@@ -236,3 +236,29 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
 - X post: not posted; edition-matched draft retained.
 - LinkedIn post: not posted; edition-matched draft retained.
+
+## 2026-09-23 publication receipt
+
+- Edition: 2026-09-23
+- Observation time: `2026-09-23T15:09:33Z`
+- Publication state: reviewed normal changed edition; no amendment or correction to earlier archives
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-23.html](https://harperz9.github.io/frontier-safety/archive/2026-09-23.html)
+- Edition hash: `1567981150b0acc5ccf330b95b01b624ee44653756733d490e5096450284c90a`
+- Idempotency key: `2654badb2c9ae421b9a816acf405eeb34d161d9cd8627c16f3e742fc1f08241a`
+- Reviewed content commit: `d29ec5b8ebb04716d34ff43c09690cfe9dc1564d`.
+- Pull request: [#257](https://github.com/HarperZ9/HarperZ9.github.io/pull/257)
+- Source check: the curated checker ran exactly once for this refresh. It reported six changed and review-required registered sources, zero errors, and zero unbaselined sources; packet SHA-256 `dd9c62ca662429eee47576fc6685e899347a4f3b2b64b452d67c198725d45fc0`.
+- Material change: OpenAI added a September 22 update saying Private Safety Processing is rolling out to API customers, with access expanding in phases. This changes the company's stated stage from planned rollout to phased rollout. It does not independently establish deployment coverage, privacy or security properties, detection performance, or control effectiveness.
+- Nonmaterial review: three other previously watched OpenAI URLs changed only in sitemap metadata, with no visible semantic article amendment. METR's methodology and joint-report bodies were unchanged even where transport metadata changed. The canonical August 26 incident record, reviewer-owned reports, and Alabama procedural record showed no new dated development that changes that incident. Potentially material AISI, Anthropic, NIST, CERT/CC, Hugging Face, open-source, and academic records outside the approved registry were held outside publication.
+- Reviewed source state: unchanged at SHA-256 `764d7d7ad131ee04db6f7e75e3eb55fd29dec269f04d87e2fac3e0e7b8748a5f`. Acceptance of any new fingerprint remains a separate reviewed transition.
+- Reproducibility: the deterministic Frontier Safety generator produced seven byte-identical outputs on two consecutive successful runs. The publication build receipt and reviewed release-spine fingerprint were synchronized to the new archive sitemap route.
+- Verification: 201 targeted Frontier Safety, deployment, and publication-operations tests passed; 31 navigation tests and five browser regressions passed; 1,354 internal links across 173 pages had zero failures; public-artifact, archive-discovery, canonical metadata, release-receipt, accessibility, responsive, page-console, secret/private-path, and diff gates passed. The complete Windows Python suite reported 608 passing tests and three unrelated failures, all reproduced on exact `origin/main`: two stale Checking the Machines hashes and generated career-text drift. Two font-browser failures also reproduced on exact `origin/main`. These baseline failures do not overlap the Frontier Safety diff; pull-request CI remains the external platform gate.
+- Independent review: one release review found zero critical or important issues and one minor stale-test issue. The standalone organization-name ban was narrowed to incident-specific phrases; exact-head review remains required before merge.
+- Visual review: current and dated-archive pages passed Chrome desktop and exact 390-by-844 CSS-viewport inspection. Both had no document-level horizontal overflow, the source-scope matrix retained its semantic caption and bounded horizontal container, and page-origin console warnings or errors were absent.
+- Guarded workflow boundary: the manual publication workflow was not dispatched because it would rerun the curated checker and violate this refresh's exactly-once source-check requirement. Pull-request CI remains the external merge gate.
+- Merge receipt: pending at the time this pre-publication receipt was committed.
+- Pages build receipt: pending at the time this pre-publication receipt was committed.
+- Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
+- X destination: `@zaindanaharper` (`ZentropyLabs.ai`); exact-edition draft retained with `not_posted` state pending action-time confirmation.
+- LinkedIn destination: `Zain Harper`; exact-edition draft retained with `not_posted` state pending action-time confirmation.
