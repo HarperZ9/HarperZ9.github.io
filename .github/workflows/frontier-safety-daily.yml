@@ -44,6 +44,7 @@ jobs:
       errors: ${{ steps.source_check.outputs.errors }}
       unbaselined: ${{ steps.source_check.outputs.unbaselined }}
       review_required: ${{ steps.source_check.outputs.review_required }}
+      unbaselined_fingerprints: ${{ steps.source_check.outputs.unbaselined_fingerprints }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -75,6 +76,14 @@ jobs:
               stream.write(f"errors={len(report['error_source_ids'])}\n")
               stream.write(f"unbaselined={len(report['unbaselined_source_ids'])}\n")
               stream.write(f"review_required={len(report['review_required_source_ids'])}\n")
+              unbaselined = set(report["unbaselined_source_ids"])
+              fingerprints = {
+                  source["id"]: source.get("sha256")
+                  for source in report.get("sources", [])
+                  if source.get("id") in unbaselined
+              }
+              encoded = json.dumps(fingerprints, sort_keys=True, separators=(",", ":"))
+              stream.write(f"unbaselined_fingerprints={encoded}\n")
           PY
       - name: Preserve a source-review packet
         if: >-
@@ -111,6 +120,7 @@ jobs:
           SOURCE_ERRORS: ${{ needs.monitor.outputs.errors }}
           SOURCE_UNBASELINED: ${{ needs.monitor.outputs.unbaselined }}
           SOURCE_REVIEW_REQUIRED: ${{ needs.monitor.outputs.review_required }}
+          SOURCE_UNBASELINED_FINGERPRINTS: ${{ needs.monitor.outputs.unbaselined_fingerprints }}
           PUBLICATION_MODE: ${{ inputs.publication_mode }}
           CORRECTION_REASON: ${{ inputs.correction_reason }}
         run: |
@@ -134,23 +144,43 @@ jobs:
           reason = " ".join(os.environ.get("CORRECTION_REASON", "").split())
           runner_temp = Path(os.environ["RUNNER_TEMP"])
           commit_message = runner_temp / "frontier-safety-commit-message.txt"
+          receipt_folder = (
+              workspace / "frontier-safety" / "data" / "receipts" / str(edition.get("edition_date"))
+          )
+          receipt_paths = (
+              [p for p in sorted(receipt_folder.glob("*.json")) if p.name != "checker-packet.json"]
+              if receipt_folder.is_dir()
+              else []
+          )
 
           if mode == "normal":
               if edition.get("edition_state") == "correction":
                   reject("a correction edition requires correction mode")
               if errors:
                   reject(f"normal publication requires zero fetch errors, observed {errors}")
-              if unbaselined:
+              fingerprints = json.loads(os.environ.get("SOURCE_UNBASELINED_FINGERPRINTS") or "{}")
+              if len(fingerprints) != unbaselined:
+                  reject("the unbaselined count and the exported fingerprints disagree")
+              receipted = {}
+              for path in receipt_paths:
+                  receipt = json.loads(path.read_text(encoding="utf-8"))
+                  receipted[receipt.get("source_id")] = receipt.get("fingerprint_sha256")
+              if set(receipted) != set(fingerprints):
                   reject(
-                      "normal publication requires zero unbaselined sources, "
-                      f"observed {unbaselined}"
+                      "normal publication requires a first-observation receipt for exactly "
+                      f"each unbaselined source, observed unbaselined={sorted(fingerprints)} "
+                      f"and receipts={sorted(map(str, receipted))}"
                   )
-              if changed < 1:
-                  reject("normal publication requires at least one changed source")
-              if review_required != changed:
+              stale = sorted(sid for sid, sha in fingerprints.items() if receipted[sid] != sha)
+              if stale:
+                  reject(f"a first-observed source changed after its receipt was reviewed: {stale}")
+              if changed + unbaselined < 1:
+                  reject("normal publication requires a changed or receipted first-observed source")
+              if review_required != changed + unbaselined:
                   reject(
                       "normal publication requires every review-required source to be an "
-                      f"existing changed source, observed changed={changed} and "
+                      f"existing changed source or a receipted first observation, observed "
+                      f"changed={changed}, unbaselined={unbaselined} and "
                       f"review_required={review_required}"
                   )
               commit_message.write_text(
@@ -159,6 +189,8 @@ jobs:
                   newline="\n",
               )
           elif mode == "correction":
+              if receipt_paths:
+                  reject("correction mode cannot carry first-observation receipts")
               if not reason:
                   reject("correction mode requires a recorded reason")
               if edition.get("edition_state") != "correction":

@@ -38,12 +38,12 @@ Before a normal publication:
 
 1. Commit the reviewed edition JSON under `frontier-safety/data/editions/` through the normal review path.
 2. Dispatch the workflow with `publish_reviewed_edition=true` and `publication_mode=normal`.
-3. Confirm the source check reports at least one changed existing source, zero fetch errors, zero unbaselined sources, and exactly the same review-required count as changed count. The publication gate rejects any other combination, including one changed existing source plus one new source.
+3. Confirm the source check reports zero fetch errors, at least one changed existing source or receipted first observation, and a review-required count equal to changed plus unbaselined. Every unbaselined source must have a first-observation receipt for this edition whose fingerprint equals this run's fingerprint (see "First-observation receipts"). The publication gate rejects any other combination, including a new source without a receipt, a receipt for a source this run did not observe as new, and a page that changed after its receipt was reviewed.
 4. Confirm the rendered edition makes a material change. Identical output creates no commit or push.
 
 The workflow pins every GitHub Action to an immutable commit SHA and names the readable release in a comment. Python validation dependencies are version-pinned. The build must reproduce every generated current HTML, archived HTML and JSON, current JSON, history JSON, and social draft byte for byte before a publication commit is allowed.
 
-The publication workflow has no reviewed-baseline receipt bypass. A reviewer can accept a successful new fingerprint into source state with the source checker's explicit `--accept-reviewed SOURCE_ID` path, but that state transition occurs in a separate reviewed change and does not authorize edition publication. If a proposed edition depends only on a newly registered source, normal publication remains fail-closed until a separately designed and tested receipt contract exists. Do not use correction mode to bypass that boundary.
+The publication workflow has no reviewed-baseline receipt bypass. A reviewer can accept a successful new fingerprint into source state with the source checker's explicit `--accept-reviewed SOURCE_ID` path, but that state transition occurs in a separate reviewed change and does not authorize edition publication. An edition that depends on a newly registered source can publish only under the first-observation receipt contract below. Correction mode cannot carry a receipt and cannot introduce a new source.
 
 ## Review procedure
 
@@ -82,6 +82,53 @@ If authentication, account state, rate limits, or platform controls are unavaila
 Corrections are append-only. A corrected edition adds a correction entry describing the earlier text, the new evidence, and the replacement. The dated archive remains addressable.
 
 Dispatch a correction with `publication_mode=correction`, `edition_state=correction`, a non-empty public `corrections` entry, and a recorded `correction_reason`. The gate normalizes and scans the reason, then records it in the publication commit body. Correction mode does not require a fresh source delta and can proceed while a monitored source has a fetch error, because correcting a known public record must not depend on an unrelated fetch. The reviewed correction evidence still has to support the edition itself.
+
+## First-observation receipts
+
+A normal edition rests on a delta: a registered source's fingerprint differs from its reviewed baseline. A newly registered source has no baseline, so its first observation produces no delta. A first-observation receipt is the substitute evidence. It binds the new source's checker fingerprint to one error-free checker run, one named reviewer's read, one edition, and the items that cite it. `tools/frontier_safety_receipts.py` holds the receipt rules and `tools/frontier_safety_coverage.py` holds the whole-record rules. Tests in `tests/test_frontier_safety_receipts.py`, `tests/test_frontier_safety_source_coverage.py`, `tests/test_frontier_safety_record_lifecycle.py` and `tests/test_frontier_safety_first_observation_gate.py` check each rule. A mutation pass that deletes each guard must turn a test red.
+
+What stays the same: registering a source (registry entry, host allowlist, fingerprint profile) is its own reviewed change. Accepting a baseline into `source-state.json` stays a separate reviewed transition after publication. A receipt never advances source state.
+
+Layout, one folder per edition:
+
+- `frontier-safety/data/receipts/<edition-date>/checker-packet.json` is the checker report from the edition's single observation run.
+- `frontier-safety/data/receipts/<edition-date>/<source-id>.json` holds one receipt per first-observed source. The file name must equal the receipt's `source_id`.
+
+Procedure:
+
+1. Register the source in a reviewed change: add the registry entry with a fingerprint profile, and add its host to the allowed source hosts.
+2. Run the curated checker once for the refresh with `--state`, so the new source reports `unbaselined` and existing sources keep their reviewed baselines.
+3. Draft the receipt: `python tools/frontier_safety_receipts.py draft --report <report.json> --source-id <id> --edition-date <date> --item <item-id>`. This writes the packet and an unattested receipt.
+4. The reviewer reads the source in full, records event, publication and observation times separately, and attests the receipt by setting `review.status` to `reviewed` and filling `reviewer`, `reviewed_at`, `read_in_full` and `times_recorded`.
+5. Commit the edition first, with its `observed_at` exactly equal to the packet's `observed_at`, then validate the whole record: `python tools/frontier_safety_receipts.py validate`. The test suite runs the same check. Every timestamp must be UTC and end in `Z`.
+6. After the edition publishes, accept the source's baseline from the committed packet in a separate reviewed change, before the next edition: `python tools/check_frontier_safety_sources.py --registry project-docs/zentropy-import/2026-08-24-source-register.json --state frontier-safety/data/source-state.json --accept-from-report frontier-safety/data/receipts/<date>/checker-packet.json --accept-reviewed <id>`. This does not fetch again, so the accepted baseline equals the receipt's fingerprint, and any later page change shows up on the next check as an ordinary delta. Until the baseline is accepted, the monitor reports the source as unbaselined, and a second receipt for it is refused as not single-use.
+
+Receipt rules:
+
+1. Receipts appear only on normal `changed` editions, at most three per edition, each source once, and each receipt for the edition whose date it names.
+2. The packet's canonical SHA-256 matches the receipt, the packet has no fetch errors, it was taken at the receipt's `checker_observed_at`, and it reports this source as `unbaselined` with the receipt's fingerprint and URL.
+3. The receipt comes from the edition's own observation run: `checker_observed_at` equals the edition's `observed_at`, and the review time is not earlier than the observation.
+4. A reviewer has attested a full read and separately recorded times. A fixed list of placeholder names is rejected, and so is any name with fewer than two letters. The name is an attestation recorded in git history, not an authentication.
+5. Each supported item exists, is `changed`, sits in the receipt's lane, and cites the source. Item ids are unique within the edition.
+6. A receipt is single-use. A source with a receipt in another edition must be baselined, not receipted again.
+7. On the newest edition only, the receipt must still match the live record: the source is registered with status `available`, its URL, fingerprint profile and lane match the registry, and it has no reviewed baseline or only the baseline accepted from this receipt. A different baseline means the source already existed, and its change must use the delta path. This also stops a checker run without `--state` from laundering an existing source's change through a receipt.
+
+Earlier editions keep rules 1 to 6 and skip rule 7. Accepting a baseline, tuning a fingerprint profile or retiring a source later therefore does not invalidate published history.
+
+Whole-record rules, checked on every commit:
+
+- The edition chain is derived from the files. Each edition's `edition_date` must equal its file name, and its `previous_edition` must equal the greatest earlier committed edition. A self-reference, a path, a skipped edition or a backdated insertion is rejected.
+- Editions before the effective date (`2026-09-24`) are a frozen archive, pinned by canonical digest in `tools/frontier_safety_coverage.py`. Adding, removing or rewriting one is rejected.
+- Every edition listed in `history.json` must match its recorded digest, and every committed edition except the newest must be listed there.
+- From the effective date, every item, changed or not, may cite only registered sources with a reviewed baseline whose URL matches the registry, sources receipted for that item, or the site's own routes on a `publication notice` item. One exception is pinned in `GRANDFATHERED_CITATIONS`: an unregistered citation published before the contract, allowed only on its own item and only while that item stays `unchanged`. A control may cite only sources with a reviewed baseline or sources receipted in the same edition. An item marked `unchanged` must also equal its previous-edition version in every field except status.
+
+Consequences for editors. Rewording a carried-forward item requires marking it `changed`, which subjects its sources to coverage. The 2026-09-16 edition changed a publication notice's title and summary while leaving it marked unchanged; the new rule rejects that. The carried item `anthropic-2026-08-14-risk-report` cites `https://www.anthropic.com/responsible-scaling-policy`, which is not registered. It carries forward under the grandfather entry, but before that item can be reworded the page must be registered and baselined, or the citation dropped. The 2026-08-27 edition's other unregistered citation is a publication notice on the site's own route, which the self-route rule covers. The archive editions themselves are pinned and not rechecked. To retire a source that items still cite, set its registry status to `pending` and keep its reviewed baseline, so the monitor stops fetching it and coverage still holds.
+
+The publication gate checks freshness only when the dispatch workflow runs. The monitor exports each unbaselined source's fingerprint, and the gate requires receipts for exactly those sources with matching fingerprints. Recent editions publish through a pull request without dispatch. On that path nothing re-fetches the source, so a stale or fabricated packet is caught only by independent review.
+
+Limits of offline checks. The test suite sees one commit, not the pull request's diff, so it cannot tell which files a change added. Three kinds of change pass these checks: one that adds an edition and, in the same change, adds a baseline or registry entry for a source that edition cites; one that adds two editions at once; and one that rewrites a post-effective edition together with its `history.json` entry. Review of the diff is the control for those cases. Closing them in code needs a comparison against the base branch, which is not implemented.
+
+Does not prove: a receipt shows one checker run fingerprinted the page and a named reviewer attested reading it. It does not prove the page's claims. It does not authenticate the reviewer beyond git history. It does not prove the packet came from a real fetch, and it does not prove the page is unchanged after publication.
 
 ## 2026-08-24 Hugging Face false-positive review
 
