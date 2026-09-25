@@ -294,7 +294,9 @@ RELEASE_PATHS = (
 # remain byte-identical to 87c320c. The frozen contract is retained.
 # September 23, 2026: reviewed Frontier Safety archive route added to the
 # sitemap; all other release-spine paths remain byte-identical.
-REVIEWED_RELEASE_SHA256 = "5c44d56bd22d0930ef3d8400a63e7de10a440f93b0a319d833212506a680a2b4"
+# September 25, 2026: reviewed studio.html copy edit that removes four em
+# dashes; all other release-spine paths remain byte-identical.
+REVIEWED_RELEASE_SHA256 = "29f7a2a754cc282da06f4cd5815ac8daa1c367c6e79d043adb632a03650074e4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

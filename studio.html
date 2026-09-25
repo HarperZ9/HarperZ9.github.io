@@ -155,9 +155,9 @@
            the live canvas of any other source, and voxel builds all become plotter drawings
            through one pipeline, blendable onto one sheet, exported as plotter-grade SVG. -->
       <section class="src-block" id="src-plotmaps" role="tabpanel" aria-label="Plot map controls" hidden>
-        <p class="transform-note">The pen surface. Any material — a generative field, a published
-        plate, a picture of your own, the frame another source just rendered, or the voxel build —
-        drawn as a plotter would draw it, and blendable onto one sheet. Same seed, same drawing,
+        <p class="transform-note">The pen surface. Any material drawn as a plotter would draw it,
+        and blendable onto one sheet: a generative field, a published plate, a picture of your own,
+        the frame another source just rendered, or the voxel build. Same seed, same drawing,
         re-checkable. The SVG export is plotter-grade: real units, ordered paths, one layer per
         pen pass.</p>
         <div class="at-group">
@@ -350,7 +350,7 @@
       <section class="src-block" id="src-voxels" role="tabpanel" aria-label="Voxel controls" hidden>
         <p class="transform-note">Voxel tooling from a seed: build, light, export. Terrain shares
         the Plot maps elevation truth, so a seed's map and its relief agree. The .vox export is
-        byte-deterministic — the same seed always hashes the same file.</p>
+        byte-deterministic: the same seed always hashes the same file.</p>
         <div class="at-group">
           <span class="at-glab">Study <span class="hint">what gets built</span></span>
           <div class="at-chips" role="group" aria-label="Voxel study">
