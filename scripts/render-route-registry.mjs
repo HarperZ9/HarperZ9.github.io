@@ -387,7 +387,7 @@ function familyForHref(href, metadata) {
   if (href.startsWith("systems/")) return "Systems";
   if (href.startsWith("demos/")) return "Systems";
   if (href.startsWith("security-") || href.includes("proof") || href.includes("receipt")) return "Security";
-  if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose)\.html$/.test(href)) return "Research";
+  if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|who-knew-first|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose)\.html$/.test(href)) return "Research";
   if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
   if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire)\.html/.test(href)) return "Work";
   if (/^(fonts|typeface)\.html$/.test(href)) return "Fonts";

@@ -296,7 +296,10 @@ RELEASE_PATHS = (
 # sitemap; all other release-spine paths remain byte-identical.
 # September 25, 2026: reviewed studio.html copy edit that removes four em
 # dashes; all other release-spine paths remain byte-identical.
-REVIEWED_RELEASE_SHA256 = "29f7a2a754cc282da06f4cd5815ac8daa1c367c6e79d043adb632a03650074e4"
+# September 25, 2026: reviewed Who Knew First registration (route registry,
+# site index, sitemap, writing index and publication build record); all other
+# release-spine paths remain byte-identical.
+REVIEWED_RELEASE_SHA256 = "4137bea0c95bce81e486301fa4cf28c0f67e1f56331628a01160cefcda5055cc"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
