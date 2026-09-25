@@ -34,13 +34,29 @@ def extract_python_heredoc(run_script: str) -> str:
     return textwrap.dedent("\n".join(lines[start:end]))
 
 
-def write_gate_edition(workspace: Path, *, state: str, corrections: list[str]) -> Path:
+GATE_EDITION_DATE = "2026-09-24"
+
+
+def write_gate_edition(
+    workspace: Path, *, state: str, corrections: list[str], receipts: dict[str, str] | None = None
+) -> Path:
     edition = workspace / "frontier-safety" / "data" / "editions" / "test.json"
     edition.parent.mkdir(parents=True)
     edition.write_text(
-        json.dumps({"edition_state": state, "corrections": corrections}) + "\n",
+        json.dumps(
+            {"edition_date": GATE_EDITION_DATE, "edition_state": state, "corrections": corrections}
+        )
+        + "\n",
         encoding="utf-8",
     )
+    folder = workspace / "frontier-safety" / "data" / "receipts" / GATE_EDITION_DATE
+    for source_id, sha in (receipts or {}).items():
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / f"{source_id}.json").write_text(
+            json.dumps({"source_id": source_id, "fingerprint_sha256": sha}) + "\n", encoding="utf-8"
+        )
+    if receipts:
+        (folder / "checker-packet.json").write_text("{}\n", encoding="utf-8")
     return edition
 
 
@@ -87,11 +103,15 @@ def run_publication_gate(
     reason: str = "",
     edition_state: str = "changed",
     corrections: list[str] | None = None,
+    fingerprints: dict[str, str] | None = None,
+    receipts: dict[str, str] | None = None,
 ) -> subprocess.CompletedProcess[str]:
     workflow = load_workflow()
     gate = named_step(workflow["jobs"]["publish"], "Enforce publication gate")
     script = extract_python_heredoc(gate["run"])
-    write_gate_edition(tmp_path, state=edition_state, corrections=corrections or [])
+    write_gate_edition(
+        tmp_path, state=edition_state, corrections=corrections or [], receipts=receipts
+    )
     runner_temp = tmp_path / "runner-temp"
     runner_temp.mkdir()
     env = {
@@ -105,6 +125,7 @@ def run_publication_gate(
         "SOURCE_REVIEW_REQUIRED": str(
             changed + unbaselined if review_required is None else review_required
         ),
+        "SOURCE_UNBASELINED_FINGERPRINTS": json.dumps(fingerprints or {}),
         "PUBLICATION_MODE": mode,
         "CORRECTION_REASON": reason,
     }
@@ -131,6 +152,10 @@ def test_monitoring_and_publication_have_separate_minimal_permissions() -> None:
 
 def test_monitor_exports_every_review_decision_count(tmp_path: Path) -> None:
     report = {
+        "sources": [
+            {"id": "changed", "status": "available", "sha256": "a" * 64},
+            {"id": "new", "status": "unbaselined", "sha256": "b" * 64},
+        ],
         "changed_source_ids": ["changed"],
         "error_source_ids": ["error"],
         "unbaselined_source_ids": ["new"],
@@ -145,8 +170,15 @@ def test_monitor_exports_every_review_decision_count(tmp_path: Path) -> None:
         "errors": "1",
         "unbaselined": "1",
         "review_required": "2",
+        "unbaselined_fingerprints": json.dumps({"new": "b" * 64}, separators=(",", ":")),
     }
-    assert set(declared) == {"changed", "errors", "unbaselined", "review_required"}
+    assert set(declared) == {
+        "changed",
+        "errors",
+        "unbaselined",
+        "review_required",
+        "unbaselined_fingerprints",
+    }
 
 
 @pytest.mark.parametrize("signal", ["changed", "errors", "unbaselined", "review_required"])

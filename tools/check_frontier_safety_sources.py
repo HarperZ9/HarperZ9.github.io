@@ -570,7 +570,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registry", type=Path, required=True)
     parser.add_argument("--state", type=Path)
-    parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--report", type=Path)
     parser.add_argument(
         "--accept-reviewed",
         action="append",
@@ -578,11 +578,26 @@ def main() -> int:
         metavar="SOURCE_ID",
         help="accept one successful reviewed fingerprint into --state; repeat for multiple sources",
     )
+    parser.add_argument(
+        "--accept-from-report",
+        type=Path,
+        metavar="REPORT",
+        help="accept baselines from a committed checker report instead of fetching again",
+    )
     parser.add_argument("--timeout", type=float, default=20.0)
     parser.add_argument("--fail-on-error", action="store_true")
     args = parser.parse_args()
-    report = check(args.registry, args.state, args.timeout)
-    write_json(args.report, report)
+    if args.accept_from_report:
+        if not args.accept_reviewed or not args.state:
+            parser.error("--accept-from-report requires --accept-reviewed and --state")
+        report = json.loads(args.accept_from_report.read_text(encoding="utf-8"))
+        if not isinstance(report, dict) or not isinstance(report.get("sources"), list) or report.get("error_source_ids"):
+            parser.error("--accept-from-report needs an error-free checker report")
+    else:
+        if not args.report:
+            parser.error("--report is required unless --accept-from-report is used")
+        report = check(args.registry, args.state, args.timeout)
+        write_json(args.report, report)
     if args.accept_reviewed:
         if not args.state:
             parser.error("--accept-reviewed requires --state")
@@ -598,13 +613,13 @@ def main() -> int:
         write_state_json(args.state, merged_state)
     print(json.dumps({
         "accepted_reviewed": args.accept_reviewed,
-        "changed": len(report["changed_source_ids"]),
-        "errors": len(report["error_source_ids"]),
-        "review_required": len(report["review_required_source_ids"]),
-        "unbaselined": len(report["unbaselined_source_ids"]),
-        "report": str(args.report),
+        "changed": len(report.get("changed_source_ids", [])),
+        "errors": len(report.get("error_source_ids", [])),
+        "review_required": len(report.get("review_required_source_ids", [])),
+        "unbaselined": len(report.get("unbaselined_source_ids", [])),
+        "report": str(args.report or args.accept_from_report),
     }, sort_keys=True))
-    return 2 if args.fail_on_error and report["error_source_ids"] else 0
+    return 2 if args.fail_on_error and report.get("error_source_ids") else 0
 
 
 if __name__ == "__main__":
