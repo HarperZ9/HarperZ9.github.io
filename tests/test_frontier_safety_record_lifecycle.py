@@ -34,6 +34,12 @@ def write(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
+def sitemap_for(dates) -> str:
+    """A sitemap listing the briefing and one archive route per date, as the real sitemap does."""
+    routes = ["frontier-safety.html", *(f"frontier-safety/archive/{date}.html" for date in dates)]
+    return "<urlset>\n" + "".join(f"  <url><loc>https://harperz9.github.io/{r}</loc></url>\n" for r in routes) + "</urlset>\n"
+
+
 @pytest.fixture
 def record(tmp_path: Path) -> Path:
     """A copy of the pinned archive only, so later live editions cannot change these tests."""
@@ -48,6 +54,7 @@ def record(tmp_path: Path) -> Path:
     history = read(ROOT / coverage.HISTORY_PATH)
     history["editions"] = [e for e in history["editions"] if e["date"] in coverage.PINNED_ARCHIVE]
     write(tmp_path / coverage.HISTORY_PATH, history)
+    (tmp_path / "sitemap.xml").write_text(sitemap_for(coverage.PINNED_ARCHIVE), encoding="utf-8")
     registry_path = tmp_path / coverage.REGISTRY_PATH
     registry = read(registry_path)
     registry["sources"].append({
@@ -60,6 +67,7 @@ def record(tmp_path: Path) -> Path:
 
 def carried(previous: dict, date: str, observed: str, state_name: str) -> dict:
     edition = copy.deepcopy(previous)
+    edition.pop("first_observation_receipts", None)  # pins belong to the edition that carries the receipts
     edition.update(edition_date=date, previous_edition=previous["edition_date"], observed_at=observed,
                    edition_state=state_name)
     for lane in edition["lanes"]:
@@ -76,7 +84,6 @@ def publish_receipted(root: Path) -> None:
                              "source_role": "developer statement", "published_at": "not shown",
                              "event_time": "not shown", "confidence": "high", "summary": "S.",
                              "does_not_prove": "D.", "sources": [{"title": "Launch", "url": NEW_URL}]})
-    write(editions / "2026-09-24.json", edition)
     packet = {"schema_version": 1, "observed_at": edition["observed_at"], "changed_source_ids": [],
               "error_source_ids": [], "unbaselined_source_ids": ["new-venue"],
               "review_required_source_ids": ["new-venue"],
@@ -86,6 +93,8 @@ def publish_receipted(root: Path) -> None:
     receipt = receipts.draft_receipt(packet, "new-venue", "2026-09-24", ["venue"], read(root / coverage.REGISTRY_PATH))
     receipt["review"] = {"status": "reviewed", "reviewer": "Zain Dana Harper",
                          "reviewed_at": "2026-09-24T16:00:00Z", "read_in_full": True, "times_recorded": True}
+    edition["first_observation_receipts"] = {"new-venue": receipts.canonical_sha256(receipt)}
+    write(editions / "2026-09-24.json", edition)
     folder = root / receipts.RECEIPTS_DIR / "2026-09-24"
     write(folder / receipts.PACKET_NAME, packet)
     write(folder / "new-venue.json", receipt)

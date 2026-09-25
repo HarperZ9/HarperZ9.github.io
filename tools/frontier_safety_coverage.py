@@ -2,9 +2,11 @@
 
 These rules hold the committed editions together: an edition chain derived
 from the files (never trusted from an edition's own fields), a frozen archive
-of editions published before the contract, integrity against history.json, and
-source coverage so no edition from the effective date on cites a source outside
-the reviewed record. Receipt rules live in frontier_safety_receipts.py.
+of editions published before the contract, integrity against history.json,
+dated artifacts and sitemap routes bound to committed editions, receipt folders
+pinned by their editions, and source coverage so no edition from the effective
+date on cites a source outside the reviewed record. Receipt rules live in
+frontier_safety_receipts.py.
 """
 
 from __future__ import annotations
@@ -25,7 +27,19 @@ from frontier_safety_receipts import (  # noqa: E402
 EDITIONS_DIR = Path("frontier-safety/data/editions")
 STATE_PATH = Path("frontier-safety/data/source-state.json")
 HISTORY_PATH = Path("frontier-safety/data/history.json")
+SITEMAP_PATH = Path("sitemap.xml")
+ARCHIVE_ROUTE = "https://harperz9.github.io/frontier-safety/archive/"
+# The files the builder writes for each edition, by directory. Pages serves every file in these
+# directories, so each one must belong to a committed edition that the coverage rules check.
+DATED_ARTIFACTS = {
+    "frontier-safety/archive": ("{d}.html",),
+    "frontier-safety/data/archive": ("{d}.json",),
+    "frontier-safety/social": ("{d}-x.txt", "{d}-linkedin.txt"),
+}
 CONTRACT_EFFECTIVE_EDITION_DATE = "2026-09-24"
+# Edition field mapping each receipted source id to the canonical SHA-256 of its attested receipt.
+# It is part of the edition digest, so history.json pins a superseded edition's receipts too.
+RECEIPT_PINS = "first_observation_receipts"
 SELF_ROUTE_HOSTS = {"harperz9.github.io"}
 SELF_ROUTE_ROLE = "publication notice"
 # Unregistered citations already published before the contract. Each is allowed only on its own
@@ -100,6 +114,25 @@ def check_archive(editions: dict[str, dict], history: dict) -> None:
         raise ReceiptError(f"history.json lists editions with no committed file: {sorted(missing)}")
 
 
+def check_dated_artifacts(root: Path, editions: dict[str, dict]) -> None:
+    """Every entry in a dated artifact directory, subdirectories included, is a file the builder writes."""
+    for folder, names in DATED_ARTIFACTS.items():
+        expected = {f"{folder}/{name.format(d=date)}" for date in editions for name in names}
+        base = root / folder
+        for path in sorted(base.rglob("*")) if base.is_dir() else []:
+            relative = path.relative_to(root).as_posix()
+            if relative not in expected:
+                raise ReceiptError(f"{relative} is not an artifact the builder writes for a committed edition")
+
+
+def check_sitemap_routes(sitemap: str, editions: dict[str, dict]) -> None:
+    """Every archive route in the sitemap is the canonical page of a committed edition."""
+    pages = {f"{ARCHIVE_ROUTE}{date}.html" for date in editions}
+    for route in re.findall(r"<loc>\s*(.*?)\s*</loc>", sitemap, flags=re.S):
+        if "frontier-safety/archive/" in route and route not in pages:
+            raise ReceiptError(f"sitemap route {route} is not the archive page of a committed edition")
+
+
 def validate_source_coverage(edition, registry, state, receipts, previous) -> None:
     """No item or control may cite a source outside the reviewed record."""
     covered = baselined_urls(registry, state)
@@ -127,8 +160,23 @@ def validate_source_coverage(edition, registry, state, receipts, previous) -> No
                 raise ReceiptError(f"controls[{index}] cites a source outside the reviewed record: {url}")
 
 
+def check_receipt_pins(date: str, edition: dict, receipts: list[dict], packet: dict | None) -> None:
+    """The receipt folder holds exactly the receipts the edition pins; each receipt binds the packet."""
+    pins = edition.get(RECEIPT_PINS, {})
+    committed = {receipt["source_id"]: canonical_sha256(receipt) for receipt in receipts}
+    if pins != committed:
+        raise ReceiptError(f"edition {date} pins {json.dumps(pins, sort_keys=True)} in {RECEIPT_PINS}, "
+                           f"but its receipt folder holds {json.dumps(committed, sort_keys=True)}")
+    if packet is not None and not receipts:
+        raise ReceiptError(f"edition {date} has a checker packet but no pinned receipt")
+
+
 def _read(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    """Parse one record file. Each one holds a JSON object, so later field reads cannot crash on it."""
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if type(payload) is not dict:
+        raise ReceiptError(f"{path.as_posix()} must hold a JSON object, not {type(payload).__name__}")
+    return payload
 
 
 def _receipt_folders(root: Path) -> dict[str, tuple[list[dict], dict | None]]:
@@ -149,7 +197,7 @@ def _receipt_folders(root: Path) -> dict[str, tuple[list[dict], dict | None]]:
 
 
 def validate_repository(root: Path) -> None:
-    """Validate the whole committed record: chain, archive, receipts and coverage."""
+    """Validate the whole committed record: chain, archive, dated artifacts, receipts and coverage."""
     editions = {path.stem: _read(path) for path in sorted((root / EDITIONS_DIR).glob("*.json"))}
     if not editions:
         raise ReceiptError("expected committed editions")
@@ -157,6 +205,8 @@ def validate_repository(root: Path) -> None:
     state = checker.validate_state(_read(root / STATE_PATH))
     check_chain(editions)
     check_archive(editions, _read(root / HISTORY_PATH))
+    check_dated_artifacts(root, editions)
+    check_sitemap_routes((root / SITEMAP_PATH).read_text(encoding="utf-8"), editions)
     folders = _receipt_folders(root)
     post = [d for d in sorted(editions) if d >= CONTRACT_EFFECTIVE_EDITION_DATE]
     stray = set(folders) - set(post)
@@ -168,3 +218,4 @@ def validate_repository(root: Path) -> None:
         prior = {r["source_id"] for other, (rs, _) in folders.items() if other != date for r in rs}
         validate_receipts(editions[date], registry, state, receipts, packet, prior, newest=date == newest)
         validate_source_coverage(editions[date], registry, state, receipts, editions.get(editions[date]["previous_edition"]))
+        check_receipt_pins(date, editions[date], receipts, packet)

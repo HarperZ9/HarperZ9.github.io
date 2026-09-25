@@ -56,6 +56,20 @@ def test_self_route_is_exempt_only_for_publication_notices() -> None:
         cover(edition(notice))
 
 
+@pytest.mark.parametrize("url", [
+    "https://www.anthropic.com/x",
+    "https://old.example/unregistered-page",
+    "https://harperz9.github.io.attacker.example/x",
+    "https://harperz9.github.io@attacker.example/x",
+    "https://attacker.example/harperz9.github.io/x",
+])
+def test_self_route_exemption_requires_the_sites_own_host(url) -> None:
+    notice = item("notice", url=url)
+    notice["source_role"] = "publication notice"
+    with pytest.raises(receipts.ReceiptError, match="outside the reviewed record"):
+        cover(edition(notice))
+
+
 def test_correction_items_are_held_to_the_same_coverage() -> None:
     with pytest.raises(receipts.ReceiptError, match="outside the reviewed record"):
         cover(edition(item(status="correction", url="https://unregistered.example/page")))
