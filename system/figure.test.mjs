@@ -74,6 +74,36 @@ test("progressive enhancement retains static content and synchronizes a table ro
 });
 
 
+test("Enter moves focus to the matching record row and Escape returns it to the part", () => {
+  const points = [makeTarget("alpha"), makeTarget("beta")];
+  const rows = [makeTarget("alpha"), makeTarget("beta")];
+  let opened = false;
+  const details = { get open() { return opened; }, set open(value) { opened = value; } };
+  let scrolled = null;
+  rows[1].closest = () => details;
+  rows[1].scrollIntoView = (options) => { scrolled = options; };
+  const root = {
+    dataset: {},
+    querySelectorAll(selector) {
+      if (selector === "[data-figure-point]") return points;
+      if (selector === "[data-figure-row]") return rows;
+      return [];
+    },
+  };
+  enhanceFigureRoot(root, { matches: false });
+
+  points[1].dispatch("keydown", { key: "Enter", preventDefault() {} });
+  assert.equal(opened, true);
+  assert.equal(rows[1].focused, true);
+  assert.equal(rows[1].getAttribute("tabindex"), "-1");
+  assert.deepEqual(scrolled, { block: "start" });
+
+  points[1].focused = false;
+  rows[1].dispatch("keydown", { key: "Escape", preventDefault() {} });
+  assert.equal(points[1].focused, true);
+});
+
+
 test("reduced-motion preference disables figure motion without disabling navigation", () => {
   assert.equal(shouldAnimate({ matches: true }), false);
   assert.equal(shouldAnimate({ matches: false }), true);

@@ -1,20 +1,18 @@
 /* ============================================================================
-   nav.css - the shared navigation bar, as a floor.
+   nav.css - the shared navigation bar and the route header, styled once.
 
-   nav.js injects the same nav into every page, but five pages carry only their
-   own inline styles and never styled it, so the bar rendered as raw browser
-   defaults: underlined links in #0000EE at 1.9:1 against a black ground, which
-   is unreadable and looks like a broken page. nav.js now prepends this file to
-   the head, ahead of everything else, so it is the lowest-priority stylesheet
-   in the cascade. A page with its own nav rules (doc.css, system.css) still
-   wins on every property it sets; a page with none gets a legible bar.
+   nav.js prepends this file to the head, so the plain .site-nav rules below are
+   a floor: a page that never styled the bar still gets a legible one. The bar
+   itself is drawn by the #site-nav rules further down. An id selector outranks
+   the class chains that older page stylesheets wrote for the bar, so the bar
+   looks the same on every page without a race over load order.
 
-   Colours here are literal, deliberately. The first version read the page's
-   own --ink and --void through var() fallbacks, which broke worse than the bug
-   it fixed: a light-themed sample page defines --ink as a near-black meant for
-   its white ground, and putting that on this dark bar measured 1.09:1. The bar
-   paints its own ground, so it states its own foreground. A floor that borrows
-   the page's variables is not a floor.
+   2026-09-25 human-first notebook: the bar paints the page ground from
+   tokens.css with one hairline under it. Links are Hanken at 15px in soft ink;
+   the current pillar is ink with a 3px ink underline. On phones the menu
+   button sits inside the header and scrolls away with it, so it never floats
+   over the text. The literal fallbacks after each var() keep the floor legible
+   on the few pages that load no token file.
    ============================================================================ */
 
 :root{
@@ -25,58 +23,20 @@
   --ink-paper:#111014;
 }
 
+/* 1. Floor. */
 .site-nav{
   position:sticky;top:0;z-index:40;
   display:flex;align-items:center;justify-content:space-between;
   gap:1rem;flex-wrap:wrap;
   box-sizing:border-box;
-  padding:.75rem clamp(1.15rem,5vw,5rem);
-  border:0;border-bottom:1px solid rgba(238,241,243,.14);
-  background:var(--ground-instrument);
+  padding:.6rem clamp(1rem,4vw,2.5rem);
+  border:0;border-bottom:1px solid var(--line,#ccd3d3);
+  background:var(--paper,#fafaf8);
+  color:var(--ink,#19272b);
   font-family:var(--font-sans);
 }
 .site-nav *{box-sizing:border-box}
-.site-nav a{text-decoration:none}
-
-.site-nav .sn-home{
-  display:inline-flex;align-items:center;gap:.7rem;flex:0 0 auto;
-  min-height:2.75rem;
-  font-family:var(--font-sans);
-  font-size:clamp(1.05rem,2vw,1.38rem);
-  font-weight:600;line-height:1;letter-spacing:0;text-transform:none;
-  color:#eef1f3;
-}
-.site-nav .sn-home:hover,
-.site-nav .sn-home:focus-visible{color:#8ee3f2}
-.site-nav .sn-home-field{
-  position:relative;display:block;flex:0 0 auto;
-  width:2.55rem;height:2.55rem;
-  border:1px solid rgba(238,241,243,.26);
-  background:#050305;
-}
-.site-nav .sn-logo-canvas,
-.site-nav .sn-logo-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}
-.site-nav .sn-logo-fallback{object-fit:cover}
-.site-nav .sn-brand-word{display:inline}
-
-.site-nav .sn-links{
-  display:flex;align-items:center;justify-content:flex-end;
-  gap:clamp(.8rem,2vw,1.8rem);flex:1 1 auto;min-width:0;
-}
-.site-nav .sn-links a,
-.site-nav .sn-more summary{
-  display:inline-flex;align-items:center;justify-content:center;
-  font-size:clamp(.86rem,.8rem + .16vw,.96rem);
-  font-weight:700;line-height:1.1;
-  color:#9aa2aa;
-  border-bottom:1.5px solid transparent;
-  min-height:44px;padding:.55rem .05rem;
-  touch-action:manipulation;
-}
-.site-nav .sn-links a:hover,
-.site-nav .sn-links a:focus-visible,
-.site-nav .sn-more summary:hover,
-.site-nav .sn-more summary:focus-visible{color:#eef1f3;outline:none}
+.site-nav a{color:inherit;text-decoration:none}
 @media (forced-colors: active){
   .site-nav,
   .site-nav .sn-home-field,
@@ -96,96 +56,138 @@
     outline:2px solid CanvasText;
     outline-offset:3px;
   }
-}
-.site-nav .sn-links a.is-active,
-.site-nav .sn-links a[aria-current="page"],
-.site-nav .sn-more[data-current="true"] > summary{
-  color:#8ee3f2;border-color:#8ee3f2;
+  #site-nav.site-nav .sn-links a.is-active{border-bottom-color:Highlight}
 }
 
-.site-nav .sn-more{position:relative;flex:0 0 auto}
-.site-nav .sn-more summary{
-  gap:.45rem;list-style:none;cursor:pointer;padding-inline:.68rem;
-  border:1px solid transparent;user-select:none;
+/* 2. The bar. */
+#site-nav.site-nav{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap;
+  gap:1.5rem;margin:0;
+  padding:.5rem max(var(--gutter,1rem),calc((100% - var(--frame,72rem)) / 2));
+  border:0;border-bottom:1px solid var(--line,#ccd3d3);border-image:none;
+  background:var(--paper,#fafaf8);color:var(--ink,#19272b);
+  box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;
+  font:400 1rem/1.3 var(--font-sans);text-shadow:none;
 }
-.site-nav .sn-more summary::-webkit-details-marker{display:none}
-.site-nav .sn-more summary::after{content:"+";margin-left:.38rem;color:#8b939b}
-.site-nav .sn-more[open] summary::after{content:"-"}
-.site-nav .sn-more:not([open]) .sn-more-list{display:none}
-.site-nav .sn-more-list{
-  position:absolute;right:0;top:calc(100% + .55rem);z-index:50;
-  min-width:16rem;max-width:min(22rem,calc(100vw - 2.3rem));
-  display:grid;gap:.55rem;padding:.7rem;
-  border:1px solid rgba(238,241,243,.26);
-  background:var(--ground-instrument);
-  box-shadow:0 20px 64px -36px rgba(0,0,0,.9);
+#site-nav.site-nav :is(a,summary){text-shadow:none;letter-spacing:0;text-transform:none}
+#site-nav.site-nav .sn-home{
+  display:inline-flex;align-items:center;gap:.65rem;flex:0 0 auto;min-height:44px;min-width:0;
+  margin:0;padding:0;
+  font:600 1.0625rem/1 var(--font-sans);color:var(--ink,#19272b);
 }
-.site-nav .sn-menu-group{display:grid;gap:.14rem}
-.site-nav .sn-menu-primary{display:none}
-.site-nav .sn-menu-label{
-  margin:.12rem .68rem .02rem;
-  font-family:var(--font-mono);
-  font-size:.62rem;line-height:1.2;letter-spacing:.1em;
-  text-transform:uppercase;color:#8b939b;
+#site-nav.site-nav .sn-home:is(:hover,:focus-visible){text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.25em}
+#site-nav.site-nav .sn-home-field{
+  position:relative;display:block;flex:0 0 auto;width:2.25rem;height:2.25rem;margin:0;
+  border:1px solid var(--line,#ccd3d3);border-radius:0;background:#050305;
 }
-.site-nav .sn-more-list a{
-  display:flex;align-items:center;min-height:44px;
-  padding:.6rem .68rem;border:0;
+#site-nav.site-nav :is(.sn-logo-canvas,.sn-logo-fallback){position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:0;object-fit:cover}
+#site-nav.site-nav .sn-brand-word{display:inline;margin:0;transform:none;text-shadow:none}
+#site-nav.site-nav .sn-links{
+  display:flex;align-items:stretch;justify-content:flex-end;flex:1 1 auto;flex-wrap:nowrap;
+  gap:clamp(.75rem,1.6vw,1.6rem);min-width:0;margin:0;
+}
+#site-nav.site-nav .sn-links a{
+  display:inline-flex;align-items:center;min-height:44px;margin:0;padding:.35rem 0 .15rem;
+  border:0;border-bottom:3px solid transparent;border-radius:0;background:transparent;
+  font:500 .9375rem/1.2 var(--font-sans);color:var(--soft,#42575d);white-space:nowrap;
+}
+#site-nav.site-nav .sn-links a:is(:hover,:focus-visible){color:var(--ink,#19272b);background:transparent;border-bottom-color:var(--line-strong,#6f7f83)}
+#site-nav.site-nav .sn-links a:is(.is-active,[aria-current="page"]){color:var(--ink,#19272b);font-weight:600;border-bottom-color:var(--ink,#19272b)}
+#site-nav.site-nav :is(a,summary):focus-visible{outline:2px solid var(--focus,#19272b);outline-offset:2px}
+/* Forced colors, after the bar rules so it wins at equal specificity: the transparent underline
+   would otherwise turn CanvasText under every pillar, so only the current pillar shows Highlight. */
+@media (forced-colors:active){
+  #site-nav.site-nav .sn-links a{border-bottom-color:Canvas}
+  #site-nav.site-nav .sn-links a:is(:hover,:focus-visible){border-bottom-color:CanvasText}
+  #site-nav.site-nav .sn-links a:is(.is-active,[aria-current="page"]){border-bottom-color:Highlight}}
+#site-nav.site-nav .sn-ext{flex:none;margin-left:.3em;width:.62em;height:.62em}
+#site-nav.site-nav :is(code,kbd),.route-header__path code{font-family:var(--font-mono);font-size:.9em}
+
+/* 3. The menu: a text button with a hairline, and a plain list. */
+#site-nav.site-nav .sn-more{position:relative;flex:0 0 auto;display:block;margin:0}
+#site-nav.site-nav .sn-more summary{
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  min-height:44px;min-width:0;margin:0;padding:.4rem .75rem;
+  list-style:none;cursor:pointer;user-select:none;
+  border:1px solid var(--line-strong,#6f7f83);border-radius:2px;background:transparent;
+  font:600 .9375rem/1 var(--font-sans);color:var(--ink,#19272b);white-space:nowrap;
+}
+#site-nav.site-nav .sn-more summary::-webkit-details-marker{display:none}
+#site-nav.site-nav .sn-more summary::before{content:none}
+#site-nav.site-nav .sn-more summary::after{content:"+";margin:0;font:600 1rem/1 var(--font-sans);color:inherit}
+#site-nav.site-nav .sn-more[open] summary::after{content:"\2212"}
+#site-nav.site-nav .sn-more summary:hover{background:var(--raised,#e7ecea)}
+#site-nav.site-nav .sn-more:not([open]) .sn-more-list{display:none}
+#site-nav.site-nav .sn-more-list{
+  position:absolute;right:0;top:calc(100% + .5rem);z-index:50;
+  min-width:17rem;max-width:min(22rem,calc(100vw - 2rem));max-height:calc(100dvh - 6rem);overflow:auto;
+  display:grid;gap:.75rem;margin:0;padding:.75rem;
+  border:1px solid var(--line-strong,#6f7f83);border-radius:0;
+  background:var(--paper,#fafaf8);color:var(--ink,#19272b);box-shadow:none;
+}
+#site-nav.site-nav .sn-menu-group{display:grid;gap:0}
+#site-nav.site-nav .sn-menu-primary{display:none}
+#site-nav.site-nav .sn-menu-label{
+  margin:0 .5rem .25rem;padding:0;
+  font:600 .875rem/1.3 var(--font-sans);letter-spacing:0;text-transform:none;color:var(--soft,#42575d);
+}
+#site-nav.site-nav .sn-more-list a{
+  display:flex;align-items:center;min-height:44px;margin:0;padding:.5rem;
+  border:0;border-left:3px solid transparent;border-radius:0;background:transparent;
   white-space:normal;overflow-wrap:anywhere;touch-action:manipulation;
-  color:#9aa2aa;font-weight:700;
+  font:500 1rem/1.3 var(--font-sans);color:var(--ink,#19272b);
 }
-.site-nav .sn-more-list a:hover,
-.site-nav .sn-more-list a:focus-visible{
-  color:#eef1f3;
-  background:color-mix(in oklab,#8ee3f2 10%,transparent);
-}
+#site-nav.site-nav .sn-more-list a:is(:hover,:focus-visible){background:var(--raised,#e7ecea);color:var(--ink,#19272b)}
+#site-nav.site-nav .sn-more-list a:is(.is-active,[aria-current="page"]){font-weight:600;border-left-color:var(--ink,#19272b)}
+#site-nav.site-nav .sn-more-list .theme-control{margin:0;padding:.25rem .5rem .75rem;border:0;border-bottom:1px solid var(--line,#ccd3d3)}
 
-@media(max-width:760px){
-  .site-nav{
-    display:grid;grid-template-columns:minmax(0,1fr) auto;
-    align-items:center;gap:.45rem .75rem;padding:.65rem .8rem;
+/* 4. Narrow screens: the pillars move into the menu. The header scrolls away with
+      the page, and the menu button scrolls away inside it. With seven pillars the full
+      bar needs about 980px on an 18px-root page, so the menu takes over below 64rem. */
+@media(max-width:64rem){
+  #site-nav.site-nav{
+    position:relative;
+    display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;
+    gap:.5rem 1rem;padding:.5rem var(--gutter,1rem);
   }
-  .site-nav .sn-home{min-width:0;width:auto;font-size:1.05rem}
-  .site-nav .sn-home-field{width:2.35rem;height:2.35rem}
-  .site-nav .sn-links{display:none}
-  .site-nav .sn-menu-primary{display:grid}
-  .site-nav .sn-more{
-    grid-column:2;grid-row:1;justify-self:end;align-self:center;
-    display:block;min-width:max-content;z-index:3;
+  #site-nav.site-nav .sn-links{display:none}
+  #site-nav.site-nav .sn-menu-primary{display:grid}
+  #site-nav.site-nav > .sn-more{
+    position:static!important;grid-column:2;grid-row:1;justify-self:end;align-self:center;
+    top:auto;right:auto;display:block!important;opacity:1!important;visibility:visible!important;z-index:auto!important;
   }
-  .site-nav .sn-more summary{
-    min-block-size:44px;display:flex;align-items:center;min-width:4.4rem;
-    color:#eef1f3;
-    background:color-mix(in oklab,#8ee3f2 9%,transparent);
-    border:1px solid rgba(238,241,243,.26);
-    font-size:0;white-space:nowrap;
-  }
-  .site-nav .sn-more summary::before{content:"Menu";font-size:.78rem}
-  .site-nav .sn-more summary::after{font-size:.78rem;color:#8ee3f2}
-  .site-nav .sn-more-list{
-    position:fixed;left:.75rem;right:.75rem;top:4.4rem;
-    min-width:0;max-width:none;max-height:calc(100dvh - 5.2rem);overflow:auto;
+  #site-nav.site-nav .sn-more summary{font-size:.9375rem}
+  #site-nav.site-nav .sn-more-list{
+    position:absolute;left:var(--gutter,1rem);right:var(--gutter,1rem);top:calc(100% + .25rem);
+    min-width:0;max-width:none;max-height:calc(100dvh - 5rem);overflow:auto;
   }
 }
-@media(max-width:330px){
-  .site-nav .sn-home .sn-brand-word{display:none}
+/* The brand word fits beside the menu button down to 360px. The older sheets hide
+   it at 430px with !important; the id rule here outranks them. */
+@media(max-width:430px){
+  #site-nav.site-nav .sn-home .sn-brand-word{display:inline!important}
+}
+@media(max-width:360px){
+  #site-nav.site-nav .sn-home .sn-brand-word{display:none!important}
 }
 @media print{
   .site-nav{display:none!important}
 }
 
-/* The route header is a structural enhancement of the page's own opening
-   block. This floor keeps injected path/title/summary pieces legible even on
-   pages that do not define local rules for the component. */
+/* 5. The route header. nav.js marks a page's own opening block with these
+   classes when the page has no masthead. It keeps a quiet path above the title. */
 .route-header{max-width:100%;box-sizing:border-box}
 .route-header__path{
-  display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .8rem;
+  display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .5rem;
   margin:0 0 .85rem;
   font-family:var(--font-sans);
-  font-size:.88rem;line-height:1.35;letter-spacing:0;text-transform:none;
-  color:#9aa2aa;
+  font-size:.875rem;font-weight:500;line-height:1.4;letter-spacing:0;text-transform:none;
+  color:var(--soft,#42575d);
 }
-.route-header__path a{color:#eef1f3;text-decoration-thickness:1px;text-underline-offset:3px}
-.route-header__path span{color:#9aa2aa}
+.route-header__path > * + *::before{content:"/";margin-right:.5rem;color:var(--soft,#42575d)}
+.route-header__path a{color:var(--soft,#42575d);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+.route-header__path a:is(:hover,:focus-visible){color:var(--ink,#19272b);text-decoration-thickness:2px}
+.route-header__path span{color:var(--soft,#42575d)}
 .route-header__title{letter-spacing:0;text-transform:none}
 .route-header__summary{max-width:68ch}

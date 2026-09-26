@@ -5,8 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafaf8" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101416" />
+    <link rel="stylesheet" href="/system/art.css?v=20260925-human-notebook" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ebe5d8" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060608" />
     <meta name="application-name" content="Zentropy Labs" />
     <title>Zentropy Labs | Re-derivable AI evaluation</title>
     <meta name="description" content="Zentropy Labs builds Flywheel and public tools for re-derivable AI evaluation, with release evidence, limits, and pilot routes." />
@@ -24,10 +25,11 @@
     <meta name="twitter:image:alt" content="Zentropy Labs aperture mark with a cyan halftone orb and oxblood reflection." />
     <script>document.documentElement.classList.add('js')</script>
     <link rel="preload" href="/system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="/system/home-readable.css?v=20260902-creative-chassis" />
+    <link rel="stylesheet" href="/system/tokens.css?v=20260925-human-notebook" />
+    <link rel="stylesheet" href="/system/plate.css?v=20260925-void-plates" />
     <style>
-      :root{color-scheme:light dark;--nojs-bg:#fafaf8;--nojs-ink:#19272b;--nojs-muted:#42575d;--nojs-link:#215a63;--nojs-line:#ccd3d3}
-      @media (prefers-color-scheme:dark){:root{--nojs-bg:#101416;--nojs-ink:#eaf5f6;--nojs-muted:#b4c5c9;--nojs-link:#8ee3f2;--nojs-line:#42555a}}
+      :root{color-scheme:light dark;--nojs-bg:#ebe5d8;--nojs-ink:#16130f;--nojs-muted:#4a443b;--nojs-link:#16130f;--nojs-line:#c9bfab}
+      @media (prefers-color-scheme:dark){:root{--nojs-bg:#060608;--nojs-ink:#ece5d6;--nojs-muted:#b8b0a0;--nojs-link:#ece5d6;--nojs-line:#29282c}}
       #noscript-main{color:var(--nojs-ink)!important;background:var(--nojs-bg)!important}
       #noscript-main a{color:var(--nojs-link)!important;text-underline-offset:.25em}
       #noscript-main section{border-top:1px solid var(--nojs-line);padding-top:1.1rem}
@@ -38,8 +40,8 @@
     <!-- home-art.js ships with the static site's shared /system, outside this build.
          The specifier is assembled at runtime so Vite leaves it as a browser
          dynamic import in dev and build. -->
-    <script type="module" crossorigin src="/assets/index-JJHLIJUt.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-eZ1QGP52.css">
+    <script type="module" crossorigin src="/assets/index-TO_R52sc.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DJj37yQz.css">
   </head>
   <body>
     <div id="root"></div>
@@ -64,13 +66,25 @@
           <p style="max-width:42rem;line-height:1.6">A proposed reviewer pilot starts with one consequential claim, equal evidence controls, expected reviewer effort, missed-error cases, and honest nulls. The output is a rerunnable verdict plus the exact remainder that still needs human judgment.</p>
         </section>
 
+        <section id="noscript-recent" aria-labelledby="noscript-recent-title">
+          <h2 id="noscript-recent-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Recent work</h2>
+          <p style="max-width:42rem;line-height:1.6">Writing and releases from the past month. Each item links to the full piece and its sources.</p>
+          <ul style="line-height:1.8">
+            <li><a style="color:#8ee3f2" href="/who-knew-first.html">Who Knew First</a>: in six of nine 2026 AI agent incidents, someone outside the organization that ran the model told the public first.</li>
+            <li><a style="color:#8ee3f2" href="/flywheel.html">Flywheel 1.0</a>: run a task with any model, then hand the result to a checker anyone can rerun offline.</li>
+            <li><a style="color:#8ee3f2" href="/checking-the-machines.html">An open letter on checking the machines</a>: a signed letter to the people who build AI systems.</li>
+            <li><a style="color:#8ee3f2" href="https://github.com/HarperZ9/articulate">Articulate</a>: the writing checker used on this site's pages.</li>
+            <li><a style="color:#8ee3f2" href="/frontier-safety.html">Frontier Safety briefing</a>: a dated record of AI safety news and what each source cannot show.</li>
+          </ul>
+        </section>
+
         <section id="noscript-flywheel" aria-labelledby="noscript-flywheel-title">
           <h2 id="noscript-flywheel-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Flagship platform: Flywheel</h2>
           <p data-canonical-purpose="flywheel" style="max-width:42rem;line-height:1.6">Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: run any frontier or local model behind one interface, with the Rowan desktop assistant, a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) for research, memory, and writing. Its check-output command grades an answer against the source that decides it, ships finance, medicine, and law packs, and can emit a Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent witness re-runs offline. Data stays local; the code is source-available under FSL-1.1-MIT.</p>
           <ul style="line-height:1.8">
-            <li>Release: <a style="color:#8ee3f2" href="https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1">Flywheel v1.0.1</a></li>
-            <li>Accepted source: <a style="color:#8ee3f2" href="https://github.com/HarperZ9/flywheel/commit/123b6d11ff9a1e9d23f8ced04a4f811b57383449">accepted source 123b6d11</a>; <a style="color:#8ee3f2" href="https://github.com/HarperZ9/flywheel/actions/runs/35076488925">main CI run 35076488925</a>; <a style="color:#8ee3f2" href="https://github.com/HarperZ9/flywheel/actions/runs/35076489004">desktop CI run 35076489004</a>; observed 2026-09-16; public release and installed acceptance are separate.</li>
-            <li>Windows installer: <a style="color:#8ee3f2" href="https://github.com/HarperZ9/flywheel/releases/download/v1.0.1/Flywheel-Setup-1.0.1-x64.exe">Flywheel-Setup-1.0.1-x64.exe</a>; 56,164,323 bytes; unsigned.</li>
+            <li>Release: <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.0.4">Flywheel v1.0.4</a></li>
+            <li>Release commit: <a href="https://github.com/HarperZ9/flywheel/commit/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7">the 1.0.4 release commit</a>; <a href="https://github.com/HarperZ9/flywheel/actions/runs/36208231392">main CI passed</a>; <a href="https://github.com/HarperZ9/flywheel/actions/runs/36208246188">installed acceptance passed</a>; observed 25 September 2026; clean-machine installation is not claimed.</li>
+            <li>Windows installer: <a href="https://github.com/HarperZ9/flywheel/releases/download/v1.0.4/Flywheel-Setup-1.0.4-x64.exe">Flywheel-Setup-1.0.4-x64.exe</a>; 56,355,754 bytes; unsigned.</li>
             <li>Install: pip install flywheel-verify</li>
             <li>Run: flywheel up</li>
             <li>Check: flywheel lanes --probe</li>
@@ -122,17 +136,6 @@
             <a style="color:#8ee3f2" href="/figures/recovered-actions-by-day.html">Recovered-actions dataset</a>
             <a style="color:#8ee3f2;margin-left:1rem" href="/figures/motive-sample-nonexclusive.html">Motive-label dataset</a>
           </p>
-        </section>
-
-        <section aria-labelledby="noscript-research">
-          <h2 id="noscript-research" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Current research</h2>
-          <p style="max-width:42rem;line-height:1.6">Model failures are framed as products of incentives, deployment conditions, and engineering choices; internal signals are treated as untrusted readouts checked against behavior.</p>
-          <article style="max-width:44rem;line-height:1.65">
-            <time datetime="2026-08-26">2026-08-26</time>
-            <h3><a style="color:#8ee3f2" href="/briefings/2026-08-26-openai-hugging-face-incident/">Five evidence lanes, one OpenAI and Hugging Face incident</a></h3>
-            <p>12 public sources. Limitations remain attached to the record.</p>
-            <p style="line-height:2"><a style="color:#8ee3f2" href="/figures/source-scope-matrix.html">Open the primary figure</a> <a style="color:#8ee3f2;margin-left:1rem" href="/research.html">Research index</a></p>
-          </article>
         </section>
 
         <section id="noscript-bulletin" aria-labelledby="noscript-bulletin-title">

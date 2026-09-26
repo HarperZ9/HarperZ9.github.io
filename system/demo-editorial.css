@@ -1,23 +1,26 @@
-:root{
-  color-scheme:light dark;
-}
+@import url("tokens.css?v=20260925-human-notebook");
+/* demo-editorial.css: the demo pages. 2026-09-25 human-first notebook: every
+   --demo-* value reads a token from tokens.css, which also loads both faces and
+   defines --font-sans, so these pages follow the reader's theme pick in CSS
+   alone and set their words in Hanken Grotesk. Accent and signal are ink; the
+   three verdicts use the verdict tokens. */
 
 body.demo-editorial{
-  --demo-bg:#f4f2ec;
-  --demo-bg-soft:#ece9e2;
-  --demo-panel:#fffef9;
-  --demo-panel-strong:#ffffff;
-  --demo-ink:#111416;
-  --demo-muted:#4d5e63;
-  --demo-faint:#64787e;
-  --demo-line:rgba(17,20,22,.18);
-  --demo-line-strong:rgba(17,20,22,.3);
-  --demo-accent:#a24f33;
-  --demo-accent-strong:#7c351f;
-  --demo-signal:#0a6f7d;
-  --demo-ok:#146b4f;
-  --demo-drift:#9a2d2e;
-  --demo-warn:#765400;
+  --demo-bg:var(--paper);
+  --demo-bg-soft:var(--inset);
+  --demo-panel:var(--paper);
+  --demo-panel-strong:var(--panel);
+  --demo-ink:var(--ink);
+  --demo-muted:var(--soft);
+  --demo-faint:var(--muted);
+  --demo-line:var(--line);
+  --demo-line-strong:var(--line-strong);
+  --demo-accent:var(--ink);
+  --demo-accent-strong:var(--ink);
+  --demo-signal:var(--ink);
+  --demo-ok:var(--verified);
+  --demo-drift:var(--drift);
+  --demo-warn:var(--unverifiable);
   --demo-canvas:#070406;
   --void:var(--demo-bg);
   --void-opaque:var(--demo-bg);
@@ -31,37 +34,15 @@ body.demo-editorial{
   min-height:100%;
   overflow:auto;
   position:static;
-  background:
-    radial-gradient(56rem 28rem at 85% -8%,rgba(10,111,125,.13),transparent 58%),
-    linear-gradient(180deg,var(--demo-bg) 0%,var(--demo-bg-soft) 100%);
-  background-color:var(--demo-bg);
+  background:var(--demo-bg);
   color:var(--demo-ink);
-  color-scheme:light dark;
-  font-family:var(--font-sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);
+  font-family:var(--font-sans,"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);
   text-rendering:optimizeLegibility;
 }
 
 @media (prefers-color-scheme:dark){
   body.demo-editorial{
-    --demo-bg:#070406;
-    --demo-bg-soft:#101416;
-    --demo-panel:#0d1113;
-    --demo-panel-strong:#121719;
-    --demo-ink:#eaf5f6;
-    --demo-muted:#abc0c4;
-    --demo-faint:#7f999f;
-    --demo-line:rgba(142,227,242,.2);
-    --demo-line-strong:rgba(142,227,242,.34);
-    --demo-accent:#c86a44;
-    --demo-accent-strong:#ee9f74;
-    --demo-signal:#8ee3f2;
-    --demo-ok:#8bd6b6;
-    --demo-drift:#f28a75;
-    --demo-warn:#f0c56d;
-    background:
-      radial-gradient(58rem 30rem at 72% -12%,rgba(142,227,242,.11),transparent 58%),
-      linear-gradient(180deg,var(--demo-bg) 0%,var(--demo-bg-soft) 100%);
-    background-color:var(--demo-bg);
+    grid-template-columns:1fr;
   }
 }
 
@@ -82,7 +63,7 @@ body.demo-editorial a{
 body.demo-editorial :where(a,button,input,select,summary):focus-visible{
   outline:2px solid var(--demo-signal);
   outline-offset:3px;
-  border-radius:4px;
+  border-radius:0;
 }
 
 body.demo-editorial :where(button,.button,.demo-back,#deck-exit){
@@ -102,7 +83,7 @@ body.demo-editorial :where(button,.button,.demo-back,#deck-exit){
   min-height:44px;
   padding:.58rem .75rem;
   border:1px solid var(--demo-line);
-  border-radius:4px;
+  border-radius:0;
   background:color-mix(in oklab,var(--demo-panel) 88%,transparent);
   color:var(--demo-muted);
   text-decoration:none;
@@ -119,7 +100,7 @@ body.demo-editorial :where(button,.button,.demo-back,#deck-exit){
   margin:1rem auto 1.25rem;
   padding:.9rem 1rem;
   border:1px solid var(--demo-line-strong);
-  border-radius:6px;
+  border-radius:0;
   background:var(--demo-panel);
   color:var(--demo-ink);
   font-family:var(--font-sans,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif);
@@ -283,7 +264,7 @@ body.demo-presentation #deck-exit{
   justify-content:center;
   padding:.62rem .8rem;
   border:1px solid var(--demo-line);
-  border-radius:4px;
+  border-radius:0;
   background:color-mix(in oklab,var(--demo-panel) 88%,transparent);
   color:var(--demo-muted);
   text-decoration:none;
@@ -399,7 +380,7 @@ body.demo-discovery .panel{
   min-width:0;
   padding:clamp(1rem,2vw,1.35rem);
   border:1px solid var(--demo-line);
-  border-radius:8px;
+  border-radius:0;
   background:var(--demo-panel);
 }
 
@@ -429,7 +410,7 @@ body.demo-discovery label{
 body.demo-discovery :where(select,input,button){
   min-height:44px;
   border:1px solid var(--demo-line-strong);
-  border-radius:4px;
+  border-radius:0;
   background:var(--demo-panel-strong);
   color:var(--demo-ink);
   font:500 .95rem/1.2 var(--font-mono,"Conso",ui-monospace,monospace);
@@ -453,7 +434,7 @@ body.demo-discovery canvas{
   width:100%;
   max-width:100%;
   border:1px solid rgba(234,245,246,.16);
-  border-radius:6px;
+  border-radius:0;
   background:var(--demo-canvas);
 }
 
@@ -550,7 +531,7 @@ body.demo-cleanroom .actions{
 body.demo-cleanroom .button{
   min-height:44px;
   border:1px solid var(--demo-line-strong);
-  border-radius:4px;
+  border-radius:0;
   background:var(--demo-panel);
   color:var(--demo-signal);
   font-weight:700;
@@ -569,7 +550,7 @@ body.demo-cleanroom .grid{
 
 body.demo-cleanroom :where(.card,.panel){
   border:1px solid var(--demo-line);
-  border-radius:8px;
+  border-radius:0;
   background:var(--demo-panel);
 }
 
@@ -602,7 +583,7 @@ body.demo-cleanroom .unknown{color:var(--demo-warn)}
 
 body.demo-cleanroom :where(code,pre){
   border:1px solid var(--demo-line);
-  border-radius:5px;
+  border-radius:0;
   background:color-mix(in oklab,var(--demo-panel) 86%,var(--demo-bg));
   color:var(--demo-ink);
   font-family:var(--font-mono,"Conso",ui-monospace,monospace);

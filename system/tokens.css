@@ -1,0 +1,150 @@
+/* tokens.css: every color, type and spacing token for the site, plus the two
+   type families. reading.css and figure.css import this file on their first
+   line, so it reaches every page that loads a family stylesheet. Pages that load
+   none of them link it directly.
+
+   Theme without JavaScript. Light values sit on the root. Dark values apply when
+   the operating system asks for dark and the reader has not picked Light, and
+   again when the reader picks Dark. The theme menu writes data-theme on <html>,
+   so the reader's pick wins in both directions.
+
+   The root selectors are written as html:root, one element selector above the
+   older :root blocks in system.css and doc.css, so these values win wherever
+   both apply, whatever the load order.
+
+   Every color is a hex value. Contrast is WCAG 2 against --paper. */
+
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-regular.woff2") format("woff2"),url("fonts/conso-regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-regularitalic.woff2") format("woff2"),url("fonts/conso-regularitalic.woff") format("woff");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-medium.woff2") format("woff2"),url("fonts/conso-medium.woff") format("woff");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-semibold.woff2") format("woff2"),url("fonts/conso-semibold.woff") format("woff");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("fonts/conso-bold.woff2") format("woff2"),url("fonts/conso-bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+
+/* 1. Light, the default. */
+html:root{
+  color-scheme:light;
+  --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
+
+  --paper:#fafaf8;        /* page ground */
+  --inset:#f6f8f7;        /* recessed band, code block ground */
+  --panel:#f0f3f2;        /* quiet panel, "How we know" body */
+  --raised:#e7ecea;       /* hover and pressed ground */
+  --ink:#19272b;          /* 14.7:1 text, links, rules, primary button */
+  --soft:#42575d;         /* 7.3:1 dek, meta line, labels */
+  --muted:#53666b;        /* 5.8:1 tertiary text, never under 14px */
+  --line:#ccd3d3;         /* decorative hairline */
+  --line-strong:#6f7f83;  /* 4.0:1 borders of controls */
+  --on-ink:#fafaf8;       /* text on the primary button */
+  --verified:#08766b;     /* 5.3:1 */
+  --drift:#96401d;        /* 6.6:1, also the 95 percent interval */
+  --unverifiable:#55548f; /* 6.6:1 */
+  --hot:var(--ink);       /* the one hot mark per view names no verdict */
+  --focus:var(--ink);
+  /* Older data-plate names, pointed at the page tokens so plates follow the theme. */
+  --ground-paper:var(--panel);
+  --ink-paper:var(--ink);
+
+  --sheet-paper:#f8f9fb;
+  --sheet-ink:#121a2c;
+  --sheet-soft:#45516a;
+  --sheet-line:#687489;
+  --sheet-hair:#d3d5da;
+  --sheet-dot:#dcdee3;               /* lighter than the first module: the ruling is texture, never a line through text */
+  --sheet-frame:#c5c8cd;
+  --sheet-halo:transparent;          /* retired 2026-09-25 round 3: the hot ring's glow is the only lit mark on a dark sheet */
+  --sheet-glow:none;                 /* dark sheets only: the hot ring's glow */
+  --sheet-grain:.25;                 /* grain veil opacity in the margin band */
+  --sheet-pupil:#121a2c;
+  --sheet-core:#f8f9fb;
+
+  --s-1:.25rem;--s-2:.5rem;--s-3:.75rem;--s-4:1rem;--s-5:1.5rem;--s-6:2rem;--s-7:3rem;--s-8:4.5rem;--s-9:6rem;
+  --gutter:clamp(1rem,4vw,2.5rem);
+  --measure:38rem;
+  --wide:58rem;
+  --frame:72rem;
+  --section-gap:var(--s-8);
+  --radius:0;
+  --radius-control:2px;
+
+  --t-display:clamp(2.25rem,1.6rem + 2.6vw,3.5rem);
+  --t-h2:clamp(1.5rem,1.25rem + 1vw,2rem);
+  --t-h3:1.25rem;
+  --t-dek:1.25rem;
+  --t-body:1.0625rem;
+  --t-takeaway:1.1875rem;
+  --t-label:.875rem;
+  --t-meta:.9375rem;
+  --t-sheet-title:clamp(1.375rem,1.1rem + 1vw,2rem);
+}
+
+/* 2. Dark: the operating system asks for it and the reader has not picked Light. */
+@media (prefers-color-scheme:dark){
+  html:root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#101416;--inset:#0c1011;--panel:#1b2528;--raised:#233034;
+    --ink:#eaf5f6;--soft:#b4c5c9;--muted:#91a6aa;--line:#42555a;--line-strong:#7d949a;--on-ink:#101416;
+    --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
+    --sheet-paper:#0b1121;--sheet-ink:#e6edf9;--sheet-soft:#a9b7cd;--sheet-line:#76839e;
+    --sheet-hair:#303646;--sheet-dot:#252b3a;--sheet-frame:#3b4151;
+    --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #e6edf98c);--sheet-grain:.15;--sheet-pupil:#03050a;--sheet-core:#f4f8ff;
+  }
+}
+/* 3. Dark: the reader picked it. */
+html:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#101416;--inset:#0c1011;--panel:#1b2528;--raised:#233034;
+  --ink:#eaf5f6;--soft:#b4c5c9;--muted:#91a6aa;--line:#42555a;--line-strong:#7d949a;--on-ink:#101416;
+  --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
+  --sheet-paper:#0b1121;--sheet-ink:#e6edf9;--sheet-soft:#a9b7cd;--sheet-line:#76839e;
+  --sheet-hair:#303646;--sheet-dot:#252b3a;--sheet-frame:#3b4151;
+  --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #e6edf98c);--sheet-grain:.15;--sheet-pupil:#03050a;--sheet-core:#f4f8ff;
+}
+html:root[data-theme="light"]{color-scheme:light}
+
+@media (max-width:40rem){html:root{--section-gap:var(--s-7)}}
+
+/* 4. Forced colors. :is() lifts these above both theme blocks, and they come later. */
+@media (forced-colors:active){
+  html:root:is([data-theme],:not([data-theme])){
+    --paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;
+    --ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
+    --verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;--hot:Highlight;--focus:Highlight;
+    --sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-line:CanvasText;
+    --sheet-hair:GrayText;--sheet-dot:Canvas;--sheet-frame:CanvasText;
+    --sheet-halo:transparent;--sheet-glow:none;--sheet-grain:0;--sheet-pupil:CanvasText;--sheet-core:Canvas;
+  }
+}
+
+/* 5. Print: white paper, black ink, and the print verdict set. */
+@media print{
+  /* The theme script writes color-scheme inline; !important keeps the printed canvas white
+     when the reader's system or menu asks for dark. */
+  html:root,html:root[data-theme]{color-scheme:light!important}
+  html:root:is([data-theme],:not([data-theme])){
+    color-scheme:light;
+    --paper:#ffffff;--inset:#ffffff;--panel:#ffffff;--raised:#ffffff;
+    --ink:#000000;--soft:#333333;--muted:#444444;--line:#aaaaaa;--line-strong:#555555;--on-ink:#ffffff;
+    --verified:#006b73;--drift:#8a3219;--unverifiable:#4b4b7a;--hot:#000000;--focus:#000000;
+    --sheet-paper:#ffffff;--sheet-ink:#000000;--sheet-soft:#333333;--sheet-line:#555555;
+    --sheet-hair:#aaaaaa;--sheet-dot:#ffffff;--sheet-frame:#999999;
+    --sheet-halo:transparent;--sheet-glow:none;--sheet-grain:0;--sheet-pupil:#000000;--sheet-core:#ffffff;
+  }
+}
+
+/* 6. Base. These rules carry no class, so every page stylesheet can refine them. */
+html{font-synthesis:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink)}
+code,pre,kbd,samp{font-family:var(--font-mono)}
+code,.digest,[translate="no"]{overflow-wrap:anywhere}
+
+/* 7. Reading comfort. Anchor jumps and keyboard focus stop below the sticky site header; the
+   root selector outranks the older html rules. Every focus ring is the focus token, never a
+   verdict hue. Readers who ask for less motion get instant scrolling. */
+html:root{scroll-padding-top:5rem}
+html :is(a,button,summary,select,input,textarea,[tabindex]):focus-visible{outline-color:var(--focus)}
+@media (prefers-reduced-motion:reduce){
+  html:root{scroll-behavior:auto}
+  html .skip-link{transition:none}}

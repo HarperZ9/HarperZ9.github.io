@@ -210,10 +210,11 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
         "FSL-1.1-MIT."
     )
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
-    assert flywheel["releaseState"] == "stable Python engine v1.0.1; unsigned Windows desktop v1.0.1; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
+    assert flywheel["releaseState"] == "stable Python engine v1.0.4; unsigned Windows desktop v1.0.4; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
     assert flywheel["entryCommand"] == "pip install flywheel-verify"
-    assert flywheel["evidence"][0]["id"] == "flywheel-release-v1-0-1"
-    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v1-0-1"
+    # 2026-09-25: Flywheel 1.0.4 is the current release; the 1.0.1 records stay as history.
+    assert flywheel["evidence"][0]["id"] == "flywheel-release-v1-0-4"
+    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v1-0-4"
     assert release["type"] == "release"
     assert release["status"] == "verified"
     assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1"
@@ -278,36 +279,41 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
 
     release_section = page[page.index('<section class="mv" id="next-release"'):]
     release_section = release_section[: release_section.index("</section>")]
-    service_desk_section = page[page.index('<section class="mv" id="service-desk"'):]
+    # 2026-09-25 round 3: the three companion products share one section, #companions, with one
+    # disclosure that holds their downloads, setup and limits; the row anchors keep their ids.
+    service_desk_section = page[page.index('<section class="mv" id="companions"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
-    assert 'href="#next-release">1.0.1 release</a>' in page
+    assert '<li id="service-desk">' in service_desk_section
+    assert 'href="#next-release">1.0.4 release</a>' in page
     assert "0.6 candidate" not in page
-    assert "Use v1.0.1 to install the current Python engine" in release_section
-    assert "The Windows installer asset is <span translate=\"no\">56,164,323</span> bytes" in release_section
+    # 2026-09-25 round 3: the install lead names the version as the thing installed.
+    assert "Install the Python engine from PyPI" in release_section
+    assert "The Windows installer asset is <span translate=\"no\">56,355,754</span> bytes" in release_section
     assert "published smoke receipt reports <span translate=\"no\">PASS</span>" in release_section
     assert "The Windows desktop installer is still unsigned" in release_section
     assert "pip install flywheel-verify" in page
-    assert "Windows desktop: 1.0.1" in page
-    assert "Flywheel-Setup-1.0.1-x64.exe" in page
-    assert "/releases/download/v1.0.1" in page
+    assert "Windows desktop: 1.0.4" in page
+    assert "Flywheel-Setup-1.0.4-x64.exe" in page
+    assert "/releases/download/v1.0.4" in page
     assert "Flywheel-Setup-0.6.0-x64.exe" not in page
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
-    assert "Flywheel v1.0.1" in catalog
+    assert "Flywheel v1.0.4" in catalog
     assert "flywheel-release-v1-0-1" in home_projection
     assert "flywheel-pypi-v1-0-1" in home_projection
+    assert "flywheel-release-v1-0-4" in home_projection
     assert "flywheel-service-desk-env-v0-1-0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_registry
-    assert "Flywheel v1.0.1" in home_registry
+    assert "Flywheel v1.0.4" in home_registry
 
     for relative in ("home/index.html", "index.html"):
         fallback = read(relative).split('<section id="noscript-flywheel"', 1)[1]
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
-        assert release_link and release_link.group(1) == release["href"]
+        assert release_link and release_link.group(1) == evidence["flywheel-release-v1-0-4"]["href"]
         install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
         assert install and install.group(1) == flywheel["entryCommand"]
 
@@ -323,13 +329,20 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
 
 def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
     page = read("flywheel.html")
-    evidence_start = page.index('<section class="mv" id="evidence-task"')
-    reader_flow_start = page.index('<section class="mv" id="reader-flow-review"')
+    # 2026-09-25 round 3: the three companion products share one section, #companions, with one
+    # disclosure that holds their downloads, setup and limits; the row anchors keep their ids.
+    # The evidence and the retired benchmark now come before the install and companion sections.
+    companions_start = page.index('<section class="mv" id="companions"')
+    evidence_start = page.index('<li id="evidence-task">')
+    reader_flow_start = page.index('<li id="reader-flow-review">')
     benchmarks_start = page.index('<section class="mv" id="benchmarks"')
-    section = page[reader_flow_start:benchmarks_start]
+    section = page[companions_start:]
+    section = section[: section.index("</section>")]
 
-    assert evidence_start < reader_flow_start < benchmarks_start
-    assert "#demo,#evidence-task,#reader-flow-review{scroll-margin-top:6rem}" in page
+    assert benchmarks_start < companions_start < evidence_start < reader_flow_start
+    # 2026-09-25 human-first notebook: tokens.css clears the sticky header for every anchor
+    # and focused element on every page, so the per-id scroll margins retired.
+    assert "html:root{scroll-padding-top:5rem}" in read("system/tokens.css")
     assert "Reader Flow Review 0.1.0 skill ZIP" in section
     assert "https://github.com/HarperZ9/flywheel/releases/tag/skill-reader-flow-review-v0.1.0" in section
     assert (
@@ -342,7 +355,10 @@ def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
     ) in section
     assert "6,379 bytes" in section
     assert "f57f8485da37d3af44a1d182994d465fc74e0a8a46aa8c35ef3969b32d57537b" in section
-    assert "Use $reader-flow-review to review this passage" in section
+    # 2026-09-25 round 4: the copyable prompt is restored word for word from the published page,
+    # including its quoted sample passage; only the command token takes the reading-face styling.
+    assert 'Use <span class="fw-token">$reader-flow-review</span> to review this passage for reader flow while preserving voice and uncertainty' in section
+    assert "&quot;The release is useful, but its evidence is developmental." in section
     assert "host installation" in section
     assert "automatic invocation" in section
     assert "held-out writing quality" in section

@@ -1,15 +1,17 @@
+@import url("tokens.css?v=20260925-human-notebook");
 /* One reading treatment across the publication index, briefings and essays.
-   Scope excludes career documents, product demos and interactive studios. */
-@font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
+   Scope excludes career documents, product demos and interactive studios.
+   2026-09-25 human-first notebook: every --reading-* value now reads a token
+   from tokens.css, which carries light, dark, the reader's theme pick, forced
+   colors and print in CSS alone. Links are ink. The faces load from tokens.css. */
 html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){
-  color-scheme:light;
-  --reading-paper:#fafaf8;
-  --reading-ink:#19272b;
-  --reading-soft:#42575d;
-  --reading-link:#215a63;
-  --reading-rule:#ccd3d3;
-  --reading-panel:#f0f3f2;
-  --reading-type:"Hanken Grotesk",Hanken,system-ui,sans-serif;
+  --reading-paper:var(--paper);
+  --reading-ink:var(--ink);
+  --reading-soft:var(--soft);
+  --reading-link:var(--ink);
+  --reading-rule:var(--line);
+  --reading-panel:var(--panel);
+  --reading-type:var(--font-sans);
   background:var(--reading-paper);
 }
 /* These selectors outrank the older page skins without touching their data. */
@@ -30,24 +32,15 @@ body.doc:has(.longform)>#gl,
 body.doc:has(.longform)>#motes{display:none!important}
 body.doc:has(.longform) .sheet{border:0;padding-inline:0;width:min(100%,62ch);max-width:62ch}
 body.doc:has(.longform) :is(.article-head h1,.article-head .lead,.article-body,.article-body h2,.article-body h3,.companion,.article-footer){font-family:var(--reading-type)}
-body.doc:has(.longform) .article-body{max-width:62ch;font-size:1rem;line-height:1.75}
-body.doc:has(.longform) .article-head h1{font-size:clamp(2.1rem,4.7vw,3.4rem);line-height:1.12;text-wrap:balance}
+body.doc:has(.longform) .article-body{max-width:62ch;font-size:var(--t-body);line-height:1.7}
+body.doc:has(.longform) .article-head h1{font-size:var(--t-display);font-weight:500;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
 body.doc:has(.longform) .article-body blockquote{border:0;border-block:1px solid var(--reading-rule);background:transparent;padding:1.2rem 0}
-body.doc:has(.longform) :is(.article-meta,.role){font-family:var(--reading-type);font-size:.82rem;letter-spacing:0;text-transform:none}
+body.doc:has(.longform) :is(.article-meta,.role){font-family:var(--reading-type);font-size:.9375rem;letter-spacing:0;text-transform:none}
 body.doc:has(.longform) :is(.article-head,.article-body,.companion,.article-footer){margin-inline:auto}
 
-/* Navigation remains familiar, but uses the same ground as the article. */
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav{
-  background:var(--reading-paper);border-color:var(--reading-rule);backdrop-filter:none;
-}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(a,summary){color:var(--reading-ink);text-shadow:none}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(a:hover,a:focus-visible,summary:hover,summary:focus-visible){color:var(--reading-link);background:var(--reading-panel)}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav .sn-more-list{background:var(--reading-paper);border-color:var(--reading-rule);box-shadow:none}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .site-nav .sn-home .sn-brand-word{text-shadow:none}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) .site-nav :is(.sn-links a.is-active,.sn-links a[aria-current="page"],.sn-more>summary){color:var(--reading-link);border-color:var(--reading-rule)}
+/* The site navigation is styled once, in nav.css. */
 html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .frame .bar .rt{color:var(--reading-soft)}
 html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) body .mv h2::after{display:none}
-html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article) :is(a,button,summary,input):focus-visible{outline:2px solid var(--reading-link);outline-offset:4px}
 
 /* The index is an invitation to read, not a dashboard or numbered catalogue. */
 body.publications-hub .frame{padding:clamp(2rem,5vw,4rem) max(1rem,calc((100vw - 68rem)/2));min-height:0}
@@ -85,7 +78,7 @@ body.frontier-briefing .briefing-intro h1 .g{color:var(--reading-ink)}
 body.frontier-briefing :is(.briefing-overview h2,.lane-head h2,.wide-section h2,.questions h2){font-size:clamp(1.6rem,3vw,2.25rem);line-height:1.25;max-width:30ch}
 body.frontier-briefing .record{display:block;max-width:64ch}
 body.frontier-briefing .record-index{display:none}
-body.frontier-briefing :is(.record-meta,.source-line,.briefing-links,.edition-readout dt,.edition-readout dd,.boundary strong,.rail-mark strong){font-family:var(--reading-type);font-size:.9rem!important;letter-spacing:0;text-transform:none}
+body.frontier-briefing :is(.record-meta,.source-line,.briefing-links,.edition-readout dt,.edition-readout dd,.boundary strong,.rail-mark strong){font-family:var(--reading-type);font-size:.9375rem!important;letter-spacing:0;text-transform:none}
 body.frontier-briefing .record-body>p{font-size:1.125rem;line-height:1.75;max-width:62ch}
 body.frontier-briefing .boundary{grid-template-columns:1fr;gap:.4rem}
 body.frontier-briefing .boundary p{font-size:1rem;max-width:62ch}
@@ -97,7 +90,7 @@ body.frontier-briefing .rail-mark{flex:1 1 12rem;display:block;padding:1rem}
 body.frontier-briefing .rail-symbol{display:none}
 body.frontier-briefing .rail-mark strong{display:block;margin-top:.25rem}
 body.frontier-briefing .source-line strong{font-family:inherit;letter-spacing:0;text-transform:none}
-body.frontier-briefing .footer-seal .seal{font-family:var(--reading-type);font-size:.9rem;letter-spacing:0;text-transform:none}
+body.frontier-briefing .footer-seal .seal{font-family:var(--reading-type);font-size:.9375rem;letter-spacing:0;text-transform:none}
 
 body:has(>.publication-article) .publication-article{font-family:var(--reading-type)}
 body:has(>.publication-article) .publication-kicker{display:none}
@@ -107,17 +100,16 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
    screen-only so doc.css / publication-article.css keep their print contracts. */
 @media screen{
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article){
-    color-scheme:light;
-    --reading-paper:#fafaf8;
-    --reading-ink:#19272b;
-    --reading-soft:#42575d;
-    --reading-link:#215a63;
-    --reading-rule:#ccd3d3;
-    --reading-panel:#f0f3f2;
-    --reading-inset:#e7ecea;
-    --reading-verdict:#1f7a52;
-    --reading-drift:#8a3b12;
-    --reading-type:"Hanken Grotesk",Hanken,system-ui,sans-serif;
+    --reading-paper:var(--paper);
+    --reading-ink:var(--ink);
+    --reading-soft:var(--soft);
+    --reading-link:var(--ink);
+    --reading-rule:var(--line);
+    --reading-panel:var(--panel);
+    --reading-inset:var(--raised);
+    --reading-verdict:var(--verified);
+    --reading-drift:var(--drift);
+    --reading-type:var(--font-sans);
     background:var(--reading-paper);
   }
 
@@ -128,12 +120,12 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     --card:var(--reading-panel);--raised:var(--reading-panel);--surface:var(--reading-panel);--inset:var(--reading-inset);
     --ink:var(--reading-ink);--bone:var(--reading-ink);--crystal:var(--reading-ink);--teal:var(--reading-ink);
     --ink-soft:var(--reading-soft);--ink-muted:var(--reading-soft);--zentropy-ink:var(--reading-ink);--zentropy-ink-2:var(--reading-soft);
-    --muted:var(--reading-soft);--soft:var(--reading-soft);--tag:var(--reading-soft);--faint:var(--reading-soft);--prussian:var(--reading-soft);--unverif:var(--reading-soft);
+    --muted:var(--reading-soft);--soft:var(--reading-soft);--tag:var(--reading-soft);--faint:var(--reading-soft);--prussian:var(--reading-soft);--unverif:var(--unverifiable);
     --zentropy-muted:var(--reading-soft);--zentropy-faint:var(--reading-soft);
     --signal:var(--reading-link);--focus:var(--reading-link);--teal-soft:var(--reading-link);--iris:var(--reading-link);--zentropy-signal:var(--reading-link);
     --verified:var(--reading-verdict);--match:var(--reading-verdict);--gold:var(--reading-verdict);
-    --drift:var(--reading-drift);--ember:var(--reading-drift);--orange:var(--reading-drift);--hot:var(--reading-drift);--zentropy-rust:var(--reading-drift);
-    --hairline:var(--reading-rule);--rule:var(--reading-rule);--rule-strong:#aebbbb;--line:var(--reading-rule);--line-soft:var(--reading-rule);--facet-line:var(--reading-rule);
+    --drift:var(--reading-drift);--ember:var(--reading-drift);--orange:var(--reading-drift);--hot:var(--reading-ink);--zentropy-rust:var(--reading-drift);
+    --hairline:var(--reading-rule);--rule:var(--reading-rule);--rule-strong:var(--line-strong);--line:var(--reading-rule);--line-soft:var(--reading-rule);--facet-line:var(--reading-rule);
     --edge:linear-gradient(90deg,transparent 0%,var(--reading-rule) 18%,var(--reading-rule) 82%,transparent 100%);
     --edge-2:var(--edge);--body:var(--reading-type);--display:var(--reading-type);--brand-display:var(--reading-type);--reading:62ch;--measure:56ch;
     min-height:100vh;
@@ -183,7 +175,8 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet{
     width:min(100%,62rem);
     background:var(--reading-paper);
-    border-color:var(--reading-rule);
+    /* No box around a text column: the reading column sits on the page ground. */
+    border-color:transparent;
     box-shadow:none;
   }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet.demo-library{
@@ -191,59 +184,21 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     max-width:68rem;
   }
 
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav,
-  html:has(body>.publication-article) .publication-static-nav{
-    background:var(--reading-paper);
-    border-color:var(--reading-rule);
-    border-image:none;
-    -webkit-backdrop-filter:none;
-    backdrop-filter:none;
-    box-shadow:none;
-    color:var(--reading-ink);
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-more-list{
-    background:var(--reading-paper);
-    border-color:var(--reading-rule);
-    box-shadow:none;
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-home-field{
-    background:var(--reading-panel);
-    border-color:var(--reading-rule);
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav .sn-home>span:last-child,
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body .site-nav .sn-home .sn-brand-word{
-    text-shadow:none;
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(a,summary),
-  html:has(body>.publication-article) .publication-static-nav a{
-    color:var(--reading-ink);
-    text-shadow:none;
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(.sn-links a,.sn-more summary,.sn-more-list a){
-    color:var(--reading-soft);
-    background:transparent;
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) .site-nav :is(a:hover,a:focus-visible,summary:hover,summary:focus-visible,.sn-links a.is-active,.sn-links a[aria-current="page"],.sn-more[data-current="true"]>summary),
-  html:has(body>.publication-article) .publication-static-nav a:hover,
-  html:has(body>.publication-article) .publication-static-nav a:focus-visible{
+  /* The site navigation is styled once, in nav.css. */
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn):not(.btn-primary):not(.btn-secondary),.sheet a,.publication-article a){
     color:var(--reading-link);
-    border-color:var(--reading-rule);
-    background:var(--reading-panel);
+    text-decoration-color:currentColor;
+    text-decoration-thickness:1px;
+    text-underline-offset:.2em;
   }
-
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn),.sheet a,.publication-article a){
-    color:var(--reading-link);
-    text-decoration-color:color-mix(in oklab,var(--reading-link) 45%,transparent);
-    text-underline-offset:.18em;
-  }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn),.sheet a,.publication-article a):hover{
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a:not(.sn-home):not(.btn):not(.btn-primary):not(.btn-secondary),.sheet a,.publication-article a):is(:hover,:focus-visible){
     color:var(--reading-link);
     border-color:currentColor;
-    text-decoration-color:currentColor;
+    text-decoration-thickness:2px;
   }
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(a,button,summary,input,select,textarea,[tabindex]):focus-visible{
-    outline:2px solid var(--reading-link);
-    outline-offset:4px;
+    outline:2px solid var(--focus);
+    outline-offset:2px;
     box-shadow:none;
   }
 
@@ -255,23 +210,29 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     text-wrap:balance;
   }
   html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame h1{
-    max-width:min(100%,18ch);
-    font-size:clamp(2rem,5vw,3.55rem);
+    max-width:min(100%,22ch);
+    font-size:var(--t-display);
+    font-weight:500;
     line-height:1.08;
+    letter-spacing:-.015em;
   }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.sheet,.route-header,.article-head,.research-opening) h1,
   html:has(body>.publication-article) body .publication-article h1{
     max-width:min(100%,22ch);
-    font-size:clamp(2rem,4.7vw,3.45rem);
-    line-height:1.1;
+    font-size:var(--t-display);
+    font-weight:500;
+    line-height:1.08;
+    letter-spacing:-.015em;
   }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h2,.publication-article h2){
-    font-size:clamp(1.45rem,2.5vw,2.1rem);
-    line-height:1.24;
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h2,.publication-article h2):not(.ns-title){
+    font-size:var(--t-h2);
+    font-weight:560;
+    line-height:1.2;
   }
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h3,.publication-article h3){
-    font-size:clamp(1.05rem,1.6vw,1.28rem);
-    line-height:1.32;
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(h3,.publication-article h3):not(.ns-title){
+    font-size:var(--t-h3);
+    font-weight:600;
+    line-height:1.3;
   }
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article) body :is(.lede,.lead,.role,.body-text,.entry-note,.index-gloss,.publication-meta,.publication-figure-limit,.publication-opening-evidence,.publication-opening-limit,.capability-figure figcaption,.capability-table td,.workflow-copy,.doc-copy,.research-deck,.research-route p){
     font-family:var(--reading-type);
@@ -344,7 +305,7 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .channels,
   html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .channels a{
     font-family:var(--reading-type);
-    font-size:.84rem;
+    font-size:.875rem;
     line-height:1.9;
     letter-spacing:0;
   }
@@ -357,14 +318,14 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.essay-meta,.essay-meta a.inline,.totop,.demo-library .workflow-facts,.demo-library .workflow-facts li,.demo-library .doc-facts,.demo-library .doc-facts li,.demo-library .doc-status){
     font-family:var(--reading-type);
-    font-size:.78rem;
+    font-size:.875rem;
     line-height:1.55;
     letter-spacing:0;
     text-transform:none;
   }
   html:has(body.doc.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc.frontier-briefing:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.lane-head p,.wide-section>header p,.briefing-footer,.briefing-footer p,.briefing-footer a){
     font-family:var(--reading-type);
-    font-size:.78rem;
+    font-size:.875rem;
     line-height:1.55;
     letter-spacing:0;
     text-transform:none;
@@ -377,7 +338,7 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     text-transform:none;
   }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.quiet,.proof-links a,.command){
-    font-size:.82rem;
+    font-size:.875rem;
     line-height:1.65;
   }
   html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.hero-actions a,.capability-links a,.research-actions a,.publication-actions a,.publication-read,.workflow-action){
@@ -394,8 +355,8 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
 
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note,.seal-line,.note-line,.exhibit-tag,.research-state,.entry-meta,.kv dt,.note,.field>label,.field-label,.hire-route-kicker,.system-meta,.domain-nav,.system-family-nav,.system-command strong,.catalog-count,.catalog-evidence small,.index-term,.index-term a,th,.splat-status,.source-label,.receipt-key,.receipt-value,.splat-links,.splat-links a){
     font-family:var(--reading-type);
-    font-size:.82rem;
-    line-height:1.65;
+    font-size:.875rem;
+    line-height:1.6;
     letter-spacing:0;
     text-transform:none;
     color:var(--reading-soft);
@@ -406,8 +367,11 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note b,.artifact-note strong,.seal-line b,.seal-line strong,.system-command code,th){
     color:var(--reading-ink);
   }
+  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) th{
+    font-weight:600;
+  }
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.artifact-note em,.seal-line .g,.note-line .g,.exhibit-tag .ord,.system-family-nav strong){
-    color:var(--reading-drift);
+    color:var(--reading-ink);
   }
   html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app)) body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.seal-line a,.note-line a,.system-family-nav a,.domain-nav a,.system-hero-actions a,.index-term a,.splat-links a){
     color:var(--reading-link);
@@ -418,7 +382,7 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(.research-actions a,.hire-action,.hire-route-actions a,.hire-secondary-links a,button.btn){
     min-height:44px;
     font-family:var(--reading-type);
-    font-size:.84rem;
+    font-size:.9375rem;
     line-height:1.25;
     letter-spacing:0;
     text-transform:none;
@@ -540,20 +504,7 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   }
 }
 
-@media screen and (prefers-color-scheme:dark){
-  html:has(body:is(.doc,.inner-clean):not(.instrument-surface):not(.studio-page):not(.studio-app),body>.publication-article){
-    color-scheme:dark;
-    --reading-paper:#101416;
-    --reading-ink:#eaf5f6;
-    --reading-soft:#b4c5c9;
-    --reading-link:#8ee3f2;
-    --reading-rule:#42555a;
-    --reading-panel:#1b2528;
-    --reading-inset:#0c1011;
-    --reading-verdict:#a7e888;
-    --reading-drift:#f0a06f;
-  }
-}
+/* Dark values come from tokens.css; the --reading-* names follow them. */
 
 @media screen and (max-width:52rem){
   html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio-app) .frame{
@@ -601,15 +552,6 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
   body.publications-hub .path-contour article:nth-child(n){padding-inline:0}
   body.frontier-briefing .rail-mark{border-inline:0}
 }
-@media(prefers-color-scheme:dark){
-  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){
-    color-scheme:dark;--reading-paper:#101416;--reading-ink:#eaf5f6;--reading-soft:#b4c5c9;--reading-link:#8ee3f2;--reading-rule:#42555a;--reading-panel:#1b2528;
-  }
-}
-@media(forced-colors:active){
-  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){--reading-paper:Canvas;--reading-ink:CanvasText;--reading-soft:CanvasText;--reading-link:LinkText;--reading-rule:CanvasText;--reading-panel:Canvas}
-}
 @media print{
-  html:has(.publications-hub,.frontier-briefing,.briefing-document,.longform,.publication-article){color-scheme:light;--reading-paper:#fff;--reading-ink:#000;--reading-soft:#333;--reading-link:#000;--reading-rule:#aaa;--reading-panel:#fff}
   body.publications-hub .frame,body.publications-hub .mv,body.frontier-briefing :is(.briefing-hero,.mv){padding:1rem 0}
 }

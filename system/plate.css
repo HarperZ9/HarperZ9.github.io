@@ -1,0 +1,180 @@
+/* plate.css: the site's surface, drawn from the operator's inspiration corpus
+   (project-docs/DESIGN-INSPIRATION.md in telos-v2): a void-black ground with a bone
+   paper pole, a registration field of small crosses in place of a graph grid, a grain
+   veil over everything, viewfinder crop marks at the corners of the window, and
+   poster-scale display type. nav.js loads it last on every page, so it refines
+   tokens.css and each page's own sheet without editing them.
+
+   Two faces only (Hanken Grotesk, Conso). Color in the interface still means a
+   verdict; the spectrum lives in the art plates. Every color is a hex value. */
+
+/* 1. Bone, the light pole. Same selectors as tokens.css, later in the cascade. */
+html:root{
+  --paper:#ebe5d8;        /* bone paper */
+  --inset:#e4ddcd;
+  --panel:#e2dac9;
+  --raised:#d8cfbc;
+  --ink:#16130f;          /* 14.6:1 on bone */
+  --soft:#4a443b;         /* 8.0:1 */
+  --muted:#5f584d;        /* 5.9:1 */
+  --line:#c9bfab;
+  --line-strong:#7b7262;  /* 3.8:1, borders of controls */
+  --on-ink:#ebe5d8;
+  --verified:#0a6b61;     /* 5.0:1 */
+  --drift:#8f3a19;        /* 7.1:1 */
+  --unverifiable:#4e4d85; /* 6.6:1 */
+  --sheet-paper:#f1ece1;--sheet-ink:#16130f;--sheet-soft:#4a443b;--sheet-line:#7b7262;
+  --sheet-hair:#d6ccb8;--sheet-dot:#d8cfbd;--sheet-frame:#b9af9b;--sheet-pupil:#16130f;--sheet-core:#f1ece1;
+  --field-cross:#cfc4ae;
+  --field-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .09 0 0 0 0 .07 0 0 0 0 .05 0 0 0 1.6 -.92'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+  --field-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 43v10M43 48h10' stroke='%23c9bea7' stroke-width='1'/%3E%3C/svg%3E");
+  --crop:#7b7262;
+  --t-poster:clamp(2.75rem,1.2rem + 6vw,6.75rem);
+  --t-display:clamp(2.4rem,1.3rem + 4vw,4.75rem);
+  --t-h2:clamp(1.6rem,1.15rem + 1.6vw,2.6rem);
+}
+
+/* 2. Void, the dark pole: pure black, bone-white ink. */
+@media (prefers-color-scheme:dark){
+  html:root:not([data-theme="light"]){
+    --paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;
+    --ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;
+    --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
+    --sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;
+    --sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;--sheet-pupil:#020203;--sheet-core:#fff6e6;
+    --field-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .9 0 0 0 0 .84 0 0 0 1.5 -.93'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+    --field-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 43v10M43 48h10' stroke='%23232226' stroke-width='1'/%3E%3C/svg%3E");
+    --crop:#6f6a61;
+  }
+}
+html:root[data-theme="dark"]{
+  --paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;
+  --ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;
+  --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
+  --sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;
+  --sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;--sheet-pupil:#020203;--sheet-core:#fff6e6;
+  --field-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .93 0 0 0 0 .9 0 0 0 0 .84 0 0 0 1.5 -.93'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+  --field-mark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 43v10M43 48h10' stroke='%23232226' stroke-width='1'/%3E%3C/svg%3E");
+  --crop:#6f6a61;
+}
+
+/* 3. The ground: bone or void, a field of registration crosses, and a grain veil. */
+html:root body{
+  background-color:var(--paper);
+  background-image:var(--field-grain),var(--field-mark);
+  background-size:220px 220px,96px 96px;
+  background-attachment:fixed,fixed;
+  color:var(--ink);
+}
+html:root ::selection{background:var(--ink);color:var(--paper)}
+
+/* 4. The viewfinder: four crop marks at the corners of the window. They frame
+   the page the way a plate is framed, and they never catch a pointer. */
+html:root::after{
+  content:"";position:fixed;inset:clamp(6px,1vw,14px);z-index:90;pointer-events:none;
+  --m:clamp(14px,1.8vw,26px);
+  background:
+    linear-gradient(var(--crop),var(--crop)) top left/var(--m) 1px no-repeat,
+    linear-gradient(var(--crop),var(--crop)) top left/1px var(--m) no-repeat,
+    linear-gradient(var(--crop),var(--crop)) top right/var(--m) 1px no-repeat,
+    linear-gradient(var(--crop),var(--crop)) top right/1px var(--m) no-repeat,
+    linear-gradient(var(--crop),var(--crop)) bottom left/var(--m) 1px no-repeat,
+    linear-gradient(var(--crop),var(--crop)) bottom left/1px var(--m) no-repeat,
+    linear-gradient(var(--crop),var(--crop)) bottom right/var(--m) 1px no-repeat,
+    linear-gradient(var(--crop),var(--crop)) bottom right/1px var(--m) no-repeat;
+}
+
+/* 5. Display type at poster scale. Weight and size carry the hierarchy. */
+html:root h1:where(:not(.visually-hidden,.sr-only,#site-nav *,.ns-sheet *)){
+  font-family:var(--font-sans);
+  font-size:var(--t-display);
+  font-weight:780;
+  letter-spacing:-.035em;
+  line-height:.98;
+  text-wrap:balance;
+}
+/* Weight is the one display property every page's own h1 rule must yield on; the
+   :not(#_) step lifts it over page selectors without touching their sizes. */
+html:root h1:not(#_):where(:not(.visually-hidden,.sr-only,#site-nav *,.ns-sheet *,.hero-title)){font-weight:780;letter-spacing:-.035em}
+html:root h2:where(main *):where(:not(.ns-sheet *,figure *,.visually-hidden)){
+  font-family:var(--font-sans);
+  font-size:var(--t-h2);
+  font-weight:720;
+  letter-spacing:-.022em;
+  line-height:1.06;
+  text-wrap:balance;
+}
+html:root h3:where(main *):where(:not(.ns-sheet *,figure *)){font-weight:680;letter-spacing:-.012em}
+
+/* 6. A section opens on a hairline with a registration cross at its left end. */
+html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *)){
+  position:relative;
+  padding-top:var(--s-5);
+  background:linear-gradient(var(--line),var(--line)) top left/100% 1px no-repeat;
+}
+html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *))::before{
+  content:"";position:absolute;top:-7px;left:-7px;width:15px;height:15px;pointer-events:none;
+  background:
+    linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,
+    linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat;
+}
+
+/* 6b. Rail layouts put the heading beside its text, so the rule and cross sit on the
+   section itself and both columns start on one line. */
+html:root .doc-rail > section:not(:first-of-type){position:relative;padding-top:var(--s-5);background:linear-gradient(var(--line),var(--line)) top left/100% 1px no-repeat}
+html:root .doc-rail > section:not(:first-of-type)::before{
+  content:"";position:absolute;top:-7px;left:-7px;width:15px;height:15px;pointer-events:none;
+  background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat;
+}
+
+/* 7. Plates: art sits in a thin frame with corner ticks, like a mounted print. */
+html:root .art{position:relative;border:1px solid var(--line);border-radius:0;background:var(--paper)}
+html:root .art::after{
+  content:"";position:absolute;inset:-5px;pointer-events:none;--k:12px;
+  background:
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/1px var(--k) no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px var(--k) no-repeat;
+}
+
+/* 7b. A hub's pillar plate sits beside its opening copy. The title keeps the full width
+   above it and grows to poster scale; on a phone the plate follows the title. */
+html:root .art.art-pillar{float:right;width:min(44%,34rem);margin:.5rem 0 2rem clamp(1.5rem,4vw,4rem)}
+html:root .art.art-pillar img{aspect-ratio:4/3;object-fit:cover}
+html:root :has(> .art.art-pillar){display:flow-root}
+html:root h1:has(+ .art.art-pillar):not(#_){font-size:var(--t-poster);letter-spacing:-.045em;line-height:.92;margin-bottom:clamp(1.25rem,3vw,2.25rem)}
+html:root .art.art-cover{margin-block:clamp(1.25rem,3vw,2rem) clamp(2rem,4vw,3rem)}
+@media (max-width:52rem){html:root .art.art-pillar{float:none;width:100%;margin:0 0 1.75rem}}
+
+/* 8. Controls: square, drawn, never a pill. */
+html:root main :is(.btn,.btn-primary,.product-action,.publication-read.btn){border-radius:var(--radius-control,2px)}
+
+/* 9. The shared navigation sits on the ground with one hairline under it. */
+html:root #site-nav.site-nav{background:var(--paper);border-bottom:1px solid var(--line)}
+
+/* 10. Forced colors and print: no field, no grain, no crop marks. */
+@media (forced-colors:active){
+  html:root:is([data-theme],:not([data-theme])){
+    --paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;
+    --ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
+    --verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;
+    --sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-line:CanvasText;
+    --sheet-hair:GrayText;--sheet-dot:Canvas;--sheet-frame:CanvasText;--sheet-pupil:CanvasText;--sheet-core:Canvas;
+  }
+  html:root body{background-image:none}
+  html:root::after,html:root .art::after,
+  html:root h2:where(main *)::before{display:none}
+}
+@media print{
+  html:root:is([data-theme],:not([data-theme])){
+    --paper:#ffffff;--inset:#ffffff;--panel:#ffffff;--raised:#ffffff;
+    --ink:#000000;--soft:#333333;--muted:#444444;--line:#aaaaaa;--line-strong:#555555;--on-ink:#ffffff;
+    --verified:#006b73;--drift:#8a3219;--unverifiable:#4b4b7a;
+    --sheet-paper:#ffffff;--sheet-ink:#000000;--sheet-soft:#333333;--sheet-line:#555555;
+    --sheet-hair:#aaaaaa;--sheet-dot:#ffffff;--sheet-frame:#999999;--sheet-pupil:#000000;--sheet-core:#ffffff;
+  }
+  html:root body{background-image:none}
+  html:root::after,html:root .art::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){html:root body{background-attachment:scroll,scroll}}

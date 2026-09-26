@@ -61,8 +61,14 @@ def test_featured_project_pages_use_their_canonical_plain_language_purpose() -> 
             page,
             re.DOTALL,
         )
-        assert len(canonical) == 1, slug
-        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+        # 2026-09-25 round 3: flywheel.html no longer prints the registry purpose as visible copy.
+        # Its gate and lane wording repeated the plain paragraph above it; the purpose stays in the
+        # meta description, and a plain-words rewrite of the purpose waits for the owner.
+        if slug == "flywheel":
+            assert canonical == [], slug
+        else:
+            assert len(canonical) == 1, slug
+            assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
         assert f'<meta name="description" content="{html.escape(record["purpose"], quote=True)}">' in page
 
 

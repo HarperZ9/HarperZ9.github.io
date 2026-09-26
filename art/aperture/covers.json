@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "note": "Alt text for each aperture art piece. The same text goes on the light and dark image. Pages and the publication builder read it from here.",
+  "alt": {
+    "cover-a-witness-should-not-become-a-ruler": "An eye drawn in fine lines, its iris a glowing ring around a bright core, above a thin horizon.",
+    "cover-articulate": "Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends.",
+    "cover-availability-is-not-reach": "A bright source at the left throws a widening cone of dots across the dark, thinning as it spreads.",
+    "cover-borrowed-ground": "A bright sun low over a flat horizon, with two thin rust-colored towers standing to its left.",
+    "cover-briefing-openai-hugging-face-incident": "A bright core inside nested square frames, with a band of fine lines running out to the right edge.",
+    "cover-checking-the-machines": "A grid of small square drawings, each a set of nested squares knocked slightly out of true. One cell near the right holds a glowing ring.",
+    "cover-dossier": "A six-armed crystal of fine lines, like a snowflake, with a bright core at its center.",
+    "cover-frontier-safety": "A bright core inside nested square frames, with a band of fine lines running out past the right edge.",
+    "cover-frontier-safety-openai-hugging-face-incident": "A bright core inside a striped sphere, with horizontal bars sliding across it.",
+    "cover-growth-needs-a-before": "Rings drawn in fine lines around a bright core, with a small bracket measuring one ring against another.",
+    "cover-ltj-bukem-the-man-behind-the-atmosphere": "A soft glowing orb hangs over a field of short woven strokes, like sound drawn as texture.",
+    "cover-models-propose-oracles-dispose": "Hundreds of tangled lines from the left converge on one bright point and leave it as a few straight rays.",
+    "cover-no-receipt-no-accept": "A halftone sphere cut by a vertical strip where the dots give way to scanlines, with a perforated edge like a receipt.",
+    "cover-pick-the-lock-for-everyone": "A glowing keyhole set into layered bands of wavy lines.",
+    "cover-pick-the-lock-for-everyone-talk": "A glowing keyhole set into layered bands of wavy lines that ripple near its center.",
+    "cover-the-sandbox-was-never-just-a-box": "A wireframe cube drawn in fine lines, with a bright core inside it and light leaking through one face.",
+    "cover-the-second-hearing": "A large disc of fine lines with two bright points side by side near its center.",
+    "cover-the-summary-is-not-the-record": "Rows of wavy horizontal lines, with one bright glow where the lines bunch together.",
+    "cover-what-the-label-changes": "Fields of fine wavy lines bend around a bright core, with a small framed label in the lower right.",
+    "home-hero": "A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+    "pillar-flywheel": "A bright core inside a large ring of fine radial lines, like a wheel drawn with a plotter pen.",
+    "pillar-fonts": "A bright core inside a thick tilted ring, like a letter O drawn in fine lines.",
+    "pillar-research": "A halftone sphere lit from one side, floating over a field of faint wavy lines.",
+    "pillar-studio": "A bright core inside a ring that breaks into offset slices, like a glitching signal.",
+    "pillar-who-knew-first": "A bright core at the left with faint rings around it, and small scattered marks drifting across the dark to the right.",
+    "pillar-work": "A bright core inside a dial of rings, beside a panel of sliders and gauges.",
+    "pillar-writing": "A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core."
+  }
+}

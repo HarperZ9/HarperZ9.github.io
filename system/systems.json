@@ -282,6 +282,24 @@
       "verificationCommand": "flywheel lanes --probe; flywheel check-output --contract task.contract.json --answer answer.json --allow-commands",
       "evidence": [
         {
+          "id": "flywheel-release-v1-0-4",
+          "type": "release",
+          "label": "Flywheel v1.0.4",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.4",
+          "date": "2026-09-25",
+          "status": "verified",
+          "summary": "The v1.0.4 GitHub release, titled Flywheel 1.0.4, was published at 2026-09-26T01:50:41Z, and the v1.0.4 tag resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7. The release attaches Flywheel-Setup-1.0.4-x64.exe at 56,355,754 bytes with SHA-256 a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881, a SHA256SUMS.txt that lists the same value, and a frozen gateway smoke receipt reporting PASS for 1.0.4. Installed acceptance passed on the tagged commit. The installer is unsigned; this is distribution evidence, not proof of clean-machine installation."
+        },
+        {
+          "id": "flywheel-pypi-v1-0-4",
+          "type": "release",
+          "label": "flywheel-verify 1.0.4 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/1.0.4/",
+          "date": "2026-09-25",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 1.0.4, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.4-py3-none-any.whl is 2,259,991 bytes with SHA-256 8b3524b147937bff8bfd86efe522ee2468891297c75721683b7a401bb186f508; the source archive flywheel_verify-1.0.4.tar.gz is 3,432,483 bytes with SHA-256 1f5b7e80551ccb3d3ca9bc6af1d1a88735ee40792666d551a69777b4e5cd890c. A clean virtual environment installed it and flywheel --version printed flywheel 1.0.4."
+        },
+        {
           "id": "flywheel-release-v1-0-1",
           "type": "release",
           "label": "Flywheel v1.0.1",
@@ -493,7 +511,7 @@
         "Receipts establish witnessed actions and checks, not general model correctness. A receipt proves a check reproduces; it does not prove the answer is true of the world.",
         "On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero. The demonstrated value is the re-derivable receipt and the containment.",
         "The v1.0.1 Python package release, Windows installer asset, and frozen gateway smoke receipt do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or universal verifier completeness.",
-        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.2.0).",
+        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.4.0 as of Flywheel 1.0.3).",
         "The v1.0.1 Windows desktop installer is unsigned. Matching the published SHA-256 checks bytes only; it does not authenticate the publisher or prove clean-machine installation.",
         "Local weights and optional signing or monitoring features have separate installation requirements."
       ],
@@ -523,10 +541,10 @@
         "mneme",
         "chorus"
       ],
-      "lastVerified": "2026-09-19",
+      "lastVerified": "2026-09-25",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable Python engine v1.0.1; unsigned Windows desktop v1.0.1; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
+      "releaseState": "stable Python engine v1.0.4; unsigned Windows desktop v1.0.4; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
     },
     {
       "id": "service-desk-incident-env",
@@ -3883,6 +3901,86 @@
       "primaryDomain": "security-privacy",
       "productType": "local access-recovery vault",
       "releaseState": "controlled private system; public capability page"
+    },
+    {
+      "id": "articulate",
+      "name": "Articulate",
+      "purpose": "Articulate is a Python command-line tool that checks prose for hedging, filler, stock phrasing and other patterns common in machine-written text, and scores how machine-textured a passage reads. Its checks run locally with no network call, and a check can leave a receipt that replays the verdict later and keeps no verbatim source text.",
+      "useCases": [
+        "prose checks in CI and pre-commit",
+        "review of AI-assisted writing",
+        "content-free audit receipts"
+      ],
+      "href": "articulate.html",
+      "sourceHref": "https://github.com/HarperZ9/articulate",
+      "domains": [
+        "evaluation-verification",
+        "developer-infrastructure",
+        "research-education"
+      ],
+      "family": "verification",
+      "architectureRole": "local-prose-checker",
+      "audiences": [
+        "writers and editors",
+        "evaluation engineers",
+        "software engineers"
+      ],
+      "deploymentContexts": [
+        "local development workspaces",
+        "review and CI lanes",
+        "editors through the Language Server Protocol"
+      ],
+      "maturity": "shipped",
+      "placement": "featured",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install articulate-writing==0.4.1",
+      "verificationCommand": "articulate check notes.md --mode technical-docs/explain --gate",
+      "evidence": [
+        {
+          "id": "articulate-release-v0-4-1",
+          "type": "release",
+          "label": "Articulate v0.4.1",
+          "href": "https://github.com/HarperZ9/articulate/releases/tag/v0.4.1",
+          "date": "2026-09-24",
+          "status": "verified",
+          "summary": "The v0.4.1 GitHub release is public, not draft, and not prerelease. The annotated tag object is b15378d849384393d1f0b40bec4d1580e30a9321; the peeled source commit is eefba5b2e8e30d6c62ef1bf9e6eaa0d0dbc0a78d. No release assets are attached to this GitHub release."
+        },
+        {
+          "id": "articulate-pypi-v0-4-1",
+          "type": "release",
+          "label": "articulate-writing 0.4.1 on PyPI",
+          "href": "https://pypi.org/project/articulate-writing/0.4.1/",
+          "date": "2026-09-24",
+          "status": "verified",
+          "summary": "PyPI serves articulate-writing 0.4.1. The wheel SHA-256 is 6a89c91243d77196e3122a94a849fdd2faa8cc55202999095b0e1bacfdde8c45; the source archive SHA-256 is ba2ef4fd994477f10a6bf15121160b5852092036354a6e3a09983b4af90e020c. This is distribution evidence, not proof of detection quality or independent use."
+        }
+      ],
+      "limitations": [
+        "A clean check means no known pattern fired; it does not establish that the prose is true, clear, or written by a person.",
+        "The pattern rules are the author's; agreement with human editors has not been measured on this page's evidence.",
+        "The judge, fix, and polish editing tools call a language model, so the no-network property covers the checks and receipts only.",
+        "A content-free receipt still records which rule fired on which line, which narrows a closed-vocabulary match to that rule's word list."
+      ],
+      "boundary": "Run on prose you are authorized to review. The tool is not built or offered for evading AI detection.",
+      "inputs": [
+        "prose files in Markdown, plain text, or LaTeX",
+        "a writing mode or register profile"
+      ],
+      "outputs": [
+        "gate verdicts with per-line findings",
+        "machine-texture scores",
+        "Match, Drift, or Unverifiable receipt replays",
+        "SARIF 2.1.0 reports"
+      ],
+      "dependencies": [],
+      "related": [
+        "flywheel",
+        "emet"
+      ],
+      "lastVerified": "2026-09-25",
+      "primaryDomain": "evaluation-verification",
+      "productType": "local prose checker",
+      "releaseState": "stable v0.4.1 on GitHub and PyPI"
     }
   ]
 }

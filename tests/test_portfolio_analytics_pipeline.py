@@ -628,7 +628,11 @@ def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_
         assert scrollers, f"{name} has no keyboard-reachable scroller"
         assert all(scroller["tabIndex"] == 0 for scroller in scrollers), name
         assert all(scroller["overflowX"] == "auto" for scroller in scrollers), name
-        assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
+        # 2026-09-25 human-first notebook: the benchmark record's chart reflows
+        # into rows and its tables stack into records on a phone, so nothing on
+        # it needs to scroll sideways. The older figure keeps the scroller check.
+        if name != RECORD_STEM:
+            assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
 
 
 def test_analytics_print_contract_is_direct_and_scoped_without_browser(tmp_path: Path) -> None:
@@ -684,11 +688,15 @@ def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tm
         page = context.new_page()
         page.emulate_media(media="print")
         page.goto((out / f"{RECORD_STEM}.html").as_uri())
+        # 2026-09-25 human-first notebook: the record's chart is a notebook
+        # sheet of HTML rows and SVG strips; the sheet takes the place of the
+        # old scrolling figure, and every strip must fit inside it in print.
         measured = page.evaluate(
             """() => {
               const printLink = document.querySelector('link[data-print-style][media="print"]');
-              const figure = document.querySelector('.figure-scroll');
-              const svg = figure.querySelector('svg');
+              const figure = document.querySelector('.ns-sheet');
+              const svg = [...figure.querySelectorAll('svg.ns-strip')]
+                .sort((a, b) => b.getBoundingClientRect().right - a.getBoundingClientRect().right)[0];
               return {
                 background: getComputedStyle(document.body).backgroundColor,
                 color: getComputedStyle(document.body).color,
@@ -696,7 +704,7 @@ def test_generated_benchmark_prints_without_javascript_or_horizontal_clipping(tm
                   .map((element) => getComputedStyle(element).display),
                 printStylesLoaded: Boolean(printLink && printLink.sheet),
                 figureOverflowX: getComputedStyle(figure).overflowX,
-                figureWidth: svg.getBoundingClientRect().width,
+                figureWidth: svg.getBoundingClientRect().right - figure.getBoundingClientRect().left,
                 containerWidth: figure.getBoundingClientRect().width,
               };
             }"""
@@ -929,19 +937,41 @@ def test_benchmark_record_reports_the_sealed_numbers_and_the_negative_result(tmp
     assert reading["accountability"]["denominator"] == {"key": "dimensions", "value": 8}
     assert reading["source-mined"]["denominator"] == {"key": "cases", "value": 26}
 
-    # Every unmeasured suite survives into the page as a named null.
-    assert [entry["suite"] for entry in companion["notRun"]] == [
-        entry["suite"] for entry in record["not_run"]
-    ]
+    # Every unmeasured suite survives into the page as a named null. The
+    # companion keeps the record's wording verbatim.
+    # 2026-09-25 human-first notebook: the page states two of the record's
+    # "needs" notes in plain words, so the page check reads the suite names and
+    # the companion carries the verbatim text.
+    assert companion["notRun"] == record["not_run"]
     assert len(companion["notRun"]) == 5
+    # 2026-09-25 round 2: the page names each unmeasured suite in plain words and prints
+    # the record's needs as sentences; the companion keeps the record's ids verbatim.
+    for plain_name in (
+        "Retired capability comparison, four arms",
+        "Paired uplift benchmark",
+        "Verified benchmark on a private task set",
+        "Classifier friction check across chat backend modes",
+        "Chat-backend versions of the governed, recovery, stateful and source-mined suites",
+    ):
+        assert plain_name in html
     for entry in companion["notRun"]:
-        assert entry["suite"] in html and entry["needs"] in html
+        assert entry["suite"] not in html
+    assert "A live local or frontier endpoint." in html
+    assert "A chat backend per mode." in html
 
-    assert "-3.05 pp" in html and "164 tasks" in html
-    assert "-3.05 pp" in svg
-    assert "What this does not prove" in html
+    # 2026-09-25 round 3: the page says the signed difference in words only; the companion
+    # keeps the record's "-3.05 pp" display, checked above.
+    assert "-3.05 pp" not in html and "164 tasks" in html
+    # 2026-09-25: the chart and the plate say the signed difference in words.
+    assert "3.05 points lower" in html
+    assert "3.05 points lower" in svg
+    assert "Does not prove" in html
     assert "Unknown" in html
     assert companion["limitations"] and companion["doesNotProve"]
+    # The one derived quantity: a Wilson interval on each binomial pass rate.
+    intervals = {suite["name"]: suite["interval95"] for suite in companion["suites"]}
+    assert intervals["accountability"] is None and intervals["paired-replication"] is None
+    assert intervals["agent-recovery"] == {"method": "wilson", "low": 0.6097, "high": 1}
 
 
 def test_benchmark_record_labels_peer_columns_as_declarations_it_recounts(tmp_path: Path) -> None:
@@ -972,10 +1002,13 @@ def test_benchmark_record_labels_peer_columns_as_declarations_it_recounts(tmp_pa
         "basis": "public documentation and configuration read on the declaration date",
     }
     assert companion["capabilityDeclarations"]["declaredOn"] == matrix["declared_on"]
-    assert "Peer harnesses executed: 0" in html
+    # 2026-09-25 round 3: the zero reads as a sentence, not a log line.
+    assert "No other harness was run" in html
     assert "A declaration is not a measurement" in html
-    assert "no peer harness was executed" in svg
-    assert "not a speed, quality, or market ranking" in svg
+    # 2026-09-25 human-first notebook: the plate's footer states the one fact
+    # in a sentence; its description says the peer rows are a dated reading.
+    assert "No peer harness was executed." in svg
+    assert "dated reading of public documentation" in svg
 
 
 def test_benchmark_record_checks_fail_when_a_source_record_disagrees(tmp_path: Path) -> None:
@@ -1026,7 +1059,11 @@ def test_benchmark_record_uses_the_live_site_chassis_and_no_local_paths(tmp_path
 def test_flywheel_page_and_sitemap_publish_the_benchmark_record() -> None:
     flywheel = (ROOT / "flywheel.html").read_text(encoding="utf-8")
     assert f'href="analytics/{RECORD_STEM}.html"' in flywheel
-    assert f'src="analytics/{RECORD_STEM}.svg"' in flywheel
+    # 2026-09-25 round 2: flywheel.html summarizes the record in one paragraph and links it,
+    # and its model comparison sheet carries the same result; the record's nulls stay in the
+    # evidence section's "How we know".
+    assert 'id="record-summary"' in flywheel
+    assert "3.05 points lower" in flywheel
     assert "Zero peer harnesses were executed." in flywheel
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")

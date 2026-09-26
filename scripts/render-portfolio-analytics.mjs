@@ -90,20 +90,20 @@ function actualFigureSvg(id, title, description, rows, valueKey, valueLabel, val
   const points = rows.map((row, index) => {
     const y = 112 + index * 92;
     const value = row[valueKey];
-    return `<g tabindex="0" role="graphics-symbol" aria-label="${escapeMarkup(row.label)} ${escapeMarkup(valueFormat(value))}"><rect class="focus-ring" x="24" y="${y - 36}" width="1072" height="72" rx="8" fill="transparent" stroke="transparent"/><text x="42" y="${y - 4}" font-size="19" font-weight="700">${escapeMarkup(row.label)}</text><text x="42" y="${y + 22}" class="mono muted" font-size="13">${escapeMarkup(row.detail)}</text><rect x="${left}" y="${y - 22}" width="${barWidth}" height="28" rx="5" fill="#1b3035"/><rect x="${left}" y="${y - 22}" width="${Math.max(0, Math.min(barWidth, barWidth * value))}" height="28" rx="5" fill="#8be4cf"/><text x="${left + barWidth + 18}" y="${y}" font-size="17">${escapeMarkup(valueFormat(value))}</text></g>`;
+    return `<g tabindex="0" role="graphics-symbol" aria-label="${escapeMarkup(row.label)} ${escapeMarkup(valueFormat(value))}"><rect class="focus-ring" x="24" y="${y - 36}" width="1072" height="72" rx="8" fill="transparent" stroke="transparent"/><text x="42" y="${y - 4}" font-size="19" font-weight="700">${escapeMarkup(row.label)}</text><text x="42" y="${y + 24}" class="muted" font-size="15">${escapeMarkup(row.detail)}</text><rect x="${left}" y="${y - 22}" width="${barWidth}" height="28" rx="5" fill="#1b3035"/><rect x="${left}" y="${y - 22}" width="${Math.max(0, Math.min(barWidth, barWidth * value))}" height="28" rx="5" fill="#8be4cf"/><text x="${left + barWidth + 18}" y="${y}" font-size="17">${escapeMarkup(valueFormat(value))}</text></g>`;
   }).join("\n");
-  return `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${escapeMarkup(title)}</title><desc id="${id}-desc">${escapeMarkup(description)}</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="${width}" height="${height}" fill="#070c0f"/><text x="42" y="42" font-size="25" font-weight="700">${escapeMarkup(title)}</text><text x="${left}" y="72" class="mono muted" font-size="13">${escapeMarkup(valueLabel)} · ZERO-BASED SCALE</text>${points}</svg>`;
+  return `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${escapeMarkup(title)}</title><desc id="${id}-desc">${escapeMarkup(description)}</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="${width}" height="${height}" fill="#070c0f"/><text x="42" y="42" font-size="25" font-weight="700">${escapeMarkup(title)}</text><text x="${left}" y="72" class="muted" font-size="15">${escapeMarkup(valueLabel)}. The scale starts at zero.</text>${points}</svg>`;
 }
 
 function exploratoryStackFigure(dataset, comparison) {
-  const rows = comparison.measuredRows.map((row) => ({ ...row, detail: `${row.model} · ${row.passed}/${row.denominator} passed` }));
+  const rows = comparison.measuredRows.map((row) => ({ ...row, detail: `${row.passed} of ${row.denominator} tasks passed` }));
   const svg = actualFigureSvg(
     "exploratory-stack-comparison",
     "Seven-case exploratory stack matrix",
     `Pass rate for three operational rows on the same seven custom cases. Models and stack configurations differ. Claude was nonoperational and OpenCode was skipped. ${comparison.doesNotProve}`,
     rows,
     "passRate",
-    "PASS RATE",
+    "Share of the seven cases passed",
     (value) => `${number(value * 100, 1)}%`,
   );
   const measuredRows = comparison.measuredRows.map((row) => `<tr><th scope="row">${escapeMarkup(row.label)}</th><td>${escapeMarkup(row.backend)}</td><td>${escapeMarkup(row.model)}</td><td>${row.passed}/${row.denominator}</td><td>${number(row.passRate * 100, 1)}%</td><td>${number(row.meanQuality, 3)}</td><td>${number(row.meanLatencyMs, 3)} ms</td><td>${number(row.errorRate * 100, 1)}%</td><td>${escapeMarkup(Object.entries(row.failureClasses).map(([key, count]) => `${key}: ${count}`).join("; "))}</td></tr>`).join("");
@@ -113,14 +113,14 @@ function exploratoryStackFigure(dataset, comparison) {
 }
 
 function modelComparisonFigure(dataset, comparison) {
-  const rows = comparison.models.map((row) => ({ ...row, label: row.role, detail: `${row.modelRef} · ${row.passed}/${comparison.denominator} passed` }));
+  const rows = comparison.models.map((row) => ({ ...row, label: row.role, detail: `${row.passed} of ${comparison.denominator} tasks passed` }));
   const svg = actualFigureSvg(
     "model-pass-at-1-comparison",
     "164-task model pass@1 comparison",
     `Pass at one under the same harness, greedy decoding, and temperature zero. McNemar p equals ${comparison.mcnemar.pValue}; the difference was not statistically significant at 0.05. ${comparison.doesNotProve}`,
     rows,
     "passAt1",
-    "PASS@1",
+    "Share of tasks passed on the first try",
     (value) => `${number(value * 100, 2)}%`,
   );
   const tableRows = comparison.models.map((row) => `<tr><th scope="row">${escapeMarkup(row.role)}</th><td>${escapeMarkup(row.modelRef)}</td><td>${row.passed}/${comparison.denominator}</td><td>${number(row.passAt1 * 100, 2)}%</td></tr>`).join("");

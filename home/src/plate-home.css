@@ -1,0 +1,202 @@
+/* plate-home.css: the home page on the site's surface. system/tokens.css and
+   system/plate.css set the void and bone grounds, the registration field, grain and
+   crop marks; this file maps the home's older token names onto them and lays the
+   page out as a poster and a run of numbered plates. Imported after App.css. */
+
+/* 1. Older home names point at the site tokens, so both themes follow the reader's pick. */
+html:root{
+  --void:var(--paper);
+  --signal:var(--ink);
+  --spark:var(--ink);
+  --on-signal:var(--paper);
+  --on-spark:var(--paper);
+  --ground-paper:var(--sheet-paper);
+  --ink-paper:var(--sheet-ink);
+  --ink-2:var(--soft);
+  --faint:var(--muted);
+  --paper-muted:var(--soft);
+  --shell:clamp(1.25rem,5vw,5.5rem);
+}
+html{background:var(--paper)}
+body{font-family:var(--font-sans);font-size:1.0625rem;color:var(--ink)}
+:focus-visible{outline:2px solid var(--focus,var(--ink));outline-offset:2px;border-radius:0}
+.ground-field,.viewport-vignette{display:none}
+
+/* 1b. The home bundle carries an older token block scoped to html[data-home-shell=react],
+   and the bundle loads after system/plate.css. These restate the void and bone values one
+   step more specific, so the home matches every other page in both themes. */
+html[data-home-shell]:root{--paper:#ebe5d8;--inset:#e4ddcd;--panel:#e2dac9;--raised:#d8cfbc;--ink:#16130f;--soft:#4a443b;--muted:#5f584d;--line:#c9bfab;--line-strong:#7b7262;--on-ink:#ebe5d8;--verified:#0a6b61;--drift:#8f3a19;--unverifiable:#4e4d85;--sheet-paper:#f1ece1;--sheet-ink:#16130f;--sheet-soft:#4a443b;--sheet-line:#7b7262;--sheet-hair:#d6ccb8;--sheet-dot:#d8cfbd;--sheet-frame:#b9af9b;color-scheme:light}
+@media (prefers-color-scheme:dark){html[data-home-shell]:root:not([data-theme="light"]){--paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;--ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;--verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;--sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;color-scheme:dark}}
+html[data-home-shell]:root[data-theme="dark"]{--paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;--ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;--verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;--sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;color-scheme:dark}
+@media (forced-colors:active){html[data-home-shell]:root:is([data-theme],:not([data-theme])){--paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;--ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;--verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;--sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-frame:CanvasText}}
+@media print{html[data-home-shell]:root:is([data-theme],:not([data-theme])){--paper:#ffffff;--ink:#000000;--soft:#333333;--muted:#444444;--line:#aaaaaa;--line-strong:#555555;--on-ink:#ffffff;--sheet-paper:#ffffff;--sheet-ink:#000000;--sheet-soft:#333333;--sheet-frame:#999999;color-scheme:light}}
+
+/* 2. The top bar: an aperture mark, the name, the pillars. */
+html[data-home-shell] .topnav{background:var(--paper);border-bottom:1px solid var(--line);padding:.65rem var(--shell);gap:2rem}
+html[data-home-shell] .brand{align-items:center;gap:.7rem;flex:0 0 auto}
+html[data-home-shell] .brand::before{
+  content:"";flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle,var(--ink) 0 17%,transparent 18% 40%,var(--ink) 41% 45%,transparent 46% 58%,var(--line-strong) 59% 61%,transparent 62%);
+}
+html[data-home-shell] .brand-name{font-size:1.02rem;font-weight:760;letter-spacing:-.01em;white-space:nowrap}
+html[data-home-shell] .brand-lab{font-family:var(--font-sans);font-size:.95rem;font-weight:500;color:var(--soft);white-space:nowrap}
+html[data-home-shell] .topnav-links{flex-wrap:nowrap;gap:1.4rem;color:var(--soft);font-size:.95rem;font-weight:560}
+html[data-home-shell] .topnav-links a{white-space:nowrap;padding-block:.35rem;border-bottom:2px solid transparent}
+html[data-home-shell] .topnav-links a:hover,html[data-home-shell] .topnav-links a:focus-visible{color:var(--ink);border-bottom-color:var(--ink)}
+html[data-home-shell] .home-menu summary{border:1px solid var(--line-strong);border-radius:2px;color:var(--ink);background:var(--paper)}
+html[data-home-shell] .home-menu-list{background:var(--paper);border:1px solid var(--line-strong);border-radius:0;box-shadow:none}
+html[data-home-shell] .home-menu-list a{color:var(--ink)}
+@media (min-width:64.01rem){html[data-home-shell] .home-menu{display:none}}
+@media (max-width:64rem){html[data-home-shell] .topnav-links{display:none}html[data-home-shell] .home-menu{display:block}}
+
+/* 3. The hero is a poster: the name runs across the full width, the copy sits
+   at the left and the aperture plate at the right. */
+html[data-home-shell] .hero{
+  min-height:auto;
+  grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+  column-gap:clamp(2rem,5vw,5.5rem);
+  row-gap:0;
+  align-items:start;
+  padding:clamp(2.5rem,7vh,5rem) var(--shell) clamp(3rem,8vh,5.5rem);
+  border-bottom:1px solid var(--line);
+}
+html[data-home-shell] .hero > .hero-copy{grid-column:1;max-width:44rem}
+html[data-home-shell] .hero .hero-title{
+  grid-column:1/-1;
+  max-width:none;
+  margin:0 0 clamp(1.5rem,4vh,2.75rem);
+  font-size:clamp(3.4rem,1rem + 10.4vw,12rem);
+  font-weight:820;
+  letter-spacing:-.052em;
+  line-height:.86;
+  padding-bottom:clamp(1rem,3vh,2rem);
+  border-bottom:1px solid var(--line);
+}
+html[data-home-shell] .hero-line{max-width:24ch;margin:0 0 1rem;font-size:clamp(1.4rem,1rem + 1.4vw,2.3rem);font-weight:650;letter-spacing:-.015em;line-height:1.14;color:var(--ink)}
+html[data-home-shell] .hero-lab{max-width:40rem;color:var(--soft);font-size:clamp(1.05rem,.98rem + .3vw,1.25rem);line-height:1.6}
+html[data-home-shell] .hero-audience{max-width:40rem;margin-top:1rem;color:var(--soft)}
+html[data-home-shell] .hero-actions{margin-top:2rem;gap:1.5rem}
+html[data-home-shell] .hero-actions .btn:not(.solid){border:0;padding-inline:0;min-block-size:44px;background:none;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em}
+html[data-home-shell] .hero-actions .btn:not(.solid):hover{text-decoration-thickness:2px}
+html[data-home-shell] .btn.solid{background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:2px;font-weight:650;padding:.8rem 1.25rem}
+html[data-home-shell] .btn.solid:hover{background:var(--paper);color:var(--ink)}
+html[data-home-shell] .hero-start{margin-top:1.25rem}
+html[data-home-shell] .hero-start a{color:var(--ink);text-decoration:underline;text-underline-offset:.22em}
+html[data-home-shell] .edition-links{display:grid;margin-top:2.5rem;border-top:1px solid var(--line);counter-reset:edition;max-width:40rem}
+html[data-home-shell] .edition-links a{
+  display:grid;grid-template-columns:3.25rem minmax(0,1fr);align-items:baseline;
+  padding:.8rem 0;border-bottom:1px solid var(--line);counter-increment:edition;
+  color:var(--ink);font-weight:560;text-decoration:none;
+}
+html[data-home-shell] .edition-links a::before{content:counter(edition,decimal-leading-zero);font-family:var(--font-mono);font-size:.95rem;color:var(--soft)}
+html[data-home-shell] .edition-links a:hover{text-decoration:underline;text-underline-offset:.22em}
+html[data-home-shell] .hero > .identity-art{grid-column:2;grid-row:2;align-self:start;margin:0;max-width:none}
+html[data-home-shell] .hero > .identity-art img{inline-size:100%;block-size:auto}
+@media (max-width:52rem){
+  html[data-home-shell] .hero{grid-template-columns:minmax(0,1fr)}
+  html[data-home-shell] .hero .identity-art{grid-column:1;grid-row:auto;margin-top:2.5rem}
+}
+
+/* 4. Every section is a numbered plate: a hairline title block, the numeral at the
+   left, the heading at poster weight. */
+html[data-home-shell] main{counter-reset:plate}
+html[data-home-shell] main > .section{counter-increment:plate;width:min(100% - 2 * var(--shell),84rem);padding:clamp(3.5rem,8vw,7rem) 0 0}
+html[data-home-shell] main > .section:last-child{padding-bottom:clamp(3.5rem,8vw,7rem)}
+html[data-home-shell] .section-heading,
+html[data-home-shell] main > .section > div:first-child:not(.section-heading){
+  position:relative;
+  display:grid;
+  grid-template-columns:clamp(3rem,7vw,6rem) minmax(0,1fr);
+  column-gap:1rem;
+  max-width:none;
+  margin-bottom:clamp(2rem,4vw,3.5rem);
+  padding-top:1.25rem;
+  border-top:1px solid var(--line-strong);
+}
+html[data-home-shell] .section-heading::before,
+html[data-home-shell] main > .section > div:first-child:not(.section-heading)::before{
+  content:counter(plate,decimal-leading-zero);
+  grid-row:1/span 4;
+  padding-top:.55rem;
+  font-family:var(--font-mono);font-size:.95rem;color:var(--soft);
+}
+html[data-home-shell] .section-heading > *,
+html[data-home-shell] main > .section > div:first-child:not(.section-heading) > *{grid-column:2}
+html[data-home-shell]:root main .section h2:not(#_){
+  margin:0 0 1rem;
+  padding-top:0;
+  background:none;
+  font-size:clamp(2.1rem,1.2rem + 3.4vw,4.6rem);
+  font-weight:780;
+  letter-spacing:-.04em;
+  line-height:.96;
+  max-width:24ch;
+}
+html[data-home-shell]:root main .section h2:not(#_)::before{display:none}
+html[data-home-shell] .section-lead{max-width:62ch;color:var(--soft);font-size:clamp(1.05rem,1rem + .25vw,1.2rem);line-height:1.6}
+html[data-home-shell] .split-section{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+html[data-home-shell] .split-section > div:first-child{border-top:1px solid var(--line-strong)}
+@media (max-width:52rem){html[data-home-shell] .split-section{grid-template-columns:minmax(0,1fr)}}
+
+/* 5. Sheets: the older light "data plates" become sheets on the sheet paper,
+   framed by one line, with no shadow. */
+html[data-home-shell] .data-plate{background:var(--sheet-paper);color:var(--sheet-ink);border:1px solid var(--sheet-frame);border-radius:0;box-shadow:none}
+html[data-home-shell] .data-plate a{color:var(--sheet-ink);text-decoration:underline;text-underline-offset:.2em}
+html[data-home-shell] .data-plate p{color:var(--sheet-soft)}
+html[data-home-shell] .data-plate h3 a{text-decoration:none}
+
+/* 6. Cards become rows on hairlines; destinations in a grid stay boxed. */
+html[data-home-shell] .mission-grid{gap:0;border:0;border-top:1px solid var(--line);background:none}
+html[data-home-shell] .mission-card{background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:1.5rem 0;box-shadow:none}
+html[data-home-shell] .mission-grid-two{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(1.5rem,4vw,3.5rem)}
+html[data-home-shell] .mission-card h3{font-size:clamp(1.3rem,1.1rem + .6vw,1.7rem);font-weight:700;letter-spacing:-.015em;margin-bottom:.6rem}
+html[data-home-shell] .mission-card p{color:var(--soft)}
+html[data-home-shell] .does-not-prove{margin-top:2rem;padding:1.25rem 0 0;border:0;border-top:1px solid var(--line);background:none;color:var(--soft);max-width:62ch}
+html[data-home-shell] .does-not-prove strong{color:var(--ink)}
+@media (max-width:52rem){html[data-home-shell] .mission-grid-two{grid-template-columns:minmax(0,1fr)}}
+
+/* 7. Recent work: the lead investigation on its sheet, then four plates with covers. */
+html[data-home-shell] .recent-feature{padding:clamp(1.5rem,3vw,2.75rem);gap:clamp(1.5rem,4vw,3.5rem)}
+html[data-home-shell] .recent-feature h3{font-size:clamp(2rem,1.3rem + 2.6vw,3.6rem);font-weight:800;letter-spacing:-.04em;line-height:.95}
+html[data-home-shell] .recent-meta{font-family:var(--font-sans);font-size:.95rem;color:var(--soft)}
+html[data-home-shell] .nine-square figcaption strong{font-size:1.2rem;font-weight:700}
+html[data-home-shell] .chart-takeaway{font-size:1.15rem;font-weight:560;color:var(--sheet-ink)}
+html[data-home-shell] .nine-cell svg{width:54px;height:54px}
+html[data-home-shell] .sq-fill{fill:var(--sheet-ink)}
+html[data-home-shell] .sq-edge{fill:none;stroke:var(--sheet-ink);stroke-width:2}
+html[data-home-shell] .recent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,4vw,3.5rem) clamp(1.5rem,3vw,3rem);margin-top:clamp(2.5rem,5vw,4rem);border:0}
+html[data-home-shell] .recent-card{display:flex;flex-direction:column;gap:.6rem;padding:0;border:0;background:none}
+html[data-home-shell] .recent-card .recent-cover{margin:0 0 .75rem}
+html[data-home-shell] .recent-card .recent-cover img{aspect-ratio:2/1;object-fit:cover}
+html[data-home-shell] .recent-card h3{font-size:clamp(1.45rem,1.15rem + 1vw,2.1rem);font-weight:760;letter-spacing:-.025em;line-height:1.05}
+html[data-home-shell] .recent-card h3 a{color:var(--ink);text-decoration:none}
+html[data-home-shell] .recent-card h3 a:hover{text-decoration:underline;text-underline-offset:.15em}
+html[data-home-shell] .recent-card p{color:var(--soft)}
+html[data-home-shell] .recent-card .text-link,html[data-home-shell] .recent-feature .text-link{border:0;padding:0;min-block-size:44px;justify-content:flex-start;color:var(--ink);text-decoration:underline;text-underline-offset:.22em}
+@media (max-width:52rem){html[data-home-shell] .recent-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* 8. Indexes: numbered rows, hairlines, no boxes. */
+html[data-home-shell] .work-index,html[data-home-shell] .family-index{border-top:1px solid var(--line-strong);counter-reset:row}
+html[data-home-shell] .work-row,html[data-home-shell] .family-row{counter-increment:row;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none;padding:1.4rem 0;box-shadow:none}
+html[data-home-shell] .work-row h3,html[data-home-shell] .family-row h3{font-size:clamp(1.3rem,1.1rem + .7vw,1.8rem);font-weight:720;letter-spacing:-.02em}
+html[data-home-shell] .work-row h3::before,html[data-home-shell] .family-row h3::before{content:counter(row,decimal-leading-zero) "  ";font-family:var(--font-mono);font-size:.95rem;font-weight:400;color:var(--soft);letter-spacing:0;white-space:pre}
+html[data-home-shell] .work-row h3 a,html[data-home-shell] .family-row h3 a{color:var(--ink);text-decoration:none}
+html[data-home-shell] .work-row h3 a:hover{text-decoration:underline}
+html[data-home-shell] .work-row p,html[data-home-shell] .family-row p{color:var(--soft)}
+html[data-home-shell] .product-status{font-size:.95rem}
+
+/* 9. Buttons and text links everywhere on the page. */
+html[data-home-shell] .btn,html[data-home-shell] .text-link{border-radius:2px}
+html[data-home-shell] .text-link{color:var(--ink)}
+html[data-home-shell] .hiring-actions .btn:not(.solid){border-color:var(--line-strong);background:none;color:var(--ink)}
+html[data-home-shell] summary{cursor:pointer}
+
+/* 10. Tables and figures follow the sheet. */
+html[data-home-shell] table{border-color:var(--line)}
+html[data-home-shell] caption{font-weight:600;color:var(--ink)}
+html[data-home-shell] th,html[data-home-shell] td{border-color:var(--line)}
+html[data-home-shell] .evidence-figure-card{background:var(--sheet-paper);border:1px solid var(--sheet-frame);border-radius:0;box-shadow:none}
+
+/* 11. The footer: a colophon on a hairline. */
+html[data-home-shell] .site-footer{border-top:1px solid var(--line-strong);background:none;padding:2.5rem var(--shell) 3.5rem;color:var(--soft)}
+html[data-home-shell] .footer-links a{color:var(--ink)}

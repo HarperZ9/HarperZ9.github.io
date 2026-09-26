@@ -24,7 +24,7 @@
 const SKIP = [
   "script", "style", "noscript", "template", "canvas", "svg", "video", "audio",
   "iframe", "object", "form", "button", "input", "select", "textarea", "dialog",
-  ".site-nav", ".docnav", ".skip-link", ".export-bar", ".export-menu",
+  ".site-nav", ".docnav", ".skip-link", ".export-bar", ".export-menu", ".page-footer",
   ".sn-more", ".route-art", ".totop", ".controls", ".visual-controls",
   ".visual-nav", ".re-panel", ".dk-panel", ".wv-panel", ".tp-dfwv", ".tp-rotv",
   "[data-export='skip']",
@@ -695,7 +695,7 @@ function buildMenu() {
   toggle.className = "export-toggle";
   toggle.setAttribute("aria-expanded", "false");
   toggle.setAttribute("aria-controls", id);
-  toggle.textContent = "Take this page";
+  toggle.textContent = "Save or print this page";
   wrap.appendChild(toggle);
 
   const list = document.createElement("div");
@@ -810,12 +810,22 @@ export function mountExport(doc = document) {
   bar.className = "export-bar";
   bar.appendChild(buildMenu("export-menu"));
 
-  // Where a page names its own spot, use it. Otherwise the control goes after
+  // Where a page names its own spot, use it; the page footer's utility line is
+  // the usual one. Otherwise the control opens a footer line of its own after
   // the reading matter, which is where somebody who has finished the page and
   // wants to keep it will look for it.
-  const slot = doc.querySelector("[data-export-slot]");
-  if (slot) slot.appendChild(bar);
-  else root.appendChild(bar);
+  const slot = doc.querySelector("[data-export-slot]") || doc.querySelector(".page-footer-line");
+  if (slot) {
+    slot.appendChild(bar);
+    return;
+  }
+  const footer = doc.createElement("footer");
+  footer.className = "page-footer export-footer";
+  const line = doc.createElement("div");
+  line.className = "page-footer-line";
+  line.appendChild(bar);
+  footer.appendChild(line);
+  root.appendChild(footer);
 }
 
 if (typeof document !== "undefined" && !document.documentElement.dataset.exportManual) {

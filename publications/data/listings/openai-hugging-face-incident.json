@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "openai-hugging-face-incident",
+  "route": "/briefings/2026-08-26-openai-hugging-face-incident/",
+  "form": "canonical dossier",
+  "category": "ai-incidents",
+  "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
+  "summary": "One OpenAI and Hugging Face incident, compared across five kinds of source: legal process, the company report, host logs, independent analysis and vendor fixes.",
+  "published_at": "2026-08-26",
+  "updated_at": "2026-08-27",
+  "date_source": null,
+  "hubs": [
+    "publications"
+  ],
+  "topics": [
+    "incidents",
+    "sources"
+  ],
+  "ai_assistance": null
+}

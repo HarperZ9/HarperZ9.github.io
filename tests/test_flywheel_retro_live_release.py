@@ -108,19 +108,21 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     assert flywheel["entryCommand"] == "pip install flywheel-verify"
     release_section = source[source.index('<section class="mv" id="next-release"'):]
     release_section = release_section[: release_section.index("</section>")]
-    service_desk_section = source[source.index('<section class="mv" id="service-desk"'):]
+    # 2026-09-25 round 3: the companion products share #companions; Service Desk keeps its row id.
+    service_desk_section = source[source.index('<section class="mv" id="companions"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
-    assert 'href="#next-release">1.0.1 release</a>' in source
+    # 2026-09-25: Flywheel 1.0.4 is the current release; the 1.0.1 records stay as history.
+    assert 'href="#next-release">1.0.4 release</a>' in source
     assert "0.6 candidate" not in source
-    assert "Use v1.0.1 to install the current Python engine" in release_section
-    assert "published at <span translate=\"no\">2026-09-19T20:44:28Z</span>" in release_section
-    assert "SHA-256 <span translate=\"no\">95c616d667b1d3232a8c56a080e4de2112428000a0635eab60427b4983e90d37</span>" in release_section
+    assert "Install the Python engine from PyPI" in release_section
+    assert "published at <span translate=\"no\">2026-09-26T01:50:41Z</span>" in release_section
+    assert "SHA-256 <span translate=\"no\">a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881</span>" in release_section
     assert "The Windows desktop installer is still unsigned" in release_section
     assert "pip install flywheel-verify" in source
     assert "flywheel up" in source
-    assert "Windows desktop: 1.0.1" in source
-    assert "Flywheel-Setup-1.0.1-x64.exe" in source
-    assert "/releases/download/v1.0.1" in source
+    assert "Windows desktop: 1.0.4" in source
+    assert "Flywheel-Setup-1.0.4-x64.exe" in source
+    assert "/releases/download/v1.0.4" in source
     assert "Flywheel-Setup-0.6.0-x64.exe" not in source
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
@@ -128,7 +130,8 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     assert "service-desk-incident-env e2e --out ./incident-runs" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
     assert "clean-machine installation" in source
-    assert "physical Android/mobile acceptance" in source
+    # 2026-09-25 human-first notebook: the release null reads in plain words.
+    assert "acceptance testing on a physical Android or other mobile device" in source
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
     assert "v0.3.10" not in source

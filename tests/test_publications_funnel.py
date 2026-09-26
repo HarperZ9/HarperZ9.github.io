@@ -111,7 +111,8 @@ def test_publication_visual_system_has_accessibility_fallbacks() -> None:
     assert "system/fonts/conso-regular.woff2" in writing
     assert "system/fonts/kilon.woff2" not in writing
     assert 'class="publication-spectrum"' in page
-    assert "This is an orientation map, not a quantitative chart" in page
+    # 2026-09-25: caption rewritten in plain words; the no-quantity disclaimer stays.
+    assert "Band width carries no meaning about volume, priority or maturity" in page
     assert "data-specimen" not in page
     for contract in (
         "@media (max-width: 52rem)",

@@ -8,8 +8,8 @@
       "form": "public-interest analysis",
       "published_at": "2026-09-01",
       "updated_at": "2026-09-01",
-      "record_sha256": "b690017ccc23b3de58f1cb8fbb6b5876bc16e960088252566ae9e3cbb078443f",
-      "idempotency_key": "a342047bd07081740a3361f0e173d97693dbdafe5991f7c7f19aa4b672dfcd6d"
+      "record_sha256": "cdfc78e058b5a4238d9137b64e3ef4af21ee7503cffeaaa4768271fab9fe45a4",
+      "idempotency_key": "c9422336b1ebcface69677a86ebf583fb1145d6a46de8618502edcdfccfc1beb"
     },
     {
       "id": "borrowed-ground",
@@ -17,9 +17,9 @@
       "category": "philosophy",
       "form": "philosophical essay",
       "published_at": "2026-09-10",
-      "updated_at": "2026-09-10",
-      "record_sha256": "9d774099c91d2c77cfe8520e51b0d399d2e80f5aff837f9e1367db66b7bffe82",
-      "idempotency_key": "83554b4d858e8e7de9d5d8ed0c2773201689f55ee199bf40c33dabc1c98faaad"
+      "updated_at": "2026-09-25",
+      "record_sha256": "b399f790d2d69438297af8342cb8d0e33fcd5966c49abc8fed2e6a0e133e8a56",
+      "idempotency_key": "0cbaafdb80ffc5cebf85773dd57258afe1bbe107e2f4cd5d602f79742dbd2465"
     },
     {
       "id": "growth-needs-a-before",
@@ -28,8 +28,8 @@
       "form": "evidence essay",
       "published_at": "2026-09-05",
       "updated_at": "2026-09-05",
-      "record_sha256": "b03b39c3cb38628b057ce8d91c9e04b7567b764d9d69c8f7872d24727658d62b",
-      "idempotency_key": "40a77c40bb6097b4c95ecf043eed71ff15aae6cbb37d6fd147bbfcb8f0cf5d50"
+      "record_sha256": "edaad29e4a27f5e3dc50ffbade2e49c888ec9758b1bc1c3959cc43346d23fc08",
+      "idempotency_key": "a3c953bd19251eef33b34c758ea0efba29925e68d467d1f1e290073447bc9806"
     },
     {
       "id": "ltj-bukem-the-man-behind-the-atmosphere",
@@ -37,9 +37,9 @@
       "category": "music-listening",
       "form": "biographical and critical essay",
       "published_at": "2026-09-09",
-      "updated_at": "2026-09-09",
-      "record_sha256": "c0a6968227cac3a48d9459ad6da7b294e631b29f08123b360890ccf2a5f33e63",
-      "idempotency_key": "eebfa70b9a91287c3badbaea90105c24fc5efdafe97ab2e9db6736e199062e48"
+      "updated_at": "2026-09-25",
+      "record_sha256": "1910b971cd1dbc4b07cd5f3693f203a6f5dec2c5e0dfda203ec8637da711b5dc",
+      "idempotency_key": "1466f2d6912bb82e6b8e886584abd675d4085a5b483626c53bd95ecc062789e3"
     },
     {
       "id": "the-sandbox-was-never-just-a-box",
@@ -47,9 +47,9 @@
       "category": "agent-evaluation",
       "form": "editorial analysis",
       "published_at": "2026-09-10",
-      "updated_at": "2026-09-10",
-      "record_sha256": "323436ce674c2250d34b69b98bfaf599b57d52103f893c48fd6552836e2f4654",
-      "idempotency_key": "366f20f6fb890001d7e304ca662fcb589cf35b6fa6072075fcd52d5f4b4f48f1"
+      "updated_at": "2026-09-25",
+      "record_sha256": "3fa090133bf1148bb908e0c745c7489e19345e0d32cf9c46efa999d9904e7474",
+      "idempotency_key": "83c5cd283f223412abf65fd0d6f38a9340c4bca9ed32c4f51d7a2ff93e8005fe"
     },
     {
       "id": "the-second-hearing",
@@ -57,9 +57,9 @@
       "category": "music-listening",
       "form": "evidence essay",
       "published_at": "2026-09-01",
-      "updated_at": "2026-09-01",
-      "record_sha256": "9b807ef8ee7a3e6e2082d86f0a4420b3e72cce2b0e564cac6fb58a70fc5274da",
-      "idempotency_key": "93c66691be11e16aa3611cb9a1cfda6d2f5f9fc3ae1be7382d7df24c06032d68"
+      "updated_at": "2026-09-25",
+      "record_sha256": "411fc44f277b97d21afba0f5fa7712818cec82337995ccb59fb35bdbd7a9a10d",
+      "idempotency_key": "e162706c7693942e3f1747c5253b60675aaf0b7f8d2e08afaa77b7cf167e3541"
     },
     {
       "id": "what-the-label-changes",
@@ -67,9 +67,59 @@
       "category": "art-perception",
       "form": "evidence-led visual essay",
       "published_at": "2026-09-02",
-      "updated_at": "2026-09-02",
-      "record_sha256": "b5d892768242fb95b6333c3c2b870e0b8ce765a48139c9d3330845be834eaa50",
-      "idempotency_key": "00bfad990e814a217490163aac2f3f7848860e608e52a0ffa51876115060a4f9"
+      "updated_at": "2026-09-25",
+      "record_sha256": "d452fdde00a3cd3a01b3e562158e50b0bcf6846c2e101d4ed757e5561b2f16ec",
+      "idempotency_key": "368c8a18b1bd3d04fb7b34803f909bf5d462c094850720aa40cde7a825d0c3db"
+    }
+  ],
+  "listings": [
+    {
+      "id": "openai-hugging-face-incident",
+      "route": "/briefings/2026-08-26-openai-hugging-face-incident/",
+      "published_at": "2026-08-26",
+      "updated_at": "2026-08-27",
+      "hubs": [
+        "publications"
+      ]
+    },
+    {
+      "id": "a-witness-should-not-become-a-ruler",
+      "route": "a-witness-should-not-become-a-ruler.html",
+      "published_at": "2026-09-09",
+      "updated_at": "2026-09-09",
+      "hubs": [
+        "publications",
+        "writing"
+      ]
+    },
+    {
+      "id": "checking-the-machines",
+      "route": "checking-the-machines.html",
+      "published_at": "2026-09-19",
+      "updated_at": "2026-09-20",
+      "hubs": [
+        "publications",
+        "writing"
+      ]
+    },
+    {
+      "id": "frontier-safety",
+      "route": "frontier-safety.html",
+      "published_at": "2026-08-24",
+      "updated_at": "2026-09-23",
+      "hubs": [
+        "publications"
+      ]
+    },
+    {
+      "id": "who-knew-first",
+      "route": "who-knew-first.html",
+      "published_at": "2026-09-23",
+      "updated_at": "2026-09-25",
+      "hubs": [
+        "publications",
+        "writing"
+      ]
     }
   ]
 }

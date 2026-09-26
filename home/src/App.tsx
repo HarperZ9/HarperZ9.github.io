@@ -4,6 +4,7 @@ import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from 
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
+import "./plate-home.css";
 
 type PublishedBriefing = {
   id: string;
@@ -24,6 +25,7 @@ type HomeEvidenceProjection = {
 
 const FOOTER_ROUTE_HREFS = new Set([
   "overview.html", "catalog.html", "research.html", "publications.html", "hire.html",
+  "start-here.html", "glossary.html",
 ]);
 const HOME_ROUTE_LINKS = [
   ...PRIMARY_ROUTES,
@@ -110,12 +112,12 @@ const HIRING_ENTRY_ROUTES = [
 ];
 
 const FLYWHEEL_ACCEPTED_SOURCE = {
-  label: "accepted source 123b6d11",
-  href: "https://github.com/HarperZ9/flywheel/commit/123b6d11ff9a1e9d23f8ced04a4f811b57383449",
-  ciHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076488925",
-  desktopCiHref: "https://github.com/HarperZ9/flywheel/actions/runs/35076489004",
-  observed: "2026-09-16",
-  boundary: "Source CI success at the accepted source commit; public release and installed acceptance are separate.",
+  label: "the 1.0.4 release commit",
+  href: "https://github.com/HarperZ9/flywheel/commit/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7",
+  ciHref: "https://github.com/HarperZ9/flywheel/actions/runs/36208231392",
+  desktopCiHref: "https://github.com/HarperZ9/flywheel/actions/runs/36208246188",
+  observed: "2026-09-25",
+  boundary: "Main CI and installed acceptance passed on the release commit; clean-machine installation is not claimed.",
 };
 
 const RESEARCH_SUPPORT_ROUTES = [
@@ -147,10 +149,6 @@ function evidenceHref(system: SystemRecord) {
 
 function productTypeLabel(system: SystemRecord) {
   return system.productType;
-}
-
-function isoDate(value: string) {
-  return value.slice(0, 10);
 }
 
 const representativeSystems = REPRESENTATIVE_IDS.map(requireSystem);
@@ -226,12 +224,12 @@ function App() {
       <main id="main">
         <IdentityHero />
         <MissionFrame />
+        <RecentWork />
         <FeaturedFlywheel />
         <ProductSelection />
         <EvidenceBoard />
         <ResearchPilotRoutes />
         <CapabilityOverview />
-        <CurrentResearch />
         <LiveBoard />
         <RetroSystemsLab />
         <SecurityBoundary />
@@ -268,15 +266,21 @@ function TopNav() {
 function IdentityHero() {
   return (
     <header id="identity" className="hero">
+      <h1 className="hero-title">Zentropy Labs</h1>
       <div className="hero-copy reveal in">
-        <h1 className="hero-title">Zentropy Labs</h1>
         <p className="hero-line">Flywheel and public tools for re-derivable AI evaluation.</p>
-        <p className="hero-lab">Built by Zain Dana Harper. Intended for evaluators, research teams, and institutions that need claims a skeptic can rerun.</p>
+        <p className="hero-lab">
+          Zentropy Labs builds Flywheel and a set of public tools for checking AI results. Each check leaves a record that
+          someone else can rerun on their own computer to see whether the result holds. Read the newest investigation below,
+          or install Flywheel and try a check yourself.
+        </p>
+        <p className="hero-audience">Built by Zain Dana Harper for evaluators, research teams and institutions that need claims a skeptic can rerun.</p>
         <div className="hero-actions" aria-label="Primary actions">
           <a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>
           <a className="btn" href="#evidence">Review evidence</a>
           <a className="btn" href="#research-pilot-support">Pilot or support</a>
         </div>
+        <p className="hero-start"><a href="/start-here.html">New here? Start with a plain guide to the site.</a></p>
         <nav className="edition-links" aria-label="Mission routes">
           <a href="/career/Flywheel-Platform-Brief.pdf">The Flywheel platform brief</a>
           <a href="/catalog.html">Public tool catalog</a>
@@ -284,31 +288,23 @@ function IdentityHero() {
           <a href="/checking-the-machines.html">Open letter: checking the machines</a>
         </nav>
       </div>
-      <figure className="identity-art mission-apparatus reveal in" aria-labelledby="mission-apparatus-title">
-        <picture>
-          <source
-            type="image/webp"
-            srcSet="/brand/zentropy-logo-640.webp 640w, /brand/zentropy-logo-960.webp 960w, /brand/zentropy-logo-1280.webp 1280w, /brand/zentropy-logo-1600.webp 1600w"
-            sizes="(max-width: 900px) 92vw, 42vw"
-          />
-          <img
-            src="/brand/zentropy-logo.png"
-            alt="Zentropy Labs aperture mark with cyan light and oxblood shadow"
-            width="1600"
-            height="900"
-            fetchPriority="high"
-          />
-        </picture>
-        <figcaption className="mission-apparatus-copy">
-          <strong id="mission-apparatus-title">Programmatic neutrality</strong>
-          <span>Same specified check, evidence, and execution assumptions. Same verdict when the implementation is correct.</span>
-        </figcaption>
-        <ol className="mission-apparatus-steps" aria-label="Verification path">
-          <li><span>Claim</span><strong>declared</strong></li>
-          <li><span>Evidence</span><strong>bounded</strong></li>
-          <li><span>Check</span><strong>versioned</strong></li>
-          <li><span>Verdict</span><strong>rerun</strong></li>
-        </ol>
+      <figure className="identity-art art art-hero reveal in">
+        <img
+          className="art-light"
+          src="/art/aperture/home-hero-light.svg"
+          width="1200"
+          height="1200"
+          alt="A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below."
+          fetchPriority="high"
+        />
+        <img
+          className="art-dark"
+          src="/art/aperture/home-hero-dark.svg"
+          width="1200"
+          height="1200"
+          alt="A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below."
+          fetchPriority="high"
+        />
       </figure>
     </header>
   );
@@ -320,26 +316,136 @@ function MissionFrame() {
       <div className="section-heading">
         <h2 id="mission-title">Mission: re-derivable verification</h2>
         <p className="section-lead">
-          A consequential AI claim needs a check another reviewer can inspect and rerun.
+          Re-derivable means another person can rerun the same check on the same evidence and reach the same verdict.
         </p>
       </div>
-      <div className="mission-grid">
+      <div className="mission-grid mission-grid-two">
         <article className="mission-card">
-          <h3>Mechanism</h3>
-          <p>Specify the claim, boundary, evidence, source version, execution assumptions, and false-success controls. Run the check. Preserve receipts so another authorized reviewer can rerun or challenge it.</p>
+          <h3>What a check records</h3>
+          <p>A check writes down the claim, the evidence, the exact version of the test and what a passing result would still leave open. Anyone who holds that record can rerun it and compare verdicts.</p>
         </article>
         <article className="mission-card">
-          <h3>Built</h3>
-          <p>Flywheel is the flagship platform. Gather, Index, Forum, EMET, Crucible, Relay, Mneme, Plexus, Proof Surface, and Accountable Surface cover capture, routing, witnessing, memory, tool discovery, claims, and action boundaries.</p>
-        </article>
-        <article className="mission-card">
-          <h3>Proposed reviewer pilot</h3>
-          <p>Start with one consequential claim, equal evidence controls, expected reviewer effort, missed-error cases, and honest nulls. The output is a rerunnable verdict plus the exact remainder that still needs human judgment.</p>
+          <h3>A proposed pilot for evaluators</h3>
+          <p>A pilot starts with one claim that matters to a decision. The check gives every side the same evidence controls. The result is a verdict anyone can rerun, the errors the check missed and the part that still needs a person to judge.</p>
         </article>
       </div>
       <p className="does-not-prove">
         <strong>Programmatic neutrality:</strong> given the same specified check, evidence, and execution assumptions, a correct implementation should return the same verdict regardless of actor, company, lab, or nation.
       </p>
+    </section>
+  );
+}
+
+const WKF_CASES: Array<{ label: string; first: "outsider" | "operator" | "same-day" }> = [
+  { label: "OpenAI agents at Hugging Face", first: "outsider" },
+  { label: "The RubyGems flood (attribution alleged)", first: "outsider" },
+  { label: "OpenAI agents on the Austrian wiki", first: "outsider" },
+  { label: "A Meta model in an Irregular environment", first: "outsider" },
+  { label: "A Google model in an Irregular environment", first: "outsider" },
+  { label: "An OpenAI agent on the Medicare portal (developing)", first: "outsider" },
+  { label: "Claude models in Irregular environments", first: "operator" },
+  { label: "The Claude Mythos Preview escape", first: "operator" },
+  { label: "The UK AISI cyber ranges", first: "same-day" },
+];
+
+const RECENT_WORK = [
+  {
+    title: "Flywheel 1.0",
+    meta: "Release, 19 September 2026.",
+    text: "Flywheel runs a task with any model, then hands the result to a checker that anyone can rerun offline.",
+    href: "/flywheel.html",
+    action: "See what Flywheel does",
+    cover: "pillar-flywheel",
+    alt: "Fine lines sweep around a bright ring, like a wheel drawn by a plotter pen.",
+  },
+  {
+    title: "An open letter on checking the machines",
+    meta: "Letter, 19 September 2026, revised 20 September 2026.",
+    text: "A signed letter to the people who build AI systems. It argues that a person should be able to question a machine's answer without first winning an argument with its owner.",
+    href: "/checking-the-machines.html",
+    action: "Read the letter",
+    cover: "cover-checking-the-machines",
+    alt: "A grid of small square drawings, each a set of nested squares, with one square lit.",
+  },
+  {
+    title: "Articulate",
+    meta: "Release, 24 September 2026.",
+    text: "Articulate is the writing checker used on this site's pages. It flags hedging, filler and stock phrasing, and its checks run on your own computer with no network connection.",
+    href: "/articulate.html",
+    action: "Try Articulate",
+    cover: "cover-articulate",
+    alt: "Rows of short dashes, like lines of text, bend around a bright circle. One run of dashes lifts out of its line.",
+  },
+  {
+    title: "Frontier Safety briefing",
+    meta: "Recurring briefing, current edition.",
+    text: "A dated record of safety news from the UK AI Security Institute, Anthropic, OpenAI and others. Each edition says what changed, which source says so and what that source cannot show.",
+    href: "/frontier-safety.html",
+    action: "Read the current edition",
+    cover: "cover-frontier-safety",
+    alt: "A drawn instrument field with a bright core, in the site's aperture art style.",
+  },
+];
+
+function WkfSquare({ first }: { first: "outsider" | "operator" | "same-day" }) {
+  return (
+    <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true" focusable="false">
+      {first === "outsider" ? <rect x="2" y="2" width="36" height="36" className="sq-fill" /> : null}
+      {first === "same-day" ? <path d="M2 2 H20 V38 H2 Z" className="sq-fill" /> : null}
+      <rect x="2" y="2" width="36" height="36" className="sq-edge" />
+    </svg>
+  );
+}
+
+function RecentWork() {
+  return (
+    <section id="recent-work" className="section recent-section" aria-labelledby="recent-title">
+      <div className="section-heading">
+        <h2 id="recent-title">Recent work</h2>
+        <p className="section-lead">Writing and releases from the past month. Each item links to the full piece and its sources.</p>
+      </div>
+      <article className="data-plate recent-feature">
+        <div className="recent-feature-copy">
+          <h3><a href="/who-knew-first.html">Who Knew First</a></h3>
+          <p className="recent-meta">Investigation and op-ed. Record published 23 September 2026, op-ed added 25 September 2026.</p>
+          <p>By the record's account, the organization that ran the model held the decisive facts in each of nine AI agent incidents from 2026. In six of them, someone else told the public first.</p>
+          <p><a className="text-link" href="/who-knew-first.html">Read the investigation</a></p>
+        </div>
+        <figure className="nine-square" aria-labelledby="wkf-chart-title">
+          <figcaption>
+            <strong id="wkf-chart-title">Who told the public first</strong>
+            <span className="chart-takeaway">In six of the nine incidents, someone outside the organization that ran the model told the public first.</span>
+          </figcaption>
+          <div className="nine-square-row" role="img" aria-labelledby="wkf-chart-title wkf-chart-summary">
+            {WKF_CASES.map((c) => (
+              <div className={`nine-cell nine-${c.first}`} key={c.label}>
+                <WkfSquare first={c.first} />
+                <span aria-hidden="true">{c.label}</span>
+              </div>
+            ))}
+          </div>
+          <p id="wkf-chart-summary" className="visually-hidden">
+            Six incidents where an outsider told the public first, two where the organization that ran the model did, and one where both spoke on the same day.
+          </p>
+          <p className="chart-how">
+            <strong>How to read this:</strong> each square is one incident. A filled square means an outsider spoke first. An outlined square means the organization that ran the model spoke first. A half-filled square means both spoke on the same day and the order is unknown.
+          </p>
+        </figure>
+      </article>
+      <div className="recent-grid">
+        {RECENT_WORK.map((item) => (
+          <article className="recent-card" key={item.href}>
+            <figure className="art recent-cover">
+              <img className="art-light" src={`/art/aperture/${item.cover}-light.svg`} width="1600" height="800" alt={item.alt} loading="lazy" decoding="async" />
+              <img className="art-dark" src={`/art/aperture/${item.cover}-dark.svg`} width="1600" height="800" alt={item.alt} loading="lazy" decoding="async" />
+            </figure>
+            <h3><a href={item.href}>{item.title}</a></h3>
+            <p className="recent-meta">{item.meta}</p>
+            <p>{item.text}</p>
+            <p><a className="text-link" href={item.href}>{item.action}</a></p>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
@@ -437,7 +543,7 @@ function FeaturedFlywheel() {
             </tr>
             <tr>
               <th scope="row">Source CI</th>
-              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.ciHref}>main CI run 35076488925</a>; <a href={FLYWHEEL_ACCEPTED_SOURCE.desktopCiHref}>desktop CI run 35076489004</a></td>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.ciHref}>Main CI passed</a>; <a href={FLYWHEEL_ACCEPTED_SOURCE.desktopCiHref}>installed acceptance passed</a></td>
             </tr>
             <tr>
               <th scope="row">Verified</th>
@@ -542,7 +648,7 @@ function CapabilityOverview() {
         <h2 id="figures-title">Measured evidence</h2>
         <p className="section-lead">
           Source-attributed figures publish units, denominators, dates, provenance, and limits.
-          Capability families remain navigation labels, not diagrams or product hierarchies.
+          Capability families are navigation labels.
         </p>
       </div>
       <div className="evidence-figure-grid">
@@ -551,6 +657,8 @@ function CapabilityOverview() {
           <a href="/analytics/model-pass-at-1-comparison.html" aria-label="Open model pass@1 comparison chart and data table">
             <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
           </a>
+          <p className="chart-takeaway-home"><strong>Takeaway:</strong> base Qwen 14B passed 141 of the 164 tasks and Flywheel 14B passed 136. The difference is not statistically significant.</p>
+          <p><strong>How to read this:</strong> each bar is the share of the 164 tasks a model passed on its first try, on a scale that starts at zero.</p>
           <p>Same task set and harness. This measures two model artifacts, not market superiority or general agent reliability.</p>
           <p><a className="text-link" href="/analytics/model-pass-at-1-comparison.html" aria-label="Open model pass@1 comparison chart and data table">Open chart and data table</a></p>
           <details className="figure-detail">
@@ -563,72 +671,15 @@ function CapabilityOverview() {
             ]} />
           </details>
         </article>
-        <article className="evidence-figure-card" data-evidence-figure-card>
-          <h3>Current cross-harness run</h3>
-          <a href="/analytics/current-cross-harness-pilot.html" aria-label="Open current cross-harness run chart and data table">
-            <img className="research-figure-image" src="/analytics/current-cross-harness-pilot.svg" alt="Horizontal bars for five harness roles on the same seven tasks: of seven attempts each, codex_harness and flywheel_harness reached a grader four times, claude_code twice, local_32b once, and local_14b none; three, two, one, zero, and zero passed." width="1120" height="610" loading="lazy" />
-          </a>
-          <p>35 attempts across five harness roles on seven tasks, all 35 receipts verified. 11 reached a grader and 6 passed; why the rest did not is named per role.</p>
-          <p><a className="text-link" href="/analytics/current-cross-harness-pilot.html" aria-label="Open current cross-harness run chart and data table">Open chart and data table</a></p>
-          <details className="figure-detail">
-            <summary>Dataset facts</summary>
-            <FigureFacts rows={[
-              ["n", "35 receipt-verified attempts"],
-              ["units", "attempts, passes, latency, and USD cost"],
-              ["retrieved", "2026-09-04"],
-              ["source", <a href="/analytics/current-cross-harness-pilot.html">result, table, and limits</a>],
-            ]} />
-          </details>
-        </article>
-        <article className="evidence-figure-card" data-evidence-figure-card>
-          <h3>Recovered actions by day</h3>
-          <a href="/figures/recovered-actions-by-day.html" aria-label="Open recovered actions by day chart and data table">
-            <img
-              className="research-figure-image"
-              src="/figures/recovered-actions-by-day.svg"
-              alt="Bar chart of five recovered-action counts from July 9 through July 13, 2026: 3,779; 1,135; 7,677; 3,892; and 1,130."
-              width="1280"
-              height="720"
-              loading="lazy"
-            />
-          </a>
-          <p>Five daily counts from Hugging Face host telemetry. Unit: recovered logged actions. The figure does not measure unique attacks, severity, intent, or harm.</p>
-          <p><a className="text-link" href="/figures/recovered-actions-by-day.html" aria-label="Open recovered actions by day chart and data table">Open chart and data table</a></p>
-          <details className="figure-detail">
-            <summary>Dataset facts</summary>
-            <FigureFacts rows={[
-              ["n", "5 daily observations"],
-              ["units", "recovered logged actions"],
-              ["retrieved", "2026-08-27"],
-              ["source", <><a href="/figures/recovered-actions-by-day.html">figure and accessible table</a> · <a href="/figures/recovered-actions-by-day.json">dataset</a></>],
-            ]} />
-          </details>
-        </article>
-        <article className="evidence-figure-card" data-evidence-figure-card>
-          <h3>Reported motive labels</h3>
-          <a href="/figures/motive-sample-nonexclusive.html" aria-label="Open reported motive labels chart and data table">
-            <img
-              className="research-figure-image"
-              src="/figures/motive-sample-nonexclusive.svg"
-              alt="Bar chart of non-exclusive motive labels in a 100-agent sample: scorer source or access 97, shared infrastructure or credentials 66, and task solution or private trajectories 89."
-              width="1280"
-              height="720"
-              loading="lazy"
-            />
-          </a>
-          <p>Non-exclusive labels from the independent investigator sample. Categories overlap, so counts must not be summed into a population total.</p>
-          <p><a className="text-link" href="/figures/motive-sample-nonexclusive.html" aria-label="Open reported motive labels chart and data table">Open chart and data table</a></p>
-          <details className="figure-detail">
-            <summary>Dataset facts</summary>
-            <FigureFacts rows={[
-              ["n", "100-agent peak-hour sample"],
-              ["units", "agents, non-exclusive"],
-              ["retrieved", "2026-08-27"],
-              ["source", <><a href="/figures/motive-sample-nonexclusive.html">figure and accessible table</a> · <a href="/figures/motive-sample-nonexclusive.json">dataset</a></>],
-            ]} />
-          </details>
-        </article>
       </div>
+      <details className="figure-detail how-we-know">
+        <summary>How we know: three more measured figures</summary>
+        <ul>
+          <li><a href="/analytics/current-cross-harness-pilot.html">Current cross-harness run</a>: 35 receipt-verified attempts across five harness roles on seven tasks, all 35 receipts verified; 11 reached a grader and 6 passed. Units: attempts, passes, latency and USD cost.</li>
+          <li><a href="/figures/recovered-actions-by-day.html">Recovered actions by day</a> (<a href="/figures/recovered-actions-by-day.svg">figure</a>, <a href="/figures/recovered-actions-by-day.json">dataset</a>): 5 daily observations from Hugging Face host telemetry. Unit: recovered logged actions. It does not measure unique attacks, severity, intent or harm.</li>
+          <li><a href="/figures/motive-sample-nonexclusive.html">Reported motive labels</a> (<a href="/figures/motive-sample-nonexclusive.svg">figure</a>, <a href="/figures/motive-sample-nonexclusive.json">dataset</a>): a 100-agent peak-hour sample with non-exclusive labels. Categories overlap, so the counts must not be summed.</li>
+        </ul>
+      </details>
       <div className="family-browser">
         <h3>Browse the work by primary subject</h3>
         <p>These are navigation labels only. Every catalog record retains its own purpose, product type, maturity, source, and limitations.</p>
@@ -660,40 +711,6 @@ function FigureFacts({ rows }: { rows: Array<[string, ReactNode]> }) {
         </div>
       ))}
     </dl>
-  );
-}
-
-function CurrentResearch() {
-  return (
-    <section id="research" className="section split-section" aria-labelledby="research-title">
-      <div>
-        <h2 id="research-title">Current research</h2>
-        <p className="section-lead">
-          The publication surface carries current briefings, figures, source records, limitations, and related reproducible artifacts for public review.
-          Model failures are framed as products of incentives, deployment conditions, and engineering choices; internal signals are treated as untrusted readouts checked against behavior.
-        </p>
-        <div className="action-row">
-          <a className="text-link" href="/publications.html">Publication index</a>
-          <a className="text-link" href="/figures/recovered-actions-by-day.html">Measured figures</a>
-        </div>
-      </div>
-      {LATEST_PUBLISHED_BRIEFING ? (
-        <article className="data-plate briefing-card">
-          <h3><a href={LATEST_PUBLISHED_BRIEFING.href} data-current-briefing-title>{LATEST_PUBLISHED_BRIEFING.title}</a></h3>
-          <p>{LATEST_PUBLISHED_BRIEFING.sourceCount} public sources. Limitations remain attached to the record.</p>
-          <dl className="briefing-meta">
-            <div>
-              <dt>Published</dt>
-              <dd>{isoDate(LATEST_PUBLISHED_BRIEFING.publishedAt)}</dd>
-            </div>
-            <div>
-              <dt>Primary figure</dt>
-              <dd><a href={LATEST_PUBLISHED_BRIEFING.primaryFigureHref}>Open figure</a></dd>
-            </div>
-          </dl>
-        </article>
-      ) : null}
-    </section>
   );
 }
 

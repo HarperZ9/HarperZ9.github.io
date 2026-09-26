@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "frontier-safety",
+  "route": "frontier-safety.html",
+  "form": "recurring briefing",
+  "category": "ai-frontier",
+  "title": "Frontier Safety briefing",
+  "summary": "A dated monitor of AISI, Anthropic, OpenAI and industry safety records. Each edition keeps reported facts, source roles and limits apart.",
+  "published_at": "2026-08-24",
+  "updated_at": "2026-08-24",
+  "date_source": "frontier-safety/data/current.json#edition_date",
+  "hubs": [
+    "publications"
+  ],
+  "topics": [
+    "briefing",
+    "safety"
+  ],
+  "ai_assistance": null
+}

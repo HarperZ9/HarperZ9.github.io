@@ -1,0 +1,164 @@
+/* page-components.css: the reader components that sit around a notebook sheet.
+
+   14. Page components. They carry single-class selectors so a page's own stylesheet can refine
+       them. The masthead's title declarations carry !important for the same reason as the sheet
+       title: the older reading rules size every h1 at a high specificity. */
+
+/* 14.1 Layout. One left edge per page: masthead, sections and figures start on the same line;
+        wide figures extend to the right of the reading column. */
+.page-frame{width:min(100% - 2 * var(--gutter,1rem),var(--frame,72rem));margin-inline:auto}
+.reading-column{max-width:var(--measure,38rem)}
+.wide-column{max-width:var(--wide,58rem)}
+.page-section{margin-block:0 var(--section-gap,4.5rem)}
+.page-section > h2{margin:0 0 var(--s-4,1rem);font:560 var(--t-h2)/1.2 var(--font-sans);color:var(--ink);letter-spacing:0;text-wrap:balance}
+.page-section > h3{margin:var(--s-6,2rem) 0 var(--s-3,.75rem);font:600 var(--t-h3)/1.3 var(--font-sans);color:var(--ink)}
+
+/* 14.2 Masthead: a quiet title block. Nothing above it but the site navigation. */
+.masthead{display:grid;row-gap:var(--s-4,1rem);margin:0 0 var(--s-7,3rem);padding:var(--s-7,3rem) 0 var(--s-6,2rem);border-bottom:1px solid var(--line);color:var(--ink);background:transparent}
+.masthead-path{margin:0;font:500 .875rem/1.4 var(--font-sans);color:var(--soft);letter-spacing:0;text-transform:none}
+.masthead-path a{color:var(--soft);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+.masthead-path a:is(:hover,:focus-visible){color:var(--ink);text-decoration-thickness:2px}
+.masthead h1{margin:0!important;max-width:22ch!important;font-family:var(--font-sans)!important;font-size:var(--t-display)!important;font-weight:500!important;
+  line-height:1.08!important;letter-spacing:-.015em!important;text-transform:none!important;text-wrap:balance;color:var(--ink)!important}
+.masthead h1 :is(.g,em,span){color:inherit!important}
+.masthead .dek{margin:0;max-width:40rem;font:400 var(--t-dek)/1.45 var(--font-sans);color:var(--soft);text-wrap:pretty}
+/* Meta items wrap between items, never inside one. Each item carries its middle dot in the
+   gap to its left; the line clips its own box, so the dot on whichever item starts a line
+   never shows and nothing reaches past the page edge. */
+.masthead .meta{margin:0;display:flex;flex-wrap:wrap;column-gap:1.25em;row-gap:.15em;overflow:hidden;
+  font:400 var(--t-meta)/1.5 var(--font-sans);color:var(--soft)}
+.masthead .meta > span{position:relative;white-space:nowrap}
+.masthead .meta > span::before{content:"\00b7";position:absolute;left:-.8em}
+
+/* 14.3 Hero, for product and hub pages: what it does for the reader, one primary action, at most
+        two text links, then the run command. Art may sit to the right on desks. */
+.page-hero{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-6,2rem);align-items:start;margin:0 0 var(--section-gap,4.5rem)}
+.page-hero .hero-copy{display:grid;row-gap:var(--s-4,1rem);min-width:0}
+.page-hero .hero-links{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3,.75rem) var(--s-5,1.5rem);margin:var(--s-2,.5rem) 0 0}
+.page-hero .hero-art{min-width:0}
+.page-hero .hero-art :is(img,video,canvas,svg){display:block;width:100%;height:auto}
+@media (min-width:62rem){.page-hero.has-art{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--s-7,3rem)}}
+
+/* 14.4 Buttons and links. Links are ink with a 1px underline; hover and focus thicken it. */
+.btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:var(--s-3,.75rem) var(--s-5,1.5rem);
+  border-radius:var(--radius-control,2px);font:600 1rem/1.2 var(--font-sans);letter-spacing:0;text-transform:none;text-decoration:none!important;cursor:pointer}
+.btn-primary{background:var(--ink)!important;color:var(--on-ink)!important;border:1px solid var(--ink)}
+.btn-primary:is(:hover,:focus-visible){background:var(--soft)!important;border-color:var(--soft)}
+.btn-secondary{background:transparent!important;color:var(--ink)!important;border:1px solid var(--line-strong)}
+.btn-secondary:is(:hover,:focus-visible){background:var(--raised)!important}
+:is(.btn-primary,.btn-secondary):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.text-link,.download-set a,.row-list a,.card-grid a,.sources a,.page-footer a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+:is(.text-link,.download-set a,.row-list a,.card-grid a,.sources a,.page-footer a):is(:hover,:focus-visible){text-decoration-thickness:2px}
+.download-set{margin:0;font:400 1rem/1.6 var(--font-sans);color:var(--soft)}
+.download-set a + a::before{content:"\00b7";display:inline-block;margin:0 .5em;color:var(--soft);text-decoration:none}
+
+/* 14.5 Command block with a copy button. */
+.copy-button{display:inline-flex;align-items:center;min-height:32px;margin-left:.5rem;padding:.2rem .6rem;border:1px solid var(--line-strong,#6f7f83);border-radius:var(--radius-control,2px);
+  background:transparent;color:inherit;font:600 .875rem/1 var(--font-sans);cursor:pointer;vertical-align:middle}
+.copy-button:hover{background:var(--raised,#e7ecea)}
+.copy-button:focus-visible{outline:2px solid var(--focus,currentColor);outline-offset:2px}
+.command-block{position:relative;display:flex;align-items:flex-start;gap:.75rem;max-width:var(--wide,58rem);margin:0;padding:var(--s-3,.75rem) var(--s-4,1rem);
+  background:var(--inset);border:1px solid var(--line);border-radius:var(--radius-control,2px);color:var(--ink)}
+.command-block code{flex:1 1 auto;min-width:0;font:500 .9375rem/1.5 var(--font-mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.command-block .copy-button{flex:none;margin:0}
+
+/* 14.6 Lists of rows, and cards only when each card is a destination in a grid. */
+.row-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row-list > li{display:grid;row-gap:.35rem;padding:var(--s-5,1.5rem) 0;border-bottom:1px solid var(--line)}
+.row-list .row-title{margin:0;font:600 1.125rem/1.35 var(--font-sans);color:var(--ink)}
+.row-list .row-text{margin:0;max-width:62ch;font:400 1rem/1.55 var(--font-sans);color:var(--soft)}
+.card-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,17rem),1fr));gap:var(--s-4,1rem)}
+.card-grid > li{position:relative;display:grid;align-content:start;row-gap:.5rem;padding:var(--s-5,1.5rem);border:1px solid var(--line);border-radius:0;background:transparent}
+.card-grid > li:has(a:focus-visible){outline:2px solid var(--focus);outline-offset:2px}
+.card-grid .card-title{margin:0;font:600 1.125rem/1.35 var(--font-sans)}
+.card-grid .card-title a::after{content:"";position:absolute;inset:0}
+.card-grid .card-text{margin:0;font:400 1rem/1.55 var(--font-sans);color:var(--soft)}
+.card-grid .card-title a:focus-visible{outline:none}
+
+/* 14.7 Verdict glyph and word. The glyph is aria-hidden in the drawing sense: it is CSS, and the
+        word carries the meaning. Solid for verified, hatch for drift, stipple for unverifiable. */
+.verdict-mark{display:inline-flex;align-items:baseline;gap:.45em;font-weight:600;white-space:nowrap}
+.verdict-mark::before{content:"";flex:none;width:.8em;height:.8em;align-self:center;border:1px solid currentColor;box-sizing:border-box}
+.verdict-mark[data-verdict="verified"]{color:var(--verified)}
+.verdict-mark[data-verdict="verified"]::before{background:currentColor}
+.verdict-mark[data-verdict="drift"]{color:var(--drift)}
+.verdict-mark[data-verdict="drift"]::before{background:repeating-linear-gradient(128deg,currentColor 0 1.1px,transparent 1.1px 4px)}
+.verdict-mark[data-verdict="missed"]{color:var(--drift)}
+.verdict-mark[data-verdict="missed"]::before{border-width:2px;background:repeating-linear-gradient(128deg,currentColor 0 1px,transparent 1px 3.4px),repeating-linear-gradient(38deg,currentColor 0 1px,transparent 1px 3.4px)}
+.verdict-mark[data-verdict="unverifiable"]{color:var(--unverifiable)}
+.verdict-mark[data-verdict="unverifiable"]::before{border-style:dashed;background:radial-gradient(circle,currentColor .8px,transparent 1.1px) 0 0/4px 4px}
+.verdict-mark[data-verdict="stated"]{color:var(--ink)}
+.verdict-mark[data-verdict="stated"]::before{background:repeating-linear-gradient(180deg,transparent 0 2px,currentColor 2px 3px)}
+
+/* 14.8 Tables. One component for every data table. Under 40rem a table with data-stack becomes
+        one record per row: the row header is the record title, and each cell shows its
+        data-label beside the value. A table with more than six numeric columns may keep its
+        grid and scroll inside its focusable wrapper, which then carries a visible note. */
+.table-wrap:has(> .data-table){max-width:100%;min-width:0;margin:var(--s-5,1.5rem) 0;overflow-x:auto;overscroll-behavior-inline:contain}
+.table-wrap:has(> .data-table):focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.table-wrap .scroll-note{margin:0 0 .5rem;font:500 .875rem/1.4 var(--font-sans);color:var(--soft)}
+.data-table{width:100%;min-width:0!important;border-collapse:collapse;font:400 1rem/1.5 var(--font-sans);color:var(--ink);font-variant-numeric:tabular-nums}
+.data-table caption{caption-side:top;margin:0;padding:0 0 .75rem;text-align:left;font:500 1rem/1.45 var(--font-sans)!important;color:var(--ink)!important;letter-spacing:0!important;text-transform:none!important}
+.data-table thead th{padding:.5rem .75rem;border:0;border-bottom:2px solid var(--ink);text-align:left;vertical-align:bottom;
+  font:600 .875rem/1.35 var(--font-sans)!important;color:var(--ink)!important;letter-spacing:0!important;text-transform:none!important;background:transparent}
+.data-table :is(tbody,tfoot) :is(th,td){padding:.5rem .75rem;border:0;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;background:transparent;color:var(--ink)}
+.data-table tbody th{font-weight:600}
+.data-table :is(td,th).num{text-align:right;white-space:nowrap;font:500 .9375rem/1.5 var(--font-mono)}
+.data-table thead th.num{text-align:right}
+.data-table :is(th,td):first-child{padding-left:0}
+.data-table :is(th,td):last-child{padding-right:0}
+.data-table.is-scroll :is(th,td):first-child{position:sticky;left:0;z-index:1;background:var(--paper)}
+@media (max-width:39.99rem){
+  .table-wrap:has(> .data-table[data-stack]) .scroll-note{display:none}
+  .data-table[data-stack],.data-table[data-stack] :is(tbody,tr,th,td){display:block;width:auto}
+  .data-table[data-stack] thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .data-table[data-stack] caption{display:block}
+  .data-table[data-stack] tbody tr{padding:.6rem 0;border-bottom:1px solid var(--line)}
+  .data-table[data-stack] tbody :is(th,td){padding:.2rem 0!important;border:0;text-align:left!important;white-space:normal}
+  .data-table[data-stack] tbody th[scope="row"],.data-table[data-stack] tbody tr > :first-child:not([data-label]){font-weight:600;font-size:1.0625rem;padding-bottom:.35rem!important}
+  .data-table[data-stack] tbody [data-label]{display:grid;grid-template-columns:minmax(6.5rem,40%) minmax(0,1fr);column-gap:.75rem;align-items:baseline}
+  .data-table[data-stack] tbody [data-label]::before{content:attr(data-label);font:600 .875rem/1.4 var(--font-sans);color:var(--soft)}
+  .data-table[data-stack] tbody td.num{font-size:.9375rem}}
+
+/* 14.9 Footnotes, sources and corrections. */
+sup.fn{font:600 .75em/0 var(--font-sans);vertical-align:super}
+sup.fn a{padding:0 .1em;color:var(--ink);text-decoration:none}
+sup.fn a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-thickness:2px}
+ol.sources{margin:var(--s-4,1rem) 0 0;padding-left:1.6rem;display:grid;row-gap:.6rem;max-width:var(--measure,38rem);font:400 1rem/1.5 var(--font-sans);color:var(--ink)}
+ol.sources > li::marker{font-weight:600;color:var(--soft)}
+ol.sources .source-meta{display:block;font-size:.9375rem;color:var(--soft)}
+ol.sources > li:target{background:var(--panel)}
+.corrections{margin:0;padding:0;list-style:none;display:grid;row-gap:.5rem}
+.corrections time{font-weight:600}
+
+/* 14.10 Page footer: one line of utility links. The save-or-print control mounts here. */
+.page-footer{margin:var(--section-gap,4.5rem) 0 0;padding:var(--s-5,1.5rem) 0 var(--s-7,3rem);border-top:1px solid var(--line);color:var(--soft)}
+.page-footer-line{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--s-5,1.5rem);row-gap:.5rem;margin:0;font:400 .9375rem/1.5 var(--font-sans)}
+.page-footer-line :is(.export-bar,.export-menu){display:flex;align-items:center;margin:0;padding:0;border:0}
+.page-footer-line .export-toggle{min-height:0;color:var(--ink)}
+.page-footer-line > * + *{position:relative}
+
+/* 14.11 Inline code in running text keeps the line's rhythm: a touch smaller, no taller line box. */
+main :is(p,li,dd,td) > code:not(.digest){font-size:.9em;font-weight:500;line-height:1;vertical-align:baseline}
+
+@media print{
+  .copy-button{display:none!important}
+  .table-wrap:has(> .data-table){overflow:visible}
+  .data-table{font-size:9.5pt}
+  .data-table :is(th,td,caption){overflow-wrap:normal;word-break:normal;hyphens:none}
+  .data-table thead{display:table-header-group}
+  .data-table tr{break-inside:avoid}
+  .data-table.is-scroll :is(th,td):first-child{position:static}
+  .btn-primary{background:transparent!important;color:#000!important;border-color:#000}
+  .masthead{padding-top:0}
+  .page-footer{display:none}}
+
+/* Forced colors. The primary button draws its own system colors, so its name never sits on a
+   backplate the same color as the text. */
+@media (forced-colors:active){
+  .verdict-mark::before{forced-color-adjust:none;border-color:CanvasText}
+  .verdict-mark[data-verdict="verified"]::before{background:CanvasText}
+  .btn-primary{forced-color-adjust:none;background:ButtonText!important;color:ButtonFace!important;border:2px solid ButtonText!important}
+  .btn-primary:is(:hover,:focus-visible){background:Highlight!important;color:HighlightText!important;border-color:Highlight!important}
+  .data-table thead th{border-bottom-color:CanvasText}
+  :is(.btn-primary,.btn-secondary):focus-visible{outline-color:Highlight}}

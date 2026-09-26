@@ -5,19 +5,31 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Summary Is Not The Record</title>
-<meta name="description" content="Proof-surface tooling for AI-assisted work: claims, evidence, checks, action state, and honest unverifiable outcomes.">
+<meta name="description" content="An essay on why an AI agent&#39;s closing summary should not stand in for the record of its work, and on tools that keep the claims, evidence, checks and actions behind it open to inspection.">
 <link rel="canonical" href="https://harperz9.github.io/the-summary-is-not-the-record.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="The Summary Is Not The Record">
-<meta property="og:description" content="Proof-surface tooling for AI-assisted work: claims, evidence, checks, action state, and honest unverifiable outcomes.">
+<meta property="og:description" content="An essay on why an AI agent&#39;s closing summary should not stand in for the record of its work, and on tools that keep the claims, evidence, checks and actions behind it open to inspection.">
 <meta property="og:url" content="https://harperz9.github.io/the-summary-is-not-the-record.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Summary Is Not The Record">
-<meta name="twitter:description" content="Proof-surface tooling for AI-assisted work: claims, evidence, checks, action state, and honest unverifiable outcomes.">
+<meta name="twitter:description" content="An essay on why an AI agent&#39;s closing summary should not stand in for the record of its work, and on tools that keep the claims, evidence, checks and actions behind it open to inspection.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<style>
+  /* Page scope: give a list the same space below it as a paragraph, and keep
+     the byline on one readable row on phones. */
+  .sheet ul.bul,.sheet ol.bul{margin-bottom:.9rem}
+  .sheet .asks li{margin-bottom:.6rem}
+  @media (max-width:40rem){
+    .mast .contact.contact--fields{display:flex;font-size:.875rem}
+    .mast .contact.contact--fields > *{display:inline;padding-block:0;padding-right:.55rem;margin-right:.55rem;border-right:1px solid var(--rule)}
+    .mast .contact.contact--fields > *:last-child{padding-right:0;margin-right:0;border-right:0}
+  }
+</style>
+<link rel="stylesheet" href="system/art.css?v=20260925-human-notebook">
 </head>
 <body class="doc">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -27,7 +39,7 @@
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <div class="docnav">
-  <span class="where">Writing &middot; proof surface</span>
+  <span class="where">Writing &middot; Essay</span>
   <span class="switch"><a href="writing.html">All writing</a><a href="the-summary-is-not-the-record.html" aria-current="page">Summary Is Not The Record</a></span>
 </div>
 
@@ -36,56 +48,56 @@
   <header class="mast">
     <p class="role">Essay &middot; AI agents &middot; verification</p>
     <h1>The Summary Is Not The Record</h1>
-    <p class="lead">Proof-surface tooling for AI-assisted work: claims, evidence, checks, action state, and honest unverifiable outcomes.</p>
-    <p class="contact">Zain Dana Harper <span class="sep">/</span> 2026 <span class="sep">/</span> Public review draft</p>
+    <p class="lead">An argument for tools that keep a record of the claims, evidence, checks and actions behind AI-assisted work, and that say plainly when a claim cannot be checked.</p>
+    <p class="contact contact--fields"><span>Zain Dana Harper</span><span>2026</span><span>Public review draft</span></p>
   </header>
+<figure class="art art-cover">
+  <img class="art-light" src="art/aperture/cover-the-summary-is-not-the-record-light.svg" width="1600" height="800" alt="Rows of wavy horizontal lines, with one bright glow where the lines bunch together." loading="lazy" decoding="async">
+  <img class="art-dark" src="art/aperture/cover-the-summary-is-not-the-record-dark.svg" width="1600" height="800" alt="Rows of wavy horizontal lines, with one bright glow where the lines bunch together." loading="lazy" decoding="async">
+</figure>
+  <section id="in-short">
+    <h2>In short</h2>
+    <p class="lead">When an AI agent finishes a job, all of its work gets compressed into a few clean paragraphs, and this essay argues that those paragraphs should not be the thing we trust. Before anyone asks for trust, the record behind them should be open to inspection: the claims, what the agent read and changed, and the checks that ran. The essay lays out a small public check that marks each claim as supported, no longer supported or impossible to check, and it asks you to <a href="test-run-request.html">send a case where that check fails</a>.</p>
+  </section>
 
   <section>
-    <p class="lead">The summary is not the record.</p>
-    <p class="lead">That is the sentence I keep coming back to.</p>
-    <p class="lead">A model can produce a useful answer. An agent can edit files, call tools, read pages, hand work to another agent, or change something outside the local machine. Then, at the end, all of that gets compressed into a few clean paragraphs.</p>
-    <p class="lead">Those paragraphs can be useful.</p>
-    <p class="lead">They should not be the thing we trust.</p>
+    <p class="lead">The summary is not the record. I keep coming back to that sentence.</p>
+    <p class="lead">A model, the AI that writes the text, can produce a useful answer. An agent is an AI system that also takes actions. It can edit files, run other software, read pages, hand work to another agent, or change something beyond the computer it runs on. At the end, all of that gets compressed into a few clean paragraphs, which can be useful even though they should not be the thing we trust.</p>
   </section>
 
   <section>
     <h2>The gap</h2>
-    <p class="lead">I am building Project Telos around that gap: not the model weights, not a grand promise that the system is safe, but the work surface around the agent.</p>
-    <p class="lead">There is a larger private backend behind the work. I am not releasing that machinery. What I am trying to bring into public view are the bounded pieces that should be safe and useful to inspect: verifier components, evidence formats, conformance examples, and review packets.</p>
+    <p class="lead">I am building <a href="field-guide.html">Project Telos</a>, my work on tools for reviewing what AI agents do, around the gap between an agent&#39;s summary and the record of what it did. Its subject is the work surface around the agent, where it reads, edits, runs tools and hands off work. The model weights, the numbers a model learns in training, sit outside its scope, and the project makes no grand promise that the system is safe.</p>
+    <p class="lead">A larger private system sits behind the work, and I am not releasing it. The pieces I am trying to bring into public view are bounded ones that should be safe and useful to inspect: verifier components, evidence formats, conformance examples and review packets. A verifier is a program that checks a claim against its evidence. A review packet bundles the claims, the evidence and the results so someone else can look.</p>
+    <p class="lead">A claim here means any statement the agent makes about its work that someone could check. After an agent acts, I want to be able to answer these questions:</p>
     <ul class="bul">
       <li>What did it claim?</li>
       <li>What did it read?</li>
       <li>What did it change?</li>
       <li>What checks ran?</li>
       <li>What evidence still supports the claim?</li>
-      <li>What drifted?</li>
+      <li>What drifted? That is, which claims does the evidence no longer support?</li>
       <li>What was never verifiable in the first place?</li>
     </ul>
-    <p class="lead">That is the proof-surface problem.</p>
-    <p class="lead">A lot of current AI-safety work is happening at the model level. My question is narrower and less glamorous: after an agent acts, can we open the work?</p>
-    <p class="lead">Not the weights. The work.</p>
+    <p class="lead">Together they make up the proof-surface problem.</p>
+    <p class="lead">A lot of current AI-safety work happens at the model level. My question is narrower and less glamorous. After an agent acts, can we open the work?</p>
   </section>
 
   <section>
     <h2>The packet</h2>
-    <p class="lead">That distinction matters because I do not want to ask anyone to trust the tool because I say so. If a public artifact is useful, it should be useful because another person can reopen it, run the check, find the missing edge, and argue with the result.</p>
+    <p class="lead">The line between the work and the model weights matters to me because I do not want anyone to trust Telos on my word. If a public artifact is useful, it should be useful because another person can reopen it, run the check, find the missing edge and argue with the result.</p>
     <p class="lead">For me, the useful packet has three honest outcomes:</p>
     <ul class="bul">
       <li><b>MATCH</b>: the available evidence supports the claim.</li>
       <li><b>DRIFT</b>: the evidence no longer supports the claim.</li>
       <li><b>UNVERIFIABLE</b>: the system cannot honestly check the claim.</li>
     </ul>
-    <p class="lead">That last one matters.</p>
-    <p class="lead">Unsupported claims should not sound the same as checked claims. If the system cannot prove something, I want it to say so plainly. Not as an apology. As a useful result.</p>
+    <p class="lead">UNVERIFIABLE matters because unsupported claims should sound different from checked claims. When the system cannot prove something, I want it to say so plainly, without apology, and to count that answer as a useful result.</p>
   </section>
 
   <section>
-    <h2>What it is not</h2>
-    <p class="lead">This is not a safety certification.</p>
-    <p class="lead">It is not a compliance claim.</p>
-    <p class="lead">It is not an audit.</p>
-    <p class="lead">It is not an affiliation claim with Anthropic or AE Studio.</p>
-    <p class="lead">It is early infrastructure for review.</p>
+    <h2>What this does not claim</h2>
+    <p class="lead">This work is early infrastructure for review. It does not certify safety, perform an audit, claim compliance or claim an affiliation with Anthropic or AE Studio. The references at the end link to their published alignment work.</p>
   </section>
 
   <section>
@@ -99,23 +111,22 @@
       <li>Mark MATCH, DRIFT, or UNVERIFIABLE.</li>
       <li>Produce a packet another person can inspect.</li>
     </ol>
-    <p class="lead">The goal is not to make the work look clean.</p>
-    <p class="lead">The goal is to make it reopenable.</p>
-    <p class="lead">A small cleanroom example is public here: <a href="https://harperz9.github.io/demos/crucible-cleanroom/">Crucible Cleanroom Verdict Packet Demo</a>. It is intentionally narrow: one verifier packet, one downloadable bundle, and one visible line between evidence-supported claims and claims the system must refuse to overstate.</p>
+    <p class="lead">The goal is to make the work reopenable, whether or not the result looks clean.</p>
+    <p class="lead">A small cleanroom example is public here: <a href="https://harperz9.github.io/demos/crucible-cleanroom/">Crucible Cleanroom Verdict Packet Demo</a>. Cleanroom means the reviewer sees only the packet and never the agent&#39;s notes, chat or reasoning. <a href="crucible.html">Crucible</a> is my claim-testing program. I kept the example narrow on purpose. It holds a single review packet and a downloadable bundle, and the page separates claims the evidence supports from claims the system must refuse to overstate.</p>
   </section>
 
   <section>
     <h2>What I am looking for</h2>
-    <p class="lead">The larger architecture may be ambitious, but the public test should not be grand. It should be small enough to audit, strict enough to refuse overclaiming, and boring enough that a critic can say exactly where it breaks.</p>
-    <p class="lead">I care about this because AI-assisted work is starting to touch real surfaces: repos, releases, benchmark claims, security reviews, customer demos, governance packets, internal tools, public pages. The more capable the agent becomes, the less acceptable it is for the final summary to become the only durable story.</p>
-    <p class="lead">Before trust is requested, the evidence should be inspectable.</p>
-    <p class="lead">That is the line I am trying to walk: small enough to audit, strict enough to refuse overclaiming, reproducible enough that another person can re-check the claim.</p>
-    <p class="lead">I am looking for failure cases, not applause.</p>
-    <p class="lead">If you build agent tools, I want to see a workflow where the trace exists but the review story is still weak.</p>
-    <p class="lead">If you maintain OSS projects, I want a release claim, benchmark claim, issue, or AI-generated patch where someone should be able to ask: what exactly was checked?</p>
-    <p class="lead">If you work near provenance, security, GRC, or standards, I want criticism on the verifier boundary: what belongs in the packet, what should stay outside it, and where the trust boundary needs to stay visible.</p>
-    <p class="lead">I need examples outside myself. Months of internal testing can prepare the idea, but it cannot prove the idea survives contact with someone else's repo, workflow, or release claim.</p>
-    <p class="lead">I wrote a short public intake note for that: <a href="test-run-request.html">send a small proof-surface test case</a>. Keep it public, keep it narrow, and do not send secrets or private data.</p>
+    <p class="lead">The larger private system may be ambitious. I want the public test small enough to audit and strict enough to refuse overclaiming. Another person should be able to re-check any claim in it. It should also stay boring, so a critic can say exactly where it breaks.</p>
+    <p class="lead">I care about this because AI-assisted work is starting to touch real surfaces: code repositories, releases, benchmark claims (claims about how a model scored on a standard test), security reviews, customer demos, governance packets, internal tools and public pages. The more capable the agent becomes, the less acceptable it is for the final summary to be the only lasting account of what happened. Before anyone asks for trust, the evidence should be open to inspection.</p>
+    <p class="lead">I am looking for failure cases, not applause. These are the cases I would like to see:</p>
+    <ul class="bul asks">
+      <li><b>Agent-tool builders:</b> a workflow where the trace exists and the review story is still weak. A trace is the log of each step the agent took.</li>
+      <li><b>Open-source maintainers:</b> a release claim, a benchmark claim, an issue (a reported problem) or an AI-generated patch (a code change written by an AI) where someone should be able to ask what exactly was checked.</li>
+      <li><b>People who work near provenance, security, governance, risk and compliance (GRC), or standards:</b> criticism of the verifier boundary, the line that sets what the verifier looks at and what it leaves out. Provenance is the record of where a piece of work came from. Tell me what belongs in the packet, what should stay outside it, and where the trust boundary needs to stay visible.</li>
+    </ul>
+    <p class="lead">I need examples from outside my own work. Months of internal testing can prepare the idea, but it cannot prove the idea survives contact with someone else&#39;s repository, workflow or release claim.</p>
+    <p class="lead">I wrote a short public intake note for that: <a href="test-run-request.html">send a small proof-surface test case</a>. Keep it public and narrow. Do not send secrets or private data.</p>
     <p class="lead">Build with a model. Take nothing on faith.</p>
   </section>
 
@@ -129,7 +140,7 @@
     </ul>
   </section>
 
-  <p class="note">Public-safe: no secrets, no client data, no private backend material. Back to <a href="writing.html">Writing</a>.</p>
+  <p class="note">This page contains no secrets, client data or material from the private system. Back to <a href="writing.html">Writing</a>.</p>
 </article>
 </main>
 </body>

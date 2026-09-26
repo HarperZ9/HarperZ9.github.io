@@ -5,26 +5,74 @@
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
     {
+      "id": "https://harperz9.github.io/who-knew-first.html",
+      "url": "https://harperz9.github.io/who-knew-first.html",
+      "title": "Who Knew First",
+      "content_text": "An op-ed and the record behind it. By the record's account, the organization that ran the model held the decisive facts in each of nine AI agent incidents from 2026, and in six of them someone else told the public first.",
+      "date_published": "2026-09-23T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/what-the-label-changes.html",
+      "url": "https://harperz9.github.io/what-the-label-changes.html",
+      "title": "What the Label Changes",
+      "content_text": "A label can change where people look and make an artwork feel easier to make sense of. It can do that without raising how much people like the work, what they learn from it, how correctly they interpret it, or its artistic value.",
+      "date_published": "2026-09-02T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/the-second-hearing.html",
+      "url": "https://harperz9.github.io/the-second-hearing.html",
+      "title": "The Second Hearing",
+      "content_text": "Repeated listening can change liking, prediction, attention and memory in different ways. A replay count records exposure and cannot measure quality or a universal response.",
+      "date_published": "2026-09-01T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/the-sandbox-was-never-just-a-box.html",
       "url": "https://harperz9.github.io/the-sandbox-was-never-just-a-box.html",
       "title": "The Sandbox Was Never Just a Box",
       "content_text": "Separate security reports expose a shared question: what can an agent reach, and can the instruments that record its actions remain trustworthy?",
       "date_published": "2026-09-10T00:00:00Z",
-      "date_modified": "2026-09-10T00:00:00Z"
-    },
-    {
-      "id": "https://harperz9.github.io/borrowed-ground.html",
-      "url": "https://harperz9.github.io/borrowed-ground.html",
-      "title": "Borrowed Ground",
-      "content_text": "On existence, responsibility, and what our work owes other people.",
-      "date_published": "2026-09-10T00:00:00Z",
-      "date_modified": "2026-09-10T00:00:00Z"
+      "date_modified": "2026-09-25T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html",
       "url": "https://harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html",
       "title": "LTJ Bukem: The Man Behind the Atmosphere",
-      "content_text": "Danny Williamson’s taste, working habits and collaborations show how an atmosphere becomes a series of musical decisions.",
+      "content_text": "Danny Williamson’s calm, spacious records come out of a series of musical decisions, shaped by his taste and working habits and by the musicians around him.",
+      "date_published": "2026-09-09T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/borrowed-ground.html",
+      "url": "https://harperz9.github.io/borrowed-ground.html",
+      "title": "Borrowed Ground",
+      "content_text": "On existence and what our work owes other people.",
+      "date_published": "2026-09-10T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/frontier-safety.html",
+      "url": "https://harperz9.github.io/frontier-safety.html",
+      "title": "Frontier Safety briefing",
+      "content_text": "A dated monitor of AISI, Anthropic, OpenAI and industry safety records. Each edition keeps reported facts, source roles and limits apart.",
+      "date_published": "2026-08-24T00:00:00Z",
+      "date_modified": "2026-09-23T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/checking-the-machines.html",
+      "url": "https://harperz9.github.io/checking-the-machines.html",
+      "title": "An open letter on checking the machines",
+      "content_text": "A signed letter to the people who build AI systems: a person should be able to question a machine's answer without first winning an argument with its owner.",
+      "date_published": "2026-09-19T00:00:00Z",
+      "date_modified": "2026-09-20T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/a-witness-should-not-become-a-ruler.html",
+      "url": "https://harperz9.github.io/a-witness-should-not-become-a-ruler.html",
+      "title": "A witness should not become a ruler",
+      "content_text": "An expanded essay on the public tool portfolio, contribution from outside academia, evidence for review and changing educational practice.",
       "date_published": "2026-09-09T00:00:00Z",
       "date_modified": "2026-09-09T00:00:00Z"
     },
@@ -37,26 +85,10 @@
       "date_modified": "2026-09-05T00:00:00Z"
     },
     {
-      "id": "https://harperz9.github.io/what-the-label-changes.html",
-      "url": "https://harperz9.github.io/what-the-label-changes.html",
-      "title": "What the Label Changes",
-      "content_text": "A label can redirect looking and make an artwork feel more legible without making it more liked, learned, correct, or valuable.",
-      "date_published": "2026-09-02T00:00:00Z",
-      "date_modified": "2026-09-02T00:00:00Z"
-    },
-    {
-      "id": "https://harperz9.github.io/the-second-hearing.html",
-      "url": "https://harperz9.github.io/the-second-hearing.html",
-      "title": "The Second Hearing",
-      "content_text": "Repeated listening can change liking, prediction, attention, and memory in different ways. Replay count records exposure, not quality or a universal response.",
-      "date_published": "2026-09-01T00:00:00Z",
-      "date_modified": "2026-09-01T00:00:00Z"
-    },
-    {
       "id": "https://harperz9.github.io/availability-is-not-reach.html",
       "url": "https://harperz9.github.io/availability-is-not-reach.html",
       "title": "Availability Is Not Reach",
-      "content_text": "Tutoring evidence is strong, but an offer is not delivery. Public claims must separate availability, reach, dosage, staffing, and outcomes.",
+      "content_text": "Tutoring has strong trial evidence. An offer of tutoring and its delivery are separate facts, and public claims must keep availability, reach, dosage, staffing, and outcomes apart.",
       "date_published": "2026-09-01T00:00:00Z",
       "date_modified": "2026-09-01T00:00:00Z"
     },

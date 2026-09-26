@@ -64,7 +64,10 @@ def test_home_loads_the_react_shell_with_a_readable_static_floor() -> None:
         assert '<div id="root"></div>' in src
         assert "styles.css" not in src
 
-    assert 'href="/system/home-readable.css?v=20260902-creative-chassis"' in read(INDEX)
+    # 2026-09-25: the void-and-bone surface replaces the plum home field; the home
+    # loads the shared tokens and plate layer instead of home-readable.css.
+    assert 'href="/system/plate.css?v=20260925-void-plates"' in read(INDEX)
+    assert "home-readable.css" not in read(INDEX)
 
 
 def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:
@@ -72,10 +75,15 @@ def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:
 
     assert "orientation / artifact" not in combined
 
-    assert ".hero > .hero-copy" in combined
-    assert ".hero > .identity-art" in combined
-    assert "z-index:1" in combined
+    # 2026-09-25: the home's static floor is the shared surface (tokens and plate
+    # layer) in place of home-readable.css; the hero layout lives in the bundle.
+    assert "--field-mark" in combined
+    assert "--field-grain" in combined
     assert "pointer-events:none" in combined
+    assert "@media (forced-colors:active)" in combined
+    home_layer = read(ROOT / "home" / "src" / "plate-home.css")
+    assert ".hero > .hero-copy" in home_layer
+    assert ".hero > .identity-art" in home_layer
 
 
 def test_home_menu_readability_rules_live_in_the_home_bundle() -> None:
@@ -107,7 +115,7 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
         "Evidence board",
         "Research, pilot, and support routes",
         "Measured evidence",
-        "Current research",
+        "Recent work",
         "Graphics, engines, and preservation",
             "Security platforms",
         "Hiring, contracting, and collaboration",

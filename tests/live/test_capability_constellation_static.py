@@ -163,7 +163,7 @@ def test_required_live_routes_and_assets_exist() -> None:
     assert "Measured evidence" in home
     assert "Recovered-actions dataset" in home
     assert "Motive-label dataset" in home
-    assert "Current research" in home
+    assert "Recent work" in home
     assert "Hire or collaborate" in home
 
     for asset in _asset_paths(home):
@@ -180,8 +180,9 @@ def test_system_registry_keeps_flywheel_primary_and_private_security_bounded() -
     assert primary == ["flywheel"]
     assert records["flywheel"]["name"] == "Flywheel"
     assert records["flywheel"]["maturity"] == "shipped"
-    assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v1.0.1"
-    assert records["flywheel"]["releaseState"] == "stable Python engine v1.0.1; unsigned Windows desktop v1.0.1; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
+    # 2026-09-25: Flywheel 1.0.4 is the current release; the 1.0.1 records stay as history.
+    assert records["flywheel"]["evidence"][0]["label"] == "Flywheel v1.0.4"
+    assert records["flywheel"]["releaseState"] == "stable Python engine v1.0.4; unsigned Windows desktop v1.0.4; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
     assert {"engine-revival", "brender-archival", "retro-engine"}.isdisjoint(records["flywheel"]["related"])
 
     private_ids = ("array", "seed", "sofer", "isomorph", "bounds", "orca", "gate")
@@ -242,7 +243,9 @@ def test_incident_briefing_and_figures_are_published_with_receipts_and_fallbacks
         svg = _text(f"figures/{figure_id}.svg")
         fallback = _text(f"figures/{figure_id}.html")
         companion = _json(f"figures/{figure_id}.json")
-        assert '<svg role="img"' in svg
+        # 25 September 2026: drawn diagrams from the human-first redesign declare
+        # role="graphics-document" with a diagram role description; charts keep img.
+        assert '<svg role="img"' in svg or '<svg role="graphics-document" aria-roledescription="diagram"' in svg
         assert "<title" in svg and "<desc" in svg
         assert '<figure class="evidence-figure"' in fallback
         assert 'class="figure-table' in fallback

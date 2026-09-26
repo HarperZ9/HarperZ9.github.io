@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Articulate | Zentropy Labs</title>
+<meta name="description" content="Articulate checks prose for hedging, filler and stock phrasing. Its checks run on your own computer with no network connection.">
+<link rel="canonical" href="https://harperz9.github.io/articulate.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Articulate | Zentropy Labs">
+<meta property="og:description" content="A writing checker for hedging, filler and stock phrasing that runs on your own computer.">
+<meta property="og:url" content="https://harperz9.github.io/articulate.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/profile.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Articulate | Zentropy Labs">
+<meta name="twitter:description" content="A writing checker for hedging, filler and stock phrasing that runs on your own computer.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<link rel="stylesheet" href="system/art.css?v=20260925-human-notebook">
+<style>
+  .art-cover { margin: 0 0 1.5rem; }
+  .cmd { overflow-x: auto; padding: .85rem 1rem; border: 1px solid var(--line, #c9cfcf); border-radius: 2px; font-size: .92rem; line-height: 1.55; }
+  .cmd code { white-space: pre; }
+  .sample { margin: .6rem 0 1rem; padding: .1rem 0 .1rem 1rem; border-left: 3px solid currentColor; }
+  .how-we-know { margin-top: 2rem; }
+  .how-we-know summary { cursor: pointer; font-weight: 700; }
+  .how-we-know ul { margin: .6rem 0 0; }
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="start-here.html">Start here</a> <a href="flywheel.html">Flywheel</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="hire.html">Work</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<main id="main">
+<article class="sheet doc-rail">
+  <header class="mast">
+    <h1>Articulate</h1>
+    <p class="role">A writing checker that runs on your own computer.</p>
+  </header>
+
+  <figure class="art art-cover">
+    <img class="art-light" src="art/aperture/cover-articulate-light.svg" width="1600" height="800" alt="Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends." loading="lazy" decoding="async">
+    <img class="art-dark" src="art/aperture/cover-articulate-dark.svg" width="1600" height="800" alt="Rows of short dashes, like lines of text, bend around a bright circle on the right. On the left, one run of dashes lifts out of its line in orange, bracketed at both ends." loading="lazy" decoding="async">
+  </figure>
+
+  <section aria-labelledby="in-short">
+    <h2 id="in-short">In short</h2>
+    <p>Articulate checks prose for the habits that make writing hard to read and hard to trust, such as hedging, filler words and stock phrases. Its checks run on your own computer with no network connection. This site checks its pages with it.</p>
+    <p><a href="#install">Install it</a> &middot; <a href="https://github.com/HarperZ9/articulate" translate="no">Source on GitHub</a> &middot; <a href="https://pypi.org/project/articulate-writing/" translate="no">PyPI</a></p>
+  </section>
+
+  <section aria-labelledby="what-title">
+    <h2 id="what-title">What it is</h2>
+    <p data-purpose>Articulate is a Python command-line tool that checks prose for hedging, filler, stock phrasing and other patterns common in machine-written text, and scores how machine-textured a passage reads. Its checks run locally with no network call, and a check can leave a receipt that replays the verdict later and keeps no verbatim source text.</p>
+    <p>Each check runs in a writing mode, such as a memo that argues a case or technical documentation that explains. The mode sets which patterns count and how strictly. Fiction, memoir, screenplays and poetry each get their own reading. Under a fiction mode, a character's quoted line is never scored as the author's prose.</p>
+  </section>
+
+  <section aria-labelledby="install">
+    <h2 id="install">Install and run a check</h2>
+    <pre class="cmd"><code>pip install articulate-writing
+articulate check notes.md --mode technical-docs/explain --gate</code></pre>
+    <p>Pick the mode that fits the text. <code>articulate modes</code> lists them all. With <code>--gate</code>, the command exits with 1 when the text is blocked, so a script or a CI job can stop on it. The core needs nothing beyond Python's standard library.</p>
+  </section>
+
+  <section aria-labelledby="example-title">
+    <h2 id="example-title">One example check</h2>
+    <p>This sentence went in:</p>
+    <blockquote class="sample">It is important to note that this release really represents a significant step forward. Arguably, the new cache could potentially make builds faster in many cases.</blockquote>
+    <p>Articulate blocked it with four findings. Each finding also prints the line it came from, cut here for width.</p>
+    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: 1 high, 3 medium (blocked)  texture 0/100
+  L1 [HIGH filler-intensifier] genuinely / really / truly / actually
+  L1 [MEDIUM throat-clearing] throat-clearing opener
+  L1 [MEDIUM hedge-stack] stacked hedge
+  L1 [MEDIUM throat-clearing] worth-noting preamble</code></pre>
+    <p>A rewrite that names the change and gives a measured number passes the gate. The numbers here are made up for the example.</p>
+    <blockquote class="sample">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</blockquote>
+    <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: unverifiable (below the signal floor)  texture 0/100</code></pre>
+    <p>The command exits with 0. The word unverifiable refers to the texture score: two sentences are too short to say how machine-textured the text reads.</p>
+  </section>
+
+  <section aria-labelledby="clean-title">
+    <h2 id="clean-title">What a clean check tells you</h2>
+    <p>A clean check means none of the patterns Articulate knows appeared in the text. It says nothing about whether the writing is true or clear, so a reader still needs the sources. The documentation states that Articulate is not a tool for evading AI detection. Writing quality is the goal, and a detector score is a side effect it never aims at.</p>
+  </section>
+
+  <section aria-labelledby="receipt-title">
+    <h2 id="receipt-title">Receipts</h2>
+    <p>A receipt records a check so that anyone can replay it later against the same file.</p>
+    <pre class="cmd"><code>articulate receipt notes.md --mode technical-docs/explain --redact drop &gt; notes.receipt.json
+articulate verify notes.receipt.json notes.md</code></pre>
+    <p>The replay gives one of three answers. Match means the file gives the same findings again. Drift means the same text under the same rules now gives different findings. Unverifiable means the replay cannot run as recorded, for example because the file changed after the receipt was made. With <code>--redact drop</code>, the receipt keeps no verbatim text from the file. It still records which rule fired on which line, and a rule named after a short word list narrows the flagged word to that list.</p>
+  </section>
+
+  <section aria-labelledby="editing-title">
+    <h2 id="editing-title">Editing</h2>
+    <p>Three tools read and rewrite prose. Judge names problems a pattern rule cannot see, such as a claim with no position behind it. Fix rewrites a passage to the standard and checks its own result. Polish repeats until the prose clears a bar for concreteness, commitment, economy, rhythm and one restatable fact per paragraph. They run through <code>articulate-mcp</code>, the MCP server that comes with the package, and they need a language model, either a local one or the claude command-line tool.</p>
+    <p>In an editor, the <code>articulate-lsp</code> server shows findings inline in any editor that speaks the Language Server Protocol, such as VS Code, a JetBrains IDE or Neovim.</p>
+  </section>
+
+  <section aria-labelledby="releases-title">
+    <h2 id="releases-title">Releases</h2>
+    <p>Articulate 0.1.0 reached PyPI on 18 September 2026. Version 0.4.1 followed on 24 September 2026, the fifth release in that span.</p>
+    <p>This page was written with AI assistance and checked with Articulate.</p>
+  </section>
+
+  <details class="how-we-know" id="how-we-know">
+    <summary>How we know</summary>
+    <ul>
+      <li>Release dates come from the upload times on <a href="https://pypi.org/project/articulate-writing/#history" translate="no">PyPI's release history</a>, in UTC: 0.1.0 at 13:07 on 18 September 2026 and 0.4.1 at 03:14 on 24 September 2026. The matching <a href="https://github.com/HarperZ9/articulate/releases" translate="no">GitHub releases</a> carry the same dates. File hashes for each release are listed on PyPI.</li>
+      <li>The example output above is from Articulate 0.4.1, run on 25 September 2026. The receipt answers come from the same run: a replay of the unchanged file gave match, and a replay after one added line gave unverifiable.</li>
+      <li>The no-network claim rests on the project README, which says the detector never touches the network, and on a search of the 0.4.1 check, receipt and command-line code, which found no network library imported. The editing tools call a language model, so they are outside that claim.</li>
+      <li>This page does not show that Articulate finds every weak pattern, or that its findings agree with a human editor. The package ships a benchmark, <code>python -m articulate.bench</code>, for anyone who wants to test that.</li>
+    </ul>
+  </details>
+</article>
+</main>
+</body>
+</html>

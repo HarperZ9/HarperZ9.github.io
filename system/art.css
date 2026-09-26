@@ -1,0 +1,79 @@
+/* art.css: placement for the aperture art family in art/aperture/.
+   scripts/render-site-art.mjs draws every piece twice, once for a dark ground and once for a
+   bone paper ground. A figure carries both images; this sheet shows the one that matches the
+   page theme. The theme menu writes data-theme on <html>; without it the system preference
+   decides. Art sits only where art is the subject (a hero, a pillar header, an essay or dossier
+   cover) and never behind body text, so nothing here positions art under words.
+
+   Markup:
+   <figure class="art art-cover">
+     <img class="art-light" src="art/aperture/cover-borrowed-ground-light.svg" width="1600" height="800" alt="..." loading="lazy" decoding="async">
+     <img class="art-dark" src="art/aperture/cover-borrowed-ground-dark.svg" width="1600" height="800" alt="..." loading="lazy" decoding="async">
+   </figure>
+   Both images carry the same alt text. The hidden one has display:none, which removes it from
+   the accessibility tree and, with loading="lazy", keeps the browser from fetching it. */
+
+.art {
+  margin: 0;
+  inline-size: 100%;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.art img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.art .art-dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .art .art-light { display: none; }
+  :root:not([data-theme="light"]) .art .art-dark { display: block; }
+}
+
+:root[data-theme="dark"] .art .art-light { display: none; }
+:root[data-theme="dark"] .art .art-dark { display: block; }
+:root[data-theme="light"] .art .art-light { display: block; }
+:root[data-theme="light"] .art .art-dark { display: none; }
+
+/* Home hero: a square piece beside the hero copy on desks, under the actions on phones. */
+.art-hero {
+  max-inline-size: 36rem;
+  aspect-ratio: 1 / 1;
+  justify-self: end;
+}
+
+/* Pillar header: a 4:3 piece beside the pillar hero on desks, under it on phones. */
+.art-pillar {
+  max-inline-size: 38rem;
+  aspect-ratio: 4 / 3;
+  justify-self: end;
+}
+
+/* Essay and dossier cover: a 2:1 band under the masthead and above the first paragraph,
+   as wide as the reading column plus its figure overhang. */
+.art-cover {
+  aspect-ratio: 2 / 1;
+  margin-block: 1.5rem 2rem;
+}
+
+@media (max-width: 760px) {
+  .art-hero,
+  .art-pillar {
+    justify-self: stretch;
+    max-inline-size: none;
+  }
+  .art-cover { margin-block: 1rem 1.5rem; }
+}
+
+/* Forced colors keep the image and give it a system frame. */
+@media (forced-colors: active) {
+  .art { outline: 1px solid CanvasText; }
+}
+
+/* Print on white paper with black ink: the art stays on screen. */
+@media print {
+  .art { display: none !important; }
+}

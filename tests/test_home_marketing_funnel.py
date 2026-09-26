@@ -47,23 +47,29 @@ def array_items(source: str, array_name: str) -> list[str]:
     return re.findall(r'"([^"]+)"', match.group("body"))
 
 
+# 25 September 2026: the human-first redesign adds Recent work after the
+# mission and folds the current-briefing card into it. Mission first and
+# Flywheel before supporting evidence still hold. Following the owner's
+# rulings of 25 September 2026, the home page shows two figures; the other
+# three stay one click away under How we know.
 def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     source = read(HOME_SOURCE)
     hero = section(source, "identity", "mission")
 
     assert "Zentropy Labs" in hero
     assert "Flywheel and public tools for re-derivable AI evaluation." in hero
-    assert "claims a skeptic can rerun" in hero
+    assert "someone else can rerun on their own computer" in hero
+    assert 'href="/start-here.html"' in hero
     assert '<a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>' in hero
     assert main_component_order(source) == [
         "IdentityHero",
         "MissionFrame",
+        "RecentWork",
         "FeaturedFlywheel",
         "ProductSelection",
         "EvidenceBoard",
         "ResearchPilotRoutes",
         "CapabilityOverview",
-        "CurrentResearch",
         "LiveBoard",
         "RetroSystemsLab",
         "SecurityBoundary",
@@ -178,7 +184,7 @@ def test_home_uses_real_figures_with_units_and_limitations() -> None:
     assert "Unit: recovered logged actions" in source
     assert "Categories overlap" in source
     assert "What this does not prove" in source
-    assert "Capability families remain navigation labels, not diagrams" in source
+    assert "Capability families are navigation labels." in source
     assert "<table" in source
     assert "<caption>" in source
     assert '<th scope="row">' in source
@@ -190,12 +196,12 @@ def test_home_uses_real_figures_with_units_and_limitations() -> None:
 def test_home_figure_cards_expose_dataset_facts_and_accessible_tables() -> None:
     source = read(HOME_SOURCE)
 
-    assert source.count("<FigureFacts rows={[") == 4
+    assert source.count("<FigureFacts rows={[") == 1
     for value in (
         '["n", "164 code-completion tasks"]',
-        '["n", "35 receipt-verified attempts"]',
-        '["n", "5 daily observations"]',
-        '["n", "100-agent peak-hour sample"]',
+        "35 receipt-verified attempts",
+        "5 daily observations",
+        "100-agent peak-hour sample",
         'href="/figures/recovered-actions-by-day.html"',
         'href="/figures/motive-sample-nonexclusive.html"',
         'href="/analytics/model-pass-at-1-comparison.html"',
@@ -226,7 +232,7 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
         "Evidence board",
         "Research, pilot, and support routes",
         "Measured evidence",
-        "Current research",
+        "Recent work",
         "Live: the agent board",
         "Hiring, contracting, and collaboration",
     ):
@@ -236,7 +242,8 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     assert fallback.index("Flagship platform: Flywheel") < fallback.index("Built tooling ecosystem")
     assert fallback.index("Built tooling ecosystem") < fallback.index("Evidence board")
     assert fallback.index("Evidence board") < fallback.index("Research, pilot, and support routes")
-    assert fallback.index("Current research") < fallback.index("Live: the agent board")
+    assert fallback.index("Mission: re-derivable verification") < fallback.index("Recent work")
+    assert fallback.index("Recent work") < fallback.index("Flagship platform: Flywheel")
     assert "workshop behind Flywheel" not in fallback
 
 
@@ -288,3 +295,16 @@ def test_home_live_board_keeps_diagnostics_behind_disclosure() -> None:
     default_view = source.split("<details>", 1)[0]
     assert "<BoardCounts counts={counts} />" not in default_view
     assert "Raw feed" not in default_view
+
+
+def test_home_recent_work_leads_with_who_knew_first() -> None:
+    source = read(HOME_SOURCE)
+    recent = source[source.index("function RecentWork() {"):]
+    recent = recent[:recent.index("\n}\n") if "\n}\n" in recent else len(recent)]
+    assert recent.index('href="/who-knew-first.html"') < recent.index("RECENT_WORK.map")
+    # 2026-09-25: Articulate has its own page, articulate.html, so the card links there.
+    for href in ('"/flywheel.html"', '"/checking-the-machines.html"', '"/frontier-safety.html"',
+                 '"/articulate.html"'):
+        assert href in source
+    assert 'role="img" aria-labelledby="wkf-chart-title wkf-chart-summary"' in recent
+    assert "How to read this:" in recent

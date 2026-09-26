@@ -11,6 +11,7 @@ import re
 import sys
 import tempfile
 import textwrap
+import time
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape as xml_escape
@@ -18,6 +19,7 @@ from xml.sax.saxutils import escape as xml_escape
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools.publication_listings import listing_sha256, load_listing
 from tools.publication_model import (
     PublicationError,
     canonical_json_bytes,
@@ -30,6 +32,24 @@ from tools.publication_model import (
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
 ASSET_REVISION = "20260907-reading-completion"
+COVER_ALT_PATH = ROOT / "art" / "aperture" / "covers.json"
+
+
+def _cover_figure(record_id: str) -> str:
+    """The record's aperture cover, when the art family has one, with its shared alt text."""
+    slug = f"cover-{record_id}"
+    if not (ROOT / "art" / "aperture" / f"{slug}-light.svg").is_file() or not COVER_ALT_PATH.is_file():
+        return ""
+    alt = json.loads(COVER_ALT_PATH.read_text(encoding="utf-8"))["alt"].get(slug)
+    if not alt:
+        return ""
+    alt = html.escape(alt, quote=True)
+    return (
+        '<figure class="art art-cover">'
+        f'<img class="art-light" src="art/aperture/{slug}-light.svg" width="1600" height="800" alt="{alt}" loading="lazy" decoding="async">'
+        f'<img class="art-dark" src="art/aperture/{slug}-dark.svg" width="1600" height="800" alt="{alt}" loading="lazy" decoding="async">'
+        "</figure>"
+    )
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
 WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"
@@ -342,9 +362,10 @@ def render_article(record: dict, *, review_materials: tuple[str, ...] = ()) -> s
 <meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
 <link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"><script type="module" src="system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
-<main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"])}</p>
+<main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"].replace("-", " "))}</p>
 <h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
 <p class="publication-meta">By {html.escape(record["author"])} · Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
+{_cover_figure(record["id"])}
 <details class="publication-contents"><summary>In this article</summary><nav aria-label="Article sections"><ol>{contents}<li><a href="#sources">Sources</a></li></ol></nav></details>
 <details class="publication-opening"><summary>Research summary and limits</summary>{opening}</details>
 {sections}{figures}
@@ -357,7 +378,8 @@ def render_article(record: dict, *, review_materials: tuple[str, ...] = ()) -> s
 
 
 def _render_publication_entry(record: dict) -> str:
-    topics = html.escape((record["category"] + " " + record["form"]).replace("-", " "))
+    words = [record["category"], record["form"], *record.get("topics", [])]
+    topics = html.escape(" ".join(words).replace("-", " "))
     return (
         f'<article data-publication-entry data-topics="{topics}">'
         f'<p class="publication-meta">{html.escape(record["form"].title())} · {html.escape(record["updated_at"])}</p>'
@@ -369,14 +391,14 @@ def _render_publication_entry(record: dict) -> str:
 def _render_writing_entry(record: dict) -> str:
     return (
         f'<article class="sheet essay generated-editorial" id="{html.escape(record["id"])}">'
-        f'<p class="role">{html.escape(record["form"])} · {html.escape(record["category"])}</p>'
+        f'<p class="role">{html.escape(record["form"])} · {html.escape(record["category"].replace("-", " "))}</p>'
         f'<h2><a href="{html.escape(record["route"])}">{html.escape(record["title"])}</a></h2>'
         f'<p>{html.escape(record["summary"])}</p></article>'
     )
 
 
 def _feed_item(record: dict) -> dict:
-    url = SITE_URL + record["route"]
+    url = SITE_URL + record["route"].lstrip("/")
     return {
         "id": url,
         "url": url,
@@ -418,16 +440,30 @@ def _validate_record_set(records: list[dict]) -> None:
         raise PublicationError("duplicate publication idempotency key")
 
 
-def planned_outputs(records: list[dict], root: Path) -> dict[str, bytes]:
+def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None = None) -> dict[str, bytes]:
     _validate_record_set(records)
+    listings = list(listings or [])
+    record_routes = {record["route"].lstrip("/") for record in records}
+    listing_ids = [listing["id"] for listing in listings]
+    if len(listing_ids) != len(set(listing_ids)) or set(listing_ids) & {record["id"] for record in records}:
+        raise PublicationError("duplicate publication or listing id")
+    for listing in listings:
+        if listing["route"].lstrip("/") in record_routes:
+            raise PublicationError(f"listing {listing['id']} shares a route with a full record")
     publications_source = (root / "publications.html").read_text(encoding="utf-8")
     writing_source = (root / "writing.html").read_text(encoding="utf-8")
     sitemap_source = (root / "sitemap.xml").read_text(encoding="utf-8")
     existing_briefings = load_existing_briefings(root)
 
     records = sorted(records, key=lambda record: (record["updated_at"], record["route"]), reverse=True)
-    publication_entries = "\n".join(_render_publication_entry(record) for record in records)
-    writing_entries = "\n".join(_render_writing_entry(record) for record in records)
+
+    def newest_first(items: list[dict]) -> list[dict]:
+        return sorted(items, key=lambda item: (item["updated_at"], item["route"]), reverse=True)
+
+    publication_items = newest_first(records + [x for x in listings if "publications" in x["hubs"]])
+    writing_items = newest_first(records + [x for x in listings if "writing" in x["hubs"]])
+    publication_entries = "\n".join(_render_publication_entry(item) for item in publication_items)
+    writing_entries = "\n".join(_render_writing_entry(item) for item in writing_items)
     route_entries = "\n".join(
         f"  <url><loc>{SITE_URL}{html.escape(record['route'])}</loc></url>" for record in records
     )
@@ -474,8 +510,24 @@ def planned_outputs(records: list[dict], root: Path) -> dict[str, bytes]:
             outputs[prefix + ".html"] = _text_bytes(render_figure_html(figure, record["sources"]))
 
     index = {"schema_version": 1, "records": sorted(index_records, key=lambda item: item["route"])}
+    if listings:
+        index["listings"] = sorted(
+            (
+                {
+                    "id": listing["id"],
+                    "route": listing["route"],
+                    "published_at": listing["published_at"],
+                    "updated_at": listing["updated_at"],
+                    "hubs": listing["hubs"],
+                }
+                for listing in listings
+            ),
+            key=lambda item: item["route"],
+        )
     outputs["publications/data/index.json"] = _json_bytes(index)
     feed_items = existing_briefings + [_feed_item(record) for record in records]
+    known_urls = {item["url"] for item in feed_items}
+    feed_items += [item for item in (_feed_item(listing) for listing in listings) if item["url"] not in known_urls]
     feed_items.sort(key=lambda item: (item["date_modified"], item["url"]), reverse=True)
     outputs["feed.json"] = _json_bytes(
         {
@@ -488,6 +540,25 @@ def planned_outputs(records: list[dict], root: Path) -> dict[str, bytes]:
     )
     outputs["feed.xml"] = _text_bytes(_render_atom(feed_items))
     return outputs
+
+
+def _replace_file(staged: Path, destination: Path) -> None:
+    """Move a staged output into place.
+
+    On Windows a reader that holds the destination open (a browser tab showing the
+    file from disk, an indexer) blocks a replace even though a rename or an in-place
+    write still works. Retry briefly, then write the bytes in place; the caller's
+    rollback restores every file it touched if a later step fails.
+    """
+    for attempt in range(5):
+        try:
+            os.replace(staged, destination)
+            return
+        except PermissionError:
+            if attempt < 4:
+                time.sleep(0.2)
+    destination.write_bytes(staged.read_bytes())
+    staged.unlink(missing_ok=True)
 
 
 def _publish_atomically(outputs: dict[str, bytes], root: Path) -> None:
@@ -504,7 +575,7 @@ def _publish_atomically(outputs: dict[str, bytes], root: Path) -> None:
                 destination = root / relative
                 backups[relative] = destination.read_bytes() if destination.is_file() else None
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                os.replace(temp_root / relative, destination)
+                _replace_file(temp_root / relative, destination)
                 replaced.append(relative)
         except Exception:
             for relative in reversed(replaced):
@@ -517,18 +588,27 @@ def _publish_atomically(outputs: dict[str, bytes], root: Path) -> None:
             raise
 
 
-def build(record_paths: list[Path], output_root: Path = ROOT) -> dict:
+def build(record_paths: list[Path], output_root: Path = ROOT, listing_paths: list[Path] | None = None) -> dict:
     root = output_root.resolve()
     paths = [path.resolve() for path in record_paths]
     records = [load_record(path) for path in paths]
-    outputs = planned_outputs(records, root)
+    listing_paths = [path.resolve() for path in (listing_paths or [])]
+    loaded = [load_listing(path, root) for path in listing_paths]
+    listings = [rendered for rendered, _stored in loaded]
+    outputs = planned_outputs(records, root, listings)
     latest = max(record["updated_at"] for record in records)
     receipt = {
         "schema_version": 1,
         "built_at": latest + "T00:00:00Z",
         "inputs": {
-            path.relative_to(root).as_posix(): record_sha256(record)
-            for path, record in sorted(zip(paths, records), key=lambda pair: pair[0].as_posix())
+            **{
+                path.relative_to(root).as_posix(): record_sha256(record)
+                for path, record in sorted(zip(paths, records), key=lambda pair: pair[0].as_posix())
+            },
+            **{
+                path.relative_to(root).as_posix(): listing_sha256(stored)
+                for path, (_rendered, stored) in sorted(zip(listing_paths, loaded), key=lambda pair: pair[0].as_posix())
+            },
         },
         "outputs": {relative: _sha256(content) for relative, content in sorted(outputs.items())},
     }
@@ -542,11 +622,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--records-dir", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, default=ROOT)
+    parser.add_argument("--listings-dir", type=Path, default=None,
+                        help="listing records (default: listings beside the records directory)")
     args = parser.parse_args()
     paths = sorted(args.records_dir.glob("*.json"))
     if not paths:
         raise SystemExit("No publication records found.")
-    print(json.dumps(build(paths, args.output_root), indent=2, sort_keys=True))
+    listings_dir = args.listings_dir or args.records_dir.parent / "listings"
+    listing_paths = sorted(listings_dir.glob("*.json")) if listings_dir.is_dir() else []
+    print(json.dumps(build(paths, args.output_root, listing_paths), indent=2, sort_keys=True))
     return 0
 
 
