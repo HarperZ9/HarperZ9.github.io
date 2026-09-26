@@ -1,43 +1,43 @@
 {
   "id": "growth-needs-a-before",
   "title": "Figure 1. A report, a baseline, and a change are different records",
-  "claim": "Prospective studies separate retrospective perceived growth from measured change, while keeping each event, sample, interval, and outcome distinct.",
+  "claim": "Four studies that followed people over time compared the growth people credited to the event with the change researchers measured. Each row keeps its own event, sample, time span, and result, and the rows are not combined.",
   "type": "evidence-matrix",
   "columns": [
-    "Source",
-    "Design and denominator",
+    "Study",
+    "Who took part, and how many",
     "What was compared",
-    "Observed relation",
-    "Main non-proof"
+    "Result",
+    "What it does not show"
   ],
   "rows": [
     [
       "S2",
       "Two-month prospective study; n=122 event subgroup",
-      "PTGI retrospective report versus measured pre-to-post domain change",
+      "Growth reported on the questionnaire versus measured change in the matching areas",
       "Generally unrelated",
-      "No claim that growth never occurs"
+      "Does not show that growth never happens"
     ],
     [
       "S3",
       "Two-wave student study; n=282 baseline; n=219 to 221 raw follow-up; n=214 to 218 full-sample analytic; 66 raw event reports; n=61 to 64 analytic event subset",
       "Perceived PTG, perceived general growth, and measured pre-to-post change",
-      "Perceived PTG was not significantly related to the other two change records",
-      "No generalization beyond the small student event subgroup"
+      "Perceived PTG was not significantly related to the other two; perceived general growth was significantly related to measured change",
+      "Does not reach beyond the small group of students who had a trauma"
     ],
     [
       "S4",
       "Stem-cell-transplant study; n=187 first; n=157 second; n=91 third",
-      "PTGI at follow-up versus repeated domain measures",
-      "Weak composite relation; three of five paired domains not significantly related",
-      "No cross-trauma prevalence claim; attrition remains material"
+      "Questionnaire at follow-up versus repeated measures of the same areas",
+      "Weakly related overall; not significantly related in three of five areas",
+      "Gives no estimate for other kinds of trauma; many patients dropped out"
     ],
     [
       "S7",
       "Three waves over six months; Wave 1 n=804; 32,099 daily assessments",
-      "Perceived PTG versus later current-standing and aggregated daily-state change",
-      "Did not predict later observed change in the tested models",
-      "No conclusion about longer horizons or every subgroup"
+      "Perceived growth versus later change in current standing and in daily ratings",
+      "Did not predict later measured change in the tested models",
+      "Does not cover longer periods or every subgroup"
     ]
   ],
   "scope": "Four prospective or measurement-burst studies published from 2009 through 2024",
@@ -52,7 +52,7 @@
   ],
   "transformation": "Findings are paraphrased with study-specific direction labels; no pooling, standardization, interpolation, or cross-study ranking is performed",
   "uncertainty": "Events, samples, follow-up windows, measures, attrition, and statistical models differ across rows",
-  "limitations": "The matrix is illustrative rather than exhaustive, and none of the samples represents every kind of adverse event or recovery context.",
+  "limitations": "The table shows selected studies and leaves others out. None of the samples represents every kind of adverse event or recovery context.",
   "doesNotProve": "The figure does not show that positive change never happens, determine whether a particular report is accurate, predict any person's recovery, or tell a reader what care to seek.",
-  "alt": "Four studies compare retrospective perceived growth with measured change. In a 122-person study the measures were generally unrelated. A later study began with 282 students, collected 219 to 221 raw follow-up measures, used 214 to 218 in full-sample comparisons, and found no significant relation for perceived PTG in a trauma-subset analysis of 61 to 64. A stem-cell-transplant study found a weak composite relation with three of five domains not significantly related after attrition from 187 to 91 questionnaires. A six-month study with 804 Wave 1 participants and 32,099 daily assessments found that perceived growth did not predict later observed change. The rows are not pooled and do not predict an individual recovery path."
+  "alt": "A table of four studies that followed people over time. In a 2009 study of 122 students, reported growth and measured change were generally unrelated. In a later student study that began with 282 people, 219 to 221 sent back follow-up answers and 214 to 218 were analyzed. Among the 61 to 64 analyzed people who had a trauma, growth they credited to the trauma was not significantly related to measured change, while a look-back rating that did not mention the trauma was related to it. In a study of stem-cell-transplant patients, where completed questionnaires fell from 187 to 91, the two were weakly related overall and not significantly related in three of five areas. In a six-month study that began with 804 adults and collected 32,099 brief daily ratings, reported growth did not predict later change. Each study stands alone. The numbers are not added together, and none predicts one person's recovery."
 }

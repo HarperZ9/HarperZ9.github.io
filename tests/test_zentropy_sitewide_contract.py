@@ -33,6 +33,12 @@ REVIEWED_ASSET_REVISIONS = {
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
     "system/nav.js": "20260909-pillar-navigation",
+    # 25 September 2026: the human-first notebook redesign adds the art family and
+    # the notebook sheet as shared, reviewed assets.
+    "system/art.css": "20260925-human-notebook",
+    "system/notebook-sheet.css": "20260925-human-notebook",
+    # 25 September 2026, evening: the void-and-bone surface layer.
+    "system/plate.css": "20260925-void-plates",
     "system/site-index.css": "20260909-pillar-navigation",
     "system/site-index.js": "20260909-pillar-navigation",
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
@@ -46,6 +52,10 @@ REVIEWED_ASSET_REVISIONS = {
     "system/report-editorial.css": "20260906",
     "system/instrument-editorial.css": "20260907-instrument-readable-floor",
     "system/demo-editorial.css": "20260906-demo-editorial",
+    # 2026-09-25 human-first notebook: the shared token file and the notebook
+    # sheet module are new files, stamped once for this redesign.
+    "system/tokens.css": "20260925-human-notebook",
+    "system/notebook-sheet.css": "20260925-human-notebook",
 }
 READING_IMPORTING_STYLESHEETS = (
     "system/system.css",
@@ -83,15 +93,18 @@ FIGURE_CONTRAST_PAIRS = (
     (".publication-figure-page .publication-evidence dd", ".publication-figure-page"),
     ('.publication-figure-page section[aria-label="Figure sources"]', ".publication-figure-page"),
 )
+# 2026-09-25 human-first notebook: captions and definition labels are reader
+# text, so they move from Conso to Hanken Grotesk at 14px or more. Conso keeps
+# code, digests and numbers in table cells, which the evidence ledger holds.
 FIGURE_FONT_ROLES = (
     ("body.figure-document", "Hanken Grotesk"),
     (".data-plate", "Hanken Grotesk"),
     (".publication-figure-page", "Hanken Grotesk"),
     (".evidence-ledger", "Conso"),
-    (".figure-relation-card dt", "Conso"),
-    (".figure-table caption", "Conso"),
-    (".publication-figure-page .publication-figure-table caption", "Conso"),
-    (".publication-figure-page .publication-evidence dt", "Conso"),
+    (".figure-relation-card dt", "Hanken Grotesk"),
+    (".figure-table caption", "Hanken Grotesk"),
+    (".publication-figure-page .publication-figure-table caption", "Hanken Grotesk"),
+    (".publication-figure-page .publication-evidence dt", "Hanken Grotesk"),
 )
 
 
@@ -400,7 +413,10 @@ def test_shared_styles_define_zentropy_material_system() -> None:
         assert ".site-nav > .sn-more" in css
         assert "position:fixed!important" in css
     assert ".inner-clean h1 .g" in system_css
-    assert "color:var(--zentropy-rust)" in system_css
+    # 2026-09-25 human-first notebook: color means a verdict, so accented words
+    # in a title render in ink. The rule stays and now inherits the title color.
+    title_accent = re.search(r"\.inner-clean h1 \.g,[^{]*\{(?P<body>[^}]*)\}", system_css)
+    assert title_accent and "color:inherit" in title_accent.group("body")
     assert "Telos Display retired" not in system_css
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css

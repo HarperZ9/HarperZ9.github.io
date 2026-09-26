@@ -1,15 +1,15 @@
 {
   "id": "label-is-a-lens",
-  "title": "Figure 1. The label is a lens, not a verdict",
-  "claim": "Label effects vary by text, artwork, viewer, setting, and measured outcome, and cannot be pooled into one score.",
+  "title": "Figure 1. What six label studies found",
+  "claim": "Across these six studies, labels most often changed where people looked or how easy a work felt to make sense of, and liking or interest changed less often. Label effects vary with the text, the artwork, the viewer, the setting, and the outcome measured, and they cannot be pooled into one score. How to read this: each row is one study, so read across to see what the label changed, what it did not, and what the study cannot show.",
   "type": "evidence-matrix",
   "columns": [
     "Source",
-    "Viewer and artwork denominator",
-    "Text intervention",
+    "Who took part and what they saw",
+    "What text viewers got",
     "What changed",
-    "What did not change or was not measured",
-    "Non-proof"
+    "What did not change, or was not measured",
+    "What this does not show"
   ],
   "rows": [
     [
@@ -77,5 +77,5 @@
   "uncertainty": "Settings, viewers, works, text interventions, exposure sequences, and measures differ substantially",
   "limitations": "The 2026 field study is discussed in prose but excluded from the matrix because its naturalistic, bundled between-condition intervention and selected 80-participant subset are not directly comparable to the six controlled rows.",
   "doesNotProve": "The matrix does not establish label quality, one correct interpretation, durable learning, visitor agreement, or artistic value.",
-  "alt": "Six studies show that label effects depend on the text, artwork, viewer, setting, and outcome. Descriptive or semantic context sometimes redirected looking or increased reported comprehensibility, while appreciation and interest often stayed unchanged. Broad category labels did not change gaze in two abstract-art experiments. The rows are not pooled and do not establish correct interpretation or artistic value."
+  "alt": "A table of six studies. Together they show that label effects depend on the text, artwork, viewer, setting, and outcome. Descriptive or semantic context sometimes redirected looking or raised how easy viewers said a work was to understand, while appreciation and interest often stayed the same. Broad category labels did not reliably change gaze in two abstract-art experiments. The rows are not pooled, and they do not establish correct interpretation or artistic value."
 }

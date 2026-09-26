@@ -54,6 +54,7 @@ def test_pick_the_lock_pages_are_public_and_discoverable() -> None:
 def test_canonical_essay_preserves_the_expanded_argument() -> None:
     essay = joined(ESSAY_PARTS)
 
+    # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
     for marker in (
         "## The sentence that would not come out",
         "I have spent most of my life trying to finish that sentence.",
@@ -71,24 +72,25 @@ def test_canonical_essay_preserves_the_expanded_argument() -> None:
         "## The inheritance is yours too",
         "What adaptation are you still calling your personality?",
         "## The unconformity",
-        "Geology is the archive after the author has lost the right of reply.",
+        "It is the archive left after whoever made the record can no longer answer back.",
         "The matter changes custody.",
         "I am not the source of the source of me.",
         "I am still one of the sources of what leaves me.",
         "## Forgiveness without deletion",
-        "Forgiveness is not deleting the receipt.",
+        "forgiveness keeps the receipt.",
         "Self-destruction removes the person who owes the work.",
         "## The river",
-        "the dream did not make disappearance beautiful.",
+        "the dream made relief beautiful, and relief is a different thing from disappearing.",
         "## The flywheel turned inward",
-        "A model has weights, not a childhood.",
+        "A model has weights, the numbers it learned in training. It has no childhood.",
         "## The robe and the farm",
         "## The bundle breaks",
         "I call that review debt.",
         "## The graph and the poem",
-        "## Build the instrument, not the imitation",
+        "## Build the instrument",
+        "A hidden archive that imitates a finished surface has no part in it.",
         "## What I owe the Mad-Happy Scientist",
-        "## The promise I can actually make",
+        "## The promise I can make",
         "## The clock keeps moving",
         "Are you preparing for the coming world, or defending the last arrangement in which your identity still made sense?",
         "## What remains",
@@ -111,8 +113,8 @@ def test_canonical_essay_preserves_the_expanded_argument() -> None:
     # the redirect lines are asserted below so the budget cannot be quietly respent elsewhere.
     assert essay.lower().count("fuck") == 5
     for redirect in (
-        "Fuck the monopoly, not the woman.",
-        "Fuck the gate, not the person trapped beside it.",
+        "Fuck the monopoly, and leave the woman out of it.",
+        "Fuck the gate, and spare the person trapped beside it.",
         "Fuck the little pipe.",
         "So I want to keep the defiance and kill the possession.",
     ):

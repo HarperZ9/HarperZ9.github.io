@@ -43,6 +43,24 @@
       "systemId": "emet"
     },
     {
+      "id": "flywheel-release-v1-0-4",
+      "type": "release",
+      "label": "Flywheel v1.0.4",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.4",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "The v1.0.4 GitHub release, titled Flywheel 1.0.4, was published at 2026-09-26T01:50:41Z, and the v1.0.4 tag resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7. The release attaches Flywheel-Setup-1.0.4-x64.exe at 56,355,754 bytes with SHA-256 a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881, a SHA256SUMS.txt that lists the same value, and a frozen gateway smoke receipt reporting PASS for 1.0.4. Installed acceptance passed on the tagged commit. The installer is unsigned; this is distribution evidence, not proof of clean-machine installation."
+    },
+    {
+      "id": "flywheel-pypi-v1-0-4",
+      "type": "release",
+      "label": "flywheel-verify 1.0.4 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/1.0.4/",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "PyPI serves flywheel-verify 1.0.4, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.4-py3-none-any.whl is 2,259,991 bytes with SHA-256 8b3524b147937bff8bfd86efe522ee2468891297c75721683b7a401bb186f508; the source archive flywheel_verify-1.0.4.tar.gz is 3,432,483 bytes with SHA-256 1f5b7e80551ccb3d3ca9bc6af1d1a88735ee40792666d551a69777b4e5cd890c. A clean virtual environment installed it and flywheel --version printed flywheel 1.0.4."
+    },
+    {
       "id": "flywheel-release-v1-0-1",
       "type": "release",
       "label": "Flywheel v1.0.1",

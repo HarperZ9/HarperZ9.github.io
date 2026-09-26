@@ -1,0 +1,306 @@
+/* notebook-sheet.css: the notebook sheet, the grammar every figure sits on.
+
+   A figure sits on a sheet: a cool working paper framed by a hairline, ruled with
+   one row of dots per line of text, with a quiet colophon at its foot. The sheet
+   leads with one plain sentence (the takeaway) that says what the figure shows.
+   Verdicts read from fill and stroke first (solid, hatch, crosshatch, stipple);
+   color only confirms them, so they survive grayscale, forced colors and print.
+   One hot mark per sheet: the aperture ring, drawn in sheet ink and named by the
+   marked line under the figure.
+
+   Everything a checker needs and a first-time reader does not goes into the
+   "How we know" disclosure. The stamp prints only a sheet number and a plain date.
+
+   Two companion files load with this one: notebook-diagram.css (chains and drawn diagrams) and
+   page-components.css (masthead, hero, buttons, tables and footer). Colors come from
+   tokens.css. Sections: 1 tokens, 2 sheet, 3 head, 4 stamp, 5 key, 6 marks, 7 rows,
+   8 count cards, 9 tables, 12 notes and limit line, 13 "How we
+   know", 15 print, 16 forced colors, 17 motion. */
+@import url("notebook-diagram.css?v=20260925-human-notebook");
+@import url("page-components.css?v=20260925-human-notebook");
+
+/* 1. Sheet tokens. The sheet reads the page tokens; nothing here names a hue. */
+.ns-sheet,.ns-defs,.dg-figure{
+  --ns-lead:1.5rem;--ns-step:.5rem;--ns-seal:3rem;
+  --ns-paper:var(--sheet-paper,#f8f9fb);--ns-ink:var(--sheet-ink,#121a2c);--ns-soft:var(--sheet-soft,#45516a);
+  --ns-line:var(--sheet-line,#687489);--ns-hair:var(--sheet-hair,#d3d5da);--ns-dot:var(--sheet-dot,#dcdee3);
+  --ns-frame:var(--sheet-frame,#c5c8cd);
+  --ns-ring:color-mix(in srgb,var(--ns-ink) 8%,transparent);
+  --ns-verified:var(--verified,#08766b);--ns-drift:var(--drift,#96401d);--ns-unver:var(--unverifiable,#55548f);
+  --ns-hot:var(--ns-ink);
+  --ns-glow:var(--sheet-glow,none);
+  --ns-grain:var(--ns-ink);--ns-grain-a:var(--sheet-grain,.25);
+  --ns-pupil:var(--sheet-pupil,#121a2c);--ns-core:var(--sheet-core,#f8f9fb);
+  --ns-sans:var(--font-sans,"Hanken Grotesk",system-ui,sans-serif);
+  --ns-mono:var(--font-mono,"Conso",ui-monospace,monospace);
+}
+
+/* 2. The sheet: container, paper, grain veil, ruled live area. */
+.ns-defs{position:absolute;width:0;height:0;overflow:hidden}
+.ns-sheet{container:ns-sheet/inline-size;margin:0 0 calc(var(--ns-lead)*2);color:var(--ns-ink);
+  font:400 1rem/var(--ns-lead) var(--ns-sans);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.ns-sheet *,.ns-sheet *::before,.ns-sheet *::after{box-sizing:border-box}
+.ns-sheet :is(h2,h3,p,ul,ol,dl,dd,figure,table){margin:0;padding:0}
+.ns-sheet :is(.ns-key,.ns-rows,.ns-cards,.ns-map,.ns-map ul,.ns-map ol){list-style:none}
+.ns-sheet :where(span,a,b,strong,em,i,abbr,time){line-height:1}
+.ns-sheet :is(.ns-key li,.ns-cell) > span{line-height:var(--ns-lead)}
+/* A span wrapper in a table cell or list value becomes a block when the table stacks on phones;
+   it keeps the lead, so wrapped links never sit on a 15px pitch. */
+.ns-sheet :is(td,th,dd) > span{line-height:var(--ns-lead)}
+/* Links on a sheet take the sheet ink with a soft-ink underline, above any host page link rule. */
+.ns-sheet .ns-live a:not([class]){color:var(--ns-ink)!important;text-decoration:underline;text-decoration-color:var(--ns-soft);text-decoration-thickness:1px;text-underline-offset:.2em}
+.ns-sheet .ns-live a:not([class]):is(:hover,:focus-visible){text-decoration-color:var(--ns-ink);text-decoration-thickness:2px}
+.ns-sheet .ns-vh,.ns-vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ns-sheet .ns-paper{--ns-m:.5rem;--ns-pi:.75rem;position:relative;isolation:isolate;padding:var(--ns-m);background:var(--ns-paper);
+  outline:1px solid var(--ns-frame);outline-offset:-1px}
+.ns-sheet .ns-grain{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.ns-sheet .ns-grain-ink{flood-color:var(--ns-grain);flood-opacity:var(--ns-grain-a)}
+/* The ruling: one row of dots per lead, a third of a lead apart. The live area is a
+   one-column grid whose row gap is one lead. The seal's rings spread from the stamp. */
+.ns-sheet .ns-live{--ns-seal-n:var(--ns-seal);--sx:calc(100% - var(--ns-pi) - var(--ns-seal-n) / 2);
+  --sy:calc(100% - var(--ns-lead) - var(--ns-seal-n) / 2);position:relative;z-index:1;display:grid;
+  grid-template-columns:minmax(0,1fr);row-gap:var(--ns-lead);padding:var(--ns-lead) var(--ns-pi);
+  background:radial-gradient(circle at 50% calc(100% - 1px),var(--ns-dot) .75px,transparent 1.15px) 0 0/var(--ns-step) var(--ns-lead),var(--ns-paper)}
+.ns-sheet .ns-live::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:repeating-radial-gradient(circle at var(--sx) var(--sy),transparent 0 calc(var(--ns-lead)/2 - 1px),var(--ns-ring) calc(var(--ns-lead)/2 - 1px) calc(var(--ns-lead)/2));
+  -webkit-mask-image:radial-gradient(circle at var(--sx) var(--sy),#000 0 3rem,rgba(0,0,0,.5) 8rem,transparent 16rem);
+  mask-image:radial-gradient(circle at var(--sx) var(--sy),#000 0 3rem,rgba(0,0,0,.5) 8rem,transparent 16rem)}
+@container ns-sheet (min-width:40rem){.ns-sheet .ns-paper{--ns-m:1rem;--ns-pi:1.5rem}}
+@container ns-sheet (min-width:62rem){.ns-sheet .ns-paper{--ns-m:1.25rem;--ns-pi:2.25rem}}
+
+/* 3. Head: title, takeaway, lede, units. Host reading pages size every h2 at a high
+   specificity; the title's size, lead and ink must win, so they carry !important. */
+.ns-sheet .ns-head{display:grid;row-gap:calc(var(--ns-lead)/2);min-width:0}
+.ns-sheet .ns-title{font-family:var(--ns-sans);font-weight:450;letter-spacing:-.01em;text-wrap:balance;max-width:34ch;border:0;text-transform:none;
+  font-size:var(--t-sheet-title,1.6rem)!important;line-height:1.2!important;color:var(--ns-ink)!important}
+.takeaway,.ns-sheet .takeaway{max-width:60ch;margin:0;font:500 var(--t-takeaway,1.1875rem)/1.45 var(--font-sans);color:var(--ink);text-wrap:pretty}
+.ns-sheet .takeaway{color:var(--ns-ink)}
+.ns-sheet .ns-lede{max-width:60ch;color:var(--ns-soft)}
+.ns-sheet .ns-units{font-size:.875rem;color:var(--ns-soft)}
+.ns-sheet .ns-k{font:600 .875rem/1 var(--ns-sans);color:var(--ns-ink);margin-right:.6em}
+
+/* 4. Stamp: a colophon at the sheet's foot. The seal, the sheet number and a plain
+   date, in Hanken at a readable weight. No figure id, seed or timestamp prints. */
+.ns-sheet .ns-stamp{display:grid;grid-template-columns:minmax(0,1fr) var(--ns-seal-n);column-gap:.75rem;align-items:center;
+  padding-top:calc(var(--ns-lead)/2);border-top:1px solid var(--ns-hair);
+  font:500 .9375rem/var(--ns-lead) var(--ns-sans);color:var(--ns-soft)}
+.ns-sheet details.how-we-know + .ns-stamp{border-top:0}
+.ns-sheet .ns-stamp > p{grid-column:1;min-width:0}
+.ns-sheet .ns-stamp .ns-sno{color:var(--ns-ink);font-weight:600}
+.ns-sheet .ns-seal{grid-column:2;grid-row:1 / span 3;align-self:center;width:var(--ns-seal-n);height:var(--ns-seal-n);overflow:visible}
+@container ns-sheet (min-width:40rem){
+  .ns-sheet .ns-stamp{grid-template-columns:minmax(0,1fr) auto var(--ns-seal-n);column-gap:1.25rem}
+  .ns-sheet .ns-stamp > p{grid-column:auto;grid-row:1;text-align:right}
+  .ns-sheet .ns-stamp > p:first-of-type{text-align:left}
+  .ns-sheet .ns-seal{grid-column:3;grid-row:1}}
+/* The seal is drawn in ink and soft ink only: the stamp is interface, and the spectrum stays in the art.
+   Its inner rings and open pupil stay in soft ink, so the ink ring around a dot belongs to the hot mark. */
+.ns-sheet .ns-seal *{vector-effect:non-scaling-stroke;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ns-sheet .ns-seal .sl-o{stroke:var(--ns-ink);stroke-width:1}
+.ns-sheet .ns-seal :is(.sl-t,.sl-b,.sl-r,.sl-i,.sl-f,.sl-p){stroke:var(--ns-soft);stroke-width:.75}
+.ns-sheet .ns-seal .sl-c{display:none}
+/* Retired stamp parts: figure ids, seeds and timestamps never print on a sheet. */
+.ns-sheet :is(.ns-sid,.ns-id,.ns-seed,.ns-smeta){display:none}
+/* The old always-visible provenance slip still renders where a page carries one, so its limits stay. */
+.ns-sheet .ns-slip{display:grid;grid-template-columns:minmax(0,1fr);border-top:2px solid var(--ns-ink)}
+.ns-sheet .ns-slip dt{font:600 .875rem/var(--ns-lead) var(--ns-sans);color:var(--ns-soft)}
+.ns-sheet .ns-slip dd{font-size:.9375rem;min-width:0;overflow-wrap:anywhere;box-shadow:inset 0 -1px var(--ns-hair)}
+@container ns-sheet (min-width:40rem){.ns-sheet .ns-slip{grid-template-columns:9rem minmax(0,1fr);column-gap:1rem}}
+
+/* 5. Key, glyphs and the marked line. A glyph always sits beside its word. */
+/* Margin and padding reset here, so no family list rule shifts a key item off the lead. */
+.ns-sheet .ns-key{display:flex;flex-wrap:wrap;column-gap:1.5rem;margin:0;padding:0;font:400 .9375rem/var(--ns-lead) var(--ns-sans)}
+.ns-sheet .ns-key li{display:flex;align-items:flex-start;gap:.55rem;margin:0;padding:0}
+.ns-sheet .ns-key li > svg{margin:4px 0 0}
+.ns-sheet :is(.ns-g,.ns-sw,.ns-ring){display:inline-block;flex:none;overflow:visible;vertical-align:middle;margin-block:-.6rem}
+.ns-sheet .ns-g{width:16px;height:16px}.ns-sheet .ns-sw{width:26px;height:16px}.ns-sheet .ns-ring{width:22px;height:22px}
+.ns-sheet .ns-marked{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:.6rem;max-width:74ch;font-size:.9375rem}
+.ns-sheet .ns-marked .ns-ring{margin:1px 0 0}.ns-sheet .ns-marked > span{line-height:var(--ns-lead)}
+
+/* 6. Marks. Verdict: solid, 38 degree hatch, crosshatch with a heavy edge, stipple with a dashed edge.
+      Quantity: scanline band, open band, dashed band (upper bound only), ink whisker (stated range).
+      The 95 percent interval is a capped whisker in soft ink: it names no verdict, so it takes no verdict hue. */
+.ns-sheet svg,.ns-defs,.dg-figure svg{forced-color-adjust:none}
+.ns-defs .p-d{stroke:var(--ns-drift);stroke-width:1.1;fill:none}.ns-defs .p-u{fill:var(--ns-unver)}.ns-defs .p-i{fill:var(--ns-ink)}
+.ns-defs .dg-arrowhead{fill:var(--ns-ink)}.ns-defs .dg-arrowhead.is-drift{fill:var(--ns-drift)}.ns-defs .dg-arrowhead.is-unver{fill:var(--ns-unver)}
+.ns-defs .dg-tickmark{stroke:var(--ns-ink);stroke-width:1;fill:none}
+.ns-defs .dg-boundary-line{stroke:var(--ns-ink);stroke-width:.75;stroke-opacity:.18}
+.ns-sheet .m-back{fill:var(--ns-paper)}
+.ns-sheet .m-held,.dg-figure .m-held{fill:var(--ns-verified);stroke:var(--ns-verified);stroke-width:1}
+.ns-sheet .m-mixed,.dg-figure .m-mixed{fill:url(#ns-hatch);stroke:var(--ns-drift);stroke-width:1}
+.ns-sheet .m-missed,.dg-figure .m-missed{fill:url(#ns-cross);stroke:var(--ns-drift);stroke-width:2}
+.ns-sheet .m-unk,.dg-figure .m-unk{fill:url(#ns-stip);stroke:var(--ns-unver);stroke-width:1.2;stroke-dasharray:3 2}
+.ns-sheet .m-scan,.dg-figure .m-scan{fill:url(#ns-scan);stroke:var(--ns-ink);stroke-width:1}
+.ns-sheet .m-open{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.4}
+.ns-sheet .m-bound{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.4;stroke-dasharray:6 4}
+.ns-sheet .m-whisk{fill:none;stroke:var(--ns-ink);stroke-width:1.4}
+.ns-sheet .m-ci{fill:none;stroke:var(--ns-soft);stroke-width:2}
+.ns-sheet .m-est{fill:var(--ns-ink);stroke:var(--ns-paper);stroke-width:1.5}
+.ns-sheet .m-grat{stroke:var(--ns-hair);stroke-width:1;stroke-dasharray:2 4}
+.ns-sheet .m-zero{stroke:var(--ns-ink);stroke-width:1.4}
+.ns-sheet .m-ref{stroke:var(--ns-ink);stroke-width:1.4;stroke-dasharray:5 4;fill:none}
+.ns-sheet .m-day0{stroke:var(--ns-ink);stroke-width:2}
+.ns-sheet .m-pub{fill:var(--ns-ink)}.ns-sheet .m-out{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.4}
+/* The hot ring: ink at the heaviest pen, over a paper casing that parts it from any line it sits on. */
+.ns-sheet .m-hot-case,.dg-figure .m-hot-case{fill:none;stroke:var(--ns-paper);stroke-width:6.5}
+.ns-sheet .m-hot,.dg-figure .m-hot{fill:none;stroke:var(--ns-hot);stroke-width:2.8;filter:var(--ns-glow)}
+.ns-sheet .m-hot-in,.dg-figure .m-hot-in{fill:none;stroke:var(--ns-hot);stroke-width:1.2}
+.ns-sheet .m-hot-p{fill:var(--ns-hot)}
+.ns-sheet .ns-ring.is-key .m-hot{filter:none}
+.ns-sheet svg text{fill:var(--ns-ink);font-family:var(--ns-sans);paint-order:stroke;stroke:var(--ns-paper);stroke-width:4px;stroke-linejoin:round}
+.ns-sheet .t-num{font-size:16px;font-weight:600}
+.ns-sheet .t-ref{font-size:14px;font-weight:500;fill:var(--ns-soft)}
+.ns-sheet .t-zero{font-size:14px;font-weight:600}
+.ns-sheet .t-null{font:italic 400 14px var(--ns-sans);fill:var(--ns-soft)}
+
+/* 7. Rows: HTML labels beside SVG strips. Strip x is a percentage and y is pixels, so no text
+      scales. Under 40rem the name sits above its bar, the value sits at the bar end, and an axis
+      caption keeps its own line above the ticks, so a truncated axis never loses its warning. Counts
+      per row live in the accessible table and in "How we know", never as a sub-line. */
+.ns-sheet .ns-rows{display:grid}
+.ns-sheet .ns-row{display:grid;grid-template-areas:"n" "s" "v";grid-template-columns:minmax(0,1fr);box-shadow:inset 0 -1px var(--ns-hair)}
+.ns-sheet .ns-row.is-axis{box-shadow:none}
+.ns-sheet .ns-rname{grid-area:n;min-width:0}
+.ns-sheet .ns-n{font-weight:560;font-size:1rem}
+.ns-sheet .ns-row .ns-sub{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.ns-sheet .ns-sc{grid-area:s;position:relative;min-height:calc(var(--ns-lead) * 1.25);min-width:0}
+.ns-sheet .ns-strip{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.ns-sheet .ns-rval{grid-area:v;font-size:.9375rem;min-width:0}
+.ns-sheet .ns-run-k{display:none}
+.ns-sheet .ns-axis{position:relative;height:var(--ns-lead);font:500 .875rem/var(--ns-lead) var(--ns-sans);color:var(--ns-soft)}
+.ns-sheet .ns-tick{position:absolute;top:0;line-height:var(--ns-lead);transform:translateX(-50%);white-space:nowrap}
+/* Every tick label centres on its position, end labels included, and a short tick mark sits
+   under it, so the spacing reads even and each label names one point on the axis. */
+.ns-sheet .ns-tick::after{content:"";position:absolute;left:50%;bottom:0;width:1px;height:5px;background:currentColor}.ns-sheet .ns-tick.is-zero{color:var(--ns-ink);font-weight:650}
+.ns-sheet .ns-axcap{font:500 .875rem/var(--ns-lead) var(--ns-sans);color:var(--ns-soft)}
+.ns-sheet .ns-row.is-axis .ns-rval{display:none}
+.ns-sheet .ns-tick.is-opt{display:none}
+.ns-sheet .ns-count{font-weight:650;font-family:var(--ns-sans)}
+.ns-sheet .ns-panel-h{font-weight:600;font-size:1rem;margin-top:var(--ns-lead)}
+/* Small multiples: the same chart across a few groups, same scale in every panel. */
+.ns-sheet .ns-multiples{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ns-lead) 2rem}
+/* On phones the strip and its axis sit in from both edges, so centred end labels stay inside the sheet. */
+@container ns-sheet (max-width:39.99rem){.ns-sheet .ns-row .ns-sc{margin-inline:1.25rem}}
+@container ns-sheet (min-width:40rem){
+  .ns-sheet .ns-row{grid-template-areas:"n s v";grid-template-columns:var(--nw,12rem) minmax(0,1fr) var(--vw,0);column-gap:1.25rem;align-items:center}
+  .ns-sheet .ns-row.is-axis :is(.ns-rname,.ns-rval){display:block}
+  .ns-sheet .ns-tick.is-opt{display:block}
+  .ns-sheet .ns-multiples{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container ns-sheet (min-width:62rem){.ns-sheet .ns-multiples{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* 8. Count cards: two to four headline counts. The marked count is set in ink at weight 500. */
+.ns-sheet .ns-cards{display:grid;grid-template-columns:minmax(0,1fr)}
+.ns-sheet .ns-card{padding:0 .9rem calc(var(--ns-lead)/2);box-shadow:inset 0 -1px var(--ns-hair)}
+.ns-sheet .ns-big{font:300 2.75rem/calc(var(--ns-lead)*2.5) var(--ns-sans);letter-spacing:-.02em;white-space:nowrap}
+.ns-sheet .ns-big .ns-unit{font-size:.4em;font-weight:500;letter-spacing:0;color:var(--ns-soft);margin-left:.3em}
+.ns-sheet .ns-big .ns-ring{width:.6em;height:.6em;margin-right:.3em}
+.ns-sheet .ns-card.is-hot .ns-big{font-weight:500}
+.ns-sheet .ns-card.is-hot .ns-unit{color:var(--ns-ink);font-weight:650}
+.ns-sheet .ns-cl{font-size:.9375rem;color:var(--ns-soft);max-width:30ch}
+@container ns-sheet (min-width:40rem){.ns-sheet .ns-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ns-sheet .ns-card:nth-child(2n){box-shadow:inset 0 -1px var(--ns-hair),inset 1px 0 var(--ns-hair)}}
+@container ns-sheet (min-width:62rem){.ns-sheet .ns-cards{grid-template-columns:repeat(var(--cards,4),minmax(0,1fr))}
+  .ns-sheet .ns-card:nth-child(n){box-shadow:inset 1px 0 var(--ns-hair)}
+  .ns-sheet .ns-card:first-child{box-shadow:none}}
+
+/* 9. Tables inside a sheet. A table reflows into labelled records on a narrow sheet. */
+.ns-sheet .ns-table{width:100%;border-collapse:collapse;font-size:.9375rem}
+.ns-sheet .ns-table :is(th,td){padding:0 .9rem 0 0;text-align:left;vertical-align:top;line-height:var(--ns-lead);box-shadow:inset 0 -1px var(--ns-hair)}
+.ns-sheet .ns-table thead th{font-weight:650;box-shadow:inset 0 -2px var(--ns-ink)}
+.ns-sheet .ns-table th{font-family:var(--ns-sans)!important;font-size:.875rem!important;line-height:var(--ns-lead)!important;color:var(--ns-ink)!important}
+.ns-sheet .ns-table tbody th{font-size:.9375rem!important}
+.ns-sheet .ns-table :is(.is-num,.num){text-align:right;padding-right:0;white-space:nowrap;font-family:var(--ns-mono);font-weight:500}
+.ns-sheet .ns-table .ns-none{font:italic 400 .9375rem/1 var(--ns-sans);color:var(--ns-soft)}
+.ns-sheet .ns-tag{white-space:nowrap;line-height:1}.ns-sheet .ns-tag > svg{margin-right:.45rem}
+.ns-sheet .ns-cell{display:flex;gap:.5rem;align-items:flex-start}
+.ns-sheet .ns-cell .ns-g{margin:4px 0 0}
+@container ns-sheet (max-width:49.99rem){
+  .ns-sheet .ns-table.is-reflow thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .ns-sheet .ns-table.is-reflow :is(tbody,tr,th,td){display:block}
+  .ns-sheet .ns-table.is-reflow tr{box-shadow:inset 0 -1px var(--ns-hair);padding-block:calc(var(--ns-lead)/4)}
+  .ns-sheet .ns-table.is-reflow :is(th,td){display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:.75rem;box-shadow:none;padding:0;text-align:left}
+  .ns-sheet .ns-table.is-reflow :is(th,td)::before{content:attr(data-label);font:600 .875rem/var(--ns-lead) var(--ns-sans);color:var(--ns-soft)}
+  .ns-sheet .ns-table.is-reflow th[scope=row]{grid-template-columns:minmax(0,1fr);font-weight:650}
+  .ns-sheet .ns-table.is-reflow th[scope=row]::before{content:none}
+  .ns-sheet .ns-table.is-reflow :is(.ns-tag,.ns-none){line-height:var(--ns-lead)}
+  .ns-sheet .ns-table.is-reflow .ns-cell{display:inline-flex}}
+
+/* 12. Callout notes and the limit line. Notes sit directly under the figure, above "How we know".
+       Each note carries the text a screen reader hears for its callout. */
+.dg-notes{counter-reset:dg;list-style:none;margin:0;padding:0;display:grid;row-gap:.5rem;max-width:62ch}
+.dg-notes > li{counter-increment:dg;position:relative;padding-left:2.25rem;font:400 1rem/1.5 var(--font-sans)}
+.dg-notes > li::before{content:counter(dg);position:absolute;left:0;top:0;width:1.5rem;height:1.5rem;border:1.5px solid currentColor;border-radius:50%;
+  font:600 .875rem/calc(1.5rem - 3px) var(--font-sans);text-align:center}
+.limit-line{margin:0;max-width:62ch;font:600 1rem/1.5 var(--font-sans);text-wrap:pretty}
+.ns-sheet .limit-line,.ns-sheet .dg-notes > li{line-height:var(--ns-lead)}
+
+/* 13. "How we know": everything a checker needs and a first-time reader does not. Closed by
+       default; print opens it. Does not prove always comes first. */
+details.how-we-know{margin:var(--s-5,1.5rem) 0 0;max-width:var(--wide,58rem);border-block:1px solid var(--line,#ccd3d3);color:var(--ink)}
+details.how-we-know > summary{display:flex;align-items:center;gap:.65rem;min-height:44px;padding-block:.5rem;cursor:pointer;list-style:none;
+  font:600 1rem/1.3 var(--font-sans);color:inherit}
+details.how-we-know > summary::-webkit-details-marker{display:none}
+details.how-we-know > summary::before{content:"";flex:none;width:.85rem;height:.85rem;
+  background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat,linear-gradient(currentColor,currentColor) center/2px 100% no-repeat}
+details.how-we-know[open] > summary::before{background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat}
+details.how-we-know > summary:focus-visible{outline:2px solid var(--focus,currentColor);outline-offset:2px}
+details.how-we-know > summary:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+.hwk-list{display:grid;grid-template-columns:minmax(0,1fr);margin:0;padding:0 0 1rem}
+.hwk-list > dt{margin:.75rem 0 0;font:600 .875rem/1.5 var(--font-sans);color:var(--soft)}
+.hwk-list > dd{margin:0;min-width:0;font:400 .9375rem/1.55 var(--font-sans);color:var(--ink);overflow-wrap:break-word}
+/* Words in a table never break inside themselves; only digests and commands may wrap anywhere. */
+.hwk-list :is(table,th,td,caption){overflow-wrap:normal;word-break:normal;hyphens:none}
+.hwk-list > dd + dd{margin-top:.35rem}
+.hwk-list :is(code,.digest,kbd,samp){font:500 .875rem/1.5 var(--font-mono);overflow-wrap:anywhere}
+.hwk-list :is(ul,ol){margin:0;padding-left:1.2rem}
+.hwk-list table{font-size:.9375rem}
+@media (min-width:40rem){
+  .hwk-list{grid-template-columns:11rem minmax(0,1fr);column-gap:1.5rem}
+  .hwk-list > dt{grid-column:1;margin:0;padding:.6rem 0;border-top:1px solid var(--line,#ccd3d3)}
+  .hwk-list > dd{grid-column:2;padding:.6rem 0;border-top:1px solid var(--line,#ccd3d3)}
+  .hwk-list > dd + dd{margin-top:0;padding-top:0;border-top:0}
+  /* A table takes the full width under its label, so no column squeezes it. */
+  .hwk-list > dd:has(> .table-wrap,> .figure-table-wrap){grid-column:1 / -1;border-top:0;padding-top:0}}
+.ns-sheet details.how-we-know{margin:0;max-width:none;border-color:var(--ns-hair);color:var(--ns-ink)}
+.ns-sheet .hwk-list > dt{color:var(--ns-soft);border-color:var(--ns-hair)}
+.ns-sheet .hwk-list > dd{color:var(--ns-ink);border-color:var(--ns-hair)}
+@container ns-sheet (min-width:40rem){.ns-sheet .hwk-list{grid-template-columns:11rem minmax(0,1fr);column-gap:1.5rem}
+  .ns-sheet .hwk-list > dt{grid-column:1;margin:0;padding:.6rem 0;border-top:1px solid var(--ns-hair)}
+  .ns-sheet .hwk-list > dd{grid-column:2;padding:.6rem 0;border-top:1px solid var(--ns-hair)}
+  .ns-sheet .hwk-list > dd:has(> .table-wrap,> .figure-table-wrap){grid-column:1 / -1;border-top:0;padding-top:0}}
+
+/* 15. Print: white paper, black ink, patterns carry the verdict; grain, rings and dots stay off.
+       Every "How we know" body prints: nav.js opens each details element before printing, and
+       ::details-content covers browsers that support it. A sheet may start on any page; its
+       drawing, chart and notes each stay whole. */
+@media print{
+  .ns-sheet .ns-grain,.ns-sheet .ns-live::before{display:none}
+  /* No frame on paper: a sheet split across pages would leave an empty outlined box. */
+  .ns-sheet .ns-paper{outline:0;padding:0}
+  /* A grid does not fragment cleanly across printed pages, so the live area prints as a block. */
+  .ns-sheet .ns-live{display:block;background:var(--ns-paper)}
+  .ns-sheet .ns-live > * + *{margin-top:var(--ns-lead)}
+  .ns-sheet :is(.ns-head,.ns-fig,.dg-figure,.dg-notes,.ns-key,.ns-stamp){break-inside:avoid}
+  .ns-sheet :is(.ns-head,.ns-key){break-after:avoid}
+  .ns-sheet .ns-fig:has(.ns-rows),.ns-sheet .ns-rows{break-inside:auto}
+  .ns-sheet .ns-row{break-inside:avoid}
+  details.how-we-know::details-content{content-visibility:visible;display:block}
+  details.how-we-know > summary::before{display:none}
+  .hwk-list{grid-template-columns:minmax(0,1fr)!important}
+  .hwk-list > :is(dt,dd){grid-column:1!important}
+  .hwk-list thead{display:table-header-group}
+  .hwk-list tr{break-inside:avoid}}
+
+/* 16. Forced colors: the tokens are already system colors, so the sheet's live area and the
+       diagrams opt out of the UA rewrite and keep their rules, dashed connectors and hatches.
+       The hot ring alone takes Highlight. The disclosure glyph opts out too, or it vanishes. */
+@media (forced-colors:active){
+  .ns-sheet,.ns-defs,.dg-figure{--ns-hot:Highlight}
+  .ns-sheet .ns-grain,.ns-sheet .ns-live::before{display:none}
+  .ns-sheet .ns-live{forced-color-adjust:none}
+  details.how-we-know > summary::before{forced-color-adjust:none}
+  details.how-we-know > summary:focus-visible{outline-color:Highlight}}
+
+/* 17. Motion: nothing here moves; this guard keeps any later addition still for readers who ask. */
+@media (prefers-reduced-motion:reduce){
+  .ns-sheet *,.ns-sheet *::before,.ns-sheet *::after,.dg-figure *{animation:none!important;transition:none!important}}

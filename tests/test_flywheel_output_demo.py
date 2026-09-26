@@ -142,11 +142,14 @@ class FlywheelOutputDemoTests(unittest.TestCase):
         primary_routes = [
             node
             for node in self.flywheel.descendants("nav")
-            if node.attrs.get("aria-label") == "Primary routes"
+            # 2026-09-25 human-first notebook: the hero links are named for what they hold, so a
+            # landmark list no longer shows two "Primary" navigations, and the primary action
+            # lands on the video itself rather than on the section that holds the button.
+            if node.attrs.get("aria-label") == "Demo and release links"
         ]
-        self.assertEqual(len(primary_routes), 1, "expected one primary route nav")
+        self.assertEqual(len(primary_routes), 1, "expected one hero link nav")
         self.assertIn(
-            "#demo",
+            "#fw-output-demo",
             [link.attrs.get("href") for link in primary_routes[0].descendants("a")],
         )
 
@@ -210,7 +213,8 @@ class FlywheelOutputDemoTests(unittest.TestCase):
             "synthetic inputs",
             "one structured field",
             "not a screen recording",
-            "what this does not prove",
+            # 2026-09-25: the limits sit in the demo's "How we know" under "Does not prove".
+            "does not prove",
             "not a software release or general correctness",
             "no model or real ci run was used",
             "does not establish source trust",
@@ -231,18 +235,21 @@ class FlywheelOutputDemoTests(unittest.TestCase):
         ]
         self.assertEqual(len(result_lists), 1, "transcript must expose one result list")
 
+        # 2026-09-25 human-first notebook: the transcript states each result in plain words
+        # with its verdict mark; the checker's own output (FAIL / HOLD and the field tallies)
+        # moves into the demo's "How we know", checked below.
         expected = (
             (
                 "42 claimed; 41 in the record",
-                ("FAIL", "HOLD", "disagrees", "0 of 1 fields confirmed"),
+                ("Held", "disagrees"),
             ),
             (
                 "41 claimed, with its source",
-                ("PASS", "RELEASE", "matches", "1 of 1 fields confirmed"),
+                ("Released", "matches"),
             ),
             (
                 "41 claimed, without a citation",
-                ("UNVERIFIABLE", "HOLD", "source is not named", "0 of 1 fields confirmed"),
+                ("Held", "no source is named"),
             ),
         )
         terms = [
@@ -269,6 +276,21 @@ class FlywheelOutputDemoTests(unittest.TestCase):
             case_text = " ".join(body)
             for token in required_tokens:
                 self.assertIn(token, case_text, f"{case_label} missing {token}")
+
+        disclosure = self.flywheel.first_by_id("demo-how")
+        self.assertIsNotNone(disclosure, "demo must keep the checker output in #demo-how")
+        assert disclosure is not None
+        self.assertEqual(disclosure.tag, "details")
+        checker_text = norm(disclosure.text())
+        for token in (
+            "FAIL / HOLD",
+            "PASS / RELEASE",
+            "UNVERIFIABLE / HOLD",
+            "0 of 1 fields confirmed",
+            "1 of 1 fields confirmed",
+            "demo-run-001",
+        ):
+            self.assertIn(token, checker_text)
 
 
 if __name__ == "__main__":

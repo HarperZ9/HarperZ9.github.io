@@ -1,0 +1,111 @@
+/* notebook-diagram.css: the chain of custody (section 10) and
+   drawn diagrams (section 11) on a notebook sheet. */
+
+/* 10. Chain of custody: stations on one spine, a branch indents. Connectors are 2px; verified is
+       solid, drift is the 6:4 dash, and every connection also states itself in words. */
+.ns-sheet .ns-map{--S:.55rem;--P:2.1rem;--B:1.6rem;--gy:4px;--gb:20px}
+.ns-sheet .ns-map li{position:relative}
+.ns-sheet :is(.ns-st,.ns-ed){position:relative;padding-left:var(--P)}
+.ns-sheet .ns-st > .ns-g{position:absolute;left:calc(var(--S) - 8px);top:var(--gy);margin:0}
+.ns-sheet .ns-st-s{font-weight:600;font-size:1rem}
+.ns-sheet .ns-st-l{font-size:.9375rem;color:var(--ns-soft);max-width:52ch}
+.ns-sheet .ns-ed p{display:flex;gap:.5rem;align-items:flex-start;font:400 .9375rem/var(--ns-lead) var(--ns-sans)}
+.ns-sheet .ns-ed p .ns-g{margin:4px 0 0}
+.ns-sheet :is(.ns-st,.ns-ed,.ns-bc)::before,.ns-sheet .ns-st::after,.ns-sheet .ns-bc::after{content:none;position:absolute;left:calc(var(--S) - 1px);width:2px;background:var(--ns-ink)}
+.ns-sheet .ns-ed::before{content:"";top:0;bottom:0}
+.ns-sheet .ns-st[class*="is-out-"]::before{content:"";top:var(--gb);bottom:0}
+.ns-sheet .ns-st[class*="is-in-"]::after{content:"";top:0;height:var(--gy)}
+.ns-sheet :is(.ns-ed.is-d,.ns-st.is-out-d)::before,.ns-sheet .ns-st.is-in-d::after,.ns-sheet .ns-bc.is-d::before{background:repeating-linear-gradient(180deg,var(--ns-ink) 0 6px,transparent 6px 10px)}
+.ns-sheet .ns-branch{margin-left:calc(var(--S) - 1px)}
+.ns-sheet .ns-bc{padding-left:var(--B)}
+.ns-sheet .ns-bc::before{content:"";left:0;top:0;height:100%}
+.ns-sheet .ns-bc.is-last::before{height:calc(var(--ns-lead) / 2 + 1px)}
+.ns-sheet .ns-bc::after{content:"";left:0;top:calc(var(--ns-lead) / 2 - 1px);height:2px;width:calc(var(--B) + var(--S))}
+.ns-sheet .ns-bc.is-d::after{background:repeating-linear-gradient(90deg,var(--ns-ink) 0 6px,transparent 6px 10px)}
+.ns-sheet .ns-bc > .ns-ed::before{top:calc(var(--ns-lead) / 2)}
+.ns-sheet .ns-bound{position:relative;margin-left:calc(-1 * var(--P));padding-left:calc(var(--P) + 1rem);font:600 .875rem/var(--ns-lead) var(--ns-sans);color:var(--ns-ink)}
+.ns-sheet .ns-bound::after{content:"";position:absolute;left:0;right:0;top:calc(var(--ns-lead) / 2);border-top:1.4px dashed var(--ns-line);z-index:0}
+.ns-sheet .ns-bound span{position:relative;z-index:1;background:var(--ns-paper);padding:0 .5rem;line-height:var(--ns-lead)}
+
+/* 11. Diagrams: inline SVG drawn from one set of primitives, so the key and the marks share a
+       definition. Coordinates snap to an 8px grid. Text is drawn at 14px or more at the SVG's
+       natural size, so a wide drawing shows only when its container is at least that wide; a
+       tall variant drawn at the width it renders on a phone shows below. Both variants carry
+       role="img" with their own title and description; display:none keeps the hidden one out of
+       the accessibility tree. Put each SVG's natural width in its width attribute. */
+.dg-figure{container:dg/inline-size;margin:0;min-width:0}
+/* The ruling runs under the drawing, as it does under a chart: nodes fill with paper and edge
+   labels sit on paper plates, so no dot crosses a label (round 3, 25 September 2026). */
+.ns-sheet .dg-figure{padding-block:calc(var(--ns-lead)/2)}
+.dg-figure svg{display:block;max-width:100%;height:auto;overflow:visible;font-family:var(--ns-sans)}
+.dg-figure :is(.dg-wide,.dg-tall){width:auto}
+.dg-figure .dg-wide{display:none}
+.dg-figure .dg-tall{display:block;margin-inline:auto}
+@container dg (min-width:50rem){.dg-figure .dg-wide{display:block}.dg-figure .dg-tall{display:none}}
+@container dg (min-width:40rem){.dg-figure.dg-at-40 .dg-wide{display:block}.dg-figure.dg-at-40 .dg-tall{display:none}}
+@container dg (max-width:61.99rem){.dg-figure.dg-at-62 .dg-wide{display:none}.dg-figure.dg-at-62 .dg-tall{display:block}}
+.dg-figure text{fill:var(--ns-ink);font-family:var(--ns-sans)}
+.dg-figure :is(rect,path,line,circle,polyline){vector-effect:non-scaling-stroke}
+/* Station nodes: actor, system, record, outside, decision. */
+.dg-node :is(rect,.dg-shape){fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:2}
+/* A step outside the flow: a double hairline. The 6:4 dash stays reserved for drift and caution. */
+.dg-node[data-kind="outside"] :is(rect,.dg-shape){stroke-width:1}
+.dg-node .dg-inner{fill:none;stroke:var(--ns-ink);stroke-width:1}
+.dg-node .dg-rule{fill:none;stroke:var(--ns-ink);stroke-width:1}
+.dg-node .dg-fold{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.5}
+.dg-node .dg-bar{fill:var(--ns-ink);stroke:none}
+.dg-label{font-size:16px;font-weight:600}
+.dg-sub{font-size:14px;font-weight:400;fill:var(--ns-soft)!important}
+.dg-dot{fill:var(--ns-ink)}
+.dg-event{font-size:15px;font-weight:500}
+/* Orthogonal connectors. The arrowhead points at the receiver; the state is also a word. */
+.dg-edge{fill:none;stroke:var(--ns-ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:butt}
+.dg-edge[data-state="drift"]{stroke:var(--ns-drift);stroke-dasharray:6 4}
+.dg-edge[data-state="unverifiable"]{stroke:var(--ns-unver);stroke-width:1.2;stroke-dasharray:2 3}
+.dg-edge-label{font-size:14px;font-weight:500;paint-order:stroke;stroke:var(--ns-paper);stroke-width:6px;stroke-linejoin:round}
+/* Each edge label sits on a paper plate, so no connector shows through the gaps between words. */
+.dg-label-bg{fill:var(--ns-paper);stroke:none}
+/* Swimlanes: full-width bands, alternate bands at 4 percent ink, labels at the left. */
+.dg-lane-band{fill:transparent;stroke:none}
+.dg-lane.is-alt .dg-lane-band,.dg-lane:nth-of-type(even) .dg-lane-band{fill:color-mix(in srgb,var(--ns-ink) 4%,transparent)}
+.dg-lane-rule{stroke:var(--ns-hair);stroke-width:1}
+.dg-lane-label{font-size:14px;font-weight:600}
+/* Boundary region: a 135 degree hatch at 10px pitch and 18 percent ink, so it never reads as the
+   38 degree drift hatch, with a dashed edge and a paper tab for its label. Draw one only where
+   the source names the boundary. */
+.dg-boundary .dg-boundary-fill{fill:url(#dg-boundary)}
+.dg-boundary .dg-boundary-edge{fill:none;stroke:var(--ns-line);stroke-width:1.4;stroke-dasharray:6 4}
+.dg-boundary .dg-boundary-tab{fill:var(--ns-paper);stroke:var(--ns-line);stroke-width:1}
+.dg-boundary-label{font-size:14px;font-weight:600}
+/* Numbered callouts, keyed to the note list under the figure. */
+.dg-callout circle{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.5}
+.dg-callout text{font-size:14px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+.dg-leader{fill:none;stroke:var(--ns-ink);stroke-width:1}
+.dg-leader-dot{fill:var(--ns-ink)}
+/* Dimension lines for durations, gaps and distances the text names. */
+.dg-dim-line{fill:none;stroke:var(--ns-ink);stroke-width:1}
+.dg-ext{fill:none;stroke:var(--ns-ink);stroke-width:1;stroke-dasharray:2 2}
+.dg-dim-label{font-size:14px;font-weight:600;text-anchor:middle;paint-order:stroke;stroke:var(--ns-paper);stroke-width:6px;stroke-linejoin:round}
+/* The hot ring on a diagram: the one mark per sheet. */
+.ns-hot > circle:not([class]):first-child{fill:none;stroke:var(--ns-hot);stroke-width:2.8;filter:var(--ns-glow)}
+.ns-hot > circle:not([class]):last-child{fill:none;stroke:var(--ns-hot);stroke-width:1.2}
+.dg-figure .t-num{font-size:16px;font-weight:600}
+.dg-figure .t-ref,.dg-figure .t-axis{font-size:14px;font-weight:500;fill:var(--ns-soft)}
+.dg-figure .m-grat{stroke:var(--ns-hair);stroke-width:1;stroke-dasharray:2 4}
+.dg-figure .m-zero,.dg-figure .m-day0{stroke:var(--ns-ink);stroke-width:1.4}
+.dg-figure .m-ref{stroke:var(--ns-ink);stroke-width:1.4;stroke-dasharray:5 4;fill:none}
+.dg-figure .m-ci{fill:none;stroke:var(--ns-soft);stroke-width:2}
+.dg-figure .m-est{fill:var(--ns-ink);stroke:var(--ns-paper);stroke-width:1.5}
+
+/* Key swatches for the node shapes and chart marks, drawn with the same pens as the marks. */
+.ns-key :is(.k-box,.k-thin){fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.5}
+.ns-key .k-thin{stroke-width:1}
+.ns-key :is(.k-bar,.k-head){fill:var(--ns-ink);stroke:none}
+.ns-key :is(.k-rule,.k-line){fill:none;stroke:var(--ns-ink);stroke-width:1.5}
+.ns-key .m-ci{fill:none;stroke:var(--ns-soft);stroke-width:2}
+.ns-key .m-ref{stroke:var(--ns-ink);stroke-width:1.4;stroke-dasharray:5 4}
+.ns-key .m-est{fill:var(--ns-ink)}
+
+@media print{
+  .dg-figure .dg-wide{display:block!important;width:100%!important;max-width:100%}
+  .dg-figure .dg-tall{display:none!important}}

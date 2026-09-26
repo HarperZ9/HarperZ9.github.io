@@ -186,5 +186,32 @@
     color:#3a3d42 !important;
     word-break:break-all;
   }
-  a[href^="http"][href$=".pdf"]::after{content:""}
+  /* A PDF is often a primary source, so paper prints its address too. */
+  a[href^="http"][href$=".pdf"]::after{content:" (" attr(href) ")";word-break:break-all}
+
+  /* Verdict glyphs are painted backgrounds. They print whether or not the reader turned on
+     background graphics, and the drift hatch widens so it never reads as an empty box. */
+  .verdict-mark::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* Paper is black ink, so the hatch is a small black SVG tile; print engines drop thin gradient stripes. */
+  .verdict-mark[data-verdict="drift"]::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M-1 7 L7 -1 M-1 1 L1 -1 M5 7 L7 5' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") 0 0/6px 6px !important}
+  .verdict-mark[data-verdict="verified"]::before{background:currentColor !important}
+  .verdict-mark[data-verdict="unverifiable"]::before{background:radial-gradient(circle,currentColor 1px,transparent 1.3px) 0 0/4px 4px !important}
+
+  /* The crystal facet notch under section headings is screen decoration; paper stays plain. */
+  section.mv > h2::after,.proof-head h2::after{display:none !important;content:none !important}
+
+  /* Inline code inside running text and cells prints without a box, so a wrapped digest
+     reads as one value and no border crosses the next line. */
+  body:not(.doc) :is(p,dd,td,li) code{border:0 !important}
+
+  /* A caption, header row or table label never ends a page apart from its rows. */
+  caption,thead,dt:has(+ dd table){break-after:avoid;page-break-after:avoid}
+
+  /* Every disclosure prints open. nav.js opens each details element before the
+     print dialog; this rule covers browsers that expose the details content. */
+  details::details-content{content-visibility:visible;display:block}
+  details > summary{list-style:none}
+  .page-footer,
+  .export-footer,
+  .copy-button{display:none !important}
 }

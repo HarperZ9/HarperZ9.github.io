@@ -44,8 +44,11 @@ const base = process.env.SITE_BASE || 'http://localhost:8765';
       if (flywheelSeal.background !== 'rgba(0, 0, 0, 0)') shellIssues.push(`flywheel/${colorScheme}: decorative background ${flywheelSeal.background}`);
       if (!(flywheelSeal.borderTopWidth === 0 || flywheelSeal.borderTopStyle === 'none' || flywheelSeal.borderTopColor === 'rgba(0, 0, 0, 0)')) shellIssues.push(`flywheel/${colorScheme}: decorative border ${flywheelSeal.borderTopWidth}px ${flywheelSeal.borderTopStyle} ${flywheelSeal.borderTopColor}`);
       if (flywheelSeal.borderRadius !== 0) shellIssues.push(`flywheel/${colorScheme}: decorative radius ${flywheelSeal.borderRadius}`);
+      // 2026-09-25: the live briefing moves to each new edition, so its expected
+      // date comes from the published current.json rather than a fixed 2026-08-27.
+      const currentEdition = JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname, '..', 'frontier-safety', 'data', 'current.json'), 'utf8')).edition_date;
       for (const {route: briefingRoute, edition} of [
-        {route: 'frontier-safety.html', edition: '2026-08-27'},
+        {route: 'frontier-safety.html', edition: currentEdition},
         {route: 'frontier-safety/archive/2026-08-27.html', edition: '2026-08-27'},
         {route: 'frontier-safety/archive/2026-08-25.html', edition: '2026-08-25'},
       ]) {

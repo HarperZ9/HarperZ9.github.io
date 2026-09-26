@@ -19,6 +19,27 @@ function notifyFrames() {
   }
 }
 
+// A video can carry a second rendition for dark pages: data-poster-dark on the video and
+// data-src-dark on its source. The light files stay in poster and src, so a page without this
+// script, a feed reader and print all get the light cut. A video already playing is left alone.
+function applyThemedMedia(resolved) {
+  if (typeof document === "undefined" || !document.querySelectorAll) return;
+  for (const video of document.querySelectorAll("video[data-poster-dark]")) {
+    if (!video.paused || video.currentTime > 0) continue;
+    if (!video.dataset.posterLight) video.dataset.posterLight = video.getAttribute("poster") || "";
+    const dark = resolved === "dark";
+    video.setAttribute("poster", dark ? video.dataset.posterDark : video.dataset.posterLight);
+    let changed = false;
+    for (const source of video.querySelectorAll("source[data-src-dark]")) {
+      if (!source.dataset.srcLight) source.dataset.srcLight = source.getAttribute("src") || "";
+      const next = dark ? source.dataset.srcDark : source.dataset.srcLight;
+      if (source.getAttribute("src") !== next) { source.setAttribute("src", next); changed = true; }
+    }
+    // load() re-runs source selection; with preload="none" it downloads nothing until play.
+    if (changed) video.load();
+  }
+}
+
 function apply(value, persist = false) {
   preference = normalize(value);
   const resolved = preference === "system" ? (systemDark.matches ? "dark" : "light") : preference;
@@ -29,6 +50,7 @@ function apply(value, persist = false) {
   if (persist) {
     try { localStorage.setItem(storageKey, preference); } catch { /* Manual choice still works this visit. */ }
   }
+  applyThemedMedia(resolved);
   window.dispatchEvent(new CustomEvent("themechange", { detail: { preference, resolved } }));
   notifyFrames();
 }
@@ -83,3 +105,4 @@ document.addEventListener("load", event => {
   if (event.target instanceof HTMLIFrameElement) notifyFrames();
 }, true);
 document.addEventListener("DOMContentLoaded", notifyFrames, { once: true });
+document.addEventListener("DOMContentLoaded", () => applyThemedMedia(root.dataset.theme), { once: true });

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start here | Zentropy Labs</title>
+<meta name="description" content="A plain guide to the site: four ways in, one worked example of re-derivable, how to read the charts and what the site does not claim.">
+<link rel="canonical" href="https://harperz9.github.io/start-here.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Start here | Zentropy Labs">
+<meta property="og:description" content="A plain guide to the site: four ways in, one worked example and how to read the charts.">
+<meta property="og:url" content="https://harperz9.github.io/start-here.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/profile.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Start here | Zentropy Labs">
+<meta name="twitter:description" content="A plain guide to the site: four ways in, one worked example and how to read the charts.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<style>
+  .doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line, #c9cfcf); margin: 1.25rem 0 2rem; }
+  .door { padding: 1.1rem 1.25rem; border-right: 1px solid var(--line, #c9cfcf); border-bottom: 1px solid var(--line, #c9cfcf); }
+  .door:nth-child(2n) { border-right: 0; }
+  .door:nth-last-child(-n+2) { border-bottom: 0; }
+  .door h3 { margin: 0 0 .4rem; font-size: 1.1rem; }
+  .door p { margin: 0 0 .6rem; }
+  .verdict-diagram { margin: 1.25rem 0 1.5rem; }
+  .verdict-diagram svg { inline-size: 100%; block-size: auto; max-inline-size: 46rem; display: block; }
+  .verdict-diagram .node { fill: none; stroke: currentColor; stroke-width: 2; }
+  .verdict-diagram .node-fill { fill: currentColor; }
+  .verdict-diagram .edge { fill: none; stroke: currentColor; stroke-width: 2; }
+  .verdict-diagram text { fill: currentColor; font: 600 17px/1.2 "Hanken Grotesk", system-ui, sans-serif; }
+  .verdict-diagram text.small { font-weight: 400; font-size: 15px; }
+  .verdict-diagram figcaption { margin-top: .6rem; }
+  @media (max-width: 640px) { .doors { grid-template-columns: 1fr; } .door { border-right: 0; } .door:nth-last-child(-n+2) { border-bottom: 1px solid var(--line, #c9cfcf); } .door:last-child { border-bottom: 0; } }
+  @media (forced-colors: active) { .verdict-diagram .node, .verdict-diagram .edge { stroke: CanvasText; } .verdict-diagram .node-fill { fill: CanvasText; } }
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="flywheel.html">Flywheel</a> <a href="research.html">Research</a> <a href="who-knew-first.html">Who Knew First</a> <a href="hire.html">Work</a> <a href="glossary.html">Glossary</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<main id="main">
+<article class="sheet doc-rail">
+  <header class="mast">
+    <h1>Start here</h1>
+    <p class="role">A plain guide to the site, for readers with no background in AI.</p>
+  </header>
+
+  <section aria-labelledby="in-short">
+    <h2 id="in-short">In short</h2>
+    <p>This site holds the work of Zain Dana Harper, published under the working name Zentropy Labs. The work keeps returning to one question: when an AI system, or the company behind it, makes a claim, how can someone else check it? Pick the door below that fits what you came for.</p>
+  </section>
+
+  <section aria-labelledby="doors-title">
+    <h2 id="doors-title">Four ways in</h2>
+    <div class="doors">
+      <div class="door">
+        <h3>If you came to read</h3>
+        <p><a href="who-knew-first.html">Who Knew First</a> traces nine AI agent incidents from 2026 and asks how long the public waited to hear about each one. It opens with a short op-ed and keeps the full record underneath.</p>
+        <p><a href="who-knew-first.html">Read Who Knew First</a></p>
+      </div>
+      <div class="door">
+        <h3>If you follow AI policy</h3>
+        <p>The <a href="frontier-safety.html">Frontier Safety briefing</a> is a dated record of safety news. Each edition ties every claim to its source and says what that source cannot show.</p>
+        <p><a href="frontier-safety.html">Read the current briefing</a></p>
+      </div>
+      <div class="door">
+        <h3>If you want to try the tools</h3>
+        <p><a href="flywheel.html">Flywheel</a> runs a task with any AI model and hands the result to a checker that anyone can rerun offline. Install it with one command.</p>
+        <p><a href="flywheel.html">See Flywheel</a></p>
+      </div>
+      <div class="door">
+        <h3>If you want to hire or work together</h3>
+        <p>The work page lists resumes, the full CV and ways to get in touch.</p>
+        <p><a href="hire.html">Go to the work page</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="example-title">
+    <h2 id="example-title">What re-derivable means, in one example</h2>
+    <p>Say a company reports that its model passed 120 of 150 coding tasks. A <a href="glossary.html#re-derivable">re-derivable</a> report comes with the tasks, the model version, the test that graded each answer and a record of every result. You run the same test on your own computer. If you also get 120, the verdict is <a href="glossary.html#match">match</a>. If you get a different number, the verdict is <a href="glossary.html#drift">drift</a>, and the record shows the exact task where the results part ways. If the report leaves out something you need, such as the tasks themselves, the verdict is <a href="glossary.html#unverifiable">unverifiable</a>, and the missing piece is named.</p>
+    <figure class="verdict-diagram" aria-labelledby="diagram-caption">
+      <svg role="graphics-document" aria-roledescription="diagram" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">One claim, one rerun, three possible verdicts</title>
+        <desc id="diagram-desc">A company's claim of 120 of 150 tasks passes to your rerun of the same test. The rerun leads to one of three verdicts: match if you also get 120, drift if you get a different number, unverifiable if the record is missing a piece you need.</desc>
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+        <rect class="node" x="10" y="110" width="180" height="80" rx="6"/>
+        <text x="100" y="146" text-anchor="middle">The claim</text>
+        <text class="small" x="100" y="170" text-anchor="middle">120 of 150 passed</text>
+        <path class="edge" d="M190 150 H260" marker-end="url(#arrow)"/>
+        <rect class="node" x="262" y="110" width="190" height="80" rx="6"/>
+        <text x="357" y="146" text-anchor="middle">Your rerun</text>
+        <text class="small" x="357" y="170" text-anchor="middle">same tasks, same test</text>
+        <path class="edge" d="M452 130 C500 130 500 50 546 50" marker-end="url(#arrow)"/>
+        <path class="edge" d="M452 150 H546" marker-end="url(#arrow)"/>
+        <path class="edge" d="M452 170 C500 170 500 250 546 250" marker-end="url(#arrow)"/>
+        <rect class="node node-fill" x="548" y="22" width="200" height="56" rx="6"/>
+        <text x="648" y="56" text-anchor="middle" style="fill:Canvas">Match: you get 120</text>
+        <rect class="node" x="548" y="122" width="200" height="56" rx="6"/>
+        <text x="648" y="146" text-anchor="middle">Drift</text>
+        <text class="small" x="648" y="166" text-anchor="middle">a different number</text>
+        <rect class="node" x="548" y="222" width="200" height="56" rx="6" stroke-dasharray="6 5"/>
+        <text x="648" y="246" text-anchor="middle">Unverifiable</text>
+        <text class="small" x="648" y="266" text-anchor="middle">a piece is missing</text>
+      </svg>
+      <figcaption id="diagram-caption"><strong>One claim, one rerun, three possible verdicts.</strong> How to read this: follow the arrows from the claim to your rerun, then to the one verdict your result lands on. The filled box, the plain box and the dashed box carry the three outcomes, so the diagram reads without color.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="charts-title">
+    <h2 id="charts-title">How to read the charts and diagrams</h2>
+    <p>Each chart opens with one sentence that says what it shows, then a short line on how to read it. Labels sit on the chart itself, in plain words. Under each chart, a section called <a href="glossary.html#how-we-know">How we know</a> holds the sources, sample sizes, dates and limits. Open it when you want to check the work.</p>
+  </section>
+
+  <section aria-labelledby="ai-title">
+    <h2 id="ai-title">How AI assistance is labeled</h2>
+    <p>Much of this site was written with <a href="glossary.html#ai-assisted">AI assistance</a>, and the pages say so where it applies. The prose is checked with Articulate, a writing checker built here, before it goes up. A clean check means the writing avoids known patterns of filler, hedging and stock phrasing. A clean check says nothing about whether a claim is true. The sources and the How we know sections carry that weight.</p>
+  </section>
+
+  <section aria-labelledby="claims-title">
+    <h2 id="claims-title">What this site does not claim</h2>
+    <p>The tools are built to serve people who evaluate AI systems. No pilot, contract or engagement with any AI lab is in place. Where a page reports a result, it also says what the result cannot show.</p>
+  </section>
+
+  <section aria-labelledby="words-title">
+    <h2 id="words-title">Words you will meet</h2>
+    <p>A short glossary explains the terms this site cannot avoid, such as receipt, verdict and witness.</p>
+    <p><a href="glossary.html">Open the glossary</a></p>
+  </section>
+</article>
+</main>
+</body>
+</html>

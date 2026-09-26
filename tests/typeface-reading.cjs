@@ -29,7 +29,8 @@ const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8766';
       assert(proof.loaded.includes('Hanken Grotesk') && proof.loaded.includes('Conso'), 'Both actual local fonts must load');
       assert(proof.textSize >= 18);
       assert.deepEqual(proof.clipped, [], `${theme}/${width}: content cannot be masked offscreen`);
-      assert.equal(proof.background, theme === 'light' ? 'rgb(250, 250, 248)' : 'rgb(16, 20, 22)');
+      // 2026-09-25: the void-and-bone surface sets the grounds (bone #ebe5d8, void #060608).
+      assert.equal(proof.background, theme === 'light' ? 'rgb(235, 229, 216)' : 'rgb(6, 6, 8)');
       await context.close();
     }
     console.log('Typeface: loaded fonts, no-JS reading, 320/1280 reflow and both themes passed.');

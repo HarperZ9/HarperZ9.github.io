@@ -1,106 +1,86 @@
-/* Explicit user choice overrides OS-only palettes. Artwork retains its colors. */
+/* theme.css: maps the older family token names onto tokens.css.
+   2026-09-25 human-first notebook: this file no longer defines a color. tokens.css
+   carries light, dark, the reader's pick (html[data-theme]) and forced colors in
+   CSS alone, so a page paints its final palette before any script runs. This file
+   arrives by script (theme-entry.js) and keeps pages that still read an old family
+   name in step with the tokens until their owners move them. The !important stays
+   on the family names because several family sheets define them on body or behind
+   :has() at a higher specificity than this map can reach without it. */
 @media screen {
+  /* The --theme-* names resolve on <html> only. The family names below read
+     them on both <html> and <body>, so a body rule that maps a bare token back
+     onto a family name cannot form a cycle. */
+  /* A page that loads no token file (the React home) still gets the palette:
+     each name falls back to the token's own hex value for the resolved theme. */
   html[data-theme="light"] {
-    --theme-paper:#fafaf8;--theme-inset:#f6f8f7;--theme-panel:#f0f3f2;
-    --theme-raised:#e7ecea;--theme-ink:#19272b;--theme-soft:#42575d;
-    --theme-muted:#53666b;--theme-link:#215a63;--theme-line:#ccd3d3;
-    --theme-line-strong:#8b9b9e;--theme-on-accent:#fff;
-    --theme-verdict:#1f7a52;--theme-drift:#8a3b12;
+    --theme-paper:var(--paper,#fafaf8);--theme-inset:var(--inset,#f6f8f7);--theme-panel:var(--panel,#f0f3f2);
+    --theme-raised:var(--raised,#e7ecea);--theme-ink:var(--ink,#19272b);--theme-soft:var(--soft,#42575d);
+    --theme-muted:var(--muted,#53666b);--theme-link:var(--ink,#19272b);--theme-line:var(--line,#ccd3d3);
+    --theme-line-strong:var(--line-strong,#6f7f83);--theme-on-accent:var(--on-ink,#fafaf8);
+    --theme-verdict:var(--verified,#08766b);--theme-drift:var(--drift,#96401d);--theme-unverifiable:var(--unverifiable,#55548f);
   }
   html[data-theme="dark"] {
-    --theme-paper:#101416;--theme-inset:#0c1011;--theme-panel:#1b2528;
-    --theme-raised:#233034;--theme-ink:#eaf5f6;--theme-soft:#b4c5c9;
-    --theme-muted:#91a6aa;--theme-link:#8ee3f2;--theme-line:#42555a;
-    --theme-line-strong:#647b81;--theme-on-accent:#071013;
-    --theme-verdict:#a7e888;--theme-drift:#f0a06f;
+    --theme-paper:var(--paper,#101416);--theme-inset:var(--inset,#0c1011);--theme-panel:var(--panel,#1b2528);
+    --theme-raised:var(--raised,#233034);--theme-ink:var(--ink,#eaf5f6);--theme-soft:var(--soft,#b4c5c9);
+    --theme-muted:var(--muted,#91a6aa);--theme-link:var(--ink,#eaf5f6);--theme-line:var(--line,#42555a);
+    --theme-line-strong:var(--line-strong,#7d949a);--theme-on-accent:var(--on-ink,#101416);
+    --theme-verdict:var(--verified,#63d4ce);--theme-drift:var(--drift,#e29472);--theme-unverifiable:var(--unverifiable,#b3b1e6);
   }
   html[data-theme="light"] body {color-scheme:light}
   html[data-theme="dark"] body {color-scheme:dark}
-  /* Map the existing page families onto one palette without changing layout,
-     typography, captured fixtures, semantic verdicts, or canvas output. */
+  /* Older family names, one line per family. */
   html[data-theme],html[data-theme] body {
-    --reading-paper:var(--theme-paper)!important;
-    --reading-ink:var(--theme-ink)!important;
-    --reading-soft:var(--theme-soft)!important;
-    --reading-link:var(--theme-link)!important;
-    --reading-rule:var(--theme-line)!important;
-    --reading-panel:var(--theme-panel)!important;
-    --reading-inset:var(--theme-inset)!important;
-    --reading-verdict:var(--theme-verdict)!important;
-    --reading-drift:var(--theme-drift)!important;
-    --chrome-ground:var(--theme-paper)!important;
-    --chrome-ground-soft:var(--theme-inset)!important;
-    --chrome-surface:var(--theme-panel)!important;
-    --chrome-surface-strong:var(--theme-raised)!important;
-    --chrome-ink:var(--theme-ink)!important;
-    --chrome-soft:var(--theme-soft)!important;
-    --chrome-muted:var(--theme-muted)!important;
-    --chrome-line:var(--theme-line)!important;
-    --chrome-line-strong:var(--theme-line-strong)!important;
-    --chrome-accent:var(--theme-link)!important;
-    --chrome-focus:var(--theme-link)!important;
-    --chrome-verdict:var(--theme-verdict)!important;
-    --chrome-drift:var(--theme-drift)!important;
-    --chrome-accent-soft:color-mix(in oklab,var(--theme-link) 12%,var(--theme-panel))!important;
-    --demo-bg:var(--theme-paper)!important;--demo-bg-soft:var(--theme-inset)!important;
-    --demo-panel:var(--theme-panel)!important;--demo-panel-strong:var(--theme-raised)!important;
-    --demo-ink:var(--theme-ink)!important;--demo-muted:var(--theme-soft)!important;
-    --demo-faint:var(--theme-muted)!important;--demo-line:var(--theme-line)!important;
-    --demo-line-strong:var(--theme-line-strong)!important;
-    --demo-accent:var(--theme-link)!important;--demo-accent-strong:var(--theme-link)!important;
-    --demo-signal:var(--theme-link)!important;--demo-ok:var(--theme-verdict)!important;
-    --demo-drift:var(--theme-drift)!important;
-    --figure-page:var(--theme-paper)!important;--figure-surface:var(--theme-panel)!important;
-    --figure-raised:var(--theme-raised)!important;--figure-ink:var(--theme-ink)!important;
-    --figure-muted:var(--theme-soft)!important;--figure-line:var(--theme-line)!important;
-    --figure-line-strong:var(--theme-line-strong)!important;
-    --figure-verified:var(--theme-verdict)!important;--figure-caution:var(--theme-drift)!important;
-    --figure-unavailable:var(--theme-muted)!important;
-    --paper:var(--theme-paper)!important;--paper-2:var(--theme-panel)!important;
-    --void:var(--theme-paper)!important;--void-opaque:var(--theme-paper)!important;
-    --page:var(--theme-paper)!important;--page-sunk:var(--theme-inset)!important;
-    --backdrop:var(--theme-paper)!important;--ground-paper:var(--theme-panel)!important;
-    --ink:var(--theme-ink)!important;--bone:var(--theme-ink)!important;
-    --ink-paper:var(--theme-ink)!important;--ink-soft:var(--theme-soft)!important;
-    --ink-muted:var(--theme-soft)!important;--ink-faint:var(--theme-muted)!important;
-    --muted:var(--theme-soft)!important;--soft:var(--theme-soft)!important;
-    --faint:var(--theme-muted)!important;--tag:var(--theme-muted)!important;
-    --paper-muted:var(--theme-soft)!important;--paper-line:var(--theme-line)!important;
-    --signal:var(--theme-link)!important;--focus:var(--theme-link)!important;
-    --teal-soft:var(--theme-link)!important;--on-signal:var(--theme-on-accent)!important;
-    --line:var(--theme-line)!important;--hairline:var(--theme-line)!important;
-    --rule:var(--theme-line)!important;--line-strong:var(--theme-line-strong)!important;
-    --rule-strong:var(--theme-line-strong)!important;
-    --panel:var(--theme-panel)!important;--surface:var(--theme-panel)!important;
-    --card:var(--theme-panel)!important;--raised:var(--theme-raised)!important;
-    --verified:var(--theme-verdict)!important;--match:var(--theme-verdict)!important;
-    --gold:var(--theme-verdict)!important;--drift:var(--theme-drift)!important;
-    --ember:var(--theme-drift)!important;--unverif:var(--theme-muted)!important;
+    --reading-paper:var(--theme-paper)!important;--reading-ink:var(--theme-ink)!important;--reading-soft:var(--theme-soft)!important;
+    --reading-link:var(--theme-ink)!important;--reading-rule:var(--theme-line)!important;--reading-panel:var(--theme-panel)!important;
+    --reading-inset:var(--theme-raised)!important;--reading-verdict:var(--theme-verdict)!important;--reading-drift:var(--theme-drift)!important;
+    --chrome-ground:var(--theme-paper)!important;--chrome-ground-soft:var(--theme-inset)!important;--chrome-surface:var(--theme-panel)!important;
+    --chrome-surface-strong:var(--theme-raised)!important;--chrome-ink:var(--theme-ink)!important;--chrome-soft:var(--theme-soft)!important;
+    --chrome-muted:var(--theme-soft)!important;--chrome-line:var(--theme-line)!important;--chrome-line-strong:var(--theme-line-strong)!important;
+    --chrome-accent:var(--theme-ink)!important;--chrome-focus:var(--theme-ink)!important;--chrome-verdict:var(--theme-verdict)!important;
+    --chrome-drift:var(--theme-drift)!important;--chrome-accent-soft:var(--theme-raised)!important;
+    --demo-bg:var(--theme-paper)!important;--demo-bg-soft:var(--theme-inset)!important;--demo-panel:var(--theme-panel)!important;
+    --demo-panel-strong:var(--theme-raised)!important;--demo-ink:var(--theme-ink)!important;--demo-muted:var(--theme-soft)!important;
+    --demo-faint:var(--theme-muted)!important;--demo-line:var(--theme-line)!important;--demo-line-strong:var(--theme-line-strong)!important;
+    --demo-accent:var(--theme-ink)!important;--demo-accent-strong:var(--theme-ink)!important;--demo-signal:var(--theme-ink)!important;
+    --demo-ok:var(--theme-verdict)!important;--demo-drift:var(--theme-drift)!important;--demo-warn:var(--theme-unverifiable)!important;
+    --figure-page:var(--theme-paper)!important;--figure-surface:var(--theme-paper)!important;--figure-raised:var(--theme-raised)!important;
+    --figure-ink:var(--theme-ink)!important;--figure-muted:var(--theme-soft)!important;--figure-line:var(--theme-line)!important;
+    --figure-line-strong:var(--theme-line-strong)!important;--figure-verified:var(--theme-verdict)!important;
+    --figure-caution:var(--theme-drift)!important;--figure-unavailable:var(--theme-unverifiable)!important;
+    --report-paper:var(--theme-paper)!important;--report-panel:var(--theme-panel)!important;--report-panel-2:var(--theme-raised)!important;
+    --report-ink:var(--theme-ink)!important;--report-soft:var(--theme-soft)!important;--report-rule:var(--theme-line)!important;
+    --report-link:var(--theme-ink)!important;--report-accent:var(--theme-drift)!important;--report-null:var(--theme-unverifiable)!important;
+    --paper-2:var(--theme-panel)!important;--void:var(--theme-paper)!important;--void-opaque:var(--theme-paper)!important;
+    --page:var(--theme-paper)!important;--page-sunk:var(--theme-inset)!important;--backdrop:var(--theme-paper)!important;
+    --ground-paper:var(--theme-panel)!important;--bone:var(--theme-ink)!important;--ink-paper:var(--theme-ink)!important;
+    --ink-soft:var(--theme-soft)!important;--ink-muted:var(--theme-soft)!important;--ink-faint:var(--theme-muted)!important;
+    --faint:var(--theme-muted)!important;--tag:var(--theme-muted)!important;--paper-muted:var(--theme-soft)!important;
+    --paper-line:var(--theme-line)!important;--signal:var(--theme-ink)!important;--teal-soft:var(--theme-ink)!important;
+    --on-signal:var(--theme-on-accent)!important;--hairline:var(--theme-line)!important;--rule:var(--theme-line)!important;
+    --rule-strong:var(--theme-line-strong)!important;--surface:var(--theme-panel)!important;--card:var(--theme-panel)!important;
+    --match:var(--theme-verdict)!important;--gold:var(--theme-verdict)!important;--ember:var(--theme-drift)!important;
+    --unverif:var(--theme-unverifiable)!important;
     background-color:var(--theme-paper);
     color:var(--theme-ink);
   }
   html[data-theme] body {background-image:none}
-  html[data-theme] :is(.site-nav,.topnav,.publication-static-nav) {
+  html[data-theme] :is(.topnav,.publication-static-nav) {
     background:var(--theme-paper);color:var(--theme-ink);border-color:var(--theme-line);
   }
-  html[data-theme] :is(.sn-more-list,.home-menu-list) {
-    background:var(--theme-panel);color:var(--theme-ink);border-color:var(--theme-line);
+  html[data-theme] .home-menu-list {background:var(--theme-panel);color:var(--theme-ink);border-color:var(--theme-line)}
+  html[data-theme] .home-menu-list a {color:var(--theme-ink)}
+  html[data-theme] body .home-menu>summary {
+    color:var(--theme-ink)!important;background:var(--theme-panel)!important;border-color:var(--theme-line-strong)!important;
   }
-  html[data-theme] :is(.sn-more-list,.home-menu-list) a {color:var(--theme-ink)}
-  html[data-theme] body :is(.sn-more>summary,.home-menu>summary) {
-    color:var(--theme-link)!important;background:var(--theme-panel)!important;
-    border-color:var(--theme-line-strong)!important;
-  }
-  html[data-theme] body .sn-more>summary::after {color:var(--theme-link)!important}
-  html[data-theme] body .docnav a {color:var(--theme-link)!important}
+  html[data-theme] body .docnav a {color:var(--theme-ink)!important}
   html[data-theme] body .skip-link {background:var(--theme-ink)!important;color:var(--theme-paper)!important}
   html[data-theme] body.instrument-surface :is(.chip,.at-chip,.re-chip,.source-menu button,[role="tab"]) {
     color:var(--theme-soft)!important;background:transparent;
   }
   html[data-theme] body.instrument-surface :is(.chip,.at-chip,.re-chip,.source-menu button):is([aria-pressed="true"],[aria-checked="true"],.active,.is-active),
   html[data-theme] body.instrument-surface [role="tab"][aria-selected="true"] {
-    color:var(--theme-ink)!important;background:var(--chrome-accent-soft)!important;
-    border-color:var(--theme-link)!important;box-shadow:inset 0 -2px 0 var(--theme-link)!important;
+    color:var(--theme-ink)!important;background:var(--theme-raised)!important;
+    border-color:var(--theme-ink)!important;box-shadow:inset 0 -2px 0 var(--theme-ink)!important;
   }
   html[data-theme] body.instrument-surface :is(input,select,textarea,.rt-btn,.re-btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn) {
     background-color:var(--theme-panel);color:var(--theme-ink);
@@ -110,7 +90,7 @@
     transition:none!important;color:var(--theme-soft)!important;
   }
   html[data-theme] body.instrument-surface.studio-page .mm-readmode .chip.active {
-    color:var(--theme-ink)!important;background:var(--chrome-accent-soft)!important;
+    color:var(--theme-ink)!important;background:var(--theme-raised)!important;
   }
   html[data-theme] body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app),
   html[data-theme] body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) :is(.frame,main) {
@@ -119,18 +99,18 @@
 }
 .theme-control {
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  margin:.65rem 0 0;padding:.7rem .6rem .3rem;border-top:1px solid var(--theme-line,#8b9b9e);
-  font:500 .875rem/1.4 "Hanken Grotesk",Hanken,system-ui,sans-serif;
-  letter-spacing:normal;text-transform:none;color:var(--theme-ink,inherit);
+  margin:.65rem 0 0;padding:.7rem .6rem .3rem;border-top:1px solid var(--line,#ccd3d3);
+  font:500 .9375rem/1.4 var(--font-sans,"Hanken Grotesk",system-ui,sans-serif);
+  letter-spacing:normal;text-transform:none;color:var(--ink,inherit);
 }
 .theme-control select {
-  font:inherit;color:inherit;background:var(--theme-paper,Canvas);
-  border:1px solid var(--theme-line-strong,#8b9b9e);border-radius:4px;
+  font:inherit;color:inherit;background:var(--paper,Canvas);
+  border:1px solid var(--line-strong,#6f7f83);border-radius:2px;
   padding:.45rem .6rem;min-height:44px;min-width:6.5rem;cursor:pointer;
 }
-.theme-control select:focus-visible {outline:3px solid var(--theme-link,Highlight);outline-offset:3px}
+.theme-control select:focus-visible {outline:2px solid var(--focus,Highlight);outline-offset:2px}
 .publication-static-nav .theme-control {margin:0;padding:0;border:0}
-.theme-demo-nav {display:flex;justify-content:flex-end;margin:0 0 1rem}
+.theme-demo-nav {display:flex;justify-content:flex-end;margin:0 0 1rem;padding:.75rem var(--gutter,1rem) 0;max-width:100%;box-sizing:border-box}
 .theme-demo-nav .theme-control {border:0;margin:0;padding:0}
 @media screen and (max-width:52rem) {
   html[data-home-shell="react"] .home-menu-list {

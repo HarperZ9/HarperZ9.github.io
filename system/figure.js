@@ -90,10 +90,34 @@ export function enhanceFigureRoot(root, reducedMotionQuery = globalThis.matchMed
     if (moveFocus) active.focus();
   };
 
+  rows.forEach((row) => {
+    row.addEventListener?.("keydown", (event) => {
+      if (event.key !== "Escape" || !row.figureReturnPoint) return;
+      event.preventDefault?.();
+      row.figureReturnPoint.focus?.();
+    });
+  });
+
   points.forEach((point, index) => {
     point.setAttribute("tabindex", index === 0 ? "0" : "-1");
     point.addEventListener("focus", () => activate(index));
     point.addEventListener("keydown", (event) => {
+      // 2026-09-25: Enter opens the record disclosure that holds this point's row, moves focus to
+      // the row and scrolls it into the upper part of the window (its scroll margin clears the
+      // sticky header). Escape on the row returns focus to the part it came from.
+      if (event.key === "Enter") {
+        const key = point.getAttribute("data-figure-key");
+        const row = rows.find((candidate) => candidate.getAttribute("data-figure-key") === key);
+        if (!row) return;
+        event.preventDefault?.();
+        const details = row.closest?.("details");
+        if (details && !details.open) details.open = true;
+        row.setAttribute("tabindex", "-1");
+        row.figureReturnPoint = point;
+        row.focus?.({ preventScroll: true });
+        row.scrollIntoView?.({ block: "start" });
+        return;
+      }
       if (!NAVIGATION_KEYS.has(event.key)) return;
       event.preventDefault();
       activate(nextPointIndex(index, event.key, points.length), true);

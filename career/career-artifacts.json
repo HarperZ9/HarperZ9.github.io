@@ -194,14 +194,14 @@
       "sha256": "87bb53fc5831282408212cf14b676bf8f70fe1cf27246cee4ca7500146c821c5"
     },
     {
-      "byte_length": 4008,
+      "byte_length": 4558,
       "extraction_sha256": "46dffb0eee81183380646ffd48b3d78c18bc6933596b08ffbdb807f4e3cd38dc",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "a5c10e4b6f45f88276a918f2334b9e393ccf372a6d813a484f437bbe44394088"
+      "sha256": "519855e68ab3786d9cec7343188b1c27e20e87d0e7dbc90f386931806ae031c5"
     },
     {
       "byte_length": 7854,

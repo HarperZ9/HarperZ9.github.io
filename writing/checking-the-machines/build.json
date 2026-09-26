@@ -1,19 +1,20 @@
 {
   "schema": "checking-machines-build/v1",
   "revised": "2026-09-20",
-  "source_sha256": "539bc5be8834889387e3bb7a50127b2edab09d1467ce540e30b6be72b85952d2",
+  "edited": "2026-09-25",
+  "source_sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5",
   "outputs": [
     {
       "path": "checking-the-machines.html",
-      "sha256": "92fc0bb83aac829f43f7da2f8b8321405eb37e6dcadd2726834227501b277d81"
+      "sha256": "5032d1d2a54428612bcbc20542b54a289c38f8aca51fb7d4b5d5336875fd4b1f"
     },
     {
       "path": "writing/checking-the-machines/01.md",
-      "sha256": "539bc5be8834889387e3bb7a50127b2edab09d1467ce540e30b6be72b85952d2"
+      "sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5"
     },
     {
       "path": "writing/checking-the-machines/source-notes.json",
-      "sha256": "d0cc483331c9c755b1fee24cbddb8ba42f82c5e3d754a9ef55e02bc2972abe85"
+      "sha256": "51281539b7975f452b43a2f95b13c2f9ce28ca7a147e501f830a41b1238d6dab"
     },
     {
       "path": "writing/checking-the-machines/reading-and-revision-note.md",
@@ -25,19 +26,19 @@
     },
     {
       "path": "writing/checking-the-machines/articulate-receipt.json",
-      "sha256": "73b9cb06baf0509b0e45acfa06ce92da3ae4ec76bc8f44cc4309c88ae1f882c2"
+      "sha256": "b7d80e7b79ee77ba17a7de74f8602ef141669c223a78e10add6ed517f4adb913"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx",
-      "sha256": "96f70a6c2f818f5139d2ccbeed467e4d33e8ba6380759a010cae3b82fdc8c0ea"
+      "sha256": "e4d61ef9f0edac714efbcb7286b5be3a146fe8726356325ce187ad174e33706e"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf",
-      "sha256": "54b9f8a2427b031119d8d2c2062e8f66f43910623c08666c69ced3de6dee0916"
+      "sha256": "87b59e82d35b24de774526aaa48d2ea138c6bd83bb921b606b2edcdf06531304"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt",
-      "sha256": "2259b8222e130d885255938464f8d45b12f7543bc4b81008e66db7b12cd9f7ae"
+      "sha256": "6d6672e153d6edeca8ea3cb767719e73cf5fecf63e9755ec93433cde0e39af4f"
     }
   ]
 }

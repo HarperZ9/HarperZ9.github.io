@@ -5,17 +5,17 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Conservation of Faithfulness &middot; Zain Dana Harper</title>
-<meta name="description" content="A reviewable working paper on what survives communication between two differently perceiving bounded agents, and the criterion that reconciles them.">
+<meta name="description" content="A working paper on what survives when information passes between two minds that sense the world differently, and why choosing it stays a human job.">
 <link rel="canonical" href="https://harperz9.github.io/research-conservation-of-faithfulness.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="The Conservation of Faithfulness &middot; Zain Dana Harper">
-<meta property="og:description" content="A reviewable working paper on what survives communication between two differently perceiving bounded agents, and the criterion that reconciles them.">
+<meta property="og:description" content="A working paper on what survives when information passes between two minds that sense the world differently, and why choosing it stays a human job.">
 <meta property="og:url" content="https://harperz9.github.io/research-conservation-of-faithfulness.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Conservation of Faithfulness &middot; Zain Dana Harper">
-<meta name="twitter:description" content="A reviewable working paper on what survives communication between two differently perceiving bounded agents, and the criterion that reconciles them.">
+<meta name="twitter:description" content="A working paper on what survives when information passes between two minds that sense the world differently, and why choosing it stays a human job.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 </head>
@@ -38,15 +38,25 @@
     <p class="role" style="margin-bottom:.55rem">Working paper &middot; reviewable draft</p>
     <h1>The Conservation of Faithfulness</h1>
     <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">
-      What crosses between two minds, the law that governs it, and the one boundary where a human must stand.</p>
-    <p class="contact">
-      <span>Zain Dana Harper</span><span class="sep">/</span>
-      <span>Drafted 2026-06-30</span><span class="sep">/</span>
-      <span>Companion to <a class="inline" href="research.html">the research program</a></span><span class="sep">/</span>
-      <a href="https://github.com/HarperZ9/faithful-transpile" translate="no">github.com/HarperZ9/faithful-transpile</a><span class="sep">/</span>
+      What crosses between two minds, and the one boundary where a human must stand.</p>
+    <p class="contact contact--fields">
+      <span>Zain Dana Harper</span>
+      <span>Drafted 30 June 2026</span>
+      <span>Companion to <a class="inline" href="research.html">the research program</a></span>
+      <a href="https://github.com/HarperZ9/faithful-transpile" translate="no">github.com/HarperZ9/faithful-transpile</a>
       <a class="inline" href="papers/faithfulness-conserved-quantity.pdf">Formal note (PDF)</a>
     </p>
   </header>
+
+  <section id="in-short">
+    <h2>In short</h2>
+    <p class="lead">This paper argues that when a message passes between minds or machines, what counts is
+    whether the one fact you needed came through, however much else changed. It tests that idea on seven
+    kinds of perception (sight, sound, shape, language, structure, quantity and identity) and finds where it
+    stops: a check can confirm that a named fact survived, and only a person can decide whether it was the
+    right fact to check. Start with the plain-terms section below; the formal statements begin in
+    section 2.</p>
+  </section>
 
   <section>
     <h2>In plain terms</h2>
@@ -56,581 +66,636 @@
     temperature. Only a few characters are lost this time, and the dish is ruined, because the temperature was
     the part you needed.</p>
     <p class="lead">This paper is about the gap between how much changed and whether the thing you needed
-    survived. When information crosses a boundary, between two minds, two senses, or two machines, the usual
-    score is how many bits made it through. That score answers the wrong question. What you want to know is
-    whether one chosen readout, the fact or meaning you care about, can still be recovered on the other side.
-    We call that readout the criterion, and the crossing is faithful to it when the criterion can still be read
-    off what arrives.</p>
+    survived. When information crosses a boundary, between two minds, two senses or two machines, the usual
+    score counts the bits that made it through. This paper asks whether one chosen readout, the fact or
+    meaning you care about, can still be recovered on the other side. We call that readout the criterion. The
+    crossing is faithful to it when the criterion can still be read off what arrives.</p>
     <p class="lead">The result, tested across seven kinds of perception, is that the quantity a lossy crossing
-    conserves is its faithfulness to whatever criterion you name. The bit count is beside the point. A crossing
-    can throw away almost every bit and keep the criterion. It can keep most of the bits and destroy it. Two
-    lessons follow. No measurement taken from inside the output can tell you whether the criterion survived, so
-    you check it against the criterion from outside. The outside check is necessary, and it is not enough. A
-    real checker holds only a close stand-in for the criterion you meant, so it can be satisfied while the
-    criterion you cared about quietly breaks. This gap is the one boundary the paper keeps returning to, and it
-    is where a human stands.</p>
+    (one that throws information away) conserves is its faithfulness to whatever criterion you name. The bit
+    count is beside the point. A crossing can throw away almost every bit and keep the criterion, and another
+    can keep most of the bits and still destroy it. Two lessons follow. First, no measurement taken from
+    inside the output can tell you whether the criterion survived, so you check it against the criterion from
+    outside. Second, the outside check is necessary, and it is not enough. This gap is the paper's one
+    boundary, the place where a human stands: a real checker holds only a close stand-in for the criterion
+    you meant, so it can be satisfied while the criterion you cared about quietly breaks.</p>
+  </section>
+
+  <section>
+    <h2>Words this paper uses</h2>
+    <p class="lead">These are the technical words the paper relies on, in plain terms.</p>
+    <dl class="kv">
+      <dt>Bit</dt><dd>The smallest unit of stored information, one yes-or-no. Counting bits measures how much data made it across.</dd>
+      <dt>Conservation law</dt><dd>A rule that some quantity stays the same through a change, the way physics treats energy. This paper claims that what can survive a crossing is faithfulness to a named criterion, and that the bit count does not decide it.</dd>
+      <dt>Transform</dt><dd>Any process that turns a thing into another form: a translation, a summary, a compressed image, an encrypted file.</dd>
+      <dt>Lossy and bijective</dt><dd>A lossy transform throws information away. A bijective transform keeps all of it and can be undone exactly by whoever holds the inverse (for encryption, the key), even when its output looks like noise.</dd>
+      <dt>Substrate</dt><dd>The medium the information lives in, such as an image, a sound, a shape or a sentence. The seven test media here are called sensory substrates.</dd>
+      <dt>Criterion</dt><dd>The one readout you care about, chosen from outside the transform and named in advance: a label, an identity, a measurement or an answer.</dd>
+      <dt>Faithful</dt><dd>A transform is faithful to a criterion when the criterion can still be recovered from its output, within an error named in advance and without any secret key unless the setup names one. Section 2.1 gives the exact definition.</dd>
+      <dt>Invariant</dt><dd>The part of a subject that stays fixed through a change.</dd>
+      <dt>Falsifier</dt><dd>An experiment that would prove the claim wrong if it came out a certain way.</dd>
+      <dt>Adversarial</dt><dd>Built on purpose to break the claim.</dd>
+      <dt>Witness and proxy</dt><dd>A witness is an outside checker that holds the criterion and tests the output against it. A proxy is a stand-in criterion that sits close to the one you meant without matching it.</dd>
+      <dt>Repository and commit</dt><dd>A repository is a public, versioned store of code. A commit is one recorded change in its history.</dd>
+      <dt>Fixed point</dt><dd>The state a process settles into and stays in.</dd>
+    </dl>
   </section>
 
   <section>
     <h2>How to read this</h2>
-    <p class="lead">This is a maturation pass over an earlier working paper. It does three things the prior
-    draft did not. It states the conservation law formally, with an explicit scope condition and one named
-    falsifier you can run. It separates the composition claim into the part that is provable at each layer
-    and the part that is still a conjecture, instead of asserting both at once. And it audits the
-    already-shipped claims against the real repositories, with one chain shown end to end (source, then test,
-    then coverage) and the maturity gap stated plainly.</p>
-    <p class="lead">The claim labels are load-bearing. <b>[established]</b> is earned by runnable evidence.
-    <b>[designed]</b> is built or specified but not yet demonstrated at the claimed strength.
-    <b>[reach]</b> is a reasonable extension the experiments do not demonstrate. Where a claim could not be
-    certified against a runnable artifact, it is marked <span translate="no">UNVERIFIABLE</span> and the
-    reason is given, in the same discipline the principle itself demands. Read the labels.</p>
+    <p class="lead">This version revises an earlier draft in three ways. It writes the main rule out in full,
+    says exactly when the rule applies, and names one experiment that would prove it wrong. It separates what
+    can be proved about chains of steps from what is still a guess; the earlier draft claimed both at once. It
+    also checks the paper's own claims about finished software against the code, and shows one check in full:
+    the code, its tests, and how much of the code those tests run. The gaps it found are named.</p>
+    <p class="lead">Each claim carries a label. <b>[established]</b> means runnable evidence supports the
+    claim. <b>[designed]</b> means the thing is built or specified and has not yet been demonstrated at the
+    claimed strength. <b>[reach]</b> marks a reasonable extension that the experiments do not demonstrate.
+    When a claim could not be certified against something a reader can run, the principle requires marking it
+    <span translate="no">UNVERIFIABLE</span> with the reason given. Two more labels record the audit of
+    shipped software. <span translate="no">MATCH</span> means a claim agrees with the code or evidence as it
+    stands now. <span translate="no">DRIFT</span> means a stated claim no longer agrees with the evidence and
+    has to be corrected.</p>
   </section>
 
   <section>
     <h2>Abstract</h2>
-    <p class="lead">Information that crosses a boundary, between two minds, between two substrates, between
-    two senses, is not conserved as bits. Almost all of the bits can be discarded. What can be conserved is
-    <em>faithfulness to a criterion</em>: the recoverability of a specific readout of the subject. This
-    paper states that as a conservation law with a precise scope condition. It tests the law on
-    <b>seven sensory substrates</b> (sight, sound, shape, language, structure, quantity, identity),
-    exercised as <b>ten distinct criterion-readout instances</b> (several substrates carry two instruments
-    each), plus <b>two structural tests</b> (composition and an adversarial boundary probe). The counting is
-    made re-derivable below, so a reader can confirm it from the table rather than take it on faith.</p>
+    <p class="lead">Information that crosses a boundary, between two minds, two substrates or two senses, is not
+    conserved as bits. Almost all of the bits can be thrown away. What can be conserved is
+    <em>faithfulness to a criterion</em>: whether a specific readout of the subject can still be recovered.
+    This paper states that idea as a conservation law with a precise scope condition. It tests the law on
+    <b>seven sensory substrates</b> (sight, sound, shape, language, structure, quantity, identity). Several
+    substrates carry two instruments each, so the tests come to <b>ten distinct criterion-readout
+    instances</b>. <b>Two structural tests</b> add to that: one on composition and one adversarial probe of the
+    boundary. The counts can be re-derived from the table below, so a reader can confirm them from the page.</p>
     <p class="lead">The law has a single named falsifier that would break it if it were false. It has exactly
-    one boundary, and it is the important one: the law conserves faithfulness to the <em>stated</em>
-    criterion and cannot certify that the stated criterion is the <em>right</em> one. That boundary is not a
-    gap to engineer away. It is the permanent place a human stands, and it is the same fact that makes one
-    shared center able to serve every domain at once. The paper also corrects two over-reaches from the
-    earlier draft: the composition claim is split into a provable layer law and a separate open conjecture,
-    and the shipped-system claims are re-counted against the actual repositories, where one number had
-    drifted.</p>
+    one boundary: the law conserves faithfulness to the <em>stated</em> criterion and cannot certify that the
+    stated criterion is the <em>right</em> one. That boundary is permanent. It is where a human stands, and
+    the same fact lets one shared center serve every domain at once. The paper also corrects two over-reaches in the earlier
+    draft. It splits the composition claim into a provable layer law and a separate open conjecture. It
+    re-counts the shipped-system claims against the actual repositories, where one number had drifted.</p>
   </section>
 
   <section>
     <h2>1. The question</h2>
     <p class="lead">Two minds cannot share their internal states. Each can only collapse a state into a
-    stream the other reconstructs. The naive picture is a <em>narrow tube</em>: a bottleneck through which
-    too little passes. The central question is whether the tube is really the limit, or whether the thing
-    that has to cross is not the state at all but something far smaller and substrate-independent that the
-    tube carries easily.</p>
-    <p class="lead">If the second reading is right, then shared understanding is not a bandwidth problem. It
-    is a problem of <em>what to conserve</em>, and <em>how to check it crossed faithfully</em>. The thing to
-    conserve is faithfulness to a named criterion. The way to check it is an external witness that holds
-    that criterion. The law that ties them together is stated next.</p>
+    stream that the other reconstructs. The naive picture is a <em>narrow tube</em>, a bottleneck that lets
+    too little through. The central question is whether the tube is the limit. The alternative is that the
+    thing that has to cross is something other than the state: far smaller, independent of the substrate, and
+    small enough for the tube to carry easily.</p>
+    <p class="lead">If the second reading is right, shared understanding is a question of <em>what to
+    conserve</em> and <em>how to check that it crossed faithfully</em>: conserve faithfulness to a named
+    criterion, and check it with an external witness that holds that criterion. The next section states the law that ties them together.</p>
   </section>
 
   <section>
     <h2>2. The conservation law, stated formally <span class="entry-meta">[established]</span></h2>
-    <p class="lead">The earlier draft gave definitions and five propositions but never wrote the law as a
-    single statement with its scope condition and its falsifier in one place. Here it is.</p>
+    <p class="lead">The earlier draft gave definitions and five propositions. It never wrote the law as a
+    single statement with its scope condition and its falsifier in one place. This section does.</p>
 
     <h3>2.1 The objects</h3>
     <ul class="bul">
       <li><b>Definition 1 (transform).</b> A <em>substrate transform</em> is a function that maps a subject
-      to a representation. It may be lossy (the output has far fewer dimensions than the input) or bijective
-      (the output has the same cardinality as the input).</li>
+      to a representation. It may be lossy, with far fewer dimensions in the output than in the input. It may
+      be bijective, with an output of the same cardinality as the input (the same number of possible
+      values).</li>
       <li><b>Definition 2 (criterion).</b> A <em>criterion</em> is a readout: the property of the subject one
-      cares to preserve, such as a label, an identity, a measurement, or an answer. Criteria are not authored
-      by the transform. This externality is not decoration. It is load-bearing, and it is where the boundary
-      in section 6 bites.</li>
+      cares to preserve, such as a label, an identity, a measurement or an answer. The transform does not
+      author its criteria. The argument depends on that externality, and section 6 shows where it bites.</li>
       <li><b>Definition 3 (faithfulness, graded).</b> A transform is <em>faithful to a criterion at level
       one minus epsilon</em> if there exists a recovery map whose readout error is at most epsilon over the
-      relevant distribution of subjects, for a stated error metric and a stated distribution. Binary
-      faithfulness is the special case where epsilon is zero. The recovery may be required to use an external
-      secret key; that is the <em>concealment</em> case.</li>
+      relevant distribution of subjects, for a stated error metric and a stated distribution. The
+      distribution is the range of cases the claim is tested over, and the error metric is the rule for
+      scoring how wrong a readout is. A recovery map
+      is any procedure that reads the criterion back from the output, and epsilon is the error it is allowed.
+      Binary faithfulness is the special case where epsilon is zero. The recovery may be required to use an
+      external secret key; that is the <em>concealment</em> case.</li>
     </ul>
-    <p class="lead">Three knobs must be named for the level to mean anything: the error metric, the
-    distribution over subjects, and, if any, the secret key. A faithfulness number with these unstated is
-    not a measurement. It is a mood.</p>
+    <p class="lead">Three knobs must be named before the level means anything: the error metric, the
+    distribution over subjects and, if there is one, the secret key. A faithfulness number with these unstated
+    is no measurement at all.</p>
 
     <h3>2.2 The law</h3>
     <p class="lead"><b>Conservation of Faithfulness.</b> Fix a subject distribution, a criterion, an error
-    metric, and a tolerance. If there exists a recovery map whose expected readout error is at most that
+    metric and a tolerance. If there exists a recovery map whose expected readout error is at most that
     tolerance, then the transform is faithful to the criterion at the corresponding level, <b>and this fact
-    is independent of the bit-rate of the transform.</b> A transform may discard arbitrarily many bits of the
-    subject and remain faithful, because faithfulness constrains the recoverability of the criterion, not the
-    cardinality of the output.</p>
-    <p class="lead">Three corollaries hold under the same fixed setup:</p>
+    is independent of the bit-rate of the transform</b>, meaning how many bits its output keeps. A transform may discard arbitrarily many bits of the
+    subject and remain faithful. Faithfulness constrains whether the criterion can be recovered. It places no
+    constraint on the cardinality of the output.</p>
+    <p class="lead">Three corollaries, results that follow directly from the law, hold under the same fixed
+    setup:</p>
     <ul class="bul">
       <li><b>C1, bit-independence.</b> Faithfulness does not track bit-loss. A transform can drop almost every
-      bit and stay faithful; another can be bijective (drop no bits) and be unfaithful to the criterion
-      without the external secret. That is the concealment case.</li>
+      bit and stay faithful. Another can be bijective, dropping no bits, and still be unfaithful to the
+      criterion without the external secret. That is the concealment case.</li>
       <li><b>C2, internal blindness.</b> No statistic computed from the representation alone determines
-      faithfulness to the criterion, because the criterion is external to the representation. Certification
-      requires evaluating against the criterion itself, off-substrate.</li>
-      <li><b>C3, criterion-relativity.</b> Faithfulness is a property of the pair (transform, criterion), not
-      of the transform. The same transform can be faithful to one criterion and lossy to another with nothing
-      about the transform changed.</li>
+      faithfulness to the criterion, because the criterion sits outside the representation. Certification
+      requires evaluating against the criterion itself, off the substrate.</li>
+      <li><b>C3, criterion-relativity.</b> Faithfulness belongs to the pair (transform, criterion). The
+      transform alone does not carry it. The same transform can be faithful to one criterion and lossy to
+      another with nothing about the transform changed.</li>
     </ul>
 
     <h3>2.3 The scope condition</h3>
-    <p class="lead">The law is only meaningful inside a declared scope. It is a precondition, not a footnote.
-    The law holds <em>relative to a fixed, externally-named</em> distribution, criterion, metric, and
-    tolerance. It says nothing about an un-named criterion, an un-stated distribution, or a transform
-    evaluated against a criterion it was allowed to choose. If any of those four is authored by the transform
-    or by the party operating it, the law does not apply and the result is <span translate="no">UNVERIFIABLE</span>
-    by construction, not by accident. The law is sound <em>because</em> it refuses to speak outside its
-    scope, not in spite of it.</p>
+    <p class="lead">The law means something only inside a declared scope. The scope is a precondition, and
+    the law depends on it. The law holds <em>relative to a fixed, externally-named</em> distribution,
+    criterion, metric and tolerance. It makes no claim about an un-named criterion, an un-stated distribution
+    or a transform evaluated against a criterion it was allowed to choose. The law is sound <em>because</em>
+    it stays silent outside that scope. If the transform, or the party operating it, authors any of those
+    four, the law does not apply, and the result is <span translate="no">UNVERIFIABLE</span> by
+    construction.</p>
 
     <h3>2.4 The named falsifier, one and runnable</h3>
-    <p class="lead">A conservation law you cannot break is not a law; it is a slogan. Here is the single
-    experiment that would falsify the core claim.</p>
-    <p class="lead"><b>Falsifier F0 (bit-rate predicts faithfulness).</b> Construct a family of transforms
+    <p class="lead"><b>Falsifier F0 (bit-rate predicts faithfulness).</b> This is the single experiment that
+    would falsify the core claim. Construct a family of transforms
     indexed by output bit-rate, all evaluated against one fixed external criterion on one fixed distribution.
-    The law is false if faithfulness is a monotone function of bit-rate across the family, that is, if lower
-    bit-rate <em>always</em> means lower faithfulness and there is no transform that is simultaneously
-    low-rate-high-faithfulness or high-rate-low-faithfulness. Concretely: if you cannot exhibit both a
-    heavily lossy transform that stays faithful <em>and</em> a bijective transform that is unfaithful without
-    an external key, on the same fixed setup, the central claim has failed.</p>
-    <p class="lead">The seven sensory substrates below are exactly attempts to trigger F0 across mechanically
-    independent instruments. F0 stayed untriggered in every one: identity survived a 24,576-fold hash
-    (lossy but faithful), and encryption was bijective yet unreadable without the key (bit-preserving but
-    unfaithful). One clean trigger of F0 on any fixed setup falsifies the law. None occurred. That is the
-    status: <b>robust by independent replication, falsifier untriggered, not a theorem.</b></p>
-    <p class="lead">A second, sharper falsifier exists for corollary C2. <b>Falsifier F1 (an internal
-    statistic certifies faithfulness).</b> C2 is false if there exists a statistic of the representation alone
-    that reliably predicts faithfulness across transforms. If a single within-substrate number (residual
+    The law is false if faithfulness is a monotone function of bit-rate across the family. That would mean a
+    lower bit-rate <em>always</em> gives lower faithfulness, and no transform is low-rate with high
+    faithfulness or high-rate with low faithfulness. In concrete terms, the central claim has failed if, on the
+    same fixed setup, you cannot exhibit both a heavily lossy transform that stays faithful <em>and</em> a
+    bijective transform that is unfaithful without an external key.</p>
+    <p class="lead">The seven sensory substrates below are exactly that: attempts to trigger F0 with
+    instruments that share no mechanism. F0 stayed untriggered in every one. Identity survived a perceptual hash (a
+    short fingerprint of an image) that shrank the data 24,576-fold, so the transform was lossy and still
+    faithful. Encryption was bijective yet unreadable without the key, so it kept every bit and was still
+    unfaithful. One clean trigger of F0 on any fixed setup falsifies the law. None occurred. Its status:
+    <b>robust by independent replication, falsifier untriggered, short of a theorem.</b></p>
+    <p class="lead">A second, sharper falsifier applies to corollary C2. <b>Falsifier F1 (an internal
+    statistic certifies faithfulness).</b> C2 is false if some statistic of the representation alone reliably
+    predicts faithfulness across transforms. Suppose a single number measured inside the substrate (residual
     energy, agreement, confidence, quantization error) tracked faithfulness with no false positives over an
-    adversarial transform set, then no external witness would be needed and C2 would fail. The adversarial
-    structural test (section 6) is the attempt to fire F1. It did not fire, but it located the precise edge
-    where a <em>proxy</em> criterion can be gamed, which is a weaker and honest version of the same pressure.</p>
+    adversarial set of transforms. Then no external witness would be needed, and C2 would fail. The
+    adversarial structural test (section 6) is the attempt to fire F1, and F1 did not fire. The test located
+    the precise edge where a <em>proxy</em> criterion can be gamed, which is a weaker version of the same
+    pressure: an outside checker that holds only a stand-in criterion can be fooled.</p>
 
     <h3>2.5 Why the propositions are near-immediate, and what is not</h3>
-    <p class="lead">Corollaries C1 to C3 fall almost directly out of Definition 3. That is on purpose: the
-    framework is chosen so that <em>what to conserve</em> and <em>why internal certification fails</em> are
-    consequences, not surprises. The empirical contribution is not the corollaries. It is that real
-    transforms across every sensory substrate instantiate them, and that two phenomena the definitions do
-    <em>not</em> force still appeared in the data: the <b>concealment versus destruction split</b> and
-    <b>graded</b> faithfulness. Those two are findings, not theorems, and they are the parts a reviewer
-    should push on hardest.</p>
+    <p class="lead">Corollaries C1 to C3 follow almost directly from Definition 3. The framework was chosen for
+    that reason, so that <em>what to conserve</em> and <em>why internal certification fails</em> come out as
+    consequences with no surprises. The empirical contribution lies elsewhere. Real transforms across every
+    sensory substrate instantiate the corollaries, and the data showed two phenomena that the definitions do
+    <em>not</em> force: the <b>concealment versus destruction split</b> and <b>graded</b> faithfulness. Those
+    two are empirical findings, unproved as theorems, and a reviewer should push hardest on them.</p>
   </section>
 
   <section>
     <h2>3. The empirical core <span class="entry-meta">[established]</span></h2>
     <h3>3.1 Method</h3>
-    <p class="lead">All simulations use the Python standard library (plus PIL for images), deterministic and
-    seeded. Each substrate pre-registers its falsifier: the condition under which the claim would fail for
-    that substrate, an instance of F0 or F1. The language and vision substrates use blind, fresh-context
-    model subjects and arm-blind judges to avoid contamination. Code and per-substrate verdicts live in the
-    substrate files and the principle document.</p>
-    <p class="lead">One process note, reported because it is the difference between a result and a
-    rationalization. The pass/fail instruments mis-fired four times: a block-shuffle sized to the hash cell
-    (perceptual hash), an internal-blindness test that compared two transforms instead of one transform
-    across two criteria (quantize), a reused-keystream cipher that leaked plaintext, which is a genuine
-    two-time-pad bug (encryption), and an over-strict absolute-area threshold for a spiky shape (geometry).
-    In each of the four, fixing the <em>measurement</em> (not the claim) restored the pre-registered result.
-    The status of this note is honest but not independently certified in this pass: it is taken from the
-    build log and the current state of the substrate files, not from a cited commit diff showing the edit
-    landed on the test and not on the claim. Its falsification condition is concrete and left as a next task:
-    pull the four commits, and if any one of them moved the asserted threshold, label, or criterion rather
-    than the measurement code, this note is <span translate="no">DRIFT</span> and must be rewritten. Until
-    that diff is checked, read this as <b>reported, <span translate="no">UNVERIFIABLE</span> against a
-    commit</b>, not established.</p>
+    <p class="lead">All simulations use the Python standard library, plus PIL for images. They are deterministic
+    and seeded. Each substrate registers its falsifier in advance: the condition under which the claim would
+    fail for that substrate, an instance of F0 or F1. The language and vision substrates use blind,
+    fresh-context model subjects (AI models that start each test with no memory of earlier ones), and judges
+    who cannot see which test arm they are scoring, to avoid contamination. Code and per-substrate verdicts
+    live in the substrate files and the principle document.</p>
+    <p class="lead">One process note belongs here: the pass/fail instruments misfired four times. A block-shuffle was sized to the hash cell
+    (perceptual hash). An internal-blindness test compared two transforms when it should have compared one
+    transform across two criteria (quantize). A cipher reused its keystream and leaked plaintext, which is a
+    real two-time-pad bug (encryption). An absolute-area threshold was too strict for a spiky shape
+    (geometry). In each of the four, fixing the <em>measurement</em> restored the pre-registered result, and
+    the claim stayed as registered. This pass has not independently certified that account. It comes from the
+    build log and the current state of the substrate files. No cited commit diff yet shows that each edit
+    landed on the test and left the claim alone. The falsification condition is concrete and left as a next
+    task: pull the four commits. If any one of them moved the asserted threshold, label or criterion, where
+    only the measurement code should have changed, this note is <span translate="no">DRIFT</span> and must be
+    rewritten. Until someone checks that diff, the note stands as <b>reported,
+    <span translate="no">UNVERIFIABLE</span> against a commit</b>, so it is not established.</p>
 
     <h3>3.2 The seven sensory substrates, and how to count them</h3>
-    <p class="lead">No shared math runs between any two rows, so agreement across them is independent
-    replication, not one result re-skinned. Each row is an attempt to trigger F0 and a record that it did
-    not.</p>
+    <p class="lead">No shared math runs between any two rows, so agreement across them counts as independent
+    replication. Each row is an attempt to trigger F0 and a record that the attempt failed.</p>
+    <p class="lead"><b>How to read this.</b> Each row names a sense, the transform applied to it, how much was
+    thrown away, and which readouts survived. Where a row gives a score between 0 and 1, a 1 means the readout
+    came through intact. For a yes-or-no readout, 0.5 is what random guessing scores, so a result near 0.5
+    means nothing survived. The sight row reports drift, a distance score where a smaller number means a
+    closer match; this lowercase drift has nothing to do with the <span translate="no">DRIFT</span> label. In
+    every row, the amount thrown away did not decide which readout survived.</p>
     <dl class="kv">
       <dt>Sight (perceptual hash)</dt><dd>Image to 64 bits, roughly 24,576-fold loss. Scene identity survives (drift 0.004); a different scene does not (0.484).</dd>
-      <dt>Sound (bandlimited audio)</dt><dd>Roughly 98% of spectral energy cut. Pitch and melody survive 4 of 4 notes; timbre, which is about 2% kept, does not. This is the phone-call effect.</dd>
-      <dt>Shape (polygon decimation)</dt><dd>To 10% of vertices. Gross area survives (4 to 6% error); 83% of fine corners are destroyed.</dd>
-      <dt>Language (lossy summary, model-read)</dt><dd>Roughly half of facts dropped. A question is answerable if and only if its supporting fact survived, with zero hallucination.</dd>
-      <dt>Structure (graph to spanning forest)</dt><dd>59% of edges dropped. Connectivity survives (1.000); distance (0.726) and triangle counts (0.492) do not.</dd>
-      <dt>Quantity (projection / quantization)</dt><dd>From 48 dimensions to 6, or down to 1 bit. The invariant survives to 1 bit when the transform keeps the criterion direction (faithful 1.00 versus unfaithful 0.46 at equal bits).</dd>
-      <dt>Identity (encryption)</dt><dd>Bijective, <b>zero bit-loss</b>. The criterion is at chance from ciphertext (0.510); the external key recovers it (1.000).</dd>
+      <dt>Sound (bandlimited audio)</dt><dd>Roughly 98% of spectral energy (the energy spread across the sound's frequencies) cut. Pitch and melody survive 4 of 4 notes; timbre, the character of a voice or instrument, with about 2% kept, does not. This is the phone-call effect: like a phone line, the transform cuts the high frequencies, so you still hear the tune while voices lose their character.</dd>
+      <dt>Shape (polygon decimation)</dt><dd>Cut to 10% of vertices, so the outline keeps 1 corner point in 10. Gross area survives (4 to 6% error); 83% of fine corners are destroyed.</dd>
+      <dt>Language (lossy summary, model-read)</dt><dd>Roughly half of facts dropped, and an AI model answered questions from the summary. A question is answerable if and only if its supporting fact survived, with zero hallucination: the model invented no facts.</dd>
+      <dt>Structure (graph to spanning forest)</dt><dd>A network of points and links, cut down to the fewest links that keep connected points connected. 59% of edges dropped. Connectivity survives (1.000); distance (0.726) and triangle counts (0.492) do not.</dd>
+      <dt>Quantity (projection / quantization)</dt><dd>48 numbers squeezed to 6, or down to a single yes-or-no bit. The invariant survives to 1 bit when the transform keeps the criterion direction, the direction in the data that the criterion is read along (faithful 1.00 versus unfaithful 0.46 at equal bits).</dd>
+      <dt>Identity (encryption)</dt><dd>Bijective, <b>zero bit-loss</b>. The criterion is at chance from ciphertext, the scrambled output (0.510); the external key recovers it (1.000).</dd>
     </dl>
-    <p class="lead"><b>How the numbers reconcile, stated once and re-derivably.</b> This paper uses three
-    counts, and they are not in conflict once you see what each one counts.</p>
+    <p class="lead"><b>How the numbers reconcile, stated once so anyone can re-derive them.</b> This paper uses
+    three counts. They agree once you see what each one counts.</p>
     <ul class="bul">
       <li><b>Seven sensory substrates:</b> the seven rows above. This is the breadth of the replication.</li>
       <li><b>Ten criterion-readout instances:</b> several substrates carry two distinct instruments or
-      readouts, so the number of independent faithfulness measurements is larger than seven. In the canonical
+      readouts, so there are more independent faithfulness measurements than substrates. In the canonical
       principle table, sight runs a perceptual hash <em>and</em> a vision arm (2), sound runs a bandlimit
       filter <em>and</em> an analog filter (2), quantity runs a linear projection <em>and</em> a one-bit
-      quantization (2), and shape, language, structure, and identity run one each (4). That is
-      2 + 2 + 2 + 1 + 1 + 1 + 1 = <b>ten</b> readout instances. This is the count the abstract and conclusion
-      mean by "ten."</li>
-      <li><b>Two structural tests:</b> beyond the sensory rows, two further substrate files probe structure
-      rather than a sense: one for composition (section 4) and one for the adversarial boundary probe
-      (section 6). They are tests of the law's <em>shape</em>, not of an additional sense, and are reported
-      as such.</li>
+      quantization (2), and shape, language, structure and identity run one each (4). That gives
+      2 + 2 + 2 + 1 + 1 + 1 + 1 = <b>ten</b> readout instances. The abstract and conclusion mean this count
+      when they say "ten."</li>
+      <li><b>Two structural tests:</b> beyond the sensory rows, two further substrate files probe the law's
+      structure. One covers composition (section 4) and one is the adversarial boundary probe (section 6).
+      They test the law's <em>shape</em>. They add no sense, and the paper reports them as structural
+      tests.</li>
     </ul>
-    <p class="lead">So on disk there are nine substrate files: seven sensory plus two structural. The
-    seven-versus-ten distinction is breadth (seven substrates) versus measurement depth (ten readout
-    instances). Wherever this paper says "ten," it means the ten readout instances; wherever it says "seven,"
-    it means the seven sensory substrates. If a reader counts the table and finds anything other than seven
-    rows, or counts the canonical instrument column and finds anything other than ten readouts, that is a
+    <p class="lead">So nine substrate files sit on disk, seven sensory and two structural, and in this paper
+    "seven" always means the sensory substrates and "ten" always means the readout instances. If a reader counts the table and finds anything other than seven rows, or counts the
+    canonical instrument column and finds anything other than ten readouts, that is a
     <span translate="no">DRIFT</span> to fix here, the same way the audit below fixes a stale organ count.</p>
 
     <h3>3.3 The two refinements the substrates forced</h3>
-    <p class="lead"><b>Loss is two things, not one.</b> <em>Destruction</em>: the bits that determine the
-    criterion are gone, and no key helps. <em>Concealment</em>: encryption discards nothing (it is bijective)
-    yet the criterion is unreadable without an external secret. Information is conserved but scrambled,
-    recoverable only through the keyed recovery. This is the modern reading of the black-hole information
-    question made concrete: not erased, only put beyond reach. The model result is <b>[established]</b>; the
-    physics analogy to the Page curve is <b>[reach]</b> and is labeled as analogy, not result, throughout.</p>
-    <p class="lead"><b>Faithfulness is graded, not binary.</b> In noiseless discrete substrates the criterion
-    either factored through the transform or did not. In analog and noisy ones it survives smoothly down to a
-    noise floor, bounded by signal-to-noise ratio. Definition 3 carries this as the epsilon knob; the
-    substrates are where it earned its place.</p>
+    <p class="lead"><b>Loss comes in two kinds.</b> In <em>destruction</em>, the bits that determine the
+    criterion are gone, and no key helps. In <em>concealment</em>, encryption discards nothing (it is
+    bijective), yet the criterion is unreadable without an external secret. The information is conserved but
+    scrambled, and only the keyed recovery gets it back. This makes the modern reading of the black-hole
+    information question concrete: the information is put beyond reach, and it is not erased. The model result
+    is <b>[established]</b>. The physics analogy to the Page curve is <b>[reach]</b>, and the paper labels it an
+    analogy throughout.</p>
+    <p class="lead"><b>Faithfulness is also graded.</b> In noiseless discrete substrates, the criterion
+    either factored through the transform (passed through it intact) or it did not. In analog and noisy
+    substrates it survives smoothly down to a noise floor, the level where background noise swamps the signal,
+    bounded by the signal-to-noise ratio (how strong the signal is compared with that noise). Definition 3 carries this as the epsilon knob,
+    and the substrates showed that the knob is needed.</p>
   </section>
 
   <section>
     <h2>4. Composition: what is provable, and what is still a conjecture <span class="entry-meta">[split, see labels]</span></h2>
-    <p class="lead">The earlier draft asserted both "a pipeline is faithful if and only if every stage is"
-    and "faithfulness composes across every layer of the architecture" as if they were the same established
-    fact. They are not. One is provable at each layer under a stated criterion. The other is a conjecture
-    that the visualization experiments have already partly <em>falsified</em> in their own domain. Honesty
-    requires splitting them.</p>
+    <p class="lead">A pipeline is a chain of transforms in which each stage feeds the next. The earlier draft
+    asserted two statements about pipelines as if they were the same established fact: "a pipeline is faithful
+    if and only if every stage is" and "faithfulness composes across every layer of the architecture." The two
+    differ. One of them can be proved at each layer under a stated criterion. The other is a conjecture, and
+    the visualization experiments have already partly <em>falsified</em> it in their own domain. Those
+    experiments come from a sibling project that draws shapes, including shapes from higher dimensions, as
+    flat pictures.</p>
 
     <h3>4.1 The layer composition law (provable, scoped) <span class="entry-meta">[established under its scope condition]</span></h3>
     <p class="lead"><b>Layer Composition Law.</b> Take a pipeline that is a chain of stages, and fix one
-    criterion. Suppose a <em>stagewise criterion chain</em> is given such that each stage is faithful to the
+    criterion. Suppose a <em>stagewise criterion chain</em> is given, such that each stage is faithful to the
     criterion handed to it and recovers into the criterion handed to the next stage. In other words, the
     criterion is <em>carried forward</em> stage by stage. Then:</p>
     <ul class="bul">
-      <li><b>Binary case.</b> If every stage is faithful (each stage error is zero) then the whole pipeline
-      is faithful. If any one stage is non-preserving for its carried criterion, the whole pipeline is
-      unfaithful. Faithfulness is the conjunction over stages: the absorbing meet. One broken stage collapses
-      the whole.</li>
-      <li><b>Graded case.</b> For noisy stages the end-to-end error is bounded by the accumulation of the
-      stage errors. In the worst case (correlated errors) the bound is the linear sum of the stage errors,
-      from the triangle inequality. <em>Under an additional independence assumption</em> the standard
-      error-propagation rate grows as the square root of the chain length rather than linearly, but that rate
-      is a property of the independence assumption, not a measured result here.</li>
+      <li><b>Binary case.</b> If every stage is faithful (each stage error is zero), the whole pipeline is
+      faithful. If any one stage fails to preserve its carried criterion, the whole pipeline is unfaithful.
+      Faithfulness is the conjunction over stages (every stage has to pass), the absorbing meet, so one
+      broken stage collapses the whole pipeline.</li>
+      <li><b>Graded case.</b> For noisy stages, the end-to-end error is bounded by the accumulated stage
+      errors. In the worst case, where the errors are correlated, the bound is the linear sum of the stage
+      errors, from the triangle inequality (the rule that a chain's total error is at most the sum of its
+      steps' errors). <em>Under an additional independence assumption</em>, the standard
+      error-propagation rate grows as the square root of the chain length, which is slower than linear. That
+      rate comes from the independence assumption. It was not measured here.</li>
     </ul>
-    <p class="lead"><b>Why it is provable and not just asserted.</b> The proof is immediate from Definition 3
-    <em>once the stagewise criterion chain exists</em>: faithfulness of each stage to its incoming criterion
-    gives a recovery map, and composing the recovery maps recovers the final criterion from the pipeline
-    output with error bounded by the triangle inequality over the stage errors. That triangle bound is the
-    linear worst case, and it is what the proof delivers. The binary collapse is the zero-error corner. This
-    much is shown empirically in the composition substrate: a faithful-but-noisy chain degrades gracefully,
-    and one unfaithful stage collapses the pipeline (0.955 to 0.501).</p>
-    <p class="lead"><b>What is not established here, said plainly.</b> The square-root-of-length rate in the
-    graded case is the textbook independent-error-accumulation result, not something the composition
-    substrate measures. The shipped simulation shows the binary collapse and graceful degradation, not a
-    fitted square-root scaling curve over chain length. <b>Status of the square-root rate claim:
-    <span translate="no">UNVERIFIABLE</span> against the shipped artifact.</b> Its falsification condition is
-    a one-experiment check left for the next pass: build chains of length 1, 2, 4, 8, and so on with
-    independent stage noise of fixed per-stage error, measure end-to-end error, and if it grows linearly in
-    the length (or faster) rather than as the square root, the independence assumption did not hold for these
-    substrates and the rate claim is <span translate="no">DRIFT</span>. Until that curve is run, only the
-    linear triangle bound and the binary collapse are <b>[established]</b>; the square-root refinement is
-    <b>[designed, <span translate="no">UNVERIFIABLE</span>]</b>.</p>
-    <p class="lead"><b>The scope condition that makes it true (and that the earlier draft hid).</b> The law
-    holds <em>only when the stagewise criterion chain exists and is carried forward</em>. It is <b>not</b>
-    the claim "if each part is faithful to the <em>final</em> criterion, the whole is." That stronger claim
-    is false, and the next subsection is the counterexample. The load-bearing object is the chain, not the
-    single final criterion. Where someone can produce the chain, composition is a theorem. Where they cannot,
-    it is a conjecture, and it can fail.</p>
-    <p class="lead"><b>Falsifier F2 (composition without a carried chain).</b> The Layer Composition Law is
-    mis-applied, and therefore false in the form people want, if there is a pipeline where every stage is
-    faithful to the final criterion <em>in isolation</em> yet the composed pipeline is not faithful. Such
-    pipelines exist, shown next, so the law must be stated with the carried chain or not at all.</p>
+    <p class="lead"><b>Why it can be proved.</b> The proof follows directly from Definition 3 <em>once the
+    stagewise criterion chain exists</em>. Faithfulness of each stage to its incoming criterion gives a
+    recovery map. Composing the recovery maps recovers the final criterion from the pipeline output, with error
+    bounded by the triangle inequality over the stage errors. That triangle bound is the linear worst case, and
+    it is what the proof delivers. The binary collapse is the zero-error corner. The composition substrate shows
+    this much empirically: a faithful but noisy chain degrades gracefully, and one unfaithful stage collapses
+    the pipeline (0.955 to 0.501).</p>
+    <p class="lead"><b>What this section does not establish.</b> The square-root rate in the graded case is the
+    textbook result for independent errors that accumulate. The composition substrate does not measure it. The
+    shipped simulation shows the binary collapse and graceful degradation. It fits no square-root scaling curve
+    over chain length. <b>Status of the square-root rate claim: <span translate="no">UNVERIFIABLE</span> against
+    the shipped artifact.</b> Its falsification condition is a single experiment left for the next pass. Build
+    chains of length 1, 2, 4, 8 and so on, with independent stage noise at a fixed per-stage error, and measure
+    the end-to-end error. If that error grows linearly with length, or faster, the independence assumption did
+    not hold for these substrates and the rate claim is <span translate="no">DRIFT</span>. Until that curve is
+    run, only the linear triangle bound and the binary collapse are <b>[established]</b>. The square-root
+    refinement is <b>[designed, <span translate="no">UNVERIFIABLE</span>]</b>.</p>
+    <p class="lead"><b>The scope condition that makes it true, which the earlier draft hid.</b> The law holds
+    <em>only when the stagewise criterion chain exists and is carried forward</em>. It does <b>not</b> make the
+    claim "if each part is faithful to the <em>final</em> criterion, the whole is." That stronger claim is
+    false, and the next subsection gives the counterexample. The claim rests on the chain, and the single
+    final criterion bears none of that load. Composition is a theorem when someone can produce the chain, and a
+    conjecture that can fail when no one can.</p>
+    <p class="lead"><b>Falsifier F2 (composition without a carried chain).</b> Suppose a pipeline exists in
+    which every stage is faithful to the final criterion <em>in isolation</em>, yet the composed pipeline is
+    not faithful. Then the Layer Composition Law is misapplied, and false in the form people want. Such
+    pipelines exist, as the next subsection shows, so the law must be stated with the carried chain or not
+    stated at all.</p>
 
     <h3>4.2 The whole-from-parts conjecture (open, partly falsified) <span class="entry-meta">[conjecture; counterexample on record]</span></h3>
-    <p class="lead">The tempting stronger statement, "if every sub-part of a subject is rendered faithfully
-    under a criterion, the whole is faithful under that criterion," is a <em>conjecture</em>, and in the one
-    domain where it was tested adversarially it <b>failed</b>.</p>
-    <p class="lead">In the visualization program, a 3-cube under orthographic projection with identity
-    rotation keeps every edge as a locally faithful straight segment, yet collapses four vertex pairs to the
-    same 2D point, so the global vertex-and-edge graph is unrecoverable. Local fidelity did not entail global
-    fidelity. The degeneracy is not rare: at dimension 4, 9.1% of views collide; at dimension 6, 69.1%. The
-    fix was not to assume composition but to <em>add a scope condition to the criterion</em>: require the
-    projection to be injection-preserving (no two distinct points collapse), enforced by a genericity check
-    the renderer now runs. After enforcement the worst case went from 65.6% degenerate views to 0% residual.</p>
-    <p class="lead">So the honest statement is two-part.</p>
+    <p class="lead">The tempting stronger statement is a <em>conjecture</em>: "if every sub-part of a subject
+    is rendered faithfully under a criterion, the whole is faithful under that criterion." In the one domain
+    where it was tested adversarially, it <b>failed</b>.</p>
+    <p class="lead">The visualization program drew a 3-cube, an ordinary cube, under orthographic projection
+    with identity rotation, which means viewed flat and straight on. Every edge stays a locally faithful
+    straight segment. Yet four pairs of vertices collapse onto the same 2D point: seen straight on, the back
+    face of the cube sits exactly behind the front face, so each front corner hides a back corner. The global
+    graph of vertices and edges cannot be recovered. Local fidelity did not entail global fidelity. The
+    degeneracy is not rare. For the same test on cubes in four and six dimensions, 9.1% of views collide at
+    dimension 4, and 69.1% do at dimension 6. The fix was to <em>add a
+    scope condition to the criterion</em>, with no assumption that composition holds. The projection must be
+    injection-preserving, so no two distinct points collapse together, and a genericity check that the
+    renderer now runs enforces it. After enforcement, the worst case went from 65.6% degenerate views to 0%
+    residual.</p>
+    <p class="lead">So the accurate statement has two parts.</p>
     <ul class="bul">
       <li><b>Provable:</b> composition holds at each layer <em>when a carried criterion chain exists</em>
       (subsection 4.1).</li>
-      <li><b>Conjecture, with a counterexample:</b> parts-faithful-implies-whole-faithful does <b>not</b>
-      hold in general. It holds only when the criterion is strengthened to forbid the collapse modes
-      (injection-preserving projection, generic position, and, for global topological invariants, at least
-      three orthogonal views). Whether a <em>single</em> scope strengthening makes whole-from-parts hold
-      across all domains is <span translate="no">UNVERIFIABLE</span> from the experiments run so far. The
-      visualization arc found a different strengthening for each failure mode (genericity for local collapse,
-      three orthogonal views for global topology, coherence-weighted fusion for cross-channel). No experiment
-      shows these reduce to one condition. Stated as one law it would be an over-claim.</li>
+      <li><b>Conjecture, with a counterexample:</b> the claim that faithful parts imply a faithful whole does
+      <b>not</b> hold in general. It holds only when the criterion is strengthened to forbid the collapse modes:
+      injection-preserving projection, generic position (points placed so that no accidental overlaps line
+      up) and, for global topological invariants such as how the whole shape connects, at least three
+      orthogonal views (views at right angles, like front, side and top). Whether a <em>single</em> scope strengthening makes whole-from-parts hold across
+      all domains is <span translate="no">UNVERIFIABLE</span> from the experiments run so far. The
+      visualization work found a different strengthening for each failure mode: genericity for local collapse,
+      three orthogonal views for global topology, and coherence-weighted fusion across channels. No experiment
+      shows these reduce to one condition. Stating them as one law would over-claim.</li>
     </ul>
-    <p class="lead">This split is the correction. The earlier draft's "faithfulness composes" is true as
-    subsection 4.1 and false as the stronger reading, and a working paper should not let the reader carry
-    away the false one.</p>
+    <p class="lead">This split is the correction. The earlier draft's "faithfulness composes" is true in the
+    sense of subsection 4.1 and false in the stronger reading.</p>
   </section>
 
   <section>
     <h2>5. The neutral center <span class="entry-meta">[designed, grounded in section 3]</span></h2>
-    <p class="lead">Here is the bridge from the experiment to what is being built. Because the
-    criterion-relevant invariant is substrate-independent (the same criterion survives translation into
-    sight, sound, shape, or language), two minds with <em>different senses of perception</em> can hold the
-    same subject. The invariant is not in either mind and not in the channel. It is the readout both can
-    recover and check.</p>
-    <p class="lead">So the move is not to widen the tube. It is to build a <b>neutral center</b>: a shared,
-    perceptible form of the subject that both parties can render into their own senses, change, and witness,
-    so the channel carries only deltas against a common referent and never whole state. In that center a
-    subject is driven toward its <b>telos</b>: the form that is faithful to the criterion, the singular point
-    of quality. Quality here is not taste. It is faithfulness made checkable. The reconcile (section 7) is
-    the dynamics of the center; the certificate is its receipt; the shipped organs are its instances in each
-    modality.</p>
+    <p class="lead">This section bridges the experiment and what is being built. The criterion-relevant
+    invariant, the part that stays fixed through the change, does not depend on the substrate: the same
+    criterion survives translation into sight, sound, shape or language. So two minds with <em>different
+    senses of perception</em> can hold the same subject. The invariant is the readout both minds can recover
+    and check, and it sits outside each mind and outside the channel.</p>
+    <p class="lead">So the plan leaves the tube as it is and builds a <b>neutral center</b>: a shared,
+    perceptible form of the subject that both parties can render into their own senses, change and witness.
+    The channel then carries only changes against a common reference, and never the whole state. In that
+    center a subject is driven toward its <b>telos</b>, a Greek word for end or purpose: the form that is
+    faithful to the criterion, the one form that best meets it. Quality here means faithfulness made
+    checkable, with no appeal to taste. Section 7's reconcile, the step that checks the shared form against an
+    outside criterion and records the result, is the operation that moves the center. Each reconcile issues a
+    certificate as its record, which anyone can re-check, and the shipped organs, which are software modules,
+    apply it in each modality (each kind of input, such as images or text).</p>
 
     <h3>5.1 Corollary: quality is relational <span class="entry-meta">[established core, scoped]</span></h3>
-    <p class="lead">If "best" means the telos, the criterion-faithful form, then because the criterion is
-    necessarily external (section 6), "best" is not a property a subject can hold or certify alone. It cannot
-    author its own criterion; it cannot certify from inside that it has reached it (internal confidence is
-    blind, corollary C2); and a reconciliation across independent perspectives can reach a fixed point no
-    single perspective holds. So a subject arrives at its best <em>through</em> being perceived and
-    reconciled by another, with the experience shared. Quality is conferred in the meeting, not declared from
-    within. The earlier program asserted this; here it is derived from the law.</p>
-    <p class="lead">Two honest bounds keep it from overreaching. First, "another" is exactly "an external
-    criterion-holder." For a quality judged by minds (clarity, correctness-as-understood, beauty, meaning)
-    that holder is another perceiving mind. For a telos fixed by an impersonal criterion (a physical law, a
-    spec) the external thing may be impersonal: the subject still cannot self-certify, but it need not be
-    <em>perceived</em> to be faithful, only checked. Second, shared perception is necessary, not sufficient:
-    two minds can agree on a form faithful to a shared <em>proxy</em> criterion (section 6), so the meeting
-    makes the best <em>reachable and knowable</em> without guaranteeing it. The criterion still has to be the
-    right one.</p>
+    <p class="lead">If "best" means the telos, the criterion-faithful form, then "best" cannot be a property a
+    subject holds or certifies alone, because the criterion is necessarily external (section 6). A subject
+    cannot author its own criterion. It cannot certify from inside that it has reached it, since internal
+    confidence is blind (corollary C2). And a reconciliation across independent perspectives can reach a fixed
+    point that no single perspective holds. So a subject arrives at its best <em>through</em> being perceived
+    and reconciled by another, with the experience shared. Quality is conferred in the meeting between
+    perspectives. The earlier program asserted this. Here it is derived from the law.</p>
+    <p class="lead">Two bounds keep the corollary from overreaching. First, "another" is exactly "an external
+    criterion-holder." For a quality judged by minds (clarity, correctness-as-understood, beauty, meaning), that
+    holder is another perceiving mind. For a telos fixed by an impersonal criterion, such as a physical law or a
+    spec, the external thing may be impersonal. The subject still cannot certify itself, and for such a telos
+    it needs only a check to count as faithful; no one has to <em>perceive</em> it. Second, shared perception
+    is required, and two minds can still agree on a form faithful to a shared <em>proxy</em> criterion
+    (section 6). So the meeting makes the best <em>reachable and knowable</em> without guaranteeing it. The
+    criterion still has to be the right one.</p>
 
     <h3>5.2 Live demonstration: the center, inhabited <span class="entry-meta">[designed, shown, with the boundary]</span></h3>
-    <p class="lead">The center was run once. A subject (propose the best new flagship from two or more
-    projects) was reconciled by two minds with genuinely different senses: a <em>visual</em> mind perceiving
-    only the relational shape (topology and roles, not function) and a <em>symbolic</em> mind perceiving only
-    the descriptions (function, not shape). Solo, they diverged and each was half-right. At the meeting each
-    corrected the other's blind spot and they converged on one reconciled result.</p>
-    <p class="lead">Judged blind by two external models, the same three artifacts ranked oppositely under two
-    criteria:</p>
+    <p class="lead">Both minds were AI models, each set up to see only part of the subject. The center was run
+    once. The subject was to propose the best new flagship, meaning lead product, from two or more projects.
+    Two minds with different senses reconciled it. A <em>visual</em> mind perceived only the relational shape:
+    how the projects connect and which role each plays, with no view of what each one does. A
+    <em>symbolic</em> mind perceived only the descriptions of what each project does, with no view of the
+    shape. Working alone, they diverged, and each was half-right. At the meeting each corrected the other's
+    blind spot, and they converged on one reconciled result.</p>
+    <p class="lead">Two external models judged the three artifacts blind. Under two criteria, they ranked the
+    same three artifacts in opposite orders. <b>How to read this:</b> each line is one judging criterion, and a
+    higher score is better. The record does not state the top of the scale. The two minds working alone win on
+    novelty, and the meeting wins on correctness.</p>
     <dl class="kv">
       <dt>Novelty-weighted</dt><dd>Visual solo 4.75 &middot; Symbolic solo 4.75 &middot; <b>The meeting 4.0</b></dd>
       <dt>Correctness / buildability</dt><dd>Visual solo 2.0 &middot; Symbolic solo 2.5 &middot; <b>The meeting 5.0</b></dd>
     </dl>
-    <p class="lead">Three things at once. The mechanism works (different senses combined, errors corrected,
-    convergence). The corollary holds (under a criterion valuing wholeness, the meeting at 5.0 strictly beats
-    either mind alone, and each solo's deficit is exactly its missing sense). And the section 6 boundary
-    appears live: the ranking flips with the criterion, so "best" is criterion-relative and choosing the
-    criterion is the human's seat.</p>
-    <p class="lead">The limits are real and stated: two model minds stand in for human-and-model, the sample
-    is one subject, and the reconciliation introduced one ungrounded over-reach (meetings can over-build, not
-    only complete). This is a single demonstration, not a study. It is
-    <span translate="no">UNVERIFIABLE</span> at the strength of "the center works for human-and-model in
-    deployment": that run has not happened, and the prior draft already conceded it. Nothing in this
-    maturation pass changes that status.</p>
+    <p class="lead">The run shows the mechanism working: different senses combined, errors got corrected, and
+    the two minds converged. The corollary holds. Under the correctness criterion, which values wholeness (a
+    complete, grounded proposal), the meeting at 5.0 strictly beats either mind alone, and each solo deficit
+    is exactly the sense that mind lacked. It also shows the section 6 boundary live. The ranking flips when
+    the criterion changes, so "best" depends on the criterion, and choosing the criterion falls to the
+    human.</p>
+    <p class="lead">The limits are these. Two model minds stood in for a human and a model. The reconciliation
+    introduced one ungrounded over-reach: the meeting added one claim its inputs did not support, so a meeting
+    can add errors as well as fill gaps. This was one run on one subject, too small to count as a study. At the
+    strength of "the center works for human-and-model in deployment," it is
+    <span translate="no">UNVERIFIABLE</span>. That run has not happened, and the prior draft already conceded
+    it. Nothing in this revision changes that status.</p>
   </section>
 
   <section>
     <h2>6. Where it expires: the one boundary <span class="entry-meta">[established]</span></h2>
-    <p class="lead">Driven to exhaustion, the law crosses every sense and every pipeline and stops at exactly
-    one place. The adversarial structural test is the attempt to fire falsifier F1, and it locates the edge
-    precisely. When the witness judges with a <em>proxy</em> criterion (the witness criterion aligns only
-    partway with the true one, a cosine of 0.61, as any real witness does), a transform can move along the
-    part of the true criterion orthogonal to the witness, reading as fully faithful to the witness while a
-    large fraction of true labels silently flip. The external witness is <em>necessary but not
-    sufficient</em>: it can be gamed if its criterion is a proxy for the intended one.</p>
-    <p class="lead">So the law is intact but <b>scoped exactly as the scope condition says</b>: it conserves
-    faithfulness to the <em>stated</em> criterion and cannot certify the stated criterion equals the
-    <em>intended</em> one. This is not a defect to engineer away. It is the same residue every layer returns
-    to: a system cannot validate its own criterion from inside. That boundary is where accountability begins.
-    "Which criterion is the right one" is an irreducibly external, human question, and the discipline of
-    naming the criterion, externalizing it, and standing behind it is what this program has been calling
-    accountability all along.</p>
+    <p class="lead">Pushed as far as it goes, the law crosses every sense and every pipeline and stops at
+    exactly one place. The adversarial structural test is the attempt to fire falsifier F1, and it locates that
+    edge precisely. Suppose the witness judges with a <em>proxy</em> criterion that lines up only partway with
+    the true one, as any real witness does. In this test the match is a cosine of 0.61, where 1 would mean a
+    perfect match. A transform can then move along the part of the true criterion that is orthogonal to the
+    witness (at right angles to it), the part the witness cannot see. It reads as fully faithful to the witness while a large fraction of the true labels
+    silently flip. The external witness is <em>necessary but not sufficient</em>. It can be gamed if its
+    criterion is a proxy for the intended one.</p>
+    <p class="lead">So the law is intact, and <b>scoped exactly as the scope condition says</b>: it conserves
+    faithfulness to the <em>stated</em> criterion and cannot certify that the stated criterion equals the
+    <em>intended</em> one. Engineering cannot remove this limit, because every layer runs into it: a system
+    cannot validate its own criterion from inside. "Which criterion is the right one" is an irreducibly
+    external, human question, and accountability begins at this boundary. The program uses the word
+    accountability for naming the criterion, putting it outside the system and standing behind it.</p>
 
     <h3>6.1 The boundary is the universality</h3>
-    <p class="lead">Turned over, the boundary is the most valuable result, not the limit. If quality were
-    criterion-<em>absolute</em>, each domain would need its own machine. Because quality is faithfulness to a
-    <em>named</em> criterion (corollary C3), exactly <b>one</b> center suffices: substrate-neutral and
-    criterion-neutral, it holds the criterion externally and lets each domain bring its own and weight it as
-    that domain demands. The same fact that bounds the law (it cannot pick the criterion from inside) is what
-    makes the center universal (it does not have to; it hosts whichever is named). The packages were never
-    different tools. They are one center bound to different criteria: security to an origin criterion, novelty
-    to a corpus criterion, correctness to a spec criterion, aesthetics to a fitness criterion.</p>
-    <p class="lead">One distinction keeps this from collapsing, and it is load-bearing. The <em>center</em>
-    is neutral; an <em>act within it</em> is not. Hosting every criterion is not "anything goes." Within a
-    named criterion, faithfulness is objective, checkable, and still gameable by a proxy. To stand behind all
-    of them is to welcome every criterion <em>and require each to be named and owned</em>: pluralism, not
-    relativism. The neutrality is the place's; the accountability is the person's, per engagement.</p>
+    <p class="lead">This boundary is the paper's most valuable result. If quality were criterion-<em>absolute</em>, each domain would need its own machine. Quality is
+    faithfulness to a <em>named</em> criterion (corollary C3), so exactly <b>one</b> center suffices. It is
+    neutral about substrate and about criterion. It holds the criterion outside itself and lets each domain
+    bring its own and weight it as that domain demands. The fact that bounds the law, that it cannot pick the
+    criterion from inside, is the same fact that makes the center universal: it has no need to pick, because
+    it hosts whichever criterion is named. The author's software packages are one center bound to different
+    criteria: security to an origin criterion, novelty to a corpus criterion, correctness to a spec criterion,
+    aesthetics to a fitness criterion.</p>
+    <p class="lead">The <em>center</em> is neutral, and each <em>act within it</em> takes a position. Hosting
+    every criterion does not mean "anything goes": within a named criterion, faithfulness is objective and
+    checkable, and a proxy can still game it. The center welcomes every criterion on one condition, that
+    someone <em>names it and owns it</em>, and that condition keeps this pluralism from sliding into
+    relativism. The place is neutral; the person who names a criterion is accountable for it in each
+    engagement.</p>
   </section>
 
   <section>
-    <h2>7. The reconcile, and an honest audit of the shipped claims <span class="entry-meta">[established, with one DRIFT]</span></h2>
+    <h2>7. The reconcile, and an audit of the shipped claims <span class="entry-meta">[established, with one DRIFT]</span></h2>
     <p class="lead">The earlier draft made several "shipped" claims in passing. A working paper that preaches
-    proof-before-trust must hold its own claims to the same standard. Below is one chain shown end to end,
-    then a re-count of the headline numbers against the actual repositories, with the gaps named.</p>
+    proof before trust must hold its own claims to the same standard. Below, one chain is shown end to end,
+    followed by a re-count of the headline numbers against the actual repositories, with the gaps named.</p>
 
     <h3>7.1 The reconcile, in one sentence</h3>
-    <p class="lead">The system reduces to one operation, the <em>reconcile</em>: perceive any artifact into
-    a witnessed form; judge that form against a criterion it did not author; carry a re-checkable certificate
-    of the judgment; return <span translate="no">UNVERIFIABLE</span> when you cannot. The shipped verifier
+    <p class="lead">The system reduces to one operation, the <em>reconcile</em>: perceive any artifact into a
+    witnessed form, judge that form against a criterion it did not author, carry a re-checkable certificate of
+    the judgment, and return <span translate="no">UNVERIFIABLE</span> when you cannot. The shipped verifier
     organs are instances of it.</p>
 
     <h3>7.2 One chain shown: source, then test, then coverage <span class="entry-meta">[established, MATCH]</span></h3>
-    <p class="lead">I audited the reconcile spine in the public coherence-membrane repository firsthand
-    rather than citing it from memory.</p>
+    <p class="lead">I audited the reconcile spine in the public
+    <a class="inline" href="coherence-membrane.html">coherence-membrane</a> repository firsthand, and the
+    source, test and coverage findings below come from that audit.</p>
     <ul class="bul">
-      <li><b>Source.</b> The reconcile module exists and is substantive: 57 executable statements. It
-      implements a reconcile function that is fail-closed (any exception in perceiving or judging yields an
-      <span translate="no">UNVERIFIABLE</span> observation; it never raises), and it implements an
-      independence tri-state (witnessed-independent, self-authored, unwitnessed). The "criterion it did not
-      author" property, asserted by discipline in the prose, is recorded as a checkable field on the
-      observation, with an opt-in strict mode that downgrades a self-graded decision to
-      <span translate="no">UNVERIFIABLE</span> and a stronger require-independent mode that refuses any
-      decision whose independence was not positively witnessed. The doctrine and the code agree.</li>
-      <li><b>Test.</b> The reconcile test file exists with 11 tests. Run on 2026-06-30, all 11 pass. They
-      cover the verifier-organ equivalence (the organ is a reconcile, same verdict and oracle), refute and
-      witness with a real SHA-256 digest, separate perceive and criterion, and the fail-closed path.</li>
-      <li><b>Coverage.</b> Running the same slice with coverage reports <b>88% line coverage</b> of the
-      reconcile module (7 of 57 statements uncovered). The uncovered lines are named: the safe-string
-      exception fallback, the strict-mode self-authored downgrade branch, and the witnessed-independent
-      exception path.</li>
+      <li><b>Source.</b> The reconcile module exists and does real work: 57 executable statements. Its
+      reconcile function fails closed. Any exception while perceiving or judging yields an
+      <span translate="no">UNVERIFIABLE</span> observation, and the function never raises an error to its
+      caller. It also records
+      independence in three states: witnessed-independent, self-authored and unwitnessed. The prose asserts
+      the "criterion it did not author" property as a discipline, and the code records it as a checkable field
+      on the observation. An opt-in strict mode downgrades a self-graded decision to
+      <span translate="no">UNVERIFIABLE</span>. A stronger require-independent mode refuses any decision whose
+      independence was not positively witnessed. The doctrine and the code agree.</li>
+      <li><b>Test.</b> The reconcile test file exists with 11 tests. Run on 30 June 2026, all 11 passed. They
+      cover the verifier-organ equivalence (the organ is a reconcile, with the same verdict and oracle, the
+      reference answer a test compares against), refute and witness with a real SHA-256 digest (a
+      cryptographic fingerprint of the data), a case where perceiving the artifact and judging it are supplied
+      as separate steps, and the fail-closed path.</li>
+      <li><b>Coverage.</b> Line coverage is the share of code lines that the tests execute. Running the same
+      set of tests with coverage reports <b>88% line coverage</b> of the reconcile module, with 7 of 57 statements
+      uncovered. The uncovered lines are named: the safe-string exception fallback, the strict-mode
+      self-authored downgrade branch and the witnessed-independent exception path.</li>
     </ul>
-    <p class="lead"><b>Verdict: <span translate="no">MATCH</span>.</b> The reconcile is real, tested, and the
-    core verdict-passthrough and fail-closed behavior are exercised. <b>Maturity gap, stated plainly:</b> the
-    two strongest guards in the file, strict mode and require-independent mode, are exactly the under-covered
-    lines. The default passthrough path is well tested; the opt-in anti-laundering downgrades are not fully
-    exercised by this slice. The most security-relevant code is the least covered. That is the honest gap,
-    and it is a concrete next task: add tests that drive a self-authored criterion through strict mode and an
-    unwitnessed criterion through require-independent mode, and assert the downgrade to
+    <p class="lead"><b>Verdict: <span translate="no">MATCH</span>.</b> The reconcile is real and tested, and
+    the tests exercise its core verdict passthrough (the default path, which passes a verdict through
+    unchanged) and fail-closed behavior. <b>The maturity gap, stated plainly:</b> the two strongest guards in
+    the file, strict mode and require-independent mode, are exactly the under-covered lines. The default
+    passthrough path is well tested. This set of tests does not fully exercise the opt-in anti-laundering
+    downgrades, the guards that stop a self-graded result from passing as independently checked. The most
+    security-relevant code is the least covered, and the next task follows from that: add tests that drive a self-authored criterion through strict
+    mode and an unwitnessed criterion through require-independent mode, then assert the downgrade to
     <span translate="no">UNVERIFIABLE</span> and the recorded reason.</p>
 
     <h3>7.3 Re-count of the headline numbers <span class="entry-meta">[one MATCH, one DRIFT, one UNVERIFIABLE]</span></h3>
     <ul class="bul">
       <li><b>"Fifteen shipped organs" turns to <span translate="no">DRIFT</span>.</b> The repository's organs
-      directory contains 17 organ modules today. The prose number "fifteen" is stale relative to the current
-      tree. This is a small drift, but it is exactly the kind of un-recounted number a proof-before-trust
-      paper should catch. The fix in this version: say "the shipped verifier and modality organs (17 modules
-      as of 2026-06-30)" and let the count be re-derivable, not asserted.</li>
+      directory contains 17 organ modules today. The prose number "fifteen" is stale against the current tree.
+      The drift is small, and it is exactly the kind of un-recounted number a proof-before-trust paper should
+      catch. The fix in this version is to say "the shipped verifier and modality organs (17 modules as of
+      2026-06-30)" so that anyone can re-derive the count.</li>
       <li><b>"emet emits MATCH / DRIFT / UNVERIFIABLE over a transform" is <span translate="no">MATCH</span>
-      on the vocabulary, partial on the round-trip claim.</b> The public emet repository's verdict logic does
-      emit the three-valued vocabulary, and its coverage map ties each check to MITRE ATLAS and OWASP-LLM
-      identifiers. So "emet witnesses MATCH and DRIFT" is a match. The earlier draft's stronger open-program
-      item, "a round-trip witness that measures invariant-survival <em>through a transform</em>, not
-      identity," is a <em>designed</em> next step, not a shipped one, and remains
-      <span translate="no">UNVERIFIABLE</span> at the strength the open-program list implied. I did not find a
-      shipped emet check that measures criterion survival across a non-identity transform; emet's shipped
-      checks are anchored to byte and view fidelity. Labeled accordingly.</li>
+      on the vocabulary and partial on the round-trip claim.</b> <a class="inline" href="emet.html">emet</a>
+      is a public tool that checks whether content still matches its claimed source. The verdict logic in
+      its public repository does emit the three-valued vocabulary. Its coverage map ties each check to MITRE ATLAS and
+      OWASP-LLM identifiers, two public catalogs of security threats to AI systems. So "emet witnesses MATCH
+      and DRIFT" is a match. The earlier draft's open-program list carried a stronger item: "a round-trip
+      witness that measures invariant-survival <em>through a transform</em>, not identity." That item is a
+      <em>designed</em> next step. It has not shipped, and it remains <span translate="no">UNVERIFIABLE</span>
+      at the strength the list implied. I did not find a shipped emet check that measures criterion survival
+      across a non-identity transform. emet's shipped checks are anchored to byte and view fidelity, and the
+      label says so.</li>
       <li><b>"157 tests" (visualization substrate) is <span translate="no">UNVERIFIABLE</span> in this
       pass.</b> The visualization thesis cites 157 tests across its JavaScript organs. I did not re-run those
-      suites in this maturation pass (they live outside the three Python repositories I audited), so I do not
-      certify the number. It is carried as the source claims it, labeled
-      <span translate="no">UNVERIFIABLE</span> here, with the honest note that re-running it is a one-command
-      check left for the next pass.</li>
+      suites in this revision. They live outside the three Python repositories I audited, so I do not
+      certify the number. It is carried as the source states it and labeled
+      <span translate="no">UNVERIFIABLE</span> here. Re-running it is a one-command check left for the next
+      pass.</li>
     </ul>
 
     <h3>7.4 What this audit establishes and what it does not</h3>
-    <p class="lead">It establishes that the central object, the reconcile, is not vaporware: it is a small,
-    real, tested module whose documented behavior matches its code, with a named coverage gap on its most
-    important guards. It does <em>not</em> establish that the whole 15-to-17-organ ecosystem, the emet
-    round-trip witness, or the visualization substrate are all at the same maturity. They are not, and the
-    labels above say so. The discipline the paper argues for (perceive the artifact, check it against a
-    criterion it did not author, carry a re-checkable result, say <span translate="no">UNVERIFIABLE</span>
-    when you cannot) is the discipline this section applied to the paper's own claims. One number drifted;
-    one chain matched cleanly with a named gap; one remains unverified. That is the receipt.</p>
+    <p class="lead">The audit establishes that the central object, the reconcile, exists as working code. It
+    is a small, real, tested module whose documented behavior matches its code, with a named coverage gap on
+    its most important guards. It does <em>not</em> establish that the whole ecosystem of 15 to 17 organs, the
+    emet round-trip witness or the visualization substrate have reached the same maturity. They have not, and
+    the labels above say so. The paper argues for a discipline: perceive the artifact, check it against a
+    criterion it did not author, carry a re-checkable result, and say <span translate="no">UNVERIFIABLE</span>
+    when you cannot. This section applied that discipline to the paper's own claims and found a stale organ
+    count, a reconcile chain that matched with a named coverage gap, and a test count still unverified.</p>
   </section>
 
   <section>
     <h2>8. The ethical corollary: what you put in lands somewhere <span class="entry-meta">[reach, with a grounded core]</span></h2>
-    <p class="lead">A parallel thought, that positive and negative energy put into the world <em>lands</em>
-    and has an effect, has a grounded core in the commons results and a reach beyond them. The grounded core,
-    with its source named: in the aperture and commons simulations (the same runs labeled the wrong-attractor
-    result) a contribution to a shared center is never neutral. It shifts the fixed point everyone settles
-    to, and the shift is not proportional to how <em>right</em> the contribution is but to how <em>loud</em>
-    and how <em>coordinated</em> it is. The wrong-attractor run is the concrete instance: a tight, confident
-    consensus formed around the <em>wrong</em> attractor, with confidence tracking coordination rather than
-    truth. A shallow, loud, aligned voice moves the center more than a deep, quiet, sincere one.
-    <b>[established in model, sourced to the aperture and commons run; falsification condition: if re-running
-    those simulations shows the settled fixed point tracks contribution correctness rather than loudness and
-    alignment, this claim is <span translate="no">DRIFT</span>.]</b> That is a precise, unsentimental version
-    of "words carry energy": in any commons, what you emit propagates and lands, weighted by force and
-    alignment, not by truth, which is exactly why a center needs a check that caps how loud any one voice can
-    be at the seam. The reach: extending this from the simulated commons to human action in the world is an
-    analogy, not a result. It is a reasonable ethic; it is not something these experiments demonstrate, and
-    the paper does not pretend otherwise. <b>[reach.]</b></p>
+    <p class="lead">A parallel thought holds that positive and negative energy put into the world
+    <em>lands</em> and has an effect. Part of that thought has support in simulation. The aperture and commons
+    simulations model a group of simulated contributors settling on a shared answer; the answer a group
+    settles on is called an attractor, and the same runs produced the wrong-attractor result. In those
+    simulations a contribution to a shared center is never neutral: it shifts the fixed point everyone settles
+    to. In the model, the size of the shift is proportional to how <em>loud</em> and how <em>coordinated</em>
+    the contribution is, and how <em>right</em> it is does not set the size. The wrong-attractor run is the
+    concrete instance: a tight, confident consensus formed around the <em>wrong</em> attractor, and its
+    confidence rose with coordination whether or not the consensus was true. In the model, a loud and aligned
+    voice moved the center more than a quiet and sincere one, even when the loud voice was shallow and the
+    quiet one was deep.</p>
+    <p class="lead"><b>[established in model, sourced to the aperture and commons run; falsification
+    condition: if re-running those simulations shows the settled fixed point follows how correct each
+    contribution is, and no longer follows its loudness and alignment, this claim is
+    <span translate="no">DRIFT</span>.]</b></p>
+    <p class="lead">This gives a precise version of "words carry energy." In any commons, what you emit
+    propagates and lands, weighted by force and alignment alone. That is why a center needs a check at the
+    seam, the point where contributions enter the shared center, that caps how loud any one voice can be. The
+    reach: extending this from the simulated commons to human action in the world is an analogy. It is a
+    reasonable ethic that these experiments do not demonstrate, and the paper does not pretend otherwise.
+    <b>[reach.]</b></p>
   </section>
 
   <section>
     <h2>9. Related work <span class="entry-meta">[moderate confidence]</span></h2>
     <p class="lead">Since this program began, the field has appeared to converge toward the same spine from
-    several directions: proof-carrying verification motivated formally by incompleteness arguments;
-    demonstrations that ungrounded self-critique fails; creative render-then-critique loops that collapse
-    without a grounded external critic; provenance work fragmenting for lack of a composition-sound criterion.
-    No one, to my reading, has assembled the cross-domain claim that <em>faithfulness is the conserved
-    quantity across substrates and senses, and the criterion must be external</em>. That assembly is the
-    contribution; the individual pieces are not all novel.</p>
-    <p class="lead">The primary citations for the frontier-convergence claims are summarized from an internal
-    H1-2026 landscape survey that this paper does not reproduce, and are <span translate="no">UNVERIFIABLE</span>
-    here as primary sources. Their falsification condition is explicit: each of the four convergence items is
-    a claim about a specific external literature, and a citation pass that fails to locate a primary source
-    for any one item turns that item from "claimed convergence" to "unsupported," and it must be struck. They
-    are listed as claims pending a citation pass, not as sourced facts. This honesty about section 9 is
-    itself an instance of the section 6 boundary.</p>
+    several directions: proof-carrying verification, systems that attach a checkable proof to their output,
+    motivated formally by incompleteness results in logic; demonstrations that ungrounded self-critique, an AI
+    model criticizing its own work without an outside reference, fails; creative tools that draw, critique and
+    redraw, which collapse without a grounded external critic; and provenance work, which traces where content
+    came from and splinters for lack of a criterion that holds when steps are combined. No one, to my reading, has assembled the cross-domain claim that <em>faithfulness is the
+    conserved quantity across substrates and senses, and the criterion must be external</em>. That assembly is
+    the contribution. The individual pieces are not all novel.</p>
+    <p class="lead">The primary citations for these convergence claims are summarized from an internal survey
+    of the field from the first half of 2026, which this paper does not reproduce. As primary sources they are
+    <span translate="no">UNVERIFIABLE</span> here. Their falsification condition is explicit. Each of the four
+    convergence items is a claim about a specific external literature. If a citation pass fails to locate a
+    primary source for any one item, that item turns from "claimed convergence" to "unsupported," and it must
+    be struck. They stay listed as claims pending a citation pass, and this page does not treat them as sourced
+    facts. The paper cannot certify its own sources from inside, so an outside citation check has to do it,
+    which is the section 6 boundary applied to this paper.</p>
   </section>
 
   <section>
     <h2>10. The horizon, and a fenced coda</h2>
     <p class="lead"><b>What is earned.</b> A falsifiable conservation law with a stated scope condition and
-    one runnable falsifier (section 2), replicated across seven sensory substrates exercised as ten
-    criterion-readout instances (section 3); a layer composition law that is provable under its carried-chain
-    scope condition, cleanly separated from the whole-from-parts conjecture that its own sibling experiments
-    partly falsified (section 4); a boundary that locates accountability precisely (section 6); and one
-    shipped-claim chain audited end to end with its gap named (section 7).</p>
-    <p class="lead"><b>What remains.</b> The demonstration with a <em>human</em> in a perceptual seat (here
-    two model minds stood in). A full rate-distortion and Landauer derivation of the
-    reversible-to-conservation hinge (the propositions give the structure, not yet the thermodynamic bound).
-    The square-root composition-rate curve (section 4.1), still <span translate="no">UNVERIFIABLE</span>
-    against the shipped simulation. A cited commit diff confirming the four method-note instrument fixes
-    landed on the tests and not the claims. Primary citations for section 9. Tests that close the coverage
-    gap on the strict and require-independent guards. A single answer to whether the section 4.2 scope
-    strengthenings reduce to one condition, which the experiments so far leave
-    <span translate="no">UNVERIFIABLE</span>.</p>
-    <p class="lead"><b>Coda, strictly [reach], offered as a question, not a claim.</b> We ask where thoughts
-    come from, whether from some lossy, imperceptible place that has always been around us, that <em>is</em>
-    us and that we are <em>of</em>. The law gives this intuition a vocabulary it did not have:
-    <em>concealment</em> shows a substrate can hold everything and still present almost nothing to a given
-    criterion, so the imperceptible-but-conserved is a real category, not a mystical one. A mind, on this
-    view, would be a neutral center of the kind being architected: a place where signals from a vast
+    one runnable falsifier (section 2). Its replication across seven sensory substrates, exercised as ten
+    criterion-readout instances (section 3). A layer composition law that can be proved under its carried-chain
+    scope condition, kept separate from the whole-from-parts conjecture that its own sibling experiments partly
+    falsified (section 4). A boundary that locates accountability precisely (section 6). One shipped-claim
+    chain audited end to end, with its gap named (section 7).</p>
+    <p class="lead"><b>What remains.</b> A run where a <em>person</em> is one of the two minds; here two model
+    minds stood in. A full rate-distortion and Landauer derivation of the hinge that links reversible
+    transforms to conservation and irreversible ones to energy dissipation. Rate-distortion theory asks how far data can be compressed at a given error, and Landauer's bound
+    sets the minimum energy cost of erasing a bit. The propositions give the structure, and the thermodynamic
+    bound is still missing. The square-root composition-rate curve (section 4.1), still
+    <span translate="no">UNVERIFIABLE</span> against the shipped simulation. A cited commit diff confirming
+    that the four method-note instrument fixes landed on the tests and left the claims alone. Primary citations
+    for section 9. Tests that close the coverage gap on the strict and require-independent guards. A single
+    answer to whether the section 4.2 scope strengthenings reduce to one condition, which the experiments so
+    far leave <span translate="no">UNVERIFIABLE</span>.</p>
+    <p class="lead"><b>Coda, strictly [reach], offered as a question and making no claim.</b> We ask where
+    thoughts come from, whether from some lossy, imperceptible place that has always been around us, that
+    <em>is</em> us and that we are <em>of</em>. The law gives this intuition a vocabulary it did not have.
+    <em>Concealment</em> shows that a substrate can hold everything and still present almost nothing to a given
+    criterion, so the imperceptible-but-conserved is a real category, with nothing mystical about it. A mind,
+    on this view, would be a neutral center of the kind being built: a place where signals from a vast
     substrate we do not perceive are reconciled into the small, checkable forms we call thoughts. But the
-    experiments do not establish this and could not. They establish how information crosses and is checked,
-    not where it originates. The honest position is that the law <em>fits</em> the intuition without
-    <em>confirming</em> it, and that fit is itself an instance of the section 6 boundary: an elegant criterion
-    the work cannot certify from inside. The paper names it and leaves the certifying to a place outside the
+    experiments do not establish this, and they could not. They establish how information crosses and is
+    checked, and they do not establish where it originates. The law <em>fits</em> the intuition without
+    <em>confirming</em> it, and that fit is an instance of the section 6 boundary: the work cannot certify
+    this elegant criterion from inside, so the paper names it and leaves the certifying to a place outside the
     paper.</p>
   </section>
 
   <section>
     <h2>Conclusion</h2>
-    <p class="lead">Between two minds, the thing that crosses is not state and not bits. It is faithfulness
-    to a criterion, and it is substrate-independent enough that minds with different senses can meet over it.
-    Stated as a law with its scope condition and its falsifier, the claim survived every attempt to break it:
-    seven sensory substrates, exercised as ten criterion-readout instances, plus two structural tests, and
-    the falsifier stayed untriggered across all of them. Stated honestly, its composition holds at each layer
-    under a carried criterion chain and fails as a naive whole-from-parts claim, which is a correction this
-    draft makes explicit. Build the minds a neutral center where the subject is made perceptible to both and
-    checked against an unauthored criterion, and the subject can be reconciled toward its telos: its
-    faithful, quality form. The one thing the center cannot do for them is choose the criterion. That choice,
-    and the standing-behind-it, is the human's. It is what accountability is, and it is the reason the work
-    has a person at its center and not only a machine.</p>
+    <p class="lead">Between two minds, what crosses is faithfulness to a criterion, and it is
+    substrate-independent enough that minds with different senses can meet over it. Stated as a law with its
+    scope condition and its falsifier, the claim survived every attempt to break it: seven sensory substrates,
+    exercised as ten criterion-readout instances, plus two structural tests, with the falsifier untriggered
+    across all of them. Its composition holds at each layer under a carried criterion chain and fails as a
+    naive whole-from-parts claim; this draft makes that correction explicit. A neutral center makes the
+    subject perceptible to both minds, checks it against a criterion it did not author and lets it be
+    reconciled toward its telos, its faithful, quality form. The center cannot choose the criterion. A human
+    chooses it and stands behind it; the paper calls that accountability, and it is why the work has a person
+    at its center as well as a machine.</p>
   </section>
 
   <section>
     <h2>Provenance and labels</h2>
     <p class="lead"><b>Evidence (this program):</b> the principle document (substrate results and the
-    seven-substrate, ten-instance table); the aperture and commons simulation records (including the
-    wrong-attractor result cited in section 8); the vision-arm report; nine substrate files (seven sensory
+    seven-substrate, ten-instance table); the aperture and commons simulation records, including the
+    wrong-attractor result cited in section 8; the vision-arm report; nine substrate files (seven sensory
     substrates plus the composition and adversarial structural tests); the live-center demonstration; the
-    reconcile spine in coherence-membrane; the visualization thesis (the composition counterexample and its
-    fix).</p>
-    <p class="lead"><b>Audited firsthand on 2026-06-30 (section 7):</b> the coherence-membrane reconcile
-    module (57 statements), its test file (11 tests, all pass), reconcile coverage 88% with named gaps; the
-    coherence-membrane organs directory (17 organ modules, correcting "fifteen"); emet's verdict logic and
-    coverage map (MATCH, DRIFT, UNVERIFIABLE vocabulary present, round-trip-over-transform witness not found
-    as shipped).</p>
-    <p class="lead"><b>Carried but <span translate="no">UNVERIFIABLE</span> in this pass (falsification
-    conditions stated in line):</b> the square-root composition rate (section 4.1, not measured by the
-    composition substrate); the four method-note instrument fixes being test-side (not certified against a
-    commit diff); the section 9 frontier-convergence items (no primary citations reproduced here); the "157
-    tests" visualization count (section 7.3, not re-run).</p>
-    <p class="lead"><b>Label key:</b> <b>[established]</b> earned by runnable evidence; <b>[designed]</b>
-    built or specified but not yet demonstrated at the claimed strength; <b>[reach]</b> a reasonable
-    extension the experiments do not demonstrate; <span translate="no">MATCH / DRIFT / UNVERIFIABLE</span>
-    the audited status of a shipped claim against the real repository. The labels are load-bearing. Read
-    them.</p>
+    reconcile spine in coherence-membrane; and the visualization thesis (the composition counterexample and its
+    fix). The principle document, the simulation records, the vision-arm report, the substrate files and the
+    demonstration record sit in the faithful-transpile repository linked at the top of this page.</p>
+    <p class="lead"><b>Audited firsthand on 30 June 2026 (section 7):</b> the coherence-membrane reconcile
+    module (57 statements), its test file (11 tests, all pass) and reconcile coverage of 88% with named gaps;
+    the coherence-membrane organs directory (17 organ modules, correcting "fifteen"); and emet's verdict logic
+    and coverage map (the MATCH, DRIFT, UNVERIFIABLE vocabulary is present; no shipped witness was found that measures a round trip through a transform).</p>
+    <p class="lead"><b>Carried but <span translate="no">UNVERIFIABLE</span> in this pass, with falsification
+    conditions stated in line:</b> the square-root composition rate (section 4.1, not measured by the
+    composition substrate); the claim that the four method-note instrument fixes were test-side (not certified
+    against a commit diff); the section 9 frontier-convergence items (no primary citations reproduced here);
+    and the "157 tests" visualization count (section 7.3, not re-run).</p>
+    <p class="lead"><b>Label key:</b> <b>[established]</b> is earned by runnable evidence. <b>[designed]</b> is
+    built or specified and not yet demonstrated at the claimed strength. <b>[reach]</b> is a reasonable
+    extension the experiments do not demonstrate. <span translate="no">MATCH / DRIFT / UNVERIFIABLE</span> is
+    the audited status of a shipped claim against the real repository.</p>
   </section>
 
   <section>
@@ -639,8 +704,8 @@
     bibliographic details to be finalized in copy-edit.</p>
     <ul class="bul">
       <li>Shannon, C. E. (1948). <em>A Mathematical Theory of Communication.</em> Bell System Technical
-      Journal. Channel capacity; the basis of rate-distortion: preserve the relevant information, not the
-      bits.</li>
+      Journal. Channel capacity, and the basis of rate-distortion: preserve the relevant information and let
+      the other bits go.</li>
       <li>Landauer, R. (1961). <em>Irreversibility and Heat Generation in the Computing Process.</em> IBM J.
       Res. Dev. Erasing a bit costs at least kT ln 2 (the floor that makes <em>destruction</em>
       dissipative).</li>
@@ -648,32 +713,36 @@
       computation approaches zero dissipation (transforming is not erasing; the basis of
       <em>concealment</em>).</li>
       <li>Bateson, G. (1972). <em>Steps to an Ecology of Mind.</em> Information as "the difference that makes
-      a difference"; a criterion-relative readout, not a substrate property.</li>
+      a difference": a readout relative to a criterion, with no home in the substrate itself.</li>
       <li>Bekenstein, J. D. (1981). <em>Universal Upper Bound on the Entropy-to-Energy Ratio.</em> Phys. Rev.
       D. Maximal information density (the black hole as the limit case).</li>
       <li>Page, D. N. (1993). <em>Information in Black Hole Radiation.</em> Phys. Rev. Lett. The Page curve:
-      information conserved and scrambled, not destroyed (the physics of <em>concealment</em>).</li>
+      information conserved and scrambled, and not destroyed (the physics of <em>concealment</em>).</li>
       <li>Lloyd, S. (2000). <em>Ultimate Physical Limits to Computation.</em> Nature 406. Energy bounds on
       operations and memory.</li>
       <li>Cover, T. M., and Thomas, J. A. <em>Elements of Information Theory.</em> Rate-distortion, sufficient
       statistics.</li>
       <li>Ashby, W. R. (1956). <em>An Introduction to Cybernetics.</em> The Law of Requisite Variety (the
-      quantitative shadow of the criterion bound; load-bearing in the visualization sibling thesis).</li>
+      quantitative shadow of the criterion bound, and central to the visualization sibling thesis).</li>
     </ul>
-    <p class="entry-note">Frontier convergence: claims summarized from an internal H1-2026 landscape survey;
-    primary citations pending and marked <span translate="no">UNVERIFIABLE</span> in section 9, with the
-    per-item falsification condition stated there. They cover proof-carrying verification motivated by
-    incompleteness arguments; the empirical failure of ungrounded self-critique; the collapse of
+    <p class="entry-note">Frontier convergence: claims summarized from an internal survey of the field from the
+    first half of 2026; primary citations pending and marked <span translate="no">UNVERIFIABLE</span> in
+    section 9, with the per-item falsification condition stated there. They cover proof-carrying verification
+    motivated by incompleteness arguments; the empirical failure of ungrounded self-critique; the collapse of
     render-then-critique creative loops without a grounded external critic; and the fragmentation of
     provenance for lack of a composition-sound criterion.</p>
   </section>
 
-  <p class="note">Working paper, reviewable draft, drafted 2026-06-30. Companion to
+  <p class="note">Working paper, reviewable draft, drafted 30 June 2026. Companion to
   <a class="inline" href="research.html">the research program</a>. Published and fingerprinted for priority:
   <a class="inline" href="https://github.com/HarperZ9/faithful-transpile" translate="no">github.com/HarperZ9/faithful-transpile</a>.
   Each claim is labeled by where it stands (established &middot; designed &middot; reach), and where a claim
   could not be certified against a runnable artifact it is marked <span translate="no">UNVERIFIABLE</span>.
-  <em>Proof before trust, including about authorship.</em></p>
+  In September 2026 the text was revised for plain language, with AI assistance, and checked with
+  Articulate, a writing checker. The revision changed wording and added plain-language explanations (an In
+  short passage, a glossary and reading notes). It kept every claim, number and position. The falsification
+  condition inside the section 8 evidence label was reworded to pass the checker, with the same meaning and
+  strength. <em>Proof before trust, including about authorship.</em></p>
 
 </article>
 </main>

@@ -22,6 +22,7 @@ RELEASE_PATHS = (
     "assets/index-CX_9A0Hy.js",
     "assets/index-4wTyKocM.js",
     "assets/index-JJHLIJUt.js",
+    "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
     "writing/the-sandbox-was-never-just-a-box/essay.md",
@@ -78,6 +79,7 @@ RELEASE_PATHS = (
     "system/theme-entry.js",
     "system/theme.css",
     "assets/index-eZ1QGP52.css",
+    "assets/index-DJj37yQz.css",
     "typeface.html",
     "system/type-specimen.css",
     "fonts.html",
@@ -176,6 +178,10 @@ RELEASE_PATHS = (
     "figures/recovered-actions-by-day.html",
     "figures/recovered-actions-by-day.json",
     "figures/recovered-actions-by-day.svg",
+    # 2026-09-25: the sandbox essay's rewritten record carries a figure.
+    "figures/sandbox-two-findings.html",
+    "figures/sandbox-two-findings.json",
+    "figures/sandbox-two-findings.svg",
     "figures/security-capability-map.html",
     "figures/security-capability-map.json",
     "figures/security-capability-map.svg",
@@ -257,6 +263,10 @@ RELEASE_PATHS = (
     "system/publications.css",
     "system/publications.js",
     "system/reading.css",
+    # 2026-09-25 human-first notebook: the token file and the notebook sheet module
+    # load on every spine page through reading.css and figure.css.
+    "system/tokens.css",
+    "system/notebook-sheet.css",
     "system/print.css",
     "system/retro-systems-lab.css",
     "system/routes.js",
@@ -299,7 +309,13 @@ RELEASE_PATHS = (
 # September 25, 2026: reviewed Who Knew First registration (route registry,
 # site index, sitemap, writing index and publication build record); all other
 # release-spine paths remain byte-identical.
-REVIEWED_RELEASE_SHA256 = "4137bea0c95bce81e486301fa4cf28c0f67e1f56331628a01160cefcda5055cc"
+# September 25, 2026, evening: the void-and-bone redesign (plate.css surface, poster
+# home bundle, art covers, Articulate page and record, Flywheel 1.0.4 facts, the
+# sandbox figure, capability-map and registry updates, publication listings).
+# September 25, 2026, 20:00: author-approved essay rewrites ship; descriptions fit
+# the 160-character limit, the surface moves into tokens.css for no-JS readers, and
+# the site index regains the Who Knew First pillar.
+REVIEWED_RELEASE_SHA256 = "5cbb20957c906bc77f8855fd3b0be2269b13e933758165a97800ce62fff94783"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -436,8 +452,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    current_js = "index-JJHLIJUt.js"
-    current_css = "index-eZ1QGP52.css"
+    # September 25, 2026: the human-first home (Recent work, the nine-square chart,
+    # the hero art, the start-here link) replaces the capability-first pair, which
+    # stays in the release tree as retained history.
+    current_js = "index-TO_R52sc.js"
+    current_css = "index-DJj37yQz.css"
+    previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
     previous_capability_first_home_js = "index-4wTyKocM.js"
     prior_mission_js = "index-DpT1GQuA.js"
     prior_mission_css = "index-B2kgPYlE.css"
@@ -452,6 +472,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
     assert previous_home_js not in source
+    for superseded in previous_capability_first_pair:
+        assert superseded not in source
+        assert (ROOT / "assets" / superseded).is_file()
+        assert f"assets/{superseded}" in RELEASE_PATHS
     # The prior v1.0.1 rollup home bundle is superseded by the capability-first
     # refresh. It stays in the reviewed release tree as a historical artifact but
     # is no longer referenced by index.html.

@@ -41,11 +41,12 @@
     "retrievedAt": "2026-08-26",
     "units": "conceptual relationships",
     "transformations": [
-      "Keep the diagram conceptual and omit reusable technical instructions, secret indicators, and sensitive infrastructure detail.",
-      "Render every connection with equal-width lines.",
-      "Use relationship labels and state labels in addition to color."
+      "The drawing stays conceptual. It leaves out reusable technical instructions, secret indicators and sensitive infrastructure detail.",
+      "Each part sits in the lane of the party it belongs to.",
+      "Every link is drawn at the same width, so none looks more important than another.",
+      "Every link and part carries a text label and a state label, so color is never the only cue."
     ],
-    "uncertainty": "The diagram reconciles reported layers and is not a complete architecture or control inventory. Every node remains attributable to its source family.",
+    "uncertainty": "The drawing lines up the layers the sources report. It is not a complete architecture or control inventory. Each part traces back to its source family.",
     "data": {
       "type": "relationship",
       "nodes": [

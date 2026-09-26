@@ -138,7 +138,8 @@ def test_generated_html_keeps_article_metadata_svg_alt_and_table_fallback() -> N
     )
     assert re.search(rf'<img src="figures/label-is-a-lens\.svg" alt="{alt}">', html)
     assert '<table class="publication-figure-table">' in html
-    assert "<caption>Figure 1. The label is a lens, not a verdict." in html
+    # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
+    assert "<caption>Figure 1. What six label studies found." in html
     assert '<th scope="col">Source</th>' in html
     assert '<th scope="row">S1</th>' in html
     assert '<th scope="row">S6</th>' in html

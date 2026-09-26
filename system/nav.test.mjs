@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildRouteHeader, navActive, renderNav } from "./nav.js";
+import { buildRouteHeader, navActive, renderNav, syncScrollRegion } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
 import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260909-pillar-navigation";
 
@@ -91,8 +91,50 @@ test("rendered nav treats extensionless local preview routes as html pages", () 
   const { doc, mount } = navFixture("/catalog");
   renderNav(doc);
 
-  assert.match(mount.innerHTML, /class="is-active" href="flywheel\.html"/);
+  // 2026-09-25 human-first notebook: Flywheel sits in the Systems family without
+  // heading it, so a Systems page such as the catalog lights no pillar. Before
+  // this change the catalog lit "Flywheel", which misled readers about where they were.
+  assert.doesNotMatch(mount.innerHTML, /class="is-active" href="flywheel\.html"/);
+  assert.match(mount.innerHTML, /<a class="" href="flywheel\.html">Flywheel<\/a>/);
   assert.equal((mount.innerHTML.match(/aria-current="page"/g) || []).length, 0);
+});
+
+test("pillars light only for the page family they head", () => {
+  const lit = (pathname) => {
+    const { doc, mount } = navFixture(pathname);
+    renderNav(doc);
+    const links = mount.innerHTML.split('<nav class="sn-links"')[1].split("</nav>")[0];
+    return [...links.matchAll(/class="is-active" href="([^"]+)"/g)].map((match) => match[1]);
+  };
+  assert.deepEqual(lit("/research.html"), ["research.html"]);
+  assert.deepEqual(lit("/research-proof-carrying-research-loops.html"), ["research.html"]);
+  assert.deepEqual(lit("/who-knew-first.html"), ["who-knew-first.html"]);
+  assert.deepEqual(lit("/flywheel.html"), ["flywheel.html"]);
+  assert.deepEqual(lit("/site-index.html"), []);
+  assert.deepEqual(lit("/overview.html"), []);
+  assert.deepEqual(lit("/systems/relay.html"), []);
+  assert.deepEqual(lit("/gallery.html"), ["studio.html"]);
+});
+
+test("Who Knew First is the third primary pillar", () => {
+  assert.deepEqual(PRIMARY_ROUTES.map((route) => route.href), [
+    "flywheel.html",
+    "research.html",
+    "who-knew-first.html",
+    "studio.html",
+    "fonts.html",
+    "hire.html",
+  ]);
+  const whoKnewFirst = PRIMARY_ROUTES.find((route) => route.href === "who-knew-first.html");
+  assert.equal(whoKnewFirst.label, "Who Knew First");
+  assert.equal(navActive("/who-knew-first.html"), "Who Knew First");
+});
+
+test("external actions draw their arrow instead of relying on a missing glyph", () => {
+  const { doc, mount } = navFixture("/hire.html");
+  renderNav(doc);
+  assert.match(mount.innerHTML, /rel="noopener">GitHub<svg class="sn-ext"/);
+  assert.doesNotMatch(mount.innerHTML, /↗/);
 });
 
 test("rendered nav does not emit mobile current-section metadata", () => {
@@ -108,7 +150,7 @@ test("rendered mobile menu retains every primary destination", () => {
   const { doc, mount } = navFixture("/hire.html");
   renderNav(doc);
 
-  for (const href of ["flywheel.html", "research.html", "studio.html", "fonts.html", "hire.html"]) {
+  for (const href of ["flywheel.html", "research.html", "who-knew-first.html", "studio.html", "fonts.html", "hire.html"]) {
     assert.match(mount.innerHTML, new RegExp(`class="sn-menu-group sn-menu-primary"[\\s\\S]*href="${href}"`));
   }
 });
@@ -396,6 +438,17 @@ test("buildRouteHeader wraps direct-main headings in a compact header only", () 
   assert.equal(main.children[1], section);
 });
 
+test("buildRouteHeader stands aside when the page carries its own masthead", () => {
+  const { doc, frame } = routeHeaderFixture("/catalog.html");
+  const masthead = new FakeElement("header");
+  masthead.className = "masthead";
+  doc.body.insertBefore(masthead, frame);
+
+  assert.equal(buildRouteHeader(doc), null);
+  assert.equal(frame.querySelector(".route-header__path"), null);
+  assert.ok(!frame.classList.contains("route-header"));
+});
+
 test("buildRouteHeader is excluded from the React home shell", () => {
   const { doc } = routeHeaderFixture("/index.html");
   doc.documentElement.dataset.homeShell = "react";
@@ -416,4 +469,28 @@ test("buildRouteHeader handles document stubs without location and no global loc
     if (hadLocation) globalThis.location = originalLocation;
     else Reflect.deleteProperty(globalThis, "location");
   }
+});
+
+// 2026-09-25: a table wrapper stays a keyboard scroll region only while its table overflows.
+function fakeWrap(scrollWidth, clientWidth) {
+  const attrs = new Map([["tabindex", "0"], ["role", "region"]]);
+  return {
+    scrollWidth,
+    clientWidth,
+    getAttribute: (name) => (attrs.has(name) ? attrs.get(name) : null),
+    setAttribute: (name, value) => attrs.set(name, String(value)),
+    removeAttribute: (name) => attrs.delete(name),
+    hasAttribute: (name) => attrs.has(name),
+  };
+}
+
+test("syncScrollRegion drops a table wrapper that fits from the tab order and restores it when it overflows", () => {
+  const wrap = fakeWrap(358, 358);
+  syncScrollRegion(wrap);
+  assert.equal(wrap.getAttribute("tabindex"), null);
+  assert.equal(wrap.getAttribute("role"), null);
+  wrap.scrollWidth = 720;
+  syncScrollRegion(wrap);
+  assert.equal(wrap.getAttribute("tabindex"), "0");
+  assert.equal(wrap.getAttribute("role"), "region");
 });

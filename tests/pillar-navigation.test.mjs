@@ -394,3 +394,22 @@ test('route renderer refreshes existing system summaries from canonical system p
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('Who Knew First is a primary pillar with a family of its own', () => {
+  // 2026-09-25 human-first notebook: the investigation joins the primary
+  // navigation after Research. Its family holds only its own page, so its
+  // pillar lights there and nowhere else, and Flywheel lights only on its own page.
+  assert.deepEqual(PRIMARY_ROUTES.map(route => route.href), [
+    'flywheel.html', 'research.html', 'who-knew-first.html', 'studio.html', 'fonts.html', 'hire.html',
+  ]);
+  const found = routeByHref('who-knew-first.html');
+  assert.equal(found.family, 'Who Knew First');
+  assert.equal(found.route.primary, true);
+  const families = ROUTE_REGISTRY.families.map(family => family.label);
+  assert.equal(families.indexOf('Who Knew First'), families.indexOf('Research') + 1);
+  const flywheel = routeByHref('flywheel.html');
+  assert.equal(flywheel.route.lightsFamily, false);
+  const mirror = readGeneratedRegistry(PROJECT_ROOT, join('home', 'src', 'site-routes.ts'));
+  assert.ok(mirror.families.some(family => family.label === 'Who Knew First'
+    && family.routes.some(route => route.href === 'who-knew-first.html' && route.primary)));
+});

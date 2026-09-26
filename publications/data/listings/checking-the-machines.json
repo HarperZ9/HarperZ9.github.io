@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "checking-the-machines",
+  "route": "checking-the-machines.html",
+  "form": "open letter",
+  "category": "verification",
+  "title": "An open letter on checking the machines",
+  "summary": "A signed letter to the people who build AI systems: a person should be able to question a machine's answer without first winning an argument with its owner.",
+  "published_at": "2026-09-19",
+  "updated_at": "2026-09-20",
+  "date_source": null,
+  "hubs": [
+    "publications",
+    "writing"
+  ],
+  "topics": [
+    "verification",
+    "letter"
+  ],
+  "ai_assistance": "AI-assisted, author-directed"
+}

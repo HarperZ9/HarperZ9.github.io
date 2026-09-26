@@ -123,7 +123,8 @@ function contrast(foreground, background) {
       assert.match(proof.staticFamilies[1], /Zentropy Mono Preview/);
       assert.equal(proof.forbidden, null);
       assert.deepEqual(proof.clipped, [], `${theme}/${width}: content cannot be clipped offscreen`);
-      assert.equal(proof.background, theme === 'light' ? 'rgb(250, 250, 248)' : 'rgb(16, 20, 22)');
+      // 2026-09-25: the void-and-bone surface sets the grounds (bone #ebe5d8, void #060608).
+      assert.equal(proof.background, theme === 'light' ? 'rgb(235, 229, 216)' : 'rgb(6, 6, 8)');
       assert.notEqual(proof.textColor, proof.background, `${theme}/${width}: heading must separate from the background`);
       await context.close();
     }

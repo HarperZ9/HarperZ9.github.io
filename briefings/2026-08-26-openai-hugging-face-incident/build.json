@@ -3,8 +3,8 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260909-pillar-navigation",
-    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged.",
+    "revision": "20260925-human-notebook",
+    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged. On 25 September 2026 the conceptual trust-boundary figure (figures/control-boundary-flow) was redrawn on the notebook sheet with plain-language labels, a stacked record table and keyboard focus fixes; its figure record keeps every node, edge, state and source, and its three output hashes were refreshed from the edited files. A second pass the same day drew caution in ink so only the verified part carries a verdict hue, numbered every part, gave the page a masthead and kept the figure record's title, description and claim as published; the hashes were refreshed again. On 25 September 2026 the void-and-bone surface pass added the page's aperture cover and the shared art and plate stylesheets; its html hash was refreshed from the edited file.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
     "figureViewBoxOverrides": {
       "incident-multilane-timeline": "0 0 640 6882"
@@ -30,7 +30,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "5ece4495161ea8f9f82e7f451a1ecc8d17d1a498a5c8a4045a5f05d92bf2eca4"
+      "sha256": "1b1408c9d2700fe1fba13dcc93ef0bd2ca6e33bd912de5b9c3df26eda551bee1"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -54,15 +54,15 @@
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "e41fc2f2b1adf48b64e5f42f749efaba519e768cb3389552a5930fff82250fa5"
+      "sha256": "e4af4b994734348b965477cda2582a144259c4deceb2e43974a23b1f76003bbc"
     },
     {
       "path": "figures/control-boundary-flow.json",
-      "sha256": "7dcc4e5d0ba491e03224ccf42ffda3523210b6d3a8c35588f6cfa14c10b89f66"
+      "sha256": "9c11c00a26cfe765e989f3569650e2d5b9c8b6aa45ef49457b3a6d8f238d6171"
     },
     {
       "path": "figures/control-boundary-flow.svg",
-      "sha256": "143fe417421f65adf6be723298a019a30feeea1b0f8eef7adf1775aaa9c359a1"
+      "sha256": "795bd1d73ba7fa0f5e27d1147ae5e5a4267166c9a6cc5f216adcfaa8a9f949a1"
     },
     {
       "path": "figures/incident-multilane-timeline.html",

@@ -134,7 +134,9 @@ export function isLogoFieldAvailable() {
 }
 
 export function mountLogoField(canvas, opts) {
-  const { seed = 58, reduced = false } = opts || {};
+  // stopAfterMs (optional): the field holds its last frame after this long, so the mark stops
+  // moving beside the page's text (WCAG 2.2.2). Leave it unset for a field that keeps moving.
+  const { seed = 58, reduced = false, stopAfterMs = 0 } = opts || {};
   const gl = canvas.getContext("webgl", { alpha: true, premultipliedAlpha: false, antialias: true })
     || canvas.getContext("experimental-webgl", { alpha: true, premultipliedAlpha: false, antialias: true });
   if (!gl) throw new Error("logo-field needs WebGL");
@@ -167,7 +169,7 @@ export function mountLogoField(canvas, opts) {
   gl.uniform1f(u.flareA, P.flareA); gl.uniform1f(u.flareW, P.flareW);
   gl.uniform1f(u.sd, P.sd);
 
-  let raf = 0, t0 = 0, running = false, disposed = false;
+  let raf = 0, t0 = 0, running = false, disposed = false, settled = false;
 
   // Sizing is observer-driven. Measuring layout inside the draw loop forced a
   // synchronous reflow on every animation frame (profiled as the single
@@ -218,9 +220,10 @@ export function mountLogoField(canvas, opts) {
     if (!running || disposed) return;
     if (!t0) t0 = tms;
     draw(tms - t0);
+    if (stopAfterMs > 0 && tms - t0 >= stopAfterMs) { settled = true; stop(); return; }
     raf = requestAnimationFrame(loop);
   };
-  const start = () => { if (running || disposed || reduced) return; running = true; raf = requestAnimationFrame(loop); };
+  const start = () => { if (running || disposed || reduced || settled) return; running = true; raf = requestAnimationFrame(loop); };
   const stop = () => { running = false; cancelAnimationFrame(raf); };
 
   const onVis = () => { if (document.hidden) stop(); else start(); };

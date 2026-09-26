@@ -54,6 +54,7 @@ def test_no_receipt_preserves_argument_and_voice() -> None:
         "no receipt, no accept",
         "finding integration through abstraction",
         "I call it review debt",
+        # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
         "ask for the witness, not the confidence",
         "verified, drift, or unverifiable",
         "The search boundary moved.",
