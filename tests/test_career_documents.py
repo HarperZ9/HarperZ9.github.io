@@ -383,14 +383,22 @@ def test_hiring_document_marks_the_local_career_switch_current() -> None:
 
 
 def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> None:
+    # 25 September 2026: the hiring paths are resume-family rows (.career-card) with
+    # a format line (.career-downloads) from career.css; the older route bands are gone.
     page = read("hire.html")
-    css = read("system/hire.css")
-    assert 'system/hire.css?v=20260902-creative-chassis' in page
-    assert ".hire-route-band" in css
-    assert "min-height:44px" in css
-    assert "@media (max-width:760px)" in css
-    mobile = css.split("@media (max-width:760px)", 1)[1]
-    assert ".hire-route-band{grid-template-columns:1fr" in mobile
+    css = read("system/career.css")
+    hire_css = read("system/hire.css")
+    assert 'system/hire.css?v=20260925-void-plates' in page
+    assert 'system/career.css?v=20260925-void-plates' in page
+    assert page.count('class="career-card"') >= 3
+    assert 'class="career-downloads"' in page
+    assert "hire-route-band" not in page
+    assert "hire-route-band" not in hire_css
+
+    download_rule = re.search(r"\.career-page \.career-downloads a:not\(#_\)\{(?P<body>[^}]*)\}", css)
+    assert download_rule and "min-height:44px" in download_rule.group("body")
+    tablet = css.split("@media (max-width:64rem)", 1)[1].split("@media", 1)[0]
+    assert ".career-page .career-card:not(#_){display:block}" in tablet
 
 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:

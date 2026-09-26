@@ -16,7 +16,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CAPTURE = ROOT / "scripts" / "capture-portfolio-analytics.py"
 RENDER = ROOT / "scripts" / "render-portfolio-analytics.mjs"
-ANALYTICS_PAGE = ROOT / "scripts" / "analytics-page.mjs"
 BASELINE_PLAN = ROOT / "analytics" / "market-baseline-plan.json"
 ANALYTICS_DATASET = ROOT / "analytics" / "portfolio-analytics.json"
 RENDER_RECORD = ROOT / "scripts" / "render-flywheel-benchmark-record.mjs"
@@ -451,7 +450,10 @@ def sandbox_renderer(tmp_path: Path, mutate) -> Path:
     scripts = tmp_path / "scripts"
     scripts.mkdir(parents=True, exist_ok=True)
     (scripts / "render-portfolio-analytics.mjs").write_bytes(RENDER.read_bytes())
-    (scripts / "analytics-page.mjs").write_bytes(ANALYTICS_PAGE.read_bytes())
+    # The renderer imports its shared page parts from sibling analytics-*.mjs
+    # modules, so every one of them travels with it into the sandbox.
+    for module in sorted(RENDER.parent.glob("analytics-*.mjs")):
+        (scripts / module.name).write_bytes(module.read_bytes())
     source_dir = tmp_path / "analytics" / "source"
     source_dir.mkdir(parents=True, exist_ok=True)
     record = json.loads((ROOT / "analytics" / "source" / "current-cross-harness-pilot-source.json").read_text(encoding="utf-8"))
@@ -630,8 +632,10 @@ def test_generated_analytics_keep_mobile_overflow_inside_keyboard_scrollers(tmp_
         assert all(scroller["overflowX"] == "auto" for scroller in scrollers), name
         # 2026-09-25 human-first notebook: the benchmark record's chart reflows
         # into rows and its tables stack into records on a phone, so nothing on
-        # it needs to scroll sideways. The older figure keeps the scroller check.
-        if name != RECORD_STEM:
+        # it needs to scroll sideways. The exploratory comparison sheet reflows
+        # the same way since the void-and-bone pass. The older figures keep the
+        # scroller check.
+        if name not in (RECORD_STEM, "exploratory-stack-comparison"):
             assert any(scroller["scrollWidth"] > scroller["clientWidth"] for scroller in scrollers), name
 
 
@@ -643,7 +647,7 @@ def test_analytics_print_contract_is_direct_and_scoped_without_browser(tmp_path:
     html = (out / f"{RECORD_STEM}.html").read_text(encoding="utf-8")
     assert '<body class="analytics-page">' in html
     assert (
-        '<link rel="stylesheet" href="../system/print.css?v=20260902-creative-chassis" '
+        '<link rel="stylesheet" href="../system/print.css?v=20260925-void-plates" '
         'media="print" data-print-style>'
     ) in html
 
@@ -1045,7 +1049,7 @@ def test_benchmark_record_uses_the_live_site_chassis_and_no_local_paths(tmp_path
     html, svg, companion = _render_record(tmp_path / "figures")
 
     assert '<div id="site-nav" class="site-nav"></div>' in html
-    assert 'href="../system/system.css?v=20260907-reading-completion"' in html
+    assert 'href="../system/system.css?v=20260925-void-plates"' in html
     assert 'src="../system/nav.js?v=20260909-pillar-navigation"' in html
     assert "<main id=" in html
     assert "<title" in svg and "<desc" in svg

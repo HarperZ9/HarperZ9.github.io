@@ -1,0 +1,270 @@
+/* studio-deck.css: the Studio's keys, fields and readouts, the stage mounted as a
+   plate, and the deck under it. Loaded after studio-plate.css, which defines the
+   --st-* tokens used here, and before studio-sheet.css, which holds the rail's shelf
+   and console. */
+
+/* 6. Keys. A chip is a choice among words: at rest it is a word, and the chosen one
+   is drawn in ink with an indicator lamp in its corner, so a panel with four things
+   on reads as four lamps, not four hot marks. A button is an action and keeps a
+   hairline; the action a group exists for carries a heavy ink edge on its leading
+   side. Every key is square. */
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) :is(.chip,.at-chip){
+  position:relative;display:inline-flex;align-items:center;gap:.45rem;min-width:0;min-height:2rem;
+  padding:.3rem .55rem;margin:0;
+  border:1px solid transparent;border-radius:0;
+  background:transparent!important;background-image:none;box-shadow:none!important;
+  color:var(--st-soft)!important;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:500;line-height:1.2;
+  letter-spacing:0;text-transform:none;text-align:left;white-space:normal;
+  transition:border-color .12s,color .12s;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) :is(.chip,.at-chip):hover:not([disabled]){
+  border-color:var(--st-line-strong);color:var(--st-ink)!important;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) :is(.chip,.at-chip):is(.active,[aria-pressed="true"],[aria-checked="true"],.is-active){
+  border-color:var(--st-ink)!important;color:var(--st-ink)!important;font-weight:650;padding-right:1rem;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) :is(.chip,.at-chip):is(.active,[aria-pressed="true"],[aria-checked="true"],.is-active)::before,
+html body.studio-page #studio-viewport .rt-btn[aria-pressed="true"]::before{
+  content:"";display:block;position:absolute;top:3px;right:3px;width:6px;height:6px;
+  background:linear-gradient(currentColor,currentColor);pointer-events:none;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop,.studio-overlay-panel) :is(.btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn){
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  min-width:0;min-height:2.25rem;padding:.4rem .8rem;
+  border:1px solid var(--st-line-strong);border-radius:0;
+  background:transparent;background-image:none;box-shadow:none;
+  color:var(--st-ink);
+  font-family:var(--st-sans);font-size:.875rem;font-weight:600;line-height:1.2;
+  letter-spacing:0;text-transform:none;white-space:normal;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop,.studio-overlay-panel) :is(.btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn):hover:not([disabled]){
+  background:var(--st-raised);border-color:var(--st-ink);color:var(--st-ink);
+}
+/* The action a group exists for (Draw, Render, Build, Send). The edge is a border,
+   not a shadow, so it survives forced colors and print. */
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) .btn:not(.ghost):not(.btn-ghost){
+  border-color:var(--st-ink);border-left-width:4px;font-weight:700;box-shadow:none;padding-left:.9rem;
+}
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel) :is(.btn,.at-mini,.chip,.at-chip,.rt-btn)[disabled]{opacity:.45;cursor:not-allowed}
+html body.studio-page #studio-rail .at-actions{display:flex;flex-wrap:wrap;gap:.35rem;margin:.75rem 0 .25rem}
+
+/* 7. Fields. Text a reader types is Hanken; a seed is data, so it is Conso at 15px. */
+html body.studio-page .studio-app :is(input[type=text],input[type=url],input[type=password],input[type=number],textarea,select,.mc-input){
+  min-height:2.25rem;border:1px solid var(--st-line-strong);border-radius:0;
+  background:var(--st-paper);color:var(--st-ink);box-shadow:none;
+  font-family:var(--st-sans);font-size:.9375rem;
+}
+html body.studio-page .studio-app :is(.at-seed,.poster-seed){font-family:var(--st-mono);font-size:.9375rem;font-weight:500;letter-spacing:0}
+html body.studio-page .studio-app input[type=range]{accent-color:var(--st-ink);width:100%}
+html body.studio-page .studio-app input[type=file]{font-family:var(--st-sans);font-size:.875rem;color:var(--st-soft);border-style:dashed}
+html body.studio-page .studio-app .dd-btn{
+  min-height:2.25rem;border:1px solid var(--st-line-strong);border-radius:0;background:var(--st-paper);
+  color:var(--st-ink);font-family:var(--st-sans);font-size:.875rem;font-weight:500;
+}
+html body.studio-page .studio-app .dd-btn:hover{border-color:var(--st-ink)}
+html body.studio-page .studio-app .dd-arrow{color:var(--st-soft);font-size:.875rem}
+html body.studio-page .studio-app .dd-list{
+  border:1px solid var(--st-ink);border-radius:0;background:var(--st-paper);box-shadow:none;padding:0;
+}
+html body.studio-page .studio-app .dd-opt{
+  border-radius:0;color:var(--st-ink);font-family:var(--st-sans);font-size:.875rem;
+  border:0;border-bottom:1px solid var(--st-line);border-left:4px solid transparent;
+}
+html body.studio-page .studio-app .dd-opt:is(:hover,:focus-visible){background:var(--st-raised);color:var(--st-ink)}
+html body.studio-page .studio-app .dd-opt[aria-selected="true"]{background:var(--st-raised);color:var(--st-ink);font-weight:700;box-shadow:none;border-left-color:var(--st-ink)}
+html body.studio-page .studio-app .studio-drop{
+  border:1px dashed var(--st-line-strong);border-radius:0;background:transparent;color:var(--st-soft);
+}
+
+/* 7b. Readouts a source writes into the rail. Reading is Hanken; data is Conso at
+   15px and weight 500, in ink. Nothing under 14px. */
+html body.studio-page #studio-rail .studio-readout{
+  margin:.5rem 0 0;min-height:1.2em;
+  font-family:var(--st-sans);font-size:.875rem;line-height:1.5;color:var(--st-ink);
+}
+html body.studio-page #studio-rail .studio-readout-pre{white-space:pre-wrap;min-height:2.4em;color:var(--st-soft)}
+html body.studio-page #studio-rail .studio-readout-data{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink);overflow-wrap:anywhere}
+/* The showcase receipt line is an identifier, so it waits behind its own drawer. */
+html body.studio-page #studio-rail details.studio-receipt{margin:.75rem 0 0;border-top:1px solid var(--st-line)}
+html body.studio-page #studio-rail details.studio-receipt>summary{
+  display:flex;align-items:center;gap:.5rem;min-height:2.5rem;padding:.4rem 0;cursor:pointer;list-style:none;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:650;color:var(--st-ink);
+}
+html body.studio-page #studio-rail details.studio-receipt>summary::-webkit-details-marker{display:none}
+html body.studio-page #studio-rail details.studio-receipt>summary::after{content:"+";content:"+" / "";margin-left:auto;font-weight:400;font-size:1.125rem;color:var(--st-soft)}
+html body.studio-page #studio-rail details.studio-receipt[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #studio-rail details.studio-receipt .studio-readout{margin:0 0 .5rem}
+html body.studio-page #studio-rail .studio-doc{margin:.75rem 0 0;padding-top:.6rem;border-top:1px solid var(--st-line)}
+html body.studio-page #studio-rail .studio-doc p{margin:0 0 .45rem;font-family:var(--st-sans);font-size:.875rem;line-height:1.5;color:var(--st-soft)}
+html body.studio-page #studio-rail .studio-doc code{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink)}
+html body.studio-page #studio-rail .studio-atelier .at-blurb{font-family:var(--st-sans);font-size:.9375rem;line-height:1.55;color:var(--st-soft)}
+html body.studio-page #studio-rail .studio-atelier .at-blurb :is(b,.sp){color:var(--st-ink);font-weight:650}
+html body.studio-page #studio-rail :is(.poster-mini-label,.poster-ftext){font-family:var(--st-sans);font-size:.875rem;letter-spacing:0;text-transform:none}
+html body.studio-page #studio-rail .poster-mini-label{color:var(--st-soft);font-weight:600}
+html body.studio-page #studio-rail .studio-drop-empty{font-family:var(--st-sans);font-size:.9375rem;color:var(--st-ink)}
+html body.studio-page #studio-rail .studio-drop-empty span{font-size:.875rem;color:var(--st-soft)}
+/* The Atelier's reconcile readout (system/reconcile.js renderInto): a cohesion line
+   with its verdict word, then one ruled row per criterion: name, ink bar, value. */
+html body.studio-page #at-scores{margin:.6rem 0 0}
+html body.studio-page #at-scores .rc-head{
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:.4rem;margin:0 0 .35rem;
+  font-family:var(--st-sans);font-size:.875rem;color:var(--st-soft);
+}
+html body.studio-page #at-scores .rc-head b{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink)}
+html body.studio-page #at-scores .rc-tag{font-family:var(--st-sans);font-size:.875rem;font-weight:700}
+html body.studio-page #at-scores .rc-tag.rc-verified{color:var(--st-verified)}
+html body.studio-page #at-scores .rc-tag.rc-unverifiable{color:var(--st-unverifiable)}
+html body.studio-page #at-scores .rc-tag.rc-refuted{color:var(--st-drift)}
+html body.studio-page #at-scores .rc-axis{
+  display:grid;grid-template-columns:7.5rem minmax(0,1fr) 3.5rem;gap:.6rem;align-items:center;
+  padding:.3rem 0;border-bottom:1px solid var(--st-line);
+  font-family:var(--st-sans);font-size:.875rem;color:var(--st-soft);
+}
+html body.studio-page #at-scores .rc-weak .rc-name{color:var(--st-ink);font-weight:650}
+html body.studio-page #at-scores .rc-bar{display:block;height:.5rem;border:1px solid var(--st-line);overflow:hidden}
+html body.studio-page #at-scores .rc-fill{display:block;height:100%;background:var(--st-ink)}
+html body.studio-page #at-scores .rc-val{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;text-align:right;color:var(--st-ink)}
+
+/* 9. The stage is the plate, and the only frame in the centre of the view: black, in
+   a thin frame on a mat, with a corner tick at the top left and bottom right, the way
+   plate.css mounts every plate on the site. The frame is an outline drawn at the inner
+   edge of a transparent border, so the ticks sit outside it while the canvas stays
+   clipped. Until a frame has been read, the plate shows the Studio's pillar art. */
+html body.studio-page #studio-viewport{padding:clamp(1rem,1.8vw,1.6rem) clamp(1rem,2vw,1.9rem) 1rem;gap:.7rem}
+@media (min-width:900px) and (max-width:1279.98px){html body.studio-page #studio-viewport{padding:.9rem 1rem .8rem;gap:.6rem}}
+html body.studio-page #viewport-stage{
+  --tk:16px;isolation:isolate;
+  border:var(--st-mat) solid transparent;border-radius:0;box-shadow:none;
+  outline:1px solid var(--st-line-strong);outline-offset:calc(-1 * var(--st-mat));
+  background:
+    linear-gradient(var(--st-line-strong),var(--st-line-strong)) left top/var(--tk) 1px no-repeat border-box,
+    linear-gradient(var(--st-line-strong),var(--st-line-strong)) left top/1px var(--tk) no-repeat border-box,
+    linear-gradient(var(--st-line-strong),var(--st-line-strong)) right bottom/var(--tk) 1px no-repeat border-box,
+    linear-gradient(var(--st-line-strong),var(--st-line-strong)) right bottom/1px var(--tk) no-repeat border-box,
+    linear-gradient(var(--st-plate),var(--st-plate)) padding-box;
+  background-color:transparent;
+}
+html body.studio-page #viewport-stage .stage-poster{
+  position:absolute;inset:0;z-index:-1;margin:0;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;background:var(--st-plate);
+}
+html body.studio-page #viewport-stage .stage-poster img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 50%}
+html body.studio-page #viewport-stage.is-painted .stage-poster{display:none}
+html body.studio-page #viewport-stage .stage-nojs{
+  position:absolute;left:0;right:0;bottom:0;z-index:1;margin:0;padding:.8rem 1rem .9rem;
+  background:var(--st-plate);color:var(--st-plate-ink);text-align:center;
+  font-family:var(--st-sans);font-size:.9375rem;font-weight:500;line-height:1.45;
+}
+html body.studio-page #studio-viewport:fullscreen #viewport-stage,
+html body.studio-page #studio-viewport:-webkit-full-screen #viewport-stage{border:0;outline:0;background:#000}
+
+/* 10. The deck under the plate: a line of words between two hairlines. A key has no
+   box at rest; hover, focus and an engaged state draw its ink frame. The clusters
+   are split by a vertical hairline. The four keys a visit uses most lead. */
+html body.studio-page #render-toolbar{
+  width:100%;max-width:none;margin:0;padding:.35rem 0;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:.3rem 0;
+  border:0;border-top:1px solid var(--st-line);border-bottom:1px solid var(--st-line);border-radius:0;
+  background:transparent;box-shadow:none;
+}
+html body.studio-page #render-toolbar .rt-group{
+  display:inline-flex;flex-wrap:wrap;align-items:center;gap:.1rem;flex:0 1 auto;
+  margin:0 .7rem 0 0;padding:0;border:0;background:transparent;
+}
+html body.studio-page #render-toolbar .deck-more>.rt-group{padding-left:.7rem;border-left:1px solid var(--st-line)}
+html body.studio-page #render-toolbar .rt-group::before{display:none}
+html body.studio-page #render-toolbar .rt-group-lab{display:none}
+html body.studio-page #studio-viewport :is(.rt-btn,.tp-pane-container .tp-rotv_b){
+  position:relative;display:inline-flex;align-items:center;gap:.4rem;min-width:0;min-height:2.1rem;
+  padding:.3rem .5rem;margin:0;
+  border:1px solid transparent;border-radius:0;
+  background:transparent;background-image:none;box-shadow:none;
+  color:var(--st-ink);
+  font-family:var(--st-sans);font-size:.875rem;font-weight:600;line-height:1.15;
+  letter-spacing:0;text-transform:none;white-space:nowrap;
+}
+/* The key glyphs came from a symbol fallback font, a third face; the words carry the
+   meaning on their own. */
+html body.studio-page #render-toolbar .rt-ico{display:none}
+html body.studio-page #studio-viewport .rt-btn[hidden]{display:none}
+html body.studio-page #studio-viewport :is(.rt-btn,.tp-pane-container .tp-rotv_b):is(:hover,:focus-visible):not([disabled]){background:transparent;border-color:var(--st-ink);color:var(--st-ink)}
+html body.studio-page #studio-viewport .rt-btn[aria-pressed="true"]{border-color:var(--st-ink);background:transparent;padding-right:1rem}
+html body.studio-page #studio-viewport .rt-btn[disabled]{opacity:.45;cursor:not-allowed}
+html body.studio-page #studio-viewport details.rt-plot>summary{list-style:none}
+html body.studio-page #studio-viewport details.rt-plot>summary::-webkit-details-marker{display:none}
+html body.studio-page #studio-viewport details.rt-plot[open]>summary{border-color:var(--st-ink)}
+/* A menu key closes on the same +/- marks as every drawer on the page (system.css drew
+   a triangle from a symbol fallback font). */
+html body.studio-page #studio-viewport details.rt-plot>summary::after{content:"+";content:"+" / "";margin-left:.05em;opacity:1;font-weight:400;color:var(--st-soft)}
+html body.studio-page #studio-viewport details.rt-plot[open]>summary::after{content:"\2212";content:"\2212" / ""}
+/* Where the screen is short or narrow, the clusters after the first fold behind a
+   "More controls" drawer, a ruled line like the rail's drawers, so the plate keeps the
+   height. On a large desk every cluster shows, and the drawer is only a wrapper: it
+   lays out as if its clusters sat in the deck itself. The inline script after the
+   toolbar in studio.html opens and closes it on the same media query. */
+html body.studio-page #render-toolbar .rt-primary{flex:1 1 100%;margin-right:0}
+html body.studio-page #deck-more{flex:1 1 100%;border-top:1px solid var(--st-line)}
+html body.studio-page #deck-more>summary{
+  display:flex;align-items:center;gap:.5rem;min-height:2.5rem;padding:.4rem 0;cursor:pointer;list-style:none;
+  font-family:var(--st-sans);font-size:.9375rem;font-weight:700;color:var(--st-ink);
+}
+html body.studio-page #deck-more>summary::-webkit-details-marker{display:none}
+html body.studio-page #deck-more>summary::after{content:"+";content:"+" / "";margin-left:auto;font-weight:400;font-size:1.125rem;color:var(--st-soft)}
+html body.studio-page #deck-more[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #deck-more>.rt-group{margin-bottom:.3rem}
+@media (min-width:1280px) and (min-height:760px){
+  html body.studio-page #render-toolbar .rt-primary{flex:0 1 auto;margin-right:.7rem}
+  html body.studio-page #deck-more{display:contents}
+  html body.studio-page #deck-more>summary{display:none}
+  html body.studio-page #deck-more>.rt-group{margin-bottom:0}
+}
+@supports selector(::details-content){
+  @media (min-width:1280px) and (min-height:760px){html body.studio-page #deck-more::details-content{display:contents}}
+}
+/* A narrow desk rail: the channel names fit their column on one line. */
+@media (min-width:900px) and (max-width:1279.98px){
+  html body.studio-page #studio-rail :is(.rail-head,.rail-scroll){padding-left:1rem;padding-right:1rem}
+  html body.studio-page #studio-rail .rail-own{margin-left:1rem;margin-right:1rem}
+  html body.studio-page #studio-source{padding-left:1rem;padding-right:1rem}
+  html body.studio-page #studio-source .source-group{column-gap:.75rem}
+  html body.studio-page #studio-source [role="tab"]{gap:.4rem;padding-left:.2rem;padding-right:.2rem}
+  html body.studio-page #studio-source [role="tab"]::before{min-width:1.1em}
+}
+html body.studio-page .rt-plot-pop{
+  border:1px solid var(--st-ink);border-radius:0;background:var(--st-paper);color:var(--st-ink);
+  box-shadow:none;padding:.9rem;
+}
+html body.studio-page .rt-plot-pop :is(.rt-plot-lab,.rt-plot-note){
+  font-family:var(--st-sans);font-size:.875rem;letter-spacing:0;text-transform:none;color:var(--st-soft);
+}
+html body.studio-page .rt-plot-pop .rt-plot-lab{font-weight:650;color:var(--st-ink)}
+html body.studio-page .rt-plot-pop .rt-plot-row + .rt-plot-row{border-top:1px solid var(--st-line);padding-top:.5rem;margin-top:.5rem}
+html body.studio-page .rt-plot-pop .rt-btn{border-color:var(--st-line-strong)}
+html body.studio-page #studio-viewport .tp-pane-container .tp-rotv_t{font-family:var(--st-sans);font-size:.875rem;font-weight:600;color:inherit}
+html body.studio-page #studio-viewport .tp-pane-container .tp-rotv_c{border:1px solid var(--st-ink);border-radius:0;background:var(--st-paper)}
+
+/* 11. The caption under the deck: the workshop line, then the engine readout, folded,
+   because its values are runtime identifiers rather than reading. */
+html body.studio-page #studio-viewport #st-flow{
+  align-self:stretch;max-width:none;margin:0!important;text-align:left;
+  font-family:var(--st-sans)!important;font-size:.875rem!important;line-height:1.5!important;
+  letter-spacing:0!important;color:var(--st-soft)!important;
+}
+html body.studio-page #studio-viewport #st-flow :is(a,b,strong){color:var(--st-ink)}
+html body.studio-page #studio-viewport .engine-status{align-self:stretch;width:100%;margin:-.35rem 0 0}
+html body.studio-page #studio-viewport .engine-status>summary{
+  display:inline-flex;align-items:center;gap:.5rem;min-height:2.25rem;cursor:pointer;list-style:none;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:600;color:var(--st-soft);
+}
+html body.studio-page #studio-viewport .engine-status>summary::-webkit-details-marker{display:none}
+html body.studio-page #studio-viewport .engine-status>summary::after{content:"+";content:"+" / "";font-weight:400;font-size:1rem}
+html body.studio-page #studio-viewport .engine-status[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #studio-viewport .engine-status>summary:hover{color:var(--st-ink)}
+html body.studio-page #studio-viewport #engine-statusbar{
+  justify-content:flex-start;width:100%;max-width:none;margin:0;opacity:1;
+  gap:.2rem 1.25rem;padding:.35rem 0 .2rem;border-top:1px solid var(--st-line);
+  font-family:var(--st-sans);font-size:.875rem;line-height:1.6;color:var(--st-soft);
+}
+html body.studio-page #studio-viewport #engine-statusbar b{font-family:var(--st-sans);font-weight:600;color:var(--st-soft)}
+html body.studio-page #studio-viewport #engine-statusbar [id^="engine-status-"]{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink)}

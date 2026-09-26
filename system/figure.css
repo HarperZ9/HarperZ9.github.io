@@ -1,5 +1,5 @@
-@import url("tokens.css?v=20260925-human-notebook");
-@import url("notebook-sheet.css?v=20260925-human-notebook");
+@import url("tokens.css?v=20260925-void-integration");
+@import url("notebook-sheet.css?v=20260925-void-sheets");
 /* figure.css: the figure page chrome. 2026-09-25 human-first notebook: fonts and
    tokens arrive through tokens.css; the notebook sheet and the reader components
    arrive through notebook-sheet.css. The --figure-* values stay here as hex so
@@ -9,47 +9,51 @@
   color-scheme: light dark;
   --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
-  --figure-page:#fafaf8;
-  --figure-surface:#fafaf8;
-  --figure-raised:#e7ecea;
-  --figure-line:#ccd3d3;
-  --figure-line-strong:#6f7f83;
-  --figure-ink:#19272b;
-  --figure-muted:#42575d;
-  --figure-verified:#08766b;
-  --figure-caution:#96401d;
-  --figure-unavailable:#55548f;
-  --figure-diagram-shell:#f8f9fb;
-  --figure-diagram-frame:#c5c8cd;
+  --figure-page:#ebe5d8;
+  --figure-surface:#ebe5d8;
+  --figure-raised:#e2dac9;
+  --figure-line:#c9bfab;
+  --figure-line-strong:#7b7262;
+  --figure-ink:#16130f;
+  --figure-muted:#4a443b;
+  --figure-verified:#0a6b61;
+  --figure-caution:#8f3a19;
+  --figure-unavailable:#4e4d85;
+  --figure-diagram-shell:#f1ece1;
+  --figure-diagram-frame:#b9af9b;
+  --figure-dot:#d8cfbd;
   --figure-body: var(--font-sans);
   --figure-mono: var(--font-mono);
 }
 
+/* 25 September 2026, void and bone: the figure grounds are the site's bone paper and void
+   black (tokens.css), and a figure's working sheet is the sheet paper a step off the ground. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --figure-page:#101416;
-    --figure-surface:#101416;
-    --figure-raised:#233034;
-    --figure-line:#42555a;
-    --figure-line-strong:#7d949a;
-    --figure-ink:#eaf5f6;
-    --figure-muted:#b4c5c9;
+    --figure-page:#060608;
+    --figure-surface:#060608;
+    --figure-raised:#1a1a1e;
+    --figure-line:#29282c;
+    --figure-line-strong:#6f6a61;
+    --figure-ink:#ece5d6;
+    --figure-muted:#b8b0a0;
     --figure-verified:#63d4ce;
     --figure-caution:#e29472;
     --figure-unavailable:#b3b1e6;
-    --figure-diagram-shell:#0b1121;
-    --figure-diagram-frame:#3b4151;
+    --figure-diagram-shell:#0a0a0d;
+    --figure-diagram-frame:#38363b;
+    --figure-dot:#1f1e22;
   }
 }
 :root[data-theme="light"] {
-  --figure-page:#fafaf8;--figure-surface:#fafaf8;--figure-raised:#e7ecea;--figure-line:#ccd3d3;
-  --figure-line-strong:#6f7f83;--figure-ink:#19272b;--figure-muted:#42575d;--figure-verified:#08766b;
-  --figure-caution:#96401d;--figure-unavailable:#55548f;--figure-diagram-shell:#f8f9fb;--figure-diagram-frame:#c5c8cd;
+  --figure-page:#ebe5d8;--figure-surface:#ebe5d8;--figure-raised:#e2dac9;--figure-line:#c9bfab;
+  --figure-line-strong:#7b7262;--figure-ink:#16130f;--figure-muted:#4a443b;--figure-verified:#0a6b61;
+  --figure-caution:#8f3a19;--figure-unavailable:#4e4d85;--figure-diagram-shell:#f1ece1;--figure-diagram-frame:#b9af9b;--figure-dot:#d8cfbd;
 }
 :root[data-theme="dark"] {
-  --figure-page:#101416;--figure-surface:#101416;--figure-raised:#233034;--figure-line:#42555a;
-  --figure-line-strong:#7d949a;--figure-ink:#eaf5f6;--figure-muted:#b4c5c9;--figure-verified:#63d4ce;
-  --figure-caution:#e29472;--figure-unavailable:#b3b1e6;--figure-diagram-shell:#0b1121;--figure-diagram-frame:#3b4151;
+  --figure-page:#060608;--figure-surface:#060608;--figure-raised:#1a1a1e;--figure-line:#29282c;
+  --figure-line-strong:#6f6a61;--figure-ink:#ece5d6;--figure-muted:#b8b0a0;--figure-verified:#63d4ce;
+  --figure-caution:#e29472;--figure-unavailable:#b3b1e6;--figure-diagram-shell:#0a0a0d;--figure-diagram-frame:#38363b;--figure-dot:#1f1e22;
 }
 
 * { box-sizing: border-box; }
@@ -129,12 +133,12 @@ body.figure-document main { min-width: 0; }
 .figure-heading { max-width: 70ch; }
 .figure-heading h1 {
   margin: 0;
-  max-width: 22ch;
+  max-width: 20ch;
   color: var(--figure-ink);
   font-size: var(--t-display, clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem));
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  font-weight: 780;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .figure-description,
@@ -297,6 +301,8 @@ body.figure-document main { min-width: 0; }
 .figure-svg-scroll--medium { --figure-svg-min-inline: 80rem; }
 .figure-svg-scroll--wide { --figure-svg-min-inline: 96rem; }
 .figure-svg-scroll--timeline { --figure-svg-min-inline: 80rem; }
+/* A relationship map keeps its 17px labels at 14px or more on a phone and fits a desktop column. */
+.figure-svg-scroll:has(> svg[data-figure-kind="relationship"]) { --figure-svg-min-inline: 62rem; }
 .figure-svg-scroll:focus-visible,
 .figure-table-wrap:focus-visible {
   outline: 2px solid var(--figure-ink);
@@ -349,26 +355,42 @@ body.figure-document main { min-width: 0; }
   outline: 2px solid var(--figure-ink);
   outline-offset: 2px;
 }
+/* 25 September 2026, void and bone: a publication figure sits straight on the ground. The title
+   is poster type, the thesis is the one takeaway at reading size, and the data table is the
+   working sheet: sheet paper, a hairline frame, crop marks at its corners and the dotted ruling.
+   The surface value below equals the page ground in both schemes; it names the color the text
+   sits on, and the contrast contract reads it. */
 .publication-figure-page {
-  width: min(100% - 2rem, 72rem);
-  margin: clamp(1rem, 4vw, 3rem) auto;
-  padding: clamp(1rem, 3vw, 2.5rem);
+  width: min(100% - 2 * var(--gutter, 1rem), 72rem);
+  margin: clamp(1rem, 4vw, 3rem) auto clamp(3rem, 7vw, 5rem);
+  padding: clamp(1.5rem, 4vw, 3rem) 0 0;
   background: var(--figure-surface);
   color: var(--figure-ink);
-  border-block: 1px solid var(--figure-line-strong);
+  border-block: 0;
+}
+/* The title, the record and its limits sit on a calm ground: main is flat paper in a centered
+   column, and the field runs in the gutters beside it. The static nav stays clear over the
+   same ground color. */
+html:root body.figure-publication-document main.publication-figure-page:not(#_) {
+  background: var(--paper);
+}
+html:root body.figure-publication-document .publication-static-nav:not(#_) {
+  background: transparent;
+}
+.publication-figure-page {
   font-family: var(--figure-body);
   font-size: 1rem;
   line-height: 1.65;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .publication-figure-page h1 {
-  max-width: 22ch;
+  max-width: 20ch;
   margin: 0;
   color: var(--figure-ink);
   font-size: var(--t-display, clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem));
-  font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
+  font-weight: 780;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .publication-figure-page h2 {
@@ -383,20 +405,30 @@ body.figure-document main { min-width: 0; }
   text-wrap: pretty;
 }
 .publication-figure-page .publication-thesis {
-  max-width: 68ch;
-  margin-block: 1rem 0;
-  padding-block-start: 0.85rem;
-  border-block-start: 2px solid var(--figure-ink);
+  max-width: 60ch;
+  margin-block: clamp(1.25rem, 3vw, 2rem) 0;
+  padding-block-start: 0;
+  border-block-start: 0;
   color: var(--figure-ink);
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
-  line-height: 1.65;
+  font-size: clamp(1.1875rem, 1.05rem + 0.45vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 .publication-figure-page .publication-table-wrap {
-  margin-block: 2rem 1.25rem;
+  --crop-k: 14px;
+  margin-block: clamp(2rem, 5vw, 3rem) 2rem;
+  padding: clamp(1rem, 3vw, 2.25rem) clamp(0.75rem, 3vw, 2.25rem);
   overflow-x: auto;
-  border: 0;
+  border: 1px solid var(--figure-diagram-frame);
   border-radius: 0;
-  background: var(--figure-surface);
+  background:
+    linear-gradient(var(--figure-line-strong), var(--figure-line-strong)) top 8px left 8px / var(--crop-k) 1px no-repeat,
+    linear-gradient(var(--figure-line-strong), var(--figure-line-strong)) top 8px left 8px / 1px var(--crop-k) no-repeat,
+    linear-gradient(var(--figure-line-strong), var(--figure-line-strong)) bottom 8px right 8px / var(--crop-k) 1px no-repeat,
+    linear-gradient(var(--figure-line-strong), var(--figure-line-strong)) bottom 8px right 8px / 1px var(--crop-k) no-repeat,
+    radial-gradient(circle at 50% calc(100% - 1px), var(--figure-dot) 0.75px, transparent 1.15px) 0 0 / 0.5rem 1.5rem,
+    var(--figure-diagram-shell);
 }
 .publication-figure-page .publication-figure-table,
 .publication-figure-page table {
@@ -405,8 +437,17 @@ body.figure-document main { min-width: 0; }
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
 }
+/* The caption repeats the title and the thesis word for word, so it stays for assistive
+   technology and leaves the view. */
 .publication-figure-page .publication-figure-table caption {
-  padding: 0 0 0.75rem;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
   color: var(--figure-ink);
   text-align: left;
   font-family: var(--figure-body);
@@ -416,30 +457,60 @@ body.figure-document main { min-width: 0; }
 }
 .publication-figure-page th,
 .publication-figure-page td {
-  padding: 0.72rem 0.8rem;
+  padding: 0.9rem 1rem 0.9rem 0;
   border: 0;
   border-block-start: 1px solid var(--figure-line);
   color: var(--figure-muted);
   text-align: left;
   vertical-align: top;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
 }
 .publication-figure-page th {
   color: var(--figure-ink);
   font-weight: 650;
 }
+.publication-figure-page thead th {
+  border-block-start: 0;
+  border-block-end: 2px solid var(--figure-ink);
+  font-size: 0.9375rem;
+  vertical-align: bottom;
+}
+/* The row key names its record in ink at a label size. Keys run from "S2" to whole phrases, so a
+   key reads as a large numeral only on a table the builder marks with data-key="short". */
+.publication-figure-page tbody th[scope="row"] {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.publication-figure-page .publication-figure-table[data-key="short"] tbody th[scope="row"] {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
 .publication-figure-page .publication-figure-table th:first-child {
-  min-width: 6rem;
+  min-width: 4.5rem;
   overflow-wrap: normal;
 }
+/* A column the builder marks as the result (data-result) keeps the full ink. No column is picked
+   by position, because the result sits in a different column on each figure. */
+.publication-figure-page .publication-figure-table [data-result] { color: var(--figure-ink); font-weight: 500; }
+/* The record under the sheet: scope, units and method set quieter than the table, with what the
+   figure does not prove in ink. The builder emits "Does not prove" first and names it with
+   data-term, so reading order and visual order are the same. */
 .publication-figure-page .publication-evidence {
   display: grid;
-  grid-template-columns: minmax(9rem, 0.35fr) minmax(0, 1fr);
+  grid-template-columns: minmax(9rem, 0.3fr) minmax(0, 1fr);
   gap: 0;
-  margin-block: 2rem 0;
-  border-block-start: 2px solid var(--figure-line);
-  font-size: 0.95rem;
+  max-width: var(--wide, 58rem);
+  margin-block: 2.5rem 0;
+  border-block-start: 1px solid var(--figure-line);
+  font-size: 0.9375rem;
   line-height: 1.55;
 }
 .publication-figure-page .publication-evidence dt,
@@ -457,14 +528,27 @@ body.figure-document main { min-width: 0; }
 .publication-figure-page .publication-evidence dd {
   color: var(--figure-muted);
 }
-.publication-figure-page .publication-evidence dd:last-child {
+/* Once the builder names the pair (data-term="does-not-prove"), the name picks it wherever it
+   sits; until then the last pair of the fixed list is that line. */
+.publication-figure-page .publication-evidence:not(:has([data-term])) > dd:last-child,
+.publication-figure-page .publication-evidence > dd[data-term="does-not-prove"] {
   color: var(--figure-ink);
+  font-size: 1rem;
   font-weight: 600;
 }
+/* The sources open on the site's hairline and registration cross (plate.css section 6), so the
+   section drops its own rule. The reading sheet sizes every h2 at a high specificity; the
+   :not(#_) step keeps this heading at the size of a record label. */
+.publication-figure-page section[aria-label="Figure sources"] h2:not(#_) {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 720;
+  letter-spacing: -0.01em;
+}
 .publication-figure-page section[aria-label="Figure sources"] {
-  margin-block-start: 1.5rem;
-  padding-block-start: 1rem;
-  border-block-start: 1px solid var(--figure-line);
+  margin-block-start: 3rem;
+  padding-block-start: 0;
+  border-block-start: 0;
   color: var(--figure-muted);
   font-size: 0.95rem;
   line-height: 1.55;
@@ -555,14 +639,42 @@ body.figure-document main { min-width: 0; }
     padding-inline: 1rem;
   }
   .publication-figure-page {
-    margin-block: 0;
-    padding-inline: 1rem;
+    width: auto;
+    margin: 0 1rem 3rem;
+    padding-inline: 0;
   }
   .publication-figure-page h1 {
-    font-size: clamp(1.75rem, 7vw, 2.45rem);
+    font-size: clamp(2.25rem, 9vw, 2.75rem);
   }
   .publication-figure-page .publication-table-wrap {
-    margin-inline: -0.25rem;
+    margin-inline: 0;
+    padding-inline: 0.75rem;
+  }
+  .publication-figure-page .publication-figure-table { min-width: 44rem; }
+  /* The table scrolls inside its region on a phone. The row key stays pinned at the left edge so
+     every value keeps its record name, and a visible line says the table scrolls. */
+  .publication-figure-page :is(tbody th[scope="row"], thead th:first-child) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    width: 6.5rem;
+    min-width: 6.5rem;
+    padding-inline-end: 0.75rem;
+    background: var(--figure-diagram-shell);
+    box-shadow: inset -1px 0 var(--figure-line);
+  }
+  .publication-figure-page tbody th[scope="row"] { font-size: 1rem; }
+  .publication-figure-page :is(tbody th[scope="row"] + td, thead th:first-child + th) { padding-inline-start: 0.75rem; }
+  .publication-figure-page .publication-table-wrap::before {
+    content: "Scroll sideways for more columns.";
+    position: sticky;
+    left: 0;
+    display: block;
+    margin: 0 0 0.75rem;
+    color: var(--figure-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
   }
   .publication-figure-page .publication-figure-table caption {
     position: absolute;
@@ -585,6 +697,19 @@ body.figure-document main { min-width: 0; }
   .publication-figure-page .publication-evidence dd {
     padding-block-start: 0.25rem;
   }
+  /* A table the builder marks data-stack reads as one record per row, as the shared table
+     component does under 40rem: the row key is the record title and each cell shows its column
+     name beside the value, so the sideways scroll and its note are not needed. */
+  .publication-figure-page .publication-table-wrap:has(> [data-stack])::before { content: none; }
+  .publication-figure-page .publication-figure-table[data-stack] { min-width: 0; }
+  .publication-figure-page .publication-figure-table[data-stack],
+  .publication-figure-page .publication-figure-table[data-stack] :is(tbody, tr, th, td) { display: block; width: auto; }
+  .publication-figure-page .publication-figure-table[data-stack] thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .publication-figure-page .publication-figure-table[data-stack] tbody tr { padding-block: 0.75rem; border-block-end: 1px solid var(--figure-line); }
+  .publication-figure-page .publication-figure-table[data-stack] tbody :is(th, td) { padding: 0.2rem 0; border: 0; }
+  .publication-figure-page .publication-figure-table[data-stack] tbody th[scope="row"] { position: static; min-width: 0; padding-block-end: 0.4rem; background: none; box-shadow: none; }
+  .publication-figure-page .publication-figure-table[data-stack] tbody td[data-label] { display: grid; grid-template-columns: minmax(6.5rem, 40%) minmax(0, 1fr); column-gap: 0.75rem; align-items: baseline; }
+  .publication-figure-page .publication-figure-table[data-stack] tbody td[data-label]::before { content: attr(data-label); color: var(--figure-muted); font-size: 0.875rem; font-weight: 600; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -633,6 +758,8 @@ body.figure-document main { min-width: 0; }
 }
 
 @media print {
+  /* A tall relationship map prints on one sheet instead of slicing across pages. */
+  .figure-svg-scroll svg[data-figure-kind="relationship"] { max-height: 240mm; width: auto; min-width: 0; margin-inline: auto; }
   .data-plate,
   .evidence-ledger{
     background:#fff!important;
@@ -652,7 +779,13 @@ body.figure-document main { min-width: 0; }
     --figure-unavailable: #4b5e66;
   }
   /* Above both theme blocks, so a dark preference never leaves a dark page ground on paper. */
-  html:root:is([data-theme],:not([data-theme])) { --figure-page: #fff; --figure-ground: #fff; --figure-surface: #fff; }
+  html:root:is([data-theme],:not([data-theme])) {
+    --figure-page: #fff; --figure-ground: #fff; --figure-surface: #fff; --figure-raised: #edf1f2;
+    --figure-line: #5b666b; --figure-line-strong: #555; --figure-ink: #11181b; --figure-muted: #35454c;
+    --figure-verified: #006b73; --figure-caution: #8a3219; --figure-unavailable: #4b5e66;
+    --figure-diagram-shell: #fff; --figure-diagram-frame: #999; --figure-dot: #fff;
+  }
+  .publication-figure-page .publication-table-wrap { padding: 0; border: 0; background: #fff; }
   body.figure-document { background: #fff; color: #111; }
   .evidence-figure { width: 100%; margin: 0; border-color: #777; background: #fff; color: #111; }
   .figure-publication-document .publication-static-nav { display: none; }
@@ -660,8 +793,10 @@ body.figure-document main { min-width: 0; }
   .publication-figure-page .publication-table-wrap { overflow: visible; border-color: #000; }
   .publication-figure-page .publication-figure-table,
   .publication-figure-page table { min-width: 0; table-layout: fixed; }
+  .publication-figure-page :is(tbody th[scope="row"], thead th:first-child) { position: static; width: auto; min-width: 0; box-shadow: none; }
+  .publication-figure-page .publication-table-wrap::before { content: none; display: none; }
   .publication-figure-page th,
-  .publication-figure-page td { font-size: 8.5pt; overflow-wrap: anywhere; border-color: #000; }
+  .publication-figure-page td { font-size: 8.5pt; overflow-wrap: anywhere; hyphens: auto; border-color: #000; }
   .publication-figure-page .publication-evidence { display: grid; border-color: #000; }
   .publication-figure-page .publication-evidence dt,
   .publication-figure-page .publication-evidence dd,

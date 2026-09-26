@@ -27,8 +27,9 @@ body.instrument-surface{
   --hairline:oklch(70% .04 308/.22);
   --line:oklch(70% .04 308/.24);
   --line-soft:oklch(70% .04 308/.11);
-  /* the bracket ink: the resting tick, and the engaged tick */
-  --brk:oklch(70% .04 308/.42);
+  /* the bracket ink: the resting tick, and the engaged tick. Drawn from the site's
+     control line, so a tick reads on bone as well as on void. */
+  --brk:var(--chrome-line-strong,var(--line-strong));
   --brk-live:var(--bone);
   background:#000;
 }
@@ -98,7 +99,7 @@ body.instrument-surface .re-btn:hover:not([disabled]),
 body.instrument-surface .re-chip:hover:not([disabled]),
 body.instrument-surface .at-mini:hover:not([disabled]),
 body.instrument-surface .tp-pane-container .tp-rotv_b:hover{
-  --brk:oklch(70% .04 308/.7);
+  --brk:var(--chrome-ink,var(--ink));
   color:var(--bone);
   background-color:transparent;
 }
@@ -123,7 +124,7 @@ body.instrument-surface .rt-btn[disabled],
 body.instrument-surface .chip[disabled],
 body.instrument-surface .at-chip[disabled],
 body.instrument-surface .re-btn[disabled]{
-  --brk:oklch(70% .04 308/.12);
+  --brk:var(--chrome-line,var(--line));
   color:var(--prussian);
   cursor:default;
 }
@@ -140,7 +141,7 @@ body.instrument-surface .tp-pane-container .tp-rotv_b:focus-visible{
   --brk:var(--brk-live);
 }
 /* a recipe is a proposal, not a state: its ticks are drawn open */
-body.instrument-surface .chip-recipe{--tk:11px;--brk:oklch(70% .04 308/.3)}
+body.instrument-surface .chip-recipe{--tk:11px;--brk:var(--chrome-line-strong,var(--line-strong))}
 
 /* ── divisions: a hairline, not a shouted word ───────────────────────────────
    The Studio deck's five cluster labels are removed in markup; the clusters
@@ -173,7 +174,7 @@ body.instrument-surface .desk-fam-lab{
   align-items:center;
   gap:.7rem;
   font-family:var(--body);
-  font-size:.74rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   color:var(--ink-soft);
@@ -193,7 +194,7 @@ body.instrument-surface .at-glab,
 body.instrument-surface .studio-atelier .at-glab,
 body.instrument-surface .re-lab{
   font-family:var(--body);
-  font-size:.78rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   font-weight:500;
@@ -207,14 +208,14 @@ body.instrument-surface .re-lab{
 }
 body.instrument-surface .re-lab .re-val{
   font-family:var(--mono);
-  font-size:.7rem;
+  font-size:.875rem;
   letter-spacing:.02em;
   color:var(--bone);
 }
 body.instrument-surface .at-glab .hint,
 body.instrument-surface .re-hint{
   font-family:var(--body);
-  font-size:.72rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   color:var(--muted);
@@ -225,7 +226,7 @@ body.instrument-surface .re-hint{
    medium, seed, year. Left exactly as authored. */
 body.instrument-surface .plate-meta,
 body.instrument-surface .edition-no,
-body.instrument-surface .edition-meta{letter-spacing:.1em}
+body.instrument-surface .edition-meta{letter-spacing:.02em}
 
 /* ── panels: instrument surfaces, drawn with hairlines, not boxes ──────────── */
 body.instrument-surface .re-panel,
@@ -257,15 +258,15 @@ body.instrument-surface .rt-plot-pop,
 body.instrument-surface .tp-pane-container .tp-rotv_c{
   border-radius:0;
   border:1px solid var(--hairline);
-  background:#050506;
+  background:var(--chrome-ground,var(--paper));
 }
 body.instrument-surface .desk-seed,
 body.instrument-surface input[type=text].re-in,
 body.instrument-surface select.re-in,
 body.instrument-surface .poster-seed{
   border-radius:0;
-  background:#050506;
-  border:1px solid var(--line-soft);
+  background:var(--chrome-ground-soft,var(--inset));
+  border:1px solid var(--chrome-line-strong,var(--line-strong));
 }
 body.instrument-surface .editions-ledger,
 body.instrument-surface .fixture-card,
@@ -297,7 +298,7 @@ body.instrument-surface .btn,
 body.instrument-surface .edition-take,
 body.instrument-surface .tp-pane-container .tp-rotv_t{
   font-family:var(--body);
-  font-size:.8rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   font-weight:500;
@@ -306,7 +307,7 @@ body.instrument-surface .tp-pane-container .tp-rotv_t{
 body.instrument-surface .at-chip,
 body.instrument-surface .chip{
   font-family:var(--mono);
-  font-size:.74rem;
+  font-size:.875rem;
 }
 
 /* row labels inside the popovers and rails: named, not shouted */
@@ -318,14 +319,14 @@ body.instrument-surface .mm-mname,
 body.instrument-surface .at-pname,
 body.instrument-surface .poster-mini-label{
   font-family:var(--body);
-  font-size:.75rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   font-weight:500;
   color:var(--ink-soft);
 }
 body.instrument-surface .mm-mname,
-body.instrument-surface .mm-clab{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+body.instrument-surface .mm-clab{font-family:var(--mono);font-size:.875rem;color:var(--muted)}
 /* the source menu's three division words become rules that carry the name */
 body.instrument-surface .source-group-label{
   display:flex;align-items:center;gap:.7rem;margin:1rem 0 .35rem;
@@ -350,13 +351,13 @@ body.instrument-surface .re-tab{
 body.instrument-surface .source-group [role="tab"]:hover,
 body.instrument-surface .re-tab:hover{
   color:var(--bone);
-  border-left-color:oklch(70% .04 308/.55);
+  border-left-color:var(--chrome-line-strong,var(--line-strong));
 }
 body.instrument-surface .source-group [role="tab"][aria-selected="true"],
 body.instrument-surface .re-tab[aria-selected="true"]{
   color:var(--bone);
   border-left:1px solid var(--bone);
-  background:oklch(100% 0 0/.035);
+  background:var(--chrome-surface,var(--panel));
   box-shadow:none;
 }
 body.instrument-surface .source-group [role="tab"]:focus-visible,
@@ -374,9 +375,9 @@ body.instrument-surface .plate-head{
 /* the numeral is the marker the canon prefers: it stays mono, and it stays quiet */
 body.instrument-surface .plate-no{
   font-family:var(--mono);
-  font-size:.62rem;
-  letter-spacing:.22em;
-  text-transform:uppercase;
+  font-size:.875rem;
+  letter-spacing:.04em;
+  text-transform:none;
   color:var(--prussian);
 }
 /* the title reads as a title */
@@ -391,9 +392,9 @@ body.instrument-surface .plate-title{
 /* the recipe line is a genuine metadata row: mono caps earned */
 body.instrument-surface .plate-meta{
   font-family:var(--mono);
-  font-size:.6rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
+  font-size:.875rem;
+  letter-spacing:.02em;
+  text-transform:none;
   color:var(--muted);
 }
 body.instrument-surface .plate-hint,
@@ -401,13 +402,13 @@ body.instrument-surface .fixture-cap,
 body.instrument-surface .desk-hint,
 body.instrument-surface .exh-note{
   font-family:var(--body);
-  font-size:.8rem;
+  font-size:.875rem;
   letter-spacing:0;
   text-transform:none;
   color:var(--muted);
 }
 body.instrument-surface .edition-meta{
-  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  font-family:var(--mono);font-size:.875rem;letter-spacing:.02em;text-transform:none;
 }
 
 /* ── stop the morph ───────────────────────────────────────────────────────────
@@ -430,6 +431,15 @@ body.instrument-surface .plate-redraw{
 }
 body.instrument-surface .btn::before,
 body.instrument-surface .chip::before{display:none}
+/* the Retro Engine's vibe row was the last capsule: a square selection, ink on hover */
+body.instrument-surface .re-vibe{
+  border-radius:var(--radius-control,2px);
+  background:transparent;
+  border-color:var(--chrome-line-strong,var(--line-strong));
+  letter-spacing:.04em;
+}
+body.instrument-surface .re-vibe:hover{border-color:var(--chrome-ink,var(--ink))}
+body.instrument-surface .re-vibe:focus-visible{outline-color:var(--chrome-focus,var(--ink))}
 body.instrument-surface .panel,
 body.instrument-surface .scenario,
 body.instrument-surface .fixture-card,
@@ -463,7 +473,7 @@ body.instrument-surface .chip{
 body.instrument-surface .at-chip:hover:not([disabled]),
 body.instrument-surface .chip:hover:not([disabled]){
   background-image:none;
-  box-shadow:inset 0 -1px 0 oklch(70% .04 308/.55);
+  box-shadow:inset 0 -1px 0 var(--chrome-ink,var(--ink));
   color:var(--bone);
 }
 body.instrument-surface .at-chip[aria-pressed="true"],
@@ -495,7 +505,7 @@ body.instrument-surface details.rail-group>summary,
 body.instrument-surface .poster-block>summary,
 body.instrument-surface .mm-fullread>summary{
   font-family:var(--body);
-  font-size:.86rem;
+  font-size:.875rem;
   font-weight:600;
   letter-spacing:0;
   text-transform:none;
@@ -535,7 +545,7 @@ body.instrument-surface .render-toolbar{border-bottom:0}
 body.instrument-surface .re-group{border-top:1px solid var(--hairline,#26262c);padding:.1rem 0 .3rem}
 body.instrument-surface .re-group>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:.6rem;padding:.6rem 0;min-height:2.25rem;user-select:none}
 body.instrument-surface .re-group>summary::-webkit-details-marker{display:none}
-body.instrument-surface .re-group>summary::before{content:"+";font-family:var(--mono,ui-monospace,monospace);font-size:.8rem;line-height:1;width:1ch;flex:none;opacity:.7}
+body.instrument-surface .re-group>summary::before{content:"+";font-family:var(--mono,ui-monospace,monospace);font-size:.875rem;line-height:1;width:1ch;flex:none;opacity:.7}
 body.instrument-surface .re-group[open]>summary::before{content:"\2212"}
 body.instrument-surface .re-group>summary>.re-lab{flex:1 1 auto;margin:0}
 body.instrument-surface .re-group>.re-body{display:flex;flex-direction:column;gap:.7rem;padding:.1rem 0 .55rem}
@@ -543,19 +553,34 @@ body.instrument-surface .re-group .re-controls{border:0;border-radius:0;padding:
 
 /* Rail group headings: the same weight as a rail-group heading, so the rack
    reads as a list of places before it reads as a list of controls. */
-body.instrument-surface .re-group>summary>.re-lab{font-size:.84rem;font-weight:600;color:var(--bone,#e6e2d8);letter-spacing:0}
+body.instrument-surface .re-group>summary>.re-lab{font-size:.875rem;font-weight:600;color:var(--bone,#e6e2d8);letter-spacing:0}
 body.instrument-surface .re-group>summary>.re-lab .re-hint{font-weight:400}
 body.instrument-surface .re-group>summary::before{color:var(--ink-soft,#a8a49b)}
 body.instrument-surface .re-group>summary:focus-visible{outline:1px solid var(--bone,#e6e2d8);outline-offset:3px}
 body.instrument-surface .re-group:first-of-type{border-top:0}
 
 /* Readable floor: a readout, a privacy line, and a key legend are read, not
-   glanced. Nothing on the rail goes under twelve pixels. */
+   glanced. Nothing on the rail goes under fourteen pixels. */
 body.instrument-surface .re-status,
 body.instrument-surface .re-privacy,
 body.instrument-surface .re-keys,
-body.instrument-surface .re-hint{font-size:.76rem}
-body.instrument-surface .re-keys kbd{font-size:.72rem}
+body.instrument-surface .re-hint{font-size:.875rem}
+body.instrument-surface .re-keys kbd{font-size:.875rem}
+/* The page-local sheets on Retro, Loom and Gallery still drew a few of the old marks:
+   a round fullscreen key and colour well, a verdict-coloured privacy line, meter and
+   ledger labels at 8 to 10px. The shared vocabulary squares them, inks them and lifts
+   them to the reader floor. A privacy line states a fact; it names no verdict. */
+body.instrument-surface :is(.re-fs,input[type=color].re-color,kbd){border-radius:var(--radius-control,2px)}
+body.instrument-surface .re-fs{font-size:.875rem}
+body.instrument-surface .re-privacy{color:var(--chrome-soft,var(--soft));letter-spacing:0}
+body.instrument-surface .re-meter b{font-size:.875rem;letter-spacing:.02em;text-transform:none}
+body.instrument-surface .re-meter i{border-radius:0;background:var(--chrome-line,var(--line))}
+body.instrument-surface .re-meter i::after{background:var(--chrome-ink,var(--ink))}
+body.instrument-surface .edition-no{font-size:.875rem;letter-spacing:.04em;color:var(--chrome-soft,var(--soft))}
+body.instrument-surface .edition-title{font-size:.9375rem}
+/* Ledger rows sit on the page ground; the 1px gaps over the line colour draw the rules.
+   The old row ground mixed the void toward black, a grey band on bone. */
+body.instrument-surface .edition-row{background:var(--chrome-ground,var(--paper))}
 
 /* ── the hero aperture ─────────────────────────────────────────────────────
    The masthead grid is the full viewport and its text column caps at 37rem,

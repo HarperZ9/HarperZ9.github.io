@@ -1,4 +1,4 @@
-# Project Telos Brand Narrative
+# Zentropy Labs Brand Narrative
 
 `BRAND.md` is the visual mark. `DESIGN-RULES.md` is the page-level design contract.
 This file is the public language contract: how the family is positioned, what holds the
@@ -6,8 +6,9 @@ many lanes together, and what language should be retired from broad site surface
 
 ## The Through-Line: One Workshop, Many Routes
 
-Project Telos is a public workshop for systems, models, graphics, research tools,
-generated media, release tracks, and long-form technical writing.
+Zentropy Labs, formerly Project Telos, is a public workshop for systems, models,
+graphics, research tools, generated media, release tracks, and long-form technical
+writing.
 
 The shared operation is not a single product claim. It is a working habit:
 
@@ -19,7 +20,7 @@ make that range legible first, with rigor underneath it.
 
 ## Positioning
 
-**Project Telos is a model-era systems workshop.** It gives visitors doors into a
+**Zentropy Labs is a model-era systems workshop.** It gives visitors doors into a
 body of work that includes local-model workflows, multi-agent orchestration,
 repository maps, browser-native demos, generated media, graphics and color systems,
 compiler work, research infrastructure, and public release tracks.
@@ -93,7 +94,7 @@ Good public sentence shape:
 
 Bad public sentence shape:
 
-> Project Telos is the accountable-work standard that carries receipts for every
+> Zentropy Labs is the accountable-work standard that carries receipts for every
 > artifact.
 
 That second sentence can still describe a specific verifier lane in a specific context.

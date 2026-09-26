@@ -1,0 +1,514 @@
+/* frontier-safety-edition.css: the Frontier Safety Briefing on the void-and-bone surface.
+
+   The live briefing and every archive after 2026-09-23 load this sheet after
+   frontier-safety-site.css (tools/build_frontier_safety_briefing.py writes the link).
+   The frozen archives up to 2026-09-23 never load it, so they keep the shell they
+   shipped with. system/tokens.css and system/plate.css own the grounds, the
+   registration field, the grain veil and the crop marks; this sheet lays the
+   briefing out on them:
+
+   - a poster title, one sentence per line, on a hairline;
+   - the edition as a dated plate: a framed block with corner ticks and the date
+     at display weight;
+   - the briefing cover as the page's one art plate, across the full measure;
+   - numbered hairline sections, each opening on a registration cross;
+   - records with the claim at the left and its limits and sources beside it;
+   - status drawn as shapes, and the one filled mark reserved for what changed;
+   - every line of text on the flat ground, with the field in the gutters.
+
+   Two faces (Hanken Grotesk for every text role, Conso only for the digest). Color
+   is ink on the ground; the tokens switch it for dark, forced colors and print.
+   Every selector carries body.frontier-briefing:not(#_), one ID step above the
+   older reading, system and plate cascades, and !important appears only where
+   reading.css or print.css already set the same property with it. */
+
+body.frontier-briefing:not(#_){
+  --fsb-shell:max(clamp(1.25rem,5vw,5.5rem),calc((100% - 80rem) / 2));
+  --fsb-title:var(--t-poster);
+  --fsb-head:clamp(1.75rem,1.05rem + 3.3vw,4.25rem);
+  --fsb-dek:clamp(1.0625rem,1rem + .3vw,1.25rem);
+}
+
+/* 1. Text sits on a calm ground. The hero and main paint the flat page ground in a
+   centered column 1.5rem wider than the text on each side, so the registration field and
+   grain veil from plate.css show in the side gutters and the gaps between plates, as they
+   do beside the essays, and never under or against a line of text. On a phone the whole
+   width is calm. */
+body.frontier-briefing:not(#_) :is(.frame.briefing-hero,main#main){
+  background:linear-gradient(var(--paper),var(--paper)) center/calc(100% - 2*max(0px,var(--fsb-shell) - 1.5rem)) 100% no-repeat;
+  background-color:transparent;box-shadow:none;border:0;border-image:none;
+}
+@media (max-width:40rem){body.frontier-briefing:not(#_) :is(.frame.briefing-hero,main#main){background:var(--paper)}}
+/* The hero's own blocks carry the flat ground too, so every line of hero text has an opaque
+   ground under it whatever the column width. */
+body.frontier-briefing:not(#_) .frame.briefing-hero > :not(.art){background-color:var(--paper)}
+body.frontier-briefing:not(#_) main > section.mv{background:var(--paper);box-shadow:none;border:0;border-image:none}
+body.frontier-briefing:not(#_) .footer-seal{background:var(--paper);box-shadow:none;border:0;border-image:none}
+
+/* 2. The hero: a poster title across the measure, the summary beside the dated
+   plate, and the cover plate under both. */
+body.frontier-briefing:not(#_) .frame.briefing-hero{
+  display:block;width:auto;max-width:none;min-height:0;margin:0;
+  padding:clamp(1.25rem,3vw,2.5rem) var(--fsb-shell) 0;
+  pointer-events:auto;
+}
+/* Named areas keep the markup order (title, dated plate, summary, cover) for reading
+   and place the plate beside the summary on wide screens. The path row stays empty
+   until nav.js mounts the breadcrumb. */
+body.frontier-briefing:not(#_) .briefing-intro{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(17rem,24rem);
+  grid-template-areas:"path path" "title title" "lede plate" "cover cover";
+  column-gap:clamp(2rem,6vw,6rem);align-items:start;
+  max-width:none;margin:0;padding:0;
+}
+body.frontier-briefing:not(#_) .briefing-intro > *{grid-column:1 / -1;min-width:0}
+body.frontier-briefing:not(#_) .briefing-intro > .route-header__path{grid-area:path}
+body.frontier-briefing:not(#_) .briefing-intro > h1{grid-area:title}
+body.frontier-briefing:not(#_) .briefing-intro > .lede{grid-area:lede}
+body.frontier-briefing:not(#_) .briefing-intro > .edition-plate{grid-area:plate}
+body.frontier-briefing:not(#_) .briefing-intro > .briefing-cover{grid-area:cover}
+
+body.frontier-briefing:not(#_) .briefing-intro h1{
+  max-width:none;margin:0 0 clamp(1.75rem,3.5vw,2.75rem);
+  padding:0 0 clamp(1.25rem,2.5vw,2rem);border-bottom:1px solid var(--line-strong);
+  font-family:var(--font-sans);font-size:var(--fsb-title);font-weight:800;
+  letter-spacing:-.045em;line-height:.9;color:var(--ink);text-shadow:none;text-wrap:balance;
+}
+body.frontier-briefing:not(#_) .briefing-intro h1 .title-line{display:block}
+/* The open clause steps back one tone: ink family, never a hue. */
+body.frontier-briefing:not(#_) .briefing-intro h1 .g{color:var(--soft)}
+
+body.frontier-briefing:not(#_) .briefing-intro > .lede{
+  max-width:62ch;margin:0;opacity:1;
+  font-family:var(--font-sans);font-size:var(--fsb-dek);line-height:1.62;color:var(--ink);
+}
+
+/* 2b. The dated plate: a thin frame with corner ticks, like a mounted print. */
+body.frontier-briefing:not(#_) .edition-plate{
+  position:relative;margin:0;padding:clamp(1.1rem,2vw,1.5rem) clamp(1.1rem,2vw,1.5rem) .9rem;
+  border:1px solid var(--line);background:var(--paper);
+}
+body.frontier-briefing:not(#_) .edition-plate::after{
+  content:"";position:absolute;inset:-5px;pointer-events:none;--k:12px;
+  background:
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/1px var(--k) no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px var(--k) no-repeat;
+}
+body.frontier-briefing:not(#_) .edition-readout{display:block;max-width:none;margin:0;padding:0;border:0}
+body.frontier-briefing:not(#_) .edition-readout > div,
+body.frontier-briefing:not(#_) .edition-readout > div:not(:first-child){
+  display:grid;grid-template-columns:minmax(0,8.25rem) minmax(0,1fr);
+  gap:.2rem 1rem;align-items:baseline;padding:.7rem 0;border:0;border-top:1px solid var(--line);
+}
+body.frontier-briefing:not(#_) .edition-readout > div:first-child{display:block;padding:0 0 1.1rem;border:0}
+body.frontier-briefing:not(#_) .edition-readout dt{
+  margin:0;font-family:var(--font-sans);font-size:.9375rem!important;font-weight:500;
+  line-height:1.4;letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .edition-readout dd{
+  margin:0;font-family:var(--font-sans);font-size:1rem!important;font-weight:600;
+  line-height:1.45;letter-spacing:0;color:var(--ink);overflow-wrap:anywhere;
+}
+body.frontier-briefing:not(#_) .edition-readout > div:first-child dd{
+  margin-top:.4rem;font-size:clamp(2rem,1.35rem + 2.4vw,3.5rem)!important;font-weight:800;
+  letter-spacing:-.045em;line-height:.92;font-variant-numeric:tabular-nums lining-nums;
+}
+body.frontier-briefing:not(#_) .edition-check{margin:0;padding:.55rem 0 0;border-top:1px solid var(--line)}
+body.frontier-briefing:not(#_) .edition-check summary{
+  display:inline-flex;align-items:center;gap:.65rem;min-height:44px;list-style:none;
+  padding:.35rem 0;cursor:pointer;font-family:var(--font-sans);font-size:.9375rem;
+  font-weight:600;line-height:1.5;color:var(--ink);
+}
+/* The drawn plus the other disclosures use, in place of the browser's filled triangle. */
+body.frontier-briefing:not(#_) .edition-check summary::-webkit-details-marker{display:none}
+body.frontier-briefing:not(#_) .edition-check summary::before{
+  content:"";flex:none;width:.85rem;height:.85rem;
+  background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat,linear-gradient(currentColor,currentColor) center/2px 100% no-repeat;
+}
+body.frontier-briefing:not(#_) .edition-check[open] summary::before{background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat}
+body.frontier-briefing:not(#_) .edition-check p{margin:.35rem 0 .3rem;font-size:.9375rem;line-height:1.55;color:var(--soft)}
+body.frontier-briefing:not(#_) .edition-check code{
+  display:block;margin-top:.35rem;font-family:var(--font-mono);font-size:.9375rem;
+  line-height:1.5;color:var(--ink);overflow-wrap:anywhere;word-break:break-all;
+}
+
+/* 2c. The cover plate: the page's one luminous object, across the measure. The
+   frame and corner ticks come from plate.css; overflow stays visible so the ticks
+   outside the frame are not clipped. */
+body.frontier-briefing:not(#_) .briefing-intro > .briefing-cover{
+  margin:clamp(2.5rem,5vw,4rem) 0 0;max-inline-size:none;aspect-ratio:auto;
+  overflow:visible;border-radius:0;
+}
+body.frontier-briefing:not(#_) .briefing-cover img{inline-size:100%;block-size:auto;aspect-ratio:2 / 1}
+
+/* 3. Numbered hairline sections. Each opens on a strong hairline with a
+   registration cross at its left end; the numeral takes the left column and the
+   heading stands at poster weight beside it. */
+body.frontier-briefing:not(#_) main#main{display:block;padding:0 var(--fsb-shell);counter-reset:fsb-plate}
+body.frontier-briefing:not(#_) main > section.mv{
+  counter-increment:fsb-plate;position:relative;display:grid;
+  grid-template-columns:clamp(3rem,7vw,6rem) minmax(0,1fr);column-gap:1rem;align-items:start;
+  min-height:0;max-width:none;margin:clamp(4rem,9vw,7.5rem) 0 0;padding:1.25rem 0 0;
+  border-top:1px solid var(--line-strong);
+}
+body.frontier-briefing:not(#_) main > section.mv::before{
+  content:counter(fsb-plate,decimal-leading-zero);
+  content:counter(fsb-plate,decimal-leading-zero) / "";
+  grid-column:1;grid-row:1;padding-top:.55rem;
+  font-family:var(--font-sans);font-size:1rem;font-weight:650;line-height:1;
+  letter-spacing:.02em;font-variant-numeric:tabular-nums;color:var(--soft);
+}
+body.frontier-briefing:not(#_) main > section.mv::after{
+  content:"";position:absolute;top:-8px;left:-7px;width:15px;height:15px;pointer-events:none;
+  background:
+    linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,
+    linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat;
+}
+body.frontier-briefing:not(#_) main > section.mv > *{grid-column:2;min-width:0}
+body.frontier-briefing:not(#_) main > section.mv :is(.lane-head,.wide-section > header,header){max-width:none;margin:0}
+body.frontier-briefing:not(#_) main h2{
+  max-width:22ch;margin:0;padding:0;background:none;
+  font-family:var(--font-sans);font-size:var(--fsb-head);font-weight:780;
+  letter-spacing:-.04em;line-height:.96;color:var(--ink);text-shadow:none;text-wrap:balance;
+}
+body.frontier-briefing:not(#_) main h2::before,
+body.frontier-briefing:not(#_) main h2::after{content:none;display:none}
+
+/* 3b. Conclusions: what the record lets a reader conclude, grouped by strength in
+   words. Each conclusion reads as one bold sentence under its strength word; its
+   support (the observed, inferred and unknown paragraphs, what would change it and
+   the evidence links) waits in a closed disclosure, the way the Who Knew First
+   findings read. Strength is a word and a heading, never a color, so no group reads
+   as a verdict mark. */
+body.frontier-briefing:not(#_) .conclusions :is(.conclusions-dek,.conclusions-note){
+  max-width:62ch;margin:1.1rem 0 0;font-family:var(--font-sans);font-size:var(--fsb-dek);line-height:1.55;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .conclusions .conclusions-note{font-size:1rem;line-height:1.6}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key{max-width:62ch;margin:1.25rem 0 0;padding:0}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key > div{padding:.55rem 0;border-top:1px solid var(--line)}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key > div:last-child{border-bottom:1px solid var(--line)}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key :is(dt,dd){display:inline;margin:0;font-family:var(--font-sans);font-size:1rem;line-height:1.55}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key dt{font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key dt::after{content:":"}
+body.frontier-briefing:not(#_) .conclusions .conclusions-key dd{color:var(--soft)}
+body.frontier-briefing:not(#_) .conclusions :is(.conclusion-group,.conclusions-across){margin:clamp(2.5rem,5vw,3.75rem) 0 0}
+body.frontier-briefing:not(#_) .conclusions :is(.conclusion-group h3,.conclusions-across > h3,.conclusion-group h4){
+  margin:0 0 1.1rem;font-family:var(--font-sans);font-size:clamp(1.3rem,1.1rem + .7vw,1.75rem);
+  font-weight:740;letter-spacing:-.02em;line-height:1.15;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .conclusions .conclusion-group h4{font-size:clamp(1.15rem,1.05rem + .4vw,1.375rem)}
+body.frontier-briefing:not(#_) .conclusions .conclusion{padding:clamp(1.25rem,2.5vw,1.75rem) 0 0;border-top:1px solid var(--line)}
+body.frontier-briefing:not(#_) .conclusion-lead{max-width:62ch;margin:0;font-size:1.1875rem;line-height:1.5;color:var(--ink);text-wrap:pretty}
+body.frontier-briefing:not(#_) .conclusion-lead strong{font-weight:650}
+body.frontier-briefing:not(#_) .conclusion-strength{
+  display:block;margin:0 0 .4rem;font-family:var(--font-sans);font-size:.9375rem;font-weight:600;
+  line-height:1.4;letter-spacing:.01em;color:var(--soft);
+}
+body.frontier-briefing:not(#_) details.conclusion-more{margin:1rem 0 clamp(1.25rem,2.5vw,1.75rem);max-width:none}
+body.frontier-briefing:not(#_) details.conclusion-more > summary{
+  display:inline-flex;align-items:center;gap:.65rem;min-height:44px;padding-block:.35rem;cursor:pointer;list-style:none;
+  font-family:var(--font-sans);font-size:1rem;font-weight:600;line-height:1.3;color:var(--ink);
+}
+body.frontier-briefing:not(#_) details.conclusion-more > summary::-webkit-details-marker{display:none}
+body.frontier-briefing:not(#_) details.conclusion-more > summary::before{
+  content:"";flex:none;width:.85rem;height:.85rem;
+  background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat,linear-gradient(currentColor,currentColor) center/2px 100% no-repeat;
+}
+body.frontier-briefing:not(#_) details.conclusion-more[open] > summary::before{background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat}
+body.frontier-briefing:not(#_) details.conclusion-more > summary:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+body.frontier-briefing:not(#_) details.conclusion-more > summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+body.frontier-briefing:not(#_) .conclusion-support{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,21rem);column-gap:clamp(2rem,4.5vw,4.5rem);
+  align-items:start;margin-top:1rem;padding-top:1.25rem;border-top:1px solid var(--line);
+}
+body.frontier-briefing:not(#_) .conclusion-support > *{min-width:0}
+body.frontier-briefing:not(#_) .conclusion-body p{max-width:66ch;margin:0 0 1rem;font-size:1.0625rem;font-weight:400;line-height:1.68;color:var(--ink)}
+body.frontier-briefing:not(#_) .conclusion-body .conclusion-change{margin:.25rem 0 0;font-size:1rem;line-height:1.6;color:var(--soft)}
+body.frontier-briefing:not(#_) .conclusion-change strong{font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .conclusion-evidence{position:relative;padding:.1rem 0 0 1.15rem}
+body.frontier-briefing:not(#_) .conclusion-evidence::before{
+  content:"";position:absolute;left:0;top:.35rem;bottom:.35rem;width:.45rem;border:1px solid var(--line-strong);border-right:0;
+}
+body.frontier-briefing:not(#_) .conclusion-evidence .evidence-head{margin:0 0 .5rem;font-size:.9375rem!important;font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .conclusion-evidence ul{margin:0;padding:0;list-style:none}
+body.frontier-briefing:not(#_) .conclusion-evidence li{margin:0 0 .7rem;font-size:.9375rem;line-height:1.5;color:var(--soft)}
+body.frontier-briefing:not(#_) .conclusion-evidence .evidence-kind{display:block;font-weight:600;color:var(--soft)}
+body.frontier-briefing:not(#_) .conclusion-evidence a{
+  color:var(--ink);overflow-wrap:anywhere;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
+
+/* 4. The overview: the lanes as three drawn plates. Words and shapes carry the
+   state; the one filled mark is the lane that changed. */
+body.frontier-briefing:not(#_) .briefing-overview .body-text,
+body.frontier-briefing:not(#_) .lane-head .lane-status{
+  max-width:56ch;margin:1.1rem 0 0;opacity:1;
+  font-family:var(--font-sans);font-size:var(--fsb-dek);line-height:1.55;
+  letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .delta-rail{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:none;
+  margin:clamp(2rem,4vw,3rem) 0 0;border:0;border-block:1px solid var(--line-strong);
+}
+body.frontier-briefing:not(#_) .delta-rail .rail-mark{
+  display:grid;grid-template-columns:1.1rem minmax(0,1fr);gap:.35rem .75rem;align-items:center;
+  flex:none;padding:1.3rem 1.25rem 1.4rem;border:0;color:var(--ink);text-decoration:none;
+}
+body.frontier-briefing:not(#_) .delta-rail .rail-mark:first-child{padding-left:0}
+body.frontier-briefing:not(#_) .delta-rail .rail-mark + .rail-mark{border-left:1px solid var(--line)}
+body.frontier-briefing:not(#_) :is(.rail-symbol,.status-mark){-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body.frontier-briefing:not(#_) .rail-symbol{
+  display:block;grid-column:1;grid-row:1;width:.72rem;height:.72rem;margin:0;
+  border:1.5px solid var(--ink);border-radius:0;background:transparent;transform:none;
+}
+body.frontier-briefing:not(#_) .rail-changed .rail-symbol{background:var(--hot);border-color:var(--hot);transform:rotate(45deg)}
+body.frontier-briefing:not(#_) .rail-baseline .rail-symbol{transform:rotate(45deg)}
+/* A correction is a hollow circle, so the one filled mark stays with what changed. */
+body.frontier-briefing:not(#_) .rail-correction .rail-symbol{border-radius:50%;background:transparent}
+body.frontier-briefing:not(#_) .rail-mark .rail-label{
+  grid-column:2;grid-row:1;font-size:clamp(1.2rem,1rem + .6vw,1.5rem);font-weight:720;
+  letter-spacing:-.02em;line-height:1.15;
+}
+body.frontier-briefing:not(#_) .rail-mark strong{
+  grid-column:2;display:block;margin:0;font-family:var(--font-sans);font-size:.9375rem!important;
+  font-weight:500;line-height:1.4;letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .rail-mark:is(:hover,:focus-visible) .rail-label{
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em;
+}
+body.frontier-briefing:not(#_) .briefing-links{
+  margin:1.25rem 0 0;font-family:var(--font-sans);font-size:.9375rem!important;line-height:1.7;
+  letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) :is(.briefing-links,.footer-seal) a{
+  color:var(--ink);border:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
+
+/* 5. Records: the claim at the left, its limit and its sources beside it, each
+   record on a hairline. */
+body.frontier-briefing:not(#_) .lane .record{
+  display:block;max-width:none;margin:0;padding:clamp(1.75rem,3.5vw,2.75rem) 0;
+  border:0;border-top:1px solid var(--line);
+}
+body.frontier-briefing:not(#_) .lane-head + .record{margin-top:clamp(2rem,4vw,3rem)}
+body.frontier-briefing:not(#_) .lane .record:last-child{padding-bottom:0}
+body.frontier-briefing:not(#_) .record-index{display:none}
+body.frontier-briefing:not(#_) .record-body{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,21rem);
+  grid-template-rows:auto auto 1fr;column-gap:clamp(2rem,4.5vw,4.5rem);align-items:start;
+}
+body.frontier-briefing:not(#_) .record-body > *{grid-column:1;min-width:0}
+body.frontier-briefing:not(#_) .record-body > .record-limits{grid-column:2;grid-row:1 / -1}
+/* The title leads; the byline under it carries the change note, the source role, the
+   dates and the confidence. */
+body.frontier-briefing:not(#_) .record-meta{
+  display:flex;flex-wrap:wrap;gap:.2rem 1.35rem;margin:0 0 .9rem;
+  font-family:var(--font-sans);font-size:.9375rem!important;line-height:1.5;
+  letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .record-meta .record-role{font-weight:650;color:var(--ink)}
+body.frontier-briefing:not(#_) .record-meta .record-change{
+  display:inline-flex;align-items:center;gap:.6rem;font-weight:700;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .status-mark{flex:none;width:.72rem;height:.72rem;background:var(--hot);transform:rotate(45deg)}
+body.frontier-briefing:not(#_) .record[data-status="correction"] .status-mark{
+  transform:none;border-radius:50%;background:transparent;border:1.5px solid var(--ink);
+}
+body.frontier-briefing:not(#_) .record-body h3{
+  max-width:34ch;margin:0 0 .5rem;font-family:var(--font-sans);
+  font-size:clamp(1.4rem,1.1rem + 1vw,2rem);font-weight:740;letter-spacing:-.022em;
+  line-height:1.12;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .record-body > p{
+  max-width:62ch;margin:0;font-family:var(--font-sans);font-size:1.125rem;line-height:1.7;color:var(--ink);opacity:1;
+}
+body.frontier-briefing:not(#_) .record-limits{margin:0}
+/* The limit hangs in a drawn bracket, a measure of how far the claim reaches. */
+body.frontier-briefing:not(#_) .record-limits .boundary{
+  position:relative;display:block;max-width:none;margin:0;padding:.1rem 0 0 1.15rem;
+  border:0;background:none;
+}
+body.frontier-briefing:not(#_) .record-limits .boundary::before{
+  content:"";position:absolute;left:0;top:.35rem;bottom:.35rem;width:.45rem;
+  border:1px solid var(--line-strong);border-right:0;
+}
+body.frontier-briefing:not(#_) .record-limits .boundary strong{
+  display:block;margin:0 0 .45rem;font-family:var(--font-sans);font-size:.9375rem!important;
+  font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .record-limits .boundary p{margin:0;max-width:none;font-size:1rem;line-height:1.6;color:var(--soft)}
+body.frontier-briefing:not(#_) .record-limits .source-line{
+  margin:1.5rem 0 0;padding:1rem 0 0 1.15rem;border-top:1px solid var(--line);
+  font-family:var(--font-sans);font-size:.9375rem!important;line-height:1.5;color:var(--soft)!important;
+}
+body.frontier-briefing:not(#_) .record-limits .source-line strong{
+  display:block;margin:0 0 .35rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .record-limits .source-line a{
+  display:block;width:fit-content;max-width:100%;margin:0 0 .4rem;color:var(--ink);border:0;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
+
+/* 6. Controls: a ruled table on hairlines. Status is a word at text weight. */
+body.frontier-briefing:not(#_) .controls .table-wrap{max-width:none;margin:clamp(1.5rem,3vw,2.25rem) 0 0;overflow-x:auto}
+body.frontier-briefing:not(#_) .controls-table{width:100%;border-collapse:collapse;table-layout:auto}
+body.frontier-briefing:not(#_) .controls-table caption{
+  caption-side:top;max-width:66ch;padding:0 0 1.25rem;text-align:left;
+  font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .controls-table caption strong{font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .controls-table :is(th,td){
+  min-width:0;padding:1rem 1.5rem 1.15rem 0;border:0;border-top:1px solid var(--line);
+  vertical-align:top;text-align:left;background:none;
+  font-family:var(--font-sans);font-size:1rem;line-height:1.6;letter-spacing:0;text-transform:none;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .controls-table thead th{
+  padding-block:.6rem;border-top:0;border-bottom:1px solid var(--line-strong);
+  font-size:.9375rem;font-weight:600;color:var(--soft);
+}
+body.frontier-briefing:not(#_) .controls-table tbody th{
+  width:11rem;font-size:1.125rem;font-weight:720;letter-spacing:-.01em;line-height:1.35;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .controls-table tbody td:last-child{padding-right:0}
+body.frontier-briefing:not(#_) .controls-table .status-word{
+  display:inline-block;margin:0 0 .2rem;font-family:var(--font-sans);font-size:1rem;
+  font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .controls-table a{color:var(--ink)}
+/* Each control names its sources, as each record does. */
+body.frontier-briefing:not(#_) .controls-table .control-sources{display:block;margin-top:.75rem;font-size:.9375rem;line-height:1.5}
+body.frontier-briefing:not(#_) .controls-table .control-sources strong{display:block;margin:0 0 .3rem;font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .controls-table .control-sources a{
+  display:block;width:fit-content;max-width:100%;margin:0 0 .35rem;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
+
+/* 7. Open questions: numbered rows on hairlines, set larger than body text. */
+body.frontier-briefing:not(#_) .questions ol{
+  counter-reset:fsb-question;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(2rem,4vw,3.5rem);max-width:none;margin:clamp(1.75rem,3.5vw,2.5rem) 0 0;
+  padding:0;border:0;list-style:none;
+}
+body.frontier-briefing:not(#_) .questions li{
+  counter-increment:fsb-question;position:static;display:grid;
+  grid-template-columns:2.75rem minmax(0,1fr);column-gap:.75rem;min-height:0;margin:0;
+  padding:1.2rem 0 1.4rem;border:0;border-top:1px solid var(--line);
+  font-size:clamp(1.0625rem,1rem + .25vw,1.1875rem);line-height:1.55;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .questions li::before{
+  content:counter(fsb-question,decimal-leading-zero);
+  content:counter(fsb-question,decimal-leading-zero) / "";
+  position:static;padding-top:.15rem;font-family:var(--font-sans);font-size:1rem;
+  font-weight:700;line-height:1.4;font-variant-numeric:tabular-nums;color:var(--soft);
+}
+
+/* 8. Method, corrections and limits: a rail of three rows, heading beside text. */
+body.frontier-briefing:not(#_) .method-grid{display:block;max-width:none;margin:clamp(1.75rem,3.5vw,2.5rem) 0 0;border:0}
+body.frontier-briefing:not(#_) .method-grid > div,
+body.frontier-briefing:not(#_) .method-grid > div + div{
+  display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);column-gap:clamp(1.5rem,4vw,3.5rem);
+  padding:1.3rem 0 1.5rem;border:0;border-top:1px solid var(--line);
+}
+body.frontier-briefing:not(#_) .method-grid h3{
+  margin:0;font-family:var(--font-sans);font-size:clamp(1.2rem,1.05rem + .5vw,1.45rem);
+  font-weight:720;letter-spacing:-.015em;line-height:1.2;color:var(--ink);
+}
+body.frontier-briefing:not(#_) .method-grid :is(p,ul){max-width:62ch;margin:0;font-size:1.0625rem;line-height:1.65;color:var(--soft)}
+body.frontier-briefing:not(#_) .method-grid ul{padding-left:1.1rem}
+
+/* 9. The colophon on a hairline. */
+body.frontier-briefing:not(#_) .footer-seal{
+  margin:clamp(4.5rem,10vw,8rem) var(--fsb-shell) 0;padding:1.25rem 0 clamp(2.5rem,6vw,4rem);
+  border-top:1px solid var(--line-strong);
+}
+/* The shared inner-clean seal is a rounded capsule; the colophon is plain text. */
+body.frontier-briefing:not(#_) .footer-seal .seal{
+  display:block;max-width:none;margin:0;padding:0;border:0;border-radius:0;background:none;
+  font-family:var(--font-sans);font-size:.9375rem;line-height:1.7;letter-spacing:0;
+  text-transform:none;color:var(--soft);
+}
+
+/* 10. Narrow screens: one column; the numeral sits above its heading. */
+@media (max-width:52rem){
+  body.frontier-briefing:not(#_) .briefing-intro{
+    grid-template-columns:minmax(0,1fr);grid-template-areas:"path" "title" "plate" "lede" "cover";
+  }
+  body.frontier-briefing:not(#_) .briefing-intro > .lede{margin-top:1.75rem}
+  body.frontier-briefing:not(#_) main > section.mv{grid-template-columns:minmax(0,1fr)}
+  body.frontier-briefing:not(#_) main > section.mv::before{padding:0 0 .7rem}
+  body.frontier-briefing:not(#_) main > section.mv > *{grid-column:1}
+  body.frontier-briefing:not(#_) :is(.record-body,.conclusion-support){display:block}
+  body.frontier-briefing:not(#_) :is(.record-limits,.conclusion-evidence){margin-top:1.5rem}
+  body.frontier-briefing:not(#_) .questions ol{grid-template-columns:minmax(0,1fr)}
+  body.frontier-briefing:not(#_) .method-grid > div,
+  body.frontier-briefing:not(#_) .method-grid > div + div{grid-template-columns:minmax(0,1fr);row-gap:.6rem}
+}
+@media (max-width:40rem){
+  body.frontier-briefing:not(#_) .delta-rail{grid-template-columns:minmax(0,1fr)}
+  body.frontier-briefing:not(#_) .delta-rail .rail-mark,
+  body.frontier-briefing:not(#_) .delta-rail .rail-mark:first-child{padding:1rem 0}
+  body.frontier-briefing:not(#_) .delta-rail .rail-mark + .rail-mark{border-left:0;border-top:1px solid var(--line)}
+}
+/* A phone stacks each control row. The explicit table roles in the markup keep the
+   row and column semantics when the cells stop displaying as a table. */
+@media screen and (max-width:44rem){
+  body.frontier-briefing:not(#_) .controls .table-wrap{overflow:visible}
+  body.frontier-briefing:not(#_) .controls-table,
+  body.frontier-briefing:not(#_) .controls-table :is(caption,thead,tbody,tr,th,td){display:block;width:auto}
+  body.frontier-briefing:not(#_) .controls-table thead{
+    position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+  }
+  body.frontier-briefing:not(#_) .controls-table tbody tr{padding:1rem 0 1.15rem;border-top:1px solid var(--line-strong)}
+  body.frontier-briefing:not(#_) .controls-table tbody :is(th,td){padding:0;border:0}
+  body.frontier-briefing:not(#_) .controls-table tbody th{margin-bottom:.6rem}
+  body.frontier-briefing:not(#_) .controls-table tbody td + td{margin-top:.9rem}
+  body.frontier-briefing:not(#_) .controls-table td::before{
+    content:attr(data-label);
+    content:attr(data-label) / "";
+    display:block;margin-bottom:.2rem;font-size:.9375rem;font-weight:600;color:var(--ink);
+  }
+}
+
+/* 11. Forced colors: drawn marks become system ink; gradient marks step aside. */
+@media (forced-colors:active){
+  body.frontier-briefing:not(#_) main > section.mv::after,
+  body.frontier-briefing:not(#_) .edition-plate::after{display:none}
+  body.frontier-briefing:not(#_) :is(.rail-symbol,.status-mark){forced-color-adjust:none;border-color:CanvasText}
+  body.frontier-briefing:not(#_) :is(.rail-changed .rail-symbol,.record:not([data-status="correction"]) .status-mark){background:CanvasText}
+  body.frontier-briefing:not(#_) .edition-plate{border-color:CanvasText}
+}
+
+/* 12. Print: one column on white paper; plate.css and art.css drop the field and art. */
+@media print{
+  body.frontier-briefing:not(#_) .frame.briefing-hero{padding:0}
+  body.frontier-briefing:not(#_) :is(.briefing-intro,main > section.mv,.record-body,.questions ol,.conclusion-support){display:block}
+  body.frontier-briefing:not(#_) .conclusion-evidence{margin-top:.75rem}
+  /* Paper cannot open a disclosure, so every conclusion prints with its support. */
+  body.frontier-briefing:not(#_) details.conclusion-more::details-content{content-visibility:visible;display:block}
+  body.frontier-briefing:not(#_) details.conclusion-more > summary::before{display:none}
+  body.frontier-briefing:not(#_) :is(.method-grid > div,.method-grid > div + div){display:block}
+  body.frontier-briefing:not(#_) :is(main#main,.footer-seal){padding-inline:0;margin-inline:0}
+  body.frontier-briefing:not(#_) main > section.mv{margin-top:1.75rem}
+  body.frontier-briefing:not(#_) main > section.mv::before{display:block;margin-bottom:.5rem}
+  body.frontier-briefing:not(#_) main > section.mv::after,
+  body.frontier-briefing:not(#_) .edition-plate::after{display:none}
+  body.frontier-briefing:not(#_) .edition-plate{margin-top:1rem;background:none}
+  body.frontier-briefing:not(#_) .record-limits{margin-top:.75rem}
+  body.frontier-briefing:not(#_) .record-limits .boundary p{max-width:62ch}
+  body.frontier-briefing:not(#_) :is(.record,.questions li,.method-grid > div){break-inside:avoid}
+  /* print.css sets every size with !important, so the ladder answers with it: title,
+     date, section (print.css 13pt), record, lane, then body text and labels at 10pt. */
+  body.frontier-briefing:not(#_) .briefing-intro h1{font-size:22pt!important;line-height:1.05}
+  body.frontier-briefing:not(#_) .edition-readout > div:first-child dd{font-size:16pt!important;line-height:1.1}
+  body.frontier-briefing:not(#_) .record-body h3{font-size:12pt!important}
+  body.frontier-briefing:not(#_) .rail-mark .rail-label{font-size:11pt}
+  body.frontier-briefing:not(#_) .controls-table tbody th{font-size:10.5pt!important}
+  body.frontier-briefing:not(#_) :is(.edition-readout dt,.edition-readout > div:not(:first-child) dd,.record-meta,.source-line,.briefing-links,.boundary strong,.rail-mark strong,.controls-table caption,.controls-table thead th,.status-word,.control-sources,.conclusion-change,.conclusion-evidence li){font-size:10pt!important}
+  /* print.css clears every fill and fades every border; the drawn marks keep both, so
+     shape still carries status on paper. */
+  body.frontier-briefing:not(#_) :is(.rail-symbol,.record[data-status="correction"] .status-mark){border-color:#000!important}
+  body.frontier-briefing:not(#_) :is(.rail-changed .rail-symbol,.record:not([data-status="correction"]) .status-mark){
+    background-color:#000!important;background-image:linear-gradient(#000,#000)!important;
+  }
+}

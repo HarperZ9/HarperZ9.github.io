@@ -1,20 +1,44 @@
-/* Editorial control chrome for Studio, Gallery, Loom, and Retro Engine. */
+/* Editorial control chrome for Studio, Gallery, Loom, and Retro Engine.
+
+   2026-09-25 void and bone: the --chrome-* palette is the site's own token values
+   (tokens.css), set per theme with the same three selectors tokens.css uses, so an
+   instrument follows the reader's theme pick as well as the system setting. The accent
+   is ink: a pressed control is ink on a raised ground, never a hue, because color on
+   this site names a verdict. Controls are square (2px), popovers carry no shadow, and
+   no label sits under 14px. */
+html:root body.instrument-surface{
+  color-scheme:light;
+  --chrome-ground:#ebe5d8;
+  --chrome-ground-soft:#e4ddcd;
+  --chrome-surface:#e2dac9;
+  --chrome-surface-strong:#d8cfbc;
+  --chrome-ink:#16130f;
+  --chrome-soft:#4a443b;
+  --chrome-muted:#5f584d;
+  --chrome-line:#c9bfab;
+  --chrome-line-strong:#7b7262;
+  --chrome-accent:#16130f;
+  --chrome-accent-soft:#d8cfbc;
+  --chrome-focus:#16130f;
+  --chrome-verdict:#0a6b61;
+  --chrome-drift:#8f3a19;
+}
+@media (prefers-color-scheme:dark){
+  html:root:not([data-theme="light"]) body.instrument-surface{
+    color-scheme:dark;
+    --chrome-ground:#060608;--chrome-ground-soft:#0c0c0f;--chrome-surface:#111114;--chrome-surface-strong:#1a1a1e;
+    --chrome-ink:#ece5d6;--chrome-soft:#b8b0a0;--chrome-muted:#958e80;--chrome-line:#29282c;--chrome-line-strong:#6f6a61;
+    --chrome-accent:#ece5d6;--chrome-accent-soft:#1a1a1e;--chrome-focus:#ece5d6;--chrome-verdict:#63d4ce;--chrome-drift:#e29472;
+  }
+}
+html:root[data-theme="dark"] body.instrument-surface{
+  color-scheme:dark;
+  --chrome-ground:#060608;--chrome-ground-soft:#0c0c0f;--chrome-surface:#111114;--chrome-surface-strong:#1a1a1e;
+  --chrome-ink:#ece5d6;--chrome-soft:#b8b0a0;--chrome-muted:#958e80;--chrome-line:#29282c;--chrome-line-strong:#6f6a61;
+  --chrome-accent:#ece5d6;--chrome-accent-soft:#1a1a1e;--chrome-focus:#ece5d6;--chrome-verdict:#63d4ce;--chrome-drift:#e29472;
+}
+
 body.instrument-surface{
-  color-scheme:dark light;
-  --chrome-ground:#101416;
-  --chrome-ground-soft:#13191b;
-  --chrome-surface:#1b2528;
-  --chrome-surface-strong:#233034;
-  --chrome-ink:#eaf5f6;
-  --chrome-soft:#b4c5c9;
-  --chrome-muted:#8fa8ad;
-  --chrome-line:#42555a;
-  --chrome-line-strong:#647b81;
-  --chrome-accent:#8ee3f2;
-  --chrome-accent-soft:color-mix(in oklab,var(--chrome-accent) 15%,transparent);
-  --chrome-focus:#8ee3f2;
-  --chrome-verdict:#a7e888;
-  --chrome-drift:#f0a06f;
   --reading-paper:var(--chrome-ground);
   --reading-ink:var(--chrome-ink);
   --reading-soft:var(--chrome-soft);
@@ -46,7 +70,7 @@ body.instrument-surface{
   --surface:var(--chrome-surface);
   --raised:var(--chrome-surface-strong);
   --orange:var(--chrome-accent);
-  --ember:var(--chrome-drift);
+  --ember:var(--chrome-accent);
   --signal:var(--chrome-accent);
   --focus:var(--chrome-focus);
   --teal:var(--chrome-accent);
@@ -63,7 +87,7 @@ body.instrument-surface{
   --zentropy-faint:var(--chrome-muted);
   --zentropy-signal:var(--chrome-accent);
   --zentropy-rust:var(--chrome-drift);
-  background:#101416;
+  background:var(--chrome-ground);
   color:var(--chrome-ink);
 }
 
@@ -135,7 +159,7 @@ body.instrument-surface :is(.studio-primary-stage .render-toolbar,.render-toolba
   align-items:flex-start;
   gap:.35rem .75rem;
   border:1px solid var(--chrome-line);
-  border-radius:8px;
+  border-radius:0;
   background:var(--chrome-surface);
   padding:.45rem;
   box-shadow:none;
@@ -155,9 +179,9 @@ body.instrument-surface :is(.rt-group + .rt-group,.dk-group + .dk-group)::before
 body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn){
   min-width:0;
   min-height:2.35rem;
-  border:1px solid var(--chrome-line);
-  border-radius:6px;
-  background:oklch(100% 0 0/.035);
+  border:1px solid var(--chrome-line-strong);
+  border-radius:var(--radius-control,2px);
+  background:transparent;
   background-image:none;
   box-shadow:none;
   color:var(--chrome-ink);
@@ -177,9 +201,9 @@ body.instrument-surface :is(.chip,.at-chip,.re-chip){
   min-width:0;
   min-height:2.15rem;
   border:1px solid transparent;
-  border-radius:6px;
+  border-radius:var(--radius-control,2px);
   background:none;
-  box-shadow:inset 0 -1px 0 var(--chrome-line);
+  box-shadow:inset 0 -1px 0 var(--chrome-line-strong);
   color:var(--chrome-soft);
   font-family:var(--mono);
   font-size:.875rem;
@@ -193,29 +217,28 @@ body.instrument-surface :is(.chip,.at-chip,.re-chip){
 }
 
 body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):hover:not([disabled]){
-  border-color:var(--chrome-line-strong);
-  background-color:oklch(100% 0 0/.06);
+  border-color:var(--chrome-ink);
+  background-color:var(--chrome-surface);
   color:var(--chrome-ink);
 }
 
 body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):is([aria-pressed="true"],[aria-checked="true"],.active,.is-active),
 body.instrument-surface [role="tab"][aria-selected="true"]{
-  border-color:var(--chrome-accent);
-  background:var(--chrome-accent-soft);
+  border-color:var(--chrome-ink);
+  background:var(--chrome-surface-strong);
   background-image:none;
-  box-shadow:inset 0 -2px 0 var(--chrome-accent);
+  box-shadow:inset 0 -2px 0 var(--chrome-ink);
   color:var(--chrome-ink);
 }
 
 body.instrument-surface :is(a,button,select,summary,input,textarea,[tabindex]):focus-visible{
   outline:2px solid var(--chrome-focus);
   outline-offset:3px;
-  border-radius:6px;
+  border-radius:0;
 }
 
 body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.re-chip,.at-chip,.chip,.at-mini,.chat-min):focus-visible{
   border-color:var(--chrome-focus);
-  box-shadow:0 0 0 2px oklch(88% .11 196/.22);
 }
 
 body.instrument-surface :is(.source-group-label,.rt-group-lab,.dk-group-lab,.rt-plot-lab,.re-lab,.at-glab,.re-fxgrouplab,.poster-mini-label,.mm-clab,.mm-mname,.at-pname,.desk-influence,.re-toggle,.re-keys,.re-privacy,.re-status,.desk-status,.desk-hint,.plate-hint,.fixture-cap,.exh-note,.rt-plot-note,.src-hint,.transform-note,.rail-own,.mc-note,.mc-hint,.mc-status){
@@ -291,7 +314,7 @@ body.instrument-surface.studio-page .studio-media-first .source-menu button[aria
 body.instrument-surface :is(.studio-atelier .at-glab,.studio-media-first .studio-atelier .at-glab,.studio-rail .studio-atelier .at-glab,.re-group .re-lab,.dk-group .dk-group-lab){
   color:var(--chrome-muted);
   font-family:var(--body);
-  font-size:.8rem;
+  font-size:.875rem;
   font-weight:700;
   letter-spacing:0;
   line-height:1.25;
@@ -307,7 +330,7 @@ body.instrument-surface :is(.studio-atelier .at-glab .hint,.studio-media-first .
 }
 
 body.instrument-surface :is(.engine-statusbar [id^="engine-status-"],.studio-console-status,.studio-watch-status,.poster-status,.desk-status,.re-status,.mc-status,.at-gate){
-  color:var(--chrome-accent);
+  color:var(--chrome-soft);
 }
 
 body.instrument-surface .engine-statusbar b{
@@ -347,7 +370,7 @@ body.instrument-surface.studio-page .mm-describe{
 
 body.instrument-surface.studio-page .mm-ascii{
   background:var(--chrome-surface);
-  color:var(--chrome-verdict);
+  color:var(--chrome-ink);
 }
 
 body.instrument-surface.studio-page :is(.rail-own,#shelf-hint,.mm-fullread-note,.mm-shapes){
@@ -387,20 +410,20 @@ body.instrument-surface.studio-page .tp-pane-container .tp-rotv_b{
 
 body.instrument-surface :is(input[type=text],input[type=url],input[type=password],input[type=file],select,textarea,.desk-seed,.poster-seed,.mc-input,.re-in){
   max-width:100%;
-  border:1px solid var(--chrome-line);
-  border-radius:6px;
-  background:oklch(100% 0 0/.04);
+  border:1px solid var(--chrome-line-strong);
+  border-radius:var(--radius-control,2px);
+  background:var(--chrome-ground-soft);
   color:var(--chrome-ink);
   box-shadow:none;
 }
 
 body.instrument-surface :is(input[type=range]){
-  accent-color:var(--chrome-accent);
+  accent-color:var(--chrome-ink);
 }
 
 body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
   border-color:var(--chrome-line);
-  border-radius:8px;
+  border-radius:0;
   background:#050506;
 }
 
@@ -411,7 +434,7 @@ body.instrument-surface :is(.studio-primary-stage .viewport-stage,.re-preview){
 body.instrument-surface :is(.re-group>summary,details.rail-group>summary,.poster-block>summary,.mm-fullread>summary,.studio-receipts>summary){
   color:var(--chrome-ink);
   font-family:var(--body);
-  font-size:.9rem;
+  font-size:.9375rem;
   font-weight:700;
   letter-spacing:0;
   line-height:1.25;
@@ -444,10 +467,10 @@ body.instrument-surface .rt-plot-pop{
   min-width:0;
   max-width:calc(100vw - 2rem);
   border:1px solid var(--chrome-line-strong);
-  border-radius:8px;
+  border-radius:0;
   background:var(--chrome-ground);
   color:var(--chrome-ink);
-  box-shadow:0 18px 48px rgba(0,0,0,.38);
+  box-shadow:none;
 }
 
 body.instrument-surface .rt-plot-row{
@@ -484,59 +507,6 @@ body.instrument-surface .rt-plot-note{
 body.instrument-surface .chat-input{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
-}
-
-@media (prefers-color-scheme:light){
-  body.instrument-surface{
-    color-scheme:light;
-    --chrome-ground:#fafaf8;
-    --chrome-ground-soft:#f6f8f7;
-    --chrome-surface:#f0f3f2;
-    --chrome-surface-strong:#e7ecea;
-    --chrome-ink:#19272b;
-    --chrome-soft:#42575d;
-    --chrome-muted:#5a6f74;
-    --chrome-line:#ccd3d3;
-    --chrome-line-strong:#98aaaa;
-    --chrome-accent:#215a63;
-    --chrome-accent-soft:color-mix(in oklab,var(--chrome-accent) 10%,transparent);
-    --chrome-focus:#215a63;
-    --chrome-verdict:#1f7a52;
-    --chrome-drift:#8a3b12;
-    background:#fafaf8;
-  }
-
-  body.instrument-surface :is(.frame,.mv,.studio-media-first,.studio-media-first .studio-rail,.studio-perception-panel,.desk-plate-col){
-    background:var(--chrome-ground);
-  }
-
-  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app),
-  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) .frame,
-  body.instrument-surface.inner-clean:not(.studio-page):not(.studio-app) main{
-    background:#fafaf8;
-    color:#19272b;
-  }
-
-  body.instrument-surface :is(.rail-head,.studio-perception-panel .panel,.studio-receipts,.chat-dock,.model-connect,.re-group,.re-controls,.at-group,.rail-group,.dk-group,.render-toolbar){
-    background:var(--chrome-surface);
-  }
-
-  body.instrument-surface :is(.rt-btn,.btn,.plate-redraw,.re-btn,.at-mini,.chat-min,.cert-act,.cert-recheck-btn){
-    background:oklch(100% 0 0/.82);
-    color:var(--chrome-ink);
-  }
-
-  body.instrument-surface :is(input[type=text],input[type=url],input[type=password],input[type=file],select,textarea,.desk-seed,.poster-seed,.mc-input,.re-in){
-    background:oklch(100% 0 0/.94);
-  }
-
-  body.instrument-surface :is(.viewport-stage,.re-preview,.plate-art,.fixture-art,.desk-var){
-    background:#050506;
-  }
-
-  body.instrument-surface.studio-page .mm-ascii{
-    color:#14543d;
-  }
 }
 
 @media (max-width:899.98px){
@@ -619,7 +589,7 @@ body.instrument-surface .chat-input{
 }
 
 @media (forced-colors:active){
-  body.instrument-surface{
+  html:root:is([data-theme],:not([data-theme])) body.instrument-surface{
     color-scheme:light;
     --chrome-ground:Canvas;
     --chrome-surface:Canvas;
@@ -632,6 +602,9 @@ body.instrument-surface .chat-input{
     --chrome-accent:Highlight;
     --chrome-accent-soft:Canvas;
     --chrome-focus:Highlight;
+    --chrome-ground-soft:Canvas;
+    --chrome-verdict:CanvasText;
+    --chrome-drift:CanvasText;
     background:Canvas;
     color:CanvasText;
   }
@@ -661,7 +634,7 @@ body.instrument-surface .chat-input{
 }
 
 @media print{
-  body.instrument-surface{
+  html:root:is([data-theme],:not([data-theme])) body.instrument-surface{
     color-scheme:light;
     --chrome-ground:#fff;
     --chrome-surface:#fff;
@@ -669,6 +642,14 @@ body.instrument-surface .chat-input{
     --chrome-soft:#222;
     --chrome-muted:#444;
     --chrome-line:#999;
+    --chrome-ground-soft:#fff;
+    --chrome-surface-strong:#fff;
+    --chrome-line-strong:#555;
+    --chrome-accent:#000;
+    --chrome-accent-soft:#fff;
+    --chrome-focus:#000;
+    --chrome-verdict:#006b73;
+    --chrome-drift:#8a3219;
     background:#fff;
     color:#000;
   }

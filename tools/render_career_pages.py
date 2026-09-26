@@ -56,6 +56,20 @@ def contacts(text: str) -> str:
     return '<p class="contact contact--fields">' + ''.join(fields) + '</p>'
 
 
+def fields(tag: str, text: str, cls: str = '', *, links: bool = True) -> str:
+    """A line of ' | '-separated fields as segment spans; the page draws the separators.
+
+    The artifact builder reads the same text back: inside a <p> it puts ' | ' between
+    spans itself, and inside an <h3> it reads the text as is, so there the bar stays in
+    the markup in a visually hidden span. The PDF, DOCX and text exports are unchanged.
+    """
+    render = linkify if links else escape
+    segments = [f'<span>{render(segment)}</span>' for segment in text.split(' | ')]
+    joiner = '<span class="career-sep"> | </span>' if tag == 'h3' else ''
+    classes = f'{cls} career-fields'.strip()
+    return f'<{tag} class="{classes}">' + joiner.join(segments) + f'</{tag}>'
+
+
 def blocks_html(blocks: list[dict]) -> str:
     out, in_list, in_section = [], False, False
     for block in blocks:
@@ -70,6 +84,10 @@ def blocks_html(blocks: list[dict]) -> str:
             out.append('<div class="career-page-break" data-career-break="true" aria-hidden="true"></div>')
         elif kind == 'contact':
             out.append(contacts(text))
+        elif kind in {'meta', 'subtitle'} and ' | ' in text:
+            out.append(fields('p', text, f'career-{kind}', links=False))
+        elif kind in {'p', 'h3'} and ' | ' in text:
+            out.append(fields(kind, text))
         elif kind == 'meta':
             out.append(f'<p class="career-meta">{escape(text)}</p>')
         elif kind == 'subtitle':
@@ -107,7 +125,7 @@ def plain(blocks: list[dict], markdown: bool = False) -> str:
 def downloads(doc: dict, include_html: bool = True) -> str:
     links = []
     if include_html:
-        links.append(f'<a href="{doc["route"]}">Read resume</a>')
+        links.append(f'<a href="{doc["route"]}">' + ('Read the CV' if doc['route'] == 'cv.html' else 'Read resume') + '</a>')
     for suffix, label in [('pdf', 'PDF'), ('docx', 'DOCX'), ('txt', 'Plain text'), ('md', 'Markdown')]:
         links.append(f'<a href="career/{doc["stem"]}.{suffix}" download>{label}</a>')
     return '<div class="career-downloads" aria-label="' + escape(doc['title'], quote=True) + ' formats">' + ''.join(links) + '</div>'
@@ -115,7 +133,12 @@ def downloads(doc: dict, include_html: bool = True) -> str:
 
 def shell(route: str, title: str, description: str, content: str, *, hire: bool = False) -> str:
     switch = ''.join(f'<a href="{p}"' + (' aria-current="page"' if route == p else '') + f'>{label}</a>' for p, label in [('hire.html','Hire'), ('resume.html','Resume'), ('portfolio.html','Portfolio'), ('cv.html','Full CV')])
-    hire_css = '<link rel="stylesheet" href="system/hire.css?v=20260902-creative-chassis">\n' if hire else ''
+    # The hiring page and the resume router add the art family (the pillar plate and the
+    # resume cover); the hiring page also adds its own poster layout, after the shared
+    # career sheet so hire.css can refine it.
+    art_css = ('<link rel="stylesheet" href="system/art.css?v=20260925-human-notebook">\n'
+               if route in ('hire.html', 'resume.html') else '')
+    hire_css = art_css + ('<link rel="stylesheet" href="system/hire.css?v=20260925-void-plates">\n' if hire else '')
     body = '<body class="doc" data-route-art="off">' if hire else '<body class="doc">'
     return f'''<!doctype html>
 <html lang="en">
@@ -137,8 +160,8 @@ def shell(route: str, title: str, description: str, content: str, *, hire: bool 
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
-{hire_css}<link rel="stylesheet" href="system/career.css?v=20260920-restoration">
-</head>
+<link rel="stylesheet" href="system/career.css?v=20260925-void-plates">
+{hire_css}</head>
 {body}
 <a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>
@@ -163,12 +186,30 @@ def source_note(source: dict) -> str:
 </aside>'''
 
 
+# Plates from the aperture art family, with the alt text art/aperture/covers.json records.
+# The Work pillar plate sits beside the hiring page's opening copy; the resume router
+# carries the contour-map cover under its heading.
+COVER_ALT = json.loads((ROOT / 'art' / 'aperture' / 'covers.json').read_text(encoding='utf-8'))['alt']
+
+
+def art_figure(name: str, kind: str, width: int, height: int) -> str:
+    alt = escape(COVER_ALT[name], quote=True)
+    return f'<figure class="art art-{kind}">' + ''.join(
+        f'<img class="art-{theme}" src="art/aperture/{name}-{theme}.svg" width="{width}" height="{height}" alt="{alt}" decoding="async">'
+        for theme in ('light', 'dark')
+    ) + '</figure>'
+
+
+PILLAR_WORK = art_figure('pillar-work', 'pillar', 1200, 900)
+RESUME_COVER = art_figure('cover-resume', 'cover', 1600, 800)
+
+
 def router_body(source: dict, *, hire: bool) -> str:
     docs = {doc['id']: doc for doc in source['documents']}
     contact = contacts('Seattle, Washington | zaindharper@gmail.com | harperz9.github.io')
     cls = 'hire-sheet' if hire else 'sheet doc-rail'
     intro = ('I build systems that make complex work inspectable: AI workstations, developer tools, evaluation infrastructure, and controlled-action interfaces. I also bring eleven years of arboriculture, customer service, estimating, and field coordination.' if hire else 'Choose the resume that matches the work. Each targeted resume is one page and includes experience, skills, and selected evidence, with the same content in HTML, PDF, DOCX, plain text, and Markdown. The full CV adds the wider project and research record.')
-    out = [f'<article class="{cls}">', '<header class="career-mast"><h1>Zain Dana Harper</h1>', '<p class="career-subtitle">Systems engineering, developer tools, and practical operations.</p>', contact, f'<p>{intro}</p></header>', '<section id="technical-lanes"><h2>Resumes</h2><div class="career-cards">']
+    out = [f'<article class="{cls}">', '<header class="career-mast"><h1>Zain Dana Harper</h1>' + (PILLAR_WORK if hire else ''), '<p class="career-subtitle">Systems engineering, developer tools, and practical operations.</p>', contact, f'<p>{intro}</p></header>'] + ([] if hire else [RESUME_COVER]) + ['<section id="technical-lanes"><h2>Resumes</h2><div class="career-cards">']
     cards = [
         ('support-operations-qa', 'engineering-path', 'Support, developer operations, and software quality', 'Technical support, developer operations, and QA experience: reproducible troubleshooting, accepted tests and documentation for Free Law Project, Hebbian Robotics, and Voxwire, software delivery, and customer communication.'),
         ('evaluation-python-tools', 'technical-operations-path', 'AI systems, evaluation, and Python tooling', 'Flywheel, Rowan, controlled-action interfaces, writing tools, and verification infrastructure, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),

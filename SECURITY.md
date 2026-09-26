@@ -1,6 +1,6 @@
 # Security Policy
 
-This repository hosts the public portfolio and Project Telos product surface.
+This repository hosts the public portfolio and Zentropy Labs product surface.
 It should not contain secrets, private customer material, live credentials, or
 operator-only corpora.
 
@@ -18,7 +18,7 @@ In scope:
 - static-site build and CI behavior
 - public links, assets, and metadata
 - client-side JavaScript and accessibility defects
-- public Project Telos presentation accuracy
+- public Zentropy Labs presentation accuracy
 
 Out of scope:
 

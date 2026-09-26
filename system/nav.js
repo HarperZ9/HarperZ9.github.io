@@ -1,6 +1,6 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260909-pillar-navigation";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260925-void-plates";
 
 const BRAND_LABEL = "Zentropy Labs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -40,7 +40,7 @@ function shouldMountAmbientField(doc = document) {
 function mountPlates(doc = document) {
   if (!doc || typeof doc.querySelector !== "function") return;
   if (!doc.querySelector("canvas[data-specimen]")) return;
-  import("./generative-field.js")
+  import("./generative-field.js?v=20260925-void-plates")
     .then((mod) => {
       if (typeof mod.mountSpecimens === "function") mod.mountSpecimens(doc);
     })
@@ -189,7 +189,11 @@ export function buildRouteHeader(doc = document) {
   h1.classList.add("route-header__title");
   if (summary) summary.classList.add("route-header__summary");
   if (!copyParent.querySelector(".route-header__path")) {
-    copyParent.insertBefore(buildRoutePath(doc, family, route), h1);
+    // A dateline written just above the title (a <p> holding a <time>) stays under the
+    // path, so the reading order is path, date, title.
+    const before = h1.previousElementSibling;
+    const dateline = before && before.matches && before.matches("p:has(> time)") ? before : null;
+    copyParent.insertBefore(buildRoutePath(doc, family, route), dateline || h1);
   }
   return container;
 }
@@ -341,7 +345,7 @@ export function renderNav(doc = document) {
   const homeHref = localHrefForPage("index.html", routePath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
   mount.innerHTML =
-    `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">Zain Dana Harper<span class="sn-brand-lab"> ${BRAND_LABEL}</span></span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
     + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")
@@ -382,7 +386,10 @@ function mountHomeLogo(doc) {
 // its own ?v= in the markup, so a new nav.js is what asks for new versions of
 // these; without a stamp here a reader with a warm cache keeps the old
 // stylesheet and the old exporter forever. Bump this with the nav.js stamp.
-const ASSET_V = "20260909-pillar-navigation";
+// Since 25 September 2026 the two move apart: the frozen briefing archives and
+// three held essays pin nav.js at its old stamp, so this stamp moves on its own
+// and the sheets below refresh once a reader's copy of nav.js revalidates.
+const ASSET_V = "20260925-void-plates";
 
 function sheetHref(name) {
   const here = import.meta && import.meta.url ? import.meta.url : "";
@@ -408,8 +415,10 @@ function ensureNavStylesheet(doc = document) {
   // know"). A page that links it in its head keeps its own link and order.
   if (!doc.querySelector('link[href*="notebook-sheet.css"]')) addSheet(doc, "notebook-sheet.css", "notebook-style", "last");
   // The site's surface (void and bone grounds, registration field, grain, crop marks,
-  // poster type). It comes after the page's own sheets so it refines them.
-  if (!doc.querySelector('link[href*="plate.css"]')) addSheet(doc, "plate.css", "plate-style", "last");
+  // poster type). It comes after the page's own sheets so it refines them. The
+  // guard names system/plate.css exactly, so a family sheet such as
+  // studio-plate.css does not read as the surface and skip it.
+  if (!doc.querySelector('link[href*="system/plate.css"],link[data-plate-style]')) addSheet(doc, "plate.css", "plate-style", "last");
   // print.css and export.css go last because they have to beat screen rules
   // that sit further down the page's own cascade. A media query adds no
   // specificity, so a print rule loaded early loses to a plain screen rule
@@ -420,12 +429,14 @@ function ensureNavStylesheet(doc = document) {
 
 // Print shows every "How we know" body. Each closed disclosure opens for the
 // print and closes again after it, so the reader's page stays as they left it.
+// A disclosure marked data-print="closed" holds machine detail (a digest, a receipt's
+// keys) that the product page already carries, so it stays folded on paper too.
 export function wirePrintDisclosures(win = typeof window !== "undefined" ? window : undefined, doc = typeof document !== "undefined" ? document : undefined) {
   if (!win || !doc || typeof win.addEventListener !== "function" || win.__printDisclosuresWired) return;
   win.__printDisclosuresWired = true;
   let opened = [];
   win.addEventListener("beforeprint", () => {
-    opened = [...doc.querySelectorAll("details:not([open])")];
+    opened = [...doc.querySelectorAll('details:not([open]):not([data-print="closed"])')];
     for (const details of opened) details.open = true;
   });
   win.addEventListener("afterprint", () => {
@@ -501,7 +512,7 @@ if (typeof document !== "undefined") {
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
     if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
-      import("./generative-field.js").catch(() => {});
+      import("./generative-field.js?v=20260925-void-plates").catch(() => {});
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);

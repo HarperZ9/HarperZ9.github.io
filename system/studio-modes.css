@@ -1,0 +1,130 @@
+/* studio-modes.css: the Studio on a phone, in forced colors, on paper and with less
+   motion. Loaded last of the four Studio files, after studio-sheet.css. */
+
+/* 15. Phone. The rail dissolves (system.css orders its parts): the title, the
+   channel strip, then the plate pinned to the top of the window while the deck,
+   the controls and the readings scroll beneath it. The plate keeps an opaque mat so
+   nothing that scrolls under it shows through, and it stops at 42% of the screen so
+   the readings get the larger share. */
+@media (max-width:899.98px){
+  html body.studio-page #studio-rail .rail-head{padding:1rem 1rem .85rem}
+  html body.studio-page #studio-rail .rail-head h1{
+    font-size:clamp(3.25rem,1.6rem + 6vw,4.5rem);
+    font-size:clamp(3.25rem,16cqi,5rem);
+    line-height:.9;margin-bottom:.7rem;
+  }
+  /* The channel strip: one line per group, the group word first, then its channels
+     as words on a hairline. The numerals are a desk detail; the strip leaves them
+     off to keep its width. */
+  html body.studio-page #studio-source{
+    flex-direction:column;gap:.15rem;padding:.1rem 1rem .9rem;
+    border-bottom:1px solid var(--st-line);border-image:none;
+  }
+  html body.studio-page #studio-source .source-group{
+    display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .2rem;width:100%;
+  }
+  html body.studio-page #studio-source .source-group-label{
+    display:inline-flex;flex:0 0 auto;align-self:center;padding:0 .4rem 0 1.05rem;margin:0;
+  }
+  html body.studio-page #studio-source .source-group-label::after{display:none}
+  html body.studio-page #studio-source [role="tab"],
+  html body.studio-page #studio-source .source-group:has([data-source="byo"]) [role="tab"]{
+    grid-column:auto;width:auto;flex:0 1 auto;margin:0;min-height:2.5rem;padding:.35rem .5rem;white-space:nowrap;
+  }
+  html body.studio-page #studio-source [role="tab"]::before{display:none}
+  html body.studio-page #studio-rail .rail-own{margin:.9rem 1rem .5rem}
+  html body.studio-page #studio-rail .rail-scroll{padding:0 1rem 1.25rem}
+  /* Below 64rem the site navigation scrolls away (nav.css), so the plate pins to the
+     top of the window. system.css and instrument-editorial.css set viewport floors
+     of 58 to 62svh; the id outranks them. */
+  html body.studio-page #viewport-stage{
+    top:0;min-height:0;height:clamp(11rem,42svh,22rem);
+    --st-mat:10px;--tk:14px;
+    background:
+      linear-gradient(var(--st-line-strong),var(--st-line-strong)) left top/var(--tk) 1px no-repeat border-box,
+      linear-gradient(var(--st-line-strong),var(--st-line-strong)) left top/1px var(--tk) no-repeat border-box,
+      linear-gradient(var(--st-line-strong),var(--st-line-strong)) right bottom/var(--tk) 1px no-repeat border-box,
+      linear-gradient(var(--st-line-strong),var(--st-line-strong)) right bottom/1px var(--tk) no-repeat border-box,
+      linear-gradient(var(--st-plate),var(--st-plate)) padding-box,
+      linear-gradient(var(--st-paper),var(--st-paper)) border-box;
+  }
+  /* The deck: the four keys used most in one row, then the other clusters behind
+     "More controls" (studio-deck.css), one cluster per line when it opens. */
+  html body.studio-page #render-toolbar{order:3;width:auto;margin:.6rem 1rem 0;padding:.25rem 0 0}
+  html body.studio-page #render-toolbar .rt-primary{margin:0 0 .25rem}
+  html body.studio-page #render-toolbar :is(.rt-btn,details.rt-plot){flex:0 0 auto}
+  html body.studio-page #render-toolbar .deck-more>.rt-group{
+    display:flex;width:100%;margin:0;padding:.3rem 0;border-left:0;border-top:1px solid var(--st-line);
+  }
+  html body.studio-page #studio-viewport #st-flow{order:3;margin:.7rem 1rem 0!important}
+  html body.studio-page #studio-viewport .engine-status{order:3;width:auto;margin:.2rem 1rem .6rem}
+  html body.studio-page #studio-panel{border-left:0;border-top:1px solid var(--st-line);border-image:none}
+  html body.studio-page #studio-panel .panel-scroll{padding:1.4rem 1rem 1rem}
+  html body.studio-page #chat-dock .chat-dock-head{padding:.55rem 1rem}
+  html body.studio-page #chat-dock .chat-dock-body{padding:0 1rem 1rem}
+}
+
+/* 16. Forced colors: system colors carry every mark. The lit channel and the engaged
+   keys use Highlight so the state still reads; the swatches and the bars keep their
+   own paint, because the colour and the length are the reading. */
+@media (forced-colors:active){
+  html:root{--st-plate:Canvas;--st-plate-ink:CanvasText}
+  html body.studio-page #studio-source [role="tab"][aria-selected="true"]{
+    forced-color-adjust:none;background:Highlight!important;color:HighlightText!important;border-color:Highlight!important;
+  }
+  html body.studio-page #studio-source [role="tab"][aria-selected="true"]::before{color:HighlightText}
+  html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel) :is(.chip,.at-chip):is(.active,[aria-pressed="true"]),
+  html body.studio-page #studio-viewport .rt-btn[aria-pressed="true"]{border:2px solid Highlight!important}
+  html body.studio-page #viewport-stage{border:1px solid CanvasText;outline:0}
+  html body.studio-page #studio-viewport{background:Canvas}
+  html body.studio-page #studio-source .source-group-label::before{display:none}
+  html body.studio-page #studio-panel .mm-sw{forced-color-adjust:none}
+  /* A transparent border is painted in CanvasText here, so the dropdown edge names its colours. */
+  html body.studio-page .studio-app .dd-opt{border-left-color:Canvas}
+  html body.studio-page .studio-app .dd-opt[aria-selected="true"]{border-left-color:Highlight}
+  html body.studio-page :is(#studio-panel .mm-fill,#studio-panel .mm-bar,#at-scores .rc-fill){forced-color-adjust:none;background:CanvasText}
+}
+
+/* 17. Print: the app is not held to one screen, so the rail and the readings print
+   in full. print.css means to drop the live section, but its later rule that prints
+   every section wins, so the frame prints: it is kept to 16cm in a thin frame. The
+   deck, the channel keys, the console and the identifiers stay off the sheet. */
+@media print{
+  html body.studio-page{height:auto!important;overflow:visible!important;display:block!important}
+  html body.studio-page .studio-app{display:block!important;height:auto!important;overflow:visible!important}
+  html body.studio-page :is(#studio-rail,#studio-panel,.rail-scroll,.panel-scroll){
+    display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;border:0!important;
+  }
+  html body.studio-page #studio-rail :is(#studio-source,.src-block[hidden],.studio-render-console,.studio-drop,details.studio-receipt){display:none!important}
+  html body.studio-page :is(#render-toolbar,.engine-status>summary,.studio-export-slot){display:none!important}
+  html body.studio-page #studio-panel .row:has(#sc-phash){display:none!important}
+  html body.studio-page #studio-viewport{background:none!important;padding:0!important;margin:1rem 0!important}
+  html body.studio-page #viewport-stage{
+    position:static!important;height:auto!important;min-height:0!important;max-width:16cm;margin:0 auto;
+    border:1px solid #000!important;outline:0!important;background:none!important;
+  }
+  html body.studio-page #viewport-stage canvas{max-width:100%!important;height:auto!important}
+  /* print.css clears every background; the swatches and the bars are the reading, so
+     they keep their paint (the swatch colour comes back from the --sw that studio.js
+     sets beside its inline colour). */
+  html body.studio-page #studio-panel .mm-sw{background-color:var(--sw,transparent)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html body.studio-page :is(#studio-panel .mm-fill,#studio-panel .mm-bar,#at-scores .rc-fill){background-color:#000!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* 18. Less motion: nothing slides or fades. */
+@media (prefers-reduced-motion:reduce){
+  html body.studio-page .studio-app *{transition:none!important}
+}
+
+/* 19. The showcase capture (studio.html?source=showcase&hero=1). first-integral.js adds
+   body.showcase-hero and system.css hides the app chrome with class selectors; the id
+   selectors in these files outrank those, so the capture layout is restated here: the
+   scene fills the window, and no nav, deck, caption or crop mark enters the frame. */
+html body.showcase-hero :is(#site-nav,.site-nav,.skip-link,#studio-rail,#studio-panel,#render-toolbar,#st-flow,.engine-status){display:none!important}
+html:has(body.showcase-hero)::after{display:none}
+html body.showcase-hero .studio-app{display:block;height:100dvh;width:100vw;background:var(--st-paper)}
+html body.showcase-hero #studio-viewport{display:block;height:100dvh;width:100vw;padding:0;gap:0;background:var(--st-paper)}
+html body.showcase-hero #viewport-stage{
+  position:relative;top:auto;width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;min-height:0;
+  border:0;outline:0;background:var(--paper);
+}

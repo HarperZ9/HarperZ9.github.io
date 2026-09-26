@@ -1,6 +1,6 @@
 # Support
 
-This site is the public launch and portfolio surface for Project Telos.
+This site is the public launch and portfolio surface for Zentropy Labs.
 
 ## Public Issues
 

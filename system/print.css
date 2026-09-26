@@ -22,6 +22,10 @@
 @media print {
 
   /* ── chrome that never belongs on paper ──────────────────────────────── */
+  /* Both hide lists sit under html body:not(#_) so they outrank the floor below,
+     where body:not(.doc) section{display:block} would otherwise bring a hidden
+     section (the Studio's live frame is one) back onto the page. */
+  html body:not(#_) :is(
   .site-nav,
   .docnav,
   .skip-link,
@@ -36,18 +40,21 @@
   video,
   audio,
   iframe,
-  [data-print="hide"]{
+  [data-print="hide"]){
     display:none !important;
   }
 
   /* Live instruments: a control panel is not a document. Their captions and
      headings stay, so the reader still knows what the missing thing was. */
+  html body:not(#_) :is(
   .studio-shell canvas,
   .re-panel,
   .re-preview,
   .dk-panel,
   .wv-panel,
   .studio-viewport,
+  body.studio-page .studio-rail > :not(.rail-head),
+  body.studio-page .studio-render-console,
   .tp-dfwv,
   .tp-rotv,
   input,
@@ -56,7 +63,7 @@
   button,
   .controls,
   .visual-controls,
-  .visual-nav{
+  .visual-nav){
     display:none !important;
   }
 
@@ -95,13 +102,15 @@
   body::after{display:none !important}
 
   /* Everything below is the floor for pages without their own print contract.
-     doc.css already prints well and is left alone. */
+     doc.css already prints well and is left alone. A mark drawn with a background
+     (a verdict or state glyph, or any element carrying data-print-keep) is kept out
+     of the background wipe; :where() keeps the wipe at its old weight. */
   body:not(.doc){
     font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
     font-size:10pt !important;
     line-height:1.42 !important;
   }
-  body:not(.doc) *{
+  body:not(.doc) *:where(:not([data-print-keep],.verdict-mark,.state-glyph,.verdict-glyph)){
     background-image:none !important;
     box-shadow:none !important;
     text-shadow:none !important;
@@ -109,11 +118,14 @@
     animation:none !important;
     transition:none !important;
   }
-  body:not(.doc) *:not(mark){
+  body:not(.doc) *:not(mark):where(:not([data-print-keep],.verdict-mark,.state-glyph,.verdict-glyph)){
     background-color:transparent !important;
+  }
+  body:not(.doc) *:not(mark){
     color:#000 !important;
     border-color:rgba(0,0,0,.28) !important;
   }
+  body:not(.doc) :is([data-print-keep],.state-glyph,.verdict-glyph){border-color:#000 !important}
   body:not(.doc) main,
   body:not(.doc) article,
   body:not(.doc) section,
@@ -182,16 +194,18 @@
   a{color:#000 !important;text-decoration:none !important;border:0 !important}
   a[href^="http"]:not([href*="harperz9.github.io"])::after{
     content:" (" attr(href) ")";
+    margin-inline-start:.3em;
     font-size:.82em;
     color:#3a3d42 !important;
     word-break:break-all;
   }
   /* A PDF is often a primary source, so paper prints its address too. */
-  a[href^="http"][href$=".pdf"]::after{content:" (" attr(href) ")";word-break:break-all}
+  a[href^="http"][href$=".pdf"]::after{content:" (" attr(href) ")";margin-inline-start:.3em;word-break:break-all}
 
   /* Verdict glyphs are painted backgrounds. They print whether or not the reader turned on
      background graphics, and the drift hatch widens so it never reads as an empty box. */
-  .verdict-mark::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .verdict-mark::before,
+  :is([data-print-keep],.state-glyph,.verdict-glyph){-webkit-print-color-adjust:exact;print-color-adjust:exact}
   /* Paper is black ink, so the hatch is a small black SVG tile; print engines drop thin gradient stripes. */
   .verdict-mark[data-verdict="drift"]::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M-1 7 L7 -1 M-1 1 L1 -1 M5 7 L7 5' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") 0 0/6px 6px !important}
   .verdict-mark[data-verdict="verified"]::before{background:currentColor !important}
@@ -211,6 +225,8 @@
      print dialog; this rule covers browsers that expose the details content. */
   details::details-content{content-visibility:visible;display:block}
   details > summary{list-style:none}
+  /* Machine detail the screen keeps folded stays folded on paper (nav.js skips it too). */
+  details[data-print="closed"]:not([open])::details-content{content-visibility:hidden;display:none}
   .page-footer,
   .export-footer,
   .copy-button{display:none !important}

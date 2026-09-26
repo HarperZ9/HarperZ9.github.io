@@ -19,6 +19,8 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { morePieces } from "./site-art-pillars-more.mjs";
+import { domainPieces } from "./site-art-domains.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "art", "aperture");
@@ -1006,9 +1008,12 @@ const PIECES = [
   { slug: "cover-briefing-openai-hugging-face-incident", page: "briefings/2026-08-26-openai-hugging-face-incident/index.html", w: 1600, h: 800, seed: 11816, draw: briefing },
   { slug: "cover-dossier", page: "dossier.html", w: 1600, h: 800, seed: 11817, draw: crystal },
   { slug: "cover-articulate", page: "articulate.html", w: 1600, h: 800, seed: 11818, draw: articulate },
-  { slug: "cover-frontier-safety", page: "frontier-safety.html", w: 1600, h: 800, seed: 11819, draw: briefing },
   { slug: "pillar-writing", page: "writing.html", w: 1200, h: 900, seed: 40213, draw: sheets },
 ];
+// The security and systems pillars, the resume cover and the six catalog domain plates live
+// in their own modules and draw with this file's vocabulary, handed over as one kit.
+const KIT = { TAU, circle, arc, seg, runs, clipLine, lift, core, flare, blades, corona, ticks, hatch, ridges, halftone, fog, veil, inDisk, outDisk, lw, fbm };
+PIECES.push(...morePieces(KIT), ...domainPieces(KIT));
 
 function main() {
   const args = process.argv.slice(2), check = args.includes("--check");

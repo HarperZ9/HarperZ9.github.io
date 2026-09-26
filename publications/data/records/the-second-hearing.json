@@ -241,6 +241,7 @@
       "how_to_read": "Each row is one study. Read across for who took part and what they heard, how often they heard it, what was measured, what was found and what the result cannot show.",
       "type": "evidence-map",
       "columns": ["Study", "Listeners and music", "How often heard", "What was measured", "What was found", "What it cannot show"],
+      "resultColumn": "What was found",
       "rows": [
         ["S2", "2017 liking study: 15 listeners; 40 examples", "Plays 1, 10, 19 and 28 over about four weeks", "Liking rating from 0 to 10", "Liking rose with more plays (omega-squared 0.197: plays accounted for about a fifth of the variation)", "No universal exposure curve"],
         ["S4", "2019 brain-recording study: 40 participants in two groups; 8 or 12 excerpts", "Three repeats in a row per excerpt", "How closely listeners' brain signals moved together (EEG)", "Brain-signal alignment fell for familiar-style music and persisted for unfamiliar-style music", "No validated measure of boredom or value"],

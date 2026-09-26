@@ -3,8 +3,8 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260925-human-notebook",
-    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged. On 25 September 2026 the conceptual trust-boundary figure (figures/control-boundary-flow) was redrawn on the notebook sheet with plain-language labels, a stacked record table and keyboard focus fixes; its figure record keeps every node, edge, state and source, and its three output hashes were refreshed from the edited files. A second pass the same day drew caution in ink so only the verified part carries a verdict hue, numbered every part, gave the page a masthead and kept the figure record's title, description and claim as published; the hashes were refreshed again. On 25 September 2026 the void-and-bone surface pass added the page's aperture cover and the shared art and plate stylesheets; its html hash was refreshed from the edited file.",
+    "revision": "20260925-void-sheets",
+    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged. On 25 September 2026 the conceptual trust-boundary figure (figures/control-boundary-flow) was redrawn on the notebook sheet with plain-language labels, a stacked record table and keyboard focus fixes; its figure record keeps every node, edge, state and source, and its three output hashes were refreshed from the edited files. A second pass the same day drew caution in ink so only the verified part carries a verdict hue, numbered every part, gave the page a masthead and kept the figure record's title, description and claim as published; the hashes were refreshed again. On 25 September 2026 the void-and-bone surface pass added the page's aperture cover and the shared art and plate stylesheets; its html hash was refreshed from the edited file. On 25 September 2026 the void-and-bone pass remapped the figure's drawing palette to the bone and void sheet values; nodes, edges, states, numbering and text are unchanged; html and svg hashes refreshed. The same day's integration pass moved the shared stylesheet cache keys on the briefing page and its seven figure pages (system.css to 20260925-void-plates, figure.css to 20260925-void-sheets); their content is unchanged and their html hashes were refreshed from the edited files. On 26 September 2026 the void-plates review pass remapped the other six figures (recovered actions by day, motive sample, source scope matrix, task overrepresentation, claim provenance and the multilane timeline, the last through its renderer) to the bone and void sheet values, squared every rounded rectangle and pill, drew caution hatching in a quiet line tone, and gave each row's focus ring a transparent fill and each label a paper halo so it reads over the hatching; data, labels, states and text are unchanged. The briefing page's claim cards now open on a plain title in place of the claim identifier, which stays as the card's anchor id. html and svg hashes refreshed.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
     "figureViewBoxOverrides": {
       "incident-multilane-timeline": "0 0 640 6882"
@@ -30,7 +30,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "1b1408c9d2700fe1fba13dcc93ef0bd2ca6e33bd912de5b9c3df26eda551bee1"
+      "sha256": "d119c2bc30206688aa2059764021880e2187959f62e2c30dc2c931c5068a9857"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -42,7 +42,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "7a98c798b1e42eb55bd9d080b6e2f14167f34451307b8e678c9331fa682a9a29"
+      "sha256": "bcb98d521edd0b129f8496fecf85d1cb58a4ddc2bb887f34ff2a801da1bf12d1"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -50,11 +50,11 @@
     },
     {
       "path": "figures/claim-provenance-panel.svg",
-      "sha256": "9bbc3aa4808e984748fadbcbc88d8aea640d299b7d2d5d7ef3a82c6ebb9e924e"
+      "sha256": "f1bea06486f467a7e5cbd90172d41e11e25493decceaf58c44a8449eb37eb9b7"
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "e4af4b994734348b965477cda2582a144259c4deceb2e43974a23b1f76003bbc"
+      "sha256": "24aa9613bb349d700e5be7efe5bd0133d0b85c1f0192b77bd6c7da284107d714"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -62,11 +62,11 @@
     },
     {
       "path": "figures/control-boundary-flow.svg",
-      "sha256": "795bd1d73ba7fa0f5e27d1147ae5e5a4267166c9a6cc5f216adcfaa8a9f949a1"
+      "sha256": "d86c64d99b6889d43ef569f4d37143fb882a82fecf61a9f685b00bddb9a264f4"
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "20ac8b0d6cd748e19230af6a746496a9786f95e8391fedfcefeba0418bc4d5a4"
+      "sha256": "0bbd6a3c5a9ed1e7f974d6721eed2ce92beb53519fd1c351cbb02be7eab87be2"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -74,11 +74,11 @@
     },
     {
       "path": "figures/incident-multilane-timeline.svg",
-      "sha256": "cb9c0987fe5f16183f762b86fe9aee9f23472354a04278032590d7b5c1fff722"
+      "sha256": "85d0b017f546e3c0165f58d274a29d1b615c098fc38bf1f268447025e4f85e2a"
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "c0b608a2494601e7c684b2802d2613f751f08a39ef19fe6a22049f3396439cbd"
+      "sha256": "0fc558f7b4b2d0d214c8a2e95f2f1758d6cc47ec37e35463818cafc6129c32ed"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -86,11 +86,11 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.svg",
-      "sha256": "2746efe2e8726b89df9fc7465b549b2a81d505ef98e03f41461682d5ef1605b4"
+      "sha256": "6a084bc8521c29ee31e6eb646967f0d86ff6c797a9d04bfbfdfe94d44b3733c1"
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "73ba8f48673694c0db9eddcbf702c5b8b3c1d083d6e07966888e7479dbd0adc4"
+      "sha256": "76eba781914ff692a85970b47c603822981c50c7a8db26db804f9b167c8fae22"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -98,11 +98,11 @@
     },
     {
       "path": "figures/recovered-actions-by-day.svg",
-      "sha256": "bd95f4e7caf0f3ca4c4436694f7845e57843823f363efabb2da81f3caf855aa9"
+      "sha256": "60650baad2025a50fa409498d1377096e8175f6bdafc53b7ad4c020f2cd42d83"
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "4df23a0031492426f1621e1371cb576040840d8d8f445a75fa5fb631f8c4ee4e"
+      "sha256": "36be38b7998f2e7cbd58846e1ce589489c65c2222278d0e236bf5f1b346eafc8"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -110,11 +110,11 @@
     },
     {
       "path": "figures/source-scope-matrix.svg",
-      "sha256": "69d0aa1a890ced737ff889ca4312740a53d6c2651f9c402c190e3e7f22284e33"
+      "sha256": "057464b95df4a185fa36eba3ae62f433509b89d3b83f9e2519a0750150a47357"
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "f3c981377e0c37bf82698ab60e54c9d931ed629203da212dff2b709be063af79"
+      "sha256": "ad9d96b5add45f5c753c8b9c1309f13f86bbc25ed0d6a1f1570f07602a71b1dc"
     },
     {
       "path": "figures/task-overrepresentation.json",
@@ -122,7 +122,7 @@
     },
     {
       "path": "figures/task-overrepresentation.svg",
-      "sha256": "a4d99123d34a3e13f5988736863c4d0f17c0647c41985bad7d9f6a0d91f684fc"
+      "sha256": "7929c99f733367c49c24a6d80a9814e00f8e6cd654a92fdd0343ff2375675c7d"
     }
   ]
 }

@@ -26,11 +26,7 @@ uniform float u_hue;
 uniform float u_blades;
 uniform float u_radius;
 uniform float u_gain;
-
-vec3 hsl2rgb(vec3 c){
-  vec3 r = clamp(abs(mod(c.x*6.0 + vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0);
-  return c.z + c.y*(r-0.5)*(1.0-abs(2.0*c.z-1.0));
-}
+uniform float u_light;
 
 void main(){
   // Element-local, normalised on the SHORT axis so the form stays circular at any box shape.
@@ -70,28 +66,25 @@ void main(){
   float ticks = pow(0.5 + 0.5*cos(r*24.0 + u_seed*2.0), 30.0)
               * smoothstep(0.26, 0.50, r) * (1.0 - smoothstep(0.72, 0.98, r));
 
-  vec3 hotCol = hsl2rgb(vec3(fract(u_hue + 0.02), 0.88, 0.62));
-  vec3 rimCol = hsl2rgb(vec3(fract(u_hue - 0.07), 0.72, 0.70));
-  vec3 line   = vec3(0.60, 0.585, 0.72);
+  // 26 September 2026: the form draws in the art plates' palette, not a per-surface hue. Ink
+  // blades and rim, one warm core, and on the bone pole ink over paper instead of light over
+  // black. Identity now comes from the blade count and the seed alone.
+  vec3 ink   = mix(vec3(0.902, 0.882, 0.839), vec3(0.102, 0.090, 0.071), u_light);
+  vec3 warm  = mix(vec3(1.000, 0.671, 0.322), vec3(0.906, 0.651, 0.325), u_light);
+  vec3 lit   = vec3(1.000, 0.969, 0.910);
+  float lines = clamp((rim * 0.92 + blades * 0.54 + ticks * 0.16) * u_gain, 0.0, 1.0);
+  float glow  = clamp((core * 0.44 + halo + iris) * u_gain, 0.0, 1.0);
 
-  vec3 col = hotCol * (core * 0.44 + halo + iris)
-           + vec3(0.86, 0.94, 1.00) * pupil * 0.68
-           + rimCol * (rim * 0.92 + blades * 0.44 + ticks * 0.16)
-           + line * blades * 0.10;
+  // Void pole: premultiplied light over the dark ground, as before.
+  vec3 darkCol = warm * glow + lit * pupil * 0.68 + ink * lines * 0.8;
+  float darkA = min(max(darkCol.r, max(darkCol.g, darkCol.b)), 1.0);
+  // Bone pole: ink lines over a warm core, premultiplied, so the paper shows between them.
+  float aL = lines * 0.72;
+  float aG = clamp(glow * 0.9 + pupil * 0.6, 0.0, 1.0);
+  vec3 lightCol = ink * aL + mix(warm, lit, pupil) * aG * (1.0 - aL);
+  float lightA = aL + aG * (1.0 - aL);
 
-  // Per-surface gain, so the three siblings carry the same weight on the page. Blade count, hue and
-  // rim weight all feed into how much light a form throws, and they do not cancel: measured
-  // composited over the black ground at 1440x900, the three came out at 24.7 / 28.6 / 37.1 mean
-  // luminance with this term at 1. The gains in APERTURES divide those to a common 26, and
-  // hero-aperture.test.mjs pins the constants to that measurement.
-  col *= u_gain;
-
-  // Premultiplied. Alpha is the form's own coverage, so every component is <= alpha and the canvas
-  // composites as light over the black ground instead of painting a black box over it. Where the orb
-  // is brightest it also clears what sits behind it, which is what makes the mark read as light
-  // rather than as a smudge added on top.
-  float a = max(col.r, max(col.g, col.b));
-  gl_FragColor = vec4(col, min(a, 1.0));
+  gl_FragColor = mix(vec4(darkCol, darkA), vec4(lightCol, lightA), step(0.5, u_light));
 }
 `;
 
@@ -103,10 +96,11 @@ void main(){
 // still renders a coherent form from these rather than a black box.
 const UNIFORMS = { seed: 3.1, hue: 0.53, blades: 44, radius: 0.30, gain: 1.0 };
 
+// hue is kept for the shared preset shape; the shader no longer reads it (26 September 2026).
 export const APERTURES = {
-  gallery: { hue: 0.78, blades: 44, seed: 3.1, radius: 0.30, gain: 1.06 },  // violet, the exhibition
-  retro:   { hue: 0.06, blades: 16, seed: 5.7, radius: 0.30, gain: 0.92 },  // ember, coarse iris
-  loom:    { hue: 0.42, blades: 72, seed: 1.4, radius: 0.30, gain: 0.70 },  // thread green, finest
+  gallery: { hue: 0.78, blades: 44, seed: 3.1, radius: 0.30, gain: 1.06 },  // the exhibition
+  retro:   { hue: 0.06, blades: 16, seed: 5.7, radius: 0.30, gain: 0.92 },  // coarse iris
+  loom:    { hue: 0.42, blades: 72, seed: 1.4, radius: 0.30, gain: 0.70 },  // finest iris
 };
 
 function compile(gl, type, src) {
@@ -202,6 +196,13 @@ function makeRunner(canvas, draw, reduced) {
   };
 }
 
+// The page's pole: the reader's pick when there is one, else the system scheme.
+function lightPole() {
+  const theme = document.documentElement.dataset.theme;
+  if (theme) return theme === "light";
+  return typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: light)").matches;
+}
+
 export function mountHeroAperture(canvas, opts) {
   const o = opts || {};
   const reduced = o.reduced === true;
@@ -214,7 +215,7 @@ export function mountHeroAperture(canvas, opts) {
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(prog, "p");
   const U = (n) => gl.getUniformLocation(prog, n);
-  const u = { res: U("u_res"), time: U("u_time") };
+  const u = { res: U("u_res"), time: U("u_time"), light: U("u_light") };
 
   gl.useProgram(prog);
   for (const k in UNIFORMS) gl.uniform1f(U("u_" + k), o[k] != null ? o[k] : UNIFORMS[k]);
@@ -235,14 +236,19 @@ export function mountHeroAperture(canvas, opts) {
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     gl.uniform2f(u.res, canvas.width, canvas.height);
     gl.uniform1f(u.time, reduced ? 0 : tms * 0.0019);
+    gl.uniform1f(u.light, lightPole() ? 1 : 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
   const runner = makeRunner(canvas, draw, reduced);
+  // A still frame redraws when the reader picks the other pole.
+  const onTheme = () => draw(0);
+  window.addEventListener("themechange", onTheme);
 
   return {
     destroy() {
       runner.dispose();
+      window.removeEventListener("themechange", onTheme);
       const ext = gl.getExtension("WEBGL_lose_context");
       if (ext) ext.loseContext();
     },

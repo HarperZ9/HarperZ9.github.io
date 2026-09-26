@@ -1,4 +1,4 @@
-@import url("tokens.css?v=20260925-human-notebook");
+@import url("tokens.css?v=20260925-void-integration");
 /* One reading treatment across the publication index, briefings and essays.
    Scope excludes career documents, product demos and interactive studios.
    2026-09-25 human-first notebook: every --reading-* value now reads a token
@@ -78,6 +78,8 @@ body.frontier-briefing .briefing-intro h1 .g{color:var(--reading-ink)}
 body.frontier-briefing :is(.briefing-overview h2,.lane-head h2,.wide-section h2,.questions h2){font-size:clamp(1.6rem,3vw,2.25rem);line-height:1.25;max-width:30ch}
 body.frontier-briefing .record{display:block;max-width:64ch}
 body.frontier-briefing .record-index{display:none}
+/* The !important stays: frozen archive editions load frontier-safety-site.css, whose
+   .source-line{font-size:.68rem!important} would otherwise put a label under 14px. */
 body.frontier-briefing :is(.record-meta,.source-line,.briefing-links,.edition-readout dt,.edition-readout dd,.boundary strong,.rail-mark strong){font-family:var(--reading-type);font-size:.9375rem!important;letter-spacing:0;text-transform:none}
 body.frontier-briefing .record-body>p{font-size:1.125rem;line-height:1.75;max-width:62ch}
 body.frontier-briefing .boundary{grid-template-columns:1fr;gap:.4rem}
@@ -171,6 +173,12 @@ body:has(>.publication-article) .publication-article h1{max-width:24ch}
     background:var(--reading-paper);
     color:var(--reading-ink);
     box-shadow:none;
+  }
+  /* On a document page the reading column (.sheet) is the calm ground. main and the
+     route header stay clear, so the registration field and grain run in the gutters
+     without a flat band that stops short of the window edge. */
+  html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) :is(main,.route-header){
+    background:transparent;
   }
   html:has(body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app)) body.doc:not(.instrument-surface):not(.studio-page):not(.studio-app) .sheet{
     width:min(100%,62rem);

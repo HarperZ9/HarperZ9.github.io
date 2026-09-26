@@ -31,7 +31,7 @@ from tools.publication_model import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
-ASSET_REVISION = "20260907-reading-completion"
+ASSET_REVISION = "20260925-void-plates"
 COVER_ALT_PATH = ROOT / "art" / "aperture" / "covers.json"
 
 
@@ -114,29 +114,44 @@ def load_existing_briefings(root: Path) -> list[dict]:
     return briefings
 
 
+def _table_cell(figure: dict, index: int, value: str) -> str:
+    """One body cell: the row key as a row header, every other cell labelled by its column."""
+    label = html.escape(figure["columns"][index], quote=True)
+    result = ' data-result=""' if figure["columns"][index] == figure.get("resultColumn") else ""
+    tag = 'th scope="row"' if index == 0 else "td"
+    close = "th" if index == 0 else "td"
+    return f'<{tag} data-label="{label}"{result}>{html.escape(value)}</{close}>'
+
+
 def _render_table(figure: dict) -> str:
-    headings = "".join(f"<th scope=\"col\">{html.escape(value)}</th>" for value in figure["columns"])
+    """The figure's data table, marked up so a phone can stack it into labelled records.
+
+    Every cell carries its column as data-label; the table carries data-stack. A table whose
+    row keys are all four characters or fewer (S2, S7) is marked data-key="short", and the
+    column the record names as resultColumn carries data-result.
+    """
+    result_column = figure.get("resultColumn")
+    result_mark = ' data-result=""'
+    headings = "".join(
+        f'<th scope="col"{result_mark if value == result_column else ""}>{html.escape(value)}</th>'
+        for value in figure["columns"]
+    )
     rows = "".join(
-        "<tr>"
-        + "".join(
-            (
-                f"<th scope=\"row\">{html.escape(value)}</th>"
-                if index == 0
-                else f"<td>{html.escape(value)}</td>"
-            )
-            for index, value in enumerate(row)
-        )
-        + "</tr>"
+        "<tr>" + "".join(_table_cell(figure, index, value) for index, value in enumerate(row)) + "</tr>"
         for row in figure["rows"]
     )
+    short = all(len(row[0]) <= 4 for row in figure["rows"])
+    key = ' data-key="short"' if short else ""
     return (
-        '<div class="publication-table-wrap" role="region" tabindex="0" aria-label="Figure data"><table class="publication-figure-table">'
+        '<div class="publication-table-wrap" role="region" tabindex="0" aria-label="Figure data">'
+        f'<table class="publication-figure-table" data-stack{key}>'
         f"<caption>{html.escape(figure['title'])}. {html.escape(figure['claim'])}</caption>"
         f"<thead><tr>{headings}</tr></thead><tbody>{rows}</tbody></table></div>"
     )
 
 
 def _render_figure_metadata(figure: dict) -> str:
+    """The record under the table. What the figure does not prove comes first and is named."""
     pairs = (
         ("Scope", figure["scope"]),
         ("Units", figure["units"]),
@@ -145,12 +160,15 @@ def _render_figure_metadata(figure: dict) -> str:
         ("Transformation", figure["transformation"]),
         ("Uncertainty", figure["uncertainty"]),
         ("Limitations", figure["limitations"]),
-        ("Does not prove", figure["doesNotProve"]),
     )
-    return '<dl class="publication-evidence">' + "".join(
-        f"<dt>{html.escape(label)}</dt><dd>{html.escape(value)}</dd>"
-        for label, value in pairs
-    ) + "</dl>"
+    does_not_prove = html.escape(figure["doesNotProve"])
+    return (
+        '<dl class="publication-evidence">'
+        '<dt data-term="does-not-prove">Does not prove</dt>'
+        f'<dd data-term="does-not-prove">{does_not_prove}</dd>'
+        + "".join(f"<dt>{html.escape(label)}</dt><dd>{html.escape(value)}</dd>" for label, value in pairs)
+        + "</dl>"
+    )
 
 
 def _svg_lines(value: str, width: int) -> list[str]:
@@ -275,7 +293,7 @@ def render_figure_html(figure: dict, sources: list[dict]) -> str:
     )
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
+<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}

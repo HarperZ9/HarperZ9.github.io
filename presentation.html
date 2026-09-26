@@ -21,7 +21,7 @@
 <meta name="theme-color" content="#f4f2ec" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#070406" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
+<link rel="stylesheet" href="system/system.css?v=20260925-void-plates">
 <style>
   /* deck layout: full-viewport scroll-snap slides on the solid void ground */
   body.deck{background:var(--void);color:var(--bone);overflow:hidden;position:fixed;inset:0}
@@ -75,11 +75,11 @@
     font-family:"Spline Sans Mono",monospace;font-size:.66rem;letter-spacing:.2em;color:var(--muted)}
   #deck-count b{color:var(--orange);font-weight:400}
   #deck-exit{position:fixed;top:clamp(1.4rem,3vw,2.2rem);right:clamp(1.8rem,4vw,3rem);z-index:30;
-    font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}
-  #deck-exit:hover{color:var(--orange);border-color:var(--orange)}
+    padding:.35rem .6rem;background:var(--paper);font-family:var(--font-sans);font-size:.875rem;letter-spacing:0;
+    color:var(--ink);text-decoration:none;border:1px solid var(--line-strong)}
+  #deck-exit:hover{border-color:var(--ink)}
   #deck-hint{position:fixed;bottom:clamp(1.4rem,3vw,2.4rem);left:clamp(1.8rem,4vw,3rem);z-index:30;
-    font-family:"Spline Sans Mono",monospace;font-size:.6rem;letter-spacing:.14em;color:var(--muted);opacity:.6}
+    padding:.3rem .55rem;background:var(--paper);font-family:var(--font-sans);font-size:.875rem;letter-spacing:0;color:var(--soft)}
   @media(max-width:680px){#deck-hint{display:none}}
   /* intentional build-in: each slide's content settles when it becomes active.
      Content is fully visible by default; the effect is added only when JS arms it
@@ -96,11 +96,11 @@
   }
   /* keyboard focus: visible ring only for keyboard users */
   .slide .links a:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:2px;color:var(--orange)}
-  #deck-exit:focus-visible{outline:2px solid var(--orange);outline-offset:4px;color:var(--orange)}
+  #deck-exit:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
   .deck-scroll:focus,.deck-scroll:focus-visible{outline:none}
   @media(prefers-reduced-motion:reduce){.deck-scroll{scroll-behavior:auto}#deck-bar{transition:none}}
 </style>
-<link rel="stylesheet" href="system/demo-editorial.css?v=20260906-demo-editorial" data-demo-editorial>
+<link rel="stylesheet" href="system/demo-editorial.css?v=20260925-void-plates" data-demo-editorial>
 </head>
 <body class="deck demo-editorial demo-presentation">
 <a class="skip-link" href="#scroll">Skip to content</a>

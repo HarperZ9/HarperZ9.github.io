@@ -18,7 +18,7 @@
    from the operator's inspiration corpus. plate.css holds the surface that goes with
    them (registration field, grain, crop marks, poster type). It is imported here, so
    every page that loads a family stylesheet gets the surface without JavaScript. */
-@import url("plate.css?v=20260925-void-plates");
+@import url("plate.css?v=20260925-void-integration");
 
 @font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
@@ -117,7 +117,7 @@ html:root[data-theme="light"]{color-scheme:light}
 @media (forced-colors:active){
   html:root:is([data-theme],:not([data-theme])){
     --paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;
-    --ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
+    --ink:CanvasText;--soft:CanvasText;--muted:CanvasText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
     --verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;--hot:Highlight;--focus:Highlight;
     --sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-line:CanvasText;
     --sheet-hair:GrayText;--sheet-dot:Canvas;--sheet-frame:CanvasText;

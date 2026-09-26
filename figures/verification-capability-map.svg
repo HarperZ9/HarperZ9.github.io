@@ -1,177 +1,182 @@
-<svg role="img" xmlns="http://www.w3.org/2000/svg" width="1200" height="1204" viewBox="0 0 1200 1204" aria-labelledby="verification-capability-map-title verification-capability-map-desc" data-figure-kind="relationship">
+<svg role="img" xmlns="http://www.w3.org/2000/svg" width="1200" height="1316" viewBox="0 0 1200 1316" aria-labelledby="verification-capability-map-title verification-capability-map-desc" data-figure-kind="relationship">
   <title id="verification-capability-map-title">Evaluation and verification systems</title>
-  <desc id="verification-capability-map-desc">Systems whose registry record includes evaluation and verification, with only implementation relationships whose endpoints both remain in view. 6 verified typed registry relationships connect two systems in this evaluation-and-verification view. Shared domain placement is taxonomy only. Systems without a line can still be independently useful, and lines can lag code changed after the verification date.</desc>
-  <defs><marker id="verification-capability-map-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e98455"/></marker></defs>
+  <desc id="verification-capability-map-desc">Systems whose registry record includes evaluation and verification, with only implementation relationships whose endpoints both remain in view. 7 verified typed registry relationships connect two systems in this evaluation-and-verification view. Shared domain placement is taxonomy only. Systems without a line can still be independently useful, and lines can lag code changed after the verification date.</desc>
+  <defs><marker id="verification-capability-map-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="cm-arrow"/></marker></defs>
   <style>
-    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}
-    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}.muted{fill:#bcd0d4}.relation-label{fill:#f4ddd1}
-    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#f5f2e9;stroke-width:5}
+    svg{--cm-p:#f1ece1;--cm-i:#16130f;--cm-s:#4a443b;--cm-l:#7b7262;--cm-h:#d6ccb8}@media (prefers-color-scheme:dark){svg{--cm-p:#0a0a0d;--cm-i:#ece5d6;--cm-s:#b8b0a0;--cm-l:#77716a;--cm-h:#262529}}:root[data-theme="light"] svg{--cm-p:#f1ece1;--cm-i:#16130f;--cm-s:#4a443b;--cm-l:#7b7262;--cm-h:#d6ccb8}:root[data-theme="dark"] svg{--cm-p:#0a0a0d;--cm-i:#ece5d6;--cm-s:#b8b0a0;--cm-l:#77716a;--cm-h:#262529}@media print{svg,:root[data-theme] svg{--cm-p:#ffffff;--cm-i:#000000;--cm-s:#333333;--cm-l:#555555;--cm-h:#aaaaaa}}@media (forced-colors:active){svg,:root[data-theme] svg{--cm-p:Canvas;--cm-i:CanvasText;--cm-s:CanvasText;--cm-l:CanvasText;--cm-h:GrayText}}
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--cm-i)}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}.muted{fill:var(--cm-s)}
+    .relation-label{fill:var(--cm-i);stroke:var(--cm-p);stroke-width:6px;paint-order:stroke}
+    .cm-node{fill:var(--cm-p)}.cm-edge{fill:none;stroke:var(--cm-l);stroke-width:1.5}
+    .cm-arrow{fill:var(--cm-l)}.cm-hair{stroke:var(--cm-h);stroke-width:1}
   </style>
-  <rect width="1200" height="1204" fill="#070c0f"/>
-  <text x="44" y="48" class="mono muted" font-size="16">SOURCE SYSTEM</text>
-  <text x="600" y="48" text-anchor="middle" class="mono muted" font-size="16">TYPED RELATIONSHIP</text>
-  <text x="824" y="48" class="mono muted" font-size="16">TARGET SYSTEM</text>
-  <g data-figure-point="true" data-figure-key="engine-revival" data-node-instance="source-0" role="graphics-symbol" aria-label="Engine Revival. software-preservation tooling." tabindex="0">
-    <rect class="focus-ring" x="40" y="92" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="96" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="123" font-size="17" font-weight="700">Engine Revival</text>
-    <text x="60" y="147" class="mono muted" font-size="16">software-preservation tooling</text>
+  <text x="44" y="48" class="mono muted" font-size="17">Source system</text>
+  <text x="600" y="48" text-anchor="middle" class="mono muted" font-size="17">Typed relationship</text>
+  <text x="824" y="48" class="mono muted" font-size="17">Target system</text>
+  <g data-figure-point="true" data-figure-key="engine-revival" data-node-instance="source-0" role="graphics-symbol" aria-label="Engine Revival. archival/revival evidence platform.">
+    <rect x="44" y="96" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="123" font-size="18" font-weight="700">Engine Revival</text>
+    <text x="60" y="147" class="mono muted" font-size="17">archival/revival evidence</text>
+    <text x="60" y="167" class="mono muted" font-size="17">platform</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="accepts-evidence-from" d="M376 137 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="accepts-evidence-from" d="M376 137 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Engine Revival accepts evidence from BRender Archival</title>
   </path>
-  <rect x="392" y="117" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="143" text-anchor="middle" class="mono relation-label" font-size="16">accepts evidence from</text>
-  <g data-figure-point="true" data-figure-key="brender-archival" data-node-instance="target-0" role="graphics-symbol" aria-label="BRender Archival. focused engine-restoration lab." tabindex="0">
-    <rect class="focus-ring" x="820" y="92" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="96" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="123" font-size="17" font-weight="700">BRender Archival</text>
-    <text x="840" y="147" class="mono muted" font-size="16">focused engine-restoration lab</text>
+  <text x="600" y="127" text-anchor="middle" class="mono relation-label" font-size="17">accepts evidence from</text>
+  <g data-figure-point="true" data-figure-key="brender-archival" data-node-instance="target-0" role="graphics-symbol" aria-label="BRender Archival. BRender restoration and build-test harness.">
+    <rect x="824" y="96" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="123" font-size="18" font-weight="700">BRender Archival</text>
+    <text x="840" y="147" class="mono muted" font-size="17">BRender restoration and</text>
+    <text x="840" y="167" class="mono muted" font-size="17">build-test harness</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-1" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client." tabindex="0">
-    <rect class="focus-ring" x="40" y="204" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="208" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="235" font-size="17" font-weight="700">Flywheel</text>
-    <text x="60" y="259" class="mono muted" font-size="16">verified-inference platform and</text>
-    <text x="60" y="277" class="mono muted" font-size="16">desktop client</text>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-1" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="208" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="235" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="259" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="279" class="mono muted" font-size="17">and desktop client</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 249 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 249 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Flywheel launches as a configured lane Accountable Surface</title>
   </path>
-  <rect x="392" y="229" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="255" text-anchor="middle" class="mono relation-label" font-size="16">launches as a configured lane</text>
-  <g data-figure-point="true" data-figure-key="accountable-surface" data-node-instance="target-1" role="graphics-symbol" aria-label="Accountable Surface. controlled agent-action workbench." tabindex="0">
-    <rect class="focus-ring" x="820" y="204" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="208" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="235" font-size="17" font-weight="700">Accountable Surface</text>
-    <text x="840" y="259" class="mono muted" font-size="16">controlled agent-action</text>
-    <text x="840" y="277" class="mono muted" font-size="16">workbench</text>
+  <text x="600" y="239" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="accountable-surface" data-node-instance="target-1" role="graphics-symbol" aria-label="Accountable Surface. workbench that allows only approved AI agent actions.">
+    <rect x="824" y="208" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="235" font-size="18" font-weight="700">Accountable Surface</text>
+    <text x="840" y="259" class="mono muted" font-size="17">workbench that allows only</text>
+    <text x="840" y="279" class="mono muted" font-size="17">approved AI agent actions</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-2" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client." tabindex="0">
-    <rect class="focus-ring" x="40" y="316" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="320" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="347" font-size="17" font-weight="700">Flywheel</text>
-    <text x="60" y="371" class="mono muted" font-size="16">verified-inference platform and</text>
-    <text x="60" y="389" class="mono muted" font-size="16">desktop client</text>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-2" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="320" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="347" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="371" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="391" class="mono muted" font-size="17">and desktop client</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 361 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 361 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
+    <title>Flywheel launches as a configured lane Articulate</title>
+  </path>
+  <text x="600" y="351" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="articulate" data-node-instance="target-2" role="graphics-symbol" aria-label="Articulate. local prose checker.">
+    <rect x="824" y="320" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="347" font-size="18" font-weight="700">Articulate</text>
+    <text x="840" y="371" class="mono muted" font-size="17">local prose checker</text>
+  </g>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-3" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="432" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="459" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="483" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="503" class="mono muted" font-size="17">and desktop client</text>
+  </g>
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 473 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Flywheel launches as a configured lane Crucible</title>
   </path>
-  <rect x="392" y="341" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="367" text-anchor="middle" class="mono relation-label" font-size="16">launches as a configured lane</text>
-  <g data-figure-point="true" data-figure-key="crucible" data-node-instance="target-2" role="graphics-symbol" aria-label="Crucible. falsifiable claim evaluation system." tabindex="0">
-    <rect class="focus-ring" x="820" y="316" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="320" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="347" font-size="17" font-weight="700">Crucible</text>
-    <text x="840" y="371" class="mono muted" font-size="16">falsifiable claim evaluation</text>
-    <text x="840" y="389" class="mono muted" font-size="16">system</text>
+  <text x="600" y="463" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="crucible" data-node-instance="target-3" role="graphics-symbol" aria-label="Crucible. engine that tests claims against evidence.">
+    <rect x="824" y="432" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="459" font-size="18" font-weight="700">Crucible</text>
+    <text x="840" y="483" class="mono muted" font-size="17">engine that tests claims</text>
+    <text x="840" y="503" class="mono muted" font-size="17">against evidence</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-3" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client." tabindex="0">
-    <rect class="focus-ring" x="40" y="428" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="432" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="459" font-size="17" font-weight="700">Flywheel</text>
-    <text x="60" y="483" class="mono muted" font-size="16">verified-inference platform and</text>
-    <text x="60" y="501" class="mono muted" font-size="16">desktop client</text>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-4" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="544" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="571" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="595" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="615" class="mono muted" font-size="17">and desktop client</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 473 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 585 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Flywheel launches as a configured lane Forum</title>
   </path>
-  <rect x="392" y="453" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="479" text-anchor="middle" class="mono relation-label" font-size="16">launches as a configured lane</text>
-  <g data-figure-point="true" data-figure-key="forum" data-node-instance="target-3" role="graphics-symbol" aria-label="Forum. multi-agent orchestration engine." tabindex="0">
-    <rect class="focus-ring" x="820" y="428" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="432" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="459" font-size="17" font-weight="700">Forum</text>
-    <text x="840" y="483" class="mono muted" font-size="16">multi-agent orchestration</text>
-    <text x="840" y="501" class="mono muted" font-size="16">engine</text>
+  <text x="600" y="575" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="forum" data-node-instance="target-4" role="graphics-symbol" aria-label="Forum. multi-agent orchestration engine.">
+    <rect x="824" y="544" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="571" font-size="18" font-weight="700">Forum</text>
+    <text x="840" y="595" class="mono muted" font-size="17">multi-agent orchestration</text>
+    <text x="840" y="615" class="mono muted" font-size="17">engine</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-4" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client." tabindex="0">
-    <rect class="focus-ring" x="40" y="540" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="544" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="571" font-size="17" font-weight="700">Flywheel</text>
-    <text x="60" y="595" class="mono muted" font-size="16">verified-inference platform and</text>
-    <text x="60" y="613" class="mono muted" font-size="16">desktop client</text>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-5" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="656" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="683" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="707" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="727" class="mono muted" font-size="17">and desktop client</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 585 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 697 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Flywheel launches as a configured lane Index</title>
   </path>
-  <rect x="392" y="565" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="591" text-anchor="middle" class="mono relation-label" font-size="16">launches as a configured lane</text>
-  <g data-figure-point="true" data-figure-key="index" data-node-instance="target-4" role="graphics-symbol" aria-label="Index. workspace map and context system." tabindex="0">
-    <rect class="focus-ring" x="820" y="540" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="544" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="571" font-size="17" font-weight="700">Index</text>
-    <text x="840" y="595" class="mono muted" font-size="16">workspace map and context</text>
-    <text x="840" y="613" class="mono muted" font-size="16">system</text>
+  <text x="600" y="687" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="index" data-node-instance="target-5" role="graphics-symbol" aria-label="Index. workspace map and context system.">
+    <rect x="824" y="656" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="683" font-size="18" font-weight="700">Index</text>
+    <text x="840" y="707" class="mono muted" font-size="17">workspace map and context</text>
+    <text x="840" y="727" class="mono muted" font-size="17">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-5" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client." tabindex="0">
-    <rect class="focus-ring" x="40" y="652" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="656" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="683" font-size="17" font-weight="700">Flywheel</text>
-    <text x="60" y="707" class="mono muted" font-size="16">verified-inference platform and</text>
-    <text x="60" y="725" class="mono muted" font-size="16">desktop client</text>
+<g data-figure-point="true" data-figure-key="flywheel" data-node-instance="source-6" role="graphics-symbol" aria-label="Flywheel. verified-inference platform and desktop client.">
+    <rect x="44" y="768" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="795" font-size="18" font-weight="700">Flywheel</text>
+    <text x="60" y="819" class="mono muted" font-size="17">verified-inference platform</text>
+    <text x="60" y="839" class="mono muted" font-size="17">and desktop client</text>
   </g>
-  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 697 H824" fill="none" stroke="#e98455" stroke-width="3" marker-end="url(#verification-capability-map-arrow)">
+  <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 809 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
     <title>Flywheel launches as a configured lane Mneme</title>
   </path>
-  <rect x="392" y="677" width="416" height="40" rx="20" fill="#151d21" stroke="#e98455"/>
-  <text x="600" y="703" text-anchor="middle" class="mono relation-label" font-size="16">launches as a configured lane</text>
-  <g data-figure-point="true" data-figure-key="mneme" data-node-instance="target-5" role="graphics-symbol" aria-label="Mneme. deterministic agent memory subsystem." tabindex="0">
-    <rect class="focus-ring" x="820" y="652" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="824" y="656" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="840" y="683" font-size="17" font-weight="700">Mneme</text>
-    <text x="840" y="707" class="mono muted" font-size="16">deterministic agent memory</text>
-    <text x="840" y="725" class="mono muted" font-size="16">subsystem</text>
+  <text x="600" y="799" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <g data-figure-point="true" data-figure-key="mneme" data-node-instance="target-6" role="graphics-symbol" aria-label="Mneme. agent memory store with repeatable recall.">
+    <rect x="824" y="768" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="840" y="795" font-size="18" font-weight="700">Mneme</text>
+    <text x="840" y="819" class="mono muted" font-size="17">agent memory store with</text>
+    <text x="840" y="839" class="mono muted" font-size="17">repeatable recall</text>
   </g>
-  <text x="44" y="796" class="mono muted" font-size="16">SYSTEMS IN SCOPE WITHOUT A TYPED RELATIONSHIP IN THIS VIEW</text>
-  <g data-figure-point="true" data-figure-key="bounds" data-node-instance="isolated-0" role="graphics-symbol" aria-label="Bounds. agent, runtime, and release trust verifier." tabindex="0">
-    <rect class="focus-ring" x="40" y="816" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="820" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="847" font-size="17" font-weight="700">Bounds</text>
-    <text x="60" y="871" class="mono muted" font-size="16">agent, runtime, and release</text>
-    <text x="60" y="889" class="mono muted" font-size="16">trust verifier</text>
+  <text x="44" y="908" class="mono muted" font-size="17">Systems in scope without a typed relationship in this view</text>
+  <g data-figure-point="true" data-figure-key="bounds" data-node-instance="isolated-0" role="graphics-symbol" aria-label="Bounds. agent, runtime, and release trust verifier.">
+    <rect x="44" y="932" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="959" font-size="18" font-weight="700">Bounds</text>
+    <text x="60" y="983" class="mono muted" font-size="17">agent, runtime, and release</text>
+    <text x="60" y="1003" class="mono muted" font-size="17">trust verifier</text>
   </g>
-<g data-figure-point="true" data-figure-key="emet" data-node-instance="isolated-1" role="graphics-symbol" aria-label="EMET. cross-implementation integrity witness." tabindex="0">
-    <rect class="focus-ring" x="420" y="816" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="820" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="847" font-size="17" font-weight="700">EMET</text>
-    <text x="440" y="871" class="mono muted" font-size="16">cross-implementation integrity</text>
-    <text x="440" y="889" class="mono muted" font-size="16">witness</text>
+<g data-figure-point="true" data-figure-key="canon" data-node-instance="isolated-1" role="graphics-symbol" aria-label="Canon. command-line tool that packages memory for AI assistants.">
+    <rect x="424" y="932" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="959" font-size="18" font-weight="700">Canon</text>
+    <text x="440" y="983" class="mono muted" font-size="17">command-line tool that</text>
+    <text x="440" y="1003" class="mono muted" font-size="17">packages memory for AI assistants</text>
   </g>
-<g data-figure-point="true" data-figure-key="gate" data-node-instance="isolated-2" role="graphics-symbol" aria-label="Gate. private-system integration and release authority." tabindex="0">
-    <rect class="focus-ring" x="800" y="816" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="820" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="847" font-size="17" font-weight="700">Gate</text>
-    <text x="820" y="871" class="mono muted" font-size="16">private-system integration and</text>
-    <text x="820" y="889" class="mono muted" font-size="16">release authority</text>
+<g data-figure-point="true" data-figure-key="emet" data-node-instance="isolated-2" role="graphics-symbol" aria-label="EMET. checker that content still matches its source.">
+    <rect x="804" y="932" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="959" font-size="18" font-weight="700">EMET</text>
+    <text x="820" y="983" class="mono muted" font-size="17">checker that content still</text>
+    <text x="820" y="1003" class="mono muted" font-size="17">matches its source</text>
   </g>
-<g data-figure-point="true" data-figure-key="isomorph" data-node-instance="isolated-3" role="graphics-symbol" aria-label="Isomorph. AI inference-boundary red-team harness." tabindex="0">
-    <rect class="focus-ring" x="40" y="920" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="924" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="951" font-size="17" font-weight="700">Isomorph</text>
-    <text x="60" y="975" class="mono muted" font-size="16">AI inference-boundary red-team</text>
-    <text x="60" y="993" class="mono muted" font-size="16">harness</text>
+<g data-figure-point="true" data-figure-key="gate" data-node-instance="isolated-3" role="graphics-symbol" aria-label="Gate. Sofer release-check subsystem.">
+    <rect x="44" y="1036" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="1063" font-size="18" font-weight="700">Gate</text>
+    <text x="60" y="1087" class="mono muted" font-size="17">Sofer release-check subsystem</text>
   </g>
-<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-4" role="graphics-symbol" aria-label="Model Provenance Validator. model provenance-envelope validator." tabindex="0">
-    <rect class="focus-ring" x="420" y="920" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="924" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="951" font-size="17" font-weight="700">Model Provenance Validator</text>
-    <text x="440" y="975" class="mono muted" font-size="16">model provenance-envelope</text>
-    <text x="440" y="993" class="mono muted" font-size="16">validator</text>
+<g data-figure-point="true" data-figure-key="isomorph" data-node-instance="isolated-4" role="graphics-symbol" aria-label="Isomorph. AI inference-boundary red-team harness.">
+    <rect x="424" y="1036" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="1063" font-size="18" font-weight="700">Isomorph</text>
+    <text x="440" y="1087" class="mono muted" font-size="17">AI inference-boundary</text>
+    <text x="440" y="1107" class="mono muted" font-size="17">red-team harness</text>
   </g>
-<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-5" role="graphics-symbol" aria-label="Proof Surface. authorization and proof-packet library." tabindex="0">
-    <rect class="focus-ring" x="800" y="920" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="924" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="951" font-size="17" font-weight="700">Proof Surface</text>
-    <text x="820" y="975" class="mono muted" font-size="16">authorization and proof-packet</text>
-    <text x="820" y="993" class="mono muted" font-size="16">library</text>
+<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-5" role="graphics-symbol" aria-label="Model Provenance Validator. checker for records tying model claims to sources.">
+    <rect x="804" y="1036" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="1063" font-size="18" font-weight="700">Model Provenance Validator</text>
+    <text x="820" y="1087" class="mono muted" font-size="17">checker for records tying</text>
+    <text x="820" y="1107" class="mono muted" font-size="17">model claims to sources</text>
   </g>
-<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-6" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff." tabindex="0">
-    <rect class="focus-ring" x="40" y="1024" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="1028" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="1055" font-size="17" font-weight="700">Repo Proof Index</text>
-    <text x="60" y="1079" class="mono muted" font-size="16">evidence index and reviewer</text>
-    <text x="60" y="1097" class="mono muted" font-size="16">handoff</text>
+<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-6" role="graphics-symbol" aria-label="Proof Surface. library that checks AI permission and evidence records.">
+    <rect x="44" y="1140" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="1167" font-size="18" font-weight="700">Proof Surface</text>
+    <text x="60" y="1191" class="mono muted" font-size="17">library that checks AI</text>
+    <text x="60" y="1211" class="mono muted" font-size="17">permission and evidence records</text>
   </g>
-  <text x="44" y="1178" class="mono muted" font-size="16">Lines: verified typed registry records only · no line: no relationship asserted by this figure</text>
+<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-7" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff.">
+    <rect x="424" y="1140" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="1167" font-size="18" font-weight="700">Repo Proof Index</text>
+    <text x="440" y="1191" class="mono muted" font-size="17">evidence index and reviewer</text>
+    <text x="440" y="1211" class="mono muted" font-size="17">handoff</text>
+  </g>
+<g data-figure-point="true" data-figure-key="service-desk-incident-env" data-node-instance="isolated-8" role="graphics-symbol" aria-label="Service Desk Incident Environment. synthetic incident environment and offline review add-on.">
+    <rect x="804" y="1140" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="1167" font-size="18" font-weight="700">Service Desk Incident Environment</text>
+    <text x="820" y="1191" class="mono muted" font-size="17">synthetic incident</text>
+    <text x="820" y="1211" class="mono muted" font-size="17">environment and offline review add-on</text>
+  </g>
+  <text x="44" y="1290" class="mono muted" font-size="17">Lines: verified typed registry records only · no line: no relationship asserted by this figure</text>
 </svg>

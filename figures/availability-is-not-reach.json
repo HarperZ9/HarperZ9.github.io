@@ -11,6 +11,7 @@
     "Margin (standard error)",
     "What it does not show"
   ],
+  "resultColumn": "Estimate",
   "rows": [
     [
       "A. Schools offering any tutoring",

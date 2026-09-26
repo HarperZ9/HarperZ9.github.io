@@ -1,4 +1,4 @@
-@import url("tokens.css?v=20260925-human-notebook");
+@import url("tokens.css?v=20260925-void-integration");
 /* demo-editorial.css: the demo pages. 2026-09-25 human-first notebook: every
    --demo-* value reads a token from tokens.css, which also loads both faces and
    defines --font-sans, so these pages follow the reader's theme pick in CSS

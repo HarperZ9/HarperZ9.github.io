@@ -8,7 +8,7 @@ const outputPath = resolve(root, "system", "routes.js");
 const homeOutputPath = resolve(root, "home", "src", "site-routes.ts");
 const current = await readFile(outputPath, "utf8");
 const systemRegistry = JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8"));
-const ROUTE_CACHE_STAMP = "20260909-pillar-navigation";
+const ROUTE_CACHE_STAMP = "20260925-void-plates";
 const encoded = current.match(/ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");/)?.[1];
 if (!encoded) throw new Error("system/routes.js does not contain a readable route registry");
 
@@ -112,6 +112,11 @@ function moveRoute(href, targetFamily, afterHref) {
 
 const catalog = moveRoute("catalog.html", systems, "overview.html");
 catalog.breadcrumbLabel = "Systems";
+
+// The field guide is the Flywheel field guide: it sits with Flywheel, and its path says so.
+if (findRouteByHref("field-guide.html")) {
+  moveRoute("field-guide.html", systems, "flywheel.html#service-desk").breadcrumbLabel = "Flywheel";
+}
 
 const rawSystem = systemRegistry.systems.find((system) => system.id === "raw");
 const rawDomain = systemRegistry.domains.find((domain) => domain.id === rawSystem?.primaryDomain);

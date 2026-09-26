@@ -268,6 +268,9 @@ def _validate_figures(record: dict, source_ids: set[str]) -> None:
             raise PublicationError(f"{context}.columns must contain labels")
         if not rows:
             raise PublicationError(f"{context}.rows must not be empty")
+        result_column = figure.get("resultColumn")
+        if result_column is not None and result_column not in columns:
+            raise PublicationError(f"{context}.resultColumn must name one of the columns")
         for row_index, row in enumerate(rows):
             if not isinstance(row, list) or len(row) != len(columns):
                 raise PublicationError(f"{context}.rows[{row_index}] must match columns")

@@ -28,7 +28,7 @@ body{font-family:var(--font-sans);font-size:1.0625rem;color:var(--ink)}
 html[data-home-shell]:root{--paper:#ebe5d8;--inset:#e4ddcd;--panel:#e2dac9;--raised:#d8cfbc;--ink:#16130f;--soft:#4a443b;--muted:#5f584d;--line:#c9bfab;--line-strong:#7b7262;--on-ink:#ebe5d8;--verified:#0a6b61;--drift:#8f3a19;--unverifiable:#4e4d85;--sheet-paper:#f1ece1;--sheet-ink:#16130f;--sheet-soft:#4a443b;--sheet-line:#7b7262;--sheet-hair:#d6ccb8;--sheet-dot:#d8cfbd;--sheet-frame:#b9af9b;color-scheme:light}
 @media (prefers-color-scheme:dark){html[data-home-shell]:root:not([data-theme="light"]){--paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;--ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;--verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;--sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;color-scheme:dark}}
 html[data-home-shell]:root[data-theme="dark"]{--paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;--ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;--verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;--sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;--sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;color-scheme:dark}
-@media (forced-colors:active){html[data-home-shell]:root:is([data-theme],:not([data-theme])){--paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;--ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;--verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;--sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-frame:CanvasText}}
+@media (forced-colors:active){html[data-home-shell]:root:is([data-theme],:not([data-theme])){--paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;--ink:CanvasText;--soft:CanvasText;--muted:CanvasText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;--verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;--sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-frame:CanvasText}}
 @media print{html[data-home-shell]:root:is([data-theme],:not([data-theme])){--paper:#ffffff;--ink:#000000;--soft:#333333;--muted:#444444;--line:#aaaaaa;--line-strong:#555555;--on-ink:#ffffff;--sheet-paper:#ffffff;--sheet-ink:#000000;--sheet-soft:#333333;--sheet-frame:#999999;color-scheme:light}}
 
 /* 2. The top bar: an aperture mark, the name, the pillars. */
@@ -46,7 +46,9 @@ html[data-home-shell] .topnav-links a:hover,html[data-home-shell] .topnav-links 
 html[data-home-shell] .home-menu summary{border:1px solid var(--line-strong);border-radius:2px;color:var(--ink);background:var(--paper)}
 html[data-home-shell] .home-menu-list{background:var(--paper);border:1px solid var(--line-strong);border-radius:0;box-shadow:none}
 html[data-home-shell] .home-menu-list a{color:var(--ink)}
-@media (min-width:64.01rem){html[data-home-shell] .home-menu{display:none}}
+/* The menu stays on a desktop too: it carries the secondary routes and the theme picker,
+   which a reader could not reach on the home page once the menu was hidden. */
+@media (min-width:64.01rem){html[data-home-shell] .home-menu{display:block;margin-left:auto}}
 @media (max-width:64rem){html[data-home-shell] .topnav-links{display:none}html[data-home-shell] .home-menu{display:block}}
 
 /* 3. The hero is a poster: the name runs across the full width, the copy sits
@@ -102,6 +104,16 @@ html[data-home-shell] .hero > .identity-art img{inline-size:100%;block-size:auto
 html[data-home-shell] main{counter-reset:plate}
 html[data-home-shell] main > .section{counter-increment:plate;width:min(100% - 2 * var(--shell),84rem);padding:clamp(3.5rem,8vw,7rem) 0 0}
 html[data-home-shell] main > .section:last-child{padding-bottom:clamp(3.5rem,8vw,7rem)}
+/* The calm ground: each section is a paper column 1.5rem wider than its text on each side,
+   so the text never sits on the field. main stays clear, so the field and the grain run in
+   the gutters and in the gaps between sections. */
+html[data-home-shell]:root main:not(#_){background-color:transparent}
+html[data-home-shell]:root main > .section:not(#_){box-sizing:border-box;width:min(100%,100% - 2 * var(--shell) + 3rem,87rem);padding-inline:1.5rem;background-color:var(--paper)}
+html[data-home-shell] .nowrap{white-space:nowrap}
+/* Labels hold the 14px floor. */
+html[data-home-shell] :is(.product-meta,.product-definition dl,.figure-facts,.live-counts,.briefing-meta) :is(dt,dd),
+html[data-home-shell] .security-list span,html[data-home-shell] .mission-apparatus-steps span{font-size:.875rem;letter-spacing:0}
+html[data-home-shell] .live-post-meta{font-size:1rem;letter-spacing:0}
 html[data-home-shell] .section-heading,
 html[data-home-shell] main > .section > div:first-child:not(.section-heading){
   position:relative;
@@ -198,5 +210,11 @@ html[data-home-shell] th,html[data-home-shell] td{border-color:var(--line)}
 html[data-home-shell] .evidence-figure-card{background:var(--sheet-paper);border:1px solid var(--sheet-frame);border-radius:0;box-shadow:none}
 
 /* 11. The footer: a colophon on a hairline. */
-html[data-home-shell] .site-footer{border-top:1px solid var(--line-strong);background:none;padding:2.5rem var(--shell) 3.5rem;color:var(--soft)}
+html[data-home-shell] .site-footer{border-top:1px solid var(--line-strong);background:var(--paper);padding:2.5rem var(--shell) 3.5rem;color:var(--soft)}
 html[data-home-shell] .footer-links a{color:var(--ink)}
+
+/* 12. Forced colors: the solid call to action draws as a system button, so its label never
+   reads as a hole punched in a CanvasText bar. */
+@media (forced-colors:active){
+  html[data-home-shell] .btn.solid,html[data-home-shell] .btn.solid:hover{background:ButtonFace;color:ButtonText;border-color:ButtonText}
+}

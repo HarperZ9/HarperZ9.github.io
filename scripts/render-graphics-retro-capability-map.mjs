@@ -113,29 +113,39 @@ function edgePath(edge) {
   const y2 = to.y;
   const bend = (y1 + y2) / 2;
   const dash = edge.type === "dependency" ? "none" : edge.type === "evidence-import" ? "12 7" : "5 7";
-  return `<path data-relationship-edge="true" data-edge-type="${escapeXml(edge.type)}" d="M${x1} ${y1} C${x1} ${bend} ${x2} ${bend} ${x2} ${y2}" fill="none" stroke="#8ee3f2" stroke-width="3" stroke-dasharray="${dash}" marker-end="url(#arrow)" opacity=".78"><title>${escapeXml(systemById.get(edge.source).name)} to ${escapeXml(systemById.get(edge.target).name)}: ${escapeXml(edge.label)}</title></path>`;
+  return `<path data-relationship-edge="true" data-edge-type="${escapeXml(edge.type)}" d="M${x1} ${y1} C${x1} ${bend} ${x2} ${bend} ${x2} ${y2}" class="cm-edge" stroke-dasharray="${dash}" marker-end="url(#arrow)"><title>${escapeXml(systemById.get(edge.source).name)} to ${escapeXml(systemById.get(edge.target).name)}: ${escapeXml(edge.label)}</title></path>`;
 }
+
+// The sheet palette in both poles, the reader's pick, print and forced colors.
+const SHEET = {
+  light: "--cm-p:#f1ece1;--cm-i:#16130f;--cm-s:#4a443b;--cm-l:#7b7262",
+  dark: "--cm-p:#0a0a0d;--cm-i:#ece5d6;--cm-s:#b8b0a0;--cm-l:#77716a",
+  print: "--cm-p:#ffffff;--cm-i:#000000;--cm-s:#333333;--cm-l:#555555",
+  forced: "--cm-p:Canvas;--cm-i:CanvasText;--cm-s:CanvasText;--cm-l:CanvasText",
+};
+const SHEET_VARS = `svg{${SHEET.light}}@media (prefers-color-scheme:dark){svg{${SHEET.dark}}}`
+  + `:root[data-theme="light"] svg{${SHEET.light}}:root[data-theme="dark"] svg{${SHEET.dark}}`
+  + `@media print{svg,:root[data-theme] svg{${SHEET.print}}}@media (forced-colors:active){svg,:root[data-theme] svg{${SHEET.forced}}}`;
 
 function nodeMarkup(node) {
   const { x, y } = positions.get(node.id);
   const lines = wrapLabel(node.stateLabel);
   return `<g data-figure-point="true" data-figure-key="${escapeXml(node.id)}" role="graphics-symbol" aria-label="${escapeXml(node.label)}. ${escapeXml(node.stateLabel)}." tabindex="-1">
     <rect class="focus-ring" x="${x - 3}" y="${y - 3}" width="426" height="96" fill="none" stroke="transparent"/>
-    <rect x="${x}" y="${y}" width="420" height="90" rx="8" fill="#111b20" stroke="#8ee3f2" stroke-width="2"/>
+    <rect x="${x}" y="${y}" width="420" height="90" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="${x + 18}" y="${y + 29}" font-size="18" font-weight="700">${escapeXml(node.label)}</text>
-    ${lines.map((line, index) => `<text x="${x + 18}" y="${y + 56 + index * 20}" class="mono muted" font-size="16">${escapeXml(line)}</text>`).join("\n")}
+    ${lines.map((line, index) => `<text x="${x + 18}" y="${y + 56 + index * 20}" class="mono muted" font-size="17">${escapeXml(line)}</text>`).join("\n")}
   </g>`;
 }
 
 const svg = `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" aria-labelledby="graphics-retro-capability-map-title graphics-retro-capability-map-desc" data-figure-kind="relationship">
   <title id="graphics-retro-capability-map-title">${escapeXml(companion.figure.title)}</title>
   <desc id="graphics-retro-capability-map-desc">${escapeXml(companion.figure.description)} ${escapeXml(companion.figure.claim)}</desc>
-  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#8ee3f2"/></marker></defs>
-  <style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eaf5f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#c8dcdf}[data-figure-point]:focus-visible .focus-ring{stroke:#f2efe6;stroke-width:4}</style>
-  <rect width="960" height="720" fill="#070b0d"/>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" class="cm-arrow"/></marker></defs>
+  <style>${SHEET_VARS}text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--cm-i)}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:var(--cm-s)}.cm-node{fill:var(--cm-p)}.cm-edge{fill:none;stroke:var(--cm-l);stroke-width:1.5}.cm-arrow{fill:var(--cm-l)}[data-figure-point]:focus-visible .focus-ring{stroke:var(--cm-i);stroke-width:2}</style>
   ${edges.map(edgePath).join("\n")}
   ${nodes.map(nodeMarkup).join("\n")}
-  <text x="40" y="694" class="mono muted" font-size="16">Solid: dependency · long dash: evidence import · short dash: optional integration</text>
+  <text x="40" y="694" class="mono muted" font-size="17">Solid: dependency · long dash: evidence import · short dash: optional integration</text>
 </svg>`;
 
 const rows = nodes.map((node) => {
@@ -146,7 +156,7 @@ const rows = nodes.map((node) => {
   return `<tr><th scope="row">${escapeXml(node.label)}</th><td>${escapeXml(node.stateLabel)}</td><td>${escapeXml(relations)}</td></tr>`;
 }).join("");
 
-const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(companion.figure.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation"></head><body class="figure-document"><main><figure class="evidence-figure" data-evidence-figure data-figure-kind="relationship"><figcaption class="figure-heading"><h1>${escapeXml(companion.figure.title)}</h1><p class="figure-description">${escapeXml(companion.figure.description)}</p><p class="figure-claim figure-finding">${escapeXml(companion.figure.claim)}</p></figcaption><div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for ${escapeXml(companion.figure.title)}">${svg}\n</div><div class="figure-table-wrap"><table class="figure-table"><caption>Text equivalent for the relationship map.</caption><thead><tr><th scope="col">System</th><th scope="col">Implemented product type</th><th scope="col">Verified outgoing relationship</th></tr></thead><tbody>${rows}</tbody></table></div><section class="figure-scope"><h2>Scope and method</h2><p>${escapeXml(companion.figure.transformations.join(" "))}</p></section><section class="figure-limitations"><h2>What this figure does not prove</h2><p>${escapeXml(companion.figure.doesNotProve)}</p><p>${escapeXml(companion.figure.uncertainty)}</p></section><footer><p>Sources: ${companion.figure.sources.map((source) => `<a href="${escapeXml(source.href)}" rel="noopener">${escapeXml(source.label)}</a>`).join(" · ")} · checked ${escapeXml(companion.figure.retrievedAt)}</p></footer></figure></main></body></html>`;
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(companion.figure.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets"></head><body class="figure-document"><main><figure class="evidence-figure" data-evidence-figure data-figure-kind="relationship"><figcaption class="figure-heading"><h1>${escapeXml(companion.figure.title)}</h1><p class="figure-description">${escapeXml(companion.figure.description)}</p><p class="figure-claim figure-finding">${escapeXml(companion.figure.claim)}</p></figcaption><div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for ${escapeXml(companion.figure.title)}">${svg}\n</div><div class="figure-table-wrap"><table class="figure-table"><caption>Text equivalent for the relationship map.</caption><thead><tr><th scope="col">System</th><th scope="col">Implemented product type</th><th scope="col">Verified outgoing relationship</th></tr></thead><tbody>${rows}</tbody></table></div><section class="figure-scope"><h2>Scope and method</h2><p>${escapeXml(companion.figure.transformations.join(" "))}</p></section><section class="figure-limitations"><h2>What this figure does not prove</h2><p>${escapeXml(companion.figure.doesNotProve)}</p><p>${escapeXml(companion.figure.uncertainty)}</p></section><footer><p>Sources: ${companion.figure.sources.map((source) => `<a href="${escapeXml(source.href)}" rel="noopener">${escapeXml(source.label)}</a>`).join(" · ")} · checked ${escapeXml(companion.figure.retrievedAt)}</p></footer></figure></main></body></html>`;
 
 await Promise.all([
   writeFile(resolve(root, "figures", "graphics-retro-capability-map.json"), `${JSON.stringify(companion, null, 2)}\n`, "utf8"),

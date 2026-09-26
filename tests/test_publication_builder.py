@@ -22,7 +22,7 @@ BRIEFING_URL = (
     "https://harperz9.github.io/briefings/"
     "2026-08-26-openai-hugging-face-incident/"
 )
-PUBLICATION_ARTICLE_REVISION = "20260907-reading-completion"
+PUBLICATION_ARTICLE_REVISION = "20260925-void-plates"
 THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 ARTICLE_THEME_ENTRY_SCRIPT = (
     f'<script type="module" src="system/theme-entry.js?v={THEME_PREFERENCES_REVISION}"></script>'

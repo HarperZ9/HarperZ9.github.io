@@ -1,4 +1,4 @@
-// First-party procedural field for shared Project Telos pages.
+// First-party procedural field for shared Zentropy Labs pages.
 // Synthesizes route-seeded orbit fields, contour ridges, crystal fragments,
 // fluid metaballs, iso-contours, ASCII dither, flow traces, pointer wakes, and
 // motes, plus the fixture vocabulary: crystal lens apertures, scanline
@@ -1276,6 +1276,120 @@ function drawCaQuadrant(ctx, width, height, tick, seed, palette) {
 
 const VEIL_TONES = [[190, 235, 255], [255, 214, 150], [255, 122, 146], [236, 244, 255]];
 
+// Aperture palette (2026-09-25). riso-moire, dendrite and caustic-veils draw in
+// the art family's own palette instead of the route washes: ink line-work on a
+// calm ground, one warm core, and a bone variant for the light pole, read from
+// the page theme at render time. Their colour is literal, so palette alignment
+// leaves it alone, and a theme change redraws them (see mountSpecimens).
+const APERTURE_INKS = {
+  dark: { dark: true, ground: [4, 4, 5], ink: [230, 225, 214], pen: [143, 139, 132], warm: [255, 171, 82], honey: [255, 213, 146], core: [255, 247, 232] },
+  light: { dark: false, ground: [241, 236, 225], ink: [26, 23, 18], pen: [95, 88, 77], warm: [196, 98, 29], honey: [231, 166, 83], core: [255, 253, 247] },
+};
+// Route layers that lead a plate on a product page keep their structure and take the
+// aperture palette through a remap (drawApertureRemap below), so they join the set.
+const APERTURE_REMAP = new Set(["weave-lattice", "pixel-sort-ruin", "dla-coral", "fiber-terrain",
+  "fiber-strands", "caustic-paper", "moire-swirl"]);
+const APERTURE_LAYERS = new Set(["riso-moire", "dendrite", "caustic-veils", ...APERTURE_REMAP]);
+
+function apertureInks() {
+  let light = false;
+  try {
+    const theme = document.documentElement.dataset.theme;
+    light = theme ? theme === "light"
+      : !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
+  } catch (_) {
+    light = false;   // no document (a worker or a test): draw the void pole
+  }
+  return light ? APERTURE_INKS.light : APERTURE_INKS.dark;
+}
+
+function apertureGround(ctx, width, height, inks, alpha = 1) {
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = toneToRgba(inks.ground, alpha);
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
+}
+
+// The one warm core: a wide warm halo and a lit centre, as in the art plates.
+function apertureCore(ctx, x, y, r, inks) {
+  const stops = inks.dark
+    ? [[r * 3, [[0, inks.warm, 0.16], [0.45, inks.warm, 0.05], [1, inks.warm, 0]]],
+      [r, [[0, inks.core, 1], [0.16, inks.honey, 0.95], [0.42, inks.warm, 0.5], [1, inks.warm, 0]]]]
+    : [[r * 2.6, [[0, inks.honey, 0.3], [1, inks.honey, 0]]],
+      [r, [[0, inks.core, 1], [0.55, inks.core, 0.92], [1, inks.core, 0]]]];
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  for (const [radius, list] of stops) {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    for (const [at, tone, a] of list) g.addColorStop(at, toneToRgba(tone, a));
+    ctx.fillStyle = g;
+    ctx.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+  }
+  ctx.restore();
+}
+
+// Remap (2026-09-26): the route layer draws alone on a scratch canvas. Each pixel's
+// contrast against the layer's own dominant tone becomes ink on the calm ground, so the
+// lattice, the sort, the coral and the fibres keep their structure and lose the route
+// washes. One warm core sits under the ink.
+function scratchCanvas(canvas) {
+  const doc = canvas && canvas.ownerDocument;
+  let out = null;
+  if (doc && typeof doc.createElement === "function") out = doc.createElement("canvas");
+  else if (typeof OffscreenCanvas === "function") out = new OffscreenCanvas(1, 1);
+  if (out) { out.width = canvas.width; out.height = canvas.height; }
+  return out;
+}
+
+function dominantTone(data) {
+  let n = 0, r = 0, g = 0, b = 0;
+  for (let i = 0; i < data.length; i += 32) {
+    if (data[i + 3] > 200) { r += data[i]; g += data[i + 1]; b += data[i + 2]; n++; }
+  }
+  return n ? [r / n, g / n, b / n] : null;
+}
+
+// A dense layer (a full lattice, a sorted slab) would print as a solid block of ink, so
+// the mean coverage is held near a light line drawing and the sparse layers keep theirs.
+const APERTURE_COVERAGE = 0.12;
+function inkFromScratch(data, inks) {
+  const base = dominantTone(data), [ir, ig, ib] = inks.ink, strength = new Float32Array(data.length / 4);
+  let sum = 0;
+  for (let i = 0, k = 0; i < data.length; i += 4, k++) {
+    const d = base ? Math.abs(data[i] - base[0]) + Math.abs(data[i + 1] - base[1]) + Math.abs(data[i + 2] - base[2]) : 255;
+    strength[k] = (data[i + 3] / 255) * Math.min(1, d / 170);
+    sum += strength[k];
+  }
+  const mean = sum / Math.max(1, strength.length), gain = (inks.dark ? 0.85 : 0.95) * Math.min(1, APERTURE_COVERAGE / Math.max(mean, 1e-6));
+  for (let i = 0, k = 0; i < data.length; i += 4, k++) {
+    data[i] = ir; data[i + 1] = ig; data[i + 2] = ib;
+    data[i + 3] = Math.round(255 * Math.min(1, gain * strength[k]));
+  }
+}
+
+function drawApertureRemap(ctx, layer, width, height, tick, seed, palette) {
+  const inks = apertureInks(), scratch = scratchCanvas(ctx.canvas);
+  const sctx = scratch && scratch.getContext("2d", { willReadFrequently: true });
+  if (!sctx || typeof sctx.getImageData !== "function" || typeof ctx.getTransform !== "function") {
+    layer(ctx, width, height, tick, seed, palette);
+    return;
+  }
+  sctx.setTransform(ctx.getTransform());
+  layer(sctx, width, height, tick, seed, palette);
+  const img = sctx.getImageData(0, 0, scratch.width, scratch.height);
+  inkFromScratch(img.data, inks);
+  sctx.setTransform(1, 0, 0, 1, 0, 0);
+  sctx.putImageData(img, 0, 0);
+  const cx = width * (0.3 + rand(seed, 1291) * 0.4), cy = height * (0.35 + rand(seed, 1292) * 0.3);
+  withLiteralColour(() => apertureCore(ctx, cx, cy, Math.min(width, height) * 0.2, inks));
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalCompositeOperation = "source-over";
+  ctx.drawImage(scratch, 0, 0);
+  ctx.restore();
+}
+
 function veilRibbon(ctx, width, height, rnd, salt, tone, alphaScale, dark) {
   const edge = Math.floor(rnd(salt) * 4);
   const p0 = edge === 0 ? [rnd(salt + 1) * width, -height * 0.06]
@@ -1318,14 +1432,16 @@ function veilRibbon(ctx, width, height, rnd, salt, tone, alphaScale, dark) {
   return p2;
 }
 
-function starCaustic(ctx, x, y, size, rnd, salt, dark) {
+function starCaustic(ctx, x, y, size, rnd, salt, dark, ink = null) {
   const bloom = ctx.createRadialGradient(x, y, 0, x, y, size * 2.4);
-  bloom.addColorStop(0, dark ? "rgba(255,255,255,0.5)" : "rgba(60,72,96,0.16)");
+  bloom.addColorStop(0, ink ? toneToRgba(ink, dark ? 0.32 : 0.14)
+    : dark ? "rgba(255,255,255,0.5)" : "rgba(60,72,96,0.16)");
   bloom.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = bloom;
   ctx.fillRect(x - size * 2.4, y - size * 2.4, size * 4.8, size * 4.8);
   const rot = rnd(salt) * Math.PI;
-  ctx.fillStyle = dark ? "rgba(255,255,255,0.55)" : "rgba(60,72,96,0.28)";
+  ctx.fillStyle = ink ? toneToRgba(ink, dark ? 0.6 : 0.5)
+    : dark ? "rgba(255,255,255,0.55)" : "rgba(60,72,96,0.28)";
   for (let k = 0; k < 2; k += 1) {
     const a = rot + (k * Math.PI) / 2;
     ctx.beginPath();
@@ -1340,23 +1456,28 @@ function starCaustic(ctx, x, y, size, rnd, salt, dark) {
 
 function drawCausticVeils(ctx, width, height, tick, seed, palette) {
   const rnd = (salt) => rand(seed, salt);
-  ctx.save();
-  ctx.globalCompositeOperation = "source-over";
-  ctx.fillStyle = "rgba(3,4,9,0.94)";
-  ctx.fillRect(0, 0, width, height);
-  ctx.globalCompositeOperation = "lighter";
-  const ribbons = 9 + Math.floor(rnd(300) * 7);
-  const crossings = [];
-  for (let r = 0; r < ribbons; r += 1) {
-    const tone = VEIL_TONES[Math.floor(rnd(310 + r * 11) * VEIL_TONES.length)];
-    crossings.push(veilRibbon(ctx, width, height, rnd, 320 + r * 13, tone, 1, true));
-  }
-  const stars = 2 + Math.floor(rnd(301) * 3);
-  for (let k = 0; k < stars; k += 1) {
-    const p = crossings[Math.floor(rnd(430 + k * 7) * crossings.length)];
-    starCaustic(ctx, p[0], p[1], 7 + rnd(440 + k * 5) * 12, rnd, 450 + k * 3, true);
-  }
-  ctx.restore();
+  const inks = apertureInks();
+  withLiteralColour(() => {
+    apertureGround(ctx, width, height, inks, 0.94);
+    ctx.save();
+    ctx.globalCompositeOperation = inks.dark ? "lighter" : "multiply";
+    const ribbons = 9 + Math.floor(rnd(300) * 7);
+    const crossings = [];
+    for (let r = 0; r < ribbons; r += 1) {
+      // Same draw as before; the pick now chooses the ink or its softer pen.
+      const tone = rnd(310 + r * 11) < 0.5 ? inks.ink : inks.pen;
+      crossings.push(veilRibbon(ctx, width, height, rnd, 320 + r * 13, tone, inks.dark ? 1 : 1.5, true));
+    }
+    const stars = 2 + Math.floor(rnd(301) * 3);
+    for (let k = 0; k < stars; k += 1) {
+      const p = crossings[Math.floor(rnd(430 + k * 7) * crossings.length)];
+      const size = 7 + rnd(440 + k * 5) * 12;
+      // The first crossing carries the one warm core; the others stay ink.
+      if (k === 0) apertureCore(ctx, p[0], p[1], size * 3.2, inks);
+      starCaustic(ctx, p[0], p[1], size, rnd, 450 + k * 3, inks.dark, k === 0 && inks.dark ? inks.core : inks.ink);
+    }
+    ctx.restore();
+  });
 }
 
 function drawCausticPaper(ctx, width, height, tick, seed, palette) {
@@ -1509,8 +1630,7 @@ function drawObsidianBurst(ctx, width, height, tick, seed, palette) {
 
 function drawDendrite(ctx, width, height, tick, seed, palette) {
   const rnd = (salt) => rand(seed, salt);
-  ctx.save();
-  ctx.globalCompositeOperation = "source-over";
+  const inks = apertureInks();
   let salt = 1000;
   const queue = [];
   const roots = 1 + Math.floor(rnd(999) * 2);
@@ -1523,25 +1643,19 @@ function drawDendrite(ctx, width, height, tick, seed, palette) {
       depth: 0,
     });
   }
+  // Grow first, draw second: the growth spends the seed exactly as before,
+  // and the warm core can sit behind the branches at the crown's first forks.
+  const limbs = [];
+  const traces = [];
   while (queue.length) {
     const b = queue.pop();
     if (b.depth > 8 || b.len < 3) continue;
     const wob = (rnd(salt += 1) - 0.5) * 0.5;
     const x1 = b.x + Math.cos(b.a + wob) * b.len;
     const y1 = b.y + Math.sin(b.a + wob) * b.len;
-    ctx.strokeStyle = `rgba(210,226,240,${0.55 - b.depth * 0.05})`;
-    ctx.lineWidth = Math.max(0.6, 2.6 - b.depth * 0.32);
-    ctx.beginPath();
-    ctx.moveTo(b.x, b.y);
-    ctx.lineTo(x1, y1);
-    ctx.stroke();
+    limbs.push([b.x, b.y, x1, y1, b.depth]);
     if (b.depth > 1 && rnd(salt += 1) > 0.62) {
-      ctx.strokeStyle = "rgba(180,205,230,0.12)";
-      ctx.lineWidth = 0.7;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x1 + (rnd(salt += 1) > 0.5 ? width : -width) * 0.5, y1);
-      ctx.stroke();
+      traces.push([x1, y1, x1 + (rnd(salt += 1) > 0.5 ? width : -width) * 0.5]);
     }
     const kids = b.depth < 2 ? 2 : rnd(salt += 1) > 0.3 ? 2 : 1;
     for (let k = 0; k < kids; k += 1) {
@@ -1553,44 +1667,97 @@ function drawDendrite(ctx, width, height, tick, seed, palette) {
       });
     }
   }
+  withLiteralColour(() => drawDendriteInk(ctx, width, height, limbs, traces, inks));
+}
+
+function drawDendriteInk(ctx, width, height, limbs, traces, inks) {
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  const forks = limbs.filter((l) => l[4] >= 2 && l[4] <= 4);
+  if (forks.length) {
+    const fx = forks.reduce((sum, l) => sum + l[2], 0) / forks.length;
+    const fy = forks.reduce((sum, l) => sum + l[3], 0) / forks.length;
+    apertureCore(ctx, fx, fy, Math.min(width, height) * 0.16, inks);
+  }
+  ctx.strokeStyle = toneToRgba(inks.pen, inks.dark ? 0.2 : 0.24);
+  ctx.lineWidth = 0.7;
+  for (const [x, y, x2] of traces) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x2, y);
+    ctx.stroke();
+  }
+  for (const [x0, y0, x1, y1, depth] of limbs) {
+    ctx.strokeStyle = toneToRgba(inks.ink, (inks.dark ? 0.78 : 0.82) - depth * 0.06);
+    ctx.lineWidth = Math.max(0.6, 2.6 - depth * 0.32);
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+  }
   ctx.restore();
 }
 
 function drawRisoMoire(ctx, width, height, tick, seed, palette) {
   const rnd = (salt) => rand(seed, salt);
-  const inks = [[235, 71, 143], [80, 196, 185], [239, 171, 48], [135, 237, 74]];
-  const inkA = inks[Math.floor(rnd(1100) * inks.length)];
-  let inkB = inks[Math.floor(rnd(1101) * inks.length)];
-  if (inkB === inkA) inkB = inks[(inks.indexOf(inkA) + 1) % inks.length];
-  ctx.save();
-  ctx.globalCompositeOperation = "lighter";
-  ctx.beginPath();
-  ctx.arc(width * (0.3 + rnd(1102) * 0.4), height * (0.3 + rnd(1103) * 0.4),
-    Math.min(width, height) * (0.42 + rnd(1104) * 0.22), 0, Math.PI * 2);
-  ctx.clip();
-  // pass A: line raster, slightly rotated
-  ctx.translate(width / 2, height / 2);
-  ctx.rotate((rnd(1105) - 0.5) * 0.12);
-  ctx.translate(-width / 2, -height / 2);
-  ctx.strokeStyle = toneToRgba(inkA, 0.22);
-  ctx.lineWidth = 1.6;
-  for (let y = -20; y < height + 20; y += 5) {
+  const inks = apertureInks();
+  const cx = width * (0.3 + rnd(1102) * 0.4);
+  const cy = height * (0.3 + rnd(1103) * 0.4);
+  const radius = Math.min(width, height) * (0.42 + rnd(1104) * 0.22);
+  const turnA = (rnd(1105) - 0.5) * 0.12;
+  const turnB = 0.06 + rnd(1106) * 0.1;
+  withLiteralColour(() => {
+    ctx.save();
+    ctx.globalCompositeOperation = "source-over";
     ctx.beginPath();
-    ctx.moveTo(-20, y);
-    ctx.lineTo(width + 20, y);
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.clip();
+    // The warm core sits under both screens, so the moire reads as light
+    // through two misregistered prints.
+    apertureCore(ctx, cx, cy, radius * 0.36, inks);
+    // pass A: ink line raster, slightly rotated
+    ctx.translate(width / 2, height / 2);
+    ctx.rotate(turnA);
+    ctx.translate(-width / 2, -height / 2);
+    ctx.strokeStyle = toneToRgba(inks.ink, inks.dark ? 0.34 : 0.46);
+    ctx.lineWidth = 1.3;
+    for (let y = -20; y < height + 20; y += 5) {
+      ctx.beginPath();
+      ctx.moveTo(-20, y);
+      ctx.lineTo(width + 20, y);
+      ctx.stroke();
+    }
+    // pass B: dot screen rotated the other way (misregistered overprint)
+    ctx.translate(width / 2, height / 2);
+    ctx.rotate(turnB);
+    ctx.translate(-width / 2, -height / 2);
+    risoDots(ctx, width, height, cx, cy, radius, turnA + turnB, inks);
+    ctx.restore();
+    ctx.save();
+    ctx.strokeStyle = toneToRgba(inks.ink, inks.dark ? 0.55 : 0.7);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
     ctx.stroke();
-  }
-  // pass B: dot grid, rotated the other way (misregistered overprint)
-  ctx.translate(width / 2, height / 2);
-  ctx.rotate(0.06 + rnd(1106) * 0.1);
-  ctx.translate(-width / 2, -height / 2);
-  ctx.fillStyle = toneToRgba(inkB, 0.3);
+    ctx.restore();
+  });
+}
+
+// The dots swell toward the rim, so the disc darkens away from its core. The
+// ramp is measured on the page, through the screen's total rotation.
+function risoDots(ctx, width, height, cx, cy, radius, turn, inks) {
+  const c = Math.cos(turn), s = Math.sin(turn);
+  ctx.fillStyle = toneToRgba(inks.pen, inks.dark ? 0.6 : 0.62);
   for (let y = -20; y < height + 20; y += 7) {
     for (let x = -20; x < width + 20; x += 7) {
-      if (orderedDither(x / 7, y / 7) > 0.4) ctx.fillRect(x, y, 2.1, 2.1);
+      if (orderedDither(x / 7, y / 7) <= 0.4) continue;
+      const dx = x - width / 2, dy = y - height / 2;
+      const px = width / 2 + dx * c - dy * s, py = height / 2 + dx * s + dy * c;
+      const f = Math.min(1, Math.hypot(px - cx, py - cy) / radius);
+      const size = 1 + 2.4 * f * f;
+      ctx.fillRect(x - size / 2, y - size / 2, size, size);
     }
   }
-  ctx.restore();
 }
 
 function drawMoireSwirl(ctx, width, height, tick, seed, palette) {
@@ -3128,15 +3295,20 @@ export function renderSpecimen(canvas, seedString, layerNames = SPECIMEN_DEFAULT
   const tick = 40000 + (seed % 50000);
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
   ctx.clearRect(0, 0, width, height);
-  drawBackdrop(ctx, width, height, tick, seed, palette);
   const names = Array.isArray(layerNames) && layerNames.length
     ? layerNames : SPECIMEN_DEFAULT_LAYERS;
+  // A plate led by an aperture-palette layer sits on the calm aperture ground,
+  // not on the route's coloured wash.
+  if (APERTURE_LAYERS.has(String(names[0]).trim())) apertureGround(ctx, width, height, apertureInks());
+  else drawBackdrop(ctx, width, height, tick, seed, palette);
   const releaseAlignment = installPaletteAlignment(ctx, palette);
   try {
-    for (const name of names) {
-      const layer = SPECIMEN_LAYERS[String(name).trim()];
-      if (layer) layer(ctx, width, height, tick, seed, palette);
-    }
+    names.forEach((name, index) => {
+      const key = String(name).trim(), layer = SPECIMEN_LAYERS[key];
+      if (!layer) return;
+      if (index === 0 && APERTURE_REMAP.has(key)) drawApertureRemap(ctx, layer, width, height, tick, seed, palette);
+      else layer(ctx, width, height, tick, seed, palette);
+    });
   } finally {
     releaseAlignment();
   }
@@ -3174,8 +3346,26 @@ export function loadSpecimenOps() {
   return _opsPending;
 }
 
+// Aperture-palette plates read the theme when they draw, so a theme switch
+// redraws them. Other plates keep their route palette and are left alone.
+let apertureThemeHooked = false;
+function hookApertureTheme(doc) {
+  if (apertureThemeHooked || typeof window === "undefined" || !window.addEventListener) return;
+  apertureThemeHooked = true;
+  window.addEventListener("themechange", () => {
+    doc.querySelectorAll("canvas[data-specimen][data-specimen-rendered='true']").forEach((canvas) => {
+      const layers = (canvas.dataset.specimenLayers || "").split(",").map((n) => n.trim()).filter(Boolean);
+      if (!layers.some((n) => APERTURE_LAYERS.has(n))) return;
+      const fx = (canvas.dataset.specimenFx || "").split(",").map((n) => n.trim()).filter(Boolean);
+      renderSpecimen(canvas, canvas.dataset.specimen || "specimen", layers,
+        fx.length ? fx : null, Number(canvas.dataset.specimenFxAmount || 0.6));
+    });
+  });
+}
+
 export function mountSpecimens(doc = typeof document !== "undefined" ? document : null) {
   if (!doc || typeof doc.querySelectorAll !== "function") return 0;
+  hookApertureTheme(doc);
   let rendered = 0;
   doc.querySelectorAll("canvas[data-specimen]").forEach((canvas) => {
     if (canvas.dataset && canvas.dataset.specimenRendered === "true") return;

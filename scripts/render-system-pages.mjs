@@ -2,7 +2,7 @@
 //
 // catalog.html is the evidence view: a product appears under every domain it
 // serves, carrying its headline evidence under its primary domain and a
-// reference line elsewhere. overview.html is the compact map: one row per
+// reference row elsewhere. overview.html is the compact map: one row per
 // public product under its primary domain only. A record page is the long form
 // of one product, and RECORD_PAGES names the products that own one.
 //
@@ -14,8 +14,20 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { escapeCopy, escapeHtml, MIDDOT, siteRelative } from "./system-page-parts.mjs";
-import { SYSTEM_PAGE_STYLE } from "./system-record-head.mjs";
+import {
+  artPlate,
+  boundaryLine,
+  catalogEvidence,
+  disclosure,
+  escapeCopy,
+  escapeHtml,
+  productActions,
+  purposeInFull,
+  purposeLead,
+  rowHeading,
+  statusFacts,
+} from "./system-page-parts.mjs";
+import { CATALOG_SHEET, renderIndexHead } from "./system-record-head.mjs";
 import { renderRecordPage } from "./system-record-page.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
@@ -23,203 +35,211 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const registry = validateRegistry(
   JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8")),
 );
+const artAlt = JSON.parse(await readFile(resolve(root, "art", "aperture", "covers.json"), "utf8")).alt;
 
 // The map omits controlled-private products. Their boundary pages are still
 // reachable from the catalog, which is the view that carries the boundary text.
 const publicSystems = registry.systems.filter((system) => system.maturity !== "controlled-private");
 
-// A release is the strongest evidence a product can show, so one wins whenever
-// it exists. Inside the chosen pool the newest date wins, and a tie keeps the
-// order the registry already declares.
 const domainById = new Map(registry.domains.map((domain) => [domain.id, domain]));
 
-function headlineEvidence(system) {
-  const releases = system.evidence.filter((item) => item.type === "release");
-  const pool = releases.length > 0 ? releases : system.evidence;
-  if (pool.length === 0) return null;
-  return pool.reduce((best, item) => (item.date > best.date ? item : best), pool[0]);
+const plural = (count, noun) => `${count} ${count === 1 ? noun : `${noun}s`}`;
+
+// The poster's index: one numbered row per domain, each a jump link. The
+// numerals are drawn by CSS counters, so they match the section numerals.
+function domainIndex(prefix, countFor) {
+  const rows = registry.domains.map((domain) =>
+    [
+      `<li><a href="#${prefix}-${escapeHtml(domain.id)}">`,
+      `<span class="domain-nav-label">${escapeHtml(domain.label)}</span>`,
+      `<span class="domain-nav-count">${countFor(domain)}</span></a></li>`,
+    ].join(""),
+  );
+  return `<nav class="domain-nav" aria-label="Product domains"><ol>${rows.join("")}</ol></nav>`;
 }
 
-function domainLinks(prefix) {
-  return registry.domains
-    .map(
-      (domain) =>
-        `<a href="#${prefix}-${escapeHtml(domain.id)}">${escapeHtml(domain.label)}</a>`,
-    )
-    .join("");
-}
-
-function statusFacts(system) {
-  const facts = [
-    ["Status", system.maturity],
-    ["Release", system.releaseState],
-  ];
-  return [
-    '<dl class="product-status">',
-    ...facts.map(
-      ([term, value]) => `<div class="product-status-fact"><dt>${term}</dt><dd>${escapeHtml(value)}</dd></div>`,
-    ),
-    "</dl>",
-    `<small class="product-status-line">${escapeHtml(system.maturity)} ${MIDDOT} ${escapeHtml(system.releaseState)}</small>`,
-  ].join("");
-}
-
-function productActions(system) {
-  const source = system.sourceHref
-    ? `<a class="product-secondary-action" href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect source</a>`
-    : "";
-  return [
-    '<div class="product-card-actions">',
-    `<a class="product-action" href="${escapeHtml(system.href)}">Open product record</a>`,
-    source,
-    "</div>",
-  ].join("");
-}
-
-function catalogEvidence(system, domainId) {
-  if (system.primaryDomain === domainId) {
-    const evidence = headlineEvidence(system);
-    return evidence
-      ? [
-          '<span class="catalog-evidence"><strong>Evidence:</strong> ',
-          `<a href="${escapeHtml(siteRelative(evidence.href))}" rel="noopener">${escapeHtml(evidence.label)}</a> `,
-          `<small>${escapeHtml(evidence.status)} ${MIDDOT} `,
-          `<time datetime="${escapeHtml(evidence.date)}">${escapeHtml(evidence.date)}</time></small></span>`,
-        ].join("")
-      : "";
-  }
-  return "";
-}
-
-function catalogDetails(system, domainId) {
-  const primary = domainById.get(system.primaryDomain);
-  const current = domainById.get(domainId);
-  const boundary = `<p class="body-text"><strong>Boundary:</strong> ${escapeHtml(system.boundary)}</p>`;
-  if (system.primaryDomain !== domainId) {
-    return [
-      '<details class="product-record-details">',
-      "<summary>Why this record appears here</summary>",
-      `<p class="body-text">Primary area: ${escapeHtml(primary?.label ?? system.primaryDomain)}. `,
-      `Also appears here because it serves ${escapeHtml(current?.label ?? domainId)}.</p>`,
-      boundary,
-      "</details>",
-    ].join("");
-  }
-  const otherAreas = system.domains
+function otherAreas(system) {
+  const labels = system.domains
     .filter((id) => id !== system.primaryDomain)
     .map((id) => domainById.get(id)?.label ?? id);
-  if (otherAreas.length === 0) {
-    return `<details class="product-record-details"><summary>Limits and source context</summary>${boundary}</details>`;
-  }
-  return [
-    '<details class="product-record-details">',
-    "<summary>Other areas this product serves</summary>",
-    `<p class="body-text">Also appears in ${escapeHtml(otherAreas.join(", "))}.</p>`,
-    boundary,
-    "</details>",
-  ].join("");
+  return labels.length
+    ? `<p class="body-text product-areas"><strong>Other areas:</strong> Also appears in ${escapeHtml(labels.join(", "))}.</p>`
+    : "";
 }
 
-function productCard(system, body) {
+// The record's first limit, shown in the row so a reader sees it without opening
+// anything. The catalog and the product map both use it.
+function firstLimit(system) {
+  return system.limitations[0]
+    ? `<p class="product-limit"><strong>Limit:</strong> ${escapeHtml(system.limitations[0])}</p>`
+    : "";
+}
+
+// A disclosure label that names its product for a screen reader's list of controls.
+const named = (label, system) =>
+  `${label}<span class="visually-hidden">: ${escapeHtml(system.name)}</span>`;
+
+// A row: name, type and state at the left; at the right the purpose, the
+// headline evidence, the limit the row must not hide, and "How we know".
+function productRow(system, inView, howWeKnow) {
   return [
     `<article class="product-card" role="listitem" data-system-id="${escapeHtml(system.id)}">`,
-    '<div class="product-card-heading">',
-    `<h3 class="product-card-title"><a href="${escapeHtml(system.href)}">${escapeHtml(system.name)}</a></h3>`,
-    `<p class="product-type">${escapeHtml(system.productType)}</p>`,
-    "</div>",
+    rowHeading(system),
     '<div class="product-card-body">',
-    `<p class="product-purpose">${escapeCopy(system.purpose)}</p>`,
-    productActions(system),
-    statusFacts(system),
-    body,
+    purposeLead(system),
+    catalogEvidence(system),
+    inView,
+    disclosure("product-how", named("How we know", system), `${purposeInFull(system)}${howWeKnow}${productActions(system)}`),
     "</div>",
     "</article>",
   ].join("");
 }
 
-function catalogRow(system, domainId) {
-  return productCard(system, `${catalogEvidence(system, domainId)}${catalogDetails(system, domainId)}`);
+function catalogRow(system) {
+  return productRow(system, firstLimit(system), `${otherAreas(system)}${boundaryLine(system)}`);
 }
 
 function overviewRow(system) {
-  const firstLimit = system.limitations[0]
-    ? `<p class="product-limit"><strong>Limit:</strong> ${escapeHtml(system.limitations[0])}</p>`
-    : "";
-  return productCard(system, firstLimit);
+  return productRow(system, firstLimit(system), statusFacts(system));
 }
 
-function section(domain, prefix, members, noun, renderRow) {
+// A product listed under a secondary domain: its name, type and status, and
+// the reason it appears here. Its full row sits under its primary domain.
+function referenceRow(system, domainId) {
+  const primary = domainById.get(system.primaryDomain);
+  const current = domainById.get(domainId);
+  const reason = [
+    `<p class="body-text">Primary area: ${escapeHtml(primary?.label ?? system.primaryDomain)}. `,
+    `Also appears here because it serves ${escapeHtml(current?.label ?? domainId)}.</p>`,
+    `<p class="product-purpose">${escapeCopy(system.purpose)}</p>`,
+    boundaryLine(system),
+    productActions(system),
+  ].join("");
+  return [
+    `<article class="product-card product-card-ref" role="listitem" data-system-id="${escapeHtml(system.id)}">`,
+    rowHeading(system),
+    `<div class="product-card-body">${catalogEvidence(system)}${firstLimit(system)}${disclosure("product-record-details", named("Why this record appears here", system), reason)}</div>`,
+    "</article>",
+  ].join("");
+}
+
+function domainHead(domain, prefix, count) {
+  const id = `${prefix}-${escapeHtml(domain.id)}-h`;
+  return [
+    '<div class="domain-head">',
+    `<h2 id="${id}">${escapeHtml(domain.label)}</h2>`,
+    `<p class="catalog-count">${count}</p>`,
+    `<p class="body-text domain-summary">${escapeHtml(domain.summary)}</p>`,
+    "</div>",
+  ].join("");
+}
+
+const list = (rows, extra = "") =>
+  `<div class="product-list${extra}" role="list">${rows.join("")}</div>`;
+
+function section(domain, prefix, count, body) {
   const id = escapeHtml(domain.id);
-  const count = `${members.length} ${members.length === 1 ? noun : `${noun}s`}`;
   return [
     `<section class="mv catalog-domain" id="${prefix}-${id}" aria-labelledby="${prefix}-${id}-h">`,
-    `<h2 id="${prefix}-${id}-h">${escapeHtml(domain.label)} <span class="catalog-count">${count}</span></h2>`,
-    `<p class="body-text">${escapeHtml(domain.summary)}</p>`,
-    `<div class="product-list" role="list">${members.map(renderRow).join("")}</div>`,
+    domainHead(domain, prefix, count),
+    body,
     "</section>",
   ].join("");
 }
 
-const catalogMain = registry.domains
-  .map((domain) =>
-    section(
-      domain,
-      "domain",
-      registry.systems.filter((system) => system.domains.includes(domain.id)),
-      "record",
-      (system) => catalogRow(system, domain.id),
-    ),
-  )
-  .join("\n");
+const REFERENCE_NOTE =
+  '<p class="product-ref-note">Also listed here: records whose primary area is elsewhere. Each full entry sits under its primary area.</p>';
 
-const overviewMain = registry.domains
-  .map((domain) =>
-    section(
-      domain,
-      "overview",
-      publicSystems.filter((system) => system.primaryDomain === domain.id),
-      "product",
-      overviewRow,
-    ),
-  )
-  .join("\n");
+function catalogSection(domain) {
+  const members = registry.systems.filter((system) => system.domains.includes(domain.id));
+  const primary = members.filter((system) => system.primaryDomain === domain.id);
+  const references = members.filter((system) => system.primaryDomain !== domain.id);
+  const refs = references.length
+    ? `${REFERENCE_NOTE}${list(references.map((system) => referenceRow(system, domain.id)), " product-list-ref")}`
+    : "";
+  return section(domain, "domain", plural(members.length, "record"), `${list(primary.map(catalogRow))}${refs}`);
+}
 
-const CATALOG_HEAD = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Product catalog · Zentropy Labs</title><meta name="description" content="Publicly listed Zentropy Labs product records, including controlled-private boundary pages, grouped by domain."><link rel="canonical" href="https://harperz9.github.io/catalog.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Product catalog · Zentropy Labs"><meta property="og:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta property="og:url" content="https://harperz9.github.io/catalog.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product catalog card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Product catalog · Zentropy Labs"><meta name="twitter:description" content="Publicly listed product records, including controlled-private boundary pages, grouped by domain."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f4f3ef"><link rel="stylesheet" href="system/system.css?v=20260907-reading-completion"><style>${SYSTEM_PAGE_STYLE}
-</style>
-</head>
-<body class="inner-clean frame-compact"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="overview.html">Systems</a> <a href="security.html">Security</a></nav></noscript><script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-<div class="frame system-hero"><div class="bar"><span class="nm">Zentropy Labs</span><span class="rt">Product catalog</span></div><div class="mid"><h1>Products, by domain.</h1><p class="lede">${registry.systems.length} system records. Each entry gives product type, maturity, current evidence, and a route to its single full definition. Domain counts overlap because one product may serve more than one domain.</p><nav class="domain-nav" aria-label="Product domains">${domainLinks('domain')}</nav></div><div class="seal">registry · ${escapeHtml(registry.schema)}</div></div>
-<section class="mv map-record-note" aria-labelledby="registry-map-note-title"><h2 id="registry-map-note-title">Detailed registry, short map linked</h2><p class="body-text">This registry is the detailed evidence view. The <a href="overview.html">product map</a> is the compact route with one entry per product; this page can repeat a product under secondary domains so its evidence and boundaries stay visible in context.</p></section>
+function overviewSection(domain) {
+  const members = publicSystems.filter((system) => system.primaryDomain === domain.id);
+  return section(domain, "overview", plural(members.length, "product"), list(members.map(overviewRow)));
+}
+
+const catalogMain = registry.domains.map(catalogSection).join("\n");
+const overviewMain = registry.domains.map(overviewSection).join("\n");
+
+const catalogCount = (domain) =>
+  plural(registry.systems.filter((system) => system.domains.includes(domain.id)).length, "record");
+const overviewCount = (domain) =>
+  plural(publicSystems.filter((system) => system.primaryDomain === domain.id).length, "product");
+
+const plate = artPlate("pillar-systems", artAlt["pillar-systems"]);
+
+// The catalog's own "How we know": where the rows come from and which record a
+// row cites. The registry schema is an identifier, so it stays in here.
+const CATALOG_HOW = disclosure(
+  "product-how page-how",
+  "How we know",
+  [
+    '<dl class="sys-fact-list">',
+    `<div><dt>Source</dt><dd>Every row on this page is generated from one product registry, schema <code>${escapeHtml(registry.schema)}</code>. The product map and each product record read the same file.</dd></div>`,
+    "<div><dt>Evidence shown</dt><dd>A product's newest release when it has one; otherwise its newest dated record.</dd></div>",
+    "</dl>",
+  ].join(""),
+);
+
+const CATALOG_POSTER = `<header class="system-hero sys-poster"><h1>Products, by domain.</h1>${plate}<div class="sys-poster-copy"><p class="lede">${registry.systems.length} system records. Each entry gives product type, maturity, current evidence, and a route to its single full definition. Domain counts overlap because one product may serve more than one domain.</p>${domainIndex("domain", catalogCount)}</div></header>
+<section class="mv map-record-note" aria-labelledby="registry-map-note-title"><h2 id="registry-map-note-title">Detailed registry, short map linked</h2><p class="body-text">This registry is the detailed evidence view. The <a href="overview.html">product map</a> is the compact route with one entry per product; this page can repeat a product under secondary domains so its evidence and boundaries stay visible in context.</p>${CATALOG_HOW}</section>
 `;
-const OVERVIEW_HEAD = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Products · Zentropy Labs</title><meta name="description" content="Zentropy Labs products grouped by primary domain, with type, maturity, release state, and direct product routes."><link rel="canonical" href="https://harperz9.github.io/overview.html"><meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs"><meta property="og:title" content="Products · Zentropy Labs"><meta property="og:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta property="og:url" content="https://harperz9.github.io/overview.html"><meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta property="og:image:alt" content="Zentropy Labs product overview card."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Products · Zentropy Labs"><meta name="twitter:description" content="Products grouped by primary domain with direct routes to definitions and evidence."><meta name="twitter:image" content="https://harperz9.github.io/img/og/portfolio-home.png"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f4f3ef"><link rel="stylesheet" href="system/system.css?v=20260907-reading-completion"><style>${SYSTEM_PAGE_STYLE}
-</style>
-</head>
-<body class="inner-clean frame-compact"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="index.html">Zentropy Labs</a> <a href="catalog.html">Catalog</a> <a href="hire.html">Hire / work</a></nav></noscript><script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-<div class="frame system-hero"><div class="bar"><span class="nm">Zentropy Labs</span><span class="rt">Product overview</span></div><div class="mid"><h1>Products, grouped by primary domain.</h1><p class="lede">${publicSystems.length} public product records across ${registry.domains.length} domains. Each product appears once here; the catalog records cross-domain references and evidence.</p><nav class="domain-nav" aria-label="Product domains">${domainLinks('overview')}</nav></div><div class="seal">built by Zain Dana Harper</div></div>
+const OVERVIEW_POSTER = `<header class="system-hero sys-poster"><h1>Products, grouped by primary domain.</h1>${plate}<div class="sys-poster-copy"><p class="lede">${publicSystems.length} public product records across ${registry.domains.length} domains. Each product appears once here; the catalog records cross-domain references and evidence.</p>${domainIndex("overview", overviewCount)}</div></header>
 <section class="mv map-record-note" aria-labelledby="map-record-note-title"><h2 id="map-record-note-title">Short map, detailed record elsewhere</h2><p class="body-text">This page is the compact product map: one entry per product under its primary domain. The <a href="catalog.html">evidence registry</a> is separate and may list the same product under additional domains with its source evidence and limitations.</p></section>
 `;
-const OVERVIEW_ROUTES = `<section class="mv"><h2>Choose a route</h2><p class="body-text"><a href="catalog.html">Open the evidence catalog</a> · <a href="demonstrations.html">See recorded workflows</a> · <a href="analytics/portfolio-source-inventory.html">Inspect the source inventory</a> · <a href="private-practice.html#private-system-index">Review controlled-private boundary pages</a> · <a href="hire.html">Hire or collaborate</a></p></section>`;
+const ROUTES = [
+  ["catalog.html", "Open the evidence catalog"],
+  ["demonstrations.html", "See recorded workflows"],
+  ["analytics/portfolio-source-inventory.html", "Inspect the source inventory"],
+  ["private-practice.html#private-system-index", "Review controlled-private boundary pages"],
+  ["hire.html", "Hire or collaborate"],
+];
+const OVERVIEW_ROUTES = `<section class="mv sys-routes"><h2>Choose a route</h2><ul class="sys-route-list">${ROUTES.map(([href, label]) => `<li><a href="${href}">${label}</a></li>`).join("")}</ul></section>`;
+const COLOPHON = '<footer class="sys-colophon"><p>Built by Zain Dana Harper.</p></footer>';
+
+// The index pages sit at the site root. The art sheet swaps the plate with the theme,
+// and both pages link the family sheet.
+const INDEX_ASSETS = {
+  sheets: ["system/system.css?v=20260925-void-plates", "system/art.css?v=20260925-human-notebook", CATALOG_SHEET],
+  navScript: "system/nav.js?v=20260909-pillar-navigation",
+};
+
+const CATALOG_HEAD = renderIndexHead({
+  ...INDEX_ASSETS,
+  href: "catalog.html",
+  title: "Product catalog",
+  description:
+    "Publicly listed Zentropy Labs product records, including controlled-private boundary pages, grouped by domain.",
+  social: "Publicly listed product records, including controlled-private boundary pages, grouped by domain.",
+  cardAlt: "Zentropy Labs product catalog card.",
+  noscript: '<a href="catalog.html">Catalog</a> <a href="overview.html">Systems</a> <a href="security.html">Security</a>',
+});
+const OVERVIEW_HEAD = renderIndexHead({
+  ...INDEX_ASSETS,
+  href: "overview.html",
+  title: "Products",
+  description:
+    "Zentropy Labs products grouped by primary domain, with type, maturity, release state, and direct product routes.",
+  social: "Products grouped by primary domain with direct routes to definitions and evidence.",
+  cardAlt: "Zentropy Labs product overview card.",
+  noscript: '<a href="index.html">Zentropy Labs</a> <a href="catalog.html">Catalog</a> <a href="hire.html">Hire / work</a>',
+});
 
 await writeFile(
   resolve(root, "catalog.html"),
-  `${CATALOG_HEAD}<main id="main">${catalogMain}</main></body></html>\n`,
+  `${CATALOG_HEAD}<main id="main" class="sys-index">${CATALOG_POSTER}${catalogMain}</main>${COLOPHON}</body></html>\n`,
   "utf8",
 );
 await writeFile(
   resolve(root, "overview.html"),
-  `${OVERVIEW_HEAD}<main id="main">${OVERVIEW_ROUTES}${overviewMain}</main></body></html>\n`,
+  `${OVERVIEW_HEAD}<main id="main" class="sys-index">${OVERVIEW_POSTER}${OVERVIEW_ROUTES}${overviewMain}</main>${COLOPHON}</body></html>\n`,
   "utf8",
 );
 
@@ -250,10 +270,11 @@ const cardById = new Map(
   ),
 );
 const recordContext = {
+  artAlt,
   cardById,
   registry,
   systemById: new Map(registry.systems.map((system) => [system.id, system])),
-  domainById: new Map(registry.domains.map((domain) => [domain.id, domain])),
+  domainById,
 };
 
 for (const id of RECORD_PAGES) {

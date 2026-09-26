@@ -3,8 +3,21 @@
 // scripts/render-system-pages.mjs is the only writer; this module holds the
 // template so neither file outgrows the 300-line limit. Every value on the page
 // comes from the registry, so a record edit is the only way to change a page.
-import { escapeCopy, escapeHtml, localHref, MIDDOT, publicOnly } from "./system-page-parts.mjs";
-import { renderHead } from "./system-record-head.mjs";
+//
+// The page is a poster (scripts/system-record-head.mjs draws it) and a run of
+// numbered plates. Evidence summaries carry digests, so each sits under
+// "How we know".
+import {
+  disclosure,
+  escapeCopy,
+  escapeHtml,
+  evidenceStatusOf,
+  linkRow,
+  localHref,
+  publicOnly,
+  verdictLine,
+} from "./system-page-parts.mjs";
+import { hero, renderHead } from "./system-record-head.mjs";
 
 const NULL_LINE = (message) => `<p class="body-text system-null">${message}</p>`;
 
@@ -22,82 +35,11 @@ function grid(leftLabel, leftValues, rightLabel, rightValues) {
 }
 
 function section(id, heading, body) {
-  return `<section class="mv" id="${id}" aria-labelledby="${id}-h"><h2 id="${id}-h">${heading}</h2>${body}</section>`;
+  return `<section class="mv" id="${id}" aria-labelledby="${id}-h"><h2 id="${id}-h">${heading}</h2><div class="plate-body">${body}</div></section>`;
 }
 
 function sourceLink(system) {
   return `<a href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect the public source</a>`;
-}
-
-function heroActions(system) {
-  const open = system.sourceHref
-    ? `<a href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect source</a>`
-    : "";
-  const run =
-    system.entryCommand || system.verificationCommand
-      ? '<a href="#run-or-evaluate">Run or verify</a>'
-      : "";
-  return [
-    '<div class="system-hero-actions">',
-    open,
-    run,
-    '<a href="#current-evidence">Read evidence</a>',
-    "</div>",
-  ].join("");
-}
-
-// The four facts a reader needs before trusting anything below: how mature the
-// work is, how they can get at it, what is actually released, and when the
-// record was last checked against the source.
-function heroMeta(system) {
-  const facts = [
-    ["Status", system.maturity],
-    ["Access", system.accessMode],
-    ["Release", system.releaseState],
-    ["Checked", system.lastVerified],
-  ];
-  return `<dl class="system-facts">${facts
-    .map(([term, value]) => `<div class="system-fact"><dt>${term}</dt><dd>${escapeHtml(value)}</dd></div>`)
-    .join("")}</dl>`;
-}
-
-// tests/test_project_copy_ground_truth.py reads a product's one canonical
-// definition back off the page by this marker, so the records it names carry
-// it on the lede. Pages outside that set state the same purpose unmarked.
-const CANONICAL_PURPOSE_IDS = new Set([
-  "flywheel",
-  "index",
-  "gather",
-  "buildlang",
-  "phantom",
-  "accountable-surface",
-  "array",
-  "seed",
-  "sofer",
-  "isomorph",
-  "bounds",
-  "kun",
-]);
-
-function canonicalMark(system) {
-  return CANONICAL_PURPOSE_IDS.has(system.id)
-    ? ` data-canonical-purpose="${escapeHtml(system.id)}"`
-    : "";
-}
-
-function hero(system, ctx) {
-  const domains = system.domains.map((id) => ctx.domainById.get(id)?.label ?? id);
-  return [
-    '<div class="frame system-hero"><div class="bar">',
-    '<span class="nm">Zentropy Labs</span>',
-    `<span class="rt">${escapeHtml(system.productType)}</span></div>`,
-    `<div class="mid"><h1>${escapeHtml(system.name)}.</h1>`,
-    `<p class="lede"${canonicalMark(system)}>${escapeCopy(system.purpose)}</p>`,
-    heroActions(system),
-    heroMeta(system),
-    "</div>",
-    `<div class="seal">${escapeHtml(domains.join(` ${MIDDOT} `))}</div></div>`,
-  ].join("");
 }
 
 function command(label, value) {
@@ -136,8 +78,7 @@ function familyNav(system, ctx) {
     (other) => other.family === system.family && other.id !== system.id,
   );
   if (peers.length === 0) return "";
-  const links = peers.map(anchor).join(` ${MIDDOT} `);
-  return `<nav class="system-family-nav" aria-label="${escapeHtml(system.family)} family"><strong>Peer records</strong> ${links}</nav>`;
+  return `<nav class="system-family-nav" aria-label="${escapeHtml(system.family)} family"><strong>Peer records</strong>${linkRow(peers.map(anchor))}</nav>`;
 }
 
 // Only typed relations appear here. A related id is navigation and never
@@ -178,48 +119,58 @@ const ROUTE_NOTES = new Map([
   ],
 ]);
 
+// Related records, each with its product type, as an index a reader can scan.
+function relatedIndex(ctx, system) {
+  const related = recordLinks(ctx, system.related);
+  if (related.length === 0) return NULL_LINE("No public related record is declared.");
+  const rows = related.map(
+    (other) => `<li>${anchor(other)}<span class="sys-related-type">${escapeHtml(other.productType)}</span></li>`,
+  );
+  return `<ul class="system-list sys-related">${rows.join("")}</ul>`;
+}
+
+// The related records and the family peers stay in view; dependencies and
+// relation-backed claims are the checker's detail, under the disclosure.
 function architectureBlock(system, ctx) {
   const dependencies = system.dependencies.length
     ? list(system.dependencies)
     : NULL_LINE("None declared in the public registry.");
-  const related = recordLinks(ctx, system.related);
-  const relatedList = related.length
-    ? `<ul class="system-list">${related.map((other) => `<li>${anchor(other)}</li>`).join("")}</ul>`
-    : NULL_LINE("No public related record is declared.");
-  const body = [
-    familyNav(system, ctx),
-    '<div class="system-grid">',
-    `<div><h3>Dependencies</h3>${dependencies}</div>`,
-    `<div><h3>Related records</h3>${relatedList}</div>`,
-    "</div>",
+  const inside = [
+    `<h3>Dependencies</h3>${dependencies}`,
     "<h3>Relation-backed claims</h3>",
     claims(system, ctx),
-    ROUTE_NOTES.get(system.id) ?? "",
   ].join("");
   return [
+    `<div><h3>Related records</h3>${relatedIndex(ctx, system)}</div>`,
+    familyNav(system, ctx),
+    ROUTE_NOTES.get(system.id) ?? "",
     '<details class="product-record-details" id="architecture-details">',
     "<summary>Architecture, dependencies, and relationship notes</summary>",
-    body,
+    `<div class="disclosure-body">${inside}</div>`,
     "</details>",
   ].join("");
 }
 
+// One row per evidence record: its name, its verdict and date in view, and the
+// summary (with its digests) under "How we know".
+function evidenceRow(evidence) {
+  const date = escapeHtml(evidence.date);
+  return [
+    '<article class="product-card sys-evidence-row" role="listitem"><div class="product-card-heading">',
+    `<h3 class="product-card-title"><a href="${escapeHtml(evidence.href)}" rel="noopener">${escapeHtml(evidence.label)}</a></h3>`,
+    verdictLine("product-verdict", evidenceStatusOf(evidence.status), ` <time datetime="${date}">${date}</time>`),
+    '</div><div class="product-card-body">',
+    disclosure("product-how", "How we know", `<p class="product-purpose">${escapeHtml(evidence.summary)}</p>`),
+    "</div></article>",
+  ].join("");
+}
+
 function evidenceBlock(system) {
-  const rows = system.evidence
-    .map((evidence) =>
-      [
-        '<article class="product-card" role="listitem"><div class="product-card-heading">',
-        `<h3 class="product-card-title"><a href="${escapeHtml(evidence.href)}" rel="noopener">${escapeHtml(evidence.label)}</a></h3></div>`,
-        `<div class="product-card-body"><p class="product-purpose">${escapeHtml(evidence.summary)}</p>`,
-        `<small class="product-status-line">${escapeHtml(evidence.status)} ${MIDDOT} ${escapeHtml(evidence.date)}</small></div></article>`,
-      ].join(""),
-    )
-    .join("");
-  return `<div class="product-list system-evidence" role="list">${rows}</div>`;
+  return `<div class="product-list system-evidence" role="list">${system.evidence.map(evidenceRow).join("")}</div>`;
 }
 
 function limitsBlock(system) {
-  return `${list(system.limitations)}<p class="body-text"><strong>Authorization boundary.</strong> ${escapeHtml(system.boundary)}</p>`;
+  return `${list(system.limitations)}<p class="body-text system-boundary"><strong>Authorization boundary.</strong> ${escapeHtml(system.boundary)}</p>`;
 }
 
 function nextBlock(system, ctx) {
@@ -227,8 +178,9 @@ function nextBlock(system, ctx) {
   const sentence = related.length
     ? `<p class="body-text">Continue with ${related.map(anchor).join(", ")}.</p>`
     : "";
-  const source = system.sourceHref ? ` ${MIDDOT} ${sourceLink(system)}` : "";
-  return `${sentence}<p class="seal-line"><a href="/catalog.html">Return to the system catalog</a>${source}</p>`;
+  const links = ['<a href="/catalog.html">Return to the system catalog</a>'];
+  if (system.sourceHref) links.push(sourceLink(system));
+  return `${sentence}${linkRow(links, "sys-link-row sys-next")}`;
 }
 
 export function renderRecordPage(system, ctx) {
@@ -260,8 +212,9 @@ export function renderRecordPage(system, ctx) {
   ];
   return [
     head,
+    '<main id="main" class="sys-record">\n',
     hero(system, ctx),
-    '\n<main id="main">\n  ',
+    "\n  ",
     main.slice(0, 2).join("\n  "),
     "\n",
     main.slice(2).join("\n"),

@@ -17,7 +17,7 @@
    8 count cards, 9 tables, 12 notes and limit line, 13 "How we
    know", 15 print, 16 forced colors, 17 motion. */
 @import url("notebook-diagram.css?v=20260925-human-notebook");
-@import url("page-components.css?v=20260925-human-notebook");
+@import url("page-components.css?v=20260925-void-sheets");
 
 /* 1. Sheet tokens. The sheet reads the page tokens; nothing here names a hue. */
 .ns-sheet,.ns-defs,.dg-figure{
@@ -53,6 +53,13 @@
 .ns-sheet .ns-vh,.ns-vh{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .ns-sheet .ns-paper{--ns-m:.5rem;--ns-pi:.75rem;position:relative;isolation:isolate;padding:var(--ns-m);background:var(--ns-paper);
   outline:1px solid var(--ns-frame);outline-offset:-1px}
+/* 25 September 2026, void and bone: a sheet is a plate mounted on the ground, so it carries the
+   plate's corner ticks (plate.css section 7) just outside its hairline frame. */
+.ns-sheet .ns-paper::after{content:"";position:absolute;inset:-6px;z-index:2;pointer-events:none;--k:14px;
+  background:linear-gradient(var(--ns-line),var(--ns-line)) top left/var(--k) 1px no-repeat,
+    linear-gradient(var(--ns-line),var(--ns-line)) top left/1px var(--k) no-repeat,
+    linear-gradient(var(--ns-line),var(--ns-line)) bottom right/var(--k) 1px no-repeat,
+    linear-gradient(var(--ns-line),var(--ns-line)) bottom right/1px var(--k) no-repeat}
 .ns-sheet .ns-grain{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .ns-sheet .ns-grain-ink{flood-color:var(--ns-grain);flood-opacity:var(--ns-grain-a)}
 /* The ruling: one row of dots per lead, a third of a lead apart. The live area is a
@@ -71,9 +78,12 @@
 /* 3. Head: title, takeaway, lede, units. Host reading pages size every h2 at a high
    specificity; the title's size, lead and ink must win, so they carry !important. */
 .ns-sheet .ns-head{display:grid;row-gap:calc(var(--ns-lead)/2);min-width:0}
-.ns-sheet .ns-title{font-family:var(--ns-sans);font-weight:450;letter-spacing:-.01em;text-wrap:balance;max-width:34ch;border:0;text-transform:none;
-  font-size:var(--t-sheet-title,1.6rem)!important;line-height:1.2!important;color:var(--ns-ink)!important}
+/* The sheet title is display type: heavy weight and tight tracking carry it, as the section heads do
+   in plate.css. Its tracking carries !important because report pages zero every heading's tracking. */
+.ns-sheet .ns-title{font-family:var(--ns-sans);font-weight:740;letter-spacing:-.024em!important;text-wrap:balance;max-width:26ch;border:0;text-transform:none;
+  font-size:var(--t-h2,clamp(1.6rem,1.15rem + 1.6vw,2.6rem))!important;line-height:1.04!important;color:var(--ns-ink)!important}
 .takeaway,.ns-sheet .takeaway{max-width:60ch;margin:0;font:500 var(--t-takeaway,1.1875rem)/1.45 var(--font-sans);color:var(--ink);text-wrap:pretty}
+.ns-sheet .takeaway{font-size:clamp(1.1875rem,1.05rem + .45vw,1.375rem)}
 .ns-sheet .takeaway{color:var(--ns-ink)}
 .ns-sheet .ns-lede{max-width:60ch;color:var(--ns-soft)}
 .ns-sheet .ns-units{font-size:.875rem;color:var(--ns-soft)}
@@ -176,7 +186,7 @@
 .ns-sheet .ns-row.is-axis .ns-rval{display:none}
 .ns-sheet .ns-tick.is-opt{display:none}
 .ns-sheet .ns-count{font-weight:650;font-family:var(--ns-sans)}
-.ns-sheet .ns-panel-h{font-weight:600;font-size:1rem;margin-top:var(--ns-lead)}
+.ns-sheet .ns-panel-h{font-weight:700;font-size:1.125rem;letter-spacing:-.01em;margin-top:var(--ns-lead)}
 /* Small multiples: the same chart across a few groups, same scale in every panel. */
 .ns-sheet .ns-multiples{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--ns-lead) 2rem}
 /* On phones the strip and its axis sit in from both edges, so centred end labels stay inside the sheet. */
@@ -191,10 +201,10 @@
 /* 8. Count cards: two to four headline counts. The marked count is set in ink at weight 500. */
 .ns-sheet .ns-cards{display:grid;grid-template-columns:minmax(0,1fr)}
 .ns-sheet .ns-card{padding:0 .9rem calc(var(--ns-lead)/2);box-shadow:inset 0 -1px var(--ns-hair)}
-.ns-sheet .ns-big{font:300 2.75rem/calc(var(--ns-lead)*2.5) var(--ns-sans);letter-spacing:-.02em;white-space:nowrap}
+.ns-sheet .ns-big{font:640 2.75rem/calc(var(--ns-lead)*2.5) var(--ns-sans);letter-spacing:-.035em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .ns-sheet .ns-big .ns-unit{font-size:.4em;font-weight:500;letter-spacing:0;color:var(--ns-soft);margin-left:.3em}
 .ns-sheet .ns-big .ns-ring{width:.6em;height:.6em;margin-right:.3em}
-.ns-sheet .ns-card.is-hot .ns-big{font-weight:500}
+.ns-sheet .ns-card.is-hot .ns-big{font-weight:820}
 .ns-sheet .ns-card.is-hot .ns-unit{color:var(--ns-ink);font-weight:650}
 .ns-sheet .ns-cl{font-size:.9375rem;color:var(--ns-soft);max-width:30ch}
 @container ns-sheet (min-width:40rem){.ns-sheet .ns-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -274,7 +284,7 @@ details.how-we-know > summary:hover{text-decoration:underline;text-decoration-th
        ::details-content covers browsers that support it. A sheet may start on any page; its
        drawing, chart and notes each stay whole. */
 @media print{
-  .ns-sheet .ns-grain,.ns-sheet .ns-live::before{display:none}
+  .ns-sheet .ns-grain,.ns-sheet .ns-live::before,.ns-sheet .ns-paper::after{display:none}
   /* No frame on paper: a sheet split across pages would leave an empty outlined box. */
   .ns-sheet .ns-paper{outline:0;padding:0}
   /* A grid does not fragment cleanly across printed pages, so the live area prints as a block. */
@@ -296,7 +306,7 @@ details.how-we-know > summary:hover{text-decoration:underline;text-decoration-th
        The hot ring alone takes Highlight. The disclosure glyph opts out too, or it vanishes. */
 @media (forced-colors:active){
   .ns-sheet,.ns-defs,.dg-figure{--ns-hot:Highlight}
-  .ns-sheet .ns-grain,.ns-sheet .ns-live::before{display:none}
+  .ns-sheet .ns-grain,.ns-sheet .ns-live::before,.ns-sheet .ns-paper::after{display:none}
   .ns-sheet .ns-live{forced-color-adjust:none}
   details.how-we-know > summary::before{forced-color-adjust:none}
   details.how-we-know > summary:focus-visible{outline-color:Highlight}}

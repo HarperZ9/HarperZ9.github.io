@@ -1,0 +1,217 @@
+/* studio-plate.css: the Studio on the void-and-bone surface (system/plate.css).
+   Only studio.html loads this file, and it loads after the older layers (system.css,
+   instrument-forms.css, instrument-editorial.css), so it finishes them. Selectors
+   carry an id where an older layer, or theme.css (which arrives by script at the end
+   of the cascade), would otherwise win.
+
+   The composition, from the operator's inspiration corpus:
+   - the stage is the plate: one live object on black, in a thin frame with corner
+     ticks, mounted on the registration field (the book-cover studies, the halftone
+     moon, the prismatic ring on black). It is the only frame in the centre of the
+     view; the deck under it is a line of words, not a row of boxes;
+   - the rail is a contents page: a poster title, then numbered channels on ruled
+     lines, the way a technical sheet lists its plates;
+   - the perception panel is a spec sheet: ruled rows of readings.
+   Canon limits: two faces (Hanken Grotesk, Conso for data at 15px and weight 500 or
+   more), color only as a verdict plus ink, one hot mark per view (the selected
+   channel), text on a calm ground, no pills, no shadows, labels at 14px or more.
+
+   Four files, loaded in this order: studio-plate.css (tokens, shell, rail head,
+   channels, control drawers), studio-deck.css (keys, fields, readouts, the stage and
+   the deck under it), studio-sheet.css (the perception panel and the drawer),
+   studio-modes.css (phone, forced colors, print, reduced motion). */
+
+/* 1. Page tokens under names no family sheet redefines. They resolve on <html>,
+   where tokens.css sets them for light, dark, the reader's pick, forced colors and
+   print, so the body can map the older family names onto them without a cycle and
+   without waiting for the theme script. */
+html:root{
+  --st-paper:var(--paper);--st-inset:var(--inset);--st-panel:var(--panel);--st-raised:var(--raised);
+  --st-ink:var(--ink);--st-soft:var(--soft);--st-muted:var(--muted);
+  --st-line:var(--line);--st-line-strong:var(--line-strong);--st-on-ink:var(--on-ink);
+  --st-verified:var(--verified);--st-drift:var(--drift);--st-unverifiable:var(--unverifiable);
+  --st-sans:var(--font-sans);--st-mono:var(--font-mono);
+  --st-plate:#000;--st-plate-ink:#ece5d6;
+  --st-mat:8px;
+}
+html body.studio-page{
+  --chrome-ground:var(--st-paper);--chrome-ground-soft:var(--st-inset);
+  --chrome-surface:var(--st-paper);--chrome-surface-strong:var(--st-raised);
+  --chrome-ink:var(--st-ink);--chrome-soft:var(--st-soft);--chrome-muted:var(--st-soft);
+  --chrome-line:var(--st-line);--chrome-line-strong:var(--st-line-strong);
+  --chrome-accent:var(--st-ink);--chrome-accent-soft:var(--st-raised);--chrome-focus:var(--st-ink);
+  --chrome-verdict:var(--st-verified);--chrome-drift:var(--st-drift);
+  --brk:var(--st-line-strong);--brk-live:var(--st-ink);
+  --line-soft:var(--st-line);--hairline:var(--st-line);
+  --edge:linear-gradient(90deg,var(--st-line),var(--st-line));
+  color:var(--st-ink);
+}
+
+/* 2. The app shell sits on calm paper, so every line of text has a quiet ground.
+   The centre column keeps the registration crosses of plate.css (fixed to the
+   window, so they line up with the page field) without the grain veil: the crosses
+   are the board the plate is mounted on. */
+html body.studio-page .studio-app{background:var(--st-paper)}
+@media (min-width:900px){
+  html body.studio-page .studio-app{grid-template-columns:minmax(236px,16rem) minmax(0,1fr) minmax(256px,17rem)}
+  /* The rail scrolls as one column: the poster title and the channel list are tall,
+     and a second scroller under them would leave the controls a narrow slot. */
+  html body.studio-page #studio-rail{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  html body.studio-page #studio-rail .rail-scroll{flex:none;min-height:0;overflow:visible}
+}
+@media (min-width:1280px){
+  html body.studio-page .studio-app{grid-template-columns:minmax(272px,19.5rem) minmax(0,1fr) minmax(300px,21.5rem)}
+}
+/* Cinema folds both side columns away (studio.js sets .cinema on the app). */
+@media (min-width:900px){
+  html body.studio-page .studio-app.cinema{grid-template-columns:0 minmax(0,1fr) 0}
+}
+html body.studio-page :is(#studio-rail,#studio-panel){background:var(--st-paper);color:var(--st-ink)}
+html body.studio-page #studio-rail{border-right:1px solid var(--st-line)}
+html body.studio-page #studio-panel{border-left:1px solid var(--st-line)}
+html body.studio-page #studio-viewport{background:var(--st-paper) var(--field-mark) repeat fixed;background-size:96px 96px}
+/* The deck and its caption sit on plain paper, so the crosses frame the plate and
+   never run behind a word. */
+html body.studio-page #studio-viewport :is(#render-toolbar,#st-flow,.engine-status){background-color:var(--st-paper)}
+
+/* 3. The rail head: the path, then the title as a poster, stacked on two lines and
+   sized to the rail's own width, then one line of what the instrument does. */
+html body.studio-page #studio-rail .rail-head{
+  display:flex;flex-direction:column;container-type:inline-size;
+  background:transparent;border:0;border-radius:0;box-shadow:none;
+  padding:1rem 1.25rem .9rem;
+}
+html body.studio-page #studio-rail .rail-head .route-header__path{
+  order:1;margin:0 0 1rem;font-family:var(--st-sans);font-size:.875rem;line-height:1.4;color:var(--st-soft);
+}
+html body.studio-page #studio-rail .rail-head h1{
+  order:3;
+  font-family:var(--st-sans);
+  font-size:clamp(3.5rem,2rem + 2.4vw,4.75rem);
+  font-size:clamp(3.5rem,33cqi,6rem);
+  font-weight:800;
+  letter-spacing:-.052em;
+  line-height:.86;
+  color:var(--st-ink);
+  margin:0 0 .85rem;
+  text-wrap:balance;
+}
+/* system.css gives every h1 a 60px shadow; the canon has no shadows. */
+html body.studio-page .studio-app :is(h1,h2,h3){text-shadow:none}
+html body.studio-page #studio-rail .rail-head .rail-lede{
+  order:4;margin:0;max-width:none;
+  font-family:var(--st-sans);font-size:.9375rem;line-height:1.45;color:var(--st-soft);
+}
+
+/* 4. The channels: a ruled contents list, numbered, in two columns, grouped under a
+   hairline that opens on a registration cross. The selected channel is the one hot
+   mark: its line is lit in ink. */
+html body.studio-page #studio-source{
+  counter-reset:st-channel;
+  display:flex;flex-direction:column;gap:.5rem;
+  padding:.35rem 1.25rem .5rem;border:0;
+}
+html body.studio-page #studio-source .source-group{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:1rem;row-gap:0;
+  padding:0;
+}
+/* Bring has three long names: one channel per line, so none breaks. */
+html body.studio-page #studio-source .source-group:has([data-source="byo"]) [role="tab"]{grid-column:1/-1}
+html body.studio-page #studio-source .source-group-label{
+  grid-column:1/-1;position:relative;
+  display:flex;align-items:center;gap:.6rem;
+  margin:0;padding:.45rem 0 .25rem 1.05rem;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:700;line-height:1.2;
+  letter-spacing:0;text-transform:none;color:var(--st-soft);
+}
+html body.studio-page #studio-source .source-group-label::before{
+  content:"";position:absolute;left:0;top:50%;width:11px;height:11px;margin-top:-3px;
+  background:
+    linear-gradient(var(--st-ink),var(--st-ink)) center/1px 100% no-repeat,
+    linear-gradient(var(--st-ink),var(--st-ink)) center/100% 1px no-repeat;
+}
+html body.studio-page #studio-source .source-group-label::after{
+  content:"";display:block;flex:1;height:1px;background:var(--st-line);
+}
+html body.studio-page #studio-source [role="tab"]{
+  counter-increment:st-channel;
+  position:relative;display:flex;align-items:baseline;justify-content:flex-start;gap:.5rem;
+  width:100%;min-width:0;min-height:2.25rem;margin:0;
+  padding:.5rem .35rem .45rem;
+  border:0;border-bottom:1px solid var(--st-line);border-radius:0;
+  background:transparent!important;background-image:none;box-shadow:none!important;
+  color:var(--st-ink)!important;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:600;line-height:1.2;
+  letter-spacing:0;text-align:left;text-transform:none;white-space:nowrap;
+  transition:background-color .12s,color .12s;
+}
+html body.studio-page #studio-source [role="tab"]::before{
+  content:counter(st-channel,decimal-leading-zero);
+  content:counter(st-channel,decimal-leading-zero) / "";
+  flex:0 0 auto;min-width:1.25em;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:500;
+  font-variant-numeric:tabular-nums lining-nums;letter-spacing:0;
+  color:var(--st-muted);
+}
+html body.studio-page #studio-source [role="tab"]:hover{background:var(--st-raised)!important}
+html body.studio-page #studio-source [role="tab"][aria-selected="true"]{
+  z-index:1;border-bottom-color:var(--st-ink);
+  background:var(--st-ink)!important;color:var(--st-on-ink)!important;box-shadow:none!important;
+}
+html body.studio-page #studio-source [role="tab"][aria-selected="true"]::before{color:var(--st-on-ink);opacity:.72}
+html body.studio-page #studio-rail .rail-own{
+  margin:.35rem 1.25rem .8rem;max-width:none;
+  font-family:var(--st-sans);font-size:.875rem;line-height:1.5;color:var(--st-soft);
+}
+
+/* 5. The control scroll. Each control group is a numbered drawer that opens on a
+   hairline; a group of chips sits under a plain label; nothing is a card. */
+html body.studio-page #studio-rail .rail-scroll{padding:0 1.25rem 1.5rem;background:transparent}
+html body.studio-page #studio-rail .at-panel{counter-reset:st-group;display:flex;flex-direction:column;gap:0;max-width:none}
+html body.studio-page #studio-rail :is(details.rail-group,section.rail-group){
+  margin:0;border:0;border-top:1px solid var(--st-line);border-radius:0;
+  background:transparent;box-shadow:none;overflow:visible;padding:0;
+}
+html body.studio-page #studio-rail details.rail-group>summary{
+  display:flex;align-items:baseline;gap:.6rem;min-height:2.75rem;margin:0;padding:.75rem 0 .7rem;
+  list-style:none;cursor:pointer;border-radius:0;background:transparent;
+  font-family:var(--st-sans);font-size:.9375rem;font-weight:700;line-height:1.25;
+  letter-spacing:-.005em;text-transform:none;color:var(--st-ink);
+}
+html body.studio-page #studio-rail details.rail-group>summary::-webkit-details-marker{display:none}
+html body.studio-page #studio-rail details.rail-group>summary::before{display:none;content:none;transform:none}
+html body.studio-page #studio-rail .at-panel>details.rail-group{counter-increment:st-group}
+html body.studio-page #studio-rail .at-panel>details.rail-group>summary::before{
+  display:inline;
+  content:counter(st-group,decimal-leading-zero);
+  content:counter(st-group,decimal-leading-zero) / "";
+  min-width:1.35em;font-size:.875rem;font-weight:500;font-variant-numeric:tabular-nums lining-nums;
+  color:var(--st-muted);transform:none;transition:none;
+}
+html body.studio-page #studio-rail details.rail-group>summary::after{
+  content:"+";content:"+" / "";margin-left:auto;padding-left:.5rem;
+  font-size:1.125rem;font-weight:400;line-height:1;color:var(--st-soft);
+}
+html body.studio-page #studio-rail details.rail-group[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #studio-rail details.rail-group>summary:hover{color:var(--st-ink);background:transparent}
+html body.studio-page #studio-rail .rail-group>*:not(summary){margin-left:0;margin-right:0}
+html body.studio-page #studio-rail .rail-group>*:not(summary):last-child{margin-bottom:1rem}
+html body.studio-page #studio-rail .at-group{
+  margin:0;padding:.55rem 0 .7rem;border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+html body.studio-page #studio-rail .at-group + .at-group{border-top:1px solid var(--st-line)}
+html body.studio-page #studio-rail .src-block>.at-group:first-of-type{border-top:1px solid var(--st-line)}
+html body.studio-page #studio-rail :is(.at-glab,.transform-label,.studio-ctrl-label){
+  display:block;margin:0 0 .45rem;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:650;line-height:1.35;
+  letter-spacing:0;text-transform:none;color:var(--st-ink);
+}
+html body.studio-page #studio-rail :is(.at-glab .hint,.hint,.src-hint,.transform-note,.studio-watch-note,.rail-about p,#shelf-hint){
+  font-family:var(--st-sans);font-size:.875rem;font-weight:400;line-height:1.5;
+  letter-spacing:0;text-transform:none;color:var(--st-soft);opacity:1;max-width:none;
+}
+html body.studio-page #studio-rail .transform-note{margin:.2rem 0 .85rem;font-size:.9375rem}
+html body.studio-page #studio-rail .at-chips{
+  display:flex;flex-wrap:wrap;gap:.15rem .3rem;
+  max-height:15.5rem;overflow-y:auto;scrollbar-width:thin;padding:.3rem;margin:0 -.3rem;
+}

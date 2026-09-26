@@ -168,3 +168,14 @@ def test_published_social_derivative_requires_exact_receipt() -> None:
 
     with pytest.raises(PublicationError, match="published social"):
         validate_record(record)
+
+
+def test_figure_result_column_must_name_one_of_its_columns() -> None:
+    record = valid_record()
+    figure = record["figures"][0]
+    figure["resultColumn"] = figure["columns"][-1]
+    validate_record(record)
+
+    figure["resultColumn"] = "A column the table does not have"
+    with pytest.raises(PublicationError, match="resultColumn"):
+        validate_record(record)

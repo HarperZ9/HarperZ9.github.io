@@ -144,104 +144,104 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 9261,
+      "byte_length": 9744,
       "extraction_sha256": "85215ef190719a8d2a2c303312bbb059c860068579efc325c1aa9bd5754ab472",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "f323fa77d6e8b949a599baff9afb407aa0ff082b3c076079d5e4a5f5feb9a038"
+      "sha256": "8e2bc5eacafed9b022dc1e294a89c9b7e48a7310123097b490b1cc6a6fa72713"
     },
     {
-      "byte_length": 9191,
+      "byte_length": 9811,
       "extraction_sha256": "e24298846b086eec6e415996516e7efcd7326b75c152f19062a41e4ccdd6686f",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume.html",
-      "sha256": "61fb2c85319ad5456cac75d956d2288efe544ce162b1b0259a64cbda99b3a6e2"
+      "sha256": "d597086b8ed3587853f4f6c56a516435d8a7c055726dc002728850fd9269b7a9"
     },
     {
-      "byte_length": 7006,
-      "extraction_sha256": "c9d2d6f29efd2666d354174257b405e204c7cfe5cd0b1843749f2b6ed272a3e0",
+      "byte_length": 7091,
+      "extraction_sha256": "a2481186fdfed7e624bc892a264f86e4a49917ae6cddc0d6f8f2698593d272e2",
       "format": "html",
       "lane_id": "page:portfolio",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "portfolio.html",
-      "sha256": "8b629e20bc59f834f376bf0eaf397311be19d0b0f2b14646d24b45ddee8775a4"
+      "sha256": "091cc446ad9633f161aeb538aff77ccd4a8ca6942e0b336ae6bca974a43481bc"
     },
     {
-      "byte_length": 4456,
+      "byte_length": 4548,
       "extraction_sha256": "7ede35a6897d35bb59d91082c2835f59b9921c07547bd63b93f42e8ec1332e95",
       "format": "html",
       "lane_id": "page:cover-letter",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cover-letter.html",
-      "sha256": "53769a21079dbf10518507625314ba3781e12fd76abbf8f883558cae763cad56"
+      "sha256": "fac734e4990cae7cb97be6e39957274cd92292ef3bfc60d73134cb69ee79f509"
     },
     {
-      "byte_length": 20300,
+      "byte_length": 21405,
       "extraction_sha256": "182a87038c8eb82fa04e84dfdc0231c78f05a44be9ff5917745088b98f813dae",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "87bb53fc5831282408212cf14b676bf8f70fe1cf27246cee4ca7500146c821c5"
+      "sha256": "d2768f880303ff4c1c703f0144bdd4d8ed0f3a4a1d3719c5aa855cbe72b585fe"
     },
     {
-      "byte_length": 4558,
+      "byte_length": 4650,
       "extraction_sha256": "46dffb0eee81183380646ffd48b3d78c18bc6933596b08ffbdb807f4e3cd38dc",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "dossier.html",
-      "sha256": "519855e68ab3786d9cec7343188b1c27e20e87d0e7dbc90f386931806ae031c5"
+      "sha256": "7f1b8cdb40afeae772927b3c753ac3587f1743a7b374700c7abe7a495c2469e6"
     },
     {
-      "byte_length": 7854,
+      "byte_length": 8485,
       "extraction_sha256": "2d6a989114bc10874f0d685a1b3ed424570a80dfdb026128dba30b75ffc9b9fc",
       "format": "html",
       "lane_id": "support-operations-qa",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-support-operations.html",
-      "sha256": "4b69c4f5dac91f13e64cb141c3f58189486c8a28558c38633403a6a9634665c0"
+      "sha256": "45280778140c4a1b96b150d62d7ec4d4c043156e85d00051b74aba85eb918c81"
     },
     {
-      "byte_length": 8024,
+      "byte_length": 8655,
       "extraction_sha256": "3e74f7d28791f54af6f69d6f8e492df320029ea1b1d83fb00947ee1339c53836",
       "format": "html",
       "lane_id": "evaluation-python-tools",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "4a5ed45236ef6e91ae2e85bba4ee842220b963111360132a9ef182310195ade2"
+      "sha256": "5b53998156584f01400fff8872e8309986611d8c48bab007b7775da93250a5de"
     },
     {
-      "byte_length": 7302,
+      "byte_length": 7933,
       "extraction_sha256": "f9dfd8940b3f4adf00f2fc3bb05ca6a314f5b7e6d909267acaf3229bbbc8f1b6",
       "format": "html",
       "lane_id": "public-operations",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-public-operations.html",
-      "sha256": "fbd2b4b2b5b76282a7e604119a7fb429f5d2ec0ee71210beccdc69d9c61990e7"
+      "sha256": "b961bbafa6b6df57212555e1455574c725e0be56a0b822b7c71a1955829a9269"
     },
     {
-      "byte_length": 7269,
+      "byte_length": 7900,
       "extraction_sha256": "901f584273e205d15e809446e584b9229bf7793f8fbe36ca9a85bd6f946b2fa5",
       "format": "html",
       "lane_id": "grounds",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-grounds.html",
-      "sha256": "bc83811083828eb1e139bbccf77a95b0fd99d5668b878831d02dc7d0acaff439"
+      "sha256": "de346ef445ef6fbeecdf96e1f47f7fee0ff9976ab60250551b70fadcd38992ba"
     }
   ],
   "generated_at_epoch": 1789931178,

@@ -13,49 +13,20 @@
 <meta property="og:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta property="og:url" content="https://harperz9.github.io/studio.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="Project Telos flagship card: Telos, the engine. See it and shape it, together with a model.">
+<meta property="og:image:alt" content="Telos card: Give model workflows durable contact with files, tools, memory, and time.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Studio &middot; Live media instrument &middot; Zain Dana Harper">
 <meta name="twitter:description" content="A live media instrument for rendering, measuring, transforming, and reading the frame, running entirely in your own browser.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <meta name="color-scheme" content="dark light">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="system/system.css?v=20260907-reading-completion">
-<link rel="stylesheet" href="system/instrument-forms.css?v=20260902-creative-chassis">
-<style>
-  /* the toolbar reads as clusters divided by a rule, left-aligned so every row
-     shares one edge instead of each centring on its own width (a ragged block).
-     The clusters carry no visible label by canon; the hairline between groups is
-     the division, and the four corner ticks on each control are the instrument. */
-  .render-toolbar{max-width:min(100%,928px);gap:.34rem 1.1rem;align-items:flex-start;justify-content:flex-start}
-  .rt-group{display:inline-flex;flex-wrap:wrap;align-items:center;padding:.12rem .1rem}
-  /* the ticks need air: at 1.6px the corner marks of neighbouring controls
-     collided into a hatch. This wins over the shared instrument rule (.1rem). */
-  .render-toolbar .rt-group{gap:.1rem .5rem}
-  .rt-group-lab{font-family:var(--mono);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--muted);padding:0 .26rem;user-select:none}
-  .rt-group .rt-btn{border-color:transparent;background:transparent;padding:.4em .55em;white-space:nowrap}
-  .rt-group .rt-btn:hover:not([disabled]){background:color-mix(in oklab,var(--ember) 12%,transparent);border-color:transparent}
-  .rt-group .rt-btn[aria-pressed="true"]{background:var(--ember);border-color:var(--ember);color:var(--void)}
-  .rt-group details.rt-plot summary.rt-btn{border-color:transparent;background:transparent}
-  /* the seed and algorithm shelves scroll instead of stacking a wall
-     (padding keeps the focus ring inside the clip box on edge rows) */
-  .at-chips{max-height:15.5rem;overflow-y:auto;scrollbar-width:thin;padding:.35rem}
-  /* source tabs sit uniform, no orphan widths */
-  .source-group [role="tab"]{width:100%}
-  /* laptop widths: the side columns give ground so the canvas keeps its stage */
-  @media (min-width:900px) and (max-width:1279.98px){
-    .studio-app{grid-template-columns:minmax(238px,17rem) minmax(0,1fr) minmax(272px,19rem)}
-  }
-  /* 1280 and up: trim the panel and rail from their system maxima (22rem/25rem)
-     so the centre column, the canvas and its toolbar, stays the widest region.
-     The hero should read as the hero; before this the two side columns together
-     (288+384) outweighed the 608 stage on a 1280 laptop. */
-  @media (min-width:1280px){
-    .studio-app{grid-template-columns:minmax(258px,19.5rem) minmax(0,1fr) minmax(300px,21.5rem)}
-  }
-</style>
-<link rel="stylesheet" href="system/instrument-editorial.css?v=20260907-instrument-readable-floor">
+<link rel="stylesheet" href="system/system.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/instrument-forms.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/instrument-editorial.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/studio-plate.css?v=20260925-studio-plate">
+<link rel="stylesheet" href="system/studio-deck.css?v=20260925-studio-plate">
+<link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
+<link rel="stylesheet" href="system/studio-modes.css?v=20260925-studio-plate">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -923,10 +894,10 @@
                 <button class="btn ghost" id="disc-model" type="button" title="Run the connected model to discover the law live (connect one in the chat dock)">Let the model discover</button>
                 <button class="btn ghost" id="disc-export" type="button" title="Export the verified law as a witnessed artifact other flagships can re-verify">Export artifact</button>
               </div>
-              <div id="disc-result" style="white-space:pre-wrap;color:#8a8a96;font-size:.78rem;margin-top:.5rem;min-height:2.4em"></div>
-              <div id="disc-cert" style="font-size:.78rem;margin-top:.4rem;line-height:1.5"></div>
+              <div id="disc-result" class="studio-readout studio-readout-pre"></div>
+              <div id="disc-cert" class="studio-readout"></div>
             </details>
-            <div id="disc-live" style="font-size:.8rem;margin-top:.3rem"></div>
+            <div id="disc-live" class="studio-readout"></div>
             <p class="src-hint">The system evolves in the canvas and the measurimeter perceives it. The model proposes which terms a conserved quantity is built from; a tool fits the weights; a sound verifier certifies it across independent initial conditions. The conserved value stays fixed (tiny drift) as the system moves.</p>
           </div>
         </div>
@@ -984,14 +955,17 @@
                 <button class="btn" id="show-verify" type="button" title="Re-integrate from the recorded literals, re-fit, re-hash, compare" disabled>Re-check</button>
                 <button class="btn ghost" id="show-export" type="button" title="Export the ground world and the canonical report JSON" disabled>Export</button>
               </div>
-              <div id="show-receipt" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;min-height:1.2em">no receipt yet</div>
-              <div id="show-verdict" style="font-size:.78rem;margin-top:.3rem;min-height:1.2em"></div>
+              <details class="studio-receipt" id="show-receipt-box" data-print="closed">
+                <summary>Receipt line</summary>
+                <div id="show-receipt" class="studio-readout studio-readout-data">no receipt yet</div>
+              </details>
+              <div id="show-verdict" class="studio-readout"></div>
             </details>
-            <div id="show-live" aria-live="polite" style="font-size:.8rem;margin-top:.3rem"></div>
-            <div id="show-doc" style="font-family:ui-monospace,monospace;font-size:.72rem;margin-top:.5rem;border-top:1px solid var(--hairline);padding-top:.5rem">
-              <p style="margin:0 0 .3rem"><code>Studio.connectModel(fn)</code> hands your model the identical readout JSON this scene speaks aloud: system, seed, invariant value, drift ratio, refusal verdict, receipt hash, and the measured frame colours.</p>
-              <p style="margin:0 0 .3rem">The studio-perception MCP serves the same channel to a local model, so a screen reader and a model perceive exactly the same numbers.</p>
-              <p style="margin:0">Keyboard: arrows step the focused control, S cycles the system, Space pauses, R replays, key V re-checks the receipt, E exports the world and report JSON. (M is reserved for sound and is not shipped in this version.)</p>
+            <div id="show-live" class="studio-readout" aria-live="polite"></div>
+            <div id="show-doc" class="studio-doc">
+              <p><code>Studio.connectModel(fn)</code> hands your model the identical readout JSON this scene speaks aloud: system, seed, invariant value, drift ratio, refusal verdict, receipt hash, and the measured frame colours.</p>
+              <p>The studio-perception MCP serves the same channel to a local model, so a screen reader and a model perceive exactly the same numbers.</p>
+              <p>Keyboard: arrows step the focused control, S cycles the system, Space pauses, R replays, key V re-checks the receipt, E exports the world and report JSON. (M is reserved for sound and is not shipped in this version.)</p>
             </div>
             <p class="src-hint">One orbit, integrated live by the site&rsquo;s own symplectic integrator; the discovery engine fits the conserved angular momentum from the trace; the same verifier visibly refuses a damped run. The scene is seeded, hashed, and re-checkable in this browser.</p>
           </div>
@@ -1019,6 +993,7 @@
         <summary>Studio notes</summary>
         <p>Render media, watch the measurements move, and export the frame or perception record. Animated sources - the living neural and seed-sound instruments, physics, the orbit, and screen capture - add a WebM button that records the motion itself; the file is named for the source and seed, so a seed's animation is reproducible. Receipts remain available when a source produces checkable evidence.</p>
       </details>
+      <div class="studio-export-slot" data-export-slot></div>
       <!-- The renderer console is secondary telemetry: it sits at the end of the one
            control scroll, below the active source's controls. -->
       <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
@@ -1068,16 +1043,58 @@
         <img id="sp-compare-img" alt="" decoding="async">
         <span id="sp-compare-tag">source</span>
       </div>
+      <!-- The plate's poster: the Studio's pillar art, shown until the first frame paints
+           (studio.js marks the stage .is-painted) and whenever scripts are off. The plate is
+           black in both themes, so it carries the art's void-ground cut. -->
+      <figure class="stage-poster"><img src="art/aperture/pillar-studio-dark.svg" width="1200" height="900" alt="A bright core inside a ring that breaks into offset slices, like a glitching signal." decoding="async"></figure>
+      <noscript><p class="stage-nojs">The Studio draws in your browser; turn on JavaScript to start.</p></noscript>
     </div>
     <div class="render-toolbar" id="render-toolbar" role="toolbar" aria-label="Render controls">
-      <div class="rt-group" role="group" aria-label="View">
-        <span class="rt-group-lab" aria-hidden="true">view</span>
+      <!-- The four keys a visit uses most stay in one row at every width. On a phone, and
+           on a desk narrower than 1280px or shorter than 760px, the other clusters fold
+           behind "More controls"; the inline script after the toolbar keeps the drawer open
+           on a larger desk, where its summary is hidden. -->
+      <div class="rt-group rt-primary" role="group" aria-label="Frame">
+        <span class="rt-group-lab" aria-hidden="true">frame</span>
       <button class="rt-btn" id="rt-playpause" type="button" aria-pressed="false"
         title="Pause or resume animated sources" aria-label="Pause animated source" disabled>
         <span class="rt-ico" aria-hidden="true">&#9208;</span> <span id="rt-playpause-label">Pause</span></button>
       <button class="rt-btn" id="rt-reset" type="button" title="Restore the source's default framing"
         aria-label="Reset view to default framing">
         <span class="rt-ico" aria-hidden="true">&#10226;</span> Reset view</button>
+      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
+        aria-label="Snapshot: freeze this frame and ask the model">
+        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
+      <details class="rt-plot" id="rt-export">
+        <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
+          aria-label="Export menu: choose a format across disciplines">
+          <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
+        <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab">quick</span>
+            <div class="rt-plot-chips">
+      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
+        aria-label="Export perception JSON">
+        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
+            </div>
+          </div>
+          <div class="rt-plot-row">
+            <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
+            <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
+              <button type="button" class="chip active" data-export-paper="a4" aria-pressed="true">a4</button>
+              <button type="button" class="chip" data-export-paper="a3" aria-pressed="false">a3</button>
+              <button type="button" class="chip" data-export-paper="letter" aria-pressed="false">letter</button>
+            </div>
+          </div>
+          <div id="rt-export-list" class="rt-export-list"></div>
+          <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
+        </div>
+      </details>
+      </div>
+      <details class="deck-more" id="deck-more" open>
+        <summary class="deck-more-toggle">More controls</summary>
+      <div class="rt-group" role="group" aria-label="View">
+        <span class="rt-group-lab" aria-hidden="true">view</span>
       <button class="rt-btn" id="rt-fit-fill" type="button" aria-pressed="false"
         title="Toggle canvas between Fit (letterboxed) and Fill (cover)"
         aria-label="Toggle Fit or Fill canvas scaling">
@@ -1111,9 +1128,6 @@
       </div>
       <div class="rt-group" role="group" aria-label="Send">
         <span class="rt-group-lab" aria-hidden="true">send</span>
-      <button class="rt-btn" id="rt-snapshot" type="button" title="Freeze this frame and ask the model"
-        aria-label="Snapshot: freeze this frame and ask the model">
-        <span class="rt-ico" aria-hidden="true">&#9677;</span> Snapshot</button>
       <button class="rt-btn" id="rt-retro" type="button" title="Send this frame to the Retro Engine"
         aria-label="Send this frame to the Retro Engine to pixelate and run effects on it">
         <span class="rt-ico" aria-hidden="true">&#9638;</span> To Retro</button>
@@ -1126,31 +1140,6 @@
       <button class="rt-btn" id="rt-export-png"  type="button" title="Save the current frame as a PNG image"
         aria-label="Export PNG image">
         <span class="rt-ico" aria-hidden="true">&#8659;</span> PNG</button>
-      <details class="rt-plot" id="rt-export">
-        <summary class="rt-btn" title="Export the frame across disciplines: raster, print, design, textile, text, relief"
-          aria-label="Export menu: choose a format across disciplines">
-          <span class="rt-ico" aria-hidden="true">&#8659;</span> Export as</summary>
-        <div class="rt-plot-pop" id="rt-export-pop" aria-label="Export formats">
-          <div class="rt-plot-row">
-            <span class="rt-plot-lab">quick</span>
-            <div class="rt-plot-chips">
-      <button class="rt-btn" id="rt-export-json" type="button" title="Save the witnessed perception certificate as JSON"
-        aria-label="Export perception JSON">
-        <span class="rt-ico" aria-hidden="true">&#8659;</span> Perception JSON</button>
-            </div>
-          </div>
-          <div class="rt-plot-row">
-            <span class="rt-plot-lab" id="export-paper-lab">pdf paper</span>
-            <div class="rt-plot-chips" role="group" aria-labelledby="export-paper-lab">
-              <button type="button" class="chip active" data-export-paper="a4" aria-pressed="true">a4</button>
-              <button type="button" class="chip" data-export-paper="a3" aria-pressed="false">a3</button>
-              <button type="button" class="chip" data-export-paper="letter" aria-pressed="false">letter</button>
-            </div>
-          </div>
-          <div id="rt-export-list" class="rt-export-list"></div>
-          <p class="rt-plot-note">Design, textile, and text formats read the live perception packet; PDF paper sets the print page; relief exports a luminance mesh.</p>
-        </div>
-      </details>
       <details class="rt-plot" id="rt-plot">
         <summary class="rt-btn" id="rt-export-svg" title="Plot the current frame as pen line art: choose style, pens, paper, and format"
           aria-label="Plot options: style, pens, paper, and format">
@@ -1231,7 +1220,11 @@
         Quality: <span id="rt-quality-val">Standard</span></button>
       <div id="tp-pane-container" class="tp-pane-container"></div>
       </div>
+      </details>
     </div>
+    <script>(function(){var d=document.getElementById("deck-more");if(!d||!window.matchMedia)return;var m=window.matchMedia("(min-width: 1280px) and (min-height: 760px)");var s=function(){d.open=m.matches;};s();if(m.addEventListener)m.addEventListener("change",s);else if(m.addListener)m.addListener(s);})();</script>
+    <details class="engine-status">
+      <summary>Engine status</summary>
     <div class="engine-statusbar" id="engine-statusbar" aria-label="Engine runtime status">
       <span><b>Graph</b> <span id="engine-status-graph">ready</span></span>
       <span><b>Backend</b> <span id="engine-status-backend">probing</span></span>
@@ -1241,6 +1234,7 @@
       <span><b>Media IR</b> <span id="engine-status-media">probing</span></span>
       <span><b>Readback</b> <span id="engine-status-readback">-</span></span>
     </div>
+    </details>
   </section>
 
   <!-- RIGHT PANEL: live perception, measured channels, receipts, and secondary chat. -->
@@ -1249,12 +1243,12 @@
       <section class="panel" id="studio-frame" aria-label="Live perception summary">
         <h2>Live Perception
           <span class="mm-live" id="mm-live" hidden aria-hidden="true"><span class="mm-dot"></span>live</span></h2>
-        <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
         <div class="row"><span class="rk">size</span><span class="rv" id="sc-size">-</span></div>
         <div class="grounds" id="sc-feats" role="group" aria-label="Visual feature readings"></div>
         <p class="mm-describe" id="mm-describe"></p>
         <details class="mm-fullread">
           <summary>full read &middot; the no-vision view</summary>
+          <div class="row"><span class="rk">perceptual hash</span><span class="rv" id="sc-phash" aria-label="Perceptual hash">-</span></div>
           <p class="mm-long" id="mm-long">Render a frame and the long-form read appears here: palette with proportions, the 3&times;3 spatial grid, edge directions, and symmetry.</p>
           <p class="mm-shapes" id="mm-shapes" hidden aria-label="Salient forms: hue, centre, area share"></p>
           <div class="mm-readmode" id="mm-readmode" role="group" aria-label="Luminance render mode">
@@ -1425,7 +1419,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260902-creative-chassis"></script>
+<script type="module" src="system/studio.js?v=20260925-studio-plate"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

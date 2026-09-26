@@ -8,7 +8,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FRESH_STAMP = "20260909-pillar-navigation"
+# 25 September 2026: the route registry, home-art.js and nav.js ASSET_V move to the
+# void-and-bone stamp. nav.js itself keeps its stamp; frozen archives link it.
+FRESH_STAMP = "20260925-void-plates"
 NAV_CACHE_STAMP = "20260909-pillar-navigation"
 
 

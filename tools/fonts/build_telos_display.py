@@ -149,7 +149,7 @@ def build_font(out_dir: Path, *, root: Path | None = None) -> tuple[Path, Path]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build the generated Project Telos display face.")
+    parser = argparse.ArgumentParser(description="Build the generated Zentropy Labs display face.")
     parser.add_argument("--out-dir", type=Path, default=Path("system/fonts"))
     args = parser.parse_args()
     ttf_path, woff2_path = build_font(args.out_dir)

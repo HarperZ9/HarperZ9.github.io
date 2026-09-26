@@ -119,7 +119,8 @@ def test_catalog_preserves_cross_domain_breadth_without_repeating_secondary_nois
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
     assert 'class="catalog-evidence"' in primary_row
     assert '<details class="product-record-details">' in secondary_row
-    assert "<summary>Why this record appears here</summary>" in secondary_row
+    assert "<summary>Why this record appears here<span class=\"visually-hidden\">: Flywheel</span></summary>" in secondary_row
+    assert "<p class=\"product-limit\"><strong>Limit:</strong>" in secondary_row
     assert f"Primary area: {domain_label(flywheel['primaryDomain'])}." in secondary_row
     assert f"Also appears here because it serves {domain_label('developer-infrastructure')}." in secondary_row
 

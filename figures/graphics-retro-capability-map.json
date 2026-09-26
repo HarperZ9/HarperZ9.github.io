@@ -33,7 +33,7 @@
           "id": "retro-engine",
           "label": "Retro Engine",
           "status": "verified",
-          "stateLabel": "browser graphics and sound studio",
+          "stateLabel": "embedded browser visual and audiovisual studio",
           "group": "graphics-retro",
           "nodeType": "system"
         },
@@ -65,7 +65,7 @@
           "id": "engine-revival",
           "label": "Engine Revival",
           "status": "verified",
-          "stateLabel": "software-preservation tooling",
+          "stateLabel": "archival/revival evidence platform",
           "group": "graphics-retro",
           "nodeType": "system"
         },
@@ -73,7 +73,7 @@
           "id": "brender-archival",
           "label": "BRender Archival",
           "status": "verified",
-          "stateLabel": "focused engine-restoration lab",
+          "stateLabel": "BRender restoration and build-test harness",
           "group": "graphics-retro",
           "nodeType": "system"
         },
@@ -97,7 +97,7 @@
           "id": "enb-runtime-core",
           "label": "ENB Runtime Core",
           "status": "verified",
-          "stateLabel": "ENB host lifecycle library",
+          "stateLabel": "embedded runtime library",
           "group": "graphics-retro",
           "nodeType": "system"
         },
@@ -105,7 +105,7 @@
           "id": "skyrimbridge",
           "label": "SkyrimBridge",
           "status": "verified",
-          "stateLabel": "Skyrim runtime integration platform",
+          "stateLabel": "Skyrim plugin linking game data to shaders and tools",
           "group": "graphics-retro",
           "nodeType": "system"
         }

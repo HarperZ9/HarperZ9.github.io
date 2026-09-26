@@ -3,6 +3,46 @@
 
 The renderer consumes reviewed JSON. It never synthesizes claims from fetched
 web pages. Source-change detection is handled by a separate script.
+
+Rebuild the live page from its reviewed edition, for example:
+
+    python tools/build_frontier_safety_briefing.py frontier-safety/data/editions/2026-09-23.json
+
+An identical rebuild rewrites only outputs whose bytes change. Dated archives
+are immutable: each keeps the shell it shipped with (see render_html).
+
+Conclusions. Each edition should carry an optional "conclusions" list: what its
+record lets a reader conclude, rendered under "What this edition lets us conclude"
+before the lanes. Each entry holds exactly:
+
+    id               short lowercase id, unique in the edition ("e1")
+    scope            "edition", or "cross_edition" (must cite an earlier edition;
+                     renders under "Across editions")
+    strength         "shows" (holds with no credible alternative left open),
+                     "points_to" (consistent, alternatives remain) or
+                     "grey" (unresolved; the body says what is missing)
+    lead             the conclusion as one plain sentence of 35 words or fewer,
+                     at its strength. It renders in bold beside its strength
+                     word; everything else sits in a closed "Evidence and what
+                     would change this" disclosure
+    body             list of paragraphs that support the lead, labelled
+                     observed, inferred (with its strength) and unknown
+    evidence         typed references that must resolve: "item:<item id>",
+                     "control:<exact control claim>", "source:<URL cited in this
+                     edition>" or "edition:<earlier date with a dated archive>"
+    would_change_it  the finding that would move the conclusion
+
+Keep observed, inferred and unknown apart; treat an organization's statement about
+itself as its claim; explain patterns by incentives, costs, rules and information
+flow; test every pattern on every organization in the edition. Text refuses em
+dashes, local paths, URLs, hostnames and internal identifiers (record and source
+ids, file names, digests); cite those in evidence. An edition already published
+takes its conclusions from a companion record, data/conclusions/<date>.json,
+outside its digest and its dated artifacts. The builder refuses a companion record
+for an unpublished edition or one whose checksum differs from the value sealed in
+data/conclusions/checksums.json, and renders each companion record on its own dated
+page, frontier-safety/conclusions/<date>.html, linked from the live page. Full
+rules: tools/frontier_safety_conclusions.py.
 """
 
 from __future__ import annotations
@@ -14,6 +54,7 @@ import json
 import os
 import re
 import shutil
+import sys
 import tempfile
 from copy import deepcopy
 from datetime import date as calendar_date
@@ -21,11 +62,21 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse
 
+# The plate shell lives beside this file. Test loaders import the builder by path, so
+# the directory goes on sys.path before the sibling import.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import frontier_safety_conclusions as conclusions  # noqa: E402
+import frontier_safety_plate as plate  # noqa: E402
+import frontier_safety_conclusions_record as conclusion_record  # noqa: E402
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_NAV_ASSET_VERSION = "20260909-pillar-navigation"
 REVEAL_ASSET_VERSION = "20260902-creative-chassis"
 FRONTIER_CSS_ASSET_VERSION = "20260907-reading-completion"
+# Archives up to this date shipped with the shared-site shell and stay byte-frozen.
+# The live page and every later archive use the plate shell (tools/frontier_safety_plate.py).
+SITE_SHELL_LAST_ARCHIVE_DATE = "2026-09-23"
 ARCHIVE_NAV_ASSET_VERSIONS = {
     "2026-08-24": CURRENT_NAV_ASSET_VERSION,
     "2026-08-25": CURRENT_NAV_ASSET_VERSION,
@@ -72,6 +123,7 @@ class EditionError(ValueError):
 def _canonical_payload(edition: dict) -> bytes:
     payload = deepcopy(edition)
     payload.pop("edition_sha256", None)
+    payload.pop(conclusions.ADDENDUM_KEY, None)  # added after publication; never in the record
     return json.dumps(
         payload,
         ensure_ascii=False,
@@ -276,6 +328,10 @@ def validate_edition(edition: dict) -> None:
     if len(linkedin) > 3000:
         raise EditionError("social.linkedin exceeds 3000 characters")
     _validate_social_publication(edition)
+    try:
+        conclusions.validate(edition)
+    except conclusions.ConclusionError as exc:
+        raise EditionError(str(exc)) from exc
 
 
 def _e(value: object) -> str:
@@ -476,19 +532,43 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 """
 
 
-def render_html(edition: dict, *, archive: bool) -> str:
-    """Render the live shared-site shell while preserving published archives.
+def render_html(edition: dict, *, archive: bool, records: tuple[str, ...] = ()) -> str:
+    """Render an edition while preserving every published archive byte for byte.
 
-    The inaugural 2026-08-24 archive shipped with the document shell. Its HTML
-    is an immutable publication artifact, so it continues through the legacy
-    renderer. The live page and every later archive use the site-wide
-    shared site presentation.
+    The inaugural 2026-08-24 archive shipped with the document shell, and the
+    archives through SITE_SHELL_LAST_ARCHIVE_DATE shipped with the shared-site
+    shell. Their HTML is an immutable publication artifact, so each continues
+    through the renderer it shipped with. The live page and every later archive
+    use the plate shell: a poster title, the edition as a dated plate, the
+    briefing cover as its art plate and numbered hairline sections.
     """
 
     date = edition["edition_date"]
     if archive and date == "2026-08-24":
         return _render_legacy_html(edition, archive=True)
+    if archive and date <= SITE_SHELL_LAST_ARCHIVE_DATE:
+        return _render_site_shell_html(edition, archive=True)
+    nav_version = (
+        ARCHIVE_NAV_ASSET_VERSIONS.get(date, CURRENT_NAV_ASSET_VERSION)
+        if archive
+        else CURRENT_NAV_ASSET_VERSION
+    )
+    return plate.render_plate_html(
+        edition,
+        archive=archive,
+        digest=edition_sha256(edition),
+        controls_caption=_render_controls_caption(date),
+        assets=plate.ShellAssets(
+            nav=nav_version, reveal=REVEAL_ASSET_VERSION, site_css=FRONTIER_CSS_ASSET_VERSION
+        ),
+        records=() if archive else records,
+    )
 
+
+def _render_site_shell_html(edition: dict, *, archive: bool) -> str:
+    """The shared-site shell of the 2026-08-25 to 2026-09-23 archives. Frozen."""
+
+    date = edition["edition_date"]
     if archive:
         root_prefix = "../../"
         css_href = f"../frontier-safety-site.css?v={FRONTIER_CSS_ASSET_VERSION}"
@@ -763,6 +843,32 @@ def _publish_atomically(outputs: dict[Path, bytes], output_root: Path) -> None:
                     pass
 
 
+def _live_edition(rendered: dict, edition_path: Path) -> dict:
+    """The record plus the conclusions addendum of an already published edition, if any."""
+    if conclusions.ADDENDUM_KEY in rendered:
+        raise EditionError(f"{conclusions.ADDENDUM_KEY} belongs in data/conclusions/<date>.json")
+    try:
+        addendum = conclusion_record.load_addendum(edition_path.parent.parent, rendered["edition_date"])
+    except conclusions.ConclusionError as exc:
+        raise EditionError(str(exc)) from exc
+    live = rendered if addendum is None else {**rendered, conclusions.ADDENDUM_KEY: addendum}
+    validate_edition(live)
+    return live
+
+
+def _conclusion_record_pages(edition_path: Path, fs_root: Path, live: dict) -> dict[Path, str]:
+    """The dated page of every companion record, so each survives the next edition."""
+    assets = plate.ShellAssets(
+        nav=CURRENT_NAV_ASSET_VERSION, reveal=REVEAL_ASSET_VERSION, site_css=FRONTIER_CSS_ASSET_VERSION
+    )
+    try:
+        return conclusion_record.record_pages(
+            edition_path.parent.parent, fs_root, live, caption=_render_controls_caption, assets=assets
+        )
+    except conclusions.ConclusionError as exc:
+        raise EditionError(str(exc)) from exc
+
+
 def build(edition_path: Path, output_root: Path = ROOT) -> dict:
     edition = json.loads(edition_path.read_text(encoding="utf-8"))
     validate_edition(edition)
@@ -770,8 +876,10 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
     rendered = deepcopy(edition)
     rendered["edition_sha256"] = digest
     date = rendered["edition_date"]
+    live = _live_edition(rendered, edition_path)
 
     fs_root = output_root / "frontier-safety"
+    record_pages = _conclusion_record_pages(edition_path, fs_root, live)
     history_path = fs_root / "data" / "history.json"
     archive_json_path = fs_root / "data" / "archive" / f"{date}.json"
     dated_outputs = {
@@ -785,10 +893,11 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
         ),
     }
     outputs = {
-        fs_root / "data" / "current.json": _json_bytes(rendered),
+        fs_root / "data" / "current.json": _json_bytes(live),
         output_root / "frontier-safety.html": _text_bytes(
-            render_html(rendered, archive=False)
+            render_html(live, archive=False, records=tuple(path.stem for path in record_pages))
         ),
+        **{path: _text_bytes(page) for path, page in record_pages.items()},
         **dated_outputs,
     }
     history = _load_history(history_path)

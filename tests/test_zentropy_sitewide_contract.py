@@ -24,38 +24,66 @@ NON_DEPLOYABLE_HTML_DIRS = {
 DEFAULT_ASSET_REVISION = "20260902-creative-chassis"
 READING_CASCADE_REVISION = "20260907-reading-completion"
 THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
+# 25 September 2026, void-and-bone integration: every stylesheet and script the
+# pass changed gets one reviewed revision, bumped on every page, generator and
+# builder that links it. Three stamps stay behind on purpose. nav.js and doc.css
+# keep theirs because the frozen briefing archives and three held essays link
+# them and may not change; frontier-safety-site.css keeps its stamp for the same
+# archives. Their consumers still refresh: nav.js carries a new ASSET_V, and
+# doc.css imports reading.css at the new revision.
+VOID_PLATES_REVISION = "20260925-void-plates"
+VOID_SHEETS_REVISION = "20260925-void-sheets"
+VOID_INTEGRATION_REVISION = "20260925-void-integration"
+STUDIO_PLATE_REVISION = "20260925-studio-plate"
+READING_IMPORT_REVISION = VOID_PLATES_REVISION
+SYSTEM_CSS_REVISION = VOID_PLATES_REVISION
 REVIEWED_ASSET_REVISIONS = {
-    "system/career.css": "20260920-restoration",
+    "system/career.css": VOID_PLATES_REVISION,
+    "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
     "system/bulletin-work.js": "20260909-open-work",
     "system/font-marketplace.css": "20260909-font-marketplace-port",
     "system/font-specimen.js": "20260909-font-marketplace-port",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
+    "frontier-safety/frontier-safety-edition.css": VOID_PLATES_REVISION,
     "system/nav.js": "20260909-pillar-navigation",
     # 25 September 2026: the human-first notebook redesign adds the art family and
     # the notebook sheet as shared, reviewed assets.
     "system/art.css": "20260925-human-notebook",
-    "system/notebook-sheet.css": "20260925-human-notebook",
-    # 25 September 2026, evening: the void-and-bone surface layer.
-    "system/plate.css": "20260925-void-plates",
-    "system/site-index.css": "20260909-pillar-navigation",
-    "system/site-index.js": "20260909-pillar-navigation",
+    # 25 September 2026, evening: the void-and-bone surface layer. plate.css and
+    # tokens.css shipped once under earlier 25 September stamps, so the
+    # integration pass gives them a stamp of their own.
+    "system/plate.css": VOID_INTEGRATION_REVISION,
+    "system/tokens.css": VOID_INTEGRATION_REVISION,
+    "system/notebook-sheet.css": VOID_SHEETS_REVISION,
+    "system/figure.css": VOID_SHEETS_REVISION,
+    "system/site-index.css": VOID_PLATES_REVISION,
+    "system/site-index.js": VOID_PLATES_REVISION,
+    "system/catalog.css": VOID_PLATES_REVISION,
+    "system/hubs.css": VOID_PLATES_REVISION,
+    "system/hubs-fonts.css": VOID_PLATES_REVISION,
+    "system/hubs-guides.css": VOID_PLATES_REVISION,
+    "system/print.css": VOID_PLATES_REVISION,
+    "system/studio.js": STUDIO_PLATE_REVISION,
+    "system/studio-plate.css": STUDIO_PLATE_REVISION,
+    "system/studio-deck.css": STUDIO_PLATE_REVISION,
+    "system/studio-sheet.css": STUDIO_PLATE_REVISION,
+    "system/studio-modes.css": STUDIO_PLATE_REVISION,
+    "system/loom-studio.js": VOID_PLATES_REVISION,
+    "system/retro-studio.js": VOID_PLATES_REVISION,
+    "img/og/cards-data.js": VOID_PLATES_REVISION,
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
     "system/theme.js": THEME_PREFERENCES_REVISION,
     "system/theme.css": THEME_PREFERENCES_REVISION,
     "system/type-specimen.css": "20260907",
-    "system/system.css": READING_CASCADE_REVISION,
+    "system/system.css": SYSTEM_CSS_REVISION,
     "system/doc.css": READING_CASCADE_REVISION,
-    "system/publication-article.css": READING_CASCADE_REVISION,
-    "system/figure.css": "20260906-figure-presentation",
-    "system/report-editorial.css": "20260906",
-    "system/instrument-editorial.css": "20260907-instrument-readable-floor",
-    "system/demo-editorial.css": "20260906-demo-editorial",
-    # 2026-09-25 human-first notebook: the shared token file and the notebook
-    # sheet module are new files, stamped once for this redesign.
-    "system/tokens.css": "20260925-human-notebook",
-    "system/notebook-sheet.css": "20260925-human-notebook",
+    "system/publication-article.css": VOID_PLATES_REVISION,
+    "system/report-editorial.css": VOID_PLATES_REVISION,
+    "system/instrument-editorial.css": VOID_PLATES_REVISION,
+    "system/instrument-forms.css": VOID_PLATES_REVISION,
+    "system/demo-editorial.css": VOID_PLATES_REVISION,
 }
 READING_IMPORTING_STYLESHEETS = (
     "system/system.css",
@@ -92,6 +120,11 @@ FIGURE_CONTRAST_PAIRS = (
     (".publication-figure-page .publication-evidence dt", ".publication-figure-page"),
     (".publication-figure-page .publication-evidence dd", ".publication-figure-page"),
     ('.publication-figure-page section[aria-label="Figure sources"]', ".publication-figure-page"),
+    # 25 September 2026, void-and-bone: sheets sit on the calm page ground, so ink
+    # and muted text are also measured against --figure-page itself.
+    ("body.figure-document", "body.figure-document"),
+    (".publication-figure-page .publication-evidence dd", "body.figure-document"),
+    (".figure-relation-card dt", "body.figure-document"),
 )
 # 2026-09-25 human-first notebook: captions and definition labels are reader
 # text, so they move from Conso to Hanken Grotesk at 14px or more. Conso keeps
@@ -370,7 +403,14 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav
     assert 'menuGroup("Explore", [{ label: "Site index", href: "site-index.html"' in nav
     assert 'classList.contains("studio-page")' in nav
-    assert 'import("./generative-field.js")' in nav
+    # Every importer names the same versioned URL, so one page never holds two
+    # copies of the engine (nav.js, studio.js, loom-studio.js, retro-studio.js
+    # and the gallery's inline module).
+    assert f'import("./generative-field.js?v={VOID_PLATES_REVISION}")' in nav
+    assert 'import("./generative-field.js")' not in nav
+    for rel in ("system/studio.js", "system/loom-studio.js", "system/retro-studio.js"):
+        assert f'import("./generative-field.js?v={VOID_PLATES_REVISION}")' in read(rel), rel
+    assert f'"./system/generative-field.js?v={VOID_PLATES_REVISION}"' in read("gallery.html")
     assert 'import("./cursor-field.js")' in nav
     assert f'import("./theme-entry.js?v={THEME_PREFERENCES_REVISION}")' in nav
 
@@ -629,23 +669,23 @@ def test_shared_frontend_assets_use_consistent_reviewed_cache_revisions() -> Non
 
 
 def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -> None:
-    expected_import = f'@import url("reading.css?v={READING_CASCADE_REVISION}");'
+    expected_import = f'@import url("reading.css?v={READING_IMPORT_REVISION}");'
     for rel in READING_IMPORTING_STYLESHEETS:
         first_line = read(rel).splitlines()[0]
         assert first_line == expected_import, f"{rel} must refresh its reading.css import"
 
     expected_generator_urls = {
         "scripts/analytics-page.mjs": (
-            f"../system/system.css?v={READING_CASCADE_REVISION}",
+            f"../system/system.css?v={SYSTEM_CSS_REVISION}",
         ),
         "scripts/render-system-pages.mjs": (
-            f"system/system.css?v={READING_CASCADE_REVISION}",
+            f"system/system.css?v={SYSTEM_CSS_REVISION}",
         ),
         "scripts/system-record-head.mjs": (
-            f"/system/system.css?v={READING_CASCADE_REVISION}",
+            f"/system/system.css?v={SYSTEM_CSS_REVISION}",
         ),
         "tools/build_publications.py": (
-            f'ASSET_REVISION = "{READING_CASCADE_REVISION}"',
+            f'ASSET_REVISION = "{VOID_PLATES_REVISION}"',
             'system/publication-article.css?v={ASSET_REVISION}',
         ),
         "tools/render_corpus.py": (
@@ -660,6 +700,8 @@ def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -
         "system/doc.css?v=20260902-creative-chassis",
         "system/publication-article.css?v=20260905-article-reading",
         "../system/publication-article.css?v=20260905-article-reading",
+        f"system/system.css?v={READING_CASCADE_REVISION}",
+        f"system/publication-article.css?v={READING_CASCADE_REVISION}",
     )
 
     for rel, expected_urls in expected_generator_urls.items():
@@ -691,7 +733,7 @@ def test_reading_cache_negative_control_rejects_stale_parent_revision() -> None:
 
     assert error is not None
     assert "system/system.css?v=20260902-creative-chassis" in error
-    assert f"expected ?v={READING_CASCADE_REVISION}" in error
+    assert f"expected ?v={SYSTEM_CSS_REVISION}" in error
 
 
 def test_asset_revision_negative_control_rejects_wrong_reviewed_revision() -> None:
@@ -706,7 +748,7 @@ def test_asset_revision_negative_control_rejects_wrong_reviewed_revision() -> No
 
     assert error is not None
     assert "system/report-editorial.css?v=20260902-creative-chassis" in error
-    assert "expected ?v=20260906" in error
+    assert f"expected ?v={VOID_PLATES_REVISION}" in error
 
 
 def test_asset_revision_negative_control_rejects_impostor_reviewed_path() -> None:

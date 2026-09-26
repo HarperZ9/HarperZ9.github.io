@@ -314,7 +314,7 @@ function MissionFrame() {
   return (
     <section id="mission" className="section mission-section" aria-labelledby="mission-title">
       <div className="section-heading">
-        <h2 id="mission-title">Mission: re-derivable verification</h2>
+        <h2 id="mission-title">Mission: <span className="nowrap">re-derivable</span> verification</h2>
         <p className="section-lead">
           Re-derivable means another person can rerun the same check on the same evidence and reach the same verdict.
         </p>
@@ -383,7 +383,7 @@ const RECENT_WORK = [
     href: "/frontier-safety.html",
     action: "Read the current edition",
     cover: "cover-frontier-safety",
-    alt: "A drawn instrument field with a bright core, in the site's aperture art style.",
+    alt: "A bright core ringed by fifty-two fine tick marks, one of them drawn long past the outer rings.",
   },
 ];
 
@@ -655,7 +655,7 @@ function CapabilityOverview() {
         <article className="evidence-figure-card" data-evidence-figure-card>
           <h3>164-task model pass@1 comparison</h3>
           <a href="/analytics/model-pass-at-1-comparison.html" aria-label="Open model pass@1 comparison chart and data table">
-            <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="1120" height="334" loading="lazy" />
+            <img className="research-figure-image" src="/analytics/model-pass-at-1-comparison.svg" alt="Paired 164-task pass-at-one result: base Qwen 14B passed 141 tasks and Flywheel 14B passed 136; the difference was not statistically significant." width="400" height="521" loading="lazy" />
           </a>
           <p className="chart-takeaway-home"><strong>Takeaway:</strong> base Qwen 14B passed 141 of the 164 tasks and Flywheel 14B passed 136. The difference is not statistically significant.</p>
           <p><strong>How to read this:</strong> each bar is the share of the 164 tasks a model passed on its first try, on a scale that starts at zero.</p>
