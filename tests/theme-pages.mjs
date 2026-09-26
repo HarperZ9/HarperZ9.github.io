@@ -33,7 +33,8 @@ try {
               await page.waitForFunction(expected => {
                 const root = document.documentElement;
                 return root.dataset.theme === expected && getComputedStyle(document.body).backgroundColor ===
-                  (expected === "light" ? "rgb(250, 250, 248)" : "rgb(16, 20, 22)");
+                  // 2026-09-25: the void-and-bone surface sets the grounds (bone #ebe5d8, void #060608).
+                  (expected === "light" ? "rgb(235, 229, 216)" : "rgb(6, 6, 8)");
               }, resolved, { timeout: 5000 });
               assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `${route} ${width} ${mode}`);
               if (route === "studio.html") {

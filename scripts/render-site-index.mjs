@@ -11,6 +11,7 @@ const pillars = [
   ['Systems', 'flywheel', 'Flywheel and tools', 'flywheel.html', 'Start with the central engine, then explore its workflows and independently useful tools.'],
   ['Security', 'security', 'Safety, verification and privacy', 'security.html', 'Inspect controls, evidence boundaries and security projects.'],
   ['Research', 'research', 'Research and writing', 'research.html', 'Read publications, source-backed essays and evaluation work.'],
+  ['Who Knew First', 'who-knew-first', 'Who Knew First', 'who-knew-first.html', 'Read the investigation of nine 2026 AI agent incidents: who held the facts, and who told the public first.'],
   ['Studio', 'studio', 'Studio and graphics', 'studio.html', 'Explore rendering, restoration, generative work and media.'],
   ['Fonts', 'fonts', 'Fonts and typography', 'fonts.html', 'Browse type families, previews and specimens.'],
   ['Work', 'work', 'Work and collaboration', 'hire.html', 'Find background, experience and ways to work together.'],

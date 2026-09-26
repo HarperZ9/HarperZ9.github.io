@@ -312,7 +312,10 @@ RELEASE_PATHS = (
 # September 25, 2026, evening: the void-and-bone redesign (plate.css surface, poster
 # home bundle, art covers, Articulate page and record, Flywheel 1.0.4 facts, the
 # sandbox figure, capability-map and registry updates, publication listings).
-REVIEWED_RELEASE_SHA256 = "489b6b90b2b11b2a56e70d5b65ff9d15d55a9473ab7dc3c90313ea0295dc9d96"
+# September 25, 2026, 20:00: author-approved essay rewrites ship; descriptions fit
+# the 160-character limit, the surface moves into tokens.css for no-JS readers, and
+# the site index regains the Who Knew First pillar.
+REVIEWED_RELEASE_SHA256 = "5cbb20957c906bc77f8855fd3b0be2269b13e933758165a97800ce62fff94783"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

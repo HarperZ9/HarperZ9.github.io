@@ -54,11 +54,8 @@ def test_no_receipt_preserves_argument_and_voice() -> None:
         "no receipt, no accept",
         "finding integration through abstraction",
         "I call it review debt",
-        # Plain-language revision, 25 September 2026: the slogan's
-        # "not the confidence" clause tripped the corrective-negation check;
-        # the meaning (ask for evidence of an outside check, discount
-        # certainty) is kept in the new wording and the sentence after it.
-        "ask for the witness, and never mind the confidence",
+        # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
+        "ask for the witness, not the confidence",
         "verified, drift, or unverifiable",
         "The search boundary moved.",
         "The proof boundary did not move.",

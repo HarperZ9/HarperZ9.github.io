@@ -8,8 +8,8 @@
       "form": "public-interest analysis",
       "published_at": "2026-09-01",
       "updated_at": "2026-09-01",
-      "record_sha256": "cdfc78e058b5a4238d9137b64e3ef4af21ee7503cffeaaa4768271fab9fe45a4",
-      "idempotency_key": "c9422336b1ebcface69677a86ebf583fb1145d6a46de8618502edcdfccfc1beb"
+      "record_sha256": "a252e243e592c496478200a73d95efe275e95476aae6fe67abdb9d3e0bf8fea6",
+      "idempotency_key": "27863f0aa3ff1ad15ce7fca53bb5c4bdea7e13fae79f6cbb70b10d2dbcf555d0"
     },
     {
       "id": "borrowed-ground",
@@ -58,8 +58,8 @@
       "form": "evidence essay",
       "published_at": "2026-09-01",
       "updated_at": "2026-09-25",
-      "record_sha256": "411fc44f277b97d21afba0f5fa7712818cec82337995ccb59fb35bdbd7a9a10d",
-      "idempotency_key": "e162706c7693942e3f1747c5253b60675aaf0b7f8d2e08afaa77b7cf167e3541"
+      "record_sha256": "f19fd459330d5eb07615e1b6ec2d73860917fc26ae4ce584bf1849cc2b5d42bb",
+      "idempotency_key": "c9cd20d5991f9a6ac774cf791ec72024cba317dc24607b7f91bd8b471b3f1eb6"
     },
     {
       "id": "what-the-label-changes",
@@ -68,8 +68,8 @@
       "form": "evidence-led visual essay",
       "published_at": "2026-09-02",
       "updated_at": "2026-09-25",
-      "record_sha256": "d452fdde00a3cd3a01b3e562158e50b0bcf6846c2e101d4ed757e5561b2f16ec",
-      "idempotency_key": "368c8a18b1bd3d04fb7b34803f909bf5d462c094850720aa40cde7a825d0c3db"
+      "record_sha256": "3123956fcb6bb4094fbe813c93e368b295dd8e3e40f4cc2548f15ac16d810936",
+      "idempotency_key": "5263e870d88b213bb3fa926fb70bd55ef1cd8f905f300efbea2610f0fa2406db"
     }
   ],
   "listings": [

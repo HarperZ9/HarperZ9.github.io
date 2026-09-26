@@ -17,8 +17,9 @@ def test_gift_coda_keeps_transformation_and_accountability_together() -> None:
     essay = "".join(read(path) for path in ESSAY_PARTS)
     talk = read(TALK)
 
+    # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
     for marker in (
-        "## The promise I can actually make",
+        "## The promise I can make",
         "I am done using annihilation as evidence that I understand the harm.",
         "I am not asking to be seen as good.",
         "I am trying to become answerable.",

@@ -12,7 +12,13 @@
    older :root blocks in system.css and doc.css, so these values win wherever
    both apply, whatever the load order.
 
-   Every color is a hex value. Contrast is WCAG 2 against --paper. */
+   Every color is a hex value. Contrast is WCAG 2 against --paper.
+
+   25 September 2026, evening: the grounds are void (#060608) and bone (#ebe5d8), drawn
+   from the operator's inspiration corpus. plate.css holds the surface that goes with
+   them (registration field, grain, crop marks, poster type). It is imported here, so
+   every page that loads a family stylesheet gets the surface without JavaScript. */
+@import url("plate.css?v=20260925-void-plates");
 
 @font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Hanken Grotesk";src:url("fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
@@ -28,37 +34,37 @@ html:root{
   --font-sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace;
 
-  --paper:#fafaf8;        /* page ground */
-  --inset:#f6f8f7;        /* recessed band, code block ground */
-  --panel:#f0f3f2;        /* quiet panel, "How we know" body */
-  --raised:#e7ecea;       /* hover and pressed ground */
-  --ink:#19272b;          /* 14.7:1 text, links, rules, primary button */
-  --soft:#42575d;         /* 7.3:1 dek, meta line, labels */
-  --muted:#53666b;        /* 5.8:1 tertiary text, never under 14px */
-  --line:#ccd3d3;         /* decorative hairline */
-  --line-strong:#6f7f83;  /* 4.0:1 borders of controls */
-  --on-ink:#fafaf8;       /* text on the primary button */
-  --verified:#08766b;     /* 5.3:1 */
-  --drift:#96401d;        /* 6.6:1, also the 95 percent interval */
-  --unverifiable:#55548f; /* 6.6:1 */
+  --paper:#ebe5d8;        /* page ground */
+  --inset:#e4ddcd;        /* recessed band, code block ground */
+  --panel:#e2dac9;        /* quiet panel, "How we know" body */
+  --raised:#d8cfbc;       /* hover and pressed ground */
+  --ink:#16130f;          /* 14.7:1 text, links, rules, primary button */
+  --soft:#4a443b;         /* 7.3:1 dek, meta line, labels */
+  --muted:#5f584d;        /* 5.8:1 tertiary text, never under 14px */
+  --line:#c9bfab;         /* decorative hairline */
+  --line-strong:#7b7262;  /* 4.0:1 borders of controls */
+  --on-ink:#ebe5d8;       /* text on the primary button */
+  --verified:#0a6b61;     /* 5.3:1 */
+  --drift:#8f3a19;        /* 6.6:1, also the 95 percent interval */
+  --unverifiable:#4e4d85; /* 6.6:1 */
   --hot:var(--ink);       /* the one hot mark per view names no verdict */
   --focus:var(--ink);
   /* Older data-plate names, pointed at the page tokens so plates follow the theme. */
   --ground-paper:var(--panel);
   --ink-paper:var(--ink);
 
-  --sheet-paper:#f8f9fb;
-  --sheet-ink:#121a2c;
-  --sheet-soft:#45516a;
-  --sheet-line:#687489;
-  --sheet-hair:#d3d5da;
-  --sheet-dot:#dcdee3;               /* lighter than the first module: the ruling is texture, never a line through text */
-  --sheet-frame:#c5c8cd;
+  --sheet-paper:#f1ece1;
+  --sheet-ink:#16130f;
+  --sheet-soft:#4a443b;
+  --sheet-line:#7b7262;
+  --sheet-hair:#d6ccb8;
+  --sheet-dot:#d8cfbd;               /* lighter than the first module: the ruling is texture, never a line through text */
+  --sheet-frame:#b9af9b;
   --sheet-halo:transparent;          /* retired 2026-09-25 round 3: the hot ring's glow is the only lit mark on a dark sheet */
   --sheet-glow:none;                 /* dark sheets only: the hot ring's glow */
   --sheet-grain:.25;                 /* grain veil opacity in the margin band */
-  --sheet-pupil:#121a2c;
-  --sheet-core:#f8f9fb;
+  --sheet-pupil:#16130f;
+  --sheet-core:#f1ece1;
 
   --s-1:.25rem;--s-2:.5rem;--s-3:.75rem;--s-4:1rem;--s-5:1.5rem;--s-6:2rem;--s-7:3rem;--s-8:4.5rem;--s-9:6rem;
   --gutter:clamp(1rem,4vw,2.5rem);
@@ -69,8 +75,9 @@ html:root{
   --radius:0;
   --radius-control:2px;
 
-  --t-display:clamp(2.25rem,1.6rem + 2.6vw,3.5rem);
-  --t-h2:clamp(1.5rem,1.25rem + 1vw,2rem);
+  --t-poster:clamp(2.75rem,1.2rem + 6vw,6.75rem);
+  --t-display:clamp(2.4rem,1.3rem + 4vw,4.75rem);
+  --t-h2:clamp(1.6rem,1.15rem + 1.6vw,2.6rem);
   --t-h3:1.25rem;
   --t-dek:1.25rem;
   --t-body:1.0625rem;
@@ -84,23 +91,23 @@ html:root{
 @media (prefers-color-scheme:dark){
   html:root:not([data-theme="light"]){
     color-scheme:dark;
-    --paper:#101416;--inset:#0c1011;--panel:#1b2528;--raised:#233034;
-    --ink:#eaf5f6;--soft:#b4c5c9;--muted:#91a6aa;--line:#42555a;--line-strong:#7d949a;--on-ink:#101416;
+    --paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;
+    --ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;
     --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
-    --sheet-paper:#0b1121;--sheet-ink:#e6edf9;--sheet-soft:#a9b7cd;--sheet-line:#76839e;
-    --sheet-hair:#303646;--sheet-dot:#252b3a;--sheet-frame:#3b4151;
-    --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #e6edf98c);--sheet-grain:.15;--sheet-pupil:#03050a;--sheet-core:#f4f8ff;
+    --sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;
+    --sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;
+    --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #ece5d68c);--sheet-grain:.15;--sheet-pupil:#020203;--sheet-core:#fff6e6;
   }
 }
 /* 3. Dark: the reader picked it. */
 html:root[data-theme="dark"]{
   color-scheme:dark;
-  --paper:#101416;--inset:#0c1011;--panel:#1b2528;--raised:#233034;
-  --ink:#eaf5f6;--soft:#b4c5c9;--muted:#91a6aa;--line:#42555a;--line-strong:#7d949a;--on-ink:#101416;
+  --paper:#060608;--inset:#0c0c0f;--panel:#111114;--raised:#1a1a1e;
+  --ink:#ece5d6;--soft:#b8b0a0;--muted:#958e80;--line:#29282c;--line-strong:#6f6a61;--on-ink:#060608;
   --verified:#63d4ce;--drift:#e29472;--unverifiable:#b3b1e6;
-  --sheet-paper:#0b1121;--sheet-ink:#e6edf9;--sheet-soft:#a9b7cd;--sheet-line:#76839e;
-  --sheet-hair:#303646;--sheet-dot:#252b3a;--sheet-frame:#3b4151;
-  --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #e6edf98c);--sheet-grain:.15;--sheet-pupil:#03050a;--sheet-core:#f4f8ff;
+  --sheet-paper:#0a0a0d;--sheet-ink:#ece5d6;--sheet-soft:#b8b0a0;--sheet-line:#77716a;
+  --sheet-hair:#262529;--sheet-dot:#1f1e22;--sheet-frame:#38363b;
+  --sheet-halo:transparent;--sheet-glow:drop-shadow(0 0 3px #ece5d68c);--sheet-grain:.15;--sheet-pupil:#020203;--sheet-core:#fff6e6;
 }
 html:root[data-theme="light"]{color-scheme:light}
 
