@@ -1,4 +1,4 @@
-@import url("reading.css?v=20260907-reading-completion");
+@import url("reading.css?v=20260925-void-plates");
 /* ============================================================================
    system.css - canonical design system for harperz9.github.io
    Tokens, reset, WebGL-hero scaffolding, and the body component library
@@ -151,7 +151,7 @@ h2 em{font-style:normal;color:var(--orange)}
 .atlas-tier .index-row{grid-template-columns:11rem 1fr;padding:.6rem 0}
 .atlas-tier .index-term{letter-spacing:.1em}
 .atlas-note{font-family:var(--body);font-size:1rem;color:var(--muted);margin:.1rem 0 .8rem;max-width:64ch}
-.index-gloss code{font-family:var(--mono);font-size:.85em;color:var(--bone)}
+.index-gloss code{font-family:var(--mono);font-size:max(.875rem,.85em);color:var(--bone)}
 @media (max-width:560px){.atlas-tier .index-row{grid-template-columns:1fr}}
 
 /* ─── organ rows ──────────────────────────────────────────────── */
@@ -995,10 +995,12 @@ body.world-3 .bar .rt{color:#cdd6cf}
   text-align:right;word-break:break-all;font-variant-numeric:tabular-nums}
 
 /* track fill: slightly taller for legibility */
-.mm-track{height:.6rem;border-radius:0;background:rgba(0,0,0,.4);border:1px solid rgba(138,155,146,.16);overflow:hidden}
-.mm-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--prussian),var(--ember));border-radius:0;
+.mm-track{height:.6rem;border-radius:0;background:var(--inset,rgba(0,0,0,.4));border:1px solid var(--line-strong,rgba(138,155,146,.16));overflow:hidden}
+/* The fill is a span, so it needs display:block for its width to take. It is ink:
+   a meter reading is not a verdict, and the spectrum stays in the art. */
+.mm-fill{display:block;height:100%;width:0%;background:var(--ink);border-radius:0;
   transition:width .12s linear}
-.mm-fill.mm-warm{background:linear-gradient(90deg,var(--prussian),var(--orange))}
+.mm-fill.mm-warm{background:var(--ink)}
 /* meta rows: no bar track, just label + value */
 .mm-meta .mm-meter{grid-template-columns:5.4rem 1fr;gap:.5rem}
 .mm-meta .mm-mval{grid-column:2;text-align:left;color:var(--muted)}
@@ -2022,7 +2024,7 @@ body.generative-host > :not(#gl):not(#motes):not(#site-nav){
   gap:clamp(1.4rem,3vw,2.4rem);
   width:100%;
   max-width:var(--site-max);
-  margin:0;
+  margin:0 auto;
   padding:clamp(4rem,12vh,8rem) var(--site-shell) clamp(3rem,8vh,6rem);
   pointer-events:auto;
   background:none;
@@ -2107,21 +2109,21 @@ body.generative-host > :not(#gl):not(#motes):not(#site-nav){
   line-height:1.48;
   color:var(--signal);
 }
+/* The seal is a plain line of text on a hairline: no box, no pill, reader size. */
 .inner-clean .seal{
-  display:inline-flex;
-  flex-wrap:wrap;
-  align-items:center;
-  align-self:flex-start;
-  gap:.25rem .55rem;
+  display:block;
+  align-self:stretch;
   max-width:min(100%,62rem);
-  padding:.55rem .8rem;
-  border:1px solid var(--hairline);
-  border-radius:12px;
-  background:color-mix(in oklab, var(--void) 58%, transparent);
-  font-size:clamp(.66rem,.62rem + .12vw,.76rem);
-  line-height:1.65;
-  letter-spacing:.08em;
-  color:var(--faint);
+  padding:.75rem 0 0;
+  border:0;
+  border-top:1px solid var(--line,var(--hairline));
+  border-radius:0;
+  background:none;
+  font-size:.9375rem;
+  line-height:1.6;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--soft,var(--muted));
 }
 section.mv,
 .proof,
@@ -3166,24 +3168,6 @@ section.mv{
   --facet-line:oklch(94% .04 210/.45);
 }
 
-/* Crystal edge under section-head H2s: a short clipped facet notch (block
-   ::after with clip-path, NOT border-left, NOT gradient text). The fill is
-   horizon-banded crystal glass: ice cyan split by the one maroon band. The
-   1px --facet-line top edge survives the clip because the polygon keeps the
-   full top edge. Decorative; the heading text alone carries the structure. */
-section.mv > h2::after,
-.proof-head h2::after{
-  content:"";
-  display:block;
-  width:4.25rem;
-  height:.5rem;
-  margin-top:.6rem;
-  border-top:1px solid var(--facet-line);
-  background:linear-gradient(180deg, var(--crystal) 0 52%, var(--crystal-deep) 52% 76%, var(--crystal) 76% 100%);
-  clip-path:polygon(0 0, 100% 0, calc(100% - 1.05rem) 100%, .5rem 72%);
-}
-/* centered statement sections keep the notch centered under the heading */
-.hinge h2::after{margin-inline:auto}
 
 /* Faceted corner on the hero frame: one small clipped shard, top-right,
    translucent crystal over the void with the maroon band reading through.
@@ -3262,7 +3246,7 @@ section.mv > h2::after,
   height:auto;
   aspect-ratio:21/9;
   border:1px solid var(--hairline);
-  border-radius:12px;
+  border-radius:0;
   background:color-mix(in oklab, var(--void) 82%, black);
 }
 .plate figcaption{
@@ -3312,17 +3296,17 @@ section.mv > h2::after,
    layer lands. Computed WCAG contrast on the #ece9e2 ground: caption ink
    #24272c = 12.36:1, folio mark #43474e = 7.70:1; both clear AA (4.5:1). */
 .plate--interstitial{
-  background:#ece9e2;
-  border:1px solid rgba(11,12,14,.16);
-  border-radius:12px;
+  background:var(--inset);
+  border:1px solid var(--line);
+  border-radius:0;
   padding:clamp(.85rem,1.8vw,1.3rem);
 }
 .plate--interstitial canvas{
-  background:#f4f2ec;
-  border-color:rgba(11,12,14,.12);
+  background:var(--inset);
+  border-color:var(--line);
 }
-.plate--interstitial .plate-no{color:#43474e}
-.plate--interstitial .plate-caption{color:#24272c}
+.plate--interstitial .plate-no{color:var(--soft)}
+.plate--interstitial .plate-caption{color:var(--ink)}
 
 /* ── menu actuation (2026-07-09) ─────────────────────────────────────────────
    Crisp, reliable menu behavior: 44px minimum hit targets and
@@ -3600,7 +3584,8 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
     background:none!important;
     mix-blend-mode:normal!important;
   }
-  .route-header{border:1px solid CanvasText!important}
+  /* A route header is a band, not a box: rules above and below, open at the sides. */
+  .route-header{border:0!important;border-block:1px solid CanvasText!important}
 }
 
 @media print{
@@ -3747,7 +3732,7 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
 
 /* Research briefings are reading surfaces, not raw record dumps. */
 .briefing-document main{
-  width:min(calc(100% - 2rem),78rem);
+  width:min(calc(100% - 2*clamp(1rem,5vw,4rem)),72rem);
   margin-inline:auto;
   padding-block:clamp(2.5rem,6vw,6rem);
 }
@@ -3770,6 +3755,11 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
   font-size:clamp(1rem,1.6vw,1.25rem);
   line-height:1.65;
 }
+/* The dateline is a quiet meta line under the path, not a second dek. */
+.briefing-document article > header > p:has(> time){font-size:.9375rem;color:var(--soft)}
+/* Section copy keeps a reading measure, and list markers sit inside the calm column. */
+.briefing-document article > section > :is(p,ul,ol){max-width:68ch;line-height:1.6}
+.briefing-document article > section > :is(ul,ol){padding-inline-start:1.25rem}
 .briefing-document article > section{
   padding-block:clamp(2.5rem,5vw,4.5rem);
   border-block-end:1px solid var(--hairline);
@@ -3799,7 +3789,7 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
   min-width:0;
   padding:1rem 1.1rem 1.15rem;
   border:1px solid var(--hairline);
-  background:rgba(142,227,242,.035);
+  background:var(--panel,transparent);
 }
 .briefing-document .claim-record h3{
   margin:0 0 .8rem;
@@ -3816,14 +3806,14 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
   margin:2rem 0 0;
   padding:clamp(.75rem,1.5vw,1.25rem);
   border:1px solid var(--hairline);
-  background:#070406;
+  background:var(--paper);
 }
 .briefing-document iframe{
   display:block;
   inline-size:100%;
   min-block-size:clamp(48rem,80vh,68rem);
   border:0;
-  background:#f2efe7;
+  background:var(--paper);
 }
 .briefing-document figcaption{
   max-width:78ch;
@@ -3838,7 +3828,7 @@ html:has(body.inner-clean:not(.instrument-surface):not(.studio-page):not(.studio
   padding-block:2.5rem 5rem;
 }
 @media (max-width:48rem){
-  .briefing-document main{width:min(calc(100% - 1rem),78rem)}
+  .briefing-document main{width:min(calc(100% - 2rem),72rem)}
   .briefing-document .claim-paragraph{grid-template-columns:1fr}
   .briefing-document iframe{min-block-size:42rem}
 }

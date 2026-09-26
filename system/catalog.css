@@ -1,0 +1,263 @@
+/* catalog.css: the product catalog, the product map and the system record pages.
+   The catalog and the record pages link this file; the product map prints it inline
+   (scripts/system-record-head.mjs says why). Rerun scripts/render-system-pages.mjs after
+   an edit so the map's copy matches. tokens.css and plate.css set the grounds, the
+   registration field, grain and crop marks; this file lays the pages out as a poster and
+   a run of numbered plates.
+
+   Rules are scoped to html[data-sys] and the #main landmark. The id step lifts them over
+   the reading shell in reading.css, whose selectors carry nine classes. Two faces only.
+   Color means one thing here: the verdict on an evidence record. Maturity is drawn in ink. */
+
+/* 1. The frame. main is one paper column 1.5rem wider than the text on each side, so
+   the text sits on a calm ground and the field runs in the gutters beyond it; on a
+   phone the column takes the full width. The content lines up with the site navigation. */
+html[data-sys] #main{--sys-pad:max(1rem,calc((100% - var(--frame,72rem)) / 2));box-sizing:border-box;width:100%;max-width:calc(var(--frame,72rem) + 3rem);margin-inline:auto;padding:0;background:var(--paper);counter-reset:domain plate}
+html[data-sys] #main > :is(header,section){box-sizing:border-box;width:100%;max-width:none;min-height:0;margin:0;padding-inline:var(--sys-pad);background:transparent;border:0;box-shadow:none}
+html[data-sys] #main :is(p,li,dd){text-wrap:pretty}
+html[data-sys] #main a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.2em}
+html[data-sys] #main a:hover{text-decoration-thickness:2px}
+html[data-sys] #main :is(h1,h2,h3){font-family:var(--font-sans);color:var(--ink);text-shadow:none}
+
+/* 2. The poster: the title across the full width on a hairline, the copy and index at
+   the left, the pillar plate at the right. On a phone the plate follows the title. */
+html[data-sys] #main header.sys-poster.system-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-auto-flow:row dense;column-gap:clamp(2rem,5vw,5rem);align-items:start;padding-block:clamp(2rem,5vw,4rem) clamp(3rem,7vw,5.5rem)}
+html[data-sys] #main header.sys-poster > :is(.route-header__path,h1){grid-column:1 / -1}
+html[data-sys] #main header.sys-poster.system-hero > h1{max-width:none;margin:0 0 clamp(1.5rem,3.5vw,2.75rem);padding-bottom:clamp(1.1rem,2.6vw,1.9rem);border-bottom:1px solid var(--line-strong);font-size:var(--t-poster);font-weight:800;letter-spacing:-.048em;line-height:.9;overflow-wrap:break-word}
+html[data-sys] #main header.sys-poster > .art.art-pillar{grid-column:2;float:none;width:100%;margin:0}
+html[data-sys] #main header.sys-poster > .sys-poster-copy{grid-column:1}
+html[data-sys] #main header.sys-poster .lede{max-width:40rem;margin:0;color:var(--soft);font-size:clamp(1.1rem,1rem + .35vw,1.3rem);line-height:1.55;opacity:1}
+html[data-sys] #main .route-header__path{margin:0 0 clamp(1.1rem,2.5vw,1.75rem)}
+
+/* 2b. The poster's index: one numbered row per domain, like a contents page. */
+html[data-sys] #main .domain-nav{margin:clamp(1.75rem,3.5vw,2.75rem) 0 0}
+html[data-sys] #main .domain-nav ol{margin:0;padding:0;list-style:none;border-top:1px solid var(--line-strong);counter-reset:dn}
+html[data-sys] #main .domain-nav li{counter-increment:dn;border-bottom:1px solid var(--line)}
+html[data-sys] #main .domain-nav a{display:grid;grid-template-columns:2.6rem minmax(0,1fr) auto;column-gap:.75rem;align-items:baseline;min-height:44px;padding:.7rem 0;border:0;font-size:1.0625rem;font-weight:640;line-height:1.3;text-decoration:none}
+html[data-sys] #main .domain-nav a::before{content:counter(dn,decimal-leading-zero);content:counter(dn,decimal-leading-zero) / "";font-weight:500;font-variant-numeric:tabular-nums;color:var(--soft)}
+html[data-sys] #main .domain-nav-count{font-size:.9375rem;font-weight:500;color:var(--soft);white-space:nowrap}
+html[data-sys] #main .domain-nav a:is(:hover,:focus-visible) .domain-nav-label{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+
+/* 3. Notes under the poster: a heading at the left, the text at the right, one hairline. */
+html[data-sys] #main > section:is(.map-record-note,.sys-routes){position:relative;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:clamp(1.5rem,4vw,4rem);row-gap:.75rem;padding-block:clamp(1.5rem,3.5vw,2.25rem)}
+html[data-sys] #main > section:is(.map-record-note,.sys-routes)::before{content:"";position:absolute;top:0;left:var(--sys-pad);right:var(--sys-pad);height:1px;background:var(--line)}
+html[data-sys] #main > section:is(.map-record-note,.sys-routes) > h2{grid-column:1;grid-row:1 / span 3;max-width:18ch;margin:0;padding:0;background:none;font-size:1.25rem;font-weight:720;letter-spacing:-.012em;line-height:1.25}
+html[data-sys] #main > section:is(.map-record-note,.sys-routes) > h2::before{display:none}
+html[data-sys] #main > section:is(.map-record-note,.sys-routes) > :not(h2){grid-column:2;margin:0}
+html[data-sys] #main .sys-route-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+html[data-sys] #main .sys-route-list li{border-bottom:1px solid var(--line)}
+html[data-sys] #main .sys-route-list a{display:flex;align-items:center;min-height:44px;padding:.45rem 0;font-size:1.0625rem;font-weight:600;text-decoration:none}
+html[data-sys] #main .sys-route-list a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+html[data-sys] #main .body-text{max-width:62ch;margin:0;color:var(--soft);font-size:1.0625rem;line-height:1.6;opacity:1}
+
+/* 4. A domain opens as a numbered plate: a strong hairline with a registration cross,
+   a thin numeral at display size, and the domain name at poster weight. */
+html[data-sys] #main > section.catalog-domain{counter-increment:domain;padding-block:clamp(3rem,7vw,5.5rem) 0;scroll-margin-top:4.5rem}
+html[data-sys] #main > section.catalog-domain:last-of-type{padding-bottom:clamp(3.5rem,8vw,6rem)}
+html[data-sys] #main .domain-head{position:relative;display:grid;grid-template-columns:clamp(4rem,10vw,8.75rem) minmax(0,1fr) auto;column-gap:clamp(1rem,2.5vw,2rem);align-items:end;margin-bottom:clamp(1.5rem,3.5vw,2.5rem);padding-top:clamp(1.25rem,2.5vw,1.75rem);border-top:1px solid var(--line-strong)}
+html[data-sys] #main .domain-head::before{content:counter(domain,decimal-leading-zero);content:counter(domain,decimal-leading-zero) / "";grid-column:1;grid-row:1 / span 2;align-self:start;font-size:clamp(2.2rem,1.2rem + 3.4vw,4.4rem);font-weight:250;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:.9;color:var(--soft)}
+html[data-sys] #main .domain-head::after{content:"";position:absolute;top:-8px;left:-8px;width:15px;height:15px;pointer-events:none;background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+html[data-sys] #main .domain-head > h2{grid-column:2;grid-row:1;max-width:16ch;margin:0;padding:0;background:none;font-size:clamp(2.2rem,1.2rem + 3.4vw,4.4rem);font-weight:780;letter-spacing:-.042em;line-height:.94}
+html[data-sys] #main .domain-head > h2::before{display:none}
+html[data-sys] #main .catalog-count{grid-column:3;grid-row:1;margin:0;padding-bottom:.35rem;font-size:1rem;font-weight:560;color:var(--soft);white-space:nowrap}
+html[data-sys] #main .domain-head > .domain-summary{grid-column:2 / -1;grid-row:2;margin-top:.9rem;font-size:clamp(1.0625rem,1rem + .25vw,1.2rem)}
+
+/* 5. A product is a row on a hairline. At the left: name, type, and its maturity with the
+   release state, whose honest nulls stay in view. At the right: one sentence of purpose,
+   the headline evidence, the map's first limit, and a closed "How we know". */
+html[data-sys] #main .product-list{display:grid;margin:0;border-top:1px solid var(--line)}
+html[data-sys] #main .product-card{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(1.5rem,4vw,4rem);row-gap:1rem;align-items:start;padding-block:clamp(1.4rem,2.6vw,2rem);border-bottom:1px solid var(--line)}
+html[data-sys] #main .product-card-heading{min-width:0}
+html[data-sys] #main .product-card-title{margin:0;font-size:clamp(1.7rem,1.05rem + 1.9vw,2.85rem);font-weight:780;letter-spacing:-.036em;line-height:.98;overflow-wrap:break-word}
+html[data-sys] #main .product-card-title a{text-decoration:none}
+html[data-sys] #main .product-card-title a:is(:hover,:focus-visible){text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.12em}
+html[data-sys] #main .product-type{max-width:36ch;margin:.6rem 0 0;font-size:1rem;line-height:1.45;color:var(--soft)}
+html[data-sys] #main .product-card-body{min-width:0}
+html[data-sys] #main :is(.product-lede,.product-card-body > .product-purpose){max-width:60ch;margin:0;font-size:clamp(1.0625rem,1rem + .3vw,1.22rem);line-height:1.55;color:var(--ink);overflow-wrap:break-word}
+html[data-sys] #main .product-state{display:flex;align-items:flex-start;gap:.6rem;margin:.95rem 0 0;font-size:1rem;font-weight:480;line-height:1.5;color:var(--ink)}
+html[data-sys] #main .state-text{min-width:0;overflow-wrap:break-word}
+html[data-sys] #main .state-text::first-letter{text-transform:uppercase}
+html[data-sys] #main .product-limit{max-width:60ch;margin:.85rem 0 0;font-size:1rem;line-height:1.55;color:var(--soft)}
+html[data-sys] #main .product-limit strong{font-weight:640;color:var(--ink)}
+
+/* 5b. Two drawn marks, so no word depends on color. A maturity is a release fact: its
+   square is drawn in ink, filled for shipped, half filled for active work, dashed and
+   dotted for a private record, open otherwise. An evidence verdict is an aperture, a ring
+   around a core: a lit core when verified, an open ring when the owner only reports it.
+   Only the verified aperture takes a color; its word stays in ink, so a list of verified
+   rows reads as a column of small marks, not a column of colored words. */
+html[data-sys] #main .state-glyph{flex:none;box-sizing:border-box;width:.8em;height:.8em;margin-top:.36em;border:1.5px solid currentColor}
+html[data-sys] #main [data-maturity="shipped"] .state-glyph{background:currentColor}
+html[data-sys] #main [data-maturity="active"] .state-glyph{background:linear-gradient(to top,currentColor 50%,transparent 50%)}
+html[data-sys] #main [data-maturity="private"] .state-glyph{border-style:dashed;background:radial-gradient(circle,currentColor .9px,transparent 1.2px) 0 0/4px 4px}
+html[data-sys] #main :is(.verdict-line,.catalog-evidence){display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .6rem;margin:.95rem 0 0;font-size:1rem;line-height:1.4;color:var(--ink)}
+html[data-sys] #main .verdict-glyph{flex:none;width:1em;height:1em;background:radial-gradient(circle closest-side,currentColor 0 30%,transparent 37% 60%,currentColor 67% 92%,transparent 100%)}
+html[data-sys] #main [data-verdict="stated"] .verdict-glyph{background:radial-gradient(circle closest-side,transparent 0 60%,currentColor 67% 92%,transparent 100%)}
+html[data-sys] #main .verdict-word{font-weight:660}
+html[data-sys] #main [data-verdict="verified"] .verdict-glyph{color:var(--verified)}
+html[data-sys] #main .catalog-evidence a{font-weight:600}
+html[data-sys] #main :is(.verdict-line,.catalog-evidence) time{font-weight:500;color:var(--soft);font-variant-numeric:tabular-nums}
+
+/* 6. "How we know": everything a checker needs and a first-time reader does not.
+   Closed by default; nav.js opens every one before printing. */
+html[data-sys] #main details:is(.product-how,.product-record-details){margin:1.1rem 0 0;padding:0;border:0;border-top:1px solid var(--line);background:none;max-width:none}
+html[data-sys] #main details:is(.product-how,.product-record-details) > summary{display:flex;align-items:center;gap:.65rem;min-height:44px;padding-block:.45rem;cursor:pointer;list-style:none;font-size:1rem;font-weight:640;line-height:1.3;color:var(--ink)}
+html[data-sys] #main details:is(.product-how,.product-record-details) > summary::-webkit-details-marker{display:none}
+html[data-sys] #main details:is(.product-how,.product-record-details) > summary::before{content:"";flex:none;width:.8rem;height:.8rem;background:linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat,linear-gradient(currentColor,currentColor) center/1.5px 100% no-repeat}
+html[data-sys] #main details[open]:is(.product-how,.product-record-details) > summary::before{background:linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat}
+html[data-sys] #main details:is(.product-how,.product-record-details) > summary:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+html[data-sys] #main .disclosure-body{display:grid;gap:.9rem;padding:.35rem 0 1.25rem}
+html[data-sys] #main .disclosure-body > *{min-width:0;margin:0}
+html[data-sys] #main .disclosure-body :is(p,li,dd){max-width:62ch;font-size:1rem;line-height:1.6;color:var(--soft);overflow-wrap:anywhere}
+html[data-sys] #main .disclosure-body .product-purpose{color:var(--ink)}
+html[data-sys] #main .disclosure-body .system-list li{max-width:none}
+html[data-sys] #main .disclosure-body strong{font-weight:640;color:var(--ink)}
+html[data-sys] #main .product-status,html[data-sys] #main .sys-fact-list{display:grid;margin:0;border-top:1px solid var(--line)}
+html[data-sys] #main :is(.product-status-fact,.sys-fact-list > div){display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line)}
+html[data-sys] #main :is(.product-status-fact,.sys-fact-list > div) dt{font-size:.9375rem;font-weight:620;line-height:1.5;color:var(--soft)}
+html[data-sys] #main :is(.product-status-fact,.sys-fact-list > div) dd{margin:0;color:var(--ink)}
+html[data-sys] #main .product-card-actions{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem}
+html[data-sys] #main :is(.product-action,.product-secondary-action){display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;font-weight:620;text-decoration:underline;text-underline-offset:.22em}
+html[data-sys] #main code{font-family:var(--font-mono);font-size:.95em;overflow-wrap:anywhere}
+
+/* 7. Records listed under a second domain: compact cells, name and status in view. */
+html[data-sys] #main .product-ref-note{max-width:62ch;margin:clamp(2.25rem,4.5vw,3.25rem) 0 .9rem;font-size:1rem;line-height:1.55;color:var(--soft)}
+html[data-sys] #main .product-list-ref{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:clamp(1.25rem,3vw,2.5rem)}
+html[data-sys] #main .product-card-ref{grid-template-columns:minmax(0,1fr);row-gap:0;padding-block:1.1rem .35rem}
+html[data-sys] #main .product-card-ref .product-card-title{font-size:clamp(1.25rem,1.1rem + .5vw,1.55rem);font-weight:720;letter-spacing:-.022em;line-height:1.1}
+html[data-sys] #main .product-card-ref .product-type{margin-top:.35rem;font-size:.9375rem}
+html[data-sys] #main .product-card-ref .product-state{margin-top:.6rem;font-size:.9375rem}
+html[data-sys] #main .product-card-ref details{margin-top:.5rem;border-top:0}
+
+/* 8. The colophon: one line on a hairline, outside the main landmark. */
+html[data-sys] .sys-colophon:not(#_){box-sizing:border-box;padding:2.25rem max(1rem,calc((100% - var(--frame,72rem)) / 2)) 4rem;border-top:1px solid var(--line-strong);background:var(--paper);color:var(--soft);font-size:1rem}
+html[data-sys] .sys-colophon:not(#_) p{margin:0}
+
+/* 9. A record's poster: the name at poster scale on a hairline; the product's own words at
+   the left and its aperture plate, framed, at the right; then the four facts in a framed
+   strip across the width, and the catalog areas it is listed under. */
+html[data-sys] #main header.sys-record-poster.system-hero{grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"path path" "title title" "copy art" "facts facts" "areas areas";column-gap:clamp(2rem,5vw,4.5rem);row-gap:0}
+html[data-sys] #main header.sys-record-poster.system-hero > .route-header__path{grid-area:path}
+html[data-sys] #main header.sys-record-poster.system-hero > h1{grid-area:title}
+html[data-sys] #main header.sys-record-poster.system-hero > h1:not(.sys-title-long){font-size:clamp(3.25rem,1rem + 9.5vw,6.75rem);letter-spacing:-.05em;line-height:.88}
+html[data-sys] #main header.sys-record-poster.system-hero > .art.art-pillar{grid-area:art;align-self:start;max-width:none}
+html[data-sys] #main header.sys-record-poster.system-hero > .sys-record-copy{grid-area:copy;min-width:0;padding-top:.15rem}
+html[data-sys] #main header.sys-record-poster.system-hero > .system-facts{grid-area:facts;margin-top:clamp(2.5rem,5vw,3.5rem)}
+html[data-sys] #main header.sys-record-poster.system-hero > .sys-record-domains{grid-area:areas}
+html[data-sys] #main .sys-record-type{max-width:30ch;margin:0;font-size:clamp(1.3rem,1.05rem + .9vw,1.85rem);font-weight:560;letter-spacing:-.012em;line-height:1.2;color:var(--soft)}
+html[data-sys] #main .sys-record-type::first-letter{text-transform:uppercase}
+html[data-sys] #main header.sys-record-poster .lede{max-width:62ch;margin:1.25rem 0 0;color:var(--ink);font-size:clamp(1.0625rem,1rem + .3vw,1.2rem);line-height:1.6}
+html[data-sys] #main .system-hero-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin:1.75rem 0 0}
+html[data-sys] #main .system-hero-actions a{display:inline-flex;align-items:center;min-height:44px;padding:.55rem 1.05rem;border:1px solid var(--line-strong);border-radius:2px;background:transparent;font-weight:640;text-decoration:none}
+html[data-sys] #main .system-hero-actions a:first-child{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+html[data-sys] #main .system-hero-actions a:is(:hover,:focus-visible){border-color:var(--ink);background:var(--ink);color:var(--paper)}
+html[data-sys] #main .system-hero-actions a:first-child:is(:hover,:focus-visible){background:transparent;color:var(--ink)}
+html[data-sys] #main .system-facts{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,2.4fr);margin:0;border:1px solid var(--line);background:var(--paper)}
+html[data-sys] #main .system-facts::after{content:"";position:absolute;inset:-5px;pointer-events:none;background:linear-gradient(var(--line-strong),var(--line-strong)) top left/12px 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) top left/1px 12px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/12px 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px 12px no-repeat}
+html[data-sys] #main .system-fact{min-width:0;padding:1rem 1.1rem 1.1rem;border-right:1px solid var(--line)}
+html[data-sys] #main .system-fact:nth-child(3){grid-column:4;grid-row:1;border-right:0}
+html[data-sys] #main .system-fact:nth-child(4){grid-column:3;grid-row:1}
+html[data-sys] #main .system-fact dt{font-size:.9375rem;font-weight:620;line-height:1.4;color:var(--soft)}
+html[data-sys] #main .system-fact dd{display:flex;align-items:baseline;gap:.5rem;margin:.35rem 0 0;font-size:1.0625rem;line-height:1.45;color:var(--ink);overflow-wrap:anywhere}
+html[data-sys] #main header[data-maturity] .system-fact:first-child dd::before{content:"";flex:none;box-sizing:border-box;width:.8em;height:.8em;border:1.5px solid currentColor;transform:translateY(.05em)}
+html[data-sys] #main header[data-maturity="shipped"] .system-fact:first-child dd::before{background:currentColor}
+html[data-sys] #main header[data-maturity="active"] .system-fact:first-child dd::before{background:linear-gradient(to top,currentColor 50%,transparent 50%)}
+html[data-sys] #main header[data-maturity="private"] .system-fact:first-child dd::before{border-style:dashed;background:radial-gradient(circle,currentColor .9px,transparent 1.2px) 0 0/4px 4px}
+html[data-sys] #main .sys-record-domains{display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem 1.25rem;margin:1.1rem 0 0}
+html[data-sys] #main .sys-record-domains > p{margin:0;font-size:1rem;line-height:1.6;color:var(--soft)}
+
+/* 9b. A row of links: it wraps between items, so no separator starts or ends a line. */
+html[data-sys] #main .sys-link-row{display:flex;flex-wrap:wrap;gap:.3rem 1.25rem;margin:0;padding:0;list-style:none}
+html[data-sys] #main .sys-link-row li{margin:0;padding:0;font-size:1rem;line-height:1.6}
+html[data-sys] #main .sys-link-row.sys-next li{font-size:1.0625rem;font-weight:600}
+
+/* 10. Record plates: each section opens on a hairline with a registration cross, its
+   numeral and heading in the left rail and its body at the right. */
+html[data-sys] #main.sys-record > section.mv{counter-increment:plate;position:relative;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);column-gap:clamp(1.5rem,4vw,4rem);padding-block:clamp(2.25rem,4.5vw,3.5rem)}
+html[data-sys] #main.sys-record > section.mv::before{content:"";position:absolute;top:0;left:var(--sys-pad);right:var(--sys-pad);height:1px;background:var(--line)}
+html[data-sys] #main.sys-record > section.mv::after{content:"";position:absolute;top:-7px;left:calc(var(--sys-pad) - 7px);width:15px;height:15px;pointer-events:none;background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+html[data-sys] #main.sys-record > section.mv > h2{grid-column:1;position:static;max-width:14ch;margin:0;padding:0;background:none;font-size:clamp(1.6rem,1.15rem + 1.6vw,2.6rem);font-weight:760;letter-spacing:-.034em;line-height:1}
+html[data-sys] #main.sys-record > section.mv > h2::before{content:counter(plate,decimal-leading-zero);content:counter(plate,decimal-leading-zero) / "";position:static;display:block;width:auto;height:auto;margin:0 0 .8rem;background:none;font-size:1rem;font-weight:500;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:var(--soft)}
+html[data-sys] #main.sys-record .plate-body{grid-column:2;min-width:0;display:grid;gap:1.1rem;align-content:start}
+html[data-sys] #main.sys-record .plate-body > *{margin:0}
+html[data-sys] #main.sys-record .plate-body > :is(.system-list,.product-list,details:first-child){border-top:0}
+html[data-sys] #main.sys-record .plate-body > details:first-child{margin-top:-.45rem}
+html[data-sys] #main.sys-record .plate-body > .system-list > li:first-child{padding-top:0}
+html[data-sys] #main .system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem clamp(1.5rem,4vw,3rem)}
+html[data-sys] #main .system-grid h3,html[data-sys] #main .plate-body > h3,html[data-sys] #main .plate-body > div > h3,html[data-sys] #main .disclosure-body h3{margin:0 0 .6rem;font-size:1.0625rem;font-weight:680;letter-spacing:-.005em;line-height:1.3}
+html[data-sys] #main .system-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+html[data-sys] #main .system-list li{padding:.6rem 0;border-bottom:1px solid var(--line);font-size:1.0625rem;line-height:1.5;color:var(--ink)}
+html[data-sys] #main .system-null{color:var(--soft)}
+html[data-sys] #main .system-command{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:.6rem 1rem;align-items:start}
+html[data-sys] #main .system-command strong{padding-top:.8rem;font-size:1rem;font-weight:640;color:var(--ink)}
+html[data-sys] #main .system-command code{position:relative;display:block;padding:.8rem 1rem;border:1px solid var(--line);background:var(--paper);font-size:1rem;line-height:1.55;color:var(--ink)}
+html[data-sys] #main .system-command code::after{content:"";position:absolute;inset:-4px;pointer-events:none;background:linear-gradient(var(--line-strong),var(--line-strong)) top left/10px 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) top left/1px 10px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/10px 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px 10px no-repeat}
+html[data-sys] #main .system-command.system-null span{padding-top:.8rem;color:var(--soft)}
+html[data-sys] #main .sys-related li{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:.15rem 1.25rem;align-items:baseline}
+html[data-sys] #main .sys-related a{font-weight:640}
+html[data-sys] #main .sys-related-type{font-size:1rem;line-height:1.5;color:var(--soft)}
+html[data-sys] #main .system-family-nav{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:.5rem 1rem;align-items:baseline;padding:.1rem 0 0;line-height:1.6}
+html[data-sys] #main .system-family-nav strong{font-size:1.0625rem;font-weight:680;line-height:1.6}
+html[data-sys] #main .system-evidence .product-card{grid-template-columns:minmax(0,1fr);row-gap:0;padding-block:1.1rem .25rem}
+html[data-sys] #main .system-evidence .product-card-title{font-size:clamp(1.2rem,1.05rem + .5vw,1.5rem);font-weight:720;letter-spacing:-.018em;line-height:1.15}
+html[data-sys] #main .system-evidence .verdict-line{margin-top:.55rem}
+html[data-sys] #main .system-evidence details{border-top:0;margin-top:.4rem}
+html[data-sys] #main .system-boundary strong{color:var(--ink)}
+
+/* 11. Narrower windows: the rails fold under their headings. */
+@media (max-width:64rem){
+  html[data-sys] #main .product-list-ref{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:52rem){
+  html[data-sys] #main header.sys-poster.system-hero,html[data-sys] #main header.sys-record-poster.system-hero{grid-template-columns:minmax(0,1fr)}
+  html[data-sys] #main header.sys-record-poster.system-hero{grid-template-areas:"path" "title" "art" "copy" "facts" "areas"}
+  html[data-sys] #main header.sys-poster > :is(.art.art-pillar,.sys-poster-copy){grid-column:1}
+  html[data-sys] #main header.sys-poster > .art.art-pillar{margin-bottom:1.75rem}
+  html[data-sys] #main header.sys-record-poster.system-hero > .system-facts{margin-top:2.25rem}
+  html[data-sys] #main .system-facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  html[data-sys] #main .system-fact{border-bottom:1px solid var(--line)}
+  html[data-sys] #main .system-fact:nth-child(3){grid-column:1 / -1;grid-row:2;border-bottom:0}
+  html[data-sys] #main .system-fact:nth-child(4){border-right:0}
+  html[data-sys] #main.sys-record > section.mv,html[data-sys] #main > section:is(.map-record-note,.sys-routes){grid-template-columns:minmax(0,1fr);row-gap:1.1rem}
+  html[data-sys] #main.sys-record > section.mv > h2,html[data-sys] #main > section:is(.map-record-note,.sys-routes) > h2{grid-row:auto;max-width:none}
+  html[data-sys] #main.sys-record .plate-body,html[data-sys] #main > section:is(.map-record-note,.sys-routes) > :not(h2){grid-column:1}
+}
+@media(max-width:720px){
+  html[data-sys] #main .product-card{grid-template-columns:minmax(0,1fr);row-gap:.85rem}
+  html[data-sys] #main .product-list-ref{grid-template-columns:minmax(0,1fr)}
+  html[data-sys] #main .domain-head{grid-template-columns:auto minmax(0,1fr)}
+  html[data-sys] #main .domain-head::before{grid-row:1;align-self:end;padding-bottom:.1rem}
+  html[data-sys] #main .catalog-count{grid-column:2;grid-row:2;padding:0;margin-top:.5rem}
+  html[data-sys] #main .domain-head > .domain-summary{grid-column:1 / -1;grid-row:3}
+  html[data-sys] #main .system-grid,html[data-sys] #main .system-command,html[data-sys] #main .system-family-nav,html[data-sys] #main .sys-related li{grid-template-columns:minmax(0,1fr)}
+  html[data-sys] #main .system-command strong,html[data-sys] #main .system-command.system-null span{padding-top:0}
+  html[data-sys] #main :is(.product-status-fact,.sys-fact-list > div){grid-template-columns:minmax(0,1fr);row-gap:.15rem}
+  html[data-sys] #main .system-fact{padding:.85rem .8rem .9rem}
+}
+
+/* 12. Forced colors: the glyphs keep their drawn shapes, in CanvasText. */
+@media (forced-colors:active){
+  html[data-sys] #main :is(.state-glyph,.verdict-glyph),html[data-sys] #main header[data-maturity] .system-fact:first-child dd::before{forced-color-adjust:none;color:CanvasText;border-color:CanvasText}
+  html[data-sys] #main details:is(.product-how,.product-record-details) > summary::before{forced-color-adjust:none;background:linear-gradient(CanvasText,CanvasText) center/100% 1.5px no-repeat,linear-gradient(CanvasText,CanvasText) center/1.5px 100% no-repeat}
+  html[data-sys] #main details[open]:is(.product-how,.product-record-details) > summary::before{background:linear-gradient(CanvasText,CanvasText) center/100% 1.5px no-repeat}
+  html[data-sys] #main .system-hero-actions a:first-child{background:Canvas;color:LinkText;border-color:CanvasText}
+  html[data-sys] #main :is(.domain-head,.product-card,.system-list li,.system-facts,.system-fact,.system-command code){border-color:CanvasText}
+  html[data-sys] #main :is(.domain-head,.system-facts,.system-command code)::after,html[data-sys] #main.sys-record > section.mv::after{display:none}
+}
+
+/* 13. Print: white paper and black ink; no plate, no disclosure marks. print.css keeps
+   .state-glyph and .verdict-glyph out of its background wipe and inks them black. */
+@media print{
+  html[data-sys] #main header.sys-poster > .art.art-pillar{display:none}
+  html[data-sys] #main header.sys-record-poster.system-hero{grid-template-columns:minmax(0,1fr);grid-template-areas:"path" "title" "copy" "facts" "areas"}
+  html[data-sys] #main :is(.system-fact,.system-command,.domain-head){break-inside:avoid}
+  html[data-sys] #main .product-card{break-inside:auto}
+  html[data-sys] #main .product-card-heading{break-inside:avoid;break-after:avoid}
+  html[data-sys] #main .product-card p{max-width:none}
+  html[data-sys] #main details > summary::before{display:none}
+  html[data-sys] #main :is(.state-glyph,.verdict-glyph),html[data-sys] #main header[data-maturity] .system-fact:first-child dd::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html[data-sys] #main .system-hero-actions a:first-child{background:transparent;color:var(--ink)}
+}
+
+/* 14. Text for a screen reader only, such as the product name after "How we know". */
+html[data-sys] .visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}

@@ -22,7 +22,12 @@ const base = process.env.SITE_BASE || 'http://localhost:8765';
       assert.ok(bounds.width >= 270, `story collapsed to ${bounds.width}px`);
       await page.goto(`${base}/flywheel.html`);
       await page.evaluate(() => document.fonts.ready);
-      const flywheelSeal = await page.locator('.frame .seal').first().evaluate(e => {
+      // 2026-09-25: the license and run command moved from a boxed '.frame .seal' into
+      // the release record, a <dd> under the 'License' term inside a closed disclosure.
+      // The disclosure is opened first, then the same plain-text checks apply.
+      const licenseTerm = page.locator('dt', {hasText: /^License$/}).first();
+      await licenseTerm.evaluate(e => { const d = e.closest('details'); if (d) d.open = true; });
+      const flywheelSeal = await licenseTerm.locator('xpath=following-sibling::dd[1]').evaluate(e => {
         const s = getComputedStyle(e);
         const r = e.getBoundingClientRect();
         return {
@@ -37,7 +42,7 @@ const base = process.env.SITE_BASE || 'http://localhost:8765';
           borderRadius: parseFloat(s.borderTopLeftRadius),
         };
       });
-      if (!flywheelSeal.visible) shellIssues.push(`flywheel/${colorScheme}: frame seal hidden`);
+      if (!flywheelSeal.visible) shellIssues.push(`flywheel/${colorScheme}: license line hidden`);
       if (!flywheelSeal.text.includes('FSL-1.1-MIT') || !flywheelSeal.text.includes('python scripts/run_harness_cli.py app --port 8799')) shellIssues.push(`flywheel/${colorScheme}: license or command text missing`);
       if (!/Hanken|system-ui|sans-serif/i.test(flywheelSeal.fontFamily)) shellIssues.push(`flywheel/${colorScheme}: ornate font ${flywheelSeal.fontFamily}`);
       if (flywheelSeal.fontSize < 13) shellIssues.push(`flywheel/${colorScheme}: small seal text ${flywheelSeal.fontSize}`);
@@ -86,9 +91,13 @@ const base = process.env.SITE_BASE || 'http://localhost:8765';
           let parent=e, bg;
           while(parent) {bg=getComputedStyle(parent).backgroundColor;if(bg!=='rgba(0, 0, 0, 0)')break;parent=parent.parentElement;}
           const a=luminance(rgb(s.color)), b=luminance(rgb(bg));
-          return {contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),size:parseFloat(s.fontSize),overflow:document.documentElement.scrollWidth>innerWidth};
+          return {contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),size:parseFloat(s.fontSize),overflow:document.documentElement.scrollWidth>innerWidth,groundTag:parent ? parent.tagName : 'NONE'};
         });
         assert.ok(reading.contrast>=4.5, `${route}/${colorScheme}: contrast ${reading.contrast}`);
+        // The contrast walk stops at the first opaque ancestor. On the briefing that must be a
+        // plate (.frame, main, a record), never <body>: text on body sits over the grain and
+        // registration field, which this walk cannot see.
+        if (route === 'frontier-safety.html') assert.ok(!['BODY','HTML','NONE'].includes(reading.groundTag), `${route}/${colorScheme}: record text sits on the page field (${reading.groundTag})`);
         assert.ok(reading.size>=17, `${route}: small body ${reading.size}`);
         assert.equal(reading.overflow,false,`${route}: horizontal overflow`);
       }

@@ -1,23 +1,198 @@
-.site-directory{max-width:72rem;margin-inline:auto;padding:clamp(1.25rem,4vw,4rem)}
-.directory-head{max-width:65ch;margin-block:2rem 3rem}
-.directory-context{margin:0 0 .8rem;color:var(--muted);font-size:.78rem;font-weight:650;letter-spacing:.12em;text-transform:uppercase}
-.site-directory h1{font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-.03em;text-wrap:balance}
-.site-directory p{max-width:70ch;line-height:1.65}
-.directory-search{max-width:42rem;margin-block:2rem}
-.directory-search label{display:block;font-weight:650;margin-bottom:.65rem}
-.directory-search>div{display:flex;gap:.6rem}
-.directory-search input{min-width:0;flex:1;padding:.85rem;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--ink-soft);border-radius:.25rem}
-.directory-search input::placeholder{color:var(--ink-soft);opacity:1}
-.directory-search button{font:inherit;padding:.5rem .8rem;color:var(--ink);background:var(--paper);border:1px solid var(--ink-soft);border-radius:.25rem;cursor:pointer}
-.directory-pillars{display:flex;flex-wrap:wrap;gap:.7rem 1.3rem;margin-block:2rem 3rem}
-.site-directory [data-index-section]{display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,2fr);gap:2.5rem;border-top:1px solid var(--hairline);padding-block:2rem;scroll-margin-top:6rem}
-.site-directory h2{font-size:1.4rem;line-height:1.3;margin:0;text-wrap:balance}
-.site-directory [data-index-section]>header p{font-size:.92rem}
-.site-directory ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem 2rem;align-content:start}
-.site-directory li>a{font-size:1.05rem;font-weight:600;overflow-wrap:anywhere}
-.site-directory li p{margin:.35rem 0 0;font-size:.9rem}
-.site-directory a{text-underline-offset:.22em}
-.site-directory :focus-visible{outline:2px solid currentColor;outline-offset:4px}
+/* site-index.css: the generated site index on the site's surface. tokens.css and
+   plate.css set the void and bone grounds, the registration field, grain and crop
+   marks; this sheet lays the index out like the hub pages: a poster title over a
+   hairline, the seven sectors as a numbered list, and each sector as a numbered
+   plate that opens on a hairline with a registration cross, its pages as rows.
+   One grotesk for every text role, square controls, color only as ink.
+
+   Only site-index.html loads this sheet, and scripts/render-site-index.mjs writes
+   that page, so every change here is presentation. Selectors that must beat the
+   notebook sheet and plate.css carry a :not(#_) step, as plate.css does. */
+
+html:root body:has(> main.site-directory){
+  margin:0;
+  font-family:var(--font-sans);
+  --ix-frame:76rem;
+  --ix-shell:clamp(1rem,4vw,3rem);
+  --ix-rail:clamp(3.25rem,7vw,6rem);
+  --ix-gap:clamp(1rem,2.5vw,2.25rem);
+  --t-poster:clamp(2.9rem,1.35rem + 6.4vw,6.75rem);
+}
+
+/* 1. The sheet: no box and no border. It is filled with the flat pole color, as
+   the reading column is on the start page, so no grain or cross runs through a
+   line of text; the registration field and the grain stay in the gutters. */
+html:root main.site-directory:not(#_){
+  box-sizing:border-box;
+  width:min(100% - 2 * var(--ix-shell),var(--ix-frame));
+  max-width:none;
+  margin:0 auto;
+  padding:clamp(1.75rem,4vw,3rem) 0 clamp(3rem,6vw,5rem);
+  border:0;
+  border-radius:0;
+  background:var(--paper);
+  box-shadow:none;
+  font-family:var(--font-sans);
+  color:var(--ink);
+  counter-reset:ix-sector ix-plate;
+}
+/* Links: an ink underline in place of the notebook sheet's tinted rule. The
+   sector list and the sector titles underline on hover and focus only. */
+html:root .site-directory a:not(#_){border-bottom:0;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:var(--line-strong);text-underline-offset:.22em}
+html:root .site-directory a:not(#_):is(:hover,:focus-visible){text-decoration-color:currentColor}
+html:root .site-directory :is([data-index-section] h2,.directory-pillars) a:not(#_){text-decoration:none}
+html:root .site-directory :is([data-index-section] h2,.directory-pillars) a:not(#_):is(:hover,:focus-visible){text-decoration:underline;text-decoration-color:currentColor}
+.site-directory :focus-visible{outline:2px solid var(--focus,currentColor);outline-offset:4px}
 .site-directory [hidden]{display:none!important}
-.site-directory footer{margin-top:3rem}
-@media(max-width:700px){.site-directory [data-index-section]{grid-template-columns:1fr;gap:1.25rem}.site-directory ul{grid-template-columns:1fr}.directory-pillars{gap:.85rem 1.25rem}}
+
+/* 2. The poster header. The context line reads as plain text, never a tracked
+   capital eyebrow; the title runs the full width over a hairline. */
+.site-directory .directory-head{max-width:none;margin:0 0 clamp(2rem,4vw,3rem)}
+/* The generated context line is this page's path. render-site-index.mjs marks it
+   masthead-path, so nav.js mounts no second breadcrumb under it. */
+html:root .site-directory .directory-context:not(#_){
+  margin:0 0 .5rem;
+  font-size:.9375rem;
+  font-weight:500;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--soft);
+}
+html:root .site-directory h1:not(#_){
+  max-width:none;
+  margin:clamp(.75rem,2vw,1.25rem) 0 clamp(1.5rem,3.5vw,2.5rem);
+  padding:0 0 clamp(1.25rem,3vw,2.25rem);
+  border-bottom:1px solid var(--line-strong);
+  font-size:var(--t-poster);
+  font-weight:800;
+  letter-spacing:-.045em;
+  line-height:.92;
+  text-wrap:balance;
+}
+.site-directory .directory-head p{max-width:40rem;margin:0 0 1rem;font-size:1.0625rem;line-height:1.6;color:var(--soft)}
+.site-directory .directory-head p.lead{font-size:clamp(1.125rem,1rem + .45vw,1.375rem);line-height:1.55;color:var(--ink)}
+
+/* 3. Search: a drawn field and a square button. */
+.site-directory .directory-search{max-width:44rem;margin:0 0 clamp(2rem,4vw,3rem)}
+.site-directory .directory-search label{display:block;margin-bottom:.6rem;font-size:1rem;font-weight:700}
+.site-directory .directory-search > div{display:flex;gap:.6rem}
+.site-directory .directory-search input{
+  min-width:0;flex:1;min-height:48px;box-sizing:border-box;
+  padding:.75rem .9rem;
+  font:inherit;font-size:1.0625rem;color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:0;
+}
+.site-directory .directory-search input::placeholder{color:var(--muted);opacity:1}
+.site-directory .directory-search button{
+  min-height:48px;padding:.5rem 1.1rem;
+  font:inherit;font-weight:650;color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:var(--radius-control,2px);
+  cursor:pointer;
+}
+.site-directory .directory-search button:is(:hover,:focus-visible){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.site-directory [data-search-status]{margin:.75rem 0 0;font-size:.9375rem;color:var(--soft)}
+
+/* 4. The seven sectors: a numbered list on hairlines. */
+.site-directory .directory-pillars{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));
+  column-gap:clamp(1.25rem,3vw,2.5rem);
+  margin:0 0 clamp(1rem,3vw,2rem);
+  border-top:1px solid var(--line-strong);
+}
+.site-directory .directory-pillars a{
+  counter-increment:ix-sector;
+  display:grid;
+  grid-template-columns:2.5rem minmax(0,1fr);
+  align-items:baseline;
+  min-height:44px;
+  padding:.7rem 0;
+  border-bottom:1px solid var(--line);
+  font-size:1.0625rem;
+  font-weight:650;
+  text-decoration:none;
+}
+.site-directory .directory-pillars a::before{
+  content:counter(ix-sector,decimal-leading-zero);
+  font-size:.9375rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--soft);
+}
+.site-directory [data-no-results]{margin:1.5rem 0;font-size:1.0625rem;color:var(--ink)}
+
+/* 5. Each sector is a numbered plate: a hairline with a registration cross, the
+   numeral in a rail, the sector heading, then its pages as rows. */
+.site-directory [data-index-section]{
+  counter-increment:ix-plate;
+  position:relative;
+  display:grid;
+  grid-template-columns:var(--ix-rail) minmax(11rem,.75fr) minmax(0,2fr);
+  column-gap:var(--ix-gap);
+  margin-top:clamp(3.5rem,7vw,6rem);
+  padding:clamp(1.25rem,2.4vw,1.9rem) 0 0;
+  border-top:1px solid var(--line-strong);
+  scroll-margin-top:6rem;
+}
+.site-directory [data-index-section]::before{
+  content:counter(ix-plate,decimal-leading-zero);
+  padding-top:.3rem;
+  font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;
+  color:var(--ink);
+}
+.site-directory [data-index-section]::after{
+  content:"";position:absolute;top:-8px;left:-7px;width:15px;height:15px;pointer-events:none;
+  background:
+    linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,
+    linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat;
+}
+html:root .site-directory [data-index-section] h2:not(#_){
+  margin:0 0 .75rem;padding:0;background:none;
+  font-size:clamp(1.6rem,1.1rem + 1.7vw,2.7rem);
+  font-weight:780;letter-spacing:-.035em;line-height:1;
+  text-wrap:balance;
+}
+html:root .site-directory [data-index-section] h2:not(#_)::before{display:none}
+.site-directory [data-index-section] > header p{max-width:24rem;margin:0;font-size:1rem;line-height:1.55;color:var(--soft)}
+
+.site-directory ul{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(1.25rem,3vw,2.5rem);
+  align-content:start;
+  border-top:1px solid var(--line);
+}
+.site-directory li{padding:.9rem 0 1rem;border-bottom:1px solid var(--line)}
+.site-directory li > a{font-size:1.125rem;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere}
+.site-directory li p{max-width:34rem;margin:.35rem 0 0;font-size:.9375rem;line-height:1.55;color:var(--soft)}
+/* The entry's status or kind reads as its own line above the description. */
+.site-directory li p .index-meta{display:block;margin:0 0 .2rem;font-size:.9375rem;font-weight:600;color:var(--ink)}
+.site-directory li p .index-meta::first-letter{text-transform:uppercase}
+
+.site-directory > footer{margin-top:clamp(3.5rem,7vw,6rem);padding-top:1rem;border-top:1px solid var(--line-strong)}
+.site-directory > footer p{margin:0;font-size:1rem;color:var(--soft)}
+
+/* 6. Narrow windows fold the rail and stack the rows. */
+@media (max-width:60rem){
+  .site-directory [data-index-section]{grid-template-columns:var(--ix-rail) minmax(0,1fr)}
+  .site-directory [data-index-section] > header{margin-bottom:1.25rem}
+  .site-directory [data-index-section] > ul{grid-column:2}
+}
+@media (max-width:40rem){
+  .site-directory [data-index-section]{grid-template-columns:minmax(0,1fr)}
+  .site-directory [data-index-section]::before{padding:0 0 1rem}
+  .site-directory [data-index-section] > ul{grid-column:1}
+  .site-directory ul{grid-template-columns:minmax(0,1fr)}
+  .site-directory .directory-search > div{flex-wrap:wrap}
+}
+
+/* 7. Forced colors and print: system colors, no drawn cross, no ground texture. */
+@media (forced-colors:active){
+  .site-directory [data-index-section]::after{display:none}
+  html:root .site-directory .route-header:not(#_){border:0!important}
+  .site-directory .directory-search button:is(:hover,:focus-visible){background:Highlight;color:HighlightText}
+}
+@media print{
+  .site-directory [data-index-section]::after{display:none}
+  .site-directory .directory-search{display:none}
+  html:root .site-directory h1:not(#_){font-size:2.4rem}
+}

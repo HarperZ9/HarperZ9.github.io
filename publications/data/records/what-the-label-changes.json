@@ -242,6 +242,7 @@
       "claim": "Across these six studies, labels most often changed where people looked or how easy a work felt to make sense of, and liking or interest changed less often. Label effects vary with the text, the artwork, the viewer, the setting, and the outcome measured, and they cannot be pooled into one score. How to read this: each row is one study, so read across to see what the label changed, what it did not, and what the study cannot show.",
       "type": "evidence-matrix",
       "columns": ["Source", "Who took part and what they saw", "What text viewers got", "What changed", "What did not change, or was not measured", "What this does not show"],
+      "resultColumn": "What changed",
       "rows": [
         ["S1", "30 viewers; 30 works, 15 abstract and 15 figurative", "Title, aesthetic-process context, or semantic context", "Semantic context increased abstract understanding and salient-region exploration; aesthetic-process context reduced overall looking time for abstract work", "Abstract appreciation was lower for aesthetic-process than semantic context, but not reliably different from title-only context", "No universal label effect or correct meaning"],
         ["S2", "214 viewers; 31 Pollock works in Experiment 1", "None, artist, technique, or combined information", "Small liking and interest increase for combined information among lower-art-experience viewers", "No museum behavior; order was fixed", "No biography-only or large general effect"],

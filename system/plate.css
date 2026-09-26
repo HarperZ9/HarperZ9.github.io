@@ -43,8 +43,24 @@ html:root body:not(#_){
 }
 html:root ::selection{background:var(--ink);color:var(--paper)}
 
+/* 3b. The calm ground. Reader text sits on flat paper, and the field and the grain stay
+   in the gutters and the gaps between plates. The rule sets the color only, so a family
+   that clips its ground or paints a column keeps that shape. */
+html:root main:not(#_),html:root body > footer:not(#_),html:root main > footer.page-footer:not(#_){background-color:var(--paper)}
+
+/* 3c. Product pages (body.inner-clean) share one centered column: the hero, the specimen
+   plate and every section. The field runs in both gutters for the full page. On a phone
+   the column takes the full width, so the gutters stay calm. */
+@media (min-width:40.01rem){
+  html:root body.inner-clean:not(.frontier-briefing,#_) > :is(.frame,main){
+    box-sizing:border-box;width:min(100% - 2*clamp(1.5rem,5vw,4rem),var(--site-max,78rem));max-width:none;margin-inline:auto;
+  }
+}
+html:root body.inner-clean:not(.frontier-briefing,#_) > .frame{background-color:var(--paper)}
+
 /* 4. The viewfinder: four crop marks at the corners of the window. They frame
-   the page the way a plate is framed, and they never catch a pointer. */
+   the page the way a plate is framed, and they never catch a pointer. On a phone the
+   arms shorten to 8px so they end inside the side gutter, clear of the first glyph. */
 html:root::after{
   content:"";position:fixed;inset:clamp(6px,1vw,14px);z-index:90;pointer-events:none;
   --m:clamp(14px,1.8vw,26px);
@@ -58,6 +74,7 @@ html:root::after{
     linear-gradient(var(--crop),var(--crop)) bottom right/var(--m) 1px no-repeat,
     linear-gradient(var(--crop),var(--crop)) bottom right/1px var(--m) no-repeat;
 }
+@media (max-width:40rem){html:root::after{--m:8px}}
 
 /* 5. Display type at poster scale. Weight and size carry the hierarchy. */
 html:root h1:where(:not(.visually-hidden,.sr-only,#site-nav *,.ns-sheet *)){
@@ -81,18 +98,23 @@ html:root h2:where(main *):where(:not(.ns-sheet *,figure *,.visually-hidden)){
 }
 html:root h3:where(main *):where(:not(.ns-sheet *,figure *)){font-weight:680;letter-spacing:-.012em}
 
-/* 6. A section opens on a hairline with a registration cross at its left end. */
-html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *)){
+/* 6. A section opens on a hairline with a registration cross at its left end. A family
+   that draws its own opening marks data-no-cross on the heading or on a container, and
+   the rule and cross stay off everything inside it. */
+html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *,[data-no-cross],[data-no-cross] *)){
   position:relative;
   padding-top:var(--s-5);
   background:linear-gradient(var(--line),var(--line)) top left/100% 1px no-repeat;
 }
-html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *))::before{
+html:root h2:where(main :is(section,article,div) > *):where(:not(.ns-sheet *,figure *,.visually-hidden,:only-child,.doc-rail > section > *,[data-no-cross],[data-no-cross] *))::before{
   content:"";position:absolute;top:-7px;left:-7px;width:15px;height:15px;pointer-events:none;
   background:
     linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,
     linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat;
 }
+
+/* 6a. The older crystal notch under a section heading gives way to the cross above. */
+html:root :is(section.mv > h2,.proof-head h2)::after{display:none}
 
 /* 6b. Rail layouts put the heading beside its text, so the rule and cross sit on the
    section itself and both columns start on one line. */
@@ -103,7 +125,9 @@ html:root .doc-rail > section:not(:first-of-type)::before{
 }
 
 /* 7. Plates: art sits in a thin frame with corner ticks, like a mounted print. */
-html:root .art{position:relative;border:1px solid var(--line);border-radius:0;background:var(--paper)}
+/* art.css clips a plate to round its corners; a plate here is square, so it lets the
+   ticks, which sit 5px outside the frame, show. */
+html:root .art{position:relative;overflow:visible;border:1px solid var(--line);border-radius:0;background:var(--paper)}
 html:root .art::after{
   content:"";position:absolute;inset:-5px;pointer-events:none;--k:12px;
   background:
@@ -122,17 +146,59 @@ html:root h1:has(+ .art.art-pillar):not(#_){font-size:var(--t-poster);letter-spa
 html:root .art.art-cover{margin-block:clamp(1.25rem,3vw,2rem) clamp(2rem,4vw,3rem)}
 @media (max-width:52rem){html:root .art.art-pillar{float:none;width:100%;margin:0 0 1.75rem}}
 
+/* 7c. Canvas plates drawn by the site engine, on every page: square, a hairline frame,
+   corner ticks, and the caption below. The ticks share the canvas's grid cell, so they
+   frame the canvas and never the caption. The interstitial plate takes the inset ground
+   of the current pole, so on the void it stays a quiet plate and never a bright box. */
+html:root .plate:has(> canvas):not(#_){position:relative;border:0;border-radius:0;background:none}
+html:root .plate:has(> canvas):not(.plate--bleed):not(#_){display:grid;grid-template-columns:minmax(0,1fr)}
+html:root .plate:has(> canvas):not(.plate--bleed) > canvas,
+html:root .plate:has(> canvas):not(.plate--bleed):not(#_)::after{grid-area:1 / 1}
+html:root .plate > canvas:not(#_){border:1px solid var(--line);border-radius:0;background:var(--inset)}
+html:root .plate:has(> canvas):not(.plate--bleed):not(#_)::after{
+  content:"";position:relative;inset:auto;margin:-5px;pointer-events:none;--k:12px;
+  background:
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) top left/1px var(--k) no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/var(--k) 1px no-repeat,
+    linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px var(--k) no-repeat;
+}
+html:root .plate--interstitial:not(#_){padding:0;background:none;border:0;border-radius:0}
+html:root .plate:has(> canvas) :is(.plate-no,.plate-caption):not(#_){font-size:.9375rem;color:var(--soft)}
+html:root .plate--interstitial .plate-caption:not(#_){color:var(--ink)}
+
 /* 8. Controls: square, drawn, never a pill. */
 html:root main :is(.btn,.btn-primary,.product-action,.publication-read.btn){border-radius:var(--radius-control,2px)}
 
 /* 9. The shared navigation sits on the ground with one hairline under it. */
 html:root #site-nav.site-nav{background:var(--paper);border-bottom:1px solid var(--line)}
+/* A document's own switch bar (Career: Hire, Resume, Portfolio, Full CV) is reader text too. */
+html:root body > .docnav:not(#_){background-color:var(--paper)}
+/* The mark is the home's ink aperture, drawn in CSS so it follows the pole. The raster
+   tile and the canvas stay hidden; the !important beats the inline display the nav
+   script sets. The word is the name, then the lab, as on the home bar. */
+html:root #site-nav .sn-home-field:not(#_){
+  width:26px;height:26px;border:0;border-radius:50%;
+  background:radial-gradient(circle,var(--ink) 0 17%,transparent 18% 40%,var(--ink) 41% 45%,transparent 46% 58%,var(--line-strong) 59% 61%,transparent 62%);
+}
+html:root #site-nav .sn-home-field :is(img,canvas){display:none!important}
+html:root #site-nav .sn-brand-word:not(#_){font-family:var(--font-sans);font-size:1.02rem;font-weight:760;letter-spacing:-.01em;text-shadow:none;white-space:nowrap}
+html:root #site-nav .sn-brand-lab{margin-left:.3rem;font-size:.95rem;font-weight:500;letter-spacing:0;color:var(--soft)}
+@media (max-width:520px){html:root #site-nav .sn-brand-lab{display:none}}
+
+/* 9b. A figure page shown inside another page's frame (theme-entry.js marks it) drops
+   the chrome the host page already draws: no second viewfinder, field or theme picker,
+   and the title steps down to a section heading. */
+html:root[data-embedded]::after{display:none}
+html:root[data-embedded] body:not(#_){background-image:none}
+html:root[data-embedded] :is(.theme-control,label.theme-control,.theme-demo-nav){display:none}
+html:root[data-embedded] .figure-heading h1:not(#_){font-size:var(--t-h2)}
 
 /* 10. Forced colors and print: no field, no grain, no crop marks. */
 @media (forced-colors:active){
   html:root:is([data-theme],:not([data-theme])){
     --paper:Canvas;--inset:Canvas;--panel:Canvas;--raised:Canvas;
-    --ink:CanvasText;--soft:CanvasText;--muted:GrayText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
+    --ink:CanvasText;--soft:CanvasText;--muted:CanvasText;--line:GrayText;--line-strong:CanvasText;--on-ink:Canvas;
     --verified:CanvasText;--drift:CanvasText;--unverifiable:CanvasText;
     --sheet-paper:Canvas;--sheet-ink:CanvasText;--sheet-soft:CanvasText;--sheet-line:CanvasText;
     --sheet-hair:GrayText;--sheet-dot:Canvas;--sheet-frame:CanvasText;--sheet-pupil:CanvasText;--sheet-core:Canvas;
@@ -140,6 +206,9 @@ html:root #site-nav.site-nav{background:var(--paper);border-bottom:1px solid var
   html:root body:not(#_){background-image:none}
   html:root::after,html:root .art::after,
   html:root h2:where(main *)::before{display:none}
+  /* A route header is a band: rules above and below, never a box. The :not(#_) step
+     outranks the boxed rule in nav.css and doc.css. */
+  html:root .route-header:not(#_){border:0!important;border-block:1px solid CanvasText!important}
 }
 @media print{
   html:root:is([data-theme],:not([data-theme])){
@@ -153,3 +222,14 @@ html:root #site-nav.site-nav{background:var(--paper);border-bottom:1px solid var
   html:root::after,html:root .art::after{display:none}
 }
 @media (prefers-reduced-motion:reduce){html:root body:not(#_){background-attachment:scroll,scroll}}
+
+/* 11. The making surfaces (gallery, loom, retro) open on the aperture drawn live in a mounted
+   plate: a hairline frame with corner ticks at the right of the masthead. Below 900px the
+   script does not mount, so the plate is not shown there. */
+html:root body.instrument-surface .frame > figure.hero-plate{
+  position:absolute;z-index:-1;pointer-events:none;box-sizing:border-box;margin:0;
+  width:min(56vh,34vw);aspect-ratio:1;right:clamp(1.5rem,4vw,4rem);top:50%;transform:translateY(-50%);background:var(--inset);
+}
+html:root body.instrument-surface .frame > figure.hero-plate > canvas{display:block;width:100%;height:100%;opacity:1;transition:none}
+@media (max-width:899px){html:root body.instrument-surface .frame > figure.hero-plate{display:none}}
+@media print{html:root body.instrument-surface .frame > figure.hero-plate{display:none}}

@@ -274,6 +274,7 @@
       "claim": "Four studies that followed people over time compared the growth people credited to the event with the change researchers measured. Each row keeps its own event, sample, time span, and result, and the rows are not combined.",
       "type": "evidence-matrix",
       "columns": ["Study", "Who took part, and how many", "What was compared", "Result", "What it does not show"],
+      "resultColumn": "Result",
       "rows": [
         ["S2", "Two-month prospective study; n=122 event subgroup", "Growth reported on the questionnaire versus measured change in the matching areas", "Generally unrelated", "Does not show that growth never happens"],
         ["S3", "Two-wave student study; n=282 baseline; n=219 to 221 raw follow-up; n=214 to 218 full-sample analytic; 66 raw event reports; n=61 to 64 analytic event subset", "Perceived PTG, perceived general growth, and measured pre-to-post change", "Perceived PTG was not significantly related to the other two; perceived general growth was significantly related to measured change", "Does not reach beyond the small group of students who had a trauma"],

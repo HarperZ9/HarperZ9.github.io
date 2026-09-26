@@ -25,11 +25,11 @@ const META_WRAP_CHARS = 32;
 const LABEL_WRAP_CHARS = 29;
 
 const LANE_ACCENTS = new Map([
-  ["Legal process", "#8d70db"],
-  ["OpenAI company report", "#d47a5a"],
-  ["Hugging Face host telemetry", "#54c9d1"],
-  ["METR and Redwood independent investigation", "#8fbf6c"],
-  ["Vendor remediation", "#d4ad5a"],
+  ["Legal process", "var(--line-strong)"],
+  ["OpenAI company report", "var(--line-strong)"],
+  ["Hugging Face host telemetry", "var(--line-strong)"],
+  ["METR and Redwood independent investigation", "var(--line-strong)"],
+  ["Vendor remediation", "var(--line-strong)"],
 ]);
 
 const STATUS_TOKENS = {
@@ -158,9 +158,9 @@ function renderEvent({ item, index, x, y, width, height }) {
   const key = `timeline:${index}`;
 
   return `<g data-figure-point="true" data-figure-key="${key}" data-date="${escapeMarkup(item.date)}" data-lane="${escapeMarkup(item.lane)}" data-state="${escapeMarkup(item.status)}" data-status-label="${escapeMarkup(status.label)}" role="graphics-symbol" aria-label="${escapeMarkup(aria)}" tabindex="-1">
-    <rect class="focus-ring" x="${x - 4}" y="${y - 4}" width="${width + 8}" height="${height + 8}" rx="22" fill="none" stroke="transparent" stroke-width="4"/>
-    <rect class="event-card ${status.className}" x="${x}" y="${y}" width="${width}" height="${height}" rx="18" fill="${status.fill}" stroke="${status.stroke}" stroke-width="2"${status.dash}/>
-    <rect x="${x}" y="${y}" width="10" height="${height}" rx="5" fill="${laneAccent}"/>
+    <rect class="focus-ring" x="${x - 4}" y="${y - 4}" width="${width + 8}" height="${height + 8}" rx="0" fill="none" stroke="transparent" stroke-width="4"/>
+    <rect class="event-card ${status.className}" x="${x}" y="${y}" width="${width}" height="${height}" rx="0" fill="${status.fill}" stroke="${status.stroke}" stroke-width="2"${status.dash}/>
+    <rect x="${x}" y="${y}" width="10" height="${height}" rx="0" fill="${laneAccent}"/>
     <circle cx="${x + 30}" cy="${y + 31}" r="9" fill="${laneAccent}" stroke="${status.stroke}" stroke-width="2"/>
     ${lineText({ x: x + 52, y: y + 29, lines: metaLines, size: 18, className: "mono meta", lineHeight: 22 })}
     ${lineText({ x: x + 52, y: labelY, lines: labelLines, size: 24, className: "label", weight: "650", lineHeight: 28 })}
@@ -203,9 +203,9 @@ function renderSvg(companion) {
     <line x1="${SVG_SPINE_X}" y1="${cursorY + 6}" x2="${SVG_SPINE_X}" y2="${cursorY + height - 8}" class="spine-segment"/>
     <circle cx="${SVG_SPINE_X}" cy="${dateY}" r="13" class="date-node"/>
     <line x1="${SVG_SPINE_X + 19}" y1="${dateY}" x2="${SVG_CARD_X - 18}" y2="${dateY}" class="date-leader"/>
-    <rect x="${SVG_LEFT_GUTTER}" y="${dateY - 23}" width="100" height="46" rx="17" class="date-badge"/>
+    <rect x="${SVG_LEFT_GUTTER}" y="${dateY - 23}" width="100" height="46" rx="0" class="date-badge"/>
     <text x="${SVG_LEFT_GUTTER + 50}" y="${dateY + 6}" text-anchor="middle" font-size="18" class="mono date-text">${escapeMarkup(group.date)}</text>
-    <rect x="${SVG_CARD_X}" y="${cursorY}" width="${SVG_CARD_WIDTH}" height="${height}" rx="26" class="date-card"/>
+    <rect x="${SVG_CARD_X}" y="${cursorY}" width="${SVG_CARD_WIDTH}" height="${height}" rx="0" class="date-card"/>
     ${itemsMarkup}
   </g>`;
       cursorY = nextCursor;
@@ -217,8 +217,8 @@ function renderSvg(companion) {
   <title id="${FIGURE_ID}-title">${escapeMarkup(figure.title)}</title>
   <desc id="${FIGURE_ID}-desc">${escapeMarkup(figure.description)} ${escapeMarkup(figure.claim)}</desc>
   <style>
-    svg{color-scheme:light dark;--bg:#f7fbfb;--panel:#ffffff;--panel-2:#eef5f5;--line:#b8cacc;--line-strong:#718c92;--text:#172126;--muted:#526a70;--verified:#007f7a;--verified-soft:#e3f6f4;--caution:#a54d2f;--caution-soft:#fff0e9;--shadow:#c8d6d6}
-    @media (prefers-color-scheme:dark){svg{--bg:#0b1115;--panel:#101a20;--panel-2:#16252c;--line:#36505a;--line-strong:#5f7a82;--text:#f2f8f8;--muted:#b9cbd0;--verified:#54c9d1;--verified-soft:#13262b;--caution:#d47a5a;--caution-soft:#291b18;--shadow:#061015}}
+    svg{color-scheme:light dark;--bg:#f1ece1;--panel:#f1ece1;--panel-2:#e4ddcd;--line:#d6ccb8;--line-strong:#7b7262;--text:#16130f;--muted:#4a443b;--verified:#0a6b61;--verified-soft:#f1ece1;--caution:#16130f;--caution-soft:#f1ece1;--shadow:transparent}
+    @media (prefers-color-scheme:dark){svg{--bg:#0a0a0d;--panel:#0a0a0d;--panel-2:#111114;--line:#262529;--line-strong:#77716a;--text:#ece5d6;--muted:#b8b0a0;--verified:#63d4ce;--verified-soft:#0a0a0d;--caution:#ece5d6;--caution-soft:#0a0a0d;--shadow:transparent}}:root[data-theme="light"] svg{--bg:#f1ece1;--panel:#f1ece1;--panel-2:#e4ddcd;--line:#d6ccb8;--line-strong:#7b7262;--text:#16130f;--muted:#4a443b;--verified:#0a6b61;--verified-soft:#f1ece1;--caution:#16130f;--caution-soft:#f1ece1;--shadow:transparent}:root[data-theme="dark"] svg{--bg:#0a0a0d;--panel:#0a0a0d;--panel-2:#111114;--line:#262529;--line-strong:#77716a;--text:#ece5d6;--muted:#b8b0a0;--verified:#63d4ce;--verified-soft:#0a0a0d;--caution:#ece5d6;--caution-soft:#0a0a0d;--shadow:transparent}
     text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--text)}
     .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}
     .muted,.meta,.legend-text{fill:var(--muted)}
@@ -227,7 +227,7 @@ function renderSvg(companion) {
     .date-node{fill:var(--panel);stroke:var(--line-strong);stroke-width:3}
     .date-badge{fill:var(--panel-2);stroke:var(--line);stroke-width:1.5}
     .date-card{fill:var(--panel);stroke:var(--line);stroke-width:1.5}
-    .event-card{filter:drop-shadow(0 5px 14px var(--shadow))}
+    .event-card{filter:none}
     .focus-ring{pointer-events:none}
     [data-figure-point]:focus{outline:none}
     [data-figure-point]:focus-visible .focus-ring{stroke:var(--verified)}
@@ -237,15 +237,15 @@ function renderSvg(companion) {
   <text x="34" y="72" font-size="19" class="muted">Grouped by date. Evidence lanes and states stay separate.</text>
   <text x="34" y="98" font-size="19" class="muted">No causal connectors are drawn.</text>
   <g aria-label="State legend">
-    <rect x="34" y="116" width="126" height="34" rx="17" fill="var(--verified-soft)" stroke="var(--verified)" stroke-width="2"/>
+    <rect x="34" y="116" width="126" height="34" rx="0" fill="var(--verified-soft)" stroke="var(--verified)" stroke-width="2"/>
     <text x="52" y="138" font-size="18" class="mono">Verified</text>
-    <rect x="176" y="116" width="120" height="34" rx="17" fill="var(--caution-soft)" stroke="var(--caution)" stroke-width="2" stroke-dasharray="8 6"/>
+    <rect x="176" y="116" width="120" height="34" rx="0" fill="var(--caution-soft)" stroke="var(--caution)" stroke-width="2" stroke-dasharray="8 6"/>
     <text x="194" y="138" font-size="18" class="mono">Caution</text>
     <text x="314" y="138" font-size="18" class="muted">Lane/source IDs are in each record.</text>
   </g>
   ${groupMarkup}
   <g aria-label="Figure limit" transform="translate(62 ${footerY})">
-    <rect x="0" y="0" width="${SVG_WIDTH - 124}" height="${SVG_FOOTER_HEIGHT}" rx="22" fill="var(--panel-2)" stroke="var(--line)" stroke-width="1.5"/>
+    <rect x="0" y="0" width="${SVG_WIDTH - 124}" height="${SVG_FOOTER_HEIGHT}" rx="0" fill="var(--panel-2)" stroke="var(--line)" stroke-width="1.5"/>
     <text x="28" y="34" font-size="22" font-weight="750">Chronology only: date order is not causality.</text>
     <text x="28" y="62" font-size="18" class="muted">Full table preserves all ${items.length} records and source IDs.</text>
   </g>
@@ -294,7 +294,7 @@ function renderHtml(companion, svg) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeMarkup(figure.title)}</title>
-  <link rel="stylesheet" href="../system/figure.css?v=20260906-figure-presentation">
+  <link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets">
   <style>
     .evidence-figure[data-figure-id="${FIGURE_ID}"] .figure-svg-scroll { --figure-svg-min-inline: 0; grid-row: 2; }
     .evidence-figure[data-figure-id="${FIGURE_ID}"] .figure-svg-scroll svg { width: min(100%, 44rem); min-width: 0; margin-inline: auto; }

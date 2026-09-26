@@ -39,6 +39,11 @@ def read_json(rel: str) -> dict | list:
     return json.loads((ROOT / rel).read_text(encoding="utf-8"))
 
 
+def published_record(current: dict) -> dict:
+    """current.json minus the conclusions addendum, which is never part of the dated record."""
+    return {key: value for key, value in current.items() if key != "conclusions_addendum"}
+
+
 def load_builder():
     path = ROOT / "tools" / "build_frontier_safety_briefing.py"
     spec = importlib.util.spec_from_file_location("frontier_safety_builder", path)
@@ -139,7 +144,7 @@ def test_current_digest_routes_incident_detail_to_the_canonical_briefing() -> No
     )
     assert stale_question not in edition["open_questions"]
     assert "previously watched OpenAI URLs" in edition["change_summary"]
-    assert current == archive
+    assert published_record(current) == archive
     assert CANONICAL_OPENAI_HUGGING_FACE_BRIEFING in page
 
 
@@ -177,7 +182,7 @@ def test_current_archive_and_history_are_hash_consistent() -> None:
     history = read_json("frontier-safety/data/history.json")
     builder = load_builder()
 
-    assert current == archived
+    assert published_record(current) == archived
     assert history["editions"][-1]["date"] == CURRENT_EDITION_DATE
     assert history["editions"][-1]["sha256"] == builder.edition_sha256(current)
     dates = [entry["date"] for entry in history["editions"]]
@@ -196,7 +201,7 @@ def test_current_edition_records_unposted_social_publication() -> None:
     assert edition["social_publication"] == expected
     assert current["social_publication"] == expected
     assert archived["social_publication"] == expected
-    assert current == archived
+    assert published_record(current) == archived
     assert (
         ROOT / "frontier-safety" / "social" / f"{CURRENT_EDITION_DATE}-x.txt"
     ).read_text(encoding="utf-8").strip() == edition["social"]["x"]
@@ -258,7 +263,11 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     assert 'class="footer-seal"' in page
     assert "system/reveal.js" in page
     assert "conso-regular.woff2" in page
-    assert '<meta name="theme-color" content="#070406">' in page
+    # The plate shell names the browser bar per scheme: bone in light, void in dark,
+    # with no unscoped fallback that would paint a light reader's bar dark.
+    assert '<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ebe5d8">' in page
+    assert '<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060608">' in page
+    assert '<meta name="theme-color" content="#070406">' not in page
 
     for html in (page, current_archive, baseline_archive):
         assert "briefing-plate" not in html
@@ -269,7 +278,9 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
     assert '<body class="doc frontier-briefing">' in baseline_archive
     assert f'href="../frontier-safety.css?v={FRONTIER_CSS_REVISION}"' in baseline_archive
 
-    assert f'@import url("../system/system.css?v={FRONTIER_CSS_REVISION}")' in stylesheet
+    # 26 September 2026: the live briefing's only route to system.css moves to the
+    # void-plates revision; the stylesheet's own stamp stays for the archives.
+    assert '@import url("../system/system.css?v=20260925-void-plates")' in stylesheet
     assert f'@import url("../system/doc.css?v={FRONTIER_CSS_REVISION}")' in legacy_stylesheet
     assert "20260812-angular" not in stylesheet
     assert '@import url("../system/doc.css")' not in stylesheet

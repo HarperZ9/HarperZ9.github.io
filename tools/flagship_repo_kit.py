@@ -101,12 +101,12 @@ IDENTITIES = {
         package_name="telos",
         role="verified contact with state and range",
         promise="Give a stateless model durable, verified contact with state and range.",
-        market_position="Serious AI work needs a floor beneath confidence. Project Telos gives the model shared state, witnessed perception, and a certificate loop a person can re-check.",
+        market_position="Serious AI work needs a floor beneath confidence. Flywheel gives the model shared state, witnessed perception, and a certificate loop a person can re-check.",
         status_labels=("PERCEIVE", "CHECK", "CERTIFIED", "UNVERIFIABLE"),
         demo_path=Path("demo/index.html"),
         install_command="Node 18 or newer",
         run_command="node demo/run.mjs",
-        description="The Project Telos membrane demo: perceive, check, and re-derive a certificate.",
+        description="The Flywheel membrane demo: perceive, check, and re-derive a certificate.",
     ),
 }
 def esc(value: str) -> str:
@@ -168,7 +168,7 @@ def mark_paths(key: str) -> str:
 
 def render_mark(identity: RepoIdentity) -> str:
     title = f"{identity.key} mark"
-    desc = f"Project Telos mark for {identity.key}, {identity.role}."
+    desc = f"Zentropy Labs mark for {identity.key}, {identity.role}."
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440" role="img" aria-label="{esc(desc)}">
   <title>{esc(title)}</title>
   <desc>{esc(desc)}</desc>
@@ -180,10 +180,10 @@ def render_mark(identity: RepoIdentity) -> str:
 
 def render_hero(identity: RepoIdentity) -> str:
     title = identity.key
-    desc = f"{identity.key} README hero for Project Telos."
+    desc = f"{identity.key} README hero for Zentropy Labs."
     promise_lines, promise_bottom = svg_tspans(identity.promise, 84, 188, 48, 36)
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 520" role="img" aria-label="{esc(desc)} {esc(identity.promise)}">
-  <title>{esc(title)} Project Telos hero</title>
+  <title>{esc(title)} Zentropy Labs hero</title>
   <desc>{esc(desc)} {esc(identity.promise)}</desc>
   <rect width="1280" height="520" rx="34" fill="{TOKENS["paper"]}"/>
   <path d="M80 96 H1200 M80 424 H1200" stroke="#0b0c0e" stroke-opacity=".14"/>
@@ -241,7 +241,7 @@ def render_demo(identity: RepoIdentity) -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(identity.key)} Project Telos demo</title>
+<title>{esc(identity.key)} Flywheel demo</title>
 <style>
 @font-face{{font-family:Kilon;src:url("https://harperz9.github.io/system/fonts/kilon.woff2") format("woff2");font-display:swap}}
 @font-face{{font-family:Conso;src:url("https://harperz9.github.io/system/fonts/conso-regular.woff2") format("woff2");font-display:swap}}
@@ -252,7 +252,7 @@ def render_demo(identity: RepoIdentity) -> str:
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <main id="main">
-  <p class="rail">Project Telos / {esc(identity.role)}</p>
+  <p class="rail">Flywheel / {esc(identity.role)}</p>
   <h1>{esc(identity.key)}</h1>
   <p class="promise">{esc(identity.promise)}</p>
   <p class="market">{esc(identity.market_position)}</p>
@@ -268,7 +268,7 @@ def render_demo(identity: RepoIdentity) -> str:
   </section>
   <nav class="actions" aria-label="Demo actions">
     <a class="pill primary" href="../README.md">Read the README</a>
-    <a class="pill" href="https://harperz9.github.io">Project Telos</a>
+    <a class="pill" href="https://harperz9.github.io">Zentropy Labs</a>
   </nav>
 </main>
 </body>

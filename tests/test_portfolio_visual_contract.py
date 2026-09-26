@@ -66,7 +66,7 @@ def test_home_loads_the_react_shell_with_a_readable_static_floor() -> None:
 
     # 2026-09-25: the void-and-bone surface replaces the plum home field; the home
     # loads the shared tokens and plate layer instead of home-readable.css.
-    assert 'href="/system/plate.css?v=20260925-void-plates"' in read(INDEX)
+    assert 'href="/system/plate.css?v=20260925-void-integration"' in read(INDEX)
     assert "home-readable.css" not in read(INDEX)
 
 

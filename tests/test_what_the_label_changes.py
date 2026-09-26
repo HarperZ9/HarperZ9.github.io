@@ -137,10 +137,14 @@ def test_generated_html_keeps_article_metadata_svg_alt_and_table_fallback() -> N
         in html
     )
     assert re.search(rf'<img src="figures/label-is-a-lens\.svg" alt="{alt}">', html)
-    assert '<table class="publication-figure-table">' in html
+    # 2026-09-25 void-and-bone pass: the table stacks into labelled records on a
+    # phone, its short study keys set as numerals, and "What changed" is the result.
+    assert '<table class="publication-figure-table" data-stack data-key="short">' in html
     # 2026-09-25: the author approved the Articulate-standard rewrite; pins follow the approved text.
     assert "<caption>Figure 1. What six label studies found." in html
     assert '<th scope="col">Source</th>' in html
-    assert '<th scope="row">S1</th>' in html
-    assert '<th scope="row">S6</th>' in html
-    assert '<th scope="row">S7</th>' not in html
+    assert '<th scope="col" data-result="">What changed</th>' in html
+    assert '<th scope="row" data-label="Source">S1</th>' in html
+    assert '<th scope="row" data-label="Source">S6</th>' in html
+    assert '<th scope="row" data-label="Source">S7</th>' not in html
+    assert '<dl class="publication-evidence"><dt data-term="does-not-prove">Does not prove</dt>' in html

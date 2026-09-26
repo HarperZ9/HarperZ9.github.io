@@ -1,7 +1,7 @@
 /* ============================================================================
    hero-gl.js -- the living technical instrument, shipped.
 
-   A self-contained vanilla-JS WebGL1 hero for harperz9.github.io (Project Telos).
+   A self-contained vanilla-JS WebGL1 hero for harperz9.github.io (Zentropy Labs).
    No dependencies, no build step. Mounts to the committed system.css scaffolding:
 
        <canvas id="gl">     the generative scene   (z-index 0, fixed full-viewport)

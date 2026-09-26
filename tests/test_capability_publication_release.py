@@ -22,6 +22,7 @@ RELEASE_PATHS = (
     "assets/index-CX_9A0Hy.js",
     "assets/index-4wTyKocM.js",
     "assets/index-JJHLIJUt.js",
+    "assets/index-DYDJA8vR.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -79,6 +80,7 @@ RELEASE_PATHS = (
     "system/theme-entry.js",
     "system/theme.css",
     "assets/index-eZ1QGP52.css",
+    "assets/index-BORSyU4q.css",
     "assets/index-DJj37yQz.css",
     "typeface.html",
     "system/type-specimen.css",
@@ -269,6 +271,12 @@ RELEASE_PATHS = (
     "system/notebook-sheet.css",
     "system/print.css",
     "system/retro-systems-lab.css",
+    # 2026-09-25 void-and-bone pass: the catalog, product map and record pages, and
+    # the hub pages, link these family sheets.
+    "system/catalog.css",
+    "system/hubs.css",
+    "system/hubs-fonts.css",
+    "system/hubs-guides.css",
     "system/routes.js",
     "system/systems.js",
     "system/systems.json",
@@ -315,7 +323,33 @@ RELEASE_PATHS = (
 # September 25, 2026, 20:00: author-approved essay rewrites ship; descriptions fit
 # the 160-character limit, the surface moves into tokens.css for no-JS readers, and
 # the site index regains the Who Knew First pillar.
-REVIEWED_RELEASE_SHA256 = "5cbb20957c906bc77f8855fd3b0be2269b13e933758165a97800ce62fff94783"
+# September 26, 2026: the 25 September void-plates integration, rebased on public
+# main d422871. Six page families (charts, briefing, studio, career, systems, hubs)
+# move to the void-and-bone plates: publication tables stack on phones and name a
+# result column, with "Does not prove" first; the home bundle pair becomes
+# index-DYDJA8vR.js and index-BORSyU4q.css; per-domain system plates and the
+# catalog.css family sheet; the hubs sheets join the release tree (catalog.css,
+# hubs.css, hubs-fonts.css, hubs-guides.css); career, studio, frontier-safety and
+# figure cache keys move to their 20260925 revisions; the incident briefing hashes
+# refresh for the remapped figure palette; the frontier-safety head drops its
+# fallback theme-color; under 40rem a data-stack figure table (figure.css and
+# publication-article.css) reads as one record per row in place of a sideways scroll.
+# The node renderers, build_publications, build_frontier_safety_briefing and
+# render_career_pages --check reran byte-identical on the new base.
+# tools/build_checking_machines.py and tools/render_legacy_essays.py (for
+# no-receipt-no-accept.html) lag their pages and were not rerun; rerunning them
+# would drop the 25 September plain-language edition and revert approved prose.
+# September 26, 2026: the void-plates review pass. Reader text sits on a calm
+# paper ground sitewide with the field in the gutters (plate.css floor, product
+# column, career, catalog, charts, figures and home sections); one ink aperture
+# brand mark; embedded figures drop their own chrome; the six remaining incident
+# figures and the four capability maps take the sheet palette with square
+# corners; the claim cards open on plain titles; a distinct frontier-safety
+# edition cover; the home bundle pair becomes index-DYDJA8vR.js and
+# index-BORSyU4q.css with the human-first pair kept as retained history;
+# pick-the-lock-for-everyone.html regenerated from its source (word count
+# 23,456).
+REVIEWED_RELEASE_SHA256 = "54a0c227d8575d90fef9380427a6738b7e53214aa563d6db3e8c494adf586956"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -452,11 +486,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_060_final_gather_pre_review_js = "index-CYqKao4X.js"
     previous_060_final_gather_fixture_js = "index-CpC5RhmM.js"
     previous_gather_171_js = "index-AYA0gyN2.js"
-    # September 25, 2026: the human-first home (Recent work, the nine-square chart,
-    # the hero art, the start-here link) replaces the capability-first pair, which
-    # stays in the release tree as retained history.
-    current_js = "index-TO_R52sc.js"
-    current_css = "index-DJj37yQz.css"
+    # September 26, 2026: the void-plates home (calm section ground, 14px labels, the
+    # edition cover) is the current pair. The 25 September human-first pair
+    # (index-TO_R52sc.js, index-DJj37yQz.css) replaced the capability-first pair;
+    # both retired pairs stay in the release tree as retained history.
+    current_js = "index-DYDJA8vR.js"
+    current_css = "index-BORSyU4q.css"
+    previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
     previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
     previous_capability_first_home_js = "index-4wTyKocM.js"
     prior_mission_js = "index-DpT1GQuA.js"
@@ -472,7 +508,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert (ROOT / "assets" / current_js).is_file()
     assert (ROOT / "assets" / current_css).is_file()
     assert previous_home_js not in source
-    for superseded in previous_capability_first_pair:
+    for superseded in previous_capability_first_pair + previous_human_first_pair:
         assert superseded not in source
         assert (ROOT / "assets" / superseded).is_file()
         assert f"assets/{superseded}" in RELEASE_PATHS

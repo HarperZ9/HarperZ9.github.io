@@ -195,7 +195,7 @@ function boot() {
   }
   async function bootPlate() {
     try {
-      const mod = await import("./generative-field.js");
+      const mod = await import("./generative-field.js?v=20260925-void-plates");
       const render = mod.renderSpecimen || mod.renderPlate;
       if (render) {
         // Ask the plate renderer for the loom's own 16:10 frame; without a

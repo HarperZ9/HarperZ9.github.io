@@ -120,7 +120,7 @@
   .wkf-chip{border:1px solid var(--wkf-line);border-radius:999px;display:inline-flex;gap:.35rem;align-items:center}
   .wkf-chip[aria-pressed="false"]{opacity:.5;text-decoration:line-through}
   .wkf-dot{width:.6rem;height:.6rem;border-radius:50%;display:inline-block}
-  .wkf-controls select{font:inherit;font-size:.85rem;color:var(--wkf-ink);background:var(--wkf-paper);border:1px solid var(--wkf-line);border-radius:6px;padding:.35rem .5rem;max-width:100%}
+  .wkf-controls select{font:inherit;font-size:.85rem;color:var(--wkf-ink);background:var(--wkf-paper);border:1px solid var(--wkf-line);border-radius:6px;padding:.35rem .5rem;max-width:min(100%,calc(100vw - 3rem))}.wkf-controls>*{min-width:0;max-width:100%}
   .wkf-stage{display:grid;grid-template-columns:minmax(0,1fr) 20rem;gap:.8rem;align-items:start}
   .wkf-stage>*{min-width:0}
   .wkf-graph{background:var(--wkf-panel);border:1px solid var(--wkf-line);position:relative}

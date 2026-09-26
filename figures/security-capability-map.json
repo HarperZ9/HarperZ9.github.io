@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-08-28",
+    "retrievedAt": "2026-09-14",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Systems are included when security-privacy appears in their registry domains.",
@@ -29,7 +29,7 @@
           "id": "accountable-surface",
           "label": "Accountable Surface",
           "status": "verified",
-          "stateLabel": "controlled agent-action workbench",
+          "stateLabel": "workbench that allows only approved AI agent actions",
           "group": "Security and privacy",
           "nodeType": "system"
         },
@@ -53,7 +53,7 @@
           "id": "behavior-transform",
           "label": "behavior-transform.io",
           "status": "verified",
-          "stateLabel": "I/O boundary and receipt library",
+          "stateLabel": "local wrapper for file, web, and tool input and output",
           "group": "Security and privacy",
           "nodeType": "system"
         },
@@ -69,7 +69,7 @@
           "id": "emet",
           "label": "EMET",
           "status": "verified",
-          "stateLabel": "cross-implementation integrity witness",
+          "stateLabel": "checker that content still matches its source",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -77,7 +77,7 @@
           "id": "gate",
           "label": "Gate",
           "status": "verified",
-          "stateLabel": "private-system integration and release authority",
+          "stateLabel": "Sofer release-check subsystem",
           "group": "Developer infrastructure",
           "nodeType": "system"
         },
@@ -101,7 +101,7 @@
           "id": "model-provenance-validator",
           "label": "Model Provenance Validator",
           "status": "verified",
-          "stateLabel": "model provenance-envelope validator",
+          "stateLabel": "checker for records tying model claims to sources",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -125,7 +125,7 @@
           "id": "proof-surface",
           "label": "Proof Surface",
           "status": "verified",
-          "stateLabel": "authorization and proof-packet library",
+          "stateLabel": "library that checks AI permission and evidence records",
           "group": "Security and privacy",
           "nodeType": "system"
         },
@@ -133,7 +133,7 @@
           "id": "public-surface-sweeper",
           "label": "Public Surface Sweeper",
           "status": "verified",
-          "stateLabel": "public release-surface auditor",
+          "stateLabel": "checker run before a repository goes public",
           "group": "Security and privacy",
           "nodeType": "system"
         },
@@ -149,7 +149,7 @@
           "id": "secret-redact-io",
           "label": "Secret Redact IO",
           "status": "verified",
-          "stateLabel": "secret-aware I/O helper library",
+          "stateLabel": "library that redacts secrets from file and tool output",
           "group": "Security and privacy",
           "nodeType": "system"
         },

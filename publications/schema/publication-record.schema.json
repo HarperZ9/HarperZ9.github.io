@@ -103,6 +103,7 @@
         "claim": {"type": "string"},
         "type": {"type": "string"},
         "columns": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "resultColumn": {"type": "string", "description": "Optional. The column label that holds the figure's result; the builder marks that column data-result."},
         "rows": {"type": "array", "minItems": 1, "items": {"type": "array", "items": {"type": "string"}}},
         "scope": {"type": "string"},
         "units": {"type": "string"},

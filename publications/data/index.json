@@ -8,8 +8,8 @@
       "form": "public-interest analysis",
       "published_at": "2026-09-01",
       "updated_at": "2026-09-01",
-      "record_sha256": "a252e243e592c496478200a73d95efe275e95476aae6fe67abdb9d3e0bf8fea6",
-      "idempotency_key": "27863f0aa3ff1ad15ce7fca53bb5c4bdea7e13fae79f6cbb70b10d2dbcf555d0"
+      "record_sha256": "1642e558886e3e2ce954753c7e1c82a2ba645a67bb3414c35e7cd259bba57c0a",
+      "idempotency_key": "433ca50b079732c6f4b803fd1285a24fa4fa6af36bd5101edb3a4d8f7c8f7d0e"
     },
     {
       "id": "borrowed-ground",
@@ -28,8 +28,8 @@
       "form": "evidence essay",
       "published_at": "2026-09-05",
       "updated_at": "2026-09-05",
-      "record_sha256": "edaad29e4a27f5e3dc50ffbade2e49c888ec9758b1bc1c3959cc43346d23fc08",
-      "idempotency_key": "a3c953bd19251eef33b34c758ea0efba29925e68d467d1f1e290073447bc9806"
+      "record_sha256": "fd3a661d3b52eedf0d6a9c71b0c20af29a13ff4cc7f960ab3231b13a7fbd266d",
+      "idempotency_key": "3fd61caf2c71957012d525b7be96d9cbc812e3ea29eb898f33aa18c4de020902"
     },
     {
       "id": "ltj-bukem-the-man-behind-the-atmosphere",
@@ -58,8 +58,8 @@
       "form": "evidence essay",
       "published_at": "2026-09-01",
       "updated_at": "2026-09-25",
-      "record_sha256": "f19fd459330d5eb07615e1b6ec2d73860917fc26ae4ce584bf1849cc2b5d42bb",
-      "idempotency_key": "c9cd20d5991f9a6ac774cf791ec72024cba317dc24607b7f91bd8b471b3f1eb6"
+      "record_sha256": "757a90fc7dc650bd2408d3198be79a0cf077ff371b2f3bb2bc87d5010aad6649",
+      "idempotency_key": "41b1a4a725fbed6c41b1db75709e75e664149099c582d715f64e02fbac62533d"
     },
     {
       "id": "what-the-label-changes",
@@ -68,8 +68,8 @@
       "form": "evidence-led visual essay",
       "published_at": "2026-09-02",
       "updated_at": "2026-09-25",
-      "record_sha256": "3123956fcb6bb4094fbe813c93e368b295dd8e3e40f4cc2548f15ac16d810936",
-      "idempotency_key": "5263e870d88b213bb3fa926fb70bd55ef1cd8f905f300efbea2610f0fa2406db"
+      "record_sha256": "5069e1af88b2ad61afd27833d7a9ae199c43d0b76d6bc93e8e7af286ffcef2ea",
+      "idempotency_key": "ec14f824044c4cafb033d613c2abec4fecb3cdbab617e754a3c5b81e2bcedf71"
     }
   ],
   "listings": [

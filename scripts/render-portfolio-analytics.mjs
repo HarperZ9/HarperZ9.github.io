@@ -1,11 +1,19 @@
 #!/usr/bin/env node
-/** Render comparable benchmark evidence and a supporting source inventory. */
+/** Render comparable benchmark evidence and a supporting source inventory.
+ *
+ * 2026-09-25, void-and-bone pass: each measured figure leads with a poster title and one
+ * notebook sheet. The sheet states one plain takeaway, draws the chart large in the site's
+ * tokens, keeps one limit line under it, and moves digests, model references, test statistics
+ * and commit identities into "How we know". Every number on a sheet is read from the record
+ * here; none is typed in. The figure code lives in this one file because the renderer tests run
+ * a copy of it beside the chassis alone. Every chart on a page is HTML rows over SVG strips, so it
+ * reflows to a phone; the standalone SVG plates exist only for an img on another page. */
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { resolve } from "node:path";
 
-import { escapeMarkup, number, page } from "./analytics-page.mjs";
+import { SHEET_DEFS, axisRow, barPlate, escapeMarkup, howWeKnow, number, page, plainDate, plateStyle, sheet } from "./analytics-page.mjs";
 
 function parseArgs(argv) {
   const values = {};
@@ -25,27 +33,301 @@ function parseArgs(argv) {
 const measured = (metric) => metric?.status === "measured" && Number.isFinite(metric.value);
 const metricText = (metric, digits = 2) => measured(metric) ? `${number(metric.value, digits)} ${metric.unit ?? ""}`.trim() : `Unknown: ${metric?.reason ?? "not_reported"}`;
 
+const pct = (value) => `${(value * 100).toFixed(2)}%`;
+const listed = (items) => items.length > 1 ? `${items.slice(0, -1).join(", ")} and ${items.at(-1)}` : items.join("");
+
+// Model ids in words for the chart rows. The tables under "How we know" keep the record's own ids.
+const MODEL_NAMES = {
+  "claude-sonnet-5": "Claude Sonnet 5",
+  "gpt-5.3-codex-spark": "GPT-5.3 Codex Spark",
+  "flywheel-local-coder-14b": "Flywheel Local Coder 14B",
+  "flywheel-local-coder-32b": "Flywheel Local Coder 32B",
+  "14b-cpt-adapter": "Flywheel 14B adapter",
+  "qwen2.5:7b": "Qwen 2.5 7B",
+};
+const modelName = (id) => MODEL_NAMES[id] ?? String(id).split(/[-_:]+/).filter(Boolean)
+  .map((part) => /^\d+(\.\d+)?b$/i.test(part) ? part.toUpperCase() : `${part.charAt(0).toUpperCase()}${part.slice(1)}`).join(" ");
+
+// A row that did not run, in words: its recorded status, then the first clause of its reason.
+const UNAVAILABLE = { "NOT OPERATIONAL": "Could not run", SKIPPED: "Skipped" };
+const REASON_WORDS = [[/^quota_or_rate_limit\b/, "quota or rate limit"], [/^no configured endpoint\b/, "no endpoint configured"]];
+function unavailableWords(row) {
+  const status = UNAVAILABLE[row.status] ?? `${String(row.status).charAt(0)}${String(row.status).slice(1).toLowerCase()}`;
+  const reason = REASON_WORDS.find(([pattern]) => pattern.test(row.reason ?? ""))?.[1]
+    ?? String(row.reason ?? "no reason recorded").split(";")[0].replaceAll("_", " ").trim();
+  return `${status} (${reason})`;
+}
+const grats = (points) => points.map((point) => `<line x1="${point}%" y1="0" x2="${point}%" y2="100%" class="m-grat"/>`).join("");
+
+// ------------------------------------------------------------------ paired model comparison
+
+/** A strip of one scanline bar on a zero-to-one scale, with the value set large beside it. */
+function shareRow(name, sub, value, display) {
+  return `<div class="ns-row"><div class="ns-rname"><p class="ns-n">${escapeMarkup(name)}</p><p class="an-sub">${escapeMarkup(sub)}</p></div>`
+    + `<div class="ns-sc"><svg class="ns-strip" aria-hidden="true" focusable="false">${grats([25, 50, 75, 100])}`
+    + `<line x1="0%" y1="0" x2="0%" y2="100%" class="m-zero"/><rect x="0" y="8" width="${pct(value)}" height="26" class="m-scan"/></svg></div>`
+    + `<p class="ns-rval"><span class="an-big">${escapeMarkup(display)}</span></p></div>`;
+}
+
+/** A row that did not run: a stippled band with a dashed edge and "No score" in words, never a zero. */
+function unmeasuredRow(name, sub) {
+  return `<div class="ns-row is-unknown"><div class="ns-rname"><p class="ns-n">${escapeMarkup(name)}</p><p class="an-sub">${escapeMarkup(sub)}</p></div>`
+    + `<div class="ns-sc"><svg class="ns-strip" aria-hidden="true" focusable="false"><rect x="0" y="13" width="100%" height="16" class="m-unk"/></svg></div>`
+    + `<p class="ns-rval"><span class="t-null-word">No score</span></p></div>`;
+}
+
+/** One square per task. The left half fills when the base model passed it, the right half when
+ * the second model did, so the four paired outcomes read from the squares themselves. */
+function unitGrid(groups, columns, pitch, cell, className) {
+  const cells = groups.flatMap((group) => Array.from({ length: group.count }, () => group));
+  const rows = Math.ceil(cells.length / columns);
+  const width = columns * pitch - (pitch - cell);
+  const height = rows * pitch - (pitch - cell);
+  const half = cell / 2;
+  const marks = cells.map((group, index) => {
+    const x = (index % columns) * pitch;
+    const y = Math.floor(index / columns) * pitch;
+    // A task both models passed is one solid square, so no seam shows between its halves.
+    const fill = group.base && group.other
+      ? `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" class="an-fill"/>`
+      : `${group.base ? `<rect x="${x}" y="${y}" width="${half}" height="${cell}" class="an-fill"/>` : ""}${group.other ? `<rect x="${x + half}" y="${y}" width="${half}" height="${cell}" class="an-fill"/>` : ""}`;
+    return `${fill}<rect x="${x + 0.5}" y="${y + 0.5}" width="${cell - 1}" height="${cell - 1}" class="an-cell"/>`;
+  }).join("");
+  return { svg: marks, width, height, className };
+}
+
+function unitFigure(groups, total, label) {
+  const summary = groups.map((group) => `${group.count} ${group.words}`).join("; ");
+  const variant = ({ svg, width, height, className }, suffix) => `<svg class="${className}" role="img" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-labelledby="units-${suffix}-t units-${suffix}-d">`
+    + `<title id="units-${suffix}-t">${escapeMarkup(label)}</title><desc id="units-${suffix}-d">${escapeMarkup(`${total} squares, one per task, in this order: ${summary}.`)}</desc>${svg}</svg>`;
+  return `<figure class="dg-figure dg-at-40 an-units">${variant(unitGrid(groups, 41, 24, 18, "dg-wide"), "wide")}${variant(unitGrid(groups, 14, 22, 18, "dg-tall"), "tall")}</figure>`;
+}
+
+const glyph = (base, other) => `<svg class="ns-g" viewBox="0 0 16 16" aria-hidden="true" focusable="false">`
+  + (base && other ? `<rect x="1" y="1" width="14" height="14" class="an-fill"/>` : "")
+  + (base && !other ? `<rect x="1" y="1" width="7" height="14" class="an-fill"/>` : "")
+  + (other && !base ? `<rect x="8" y="1" width="7" height="14" class="an-fill"/>` : "")
+  + `<rect x="1.5" y="1.5" width="13" height="13" class="an-cell"/></svg>`;
+
+function modelComparisonFigure(dataset, comparison) {
+  const [base, other] = comparison.models;
+  const n = comparison.denominator;
+  const paired = comparison.paired;
+  const gap = number(Math.abs(comparison.deltaPercentagePoints), 2);
+  const direction = comparison.deltaPercentagePoints < 0 ? "lower" : "higher";
+  const significance = comparison.mcnemar.significantAt005 ? "statistically significant at 0.05" : "not statistically significant";
+  const svg = barPlate({
+    id: "model-pass-at-1-comparison",
+    title: "164-task model pass@1 comparison",
+    description: `Pass at one under the same harness, greedy decoding, and temperature zero. McNemar p equals ${comparison.mcnemar.pValue}; the difference was ${comparison.mcnemar.significantAt005 ? "" : "not "}statistically significant at 0.05. ${comparison.doesNotProve}`,
+    heading: `Share of ${n} code-completion tasks passed on the first try`,
+    scaleNote: "Same tasks, same harness, one greedy try each. The scale starts at zero.",
+    rows: comparison.models.map((row) => ({ label: row.role, detail: `${row.passed} of ${n} tasks passed`, value: row.passAt1, display: `${number(row.passAt1 * 100, 2)}%` })),
+    footnote: `The ${gap}-point gap is ${significance}${comparison.mcnemar.significantAt005 ? "" : " at 0.05"}.`,
+    embedFonts: true,
+  });
+
+  const groups = [
+    { count: paired.both_pass, base: true, other: true, words: "both models passed" },
+    { count: paired.regressions_flywheel_fail_base_pass, base: true, other: false, words: `only ${base.role} passed` },
+    { count: paired.gains_flywheel_pass_base_fail, base: false, other: true, words: `only ${other.role} passed` },
+    { count: paired.both_fail, base: false, other: false, words: "both models failed" },
+  ];
+  if (groups.reduce((sum, group) => sum + group.count, 0) !== n) throw new Error("paired outcomes do not sum to the task count");
+  const split = paired.regressions_flywheel_fail_base_pass + paired.gains_flywheel_pass_base_fail;
+
+  const bars = `<div class="ns-rows an-bars" role="group" aria-label="Share of the ${n} tasks each model passed on the first try">`
+    + axisRow("Share of tasks passed on the first try. The scale starts at zero.", [[0, "0%", " is-s"], [25, "25%", " is-opt"], [50, "50%", ""], [75, "75%", " is-opt"], [100, "100%", " is-e"]])
+    + comparison.models.map((row) => shareRow(row.role, `${row.passed} of ${n} tasks passed`, row.passAt1, `${number(row.passAt1 * 100, 2)}%`)).join("")
+    + `</div>`;
+  const units = `<p class="ns-panel-h">Where the two models split</p>`
+    + `<p class="ns-units">Each square is one task. Its left half is filled when ${escapeMarkup(base.role)} passed it, its right half when ${escapeMarkup(other.role)} passed it.</p>`
+    + unitFigure(groups, n, `The ${n} tasks by paired outcome`)
+    + `<ul class="ns-key an-unit-key" aria-label="Key">${groups.map((group) => `<li>${glyph(group.base, group.other)}<span><b class="ns-count">${group.count}</b> ${escapeMarkup(group.words)}</span></li>`).join("")}</ul>`;
+  const limit = `<p class="limit-line">A gap this small can be chance: the two models split on ${split} of the ${n} tasks, ${paired.regressions_flywheel_fail_base_pass} for ${escapeMarkup(base.role)} and ${paired.gains_flywheel_pass_base_fail} for ${escapeMarkup(other.role)}. It covers one ${n}-task code-completion suite and does not measure agentic tool use or general coding quality.</p>`;
+
+  const tableRows = comparison.models.map((row) => `<tr><th scope="row">${escapeMarkup(row.role)}</th><td data-label="Model reference">${escapeMarkup(row.modelRef)}</td><td class="num" data-label="Passed / n">${row.passed}/${n}</td><td class="num" data-label="Pass@1">${number(row.passAt1 * 100, 2)}%</td></tr>`).join("");
+  const table = `<div class="table-wrap" role="region" aria-labelledby="model-cap" tabindex="0"><table class="data-table" data-stack><caption id="model-cap">Text equivalent for both model results.</caption>`
+    + `<thead><tr><th scope="col">Model role</th><th scope="col">Model reference</th><th scope="col" class="num">Passed / n</th><th scope="col" class="num">Pass@1</th></tr></thead><tbody>${tableRows}</tbody></table></div>`;
+  const source = comparison.sourcePublicUrl ? `<a href="${escapeMarkup(comparison.sourcePublicUrl)}">Public tracked result</a>` : escapeMarkup(comparison.sourceAvailability);
+  const hwk = howWeKnow(`How we know<span class="ns-vh">: the comparison</span>`, [
+    ["Does not prove", escapeMarkup(comparison.doesNotProve)],
+    ["Limits", escapeMarkup(comparison.limitations.join(" "))],
+    ["Method", `Same ${n} code-completion tasks, same harness, pass@1, greedy decoding, temperature 0. Each bar is the share of the ${n} tasks a model passed on its first try, on a scale that starts at zero.`],
+    ["Test", `${escapeMarkup(other.role)} was ${gap} percentage points ${direction}. McNemar test on the paired outcomes: continuity-corrected χ²=${number(comparison.mcnemar.chiSquareContinuityCorrected, 3)}, p=${number(comparison.mcnemar.pValue, 3)}, significant at 0.05: ${comparison.mcnemar.significantAt005 ? "yes" : "no"}.`],
+    ["Paired outcomes", `${paired.gains_flywheel_pass_base_fail} gains; ${paired.regressions_flywheel_fail_base_pass} regressions; ${paired.both_pass} both pass; ${paired.both_fail} both fail`],
+    ["Tally", table],
+    ["Source", `<p>${source}</p><p>Source SHA-256: <code class="digest">${escapeMarkup(comparison.sourceSha256)}</code></p>`],
+  ]);
+  const takeaway = `${base.role} passed ${base.passed} of the ${n} tasks and ${other.role} passed ${other.passed}, a gap of ${gap} points that is ${significance}.`;
+  const figure = sheet({
+    uid: "model", seed: 16441, title: `How many of the ${n} tasks each model passed on its first try`, takeaway,
+    body: `<div class="ns-fig">${bars}${units}</div>${limit}${hwk}`,
+    stamp: `Measured result, captured ${plainDate(dataset.capturedAt)}`,
+  });
+  const html = page("164-task model pass@1 comparison", `<p class="eyebrow">MEASURED MODEL COMPARISON · ${escapeMarkup(dataset.capturedAt)}</p><h1>164-task model pass@1 comparison</h1>`
+    + `<p class="lede">Two 14B coding models took the same ${n} code-completion tasks through the same harness, with one greedy try at each task.</p>${SHEET_DEFS}${figure}`);
+  return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "model-pass-at-1-comparison", kind: "paired-model-comparison", sourceSha256: comparison.sourceSha256, units: ["pass@1", "passed tasks", "percentage points", "McNemar p-value"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
+}
+
+// ------------------------------------------------------------------ exploratory stack matrix
+
+function exploratoryStackFigure(dataset, comparison) {
+  const n = comparison.denominator;
+  const ranked = [...comparison.measuredRows].sort((a, b) => b.passed - a.passed || a.label.localeCompare(b.label));
+  const missing = comparison.unavailableRows.map((row) => row.label);
+  const notDrawn = `${listed(missing)} did not run and ${missing.length === 1 ? "is" : "are"} not drawn as zero.`;
+  const detail = (row) => `${modelName(row.model)}, ${row.passed} of ${row.denominator} cases passed`;
+  const display = (row) => `${number(row.passRate * 100, 1)}%`;
+  const svg = barPlate({
+    id: "exploratory-stack-comparison",
+    title: "Seven-case exploratory stack matrix",
+    description: `Pass rate for ${ranked.length} operational rows on the same ${n} custom cases. Models and stack configurations differ. ${comparison.unavailableRows.map((row) => `${row.label}: ${unavailableWords(row)}.`).join(" ")} ${comparison.doesNotProve}`,
+    heading: `Share of the ${n} cases each stack passed`,
+    scaleNote: "Each stack ran its own model and configuration. The scale starts at zero.",
+    rows: [...ranked.map((row) => ({ label: row.label, detail: detail(row), value: row.passRate, display: display(row) })),
+      ...comparison.unavailableRows.map((row) => ({ label: row.label, detail: unavailableWords(row), unavailable: true, display: "No score" }))],
+    footnote: `Stack-level evidence, not a same-model harness test. ${notDrawn}`,
+    embedFonts: true,
+  });
+  const measuredRows = comparison.measuredRows.map((row) => `<tr><th scope="row">${escapeMarkup(row.label)}</th><td>${escapeMarkup(row.backend)}</td><td>${escapeMarkup(row.model)}</td><td>${row.passed}/${row.denominator}</td><td>${number(row.passRate * 100, 1)}%</td><td>${number(row.meanQuality, 3)}</td><td>${number(row.meanLatencyMs, 3)} ms</td><td>${number(row.errorRate * 100, 1)}%</td><td>${escapeMarkup(Object.entries(row.failureClasses).map(([key, count]) => `${key}: ${count}`).join("; "))}</td></tr>`).join("");
+  const unavailable = comparison.unavailableRows.map((row) => `<tr><th scope="row">${escapeMarkup(row.label)}</th><td class="status unknown">${escapeMarkup(row.status)}</td><td>${escapeMarkup(row.reason)}</td></tr>`).join("");
+  const takeaway = `${ranked[0].label} passed ${ranked[0].passed} of the ${n} cases, ${listed(ranked.slice(1).map((row) => `${row.label} ${row.passed}`))}, each on its own model and stack configuration.`;
+  const hwk = howWeKnow(`How we know<span class="ns-vh">: the matrix</span>`, [
+    ["What this does not prove", escapeMarkup(comparison.doesNotProve)],
+    ["Limitations", escapeMarkup(comparison.limitations.join(" "))],
+    ["Method", escapeMarkup(comparison.method)],
+    ["Environment", escapeMarkup(comparison.environment)],
+    ["Denominator", `${comparison.denominator} custom cases per operational row`],
+    ["Operational rows", `<div class="table-wrap"><table><caption>Text equivalent for the three operational rows.</caption><thead><tr><th>Stack</th><th>Backend</th><th>Model</th><th>Passed / n</th><th>Pass rate</th><th>Mean quality</th><th>Mean latency</th><th>Error rate</th><th>Failure classes</th></tr></thead><tbody>${measuredRows}</tbody></table></div>`],
+    ["Unavailable rows", `<div class="table-wrap"><table><caption>Systems excluded from numeric ranking rather than represented as zero.</caption><thead><tr><th>System</th><th>Status</th><th>Reason</th></tr></thead><tbody>${unavailable}</tbody></table></div>`],
+    ["Source SHA-256", `<code class="digest">${escapeMarkup(comparison.sourceSha256)}</code>`],
+  ]);
+  const swatch = (cls) => `<svg class="ns-sw" viewBox="0 0 26 16" aria-hidden="true" focusable="false"><rect x="1" y="3" width="24" height="10" class="${cls}"/></svg>`;
+  const key = `<ul class="ns-key" aria-label="Key"><li>${swatch("m-scan")}<span>Share of the ${n} cases passed</span></li><li>${swatch("m-unk")}<span>Did not run, so it has no score</span></li></ul>`;
+  const bars = `<div class="ns-rows an-bars" role="group" aria-label="Share of the ${n} cases each stack passed">`
+    + axisRow(`Share of the ${n} cases passed. The scale starts at zero.`, [[0, "0%", " is-s"], [25, "25%", " is-opt"], [50, "50%", ""], [75, "75%", " is-opt"], [100, "100%", " is-e"]])
+    + ranked.map((row) => shareRow(row.label, detail(row), row.passRate, display(row))).join("")
+    + comparison.unavailableRows.map((row) => unmeasuredRow(row.label, unavailableWords(row))).join("")
+    + `</div>`;
+  const figure = sheet({
+    uid: "stack", seed: 70709, title: `Share of the ${comparison.denominator} cases each stack passed`, takeaway,
+    body: `<div class="ns-fig">${key}${bars}</div>`
+      + `<p class="limit-line">This is stack-level evidence, not a same-model harness attribution test. ${escapeMarkup(notDrawn)}</p>${hwk}`,
+    stamp: `Exploratory result, captured ${plainDate(dataset.capturedAt)}`,
+  });
+  const html = page("Seven-case exploratory stack matrix", `<p class="eyebrow">EXPLORATORY ACTUAL RESULT · ${escapeMarkup(dataset.capturedAt)}</p><h1>Seven-case exploratory stack matrix</h1><p class="lede">The operational rows used the same seven cases and scoring fields, but different models and stack configurations. This is stack-level evidence, not a same-model harness attribution test.</p>${SHEET_DEFS}${figure}`);
+  return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "exploratory-stack-comparison", kind: "exploratory-actual-result", sourceSha256: comparison.sourceSha256, units: ["pass rate", "quality score", "milliseconds", "error rate", "failure counts"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
+}
+
+// ------------------------------------------------------------------ source inventory
+//
+// One sheet draws each public repository's source and test lines, then the full commit-backed
+// table sits under "How we know". The sizes run from a few hundred lines to nearly two hundred
+// thousand, so the strips use a log scale with each step ten times the last, and every row prints
+// its two counts in words beside the marks. A measured zero cannot sit on a log scale, so it
+// prints as words and draws no mark. A repository with no measurement draws a stippled band.
+
+// The drawn domain: 10^1.5 (about 32 lines) to 10^5.5 (about 316,000 lines), four steps of ten.
+const LOG_LOW = 1.5;
+const LOG_HIGH = 5.5;
+const position = (value) => ((Math.log10(value) - LOG_LOW) / (LOG_HIGH - LOG_LOW)) * 100;
+const TICKS = [[position(100), "100"], [position(1000), "1,000"], [position(10000), "10,000"], [position(100000), "100,000"]];
+const REASONS = {
+  local_checkout_not_found: "no local checkout was found at capture time",
+};
+
 function repositoryCommitLink(project) {
   return project.commit?.status === "measured"
     ? `${project.repositoryUrl}/tree/${encodeURIComponent(project.commit.value)}`
     : project.repositoryUrl;
 }
 
-function sourceInventory(dataset) {
+function inventoryRow(project) {
+  const source = project.sourceLoc;
+  const test = project.testLoc;
+  const name = `<div class="ns-rname"><p class="ns-n">${escapeMarkup(project.name)}</p></div>`;
+  if (!measured(source) || !measured(test)) {
+    const reason = REASONS[source?.reason] ?? String(source?.reason ?? "not reported").replaceAll("_", " ");
+    return `<div class="ns-row an-inv is-unknown">${name}<div class="ns-sc"><svg class="ns-strip" aria-hidden="true" focusable="false">`
+      + `<rect x="0" y="9" width="100%" height="14" class="m-unk"/></svg></div>`
+      + `<p class="ns-rval"><span class="t-null-word">Unknown: ${escapeMarkup(reason)}</span></p></div>`;
+  }
+  const marks = [];
+  const sx = source.value > 0 ? position(source.value) : null;
+  const tx = test.value > 0 ? position(test.value) : null;
+  if (sx !== null && tx !== null) marks.push(`<line x1="${sx.toFixed(2)}%" y1="16" x2="${tx.toFixed(2)}%" y2="16" class="an-link"/>`);
+  if (tx !== null) marks.push(`<svg x="${tx.toFixed(2)}%" y="16" width="1" height="1" overflow="visible"><path d="M0 -6.5 L6.5 0 L0 6.5 L-6.5 0 Z" class="an-test"/></svg>`);
+  if (sx !== null) marks.push(`<circle cx="${sx.toFixed(2)}%" cy="16" r="6" class="an-src"/>`);
+  const words = source.value === 0 && test.value === 0
+    ? "No code files"
+    : `${number(source.value, 0)} source · ${number(test.value, 0)} test`;
+  return `<div class="ns-row an-inv">${name}<div class="ns-sc"><svg class="ns-strip" aria-hidden="true" focusable="false">`
+    + TICKS.map(([x]) => `<line x1="${x.toFixed(2)}%" y1="0" x2="${x.toFixed(2)}%" y2="100%" class="m-grat"/>`).join("")
+    + `${marks.join("")}</svg></div><p class="ns-rval">${escapeMarkup(words)}</p></div>`;
+}
+
+function inventoryTable(dataset) {
   const rows = dataset.projects.map((project) => {
     const extensions = (project.extensions ?? []).map((item) => `${item.language} (${item.extension}): ${number(item.loc, 0)} LOC`).join("; ") || "Unknown or no included code extension";
     return `<tr><th scope="row"><a href="${escapeMarkup(project.repositoryUrl)}">${escapeMarkup(project.name)}</a></th><td><a href="${escapeMarkup(repositoryCommitLink(project))}">${project.commit?.status === "measured" ? `<code>${escapeMarkup(project.commit.value)}</code>` : `Unknown: ${escapeMarkup(project.commit?.reason ?? "not_reported")}`}</a></td><td>${escapeMarkup(project.commitDate?.value ?? `Unknown: ${project.commitDate?.reason ?? "not_reported"}`)}</td><td>${escapeMarkup(metricText(project.sourceFiles, 0))}</td><td>${escapeMarkup(metricText(project.testFiles, 0))}</td><td>${escapeMarkup(metricText(project.sourceLoc, 0))}</td><td>${escapeMarkup(metricText(project.testLoc, 0))}</td><td>${escapeMarkup(metricText(project.testCollectionCount, 0))}${project.testCollectionCount?.method ? `<br><span class="status">${escapeMarkup(project.testCollectionCount.method)}</span>` : ""}</td><td>${escapeMarkup(extensions)}</td></tr>`;
   }).join("\n");
-  const html = page("Portfolio source inventory", `<p class="eyebrow">SUPPORTING INVENTORY · ${escapeMarkup(dataset.capturedAt)}</p><h1>Public source and test inventory</h1><p class="lede">This supporting inventory records commit-backed source structure. It is not the portfolio's benchmark result and is not used as a proxy for quality.</p><div class="table-wrap"><table><caption>Text equivalent for every measured or unknown public-registry project.</caption><thead><tr><th>Project</th><th>Commit</th><th>Commit date</th><th>Source files</th><th>Test files</th><th>Source LOC</th><th>Test LOC</th><th>Static test definitions</th><th>Language or extension LOC</th></tr></thead><tbody>${rows}</tbody></table></div><dl class="scope"><dt>Date</dt><dd>${escapeMarkup(dataset.capturedAt)}</dd><dt>Units</dt><dd>tracked files, physical lines, and statically recognized test definitions</dd><dt>Denominator</dt><dd>${escapeMarkup(String(dataset.selection?.denominator ?? dataset.projects.length))} public registry-listed GitHub repositories</dd><dt>Method</dt><dd>${escapeMarkup(dataset.method?.snapshot ?? "git HEAD blobs only")}; ${escapeMarkup(dataset.method?.lineCount ?? "physical lines")}</dd><dt>Exclusions</dt><dd>${escapeMarkup((dataset.method?.excludedPathSegments ?? []).join(", "))}</dd><dt>Uncertainty</dt><dd>${escapeMarkup(dataset.uncertainty)}</dd><dt>What this table does not prove</dt><dd class="does-not-prove">${escapeMarkup(dataset.doesNotProve)}</dd></dl>`);
+  return `<div class="table-wrap"><table><caption>Text equivalent for every measured or unknown public-registry project.</caption><thead><tr><th>Project</th><th>Commit</th><th>Commit date</th><th>Source files</th><th>Test files</th><th>Source LOC</th><th>Test LOC</th><th>Static test definitions</th><th>Language or extension LOC</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+const key = `<ul class="ns-key" aria-label="Key">`
+  + `<li><svg class="ns-g" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6" class="an-src"/></svg><span>Source lines</span></li>`
+  + `<li><svg class="ns-g" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.5 L14.5 8 L8 14.5 L1.5 8 Z" class="an-test"/></svg><span>Test lines</span></li>`
+  + `<li><svg class="ns-sw" viewBox="0 0 26 16" aria-hidden="true" focusable="false"><rect x="1" y="3" width="24" height="10" class="m-unk"/></svg><span>Not measured</span></li>`
+  + `</ul>`;
+
+function sourceInventory(dataset) {
+  const projects = dataset.projects;
+  const measuredProjects = projects.filter((project) => measured(project.sourceLoc) && measured(project.testLoc));
+  const ordered = [...measuredProjects].sort((a, b) => b.sourceLoc.value - a.sourceLoc.value || a.name.localeCompare(b.name));
+  const unknown = projects.filter((project) => !measuredProjects.includes(project));
+  const total = measuredProjects.reduce((sum, project) => sum + project.sourceLoc.value, 0);
+  const [first, second] = ordered;
+  const sizes = ordered.map((project) => project.sourceLoc.value).sort((a, b) => a - b);
+  const median = sizes.length % 2 ? sizes[(sizes.length - 1) / 2] : (sizes[sizes.length / 2 - 1] + sizes[sizes.length / 2]) / 2;
+  // The sentence follows the count: a registry with one measured repository or none still gets a
+  // true takeaway, never a share of an empty total.
+  let takeaway = "No repository in the registry could be measured at capture time.";
+  if (ordered.length === 1) takeaway = `${first.name} is the one measured repository, with ${number(total, 0)} source lines.`;
+  if (ordered.length > 1 && total > 0) {
+    const share = Math.round(((first.sourceLoc.value + second.sourceLoc.value) / total) * 100);
+    takeaway = `${first.name} and ${second.name} hold ${share} percent of the ${number(total, 0)} source lines across the ${measuredProjects.length} measured repositories, and the median repository holds ${number(median, 0)}.`;
+  }
+
+  const chart = `<div class="ns-fig">${key}<div class="ns-rows an-inventory" role="group" aria-label="Source and test lines in each repository">`
+    + axisRow("Physical lines, log scale: each step is ten times the last", TICKS.map(([x, label], index) => [x.toFixed(2), label, index === 0 ? " is-s" : index === TICKS.length - 1 ? " is-e" : ""]))
+    + [...ordered, ...unknown].map(inventoryRow).join("") + `</div></div>`;
+  const limit = `<p class="limit-line">Line counts measure size. This inventory is not the portfolio's benchmark result and is not used as a proxy for quality.</p>`;
+  const hwk = howWeKnow(`How we know<span class="ns-vh">: the inventory</span>`, [
+    ["Does not prove", escapeMarkup(dataset.doesNotProve)],
+    ["Uncertainty", escapeMarkup(dataset.uncertainty)],
+    ["Date", escapeMarkup(dataset.capturedAt)],
+    ["Units", "tracked files, physical lines, and statically recognized test definitions"],
+    ["Denominator", `${escapeMarkup(String(dataset.selection?.denominator ?? projects.length))} public registry-listed GitHub repositories`],
+    ["Method", `${escapeMarkup(dataset.method?.snapshot ?? "git HEAD blobs only")}; ${escapeMarkup(dataset.method?.lineCount ?? "physical lines")}. The chart draws source and test lines on a log scale; a measured zero prints as words.`],
+    ["Exclusions", escapeMarkup((dataset.method?.excludedPathSegments ?? []).join(", "))],
+    ["Full inventory", inventoryTable(dataset)],
+  ]);
+  const figure = sheet({
+    uid: "inventory", seed: 31032, title: "Source and test lines in each public repository", takeaway,
+    body: `${chart}${limit}${hwk}`,
+    stamp: `Inventory captured ${plainDate(dataset.capturedAt)}`,
+  });
+  const html = page("Portfolio source inventory", `<p class="eyebrow">SUPPORTING INVENTORY · ${escapeMarkup(dataset.capturedAt)}</p><h1>Public source and test inventory</h1><p class="lede">This supporting inventory records commit-backed source structure. It is not the portfolio's benchmark result and is not used as a proxy for quality.</p>${SHEET_DEFS}${figure}`);
   const companion = {
     schema: "zentropy-portfolio-source-inventory/v1",
     capturedAt: dataset.capturedAt,
     units: ["tracked files", "physical lines", "statically recognized test definitions"],
-    denominator: dataset.selection?.denominator ?? dataset.projects.length,
+    denominator: dataset.selection?.denominator ?? projects.length,
     method: dataset.method,
     uncertainty: dataset.uncertainty,
     doesNotProve: dataset.doesNotProve,
-    projects: dataset.projects,
+    projects,
   };
   return { html, companion };
 }
@@ -65,7 +347,36 @@ function benchmarkStatus(dataset) {
   }).join("");
   const excluded = (evidence.excludedCandidates ?? []).map((candidate) => `<tr><th scope="row">${escapeMarkup(candidate.projectId)}</th><td>${escapeMarkup(candidate.trackedPath)}</td><td>${escapeMarkup(candidate.schema ?? "unknown")}</td><td>${escapeMarkup(candidate.reason)}</td></tr>`).join("");
   const actualCount = Object.keys(evidence.actualComparisons ?? {}).length;
-  const html = page("Benchmark evidence status", `<p class="eyebrow">BENCHMARK EVIDENCE · ${escapeMarkup(dataset.capturedAt)}</p><h1>Benchmark evidence status</h1><p class="notice"><strong>Generic scorecard gate:</strong> ${escapeMarkup(evidence.status)}${evidence.reason ? ` · ${escapeMarkup(evidence.reason)}` : ""}. ${groups.length} same-task-set comparison group${groups.length === 1 ? "" : "s"} passed that gate. ${actualCount} separately scoped, source-hashed actual comparison${actualCount === 1 ? "" : "s"} are published with their own limitations. A target marked NOT_MEASURED is a planned baseline, not a result and not a zero.</p><h2>Named baseline targets</h2><div class="table-wrap"><table><caption>Market-adjacent and focal tools named by the site-owned benchmark plan.</caption><thead><tr><th>Tool</th><th>Model</th><th>Status</th><th>Reason</th><th>Plan provenance</th></tr></thead><tbody>${targets || `<tr><td colspan="5">No named baseline targets were found.</td></tr>`}</tbody></table></div><h2>Excluded benchmark candidates</h2><div class="table-wrap"><table><caption>Tracked benchmark-like JSON kept out of generic comparative figures.</caption><thead><tr><th>Project</th><th>Tracked path</th><th>Schema</th><th>Exclusion reason</th></tr></thead><tbody>${excluded || `<tr><td colspan="4">No candidate exclusions were recorded.</td></tr>`}</tbody></table></div><p class="does-not-prove">${escapeMarkup(dataset.benchmarkDoesNotProve)}</p>`);
+  const targetList = evidence.baselineTargets ?? [];
+  const notMeasured = targetList.filter((target) => target.status === "NOT_MEASURED").length;
+  const excludedCount = (evidence.excludedCandidates ?? []).length;
+  // Four counts carry the page, each set as a display numeral with its meaning under it.
+  const card = (count, words, names = "") => `<li class="ns-card"><p class="ns-big">${number(count, 0)}</p><p class="ns-cl">${escapeMarkup(words)}</p>${names ? `<p class="an-names">${escapeMarkup(names)}</p>` : ""}</li>`;
+  const cards = `<ul class="ns-cards" style="--cards:4" aria-label="Benchmark evidence counts">`
+    + card(groups.length, `same-task comparison group${groups.length === 1 ? "" : "s"} passed the scorecard gate`)
+    + card(actualCount, `measured comparison${actualCount === 1 ? "" : "s"} published on ${actualCount === 1 ? "its" : "their"} own page`)
+    + card(notMeasured, `named baseline tool${notMeasured === 1 ? "" : "s"} not measured yet`, listed(targetList.filter((target) => target.status === "NOT_MEASURED").map((target) => target.toolName.replaceAll(" ", "\u00a0"))))
+    + card(excludedCount, `benchmark-like record${excludedCount === 1 ? "" : "s"} kept out of any comparison`)
+    + `</ul>`;
+  const ACTUAL_PAGES = { modelComparison: ["model-pass-at-1-comparison.html", "The 164-task model comparison"], exploratoryStackMatrix: ["exploratory-stack-comparison.html", "The seven-case stack matrix"] };
+  const readLinks = Object.keys(evidence.actualComparisons ?? {}).filter((key) => ACTUAL_PAGES[key])
+    .map((key) => `<a href="${ACTUAL_PAGES[key][0]}">${ACTUAL_PAGES[key][1]}</a>`).join(" · ");
+  const takeaway = groups.length
+    ? `${groups.length} same-task comparison group${groups.length === 1 ? "" : "s"} passed the gate, and ${notMeasured} of the ${targetList.length} named baseline tools are not measured yet.`
+    : `No same-task comparison has passed the scorecard gate yet, so none of the ${targetList.length} named baseline tools has a result; the ${actualCount} measured comparison${actualCount === 1 ? " is" : "s are"} published separately with ${actualCount === 1 ? "its" : "their"} own limits.`;
+  const hwk = howWeKnow(`How we know<span class="ns-vh">: the evidence status</span>`, [
+    ["Does not prove", escapeMarkup(dataset.benchmarkDoesNotProve)],
+    ["Scorecard gate", `Generic scorecard gate: ${escapeMarkup(evidence.status)}${evidence.reason ? ` · ${escapeMarkup(evidence.reason)}` : ""}. ${groups.length} same-task-set comparison group${groups.length === 1 ? "" : "s"} passed that gate. ${actualCount} separately scoped, source-hashed actual comparison${actualCount === 1 ? "" : "s"} are published with their own limitations. A target marked NOT_MEASURED is a planned baseline, not a result and not a zero.`],
+    ["Named baseline targets", `<div class="table-wrap"><table><caption>Market-adjacent and focal tools named by the site-owned benchmark plan.</caption><thead><tr><th>Tool</th><th>Model</th><th>Status</th><th>Reason</th><th>Plan provenance</th></tr></thead><tbody>${targets || `<tr><td colspan="5">No named baseline targets were found.</td></tr>`}</tbody></table></div>`],
+    ["Excluded benchmark candidates", `<div class="table-wrap"><table><caption>Tracked benchmark-like JSON kept out of generic comparative figures.</caption><thead><tr><th>Project</th><th>Tracked path</th><th>Schema</th><th>Exclusion reason</th></tr></thead><tbody>${excluded || `<tr><td colspan="4">No candidate exclusions were recorded.</td></tr>`}</tbody></table></div>`],
+  ]);
+  const figure = sheet({
+    uid: "status", seed: 28082, title: "Where the benchmark evidence stands", takeaway,
+    body: `<div class="ns-fig">${cards}</div>${readLinks ? `<p class="an-read">Read the measured results: ${readLinks}</p>` : ""}`
+      + `<p class="limit-line">A tool that has not been measured has no score here, which is not a score of zero.</p>${hwk}`,
+    stamp: `Status captured ${plainDate(dataset.capturedAt)}`,
+  });
+  const html = page("Benchmark evidence status", `<p class="eyebrow">BENCHMARK EVIDENCE · ${escapeMarkup(dataset.capturedAt)}</p><h1>Benchmark evidence status</h1>${SHEET_DEFS}${figure}`);
   const companion = {
     schema: "zentropy-benchmark-evidence-status/v1",
     capturedAt: dataset.capturedAt,
@@ -80,53 +391,6 @@ function benchmarkStatus(dataset) {
     doesNotProve: dataset.benchmarkDoesNotProve,
   };
   return { html, companion };
-}
-
-function actualFigureSvg(id, title, description, rows, valueKey, valueLabel, valueFormat) {
-  const width = 1120;
-  const left = 300;
-  const barWidth = 650;
-  const height = 150 + rows.length * 92;
-  const points = rows.map((row, index) => {
-    const y = 112 + index * 92;
-    const value = row[valueKey];
-    return `<g tabindex="0" role="graphics-symbol" aria-label="${escapeMarkup(row.label)} ${escapeMarkup(valueFormat(value))}"><rect class="focus-ring" x="24" y="${y - 36}" width="1072" height="72" rx="8" fill="transparent" stroke="transparent"/><text x="42" y="${y - 4}" font-size="19" font-weight="700">${escapeMarkup(row.label)}</text><text x="42" y="${y + 24}" class="muted" font-size="15">${escapeMarkup(row.detail)}</text><rect x="${left}" y="${y - 22}" width="${barWidth}" height="28" rx="5" fill="#1b3035"/><rect x="${left}" y="${y - 22}" width="${Math.max(0, Math.min(barWidth, barWidth * value))}" height="28" rx="5" fill="#8be4cf"/><text x="${left + barWidth + 18}" y="${y}" font-size="17">${escapeMarkup(valueFormat(value))}</text></g>`;
-  }).join("\n");
-  return `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-labelledby="${id}-title ${id}-desc"><title id="${id}-title">${escapeMarkup(title)}</title><desc id="${id}-desc">${escapeMarkup(description)}</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="${width}" height="${height}" fill="#070c0f"/><text x="42" y="42" font-size="25" font-weight="700">${escapeMarkup(title)}</text><text x="${left}" y="72" class="muted" font-size="15">${escapeMarkup(valueLabel)}. The scale starts at zero.</text>${points}</svg>`;
-}
-
-function exploratoryStackFigure(dataset, comparison) {
-  const rows = comparison.measuredRows.map((row) => ({ ...row, detail: `${row.passed} of ${row.denominator} tasks passed` }));
-  const svg = actualFigureSvg(
-    "exploratory-stack-comparison",
-    "Seven-case exploratory stack matrix",
-    `Pass rate for three operational rows on the same seven custom cases. Models and stack configurations differ. Claude was nonoperational and OpenCode was skipped. ${comparison.doesNotProve}`,
-    rows,
-    "passRate",
-    "Share of the seven cases passed",
-    (value) => `${number(value * 100, 1)}%`,
-  );
-  const measuredRows = comparison.measuredRows.map((row) => `<tr><th scope="row">${escapeMarkup(row.label)}</th><td>${escapeMarkup(row.backend)}</td><td>${escapeMarkup(row.model)}</td><td>${row.passed}/${row.denominator}</td><td>${number(row.passRate * 100, 1)}%</td><td>${number(row.meanQuality, 3)}</td><td>${number(row.meanLatencyMs, 3)} ms</td><td>${number(row.errorRate * 100, 1)}%</td><td>${escapeMarkup(Object.entries(row.failureClasses).map(([key, count]) => `${key}: ${count}`).join("; "))}</td></tr>`).join("");
-  const unavailable = comparison.unavailableRows.map((row) => `<tr><th scope="row">${escapeMarkup(row.label)}</th><td class="status unknown">${escapeMarkup(row.status)}</td><td>${escapeMarkup(row.reason)}</td></tr>`).join("");
-  const html = page("Seven-case exploratory stack matrix", `<p class="eyebrow">EXPLORATORY ACTUAL RESULT · ${escapeMarkup(dataset.capturedAt)}</p><h1>Seven-case exploratory stack matrix</h1><p class="lede">The operational rows used the same seven cases and scoring fields, but different models and stack configurations. This is stack-level evidence, not a same-model harness attribution test.</p><div class="figure-scroll" tabindex="0" aria-label="Scrollable exploratory comparison">${svg}</div><div class="table-wrap"><table><caption>Text equivalent for the three operational rows.</caption><thead><tr><th>Stack</th><th>Backend</th><th>Model</th><th>Passed / n</th><th>Pass rate</th><th>Mean quality</th><th>Mean latency</th><th>Error rate</th><th>Failure classes</th></tr></thead><tbody>${measuredRows}</tbody></table></div><h2>Unavailable rows</h2><div class="table-wrap"><table><caption>Systems excluded from numeric ranking rather than represented as zero.</caption><thead><tr><th>System</th><th>Status</th><th>Reason</th></tr></thead><tbody>${unavailable}</tbody></table></div><dl class="scope"><dt>Source SHA-256</dt><dd><code>${escapeMarkup(comparison.sourceSha256)}</code></dd><dt>Denominator</dt><dd>${comparison.denominator} custom cases per operational row</dd><dt>Environment</dt><dd>${escapeMarkup(comparison.environment)}</dd><dt>Method</dt><dd>${escapeMarkup(comparison.method)}</dd><dt>Limitations</dt><dd>${escapeMarkup(comparison.limitations.join(" "))}</dd></dl><p class="does-not-prove"><strong>What this does not prove:</strong> ${escapeMarkup(comparison.doesNotProve)}</p>`);
-  return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "exploratory-stack-comparison", kind: "exploratory-actual-result", sourceSha256: comparison.sourceSha256, units: ["pass rate", "quality score", "milliseconds", "error rate", "failure counts"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
-}
-
-function modelComparisonFigure(dataset, comparison) {
-  const rows = comparison.models.map((row) => ({ ...row, label: row.role, detail: `${row.passed} of ${comparison.denominator} tasks passed` }));
-  const svg = actualFigureSvg(
-    "model-pass-at-1-comparison",
-    "164-task model pass@1 comparison",
-    `Pass at one under the same harness, greedy decoding, and temperature zero. McNemar p equals ${comparison.mcnemar.pValue}; the difference was not statistically significant at 0.05. ${comparison.doesNotProve}`,
-    rows,
-    "passAt1",
-    "Share of tasks passed on the first try",
-    (value) => `${number(value * 100, 2)}%`,
-  );
-  const tableRows = comparison.models.map((row) => `<tr><th scope="row">${escapeMarkup(row.role)}</th><td>${escapeMarkup(row.modelRef)}</td><td>${row.passed}/${comparison.denominator}</td><td>${number(row.passAt1 * 100, 2)}%</td></tr>`).join("");
-  const source = comparison.sourcePublicUrl ? `<a href="${escapeMarkup(comparison.sourcePublicUrl)}">Public tracked result</a>` : escapeMarkup(comparison.sourceAvailability);
-  const html = page("164-task model pass@1 comparison", `<p class="eyebrow">MEASURED MODEL COMPARISON · ${escapeMarkup(dataset.capturedAt)}</p><h1>164-task model pass@1 comparison</h1><p class="lede">Same 164 code-completion tasks, same harness, pass@1, greedy decoding, temperature 0. Flywheel 14B was ${number(Math.abs(comparison.deltaPercentagePoints), 2)} percentage points lower. McNemar p=${number(comparison.mcnemar.pValue, 3)}; the observed difference was not statistically significant at 0.05.</p><div class="figure-scroll" tabindex="0" aria-label="Scrollable model comparison">${svg}</div><div class="table-wrap"><table><caption>Text equivalent for both model results.</caption><thead><tr><th>Model role</th><th>Model reference</th><th>Passed / n</th><th>Pass@1</th></tr></thead><tbody>${tableRows}</tbody></table></div><dl class="scope"><dt>Source</dt><dd>${source}</dd><dt>Source SHA-256</dt><dd><code>${escapeMarkup(comparison.sourceSha256)}</code></dd><dt>Paired outcomes</dt><dd>${comparison.paired.gains_flywheel_pass_base_fail} gains; ${comparison.paired.regressions_flywheel_fail_base_pass} regressions; ${comparison.paired.both_pass} both pass; ${comparison.paired.both_fail} both fail</dd><dt>McNemar test</dt><dd>continuity-corrected χ²=${number(comparison.mcnemar.chiSquareContinuityCorrected, 3)}, p=${number(comparison.mcnemar.pValue, 3)}, significant at 0.05: ${comparison.mcnemar.significantAt005 ? "yes" : "no"}</dd><dt>Limitations</dt><dd>${escapeMarkup(comparison.limitations.join(" "))}</dd></dl><p class="does-not-prove"><strong>What this does not prove:</strong> ${escapeMarkup(comparison.doesNotProve)}</p>`);
-  return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "model-pass-at-1-comparison", kind: "paired-model-comparison", sourceSha256: comparison.sourceSha256, units: ["pass@1", "passed tasks", "percentage points", "McNemar p-value"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
 }
 
 const ratioMetrics = [
@@ -225,6 +489,33 @@ function recoveryText(role) {
   return `${parts.join("; ")}.`;
 }
 
+// Role ids in words for the chart. The tables under "How we know" keep the record's own ids.
+const ROLE_NAMES = {
+  claude_code: "Claude Code",
+  codex_harness: "Codex harness",
+  flywheel_harness: "Flywheel harness",
+  local_14b: "Local 14B model",
+  local_32b: "Local 32B model",
+};
+const roleName = (id) => ROLE_NAMES[id] ?? `${id.charAt(0).toUpperCase()}${id.slice(1)}`.replaceAll("_", " ");
+
+/** One entry per attempt, in the order passed, read and failed, never read. */
+function attemptCells(role) {
+  const failed = role.readable - role.passed;
+  const unread = role.attempts - role.readable;
+  if (failed < 0 || unread < 0) throw new Error(`current pilot role ${role.role} counts do not nest`);
+  return [...Array(role.passed).fill("passed"), ...Array(failed).fill("failed"), ...Array(unread).fill("unread")];
+}
+
+/** The same squares drawn in a sheet row, at a fixed size so a square never scales. */
+function attemptStrip(role) {
+  const pitch = 30;
+  const size = 24;
+  const width = role.attempts * pitch - (pitch - size);
+  const cells = attemptCells(role).map((kind, index) => `<rect x="${index * pitch + 0.75}" y="0.75" width="${size - 1.5}" height="${size - 1.5}" class="${kind === "passed" ? "an-fill" : kind === "failed" ? "an-open" : "m-unk"}"/>`).join("");
+  return `<svg class="an-attempts" width="${width}" height="${size}" viewBox="0 0 ${width} ${size}" aria-hidden="true" focusable="false">${cells}</svg>`;
+}
+
 function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
   if (sourceRecord.schema !== "zentropy-current-cross-harness-pilot-source/v2") {
     throw new Error(`unsupported current pilot source schema: ${sourceRecord.schema}`);
@@ -268,23 +559,31 @@ function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
 
   const headline = `${counts.attempts} attempts · ${counts.readable} reached a grader · ${counts.passed} passed · ${receipts.verified}/${receipts.attempts} receipts verified`;
   const parityLine = `${escapeMarkup(companion.parity.prompt)} prompt and runtime context for every role on each of ${counts.tasks} tasks`;
-  const trackX = 300;
-  const trackW = 440;
+  // Each role's attempts as squares: solid when the attempt passed, open when a checker read it
+  // and it failed, stippled with a dashed edge when no checker could read it. Every row also
+  // prints its counts, so a zero never has to be read from an empty track.
+  const cellPitch = 34;
+  const cellSize = 26;
+  const gridX = 330;
   const svgRows = roles.map((role, index) => {
     const y = 176 + index * 74;
-    const readableW = Math.round(trackW * ratio(role.readable, role.attempts));
-    const passedW = Math.round(trackW * ratio(role.passed, role.attempts));
     const median = duration(role.latencyMsMedian);
-    const foot = [median ? `median ${median}` : "latency unmeasured", role.modelsObserved.length ? role.modelsObserved.join(", ") : "no model observed"].join(" · ");
-    const label = `${role.role}: ${role.readable} of ${role.attempts} readable, ${role.passed} passed, ${foot}`;
-    // A zero-width bar and an unmeasured one look identical, so the counts are
-    // printed beside every track rather than left to the fill to imply.
-    const readable = readableW ? `<rect x="${trackX}" y="${y - 20}" width="${readableW}" height="22" rx="4" fill="#9fc2c7"/>` : "";
-    const passed = passedW ? `<rect x="${trackX}" y="${y - 20}" width="${passedW}" height="22" rx="4" fill="#8be4cf"/>` : "";
-    return `<g role="graphics-symbol" tabindex="0" aria-label="${escapeMarkup(label)}"><rect class="focus-ring" x="38" y="${y - 34}" width="1044" height="58" rx="8" fill="#0d1519" stroke="#33484e"/><text x="56" y="${y - 4}" font-size="18" font-weight="700">${escapeMarkup(role.role)}</text><text x="56" y="${y + 18}" class="mono muted" font-size="13">${escapeMarkup(foot)}</text><rect x="${trackX}" y="${y - 20}" width="${trackW}" height="22" rx="4" fill="#1b3035"/>${readable}${passed}<text x="${trackX + trackW + 18}" y="${y - 3}" class="mono" font-size="14">${role.readable}/${role.attempts} readable</text><text x="${trackX + trackW + 18}" y="${y + 18}" class="mono muted" font-size="13">${role.passed} passed</text></g>`;
+    const foot = [median ? `median ${median}` : "latency unmeasured", role.modelsObserved.length ? listed(role.modelsObserved.map(modelName)) : "no model observed"].join(" · ");
+    const label = `${roleName(role.role)}: ${role.readable} of ${role.attempts} readable, ${role.passed} passed, ${foot}`;
+    const squares = attemptCells(role).map((kind, cellIndex) => `<rect x="${gridX + cellIndex * cellPitch + 0.5}" y="${y - 22.5}" width="${cellSize - 1}" height="${cellSize - 1}" class="${kind === "passed" ? "fill" : kind === "failed" ? "open" : "unk"}"/>`).join("");
+    const textX = gridX + role.attempts * cellPitch + 24;
+    return `<g role="graphics-symbol" tabindex="0" aria-label="${escapeMarkup(label)}"><rect class="focus-ring" x="38" y="${y - 34}" width="1044" height="58"/>`
+      + `<text x="56" y="${y - 4}" font-size="19" font-weight="700">${escapeMarkup(roleName(role.role))}</text><text x="56" y="${y + 18}" class="s" font-size="14">${escapeMarkup(foot)}</text>${squares}`
+      + `<text x="${textX}" y="${y - 3}" font-size="16" font-weight="600">${role.readable} of ${role.attempts} reached a grader</text><text x="${textX}" y="${y + 18}" class="s" font-size="14">${role.passed} passed</text></g>`;
   }).join("\n");
   const svgHeight = 176 + roles.length * 74 + 64;
-  const svg = `<svg role="img" xmlns="http://www.w3.org/2000/svg" width="1120" height="${svgHeight}" viewBox="0 0 1120 ${svgHeight}" aria-labelledby="pilot-title pilot-desc"><title id="pilot-title">Cross-harness run across ${counts.roles} harness roles</title><desc id="pilot-desc">${escapeMarkup(headline)}. On each task the prompt and runtime context every role received were ${escapeMarkup(companion.parity.prompt)}. The pale bar is how many attempts reached a grader and the bright bar is how many passed. Durations are wall clock on one machine and are not a speed ranking.</desc><style>text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}.mono{font-family:"Conso","JetBrains Mono",ui-monospace,monospace}.muted{fill:#bcd0d4}g:focus{outline:none}g:focus-visible .focus-ring{stroke:#fff;stroke-width:4}</style><rect width="1120" height="${svgHeight}" fill="#070c0f"/><text x="42" y="44" font-size="25" font-weight="700">Cross-harness run across ${counts.roles} harness roles</text><text x="42" y="76" class="mono muted" font-size="15">${escapeMarkup(headline)}</text><text x="42" y="102" class="mono muted" font-size="13">${parityLine} · durations are wall clock on one machine</text><g><rect x="42" y="120" width="14" height="14" rx="3" fill="#9fc2c7"/><text x="64" y="132" class="mono muted" font-size="13">reached a grader</text><rect x="216" y="120" width="14" height="14" rx="3" fill="#8be4cf"/><text x="238" y="132" class="mono muted" font-size="13">passed</text></g>${svgRows}<text x="42" y="${svgHeight - 22}" class="mono muted" font-size="13">${escapeMarkup(companion.capturedAt)} · not market performance · not a quality ranking</text></svg>`;
+  const svgKey = `<g><rect x="42.5" y="119.5" width="15" height="15" class="fill"/><text x="66" y="132" class="s" font-size="14">passed</text>`
+    + `<rect x="152.5" y="119.5" width="15" height="15" class="open"/><text x="176" y="132" class="s" font-size="14">reached a grader and failed</text>`
+    + `<rect x="392.5" y="119.5" width="15" height="15" class="unk"/><text x="416" y="132" class="s" font-size="14">never reached a grader</text></g>`;
+  const svg = `<svg role="img" xmlns="http://www.w3.org/2000/svg" class="an-plate" width="1120" height="${svgHeight}" viewBox="0 0 1120 ${svgHeight}" aria-labelledby="pilot-title pilot-desc"><title id="pilot-title">Cross-harness run across ${counts.roles} harness roles</title><desc id="pilot-desc">${escapeMarkup(headline)}. On each task the prompt and runtime context every role received were ${escapeMarkup(companion.parity.prompt)}. Each square is one attempt: solid when it passed, open when a checker read it and it failed, stippled when no checker could read it. Durations are wall clock on one machine and are not a speed ranking.</desc>`
+    + plateStyle(false)
+    + `<defs><pattern id="an-stip" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".85" class="dot"/></pattern></defs>`
+    + `<rect x="0.5" y="0.5" width="1119" height="${svgHeight - 1}" class="bg"/><text x="42" y="48" font-size="27" font-weight="760">Cross-harness run across ${counts.roles} harness roles</text><text x="42" y="78" class="s" font-size="16" font-weight="500">${escapeMarkup(headline)}</text><text x="42" y="102" class="s" font-size="14">${parityLine} · durations are wall clock on one machine</text>${svgKey}${svgRows}<text x="42" y="${svgHeight - 22}" class="s" font-size="14">${escapeMarkup(companion.capturedAt)} · not market performance · not a quality ranking</text></svg>`;
 
   const roleRows = roles.map((role) => `<tr><th scope="row">${escapeMarkup(role.role)}<br><span class="status">${escapeMarkup(role.modelsObserved.join(", ") || "no model observed")}</span></th><td>${role.launched}/${role.attempts}</td><td>${role.readable}/${role.attempts}</td><td>${role.passed}</td><td>${duration(role.latencyMsMedian) ?? unknown("latency unmeasured")}</td><td>${duration(role.latencyMsP90) ?? unknown("latency unmeasured")}</td><td>${roleCost(role)}</td></tr>`).join("");
   const ungradedRows = roles.filter((role) => ungradedText(role)).map((role) => `<tr><th scope="row">${escapeMarkup(role.role)}</th><td>${escapeMarkup(ungradedText(role))}.</td><td>${escapeMarkup(recoveryText(role)) || "not probed"}</td></tr>`).join("");
@@ -292,7 +591,7 @@ function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
   const receiptRows = receipts.records.map((record) => `<tr><th scope="row">${escapeMarkup(record.role)}<br><span class="status">${escapeMarkup(record.taskId)}</span></th><td>${escapeMarkup(record.state)}</td><td>${record.receiptSha256 ? `<code>${record.receiptSha256}</code>` : unknown("the receipt file is no longer on disk")}</td><td>${record.receiptSubjectSha256 ? `<code>${record.receiptSubjectSha256}</code>` : unknown("no subject hash retained")}</td></tr>`).join("");
   const hashRows = Object.entries(companion.artifactHashes).map(([name, sha256]) => `<tr><th scope="row">${escapeMarkup(name)}</th><td><code>${sha256}</code></td></tr>`).join("");
   const checkerBlocks = companion.checkers.map((checker) => {
-    const heading = `<h3>${escapeMarkup(checker.checker_id)}</h3><p class="status">${escapeMarkup(checker.task_ids.join(", "))} · ${checker.scored_attempts} scored attempt${checker.scored_attempts === 1 ? "" : "s"}</p>`;
+    const heading = `<p class="an-check"><strong>${escapeMarkup(checker.checker_id)}</strong></p><p class="status">${escapeMarkup(checker.task_ids.join(", "))} · ${checker.scored_attempts} scored attempt${checker.scored_attempts === 1 ? "" : "s"}</p>`;
     if (!checker.metrics.length) {
       // An empty table reads as a score of zero. This checker graded the
       // attempts and reported no numeric evidence, which is a different fact.
@@ -310,7 +609,50 @@ function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
     ? "The source tree was checked against the commit these rows name and matched."
     : `The run recorded its source tree as <code>${escapeMarkup(companion.sourceTreeState)}</code>, so nothing confirmed the tree still matched the commit these rows name. Each attempt verified its own workspace, which is a narrower claim.`;
 
-  const html = page(`Cross-harness run across ${counts.roles} harness roles`, `<p class="record-label">Current cross-harness run · ${escapeMarkup(companion.capturedAt)}</p><h1>Cross-harness run across ${counts.roles} harness roles</h1><p class="notice"><strong>Verdict:</strong> ${escapeMarkup(headline)}. This is one repetition per task on one machine. It is not market performance and not a quality ranking.</p><p class="lede">${counts.roles} harness roles ran the same ${counts.tasks} tasks from the same task set. On every one of those tasks the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}, so what differs between the rows is the harness and the model behind it. ${counts.readable} of ${counts.attempts} attempts produced something a checker could read, and why the rest did not is reported beside each row rather than left inside the rate.</p><div class="figure-scroll" tabindex="0" aria-label="Scrollable cross-harness run figure">${svg}</div><div class="table-wrap"><table><caption>Outcome and cost for each harness role, with its own denominator.</caption><thead><tr><th>Role and observed model</th><th>Launched</th><th>Reached a grader</th><th>Passed</th><th>Median latency</th><th>p90 latency</th><th>Cost</th></tr></thead><tbody>${roleRows}</tbody></table></div><h2>Why an attempt went ungraded</h2><p>A malformed answer and a missing one are different failures, so each is named. An attempt that never returned a readable result has no quality numbers here, which is a fact about this run and not a score of zero.</p><div class="table-wrap"><table><caption>Ungraded attempts by reason, and whether a refused answer still held one.</caption><thead><tr><th>Role</th><th>Reasons</th><th>Envelope recovery</th></tr></thead><tbody>${ungradedRows}</tbody></table></div><h2>Graded quality metrics</h2><p>Each checker graded the attempts that reached it. A mean over one repetition is a reading and not an estimate, so no interval is reported.</p>${checkerBlocks}<h2>Prompt and context parity</h2><div class="table-wrap"><table><caption>Prompt and runtime-context hashes for each task, across all roles.</caption><thead><tr><th>Task</th><th>Prompt SHA-256</th><th>Runtime context SHA-256</th><th>Equal across roles</th></tr></thead><tbody>${parityRows}</tbody></table></div><dl class="scope"><dt>Benchmark code</dt><dd><a href="${escapeMarkup(companion.sourceCommitUrl)}"><code>${escapeMarkup(companion.sourceCommit)}</code></a></dd><dt>Run identifier</dt><dd><code>${escapeMarkup(companion.runId)}</code></dd><dt>Task set</dt><dd><code>${escapeMarkup(companion.taskSetId)}</code></dd><dt>Public result source</dt><dd><a href="${escapeMarkup(companion.sourceEvidence.href)}">Sanitized source record</a> · <code>${companion.sourceEvidence.sha256}</code></dd><dt>Evidence availability</dt><dd>${escapeMarkup(companion.evidenceAvailability)}; raw attempt outputs remain private and are represented here by hashes and sanitized receipt records.</dd><dt>Source tree state</dt><dd>${treeNote}</dd><dt>Resource use</dt><dd class="unknown">Unknown: CPU, memory, GPU, and energy observations unavailable</dd></dl><h2>Sanitized receipt records</h2><p>Every attempt carries a receipt whose subject hash names the artifacts it produced. ${receipts.verified} of ${receipts.attempts} verified on re-check; any other state is printed as it was recorded.</p><div class="table-wrap"><table><caption>Public receipt and receipt-subject identities for all ${receipts.attempts} attempts.</caption><thead><tr><th>Role and task</th><th>State</th><th>Receipt SHA-256</th><th>Subject SHA-256</th></tr></thead><tbody>${receiptRows}</tbody></table></div><h2>Artifact hashes</h2><div class="table-wrap"><table><caption>SHA-256 identities for the operator-local run artifacts.</caption><thead><tr><th>Artifact</th><th>SHA-256</th></tr></thead><tbody>${hashRows}</tbody></table></div><h2>Limitations</h2><ul>${companion.limitations.map((item) => `<li>${escapeMarkup(item)}</li>`).join("")}</ul><p class="does-not-prove"><strong>What this does not prove:</strong> ${escapeMarkup(companion.doesNotProve)}</p>`);
+  const ungradedWords = (role) => {
+    const text = ungradedText(role);
+    return text ? `Not graded: ${text}.` : "Every attempt reached a grader.";
+  };
+  const behind = (role) => {
+    // The number and its unit never part at a line end.
+    const median = duration(role.latencyMsMedian);
+    return `${role.modelsObserved.length ? listed(role.modelsObserved.map(modelName)) : "No model observed"}, ${median ? `median ${median.replace(" ", "\u00a0")}` : "latency unmeasured"}`;
+  };
+  const attemptRows = roles.map((role) => `<div class="ns-row"><div class="ns-rname"><p class="ns-n">${escapeMarkup(roleName(role.role))}</p><p class="an-sub">${escapeMarkup(behind(role))}</p></div>`
+    + `<div class="ns-sc">${attemptStrip(role)}</div>`
+    + `<div class="ns-rval"><p class="an-val">${role.readable} of ${role.attempts} reached a grader, ${role.passed} passed</p><p class="an-sub">${escapeMarkup(ungradedWords(role))}</p></div></div>`).join("");
+  const sw = (cls) => `<svg class="ns-g" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="1.5" y="1.5" width="13" height="13" class="${cls}"/></svg>`;
+  const key = `<ul class="ns-key" aria-label="Key"><li>${sw("an-fill")}<span>Passed</span></li><li>${sw("an-open")}<span>Reached a grader and failed</span></li><li>${sw("m-unk")}<span>Never reached a grader</span></li></ul>`;
+  const verified = receipts.verified === receipts.attempts ? `all ${receipts.attempts} receipts verified on re-check` : `${receipts.verified} of ${receipts.attempts} receipts verified on re-check`;
+  const takeaway = `${counts.readable} of ${counts.attempts} attempts across ${counts.roles} harness roles reached a grader and ${counts.passed} passed, and ${verified}.`;
+  const record = [
+    ["Benchmark code", `<a href="${escapeMarkup(companion.sourceCommitUrl)}"><code>${escapeMarkup(companion.sourceCommit)}</code></a>`],
+    ["Run identifier", `<code>${escapeMarkup(companion.runId)}</code>`],
+    ["Task set", `<code>${escapeMarkup(companion.taskSetId)}</code>`],
+    ["Public result source", `<a href="${escapeMarkup(companion.sourceEvidence.href)}">Sanitized source record</a> · <code class="digest">${companion.sourceEvidence.sha256}</code>`],
+    ["Evidence availability", `${escapeMarkup(companion.evidenceAvailability)}; raw attempt outputs remain private and are represented here by hashes and sanitized receipt records.`],
+    ["Source tree state", treeNote],
+    ["Resource use", `<span class="unknown">Unknown: CPU, memory, GPU, and energy observations unavailable</span>`],
+  ];
+  const hwk = howWeKnow(`How we know<span class="ns-vh">: the run</span>`, [
+    ["What this does not prove", escapeMarkup(companion.doesNotProve)],
+    ["Limits", `<ul>${companion.limitations.map((item) => `<li>${escapeMarkup(item)}</li>`).join("")}</ul>`],
+    ["Method", `${counts.roles} harness roles ran the same ${counts.tasks} tasks. On every task the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}. Each square in the chart is one attempt.`],
+    ["Outcome and cost", `<div class="table-wrap"><table><caption>Outcome and cost for each harness role, with its own denominator.</caption><thead><tr><th>Role and observed model</th><th>Launched</th><th>Reached a grader</th><th>Passed</th><th>Median latency</th><th>p90 latency</th><th>Cost</th></tr></thead><tbody>${roleRows}</tbody></table></div>`],
+    ["Why an attempt went ungraded", `<p>A malformed answer and a missing one are different failures, so each is named. An attempt that never returned a readable result has no quality numbers here, which is a fact about this run and not a score of zero.</p><div class="table-wrap"><table><caption>Ungraded attempts by reason, and whether a refused answer still held one.</caption><thead><tr><th>Role</th><th>Reasons</th><th>Envelope recovery</th></tr></thead><tbody>${ungradedRows}</tbody></table></div>`],
+    ["Graded quality metrics", `<p>Each checker graded the attempts that reached it. A mean over one repetition is a reading and not an estimate, so no interval is reported.</p>${checkerBlocks}`],
+    ["Prompt and context parity", `<div class="table-wrap"><table><caption>Prompt and runtime-context hashes for each task, across all roles.</caption><thead><tr><th>Task</th><th>Prompt SHA-256</th><th>Runtime context SHA-256</th><th>Equal across roles</th></tr></thead><tbody>${parityRows}</tbody></table></div>`],
+    ...record,
+    ["Sanitized receipt records", `<p>Every attempt carries a receipt whose subject hash names the artifacts it produced. ${receipts.verified} of ${receipts.attempts} verified on re-check; any other state is printed as it was recorded.</p><div class="table-wrap"><table><caption>Public receipt and receipt-subject identities for all ${receipts.attempts} attempts.</caption><thead><tr><th>Role and task</th><th>State</th><th>Receipt SHA-256</th><th>Subject SHA-256</th></tr></thead><tbody>${receiptRows}</tbody></table></div>`],
+    ["Artifact hashes", `<div class="table-wrap"><table><caption>SHA-256 identities for the operator-local run artifacts.</caption><thead><tr><th>Artifact</th><th>SHA-256</th></tr></thead><tbody>${hashRows}</tbody></table></div>`],
+  ]);
+  const figure = sheet({
+    uid: "pilot", seed: 35117, title: `What happened to each role's ${counts.tasks} attempts`, takeaway,
+    body: `<div class="ns-fig">${key}<div class="ns-rows an-attempt-rows" role="group" aria-label="Attempts for each harness role">${attemptRows}</div></div>`
+      + `<p class="limit-line">This is one repetition per task on one machine. Times are wall-clock medians and not a speed ranking. It is not market performance and not a quality ranking.</p>${hwk}`,
+    stamp: `Run captured ${plainDate(companion.capturedAt)}`,
+  });
+  const html = page(`Cross-harness run across ${counts.roles} harness roles`, `<p class="record-label">Current cross-harness run · ${escapeMarkup(companion.capturedAt)}</p><h1>Cross-harness run across ${counts.roles} harness roles</h1><p class="lede">${counts.roles} harness roles ran the same ${counts.tasks} tasks from the same task set. On every one of those tasks the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}, so what differs between the rows is the harness and the model behind it. ${counts.readable} of ${counts.attempts} attempts produced something a checker could read, and why the rest did not is reported beside each row rather than left inside the rate.</p>${SHEET_DEFS}${figure}`);
   return { html, svg, companion };
 }
 

@@ -153,8 +153,10 @@ test("no plate renders empty", () => {
 test("colour follows the seed palette, including in the literal layers", () => {
   // Nineteen layers drew from hardcoded rgb literals, so a plate's colour did
   // not change with its palette. Two seeds landing on different palettes must
-  // now produce different drawn colours, for exactly those layers.
-  const literalLayers = ["facets", "groove", "caustic-paper", "planet-limb", "dendrite", "riso-moire"];
+  // now produce different drawn colours, for exactly those layers. dendrite and
+  // riso-moire left this list on 25 September 2026: they draw in the aperture
+  // inks (next test), on purpose.
+  const literalLayers = ["facets", "groove", "caustic-paper", "planet-limb"];
   const stylesFor = (seedString, layer) => {
     const rec = recordingCanvas(900, 560);
     field.renderSpecimen(rec.canvas, seedString, [layer]);
@@ -168,6 +170,34 @@ test("colour follows the seed palette, including in the literal layers", () => {
     assert.ok(a.length > 0, `${layer}: recorded no colour assignments at all`);
     assert.ok(a !== b || b !== c || a !== c,
       `${layer}: identical colours across three seeds, so the palette is still ignored`);
+  }
+});
+
+test("the aperture engines draw in the art family's inks, whatever the seed palette", () => {
+  // 25 September 2026: riso-moire, dendrite and caustic-veils moved to the
+  // aperture palette: ink line-work on the void or bone ground and one warm
+  // core. Colour means a verdict on this site, so a seed must not tint them.
+  // With no document the engines draw the void pole, whose inks are these.
+  const inks = new Set(["4,4,5", "230,225,214", "143,139,132", "255,171,82", "255,213,146", "255,247,232"]);
+  const channels = (style) => {
+    const rgb = /^rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(style);
+    if (rgb) return `${rgb[1]},${rgb[2]},${rgb[3]}`;
+    const hex = /^#([0-9a-f]{6})$/i.exec(style);
+    if (!hex) return null;
+    const n = parseInt(hex[1], 16);
+    return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+  };
+  for (const layer of ["riso-moire", "dendrite", "caustic-veils"]) {
+    const seen = new Set();
+    for (const seed of ["palette-probe-a", "palette-probe-b", "palette-probe-c"]) {
+      const rec = recordingCanvas(900, 560);
+      field.renderSpecimen(rec.canvas, seed, [layer]);
+      for (const call of rec.calls.filter((c) => c.startsWith("style:"))) seen.add(call.slice(6));
+    }
+    const solid = [...seen].map(channels).filter(Boolean);
+    assert.ok(solid.length > 0, `${layer}: recorded no solid colours`);
+    const stray = [...new Set(solid.filter((rgb) => !inks.has(rgb)))];
+    assert.deepEqual(stray, [], `${layer}: drew colours outside the aperture inks`);
   }
 });
 

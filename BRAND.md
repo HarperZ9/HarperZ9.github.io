@@ -1,4 +1,4 @@
-# Project Telos artwork
+# Zentropy Labs artwork
 
 Use [DESIGN-RULES.md](DESIGN-RULES.md) for the site's visual system. The canonical
 website is HarperZ9/HarperZ9.github.io. Neighboring repository artwork is updated

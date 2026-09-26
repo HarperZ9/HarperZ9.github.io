@@ -1,6 +1,6 @@
 # Usage Guide
 
-This repository publishes the static Project Telos portfolio and product
+This repository publishes the static Zentropy Labs portfolio and product
 surface at `HarperZ9.github.io`.
 
 It is intentionally inspectable: no application build step is required for the

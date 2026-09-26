@@ -159,6 +159,18 @@
       "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots."
     },
     {
+      "source": "flywheel",
+      "target": "articulate",
+      "relation": "integrates-lane",
+      "status": "verified-in-source",
+      "evidenceIds": [
+        "flywheel-articulate-lane-code",
+        "flywheel-release-v1-0-4",
+        "articulate-pypi-v0-4-1"
+      ],
+      "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.4.1 release, and this relation does not show that Flywheel was tested with 0.4.1."
+    },
+    {
       "source": "truth-enb",
       "target": "enb-runtime-core",
       "relation": "build-dependency",
@@ -240,7 +252,7 @@
         "chorus-public-source-0-1-0",
         "gather-release-v1-6-1"
       ],
-      "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. It is not a declared Flywheel lane in the current lane registry."
+      "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. Flywheel 1.0.4 also declares a Chorus lane; that lane is outside this relation."
     }
   ],
   "systems": [
@@ -505,13 +517,22 @@
           "date": "2026-08-28",
           "status": "verified",
           "summary": "The pinned lane registry declares Accountable Surface's server entry, source repository, extra source roots, and actuation role."
+        },
+        {
+          "id": "flywheel-articulate-lane-code",
+          "type": "code-permalink",
+          "label": "Flywheel Articulate lane declaration",
+          "href": "https://github.com/HarperZ9/flywheel/blob/v1.0.4/harness/lanes_registry.py#L79-L92",
+          "date": "2026-09-25",
+          "status": "verified",
+          "summary": "Lines 79 to 92 of the lane registry at tag v1.0.4, which resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7, declare the articulate lane: the articulate-writing package pinned at 0.4.0, a pip install, the articulate-mcp command with no arguments, the articulate.local_mcp module, and the authoring role. A comment in the same lines explains that the lane starts the standard-library MCP entry point added in 0.4.0. The lines do not show a completed launch or probe on any machine, bundling from vendored source, compatibility with articulate-writing 0.4.1, or the quality of Articulate's checks."
         }
       ],
       "limitations": [
         "Receipts establish witnessed actions and checks, not general model correctness. A receipt proves a check reproduces; it does not prove the answer is true of the world.",
         "On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero. The demonstrated value is the re-derivable receipt and the containment.",
         "The v1.0.1 Python package release, Windows installer asset, and frozen gateway smoke receipt do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or universal verifier completeness.",
-        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.4.0 as of Flywheel 1.0.3).",
+        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.4.0 as of Flywheel 1.0.4).",
         "The v1.0.1 Windows desktop installer is unsigned. Matching the published SHA-256 checks bytes only; it does not authenticate the publisher or prove clean-machine installation.",
         "Local weights and optional signing or monitoring features have separate installation requirements."
       ],
@@ -539,7 +560,8 @@
         "relay",
         "plexus",
         "mneme",
-        "chorus"
+        "chorus",
+        "articulate"
       ],
       "lastVerified": "2026-09-25",
       "primaryDomain": "agent-systems",
@@ -684,7 +706,7 @@
       ],
       "lastVerified": "2026-08-28",
       "primaryDomain": "developer-infrastructure",
-      "productType": "local MCP workbench",
+      "productType": "local workbench for creating and replaying AI work",
       "releaseState": "active source 0.2.0; latest tag v0.1.0"
     },
     {
@@ -1095,7 +1117,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "evaluation-verification",
-      "productType": "falsifiable claim evaluation system",
+      "productType": "engine that tests claims against evidence",
       "releaseState": "stable v1.2.0"
     },
     {
@@ -1184,7 +1206,7 @@
       ],
       "lastVerified": "2026-09-14",
       "primaryDomain": "evaluation-verification",
-      "productType": "cross-implementation integrity witness",
+      "productType": "checker that content still matches its source",
       "releaseState": "stable v1.3.0 on GitHub and PyPI"
     },
     {
@@ -1402,7 +1424,7 @@
       ],
       "lastVerified": "2026-09-08",
       "primaryDomain": "agent-systems",
-      "productType": "permission-gated coding agent and execution lane",
+      "productType": "coding agent that acts within granted permissions",
       "releaseState": "GitHub release v0.2.0 verified; no PyPI release claimed"
     },
     {
@@ -1470,7 +1492,7 @@
       ],
       "lastVerified": "2026-08-28",
       "primaryDomain": "developer-infrastructure",
-      "productType": "capability mesh and toolchain wiring infrastructure",
+      "productType": "tool discovery and wiring for AI agents",
       "releaseState": "active source 0.2.0; no GitHub release"
     },
     {
@@ -1561,7 +1583,7 @@
       ],
       "lastVerified": "2026-09-07",
       "primaryDomain": "agent-systems",
-      "productType": "deterministic agent memory subsystem",
+      "productType": "agent memory store with repeatable recall",
       "releaseState": "GitHub release v0.3.0; no PyPI release claimed"
     },
     {
@@ -1587,7 +1609,7 @@
       ],
       "primaryDomain": "agent-systems",
       "family": "infrastructure",
-      "productType": "continuity capsule and instruction-surface CLI",
+      "productType": "command-line tool that packages memory for AI assistants",
       "architectureRole": "continuity-capsule-and-surface-gate",
       "audiences": [
         "agent-system engineers",
@@ -2205,7 +2227,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "security-privacy",
-      "productType": "authorization and proof-packet library",
+      "productType": "library that checks AI permission and evidence records",
       "releaseState": "active source 0.2.0; no release"
     },
     {
@@ -2527,7 +2549,7 @@
       ],
       "lastVerified": "2026-08-28",
       "primaryDomain": "graphics-media",
-      "productType": "SKSE state, record, asset, ABI, and optional renderer system",
+      "productType": "Skyrim plugin linking game data to shaders and tools",
       "releaseState": "prerelease v3.0.0-rc.1"
     },
     {
@@ -2663,7 +2685,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "security-privacy",
-      "productType": "local I/O wrapper and hook layer",
+      "productType": "local wrapper for file, web, and tool input and output",
       "releaseState": "active public source; no tagged release"
     },
     {
@@ -3267,7 +3289,7 @@
       ],
       "lastVerified": "2026-09-14",
       "primaryDomain": "security-privacy",
-      "productType": "controlled agent-action workbench",
+      "productType": "workbench that allows only approved AI agent actions",
       "releaseState": "GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed"
     },
     {
@@ -3364,7 +3386,7 @@
       ],
       "lastVerified": "2026-09-07",
       "primaryDomain": "security-privacy",
-      "productType": "public release-surface auditor",
+      "productType": "checker run before a repository goes public",
       "releaseState": "v0.1.3 on GitHub and PyPI"
     },
     {
@@ -3432,7 +3454,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "evaluation-verification",
-      "productType": "model provenance-envelope validator",
+      "productType": "checker for records tying model claims to sources",
       "releaseState": "alpha v0.1.1"
     },
     {
@@ -3498,7 +3520,7 @@
       ],
       "lastVerified": "2026-08-27",
       "primaryDomain": "security-privacy",
-      "productType": "secret-aware I/O helper library",
+      "productType": "library that redacts secrets from file and tool output",
       "releaseState": "stable v0.1.0"
     },
     {

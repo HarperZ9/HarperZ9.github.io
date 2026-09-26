@@ -51,9 +51,9 @@
       "sha256": "135a5d875faf2200f5ca6099de0ba8e0988381f10f8963b6653572f503dd464b"
     },
     {
-      "byte_length": 20300,
+      "byte_length": 21405,
       "path": "cv.html",
-      "sha256": "87bb53fc5831282408212cf14b676bf8f70fe1cf27246cee4ca7500146c821c5"
+      "sha256": "d2768f880303ff4c1c703f0144bdd4d8ed0f3a4a1d3719c5aa855cbe72b585fe"
     },
     {
       "byte_length": 13885,
@@ -61,34 +61,34 @@
       "sha256": "73e37f22144206a83e3eaa8d786a084735cc4b94f167e8d17dec489b4392e325"
     },
     {
-      "byte_length": 9261,
+      "byte_length": 9744,
       "path": "hire.html",
-      "sha256": "f323fa77d6e8b949a599baff9afb407aa0ff082b3c076079d5e4a5f5feb9a038"
+      "sha256": "8e2bc5eacafed9b022dc1e294a89c9b7e48a7310123097b490b1cc6a6fa72713"
     },
     {
-      "byte_length": 8024,
+      "byte_length": 8655,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "4a5ed45236ef6e91ae2e85bba4ee842220b963111360132a9ef182310195ade2"
+      "sha256": "5b53998156584f01400fff8872e8309986611d8c48bab007b7775da93250a5de"
     },
     {
-      "byte_length": 7269,
+      "byte_length": 7900,
       "path": "resume-grounds.html",
-      "sha256": "bc83811083828eb1e139bbccf77a95b0fd99d5668b878831d02dc7d0acaff439"
+      "sha256": "de346ef445ef6fbeecdf96e1f47f7fee0ff9976ab60250551b70fadcd38992ba"
     },
     {
-      "byte_length": 7302,
+      "byte_length": 7933,
       "path": "resume-public-operations.html",
-      "sha256": "fbd2b4b2b5b76282a7e604119a7fb429f5d2ec0ee71210beccdc69d9c61990e7"
+      "sha256": "b961bbafa6b6df57212555e1455574c725e0be56a0b822b7c71a1955829a9269"
     },
     {
-      "byte_length": 7854,
+      "byte_length": 8485,
       "path": "resume-support-operations.html",
-      "sha256": "4b69c4f5dac91f13e64cb141c3f58189486c8a28558c38633403a6a9634665c0"
+      "sha256": "45280778140c4a1b96b150d62d7ec4d4c043156e85d00051b74aba85eb918c81"
     },
     {
-      "byte_length": 9191,
+      "byte_length": 9811,
       "path": "resume.html",
-      "sha256": "61fb2c85319ad5456cac75d956d2288efe544ce162b1b0259a64cbda99b3a6e2"
+      "sha256": "d597086b8ed3587853f4f6c56a516435d8a7c055726dc002728850fd9269b7a9"
     },
     {
       "byte_length": 3309,
@@ -96,7 +96,7 @@
       "sha256": "8bbfc24501da56d58c815bfdd3a2df8779fd86b12afd9c09495b168032193fe8"
     }
   ],
-  "renderer_sha256": "936cfb39f9f3175780b3b60bd7e95a6208810649fd03379a25b3f132484a87ea",
+  "renderer_sha256": "7d560d2b8e4e84dfaad218e5b73164deb6971e3cf7f90786ad0e1a8a4a3f6431",
   "reviewed": "2026-09-20",
   "schema": "harperz9-career-text-build/v1",
   "source": {

@@ -85,7 +85,7 @@ const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js")
 
 // Showcase source: the First Integral scene.
 let _showcase = null;
-const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260701a"), m => { _showcase = m; });
+const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260925-studio-plate"), m => { _showcase = m; });
 
 // Living neural source: the seed's neural instruments, animated on the shared
 // canvas and measured by the perception loop. Static under reduced motion.
@@ -545,7 +545,7 @@ async function enterPosterWorkshop(epoch) {
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
       import("./poster-panel.js"),
-      import("./generative-field.js"),
+      import("./generative-field.js?v=20260925-void-plates"),
       loadExporters(),
     ]);
     if (epoch !== _sourceEpoch) return;   // switched away while loading
@@ -866,7 +866,7 @@ function acquirePlotField(then) {
   };
   if (_plotMaterial === "canvas") {
     if (!_plotSnapshotOk || _plotSnapshot.width < 9) {
-      return refuse("no captured frame — render a source, then switch straight here",
+      return refuse("no captured frame: render a source, then switch straight here",
         "No frame to plot: nothing was on the studio canvas when you switched here. Render a source, then come back.");
     }
     fromCanvas(_plotSnapshot, "the studio canvas");
@@ -876,8 +876,8 @@ function acquirePlotField(then) {
     for (const v of _plotField.lum) { if (v < lo) lo = v; if (v > hi) hi = v; }
     if (hi - lo < 0.02) {
       _plotField = null; _plotFieldInfo = null;
-      return refuse("the captured frame came back blank — that source's GPU buffer was already released",
-        "The last frame could not be captured — that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
+      return refuse("the captured frame came back blank; that source's GPU buffer was already released",
+        "The last frame could not be captured: that source renders on a GPU buffer the browser had already released. Render it again, then switch straight here.");
     }
     then(); return true;
   }
@@ -942,7 +942,7 @@ function acquirePlotField(then) {
     const id = (sel && sel.value) || (_library.works.length ? _library.works[0].id : null);
     const work = id ? _library.byId(id) : null;
     if (!work) {
-      return refuse("no work chosen — pick one from the archive above",
+      return refuse("no work chosen: pick one from the archive above",
         "Choose a work from the archive picker, and the pen draws it.");
     }
     // The receipt names the file this was drawn from, not the title, because a title can be
@@ -951,8 +951,8 @@ function acquirePlotField(then) {
       { workId: work.id, sha: work.sha });
   }
   // picture: nothing cached means no file chosen yet.
-  return refuse("choose a picture above — it stays in this browser",
-    "Choose a picture first — any image file becomes a plotter drawing.");
+  return refuse("choose a picture above; it stays in this browser",
+    "Choose a picture first: any image file becomes a plotter drawing.");
 }
 
 function drawPlotMap() {
@@ -978,7 +978,7 @@ function drawPlotMap() {
     // The drawing crosses as geometry too. The pen-surface register chip re-marks it when set
     // explicitly; "auto" keeps the register the sketch was drawn in.
     if (!_sketch || _sketch.isEmpty()) {
-      if (!_lastSketchSheet) { say("model", "No sketch yet — draw one in the Sketch source first."); return; }
+      if (!_lastSketchSheet) { say("model", "No sketch yet: draw one in the Sketch source first."); return; }
       plot = _lastSketchSheet;
     } else {
       plot = _sketch.toSheet({ register: _plotRegister !== "auto" ? _plotRegister : _sketchRegister });
@@ -1048,7 +1048,7 @@ function sayPlotReceipt(plot, seed, obs) {
   if (meta.kind === "blend") {
     const [a, b] = meta.parts;
     say("model",
-      `Two mediums on one sheet: ${meta.label}, the field ${meta.mode === "over" ? "breaking over" : "laid under"} the subject — `
+      `Two mediums on one sheet: ${meta.label}, the field ${meta.mode === "over" ? "breaking over" : "laid under"} the subject: `
       + `${a.strokes.toLocaleString()} strokes from the ${a.kind}, ${b.strokes.toLocaleString()} from the ${b.kind}, `
       + `re-measured whole: coverage ${m.coverage}, direction ${m.direction}. `
       // A blend hides which material went in, so an archive work says so here or the sheet's own
@@ -1059,7 +1059,7 @@ function sayPlotReceipt(plot, seed, obs) {
   }
   if (meta.kind === "voxel") {
     say("model",
-      `The build crossed over as geometry: ${meta.voxels.toLocaleString()} voxels became a hidden-line drawing — `
+      `The build crossed over as geometry: ${meta.voxels.toLocaleString()} voxels became a hidden-line drawing: `
       + `${meta.faces.toLocaleString()} visible faces, silhouette and crease edges chained, walls hatched by their lit tone, `
       + `${meta.strokes.toLocaleString()} strokes${meta.edits ? `, ${meta.edits} hand edit${meta.edits === 1 ? "" : "s"} included` : ""}. `
       + `Fingerprint ${obs.phash}. The SVG plots exactly this.`);
@@ -1070,7 +1070,7 @@ function sayPlotReceipt(plot, seed, obs) {
     say("model",
       `A ${meta.label} drawing${src}: ${meta.strokes.toLocaleString()} strokes, `
       + (meta.chosen === "measured"
-        ? `method chosen by measurement — tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells, from ${meta.considered.length} candidates (${meta.considered.join(", ")}). `
+        ? `method chosen by measurement: tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells, from ${meta.considered.length} candidates (${meta.considered.join(", ")}). `
         : `tone correlation r ${meta.tone.r} against the source over ${meta.tone.cells} cells. `)
       + (meta.note ? meta.note + ". " : "")
       + `Fingerprint ${obs.phash}. Same picture, same seed, same drawing.`);
@@ -1102,7 +1102,7 @@ function sayPlotReceipt(plot, seed, obs) {
   } else {
     say("model",
       `A ${label} sheet from seed "${seed}": ${meta.strokes} single-stroke paths over a seeded elevation field, `
-      + `sea level at ${meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet — `
+      + `sea level at ${meta.seaLevel}. Fingerprint ${obs.phash}. Same seed, same sheet; `
       + `the SVG export carries real units and one layer per pen pass.`);
   }
 }
@@ -1342,7 +1342,7 @@ function repaintVoxelScene(announce) {
       `A ${label} built from seed "${scene.meta.seed}": ${scene.meta.voxels.toLocaleString()} voxels at `
       + `${scene.meta.res.join("×")}${scene.meta.tune ? ", algorithm hand-tuned" : ""}, lit with baked `
       + `per-face occlusion. Fingerprint ${obs.phash}. Orbit turns it, Build/Chisel/Paint edit it, `
-      + `and the .vox export hashes exactly what you see — seed, turns, and hand edits included.`);
+      + `and the .vox export hashes exactly what you see, with seed, turns, and hand edits included.`);
   }
   startMeterLoop();
 }
@@ -1583,7 +1583,7 @@ function drawSketch(announce) {
           + `and the ${_sketchRegister} register settles the ink when the pen lifts.`
         : `Your drawing, ${sheet.meta.strokes.toLocaleString()} strokes in the ${_sketchRegister} register`
           + (sym.mode !== "none" ? ` under ${sym.mode} ×${sym.k} symmetry` : "")
-          + `. Geometry hash ${sheet.meta.geometryHash} — the receipt that this is exactly your drawing. `
+          + `. Geometry hash ${sheet.meta.geometryHash}, the receipt that this is exactly your drawing. `
           + `Fingerprint ${obs.phash}.`);
   }
   startMeterLoop();
@@ -1718,7 +1718,7 @@ function initSketchControls() {
   // The crossover: the drawing onto the pen surface as its own material.
   const toPlot = $("sketch-plot");
   if (toPlot) toPlot.addEventListener("click", () => {
-    if (!_sketch || _sketch.isEmpty()) { say("model", "Nothing to send yet — draw something first."); return; }
+    if (!_sketch || _sketch.isEmpty()) { say("model", "Nothing to send yet: draw something first."); return; }
     _plotMaterial = "sketchsheet";
     document.querySelectorAll("[data-plot-material]").forEach(b =>
       b.classList.toggle("active", b.dataset.plotMaterial === "sketchsheet"));
@@ -1786,11 +1786,11 @@ function startReplay() {
     replayDrawBatch(ctx, T, r.batch);
     if (r.penChanged != null && note) {
       const names = _replayMod.PEN_NAMES || [];
-      note.textContent = `pen change — ${names[r.penChanged] || "pen " + r.penChanged} down`;
+      note.textContent = `pen change: ${names[r.penChanged] || "pen " + r.penChanged} down`;
     }
     if (scrub) scrub.value = String(Math.round(r.progress * 1000));
     if (r.done) {
-      if (note) note.textContent = `sheet complete — drawn as the plotter would run it`;
+      if (note) note.textContent = `sheet complete, drawn as the plotter would run it`;
       stopReplay();
       return;
     }
@@ -2010,7 +2010,7 @@ function pinCurrent(what) {
       if (!cur.rec) {
         const hint0 = $("shelf-hint");
         if (hint0) hint0.textContent = "not pinned: " + cur.why;
-        say("model", "This sheet cannot be pinned yet — " + cur.why + ".");
+        say("model", "This sheet cannot be pinned yet: " + cur.why + ".");
         return;
       }
       kind = cur.kind; rec = cur.rec;
@@ -2024,14 +2024,14 @@ function pinCurrent(what) {
       return;
     }
     renderShelfStrip();
-    if (hint) hint.textContent = "pinned — the recipe reproduces it exactly, in this browser or from an exported file";
+    if (hint) hint.textContent = "pinned: the recipe reproduces it exactly, in this browser or from an exported file";
   };
   if (_shelf) { finish(); return; }
   loadShelf().then(() => {
     if (!_shelf) {
       let storage = null;
       try { storage = window.localStorage; storage.setItem("studio.shelf.probe", "1"); storage.removeItem("studio.shelf.probe"); } catch (_) { storage = null; }
-      if (!storage) { say("model", "The shelf needs browser storage, which is unavailable here — pins would not survive. Export/import still works once storage exists."); return; }
+      if (!storage) { say("model", "The shelf needs browser storage, which is unavailable here, so pins would not survive. Export/import still works once storage exists."); return; }
       _shelf = _shelfMod.createShelf({ storage });
     }
     finish();
@@ -2130,7 +2130,7 @@ function restorePin(pin) {
     // unrelated image under this pin's name.
     _restoringPin = true;
     _plotSnapshotOk = false;
-    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made, so it cannot be redrawn from the recipe. Every other control is set exactly as pinned — choose the image again and the sheet comes back.");
+    say("model", "That pin used a " + (r.material === "picture" ? "picture" : "captured frame") + " that lives only in the moment it was made, so it cannot be redrawn from the recipe. Every other control is set exactly as pinned; choose the image again and the sheet comes back.");
     setTimeout(() => { _restoringPin = false; }, 0);
   }
   if (r.material === "archive" && r.workId) {
@@ -2211,7 +2211,7 @@ function renderShelfStrip() {
   for (const pin of pins) {
     const el = document.createElement("button");
     el.type = "button"; el.className = "shelf-pin"; el.setAttribute("role", "listitem");
-    el.title = `${pin.title} — pinned ${String(pin.stamp).slice(0, 10)}; click to reproduce`;
+    el.title = `${pin.title}, pinned ${String(pin.stamp).slice(0, 10)}; click to reproduce`;
     if (pin.thumb) {
       const img = document.createElement("img");
       img.src = pin.thumb; img.alt = "";
@@ -2248,7 +2248,7 @@ function initShelf() {
   const exp = $("shelf-export");
   if (exp) exp.addEventListener("click", () => {
     if (!_shelf) { say("model", "This window blocks browser storage, so there is no shelf to export."); return; }
-    if (!_shelf.list().length) { say("model", "The shelf is empty — nothing to export."); return; }
+    if (!_shelf.list().length) { say("model", "The shelf is empty: nothing to export."); return; }
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([_shelf.exportJSON()], { type: "application/json" }));
     a.download = "studio-shelf.json";
@@ -2552,7 +2552,15 @@ function perceive(canvas) {
   computePerceptionDetail(canvas);
   updateReconstructionBadge();   // settled render: refresh the round-trip fidelity claim
   updateDetailUI(rich);
+  markStagePainted();
   return { phash, features:f, rich, width:w, height:h };
+}
+
+// The plate shows the Studio's pillar art as a poster until a frame has been read; after that
+// the poster steps aside for good (studio-deck.css hides it under .is-painted).
+function markStagePainted() {
+  const stage = $("viewport-stage");
+  if (stage && !stage.classList.contains("is-painted")) stage.classList.add("is-painted");
 }
 
 function say(role, text) {
@@ -4221,7 +4229,8 @@ function buildTransformMenu() {
 // (Built by the setSource("byo") continuation once the lazy effects graph loads.)
 
 // Topography controls: update display spans and re-run if canvas is loaded.
-function topoHasCanvas() { return $("sc-phash").textContent !== "—"; }
+// The panel writes "-" before any frame is read (older builds wrote an em dash).
+function topoHasCanvas() { const t = ($("sc-phash").textContent || "").trim(); return t !== "" && t !== "-" && t !== "—"; }
 
 $("topo-azimuth").addEventListener("input", () => {
   $("topo-az-val").textContent = $("topo-azimuth").value;
@@ -4486,6 +4495,7 @@ function paintSwatches(rich) {
     const wrap = document.createElement("span"); wrap.className = "mm-sw-wrap"; wrap.setAttribute("role", "listitem");
     const el = document.createElement("span"); el.className = "mm-sw";
     el.style.background = s.hex;
+    el.style.setProperty("--sw", s.hex);   // print restores the colour from this (studio-modes.css)
     el.setAttribute("role", "img");
     el.setAttribute("aria-label", `Colour ${name} ${s.hex}, ${pct} of the frame`);
     el.title = `${name} · ${s.hex} · ${pct}`;
@@ -4501,7 +4511,10 @@ function pushMotion(deltaFrac) {
   const ctx = c.getContext("2d", { willReadFrequently: true }); if (!ctx) return;
   const W = c.width, H = c.height;
   ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = "rgba(95,174,147,.85)"; ctx.lineWidth = 1.5; ctx.beginPath();
+  // Ink, like every other reading in the panel: interface colour is kept for verdicts.
+  let ink = "";
+  try { ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim(); } catch (_) {}
+  ctx.strokeStyle = ink || "#ece5d6"; ctx.lineWidth = 1.5; ctx.beginPath();
   for (let i = 0; i < motionHist.length; i++) {
     const x = i / (motionHist.length - 1) * W;
     const y = H - Math.max(0, Math.min(1, motionHist[i])) * (H - 3) - 1.5;
@@ -4603,6 +4616,7 @@ function liveTick(ts) {
     phash = perceptualHash(px, w, h, 4);
     // stream the cheap line + the full measurimeter (no say(), no drift mutation)
     $("sc-phash").textContent = phash;
+    markStagePainted();
     measure(px, w, h, phash);
     // Granular detail refresh at ~0.5Hz while animating: description-grade,
     // computed on a downsample, cheap enough for the live loop.
@@ -4662,7 +4676,7 @@ function buildAudioMeters() {
   const lt = document.createElement("span"); lt.className = "mm-track";
   const lf = document.createElement("span"); lf.className = "mm-fill mm-warm"; lf.id = "mm-au-level";
   lt.appendChild(lf);
-  const lv = document.createElement("span"); lv.className = "mm-mval"; lv.id = "mm-au-level-v"; lv.textContent = "—";
+  const lv = document.createElement("span"); lv.className = "mm-mval"; lv.id = "mm-au-level-v"; lv.textContent = "-";
   lvl.appendChild(ln); lvl.appendChild(lt); lvl.appendChild(lv); host.appendChild(lvl);
   // spectrum
   const sp = document.createElement("div"); sp.className = "mm-meter";
@@ -4676,14 +4690,14 @@ function buildAudioMeters() {
   const pn = document.createElement("span"); pn.className = "mm-mname"; pn.textContent = "pitch";
   const pp = document.createElement("span"); pp.className = "mm-track";
   const pf = document.createElement("span"); pf.className = "mm-fill"; pf.id = "mm-au-pitch"; pp.appendChild(pf);
-  const pv = document.createElement("span"); pv.className = "mm-mval"; pv.id = "mm-au-pitch-v"; pv.textContent = "—";
+  const pv = document.createElement("span"); pv.className = "mm-mval"; pv.id = "mm-au-pitch-v"; pv.textContent = "-";
   pt.appendChild(pn); pt.appendChild(pp); pt.appendChild(pv); host.appendChild(pt);
 }
 function audioMetersIdle() {
   buildAudioMeters();
   const lf = $("mm-au-level"), lv = $("mm-au-level-v"), pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
-  if (lf) lf.style.width = "0%"; if (lv) lv.textContent = "—";
-  if (pf) pf.style.width = "0%"; if (pv) pv.textContent = "—";
+  if (lf) lf.style.width = "0%"; if (lv) lv.textContent = "-";
+  if (pf) pf.style.width = "0%"; if (pv) pv.textContent = "-";
   const sp = $("mm-au-spectrum"); if (sp) sp.querySelectorAll(".mm-bar").forEach(b => b.style.height = "2%");
 }
 
@@ -4729,14 +4743,14 @@ function pollAudio() {
   const level = rmsFromBytes(audioTimeBuf);
   const lf = $("mm-au-level"), lv = $("mm-au-level-v");
   if (lf) lf.style.width = Math.min(1, level * 2.2) * 100 + "%";
-  if (lv) lv.textContent = level < 0.005 ? "—" : level.toFixed(3);
+  if (lv) lv.textContent = level < 0.005 ? "-" : level.toFixed(3);
   const bars = spectrumBands(audioFreqBuf, 32);
   const sp = $("mm-au-spectrum");
   if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
   const hz = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
   const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
   if (pf) pf.style.width = Math.min(1, hz / 4000) * 100 + "%";
-  if (pv) pv.textContent = hz ? hz + " Hz" : "—";
+  if (pv) pv.textContent = hz ? hz + " Hz" : "-";
 }
 window.__studioAttachAudio = attachAudio;
 window.__studioDetachAudio = detachAudio;
@@ -4768,7 +4782,7 @@ function studioReactiveAudioBridge(features) {
   const level = Math.max(0, Math.min(1, features.level || 0));
   const lf = $("mm-au-level"), lv = $("mm-au-level-v");
   if (lf) lf.style.width = level * 100 + "%";
-  if (lv) lv.textContent = level < 0.005 ? "—" : level.toFixed(3);
+  if (lv) lv.textContent = level < 0.005 ? "-" : level.toFixed(3);
   // spectrum (faithful 3-band + chroma envelope)
   const sp = $("mm-au-spectrum");
   if (sp) {
@@ -4789,7 +4803,7 @@ function studioReactiveAudioBridge(features) {
     if (pv) pv.textContent = hz + " Hz";
   } else {
     if (pf) pf.style.width = "0%";
-    if (pv) pv.textContent = "—";
+    if (pv) pv.textContent = "-";
   }
 }
 window.__studioReactiveAudioBridge = studioReactiveAudioBridge;
@@ -4867,7 +4881,7 @@ function upgradeDropdown(stateId) {
       const sel = list_opts.find(o => o.hasAttribute("selected")) || list_opts[0];
       selectedValue = sel ? sel.value : null;
     }
-    lab.textContent = labelFor(selectedValue) || "—";
+    lab.textContent = labelFor(selectedValue) || "-";
     list.innerHTML = "";
     for (const o of list_opts) {
       const item = document.createElement("div");
@@ -5097,7 +5111,7 @@ function readout() {
   const size = ($("sc-size").textContent || "—").trim();
   const grab = sel => { const el = $("sc-feats").querySelector(sel); return el ? el.textContent.trim() : null; };
   const feats = [...$("sc-feats").querySelectorAll(".ground")].map(g => g.textContent.trim());
-  const has = phash !== "—" && phash !== "";
+  const has = phash !== "—" && phash !== "-" && phash !== "";
   return { phash, size, feats, has, rich: lastRich, source: currentSourceLabel() };
 }
 function num(label) { // pull a named feature value (contrast / structure / balance) off the chips
@@ -5138,7 +5152,7 @@ function groundedAnswer(input) {
   if (ask("try", "next", "do", "idea", "make", "could", "suggest")) {
     let weak = "structure"; let lo = Infinity;
     for (const [k, v] of [["contrast", con], ["structure", str], ["balance", bal]]) if (v != null && v < lo) { lo = v; weak = k; }
-    return `We could push it further. ${weak} is where there's most room (${lo === Infinity ? "—" : fmt(lo, 2)}). Try a transform, swap the source, or hand it to me for a turn.`;
+    return `We could push it further. ${weak} is where there's most room (${lo === Infinity ? "no reading" : fmt(lo, 2)}). Try a transform, swap the source, or hand it to me for a turn.`;
   }
   // friendly grounded fallback
   return `Here's what I can say for sure: a ${r.size} ${r.source} frame${hueBit}, fingerprint ${r.phash}. ${desc} Ask me about its colour, contrast, structure, or what to try next.`;
@@ -5299,7 +5313,7 @@ function fsToolbarEngaged() {
   const tb = $("render-toolbar");
   if (!tb) return false;
   if (tb.contains(document.activeElement)) return true;
-  if (tb.querySelector("details[open]")) return true;
+  if (tb.querySelector("details[open]:not(.deck-more)")) return true;   // the deck drawer is always open on a desk
   const pane = tb.querySelector(".tp-rotv");
   return !!(pane && !pane.classList.contains("tp-rotv-cpl"));
 }

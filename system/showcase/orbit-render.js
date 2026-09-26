@@ -14,7 +14,9 @@ export const PAPER = "#f4f3ef";
 export const INK = "#0b0c0e";
 export const IRIS = "#4636e8";
 export const CERAMIC_RAMP = ["#f4f3ef", "#f1f0eb", "#eeede7", "#ebeae4", "#e9e8e1", "#edece6"];
-export const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+// Conso is the site's mono face and the Studio page already loads it; the system fallbacks only
+// matter for a host page that does not.
+export const MONO = 'Conso, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
 export const DISPLAY = '"Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 const r6 = (x) => Math.round(x * 1e6) / 1e6;

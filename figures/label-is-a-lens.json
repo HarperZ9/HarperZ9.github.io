@@ -11,6 +11,7 @@
     "What did not change, or was not measured",
     "What this does not show"
   ],
+  "resultColumn": "What changed",
   "rows": [
     [
       "S1",

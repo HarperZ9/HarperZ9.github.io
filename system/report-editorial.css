@@ -24,7 +24,7 @@
 body.analytics-page,
 body.report-editorial{
   margin:0;
-  background:var(--report-paper)!important;
+  background-color:var(--report-paper)!important;
   color:var(--report-ink)!important;
   font-family:var(--report-type);
   font-size:var(--t-body,1.0625rem);
@@ -87,7 +87,7 @@ body.report-editorial .wrap{
 body.analytics-page main,
 body.report-editorial main{
   padding:0 0 clamp(3rem,7vw,5rem)!important;
-  background:var(--report-paper)!important;
+  background-color:var(--report-paper)!important;
 }
 
 body.report-editorial > header.shell{
@@ -136,8 +136,10 @@ body.report-editorial h3{
   line-height:1.3!important;
 }
 
-body.analytics-page :is(p,li,dd),
-body.report-editorial :is(p,li,dd){
+/* Notebook sheets set their own measure and list rhythm; these reading defaults
+   stop at the sheet edge. :where() keeps the specificity unchanged. */
+body.analytics-page :is(p,li,dd):where(:not(.ns-sheet *)),
+body.report-editorial :is(p,li,dd):where(:not(.ns-sheet *)){
   max-width:var(--report-prose);
 }
 
@@ -146,14 +148,14 @@ body.report-editorial p{
   margin:0 0 1rem;
 }
 
-body.analytics-page ul,
-body.report-editorial ul{
+body.analytics-page ul:where(:not(.ns-sheet *)),
+body.report-editorial ul:where(:not(.ns-sheet *)){
   margin:1rem 0 0;
   padding-left:1.15rem;
 }
 
-body.analytics-page li + li,
-body.report-editorial li + li{
+body.analytics-page li:where(:not(.ns-sheet *)) + li,
+body.report-editorial li:where(:not(.ns-sheet *)) + li{
   margin-top:.45rem;
 }
 

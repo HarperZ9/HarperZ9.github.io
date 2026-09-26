@@ -1,0 +1,182 @@
+/* studio-sheet.css: the rail's shelf and console, the Studio's perception panel as a
+   spec sheet, the drawer for asking about the frame, the hidden-state guard and the
+   square rule. Loaded after studio-deck.css; studio-modes.css follows with phone,
+   forced colors, print and reduced motion. */
+
+/* 8. The shelf, the notes and the renderer console close the rail. */
+html body.studio-page #studio-rail .studio-shelf{margin:.25rem 0 0;padding:.7rem 0 .8rem}
+html body.studio-page #studio-rail .shelf-pin{border:1px solid var(--st-line);border-radius:0;background:transparent}
+html body.studio-page #studio-rail .shelf-pin:hover{border-color:var(--st-ink)}
+html body.studio-page #studio-rail .shelf-pin :is(img,canvas){border-radius:0;background:var(--st-plate)}
+html body.studio-page #studio-rail .shelf-pin .shelf-pin-title{color:var(--st-soft);font-size:.875rem}
+html body.studio-page #studio-rail .shelf-pin .shelf-pin-x{border-radius:0;background:var(--st-paper);color:var(--st-ink);border-color:var(--st-line-strong)}
+html body.studio-page #studio-rail .rail-about{margin-top:.25rem}
+html body.studio-page #studio-rail .rail-about p{margin:0 0 .9rem;font-size:.9375rem;line-height:1.55}
+html body.studio-page #studio-rail .studio-export-slot{
+  display:block;margin:0 0 1rem;padding:.35rem 0 0;border-top:1px solid var(--st-line);color:var(--st-ink);
+}
+html body.studio-page #studio-rail .studio-render-console{
+  margin:.5rem 0 1rem;min-height:0;max-height:none;resize:none;overflow:visible;
+  border:0;border-top:1px solid var(--st-line);border-radius:0;background:transparent;
+}
+html body.studio-page #studio-rail :is(.studio-console-head,.studio-console-actions){padding:.6rem 0;gap:.5rem}
+html body.studio-page #studio-rail .studio-console-title{font-family:var(--st-sans);font-size:.9375rem;font-weight:700;color:var(--st-ink)}
+html body.studio-page #studio-rail .studio-console-status{
+  padding:0;border:0;background:transparent;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:500;line-height:1.2;color:var(--st-soft);
+}
+html body.studio-page #studio-rail .studio-console-stage{
+  min-height:6rem;margin:.2rem 0 .7rem;border:1px solid var(--st-line);border-radius:0;
+  background:
+    linear-gradient(#ffffff26,#ffffff26) center/1px 100% no-repeat,
+    linear-gradient(#ffffff26,#ffffff26) center/100% 1px no-repeat,
+    var(--st-plate);
+}
+html body.studio-page #studio-rail .studio-console-orbit{border-color:#ece5d68c}
+html body.studio-page #studio-rail .studio-console-crosshair{background:var(--st-plate-ink);box-shadow:none}
+html body.studio-page #studio-rail .studio-console-pointer{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-plate-ink)}
+html body.studio-page #studio-rail .studio-console-pointer b{color:var(--st-plate-ink);font-weight:600}
+html body.studio-page #studio-rail .studio-console-meters{gap:.5rem;padding:0 0 .7rem}
+html body.studio-page #studio-rail .studio-console-meter{font-family:var(--st-sans);font-size:.875rem;font-weight:600;color:var(--st-soft)}
+html body.studio-page #studio-rail .studio-console-meter output{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink)}
+html body.studio-page #studio-rail .studio-console-meter i{border-radius:0;background:var(--st-line)}
+html body.studio-page #studio-rail .studio-console-actions button{
+  flex:1 1 auto;min-height:2.25rem;border:1px solid var(--st-line);border-radius:0;
+  background:transparent;color:var(--st-ink);font-family:var(--st-sans);font-size:.875rem;font-weight:600;
+}
+html body.studio-page #studio-rail .studio-console-actions button:hover{background:var(--st-raised);border-color:var(--st-ink)}
+
+/* 12. The perception panel reads as a spec sheet: sections open on the site's
+   hairline and registration cross, readings sit in ruled rows with the name on the
+   left and the value on the right. Values are Conso at 15px and weight 500, in ink.
+   Bars and traces are ink on paper; the only colour left is a verdict. */
+html body.studio-page #studio-panel .panel-scroll{padding:1.4rem 1.25rem 1.25rem;gap:1.6rem}
+html body.studio-page #studio-panel .panel{
+  margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+html body.studio-page #studio-panel .panel>h2{
+  margin:0 0 .85rem;padding-top:1.1rem;
+  font-family:var(--st-sans);font-size:1.3125rem;font-weight:720;line-height:1.08;
+  letter-spacing:-.02em;text-transform:none;color:var(--st-ink);text-wrap:balance;
+}
+html body.studio-page #studio-panel .panel>h2 .mm-sub{
+  display:block;margin-top:.35rem;
+  font-family:var(--st-sans);font-size:.875rem;font-weight:500;line-height:1.4;letter-spacing:0;color:var(--st-soft);
+}
+/* 'live' is a running state, not a verdict: ink, with its round lamp. */
+html body.studio-page #studio-panel .mm-live{font-size:.875rem;font-weight:600;letter-spacing:0;color:var(--st-ink)}
+html body.studio-page #studio-panel .mm-live .mm-dot{background:currentColor}
+html body.studio-page #studio-panel .mm-fidelity{
+  display:inline-block;margin-top:.45rem;padding:.15rem .45rem;border:1px solid currentColor;border-radius:0;
+  background:transparent;font-family:var(--st-sans);font-size:.875rem;font-weight:600;letter-spacing:0;
+}
+html body.studio-page #studio-panel :is(.row,.ground){
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  margin:0;padding:.45rem 0;border:0;border-bottom:1px solid var(--st-line);border-radius:0;background:transparent;
+  font-family:var(--st-sans);font-size:.875rem;color:var(--st-soft);
+}
+html body.studio-page #studio-panel .rk{letter-spacing:0;color:var(--st-soft)}
+/* The feature readings were three boxed cells; they are rows of the same table as
+   the size line above them. The value is the bare text after the name. */
+html body.studio-page #studio-panel .grounds{display:block;gap:0;margin:0;padding:0}
+html body.studio-page #studio-panel .ground{font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink);font-variant-numeric:tabular-nums}
+html body.studio-page #studio-panel .ground .gk{font-family:var(--st-sans);font-size:.875rem;font-weight:400;color:var(--st-soft)}
+html body.studio-page #studio-panel :is(.mm-swf,.mm-mval,.rv){
+  font-family:var(--st-mono);font-size:.9375rem;font-weight:500;color:var(--st-ink);font-variant-numeric:tabular-nums;
+}
+html body.studio-page #studio-panel .mm-meta .mm-mval{color:var(--st-ink)}
+html body.studio-page #studio-panel .mm-describe{margin:.85rem 0 0;font-family:var(--st-sans);font-size:.9375rem;line-height:1.5;color:var(--st-ink)}
+html body.studio-page #studio-panel :is(.mm-fullread,.studio-receipts){margin-top:.85rem;border:0;border-top:1px solid var(--st-line);border-radius:0;background:transparent}
+html body.studio-page #studio-panel :is(.mm-fullread,.studio-receipts)>summary{
+  display:flex;align-items:center;gap:.5rem;min-height:2.6rem;padding:.55rem 0;cursor:pointer;list-style:none;
+  font-family:var(--st-sans);font-size:.9375rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--st-ink);
+}
+html body.studio-page #studio-panel :is(.mm-fullread,.studio-receipts)>summary::-webkit-details-marker{display:none}
+html body.studio-page #studio-panel :is(.mm-fullread,.studio-receipts)>summary::after{
+  content:"+";content:"+" / "";float:none;margin-left:auto;font-weight:400;font-size:1.125rem;color:var(--st-soft);
+}
+html body.studio-page #studio-panel :is(.mm-fullread,.studio-receipts)[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #studio-panel .mm-fullread .row{margin-bottom:.6rem}
+html body.studio-page #studio-panel :is(.mm-long,.mm-shapes,.mm-fullread-note){font-family:var(--st-sans);font-size:.875rem;line-height:1.55;color:var(--st-soft)}
+html body.studio-page #studio-panel .mm-ascii{border:1px solid var(--st-line);border-radius:0;background:var(--st-inset);color:var(--st-ink)}
+html body.studio-page #studio-panel :is(.mm-clab,.mm-mname){
+  font-family:var(--st-sans);font-size:.875rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--st-soft);
+}
+html body.studio-page #studio-panel .mm-clab{color:var(--st-ink)}
+html body.studio-page #studio-panel .mm-hint{font-weight:400;letter-spacing:0;color:var(--st-soft)}
+/* The mosaic shows the frame's own colours, so it stays a small black plate. */
+html body.studio-page #studio-panel .mm-mosaic{border:1px solid var(--st-line);border-radius:0;background:var(--st-plate)}
+html body.studio-page #studio-panel :is(.mm-motion,.mm-spectrum){border:0;border-bottom:1px solid var(--st-line-strong);border-radius:0;background:transparent}
+html body.studio-page #studio-panel .mm-sw{border-radius:0;border:1px solid var(--st-line-strong);box-shadow:none}
+/* A meter row: name, bar, value. The name and value share a baseline; the bar sits
+   on the row's centre. system.css leaves the fill an inline span, which drew
+   nothing: the fill is a block, and the width studio.js writes now shows. */
+html body.studio-page #studio-panel .mm-meter{align-items:baseline}
+html body.studio-page #studio-panel .mm-track{
+  display:block;align-self:center;height:.5rem;overflow:hidden;
+  border:1px solid var(--st-line);border-radius:0;background:transparent;
+}
+html body.studio-page #studio-panel :is(.mm-fill,.mm-fill.mm-warm){display:block;height:100%;background:var(--st-ink);border-radius:0}
+/* The spectrum rises from a floor, so its name sits on that floor. */
+html body.studio-page #studio-panel .mm-meter:has(.mm-spectrum){align-items:end}
+html body.studio-page #studio-panel .mm-spectrum{align-self:end}
+html body.studio-page #studio-panel .mm-bar{background:var(--st-ink);border-radius:0}
+html body.studio-page #studio-panel .mc-drift{border-top:1px solid var(--st-line);color:var(--st-soft)}
+html body.studio-page #studio-panel .studio-receipts .panel{border-top:1px solid var(--st-line);border-image:none;padding-top:.25rem}
+html body.studio-page #studio-panel .feature-intro{font-size:.9375rem;line-height:1.5;color:var(--st-soft)}
+html body.studio-page #studio-panel .feature-stack-grid{gap:0;padding:0}
+html body.studio-page #studio-panel .feature-stack-grid article{
+  margin:0;padding:.75rem 0;border:0;border-top:1px solid var(--st-line);border-radius:0;background:transparent;
+}
+html body.studio-page #studio-panel .feature-stack-grid h3{font-family:var(--st-sans);font-size:.9375rem;font-weight:700;color:var(--st-ink);margin:0 0 .3rem}
+html body.studio-page #studio-panel .feature-stack-grid p{font-size:.875rem;line-height:1.5;color:var(--st-soft)}
+html body.studio-page #studio-panel .feature-stack-grid :is(b,code){color:var(--st-ink)}
+html body.studio-page #studio-panel .feature-stack-grid code{font-size:.9375rem;font-weight:500}
+/* Links are text links, as on every reading page. */
+html body.studio-page #studio-panel .feature-links{gap:.2rem 1.1rem}
+html body.studio-page #studio-panel .feature-links a{
+  padding:.35rem 0;border:0;border-radius:0;background:transparent;
+  color:var(--st-ink);font-family:var(--st-sans);font-size:.875rem;font-weight:600;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
+html body.studio-page #studio-panel .feature-links a:is(:hover,:focus-visible){background:transparent;color:var(--st-ink);text-decoration-thickness:2px}
+
+/* 13. The drawer for asking about the frame closes the panel: a plain heading and a
+   square toggle, not a second poster. */
+html body.studio-page #chat-dock{border:0;border-top:1px solid var(--st-line);border-image:none;background:var(--st-paper)}
+html body.studio-page #chat-dock .chat-dock-head{min-height:3.25rem;padding:.55rem 1.25rem}
+html body.studio-page #chat-dock .chat-dock-head h2{
+  margin:0;padding:0;background:none;position:static;
+  font-family:var(--st-sans);font-size:1.0625rem;font-weight:720;line-height:1.2;letter-spacing:-.01em;color:var(--st-ink);
+}
+html body.studio-page #chat-dock .chat-dock-head h2::before{display:none}
+html body.studio-page #chat-dock .chat-min{width:2.5rem;height:2.5rem;min-height:2.5rem;padding:0;font-family:var(--st-sans);font-size:1.125rem;font-weight:500}
+html body.studio-page #chat-dock .chat-dock-body{padding:0 1.25rem 1rem}
+html body.studio-page #chat-dock :is(.mc-note,.mc-hint,.mc-status,.mc-label){font-family:var(--st-sans);font-size:.875rem;line-height:1.5;color:var(--st-soft)}
+html body.studio-page #chat-dock .mc-label{color:var(--st-ink);font-weight:600}
+html body.studio-page #chat-dock .model-connect{border:0;border-top:1px solid var(--st-line);border-radius:0;background:transparent}
+html body.studio-page #chat-dock .model-connect>summary{
+  list-style:none;display:flex;align-items:center;gap:.5rem;cursor:pointer;
+  min-height:2.5rem;padding:.5rem 0;font-family:var(--st-sans);font-size:.875rem;font-weight:650;color:var(--st-ink);
+}
+html body.studio-page #chat-dock .model-connect>summary::-webkit-details-marker{display:none}
+html body.studio-page #chat-dock .model-connect>summary::after{content:"+";content:"+" / "";margin-left:auto;font-weight:400;font-size:1.125rem;color:var(--st-soft)}
+html body.studio-page #chat-dock .model-connect[open]>summary::after{content:"\2212";content:"\2212" / ""}
+html body.studio-page #chat-dock .msg{border:0;border-left:1px solid var(--st-line);background:transparent;color:var(--st-ink);font-family:var(--st-sans);font-size:.9375rem}
+html body.studio-page #chat-dock .msg.you{border-left:4px solid var(--st-ink);background:transparent}
+html body.studio-page #chat-dock .msg .who{color:var(--st-soft);font-weight:650;letter-spacing:0;text-transform:none}
+html body.studio-page .studio-overlay-panel{border:1px solid var(--st-ink);border-radius:0;background:var(--st-paper);color:var(--st-ink);box-shadow:none}
+html body.studio-page .studio-overlay-head{background:var(--st-paper);border-bottom:1px solid var(--st-line);border-image:none}
+
+/* 13b. The display values set in these files must not reveal what a script has
+   hidden (the braille read mode, the live lamp before anything is live, the
+   fidelity mark before a reconstruction, exports that do not apply). */
+html body.studio-page :is(#studio-rail,#studio-viewport,#studio-panel,.rt-plot-pop) :is(.chip,.at-chip,.btn,.at-mini,.chat-min,.rt-btn,.mm-live,.mm-fidelity,.rt-group,[role="tab"],.studio-readout,.cert-act,.cert-recheck-btn,.row,.ground,.engine-status,.deck-more)[hidden]{display:none!important}
+
+/* 14. Square everywhere inside the app. The live lamp and the console's orbit stay
+   round: those are apertures, the one place the canon keeps a circle. */
+html body.studio-page :is(.studio-app,.studio-overlay-panel,.rt-plot-pop) *:not(.mm-dot):not(.studio-console-orbit):not(.studio-console-crosshair){border-radius:0}
+html body.studio-page :is(a,button,summary,select,input,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--st-ink);outline-offset:2px;border-radius:0;box-shadow:none;
+}
+html body.studio-page #studio-source [role="tab"]:focus-visible{outline-offset:-3px;outline-color:currentColor}

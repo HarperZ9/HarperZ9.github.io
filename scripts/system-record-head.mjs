@@ -1,56 +1,70 @@
-// The document head of a system record page. Everything here is derived from
-// system/systems.json and img/og/cards-data.js, so the only way to change a
-// title, description, or social card is to edit the record.
-import { escapeCopy, escapeHtml, MIDDOT } from "./system-page-parts.mjs";
+// The document heads of the pages rendered from system/systems.json (the
+// catalog, the product map and every system record page), and the poster that
+// opens each record page. Everything here is
+// derived from the registry and img/og/cards-data.js, so the only way to change
+// a title, description, or social card is to edit the record.
+//
+// The pages' own styles live in system/catalog.css. The catalog, the product map
+// and the record pages all link it, so the browser caches one copy.
+// CATALOG_REVISION is the key the sitewide contract test accepts for the sheet;
+// bump it only when that test names a reviewed key.
+import { artPlate, escapeCopy, escapeHtml, linkRow, maturityState, MIDDOT } from "./system-page-parts.mjs";
 
-export const SYSTEM_PAGE_STYLE = `
-.system-hero{min-height:auto;padding-block:clamp(4.5rem,10vw,8rem)}
-.system-hero .mid{max-width:min(72rem,100%)}
-.system-hero h1{max-width:14ch}
-.system-hero .lede{max-width:72ch}
-.system-facts,.product-status{display:grid;gap:.85rem clamp(1rem,2.4vw,1.6rem);margin:clamp(1.4rem,3vw,2rem) 0 0}
-.system-facts{grid-template-columns:repeat(4,minmax(0,1fr))}
-.system-fact,.product-status-fact{min-width:0}
-.system-fact dt,.product-status-fact dt{font-size:.84rem;line-height:1.4;color:var(--muted)}
-.system-fact dd,.product-status-fact dd{margin:.12rem 0 0;color:var(--bone);line-height:1.45}
-.domain-nav{display:flex;flex-wrap:wrap;gap:.55rem 1rem;margin-top:1.5rem;line-height:1.55}
-.domain-nav a{display:inline-flex;align-items:center;min-height:44px;border-bottom:1px solid var(--hairline);padding:.35rem 0;color:var(--bone);text-decoration:none}
-.system-hero-actions,.product-card-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem}
-.system-hero-actions a,.product-action,.product-secondary-action{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--hairline);padding:.65rem .9rem;color:var(--bone);text-decoration:none}
-.system-hero-actions a:first-child,.product-action{border-color:var(--orange)}
-.product-list{display:grid;gap:0;margin-top:1.6rem}
-.product-card{display:grid;grid-template-columns:minmax(12rem,.32fr) minmax(0,1fr);gap:1rem clamp(1.4rem,3vw,2.6rem);border-top:1px solid var(--hairline);padding:clamp(1.1rem,2.4vw,1.7rem) 0}
-.product-card:last-child{border-bottom:1px solid var(--hairline)}
-.product-card-title{margin:0;font-size:clamp(1.22rem,2vw,1.72rem);line-height:1.12}
-.product-card-title a{color:var(--bone);text-decoration:none}
-.product-type{margin:.4rem 0 0;color:var(--muted);line-height:1.55}
-.product-purpose{max-width:78ch;color:var(--bone);font-size:clamp(1rem,1.18vw,1.12rem);line-height:1.68;overflow-wrap:anywhere}
-.product-limit{max-width:72ch;margin-top:.8rem;color:var(--muted);line-height:1.6}
-.product-status{grid-template-columns:repeat(2,minmax(8rem,1fr));margin-top:1rem}
-.product-status-line{display:block;margin-top:.7rem;color:var(--muted);line-height:1.5}
-.catalog-domain{scroll-margin-top:5rem}
-.catalog-count{font-size:clamp(.9rem,1.1vw,1rem);font-weight:500;color:var(--muted)}
-.catalog-evidence{display:block;margin-top:1rem;color:var(--muted);line-height:1.65}
-.catalog-evidence strong{color:var(--bone);font-weight:600}
-.catalog-evidence small{display:block;margin-top:.2rem}
-.system-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(16rem,.65fr);gap:clamp(2rem,5vw,5rem);max-width:70rem}
-.system-list{max-width:58ch;margin:1rem 0 0;padding-left:1.2rem;color:var(--bone);font-size:clamp(1rem,1.25vw,1.14rem);line-height:1.7}
-.system-list li+li{margin-top:.55rem}
-.system-command{max-width:60rem;border-top:1px solid var(--hairline);padding:1rem 0;display:grid;grid-template-columns:minmax(9rem,.3fr) 1fr;gap:1rem}
-.system-command strong{font-weight:600;color:var(--bone)}
-.system-command code{overflow-wrap:anywhere;color:var(--bone)}
-.system-null{color:var(--muted)}
-.system-evidence{max-width:68rem}
-.system-evidence .product-card{grid-template-columns:minmax(12rem,.34fr) minmax(0,1fr)}
-.system-family-nav{display:grid;grid-template-columns:minmax(8rem,.28fr) 1fr;gap:.75rem 1rem;max-width:68rem;margin:0 0 1.4rem;padding:1rem 0;border-block:1px solid var(--hairline);line-height:1.7}
-.system-family-nav strong{font-weight:600;color:var(--bone)}
-.product-record-details{max-width:72rem;margin-top:1rem;border:1px solid var(--hairline);padding:.85rem 1rem;background:color-mix(in srgb,var(--void) 88%,var(--bone) 12%)}
-.product-record-details summary{cursor:pointer;color:var(--bone);font-weight:600;min-height:44px;display:flex;align-items:center}
-.product-record-details>*+*{margin-top:1rem}
-@media(max-width:720px){.system-grid,.system-command,.system-evidence .product-card,.product-card{grid-template-columns:1fr}.system-hero{min-height:auto}.system-facts,.product-status{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:430px){.system-facts,.product-status{grid-template-columns:1fr}.product-record-details{padding:.8rem}}
-@media(forced-colors:active){.product-record-details,.product-action,.product-secondary-action,.system-hero-actions a{border-color:CanvasText}}
-`;
+const CATALOG_REVISION = "20260925-void-plates";
+export const CATALOG_SHEET = `system/catalog.css?v=${CATALOG_REVISION}`;
+
+// Record pages sit at more than one depth, so their assets are origin-absolute.
+// The art sheet swaps the record's plate with the theme.
+const RECORD_SHEETS = [
+  "/system/system.css?v=20260925-void-plates",
+  "/system/art.css?v=20260925-human-notebook",
+  `/${CATALOG_SHEET}`,
+];
+const RECORD_NAV = "/system/nav.js?v=20260909-pillar-navigation";
+const THEME_COLOR =
+  '<meta name="theme-color" content="#ebe5d8" media="(prefers-color-scheme: light)">'
+  + '<meta name="theme-color" content="#060608" media="(prefers-color-scheme: dark)">';
+
+function shellOpen(sheets) {
+  return [
+    ...sheets.map((href) => `<link rel="stylesheet" href="${href}">`),
+    "\n</head>\n",
+  ].join("");
+}
+
+function bodyOpen(navScript, noscript) {
+  return [
+    '<body class="inner-clean frame-compact">',
+    '<a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div>',
+    `<noscript><nav class="site-nav">${noscript}</nav></noscript>`,
+    `<script type="module" src="${navScript}"></script>\n`,
+  ].join("");
+}
+
+// The catalog and the product map: one head, differing only in the copy. The
+// caller names the stylesheets and the navigation module.
+export function renderIndexHead({ href, title, description, social, cardAlt, noscript, sheets, navScript }) {
+  const full = `${title} ${MIDDOT} Zentropy Labs`;
+  const image = "https://harperz9.github.io/img/og/portfolio-home.png";
+  const meta = [
+    `<title>${full}</title><meta name="description" content="${description}">`,
+    `<link rel="canonical" href="https://harperz9.github.io/${href}">`,
+    '<meta property="og:type" content="website"><meta property="og:site_name" content="Zentropy Labs">',
+    `<meta property="og:title" content="${full}"><meta property="og:description" content="${social}">`,
+    `<meta property="og:url" content="https://harperz9.github.io/${href}"><meta property="og:image" content="${image}">`,
+    `<meta property="og:image:alt" content="${cardAlt}"><meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:title" content="${full}"><meta name="twitter:description" content="${social}">`,
+    `<meta name="twitter:image" content="${image}"><meta name="color-scheme" content="light dark">${THEME_COLOR}`,
+  ].join("");
+  return [
+    '<!doctype html>\n<html lang="en" data-sys="index">\n<head>\n<meta charset="utf-8">\n',
+    "<!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->\n",
+    '<link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="viewport" content="width=device-width,initial-scale=1">\n',
+    meta,
+    shellOpen(sheets),
+    bodyOpen(navScript, noscript),
+  ].join("");
+}
 
 // A constellation card is the one social image a record page is allowed to
 // claim. Records without one fall back to a text summary card.
@@ -93,21 +107,129 @@ export function renderHead(system, ctx) {
   const name = escapeHtml(system.name);
   const purpose = escapeCopy(system.purpose);
   const href = escapeHtml(system.href);
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${name} ${MIDDOT} Zentropy Labs</title>
-<meta name="description" content="${purpose}">
-<link rel="canonical" href="https://harperz9.github.io/${href}">
-  ${social(system, ctx)}
-<meta name="color-scheme" content="light dark"><link rel="stylesheet" href="/system/system.css?v=20260907-reading-completion"><style>${SYSTEM_PAGE_STYLE}
-</style>
-</head>
-<body class="inner-clean frame-compact">
-<a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="/catalog.html">Catalog</a> <a href="/overview.html">Systems</a> <a href="/security.html">Security</a></nav></noscript><script type="module" src="/system/nav.js?v=20260909-pillar-navigation"></script>
-`;
+  return [
+    '<!doctype html>\n<html lang="en" data-sys="record">\n<head>\n<meta charset="utf-8">\n',
+    "<!-- Generated by scripts/render-system-pages.mjs. Do not edit. -->\n",
+    '<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n',
+    '<meta name="viewport" content="width=device-width,initial-scale=1">\n',
+    `  <title>${name} ${MIDDOT} Zentropy Labs</title>\n`,
+    `<meta name="description" content="${purpose}">\n`,
+    `<link rel="canonical" href="https://harperz9.github.io/${href}">\n`,
+    `  ${social(system, ctx)}\n`,
+    `<meta name="color-scheme" content="light dark">${THEME_COLOR}`,
+    shellOpen(RECORD_SHEETS),
+    bodyOpen(
+      RECORD_NAV,
+      '<a href="/catalog.html">Catalog</a> <a href="/overview.html">Systems</a> <a href="/security.html">Security</a>',
+    ),
+  ].join("");
+}
+
+// The record poster: the name on a hairline, the product's own words beside
+// its plate, then four facts in a framed strip and the catalog areas.
+function heroActions(system) {
+  const open = system.sourceHref
+    ? `<a href="${escapeHtml(system.sourceHref)}" rel="noopener">Inspect source</a>`
+    : "";
+  const run =
+    system.entryCommand || system.verificationCommand
+      ? '<a href="#run-or-evaluate">Run or verify</a>'
+      : "";
+  return [
+    '<div class="system-hero-actions">',
+    open,
+    run,
+    '<a href="#current-evidence">Read evidence</a>',
+    "</div>",
+  ].join("");
+}
+
+// The four facts a reader needs before trusting anything below: how mature the
+// work is, how they can get at it, what is actually released, and when the
+// record was last checked against the source.
+function heroMeta(system) {
+  const facts = [
+    ["Status", system.maturity],
+    ["Access", system.accessMode],
+    ["Release", system.releaseState],
+    ["Checked", system.lastVerified],
+  ];
+  return `<dl class="system-facts">${facts
+    .map(([term, value]) => `<div class="system-fact"><dt>${term}</dt><dd>${escapeHtml(value)}</dd></div>`)
+    .join("")}</dl>`;
+}
+
+// tests/test_project_copy_ground_truth.py reads a product's one canonical
+// definition back off the page by this marker, so the records it names carry
+// it on the lede. Pages outside that set state the same purpose unmarked.
+const CANONICAL_PURPOSE_IDS = new Set([
+  "flywheel",
+  "index",
+  "gather",
+  "buildlang",
+  "phantom",
+  "accountable-surface",
+  "array",
+  "seed",
+  "sofer",
+  "isomorph",
+  "bounds",
+  "kun",
+]);
+
+function canonicalMark(system) {
+  return CANONICAL_PURPOSE_IDS.has(system.id)
+    ? ` data-canonical-purpose="${escapeHtml(system.id)}"`
+    : "";
+}
+
+// A name with a word longer than eleven characters takes the smaller poster
+// size, so "SkyrimBridge" never breaks inside the word on a phone.
+function titleClass(system) {
+  const longest = Math.max(...system.name.split(/[\s-]/).map((word) => word.length));
+  return longest > 11 ? ' class="sys-title-long"' : "";
+}
+
+// Each record carries its primary domain's aperture plate, drawn for that
+// domain by scripts/site-art-domains.mjs.
+const DOMAIN_PLATE = new Map([
+  ["agent-systems", "domain-agent-systems"],
+  ["developer-infrastructure", "domain-developer-infrastructure"],
+  ["graphics-media", "domain-graphics-media"],
+  ["evaluation-verification", "domain-evaluation-verification"],
+  ["security-privacy", "domain-security-privacy"],
+  ["research-education", "domain-research-education"],
+]);
+
+function recordPlate(system, ctx) {
+  const name = DOMAIN_PLATE.get(system.primaryDomain);
+  if (!name) throw new Error(`${system.id}: no plate for domain ${system.primaryDomain}`);
+  return artPlate(name, ctx.artAlt[name], "/");
+}
+
+// The catalog areas a record is listed under, each a link to its catalog plate.
+function domainLinks(system, ctx) {
+  const links = system.domains.map((id) => {
+    const label = ctx.domainById.get(id)?.label ?? id;
+    return `<a href="/catalog.html#domain-${escapeHtml(id)}">${escapeHtml(label)}</a>`;
+  });
+  return `<div class="sys-record-domains"><p>Listed in the catalog under</p>${linkRow(links)}</div>`;
+}
+
+// The status fact takes the maturity glyph from the header's data-maturity,
+// so the fact itself stays a plain term and value.
+export function hero(system, ctx) {
+  return [
+    `<header class="system-hero sys-poster sys-record-poster" data-maturity="${maturityState(system.maturity)}">`,
+    `<h1${titleClass(system)}>${escapeHtml(system.name)}</h1>`,
+    recordPlate(system, ctx),
+    '<div class="sys-record-copy">',
+    `<p class="sys-record-type">${escapeHtml(system.productType)}</p>`,
+    `<p class="lede"${canonicalMark(system)}>${escapeCopy(system.purpose)}</p>`,
+    heroActions(system),
+    "</div>",
+    heroMeta(system),
+    domainLinks(system, ctx),
+    "</header>",
+  ].join("");
 }

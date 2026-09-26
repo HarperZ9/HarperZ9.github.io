@@ -41,11 +41,11 @@ const page = `<!doctype html>
 <meta property="og:description" content="A clear map of the workshop, with Flywheel as the main engine.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
-<link rel="stylesheet" href="system/site-index.css?v=20260909-pillar-navigation">
+<link rel="stylesheet" href="system/site-index.css?v=20260925-void-plates">
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-<script type="module" src="system/site-index.js?v=20260909-pillar-navigation"></script>
+<script type="module" src="system/site-index.js?v=20260925-void-plates"></script>
 </head><body><a class="skip-link" href="#main">Skip to index</a><div id="site-nav" class="site-nav"></div>
-<main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context">Zentropy Labs / Explore</p><h1>Find your way in.</h1>
+<main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context masthead-path">Zentropy Labs / Explore</p><h1>Find your way in.</h1>
 <p class="lead">Start with <a href="flywheel.html">Flywheel</a> for the central engine and its integrated workflows. Explore individual tools when you need them, or enter through research, graphics, typography and collaboration.</p>
 <p>Each project page explains its purpose, current status and evidence. A listing here does not imply that every capability is installed or operational in Flywheel.</p>
 <p><a href="catalog.html">Browse the product catalog by capability</a> · <a href="site-index.html" aria-current="page">Site index</a></p></header>

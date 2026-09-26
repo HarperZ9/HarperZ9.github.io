@@ -2,9 +2,9 @@
 // the four-state machine (SEED, MOTION, LAW, WITNESS), and the reveal. controls.js owns the rail +
 // key map, readout.js the one-readout-three-consumers, report.js the witness. The pipeline is
 // milliseconds of compute; the choreography only paces the reveal. ASCII only; no em or en dashes.
-import { makeScene, buildGround, seedUint32, deriveIC } from "./orbit-render.js?v=20260701a";
+import { makeScene, buildGround, seedUint32, deriveIC } from "./orbit-render.js?v=20260925-studio-plate";
 import { buildReport, recheck } from "./report.js?v=20260701a";
-import { buildReadout, readoutSentence, readoutJSON } from "./readout.js?v=20260701a";
+import { buildReadout, readoutSentence, readoutJSON } from "./readout.js?v=20260925-studio-plate";
 import { wireShowcaseControls, downloadReportJSON } from "./controls.js?v=20260701a";
 import { buildView, REFUSAL_DRAG } from "./view.js?v=20260701a";
 import { SYSTEMS } from "../discovery/systems.js";
@@ -39,13 +39,22 @@ export async function recheckShowcase() {
   return r;
 }
 
-// Read the scene parameters from the rail + URL (head-snapshot seed, then URL, then rail, then
-// lab canon). Kepler is the default and the only bit-hashed path.
-function readParams() {
-  const params = new URLSearchParams((typeof window !== "undefined" && window.location.search) || "");
-  const bootSeed = (typeof window !== "undefined" && window.__studioBootSeed) || "";
-  const urlSeed = params.get("seed");
-  const seed = String(bootSeed || urlSeed || ($("show-seed") && $("show-seed").value) || "1").trim() || "1";
+// The query the page opened with: studio.html snapshots it (window.__studioBootSearch) before the
+// Atelier rewrites location.search; a host page without the snapshot reads the live URL.
+function bootParams() {
+  if (typeof window === "undefined") return new URLSearchParams("");
+  const snap = window.__studioBootSearch;
+  return new URLSearchParams(typeof snap === "string" ? snap : (window.location.search || ""));
+}
+
+// Scene parameters. The first build replays the seed the link names (head snapshot, boot query,
+// rail, then "1") and writes it into the rail; a rebuild reads the rail, so a typed seed draws.
+// Kepler is the default and the only bit-hashed path.
+function readParams(initial = false) {
+  const rail = $("show-seed");
+  const bootSeed = initial && ((typeof window !== "undefined" && window.__studioBootSeed) || bootParams().get("seed"));
+  const seed = String(bootSeed || (rail && rail.value) || "1").trim() || "1";
+  if (initial && rail) rail.value = seed;
   const system = ($("show-system") && $("show-system").querySelector(".chip.active") &&
     $("show-system").querySelector(".chip.active").dataset.showSystem) || "kepler";
   const ecc = $("show-ecc") ? Number($("show-ecc").value) : 0.4;
@@ -71,9 +80,27 @@ async function buildScene(p) {
   return { ...bundle, invSeries, refusalSeries, verdict: null };
 }
 
+// The receipt rows (the seed line, the report hash, the ground world id) are identifiers, so the
+// in-Studio plate draws them only while the reader has the "Receipt line" disclosure open. The
+// capture layout (hero=1) keeps its full composition, and a host page without the disclosure
+// keeps the rows as before.
+function receiptRowsShown() {
+  if (capture || typeof document === "undefined") return true;
+  const box = document.getElementById("show-receipt-box");
+  return !box || box.open;
+}
 function drawFrame(revealed) {
   if (!scene || !built) return;
-  scene.draw(buildView(built, state, revealed));
+  const view = buildView(built, state, revealed);
+  if (!receiptRowsShown()) {
+    delete view.seedLine;
+    if (view.witness) view.witness = { ...view.witness, rows: null };
+  }
+  scene.draw(view);
+}
+function redrawForReceipt() {
+  if (!active || !scene || !built) return;
+  drawFrame(Math.min(scene.revealedCount(), built.states.length - 1));
 }
 
 function runMotion() {
@@ -148,7 +175,7 @@ function paintVerdict(r) {
   el.textContent = r.verdict === "MATCH" ? "MATCH: recomputed hash equals the receipt"
     : r.verdict === "DRIFT" ? "DRIFT: " + (r.deltas || []).map((d) => d.field).slice(0, 4).join(", ")
     : "UNVERIFIABLE: " + (r.reason || "cannot re-run here");
-  el.style.color = r.verdict === "MATCH" ? "var(--ember)" : "";
+  el.style.color = r.verdict === "MATCH" ? "var(--verified)" : r.verdict === "DRIFT" ? "var(--drift)" : "var(--unverifiable)";
 }
 function paintReceipt() {
   const el = $("show-receipt"); if (!el || !built) return;
@@ -193,11 +220,18 @@ export function startShowcase(canvas) {
   scene = makeScene(canvasEl);
   if (typeof window !== "undefined") window.__studioShowcaseResize = resizeShowcase;
   // Hero capture mode from the head-snapshot (the Atelier boot has since rewritten the URL).
-  const hero = (typeof window !== "undefined" && window.__studioBootHero) ||
-    new URLSearchParams((typeof window !== "undefined" && window.location.search) || "").get("hero") === "1";
+  const hero = (typeof window !== "undefined" && window.__studioBootHero) || bootParams().get("hero") === "1";
   if (hero) applyHero(); else fitCanvasToStage();
-  loadScene(readParams(), hero);
-  if (!hero && typeof document !== "undefined") unwireControls = wireShowcaseControls(controlCallbacks());
+  loadScene(readParams(true), hero);
+  if (!hero && typeof document !== "undefined") {
+    const wired = wireShowcaseControls(controlCallbacks());
+    const box = document.getElementById("show-receipt-box");
+    if (box) box.addEventListener("toggle", redrawForReceipt);
+    unwireControls = () => {
+      if (box) box.removeEventListener("toggle", redrawForReceipt);
+      if (typeof wired === "function") wired();
+    };
+  }
 }
 
 // Build (or rebuild) the ground + report for the params, then play or settle. Shared by the

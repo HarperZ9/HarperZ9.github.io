@@ -1,12 +1,12 @@
 {
   "renderer": "telos-figure/v1",
-  "viewBox": "0 0 1200 2072",
+  "viewBox": "0 0 1200 2184",
   "figure": {
     "id": "system-capability-map",
     "kind": "relationship",
     "title": "Verified cross-system relationships",
     "description": "Every row is one implementation relationship recorded in the public system registry. Systems repeat when they participate in more than one relationship.",
-    "claim": "17 implementation relationships are backed by the evidence IDs on their registry records. The map does not infer family, ownership, or general-association lines.",
+    "claim": "18 implementation relationships are backed by the evidence IDs on their registry records. The map does not infer family, ownership, or general-association lines.",
     "doesNotProve": "A recorded relationship does not establish product ownership, general interoperability, production adoption, performance, correctness, safety, or independent review.",
     "sources": [
       {
@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-08-28",
+    "retrievedAt": "2026-09-25",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Only verified-in-source typed relation records are included.",
@@ -29,15 +29,23 @@
           "id": "accountable-surface",
           "label": "Accountable Surface",
           "status": "verified",
-          "stateLabel": "controlled agent-action workbench",
+          "stateLabel": "workbench that allows only approved AI agent actions",
           "group": "Security and privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "articulate",
+          "label": "Articulate",
+          "status": "verified",
+          "stateLabel": "local prose checker",
+          "group": "Evaluation and verification",
           "nodeType": "system"
         },
         {
           "id": "brender-archival",
           "label": "BRender Archival",
           "status": "verified",
-          "stateLabel": "focused engine-restoration lab",
+          "stateLabel": "BRender restoration and build-test harness",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -53,7 +61,7 @@
           "id": "crucible",
           "label": "Crucible",
           "status": "verified",
-          "stateLabel": "falsifiable claim evaluation system",
+          "stateLabel": "engine that tests claims against evidence",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -69,7 +77,7 @@
           "id": "enb-runtime-core",
           "label": "ENB Runtime Core",
           "status": "verified",
-          "stateLabel": "ENB host lifecycle library",
+          "stateLabel": "embedded runtime library",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -77,7 +85,7 @@
           "id": "engine-revival",
           "label": "Engine Revival",
           "status": "verified",
-          "stateLabel": "software-preservation tooling",
+          "stateLabel": "archival/revival evidence platform",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -125,7 +133,7 @@
           "id": "mneme",
           "label": "Mneme",
           "status": "verified",
-          "stateLabel": "deterministic agent memory subsystem",
+          "stateLabel": "agent memory store with repeatable recall",
           "group": "Agent systems",
           "nodeType": "system"
         },
@@ -133,7 +141,7 @@
           "id": "plexus",
           "label": "Plexus",
           "status": "verified",
-          "stateLabel": "toolchain wiring and pipeline planner",
+          "stateLabel": "tool discovery and wiring for AI agents",
           "group": "Developer infrastructure",
           "nodeType": "system"
         },
@@ -149,7 +157,7 @@
           "id": "relay",
           "label": "Relay",
           "status": "verified",
-          "stateLabel": "permission-gated coding agent",
+          "stateLabel": "coding agent that acts within granted permissions",
           "group": "Agent systems",
           "nodeType": "system"
         },
@@ -157,7 +165,7 @@
           "id": "skyrimbridge",
           "label": "SkyrimBridge",
           "status": "verified",
-          "stateLabel": "Skyrim runtime integration platform",
+          "stateLabel": "Skyrim plugin linking game data to shaders and tools",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -173,7 +181,7 @@
           "id": "telos",
           "label": "Telos",
           "status": "verified",
-          "stateLabel": "local MCP workbench",
+          "stateLabel": "local workbench for creating and replaying AI work",
           "group": "Developer infrastructure",
           "nodeType": "system"
         },
@@ -197,7 +205,7 @@
             "chorus-public-source-0-1-0",
             "gather-release-v1-6-1"
           ],
-          "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. It is not a declared Flywheel lane in the current lane registry.",
+          "claimScope": "Chorus accepts Gather-compatible corpus directories or JSON comment rows. Flywheel 1.0.4 also declares a Chorus lane; that lane is outside this relation.",
           "label": "accepts corpus from",
           "type": "accepts-corpus-from"
         },
@@ -259,6 +267,20 @@
         },
         {
           "source": "flywheel",
+          "target": "articulate",
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-articulate-lane-code",
+            "flywheel-release-v1-0-4",
+            "articulate-pypi-v0-4-1"
+          ],
+          "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.4.1 release, and this relation does not show that Flywheel was tested with 0.4.1.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
+        },
+        {
+          "source": "flywheel",
           "target": "crucible",
           "relation": "integrates-lane",
           "status": "verified-in-source",
@@ -309,7 +331,7 @@
             "flywheel-release-v0-3-10",
             "index-release-v2-10-0"
           ],
-          "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package.",
+          "claimScope": "Flywheel declares and launches Index 2.10.0 as its workspace-structure MCP lane. Index remains an independently published package.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },
@@ -337,7 +359,7 @@
             "flywheel-release-v0-3-10",
             "mneme-public-source"
           ],
-          "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0.",
+          "claimScope": "Flywheel declares and launches Mneme 0.2.0 as its memory MCP lane. Mneme remains an independently published package.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },
@@ -351,7 +373,7 @@
             "flywheel-release-v0-3-10",
             "plexus-public-source"
           ],
-          "claimScope": "Flywheel declares and launches Plexus as its tool-wiring MCP lane. Plexus derives wiring from declared manifests rather than probing every tool by default.",
+          "claimScope": "Flywheel declares and launches Plexus as its capability-mesh and tool-wiring MCP lane. Plexus can probe registered lanes when explicitly requested, but declared mesh edges are not semantic interoperability proof.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },

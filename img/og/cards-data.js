@@ -152,7 +152,7 @@ window.CARD_DATA = {
     "role": "ZENTROPY LABS / PRODUCT OVERVIEW",
     "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
     "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
-    "word": "PROJECT TELOS",
+    "word": "ZENTROPY LABS",
     "glyph": "aperture"
   },
   "profile": {

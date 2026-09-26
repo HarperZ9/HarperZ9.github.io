@@ -30,6 +30,9 @@
  * glossed once, and the record's notes keep their meaning: roster, greedy decode and the
  * unmeasured checking harness.
  *
+ * Void and bone, 25 September 2026: the sheet fills the page frame instead of a narrow column,
+ * and the plate's grounds move to the site's bone and void papers.
+ *
  * Round 2, 25 September 2026: one "How we know" per figure plus one page-level
  * record, with no paragraph printed twice. Unmeasured suites carry plain names,
  * the record's questions and notes print as sentences, the interval whiskers are
@@ -355,7 +358,7 @@ function suiteQuestions(suites) {
 // the sheet keeps its own spacing inside the analytics type rules, and the value
 // column is wide enough for "3.05 points lower" on one line.
 const PAGE_STYLE = `<style data-record-page>`
-  + `body.analytics-page .fw-sheet,body.analytics-page .fw-page-hwk{max-width:var(--wide,58rem)}`
+  + `body.analytics-page .fw-sheet{max-width:none}body.analytics-page .fw-page-hwk{max-width:var(--wide,58rem)}`
   + `body.analytics-page .fw-sheet :is(h2,p){margin:0}`
   + `body.analytics-page .fw-sheet .ns-row{--nw:16rem;--vw:9.5rem}`
   + `body.analytics-page .fw-sheet .ns-den .fw-size{display:block}`
@@ -366,6 +369,9 @@ const PAGE_STYLE = `<style data-record-page>`
   + `body.analytics-page .fw-sheet .data-table :is(td,th).num{white-space:normal}`
   + `body.analytics-page .fw-sheet .ns-row .ns-sc{min-height:40px}body.analytics-page .fw-sheet .ns-row.is-tall .ns-sc{min-height:52px}`
   + `body.analytics-page .fw-sheet .t-ref{font-size:14px;font-weight:500;fill:var(--ns-soft)}`
+  // Void and bone: each score is set as a display numeral beside its bar.
+  + `body.analytics-page .fw-sheet .ns-rval .ns-count{font:760 clamp(1.375rem,1.1rem + .9vw,1.75rem)/1 var(--font-sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums}`
+  + `body.analytics-page .fw-sheet .ns-row.is-tall .ns-rval .ns-count{font-size:1.125rem;letter-spacing:-.01em}`
   + `body.analytics-page .fw-asks{margin:0;padding-left:1.2rem;display:grid;row-gap:.5rem}`
   + `body.analytics-page .fw-notice{max-width:var(--measure,38rem);margin:0 0 var(--s-6,2rem);font:400 1.0625rem/1.6 var(--font-sans);color:var(--ink)}`
   + `body.analytics-page .fw-page-hwk{margin-top:var(--s-6,2rem)}`
@@ -378,9 +384,10 @@ const PAGE_STYLE = `<style data-record-page>`
 
 // ------------------------------------------------------------------ plate
 
+// 25 September 2026, void and bone: the plate's grounds are the sheet's bone and void papers.
 const PLATE_TOKENS = {
-  light: { paper: "#f8f9fb", ink: "#121a2c", soft: "#45516a", hair: "#d3d5da", frame: "#c5c8cd" },
-  dark: { paper: "#0b1121", ink: "#e6edf9", soft: "#a9b7cd", hair: "#303646", frame: "#3b4151" },
+  light: { paper: "#f1ece1", ink: "#16130f", soft: "#4a443b", hair: "#d6ccb8", frame: "#b9af9b" },
+  dark: { paper: "#0a0a0d", ink: "#ece5d6", soft: "#b8b0a0", hair: "#262529", frame: "#38363b" },
 };
 const tokenBlock = (set) => `--p:${set.paper};--i:${set.ink};--s:${set.soft};--h:${set.hair};--f:${set.frame};--hot:${set.ink}`;
 
@@ -400,7 +407,7 @@ function plate(suites, declarations, font) {
   const drawn = [];
   const marks = [];
   const label = (...args) => { drawn.push(args[4]); return plateText(...args); };
-  marks.push(label(left, 44, 24, 500, "Flywheel offline benchmark record"));
+  marks.push(label(left, 44, 26, 760, "Flywheel offline benchmark record"));
   const nulls = signed.length;
   const takeaway = [
     `${capitalized(word(rates.length))} suites scored 100 percent on their own tests.`,

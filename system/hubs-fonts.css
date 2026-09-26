@@ -1,0 +1,72 @@
+/* hubs-fonts.css: the Fonts page on the hub layout in hubs.css. The hero becomes
+   a poster: the title across the width, the copy beside the pillar plate, then
+   the Editorial preview set at poster scale on two hairlines. The live specimen,
+   its controls and every test hook keep their markup and font-marketplace.css;
+   this sheet only moves and restyles them. Loaded after hubs.css by fonts.html
+   only; every rule is scoped to body.font-marketplace-page with a :not(#_) step. */
+
+/* 1. The poster hero, the numbered sections and square controls. */
+/* The page's column is filled with the flat pole color, so the specimens and
+   their notes sit on a calm ground; the field and grain stay in the gutters. */
+html:root body.font-marketplace-page:not(#_) main.font-market{box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));padding-block:clamp(1.75rem,4vw,3rem) 0;background:var(--paper);counter-reset:hub-plate}
+html:root body.font-marketplace-page:not(#_) :is(.font-market-hero,.font-market-section,.font-details){background:none}
+html:root body.font-marketplace-page:not(#_) .font-market-hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(2rem,5vw,5rem);row-gap:0;align-items:start;width:auto;margin:0;padding:0;border:0}
+html:root body.font-marketplace-page:not(#_) .font-market-hero > *{grid-column:1;min-width:0}
+html:root body.font-marketplace-page:not(#_) .font-market-hero > :is(.route-header__path,h1,.font-specimen-panel){grid-column:1 / -1}
+html:root body.font-marketplace-page:not(#_) .font-market-hero > h1:not(#_){max-width:none;margin:clamp(.75rem,2vw,1.25rem) 0 clamp(1.75rem,4vw,3rem);padding:0 0 clamp(1.25rem,3vw,2.25rem);border-bottom:1px solid var(--line-strong);font-size:var(--t-poster);font-weight:800;letter-spacing:-.045em;line-height:.92;color:var(--ink)}
+html:root body.font-marketplace-page:not(#_) .font-market-lede{max-width:34rem;color:var(--ink)}
+html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-hero-plate{grid-column:2;grid-row:3;float:none;width:auto;max-width:none;margin:0;border-radius:0;overflow:visible}
+html:root body.font-marketplace-page:not(#_) .font-hero-plate img{aspect-ratio:4 / 3;object-fit:cover}
+html:root body.font-marketplace-page:not(#_) .font-sale-note{background:none;border-color:var(--line-strong);border-radius:0}
+html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-specimen-panel{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;column-gap:clamp(1.5rem,5vw,5rem);margin:clamp(2.5rem,6vw,4.5rem) 0 0;padding:clamp(.5rem,1.5vw,1.25rem) 0 clamp(1.25rem,2.5vw,2rem);border:0;border-block:1px solid var(--line);border-radius:0;background:none}
+html:root body.font-marketplace-page:not(#_) .font-specimen-panel .specimen-line-large{font-size:clamp(7rem,2.5rem + 19vw,19rem);line-height:.8}
+html:root body.font-marketplace-page:not(#_) .font-specimen-panel .specimen-line-text{justify-self:end;max-width:18ch;margin:0 0 .5rem;font-size:clamp(1.3rem,1rem + 1.4vw,2.4rem);line-height:1.15;text-align:right}
+html:root body.font-marketplace-page:not(#_) .font-market-section{counter-increment:hub-plate;position:relative;margin-top:var(--hub-space);padding-block:clamp(1.25rem,2.4vw,1.9rem) 0;border:0;border-top:1px solid var(--line-strong)}
+html:root body.font-marketplace-page:not(#_) .font-market-section::after{content:"";position:absolute;top:-8px;left:-7px;width:15px;height:15px;pointer-events:none;background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+html:root body.font-marketplace-page:not(#_) .font-market-section > .section-copy::before{content:counter(hub-plate,decimal-leading-zero);display:block;margin-bottom:1rem;font-family:var(--font-sans);font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;color:var(--ink)}
+html:root body.font-marketplace-page:not(#_) .font-market-section h2{max-width:16ch;margin:0 0 1rem;padding:0;background:none;font-size:clamp(2rem,1.2rem + 2.9vw,4.1rem);font-weight:780;letter-spacing:-.04em;line-height:.98}
+html:root body.font-marketplace-page:not(#_) .font-market-section h2::before{display:none}
+html:root body.font-marketplace-page:not(#_) .font-market-section .section-copy p{max-width:36rem;font-size:1.0625rem;color:var(--soft)}
+html:root body.font-marketplace-page:not(#_) .font-product-list{border-top-color:var(--line-strong)}
+html:root body.font-marketplace-page:not(#_) .font-product{padding-inline:0}
+/* The face's name leads each product; its category reads as a subtitle under it,
+   never as a label over it. The markup puts the name first, so the reading order and
+   the visual order agree. */
+html:root body.font-marketplace-page:not(#_) .font-product-copy{display:flex;flex-direction:column}
+html:root body.font-marketplace-page:not(#_) .font-product-copy > h3{margin:0;font-size:clamp(1.6rem,1.2rem + 1.2vw,2.25rem);font-weight:760;letter-spacing:-.025em;line-height:1.05}
+html:root body.font-marketplace-page:not(#_) .font-market-section p.font-product-kicker{margin:.2rem 0 .8rem;font-size:1.0625rem;font-weight:500;color:var(--soft)}
+html:root body.font-marketplace-page:not(#_) .font-market-section p.font-product-sample-small{font-size:clamp(.875rem,1.2vw,.96rem)}
+html:root body.font-marketplace-page:not(#_) .font-sample-button{border-radius:var(--radius-control,2px);background:none;border-color:var(--line-strong)}
+html:root body.font-marketplace-page:not(#_) .font-sample-button:is(:hover,:focus-visible){border-color:var(--ink)}
+html:root body.font-marketplace-page:not(#_) :is(.font-specimen-controls,.font-live-specimen,.font-static-specimen,.font-compare-panel){border-radius:0}
+html:root body.font-marketplace-page:not(#_) .font-details{margin-top:var(--hub-space);padding-top:1rem;border:0;border-top:1px solid var(--line-strong)}
+html:root body.font-marketplace-page:not(#_) .font-market-footer{box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));margin:clamp(3rem,6vw,5rem) auto 0;padding:1.1rem 0 clamp(3rem,6vw,5rem);border:0;border-top:1px solid var(--line-strong);background:var(--paper)}
+@media (max-width:52rem){
+  html:root body.font-marketplace-page:not(#_) .font-market-hero{grid-template-columns:minmax(0,1fr)}
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > *,
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-hero-plate{grid-column:1;grid-row:auto}
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-hero-plate{order:1;margin-top:2rem}
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-specimen-panel{order:2}
+}
+@media (max-width:40rem){
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-specimen-panel{grid-template-columns:minmax(0,1fr)}
+  html:root body.font-marketplace-page:not(#_) .font-specimen-panel .specimen-line-text{justify-self:start;text-align:left;margin-top:1rem}
+}
+@media (forced-colors:active){
+  html:root body.font-marketplace-page:not(#_) .font-market-section::after{display:none}
+  html:root body.font-marketplace-page:not(#_) .route-header{border:0!important}
+  /* Forced colors draws a Canvas backplate behind text, which hides Canvas text on
+     the filled primary action; the action keeps its own system colors instead. */
+  html:root body.font-marketplace-page:not(#_) .font-action-primary{forced-color-adjust:none;color:Canvas;background:CanvasText;border-color:CanvasText}
+}
+@media print{
+  html:root body.font-marketplace-page:not(#_) .font-market-section::after{display:none}
+  html:root body.font-marketplace-page:not(#_) .font-market-hero{grid-template-columns:minmax(0,1fr)}
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > *{grid-column:1;grid-row:auto}
+  html:root body.font-marketplace-page:not(#_) main.font-market{width:auto;margin-inline:0;padding-top:0}
+  html:root body.font-marketplace-page:not(#_) .font-market-section{margin-top:2rem!important;padding-top:.75rem!important}
+  /* The poster specimen repeats in the collection below, so print drops it, as
+     font-marketplace.css intends; this sheet's grid rule would otherwise bring it back. */
+  html:root body.font-marketplace-page:not(#_) .font-market-hero > .font-specimen-panel{display:none}
+}
+

@@ -73,7 +73,9 @@ export function readoutSentence(readout) {
   const f = (readout && readout.facts) || {};
   const parts = [];
   const sys = f.system ? f.system[0].toUpperCase() + f.system.slice(1) : "Scene";
-  parts.push(`${sys} system, seed ${f.seed != null ? f.seed : "unknown"}.`);
+  // The seed is an identifier: it stays in the receipt line and the model JSON, not in the
+  // sentence the page shows and speaks.
+  parts.push(`${sys} system.`);
   if (f.state === "seed") parts.push("Initial condition recorded, ground breathing in.");
   else if (f.state === "motion") parts.push("Integrating the orbit.");
   else {

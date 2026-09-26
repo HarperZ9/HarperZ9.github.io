@@ -38,9 +38,13 @@ try {
               }, resolved, { timeout: 5000 });
               assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `${route} ${width} ${mode}`);
               if (route === "studio.html") {
-                await page.locator("#mm-mode-braille").scrollIntoViewIfNeeded();
+                // The braille chip sits in a panel that a 390px layout can collapse, so it is
+                // scrolled to only when shown; its computed colour is read either way.
+                const chip = page.locator("#mm-mode-braille");
+                if (await chip.isVisible()) await chip.scrollIntoViewIfNeeded();
+                // 2026-09-25 studio plate: soft ink on bone, soft bone on void.
                 await page.waitForFunction(expected => getComputedStyle(document.getElementById("mm-mode-braille")).color === expected,
-                  resolved === "light" ? "rgb(66, 87, 93)" : "rgb(180, 197, 201)", { timeout: 5000 });
+                  resolved === "light" ? "rgb(74, 68, 59)" : "rgb(184, 176, 160)", { timeout: 5000 });
               }
             }
             await page.reload();

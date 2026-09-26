@@ -106,6 +106,8 @@ def test_committed_public_artifacts_are_byte_reproducible(tmp_path: Path) -> Non
         Path("frontier-safety.html"),
         Path("frontier-safety/data/current.json"),
         Path("frontier-safety/data/history.json"),
+        *(Path("frontier-safety/conclusions") / f"{path.stem}.html"
+          for path in (ROOT / "frontier-safety" / "data" / "conclusions").glob("????-??-??.json")),
     ]
     for edition in editions:
         edition_date = edition.stem

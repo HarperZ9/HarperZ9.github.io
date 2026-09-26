@@ -14,12 +14,21 @@
 .page-section > h3{margin:var(--s-6,2rem) 0 var(--s-3,.75rem);font:600 var(--t-h3)/1.3 var(--font-sans);color:var(--ink)}
 
 /* 14.2 Masthead: a quiet title block. Nothing above it but the site navigation. */
-.masthead{display:grid;row-gap:var(--s-4,1rem);margin:0 0 var(--s-7,3rem);padding:var(--s-7,3rem) 0 var(--s-6,2rem);border-bottom:1px solid var(--line);color:var(--ink);background:transparent}
+.masthead{position:relative;display:grid;row-gap:var(--s-4,1rem);margin:0 0 var(--s-7,3rem);padding:var(--s-7,3rem) 0 var(--s-6,2rem);border-bottom:1px solid var(--line);color:var(--ink);background:transparent}
+/* The masthead closes on a hairline with a registration cross at its left end, the way a
+   section opens in plate.css. */
+.masthead::after{content:"";position:absolute;left:-7px;bottom:-8px;width:15px;height:15px;pointer-events:none;
+  background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
 .masthead-path{margin:0;font:500 .875rem/1.4 var(--font-sans);color:var(--soft);letter-spacing:0;text-transform:none}
 .masthead-path a{color:var(--soft);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
 .masthead-path a:is(:hover,:focus-visible){color:var(--ink);text-decoration-thickness:2px}
-.masthead h1{margin:0!important;max-width:22ch!important;font-family:var(--font-sans)!important;font-size:var(--t-display)!important;font-weight:500!important;
-  line-height:1.08!important;letter-spacing:-.015em!important;text-transform:none!important;text-wrap:balance;color:var(--ink)!important}
+/* 25 September 2026, void and bone: the title is poster type. Weight 780 and tight tracking
+   carry it, as plate.css sets every h1; the older 500 weight is retired. */
+.masthead h1{margin:0!important;max-width:20ch!important;font-family:var(--font-sans)!important;font-size:var(--t-display)!important;font-weight:780!important;
+  line-height:.98!important;letter-spacing:-.035em!important;text-transform:none!important;text-wrap:balance;color:var(--ink)!important}
+/* Chart and figure pages set the title at poster scale above their one sheet. The report
+   reading rules size every analytics h1, so this selector carries one more class. */
+body:is(.analytics-page,.figure-document) .masthead h1{font-size:clamp(2.75rem,1.4rem + 5.2vw,6rem)!important;letter-spacing:-.045em!important;line-height:.94!important;max-width:18ch!important}
 .masthead h1 :is(.g,em,span){color:inherit!important}
 .masthead .dek{margin:0;max-width:40rem;font:400 var(--t-dek)/1.45 var(--font-sans);color:var(--soft);text-wrap:pretty}
 /* Meta items wrap between items, never inside one. Each item carries its middle dot in the
@@ -138,10 +147,97 @@ ol.sources > li:target{background:var(--panel)}
 .page-footer-line .export-toggle{min-height:0;color:var(--ink)}
 .page-footer-line > * + *{position:relative}
 
+/* 14.12 Analytics sheets (analytics/*.html). A chart fills the page frame; each row names its
+         subject, draws one strip and prints its value large beside it. Colors are the sheet tokens. */
+.an-sheet{max-width:none}
+.an-sheet .ns-row{--nw:16rem;--vw:10rem}
+.an-sheet .ns-live .ns-panel-h{margin-top:calc(var(--ns-lead) * 1.5);margin-bottom:.25rem}
+.an-sheet .an-bars .ns-row{--nw:19rem}
+.an-sheet .an-bars .ns-sc{min-height:42px}
+.an-sheet .an-bars .ns-row .ns-rname{padding-block:.5rem}
+.an-sheet .an-sub{margin:0;font:500 .9375rem/1.4 var(--font-sans);color:var(--ns-soft)}
+.an-sheet .an-big{font:760 clamp(1.75rem,1.2rem + 1.6vw,2.625rem)/1 var(--font-sans);letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ns-ink)}
+.an-sheet .an-fill{fill:var(--ns-ink);stroke:none}
+.an-sheet .an-cell{fill:none;stroke:var(--ns-ink);stroke-width:1}
+.an-sheet .an-units{padding-block:.75rem 1rem}
+.an-sheet .an-units svg{margin-inline:0}
+.an-sheet .an-unit-key{column-gap:2rem;row-gap:.25rem}
+.an-sheet .an-unit-key .ns-count{font-size:1.0625rem;margin-right:.2em}
+.an-sheet .an-inventory .ns-row{--nw:13rem;--vw:15rem}
+.an-sheet .an-inventory .ns-row .ns-n{font-size:.9375rem}
+.an-sheet .an-inventory .ns-rval{font:500 .9375rem/1.4 var(--font-sans);font-variant-numeric:tabular-nums;color:var(--ns-ink)}
+.an-sheet :is(.an-src){fill:var(--ns-ink);stroke:var(--ns-paper);stroke-width:1.5}
+.an-sheet :is(.an-test){fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.6}
+.an-sheet .an-link{stroke:var(--ns-soft);stroke-width:1.5}
+.an-sheet .t-null-word{font-style:italic;color:var(--ns-soft)}
+.an-sheet .an-open{fill:var(--ns-paper);stroke:var(--ns-ink);stroke-width:1.5}
+.an-sheet .an-attempt-rows .ns-row{--nw:17.5rem;--vw:minmax(0,1.4fr)}
+.an-sheet .an-attempt-rows .ns-sc{display:flex;align-items:center;min-height:52px}
+.an-sheet .an-attempts{display:block;overflow:visible}
+.an-sheet .an-attempt-rows .ns-rval{padding-block:.6rem}
+.an-sheet .an-attempt-rows .ns-rname{padding-top:.6rem}
+.an-sheet .an-val{font:650 1.0625rem/1.35 var(--font-sans);color:var(--ns-ink)}
+.an-sheet .an-check{margin-top:1rem!important}
+.an-sheet .an-read{font:500 1rem/1.5 var(--font-sans);color:var(--ns-ink)}
+.an-sheet .ns-cards .ns-cl{max-width:26ch}
+/* The report reading rules indent every list and space each item; a row of counts takes neither. */
+.an-sheet .ns-live :is(.ns-cards,.ns-key){margin:0;padding:0}
+.an-sheet .ns-live :is(.ns-cards,.ns-key) > li{margin:0}
+.an-sheet .ns-cards .ns-card:first-child{padding-left:0}
+@container ns-sheet (max-width:39.99rem){.an-sheet .ns-cards .ns-card{padding-left:0}}
+/* A row that did not run prints "No score" in words beside a stippled band. The named tools under
+   a count read in ink, one plain line. */
+.an-sheet .an-bars .ns-row.is-unknown .t-null-word{font:italic 500 1.0625rem/1.3 var(--font-sans);white-space:nowrap}
+.an-sheet .an-names{margin-top:.35rem!important;font:500 .9375rem/1.45 var(--font-sans);color:var(--ns-ink);max-width:30ch}
+/* The report reading rules cap every p, li and dd at the prose measure; inside a sheet the chart
+   rows and full-width tables need the whole live area, and prose keeps a reading measure. */
+.an-sheet .ns-live :is(p,li,dd){max-width:none}
+.an-sheet .ns-live .hwk-list > dd:not(:has(> .table-wrap)){max-width:46rem}
+.an-sheet .ns-live :is(.takeaway,.limit-line){max-width:60ch}
+.an-sheet .ns-live p,.an-sheet .ns-title{margin:0}
+.an-sheet .hwk-list dd > p + p{margin-top:.5rem}
+.an-sheet .hwk-list .table-wrap{margin:0}
+/* On a phone the value sits on the name line, beside the strip it describes. */
+@container ns-sheet (max-width:39.99rem){
+  .an-sheet .ns-row:not(.is-axis){grid-template-areas:"n v" "s s";grid-template-columns:minmax(0,1fr) auto;column-gap:1rem}
+  .an-sheet .ns-row:not(.is-axis) .ns-rval{align-self:start;padding-top:.35rem;text-align:right}
+  .an-sheet :is(.an-inventory,.an-attempt-rows) .ns-row:not(.is-axis){grid-template-areas:"n" "v" "s";grid-template-columns:minmax(0,1fr)}
+  .an-sheet .an-attempt-rows .ns-row:not(.is-axis){grid-template-areas:"n" "s" "v"}
+  .an-sheet .an-attempt-rows .ns-row .ns-sc{min-height:40px}
+  .an-sheet .an-attempt-rows .ns-row:not(.is-axis) .ns-rval{padding:0 0 .6rem;text-align:left}
+  .an-sheet .an-inventory .ns-row:not(.is-axis) .ns-rval{padding-top:0;text-align:left;color:var(--ns-soft)}}
+/* On a tablet the rows keep the phone layout, so no strip shrinks under its marks: bars and dots
+   take the full width under their name, the axis caption sits above its ticks, and the attempt
+   squares keep their drawn size. Three columns return once the sheet is 56rem wide. */
+@container ns-sheet (min-width:40rem) and (max-width:55.99rem){
+  .an-sheet :is(.an-bars,.an-inventory,.an-attempt-rows) .ns-row:not(.is-axis){grid-template-areas:"n v" "s s";grid-template-columns:minmax(0,1fr) auto;column-gap:1rem}
+  .an-sheet :is(.an-bars,.an-inventory,.an-attempt-rows) .ns-row:not(.is-axis) .ns-rval{align-self:start;padding-top:.35rem;text-align:right}
+  .an-sheet :is(.an-inventory,.an-attempt-rows) .ns-row:not(.is-axis){grid-template-areas:"n" "v" "s";grid-template-columns:minmax(0,1fr)}
+  .an-sheet .an-attempt-rows .ns-row:not(.is-axis){grid-template-areas:"n" "s" "v"}
+  .an-sheet :is(.an-inventory,.an-attempt-rows) .ns-row:not(.is-axis) .ns-rval{padding:0 0 .6rem;text-align:left}
+  .an-sheet :is(.an-bars,.an-inventory) .ns-row.is-axis{grid-template-areas:"n" "s";grid-template-columns:minmax(0,1fr)}
+  .an-sheet :is(.an-bars,.an-inventory) .ns-row.is-axis .ns-rval{display:none}
+  .an-sheet :is(.an-bars,.an-inventory) .ns-row .ns-sc{margin-inline:1.25rem}}
+@container ns-sheet (min-width:56rem){.an-sheet .an-attempt-rows .ns-row{grid-template-columns:var(--nw) auto minmax(0,1fr)}}
+
+/* 14.13 The ground on chart pages. report-editorial.css paints the analytics body and its main with
+         a background shorthand at !important, which clears the plate field (plate.css section 3).
+         These rules restore the grain veil and the registration crosses at a weight that outranks
+         it. main is a centered column on flat paper, so the masthead, the sheet and the limits
+         sit on a calm ground and the field runs in the gutters beside it. */
+html:root body.analytics-page:not(#_){background-image:var(--field-grain),var(--field-mark)!important;
+  background-size:220px 220px,96px 96px!important;background-attachment:fixed,fixed!important}
+html:root body.analytics-page main:not(#_){background-color:var(--paper)!important}
+@media (prefers-reduced-motion:reduce){html:root body.analytics-page:not(#_){background-attachment:scroll,scroll!important}}
+
 /* 14.11 Inline code in running text keeps the line's rhythm: a touch smaller, no taller line box. */
 main :is(p,li,dd,td) > code:not(.digest){font-size:.9em;font-weight:500;line-height:1;vertical-align:baseline}
 
 @media print{
+  html:root body.analytics-page:not(#_){background-image:none!important}
+  .masthead::after{display:none}
+  .an-sheet .ns-live > * + :is(p,*){margin-top:var(--ns-lead)}
+  .table-wrap .scroll-note{display:none}
   .copy-button{display:none!important}
   .table-wrap:has(> .data-table){overflow:visible}
   .data-table{font-size:9.5pt}
@@ -156,6 +252,8 @@ main :is(p,li,dd,td) > code:not(.digest){font-size:.9em;font-weight:500;line-hei
 /* Forced colors. The primary button draws its own system colors, so its name never sits on a
    backplate the same color as the text. */
 @media (forced-colors:active){
+  html:root body.analytics-page:not(#_){background-image:none!important}
+  .masthead::after{display:none}
   .verdict-mark::before{forced-color-adjust:none;border-color:CanvasText}
   .verdict-mark[data-verdict="verified"]::before{background:CanvasText}
   .btn-primary{forced-color-adjust:none;background:ButtonText!important;color:ButtonFace!important;border:2px solid ButtonText!important}

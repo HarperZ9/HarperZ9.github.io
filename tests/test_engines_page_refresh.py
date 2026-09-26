@@ -47,7 +47,7 @@ def test_engines_page_is_the_generated_product_overview() -> None:
     assert page.index("Zentropy Labs") < page.index("Flywheel")
     assert '<title>Products · Zentropy Labs</title>' in page
     assert '<body class="inner-clean frame-compact">' in page
-    assert 'href="system/system.css?v=20260907-reading-completion"' in page
+    assert 'href="system/system.css?v=20260925-void-plates"' in page
     assert 'src="system/nav.js?v=20260909-pillar-navigation"' in page
     assert "Products, grouped by primary domain." in page
     assert f"{len(public_records)} public product records across {len(payload['domains'])} domains." in page
@@ -132,10 +132,13 @@ def test_engines_page_release_facts_match_the_system_registry() -> None:
 
 
 def test_engines_page_keeps_readable_generated_overview_styles() -> None:
+    # 25 September 2026: the product map links the family sheet instead of
+    # printing it inline, so the selectors are read from the linked file.
     page = read(PAGE)
-    style = re.search(r"<style>(?P<body>.*?)</style>", page, re.DOTALL)
-    assert style
-    css = style.group("body")
+    assert "<style>" not in page
+    linked = re.search(r'<link rel="stylesheet" href="(system/catalog\.css)\?v=[^"]+">', page)
+    assert linked, "the product map must link system/catalog.css"
+    css = read(ROOT / linked.group(1))
 
     for selector in (
         ".system-hero",

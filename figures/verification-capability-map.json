@@ -1,12 +1,12 @@
 {
   "renderer": "telos-figure/v1",
-  "viewBox": "0 0 1200 1204",
+  "viewBox": "0 0 1200 1316",
   "figure": {
     "id": "verification-capability-map",
     "kind": "relationship",
     "title": "Evaluation and verification systems",
     "description": "Systems whose registry record includes evaluation and verification, with only implementation relationships whose endpoints both remain in view.",
-    "claim": "6 verified typed registry relationships connect two systems in this evaluation-and-verification view.",
+    "claim": "7 verified typed registry relationships connect two systems in this evaluation-and-verification view.",
     "doesNotProve": "The map does not establish evaluation quality, evidence sufficiency, general correctness, runtime compatibility, product ownership, production adoption, or independent review.",
     "sources": [
       {
@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-08-28",
+    "retrievedAt": "2026-09-25",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Systems are included when evaluation-verification appears in their registry domains.",
@@ -29,8 +29,16 @@
           "id": "accountable-surface",
           "label": "Accountable Surface",
           "status": "verified",
-          "stateLabel": "controlled agent-action workbench",
+          "stateLabel": "workbench that allows only approved AI agent actions",
           "group": "Security and privacy",
+          "nodeType": "system"
+        },
+        {
+          "id": "articulate",
+          "label": "Articulate",
+          "status": "verified",
+          "stateLabel": "local prose checker",
+          "group": "Evaluation and verification",
           "nodeType": "system"
         },
         {
@@ -45,15 +53,23 @@
           "id": "brender-archival",
           "label": "BRender Archival",
           "status": "verified",
-          "stateLabel": "focused engine-restoration lab",
+          "stateLabel": "BRender restoration and build-test harness",
           "group": "Graphics and media",
+          "nodeType": "system"
+        },
+        {
+          "id": "canon",
+          "label": "Canon",
+          "status": "verified",
+          "stateLabel": "command-line tool that packages memory for AI assistants",
+          "group": "Agent systems",
           "nodeType": "system"
         },
         {
           "id": "crucible",
           "label": "Crucible",
           "status": "verified",
-          "stateLabel": "falsifiable claim evaluation system",
+          "stateLabel": "engine that tests claims against evidence",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -61,7 +77,7 @@
           "id": "emet",
           "label": "EMET",
           "status": "verified",
-          "stateLabel": "cross-implementation integrity witness",
+          "stateLabel": "checker that content still matches its source",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -69,7 +85,7 @@
           "id": "engine-revival",
           "label": "Engine Revival",
           "status": "verified",
-          "stateLabel": "software-preservation tooling",
+          "stateLabel": "archival/revival evidence platform",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -93,7 +109,7 @@
           "id": "gate",
           "label": "Gate",
           "status": "verified",
-          "stateLabel": "private-system integration and release authority",
+          "stateLabel": "Sofer release-check subsystem",
           "group": "Developer infrastructure",
           "nodeType": "system"
         },
@@ -117,7 +133,7 @@
           "id": "mneme",
           "label": "Mneme",
           "status": "verified",
-          "stateLabel": "deterministic agent memory subsystem",
+          "stateLabel": "agent memory store with repeatable recall",
           "group": "Agent systems",
           "nodeType": "system"
         },
@@ -125,7 +141,7 @@
           "id": "model-provenance-validator",
           "label": "Model Provenance Validator",
           "status": "verified",
-          "stateLabel": "model provenance-envelope validator",
+          "stateLabel": "checker for records tying model claims to sources",
           "group": "Evaluation and verification",
           "nodeType": "system"
         },
@@ -133,7 +149,7 @@
           "id": "proof-surface",
           "label": "Proof Surface",
           "status": "verified",
-          "stateLabel": "authorization and proof-packet library",
+          "stateLabel": "library that checks AI permission and evidence records",
           "group": "Security and privacy",
           "nodeType": "system"
         },
@@ -142,6 +158,14 @@
           "label": "Repo Proof Index",
           "status": "verified",
           "stateLabel": "evidence index and reviewer handoff",
+          "group": "Evaluation and verification",
+          "nodeType": "system"
+        },
+        {
+          "id": "service-desk-incident-env",
+          "label": "Service Desk Incident Environment",
+          "status": "verified",
+          "stateLabel": "synthetic incident environment and offline review add-on",
           "group": "Evaluation and verification",
           "nodeType": "system"
         }
@@ -172,6 +196,20 @@
             "accountable-surface-public-source"
           ],
           "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots.",
+          "label": "launches as a configured lane",
+          "type": "integrates-lane"
+        },
+        {
+          "source": "flywheel",
+          "target": "articulate",
+          "relation": "integrates-lane",
+          "status": "verified-in-source",
+          "evidenceIds": [
+            "flywheel-articulate-lane-code",
+            "flywheel-release-v1-0-4",
+            "articulate-pypi-v0-4-1"
+          ],
+          "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.4.1 release, and this relation does not show that Flywheel was tested with 0.4.1.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },
@@ -213,7 +251,7 @@
             "flywheel-release-v0-3-10",
             "index-release-v2-10-0"
           ],
-          "claimScope": "Flywheel declares and launches Index as its workspace-structure MCP lane. The Flywheel lane metadata currently trails the published Index 2.10.0 package.",
+          "claimScope": "Flywheel declares and launches Index 2.10.0 as its workspace-structure MCP lane. Index remains an independently published package.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },
@@ -227,7 +265,7 @@
             "flywheel-release-v0-3-10",
             "mneme-public-source"
           ],
-          "claimScope": "Flywheel declares and launches Mneme as its memory MCP lane. Flywheel lane metadata currently trails Mneme source version 0.2.0.",
+          "claimScope": "Flywheel declares and launches Mneme 0.2.0 as its memory MCP lane. Mneme remains an independently published package.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         }

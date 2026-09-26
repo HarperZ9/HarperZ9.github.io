@@ -1,142 +1,127 @@
 <svg role="img" xmlns="http://www.w3.org/2000/svg" width="1200" height="938" viewBox="0 0 1200 938" aria-labelledby="security-capability-map-title security-capability-map-desc" data-figure-kind="relationship">
   <title id="security-capability-map-title">Security and privacy systems</title>
   <desc id="security-capability-map-desc">Distinct public and private-practice systems whose registry record includes security and privacy work. Product type remains visible so unlike tools are not collapsed into one category. The current registry asserts no verified typed implementation relationship whose endpoints both appear in this domain view. An absent line means no typed relationship is recorded in the current public registry, not that integration is impossible or absent in private work.</desc>
-  <defs><marker id="security-capability-map-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e98455"/></marker></defs>
+  <defs><marker id="security-capability-map-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" class="cm-arrow"/></marker></defs>
   <style>
-    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#eef6f6}
-    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}.muted{fill:#bcd0d4}.relation-label{fill:#f4ddd1}
-    [data-figure-point]:focus{outline:none}[data-figure-point]:focus-visible .focus-ring{stroke:#f5f2e9;stroke-width:5}
+    svg{--cm-p:#f1ece1;--cm-i:#16130f;--cm-s:#4a443b;--cm-l:#7b7262;--cm-h:#d6ccb8}@media (prefers-color-scheme:dark){svg{--cm-p:#0a0a0d;--cm-i:#ece5d6;--cm-s:#b8b0a0;--cm-l:#77716a;--cm-h:#262529}}:root[data-theme="light"] svg{--cm-p:#f1ece1;--cm-i:#16130f;--cm-s:#4a443b;--cm-l:#7b7262;--cm-h:#d6ccb8}:root[data-theme="dark"] svg{--cm-p:#0a0a0d;--cm-i:#ece5d6;--cm-s:#b8b0a0;--cm-l:#77716a;--cm-h:#262529}@media print{svg,:root[data-theme] svg{--cm-p:#ffffff;--cm-i:#000000;--cm-s:#333333;--cm-l:#555555;--cm-h:#aaaaaa}}@media (forced-colors:active){svg,:root[data-theme] svg{--cm-p:Canvas;--cm-i:CanvasText;--cm-s:CanvasText;--cm-l:CanvasText;--cm-h:GrayText}}
+    text{font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:var(--cm-i)}
+    .mono{font-family:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",monospace}.muted{fill:var(--cm-s)}
+    .relation-label{fill:var(--cm-i);stroke:var(--cm-p);stroke-width:6px;paint-order:stroke}
+    .cm-node{fill:var(--cm-p)}.cm-edge{fill:none;stroke:var(--cm-l);stroke-width:1.5}
+    .cm-arrow{fill:var(--cm-l)}.cm-hair{stroke:var(--cm-h);stroke-width:1}
   </style>
-  <rect width="1200" height="938" fill="#070c0f"/>
-  <text x="44" y="48" class="mono muted" font-size="16">SOURCE SYSTEM</text>
-  <text x="600" y="48" text-anchor="middle" class="mono muted" font-size="16">TYPED RELATIONSHIP</text>
-  <text x="824" y="48" class="mono muted" font-size="16">TARGET SYSTEM</text>
+  <text x="44" y="48" class="mono muted" font-size="17">Source system</text>
+  <text x="600" y="48" text-anchor="middle" class="mono muted" font-size="17">Typed relationship</text>
+  <text x="824" y="48" class="mono muted" font-size="17">Target system</text>
   <g role="note" aria-label="No typed implementation relationship is asserted among these systems in the current registry.">
-    <line x1="44" y1="126" x2="1156" y2="126" stroke="#42545b" stroke-width="2" stroke-dasharray="6 8"/>
-    <text x="600" y="116" text-anchor="middle" class="mono muted" font-size="16">No typed implementation relationship asserted in the current registry</text>
+    <line x1="44" y1="126" x2="1156" y2="126" class="cm-hair" stroke-dasharray="6 8"/>
+    <text x="600" y="116" text-anchor="middle" class="mono muted" font-size="17">No typed implementation relationship asserted in the current registry</text>
   </g>
-  <text x="44" y="218" class="mono muted" font-size="16">SYSTEMS IN SCOPE WITHOUT A TYPED RELATIONSHIP IN THIS VIEW</text>
-  <g data-figure-point="true" data-figure-key="accountable-surface" data-node-instance="isolated-0" role="graphics-symbol" aria-label="Accountable Surface. controlled agent-action workbench." tabindex="0">
-    <rect class="focus-ring" x="40" y="238" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="242" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="269" font-size="17" font-weight="700">Accountable Surface</text>
-    <text x="60" y="293" class="mono muted" font-size="16">controlled agent-action</text>
-    <text x="60" y="311" class="mono muted" font-size="16">workbench</text>
+  <text x="44" y="218" class="mono muted" font-size="17">Systems in scope without a typed relationship in this view</text>
+  <g data-figure-point="true" data-figure-key="accountable-surface" data-node-instance="isolated-0" role="graphics-symbol" aria-label="Accountable Surface. workbench that allows only approved AI agent actions.">
+    <rect x="44" y="242" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="269" font-size="18" font-weight="700">Accountable Surface</text>
+    <text x="60" y="293" class="mono muted" font-size="17">workbench that allows only</text>
+    <text x="60" y="313" class="mono muted" font-size="17">approved AI agent actions</text>
   </g>
-<g data-figure-point="true" data-figure-key="agent-hook-pack" data-node-instance="isolated-1" role="graphics-symbol" aria-label="Agent Hook Pack. repository hook toolkit." tabindex="0">
-    <rect class="focus-ring" x="420" y="238" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="242" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="269" font-size="17" font-weight="700">Agent Hook Pack</text>
-    <text x="440" y="293" class="mono muted" font-size="16">repository hook toolkit</text>
+<g data-figure-point="true" data-figure-key="agent-hook-pack" data-node-instance="isolated-1" role="graphics-symbol" aria-label="Agent Hook Pack. repository hook toolkit.">
+    <rect x="424" y="242" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="269" font-size="18" font-weight="700">Agent Hook Pack</text>
+    <text x="440" y="293" class="mono muted" font-size="17">repository hook toolkit</text>
   </g>
-<g data-figure-point="true" data-figure-key="array" data-node-instance="isolated-2" role="graphics-symbol" aria-label="Array. authorized offensive campaign orchestrator." tabindex="0">
-    <rect class="focus-ring" x="800" y="238" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="242" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="269" font-size="17" font-weight="700">Array</text>
-    <text x="820" y="293" class="mono muted" font-size="16">authorized offensive campaign</text>
-    <text x="820" y="311" class="mono muted" font-size="16">orchestrator</text>
+<g data-figure-point="true" data-figure-key="array" data-node-instance="isolated-2" role="graphics-symbol" aria-label="Array. authorized offensive campaign orchestrator.">
+    <rect x="804" y="242" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="269" font-size="18" font-weight="700">Array</text>
+    <text x="820" y="293" class="mono muted" font-size="17">authorized offensive campaign</text>
+    <text x="820" y="313" class="mono muted" font-size="17">orchestrator</text>
   </g>
-<g data-figure-point="true" data-figure-key="behavior-transform" data-node-instance="isolated-3" role="graphics-symbol" aria-label="behavior-transform.io. I/O boundary and receipt library." tabindex="0">
-    <rect class="focus-ring" x="40" y="342" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="346" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="373" font-size="17" font-weight="700">behavior-transform.io</text>
-    <text x="60" y="397" class="mono muted" font-size="16">I/O boundary and receipt</text>
-    <text x="60" y="415" class="mono muted" font-size="16">library</text>
+<g data-figure-point="true" data-figure-key="behavior-transform" data-node-instance="isolated-3" role="graphics-symbol" aria-label="behavior-transform.io. local wrapper for file, web, and tool input and output.">
+    <rect x="44" y="346" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="373" font-size="18" font-weight="700">behavior-transform.io</text>
+    <text x="60" y="397" class="mono muted" font-size="17">local wrapper for file, web,</text>
+    <text x="60" y="417" class="mono muted" font-size="17">and tool input and output</text>
   </g>
-<g data-figure-point="true" data-figure-key="bounds" data-node-instance="isolated-4" role="graphics-symbol" aria-label="Bounds. agent, runtime, and release trust verifier." tabindex="0">
-    <rect class="focus-ring" x="420" y="342" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="346" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="373" font-size="17" font-weight="700">Bounds</text>
-    <text x="440" y="397" class="mono muted" font-size="16">agent, runtime, and release</text>
-    <text x="440" y="415" class="mono muted" font-size="16">trust verifier</text>
+<g data-figure-point="true" data-figure-key="bounds" data-node-instance="isolated-4" role="graphics-symbol" aria-label="Bounds. agent, runtime, and release trust verifier.">
+    <rect x="424" y="346" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="373" font-size="18" font-weight="700">Bounds</text>
+    <text x="440" y="397" class="mono muted" font-size="17">agent, runtime, and release</text>
+    <text x="440" y="417" class="mono muted" font-size="17">trust verifier</text>
   </g>
-<g data-figure-point="true" data-figure-key="emet" data-node-instance="isolated-5" role="graphics-symbol" aria-label="EMET. cross-implementation integrity witness." tabindex="0">
-    <rect class="focus-ring" x="800" y="342" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="346" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="373" font-size="17" font-weight="700">EMET</text>
-    <text x="820" y="397" class="mono muted" font-size="16">cross-implementation integrity</text>
-    <text x="820" y="415" class="mono muted" font-size="16">witness</text>
+<g data-figure-point="true" data-figure-key="emet" data-node-instance="isolated-5" role="graphics-symbol" aria-label="EMET. checker that content still matches its source.">
+    <rect x="804" y="346" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="373" font-size="18" font-weight="700">EMET</text>
+    <text x="820" y="397" class="mono muted" font-size="17">checker that content still</text>
+    <text x="820" y="417" class="mono muted" font-size="17">matches its source</text>
   </g>
-<g data-figure-point="true" data-figure-key="gate" data-node-instance="isolated-6" role="graphics-symbol" aria-label="Gate. private-system integration and release authority." tabindex="0">
-    <rect class="focus-ring" x="40" y="446" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="450" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="477" font-size="17" font-weight="700">Gate</text>
-    <text x="60" y="501" class="mono muted" font-size="16">private-system integration and</text>
-    <text x="60" y="519" class="mono muted" font-size="16">release authority</text>
+<g data-figure-point="true" data-figure-key="gate" data-node-instance="isolated-6" role="graphics-symbol" aria-label="Gate. Sofer release-check subsystem.">
+    <rect x="44" y="450" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="477" font-size="18" font-weight="700">Gate</text>
+    <text x="60" y="501" class="mono muted" font-size="17">Sofer release-check subsystem</text>
   </g>
-<g data-figure-point="true" data-figure-key="isomorph" data-node-instance="isolated-7" role="graphics-symbol" aria-label="Isomorph. AI inference-boundary red-team harness." tabindex="0">
-    <rect class="focus-ring" x="420" y="446" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="450" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="477" font-size="17" font-weight="700">Isomorph</text>
-    <text x="440" y="501" class="mono muted" font-size="16">AI inference-boundary red-team</text>
-    <text x="440" y="519" class="mono muted" font-size="16">harness</text>
+<g data-figure-point="true" data-figure-key="isomorph" data-node-instance="isolated-7" role="graphics-symbol" aria-label="Isomorph. AI inference-boundary red-team harness.">
+    <rect x="424" y="450" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="477" font-size="18" font-weight="700">Isomorph</text>
+    <text x="440" y="501" class="mono muted" font-size="17">AI inference-boundary</text>
+    <text x="440" y="521" class="mono muted" font-size="17">red-team harness</text>
   </g>
-<g data-figure-point="true" data-figure-key="kun" data-node-instance="isolated-8" role="graphics-symbol" aria-label="Kun. local access-recovery vault." tabindex="0">
-    <rect class="focus-ring" x="800" y="446" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="450" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="477" font-size="17" font-weight="700">Kun</text>
-    <text x="820" y="501" class="mono muted" font-size="16">local access-recovery vault</text>
+<g data-figure-point="true" data-figure-key="kun" data-node-instance="isolated-8" role="graphics-symbol" aria-label="Kun. local access-recovery vault.">
+    <rect x="804" y="450" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="477" font-size="18" font-weight="700">Kun</text>
+    <text x="820" y="501" class="mono muted" font-size="17">local access-recovery vault</text>
   </g>
-<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-9" role="graphics-symbol" aria-label="Model Provenance Validator. model provenance-envelope validator." tabindex="0">
-    <rect class="focus-ring" x="40" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="581" font-size="17" font-weight="700">Model Provenance Validator</text>
-    <text x="60" y="605" class="mono muted" font-size="16">model provenance-envelope</text>
-    <text x="60" y="623" class="mono muted" font-size="16">validator</text>
+<g data-figure-point="true" data-figure-key="model-provenance-validator" data-node-instance="isolated-9" role="graphics-symbol" aria-label="Model Provenance Validator. checker for records tying model claims to sources.">
+    <rect x="44" y="554" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="581" font-size="18" font-weight="700">Model Provenance Validator</text>
+    <text x="60" y="605" class="mono muted" font-size="17">checker for records tying</text>
+    <text x="60" y="625" class="mono muted" font-size="17">model claims to sources</text>
   </g>
-<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-10" role="graphics-symbol" aria-label="ORCA. native assessment operator runtime." tabindex="0">
-    <rect class="focus-ring" x="420" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="581" font-size="17" font-weight="700">ORCA</text>
-    <text x="440" y="605" class="mono muted" font-size="16">native assessment operator</text>
-    <text x="440" y="623" class="mono muted" font-size="16">runtime</text>
+<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-10" role="graphics-symbol" aria-label="ORCA. native assessment operator runtime.">
+    <rect x="424" y="554" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="581" font-size="18" font-weight="700">ORCA</text>
+    <text x="440" y="605" class="mono muted" font-size="17">native assessment operator</text>
+    <text x="440" y="625" class="mono muted" font-size="17">runtime</text>
   </g>
-<g data-figure-point="true" data-figure-key="phantom" data-node-instance="isolated-11" role="graphics-symbol" aria-label="Phantom. hardware-identity privacy system." tabindex="0">
-    <rect class="focus-ring" x="800" y="550" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="554" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="581" font-size="17" font-weight="700">Phantom</text>
-    <text x="820" y="605" class="mono muted" font-size="16">hardware-identity privacy</text>
-    <text x="820" y="623" class="mono muted" font-size="16">system</text>
+<g data-figure-point="true" data-figure-key="phantom" data-node-instance="isolated-11" role="graphics-symbol" aria-label="Phantom. hardware-identity privacy system.">
+    <rect x="804" y="554" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="581" font-size="18" font-weight="700">Phantom</text>
+    <text x="820" y="605" class="mono muted" font-size="17">hardware-identity privacy</text>
+    <text x="820" y="625" class="mono muted" font-size="17">system</text>
   </g>
-<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-12" role="graphics-symbol" aria-label="Proof Surface. authorization and proof-packet library." tabindex="0">
-    <rect class="focus-ring" x="40" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="685" font-size="17" font-weight="700">Proof Surface</text>
-    <text x="60" y="709" class="mono muted" font-size="16">authorization and proof-packet</text>
-    <text x="60" y="727" class="mono muted" font-size="16">library</text>
+<g data-figure-point="true" data-figure-key="proof-surface" data-node-instance="isolated-12" role="graphics-symbol" aria-label="Proof Surface. library that checks AI permission and evidence records.">
+    <rect x="44" y="658" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="685" font-size="18" font-weight="700">Proof Surface</text>
+    <text x="60" y="709" class="mono muted" font-size="17">library that checks AI</text>
+    <text x="60" y="729" class="mono muted" font-size="17">permission and evidence records</text>
   </g>
-<g data-figure-point="true" data-figure-key="public-surface-sweeper" data-node-instance="isolated-13" role="graphics-symbol" aria-label="Public Surface Sweeper. public release-surface auditor." tabindex="0">
-    <rect class="focus-ring" x="420" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="685" font-size="17" font-weight="700">Public Surface Sweeper</text>
-    <text x="440" y="709" class="mono muted" font-size="16">public release-surface auditor</text>
+<g data-figure-point="true" data-figure-key="public-surface-sweeper" data-node-instance="isolated-13" role="graphics-symbol" aria-label="Public Surface Sweeper. checker run before a repository goes public.">
+    <rect x="424" y="658" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="685" font-size="18" font-weight="700">Public Surface Sweeper</text>
+    <text x="440" y="709" class="mono muted" font-size="17">checker run before a</text>
+    <text x="440" y="729" class="mono muted" font-size="17">repository goes public</text>
   </g>
-<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-14" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff." tabindex="0">
-    <rect class="focus-ring" x="800" y="654" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="658" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="685" font-size="17" font-weight="700">Repo Proof Index</text>
-    <text x="820" y="709" class="mono muted" font-size="16">evidence index and reviewer</text>
-    <text x="820" y="727" class="mono muted" font-size="16">handoff</text>
+<g data-figure-point="true" data-figure-key="repo-proof-index" data-node-instance="isolated-14" role="graphics-symbol" aria-label="Repo Proof Index. evidence index and reviewer handoff.">
+    <rect x="804" y="658" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="685" font-size="18" font-weight="700">Repo Proof Index</text>
+    <text x="820" y="709" class="mono muted" font-size="17">evidence index and reviewer</text>
+    <text x="820" y="729" class="mono muted" font-size="17">handoff</text>
   </g>
-<g data-figure-point="true" data-figure-key="secret-redact-io" data-node-instance="isolated-15" role="graphics-symbol" aria-label="Secret Redact IO. secret-aware I/O helper library." tabindex="0">
-    <rect class="focus-ring" x="40" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="44" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="60" y="789" font-size="17" font-weight="700">Secret Redact IO</text>
-    <text x="60" y="813" class="mono muted" font-size="16">secret-aware I/O helper library</text>
+<g data-figure-point="true" data-figure-key="secret-redact-io" data-node-instance="isolated-15" role="graphics-symbol" aria-label="Secret Redact IO. library that redacts secrets from file and tool output.">
+    <rect x="44" y="762" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="60" y="789" font-size="18" font-weight="700">Secret Redact IO</text>
+    <text x="60" y="813" class="mono muted" font-size="17">library that redacts secrets</text>
+    <text x="60" y="833" class="mono muted" font-size="17">from file and tool output</text>
   </g>
-<g data-figure-point="true" data-figure-key="seed" data-node-instance="isolated-16" role="graphics-symbol" aria-label="Seed. native security-assessment engine." tabindex="0">
-    <rect class="focus-ring" x="420" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="424" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="440" y="789" font-size="17" font-weight="700">Seed</text>
-    <text x="440" y="813" class="mono muted" font-size="16">native security-assessment</text>
-    <text x="440" y="831" class="mono muted" font-size="16">engine</text>
+<g data-figure-point="true" data-figure-key="seed" data-node-instance="isolated-16" role="graphics-symbol" aria-label="Seed. native security-assessment engine.">
+    <rect x="424" y="762" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="440" y="789" font-size="18" font-weight="700">Seed</text>
+    <text x="440" y="813" class="mono muted" font-size="17">native security-assessment</text>
+    <text x="440" y="833" class="mono muted" font-size="17">engine</text>
   </g>
-<g data-figure-point="true" data-figure-key="sofer" data-node-instance="isolated-17" role="graphics-symbol" aria-label="Sofer. private-line orchestration suite." tabindex="0">
-    <rect class="focus-ring" x="800" y="758" width="340" height="90" rx="10" fill="none" stroke="transparent"/>
-    <rect x="804" y="762" width="332" height="82" rx="7" fill="#10191e" stroke="#87d7df" stroke-width="2"/>
-    <text x="820" y="789" font-size="17" font-weight="700">Sofer</text>
-    <text x="820" y="813" class="mono muted" font-size="16">private-line orchestration</text>
-    <text x="820" y="831" class="mono muted" font-size="16">suite</text>
+<g data-figure-point="true" data-figure-key="sofer" data-node-instance="isolated-17" role="graphics-symbol" aria-label="Sofer. private-line orchestration suite.">
+    <rect x="804" y="762" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
+    <text x="820" y="789" font-size="18" font-weight="700">Sofer</text>
+    <text x="820" y="813" class="mono muted" font-size="17">private-line orchestration</text>
+    <text x="820" y="833" class="mono muted" font-size="17">suite</text>
   </g>
-  <text x="44" y="912" class="mono muted" font-size="16">Lines: verified typed registry records only · no line: no relationship asserted by this figure</text>
+  <text x="44" y="912" class="mono muted" font-size="17">Lines: verified typed registry records only · no line: no relationship asserted by this figure</text>
 </svg>

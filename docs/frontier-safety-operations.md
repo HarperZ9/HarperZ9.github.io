@@ -11,6 +11,8 @@
 
 The SHA-256 value is derived from canonical edition JSON. Current and archived JSON must match byte-for-meaning after parsing.
 
+Page shells. Two shells render the HTML. The plate module, `tools/frontier_safety_plate.py`, renders the live page and every dated archive after 2026-09-23 in the site's void-and-bone plate design. It also supplies the head, nav and hero for each dated conclusions record page, `frontier-safety/conclusions/<date>.html`, which `tools/frontier_safety_conclusions_record.py` writes. Archives dated 2026-09-23 or earlier keep the shared-site shell they shipped with and stay byte-frozen. `SITE_SHELL_LAST_ARCHIVE_DATE` in `tools/build_frontier_safety_briefing.py` sets that boundary, and the byte-reproducibility test enforces it. A change to the plate module therefore changes the live page and later archives only. The plate stylesheet, `frontier-safety/frontier-safety-edition.css`, carries its own cache revision, `FRONTIER_EDITION_CSS_ASSET_VERSION` in the plate module, which must match `REVIEWED_ASSET_REVISIONS` in `tests/test_zentropy_sitewide_contract.py`.
+
 Incident notices on the daily digest cite the canonical incident briefing only. The briefing's source manifest and build receipt carry the underlying developer statements, affected-party telemetry, independent analysis, and procedural records. This keeps source roles distinct and prevents the routing surface from collapsing heterogeneous evidence into a single label.
 
 The Frontier Safety automation exclusively owns Frontier Safety editions and amendments. The general editorial automation must not publish or amend them. This lane preserves one canonical August 26 incident dossier and a limit of one edition or amendment per calendar day.

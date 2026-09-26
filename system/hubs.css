@@ -1,0 +1,180 @@
+/* hubs.css: the hub and guide pages (Security, Why, Learn, the guide, the field
+   guide and Fonts) on the site's surface. tokens.css and plate.css set the void
+   and bone grounds, the registration field, grain and crop marks. This sheet
+   lays these pages out the way the home and the publications page are laid
+   out: a poster header whose title runs the full width over a hairline, the
+   copy at the left and one framed plate at the right, then a run of numbered
+   plates, each opening on a hairline with a registration cross. Cards become
+   rows on hairlines. Controls are square. hubs-guides.css adds the guide and
+   field guide rows; hubs-fonts.css lays out the Fonts page.
+
+   Only these pages load this sheet. Every rule is scoped to body.hub-plate (the
+   Fonts page keeps its own body class, body.font-marketplace-page). The reading
+   cascade in system.css reaches these pages through long :not() chains, and
+   nav.js appends plate.css after this sheet, so the scope carries the same
+   :not(#_) step plate.css uses and outranks both. Two faces only; color only
+   as a verdict or ink. */
+
+/* 1. Measures shared by the hub pages. The poster title steps up on phones,
+   where the shared scale bottoms out. */
+html:root body:is(.hub-plate,.font-marketplace-page){--hub-frame:76rem;--hub-shell:clamp(1rem,4vw,3rem);--hub-rail:clamp(3.25rem,7vw,6rem);--hub-gap:clamp(1rem,2.5vw,2.25rem);--hub-read:40rem;--hub-wide:58rem;--hub-space:clamp(4rem,9vw,8rem);--t-poster:clamp(2.9rem,1.35rem + 6.4vw,6.75rem)}
+
+/* 2. Text sits on a calm ground. The header, each numbered plate, the closing
+   line and the save control are filled with the flat pole color, as the
+   reading column is on the start page and the essays, so no grain or cross
+   ever runs through a line of text. The registration field and the grain veil
+   stay in the outer gutters and in the gaps between plates. A plate's hairline
+   is a background image, so the fill leaves it in place. One grotesk carries
+   every text role; code keeps the mono through its own rules. */
+html:root body.hub-plate:not(#_) :is(.frame,main){background:none}
+html:root body.hub-plate:not(#_) > .frame,
+html:root body.hub-plate:not(#_) main > section.mv,
+html:root body.hub-plate:not(#_) footer.footer-seal,
+html:root body:is(.hub-plate,.font-marketplace-page):not(#_) .export-footer{background-color:var(--paper)}
+html:root body.hub-plate:not(#_) main{font-family:var(--font-sans)}
+html:root body.hub-plate:not(#_) .frame::before,
+html:root body.hub-plate:not(#_) .frame::after{display:none}
+
+/* 3. The poster header. The title runs the full width over a hairline; the copy
+   takes the left column and a framed plate the right. */
+html:root body.hub-plate:not(#_) > .frame{display:block;position:relative;box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));max-width:none;min-height:0;margin:0 auto;padding:clamp(1.75rem,4vw,3rem) 0 clamp(1.5rem,3vw,2.5rem);border:0;pointer-events:auto}
+html:root body.hub-plate:not(#_) > .frame > .bar{display:none}
+html:root body.hub-plate:not(#_) > .frame > .mid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(2rem,5vw,5rem);align-items:start;width:auto;max-width:none;margin:0;padding:0}
+html:root body.hub-plate:not(#_) > .frame > .mid > *{grid-column:1;min-width:0}
+html:root body.hub-plate:not(#_) > .frame > .mid > :is(.route-header__path,h1){grid-column:1 / -1}
+html:root body.hub-plate:not(#_) > .frame h1:not(#_){max-width:none;margin:clamp(.75rem,2vw,1.25rem) 0 clamp(1.75rem,4vw,3rem);padding:0 0 clamp(1.25rem,3vw,2.25rem);border-bottom:1px solid var(--line-strong);font-size:var(--t-poster);font-weight:800;letter-spacing:-.045em;line-height:.92;color:var(--ink);text-wrap:balance}
+html:root body.hub-plate:not(#_) > .frame h1 .g{color:inherit}
+/* A header that holds only its title drops the title's rule and pulls the first
+   plate up, so the first plate's hairline and cross are the one rule under it. */
+html:root body.hub-plate:not(#_) > .frame > .mid > h1:last-child:not(#_){margin-bottom:0;padding-bottom:0;border-bottom:0}
+html:root body.hub-plate:not(#_) > .frame:has(> .mid > h1:last-child) + main > section.mv:first-of-type{margin-top:clamp(1.5rem,3vw,2.5rem)}
+html:root body.hub-plate:not(#_) > .frame .lede{max-width:34rem;margin:0 0 1.25rem;font-size:clamp(1.125rem,1rem + .45vw,1.375rem);line-height:1.55;color:var(--ink)}
+html:root body.hub-plate:not(#_) > .frame .close{max-width:34rem;margin:0 0 1.25rem;font-size:1.0625rem;line-height:1.6;color:var(--soft)}
+
+/* The plate: one luminous object in a thin frame with corner ticks. */
+html:root body.hub-plate:not(#_) > .frame > .mid > :is(.art,.plate){grid-column:2;grid-row:3 / span 4;float:none;width:auto;max-width:none;margin:0}
+html:root body.hub-plate:not(#_) .art{overflow:visible;border-radius:0}
+html:root body.hub-plate:not(#_) .art img{aspect-ratio:4 / 3;object-fit:cover}
+/* A cover piece keeps its own 2:1 frame so the object stays whole. */
+html:root body.hub-plate:not(#_) .art.art-cover img{aspect-ratio:2 / 1}
+
+/* The header's metadata row: one hairline, then plain text. */
+html:root body.hub-plate:not(#_) > .frame > .seal{display:block;clear:both;max-width:none;margin:clamp(2rem,4vw,3rem) 0 0;padding:.9rem 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:none;font-family:var(--font-sans);font-size:.9375rem;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--soft)}
+
+/* 4. Canvas plates drawn by the site engine: square, a hairline frame, corner
+   ticks, and the caption below. The ticks share the canvas's grid cell, so
+   they frame the canvas and never the caption under it. */
+html:root body.hub-plate:not(#_) .plate{position:relative;background:none;border:0;border-radius:0}
+html:root body.hub-plate:not(#_) .plate:not(.plate--bleed){display:grid;grid-template-columns:minmax(0,1fr)}
+html:root body.hub-plate:not(#_) .plate:not(.plate--bleed) > canvas,
+html:root body.hub-plate:not(#_) .plate:not(.plate--bleed)::after{grid-area:1 / 1}
+html:root body.hub-plate:not(#_) .plate canvas{border:1px solid var(--line);border-radius:0;background:var(--inset)}
+html:root body.hub-plate:not(#_) .plate:not(.plate--bleed)::after{content:"";position:relative;inset:auto;margin:-5px;pointer-events:none;--k:12px;background:linear-gradient(var(--line-strong),var(--line-strong)) top left/var(--k) 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) top left/1px var(--k) no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/var(--k) 1px no-repeat,linear-gradient(var(--line-strong),var(--line-strong)) bottom right/1px var(--k) no-repeat}
+html:root body.hub-plate:not(#_) > .frame > .mid > .plate canvas{aspect-ratio:4 / 3}
+html:root body.hub-plate:not(#_) .plate figcaption{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:1rem;margin:0;padding:.8rem .1rem .2rem;background:none}
+html:root body.hub-plate:not(#_) .plate :is(.plate-no,.plate-caption){font-family:var(--font-sans);font-size:.9375rem;line-height:1.55;letter-spacing:0;text-transform:none}
+html:root body.hub-plate:not(#_) .plate .plate-no{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+html:root body.hub-plate:not(#_) .plate .plate-caption{color:var(--soft);max-width:60ch}
+
+/* A plate inside a section keeps to the wide column. */
+html:root body.hub-plate:not(#_) main > section.mv > .plate{max-width:var(--hub-wide);margin:clamp(2.5rem,5vw,3.5rem) 0 0}
+
+/* A full-bleed plate sits between sections and runs edge to edge, like the
+   corpus's plates on black. Its caption keeps to the column. */
+html:root body.hub-plate:not(#_) main > .plate--bleed{width:auto;margin:var(--hub-space) 0 0;padding:0}
+html:root body.hub-plate:not(#_) main > .plate--bleed canvas{aspect-ratio:21 / 9;border-inline:0;border-block:1px solid var(--line)}
+html:root body.hub-plate:not(#_) main > .plate--bleed figcaption{box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));margin:0 auto;padding-inline:0;background-color:var(--paper)}
+
+/* 5. Numbered plates. Each section opens on a hairline with a registration
+   cross at its left end; the numeral sits in a rail and the heading at poster
+   weight beside it. */
+html:root body.hub-plate:not(#_) main{counter-reset:hub-plate}
+html:root body.hub-plate:not(#_) main > section.mv{counter-increment:hub-plate;position:relative;display:grid;grid-template-columns:var(--hub-rail) minmax(0,1fr);column-gap:var(--hub-gap);box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));max-width:none;margin:var(--hub-space) auto 0;padding:clamp(1.25rem,2.4vw,1.9rem) 0 clamp(1.5rem,3vw,2.5rem);border:0;background-image:linear-gradient(var(--line-strong),var(--line-strong));background-size:100% 1px;background-position:top left;background-repeat:no-repeat}
+html:root body.hub-plate:not(#_) main > section.mv > *{grid-column:2;min-width:0}
+html:root body.hub-plate:not(#_) main > section.mv::before{content:counter(hub-plate,decimal-leading-zero);grid-column:1;grid-row:1;padding-top:.35rem;font-family:var(--font-sans);font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;color:var(--ink)}
+html:root body.hub-plate:not(#_) main > section.mv::after{content:"";position:absolute;top:-7px;left:-7px;width:15px;height:15px;pointer-events:none;background:linear-gradient(var(--ink),var(--ink)) center/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) center/100% 1px no-repeat}
+html:root body.hub-plate:not(#_) main > section.mv > h2{max-width:22ch;margin:0 0 clamp(1.25rem,2.6vw,2rem);padding:0;background:none;font-size:clamp(2rem,1.2rem + 2.9vw,4.1rem);font-weight:780;letter-spacing:-.04em;line-height:.98;color:var(--ink)}
+html:root body.hub-plate:not(#_) main > section.mv > h2::before{display:none}
+
+/* Reading text keeps a comfortable measure inside the wide column. */
+html:root body.hub-plate:not(#_) main > section.mv :is(.body-text,p:not([class])){max-width:var(--hub-read);font-size:clamp(1.0625rem,1rem + .2vw,1.15rem);line-height:1.65;color:var(--soft)}
+html:root body.hub-plate:not(#_) main > section.mv .close{max-width:var(--hub-read);margin-block:1.5rem 0;font-size:1.125rem;line-height:1.55;color:var(--ink)}
+html:root body.hub-plate:not(#_) main > section.mv .pull{max-width:20ch;margin:clamp(2rem,4vw,3.25rem) 0;padding:0;border:0;background:none;font-size:clamp(1.9rem,1.1rem + 2.6vw,3.4rem);font-style:normal;font-weight:760;letter-spacing:-.032em;line-height:1.02;color:var(--ink);text-wrap:balance}
+
+/* 6. Index rows: a term and its gloss on one hairline. */
+html:root body.hub-plate:not(#_) main .index{max-width:var(--hub-wide);margin:clamp(1.5rem,3vw,2.25rem) 0;border:0;border-top:1px solid var(--line-strong)}
+html:root body.hub-plate:not(#_) main .index-row{display:grid;grid-template-columns:minmax(9rem,15rem) minmax(0,1fr);column-gap:clamp(1rem,3vw,2.5rem);padding:1.05rem 0;border:0;border-bottom:1px solid var(--line);background:none}
+html:root body.hub-plate:not(#_) main .index-term{font-family:var(--font-sans);font-size:1.0625rem;font-weight:700;line-height:1.4;letter-spacing:0;text-transform:none;color:var(--ink)}
+html:root body.hub-plate:not(#_) main .index-gloss{font-size:1.0625rem;line-height:1.6;color:var(--soft)}
+
+/* 7. Links that close a section: one hairline, then a plain line of links. */
+html:root body.hub-plate:not(#_) main .channels{max-width:var(--hub-wide);margin:clamp(1.75rem,3vw,2.5rem) 0 0;padding:1rem 0 0;border:0;border-top:1px solid var(--line);background:none;font-family:var(--font-sans);font-size:1rem;line-height:2;letter-spacing:0;color:var(--soft)}
+html:root body.hub-plate:not(#_) main .channels .g{color:var(--ink);font-weight:700}
+
+/* 8. Code and records: square, on the recessed ground, in the mono at reading size.
+   A passing line reads in ink at a heavier weight; drift is the one hot mark,
+   so a record never shows more than one color in a view. */
+html:root body.hub-plate:not(#_) main pre.artifact{box-sizing:border-box;max-width:var(--hub-wide);margin:clamp(1.5rem,3vw,2.25rem) 0;padding:1.1rem 1.25rem;overflow-x:auto;border:1px solid var(--line);border-radius:0;background:var(--inset);box-shadow:none;font-family:var(--font-mono);font-size:.9375rem;line-height:1.75;color:var(--ink);white-space:pre}
+html:root body.hub-plate:not(#_) main pre.artifact :is(.pr,.cmt){color:var(--soft)}
+html:root body.hub-plate:not(#_) main pre.artifact .ok{color:var(--ink);font-weight:600}
+html:root body.hub-plate:not(#_) main pre.artifact .bad{color:var(--drift)}
+
+/* 9. Why: the closing line and the note under it. */
+html:root body.hub-plate:not(#_) main .seal-line{max-width:var(--hub-read);margin:clamp(2rem,4vw,3rem) 0 0;padding:1rem 0 0;border-top:1px solid var(--line-strong);font-family:var(--font-sans);font-size:clamp(1.25rem,1.05rem + .7vw,1.6rem);font-weight:700;letter-spacing:-.015em;text-transform:none;color:var(--ink)}
+html:root body.hub-plate:not(#_) main .note-line{max-width:var(--hub-read);margin:1rem 0 0;font-size:1rem;line-height:1.6;color:var(--soft);font-style:normal}
+
+/* 10. The closing line of the page: a hairline and plain text, never a boxed pill. */
+html:root body.hub-plate:not(#_) footer.footer-seal{box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));margin:var(--hub-space) auto 0;padding:1.1rem 0 clamp(3rem,6vw,5rem);border:0;border-top:1px solid var(--line-strong);border-image:none;background-image:none}
+html:root body.hub-plate:not(#_) footer.footer-seal .seal{max-width:44rem;margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;font-family:var(--font-sans);font-size:1.0625rem;line-height:1.6;letter-spacing:0;text-transform:none;color:var(--soft)}
+
+/* The shared save and print control keeps the column's gutter. */
+html:root body:is(.hub-plate,.font-marketplace-page):not(#_) .export-footer{box-sizing:border-box;width:min(100% - 2 * var(--hub-shell),var(--hub-frame));margin-inline:auto;padding-inline:0}
+
+/* 11. Phones and narrow windows: the rail folds above the heading, the header's
+   plate follows the copy, and every row stacks. */
+@media (max-width:52rem){
+  html:root body.hub-plate:not(#_) > .frame > .mid{grid-template-columns:minmax(0,1fr)}
+  html:root body.hub-plate:not(#_) > .frame > .mid > *{grid-column:1;grid-row:auto}
+  html:root body.hub-plate:not(#_) > .frame > .mid > :is(.art,.plate){grid-column:1;grid-row:auto;margin:.75rem 0 .5rem}
+}
+@media (max-width:40rem){
+  html:root body.hub-plate:not(#_) main > section.mv{grid-template-columns:minmax(0,1fr);row-gap:0}
+  html:root body.hub-plate:not(#_) main > section.mv > *,
+  html:root body.hub-plate:not(#_) main > section.mv::before{grid-column:1}
+  html:root body.hub-plate:not(#_) main > section.mv::before{padding:0 0 1rem}
+  html:root body.hub-plate:not(#_) main .index-row{grid-template-columns:minmax(0,1fr);row-gap:.4rem}
+  html:root body.hub-plate:not(#_) main > .plate--bleed canvas{aspect-ratio:4 / 3}
+  html:root body.hub-plate:not(#_) main pre.artifact{white-space:pre-wrap;overflow-wrap:anywhere}
+}
+
+/* 12. Forced colors, reduced motion and print. The drawn cross and plate ticks
+   step aside for system colors; print keeps the rules and drops the art. */
+@media (forced-colors:active){
+  html:root body.hub-plate:not(#_) main > section.mv{background-image:none;border-top:1px solid CanvasText}
+  html:root body.hub-plate:not(#_) main > section.mv::after,
+  html:root body.hub-plate:not(#_) .plate::after{display:none}
+  /* The shared sheet boxes every route header in forced colors. The poster
+     header keeps its own rules instead: the title's hairline and the rule
+     over the metadata line. */
+  html:root body.hub-plate:not(#_) .route-header{border:0!important}
+}
+@media (prefers-reduced-motion:reduce){
+  html:root body.hub-plate:not(#_) .reveal,
+  html:root body.hub-plate:not(#_) .reveal-children > *{transition:none}
+}
+@media print{
+  html:root body.hub-plate:not(#_) > .frame,
+  html:root body.hub-plate:not(#_) main > section.mv,
+  html:root body.hub-plate:not(#_) footer.footer-seal{width:auto;margin-inline:0}
+  html:root body.hub-plate:not(#_) > .frame{padding-top:0}
+  /* The shared print sheet zeroes every section's margin and padding with
+     !important, which would set each numeral on its rule; the plates keep a
+     small gap above and below the rule. */
+  html:root body.hub-plate:not(#_) main > section.mv{margin-top:2rem!important;padding-top:.75rem!important;row-gap:.75rem;break-inside:auto;background-image:none;border-top:1px solid var(--line-strong)}
+  html:root body.hub-plate:not(#_) main > section.mv::after,
+  html:root body.hub-plate:not(#_) .plate::after{display:none}
+  html:root body.hub-plate:not(#_) :is(.plate,.art):not(#_){display:none}
+  html:root body.hub-plate:not(#_) > .frame > .mid{grid-template-columns:minmax(0,1fr)}
+  html:root body.hub-plate:not(#_) > .frame > .mid > *{grid-column:1;grid-row:auto}
+  html:root body.hub-plate:not(#_) > .frame h1:not(#_){font-size:2.4rem}
+}

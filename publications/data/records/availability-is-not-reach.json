@@ -231,6 +231,7 @@
       "claim": "Panel A shows the percent of U.S. public schools that offered tutoring in June 2025. Panel B shows the average percent of each school's students in high-dosage tutoring in October 2024, a different month with a different base number, so each panel answers its own question.",
       "type": "separate-panels",
       "columns": ["Panel and measure", "Estimate", "Date", "Unit and base number", "Margin (standard error)", "What it does not show"],
+      "resultColumn": "Estimate",
       "rows": [
         ["A. Schools offering any tutoring", "85%", "June 2025", "Percent of U.S. public schools", "0.9 points, for the 15% offering no tutoring", "No delivered dosage or impact"],
         ["A. Schools offering high-dosage tutoring", "42%", "June 2025", "Percent of U.S. public schools", "1.2 percentage points", "No student participation rate"],

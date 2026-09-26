@@ -1,6 +1,6 @@
-@import url("reading.css?v=20260907-reading-completion");
+@import url("reading.css?v=20260925-void-plates");
 @import url("art.css?v=20260925-human-notebook");
-@import url("plate.css?v=20260925-void-plates");
+@import url("plate.css?v=20260925-void-integration");
 @font-face{font-family:Hanken;src:url("fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:Conso;src:url("fonts/conso-regular.woff2") format("woff2");font-display:swap}
 :root{color-scheme:dark;--paper:#070406;--ink:#eaf5f6;--soft:#94afb4;--rule:rgba(142,227,242,.3);--focus:#8ee3f2;--panel:#0b070a;--reading:68ch}
@@ -45,11 +45,15 @@ details[open]>summary{margin-bottom:1rem}
 .publication-article th,.publication-article td{padding:.75rem;text-align:left;vertical-align:top;border:1px solid var(--rule);font-size:1rem;line-height:1.55}
 .publication-article th{font-weight:650}
 .publication-figure-table th:first-child{min-width:5rem;overflow-wrap:normal}
+/* Under 40rem a data-stack figure table reads as one record per row, as the shared table component does. */
+@media screen and (max-width:40rem){.publication-figure-table[data-stack]{min-width:0}.publication-figure-table[data-stack],.publication-figure-table[data-stack] :is(tbody,tr,th,td){display:block;width:auto}.publication-figure-table[data-stack] caption{display:block;margin-bottom:.5rem;text-align:left}.publication-figure-table[data-stack] thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}.publication-figure-table[data-stack] tbody tr{padding:.75rem 0;border-bottom:1px solid var(--rule)}.publication-article .publication-figure-table[data-stack] tbody :is(th,td){padding:.2rem 0;border:0}.publication-article .publication-figure-table[data-stack] tbody th[scope=row]{min-width:0;padding-bottom:.4rem}.publication-figure-table[data-stack] tbody td[data-label]{display:grid;grid-template-columns:minmax(6.5rem,40%) minmax(0,1fr);column-gap:.75rem;align-items:baseline}.publication-figure-table[data-stack] tbody td[data-label]::before{content:attr(data-label);font-weight:600;font-size:.875rem;color:var(--soft)}}
 .publication-evidence{display:grid;grid-template-columns:minmax(8rem,10rem) minmax(0,1fr);gap:.75rem 1.5rem;font-size:.95rem;line-height:1.65}
 .publication-evidence dt{color:var(--soft)}
 .publication-evidence dd{margin:0}
 .publication-article a{color:var(--focus);text-decoration-thickness:.07em;text-underline-offset:.2em}
 .publication-article a:focus-visible,.publication-article summary:focus-visible,.publication-table-wrap:focus-visible,.skip-link:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+/* The article and figure pages read on a calm ground; the field stays in the gutters. */
+html:root main:is(.publication-article,.publication-figure-page):not(#_){background-color:var(--paper)}
 .skip-link{position:absolute;left:1rem;top:-8rem;padding:.6rem .8rem;background:var(--paper);color:var(--ink);z-index:10}
 .skip-link:focus{top:1rem}
 @media(max-width:40rem){.publication-static-nav,.publication-article{width:calc(100% - 2rem)}.publication-static-nav{gap:.25rem 1rem}.publication-home{flex-basis:100%}.publication-article{font-size:1.0625rem}.publication-evidence{grid-template-columns:1fr;gap:.25rem}.publication-evidence dt{margin-top:.7rem}.publication-article h1{font-size:clamp(2rem,8vw,2.8rem)}}

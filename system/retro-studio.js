@@ -474,7 +474,7 @@ function boot() {
   }
 
   async function renderPlate() {
-    if (!renderSpecimen) { const mod = await import("./generative-field.js"); renderSpecimen = mod.renderSpecimen || mod.renderPlate || null; }
+    if (!renderSpecimen) { const mod = await import("./generative-field.js?v=20260925-void-plates"); renderSpecimen = mod.renderSpecimen || mod.renderPlate || null; }
     if (!renderSpecimen) { status("generative engine unavailable", "err"); return; }
     const layers = $("re-layers").value.split(",").map((s) => s.trim()).filter(Boolean);
     try { renderSpecimen(srcCanvas, $("re-seed").value || "folded-light", layers); status(""); }
