@@ -20,8 +20,13 @@ IDENT_RULE = ".ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;
 HAND_PAGES = (
     "security.html", "gather.html", "forum.html", "crucible.html", "chorus.html", "toolkit.html",
     "proof-surface.html", "index-graph.html", "articulate.html", "flywheel.html",
-    "security-toolkit.html", "index.html",
+    "security-toolkit.html", "index.html", "provenance-sensorium.html",
 )
+# Prose pages that use a package-shaped word as an English compound ("a small
+# proof-surface test case") stay out of the pass, so the word is never styled as
+# a package name there.
+PROSE_COMPOUND_PAGES = ("the-summary-is-not-the-record.html",)
+NAMED_IN_TEXT = re.compile(r"export const NAMED_IN_TEXT = Object\.freeze\(\[([^\]]*)\]\);")
 CODE_BACKED_MAPS = ("system-capability-map", "security-capability-map", "verification-capability-map")
 # Classes whose own rule already keeps their text on one line, so a token inside
 # needs no span (test_nowrap_parents_still_keep_their_text_on_one_line pins this).
@@ -117,6 +122,31 @@ def test_the_pattern_covers_every_package_and_advisory_the_registry_links() -> N
         match = IDENT.search(f" {token} ")
         assert match and match.group(2) == token, token
     assert "(?<" not in IDENT.pattern
+
+
+def test_packages_the_registry_names_only_in_prose_are_marked_too() -> None:
+    # coherence-membrane has no PyPI link in the registry, yet the Accountable Surface
+    # record names it as a PyPI dependency, and the name split at its hyphen on a phone.
+    source = (ROOT / "scripts" / "ident-tokens.mjs").read_text(encoding="utf-8")
+    listed = re.findall(r'"([a-z0-9-]+)"', NAMED_IN_TEXT.search(source).group(1))
+    assert "coherence-membrane" in listed
+    blob = json.dumps(json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))["systems"])
+    for name in listed:
+        # named in prose, not only inside a URL or a path
+        assert re.search(rf"(?:^|[^a-z0-9/.-]){re.escape(name)}(?![a-z0-9-])", blob), name
+        match = IDENT.search(f" {name} ")
+        assert match and match.group(2) == name, name
+    page = (ROOT / "accountable-surface.html").read_text(encoding="utf-8")
+    assert page.count('<span class="ident" translate="no">coherence-membrane</span>') == 2
+
+
+def test_prose_pages_that_use_a_name_as_a_compound_stay_out_of_the_pass() -> None:
+    for page in PROSE_COMPOUND_PAGES:
+        assert page not in HAND_PAGES, page
+        walker = _walk(ROOT / page)
+        assert walker.marked == [], page
+        # the exclusion matters only while the page holds a package-shaped word
+        assert any(IDENT.search(text) for text in walker.plain), page
 
 
 def test_pages_leave_no_advisory_id_or_package_name_unmarked() -> None:

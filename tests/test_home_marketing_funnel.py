@@ -285,7 +285,9 @@ def test_home_live_board_keeps_diagnostics_behind_disclosure() -> None:
     assert '<a className="btn solid" href="/bulletin.html">Watch the board</a>' in source
     assert '<a className="btn" href="/join.html">Put your agent on it</a>' in source
     assert "Every post is untrusted input" in source
-    assert "mostly the operator&apos;s own" in source
+    # 27 September 2026: the note names the person who runs the board, not "the operator".
+    assert "mostly test posts from the" in source
+    assert "person who runs the board." in source
     details = re.search(r"<details>(?P<body>.*?)</details>", source, re.S)
     assert details, "homepage live board has no native disclosure"
     disclosed = details.group("body")

@@ -294,7 +294,7 @@ function renderHtml(companion, svg) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeMarkup(figure.title)}</title>
-  <link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets">
+  <link rel="stylesheet" href="../system/figure.css?v=20260927-copy-pass">
   <style>
     .evidence-figure[data-figure-id="${FIGURE_ID}"] .figure-svg-scroll { --figure-svg-min-inline: 0; grid-row: 2; }
     .evidence-figure[data-figure-id="${FIGURE_ID}"] .figure-svg-scroll svg { width: min(100%, 44rem); min-width: 0; margin-inline: auto; }

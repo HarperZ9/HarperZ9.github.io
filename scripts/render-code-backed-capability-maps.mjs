@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { identPattern, markIdents, packageNames } from "./ident-tokens.mjs";
-import { relationLabel } from "./relation-wording.mjs";
+import { relationLabel, relationWording } from "./relation-wording.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -78,6 +78,13 @@ const compareByName = (left, right) => left.name.localeCompare(right.name, "en")
 // on every surface. relationLabel throws when a key has no wording.
 function relationshipLabel(relation) {
   return relationLabel(relation.relation);
+}
+
+// An edge's tooltip is the record page's sentence: "Flywheel includes Relay as a
+// lane", never the joined label between two names.
+function relationshipSentence(relation, source, target) {
+  const { before, after } = relationWording(relation.relation);
+  return [source.name, before, target.name, after].filter(Boolean).join(" ");
 }
 
 function selectSystems(configuration) {
@@ -174,7 +181,7 @@ function renderRelationshipSvg(configuration, systems, relations) {
     const label = relationshipLabel(relation);
     return `${renderNode(source, leftX, y, nodeWidth, `source-${index}`)}
   <path data-relationship-edge="true" data-edge-type="${escapeXml(relation.relation)}" d="M${leftX + nodeWidth} ${lineY} H${rightX}" class="cm-edge" marker-end="url(#${configuration.id}-arrow)">
-    <title>${escapeXml(source.name)} ${escapeXml(label)} ${escapeXml(target.name)}</title>
+    <title>${escapeXml(relationshipSentence(relation, source, target))}</title>
   </path>
   <text x="600" y="${lineY - 10}" text-anchor="middle" class="mono relation-label" font-size="17">${escapeXml(label)}</text>
   ${renderNode(target, rightX, y, nodeWidth, `target-${index}`)}`;
@@ -230,7 +237,7 @@ function renderHtml(configuration, systems, relations, svg, retrievedAt) {
     : `<tr><td colspan="5">No typed implementation relationship is asserted among the systems in this view.</td></tr>`;
   return `<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(configuration.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets"><style>.nowrap{white-space:nowrap}.map-records section + section{margin-block-start:1.5rem}.map-records .figure-table :is(th,td){overflow-wrap:break-word}.map-records section:first-child .figure-table :is(th,td):nth-child(-n+3){min-width:7rem}@media (max-width:40rem){.map-records .figure-table-wrap{display:block}}</style></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeXml(configuration.title)}</title><link rel="stylesheet" href="../system/figure.css?v=20260927-copy-pass"><style>.nowrap{white-space:nowrap}.map-records section + section{margin-block-start:1.5rem}.map-records .figure-table :is(th,td){overflow-wrap:break-word}.map-records section:first-child .figure-table :is(th,td):nth-child(-n+3){min-width:7rem}@media (max-width:40rem){.map-records .figure-table-wrap{display:block}}</style></head>
 <body class="figure-document"><a class="skip-link" href="#${configuration.id}-relationship-records">Skip to the relationship records</a><main><figure class="evidence-figure" data-evidence-figure data-figure-kind="relationship">
   <figcaption class="figure-heading"><h1>${escapeXml(configuration.title).replace(/(\S+-\S+)/g, '<span class="nowrap">$1</span>')}</h1><p class="figure-description">${escapeXml(configuration.description)}</p><p class="figure-claim figure-finding">${escapeXml(configuration.claim)}</p></figcaption>
   <div class="figure-svg-scroll" tabindex="0" aria-label="Scrollable visualization for ${escapeXml(configuration.title)}">${svg}

@@ -25,7 +25,7 @@ RELEASE_PATHS = (
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
     "assets/index-DuXEIE3Q.js",
-    "assets/index-BzE0lc-H.js",
+    "assets/index-9egMTEOG.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -388,7 +388,14 @@ RELEASE_PATHS = (
 # no-wrap .built-stat stay unmarked, and code inside a marked span takes no extra
 # leading. The home bundle is index-BzE0lc-H.js; the intermediate index-CGMskzEB.js
 # was never published and is gone.
-REVIEWED_RELEASE_SHA256 = "4efa2e46b8d07fb7340c2820a602aba2848e5eb881c15f2ef61de4e6e9b3b47b"
+# September 27, 2026, copy pass, review fixes: the home board note and the Bulletin
+# page name the person who runs the board in place of "operator"; capability-map
+# edge titles read as the record-page sentence; coherence-membrane joins the marked
+# package names; record social cards carry their image's content hash as ?v=;
+# system.css, figure.css and catalog.css move to the 20260927-copy-pass key on every
+# page and generator that links them; provenance-sensorium.html is marked. The home
+# bundle is index-9egMTEOG.js; index-BzE0lc-H.js was never published and is gone.
+REVIEWED_RELEASE_SHA256 = "be5f9c6966a2dd143a617e2f34930f3786b3f9403f037dd9cdc4c9ee756e0f4a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -541,9 +548,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # each marked token. index-DuXEIE3Q.js and index-BORSyU4q.css stay as retained
     # history. The intermediate builds index-Brb2IBwO.js and index-CGMskzEB.js were
     # never published and are gone.
-    current_js = "index-BzE0lc-H.js"
+    # September 27, 2026, copy pass, review fixes: the rebuilt bundle names the person
+    # who runs the board in the live board note and marks coherence-membrane; it is
+    # index-9egMTEOG.js with the same sheet, and index-BzE0lc-H.js, never published,
+    # is gone.
+    current_js = "index-9egMTEOG.js"
     for unpublished_js in (
         "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
+        "index-BzE0lc-H.js",
     ):
         assert not (ROOT / "assets" / unpublished_js).exists()
         assert f"assets/{unpublished_js}" not in RELEASE_PATHS

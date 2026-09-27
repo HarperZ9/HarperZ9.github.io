@@ -10,6 +10,7 @@
 // tests/test_project_copy_ground_truth.py enforces that this is the only name
 // a deployable page may cite, so treat this script as their sole writer. Run it
 // after any edit to system/systems.json.
+import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -211,7 +212,7 @@ const COLOPHON = '<footer class="sys-colophon"><p>Built by Zain Dana Harper.</p>
 // The index pages sit at the site root. The art sheet swaps the plate with the theme,
 // and both pages link the family sheet.
 const INDEX_ASSETS = {
-  sheets: ["system/system.css?v=20260925-void-plates", "system/art.css?v=20260925-human-notebook", CATALOG_SHEET],
+  sheets: ["system/system.css?v=20260927-copy-pass", "system/art.css?v=20260925-human-notebook", CATALOG_SHEET],
   navScript: "system/nav.js?v=20260909-pillar-navigation",
 };
 
@@ -273,9 +274,20 @@ const cardById = new Map(
     JSON.parse(cardSource.slice(cardSource.indexOf("{"), cardSource.lastIndexOf("}") + 1)),
   ),
 );
+// Each record's card URL carries the first 12 hex digits of the image's SHA-256,
+// so a platform that cached the old picture fetches the new one
+// (system-record-head.mjs). A record page never points at a missing card.
+const cardVersionById = new Map();
+for (const id of RECORD_PAGES) {
+  const card = cardById.get(id);
+  if (!card || !card.constellationCard) continue;
+  const bytes = await readFile(resolve(root, card.imagePath));
+  cardVersionById.set(id, createHash("sha256").update(bytes).digest("hex").slice(0, 12));
+}
 const recordContext = {
   artAlt,
   cardById,
+  cardVersionById,
   registry,
   systemById: new Map(registry.systems.map((system) => [system.id, system])),
   domainById,

@@ -2,7 +2,8 @@
 //
 // Pages wrap each token in .ident (scripts/ident-tokens.mjs). At 320, 375 and 390 px, with
 // every <details> open, each token that fits its container must sit on one line, and no
-// token may reach past the viewport. A token in a box that scrolls sideways (a wide figure
+// token may reach past the viewport or past the edge of an ancestor that hides overflow.
+// A token in a box that scrolls sideways (overflow-x auto or scroll, as on a wide figure
 // table) must always sit on one line, since the box scrolls instead. Anywhere else a token
 // wider than its container may wrap inside itself; that is the rule's fallback, and it is
 // counted but not failed.
@@ -17,6 +18,7 @@ const PAGES = [
   'catalog.html', 'overview.html', 'site-index.html', 'toolkit.html', 'index-graph.html',
   'chorus.html', 'proof-surface.html', 'security-toolkit.html', 'flywheel.html',
   'articulate.html', 'figures/system-capability-map.html', 'figures/verification-capability-map.html', 'index.html',
+  'provenance-sensorium.html',
 ];
 
 function probe() {
@@ -36,12 +38,19 @@ function probe() {
     // the comma after it sit on one line even though their tops differ.
     const overlaps = (a, b) => Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5 * Math.min(a.bottom - a.top, b.bottom - b.top);
     const lines = [];
+    // The token's ink is where its text is drawn. Text held on one line can run past the
+    // token's own box, so the edges below come from the text and the box together.
+    let inkLeft = box.left;
+    let inkRight = box.right;
     const texts = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     for (let node = texts.nextNode(); node; node = texts.nextNode()) {
       const range = document.createRange();
       range.selectNodeContents(node);
       for (const rect of range.getClientRects()) {
-        if (rect.width > 0.5 && !lines.some((line) => overlaps(line, rect))) lines.push(rect);
+        if (rect.width <= 0.5) continue;
+        inkLeft = Math.min(inkLeft, rect.left);
+        inkRight = Math.max(inkRight, rect.right);
+        if (!lines.some((line) => overlaps(line, rect))) lines.push(rect);
       }
     }
     // The natural width is measured on a copy of the token, so inner code keeps its face.
@@ -54,10 +63,23 @@ function probe() {
     const style = getComputedStyle(container);
     const room = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
     // A token inside a sideways-scrolling box (a wide figure table) moves with that box
-    // and cannot widen the page, so only the others are held to the viewport.
+    // and cannot widen the page, so only the others are held to the viewport. Only auto
+    // and scroll make such a box. A hidden or clip ancestor cuts off whatever passes its
+    // edge, so a token there must sit inside that ancestor's padding box. The walk stops
+    // at the first scrolling box, which owns everything inside it.
     let scrolled = false;
+    let clippedBy = null;
     for (let node = el.parentElement; node && node !== document.body; node = node.parentElement) {
-      if (getComputedStyle(node).overflowX !== 'visible') { scrolled = true; break; }
+      const overflowX = getComputedStyle(node).overflowX;
+      if (overflowX === 'auto' || overflowX === 'scroll') { scrolled = true; break; }
+      if ((overflowX === 'hidden' || overflowX === 'clip') && node.clientWidth > 1 && !clippedBy) {
+        const outer = node.getBoundingClientRect();
+        const left = outer.left + node.clientLeft;
+        const right = left + node.clientWidth;
+        if (inkLeft < left - 1 || inkRight > right + 1) {
+          clippedBy = `${node.tagName.toLowerCase()}${node.className ? `.${String(node.className).trim().split(/\s+/).join('.')}` : ''}`;
+        }
+      }
     }
     // Punctuation touching the token from outside must share a line with it.
     const boxes = [...el.getClientRects()];
@@ -82,8 +104,9 @@ function probe() {
       token: el.textContent,
       lines: lines.length,
       fits: natural <= room + 0.5,
-      right: box.right,
+      right: inkRight,
       scrolled,
+      clippedBy,
       strandedAfter: neighbour(true),
       strandedBefore: neighbour(false),
     });
@@ -120,6 +143,7 @@ function probe() {
           if (!item.scrolled) {
             assert.ok(item.right <= viewport + 1, `${path}@${width}: "${item.token}" reaches past the viewport (${Math.round(item.right)} > ${viewport})`);
           }
+          assert.equal(item.clippedBy, null, `${path}@${width}: "${item.token}" is cut off by ${item.clippedBy}, which hides what passes its edge`);
           assert.equal(item.strandedAfter, null, `${path}@${width}: "${item.strandedAfter}" after "${item.token}" starts a line alone`);
           assert.equal(item.strandedBefore, null, `${path}@${width}: "${item.strandedBefore}" before "${item.token}" ends a line alone`);
         }

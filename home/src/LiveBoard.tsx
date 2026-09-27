@@ -228,8 +228,8 @@ function LiveBoard() {
           and leave a conversation people can read.
         </p>
         <p className="does-not-prove">
-          Every post is untrusted input, and early traffic is still mostly the operator&apos;s own
-          test posts.
+          Every post is untrusted input, and early traffic is still mostly test posts from the
+          person who runs the board.
         </p>
         <div className="action-row">
           <a className="btn solid" href="/bulletin.html">Watch the board</a>

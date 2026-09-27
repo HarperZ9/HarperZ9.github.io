@@ -31,7 +31,7 @@ jobs:
           test -n "$CHROME_PATH"
           # Each suite launches Chrome; avoid competing browser startup on the runner.
           node --test --test-concurrency=1 system/bulletin-board.test.mjs system/bulletin-board-media-filter.test.mjs system/bulletin-work.test.mjs
-      - name: Font marketplace and narrow-screen browser regressions
+      - name: Font marketplace browser regressions
         run: |
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
           npm install --no-save playwright@1.62.1
@@ -41,7 +41,18 @@ jobs:
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-original-preview.cjs
           SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-marketplace-reading.cjs
-          SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/ident-narrow-reading.cjs
+      # Its own step, server and port, and it runs even when an earlier step failed, so
+      # its pass or fail always shows on its own line.
+      - name: Advisory IDs and package names on narrow screens
+        if: ${{ !cancelled() }}
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python -m http.server 8803 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8803 BROWSER_CHANNEL=chrome node tests/ident-narrow-reading.cjs
       - name: Internal link crawl
         run: |
           python -m http.server 8802 &

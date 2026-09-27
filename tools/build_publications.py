@@ -293,7 +293,7 @@ def render_figure_html(figure: dict, sources: list[dict]) -> str:
     )
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260925-void-sheets"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
+<title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260927-copy-pass"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { identPattern, identSource, markIdents, packageNames } from '../scripts/ident-tokens.mjs';
+import { identPattern, identSource, markIdents, NAMED_IN_TEXT, packageNames } from '../scripts/ident-tokens.mjs';
 
 const registry = JSON.parse(readFileSync(new URL('../system/systems.json', import.meta.url), 'utf8'));
 const names = packageNames(registry);
@@ -18,6 +18,19 @@ test('package names come from the registry and each one has a hyphen', () => {
   }
   assert.ok(names.every((name) => /^[a-z0-9]+(?:-[a-z0-9]+)+$/.test(name)));
   assert.ok(!names.includes('emet'), 'a name with no hyphen cannot break and is left out');
+});
+
+test('a package the registry names only in prose counts while the prose still names it', () => {
+  assert.ok(NAMED_IN_TEXT.includes('coherence-membrane'));
+  assert.ok(names.includes('coherence-membrane'));
+  assert.equal(
+    markIdents('<p>its dependencies coherence-membrane 0.1.0 and proof-surface 0.1.0</p>', pattern),
+    `<p>its dependencies ${wrap('coherence-membrane')} 0.1.0 and ${wrap('proof-surface')} 0.1.0</p>`,
+  );
+  const linkOnly = { systems: [{ sourceHref: 'https://github.com/HarperZ9/coherence-membrane' }] };
+  assert.ok(!packageNames(linkOnly).includes('coherence-membrane'), 'a URL alone does not name the package');
+  assert.ok(!packageNames({ systems: [] }).includes('coherence-membrane'), 'no sentence, no entry');
+  assert.ok(packageNames({ systems: [{ note: 'installs coherence-membrane 0.1.0' }] }).includes('coherence-membrane'));
 });
 
 test('advisory IDs and package names, with a pinned version, are wrapped whole', () => {

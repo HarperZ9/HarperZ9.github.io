@@ -8,6 +8,13 @@
 // evidence links to, every name its install commands install, and every PyPI
 // name its text says belongs to another publisher. Only hyphenated names can
 // break, so only they are kept.
+//
+// NAMED_IN_TEXT lists the few packages the registry names in prose without a
+// link or an install command. coherence-membrane is one: the Accountable Surface
+// record says PyPI installed it as a dependency, and it has no record of its own
+// to link from. A name here counts only while the registry text still names it,
+// so an entry cannot outlive the sentence that needs it.
+// tests/test_ident_tokens.py checks each entry against the registry.
 
 const GHSA = "GHSA(?:-[0-9a-z]{4}){3}";
 const NAME = /^[a-z0-9]+(?:-[a-z0-9]+)+$/;
@@ -17,6 +24,7 @@ const SOURCES = [
   /(?:pip install(?: -U| --upgrade)?|pipx install|npm install(?: -g)?|npx(?: -y)?)\s+([a-z0-9][a-z0-9-]*[a-z0-9])/g,
   /PyPI name ([a-z0-9][a-z0-9-]*[a-z0-9])/g,
 ];
+export const NAMED_IN_TEXT = Object.freeze(["coherence-membrane"]);
 
 export function packageNames(registry) {
   const names = new Set();
@@ -26,6 +34,9 @@ export function packageNames(registry) {
       const name = match[1].toLowerCase();
       if (NAME.test(name)) names.add(name);
     }
+  }
+  for (const name of NAMED_IN_TEXT) {
+    if (new RegExp(`(?:^|[^a-z0-9/.-])${name}(?![a-z0-9-])`).test(text)) names.add(name);
   }
   return [...names].sort();
 }
