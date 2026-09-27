@@ -24,6 +24,7 @@ RELEASE_PATHS = (
     "assets/index-JJHLIJUt.js",
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
+    "assets/index-RXS41pPF.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -359,7 +360,11 @@ RELEASE_PATHS = (
 # (index-D4UoCuIT.js) regenerate from the registry. The review pass moves Chorus to
 # 0.3.1 on PyPI, drops commit hashes from the lane summaries on the home page and
 # lists the home evidence newest first.
-REVIEWED_RELEASE_SHA256 = "4a6f12b617bb2cd736a699bdd43ec9e29ad6e30dacb2b413207c8fd596aada00"
+# September 27, 2026: Forum 1.15.1, Gather 1.9.1 and Relay 0.5.0 with the five
+# advisories published that day; the security plate lists twelve advisories and
+# the five Flywheel 1.0.4 lane pins inside their ranges; the home bundle rebuilt
+# from the refreshed registry is index-RXS41pPF.js.
+REVIEWED_RELEASE_SHA256 = "ec0671d76c14b8ef398d7db38d0316fd478e8ab701cd3eee2976c63f9642cecd"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -502,7 +507,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # both retired pairs stay in the release tree as retained history.
     # September 26, 2026, facts pass: the home bundle rebuilt from the refreshed
     # registry is index-D4UoCuIT.js; the void-plates bundle stays as retained history.
-    current_js = "index-D4UoCuIT.js"
+    # September 27, 2026: the bundle rebuilt for the 27 September releases and
+    # advisories is index-RXS41pPF.js; index-D4UoCuIT.js stays as retained history.
+    current_js = "index-RXS41pPF.js"
+    previous_facts_js = "index-D4UoCuIT.js"
+    assert previous_facts_js not in source
+    assert (ROOT / "assets" / previous_facts_js).is_file()
+    assert f"assets/{previous_facts_js}" in RELEASE_PATHS
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
