@@ -593,3 +593,49 @@ def test_gather_171_evidence_remains_after_current_release_update() -> None:
         assert "example.com/article" not in source
         assert "source bytes are normalized to LF" not in source
 
+
+def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> None:
+    """The security plate and the registry name the same advisories, each linked once.
+
+    A new advisory recorded in the registry without a plate row, or a plate row with no
+    registry record, fails here. 2026-09-27: twelve advisories across six tools.
+    """
+    registry = json.loads(read("system/systems.json"))
+    page = read("security.html")
+    recorded = {}
+    for system in registry["systems"]:
+        for item in system["evidence"]:
+            if item["type"] == "advisory":
+                ghsa = re.search(r"GHSA(?:-[a-z0-9]{4}){3}", item["href"]).group(0)
+                recorded[ghsa] = item["href"]
+    listed = re.findall(r'Advisory <span translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>', page)
+    assert len(listed) == len(set(listed)), "an advisory is listed twice"
+    assert set(listed) == set(recorded)
+    assert len(recorded) == 12
+    for ghsa, href in recorded.items():
+        assert f'href="{href}"' in page
+
+    # Every lane pin that sits inside an advisory range is named, Mneme stays outside.
+    for pin in ("crucible-bench</code> 1.2.0", "gather-engine</code> 1.8.2",
+                "flywheel-relay</code> 0.2.5", "flywheel-canon</code> 0.2.0",
+                "forum-engine</code> 1.14.0"):
+        assert pin in page
+    assert "five of these lanes</a>" in page
+    assert "four of these lanes" not in page
+    assert "Its Mneme pin, 0.4.2, is outside the Mneme advisory." in page
+
+    # The null names only tools that have no advisory in the registry.
+    null = page[page.index("No other tool in the catalog"):]
+    null = null[: null.index("</p>")]
+    assert "as of 27 September 2026" in null
+    includes = null.split("That includes ", 1)[1].split(".", 1)[0]
+    assert includes == "Flywheel, Articulate, Index and Accountable Surface"
+    with_advisory = {
+        system["name"]
+        for system in registry["systems"]
+        if any(item["type"] == "advisory" for item in system["evidence"])
+    }
+    assert with_advisory == {"Gather", "Relay", "Forum", "Crucible", "Canon", "Mneme"}
+    for name in with_advisory:
+        assert name not in includes
+    assert "evidence through 2026-09-27" in page
