@@ -7,16 +7,19 @@
 // The pages' own styles live in system/catalog.css. The catalog, the product map
 // and the record pages all link it, so the browser caches one copy.
 // CATALOG_REVISION is the key the sitewide contract test accepts for the sheet;
-// bump it only when that test names a reviewed key.
+// bump it only when that test names a reviewed key. 27 September 2026, copy pass:
+// record facts keep flex only on the status fact, and a cached sheet from before
+// that would split a marked package name in the release fact into its own flex
+// item, so the key moves with the markup, as system.css's does for the .ident rule.
 import { artPlate, escapeCopy, escapeHtml, linkRow, maturityState, MIDDOT } from "./system-page-parts.mjs";
 
-const CATALOG_REVISION = "20260925-void-plates";
+const CATALOG_REVISION = "20260927-copy-pass";
 export const CATALOG_SHEET = `system/catalog.css?v=${CATALOG_REVISION}`;
 
 // Record pages sit at more than one depth, so their assets are origin-absolute.
 // The art sheet swaps the record's plate with the theme.
 const RECORD_SHEETS = [
-  "/system/system.css?v=20260925-void-plates",
+  "/system/system.css?v=20260927-copy-pass",
   "/system/art.css?v=20260925-human-notebook",
   `/${CATALOG_SHEET}`,
 ];
@@ -68,6 +71,11 @@ export function renderIndexHead({ href, title, description, social, cardAlt, nos
 
 // A constellation card is the one social image a record page is allowed to
 // claim. Records without one fall back to a text summary card.
+//
+// A social platform caches a card image by its URL, so the URL carries the
+// image's own content hash (ctx.cardVersionById, from render-system-pages.mjs).
+// A re-rendered card gets a new URL and its new alt text never sits beside the
+// old picture; an unchanged card keeps its URL.
 function social(system, ctx) {
   const name = escapeHtml(system.name);
   const purpose = escapeCopy(system.purpose);
@@ -88,7 +96,9 @@ function social(system, ctx) {
       ])
       .join("");
   }
-  const image = `https://harperz9.github.io/${escapeHtml(card.imagePath)}`;
+  const version = ctx.cardVersionById.get(system.id);
+  if (!version) throw new Error(`${system.id}: no content version for ${card.imagePath}`);
+  const image = `https://harperz9.github.io/${escapeHtml(card.imagePath)}?v=${version}`;
   const alt = escapeHtml(`${card.routeTitle} social card. ${card.headline}`);
   return shared
     .concat([

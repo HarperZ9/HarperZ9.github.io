@@ -10,6 +10,7 @@
 // tests/test_project_copy_ground_truth.py enforces that this is the only name
 // a deployable page may cite, so treat this script as their sole writer. Run it
 // after any edit to system/systems.json.
+import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,6 +28,7 @@ import {
   rowHeading,
   statusFacts,
 } from "./system-page-parts.mjs";
+import { identPattern, markIdents, packageNames } from "./ident-tokens.mjs";
 import { CATALOG_SHEET, renderIndexHead } from "./system-record-head.mjs";
 import { renderRecordPage } from "./system-record-page.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
@@ -35,6 +37,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const registry = validateRegistry(
   JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8")),
 );
+// Advisory IDs and package names in page text stay whole on narrow screens.
+const IDENTS = identPattern(packageNames(registry));
+const withIdents = (html) => markIdents(html, IDENTS);
 const artAlt = JSON.parse(await readFile(resolve(root, "art", "aperture", "covers.json"), "utf8")).alt;
 
 // The map omits controlled-private products. Their boundary pages are still
@@ -207,7 +212,7 @@ const COLOPHON = '<footer class="sys-colophon"><p>Built by Zain Dana Harper.</p>
 // The index pages sit at the site root. The art sheet swaps the plate with the theme,
 // and both pages link the family sheet.
 const INDEX_ASSETS = {
-  sheets: ["system/system.css?v=20260925-void-plates", "system/art.css?v=20260925-human-notebook", CATALOG_SHEET],
+  sheets: ["system/system.css?v=20260927-copy-pass", "system/art.css?v=20260925-human-notebook", CATALOG_SHEET],
   navScript: "system/nav.js?v=20260909-pillar-navigation",
 };
 
@@ -234,12 +239,12 @@ const OVERVIEW_HEAD = renderIndexHead({
 
 await writeFile(
   resolve(root, "catalog.html"),
-  `${CATALOG_HEAD}<main id="main" class="sys-index">${CATALOG_POSTER}${catalogMain}</main>${COLOPHON}</body></html>\n`,
+  withIdents(`${CATALOG_HEAD}<main id="main" class="sys-index">${CATALOG_POSTER}${catalogMain}</main>${COLOPHON}</body></html>\n`),
   "utf8",
 );
 await writeFile(
   resolve(root, "overview.html"),
-  `${OVERVIEW_HEAD}<main id="main" class="sys-index">${OVERVIEW_POSTER}${OVERVIEW_ROUTES}${overviewMain}</main>${COLOPHON}</body></html>\n`,
+  withIdents(`${OVERVIEW_HEAD}<main id="main" class="sys-index">${OVERVIEW_POSTER}${OVERVIEW_ROUTES}${overviewMain}</main>${COLOPHON}</body></html>\n`),
   "utf8",
 );
 
@@ -269,9 +274,20 @@ const cardById = new Map(
     JSON.parse(cardSource.slice(cardSource.indexOf("{"), cardSource.lastIndexOf("}") + 1)),
   ),
 );
+// Each record's card URL carries the first 12 hex digits of the image's SHA-256,
+// so a platform that cached the old picture fetches the new one
+// (system-record-head.mjs). A record page never points at a missing card.
+const cardVersionById = new Map();
+for (const id of RECORD_PAGES) {
+  const card = cardById.get(id);
+  if (!card || !card.constellationCard) continue;
+  const bytes = await readFile(resolve(root, card.imagePath));
+  cardVersionById.set(id, createHash("sha256").update(bytes).digest("hex").slice(0, 12));
+}
 const recordContext = {
   artAlt,
   cardById,
+  cardVersionById,
   registry,
   systemById: new Map(registry.systems.map((system) => [system.id, system])),
   domainById,
@@ -280,7 +296,7 @@ const recordContext = {
 for (const id of RECORD_PAGES) {
   const system = recordContext.systemById.get(id);
   if (!system) throw new Error(`${id}: RECORD_PAGES names a record the registry does not hold`);
-  await writeFile(resolve(root, system.href), renderRecordPage(system, recordContext), "utf8");
+  await writeFile(resolve(root, system.href), withIdents(renderRecordPage(system, recordContext)), "utf8");
 }
 
 console.log(

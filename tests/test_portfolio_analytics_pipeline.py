@@ -1049,7 +1049,7 @@ def test_benchmark_record_uses_the_live_site_chassis_and_no_local_paths(tmp_path
     html, svg, companion = _render_record(tmp_path / "figures")
 
     assert '<div id="site-nav" class="site-nav"></div>' in html
-    assert 'href="../system/system.css?v=20260925-void-plates"' in html
+    assert 'href="../system/system.css?v=20260927-copy-pass"' in html
     assert 'src="../system/nav.js?v=20260909-pillar-navigation"' in html
     assert "<main id=" in html
     assert "<title" in svg and "<desc" in svg

@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+from ident_markup import without_idents
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "overview.html"
@@ -47,7 +49,7 @@ def test_engines_page_is_the_generated_product_overview() -> None:
     assert page.index("Zentropy Labs") < page.index("Flywheel")
     assert '<title>Products · Zentropy Labs</title>' in page
     assert '<body class="inner-clean frame-compact">' in page
-    assert 'href="system/system.css?v=20260925-void-plates"' in page
+    assert 'href="system/system.css?v=20260927-copy-pass"' in page
     assert 'src="system/nav.js?v=20260909-pillar-navigation"' in page
     assert "Products, grouped by primary domain." in page
     assert f"{len(public_records)} public product records across {len(payload['domains'])} domains." in page
@@ -103,7 +105,7 @@ def test_engines_page_routes_to_products_evidence_and_work() -> None:
 
 
 def test_engines_page_release_facts_match_the_system_registry() -> None:
-    page = read(PAGE)
+    page = without_idents(read(PAGE))
     systems = systems_by_id()
 
     for system_id in (

@@ -3,8 +3,8 @@
   "briefingId": "2026-08-26-openai-hugging-face-incident",
   "renderer": "render-publications/v1",
   "postProcessing": {
-    "revision": "20260925-void-sheets",
-    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged. On 25 September 2026 the conceptual trust-boundary figure (figures/control-boundary-flow) was redrawn on the notebook sheet with plain-language labels, a stacked record table and keyboard focus fixes; its figure record keeps every node, edge, state and source, and its three output hashes were refreshed from the edited files. A second pass the same day drew caution in ink so only the verified part carries a verdict hue, numbered every part, gave the page a masthead and kept the figure record's title, description and claim as published; the hashes were refreshed again. On 25 September 2026 the void-and-bone surface pass added the page's aperture cover and the shared art and plate stylesheets; its html hash was refreshed from the edited file. On 25 September 2026 the void-and-bone pass remapped the figure's drawing palette to the bone and void sheet values; nodes, edges, states, numbering and text are unchanged; html and svg hashes refreshed. The same day's integration pass moved the shared stylesheet cache keys on the briefing page and its seven figure pages (system.css to 20260925-void-plates, figure.css to 20260925-void-sheets); their content is unchanged and their html hashes were refreshed from the edited files. On 26 September 2026 the void-plates review pass remapped the other six figures (recovered actions by day, motive sample, source scope matrix, task overrepresentation, claim provenance and the multilane timeline, the last through its renderer) to the bone and void sheet values, squared every rounded rectangle and pill, drew caution hatching in a quiet line tone, and gave each row's focus ring a transparent fill and each label a paper halo so it reads over the hatching; data, labels, states and text are unchanged. The briefing page's claim cards now open on a plain title in place of the claim identifier, which stays as the card's anchor id. html and svg hashes refreshed.",
+    "revision": "20260927-copy-pass",
+    "scope": "Shared navigation cache references and site-index route coverage were refreshed for the pillar-navigation pass; source records and publication edition unchanged. On 25 September 2026 the conceptual trust-boundary figure (figures/control-boundary-flow) was redrawn on the notebook sheet with plain-language labels, a stacked record table and keyboard focus fixes; its figure record keeps every node, edge, state and source, and its three output hashes were refreshed from the edited files. A second pass the same day drew caution in ink so only the verified part carries a verdict hue, numbered every part, gave the page a masthead and kept the figure record's title, description and claim as published; the hashes were refreshed again. On 25 September 2026 the void-and-bone surface pass added the page's aperture cover and the shared art and plate stylesheets; its html hash was refreshed from the edited file. On 25 September 2026 the void-and-bone pass remapped the figure's drawing palette to the bone and void sheet values; nodes, edges, states, numbering and text are unchanged; html and svg hashes refreshed. The same day's integration pass moved the shared stylesheet cache keys on the briefing page and its seven figure pages (system.css to 20260925-void-plates, figure.css to 20260925-void-sheets); their content is unchanged and their html hashes were refreshed from the edited files. On 26 September 2026 the void-plates review pass remapped the other six figures (recovered actions by day, motive sample, source scope matrix, task overrepresentation, claim provenance and the multilane timeline, the last through its renderer) to the bone and void sheet values, squared every rounded rectangle and pill, drew caution hatching in a quiet line tone, and gave each row's focus ring a transparent fill and each label a paper halo so it reads over the hatching; data, labels, states and text are unchanged. The briefing page's claim cards now open on a plain title in place of the claim identifier, which stays as the card's anchor id. html and svg hashes refreshed. On 27 September 2026 the copy pass moved the shared stylesheet cache keys on the briefing page and its seven figure pages (system.css and figure.css to 20260927-copy-pass); their content is unchanged and their html hashes were refreshed from the edited files.",
     "method": "Presentation edits applied after the original render; the incident timeline is reproduced by scripts/render-incident-multilane-timeline.mjs. Output hashes are refreshed from the resulting LF-normalized files.",
     "figureViewBoxOverrides": {
       "incident-multilane-timeline": "0 0 640 6882"
@@ -30,7 +30,7 @@
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/index.html",
-      "sha256": "d119c2bc30206688aa2059764021880e2187959f62e2c30dc2c931c5068a9857"
+      "sha256": "cfad2206de4b18a78d4af396e84fd87a8637687b880969cbb1e80e4f64689012"
     },
     {
       "path": "briefings/2026-08-26-openai-hugging-face-incident/publication.json",
@@ -42,7 +42,7 @@
     },
     {
       "path": "figures/claim-provenance-panel.html",
-      "sha256": "bcb98d521edd0b129f8496fecf85d1cb58a4ddc2bb887f34ff2a801da1bf12d1"
+      "sha256": "12ba9c99b6addba03d6f954b67556de7400ae3fa03e0fe74f39a6fe94b7e41aa"
     },
     {
       "path": "figures/claim-provenance-panel.json",
@@ -54,7 +54,7 @@
     },
     {
       "path": "figures/control-boundary-flow.html",
-      "sha256": "24aa9613bb349d700e5be7efe5bd0133d0b85c1f0192b77bd6c7da284107d714"
+      "sha256": "d9390cf5eea027adf024942b3f4c8def5b6fe63c7546d9d8857cb6a183961c85"
     },
     {
       "path": "figures/control-boundary-flow.json",
@@ -66,7 +66,7 @@
     },
     {
       "path": "figures/incident-multilane-timeline.html",
-      "sha256": "0bbd6a3c5a9ed1e7f974d6721eed2ce92beb53519fd1c351cbb02be7eab87be2"
+      "sha256": "c6af40ee829387fc2bd71997225d40661a175a5c09a2538d10d72ad6ed9270bc"
     },
     {
       "path": "figures/incident-multilane-timeline.json",
@@ -78,7 +78,7 @@
     },
     {
       "path": "figures/motive-sample-nonexclusive.html",
-      "sha256": "0fc558f7b4b2d0d214c8a2e95f2f1758d6cc47ec37e35463818cafc6129c32ed"
+      "sha256": "502af8047e2be4bf35c7b3145d880f3ff6332b3735e270da7d18caaf2558cce6"
     },
     {
       "path": "figures/motive-sample-nonexclusive.json",
@@ -90,7 +90,7 @@
     },
     {
       "path": "figures/recovered-actions-by-day.html",
-      "sha256": "76eba781914ff692a85970b47c603822981c50c7a8db26db804f9b167c8fae22"
+      "sha256": "0875a12861f1449026647e3d289c3f6393a107694c74e2d8d369a63b5e2c6683"
     },
     {
       "path": "figures/recovered-actions-by-day.json",
@@ -102,7 +102,7 @@
     },
     {
       "path": "figures/source-scope-matrix.html",
-      "sha256": "36be38b7998f2e7cbd58846e1ce589489c65c2222278d0e236bf5f1b346eafc8"
+      "sha256": "a806dfefaea0f414dd03f4f0038efcae9395a53ccb031b158873842552749c9b"
     },
     {
       "path": "figures/source-scope-matrix.json",
@@ -114,7 +114,7 @@
     },
     {
       "path": "figures/task-overrepresentation.html",
-      "sha256": "ad9d96b5add45f5c753c8b9c1309f13f86bbc25ed0d6a1f1570f07602a71b1dc"
+      "sha256": "7abf5a0ec56ee2958d00d9c58383dfff9b3da46437a91d036d967240a4680cf2"
     },
     {
       "path": "figures/task-overrepresentation.json",

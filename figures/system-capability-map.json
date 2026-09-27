@@ -234,7 +234,7 @@
             "skyrimbridge-public-source-3-0-0"
           ],
           "claimScope": "Elder ENB exposes optional SkyrimBridge interoperability. This does not make either project a dependency of the other.",
-          "label": "supports an optional runtime integration",
+          "label": "supports an optional runtime integration with",
           "type": "optional-runtime-integration"
         },
         {
@@ -262,7 +262,7 @@
             "accountable-surface-pypi-v0-3-1"
           ],
           "claimScope": "Flywheel 1.0.4 declares Accountable Surface 0.3.1 as an actuation lane with additional Coherence Membrane and Proof Surface source roots.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -276,7 +276,7 @@
             "articulate-pypi-v0-5-0"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.5.0 release, and this relation does not show that Flywheel was tested with 0.5.0.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -290,7 +290,7 @@
             "crucible-release-v1-3-0"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Crucible as its verification MCP lane, pinned to crucible-bench 1.2.0. That pin is inside the range of GHSA-49qx-cj4f-wfqv, fixed in 1.3.0, and this relation does not show that Flywheel was tested with 1.3.0. This does not make Crucible a Flywheel-owned product.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -304,7 +304,7 @@
             "forum-release-v1-15-1"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Forum as its orchestration MCP lane, pinned to forum-engine 1.14.0. That pin is inside the range of one of the two Forum advisories listed on the Security page, and 1.15.1 and later are outside both; this relation does not show that Flywheel was tested with 1.15.1.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -318,7 +318,7 @@
             "gather-release-v1-9-1"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the ranges of the four Gather advisories listed on the Security page, and 1.9.1 and later are outside all four; this relation does not show that Flywheel was tested with 1.9.1. This does not make Gather a Flywheel-owned product.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -332,7 +332,7 @@
             "index-release-v2-13-0"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Index 2.13.0 as its workspace-structure MCP lane. Index remains an independently published package.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -346,7 +346,7 @@
             "learn-public-source"
           ],
           "claimScope": "Flywheel 1.0.4 declares Learn 1.6.0 as a Node MCP lane. Learn remains an independently published package.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -360,7 +360,7 @@
             "mneme-release-v0-5-1"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Mneme as its memory MCP lane, pinned to flywheel-mneme 0.4.2. The pin trails the current 0.5.1 and is outside GHSA-j2pw-g7f4-9ppp, which names 0.5.0 only. Mneme remains an independently published package.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -374,7 +374,7 @@
             "plexus-pypi-v0-2-2"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Plexus 0.2.2 as its capability-mesh and tool-wiring MCP lane. Plexus can probe registered lanes when explicitly requested, but declared mesh edges are not semantic interoperability proof.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -388,7 +388,7 @@
             "relay-release-v0-5-0"
           ],
           "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the ranges of the three Relay advisories listed on the Security page, and 0.5.0 and later are outside all three; this relation does not show that Flywheel was tested with 0.5.0.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -402,7 +402,7 @@
             "telos-release-v0-4-1"
           ],
           "claimScope": "Flywheel 1.0.4 declares the Telos MCP workbench as a lane and disables its package: no npm distribution is published, so the lane runs from a Telos source checkout.",
-          "label": "launches as a configured lane",
+          "label": "includes as a lane",
           "type": "integrates-lane"
         },
         {
@@ -444,7 +444,7 @@
             "skyrimbridge-public-source-3-0-0"
           ],
           "claimScope": "SkyrimBridge is optional for the base optical suite and supplies celestial data used by the current procedural sky path.",
-          "label": "supports an optional runtime integration",
+          "label": "supports an optional runtime integration with",
           "type": "optional-runtime-integration"
         }
       ]

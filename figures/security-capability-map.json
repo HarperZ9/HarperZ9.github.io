@@ -109,7 +109,7 @@
           "id": "orca",
           "label": "ORCA",
           "status": "verified",
-          "stateLabel": "native assessment operator runtime",
+          "stateLabel": "native assessment runtime",
           "group": "Security and privacy",
           "nodeType": "system"
         },

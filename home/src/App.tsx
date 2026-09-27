@@ -4,6 +4,7 @@ import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from 
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
+import { Idents } from "./Idents";
 import "./plate-home.css";
 
 type PublishedBriefing = {
@@ -465,8 +466,8 @@ function ProductSelection() {
           <article className="work-row" key={system.id}>
             <div>
               <h3><a href={localHref(system.href)}>{system.name}</a></h3>
-              <p>{system.purpose}</p>
-              <p className="product-status">{system.releaseState} / {system.maturity}</p>
+              <p><Idents text={system.purpose} /></p>
+              <p className="product-status"><Idents text={system.releaseState} /> / {system.maturity}</p>
             </div>
             <ProductDefinition system={system} />
           </article>
@@ -487,7 +488,7 @@ function ProductDefinition({ system }: { system: SystemRecord }) {
         </div>
         <div>
           <dt>State</dt>
-          <dd>{system.releaseState}</dd>
+          <dd><Idents text={system.releaseState} /></dd>
         </div>
         <div>
           <dt>Verified</dt>
@@ -495,7 +496,7 @@ function ProductDefinition({ system }: { system: SystemRecord }) {
         </div>
         <div>
           <dt>Evidence</dt>
-          <dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd>
+          <dd><a href={evidenceHref(system)}><Idents text={system.evidence[0]?.label ?? system.maturity} /></a></dd>
         </div>
       </dl>
     </details>
@@ -513,7 +514,7 @@ function FeaturedFlywheel() {
       <div>
         <h2 id="flywheel-title">Flagship platform: Flywheel</h2>
         <p className="section-lead">
-          {FLYWHEEL.purpose} The public record stays honest about maturity, separating a shipped release from accepted source, installed acceptance, and external use.
+          <Idents text={FLYWHEEL.purpose} /> The public record stays honest about maturity, separating a shipped release from accepted source, installed acceptance, and external use.
         </p>
         <div className="action-row">
           <a className="text-link" href={localHref(FLYWHEEL.href)}>Inspect Flywheel</a>
@@ -531,15 +532,15 @@ function FeaturedFlywheel() {
             </tr>
             <tr>
               <th scope="row">State</th>
-              <td>{FLYWHEEL.releaseState}</td>
+              <td><Idents text={FLYWHEEL.releaseState} /></td>
             </tr>
             <tr>
               <th scope="row">Release</th>
-              <td>{release ? <a href={release.href}>{release.label}</a> : "No release record"}</td>
+              <td>{release ? <a href={release.href}><Idents text={release.label} /></a> : "No release record"}</td>
             </tr>
             <tr>
               <th scope="row">Accepted source</th>
-              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.href}>{FLYWHEEL_ACCEPTED_SOURCE.label}</a></td>
+              <td><a href={FLYWHEEL_ACCEPTED_SOURCE.href}><Idents text={FLYWHEEL_ACCEPTED_SOURCE.label} /></a></td>
             </tr>
             <tr>
               <th scope="row">Source CI</th>
@@ -551,11 +552,11 @@ function FeaturedFlywheel() {
             </tr>
             <tr>
               <th scope="row">Install</th>
-              <td><code>{FLYWHEEL.entryCommand}</code></td>
+              <td><code><Idents text={FLYWHEEL.entryCommand} /></code></td>
             </tr>
             <tr>
               <th scope="row">Check</th>
-              <td><code>{FLYWHEEL.verificationCommand}</code></td>
+              <td><code><Idents text={FLYWHEEL.verificationCommand} /></code></td>
             </tr>
           </tbody>
         </table>
@@ -595,9 +596,9 @@ function EvidenceBoard() {
               {evidenceRows.map((row) => (
                 <tr data-evidence-row key={row.label}>
                   <th scope="row"><a href={row.href}>{row.measure}</a></th>
-                  <td>{row.label}</td>
-                  <td>{row.source}</td>
-                  <td>{row.note}</td>
+                  <td><Idents text={row.label} /></td>
+                  <td><Idents text={row.source} /></td>
+                  <td><Idents text={row.note} /></td>
                 </tr>
               ))}
             </tbody>
@@ -608,8 +609,8 @@ function EvidenceBoard() {
               {CURRENT_EVIDENCE.map((evidence) => (
                 <li key={`${evidence.systemId}:${evidence.id}`}>
                   <time dateTime={evidence.date}>{evidence.date}</time>
-                  <a href={evidence.href} rel="noopener">{evidence.label}</a>
-                  <span>{evidence.summary}</span>
+                  <a href={evidence.href} rel="noopener"><Idents text={evidence.label} /></a>
+                  <span><Idents text={evidence.summary} /></span>
                 </li>
               ))}
             </ol>
@@ -633,7 +634,7 @@ function ResearchPilotRoutes() {
         {RESEARCH_SUPPORT_ROUTES.map((route) => (
           <a className="route-step" href={route.href} key={route.href}>
             <span>{route.label}</span>
-            <small>{route.summary}</small>
+            <small><Idents text={route.summary} /></small>
           </a>
         ))}
       </div>
@@ -729,11 +730,11 @@ function RetroSystemsLab() {
           <article className="retro-step" key={system.id}>
             <span className="retro-verb">{system.accessMode}</span>
             <h3><a href={localHref(system.href)}>{system.name}</a></h3>
-            <p>{system.purpose}</p>
+            <p><Idents text={system.purpose} /></p>
             <dl className="product-meta">
               <div><dt>Type</dt><dd>{productTypeLabel(system)}</dd></div>
-              <div><dt>State</dt><dd>{system.releaseState}</dd></div>
-              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}>{system.evidence[0]?.label ?? system.maturity}</a></dd></div>
+              <div><dt>State</dt><dd><Idents text={system.releaseState} /></dd></div>
+              <div><dt>Evidence</dt><dd><a href={evidenceHref(system)}><Idents text={system.evidence[0]?.label ?? system.maturity} /></a></dd></div>
             </dl>
           </article>
         ))}
@@ -796,7 +797,7 @@ function HiringRoutes() {
           {HIRING_ENTRY_ROUTES.map((route) => (
             <a className="text-link" href={route.href} key={route.href}>
               <span>{route.label}</span>
-              <small>{route.summary}</small>
+              <small><Idents text={route.summary} /></small>
             </a>
           ))}
           <a className="text-link" href="/cv.html">CV</a>

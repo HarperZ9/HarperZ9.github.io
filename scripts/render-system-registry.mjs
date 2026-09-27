@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
+import { identSource, packageNames } from "./ident-tokens.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
 
@@ -47,6 +48,8 @@ const homeModuleSource = [
   "export const EVIDENCE_STREAM = SYSTEMS.flatMap((system) => system.evidence.map((evidence) => ({ ...evidence, systemId: system.id }))).sort((left, right) => right.date.localeCompare(left.date));",
   "export function systemById(id: string) { return SYSTEMS.find((system) => system.id === id); }",
   "export function relatedSystems(id: string) { const system = systemById(id); return system ? system.related.map((relatedId: string) => systemById(relatedId)).filter(Boolean) : []; }",
+  "// Advisory IDs and package names the home keeps whole (scripts/ident-tokens.mjs).",
+  `export const IDENT_SOURCE = ${JSON.stringify(identSource(packageNames(registry)))};`,
   "",
 ].join("\n");
 

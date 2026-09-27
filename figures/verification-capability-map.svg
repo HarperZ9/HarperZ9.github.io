@@ -36,9 +36,9 @@
     <text x="60" y="279" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 249 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Accountable Surface</title>
+    <title>Flywheel includes Accountable Surface as a lane</title>
   </path>
-  <text x="600" y="239" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="239" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="accountable-surface" data-node-instance="target-1" role="graphics-symbol" aria-label="Accountable Surface. workbench that allows only approved AI agent actions.">
     <rect x="824" y="208" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="235" font-size="18" font-weight="700">Accountable Surface</text>
@@ -52,9 +52,9 @@
     <text x="60" y="391" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 361 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Articulate</title>
+    <title>Flywheel includes Articulate as a lane</title>
   </path>
-  <text x="600" y="351" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="351" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="articulate" data-node-instance="target-2" role="graphics-symbol" aria-label="Articulate. local prose checker.">
     <rect x="824" y="320" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="347" font-size="18" font-weight="700">Articulate</text>
@@ -67,9 +67,9 @@
     <text x="60" y="503" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 473 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Crucible</title>
+    <title>Flywheel includes Crucible as a lane</title>
   </path>
-  <text x="600" y="463" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="463" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="crucible" data-node-instance="target-3" role="graphics-symbol" aria-label="Crucible. engine that tests claims against evidence.">
     <rect x="824" y="432" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="459" font-size="18" font-weight="700">Crucible</text>
@@ -83,9 +83,9 @@
     <text x="60" y="615" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 585 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Forum</title>
+    <title>Flywheel includes Forum as a lane</title>
   </path>
-  <text x="600" y="575" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="575" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="forum" data-node-instance="target-4" role="graphics-symbol" aria-label="Forum. multi-agent orchestration engine.">
     <rect x="824" y="544" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="571" font-size="18" font-weight="700">Forum</text>
@@ -99,9 +99,9 @@
     <text x="60" y="727" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 697 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Index</title>
+    <title>Flywheel includes Index as a lane</title>
   </path>
-  <text x="600" y="687" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="687" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="index" data-node-instance="target-5" role="graphics-symbol" aria-label="Index. workspace map and context system.">
     <rect x="824" y="656" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="683" font-size="18" font-weight="700">Index</text>
@@ -115,9 +115,9 @@
     <text x="60" y="839" class="mono muted" font-size="17">and desktop client</text>
   </g>
   <path data-relationship-edge="true" data-edge-type="integrates-lane" d="M376 809 H824" class="cm-edge" marker-end="url(#verification-capability-map-arrow)">
-    <title>Flywheel launches as a configured lane Mneme</title>
+    <title>Flywheel includes Mneme as a lane</title>
   </path>
-  <text x="600" y="799" text-anchor="middle" class="mono relation-label" font-size="17">launches as a configured lane</text>
+  <text x="600" y="799" text-anchor="middle" class="mono relation-label" font-size="17">includes as a lane</text>
   <g data-figure-point="true" data-figure-key="mneme" data-node-instance="target-6" role="graphics-symbol" aria-label="Mneme. agent memory store with repeatable recall.">
     <rect x="824" y="768" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="795" font-size="18" font-weight="700">Mneme</text>

@@ -24,9 +24,11 @@ PLATE_ROW = re.compile(
     r'<span class="index-gloss">(.*?)</span>\s*</div>',
     re.S,
 )
+# 2026-09-27 copy pass: the package and the advisory ID carry class="ident", which
+# keeps each one whole on narrow screens.
 PLATE_RANGE = re.compile(
-    r'Affected: <code translate="no">(\S+)</code> (.+?)\. Fixed in ([0-9.]+)\. '
-    r'<a [^>]*>Advisory <span translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>'
+    r'Affected: <code class="ident" translate="no">(\S+)</code> (.+?)\. Fixed in ([0-9.]+)\. '
+    r'<a [^>]*>Advisory <span class="ident" translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>'
 )
 
 

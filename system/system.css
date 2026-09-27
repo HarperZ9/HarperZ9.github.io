@@ -152,6 +152,12 @@ h2 em{font-style:normal;color:var(--orange)}
 .atlas-tier .index-term{letter-spacing:.1em}
 .atlas-note{font-family:var(--body);font-size:1rem;color:var(--muted);margin:.1rem 0 .8rem;max-width:64ch}
 .index-gloss code{font-family:var(--mono);font-size:max(.875rem,.85em);color:var(--bone)}
+/* Advisory IDs and package names (span.ident) stay on one line when the line has room,
+   and wrap inside only when their container is narrower than the name, so they never
+   push the page sideways. */
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+/* Code inside a marked span takes no extra leading, so its line keeps the paragraph's rhythm. */
+.ident > code{line-height:1}
 @media (max-width:560px){.atlas-tier .index-row{grid-template-columns:1fr}}
 
 /* ─── organ rows ──────────────────────────────────────────────── */

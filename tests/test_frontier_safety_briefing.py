@@ -280,7 +280,9 @@ def test_briefing_uses_the_shared_site_design_canon() -> None:
 
     # 26 September 2026: the live briefing's only route to system.css moves to the
     # void-plates revision; the stylesheet's own stamp stays for the archives.
-    assert '@import url("../system/system.css?v=20260925-void-plates")' in stylesheet
+    # 27 September 2026: the copy pass moves system.css to its own revision, and this
+    # import follows it.
+    assert '@import url("../system/system.css?v=20260927-copy-pass")' in stylesheet
     assert f'@import url("../system/doc.css?v={FRONTIER_CSS_REVISION}")' in legacy_stylesheet
     assert "20260812-angular" not in stylesheet
     assert '@import url("../system/doc.css")' not in stylesheet

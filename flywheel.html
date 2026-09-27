@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/flywheel.png">
 <meta name="twitter:image:alt" content="Flywheel social card. Route across local or hosted models, verify the result, and keep a re-checkable receipt.">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="system/system.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <link rel="stylesheet" href="system/notebook-sheet.css?v=20260925-void-sheets">
 <style>
   #main.fw-main{padding-bottom:0}
@@ -231,7 +231,7 @@
 <section class="mv" id="next-release" aria-labelledby="next-release-h">
   <h2 id="next-release-h">Install Flywheel</h2>
   <p>Install the Python engine from PyPI with the command below. For the desktop route, download the unsigned Windows installer from the GitHub release. Test a workflow before you depend on it.</p>
-  <div class="command-block" id="run"><code id="fw-install">pip install flywheel-verify
+  <div class="command-block" id="run"><code id="fw-install">pip install <span class="ident" translate="no">flywheel-verify</span>
 flywheel up</code><button type="button" class="copy-button" data-copy-target="#fw-install">Copy</button></div>
   <p>The core package needs nothing beyond the Python standard library. Route online with your keys, or run fully offline against local weights. <code>flywheel up</code> starts Flywheel and prints the address of its page, http://127.0.0.1:8799 by default. Open that address in your browser.</p>
   <h3>Windows desktop: 1.0.4</h3>
@@ -271,7 +271,7 @@ flywheel up</code><button type="button" class="copy-button" data-copy-target="#f
     <h3 class="fw-tool-h">Service Desk Incident Environment 0.2.0</h3>
     <p>Service Desk Incident Environment is a separately installable product with its own state, action log and verifier. Its offline HTML report keeps four things apart: recorded claims, whether the stored fingerprints still match, recomputed task outcomes, and contradictions between recorded authorization, responses and mutations. Its scripted cases use synthetic data and local HTTP services. They do not call a model provider or connect to ServiceNow.</p>
     <p>Extract the sample ZIP and open the passing example first, then the example where a denied change still went through. That second example records a mutation despite denied authorization and an unsuccessful response. Its fingerprints were recomputed so they match, and the report still rejects the contradiction.</p>
-    <p>To create your own report, use Python 3.11 or newer in a virtual environment. Install a compatible Flywheel engine (the environment requires <code>flywheel-verify &gt;=0.6.1,&lt;0.7</code>), then download the <a href="https://github.com/HarperZ9/flywheel/releases/download/env-service-desk-incident-v0.2.0/flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl">Service Desk 0.2.0 wheel</a> into your current directory. The add-on ships on GitHub. It does not update the desktop app, and this page claims no PyPI listing for it.</p>
+    <p>To create your own report, use Python 3.11 or newer in a virtual environment. Install a compatible Flywheel engine (the environment requires <code><span class="ident" translate="no">flywheel-verify</span> &gt;=0.6.1,&lt;0.7</code>), then download the <a href="https://github.com/HarperZ9/flywheel/releases/download/env-service-desk-incident-v0.2.0/flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl">Service Desk 0.2.0 wheel</a> into your current directory. The add-on ships on GitHub. It does not update the desktop app, and this page claims no PyPI listing for it.</p>
     <div class="command-block"><code id="fw-sd-run">python -m pip install ./flywheel_env_service_desk_incident-0.2.0-py3-none-any.whl
 service-desk-incident-env e2e --out ./incident-runs</code><button type="button" class="copy-button" data-copy-target="#fw-sd-run">Copy</button></div>
     <p>The result includes an <code>artifact_dir</code>. Pass that exact run directory, the one inside <code>incident-runs</code>, to verification and review.</p>

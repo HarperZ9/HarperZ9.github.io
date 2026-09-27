@@ -35,8 +35,16 @@ VOID_PLATES_REVISION = "20260925-void-plates"
 VOID_SHEETS_REVISION = "20260925-void-sheets"
 VOID_INTEGRATION_REVISION = "20260925-void-integration"
 STUDIO_PLATE_REVISION = "20260925-studio-plate"
+# 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
+# figure.css) and the record-facts flex change (catalog.css) take one new revision on
+# every page, generator and builder that links them. A cached catalog sheet from
+# before would split a marked package name in the release fact into its own flex
+# item. doc.css keeps its stamp for the same frozen archives and held essays as above;
+# its two marked pages (articulate.html, site-index.html) lay out the same with the
+# old doc.css whether or not the tokens are marked.
+COPY_PASS_REVISION = "20260927-copy-pass"
 READING_IMPORT_REVISION = VOID_PLATES_REVISION
-SYSTEM_CSS_REVISION = VOID_PLATES_REVISION
+SYSTEM_CSS_REVISION = COPY_PASS_REVISION
 REVIEWED_ASSET_REVISIONS = {
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
@@ -57,10 +65,10 @@ REVIEWED_ASSET_REVISIONS = {
     "system/plate.css": VOID_INTEGRATION_REVISION,
     "system/tokens.css": VOID_INTEGRATION_REVISION,
     "system/notebook-sheet.css": VOID_SHEETS_REVISION,
-    "system/figure.css": VOID_SHEETS_REVISION,
+    "system/figure.css": COPY_PASS_REVISION,
     "system/site-index.css": VOID_PLATES_REVISION,
     "system/site-index.js": VOID_PLATES_REVISION,
-    "system/catalog.css": VOID_PLATES_REVISION,
+    "system/catalog.css": COPY_PASS_REVISION,
     "system/hubs.css": VOID_PLATES_REVISION,
     "system/hubs-fonts.css": VOID_PLATES_REVISION,
     "system/hubs-guides.css": VOID_PLATES_REVISION,
@@ -683,10 +691,21 @@ def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -
         ),
         "scripts/system-record-head.mjs": (
             f"/system/system.css?v={SYSTEM_CSS_REVISION}",
+            f'const CATALOG_REVISION = "{COPY_PASS_REVISION}";',
+        ),
+        "scripts/render-code-backed-capability-maps.mjs": (
+            f"../system/figure.css?v={COPY_PASS_REVISION}",
+        ),
+        "scripts/render-graphics-retro-capability-map.mjs": (
+            f"../system/figure.css?v={COPY_PASS_REVISION}",
+        ),
+        "scripts/render-incident-multilane-timeline.mjs": (
+            f"../system/figure.css?v={COPY_PASS_REVISION}",
         ),
         "tools/build_publications.py": (
             f'ASSET_REVISION = "{VOID_PLATES_REVISION}"',
             'system/publication-article.css?v={ASSET_REVISION}',
+            f"../system/figure.css?v={COPY_PASS_REVISION}",
         ),
         "tools/render_corpus.py": (
             f"system/doc.css?v={READING_CASCADE_REVISION}",
@@ -702,6 +721,9 @@ def test_reading_cache_revision_reaches_importing_stylesheets_and_generators() -
         "../system/publication-article.css?v=20260905-article-reading",
         f"system/system.css?v={READING_CASCADE_REVISION}",
         f"system/publication-article.css?v={READING_CASCADE_REVISION}",
+        f"system/system.css?v={VOID_PLATES_REVISION}",
+        f"system/figure.css?v={VOID_SHEETS_REVISION}",
+        f"system/catalog.css?v={VOID_PLATES_REVISION}",
     )
 
     for rel, expected_urls in expected_generator_urls.items():

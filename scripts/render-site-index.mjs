@@ -2,6 +2,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { ROUTE_REGISTRY } from '../system/routes.js';
+import { identPattern, markIdents, packageNames } from './ident-tokens.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const escape = value => String(value).replace(/[&<>"']/g, c => ({
@@ -54,7 +55,9 @@ const page = `<!doctype html>
 <p data-no-results hidden>No matching pages. Try a broader term or clear the search.</p>
 ${sections}
 <footer><p><a href="index.html">Home</a> · <a href="https://github.com/HarperZ9" rel="external noopener">Public source</a></p></footer></main></body></html>\n`;
-await writeFile(root + 'site-index.html', page);
+// Advisory IDs and package names in the summaries stay whole on narrow screens.
+const systems = JSON.parse(await readFile(root + 'system/systems.json', 'utf8'));
+await writeFile(root + 'site-index.html', markIdents(page, identPattern(packageNames(systems))));
 const sitemapPath = root + 'sitemap.xml';
 const sitemap = await readFile(sitemapPath, 'utf8');
 if (!sitemap.includes('https://harperz9.github.io/site-index.html')) {

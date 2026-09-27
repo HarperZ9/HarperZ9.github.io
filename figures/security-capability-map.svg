@@ -75,11 +75,10 @@
     <text x="60" y="605" class="mono muted" font-size="17">checker for records tying</text>
     <text x="60" y="625" class="mono muted" font-size="17">model claims to sources</text>
   </g>
-<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-10" role="graphics-symbol" aria-label="ORCA. native assessment operator runtime.">
+<g data-figure-point="true" data-figure-key="orca" data-node-instance="isolated-10" role="graphics-symbol" aria-label="ORCA. native assessment runtime.">
     <rect x="424" y="554" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="440" y="581" font-size="18" font-weight="700">ORCA</text>
-    <text x="440" y="605" class="mono muted" font-size="17">native assessment operator</text>
-    <text x="440" y="625" class="mono muted" font-size="17">runtime</text>
+    <text x="440" y="605" class="mono muted" font-size="17">native assessment runtime</text>
   </g>
 <g data-figure-point="true" data-figure-key="phantom" data-node-instance="isolated-11" role="graphics-symbol" aria-label="Phantom. hardware-identity privacy system.">
     <rect x="804" y="554" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>

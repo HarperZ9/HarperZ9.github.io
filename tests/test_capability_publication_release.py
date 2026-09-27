@@ -25,6 +25,7 @@ RELEASE_PATHS = (
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
     "assets/index-DuXEIE3Q.js",
+    "assets/index-9egMTEOG.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -83,6 +84,7 @@ RELEASE_PATHS = (
     "system/theme.css",
     "assets/index-eZ1QGP52.css",
     "assets/index-BORSyU4q.css",
+    "assets/index-DPe17JSn.css",
     "assets/index-DJj37yQz.css",
     "typeface.html",
     "system/type-specimen.css",
@@ -367,7 +369,33 @@ RELEASE_PATHS = (
 # moves to its 0.5.0 release and live contract, and BuildLang to its v1.4.0 GitHub
 # release with 1.2.0 still on crates.io. The home bundle rebuilt from the refreshed
 # registry is index-DuXEIE3Q.js.
-REVIEWED_RELEASE_SHA256 = "9cd047d4597a1b81d931f8dc96156ee0e36b0df69622de4e76c397680db6b658"
+# September 27, 2026, copy pass: the registry drops its fourteen "operator" uses for
+# plain product words, and record pages and capability maps show relation wording
+# from scripts/relation-wording.mjs ("Flywheel includes Relay as a lane") in place
+# of raw keys such as "integrates lane". The Accountable Surface social card takes
+# its new headline. Catalog, overview, record pages, capability maps, security
+# registry, route registry, site index and the home bundle (index-Brb2IBwO.js)
+# regenerate from the registry.
+# September 27, 2026, copy pass, second commit: advisory IDs and package names stay
+# whole on narrow screens. Generated pages, the three code-backed capability maps,
+# the site index, eleven hand pages and the home wrap each one in class="ident";
+# system.css, doc.css, figure.css and the home sheet carry the rule; record-page facts
+# keep flex only on the status fact. The home pair is index-CGMskzEB.js and
+# index-DPe17JSn.css.
+# September 27, 2026, copy pass, third commit: punctuation that touches a marked token
+# (an opening bracket before it, a comma, full stop or closing bracket after it) sits
+# inside the marked span, so it cannot end or start a line alone. Tokens inside the
+# no-wrap .built-stat stay unmarked, and code inside a marked span takes no extra
+# leading. The home bundle is index-BzE0lc-H.js; the intermediate index-CGMskzEB.js
+# was never published and is gone.
+# September 27, 2026, copy pass, review fixes: the home board note and the Bulletin
+# page name the person who runs the board in place of "operator"; capability-map
+# edge titles read as the record-page sentence; coherence-membrane joins the marked
+# package names; record social cards carry their image's content hash as ?v=;
+# system.css, figure.css and catalog.css move to the 20260927-copy-pass key on every
+# page and generator that links them; provenance-sensorium.html is marked. The home
+# bundle is index-9egMTEOG.js; index-BzE0lc-H.js was never published and is gone.
+REVIEWED_RELEASE_SHA256 = "be5f9c6966a2dd143a617e2f34930f3786b3f9403f037dd9cdc4c9ee756e0f4a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -514,9 +542,31 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # advisories is index-DuXEIE3Q.js; index-D4UoCuIT.js stays as retained history.
     # The earlier 27 September builds, index-RXS41pPF.js and index-CUXkFuw-.js, were
     # never published and are gone.
-    current_js = "index-DuXEIE3Q.js"
-    for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js"):
+    # September 27, 2026, copy pass: the home pair rebuilt from the registry after its
+    # plain-words rewrite, with advisory IDs and package names kept whole, is
+    # index-BzE0lc-H.js and index-DPe17JSn.css, with touching punctuation kept in
+    # each marked token. index-DuXEIE3Q.js and index-BORSyU4q.css stay as retained
+    # history. The intermediate builds index-Brb2IBwO.js and index-CGMskzEB.js were
+    # never published and are gone.
+    # September 27, 2026, copy pass, review fixes: the rebuilt bundle names the person
+    # who runs the board in the live board note and marks coherence-membrane; it is
+    # index-9egMTEOG.js with the same sheet, and index-BzE0lc-H.js, never published,
+    # is gone.
+    current_js = "index-9egMTEOG.js"
+    for unpublished_js in (
+        "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
+        "index-BzE0lc-H.js",
+    ):
         assert not (ROOT / "assets" / unpublished_js).exists()
+        assert f"assets/{unpublished_js}" not in RELEASE_PATHS
+    previous_advisories_css = "index-BORSyU4q.css"
+    assert previous_advisories_css not in source
+    assert (ROOT / "assets" / previous_advisories_css).is_file()
+    assert f"assets/{previous_advisories_css}" in RELEASE_PATHS
+    previous_advisories_js = "index-DuXEIE3Q.js"
+    assert previous_advisories_js not in source
+    assert (ROOT / "assets" / previous_advisories_js).is_file()
+    assert f"assets/{previous_advisories_js}" in RELEASE_PATHS
     previous_facts_js = "index-D4UoCuIT.js"
     assert previous_facts_js not in source
     assert (ROOT / "assets" / previous_facts_js).is_file()
@@ -524,7 +574,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    current_css = "index-BORSyU4q.css"
+    current_css = "index-DPe17JSn.css"
     previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
     previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
     previous_capability_first_home_js = "index-4wTyKocM.js"
