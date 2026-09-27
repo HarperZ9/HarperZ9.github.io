@@ -152,8 +152,9 @@ test('site index search includes reviewed route context beyond labels', () => {
   assert.ok(indexMatches('benchmark').includes('analytics/flywheel-benchmark-record.html'));
 });
 
-test('Accountable Surface route search text carries the release dependency boundary', () => {
-  const releaseBoundary = 'GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed';
+test('Accountable Surface route search text carries the current release state', () => {
+  // 2026-09-26: accountable-surface 0.3.1 installs from PyPI; the latest GitHub release is v0.2.0.
+  const releaseBoundary = '0.3.1 on PyPI; latest GitHub release v0.2.0';
   const staleBoundary = /active source 0\.1\.0; no release/;
   const registries = [
     ['system route registry', ROUTE_REGISTRY],
@@ -165,18 +166,17 @@ test('Accountable Surface route search text carries the release dependency bound
     assert.ok(route, `${label} is missing the Accountable Surface route`);
     assert.equal(route.label, 'Accountable Surface');
     assert.equal(route.maturity, 'active');
-    assert.match(route.searchText, /GitHub release v0\.1\.0 verified/);
-    assert.match(route.searchText, /source setup requires sibling dependencies/);
-    assert.match(route.searchText, /no PyPI release claimed/);
+    assert.match(route.searchText, /0\.3\.1 on PyPI/);
+    assert.doesNotMatch(route.searchText, /no PyPI release claimed/);
     assert.doesNotMatch(route.searchText, staleBoundary);
     assert.equal(route.searchText.includes(releaseBoundary), true);
   }
 
   const accountableSurfaceIndex = indexEntries().find(entry => entry.href === 'accountable-surface.html');
   assert.ok(accountableSurfaceIndex, 'site index is missing the Accountable Surface route');
-  assert.match(accountableSurfaceIndex.searchText, /source setup requires sibling dependencies/);
+  assert.match(accountableSurfaceIndex.searchText, /0\.3\.1 on PyPI/);
   assert.doesNotMatch(accountableSurfaceIndex.searchText, staleBoundary);
-  assert.ok(indexMatches('sibling dependencies').includes('accountable-surface.html'));
+  assert.ok(indexMatches('latest GitHub release v0.2.0').includes('accountable-surface.html'));
 });
 
 test('research lane owns writing, publication archives, and current essays', () => {

@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Phantom v1.1.0, hardware identity privacy for authorized systems</title>
+<title>Phantom v1.1.1, hardware identity privacy for authorized systems</title>
 <meta name="description" content="Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.">
 <link rel="canonical" href="https://harperz9.github.io/phantom.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
-<meta property="og:title" content="Phantom v1.1.0">
+<meta property="og:title" content="Phantom v1.1.1">
 <meta property="og:description" content="Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.">
 <meta property="og:url" content="https://harperz9.github.io/phantom.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/phantom.png">
@@ -35,7 +35,7 @@
     <p class="lede" data-canonical-purpose="phantom">Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.</p>
     <p class="close">You own the machine. You decide what it says about itself.</p>
   </div>
-  <div class="seal"><span translate="no">phantom</span> &middot; v1.1.0 &middot; Windows + Linux &middot; proprietary &middot; Free / Pro / Enterprise &middot; <span translate="no">phantom audit</span></div>
+  <div class="seal"><span translate="no">phantom</span> &middot; v1.1.1 &middot; Windows + Linux &middot; proprietary &middot; Free / Pro / Enterprise &middot; <span translate="no">phantom audit</span></div>
 </div>
 
 <main id="main">
@@ -169,8 +169,8 @@
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
   <p class="body-text reveal">Everything is on the <a href="https://github.com/HarperZ9/phantom/releases">releases page</a> with a published <span translate="no">SHA256SUMS.txt</span>. Verify the file you got before you install it, because the Windows installer is not code-signed yet.</p>
-  <div class="run reveal"><span class="c">windows</span> download <span translate="no">PhantomSetup-v1.1.0.msi</span> <span class="c">&middot;</span> certutil -hashfile PhantomSetup-v1.1.0.msi SHA256</div>
-  <div class="run reveal"><span class="c">linux</span> sudo apt-get install ./phantom_1.1.0-1_amd64.deb <span class="c">&middot;</span> or the .rpm, or the tarball's install.sh</div>
+  <div class="run reveal"><span class="c">windows</span> download <span translate="no">PhantomSetup-v1.1.1.msi</span> <span class="c">&middot;</span> certutil -hashfile PhantomSetup-v1.1.1.msi SHA256</div>
+  <div class="run reveal"><span class="c">linux</span> sudo apt-get install ./phantom_1.1.1-1_amd64.deb <span class="c">&middot;</span> or the .rpm, or the tarball's install.sh</div>
   <p class="body-text reveal">On Windows, clear the SmartScreen warning with <b>More info</b> then <b>Run anyway</b>, and accept the UAC and license prompts. Once it is installed, see your exposure before you change anything:</p>
   <div class="run reveal"><span class="c">audit</span> phantom audit</div>
   <p class="body-text reveal">Applying changes machine-wide identifiers, so run it from an <b>elevated</b> terminal on Windows, with <span translate="no">sudo</span> on Linux. <span translate="no">Phantom</span> runs in Free tier immediately, which covers Layer-2 spoofing and up to two profiles.</p>
@@ -219,14 +219,14 @@
 <section class="mv" id="vision" aria-labelledby="vision-h">
   <h2 id="vision-h" class="reveal">The change and the undo, shipped together.</h2>
   <p class="body-text reveal"><span translate="no">Phantom</span> treats hardware identity the way the rest of this workshop treats a result: something you can inspect, reproduce from a seed, and reverse without residue. The backup is the receipt. A spoof you cannot cleanly undo is not control, so the undo is written before the change, every time.</p>
-  <p class="body-text reveal">v1.1.0 ships the Layer-2 path on Windows and Linux, verified end to end. Layer 1 reaches disk, network, GPU, TPM, and display through a kernel driver; Layer 0 reaches SMBIOS and boot identifiers through UEFI firmware. Both are modeled now so today's profiles stay consistent when those layers arrive. The profile you generate is already the whole identity; the deeper layers only widen where it is written.</p>
+  <p class="body-text reveal">The 1.1 line ships the Layer-2 path on Windows and Linux, verified end to end on v1.1.0. Layer 1 reaches disk, network, GPU, TPM, and display through a kernel driver; Layer 0 reaches SMBIOS and boot identifiers through UEFI firmware. Both are modeled now so today's profiles stay consistent when those layers arrive. The profile you generate is already the whole identity; the deeper layers only widen where it is written.</p>
   <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/phantom</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
 </section>
 
 <!-- STATE OF THE WORK -->
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">State of the work, August 2026.</h2>
-  <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.0 is shipped, on Windows and Linux. The Layer-2 path is verified end to end on fresh VMs of both: audit, generate, apply, validate, a clean uninstall that returns the machine to its original identity, and reboot persistence. On Linux that last one is proven through an actual power-cycle, where the service brought a spoofed MAC back after a reboot.</p>
+  <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.1 is the current release, on Windows and Linux. It adds a getting-started guide and the first slice of a local boundary gateway to v1.1.0. On v1.1.0 the Layer-2 path was verified end to end on fresh VMs of both: audit, generate, apply, validate, a clean uninstall that returns the machine to its original identity, and reboot persistence. On Linux that last one was proven through an actual power-cycle, where the service brought a spoofed MAC back after a reboot.</p>
   <p class="body-text reveal">It is honest about its edges. Layer 2 only for now, with Layers 1 and 0 modeled but not shipped. The Layer 1 kernel driver now compiles under CI and two of its security defects are fixed, but it is unsigned and not yet functional end to end. The Windows installer is not code-signed yet, so SmartScreen warns until a certificate is in place. Intended for machines you own or are expressly authorized to test, not for evading fraud controls or misrepresenting a device you do not control.</p>
   <p class="body-text reveal">The shared public maturity record, verification entry point, and authorization boundary are also available in <a href="security-tools.json">security-tools.json</a>.</p>
 </section>

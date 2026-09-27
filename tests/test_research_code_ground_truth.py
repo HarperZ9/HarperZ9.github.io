@@ -93,7 +93,7 @@ def test_research_opening_routes_to_current_public_artifacts_before_the_index() 
         "mailto:zaindharper@gmail.com?subject=AI%20safety%20research%20collaboration",
         "test-run-request.html",
     } <= opening.links
-    assert "Chorus" in text and "58 tests pass" in text
+    assert "Chorus" in text and "108 tests pass" in text
     assert "faithful-transpile" in text and "eight hermetic tests pass" in text
     assert "The Witnessing Spine" in text and "one of seven listed files does not re-derive" in text
     assert "Senses and Sensibility" in text and "all 172 listed files re-derive" in text

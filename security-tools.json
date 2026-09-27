@@ -31,7 +31,7 @@
         "Public source 0.2.0 does not establish independent adversarial review or production safety."
       ],
       "authorizationBoundary": "Use only with explicit human authority; a recommendation does not itself grant permission.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-26"
     },
     {
       "slug": "phantom",
@@ -39,14 +39,14 @@
       "purpose": "Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/phantom",
-      "installOrEntry": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
+      "installOrEntry": "Download a v1.1.1 release asset and compare its hash with SHA256SUMS.txt.",
       "verificationCommand": "phantom --version; phantom audit",
       "limitations": [
         "Phantom covers Layer 2 identity surfaces; kernel and firmware layers are modeled but not shipped end to end.",
         "The Windows installer is unsigned, and platform controls differ between Windows and Linux."
       ],
       "authorizationBoundary": "Use only on machines you own or are expressly authorized to test; do not use it for fraud, anti-cheat targeting, or unauthorized access.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-26"
     },
     {
       "slug": "behavior-transform",
@@ -174,17 +174,16 @@
       "purpose": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records decisions and outcomes in a journal. Persisted journals are hash-chained so later edits, deletions, or reordering are detected.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/accountable-surface",
-      "installOrEntry": "Follow the repository source setup with sibling source packages present; python examples/demo.py",
-      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; follow documented source setup with sibling source packages; python -m pytest",
+      "installOrEntry": "python -m pip install accountable-surface==0.3.1",
+      "verificationCommand": "From a source checkout at tag v0.3.1: python -m pip install -e \".[test]\"; python examples/demo.py; python -m pytest",
       "limitations": [
         "The model cannot supply its own authorization.",
-        "The v0.1.0 GitHub wheel is not a self-contained clean-machine install; clean wheel import fails without coherence_membrane.",
-        "Some capabilities require sibling source packages from the documented source setup.",
         "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
-        "Self-authored tests do not establish independent adversarial review or production safety."
+        "Self-authored tests do not establish independent adversarial review or production safety.",
+        "The v0.1.0 GitHub wheel was not a self-contained install. PyPI 0.3.1 installs its coherence-membrane and proof-surface dependencies from PyPI; the MCP server entry needs the [server] extra."
       ],
       "authorizationBoundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
-      "evidenceDate": "2026-09-14"
+      "evidenceDate": "2026-09-26"
     },
     {
       "slug": "public-surface-sweeper",
@@ -253,13 +252,13 @@
       "purpose": "Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/repo-proof-index",
-      "installOrEntry": "python -m pip install repo-proof-index; repo-proof-index contracts/*.json --summary",
+      "installOrEntry": "python -m pip install repo-proof-index==0.2.0; repo-proof-index contracts/*.json --summary",
       "verificationCommand": "python -m pip install -e \".[test]\"; repo-proof-index examples/contracts/*.json --summary; python -m pytest",
       "limitations": [
         "The index does not decide whether evidence is sufficient, validate arbitrary schemas, or read referenced private payloads."
       ],
       "authorizationBoundary": "Index only public or authorized evidence and keep private payloads outside public summaries.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-26"
     },
     {
       "slug": "kun",

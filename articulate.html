@@ -105,14 +105,14 @@ articulate verify notes.receipt.json notes.md</code></pre>
 
   <section aria-labelledby="releases-title">
     <h2 id="releases-title">Releases</h2>
-    <p>Articulate 0.1.0 reached PyPI on 18 September 2026. Version 0.4.1 followed on 24 September 2026, the fifth release in that span.</p>
+    <p>Articulate 0.1.0 reached PyPI on 18 September 2026. Version 0.4.1 followed on 24 September 2026. Versions 0.4.2 and 0.5.0 both shipped on 26 September 2026, for seven releases in that span. In 0.5.0 the editing tools start the claude command-line tool in a private empty folder with user settings only, so a document folder cannot run commands through them. The detector and its findings are the same as in 0.4.1.</p>
     <p>This page was written with AI assistance and checked with Articulate.</p>
   </section>
 
   <details class="how-we-know" id="how-we-know">
     <summary>How we know</summary>
     <ul>
-      <li>Release dates come from the upload times on <a href="https://pypi.org/project/articulate-writing/#history" translate="no">PyPI's release history</a>, in UTC: 0.1.0 at 13:07 on 18 September 2026 and 0.4.1 at 03:14 on 24 September 2026. The matching <a href="https://github.com/HarperZ9/articulate/releases" translate="no">GitHub releases</a> carry the same dates. File hashes for each release are listed on PyPI.</li>
+      <li>Release dates come from the upload times on <a href="https://pypi.org/project/articulate-writing/#history" translate="no">PyPI's release history</a>, in UTC: 0.1.0 at 13:07 on 18 September 2026, 0.4.1 at 03:14 on 24 September 2026, 0.4.2 at 07:56 and 0.5.0 at 16:40 on 26 September 2026. The 0.5.0 change comes from its <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.5.0" translate="no">release notes</a>. The matching <a href="https://github.com/HarperZ9/articulate/releases" translate="no">GitHub releases</a> carry the same dates. File hashes for each release are listed on PyPI.</li>
       <li>The example output above is from Articulate 0.4.1, run on 25 September 2026. The receipt answers come from the same run: a replay of the unchanged file gave match, and a replay after one added line gave unverifiable.</li>
       <li>The no-network claim rests on the project README, which says the detector never touches the network, and on a search of the 0.4.1 check, receipt and command-line code, which found no network library imported. The editing tools call a language model, so they are outside that claim.</li>
       <li>This page does not show that Articulate finds every weak pattern, or that its findings agree with a human editor. The package ships a benchmark, <code>python -m articulate.bench</code>, for anyone who wants to test that.</li>
