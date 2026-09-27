@@ -115,3 +115,46 @@ def test_flywheel_relations_count_the_advisories_that_cover_each_pin() -> None:
         else:
             assert set(re.findall(r"GHSA(?:-[a-z0-9]{4}){3}", text)) == inside, package
     assert checked == 5, "gather, crucible, forum, relay and mneme relations carry a pin"
+
+
+def test_bulletin_names_its_newest_release_and_live_contract() -> None:
+    registry = json.loads(read("system/systems.json"))
+    bulletin = next(s for s in registry["systems"] if s["id"] == "bulletin")
+    evidence = {item["id"]: item for item in bulletin["evidence"]}
+    # 2026-09-27: GitHub release v0.5.0 is Latest, and the deployed contract and OpenAPI
+    # both report 0.5.0. The v0.4.0 and v0.3.1 records stay as history.
+    assert bulletin["releaseState"] == "GitHub release v0.5.0; deployed board contract 0.5.0"
+    assert bulletin["evidence"][0]["id"] == "bulletin-release-v0-5-0"
+    release = evidence["bulletin-release-v0-5-0"]
+    assert release["href"] == "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0"
+    assert "does not escrow, collect, settle or verify payments" in release["summary"]
+    contract = evidence["bulletin-deployed-board-contract"]
+    assert "reported version 0.5.0" in contract["summary"]
+    assert "0.4.0" not in contract["summary"]
+    for page in ("bulletin.html", "join.html"):
+        source = read(page)
+        assert "&middot; Bulletin 0.5.0</span>" in source, page
+        assert "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0" in source, page
+        assert "v0.4.0" not in source, page
+        assert "Bulletin 0.4.0" not in source, page
+    assert 'Bulletin <span id="board-version">0.5.0</span>' in read("join.html")
+
+
+def test_buildlang_separates_the_github_release_from_the_crates_io_version() -> None:
+    registry = json.loads(read("system/systems.json"))
+    buildlang = next(s for s in registry["systems"] if s["id"] == "buildlang")
+    # 2026-09-27: GitHub's latest release is v1.4.0, a source release with no registry
+    # artifact; crates.io still serves 1.2.0, which is what cargo install fetches.
+    assert buildlang["releaseState"] == (
+        "GitHub release v1.4.0; buildlang 1.2.0 on crates.io; non-C backends experimental"
+    )
+    ids = [item["id"] for item in buildlang["evidence"]]
+    assert ids[:3] == ["buildlang-release-v1-4-0", "buildlang-crates-v1-2-0", "buildlang-release-v1-2-0"]
+    release = buildlang["evidence"][0]
+    assert "no package registry artifact" in release["summary"]
+    assert buildlang["entryCommand"].startswith("cargo install buildlang;")
+    for page in ("catalog.html", "overview.html", "site-index.html"):
+        source = read(page)
+        assert "GitHub release v1.4.0; buildlang 1.2.0 on crates.io" in source, page
+        assert "stable v1.2.0" not in source, page
+    assert "buildlang 1.2.0 on crates.io" in read("buildlang.html")
