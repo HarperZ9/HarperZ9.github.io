@@ -156,6 +156,8 @@ h2 em{font-style:normal;color:var(--orange)}
    and wrap inside only when their container is narrower than the name, so they never
    push the page sideways. */
 .ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+/* Code inside a marked span takes no extra leading, so its line keeps the paragraph's rhythm. */
+.ident > code{line-height:1}
 @media (max-width:560px){.atlas-tier .index-row{grid-template-columns:1fr}}
 
 /* ─── organ rows ──────────────────────────────────────────────── */

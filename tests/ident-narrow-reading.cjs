@@ -31,18 +31,25 @@ function probe() {
   for (const el of document.querySelectorAll('.ident')) {
     const box = el.getBoundingClientRect();
     if (box.width === 0 || box.height === 0) continue;
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    const tops = [];
-    for (const rect of range.getClientRects()) {
-      if (rect.width > 0.5 && !tops.some((top) => Math.abs(top - rect.top) < 3)) tops.push(rect.top);
+    // Lines are counted from the text itself, and two text boxes share a line when
+    // they overlap vertically by half the shorter one: a code box with padding and
+    // the comma after it sit on one line even though their tops differ.
+    const overlaps = (a, b) => Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0.5 * Math.min(a.bottom - a.top, b.bottom - b.top);
+    const lines = [];
+    const texts = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let node = texts.nextNode(); node; node = texts.nextNode()) {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      for (const rect of range.getClientRects()) {
+        if (rect.width > 0.5 && !lines.some((line) => overlaps(line, rect))) lines.push(rect);
+      }
     }
-    const probeSpan = document.createElement('span');
-    probeSpan.textContent = el.textContent;
-    probeSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block';
-    el.parentElement.appendChild(probeSpan);
-    const natural = probeSpan.getBoundingClientRect().width;
-    probeSpan.remove();
+    // The natural width is measured on a copy of the token, so inner code keeps its face.
+    const copy = el.cloneNode(true);
+    copy.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;display:inline-block;max-width:none';
+    el.parentElement.appendChild(copy);
+    const natural = copy.getBoundingClientRect().width;
+    copy.remove();
     const container = blockAncestor(el);
     const style = getComputedStyle(container);
     const room = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
@@ -52,12 +59,33 @@ function probe() {
     for (let node = el.parentElement; node && node !== document.body; node = node.parentElement) {
       if (getComputedStyle(node).overflowX !== 'visible') { scrolled = true; break; }
     }
+    // Punctuation touching the token from outside must share a line with it.
+    const boxes = [...el.getClientRects()];
+    const neighbour = (forward) => {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      walker.currentNode = el;
+      let node = forward ? walker.nextNode() : walker.previousNode();
+      while (node && el.contains(node)) node = forward ? walker.nextNode() : walker.previousNode();
+      if (!node || !node.nodeValue.length) return null;
+      const index = forward ? 0 : node.nodeValue.length - 1;
+      const char = node.nodeValue[index];
+      if (!(forward ? /[)\]}”’.,;:!?]/ : /[(\[{“‘]/).test(char)) return null;
+      const r = document.createRange();
+      r.setStart(node, index);
+      r.setEnd(node, index + 1);
+      const rect = r.getClientRects()[0];
+      if (!rect) return null;
+      // On the token's line, the character sits inside the token box's vertical span.
+      return boxes.some((b) => overlaps(b, rect)) ? null : char;
+    };
     results.push({
       token: el.textContent,
-      lines: tops.length,
+      lines: lines.length,
       fits: natural <= room + 0.5,
       right: box.right,
       scrolled,
+      strandedAfter: neighbour(true),
+      strandedBefore: neighbour(false),
     });
   }
   return { results, viewport: window.innerWidth, display: getComputedStyle(document.querySelector('.ident') || document.body).display };
@@ -92,6 +120,8 @@ function probe() {
           if (!item.scrolled) {
             assert.ok(item.right <= viewport + 1, `${path}@${width}: "${item.token}" reaches past the viewport (${Math.round(item.right)} > ${viewport})`);
           }
+          assert.equal(item.strandedAfter, null, `${path}@${width}: "${item.strandedAfter}" after "${item.token}" starts a line alone`);
+          assert.equal(item.strandedBefore, null, `${path}@${width}: "${item.strandedBefore}" before "${item.token}" ends a line alone`);
         }
       }
       await context.close();

@@ -21,17 +21,26 @@ test('package names come from the registry and each one has a hyphen', () => {
 });
 
 test('advisory IDs and package names, with a pinned version, are wrapped whole', () => {
-  assert.equal(markIdents('<p>Fixed by GHSA-82fg-qprm-q5r7.</p>', pattern), `<p>Fixed by ${wrap('GHSA-82fg-qprm-q5r7')}.</p>`);
   assert.equal(
-    markIdents('<code>pip install forum-engine==1.15.1; forum demo</code>', pattern),
-    `<code>pip install ${wrap('forum-engine==1.15.1')}; forum demo</code>`,
+    markIdents('<code>pip install forum-engine==1.15.1 then forum demo</code>', pattern),
+    `<code>pip install ${wrap('forum-engine==1.15.1')} then forum demo</code>`,
   );
-  assert.equal(
-    markIdents('<p>as flywheel-relay, then gather-engine 1.9.1.</p>', pattern),
-    `<p>as ${wrap('flywheel-relay')}, then ${wrap('gather-engine')} 1.9.1.</p>`,
-  );
+  assert.equal(markIdents('<p>gather-engine 1.9.1</p>', pattern), `<p>${wrap('gather-engine')} 1.9.1</p>`);
   assert.equal(markIdents('<p>GHSA-aaaa-bbbb-cccc GHSA-dddd-eeee-ffff</p>', pattern),
     `<p>${wrap('GHSA-aaaa-bbbb-cccc')} ${wrap('GHSA-dddd-eeee-ffff')}</p>`);
+});
+
+test('touching punctuation joins the span, so no bracket or full stop can end or start a line alone', () => {
+  assert.equal(markIdents('<p>a tool (GHSA-82fg-qprm-q5r7)</p>', pattern), `<p>a tool ${wrap('(GHSA-82fg-qprm-q5r7)')}</p>`);
+  assert.equal(markIdents('<p>Fixed by GHSA-82fg-qprm-q5r7.</p>', pattern), `<p>Fixed by ${wrap('GHSA-82fg-qprm-q5r7.')}</p>`);
+  assert.equal(
+    markIdents('<p>as flywheel-relay, then gather-engine; see (forum-engine).</p>', pattern),
+    `<p>as ${wrap('flywheel-relay,')} then ${wrap('gather-engine;')} see ${wrap('(forum-engine).')}</p>`,
+  );
+  assert.equal(markIdents('<p>"flywheel-mneme" was</p>', pattern), `<p>${wrap('"flywheel-mneme"')} was</p>`);
+  assert.equal(markIdents('<li>flywheel-canon.</li>', pattern), `<li>${wrap('flywheel-canon.')}</li>`);
+  assert.equal(markIdents('<p>flywheel-relay.x</p>', pattern), `<p>${wrap('flywheel-relay')}.x</p>`,
+    'punctuation followed by a letter stays outside');
 });
 
 test('names inside URLs, paths and longer words are left as they are', () => {
@@ -70,6 +79,10 @@ test('pre text is marked, a classed element is not wrapped again, and a second r
   assert.equal(markIdents('<pre>$ pip install index-graph==2.13.0</pre>', pattern), `<pre>$ pip install ${wrap('index-graph==2.13.0')}</pre>`);
   const classed = '<code class="ident" translate="no">gather-engine</code>';
   assert.equal(markIdents(classed, pattern), classed);
+  const nested = '<span class="ident" translate="no"><code>flywheel-relay</code>.</span>';
+  assert.equal(markIdents(nested, pattern), nested, 'text anywhere inside an ident element is left alone');
+  const stat = '<span class="built-stat">v2.13.0, as <span translate="no">index-graph</span></span>:';
+  assert.equal(markIdents(stat, pattern), stat, 'a no-wrap class already keeps its text on one line');
   const once = markIdents('<li>flywheel-relay 0.2.5 and GHSA-xxcc-grhg-v9g7</li>', pattern);
   assert.equal(markIdents(once, pattern), once);
 });

@@ -23,6 +23,9 @@ HAND_PAGES = (
     "security-toolkit.html", "index.html",
 )
 CODE_BACKED_MAPS = ("system-capability-map", "security-capability-map", "verification-capability-map")
+# Classes whose own rule already keeps their text on one line, so a token inside
+# needs no span (test_nowrap_parents_still_keep_their_text_on_one_line pins this).
+NOWRAP_PARENTS = {"built-stat"}
 
 
 def _ident_source() -> str:
@@ -33,31 +36,59 @@ def _ident_source() -> str:
 IDENT = re.compile(_ident_source())
 
 
+OPENING = "([{“‘"
+STRANDED_AFTER = re.compile(r"[)\]}”’.,;:!?]+(?:\s|$)")
+
+
 class _TextWalker(HTMLParser):
-    """Collect text outside skipped elements, split by whether an ident element holds it."""
+    """Collect text outside skipped elements, split by whether a whole-keeping element holds it.
+
+    It also records punctuation that touches a marked element from outside: text that
+    ends in an opening bracket right before one opens (other opening tags may sit
+    between), and text that starts with closing punctuation right after one closes
+    (other closing tags may sit between).
+    """
 
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
-        self.stack: list[tuple[str, bool]] = []
+        self.stack: list[tuple[str, bool, bool]] = []
         self.plain: list[str] = []
         self.marked: list[str] = []
+        self.stranded: list[str] = []
+        self._tail = ""
+        self._after_ident = False
+
+    def _in_ident(self) -> bool:
+        return any(ident for _, _, ident in self.stack)
 
     def handle_starttag(self, tag, attrs):
+        self._after_ident = False
         if tag in VOID:
             return
-        classes = (dict(attrs).get("class") or "").split()
-        self.stack.append((tag, "ident" in classes))
+        classes = set((dict(attrs).get("class") or "").split())
+        ident = "ident" in classes
+        if ident and not self._in_ident() and self._tail[-1:] in set(OPENING):
+            self.stranded.append(f"{self._tail[-12:]!r} before a marked token")
+        self.stack.append((tag, bool(classes & ({"ident"} | NOWRAP_PARENTS)), ident))
 
     def handle_endtag(self, tag):
+        self._tail = ""
         for index in range(len(self.stack) - 1, -1, -1):
             if self.stack[index][0] == tag:
+                closed_ident = any(ident for _, _, ident in self.stack[index:])
                 del self.stack[index:]
+                if closed_ident and not self._in_ident():
+                    self._after_ident = True
                 return
 
     def handle_data(self, data):
-        if any(tag in SKIP for tag, _ in self.stack):
+        if any(tag in SKIP for tag, _, _ in self.stack):
             return
-        (self.marked if any(ident for _, ident in self.stack) else self.plain).append(data)
+        if self._after_ident and STRANDED_AFTER.match(data):
+            self.stranded.append(f"{data[:12]!r} after a marked token")
+        self._after_ident = False
+        self._tail = data
+        (self.marked if any(keeps for _, keeps, _ in self.stack) else self.plain).append(data)
 
 
 def _walk(path: Path) -> _TextWalker:
@@ -98,6 +129,25 @@ def test_pages_leave_no_advisory_id_or_package_name_unmarked() -> None:
     assert marked_total >= 150
 
 
+def test_touching_punctuation_sits_inside_the_marked_token() -> None:
+    # A marked token is an inline-block, and a line may break on either side of one. An
+    # opening bracket just before it, or closing punctuation just after it, could then
+    # end or start a line alone, so that punctuation belongs inside the marked element.
+    checked = 0
+    for path in _marking_pages():
+        walker = _walk(path)
+        checked += len(walker.marked)
+        assert walker.stranded == [], f"{path.relative_to(ROOT)}: {walker.stranded[:3]}"
+    assert checked >= 150
+
+
+def test_nowrap_parents_still_keep_their_text_on_one_line() -> None:
+    sheet = (ROOT / "system" / "system.css").read_text(encoding="utf-8")
+    for name in NOWRAP_PARENTS:
+        rule = re.search(rf"(?m)^\.{re.escape(name)}\{{([^}}]*)\}}", sheet)
+        assert rule and "white-space:nowrap" in rule.group(1), name
+
+
 def test_every_page_that_marks_a_token_links_a_sheet_with_the_ident_rule() -> None:
     checked = 0
     for path in sorted(ROOT.rglob("*.html")):
@@ -133,6 +183,8 @@ def _has_ident_rule(sheet: str) -> bool:
 def test_the_ident_rule_never_lets_a_name_push_the_page_sideways() -> None:
     for sheet in ("system/system.css", "system/doc.css", "system/figure.css", "home/src/App.css"):
         assert IDENT_RULE in (ROOT / sheet).read_text(encoding="utf-8"), sheet
+    # code inside a marked span takes no extra leading (a 3 px taller line otherwise)
+    assert ".ident > code{line-height:1}" in (ROOT / "system" / "system.css").read_text(encoding="utf-8")
     figure = (ROOT / "system" / "figure.css").read_text(encoding="utf-8")
     # nowrap only where the table already scrolls inside its own box
     assert "@media screen { .figure-table-wrap .ident{white-space:nowrap} }" in figure

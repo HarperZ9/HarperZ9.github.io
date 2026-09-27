@@ -32,17 +32,46 @@ export function packageNames(registry) {
 
 // A token stands alone: no letter, digit, dot, slash or hyphen touches it, so a
 // name inside a URL, a path or a longer word is left as it is. A pinned version
-// (==1.9.1) stays with its package name. Group 1 is the character before the
-// token (or nothing at the start of the text) and group 2 is the token. The
-// pattern uses no lookbehind, so older browsers can compile it in the home bundle.
-export function identSource(names) {
+// (==1.9.1) stays with its package name.
+//
+// Punctuation that touches the token goes inside the span with it: an opening
+// bracket or quote before it, and closing punctuation after it when a space, a
+// tag or the end of the text follows. The span is an inline-block, and a line
+// may break on either side of one, so a bracket left outside could end a line
+// alone ("tool (" then "GHSA-...)" below it).
+//
+// Group 1 is the text before the token: at most one other character, then at
+// most one opening bracket or quote. Group 2 is the token. Group 3, when present,
+// is the closing punctuation. The pattern uses no lookbehind and no named group,
+// so older browsers and Python's re can both compile it.
+const OPENING = `([{\\u201c\\u2018"'`;
+const CLOSING = `)\\]}\\u201d\\u2019"'.,;:!?`;
+export const IDENT_OPENING = new Set(["(", "[", "{", "“", "‘", '"', "'"]);
+
+export const IDENT_LEAD = `(^[${OPENING}]?|[^A-Za-z0-9_./-][${OPENING}]?)`;
+export const IDENT_TRAIL = `((?:[${CLOSING}]+)(?=\\s|$|<))?`;
+
+// The token alone, as one capture group, without the text around it.
+export function identTokenSource(names) {
   const alternatives = [...names].sort((a, b) => b.length - a.length || a.localeCompare(b));
   const packages = alternatives.map((name) => name.replaceAll("-", "\\-")).join("|");
-  return `(^|[^A-Za-z0-9_./-])(${GHSA}|(?:${packages})(?:==[0-9]+(?:\\.[0-9A-Za-z]+)*)?)(?![A-Za-z0-9_/-])`;
+  return `(${GHSA}|(?:${packages})(?:==[0-9]+(?:\\.[0-9A-Za-z]+)*)?)(?![A-Za-z0-9_/-])`;
+}
+
+export function identSource(names) {
+  return `${IDENT_LEAD}${identTokenSource(names)}${IDENT_TRAIL}`;
 }
 
 export function identPattern(names) {
   return new RegExp(identSource(names), "g");
+}
+
+// The span for one match: the opening bracket joins the token, and whatever
+// else came before it stays outside.
+export function identSpan(lead, token, trail = "") {
+  const glue = IDENT_OPENING.has(lead.at(-1)) ? lead.at(-1) : "";
+  const before = glue ? lead.slice(0, -1) : lead;
+  return `${before}<span class="ident" translate="no">${glue}${token}${trail}</span>`;
 }
 
 // Text in these elements is never marked. In the raw-text ones only their own
@@ -51,38 +80,45 @@ export function identPattern(names) {
 // changes nothing a reader copies.
 const SKIP = new Set(["head", "svg", "title", "textarea", "script", "style"]);
 const RAW_TEXT = new Set(["title", "textarea", "script", "style"]);
+const VOID = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
 const TAG = /(<[^>]+>)/;
 const TAG_NAME = /^<(\/?)([a-zA-Z][a-zA-Z0-9-]*)/;
 const IDENT_CLASS = /\bclass="(?:[^"]*\s)?ident(?:\s[^"]*)?"/;
+// Classes whose own rule already keeps their text on one line (white-space:nowrap in
+// system.css). A token inside needs no span, and an inline-block there would only add
+// a break before the punctuation that follows.
+export const NOWRAP_CLASSES = ["built-stat"];
+const NOWRAP_CLASS = new RegExp(`\\bclass="(?:[^"]*\\s)?(?:${NOWRAP_CLASSES.join("|")})(?:\\s[^"]*)?"`);
 
 // Wraps every token in the text of an HTML document. Tags and attributes are
-// never changed, and text directly inside an element that already carries the
-// ident class is not wrapped twice, so running it again changes nothing.
+// never changed. Text anywhere inside an element that carries the ident class is
+// left alone, so running it again changes nothing.
 export function markIdents(html, pattern) {
   const parts = html.split(TAG);
-  const open = [];
-  let insideIdent = false;
+  const stack = [];
   for (let index = 0; index < parts.length; index += 1) {
     const part = parts[index];
     if (index % 2 === 1) {
       const tag = TAG_NAME.exec(part);
       const closing = tag?.[1] === "/";
       const name = tag?.[2].toLowerCase();
-      const top = open.at(-1);
-      if (RAW_TEXT.has(top)) {
-        if (closing && name === top) open.pop();
-      } else if (name && SKIP.has(name) && !part.endsWith("/>")) {
-        if (!closing) open.push(name);
-        else if (name === top) open.pop();
+      const top = stack.at(-1);
+      if (top && RAW_TEXT.has(top.name)) {
+        if (closing && name === top.name) stack.pop();
+        continue;
       }
-      insideIdent = !closing && IDENT_CLASS.test(part);
+      if (!name || VOID.has(name) || part.endsWith("/>")) continue;
+      if (!closing) {
+        stack.push({ name, skip: SKIP.has(name), ident: IDENT_CLASS.test(part) || NOWRAP_CLASS.test(part) });
+      } else {
+        let at = stack.length - 1;
+        while (at >= 0 && stack[at].name !== name) at -= 1;
+        if (at >= 0) stack.length = at;
+      }
       continue;
     }
-    if (open.length || insideIdent || !part) continue;
-    parts[index] = part.replace(
-      pattern,
-      (_, lead, token) => `${lead}<span class="ident" translate="no">${token}</span>`,
-    );
+    if (!part || stack.some((element) => element.skip || element.ident)) continue;
+    parts[index] = part.replace(pattern, (_, lead, token, trail) => identSpan(lead, token, trail));
   }
   return parts.join("");
 }

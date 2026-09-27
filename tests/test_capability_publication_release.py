@@ -25,7 +25,7 @@ RELEASE_PATHS = (
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
     "assets/index-DuXEIE3Q.js",
-    "assets/index-CGMskzEB.js",
+    "assets/index-BzE0lc-H.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -382,7 +382,13 @@ RELEASE_PATHS = (
 # system.css, doc.css, figure.css and the home sheet carry the rule; record-page facts
 # keep flex only on the status fact. The home pair is index-CGMskzEB.js and
 # index-DPe17JSn.css.
-REVIEWED_RELEASE_SHA256 = "8daae80b0635f52647ffb0dfc335d0356c6ee509606dfc5cac086f6420493e77"
+# September 27, 2026, copy pass, third commit: punctuation that touches a marked token
+# (an opening bracket before it, a comma, full stop or closing bracket after it) sits
+# inside the marked span, so it cannot end or start a line alone. Tokens inside the
+# no-wrap .built-stat stay unmarked, and code inside a marked span takes no extra
+# leading. The home bundle is index-BzE0lc-H.js; the intermediate index-CGMskzEB.js
+# was never published and is gone.
+REVIEWED_RELEASE_SHA256 = "4efa2e46b8d07fb7340c2820a602aba2848e5eb881c15f2ef61de4e6e9b3b47b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -531,11 +537,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # never published and are gone.
     # September 27, 2026, copy pass: the home pair rebuilt from the registry after its
     # plain-words rewrite, with advisory IDs and package names kept whole, is
-    # index-CGMskzEB.js and index-DPe17JSn.css. index-DuXEIE3Q.js and
-    # index-BORSyU4q.css stay as retained history. The intermediate build
-    # index-Brb2IBwO.js was never published and is gone.
-    current_js = "index-CGMskzEB.js"
-    for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js"):
+    # index-BzE0lc-H.js and index-DPe17JSn.css, with touching punctuation kept in
+    # each marked token. index-DuXEIE3Q.js and index-BORSyU4q.css stay as retained
+    # history. The intermediate builds index-Brb2IBwO.js and index-CGMskzEB.js were
+    # never published and are gone.
+    current_js = "index-BzE0lc-H.js"
+    for unpublished_js in (
+        "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
+    ):
         assert not (ROOT / "assets" / unpublished_js).exists()
         assert f"assets/{unpublished_js}" not in RELEASE_PATHS
     previous_advisories_css = "index-BORSyU4q.css"
