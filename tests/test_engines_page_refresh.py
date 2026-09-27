@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+from ident_markup import without_idents
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "overview.html"
@@ -103,7 +105,7 @@ def test_engines_page_routes_to_products_evidence_and_work() -> None:
 
 
 def test_engines_page_release_facts_match_the_system_registry() -> None:
-    page = read(PAGE)
+    page = without_idents(read(PAGE))
     systems = systems_by_id()
 
     for system_id in (

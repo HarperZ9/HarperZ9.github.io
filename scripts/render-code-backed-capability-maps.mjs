@@ -2,12 +2,16 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { identPattern, markIdents, packageNames } from "./ident-tokens.mjs";
 import { relationLabel } from "./relation-wording.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const registry = validateRegistry(JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8")));
 const systemById = new Map(registry.systems.map((system) => [system.id, system]));
+// The text table under each map keeps advisory IDs and package names whole;
+// markIdents leaves the inline SVG alone.
+const IDENTS = identPattern(packageNames(registry));
 const evidenceById = new Map(registry.systems.flatMap((system) => system.evidence.map((evidence) => [evidence.id, evidence])));
 const verifiedRelations = registry.relations.filter((relation) => relation.status === "verified-in-source");
 
@@ -271,7 +275,7 @@ for (const configuredView of configurations) {
   await Promise.all([
     writeFile(resolve(root, "figures", `${configuration.id}.json`), `${JSON.stringify(companion, null, 2)}\n`, "utf8"),
     writeFile(resolve(root, "figures", `${configuration.id}.svg`), `${svg}\n`, "utf8"),
-    writeFile(resolve(root, "figures", `${configuration.id}.html`), `${html}\n`, "utf8"),
+    writeFile(resolve(root, "figures", `${configuration.id}.html`), `${markIdents(html, IDENTS)}\n`, "utf8"),
   ]);
   console.log(`rendered ${configuration.id}: ${systems.length} systems, ${relations.length} typed relationships`);
 }

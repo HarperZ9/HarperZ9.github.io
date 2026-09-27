@@ -25,7 +25,7 @@ RELEASE_PATHS = (
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
     "assets/index-DuXEIE3Q.js",
-    "assets/index-Brb2IBwO.js",
+    "assets/index-CGMskzEB.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -84,6 +84,7 @@ RELEASE_PATHS = (
     "system/theme.css",
     "assets/index-eZ1QGP52.css",
     "assets/index-BORSyU4q.css",
+    "assets/index-DPe17JSn.css",
     "assets/index-DJj37yQz.css",
     "typeface.html",
     "system/type-specimen.css",
@@ -375,7 +376,13 @@ RELEASE_PATHS = (
 # its new headline. Catalog, overview, record pages, capability maps, security
 # registry, route registry, site index and the home bundle (index-Brb2IBwO.js)
 # regenerate from the registry.
-REVIEWED_RELEASE_SHA256 = "68414adab63b30dff6790f08cbf54656e13a4694a34f3e9d96de72ec995a3b2d"
+# September 27, 2026, copy pass, second commit: advisory IDs and package names stay
+# whole on narrow screens. Generated pages, the three code-backed capability maps,
+# the site index, eleven hand pages and the home wrap each one in class="ident";
+# system.css, doc.css, figure.css and the home sheet carry the rule; record-page facts
+# keep flex only on the status fact. The home pair is index-CGMskzEB.js and
+# index-DPe17JSn.css.
+REVIEWED_RELEASE_SHA256 = "8daae80b0635f52647ffb0dfc335d0356c6ee509606dfc5cac086f6420493e77"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -522,12 +529,19 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # advisories is index-DuXEIE3Q.js; index-D4UoCuIT.js stays as retained history.
     # The earlier 27 September builds, index-RXS41pPF.js and index-CUXkFuw-.js, were
     # never published and are gone.
-    # September 27, 2026, copy pass: the bundle rebuilt from the registry after its
-    # plain-words rewrite is index-Brb2IBwO.js; index-DuXEIE3Q.js stays as retained
-    # history.
-    current_js = "index-Brb2IBwO.js"
-    for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js"):
+    # September 27, 2026, copy pass: the home pair rebuilt from the registry after its
+    # plain-words rewrite, with advisory IDs and package names kept whole, is
+    # index-CGMskzEB.js and index-DPe17JSn.css. index-DuXEIE3Q.js and
+    # index-BORSyU4q.css stay as retained history. The intermediate build
+    # index-Brb2IBwO.js was never published and is gone.
+    current_js = "index-CGMskzEB.js"
+    for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js"):
         assert not (ROOT / "assets" / unpublished_js).exists()
+        assert f"assets/{unpublished_js}" not in RELEASE_PATHS
+    previous_advisories_css = "index-BORSyU4q.css"
+    assert previous_advisories_css not in source
+    assert (ROOT / "assets" / previous_advisories_css).is_file()
+    assert f"assets/{previous_advisories_css}" in RELEASE_PATHS
     previous_advisories_js = "index-DuXEIE3Q.js"
     assert previous_advisories_js not in source
     assert (ROOT / "assets" / previous_advisories_js).is_file()
@@ -539,7 +553,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    current_css = "index-BORSyU4q.css"
+    current_css = "index-DPe17JSn.css"
     previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
     previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
     previous_capability_first_home_js = "index-4wTyKocM.js"

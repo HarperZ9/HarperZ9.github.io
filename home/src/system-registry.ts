@@ -17,3 +17,5 @@ export const CAPABILITY_DOMAINS = SYSTEM_REGISTRY.domains;
 export const EVIDENCE_STREAM = SYSTEMS.flatMap((system) => system.evidence.map((evidence) => ({ ...evidence, systemId: system.id }))).sort((left, right) => right.date.localeCompare(left.date));
 export function systemById(id: string) { return SYSTEMS.find((system) => system.id === id); }
 export function relatedSystems(id: string) { const system = systemById(id); return system ? system.related.map((relatedId: string) => systemById(relatedId)).filter(Boolean) : []; }
+// Advisory IDs and package names the home keeps whole (scripts/ident-tokens.mjs).
+export const IDENT_SOURCE = "(^|[^A-Za-z0-9_./-])(GHSA(?:-[0-9a-z]{4}){3}|(?:model\\-provenance\\-validator|public\\-surface\\-sweeper|accountable\\-surface|articulate\\-writing|chorus\\-discourse|repo\\-proof\\-index|flywheel\\-verify|crucible\\-bench|flywheel\\-canon|flywheel\\-mneme|flywheel\\-relay|gather\\-engine|proof\\-surface|canon\\-memory|forum\\-engine|mneme\\-memory|index\\-graph|plexus\\-mesh|relay\\-agent)(?:==[0-9]+(?:\\.[0-9A-Za-z]+)*)?)(?![A-Za-z0-9_/-])";

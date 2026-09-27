@@ -831,3 +831,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{
   /* the pinned trigger needs the whole right edge once the wordmark is gone */
   .site-nav > .sn-more{right:1rem}
 }
+/* Advisory IDs and package names (span.ident) stay on one line when the line has room,
+   and wrap inside only when their container is narrower than the name, so they never
+   push the page sideways. */
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}

@@ -909,3 +909,10 @@ body.figure-document .skip-link:focus { top: .5rem; outline: 2px solid var(--foc
 /* The row header takes a small inset, so the focus ring and the active highlight never touch its first letter. */
 .figure-table.data-table :is(thead th:first-child, [data-figure-row] > th[scope="row"]) { padding-left: 0.5rem; }
 @media (forced-colors: active) { [data-figure-row]:focus { outline-color: Highlight; } }
+/* Advisory IDs and package names (span.ident) stay on one line when the line has room,
+   and wrap inside only when their container is narrower than the name, so they never
+   push the page sideways. */
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+/* On a narrow screen a figure table already scrolls sideways inside .figure-table-wrap, so a
+   name in it stays whole and the table scrolls a little further. The page does not move. */
+@media screen { .figure-table-wrap .ident{white-space:nowrap} }

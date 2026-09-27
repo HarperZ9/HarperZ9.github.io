@@ -27,6 +27,7 @@ import {
   rowHeading,
   statusFacts,
 } from "./system-page-parts.mjs";
+import { identPattern, markIdents, packageNames } from "./ident-tokens.mjs";
 import { CATALOG_SHEET, renderIndexHead } from "./system-record-head.mjs";
 import { renderRecordPage } from "./system-record-page.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
@@ -35,6 +36,9 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const registry = validateRegistry(
   JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8")),
 );
+// Advisory IDs and package names in page text stay whole on narrow screens.
+const IDENTS = identPattern(packageNames(registry));
+const withIdents = (html) => markIdents(html, IDENTS);
 const artAlt = JSON.parse(await readFile(resolve(root, "art", "aperture", "covers.json"), "utf8")).alt;
 
 // The map omits controlled-private products. Their boundary pages are still
@@ -234,12 +238,12 @@ const OVERVIEW_HEAD = renderIndexHead({
 
 await writeFile(
   resolve(root, "catalog.html"),
-  `${CATALOG_HEAD}<main id="main" class="sys-index">${CATALOG_POSTER}${catalogMain}</main>${COLOPHON}</body></html>\n`,
+  withIdents(`${CATALOG_HEAD}<main id="main" class="sys-index">${CATALOG_POSTER}${catalogMain}</main>${COLOPHON}</body></html>\n`),
   "utf8",
 );
 await writeFile(
   resolve(root, "overview.html"),
-  `${OVERVIEW_HEAD}<main id="main" class="sys-index">${OVERVIEW_POSTER}${OVERVIEW_ROUTES}${overviewMain}</main>${COLOPHON}</body></html>\n`,
+  withIdents(`${OVERVIEW_HEAD}<main id="main" class="sys-index">${OVERVIEW_POSTER}${OVERVIEW_ROUTES}${overviewMain}</main>${COLOPHON}</body></html>\n`),
   "utf8",
 );
 
@@ -280,7 +284,7 @@ const recordContext = {
 for (const id of RECORD_PAGES) {
   const system = recordContext.systemById.get(id);
   if (!system) throw new Error(`${id}: RECORD_PAGES names a record the registry does not hold`);
-  await writeFile(resolve(root, system.href), renderRecordPage(system, recordContext), "utf8");
+  await writeFile(resolve(root, system.href), withIdents(renderRecordPage(system, recordContext)), "utf8");
 }
 
 console.log(

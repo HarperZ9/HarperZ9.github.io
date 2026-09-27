@@ -9,6 +9,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from ident_markup import without_idents
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PILLAR_PAGES = (
@@ -101,7 +103,7 @@ def test_home_bundle_is_atomic_and_all_referenced_assets_exist() -> None:
 
 
 def test_flywheel_primary_page_uses_the_current_release_route() -> None:
-    source = (ROOT / "flywheel.html").read_text(encoding="utf-8")
+    source = without_idents((ROOT / "flywheel.html").read_text(encoding="utf-8"))
     registry = json.loads((ROOT / "system/systems.json").read_text(encoding="utf-8"))
     flywheel = next(system for system in registry["systems"] if system["id"] == "flywheel")
 

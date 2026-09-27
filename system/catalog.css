@@ -158,7 +158,10 @@ html[data-sys] #main .system-fact{min-width:0;padding:1rem 1.1rem 1.1rem;border-
 html[data-sys] #main .system-fact:nth-child(3){grid-column:4;grid-row:1;border-right:0}
 html[data-sys] #main .system-fact:nth-child(4){grid-column:3;grid-row:1}
 html[data-sys] #main .system-fact dt{font-size:.9375rem;font-weight:620;line-height:1.4;color:var(--soft)}
-html[data-sys] #main .system-fact dd{display:flex;align-items:baseline;gap:.5rem;margin:.35rem 0 0;font-size:1.0625rem;line-height:1.45;color:var(--ink);overflow-wrap:anywhere}
+html[data-sys] #main .system-fact dd{margin:.35rem 0 0;font-size:1.0625rem;line-height:1.45;color:var(--ink);overflow-wrap:anywhere}
+/* Only the status fact draws a maturity mark, so only it lines the mark up with flex. The
+   other facts stay one run of text, and an advisory ID or package name in them stays inline. */
+html[data-sys] #main header[data-maturity] .system-fact:first-child dd{display:flex;align-items:baseline;gap:.5rem}
 html[data-sys] #main header[data-maturity] .system-fact:first-child dd::before{content:"";flex:none;box-sizing:border-box;width:.8em;height:.8em;border:1.5px solid currentColor;transform:translateY(.05em)}
 html[data-sys] #main header[data-maturity="shipped"] .system-fact:first-child dd::before{background:currentColor}
 html[data-sys] #main header[data-maturity="active"] .system-fact:first-child dd::before{background:linear-gradient(to top,currentColor 50%,transparent 50%)}

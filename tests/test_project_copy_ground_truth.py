@@ -3,6 +3,8 @@ import json
 import re
 from pathlib import Path
 
+from ident_markup import without_idents
+
 
 ROOT = Path(__file__).resolve().parents[1]
 NON_DEPLOYABLE_HTML_DIRS = {"node_modules", "dist", ".worktrees", "_preview", "_drafts", "_redesign"}
@@ -101,7 +103,7 @@ def test_index_page_uses_the_registry_release_version_everywhere() -> None:
     record = _registry_record("index")
     version_match = re.search(r"\b(\d+\.\d+\.\d+)\b", record["releaseState"])
     assert version_match, record["releaseState"]
-    page = (ROOT / record["href"]).read_text(encoding="utf-8")
+    page = without_idents((ROOT / record["href"]).read_text(encoding="utf-8"))
     page_versions = set(re.findall(r"index-graph[- ](\d+\.\d+\.\d+)", page))
     assert page_versions == {version_match.group(1)}
 

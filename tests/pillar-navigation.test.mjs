@@ -244,6 +244,7 @@ test('route renderer classifies sitemap articles from writing sources under Rese
     mkdirSync(join(root, 'home', 'src'), { recursive: true });
     cpSync(new URL('../scripts/render-route-registry.mjs', import.meta.url), join(root, 'scripts', 'render-route-registry.mjs'));
     cpSync(new URL('../scripts/render-site-index.mjs', import.meta.url), join(root, 'scripts', 'render-site-index.mjs'));
+    cpSync(new URL('../scripts/ident-tokens.mjs', import.meta.url), join(root, 'scripts', 'ident-tokens.mjs'));
     writeFixture(root, 'system/routes.js', fixtureRoutesModule({
       families: [
         { label: 'Work', routes: [{ label: 'Work', href: 'hire.html' }] },
@@ -318,6 +319,7 @@ test('route renderer refreshes existing system summaries from canonical system p
     mkdirSync(join(root, 'systems'), { recursive: true });
     cpSync(new URL('../scripts/render-route-registry.mjs', import.meta.url), join(root, 'scripts', 'render-route-registry.mjs'));
     cpSync(new URL('../scripts/render-site-index.mjs', import.meta.url), join(root, 'scripts', 'render-site-index.mjs'));
+    cpSync(new URL('../scripts/ident-tokens.mjs', import.meta.url), join(root, 'scripts', 'ident-tokens.mjs'));
     writeFixture(root, 'system/routes.js', fixtureRoutesModule({
       families: [
         { label: 'Work', routes: [{ label: 'Work', href: 'hire.html' }] },

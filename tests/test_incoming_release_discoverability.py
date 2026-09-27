@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 
+from ident_markup import without_idents
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -52,7 +54,7 @@ def test_canon_is_discoverable_with_pypi_release_and_advisory() -> None:
     assert "canon --json preview" in canon["entryCommand"]
     assert "canon --json export" in canon["verificationCommand"]
     assert canon["runGuide"]["href"].endswith("/README.md#L133-L145")
-    assert "records.jsonl and atoms.jsonl" in read("canon.html")
+    assert "records.jsonl and atoms.jsonl" in without_idents(read("canon.html"))
     assert evidence["canon-release-v0-1-0"]["href"].endswith("/releases/tag/v0.1.0")
     assert "939639e91414bfe163c43ea689f1a5ddf348254c1989fa54b08c5f2b3849246f" in evidence[
         "canon-release-v0-1-0"
@@ -84,7 +86,7 @@ def test_chorus_names_pypi_0_3_1_github_release_and_source_change_gate() -> None
     assert "no PyPI release claimed" not in chorus["releaseState"]
     for surface in ("chorus.html", "research.html", "catalog.html"):
         assert "no PyPI release claimed" not in read(surface)
-    assert "chorus-discourse==0.3.1" in read("chorus.html")
+    assert "chorus-discourse==0.3.1" in without_idents(read("chorus.html"))
     assert "108 tests" not in read("research.html")
     assert evidence["chorus-source-change-gate-v0-3-0-source"]["status"] == "verified"
     assert "UNVERIFIABLE" in evidence["chorus-source-change-gate-v0-3-0-source"]["summary"]
@@ -117,7 +119,7 @@ def test_index_release_discovery_names_durable_jobs_and_keeps_212_wheel_drift() 
     index = registry_record("index")
     evidence = evidence_by_id(index)
     payload = json.dumps(index)
-    page = read("index-graph.html")
+    page = without_idents(read("index-graph.html"))
     home_projection = read("home/site/evidence-stream.json")
 
     # 2026-09-26: 2.13.0 is current; the 2.12.0 records stay as history.
@@ -167,8 +169,8 @@ def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
     forum = registry_record("forum")
     evidence = evidence_by_id(forum)
     payload = json.dumps(forum)
-    page = read("forum.html")
-    catalog = read("catalog.html")
+    page = without_idents(read("forum.html"))
+    catalog = without_idents(read("catalog.html"))
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
@@ -229,8 +231,8 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     flywheel = registry_record("flywheel")
     evidence = evidence_by_id(flywheel)
     payload = json.dumps(flywheel)
-    page = read("flywheel.html")
-    catalog = read("catalog.html")
+    page = without_idents(read("flywheel.html"))
+    catalog = without_idents(read("catalog.html"))
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
@@ -348,7 +350,7 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     assert "Flywheel v1.0.4" in home_registry
 
     for relative in ("home/index.html", "index.html"):
-        fallback = read(relative).split('<section id="noscript-flywheel"', 1)[1]
+        fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
         assert release_link and release_link.group(1) == evidence["flywheel-release-v1-0-4"]["href"]
@@ -366,7 +368,7 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
 
 
 def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
-    page = read("flywheel.html")
+    page = without_idents(read("flywheel.html"))
     # 2026-09-25 round 3: the three companion products share one section, #companions, with one
     # disclosure that holds their downloads, setup and limits; the row anchors keep their ids.
     # The evidence and the retired benchmark now come before the install and companion sections.
@@ -417,8 +419,8 @@ def test_relay_release_discovery_uses_flywheel_relay_and_avoids_pypi_relay_agent
     relay = registry_record("relay")
     evidence = evidence_by_id(relay)
     payload = json.dumps(relay)
-    page = read("systems/relay.html")
-    catalog = read("catalog.html")
+    page = without_idents(read("systems/relay.html"))
+    catalog = without_idents(read("catalog.html"))
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
@@ -478,7 +480,7 @@ def test_relay_release_discovery_uses_flywheel_relay_and_avoids_pypi_relay_agent
 def test_gather_current_install_and_mount_boundary_are_discoverable() -> None:
     gather = registry_record("gather")
     evidence = evidence_by_id(gather)
-    page = read("gather.html")
+    page = without_idents(read("gather.html"))
     for item_id in ("gather-release-v1-8-1", "gather-pypi-v1-8-1"):
         assert evidence[item_id]["status"] == "verified"
         assert item_id in read("home/site/evidence-stream.json")
@@ -508,8 +510,8 @@ def test_gather_171_evidence_remains_after_current_release_update() -> None:
     gather = registry_record("gather")
     evidence = evidence_by_id(gather)
     payload = json.dumps(gather)
-    page = read("gather.html")
-    catalog = read("catalog.html")
+    page = without_idents(read("gather.html"))
+    catalog = without_idents(read("catalog.html"))
     home_projection = read("home/site/evidence-stream.json")
     home_registry = read("home/src/system-registry.ts")
 
@@ -608,7 +610,8 @@ def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> N
             if item["type"] == "advisory":
                 ghsa = re.search(r"GHSA(?:-[a-z0-9]{4}){3}", item["href"]).group(0)
                 recorded[ghsa] = item["href"]
-    listed = re.findall(r'Advisory <span translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>', page)
+    # 2026-09-27 copy pass: each advisory ID carries class="ident" so it stays whole.
+    listed = re.findall(r'Advisory <span class="ident" translate="no">(GHSA(?:-[a-z0-9]{4}){3})</span>', page)
     assert len(listed) == len(set(listed)), "an advisory is listed twice"
     assert set(listed) == set(recorded)
     assert len(recorded) == 12
