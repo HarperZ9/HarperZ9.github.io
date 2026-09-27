@@ -9,7 +9,7 @@
       "href": "https://github.com/HarperZ9/relay/releases/tag/v0.5.0",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops every PATH entry that reaches the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs.",
+      "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops PATH entries that reach the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs. The folder of the interpreter relay runs on stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When the working folder is a filesystem root or holds the home folder, only the entry naming that folder itself leaves. The release notes list the remaining limits.",
       "systemId": "relay"
     },
     {
@@ -29,7 +29,7 @@
       "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.1",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps a PATH entry that reaches the working folder through an alias, a link or a quoted entry out of the command lookup and out of the child's PATH.",
+      "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps PATH entries that reach the working folder through an alias, a link or quotes out of the command lookup and out of the child's PATH. The folder of the running interpreter stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Forum runs in a filesystem root or in a folder that holds the home folder, only the entry naming that folder itself leaves.",
       "systemId": "forum"
     },
     {
@@ -49,7 +49,7 @@
       "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.1",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps a PATH entry that reaches the working folder out of the command lookup and out of the child's PATH, and on Windows its file sources and MCP path arguments refuse network shares and device paths.",
+      "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps PATH entries that reach the working folder out of the command lookup and out of the child's PATH. The folder of the Python that runs Gather stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, only the entry naming that folder itself leaves. On Windows, its file sources and MCP path arguments refuse network shares and device paths.",
       "systemId": "gather"
     },
     {

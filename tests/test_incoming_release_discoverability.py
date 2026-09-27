@@ -615,13 +615,17 @@ def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> N
     for ghsa, href in recorded.items():
         assert f'href="{href}"' in page
 
-    # Every lane pin that sits inside an advisory range is named, Mneme stays outside.
-    for pin in ("crucible-bench</code> 1.2.0", "gather-engine</code> 1.8.2",
-                "flywheel-relay</code> 0.2.5", "flywheel-canon</code> 0.2.0",
-                "forum-engine</code> 1.14.0"):
-        assert pin in page
-    assert "five of these lanes</a>" in page
-    assert "four of these lanes" not in page
+    # Every Flywheel pin that sits inside an advisory range is named, in plate order
+    # (Gather, Relay, Forum, Crucible, Canon), and Mneme stays outside.
+    pins = ("gather-engine</code> 1.8.2", "flywheel-relay</code> 0.2.5",
+            "forum-engine</code> 1.14.0", "crucible-bench</code> 1.2.0",
+            "flywheel-canon</code> 0.2.0")
+    pin_note = page[page.index("Flywheel 1.0.4, the current release"):]
+    pin_note = pin_note[: pin_note.index("</p>")]
+    positions = [pin_note.index(pin) for pin in pins]
+    assert positions == sorted(positions), "the pin list does not follow the plate order"
+    assert "five of these tools</a> to affected versions" in page
+    assert "of these lanes" not in page
     assert "Its Mneme pin, 0.4.2, is outside the Mneme advisory." in page
 
     # The null names only tools that have no advisory in the registry.

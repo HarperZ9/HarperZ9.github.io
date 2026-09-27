@@ -1171,7 +1171,7 @@ Error generating stack: `+e.message+`
         "flywheel-release-v1-0-4",
         "gather-release-v1-9-1"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the ranges of GHSA-pxvv-rg3f-4v5w, GHSA-r4f3-9xrf-72m5, GHSA-r38f-cr69-jpp8 and GHSA-j6j7-39vh-qrp4, all fixed in 1.9.1, and this relation does not show that Flywheel was tested with 1.9.1. This does not make Gather a Flywheel-owned product."
+      "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the ranges of the four Gather advisories listed on the Security page, and 1.9.1 and later are outside all four; this relation does not show that Flywheel was tested with 1.9.1. This does not make Gather a Flywheel-owned product."
     },
     {
       "source": "flywheel",
@@ -1207,7 +1207,7 @@ Error generating stack: `+e.message+`
         "flywheel-release-v1-0-4",
         "forum-release-v1-15-1"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Forum as its orchestration MCP lane, pinned to forum-engine 1.14.0. That pin is inside the range of GHSA-36gv-h885-fmjf, and 1.15.1 fixes it and GHSA-h6qh-49hv-4xcg; this relation does not show that Flywheel was tested with 1.15.1."
+      "claimScope": "Flywheel 1.0.4 declares and launches Forum as its orchestration MCP lane, pinned to forum-engine 1.14.0. That pin is inside the range of one of the two Forum advisories listed on the Security page, and 1.15.1 and later are outside both; this relation does not show that Flywheel was tested with 1.15.1."
     },
     {
       "source": "flywheel",
@@ -1243,7 +1243,7 @@ Error generating stack: `+e.message+`
         "flywheel-release-v1-0-4",
         "relay-release-v0-5-0"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the ranges of GHSA-xxcc-grhg-v9g7, GHSA-phjr-6qrc-39mw and GHSA-82fg-qprm-q5r7, all fixed in 0.5.0, and this relation does not show that Flywheel was tested with 0.5.0."
+      "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the ranges of the three Relay advisories listed on the Security page, and 0.5.0 and later are outside all three; this relation does not show that Flywheel was tested with 0.5.0."
     },
     {
       "source": "flywheel",
@@ -2016,7 +2016,7 @@ Error generating stack: `+e.message+`
           "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.1",
           "date": "2026-09-27",
           "status": "verified",
-          "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps a PATH entry that reaches the working folder out of the command lookup and out of the child's PATH, and on Windows its file sources and MCP path arguments refuse network shares and device paths."
+          "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps PATH entries that reach the working folder out of the command lookup and out of the child's PATH. The folder of the Python that runs Gather stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, only the entry naming that folder itself leaves. On Windows, its file sources and MCP path arguments refuse network shares and device paths."
         },
         {
           "id": "gather-pypi-v1-9-1",
@@ -2150,7 +2150,7 @@ Error generating stack: `+e.message+`
         "Optional hard-source adapters require external tools, and untrusted URLs near internal services require separate network controls.",
         "Readable context selection returns acquired source context; it does not prove source truth, claim support, completeness, downstream model use, or absence of sensitive material in selected text or URLs.",
         "Selection offsets use the LF-normalized view. New writes witness exact UTF-8 source text; legacy reconstruction does not prove historical raw object-byte integrity. Detecting witness changes requires a previously pinned corpus digest.",
-        "gather-engine before 1.9.1 is affected by GHSA-r38f-cr69-jpp8, and 1.6.0 and later releases before 1.9.1 by GHSA-j6j7-39vh-qrp4 when gather mcp runs on Windows. Releases before 1.9.0 are also affected by GHSA-pxvv-rg3f-4v5w and GHSA-r4f3-9xrf-72m5. Install 1.9.1 or later.",
+        "Every gather-engine release before 1.9.1 is inside the range of at least one of the four Gather advisories listed on the Security page; install 1.9.1 or later.",
         "MCP hosts that relied on the old gather.run and gather.pilot behavior add a launch grant. A tool found only inside the working folder needs its absolute path in its GATHER_<TOOL> variable."
       ],
       "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
@@ -2220,7 +2220,7 @@ Error generating stack: `+e.message+`
           "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.1",
           "date": "2026-09-27",
           "status": "verified",
-          "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps a PATH entry that reaches the working folder through an alias, a link or a quoted entry out of the command lookup and out of the child's PATH."
+          "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps PATH entries that reach the working folder through an alias, a link or quotes out of the command lookup and out of the child's PATH. The folder of the running interpreter stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Forum runs in a filesystem root or in a folder that holds the home folder, only the entry naming that folder itself leaves."
         },
         {
           "id": "forum-pypi-v1-15-1",
@@ -2297,13 +2297,13 @@ Error generating stack: `+e.message+`
       ],
       "limitations": [
         "A valid ledger proves recorded integrity and replayability, not that model output is substantively correct.",
-        "Executors and human approval policy remain operator-supplied.",
+        "You supply the executors and the human approval policy.",
         "The route-preflight skill is a standalone host skill, not a marketplace approval and not a Forum engine version bump.",
         "The skill checks route, context, and runtime readiness without executing the supplied model or shell command; safe_to_submit remains false so a human or host policy still decides whether to proceed.",
-        "forum-engine before 1.15.0 is affected by GHSA-36gv-h885-fmjf, and 1.15.0 by GHSA-h6qh-49hv-4xcg; install 1.15.1 or later.",
-        "From 1.15.0, forum serve by default needs the bearer token it prints at startup, each command runs in a private empty folder with a short environment (FORUM_CHILD_ENV adds named variables), and an MCP client decides gates only when forum mcp starts with --allow-gate-decisions."
+        "Every forum-engine release before 1.15.1 is inside the range of one of the two Forum advisories listed on the Security page; install 1.15.1 or later.",
+        "From 1.15.0, forum serve by default needs the bearer token it prints at startup, and an MCP client decides gates only when forum mcp starts with --allow-gate-decisions. Each command runs in a private empty folder with a short environment. Give commands full paths, because a relative path no longer resolves, and name any extra variable in FORUM_CHILD_ENV. The v1.15.0 and v1.15.1 release notes list every upgrade change."
       ],
-      "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
+      "boundary": "Agent permissions must remain no broader than your authority and the active task scope.",
       "inputs": [
         "task graphs and delivery contracts",
         "agent and executor profiles",
@@ -2702,7 +2702,7 @@ Error generating stack: `+e.message+`
           "href": "https://github.com/HarperZ9/relay/releases/tag/v0.5.0",
           "date": "2026-09-27",
           "status": "verified",
-          "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops every PATH entry that reaches the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs."
+          "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops PATH entries that reach the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs. The folder of the interpreter relay runs on stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When the working folder is a filesystem root or holds the home folder, only the entry naming that folder itself leaves. The release notes list the remaining limits."
         },
         {
           "id": "relay-pypi-v0-5-0",
@@ -2779,9 +2779,10 @@ Error generating stack: `+e.message+`
       ],
       "limitations": [
         "The command denylist is not a security boundary.",
-        "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs an operator-owned check.",
+        "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs a check you own.",
         "Relay publishes on PyPI as flywheel-relay. The PyPI name relay-agent belongs to another publisher.",
-        "flywheel-relay before 0.5.0 is affected by GHSA-82fg-qprm-q5r7, releases before 0.4.0 also by GHSA-xxcc-grhg-v9g7, and 0.2.0 and later releases before 0.4.0 by GHSA-phjr-6qrc-39mw; install 0.5.0 or later. Commands that read a variable outside the child allowlist need it named in RELAY_CHILD_ENV.",
+        "Every flywheel-relay release before 0.5.0 is inside the range of at least one of the three Relay advisories listed on the Security page; install 0.5.0 or later.",
+        "Commands that read a variable outside the child allowlist need it named in RELAY_CHILD_ENV.",
         "From 0.5.0, a run, test_cmd or check command that found a program through a project folder on PATH, such as node_modules/.bin, needs that program's path, unless the folder holds the interpreter relay runs on. A pin such as ~=0.4.0 excludes 0.5.0."
       ],
       "boundary": "Tool use remains permission-checked and limited to authorized repositories, systems, and endpoints.",
@@ -5554,7 +5555,7 @@ Error generating stack: `+e.message+`
       "href": "https://github.com/HarperZ9/relay/releases/tag/v0.5.0",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops every PATH entry that reaches the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs.",
+      "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops PATH entries that reach the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs. The folder of the interpreter relay runs on stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When the working folder is a filesystem root or holds the home folder, only the entry naming that folder itself leaves. The release notes list the remaining limits.",
       "systemId": "relay"
     },
     {
@@ -5574,7 +5575,7 @@ Error generating stack: `+e.message+`
       "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.1",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps a PATH entry that reaches the working folder through an alias, a link or a quoted entry out of the command lookup and out of the child's PATH.",
+      "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps PATH entries that reach the working folder through an alias, a link or quotes out of the command lookup and out of the child's PATH. The folder of the running interpreter stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Forum runs in a filesystem root or in a folder that holds the home folder, only the entry naming that folder itself leaves.",
       "systemId": "forum"
     },
     {
@@ -5594,7 +5595,7 @@ Error generating stack: `+e.message+`
       "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.1",
       "date": "2026-09-27",
       "status": "verified",
-      "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps a PATH entry that reaches the working folder out of the command lookup and out of the child's PATH, and on Windows its file sources and MCP path arguments refuse network shares and device paths.",
+      "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps PATH entries that reach the working folder out of the command lookup and out of the child's PATH. The folder of the Python that runs Gather stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, only the entry naming that folder itself leaves. On Windows, its file sources and MCP path arguments refuse network shares and device paths.",
       "systemId": "gather"
     },
     {

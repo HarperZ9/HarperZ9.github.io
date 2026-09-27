@@ -24,7 +24,7 @@ RELEASE_PATHS = (
     "assets/index-JJHLIJUt.js",
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
-    "assets/index-RXS41pPF.js",
+    "assets/index-CUXkFuw-.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -362,9 +362,10 @@ RELEASE_PATHS = (
 # lists the home evidence newest first.
 # September 27, 2026: Forum 1.15.1, Gather 1.9.1 and Relay 0.5.0 with the five
 # advisories published that day; the security plate lists twelve advisories and
-# the five Flywheel 1.0.4 lane pins inside their ranges; the home bundle rebuilt
-# from the refreshed registry is index-RXS41pPF.js.
-REVIEWED_RELEASE_SHA256 = "ec0671d76c14b8ef398d7db38d0316fd478e8ab701cd3eee2976c63f9642cecd"
+# the five Flywheel 1.0.4 lane pins inside their ranges. The review pass bounds the
+# PATH claims, counts advisories in the relations instead of listing IDs, and rebuilds
+# the home bundle from the refreshed registry as index-CUXkFuw-.js.
+REVIEWED_RELEASE_SHA256 = "cf50087e515c4f350e16ed11b2d2cc3d66123d9d5a06bdc0967d79612003ff88"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -508,8 +509,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # September 26, 2026, facts pass: the home bundle rebuilt from the refreshed
     # registry is index-D4UoCuIT.js; the void-plates bundle stays as retained history.
     # September 27, 2026: the bundle rebuilt for the 27 September releases and
-    # advisories is index-RXS41pPF.js; index-D4UoCuIT.js stays as retained history.
-    current_js = "index-RXS41pPF.js"
+    # advisories is index-CUXkFuw-.js; index-D4UoCuIT.js stays as retained history.
+    # The first 27 September build, index-RXS41pPF.js, was never published and is gone.
+    current_js = "index-CUXkFuw-.js"
+    assert not (ROOT / "assets" / "index-RXS41pPF.js").exists()
     previous_facts_js = "index-D4UoCuIT.js"
     assert previous_facts_js not in source
     assert (ROOT / "assets" / previous_facts_js).is_file()
