@@ -35,7 +35,7 @@
     <p class="lede" data-canonical-purpose="crucible">Crucible is a Python claim-testing engine. It breaks a thesis into claims with stated failure conditions, measures them against supplied evidence or checks, and returns MATCH, DRIFT, or UNVERIFIABLE with a record that can be recomputed.</p>
     <p class="close">Steelman proposes what would settle the claim. Measurement decides. The verdict recomputes from the record.</p>
   </div>
-  <div class="seal"><span translate="no">crucible</span> &middot; v1.2.0 on PyPI (<span translate="no">crucible-bench</span>) &middot; <span translate="no">MATCH</span>-provenance check &middot; fair-source &middot; zero core dependencies</div>
+  <div class="seal"><span translate="no">crucible</span> &middot; v1.3.0 on PyPI (<span translate="no">crucible-bench</span>) &middot; <span translate="no">MATCH</span>-provenance check &middot; fair-source &middot; zero core dependencies</div>
 </div>
 
 <main id="main">
@@ -108,14 +108,15 @@
 
 <section class="mv" id="state" aria-labelledby="state-h">
   <h2 id="state-h" class="reveal">Current state. What is honest to claim.</h2>
-  <p class="body-text reveal">The public repo is a versioned 1.2.0 judgment package: the register-through-witness loop, drift tracking, thesis adapter, measurement rechecks, Markdown reports, one-command runs, cleanroom review, the <span translate="no">MATCH</span>-provenance check, missing-evidence explanations, ill-posed measurement warnings, the full CLI, a native MCP bridge, README, architecture note, and changelog. Its core loop is tested and published to PyPI as <b translate="no">crucible-bench</b> (<code translate="no">pip install crucible-bench</code>) via OIDC trusted publishing. The next increments can move in parallel while the wider Telos outreach asks for verification, testing, traction, and research support.</p>
+  <p class="body-text reveal">The public repo is a versioned 1.3.0 judgment package: the register-through-witness loop, drift tracking, thesis adapter, measurement rechecks, Markdown reports, one-command runs, cleanroom review, the <span translate="no">MATCH</span>-provenance check, missing-evidence explanations, ill-posed measurement warnings, the full CLI, a native MCP bridge, README, architecture note, and changelog. Its core loop is tested and published to PyPI as <b translate="no">crucible-bench</b> (<code translate="no">pip install crucible-bench</code>) via OIDC trusted publishing. The next increments can move in parallel while the wider Telos outreach asks for verification, testing, traction, and research support.</p>
+  <p class="body-text reveal">Version 1.3.0, released on 26 September 2026, fixes verdict-integrity defects in 1.2.0 and earlier. In those versions a measurement could widen the tolerance that decides <span translate="no">MATCH</span>, and <code translate="no">doctor</code> reported <span translate="no">MATCH</span> for checks it never ran. The published advisory <a href="https://github.com/HarperZ9/crucible/security/advisories/GHSA-49qx-cj4f-wfqv" rel="noopener" aria-label="Advisory GHSA-49qx-cj4f-wfqv: Crucible, unsupported MATCH verdicts"><span translate="no">GHSA-49qx-cj4f-wfqv</span></a> covers 1.2.0 and earlier, so install 1.3.0 or later. Version 1.3.0 also adds <code translate="no">ProofMeasure</code>, which uses a proof or type checker as the measurement.</p>
   <p class="body-text reveal"><a href="demo-crucible.html">Watch the recorded workflow</a>: the same three-claim thesis moves from 1 MATCH / 2 DRIFT to 3 MATCH / 0 DRIFT, both cleanroom packets pass, and the final verdict is re-derived from disk.</p>
   <div class="channels reveal">
     <span class="g">Source</span> &rarr; <a href="https://github.com/HarperZ9/crucible" rel="noopener" translate="no">github.com/HarperZ9/crucible</a>
     &nbsp;&middot;&nbsp;
     <span class="g">PyPI</span> &rarr; <a href="https://pypi.org/project/crucible-bench/" rel="noopener" translate="no">crucible-bench</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Version</span> &rarr; <span translate="no">1.2.0 release</span>
+    <span class="g">Version</span> &rarr; <a href="https://github.com/HarperZ9/crucible/releases/tag/v1.3.0" rel="noopener" translate="no">1.3.0 release</a>
     &nbsp;&middot;&nbsp;
     <span class="g">Recorded demo</span> &rarr; <a href="demo-crucible.html">watch the workflow</a>
     &nbsp;&middot;&nbsp;

@@ -198,9 +198,9 @@
     }
   ],
   "limits": [
-    "Flywheel's registry and bundled payloads are different integration layers. Articulate's standalone v0.3.0 release is newer than the version declared in Flywheel's lane registry. Do not claim every latest companion is bundled in the v1.0.1 installer.",
+    "Flywheel's registry and bundled payloads are different integration layers. Articulate's standalone v0.5.0 release (26 September 2026) is newer than the 0.4.0 declared in Flywheel 1.0.4's lane registry. Do not claim every latest companion is bundled in the v1.0.4 installer.",
     "Computer-use capabilities are described at the implemented Accountable Surface adapter level. This is not a claim that every platform, application, or action is supported out of the box.",
-    "Accountable Surface remains alpha; its wheel is released on GitHub, not asserted to be on PyPI.",
+    "Accountable Surface remains alpha. PyPI serves accountable-surface 0.3.1 (23 September 2026); the latest GitHub release is v0.2.0.",
     "Articulate writing signals do not prove AI authorship or factual truth. Optional editing uses a configured model.",
     "Phantom kernel and firmware layers are modeled and unshipped in the reviewed release.",
     "No customer adoption, revenue, universal safety, benchmark uplift, formal certification, or degree equivalency has been added.",

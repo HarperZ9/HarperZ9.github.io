@@ -45,10 +45,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-gather-lane-code",
-        "flywheel-release-v0-3-10",
-        "gather-release-v1-6-1"
+        "flywheel-release-v1-0-4",
+        "gather-release-v1-9-0"
       ],
-      "claimScope": "Flywheel declares and launches Gather as its research-intake MCP lane. This does not make Gather a Flywheel-owned product."
+      "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the range of GHSA-pxvv-rg3f-4v5w and GHSA-r4f3-9xrf-72m5, fixed in 1.9.0, and this relation does not show that Flywheel was tested with 1.9.0. This does not make Gather a Flywheel-owned product."
     },
     {
       "source": "flywheel",
@@ -57,10 +57,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-crucible-lane-code",
-        "flywheel-release-v0-3-10",
-        "crucible-release-v1-2-0"
+        "flywheel-release-v1-0-4",
+        "crucible-release-v1-3-0"
       ],
-      "claimScope": "Flywheel declares and launches Crucible as its verification MCP lane. This does not make Crucible a Flywheel-owned product."
+      "claimScope": "Flywheel 1.0.4 declares and launches Crucible as its verification MCP lane, pinned to crucible-bench 1.2.0. That pin is inside the range of GHSA-49qx-cj4f-wfqv, fixed in 1.3.0, and this relation does not show that Flywheel was tested with 1.3.0. This does not make Crucible a Flywheel-owned product."
     },
     {
       "source": "flywheel",
@@ -69,10 +69,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-index-lane-code",
-        "flywheel-release-v0-3-10",
-        "index-release-v2-10-0"
+        "flywheel-release-v1-0-4",
+        "index-release-v2-13-0"
       ],
-      "claimScope": "Flywheel declares and launches Index 2.10.0 as its workspace-structure MCP lane. Index remains an independently published package."
+      "claimScope": "Flywheel 1.0.4 declares and launches Index 2.13.0 as its workspace-structure MCP lane. Index remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -81,10 +81,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-forum-lane-code",
-        "flywheel-release-v0-3-10",
-        "forum-release-v1-13-0"
+        "flywheel-release-v1-0-4",
+        "forum-release-v1-14-0"
       ],
-      "claimScope": "Flywheel declares and launches Forum as its orchestration MCP lane."
+      "claimScope": "Flywheel 1.0.4 declares and launches Forum 1.14.0 as its orchestration MCP lane."
     },
     {
       "source": "flywheel",
@@ -93,10 +93,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-learn-lane-code",
-        "flywheel-release-v0-3-10",
+        "flywheel-release-v1-0-4",
         "learn-public-source"
       ],
-      "claimScope": "Flywheel declares Learn 1.6.0 as a Node MCP lane. Learn remains an independently published package."
+      "claimScope": "Flywheel 1.0.4 declares Learn 1.6.0 as a Node MCP lane. Learn remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -105,10 +105,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-telos-lane-code",
-        "flywheel-release-v0-3-10",
-        "telos-public-source"
+        "flywheel-release-v1-0-4",
+        "telos-release-v0-4-1"
       ],
-      "claimScope": "Flywheel declares and launches the Telos MCP workbench as a lane."
+      "claimScope": "Flywheel 1.0.4 declares the Telos MCP workbench as a lane and disables its package: no npm distribution is published, so the lane runs from a Telos source checkout."
     },
     {
       "source": "flywheel",
@@ -117,10 +117,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-relay-lane-code",
-        "flywheel-release-v0-3-10",
-        "relay-public-source"
+        "flywheel-release-v1-0-4",
+        "relay-release-v0-4-0"
       ],
-      "claimScope": "Flywheel declares and launches Relay as its coding-agent MCP lane."
+      "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the range of GHSA-xxcc-grhg-v9g7 and GHSA-phjr-6qrc-39mw, fixed in 0.4.0, and this relation does not show that Flywheel was tested with 0.4.0."
     },
     {
       "source": "flywheel",
@@ -129,10 +129,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-plexus-lane-code",
-        "flywheel-release-v0-3-10",
-        "plexus-public-source"
+        "flywheel-release-v1-0-4",
+        "plexus-pypi-v0-2-2"
       ],
-      "claimScope": "Flywheel declares and launches Plexus as its capability-mesh and tool-wiring MCP lane. Plexus can probe registered lanes when explicitly requested, but declared mesh edges are not semantic interoperability proof."
+      "claimScope": "Flywheel 1.0.4 declares and launches Plexus 0.2.2 as its capability-mesh and tool-wiring MCP lane. Plexus can probe registered lanes when explicitly requested, but declared mesh edges are not semantic interoperability proof."
     },
     {
       "source": "flywheel",
@@ -141,10 +141,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-mneme-lane-code",
-        "flywheel-release-v0-3-10",
-        "mneme-public-source"
+        "flywheel-release-v1-0-4",
+        "mneme-release-v0-5-1"
       ],
-      "claimScope": "Flywheel declares and launches Mneme 0.2.0 as its memory MCP lane. Mneme remains an independently published package."
+      "claimScope": "Flywheel 1.0.4 declares and launches Mneme as its memory MCP lane, pinned to flywheel-mneme 0.4.2. The pin trails the current 0.5.1 and is outside GHSA-j2pw-g7f4-9ppp, which names 0.5.0 only. Mneme remains an independently published package."
     },
     {
       "source": "flywheel",
@@ -153,10 +153,10 @@
       "status": "verified-in-source",
       "evidenceIds": [
         "flywheel-accountable-surface-lane-code",
-        "flywheel-release-v0-3-10",
-        "accountable-surface-public-source"
+        "flywheel-release-v1-0-4",
+        "accountable-surface-pypi-v0-3-1"
       ],
-      "claimScope": "Flywheel declares Accountable Surface as an actuation lane with additional Coherence Membrane and Proof Surface source roots."
+      "claimScope": "Flywheel 1.0.4 declares Accountable Surface 0.3.1 as an actuation lane with additional Coherence Membrane and Proof Surface source roots."
     },
     {
       "source": "flywheel",
@@ -166,9 +166,9 @@
       "evidenceIds": [
         "flywheel-articulate-lane-code",
         "flywheel-release-v1-0-4",
-        "articulate-pypi-v0-4-1"
+        "articulate-pypi-v0-5-0"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.4.1 release, and this relation does not show that Flywheel was tested with 0.4.1."
+      "claimScope": "Flywheel 1.0.4 declares and launches Articulate as an authoring MCP lane, pinned to articulate-writing 0.4.0, with articulate-mcp as its declared command and articulate.local_mcp as its declared module. Articulate installs from PyPI, is not among the ten lanes bundled from vendored source, and remains an independently published package. The pin trails the current 0.5.0 release, and this relation does not show that Flywheel was tested with 0.5.0."
     },
     {
       "source": "truth-enb",
@@ -432,91 +432,91 @@
           "id": "flywheel-gather-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Gather lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L55-L58",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L67-L70",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Gather's package, command, MCP arguments, version, source repository, and role."
+          "summary": "Lines 67 to 70 of the Flywheel v1.0.4 lane registry declare the gather lane: the gather-engine package pinned at 1.8.2, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-crucible-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Crucible lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L59-L62",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L71-L74",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Crucible's package, command, MCP arguments, version, source repository, and role."
+          "summary": "Lines 71 to 74 of the Flywheel v1.0.4 lane registry declare the crucible lane: the crucible-bench package pinned at 1.2.0, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-index-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Index lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L43-L46",
-          "date": "2026-08-29",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L93-L99",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Index 2.10.0, its package, command, MCP arguments, source repository, and role."
+          "summary": "Lines 93 to 99 of the Flywheel v1.0.4 lane registry declare the index lane: the index-graph package pinned at 2.13.0, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-forum-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Forum lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L67-L70",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L100-L104",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Forum's package, command, MCP arguments, version, source repository, and role."
+          "summary": "Lines 100 to 104 of the Flywheel v1.0.4 lane registry declare the forum lane: the forum-engine package pinned at 1.14.0, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-learn-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Learn lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L71-L74",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L105-L110",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Learn's npm package, Node MCP entry, version, source repository, and role."
+          "summary": "Lines 105 to 110 of the Flywheel v1.0.4 lane registry declare the learn lane: the @harperz9/learn package pinned at 1.6.0, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-telos-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Telos lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L75-L78",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L111-L118",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Telos's npm package, MCP entry, version, source repository, and role."
+          "summary": "Lines 111 to 118 of the Flywheel v1.0.4 lane registry declare the telos lane: the project-telos-mcp package pinned at 0.2.0, its command, MCP arguments, source repository and role. The same lines disable the package: no published npm distribution is available, so the lane runs from a Telos source checkout."
         },
         {
           "id": "flywheel-relay-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Relay lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L83-L86",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L127-L136",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Relay's package, command, MCP arguments, source repository, and role."
+          "summary": "Lines 127 to 136 of the Flywheel v1.0.4 lane registry declare the relay lane: the flywheel-relay package pinned at 0.2.5, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-plexus-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Plexus lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L87-L90",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L137-L140",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Plexus's package, command, MCP arguments, source repository, and role."
+          "summary": "Lines 137 to 140 of the Flywheel v1.0.4 lane registry declare the plexus lane: the plexus-mesh package pinned at 0.2.2, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-mneme-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Mneme lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L71-L74",
-          "date": "2026-08-29",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L141-L146",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Mneme 0.2.0, its package, command, MCP arguments, source repository, and role."
+          "summary": "Lines 141 to 146 of the Flywheel v1.0.4 lane registry declare the mneme lane: the flywheel-mneme package pinned at 0.4.2, its command, MCP arguments, source repository and role."
         },
         {
           "id": "flywheel-accountable-surface-lane-code",
           "type": "code-permalink",
           "label": "Flywheel Accountable Surface lane declaration",
-          "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L100-L107",
-          "date": "2026-08-28",
+          "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L167-L185",
+          "date": "2026-09-25",
           "status": "verified",
-          "summary": "The pinned lane registry declares Accountable Surface's server entry, source repository, extra source roots, and actuation role."
+          "summary": "Lines 167 to 185 of the Flywheel v1.0.4 lane registry declare the accountable-surface lane: the accountable-surface package pinned at 0.3.1, its command, MCP arguments, source repository and role. They also name coherence-membrane and proof-surface as extra source roots."
         },
         {
           "id": "flywheel-articulate-lane-code",
@@ -525,7 +525,7 @@
           "href": "https://github.com/HarperZ9/flywheel/blob/v1.0.4/harness/lanes_registry.py#L79-L92",
           "date": "2026-09-25",
           "status": "verified",
-          "summary": "Lines 79 to 92 of the lane registry at tag v1.0.4, which resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7, declare the articulate lane: the articulate-writing package pinned at 0.4.0, a pip install, the articulate-mcp command with no arguments, the articulate.local_mcp module, and the authoring role. A comment in the same lines explains that the lane starts the standard-library MCP entry point added in 0.4.0. The lines do not show a completed launch or probe on any machine, bundling from vendored source, compatibility with articulate-writing 0.4.1, or the quality of Articulate's checks."
+          "summary": "Lines 79 to 92 of the Flywheel v1.0.4 lane registry declare the articulate lane: the articulate-writing package pinned at 0.4.0, a pip install, the articulate-mcp command with no arguments, the articulate.local_mcp module, and the authoring role. A comment in the same lines explains that the lane starts the standard-library MCP entry point added in 0.4.0. The lines do not show a completed launch or probe on any machine, bundling from vendored source, compatibility with articulate-writing 0.4.1, or the quality of Articulate's checks."
         }
       ],
       "limitations": [
@@ -669,6 +669,15 @@
       "verificationCommand": "npm run test:mcp",
       "evidence": [
         {
+          "id": "telos-release-v0-4-1",
+          "type": "release",
+          "label": "Telos v0.4.1",
+          "href": "https://github.com/HarperZ9/telos/releases/tag/v0.4.1",
+          "date": "2026-09-23",
+          "status": "verified",
+          "summary": "The v0.4.1 GitHub release was published on 23 September 2026 (Pacific time) and is the latest GitHub release. No npm package is published: project-telos-mcp is absent from the npm registry, and Flywheel 1.0.4 runs the Telos lane from a source checkout."
+        },
+        {
           "id": "telos-public-source",
           "type": "source",
           "label": "Telos public source",
@@ -704,15 +713,15 @@
         "crucible",
         "studio-engine"
       ],
-      "lastVerified": "2026-08-28",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "local workbench for creating and replaying AI work",
-      "releaseState": "active source 0.2.0; latest tag v0.1.0"
+      "releaseState": "GitHub release v0.4.1; no npm package"
     },
     {
       "id": "index",
       "name": "Index",
-      "purpose": "Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Version 2.12.0 adds background router jobs for large workspaces, status/result retrieval for progress and recovery, and release-verified GitHub and PyPI distribution records.",
+      "purpose": "Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.",
       "useCases": [
         "multi-repository mapping",
         "dependency analysis",
@@ -738,9 +747,27 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "Install with python -m pip install index-graph==2.12.0. For large workspaces, start a durable run with index router-job start --root . --json; read the returned job_id, then inspect progress with index router-job status and retrieve output with index router-job result. MCP clients use index.router.job.start, index.router.job.status, and index.router.job.result.",
+      "entryCommand": "Install with python -m pip install index-graph==2.13.0. For large workspaces, start a durable run with index router-job start --root . --json; read the returned job_id, then inspect progress with index router-job status and retrieve output with index router-job result. MCP clients use index.router.job.start, index.router.job.status, and index.router.job.result.",
       "verificationCommand": "Verify the GitHub and PyPI 2.12.0 release digests separately; run index --version, index status --json, index doctor --json, and confirm MCP tools/list includes index.router.job.start, index.router.job.status, and index.router.job.result.",
       "evidence": [
+        {
+          "id": "index-release-v2-13-0",
+          "type": "release",
+          "label": "Index v2.13.0",
+          "href": "https://github.com/HarperZ9/index/releases/tag/v2.13.0",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "The v2.13.0 GitHub release was published on 10 September 2026 and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for index-graph 2.13.0. The release reduces repeated router traversal and fixes router job completion events."
+        },
+        {
+          "id": "index-pypi-v2-13-0",
+          "type": "release",
+          "label": "index-graph 2.13.0 on PyPI",
+          "href": "https://pypi.org/project/index-graph/2.13.0/",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "PyPI serves index-graph 2.13.0. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 2.13.0. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
         {
           "id": "index-release-v2-12-0",
           "type": "release",
@@ -823,10 +850,10 @@
         "gather",
         "telos"
       ],
-      "lastVerified": "2026-09-07",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "workspace map and context system",
-      "releaseState": "GitHub and PyPI release 2.12.0 verified; PyPI wheel container hash differs while payload bytes match"
+      "releaseState": "GitHub and PyPI release 2.13.0; wheel and source digests match across both channels"
     },
     {
       "id": "gather",
@@ -856,9 +883,45 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install gather-engine==1.8.1; gather docs sample.txt --store corpus",
+      "entryCommand": "pip install gather-engine==1.9.0; gather docs sample.txt --store corpus",
       "verificationCommand": "gather corpus verify ./corpus",
       "evidence": [
+        {
+          "id": "gather-release-v1-9-0",
+          "type": "release",
+          "label": "Gather v1.9.0",
+          "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.0",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v1.9.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.0. The release requires launch grants before the MCP gather.run and gather.pilot tools run a command, reach a network source or send a credential, and it starts every child program from an absolute path in a private folder."
+        },
+        {
+          "id": "gather-pypi-v1-9-0",
+          "type": "release",
+          "label": "gather-engine 1.9.0 on PyPI",
+          "href": "https://pypi.org/project/gather-engine/1.9.0/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves gather-engine 1.9.0. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 1.9.0. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "gather-advisory-ghsa-pxvv-rg3f-4v5w",
+          "type": "advisory",
+          "label": "MCP tool arguments could run commands and send environment secrets to a chosen host (GHSA-pxvv-rg3f-4v5w)",
+          "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned."
+        },
+        {
+          "id": "gather-advisory-ghsa-r4f3-9xrf-72m5",
+          "type": "advisory",
+          "label": "External tools started by bare name, so an executable planted in the working folder could run (GHSA-r4f3-9xrf-72m5)",
+          "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned."
+        },
         {
           "id": "gather-release-v1-8-1",
           "type": "release",
@@ -927,7 +990,8 @@
         "Static web mode does not execute JavaScript.",
         "Optional hard-source adapters require external tools, and untrusted URLs near internal services require separate network controls.",
         "Readable context selection returns acquired source context; it does not prove source truth, claim support, completeness, downstream model use, or absence of sensitive material in selected text or URLs.",
-        "Selection offsets use the LF-normalized view. New writes witness exact UTF-8 source text; legacy reconstruction does not prove historical raw object-byte integrity. Detecting witness changes requires a previously pinned corpus digest."
+        "Selection offsets use the LF-normalized view. New writes witness exact UTF-8 source text; legacy reconstruction does not prove historical raw object-byte integrity. Detecting witness changes requires a previously pinned corpus digest.",
+        "gather-engine before 1.9.0 is affected by GHSA-pxvv-rg3f-4v5w and GHSA-r4f3-9xrf-72m5; install 1.9.0 or later. MCP hosts that relied on the old gather.run and gather.pilot behavior add a launch grant."
       ],
       "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
       "inputs": [
@@ -949,10 +1013,10 @@
         "learn",
         "chorus"
       ],
-      "lastVerified": "2026-09-09",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "research-education",
       "productType": "research intake and corpus system",
-      "releaseState": "stable v1.8.1; GitHub and PyPI download-back verified"
+      "releaseState": "stable v1.9.0 on GitHub and PyPI"
     },
     {
       "id": "forum",
@@ -986,7 +1050,7 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install forum-engine==1.13.0; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
+      "entryCommand": "python -m pip install forum-engine==1.14.0; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
       "verificationCommand": "With the Forum CLI or source checkout available, run the installed forum-route-preflight helper before any model command; confirm route, context, and runtime observations are reported and safe_to_submit is false.",
       "evidence": [
         {
@@ -997,6 +1061,24 @@
           "date": "2026-09-08",
           "status": "verified",
           "summary": "The live GitHub release publishes forum-route-preflight-skill-20260907-final.zip as a 9,573-byte standalone host skill with SHA-256 1827a9673414e73722ba7bd74be15316534bb6c66fc55ecc26845a5e5c953450; SHA256SUMS.txt has SHA-256 afa5b4a94a3904e4afb1f441206d98a665757e0fa770049e4925020a94b0b390. Download-back verification matched the ZIP digest. The skill inspects routing, context pressure, and runtime readiness before model work; it does not execute the supplied command and keeps safe_to_submit=false."
+        },
+        {
+          "id": "forum-release-v1-14-0",
+          "type": "release",
+          "label": "Forum v1.14.0",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/v1.14.0",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "The v1.14.0 GitHub release was published on 10 September 2026 and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.14.0."
+        },
+        {
+          "id": "forum-pypi-v1-14-0",
+          "type": "release",
+          "label": "forum-engine 1.14.0 on PyPI",
+          "href": "https://pypi.org/project/forum-engine/1.14.0/",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "PyPI serves forum-engine 1.14.0. A clean virtual environment installed it from PyPI on 26 September 2026, and forum --version reported 1.14.0. This is distribution evidence; it does not establish that every feature works on every platform."
         },
         {
           "id": "forum-release-v1-13-0",
@@ -1039,10 +1121,10 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-09-08",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "agent-systems",
       "productType": "multi-agent orchestration engine",
-      "releaseState": "stable engine v1.13.0; standalone route-preflight skill v0.1.0",
+      "releaseState": "stable engine v1.14.0; standalone route-preflight skill v0.1.0",
       "runGuide": {
         "label": "Download the standalone route-preflight skill",
         "href": "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip",
@@ -1077,9 +1159,36 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install crucible-bench; python examples/demo.py",
+      "entryCommand": "pip install crucible-bench==1.3.0; crucible demo",
       "verificationCommand": "python -m pytest",
       "evidence": [
+        {
+          "id": "crucible-release-v1-3-0",
+          "type": "release",
+          "label": "Crucible v1.3.0",
+          "href": "https://github.com/HarperZ9/crucible/releases/tag/v1.3.0",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v1.3.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for crucible-bench 1.3.0. The release fixes verdict-integrity defects that shipped in 1.2.0 and earlier and adds ProofMeasure, which uses a proof or type checker as a measurement oracle."
+        },
+        {
+          "id": "crucible-pypi-v1-3-0",
+          "type": "release",
+          "label": "crucible-bench 1.3.0 on PyPI",
+          "href": "https://pypi.org/project/crucible-bench/1.3.0/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves crucible-bench 1.3.0. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 1.3.0. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "crucible-advisory-ghsa-49qx-cj4f-wfqv",
+          "type": "advisory",
+          "label": "Verdicts in crucible-bench 1.2.0 and earlier can report MATCH that no sealed measurement supports (GHSA-49qx-cj4f-wfqv)",
+          "href": "https://github.com/HarperZ9/crucible/security/advisories/GHSA-49qx-cj4f-wfqv",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: crucible-bench 1.2.0 and earlier. Fixed in 1.3.0; install 1.3.0 or later. No CVE is assigned."
+        },
         {
           "id": "crucible-release-v1-2-0",
           "type": "release",
@@ -1092,7 +1201,8 @@
       ],
       "limitations": [
         "Verdict quality cannot exceed the supplied substrate, measurement, tolerance, and criterion.",
-        "Missing or ill-posed evidence fails closed."
+        "Missing or ill-posed evidence fails closed.",
+        "crucible-bench 1.2.0 and earlier are affected by GHSA-49qx-cj4f-wfqv; install 1.3.0 or later."
       ],
       "boundary": "Do not present a verdict as stronger than the evidence and criterion that produced it.",
       "inputs": [
@@ -1115,10 +1225,10 @@
         "telos",
         "learn"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "evaluation-verification",
       "productType": "engine that tests claims against evidence",
-      "releaseState": "stable v1.2.0"
+      "releaseState": "stable v1.3.0 on GitHub and PyPI"
     },
     {
       "id": "emet",
@@ -1375,9 +1485,45 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install https://github.com/HarperZ9/relay/releases/download/v0.2.0/relay_agent-0.2.0-py3-none-any.whl; relay --health --online",
+      "entryCommand": "pip install flywheel-relay==0.4.0; relay --health --online",
       "verificationCommand": "python -m pytest -q",
       "evidence": [
+        {
+          "id": "relay-release-v0-4-0",
+          "type": "release",
+          "label": "Relay v0.4.0",
+          "href": "https://github.com/HarperZ9/relay/releases/tag/v0.4.0",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v0.4.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.4.0. The release gives every child program an environment allowlist, runs the claude and codex tiers in an isolated empty folder, and keeps session reads inside the session store."
+        },
+        {
+          "id": "relay-pypi-v0-4-0",
+          "type": "release",
+          "label": "flywheel-relay 0.4.0 on PyPI",
+          "href": "https://pypi.org/project/flywheel-relay/0.4.0/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-relay 0.4.0. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 0.4.0. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "relay-advisory-ghsa-xxcc-grhg-v9g7",
+          "type": "advisory",
+          "label": "CLI tiers could run a planted binary or project hooks, and shell children inherited provider keys (GHSA-xxcc-grhg-v9g7)",
+          "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned."
+        },
+        {
+          "id": "relay-advisory-ghsa-phjr-6qrc-39mw",
+          "type": "advisory",
+          "label": "The session listing tool could read ledger files outside the session store (GHSA-phjr-6qrc-39mw)",
+          "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned."
+        },
         {
           "id": "relay-release-v0-2-0",
           "type": "release",
@@ -1390,17 +1536,18 @@
         {
           "id": "relay-public-source",
           "type": "source",
-          "label": "Relay public source",
+          "label": "Relay source, August 2026",
           "href": "https://github.com/HarperZ9/relay",
           "date": "2026-08-28",
           "status": "verified",
-          "summary": "The public source metadata identifies relay-agent 0.1.0, and the README describes a permission-checked tool loop, hash-chained ledger, MCP surface, failover routes, and acceptance checks; no GitHub release tag was returned."
+          "summary": "In August 2026 the source metadata named the package relay-agent 0.1.0; Relay now publishes on PyPI as flywheel-relay, and the PyPI name relay-agent belongs to another publisher. The README then described a permission-checked tool loop, hash-chained ledger, MCP surface, failover routes, and acceptance checks; no GitHub release tag was returned at that time."
         }
       ],
       "limitations": [
         "The command denylist is not a security boundary.",
         "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs an operator-owned check.",
-        "Relay 0.2.0 publication is GitHub-only in this record; PyPI relay-agent publication and install are not claimed."
+        "Relay publishes on PyPI as flywheel-relay. The PyPI name relay-agent belongs to another publisher.",
+        "flywheel-relay before 0.4.0 is affected by GHSA-xxcc-grhg-v9g7, and 0.2.0 and later releases before 0.4.0 by GHSA-phjr-6qrc-39mw; install 0.4.0 or later. Commands that read a variable outside the child allowlist need it named in RELAY_CHILD_ENV."
       ],
       "boundary": "Tool use remains permission-checked and limited to authorized repositories, systems, and endpoints.",
       "inputs": [
@@ -1422,10 +1569,10 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-09-08",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "agent-systems",
       "productType": "coding agent that acts within granted permissions",
-      "releaseState": "GitHub release v0.2.0 verified; no PyPI release claimed"
+      "releaseState": "v0.4.0 on GitHub and PyPI as flywheel-relay"
     },
     {
       "id": "plexus",
@@ -1455,9 +1602,27 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install git+https://github.com/HarperZ9/plexus.git; plexus discover --builtin",
+      "entryCommand": "pip install plexus-mesh==0.2.2; plexus discover --builtin",
       "verificationCommand": "plexus plan --goal crucible --builtin > plan.json; plexus verify --plan plan.json --builtin",
       "evidence": [
+        {
+          "id": "plexus-pypi-v0-2-2",
+          "type": "release",
+          "label": "plexus-mesh 0.2.2 on PyPI",
+          "href": "https://pypi.org/project/plexus-mesh/0.2.2/",
+          "date": "2026-09-22",
+          "status": "verified",
+          "summary": "PyPI serves plexus-mesh 0.2.2, uploaded on 22 September 2026 (Pacific time). A clean virtual environment installed it from PyPI and plexus --version reported 0.2.2. Version 0.2.2 has no GitHub release."
+        },
+        {
+          "id": "plexus-release-v0-2-1",
+          "type": "release",
+          "label": "Plexus v0.2.1",
+          "href": "https://github.com/HarperZ9/plexus/releases/tag/v0.2.1",
+          "date": "2026-09-17",
+          "status": "verified",
+          "summary": "The v0.2.1 GitHub release was published on 17 September 2026 (Pacific time) and is the latest GitHub release."
+        },
         {
           "id": "plexus-public-source",
           "type": "source",
@@ -1490,10 +1655,10 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-08-28",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "tool discovery and wiring for AI agents",
-      "releaseState": "active source 0.2.0; no GitHub release"
+      "releaseState": "0.2.2 on PyPI as plexus-mesh; latest GitHub release v0.2.1"
     },
     {
       "id": "mneme",
@@ -1524,9 +1689,36 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install https://github.com/HarperZ9/mneme/releases/download/v0.3.0/mneme_memory-0.3.0-py3-none-any.whl; mneme --help",
+      "entryCommand": "python -m pip install flywheel-mneme==0.5.1; mneme --help",
       "verificationCommand": "mneme --state demo.db remember chat session.json --user alice; mneme --state demo.db recall \"where does the user live\" --user alice --json",
       "evidence": [
+        {
+          "id": "mneme-release-v0-5-1",
+          "type": "release",
+          "label": "Mneme v0.5.1",
+          "href": "https://github.com/HarperZ9/mneme/releases/tag/v0.5.1",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v0.5.1 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-mneme 0.5.1. The release fixes the 0.5.0 forget command, which could keep erased text or erase another user's row while its receipt reported erased."
+        },
+        {
+          "id": "mneme-pypi-v0-5-1",
+          "type": "release",
+          "label": "flywheel-mneme 0.5.1 on PyPI",
+          "href": "https://pypi.org/project/flywheel-mneme/0.5.1/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-mneme 0.5.1. PyPI dates the upload 27 September 2026 in UTC, which is 26 September in Pacific time. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 0.5.1. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "mneme-advisory-ghsa-j2pw-g7f4-9ppp",
+          "type": "advisory",
+          "label": "The forget command could keep erased text or erase another user's row (GHSA-j2pw-g7f4-9ppp)",
+          "href": "https://github.com/HarperZ9/mneme/security/advisories/GHSA-j2pw-g7f4-9ppp",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-mneme 0.5.0 only. Fixed in 0.5.1; install 0.5.1 or later. No CVE is assigned."
+        },
         {
           "id": "mneme-release-v0-3-0",
           "type": "release",
@@ -1558,8 +1750,9 @@
       "limitations": [
         "Source recheck remains Mneme-owned rather than independently re-read by Crucible.",
         "Replay rejects ambiguous SQLite sidecar or hardlink state.",
-        "GitHub wheel and source downloads are verified; PyPI publication is not claimed.",
-        "Source partitioning does not implement provider-native continuation or automatically upgrade the separately pinned Flywheel memory lane."
+        "Source partitioning does not implement provider-native continuation or automatically upgrade the separately pinned Flywheel memory lane.",
+        "Mneme publishes on PyPI as flywheel-mneme. The PyPI name mneme-memory belongs to another publisher.",
+        "flywheel-mneme 0.5.0 is affected by GHSA-j2pw-g7f4-9ppp; install 0.5.1 or later before erasing data."
       ],
       "boundary": "Store and recall only information the operator is authorized to retain and process.",
       "inputs": [
@@ -1581,17 +1774,17 @@
         "forum",
         "flywheel"
       ],
-      "lastVerified": "2026-09-07",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "agent-systems",
       "productType": "agent memory store with repeatable recall",
-      "releaseState": "GitHub release v0.3.0; no PyPI release claimed"
+      "releaseState": "v0.5.1 on GitHub and PyPI as flywheel-mneme"
     },
     {
       "maturity": "active",
       "placement": "catalog-only",
       "accessMode": "install",
       "boundary": "Use only records, atoms, and local surfaces you are authorized to read or update; do not export private provider state, credentials, or unpublished memory banks into public artifacts.",
-      "lastVerified": "2026-09-07",
+      "lastVerified": "2026-09-26",
       "id": "canon",
       "name": "Canon",
       "purpose": "Canon turns explicit local memory records and typed atoms into provider-neutral continuity capsules for Codex, Claude Code, and other agent hosts. It previews target readiness, exports Canon Markdown or capsule JSON, and rewrites only declared local instruction-file regions when a caller chooses an owned surface.",
@@ -1621,10 +1814,37 @@
         "Codex and Claude Code instruction surfaces",
         "offline release-review handoffs"
       ],
-      "releaseState": "GitHub release v0.1.0 verified; no PyPI release claimed",
-      "entryCommand": "python -m pip install https://github.com/HarperZ9/canon/releases/download/v0.1.0/canon-0.1.0-py3-none-any.whl; canon --json preview --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli",
-      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; canon check; canon --json export --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli --format bundle --out bundle",
+      "releaseState": "v0.4.2 on GitHub and PyPI as flywheel-canon",
+      "entryCommand": "python -m pip install flywheel-canon==0.4.2; canon --json preview --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli",
+      "verificationCommand": "canon check; canon --json export --workspace . --records records.jsonl --atoms atoms.jsonl --target codex-cli --format bundle --out bundle",
       "evidence": [
+        {
+          "id": "canon-release-v0-4-2",
+          "type": "release",
+          "label": "Canon v0.4.2",
+          "href": "https://github.com/HarperZ9/canon/releases/tag/v0.4.2",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v0.4.2 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-canon 0.4.2. The release redacts every ingest, scrubs query excerpts before cutting them, counts transcript paths instead of listing them, and reports a purge as purged only when its scrub finished."
+        },
+        {
+          "id": "canon-pypi-v0-4-2",
+          "type": "release",
+          "label": "flywheel-canon 0.4.2 on PyPI",
+          "href": "https://pypi.org/project/flywheel-canon/0.4.2/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-canon 0.4.2. PyPI dates the upload 27 September 2026 in UTC, which is 26 September in Pacific time. A clean virtual environment installed it from PyPI on 26 September 2026, and pip reported the installed version as 0.4.2. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "canon-advisory-ghsa-48rq-xjfx-6j4f",
+          "type": "advisory",
+          "label": "The shared context store could keep and return secrets, list transcript paths, and overstate purges (GHSA-48rq-xjfx-6j4f)",
+          "href": "https://github.com/HarperZ9/canon/security/advisories/GHSA-48rq-xjfx-6j4f",
+          "date": "2026-09-26",
+          "status": "published",
+          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-canon 0.2.0 and later releases before 0.4.2. Fixed in 0.4.2; install 0.4.2 or later. No CVE is assigned."
+        },
         {
           "id": "canon-release-v0-1-0",
           "type": "release",
@@ -1654,10 +1874,11 @@
         }
       ],
       "limitations": [
-        "The v0.1.0 distribution is GitHub-only here; no PyPI release is claimed.",
         "Preview and export read explicit local JSONL inputs. They do not import provider auth, private databases, ChatGPT web state, Claude web state, credentials, or native provider history.",
         "Preview and stdout exports are portable across supported Python platforms; creating a new three-file bundle currently requires Windows with the confined native writer.",
-        "A capsule preserves declared context and omissions. It does not prove host enforcement or future provider behavior."
+        "A capsule preserves declared context and omissions. It does not prove host enforcement or future provider behavior.",
+        "Canon publishes on PyPI as flywheel-canon. The PyPI name canon-memory belongs to another publisher.",
+        "flywheel-canon 0.2.0 and later releases before 0.4.2 are affected by GHSA-48rq-xjfx-6j4f; install 0.4.2 or later. The advisory does not name the GitHub-only 0.1.0 release."
       ],
       "inputs": [
         "Record JSONL and CanonAtom JSONL inputs",
@@ -2194,6 +2415,15 @@
       "verificationCommand": null,
       "evidence": [
         {
+          "id": "proof-surface-pypi-v0-1-0",
+          "type": "release",
+          "label": "proof-surface 0.1.0 on PyPI",
+          "href": "https://pypi.org/project/proof-surface/0.1.0/",
+          "date": "2026-06-18",
+          "status": "verified",
+          "summary": "PyPI serves proof-surface 0.1.0, uploaded on 18 June 2026. The public source has since moved to 0.2.0, which has no release. accountable-surface 0.3.1 installs proof-surface 0.1.0 as a dependency."
+        },
+        {
           "id": "proof-surface-public-source-0-2-0",
           "type": "source",
           "label": "Proof Surface public source 0.2.0",
@@ -2225,10 +2455,10 @@
         "emet",
         "repo-proof-index"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "security-privacy",
       "productType": "library that checks AI permission and evidence records",
-      "releaseState": "active source 0.2.0; no release"
+      "releaseState": "0.1.0 on PyPI; active source 0.2.0 with no release"
     },
     {
       "id": "elder-enb",
@@ -2577,9 +2807,18 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "Download a v1.1.0 release asset and compare its hash with SHA256SUMS.txt.",
+      "entryCommand": "Download a v1.1.1 release asset and compare its hash with SHA256SUMS.txt.",
       "verificationCommand": "phantom --version; phantom audit",
       "evidence": [
+        {
+          "id": "phantom-release-v1-1-1",
+          "type": "release",
+          "label": "Phantom v1.1.1",
+          "href": "https://github.com/HarperZ9/phantom/releases/tag/v1.1.1",
+          "date": "2026-09-10",
+          "status": "verified",
+          "summary": "The v1.1.1 GitHub release was published on 10 September 2026 and attaches a Windows MSI and ZIP, a Linux .deb, .rpm and tarball, and SHA256SUMS.txt. It adds a getting-started guide and the first slice of a local boundary gateway."
+        },
         {
           "id": "phantom-release-v1-1-0",
           "type": "release",
@@ -2613,10 +2852,10 @@
         "seed",
         "accountable-surface"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "security-privacy",
       "productType": "hardware-identity privacy system",
-      "releaseState": "stable v1.1.0"
+      "releaseState": "stable v1.1.1"
     },
     {
       "id": "behavior-transform",
@@ -3233,10 +3472,28 @@
       ],
       "maturity": "active",
       "placement": "featured",
-      "accessMode": "inspect",
-      "entryCommand": "Follow the repository source setup with sibling source packages present; python examples/demo.py",
-      "verificationCommand": "Verify the v0.1.0 SHA256SUMS.txt entry; follow documented source setup with sibling source packages; python -m pytest",
+      "accessMode": "install",
+      "entryCommand": "python -m pip install accountable-surface==0.3.1",
+      "verificationCommand": "From a source checkout at tag v0.3.1: python -m pip install -e \".[test]\"; python examples/demo.py; python -m pytest",
       "evidence": [
+        {
+          "id": "accountable-surface-pypi-v0-3-1",
+          "type": "release",
+          "label": "accountable-surface 0.3.1 on PyPI",
+          "href": "https://pypi.org/project/accountable-surface/0.3.1/",
+          "date": "2026-09-22",
+          "status": "verified",
+          "summary": "PyPI serves accountable-surface 0.3.1, uploaded on 22 September 2026 (Pacific time). A clean virtual environment installed it from PyPI with its dependencies coherence-membrane 0.1.0 and proof-surface 0.1.0, and both packages imported. Tag v0.3.1 exists on GitHub with no GitHub release attached."
+        },
+        {
+          "id": "accountable-surface-release-v0-2-0",
+          "type": "release",
+          "label": "Accountable Surface v0.2.0",
+          "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.2.0",
+          "date": "2026-09-17",
+          "status": "verified",
+          "summary": "The v0.2.0 GitHub release was published on 17 September 2026 (Pacific time) and is the latest GitHub release. PyPI carries the newer 0.3.1."
+        },
         {
           "id": "accountable-surface-release-v0-1-0",
           "type": "release",
@@ -3258,10 +3515,9 @@
       ],
       "limitations": [
         "The model cannot supply its own authorization.",
-        "The v0.1.0 GitHub wheel is not a self-contained clean-machine install; clean wheel import fails without coherence_membrane.",
-        "Some capabilities require sibling source packages from the documented source setup.",
         "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
-        "Self-authored tests do not establish independent adversarial review or production safety."
+        "Self-authored tests do not establish independent adversarial review or production safety.",
+        "The v0.1.0 GitHub wheel was not a self-contained install. PyPI 0.3.1 installs its coherence-membrane and proof-surface dependencies from PyPI; the FastMCP server entry, accountable-surface-server, needs the [server] extra; the stdio entry accountable-surface-mcp, which Flywheel 1.0.4 launches, does not."
       ],
       "boundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
       "inputs": [
@@ -3287,10 +3543,10 @@
         "bounds",
         "isomorph"
       ],
-      "lastVerified": "2026-09-14",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "security-privacy",
       "productType": "workbench that allows only approved AI agent actions",
-      "releaseState": "GitHub release v0.1.0 verified; source setup requires sibling dependencies; no PyPI release claimed"
+      "releaseState": "0.3.1 on PyPI; latest GitHub release v0.2.0"
     },
     {
       "id": "public-surface-sweeper",
@@ -3485,7 +3741,7 @@
       "maturity": "shipped",
       "placement": "catalog-only",
       "accessMode": "install",
-      "entryCommand": "python -m pip install secret-redact-io; secret-redact-io read README.md --json",
+      "entryCommand": "python -m pip install https://github.com/HarperZ9/secret-redact-io/releases/download/v0.1.0/io_guardrails-0.1.0-py3-none-any.whl; io-guard read README.md --json",
       "verificationCommand": "python -m pip install -e \".[dev]\"; python -m pytest",
       "evidence": [
         {
@@ -3500,7 +3756,8 @@
       ],
       "limitations": [
         "The package does not include credentials or environment configuration.",
-        "Redaction and hash-only receipts reduce exposure but do not replace source review."
+        "Redaction and hash-only receipts reduce exposure but do not replace source review.",
+        "The v0.1.0 release installs as io-guardrails with the io-guard command. The source has since been renamed secret-redact-io, and no package by either name is on PyPI."
       ],
       "boundary": "Do not pass secrets to destinations that are not authorized to receive them, even when redaction is enabled.",
       "inputs": [
@@ -3518,7 +3775,7 @@
         "agent-hook-pack",
         "model-provenance-validator"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "security-privacy",
       "productType": "library that redacts secrets from file and tool output",
       "releaseState": "stable v0.1.0"
@@ -3621,9 +3878,18 @@
       "maturity": "shipped",
       "placement": "catalog-only",
       "accessMode": "install",
-      "entryCommand": "python -m pip install repo-proof-index; repo-proof-index contracts/*.json --summary",
+      "entryCommand": "python -m pip install repo-proof-index==0.2.0; repo-proof-index contracts/*.json --summary",
       "verificationCommand": "python -m pip install -e \".[test]\"; repo-proof-index examples/contracts/*.json --summary; python -m pytest",
       "evidence": [
+        {
+          "id": "repo-proof-index-release-v0-2-0",
+          "type": "release",
+          "label": "Repo Proof Index v0.2.0",
+          "href": "https://github.com/HarperZ9/repo-proof-index/releases/tag/v0.2.0",
+          "date": "2026-09-13",
+          "status": "verified",
+          "summary": "The v0.2.0 GitHub release was published on 13 September 2026, and PyPI serves repo-proof-index 0.2.0 from the same day."
+        },
         {
           "id": "repo-proof-index-release-v0-1-1",
           "type": "release",
@@ -3656,17 +3922,17 @@
         "model-provenance-validator",
         "public-surface-sweeper"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "evaluation-verification",
       "productType": "evidence index and reviewer handoff",
-      "releaseState": "alpha v0.1.1"
+      "releaseState": "alpha v0.2.0 on GitHub and PyPI"
     },
     {
       "maturity": "active",
       "placement": "catalog-only",
       "accessMode": "install",
       "boundary": "Use only source material and systems you are authorized to access; preserve privacy, licensing, and source provenance.",
-      "lastVerified": "2026-09-07",
+      "lastVerified": "2026-09-26",
       "id": "chorus",
       "name": "Chorus",
       "purpose": "Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.",
@@ -3695,10 +3961,28 @@
         "community and comment analysis",
         "Flywheel discourse bridge"
       ],
-      "releaseState": "GitHub release v0.3.0 verified; no PyPI release claimed",
-      "entryCommand": "python -m pip install https://github.com/HarperZ9/chorus/releases/download/v0.3.0/chorus_discourse-0.3.0-py3-none-any.whl; chorus decision <current> --reference <reference> --task \"Check whether sources changed\"",
-      "verificationCommand": "Verify the v0.3.0 SHA256SUMS.txt entry; chorus run <authorized-corpus> --verify; chorus decision <current> --reference <reference> --public --public-policy public-policy.json",
+      "releaseState": "v0.3.1 on PyPI as chorus-discourse; latest GitHub release v0.3.0",
+      "entryCommand": "python -m pip install chorus-discourse==0.3.1; chorus decision <current> --reference <reference> --task \"Check whether sources changed\"",
+      "verificationCommand": "python -m pip show chorus-discourse; chorus run <authorized-corpus> --verify; chorus decision <current> --reference <reference> --public --public-policy public-policy.json",
       "evidence": [
+        {
+          "id": "chorus-pypi-v0-3-1",
+          "type": "release",
+          "label": "chorus-discourse 0.3.1 on PyPI",
+          "href": "https://pypi.org/project/chorus-discourse/0.3.1/",
+          "date": "2026-09-22",
+          "status": "verified",
+          "summary": "PyPI serves chorus-discourse 0.3.1, uploaded on 22 September 2026 (Pacific time). PyPI's provenance record names the release workflow of the HarperZ9/chorus repository as the publisher, and the Python files in the source archive match the v0.3.1 tag. A clean virtual environment installed it from PyPI and pip reported 0.3.1. The tag has no GitHub release; the latest GitHub release is v0.3.0. Version 0.3.1 maps Gather feed entries into the discourse input, which 0.3.0 dropped."
+        },
+        {
+          "id": "chorus-ci-v0-3-1",
+          "type": "test",
+          "label": "Chorus 0.3.1 CI run",
+          "href": "https://github.com/HarperZ9/chorus/actions/runs/35794055758",
+          "date": "2026-09-22",
+          "status": "verified",
+          "summary": "The public CI workflow passed on the main branch at the v0.3.1 release commit on 22 September 2026 (Pacific time). A passing suite checks the cases the tests cover; it does not prove semantic accuracy on new corpora."
+        },
         {
           "id": "chorus-release-v0-3-0",
           "type": "release",
@@ -3758,7 +4042,7 @@
         "Core sentiment is English and literal; sarcasm and context can be missed.",
         "Lexical clustering is not semantic equivalence.",
         "The optional model overlay is advisory and excluded from the re-checkable core digest.",
-        "The v0.3.0 distribution is GitHub-only here; no PyPI release is claimed.",
+        "Version 0.3.1 is on PyPI as chorus-discourse and has no GitHub release; the v0.3.0 GitHub release carries the last attached wheel and checksums.",
         "A reproducible digest or source-change decision does not prove source completeness, public opinion, motive, identity, or factual correctness outside the captured material."
       ],
       "inputs": [
@@ -3955,9 +4239,27 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install articulate-writing==0.4.1",
+      "entryCommand": "python -m pip install articulate-writing==0.5.0",
       "verificationCommand": "articulate check notes.md --mode technical-docs/explain --gate",
       "evidence": [
+        {
+          "id": "articulate-release-v0-5-0",
+          "type": "release",
+          "label": "Articulate v0.5.0",
+          "href": "https://github.com/HarperZ9/articulate/releases/tag/v0.5.0",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "The v0.5.0 GitHub release was published on 26 September 2026 with no attached assets. It starts the editor's claude child in a new private folder and loads user settings only, so a document folder can no longer run commands through judge, fix or polish. Detector findings and the ruleset fingerprint do not change. Version 0.4.2, released earlier the same day, resolved the claude CLI path and ran the model call with no tools."
+        },
+        {
+          "id": "articulate-pypi-v0-5-0",
+          "type": "release",
+          "label": "articulate-writing 0.5.0 on PyPI",
+          "href": "https://pypi.org/project/articulate-writing/0.5.0/",
+          "date": "2026-09-26",
+          "status": "verified",
+          "summary": "PyPI serves articulate-writing 0.5.0, uploaded at 16:40 UTC on 26 September 2026. A clean virtual environment installed it from PyPI. This is distribution evidence, not proof that a checked document is clear or true."
+        },
         {
           "id": "articulate-release-v0-4-1",
           "type": "release",
@@ -3999,10 +4301,10 @@
         "flywheel",
         "emet"
       ],
-      "lastVerified": "2026-09-25",
+      "lastVerified": "2026-09-26",
       "primaryDomain": "evaluation-verification",
       "productType": "local prose checker",
-      "releaseState": "stable v0.4.1 on GitHub and PyPI"
+      "releaseState": "stable v0.5.0 on GitHub and PyPI"
     }
   ]
 }

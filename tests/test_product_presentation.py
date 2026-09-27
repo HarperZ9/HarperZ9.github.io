@@ -130,19 +130,16 @@ def test_record_pages_keep_limits_visible_and_relationships_optional() -> None:
 
     assert '<dl class="system-facts">' in page
     assert '<dt>Status</dt><dd>active</dd>' in page
-    assert '<dt>Access</dt><dd>inspect</dd>' in page
-    assert (
-        "<dt>Release</dt><dd>GitHub release v0.1.0 verified; "
-        "source setup requires sibling dependencies; no PyPI release claimed</dd>"
-        in page
-    )
+    # 2026-09-26: accountable-surface 0.3.1 installs from PyPI with its dependencies.
+    assert '<dt>Access</dt><dd>install</dd>' in page
+    assert "<dt>Release</dt><dd>0.3.1 on PyPI; latest GitHub release v0.2.0</dd>" in page
     assert "Accountable Surface v0.1.0" in page
-    assert "missing coherence_membrane" in page
+    assert "The v0.1.0 GitHub wheel was not a self-contained install." in page
     assert "Real Windows native-application acceptance remains unverified" in page
     assert '<section class="mv" id="architecture-and-relationships"' in page
     assert '<details class="product-record-details" id="architecture-details">' in page
     assert "<summary>Architecture, dependencies, and relationship notes</summary>" in page
-    assert "Flywheel declares Accountable Surface as an actuation lane" in page
+    assert "Flywheel 1.0.4 declares Accountable Surface 0.3.1 as an actuation lane" in page
     assert '<a href="/accountable-machines.html">Accountable Machines</a>' in page
     assert "<strong>Authorization boundary.</strong>" in page
 

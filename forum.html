@@ -35,7 +35,7 @@
     <p class="lede" data-canonical-purpose="forum">Forum is a zero-dependency Python orchestration engine for teams of AI agents. It turns a request into dependent tasks, runs independent tasks in parallel through local commands or model APIs, pauses for human approval, resumes interrupted runs, and records a replayable ledger. The standalone route-preflight skill helps a host inspect routing, context pressure, and runtime readiness before model work starts.</p>
     <p class="close">The trust comes from re-deriving the chain, not from the engine asserting it ran cleanly.</p>
   </div>
-  <div class="seal"><span translate="no">forum</span> &middot; engine v1.13.0 &middot; standalone route-preflight skill v0.1.0 &middot; witnessed ledger</div>
+  <div class="seal"><span translate="no">forum</span> &middot; engine v1.14.0 &middot; standalone route-preflight skill v0.1.0 &middot; witnessed ledger</div>
 </div>
 
 <main id="main">
@@ -131,7 +131,7 @@
 <!-- PROOF AND RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Current state. How to run it.</h2>
-  <p class="body-text reveal">Version 1.13.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. The current core workflows are tested, linted, and type-checked, with no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
+  <p class="body-text reveal">Version 1.14.0, on PyPI as <code translate="no">forum-engine</code>. The full engine is here: durable ledger, routing, the control loop, model-agnostic executors, an HTTP and MCP daemon, the <code translate="no">forum</code> CLI, witnessed budgets and escalation, the intent and delivery ladders, typed data-flow between tasks, resumable runs, and the context and verification seams. The current core workflows are tested, linted, and type-checked, with no third-party runtime dependency. The license is fair-source: source-available, rights reserved to fund the research; the smaller utility tools that came out of this work stay permissive.</p>
   <p class="body-text reveal"><a href="demo-forum.html">Watch the recorded workflow</a>: one routed request becomes three dependency waves, three validator passes, 19 ledger entries, three checkpoints, and a chain-plus-payload verification pass.</p>
   <p class="body-text reveal">The standalone <span translate="no">forum-route-preflight</span> skill is now a live v0.1.0 GitHub release for agent hosts that load local skills. It assumes the Forum CLI or a Forum source checkout is available, then checks route selection, context pressure, and runtime readiness before model work starts. The helper does not execute the supplied command and keeps <code translate="no">safe_to_submit=false</code>, so a human or host policy still decides whether to proceed.</p>
   <pre class="artifact" translate="no"><span class="pr">$ curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip</span>

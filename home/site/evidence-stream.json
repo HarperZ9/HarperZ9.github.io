@@ -3,44 +3,134 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
-      "id": "accountable-surface-release-v0-1-0",
+      "id": "gather-release-v1-9-0",
       "type": "release",
-      "label": "Accountable Surface v0.1.0",
-      "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
-      "date": "2026-09-14",
+      "label": "Gather v1.9.0",
+      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.0",
+      "date": "2026-09-26",
       "status": "verified",
-      "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance.",
-      "systemId": "accountable-surface"
+      "summary": "The v1.9.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.0. The release requires launch grants before the MCP gather.run and gather.pilot tools run a command, reach a network source or send a credential, and it starts every child program from an absolute path in a private folder.",
+      "systemId": "gather"
     },
     {
-      "id": "emet-release-v1-3-0",
-      "type": "release",
-      "label": "EMET v1.3.0",
-      "href": "https://github.com/HarperZ9/emet/releases/tag/v1.3.0",
-      "date": "2026-09-13",
-      "status": "verified",
-      "summary": "The v1.3.0 GitHub release is public, not draft, and not prerelease. The annotated tag object is 6fa3985cb02dfc84e77f7e3c5872bc988304b18d; the peeled source commit is b37da003951866ece403fb08fe3d028d00c39f4f. No release assets are attached to this GitHub release.",
-      "systemId": "emet"
+      "id": "gather-advisory-ghsa-pxvv-rg3f-4v5w",
+      "type": "advisory",
+      "label": "MCP tool arguments could run commands and send environment secrets to a chosen host (GHSA-pxvv-rg3f-4v5w)",
+      "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned.",
+      "systemId": "gather"
     },
     {
-      "id": "emet-pypi-v1-3-0",
-      "type": "release",
-      "label": "emet 1.3.0 on PyPI",
-      "href": "https://pypi.org/project/emet/1.3.0/",
-      "date": "2026-09-13",
-      "status": "verified",
-      "summary": "PyPI serves emet 1.3.0. The wheel SHA-256 is 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; the source archive SHA-256 is b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02. This is distribution evidence, not proof of semantic quality or independent use.",
-      "systemId": "emet"
+      "id": "gather-advisory-ghsa-r4f3-9xrf-72m5",
+      "type": "advisory",
+      "label": "External tools started by bare name, so an executable planted in the working folder could run (GHSA-r4f3-9xrf-72m5)",
+      "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned.",
+      "systemId": "gather"
     },
     {
-      "id": "emet-flywheel-review-protocol-v1-3-0",
-      "type": "code-permalink",
-      "label": "EMET Flywheel review protocol",
-      "href": "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md",
-      "date": "2026-09-14",
+      "id": "crucible-release-v1-3-0",
+      "type": "release",
+      "label": "Crucible v1.3.0",
+      "href": "https://github.com/HarperZ9/crucible/releases/tag/v1.3.0",
+      "date": "2026-09-26",
       "status": "verified",
-      "summary": "The pinned v1.3.0 protocol document is a development compatibility exercise that requires source checkouts. It is not a model assessment, regulatory assessment, policy endorsement, or public proof that a reviewer reran the exercise.",
-      "systemId": "emet"
+      "summary": "The v1.3.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for crucible-bench 1.3.0. The release fixes verdict-integrity defects that shipped in 1.2.0 and earlier and adds ProofMeasure, which uses a proof or type checker as a measurement oracle.",
+      "systemId": "crucible"
+    },
+    {
+      "id": "crucible-advisory-ghsa-49qx-cj4f-wfqv",
+      "type": "advisory",
+      "label": "Verdicts in crucible-bench 1.2.0 and earlier can report MATCH that no sealed measurement supports (GHSA-49qx-cj4f-wfqv)",
+      "href": "https://github.com/HarperZ9/crucible/security/advisories/GHSA-49qx-cj4f-wfqv",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: crucible-bench 1.2.0 and earlier. Fixed in 1.3.0; install 1.3.0 or later. No CVE is assigned.",
+      "systemId": "crucible"
+    },
+    {
+      "id": "relay-release-v0-4-0",
+      "type": "release",
+      "label": "Relay v0.4.0",
+      "href": "https://github.com/HarperZ9/relay/releases/tag/v0.4.0",
+      "date": "2026-09-26",
+      "status": "verified",
+      "summary": "The v0.4.0 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.4.0. The release gives every child program an environment allowlist, runs the claude and codex tiers in an isolated empty folder, and keeps session reads inside the session store.",
+      "systemId": "relay"
+    },
+    {
+      "id": "relay-advisory-ghsa-xxcc-grhg-v9g7",
+      "type": "advisory",
+      "label": "CLI tiers could run a planted binary or project hooks, and shell children inherited provider keys (GHSA-xxcc-grhg-v9g7)",
+      "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned.",
+      "systemId": "relay"
+    },
+    {
+      "id": "relay-advisory-ghsa-phjr-6qrc-39mw",
+      "type": "advisory",
+      "label": "The session listing tool could read ledger files outside the session store (GHSA-phjr-6qrc-39mw)",
+      "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned.",
+      "systemId": "relay"
+    },
+    {
+      "id": "mneme-release-v0-5-1",
+      "type": "release",
+      "label": "Mneme v0.5.1",
+      "href": "https://github.com/HarperZ9/mneme/releases/tag/v0.5.1",
+      "date": "2026-09-26",
+      "status": "verified",
+      "summary": "The v0.5.1 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-mneme 0.5.1. The release fixes the 0.5.0 forget command, which could keep erased text or erase another user's row while its receipt reported erased.",
+      "systemId": "mneme"
+    },
+    {
+      "id": "mneme-advisory-ghsa-j2pw-g7f4-9ppp",
+      "type": "advisory",
+      "label": "The forget command could keep erased text or erase another user's row (GHSA-j2pw-g7f4-9ppp)",
+      "href": "https://github.com/HarperZ9/mneme/security/advisories/GHSA-j2pw-g7f4-9ppp",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-mneme 0.5.0 only. Fixed in 0.5.1; install 0.5.1 or later. No CVE is assigned.",
+      "systemId": "mneme"
+    },
+    {
+      "id": "canon-release-v0-4-2",
+      "type": "release",
+      "label": "Canon v0.4.2",
+      "href": "https://github.com/HarperZ9/canon/releases/tag/v0.4.2",
+      "date": "2026-09-26",
+      "status": "verified",
+      "summary": "The v0.4.2 GitHub release was published on 26 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-canon 0.4.2. The release redacts every ingest, scrubs query excerpts before cutting them, counts transcript paths instead of listing them, and reports a purge as purged only when its scrub finished.",
+      "systemId": "canon"
+    },
+    {
+      "id": "canon-advisory-ghsa-48rq-xjfx-6j4f",
+      "type": "advisory",
+      "label": "The shared context store could keep and return secrets, list transcript paths, and overstate purges (GHSA-48rq-xjfx-6j4f)",
+      "href": "https://github.com/HarperZ9/canon/security/advisories/GHSA-48rq-xjfx-6j4f",
+      "date": "2026-09-26",
+      "status": "published",
+      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-canon 0.2.0 and later releases before 0.4.2. Fixed in 0.4.2; install 0.4.2 or later. No CVE is assigned.",
+      "systemId": "canon"
+    },
+    {
+      "id": "articulate-release-v0-5-0",
+      "type": "release",
+      "label": "Articulate v0.5.0",
+      "href": "https://github.com/HarperZ9/articulate/releases/tag/v0.5.0",
+      "date": "2026-09-26",
+      "status": "verified",
+      "summary": "The v0.5.0 GitHub release was published on 26 September 2026 with no attached assets. It starts the editor's claude child in a new private folder and loads user settings only, so a document folder can no longer run commands through judge, fix or polish. Detector findings and the ruleset fingerprint do not change. Version 0.4.2, released earlier the same day, resolved the claude CLI path and ran the model call with no tools.",
+      "systemId": "articulate"
     },
     {
       "id": "flywheel-release-v1-0-4",
@@ -61,6 +151,56 @@
       "summary": "PyPI serves flywheel-verify 1.0.4, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.4-py3-none-any.whl is 2,259,991 bytes with SHA-256 8b3524b147937bff8bfd86efe522ee2468891297c75721683b7a401bb186f508; the source archive flywheel_verify-1.0.4.tar.gz is 3,432,483 bytes with SHA-256 1f5b7e80551ccb3d3ca9bc6af1d1a88735ee40792666d551a69777b4e5cd890c. A clean virtual environment installed it and flywheel --version printed flywheel 1.0.4."
     },
     {
+      "id": "flywheel-gather-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Gather lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L67-L70",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "Lines 67 to 70 of the Flywheel v1.0.4 lane registry declare the gather lane: the gather-engine package pinned at 1.8.2, its command, MCP arguments, source repository and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-crucible-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Crucible lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L71-L74",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "Lines 71 to 74 of the Flywheel v1.0.4 lane registry declare the crucible lane: the crucible-bench package pinned at 1.2.0, its command, MCP arguments, source repository and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-index-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Index lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L93-L99",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "Lines 93 to 99 of the Flywheel v1.0.4 lane registry declare the index lane: the index-graph package pinned at 2.13.0, its command, MCP arguments, source repository and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-forum-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Forum lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L100-L104",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "Lines 100 to 104 of the Flywheel v1.0.4 lane registry declare the forum lane: the forum-engine package pinned at 1.14.0, its command, MCP arguments, source repository and role.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-learn-lane-code",
+      "type": "code-permalink",
+      "label": "Flywheel Learn lane declaration",
+      "href": "https://github.com/HarperZ9/flywheel/blob/5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7/harness/lanes_registry.py#L105-L110",
+      "date": "2026-09-25",
+      "status": "verified",
+      "summary": "Lines 105 to 110 of the Flywheel v1.0.4 lane registry declare the learn lane: the @harperz9/learn package pinned at 1.6.0, its command, MCP arguments, source repository and role.",
+      "systemId": "flywheel"
+    },
+    {
       "id": "flywheel-release-v1-0-1",
       "type": "release",
       "label": "Flywheel v1.0.1",
@@ -79,6 +219,46 @@
       "status": "verified",
       "summary": "PyPI serves flywheel-verify 1.0.1, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.1-py3-none-any.whl is 2,217,845 bytes with SHA-256 be08deaabaa506c893144db460f1b43326a8fbc0e58e0dea38439b31235f2b8c; the source archive flywheel_verify-1.0.1.tar.gz is 3,350,903 bytes with SHA-256 83a34cfe7709f4ee8c29dbf888b1fca99c3d1928c116f980e3b09a12b6d33916. This distribution evidence does not prove source truth, claim support, complete coverage, downstream model use, absence of sensitive material, or clean-machine installation.",
       "systemId": "flywheel"
+    },
+    {
+      "id": "accountable-surface-release-v0-1-0",
+      "type": "release",
+      "label": "Accountable Surface v0.1.0",
+      "href": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.1.0",
+      "date": "2026-09-14",
+      "status": "verified",
+      "summary": "The v0.1.0 GitHub release is public, not draft, and not prerelease. It targets commit 9ebc4519e92ce674ac9058e662e655842c69be42 and publishes accountable_surface-0.1.0-py3-none-any.whl SHA-256 9f08e87868a755141e515a7b0e99be67caee3770f33d8adc11506effa8ac1e52, accountable_surface-0.1.0.tar.gz SHA-256 ac655bf23dee3714c7ee59c87fae98c09a75dcaaf0244bbb641e04d3d05eaa9b, and accountable-surface-010-release-SHA256SUMS.txt SHA-256 a28e4e2b37baf1899137db681a2ea7387e48577eb452cff69e41605b71e59c84. The release notes require the repository's documented source setup because some capabilities need sibling source packages. A clean wheel install succeeded, then importing accountable_surface failed on missing coherence_membrane. This is release evidence, not self-contained package readiness or real Windows native-app acceptance.",
+      "systemId": "accountable-surface"
+    },
+    {
+      "id": "emet-flywheel-review-protocol-v1-3-0",
+      "type": "code-permalink",
+      "label": "EMET Flywheel review protocol",
+      "href": "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md",
+      "date": "2026-09-14",
+      "status": "verified",
+      "summary": "The pinned v1.3.0 protocol document is a development compatibility exercise that requires source checkouts. It is not a model assessment, regulatory assessment, policy endorsement, or public proof that a reviewer reran the exercise.",
+      "systemId": "emet"
+    },
+    {
+      "id": "emet-release-v1-3-0",
+      "type": "release",
+      "label": "EMET v1.3.0",
+      "href": "https://github.com/HarperZ9/emet/releases/tag/v1.3.0",
+      "date": "2026-09-13",
+      "status": "verified",
+      "summary": "The v1.3.0 GitHub release is public, not draft, and not prerelease. The annotated tag object is 6fa3985cb02dfc84e77f7e3c5872bc988304b18d; the peeled source commit is b37da003951866ece403fb08fe3d028d00c39f4f. No release assets are attached to this GitHub release.",
+      "systemId": "emet"
+    },
+    {
+      "id": "emet-pypi-v1-3-0",
+      "type": "release",
+      "label": "emet 1.3.0 on PyPI",
+      "href": "https://pypi.org/project/emet/1.3.0/",
+      "date": "2026-09-13",
+      "status": "verified",
+      "summary": "PyPI serves emet 1.3.0. The wheel SHA-256 is 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; the source archive SHA-256 is b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02. This is distribution evidence, not proof of semantic quality or independent use.",
+      "systemId": "emet"
     },
     {
       "id": "flywheel-service-desk-env-v0-1-0",
@@ -189,56 +369,6 @@
       "status": "verified",
       "summary": "PyPI serves index-graph 2.12.0 for Python 3.11 or newer. The wheel is 229,391 bytes with SHA-256 1825b12a1a9413fadba7d0f786852ac0ef17515389ab19e267732e2aecbca683, and the source archive is 1,047,912 bytes with SHA-256 9451351820f6e779de3a3e567f0a9c4cf59edcee1de7bda9997d3ac6dda46445. The PyPI wheel hash differs from the GitHub wheel hash because ZIP create_system metadata differs; extracted file sets and file bytes match, and a fresh installed-wheel runtime check passed.",
       "systemId": "index"
-    },
-    {
-      "id": "flywheel-gather-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Gather lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L55-L58",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Gather's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-crucible-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Crucible lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L59-L62",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Crucible's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-index-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Index lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/c1c89d8/harness/lanes_registry.py#L43-L46",
-      "date": "2026-08-29",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Index 2.10.0, its package, command, MCP arguments, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-forum-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Forum lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L67-L70",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Forum's package, command, MCP arguments, version, source repository, and role.",
-      "systemId": "flywheel"
-    },
-    {
-      "id": "flywheel-learn-lane-code",
-      "type": "code-permalink",
-      "label": "Flywheel Learn lane declaration",
-      "href": "https://github.com/HarperZ9/flywheel/blob/3b0a1d5e90326edb59ad010ffdb1e1934b96f19a/harness/lanes.py#L71-L74",
-      "date": "2026-08-28",
-      "status": "verified",
-      "summary": "The pinned lane registry declares Learn's npm package, Node MCP entry, version, source repository, and role.",
-      "systemId": "flywheel"
     }
   ],
   "latestPublishedBriefing": {

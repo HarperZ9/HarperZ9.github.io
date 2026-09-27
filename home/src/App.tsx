@@ -603,7 +603,7 @@ function EvidenceBoard() {
             </tbody>
           </table>
           <section className="evidence-current" aria-labelledby="current-evidence-title">
-            <h3 id="current-evidence-title">Newest registry evidence</h3>
+            <h3 id="current-evidence-title">Recent registry evidence, newest first</h3>
             <ol>
               {CURRENT_EVIDENCE.map((evidence) => (
                 <li key={`${evidence.systemId}:${evidence.id}`}>

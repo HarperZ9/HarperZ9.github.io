@@ -136,6 +136,7 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
 
     phantom = read("phantom.html")
     assert "v1.1.0" in phantom
+    assert "v1.1.1 is the current release" in phantom
     assert "Layer-2 path" in phantom
     assert "Layers 1 and 0 modeled but not shipped" in phantom
     assert 'href="security-tools.json"' in phantom

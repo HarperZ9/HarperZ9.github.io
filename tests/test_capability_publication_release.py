@@ -23,6 +23,7 @@ RELEASE_PATHS = (
     "assets/index-4wTyKocM.js",
     "assets/index-JJHLIJUt.js",
     "assets/index-DYDJA8vR.js",
+    "assets/index-D4UoCuIT.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -349,7 +350,16 @@ RELEASE_PATHS = (
 # index-BORSyU4q.css with the human-first pair kept as retained history;
 # pick-the-lock-for-everyone.html regenerated from its source (word count
 # 23,456).
-REVIEWED_RELEASE_SHA256 = "54a0c227d8575d90fef9380427a6738b7e53214aa563d6db3e8c494adf586956"
+# September 26, 2026: the facts pass. Seventeen tools move to the versions PyPI and
+# GitHub serve today (Gather 1.9.0, Crucible 1.3.0, Relay 0.4.0, Mneme 0.5.1, Canon
+# 0.4.2, Articulate 0.5.0, Index 2.13.0, Forum 1.14.0, Plexus 0.2.2, Accountable
+# Surface 0.3.1, Telos 0.4.1, Phantom 1.1.1 and the toolkit rows); each fixing
+# release carries its published advisory; the Flywheel lane relations re-source to
+# the v1.0.4 lane registry; the capability maps, record pages and home bundle
+# (index-D4UoCuIT.js) regenerate from the registry. The review pass moves Chorus to
+# 0.3.1 on PyPI, drops commit hashes from the lane summaries on the home page and
+# lists the home evidence newest first.
+REVIEWED_RELEASE_SHA256 = "4a6f12b617bb2cd736a699bdd43ec9e29ad6e30dacb2b413207c8fd596aada00"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -490,7 +500,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # edition cover) is the current pair. The 25 September human-first pair
     # (index-TO_R52sc.js, index-DJj37yQz.css) replaced the capability-first pair;
     # both retired pairs stay in the release tree as retained history.
-    current_js = "index-DYDJA8vR.js"
+    # September 26, 2026, facts pass: the home bundle rebuilt from the refreshed
+    # registry is index-D4UoCuIT.js; the void-plates bundle stays as retained history.
+    current_js = "index-D4UoCuIT.js"
+    previous_void_plates_js = "index-DYDJA8vR.js"
+    assert previous_void_plates_js not in source
+    assert (ROOT / "assets" / previous_void_plates_js).is_file()
     current_css = "index-BORSyU4q.css"
     previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
     previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
