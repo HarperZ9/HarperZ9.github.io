@@ -65,17 +65,27 @@ def test_canon_is_discoverable_with_pypi_release_and_advisory() -> None:
     assert "https://harperz9.github.io/canon.html" in read("sitemap.xml")
 
 
-def test_chorus_names_github_release_source_change_gate_and_no_pypi_claim() -> None:
+def test_chorus_names_pypi_0_3_1_github_release_and_source_change_gate() -> None:
     chorus = registry_record("chorus")
     evidence = evidence_by_id(chorus)
 
-    assert chorus["releaseState"] == "GitHub release v0.3.0 verified; no PyPI release claimed"
+    # 2026-09-26: chorus-discourse 0.3.1 is on PyPI (publisher confirmed by PyPI
+    # provenance: HarperZ9/chorus release.yml); v0.3.0 stays the latest GitHub release.
+    assert chorus["releaseState"] == "v0.3.1 on PyPI as chorus-discourse; latest GitHub release v0.3.0"
+    assert chorus["entryCommand"].startswith("python -m pip install chorus-discourse==0.3.1;")
     assert "chorus decision <current> --reference <reference>" in chorus["entryCommand"]
+    assert chorus["evidence"][0]["id"] == "chorus-pypi-v0-3-1"
+    assert evidence["chorus-pypi-v0-3-1"]["href"] == "https://pypi.org/project/chorus-discourse/0.3.1/"
+    assert evidence["chorus-ci-v0-3-1"]["href"].startswith("https://github.com/HarperZ9/chorus/actions/runs/")
     assert evidence["chorus-release-v0-3-0"]["href"].endswith("/releases/tag/v0.3.0")
     assert "1997b649ac381fdcb7a13ec4f5d2d686c9e6306dfe4c58405a7e5b9921c70f2a" in evidence[
         "chorus-release-v0-3-0"
     ]["summary"]
-    assert "no PyPI release is claimed" in json.dumps(chorus)
+    assert "no PyPI release claimed" not in chorus["releaseState"]
+    for surface in ("chorus.html", "research.html", "catalog.html"):
+        assert "no PyPI release claimed" not in read(surface)
+    assert "chorus-discourse==0.3.1" in read("chorus.html")
+    assert "108 tests" not in read("research.html")
     assert evidence["chorus-source-change-gate-v0-3-0-source"]["status"] == "verified"
     assert "UNVERIFIABLE" in evidence["chorus-source-change-gate-v0-3-0-source"]["summary"]
 

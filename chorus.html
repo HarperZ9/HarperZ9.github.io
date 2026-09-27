@@ -32,9 +32,9 @@
   <div class="mid">
     <h1>Discourse synthesis, <span class="g">bounded by receipts.</span></h1>
     <p class="lede" data-canonical-purpose="chorus">Chorus turns a captured comment or thread corpus into weighted, clustered, re-checkable discourse digests. Version 0.3.0 adds a source-change review gate for deciding whether current gathered sources still match a reference set.</p>
-    <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt, and the verified v0.3.0 GitHub-only release adds the source-change gate.</p>
+    <p class="close">It is a standalone public system that can read Gather corpora. Its optional model overlay is separately provenanced and excluded from the deterministic receipt, and the v0.3.0 GitHub release added the source-change gate. Version 0.3.1 is on PyPI as <span translate="no">chorus-discourse</span>.</p>
   </div>
-  <div class="seal">GitHub release v0.3.0 verified &middot; no PyPI release claimed &middot; checked 2026-09-07</div>
+  <div class="seal">0.3.1 on PyPI &middot; latest GitHub release v0.3.0 &middot; checked 2026-09-26</div>
 </div>
 
 <main id="main">
@@ -51,7 +51,7 @@
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Evidence</span>
-      <span class="index-gloss"><a href="https://github.com/HarperZ9/chorus/releases/tag/v0.3.0" rel="noopener">GitHub release v0.3.0</a> publishes <span translate="no">chorus_discourse-0.3.0-py3-none-any.whl</span> with SHA-256 <span translate="no">1997b649ac381fdcb7a13ec4f5d2d686c9e6306dfe4c58405a7e5b9921c70f2a</span>, <span translate="no">chorus_discourse-0.3.0.tar.gz</span> with SHA-256 <span translate="no">c125cac68b7b5065551100b93bf82d22f210bdd2d5ae5ee6c7bec60d2bb2eb39</span>, and <span translate="no">SHA256SUMS.txt</span> with SHA-256 <span translate="no">ca0f0b4a4cb8670e409d9fb6b8e36c740a2d16fb11e43ed56008dd355ff21233</span>. This verifies the GitHub release path in the receipt, not semantic accuracy on new corpora, representative demand, deployment, adoption, semantic truth, or population sentiment. No PyPI release is claimed.</span>
+      <span class="index-gloss"><a href="https://pypi.org/project/chorus-discourse/0.3.1/" rel="noopener">PyPI serves <span translate="no">chorus-discourse</span> 0.3.1</a>, uploaded on 22 September 2026 (Pacific time). PyPI's provenance record names the Chorus repository's release workflow as the publisher, and the Python files in its source archive match the v0.3.1 tag. Version 0.3.1 maps Gather feed entries into the discourse input, which 0.3.0 dropped. The tag has no GitHub release; <a href="https://github.com/HarperZ9/chorus/releases/tag/v0.3.0" rel="noopener">GitHub release v0.3.0</a> is the latest and carries the wheel, the source archive and a checksum file. This shows how the package is published, not semantic accuracy on new corpora, representative demand, deployment, adoption, semantic truth, or population sentiment.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Source-change check</span>
@@ -59,7 +59,7 @@
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Install</span>
-      <span class="index-gloss">Verify the v0.3.0 checksum file, then install the GitHub wheel with <span translate="no">python -m pip install https://github.com/HarperZ9/chorus/releases/download/v0.3.0/chorus_discourse-0.3.0-py3-none-any.whl</span>. First use: <span translate="no">chorus decision &lt;current&gt; --reference &lt;reference&gt; --task "Check whether sources changed"</span>.</span>
+      <span class="index-gloss">Install from PyPI with <span translate="no">python -m pip install chorus-discourse==0.3.1</span>. First use: <span translate="no">chorus decision &lt;current&gt; --reference &lt;reference&gt; --task "Check whether sources changed"</span>.</span>
     </article>
     <article class="index-row" role="listitem">
       <span class="index-term">Boundary</span>

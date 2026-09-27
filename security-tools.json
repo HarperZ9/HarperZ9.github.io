@@ -180,7 +180,7 @@
         "The model cannot supply its own authorization.",
         "Real Windows native-application acceptance remains unverified; release validation used a fake UI Automation driver.",
         "Self-authored tests do not establish independent adversarial review or production safety.",
-        "The v0.1.0 GitHub wheel was not a self-contained install. PyPI 0.3.1 installs its coherence-membrane and proof-surface dependencies from PyPI; the MCP server entry needs the [server] extra."
+        "The v0.1.0 GitHub wheel was not a self-contained install. PyPI 0.3.1 installs its coherence-membrane and proof-surface dependencies from PyPI; the FastMCP server entry, accountable-surface-server, needs the [server] extra; the stdio entry accountable-surface-mcp, which Flywheel 1.0.4 launches, does not."
       ],
       "authorizationBoundary": "Every effect requires authority external to the model and remains limited to the granted scope.",
       "evidenceDate": "2026-09-26"
@@ -222,14 +222,15 @@
       "purpose": "Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts.",
       "maturity": "shipped",
       "source": "https://github.com/HarperZ9/secret-redact-io",
-      "installOrEntry": "python -m pip install secret-redact-io; secret-redact-io read README.md --json",
+      "installOrEntry": "python -m pip install https://github.com/HarperZ9/secret-redact-io/releases/download/v0.1.0/io_guardrails-0.1.0-py3-none-any.whl; io-guard read README.md --json",
       "verificationCommand": "python -m pip install -e \".[dev]\"; python -m pytest",
       "limitations": [
         "The package does not include credentials or environment configuration.",
-        "Redaction and hash-only receipts reduce exposure but do not replace source review."
+        "Redaction and hash-only receipts reduce exposure but do not replace source review.",
+        "The v0.1.0 release installs as io-guardrails with the io-guard command. The source has since been renamed secret-redact-io, and no package by either name is on PyPI."
       ],
       "authorizationBoundary": "Do not pass secrets to destinations that are not authorized to receive them, even when redaction is enabled.",
-      "evidenceDate": "2026-08-27"
+      "evidenceDate": "2026-09-26"
     },
     {
       "slug": "agent-hook-pack",
