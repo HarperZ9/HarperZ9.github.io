@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-09-26",
+    "retrievedAt": "2026-09-27",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Systems are included when evaluation-verification appears in their registry domains.",
@@ -235,9 +235,9 @@
           "evidenceIds": [
             "flywheel-forum-lane-code",
             "flywheel-release-v1-0-4",
-            "forum-release-v1-14-0"
+            "forum-release-v1-15-1"
           ],
-          "claimScope": "Flywheel 1.0.4 declares and launches Forum 1.14.0 as its orchestration MCP lane.",
+          "claimScope": "Flywheel 1.0.4 declares and launches Forum as its orchestration MCP lane, pinned to forum-engine 1.14.0. That pin is inside the range of one of the two Forum advisories listed on the Security page, and 1.15.1 and later are outside both; this relation does not show that Flywheel was tested with 1.15.1.",
           "label": "launches as a configured lane",
           "type": "integrates-lane"
         },

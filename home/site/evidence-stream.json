@@ -3,6 +3,96 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "relay-release-v0-5-0",
+      "type": "release",
+      "label": "Relay v0.5.0",
+      "href": "https://github.com/HarperZ9/relay/releases/tag/v0.5.0",
+      "date": "2026-09-27",
+      "status": "verified",
+      "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops PATH entries that reach the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs. The folder of the interpreter relay runs on stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When the working folder is a filesystem root or holds the home folder, only the entry naming that folder itself leaves. The release notes list the remaining limits.",
+      "systemId": "relay"
+    },
+    {
+      "id": "relay-advisory-ghsa-82fg-qprm-q5r7",
+      "type": "advisory",
+      "label": "A program planted where a PATH entry reached the working folder could start in place of an installed tool (GHSA-82fg-qprm-q5r7)",
+      "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-82fg-qprm-q5r7",
+      "date": "2026-09-27",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: flywheel-relay before 0.5.0. Fixed in 0.5.0; install 0.5.0 or later. No CVE is assigned.",
+      "systemId": "relay"
+    },
+    {
+      "id": "forum-release-v1-15-1",
+      "type": "release",
+      "label": "Forum v1.15.1",
+      "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.1",
+      "date": "2026-09-27",
+      "status": "verified",
+      "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps PATH entries that reach the working folder through an alias, a link or quotes out of the command lookup and out of the child's PATH. The folder of the running interpreter stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Forum runs in a filesystem root or in a folder that holds the home folder, only the entry naming that folder itself leaves.",
+      "systemId": "forum"
+    },
+    {
+      "id": "forum-advisory-ghsa-h6qh-49hv-4xcg",
+      "type": "advisory",
+      "label": "The working-folder guard in 1.15.0 missed an alias, a repointed link and a quoted PATH entry (GHSA-h6qh-49hv-4xcg)",
+      "href": "https://github.com/HarperZ9/forum/security/advisories/GHSA-h6qh-49hv-4xcg",
+      "date": "2026-09-27",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: forum-engine 1.15.0 only. Fixed in 1.15.1; install 1.15.1 or later. No CVE is assigned.",
+      "systemId": "forum"
+    },
+    {
+      "id": "gather-release-v1-9-1",
+      "type": "release",
+      "label": "Gather v1.9.1",
+      "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.1",
+      "date": "2026-09-27",
+      "status": "verified",
+      "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps PATH entries that reach the working folder out of the command lookup and out of the child's PATH. The folder of the Python that runs Gather stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, only the entry naming that folder itself leaves. On Windows, its file sources and MCP path arguments refuse network shares and device paths.",
+      "systemId": "gather"
+    },
+    {
+      "id": "gather-advisory-ghsa-r38f-cr69-jpp8",
+      "type": "advisory",
+      "label": "A program planted in the working folder could start through an absolute PATH entry, a link or a drive-relative name (GHSA-r38f-cr69-jpp8)",
+      "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r38f-cr69-jpp8",
+      "date": "2026-09-27",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: gather-engine before 1.9.1. Fixed in 1.9.1; install 1.9.1 or later. No CVE is assigned.",
+      "systemId": "gather"
+    },
+    {
+      "id": "gather-advisory-ghsa-j6j7-39vh-qrp4",
+      "type": "advisory",
+      "label": "On Windows, MCP path arguments could make the machine sign in to a network share named in the call (GHSA-j6j7-39vh-qrp4)",
+      "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-j6j7-39vh-qrp4",
+      "date": "2026-09-27",
+      "status": "published",
+      "summary": "Medium severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: gather-engine 1.6.0 and later releases before 1.9.1, when gather mcp runs on Windows. Fixed in 1.9.1; install 1.9.1 or later. No CVE is assigned.",
+      "systemId": "gather"
+    },
+    {
+      "id": "forum-release-v1-15-0",
+      "type": "release",
+      "label": "Forum v1.15.0",
+      "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.0",
+      "date": "2026-09-27",
+      "status": "verified",
+      "summary": "The v1.15.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt, whose digests match the digests PyPI reports for forum-engine 1.15.0. The release binds each gate decision to the gate it resolves, requires a launch grant before an MCP client can decide a gate, starts each command in a private empty folder with an environment allowlist, and requires a bearer token for forum serve by default. GHSA-h6qh-49hv-4xcg affects 1.15.0, so install 1.15.1 or later.",
+      "systemId": "forum"
+    },
+    {
+      "id": "forum-advisory-ghsa-36gv-h885-fmjf",
+      "type": "advisory",
+      "label": "Commands ran with the working folder and full environment, gate approvals were not bound to a raised gate, and the local daemon had no authentication (GHSA-36gv-h885-fmjf)",
+      "href": "https://github.com/HarperZ9/forum/security/advisories/GHSA-36gv-h885-fmjf",
+      "date": "2026-09-27",
+      "status": "published",
+      "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: forum-engine before 1.15.0. Fixed in 1.15.0. GHSA-h6qh-49hv-4xcg affects 1.15.0, so install 1.15.1 or later. No CVE is assigned.",
+      "systemId": "forum"
+    },
+    {
       "id": "gather-release-v1-9-0",
       "type": "release",
       "label": "Gather v1.9.0",
@@ -19,7 +109,7 @@
       "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w",
       "date": "2026-09-26",
       "status": "published",
-      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned.",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0. Later advisories also affect 1.9.0, so install 1.9.1 or later. No CVE is assigned.",
       "systemId": "gather"
     },
     {
@@ -29,7 +119,7 @@
       "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5",
       "date": "2026-09-26",
       "status": "published",
-      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned.",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0. Later advisories also affect 1.9.0, so install 1.9.1 or later. No CVE is assigned.",
       "systemId": "gather"
     },
     {
@@ -69,7 +159,7 @@
       "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7",
       "date": "2026-09-26",
       "status": "published",
-      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned.",
+      "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0. GHSA-82fg-qprm-q5r7 also affects 0.4.0, so install 0.5.0 or later. No CVE is assigned.",
       "systemId": "relay"
     },
     {
@@ -79,7 +169,7 @@
       "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw",
       "date": "2026-09-26",
       "status": "published",
-      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned.",
+      "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0. GHSA-82fg-qprm-q5r7 also affects 0.4.0, so install 0.5.0 or later. No CVE is assigned.",
       "systemId": "relay"
     },
     {

@@ -46,9 +46,9 @@
       "evidenceIds": [
         "flywheel-gather-lane-code",
         "flywheel-release-v1-0-4",
-        "gather-release-v1-9-0"
+        "gather-release-v1-9-1"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the range of GHSA-pxvv-rg3f-4v5w and GHSA-r4f3-9xrf-72m5, fixed in 1.9.0, and this relation does not show that Flywheel was tested with 1.9.0. This does not make Gather a Flywheel-owned product."
+      "claimScope": "Flywheel 1.0.4 declares and launches Gather as its research-intake MCP lane, pinned to gather-engine 1.8.2. That pin is inside the ranges of the four Gather advisories listed on the Security page, and 1.9.1 and later are outside all four; this relation does not show that Flywheel was tested with 1.9.1. This does not make Gather a Flywheel-owned product."
     },
     {
       "source": "flywheel",
@@ -82,9 +82,9 @@
       "evidenceIds": [
         "flywheel-forum-lane-code",
         "flywheel-release-v1-0-4",
-        "forum-release-v1-14-0"
+        "forum-release-v1-15-1"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Forum 1.14.0 as its orchestration MCP lane."
+      "claimScope": "Flywheel 1.0.4 declares and launches Forum as its orchestration MCP lane, pinned to forum-engine 1.14.0. That pin is inside the range of one of the two Forum advisories listed on the Security page, and 1.15.1 and later are outside both; this relation does not show that Flywheel was tested with 1.15.1."
     },
     {
       "source": "flywheel",
@@ -118,9 +118,9 @@
       "evidenceIds": [
         "flywheel-relay-lane-code",
         "flywheel-release-v1-0-4",
-        "relay-release-v0-4-0"
+        "relay-release-v0-5-0"
       ],
-      "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the range of GHSA-xxcc-grhg-v9g7 and GHSA-phjr-6qrc-39mw, fixed in 0.4.0, and this relation does not show that Flywheel was tested with 0.4.0."
+      "claimScope": "Flywheel 1.0.4 declares and launches Relay as its coding-agent MCP lane, pinned to flywheel-relay 0.2.5. That pin is inside the ranges of the three Relay advisories listed on the Security page, and 0.5.0 and later are outside all three; this relation does not show that Flywheel was tested with 0.5.0."
     },
     {
       "source": "flywheel",
@@ -883,9 +883,45 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install gather-engine==1.9.0; gather docs sample.txt --store corpus",
+      "entryCommand": "pip install gather-engine==1.9.1; gather docs sample.txt --store corpus",
       "verificationCommand": "gather corpus verify ./corpus",
       "evidence": [
+        {
+          "id": "gather-release-v1-9-1",
+          "type": "release",
+          "label": "Gather v1.9.1",
+          "href": "https://github.com/HarperZ9/gather/releases/tag/v1.9.1",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v1.9.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for gather-engine 1.9.1. The release keeps PATH entries that reach the working folder out of the command lookup and out of the child's PATH. The folder of the Python that runs Gather stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Gather runs from a filesystem root, or from the home folder or a folder above it, only the entry naming that folder itself leaves. On Windows, its file sources and MCP path arguments refuse network shares and device paths."
+        },
+        {
+          "id": "gather-pypi-v1-9-1",
+          "type": "release",
+          "label": "gather-engine 1.9.1 on PyPI",
+          "href": "https://pypi.org/project/gather-engine/1.9.1/",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "PyPI serves gather-engine 1.9.1. A clean virtual environment installed it from PyPI on 27 September 2026, gather --version reported 1.9.1, and the quickstart on the Gather page stored the sample, selected its first line and verified the corpus. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "gather-advisory-ghsa-r38f-cr69-jpp8",
+          "type": "advisory",
+          "label": "A program planted in the working folder could start through an absolute PATH entry, a link or a drive-relative name (GHSA-r38f-cr69-jpp8)",
+          "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r38f-cr69-jpp8",
+          "date": "2026-09-27",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: gather-engine before 1.9.1. Fixed in 1.9.1; install 1.9.1 or later. No CVE is assigned."
+        },
+        {
+          "id": "gather-advisory-ghsa-j6j7-39vh-qrp4",
+          "type": "advisory",
+          "label": "On Windows, MCP path arguments could make the machine sign in to a network share named in the call (GHSA-j6j7-39vh-qrp4)",
+          "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-j6j7-39vh-qrp4",
+          "date": "2026-09-27",
+          "status": "published",
+          "summary": "Medium severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: gather-engine 1.6.0 and later releases before 1.9.1, when gather mcp runs on Windows. Fixed in 1.9.1; install 1.9.1 or later. No CVE is assigned."
+        },
         {
           "id": "gather-release-v1-9-0",
           "type": "release",
@@ -911,7 +947,7 @@
           "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w",
           "date": "2026-09-26",
           "status": "published",
-          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned."
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0. Later advisories also affect 1.9.0, so install 1.9.1 or later. No CVE is assigned."
         },
         {
           "id": "gather-advisory-ghsa-r4f3-9xrf-72m5",
@@ -920,7 +956,7 @@
           "href": "https://github.com/HarperZ9/gather/security/advisories/GHSA-r4f3-9xrf-72m5",
           "date": "2026-09-26",
           "status": "published",
-          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0; install 1.9.0 or later. No CVE is assigned."
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: gather-engine before 1.9.0. Fixed in 1.9.0. Later advisories also affect 1.9.0, so install 1.9.1 or later. No CVE is assigned."
         },
         {
           "id": "gather-release-v1-8-1",
@@ -991,7 +1027,8 @@
         "Optional hard-source adapters require external tools, and untrusted URLs near internal services require separate network controls.",
         "Readable context selection returns acquired source context; it does not prove source truth, claim support, completeness, downstream model use, or absence of sensitive material in selected text or URLs.",
         "Selection offsets use the LF-normalized view. New writes witness exact UTF-8 source text; legacy reconstruction does not prove historical raw object-byte integrity. Detecting witness changes requires a previously pinned corpus digest.",
-        "gather-engine before 1.9.0 is affected by GHSA-pxvv-rg3f-4v5w and GHSA-r4f3-9xrf-72m5; install 1.9.0 or later. MCP hosts that relied on the old gather.run and gather.pilot behavior add a launch grant."
+        "Every gather-engine release before 1.9.1 is inside the range of at least one of the four Gather advisories listed on the Security page; install 1.9.1 or later.",
+        "MCP hosts that relied on the old gather.run and gather.pilot behavior add a launch grant. A tool found only inside the working folder needs its absolute path in its GATHER_<TOOL> variable."
       ],
       "boundary": "Respect access controls, copyright, privacy, and the terms governing each source.",
       "inputs": [
@@ -1013,10 +1050,10 @@
         "learn",
         "chorus"
       ],
-      "lastVerified": "2026-09-26",
+      "lastVerified": "2026-09-27",
       "primaryDomain": "research-education",
       "productType": "research intake and corpus system",
-      "releaseState": "stable v1.9.0 on GitHub and PyPI"
+      "releaseState": "stable v1.9.1 on GitHub and PyPI"
     },
     {
       "id": "forum",
@@ -1050,9 +1087,54 @@
       "maturity": "shipped",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "python -m pip install forum-engine==1.14.0; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
+      "entryCommand": "python -m pip install forum-engine==1.15.1; curl -L -O https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip; install the extracted forum-route-preflight folder with your host skill loader",
       "verificationCommand": "With the Forum CLI or source checkout available, run the installed forum-route-preflight helper before any model command; confirm route, context, and runtime observations are reported and safe_to_submit is false.",
       "evidence": [
+        {
+          "id": "forum-release-v1-15-1",
+          "type": "release",
+          "label": "Forum v1.15.1",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.1",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v1.15.1 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for forum-engine 1.15.1. The release keeps PATH entries that reach the working folder through an alias, a link or quotes out of the command lookup and out of the child's PATH. The folder of the running interpreter stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When Forum runs in a filesystem root or in a folder that holds the home folder, only the entry naming that folder itself leaves."
+        },
+        {
+          "id": "forum-pypi-v1-15-1",
+          "type": "release",
+          "label": "forum-engine 1.15.1 on PyPI",
+          "href": "https://pypi.org/project/forum-engine/1.15.1/",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "PyPI serves forum-engine 1.15.1. A clean virtual environment installed it from PyPI on 27 September 2026, forum --version reported 1.15.1, and examples/demo.py from the v1.15.1 source ran and caught a tampered ledger payload. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "forum-advisory-ghsa-h6qh-49hv-4xcg",
+          "type": "advisory",
+          "label": "The working-folder guard in 1.15.0 missed an alias, a repointed link and a quoted PATH entry (GHSA-h6qh-49hv-4xcg)",
+          "href": "https://github.com/HarperZ9/forum/security/advisories/GHSA-h6qh-49hv-4xcg",
+          "date": "2026-09-27",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: forum-engine 1.15.0 only. Fixed in 1.15.1; install 1.15.1 or later. No CVE is assigned."
+        },
+        {
+          "id": "forum-release-v1-15-0",
+          "type": "release",
+          "label": "Forum v1.15.0",
+          "href": "https://github.com/HarperZ9/forum/releases/tag/v1.15.0",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v1.15.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt, whose digests match the digests PyPI reports for forum-engine 1.15.0. The release binds each gate decision to the gate it resolves, requires a launch grant before an MCP client can decide a gate, starts each command in a private empty folder with an environment allowlist, and requires a bearer token for forum serve by default. GHSA-h6qh-49hv-4xcg affects 1.15.0, so install 1.15.1 or later."
+        },
+        {
+          "id": "forum-advisory-ghsa-36gv-h885-fmjf",
+          "type": "advisory",
+          "label": "Commands ran with the working folder and full environment, gate approvals were not bound to a raised gate, and the local daemon had no authentication (GHSA-36gv-h885-fmjf)",
+          "href": "https://github.com/HarperZ9/forum/security/advisories/GHSA-36gv-h885-fmjf",
+          "date": "2026-09-27",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: forum-engine before 1.15.0. Fixed in 1.15.0. GHSA-h6qh-49hv-4xcg affects 1.15.0, so install 1.15.1 or later. No CVE is assigned."
+        },
         {
           "id": "forum-route-preflight-skill-v0-1-0",
           "type": "release",
@@ -1092,11 +1174,13 @@
       ],
       "limitations": [
         "A valid ledger proves recorded integrity and replayability, not that model output is substantively correct.",
-        "Executors and human approval policy remain operator-supplied.",
+        "You supply the executors and the human approval policy.",
         "The route-preflight skill is a standalone host skill, not a marketplace approval and not a Forum engine version bump.",
-        "The skill checks route, context, and runtime readiness without executing the supplied model or shell command; safe_to_submit remains false so a human or host policy still decides whether to proceed."
+        "The skill checks route, context, and runtime readiness without executing the supplied model or shell command; safe_to_submit remains false so a human or host policy still decides whether to proceed.",
+        "Every forum-engine release before 1.15.1 is inside the range of one of the two Forum advisories listed on the Security page; install 1.15.1 or later.",
+        "From 1.15.0, forum serve by default needs the bearer token it prints at startup, and an MCP client decides gates only when forum mcp starts with --allow-gate-decisions. Each command runs in a private empty folder with a short environment. Give commands full paths, because a relative path no longer resolves, and name any extra variable in FORUM_CHILD_ENV. The v1.15.0 and v1.15.1 release notes list every upgrade change."
       ],
-      "boundary": "Agent permissions must remain no broader than the operator's authority and the active task scope.",
+      "boundary": "Agent permissions must remain no broader than your authority and the active task scope.",
       "inputs": [
         "task graphs and delivery contracts",
         "agent and executor profiles",
@@ -1121,10 +1205,10 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-09-26",
+      "lastVerified": "2026-09-27",
       "primaryDomain": "agent-systems",
       "productType": "multi-agent orchestration engine",
-      "releaseState": "stable engine v1.14.0; standalone route-preflight skill v0.1.0",
+      "releaseState": "stable engine v1.15.1; standalone route-preflight skill v0.1.0",
       "runGuide": {
         "label": "Download the standalone route-preflight skill",
         "href": "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip",
@@ -1351,6 +1435,24 @@
       "verificationCommand": "buildc corpus verify",
       "evidence": [
         {
+          "id": "buildlang-release-v1-4-0",
+          "type": "release",
+          "label": "BuildLang v1.4.0",
+          "href": "https://github.com/HarperZ9/buildlang/releases/tag/v1.4.0",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v1.4.0 GitHub source release was published on 10 September 2026 (Pacific time) for release commit 12014e291bb1e7233caf4d23d49d78b2270c5332, and it is not a draft or a prerelease. Plain fixed-width integer arithmetic is now checked: constant overflow is diagnosed, and runtime overflow takes the arithmetic panic path. The C path remains primary, and the other backends keep their documented limits. The release publishes no package registry artifact and no prebuilt compiler binary."
+        },
+        {
+          "id": "buildlang-crates-v1-2-0",
+          "type": "release",
+          "label": "buildlang 1.2.0 on crates.io",
+          "href": "https://crates.io/crates/buildlang/1.2.0",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "crates.io lists 1.2.0, published on 7 July 2026, as the newest buildlang version, so cargo install buildlang installs 1.2.0. The v1.3.0 and v1.4.0 GitHub releases are not on crates.io."
+        },
+        {
           "id": "buildlang-release-v1-2-0",
           "type": "release",
           "label": "BuildLang v1.2.0",
@@ -1383,10 +1485,10 @@
         "build-color",
         "raw"
       ],
-      "lastVerified": "2026-08-27",
+      "lastVerified": "2026-09-27",
       "primaryDomain": "developer-infrastructure",
       "productType": "systems language and compiler toolchain",
-      "releaseState": "stable v1.2.0; non-C backends experimental"
+      "releaseState": "GitHub release v1.4.0; buildlang 1.2.0 on crates.io; non-C backends experimental"
     },
     {
       "id": "learn",
@@ -1485,9 +1587,36 @@
       "maturity": "active",
       "placement": "featured",
       "accessMode": "install",
-      "entryCommand": "pip install flywheel-relay==0.4.0; relay --health --online",
+      "entryCommand": "pip install flywheel-relay==0.5.0; relay --health --online",
       "verificationCommand": "python -m pytest -q",
       "evidence": [
+        {
+          "id": "relay-release-v0-5-0",
+          "type": "release",
+          "label": "Relay v0.5.0",
+          "href": "https://github.com/HarperZ9/relay/releases/tag/v0.5.0",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v0.5.0 GitHub release was published on 27 September 2026 (Pacific time) and attaches the wheel, the source archive and SHA256SUMS.txt. The wheel and source archive digests in SHA256SUMS.txt match the digests PyPI reports for flywheel-relay 0.5.0. The release drops PATH entries that reach the folder a child works in, from the lookup and from the child's PATH, including for the git that --auto-commit runs. The folder of the interpreter relay runs on stays, and on Windows so do the Windows, System32 and SysWOW64 folders. When the working folder is a filesystem root or holds the home folder, only the entry naming that folder itself leaves. The release notes list the remaining limits."
+        },
+        {
+          "id": "relay-pypi-v0-5-0",
+          "type": "release",
+          "label": "flywheel-relay 0.5.0 on PyPI",
+          "href": "https://pypi.org/project/flywheel-relay/0.5.0/",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-relay 0.5.0. A clean virtual environment installed it from PyPI on 27 September 2026, pip reported the installed version as 0.5.0, and relay --help listed the --health and --online options. This is distribution evidence; it does not establish that every feature works on every platform."
+        },
+        {
+          "id": "relay-advisory-ghsa-82fg-qprm-q5r7",
+          "type": "advisory",
+          "label": "A program planted where a PATH entry reached the working folder could start in place of an installed tool (GHSA-82fg-qprm-q5r7)",
+          "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-82fg-qprm-q5r7",
+          "date": "2026-09-27",
+          "status": "published",
+          "summary": "High severity security advisory, published on GitHub on 27 September 2026 (Pacific time). Affected: flywheel-relay before 0.5.0. Fixed in 0.5.0; install 0.5.0 or later. No CVE is assigned."
+        },
         {
           "id": "relay-release-v0-4-0",
           "type": "release",
@@ -1513,7 +1642,7 @@
           "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7",
           "date": "2026-09-26",
           "status": "published",
-          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned."
+          "summary": "High severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay before 0.4.0. Fixed in 0.4.0. GHSA-82fg-qprm-q5r7 also affects 0.4.0, so install 0.5.0 or later. No CVE is assigned."
         },
         {
           "id": "relay-advisory-ghsa-phjr-6qrc-39mw",
@@ -1522,7 +1651,7 @@
           "href": "https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw",
           "date": "2026-09-26",
           "status": "published",
-          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0; install 0.4.0 or later. No CVE is assigned."
+          "summary": "Medium severity security advisory, published on GitHub on 26 September 2026 (Pacific time). Affected: flywheel-relay 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0. GHSA-82fg-qprm-q5r7 also affects 0.4.0, so install 0.5.0 or later. No CVE is assigned."
         },
         {
           "id": "relay-release-v0-2-0",
@@ -1545,9 +1674,11 @@
       ],
       "limitations": [
         "The command denylist is not a security boundary.",
-        "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs an operator-owned check.",
+        "A valid trajectory proves recorded actions, not that edits are correct; acceptance needs a check you own.",
         "Relay publishes on PyPI as flywheel-relay. The PyPI name relay-agent belongs to another publisher.",
-        "flywheel-relay before 0.4.0 is affected by GHSA-xxcc-grhg-v9g7, and 0.2.0 and later releases before 0.4.0 by GHSA-phjr-6qrc-39mw; install 0.4.0 or later. Commands that read a variable outside the child allowlist need it named in RELAY_CHILD_ENV."
+        "Every flywheel-relay release before 0.5.0 is inside the range of at least one of the three Relay advisories listed on the Security page; install 0.5.0 or later.",
+        "Commands that read a variable outside the child allowlist need it named in RELAY_CHILD_ENV.",
+        "From 0.5.0, a run, test_cmd or check command that found a program through a project folder on PATH, such as node_modules/.bin, needs that program's path, unless the folder holds the interpreter relay runs on. A pin such as ~=0.4.0 excludes 0.5.0."
       ],
       "boundary": "Tool use remains permission-checked and limited to authorized repositories, systems, and endpoints.",
       "inputs": [
@@ -1569,10 +1700,10 @@
         "plexus",
         "mneme"
       ],
-      "lastVerified": "2026-09-26",
+      "lastVerified": "2026-09-27",
       "primaryDomain": "agent-systems",
       "productType": "coding agent that acts within granted permissions",
-      "releaseState": "v0.4.0 on GitHub and PyPI as flywheel-relay"
+      "releaseState": "v0.5.0 on GitHub and PyPI as flywheel-relay"
     },
     {
       "id": "plexus",
@@ -1933,6 +2064,15 @@
       "verificationCommand": "npm test",
       "evidence": [
         {
+          "id": "bulletin-release-v0-5-0",
+          "type": "release",
+          "label": "Bulletin v0.5.0",
+          "href": "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0",
+          "date": "2026-09-27",
+          "status": "verified",
+          "summary": "The v0.5.0 GitHub release was published on 13 September 2026 (Pacific time) for source commit ba75ef522caf4ee73cbacb44807ba4feefc9fad5, and it is not a draft or a prerelease. It adds a signed public ledger for bounties and work offers, with immutable versions of its terms, claim slots, evidence submissions and requester reviews, and browser utilities that sign writes with a non-extractable Ed25519 key. The release attaches no files. Bulletin records offers and reviews; it does not escrow, collect, settle or verify payments."
+        },
+        {
           "id": "bulletin-release-v0-4-0",
           "type": "release",
           "label": "Bulletin v0.4.0",
@@ -1954,19 +2094,19 @@
           "id": "bulletin-public-source",
           "type": "source",
           "label": "Bulletin public source",
-          "href": "https://github.com/HarperZ9/bulletin/tree/00a09ead067e8869c097d83cce24958c1dbf3daa",
-          "date": "2026-09-09",
+          "href": "https://github.com/HarperZ9/bulletin/tree/860f7ac7a8722900414617790cb44082c0eedff6",
+          "date": "2026-09-27",
           "status": "verified",
-          "summary": "The public source is current through merged PR 23 source commit 00a09ead067e8869c097d83cce24958c1dbf3daa. The Sep 9 source update adds the bulletin-media-instruction-inert-cross-surface work item while keeping the public release version at v0.4.0."
+          "summary": "The public source is current through merged PR 33, commit 860f7ac7a8722900414617790cb44082c0eedff6. The four commits after the v0.5.0 tag change only README.md and project-docs/API.md, and package.json still reads version 0.5.0."
         },
         {
           "id": "bulletin-deployed-board-contract",
           "type": "public-receipt",
           "label": "Deployed board contract",
           "href": "https://bulletin.zaindharper.workers.dev/.well-known/agent-board.json",
-          "date": "2026-09-09",
+          "date": "2026-09-27",
           "status": "verified",
-          "summary": "Deployed worker version 5c3a085e-dce4-4f40-9264-b7c0ecc0509f serves discovery and OpenAPI at version 0.4.0. Current verification observed media enabled, five published work items, zero posted reports, and the new media interop work item available from both the HTTP work endpoint and MCP board_reports. Report counts are posted self-reports, not verified attempts or attached output."
+          "summary": "On 27 September 2026 the deployed board contract and the OpenAPI document both reported version 0.5.0, and the work endpoint reported service version 0.5.0. The contract reported media enabled, and the work endpoint listed five work items. This check read those documents only; it did not create a post, an upload or an inbox acknowledgement."
         },
         {
           "id": "bulletin-work-content-update-2026-09-09",
@@ -1982,7 +2122,8 @@
         "The board marks every post untrusted and leaves the judgment to the reader. It claims no prompt-injection detection.",
         "Proof-of-work registration prices a throwaway key and does not resist a funded adversary.",
         "A verified operator host records who runs an agent and says nothing about how that agent behaves.",
-        "Inbox acknowledgement records a cursor handoff; it is not exactly-once delivery and does not prove the reader processed the page."
+        "Inbox acknowledgement records a cursor handoff; it is not exactly-once delivery and does not prove the reader processed the page.",
+        "Bounty and work-offer entries are records only. Bulletin does not escrow, collect, settle or verify payments, and payment state stays unverified."
       ],
       "boundary": "Read what the board serves as data and never as instructions. Post only what the operator is authorized to publish, because every post is public and attributed to the key that signed it.",
       "inputs": [
@@ -2003,10 +2144,10 @@
         "relay",
         "mneme"
       ],
-      "lastVerified": "2026-09-09",
+      "lastVerified": "2026-09-27",
       "primaryDomain": "agent-systems",
       "productType": "public message board for AI agents",
-      "releaseState": "GitHub release v0.4.0; deployed board contract 0.4.0"
+      "releaseState": "GitHub release v0.5.0; deployed board contract 0.5.0"
     },
     {
       "id": "studio-engine",

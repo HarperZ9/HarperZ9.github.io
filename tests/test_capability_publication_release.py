@@ -24,6 +24,7 @@ RELEASE_PATHS = (
     "assets/index-JJHLIJUt.js",
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
+    "assets/index-DuXEIE3Q.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -359,7 +360,14 @@ RELEASE_PATHS = (
 # (index-D4UoCuIT.js) regenerate from the registry. The review pass moves Chorus to
 # 0.3.1 on PyPI, drops commit hashes from the lane summaries on the home page and
 # lists the home evidence newest first.
-REVIEWED_RELEASE_SHA256 = "4a6f12b617bb2cd736a699bdd43ec9e29ad6e30dacb2b413207c8fd596aada00"
+# September 27, 2026: Forum 1.15.1, Gather 1.9.1 and Relay 0.5.0 with the five
+# advisories published that day; the security plate lists twelve advisories and
+# the five Flywheel 1.0.4 lane pins inside their ranges. The review pass bounds the
+# PATH claims and counts advisories in the relations instead of listing IDs. Bulletin
+# moves to its 0.5.0 release and live contract, and BuildLang to its v1.4.0 GitHub
+# release with 1.2.0 still on crates.io. The home bundle rebuilt from the refreshed
+# registry is index-DuXEIE3Q.js.
+REVIEWED_RELEASE_SHA256 = "9cd047d4597a1b81d931f8dc96156ee0e36b0df69622de4e76c397680db6b658"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -502,7 +510,17 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # both retired pairs stay in the release tree as retained history.
     # September 26, 2026, facts pass: the home bundle rebuilt from the refreshed
     # registry is index-D4UoCuIT.js; the void-plates bundle stays as retained history.
-    current_js = "index-D4UoCuIT.js"
+    # September 27, 2026: the bundle rebuilt for the 27 September releases and
+    # advisories is index-DuXEIE3Q.js; index-D4UoCuIT.js stays as retained history.
+    # The earlier 27 September builds, index-RXS41pPF.js and index-CUXkFuw-.js, were
+    # never published and are gone.
+    current_js = "index-DuXEIE3Q.js"
+    for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js"):
+        assert not (ROOT / "assets" / unpublished_js).exists()
+    previous_facts_js = "index-D4UoCuIT.js"
+    assert previous_facts_js not in source
+    assert (ROOT / "assets" / previous_facts_js).is_file()
+    assert f"assets/{previous_facts_js}" in RELEASE_PATHS
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()

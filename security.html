@@ -39,7 +39,7 @@
     <p class="close">Every promoted item has a <a href="security-tools.json">public record</a>. Unknown release or CI state stays unknown until revalidated.</p>
     <figure class="art art-pillar"><img class="art-light" src="art/aperture/pillar-security-light.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"><img class="art-dark" src="art/aperture/pillar-security-dark.svg" width="1200" height="900" alt="An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing." decoding="async"></figure>
   </div>
-  <div class="seal">evidence through 2026-09-26 &middot; shipped, active, toolkit, controlled private</div>
+  <div class="seal">evidence through 2026-09-27 &middot; shipped, active, toolkit, controlled private</div>
 </div>
 
 <main id="main">
@@ -67,8 +67,16 @@
 
 <section class="mv" id="advisories" aria-labelledby="advisories-h">
   <h2 id="advisories-h">Security advisories in my own tools.</h2>
-  <p class="body-text">The GitHub security advisories below each cover a flaw in a released version of one of my tools. A row names what could happen, the versions affected and the release that fixes it. All seven were published on 26 September 2026, Pacific time, and none has a CVE. Upgrade to the fixed release or later.</p>
+  <p class="body-text">The GitHub security advisories below each cover a flaw in a released version of one of my tools. A row names what could happen, the versions affected and the release that fixes it. Seven were published on 26 September 2026 and five on 27 September 2026, Pacific time. None has a CVE. Each tool&rsquo;s newest release fixes every advisory listed for it: Gather 1.9.1, Relay 0.5.0, Forum 1.15.1, Crucible 1.3.0, Canon 0.4.2 and Mneme 0.5.1.</p>
   <div class="index" role="list">
+    <div class="index-row" role="listitem">
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; high</span>
+      <span class="index-gloss">A program planted in the working folder could start in place of a tool through an absolute PATH entry, a link or a drive-relative name. Affected: <code translate="no">gather-engine</code> before 1.9.1. Fixed in 1.9.1. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-r38f-cr69-jpp8" rel="noopener" aria-label="Advisory GHSA-r38f-cr69-jpp8: Gather, PATH entries reaching the working folder">Advisory <span translate="no">GHSA-r38f-cr69-jpp8</span></a></span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term"><a href="gather.html">Gather</a> &middot; medium</span>
+      <span class="index-gloss">On Windows, MCP path arguments could make the machine sign in to a network share named in the call. Affected: <code translate="no">gather-engine</code> 1.6.0 and later releases before 1.9.1. Fixed in 1.9.1. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-j6j7-39vh-qrp4" rel="noopener" aria-label="Advisory GHSA-j6j7-39vh-qrp4: Gather, network share paths on Windows">Advisory <span translate="no">GHSA-j6j7-39vh-qrp4</span></a></span>
+    </div>
     <div class="index-row" role="listitem">
       <span class="index-term"><a href="gather.html">Gather</a> &middot; high</span>
       <span class="index-gloss">MCP tool arguments could run commands and send environment secrets to a host named in the call. Affected: <code translate="no">gather-engine</code> before 1.9.0. Fixed in 1.9.0. <a href="https://github.com/HarperZ9/gather/security/advisories/GHSA-pxvv-rg3f-4v5w" rel="noopener" aria-label="Advisory GHSA-pxvv-rg3f-4v5w: Gather, MCP tool arguments">Advisory <span translate="no">GHSA-pxvv-rg3f-4v5w</span></a></span>
@@ -79,11 +87,23 @@
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; high</span>
+      <span class="index-gloss">A program planted where a PATH entry reached the working folder could start in place of an installed tool. Affected: <code translate="no">flywheel-relay</code> before 0.5.0. Fixed in 0.5.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-82fg-qprm-q5r7" rel="noopener" aria-label="Advisory GHSA-82fg-qprm-q5r7: Relay, PATH entries reaching the working folder">Advisory <span translate="no">GHSA-82fg-qprm-q5r7</span></a></span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; high</span>
       <span class="index-gloss">The CLI tiers could run a planted binary or project hooks, and shell children inherited provider keys. Affected: <code translate="no">flywheel-relay</code> before 0.4.0. Fixed in 0.4.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-xxcc-grhg-v9g7" rel="noopener" aria-label="Advisory GHSA-xxcc-grhg-v9g7: Relay, CLI tiers and provider keys">Advisory <span translate="no">GHSA-xxcc-grhg-v9g7</span></a></span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term"><a href="systems/relay.html">Relay</a> &middot; medium</span>
       <span class="index-gloss">The session listing tool could read ledger files outside the session store. Affected: <code translate="no">flywheel-relay</code> 0.2.0 and later releases before 0.4.0. Fixed in 0.4.0. <a href="https://github.com/HarperZ9/relay/security/advisories/GHSA-phjr-6qrc-39mw" rel="noopener" aria-label="Advisory GHSA-phjr-6qrc-39mw: Relay, session listing tool">Advisory <span translate="no">GHSA-phjr-6qrc-39mw</span></a></span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term"><a href="forum.html">Forum</a> &middot; high</span>
+      <span class="index-gloss">The working-folder guard added in 1.15.0 missed an alias, a repointed link and a quoted PATH entry, so a planted program could still start. Affected: <code translate="no">forum-engine</code> 1.15.0 only. Fixed in 1.15.1. <a href="https://github.com/HarperZ9/forum/security/advisories/GHSA-h6qh-49hv-4xcg" rel="noopener" aria-label="Advisory GHSA-h6qh-49hv-4xcg: Forum, the 1.15.0 working-folder guard">Advisory <span translate="no">GHSA-h6qh-49hv-4xcg</span></a></span>
+    </div>
+    <div class="index-row" role="listitem">
+      <span class="index-term"><a href="forum.html">Forum</a> &middot; high</span>
+      <span class="index-gloss">Commands ran with the working folder and the full environment, gate approvals were not bound to a raised gate, and the local daemon had no authentication. Affected: <code translate="no">forum-engine</code> before 1.15.0. Fixed in 1.15.0. <a href="https://github.com/HarperZ9/forum/security/advisories/GHSA-36gv-h885-fmjf" rel="noopener" aria-label="Advisory GHSA-36gv-h885-fmjf: Forum, executors, gates and the local daemon">Advisory <span translate="no">GHSA-36gv-h885-fmjf</span></a></span>
     </div>
     <div class="index-row" role="listitem">
       <span class="index-term"><a href="crucible.html">Crucible</a> &middot; medium</span>
@@ -98,8 +118,8 @@
       <span class="index-gloss">The forget command could keep erased text, or erase another user&rsquo;s row, while its receipt said erased. Affected: <code translate="no">flywheel-mneme</code> 0.5.0 only. Fixed in 0.5.1. <a href="https://github.com/HarperZ9/mneme/security/advisories/GHSA-j2pw-g7f4-9ppp" rel="noopener" aria-label="Advisory GHSA-j2pw-g7f4-9ppp: Mneme, forget command">Advisory <span translate="no">GHSA-j2pw-g7f4-9ppp</span></a></span>
     </div>
   </div>
-  <p class="body-text">Flywheel 1.0.4 still pins <a href="https://github.com/HarperZ9/flywheel/blob/v1.0.4/harness/lanes_registry.py" rel="noopener">four of these lanes</a> to affected versions: <code translate="no">crucible-bench</code> 1.2.0, <code translate="no">gather-engine</code> 1.8.2, <code translate="no">flywheel-relay</code> 0.2.5 and <code translate="no">flywheel-canon</code> 0.2.0. Its Mneme pin, 0.4.2, is outside the Mneme advisory.</p>
-  <p class="body-text">No other tool in the catalog with a public repository has a published advisory as of 26 September 2026. That includes Flywheel, Articulate, Forum, Index and Accountable Surface. Articulate <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.4.2" rel="noopener">0.4.2</a> and <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.5.0" rel="noopener">0.5.0</a> fixed two ways a document folder could run its own program or command hooks during an editor call. Their release notes describe both fixes, and no advisory was filed.</p>
+  <p class="body-text">Flywheel 1.0.4, the current release, pins <a href="https://github.com/HarperZ9/flywheel/blob/v1.0.4/harness/lanes_registry.py" rel="noopener">five of these tools</a> to affected versions: <code translate="no">gather-engine</code> 1.8.2, <code translate="no">flywheel-relay</code> 0.2.5, <code translate="no">forum-engine</code> 1.14.0, <code translate="no">crucible-bench</code> 1.2.0 and <code translate="no">flywheel-canon</code> 0.2.0. Its Mneme pin, 0.4.2, is outside the Mneme advisory.</p>
+  <p class="body-text">No other tool in the catalog with a public repository has a published advisory as of 27 September 2026. That includes Flywheel, Articulate, Index and Accountable Surface. Articulate <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.4.2" rel="noopener">0.4.2</a> and <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.5.0" rel="noopener">0.5.0</a> fixed two ways a document folder could run its own program or command hooks during an editor call. Their release notes describe both fixes, and no advisory was filed.</p>
 </section>
 
 <section class="mv" id="private-systems" aria-labelledby="private-systems-h">
