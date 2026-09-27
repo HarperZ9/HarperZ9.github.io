@@ -17,6 +17,7 @@ import {
   publicOnly,
   verdictLine,
 } from "./system-page-parts.mjs";
+import { relationWording } from "./relation-wording.mjs";
 import { hero, renderHead } from "./system-record-head.mjs";
 
 const NULL_LINE = (message) => `<p class="body-text system-null">${message}</p>`;
@@ -94,9 +95,12 @@ function claims(system, ctx) {
     .map((relation) => {
       const source = ctx.systemById.get(relation.source);
       const target = ctx.systemById.get(relation.target);
-      const label = escapeHtml(relation.relation.replaceAll("-", " "));
+      // Readers see plain words; the registry key stays in data-relation.
+      const { before, after } = relationWording(relation.relation);
+      const tail = after ? ` <span>${escapeHtml(after)}</span>` : "";
       return [
-        `<li>${anchor(source)} <span>${label}</span> ${anchor(target)}<br>`,
+        `<li data-relation="${escapeHtml(relation.relation)}">`,
+        `${anchor(source)} <span>${escapeHtml(before)}</span> ${anchor(target)}${tail}<br>`,
         `<span class="system-null">${escapeHtml(relation.claimScope)}</span></li>`,
       ].join("");
     })

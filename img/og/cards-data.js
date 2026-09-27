@@ -297,7 +297,7 @@ window.CARD_DATA = {
   },
   "accountable-surface": {
     "role": "AGENT ACTION GATE",
-    "headline": "Gate agent actions behind operator grants, witness every step",
+    "headline": "Allow only approved agent actions, witness every step",
     "pipeline": "PERCEIVE / GATE / ACT / VERIFY / WITNESS",
     "word": "ACCOUNTABLE SURFACE",
     "glyph": "shield",

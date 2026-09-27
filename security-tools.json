@@ -51,7 +51,7 @@
     {
       "slug": "behavior-transform",
       "name": "behavior-transform.io",
-      "purpose": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, operator input, and MCP traffic. It accepts an I/O request plus an operations or research mode and local text rules, then passes through or transforms the content and returns the requested result with hashes, substitution counts, return codes, or local audit artifacts.",
+      "purpose": "behavior-transform.io is a local Python wrapper and hook layer for file reads and writes, subprocesses, HTTP fetches, user input, and MCP traffic. It accepts an I/O request plus an operations or research mode and local text rules, then passes through or transforms the content and returns the requested result with hashes, substitution counts, return codes, or local audit artifacts.",
       "maturity": "active",
       "source": "https://github.com/HarperZ9/behavior-transform.io",
       "installOrEntry": null,
@@ -60,7 +60,7 @@
         "No tagged release or publicly verified entry command is claimed.",
         "Local audit artifacts and hashes record selected observations; they do not guarantee provider acceptance or substantive safety."
       ],
-      "authorizationBoundary": "Use the boundary only within the operator's authority and governing provider, data-owner, and system policies.",
+      "authorizationBoundary": "Use behavior-transform.io only within your own authority and the policies of the provider, the data owner and the system it runs on.",
       "evidenceDate": "2026-08-27"
     },
     {
@@ -105,7 +105,7 @@
         "The public capability description does not establish deployment across every named domain or third-party acceptance.",
         "Private workflow definitions, operational data, targets, credentials, and client material are not published."
       ],
-      "authorizationBoundary": "Every workflow requires operator authority, approved tools and data, and an accountable recipient. Sensitive operational material stays in the approved private channel.",
+      "authorizationBoundary": "Every workflow requires explicit authorization, approved tools and data, and an accountable recipient. Sensitive operational material stays in the approved private channel.",
       "evidenceDate": "2026-08-28"
     },
     {
@@ -264,7 +264,7 @@
     {
       "slug": "kun",
       "name": "Kun",
-      "purpose": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and operator runbooks without storing raw credentials.",
+      "purpose": "Kun maintains local access-recovery memory for owned systems through path-only receipts, redacted diagnostics, rotation notes, and recovery runbooks without storing raw credentials.",
       "maturity": "controlled-private",
       "source": null,
       "installOrEntry": null,

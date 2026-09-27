@@ -1,3 +1,5 @@
+import { RELATION_WORDING } from "./relation-wording.mjs";
+
 const REQUIRED_SYSTEM_STRINGS = [
   "id",
   "name",
@@ -111,6 +113,7 @@ export function validateRegistry(registry) {
       invariant(evidenceIds.has(evidenceId), `${relation.source} -> ${relation.target}: unknown evidence ${evidenceId}`);
     }
     invariant(!["hierarchy", "owns", "parent-of"].includes(relation.relation), `${relation.source} -> ${relation.target}: generic hierarchy is prohibited`);
+    invariant(Object.hasOwn(RELATION_WORDING, relation.relation), `${relation.source} -> ${relation.target}: relation ${relation.relation} has no reader wording in scripts/relation-wording.mjs`);
     relationKeys.push(`${relation.source}|${relation.relation}|${relation.target}`);
   }
   unique(relationKeys, "relation");

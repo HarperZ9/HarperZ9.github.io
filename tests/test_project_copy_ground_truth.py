@@ -181,7 +181,7 @@ def test_private_security_projects_are_distinct_registry_records() -> None:
         "sofer": "private-line orchestration suite",
         "isomorph": "AI inference-boundary red-team harness",
         "bounds": "agent, runtime, and release trust verifier",
-        "orca": "native assessment operator runtime",
+        "orca": "native assessment runtime",
         "gate": "Sofer release-check subsystem",
     }
     expected_hrefs = {

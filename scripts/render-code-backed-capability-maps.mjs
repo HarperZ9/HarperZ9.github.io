@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { relationLabel } from "./relation-wording.mjs";
 import { validateRegistry } from "./system-registry-contract.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -9,16 +10,6 @@ const registry = validateRegistry(JSON.parse(await readFile(resolve(root, "syste
 const systemById = new Map(registry.systems.map((system) => [system.id, system]));
 const evidenceById = new Map(registry.systems.flatMap((system) => system.evidence.map((evidence) => [evidence.id, evidence])));
 const verifiedRelations = registry.relations.filter((relation) => relation.status === "verified-in-source");
-
-const relationLabels = {
-  "accepts-corpus-from": "accepts corpus from",
-  "accepts-evidence-from": "accepts evidence from",
-  "build-dependency": "builds against",
-  "integrates-lane": "launches as a configured lane",
-  "optional-native-render-bridge": "can invoke as an optional native bridge",
-  "optional-native-runtime-dependency": "optionally links at runtime",
-  "optional-runtime-integration": "supports an optional runtime integration",
-};
 
 const configurations = [
   {
@@ -79,10 +70,10 @@ const escapeXml = (value) => String(value)
 
 const compareByName = (left, right) => left.name.localeCompare(right.name, "en");
 
+// The same reader wording as the record pages, so one relation reads the same
+// on every surface. relationLabel throws when a key has no wording.
 function relationshipLabel(relation) {
-  const label = relationLabels[relation.relation];
-  if (!label) throw new Error(`no presentation label for typed relation ${relation.relation}`);
-  return label;
+  return relationLabel(relation.relation);
 }
 
 function selectSystems(configuration) {

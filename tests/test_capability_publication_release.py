@@ -25,6 +25,7 @@ RELEASE_PATHS = (
     "assets/index-DYDJA8vR.js",
     "assets/index-D4UoCuIT.js",
     "assets/index-DuXEIE3Q.js",
+    "assets/index-Brb2IBwO.js",
     "assets/index-TO_R52sc.js",
     "img/og/the-sandbox-was-never-just-a-box.png",
     "writing/the-sandbox-was-never-just-a-box/source-map.json",
@@ -367,7 +368,14 @@ RELEASE_PATHS = (
 # moves to its 0.5.0 release and live contract, and BuildLang to its v1.4.0 GitHub
 # release with 1.2.0 still on crates.io. The home bundle rebuilt from the refreshed
 # registry is index-DuXEIE3Q.js.
-REVIEWED_RELEASE_SHA256 = "9cd047d4597a1b81d931f8dc96156ee0e36b0df69622de4e76c397680db6b658"
+# September 27, 2026, copy pass: the registry drops its fourteen "operator" uses for
+# plain product words, and record pages and capability maps show relation wording
+# from scripts/relation-wording.mjs ("Flywheel includes Relay as a lane") in place
+# of raw keys such as "integrates lane". The Accountable Surface social card takes
+# its new headline. Catalog, overview, record pages, capability maps, security
+# registry, route registry, site index and the home bundle (index-Brb2IBwO.js)
+# regenerate from the registry.
+REVIEWED_RELEASE_SHA256 = "68414adab63b30dff6790f08cbf54656e13a4694a34f3e9d96de72ec995a3b2d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -514,9 +522,16 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # advisories is index-DuXEIE3Q.js; index-D4UoCuIT.js stays as retained history.
     # The earlier 27 September builds, index-RXS41pPF.js and index-CUXkFuw-.js, were
     # never published and are gone.
-    current_js = "index-DuXEIE3Q.js"
+    # September 27, 2026, copy pass: the bundle rebuilt from the registry after its
+    # plain-words rewrite is index-Brb2IBwO.js; index-DuXEIE3Q.js stays as retained
+    # history.
+    current_js = "index-Brb2IBwO.js"
     for unpublished_js in ("index-RXS41pPF.js", "index-CUXkFuw-.js"):
         assert not (ROOT / "assets" / unpublished_js).exists()
+    previous_advisories_js = "index-DuXEIE3Q.js"
+    assert previous_advisories_js not in source
+    assert (ROOT / "assets" / previous_advisories_js).is_file()
+    assert f"assets/{previous_advisories_js}" in RELEASE_PATHS
     previous_facts_js = "index-D4UoCuIT.js"
     assert previous_facts_js not in source
     assert (ROOT / "assets" / previous_facts_js).is_file()
