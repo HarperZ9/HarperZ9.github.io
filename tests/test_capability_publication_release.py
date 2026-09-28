@@ -395,7 +395,10 @@ RELEASE_PATHS = (
 # system.css, figure.css and catalog.css move to the 20260927-copy-pass key on every
 # page and generator that links them; provenance-sensorium.html is marked. The home
 # bundle is index-9egMTEOG.js; index-BzE0lc-H.js was never published and is gone.
-REVIEWED_RELEASE_SHA256 = "be5f9c6966a2dd143a617e2f34930f3786b3f9403f037dd9cdc4c9ee756e0f4a"
+# September 28, 2026: Who Knew First's dated follow-up updates its listing and
+# the five generated index, feed and build artifacts. The original author
+# paragraphs and nine-case record remain unchanged.
+REVIEWED_RELEASE_SHA256 = "2f96e47db78c1aa610047cd892a206e736d5075915e2cd33046da005084ad6ca"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
