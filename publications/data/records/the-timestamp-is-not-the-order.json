@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "id": "the-timestamp-is-not-the-order",
+  "route": "the-timestamp-is-not-the-order.html",
+  "category": "tools-practical-computing",
+  "form": "essay",
+  "title": "The Timestamp Is Not the Order",
+  "summary": "Precise-looking timestamps need clock-error evidence and ordering relations before they can support a close sequence of events.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "observed_at": "2026-09-28T17:31:57Z",
+  "thesis": "Displayed precision cannot settle event order without evidence about the clocks and the relations between events.",
+  "opening": {
+    "question": "What does a timestamp establish about which event happened first?",
+    "finding": "A representation can be sortable while its clock error remains unknown. Message relations and justified time intervals can supply separate ordering evidence.",
+    "evidence": "Internet time and logging standards, Lamport’s logical clocks and Spanner’s transaction design define distinct guarantees.",
+    "limit": "The numerical example is invented. Ordering guarantees depend on stated mechanisms and assumptions, and temporal precedence does not establish cause or event truth."
+  },
+  "sections": [
+    {
+      "id": "essay",
+      "heading": "Precision, uncertainty and sequence",
+      "paragraphs": [
+        "Two computers log events a fraction of a second apart. Their timestamps look precise enough to settle which came first. The number of digits on display says little about how far off each clock was. Before a timeline can serve as evidence of order, someone has to account for how its times were measured and how they relate.",
+        "RFC 3339 defines a format for dates and times. Under stated conditions, timestamps in the same form sort correctly as plain text. That solves a formatting problem. It guarantees nothing about whether a computer's clock was accurate when it stamped an event. RFC 3339",
+        "Clock evidence can narrow the question. NTP estimates offset and delay and keeps values that describe its uncertainty. Syslog can carry the originating device's own statement about synchronization and accuracy. Both are worth preserving. A protocol name or a claim of synchronization still falls short of proving zero error, and the claim can be missing or wrong. RFC 5905, RFC 5424",
+        "Take a made-up example. A message is sent at reference time 10.100 seconds and received at 10.160 seconds. If the sending clock runs 120 milliseconds fast and the receiving clock runs 80 milliseconds slow, their displayed times are 10.220 and 10.080 seconds. Sorting those displays puts receipt before dispatch. The values are invented to explain the point; they measure no real system and represent no typical clock error.",
+        "The message relation supplies evidence the display alone lacks. Lamport's happened-before relation builds on order within a process, on a message being sent before it is received, and on the chains those relations form. A logical clock can respect that relation, but a larger logical-clock value alone does not establish its converse. A system's chosen total order also need not describe every physical or social cause. Lamport's paper",
+        "The strongest objection is that engineered systems can provide useful ordering guarantees. They can. Spanner's published design combines interval-valued time with transaction rules to provide external consistency. The guarantee depends on those mechanisms and assumptions; an ordinary log does not acquire it by displaying a similarly precise timestamp. Spanner, OSDI 2012",
+        "An incident reviewer can ask a short set of questions. Which clock produced each value? What evidence bounds its error during the window that matters? Do the resulting intervals overlap? Does a message, process or transaction relation establish an order independent of the display? What corroborates the event descriptions themselves?",
+        "If independently justified intervals for two events do not overlap, the gap between them can support which came first, under the stated assumptions. If they overlap, the intervals alone cannot settle the order. Either way, finding the cause of the events takes further inquiry. This interval rule is an aid to reasoning and falls short of a complete forensic method.",
+        "A public timeline should carry the same care. Whoever assembles it should disclose the basis for any close ordering claim, so another reader can challenge it. That is an editorial proposal about accountability. Precision helps when its uncertainty is open to inspection. Without that, a cleanly sorted page can hide an open question."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "rfc3339",
+      "title": "RFC 3339: Date and Time on the Internet: Timestamps",
+      "url": "https://www.rfc-editor.org/rfc/rfc3339.html",
+      "publisher": "RFC Editor",
+      "role": "Date-time representation and conditional lexical sorting, July 2002.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "rfc5905",
+      "title": "RFC 5905: Network Time Protocol Version 4: Protocol and Algorithms Specification",
+      "url": "https://www.rfc-editor.org/rfc/rfc5905.html",
+      "publisher": "RFC Editor",
+      "role": "Offset, delay and uncertainty-related protocol quantities, June 2010.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "rfc5424",
+      "title": "RFC 5424: The Syslog Protocol",
+      "url": "https://www.rfc-editor.org/rfc/rfc5424.html",
+      "publisher": "RFC Editor",
+      "role": "Optional originator-declared time quality, March 2009.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "lamport",
+      "title": "Time, Clocks, and the Ordering of Events in a Distributed System",
+      "url": "https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/",
+      "publisher": "Communications of the ACM; Microsoft Research publication archive",
+      "role": "Foundational happened-before relation and logical-clock limits, July 1978.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "spanner",
+      "title": "Spanner: Google’s Globally-Distributed Database",
+      "url": "https://www.usenix.org/conference/osdi12/technical-sessions/presentation/corbett",
+      "publisher": "USENIX OSDI 2012",
+      "role": "Published design combining interval-valued time and transaction rules, October 2012.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    }
+  ],
+  "claims": [
+    {
+      "id": "representation",
+      "text": "RFC 3339 defines date-time representation and conditional string sorting.",
+      "source_ids": [
+        "rfc3339"
+      ],
+      "scope": "Section 5.1 ordering conditions, including matching zone representations and fractional precision.",
+      "uncertainty": "Valid representation does not report clock error.",
+      "doesNotProve": "Clock accuracy, cross-computer event order or event truth.",
+      "status": "verified"
+    },
+    {
+      "id": "clock-evidence",
+      "text": "NTP estimates offset and delay, while syslog can carry an originator’s time-quality declaration.",
+      "source_ids": [
+        "rfc5905",
+        "rfc5424"
+      ],
+      "scope": "Protocol mechanisms and optional metadata.",
+      "uncertainty": "Network conditions, implementation state and missing or incorrect declarations remain relevant.",
+      "doesNotProve": "Zero error or exact ordering of arbitrarily close events.",
+      "status": "verified"
+    },
+    {
+      "id": "constructed-example",
+      "text": "Clock errors can reverse a sort of displayed send and receive times.",
+      "source_ids": [
+        "rfc3339",
+        "rfc5905"
+      ],
+      "scope": "Synthetic example: reference send 10.100 seconds plus 0.120 gives 10.220; reference receipt 10.160 minus 0.080 gives 10.080.",
+      "uncertainty": "The clock offsets are invented values for explanation.",
+      "doesNotProve": "A real incident, typical clock errors or a prevalence estimate.",
+      "status": "inferred"
+    },
+    {
+      "id": "message-order",
+      "text": "Happened-before uses within-process order, send-before-receive and transitivity.",
+      "source_ids": [
+        "lamport"
+      ],
+      "scope": "Lamport’s distributed-system relation.",
+      "uncertainty": "A larger logical-clock value alone does not establish the converse.",
+      "doesNotProve": "Every physical or social cause, or causation from a chosen total order.",
+      "status": "verified"
+    },
+    {
+      "id": "engineered-guarantee",
+      "text": "Spanner’s published design combines interval-valued time with transaction rules for external consistency.",
+      "source_ids": [
+        "spanner"
+      ],
+      "scope": "The OSDI 2012 design and its assumptions.",
+      "uncertainty": "Later implementations may differ; the guarantee belongs to the specified mechanisms.",
+      "doesNotProve": "That an ordinary log inherits the guarantee by displaying precise timestamps.",
+      "status": "verified"
+    },
+    {
+      "id": "interval-rule",
+      "text": "Non-overlapping, independently justified event-time intervals can support temporal precedence under stated assumptions.",
+      "source_ids": [
+        "rfc5905",
+        "rfc5424",
+        "spanner"
+      ],
+      "scope": "Editorial reasoning aid for intervals attached to the relevant events.",
+      "uncertainty": "Intervals must cover relevant error; overlapping intervals alone cannot settle order.",
+      "doesNotProve": "A complete forensic method, event authenticity or causation.",
+      "status": "inferred"
+    },
+    {
+      "id": "timeline-disclosure",
+      "text": "A public timeline should disclose the basis for close ordering claims.",
+      "source_ids": [
+        "rfc3339",
+        "rfc5905",
+        "rfc5424",
+        "lamport",
+        "spanner"
+      ],
+      "scope": "Editorial proposal about accountability.",
+      "uncertainty": "Disclosure enables scrutiny but cannot repair missing or incorrect evidence.",
+      "doesNotProve": "That any particular timeline is wrong or that readers have been empirically shown to improve.",
+      "status": "inferred"
+    }
+  ],
+  "figures": [],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
+  "personal_voice_adopted": false
+}

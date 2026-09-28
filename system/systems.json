@@ -259,11 +259,11 @@
     {
       "id": "flywheel",
       "name": "Flywheel",
-      "purpose": "Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: run any frontier or local model behind one interface, with the Rowan desktop assistant, a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) for research, memory, and writing. Its check-output command grades an answer against the source that decides it, ships finance, medicine, and law packs, and can emit a Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent witness re-runs offline. Data stays local; the code is source-available under FSL-1.1-MIT.",
+      "purpose": "Flywheel runs AI tasks with a model you choose and keeps a record you can recheck. Version 1.1.0 is available as a Python package and a Windows installer. Lane cards in the app run tools and show the setup they need. Flywheel keeps its own records on your machine; request content goes to the model provider you choose.",
       "useCases": [
         "agent workflow orchestration",
         "model-neutral execution",
-        "receipt-backed evaluation",
+        "evaluation with replayable receipts",
         "endpoint profile probe controls",
         "synthetic workflow environment checks"
       ],
@@ -294,13 +294,31 @@
       "verificationCommand": "flywheel lanes --probe; flywheel check-output --contract task.contract.json --answer answer.json --allow-commands",
       "evidence": [
         {
+          "id": "flywheel-release-v1-1-0",
+          "type": "release",
+          "label": "Flywheel v1.1.0",
+          "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.1.0",
+          "date": "2026-09-28",
+          "status": "verified",
+          "summary": "GitHub lists Flywheel 1.1.0 as a published release with a Windows installer. The release reports that 15 of 17 lanes reached their expected classes in an installed-app check. Index fell below its expected class without Git; Telos is excluded. The check used a stub model on a Windows Server runner and called app routes without driving screens. It did not measure answer quality or test consumer Windows 11 or offline use. This metadata review did not run the installer. Read the release notes for known issues with the engine install command."
+        },
+        {
+          "id": "flywheel-pypi-v1-1-0",
+          "type": "release",
+          "label": "flywheel-verify 1.1.0 on PyPI",
+          "href": "https://pypi.org/project/flywheel-verify/1.1.0/",
+          "date": "2026-09-28",
+          "status": "verified",
+          "summary": "PyPI serves flywheel-verify 1.1.0 as a wheel and source archive. This metadata review confirms distribution; it did not install the package or repeat runtime acceptance."
+        },
+        {
           "id": "flywheel-release-v1-0-4",
           "type": "release",
           "label": "Flywheel v1.0.4",
           "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.4",
           "date": "2026-09-25",
           "status": "verified",
-          "summary": "The v1.0.4 GitHub release, titled Flywheel 1.0.4, was published at 2026-09-26T01:50:41Z, and the v1.0.4 tag resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7. The release attaches Flywheel-Setup-1.0.4-x64.exe at 56,355,754 bytes with SHA-256 a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881, a SHA256SUMS.txt that lists the same value, and a frozen gateway smoke receipt reporting PASS for 1.0.4. Installed acceptance passed on the tagged commit. The installer is unsigned; this is distribution evidence, not proof of clean-machine installation."
+          "summary": "Flywheel 1.0.4 was published with a Windows installer and a smoke receipt that reported PASS. The dated 28 September correction records that the release checker counted Forum exit code 1 as passing. The rebuilt tag ran Bulletin reads; nine bundled lanes reached status or doctor only. Forum, local-model and writing did not start, and Articulate, Calibrate Pro, Learn and Telos were not bundled. The older pass does not establish that lane main actions worked. Read the correction for the rebuilt-tag findings."
         },
         {
           "id": "flywheel-pypi-v1-0-4",
@@ -531,9 +549,10 @@
       "limitations": [
         "Receipts establish witnessed actions and checks, not general model correctness. A receipt proves a check reproduces; it does not prove the answer is true of the world.",
         "On the shipped benchmark the verified loop shows no measured accuracy uplift over single-shot; the interval includes zero. The demonstrated value is the re-derivable receipt and the containment.",
-        "The v1.0.1 Python package release, Windows installer asset, and frozen gateway smoke receipt do not establish installer integration, clean OS compatibility, Flutter UI rendering, native identity registration, Relay model-backed task execution, production Bulletin posting, general model uplift, physical Android/mobile acceptance, or universal verifier completeness.",
-        "Native lane bundling covers ten Python lanes from hash-pinned vendored source. The node lanes learn and telos, and calibrate-pro, resolve from a source checkout today and are not claimed as natively bundled; articulate installs from PyPI (articulate-writing 0.4.0 as of Flywheel 1.0.4).",
-        "The v1.0.1 Windows desktop installer is unsigned. Matching the published SHA-256 checks bytes only; it does not authenticate the publisher or prove clean-machine installation.",
+        "The release reports an installed-app check on a Windows Server runner, using a stub model and calls through app routes. Consumer Windows 11, offline use, screen interactions and answer quality remain untested by that check.",
+        "Index falls below its expected class without Git; Telos is excluded. Hosted model paths for Forum, Mneme and the Articulate editor were not exercised.",
+        "Desktop chat history remains plaintext. Trace deletion does not reach every lane store, and the Windows app has no traces screen.",
+        "The release notes list known issues with the engine install command. This review confirmed release metadata and did not run the installer.",
         "Local weights and optional signing or monitoring features have separate installation requirements."
       ],
       "boundary": "Use model routes, tools, data, and environments only with the authority required by their owners and providers.",
@@ -563,10 +582,10 @@
         "chorus",
         "articulate"
       ],
-      "lastVerified": "2026-09-25",
+      "lastVerified": "2026-09-28",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "stable Python engine v1.0.4; unsigned Windows desktop v1.0.4; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
+      "releaseState": "Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded"
     },
     {
       "id": "service-desk-incident-env",
@@ -4352,7 +4371,7 @@
     {
       "id": "articulate",
       "name": "Articulate",
-      "purpose": "Articulate is a Python command-line tool that checks prose for hedging, filler, stock phrasing and other patterns common in machine-written text, and scores how machine-textured a passage reads. Its checks run locally with no network call, and a check can leave a receipt that replays the verdict later and keeps no verbatim source text.",
+      "purpose": "Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.",
       "useCases": [
         "prose checks in CI and pre-commit",
         "review of AI-assisted writing",
@@ -4418,11 +4437,20 @@
           "date": "2026-09-24",
           "status": "verified",
           "summary": "PyPI serves articulate-writing 0.4.1. The wheel SHA-256 is 6a89c91243d77196e3122a94a849fdd2faa8cc55202999095b0e1bacfdde8c45; the source archive SHA-256 is ba2ef4fd994477f10a6bf15121160b5852092036354a6e3a09983b4af90e020c. This is distribution evidence, not proof of detection quality or independent use."
+        },
+        {
+          "id": "articulate-fairness-confirmatory",
+          "type": "report",
+          "label": "Failed confirmatory fairness release gate",
+          "href": "https://github.com/HarperZ9/articulate/blob/bd43ccd748d0304b10f9efc650a5b0307dda380f/docs/fairness-confirmatory.md",
+          "date": "2026-09-28",
+          "status": "reported",
+          "summary": "Later source records a failed fairness release gate. Version 0.6.0 is not published. The result describes one ruleset on one school-essay corpus; it establishes neither authorship nor the cause of the group difference."
         }
       ],
       "limitations": [
         "A clean check means no known pattern fired; it does not establish that the prose is true, clear, or written by a person.",
-        "The pattern rules are the author's; agreement with human editors has not been measured on this page's evidence.",
+        "Detector labels and texture scores do not establish who or what wrote a text. Later source records a failed fairness release gate; those source changes are not a published release.",
         "The judge, fix, and polish editing tools call a language model, so the no-network property covers the checks and receipts only.",
         "A content-free receipt still records which rule fired on which line, which narrows a closed-vocabulary match to that rule's word list."
       ],
@@ -4442,10 +4470,10 @@
         "flywheel",
         "emet"
       ],
-      "lastVerified": "2026-09-26",
+      "lastVerified": "2026-09-28",
       "primaryDomain": "evaluation-verification",
       "productType": "local prose checker",
-      "releaseState": "stable v0.5.0 on GitHub and PyPI"
+      "releaseState": "v0.5.0 on GitHub and PyPI; v0.6.0 is not published and its confirmatory release gate failed"
     }
   ]
 }

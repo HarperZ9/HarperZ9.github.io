@@ -13,6 +13,19 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DMn8Bp7X.js",
+    "support-has-more-than-one-record.html",
+    "publications/data/records/support-has-more-than-one-record.json",
+    "img/og/support-has-more-than-one-record.png",
+    "what-the-formula-counts.html",
+    "publications/data/records/what-the-formula-counts.json",
+    "img/og/what-the-formula-counts.png",
+    "the-scene-the-song-did-not-tell-you.html",
+    "publications/data/records/the-scene-the-song-did-not-tell-you.json",
+    "img/og/the-scene-the-song-did-not-tell-you.png",
+    "the-timestamp-is-not-the-order.html",
+    "publications/data/records/the-timestamp-is-not-the-order.json",
+    "img/og/the-timestamp-is-not-the-order.png",
     "img/og/borrowed-ground.png",
     "writing/borrowed-ground/source-map.json",
     "writing/borrowed-ground/essay.md",
@@ -398,7 +411,9 @@ RELEASE_PATHS = (
 # September 28, 2026: Who Knew First's dated follow-up updates its listing and
 # the five generated index, feed and build artifacts. The original author
 # paragraphs and nine-case record remain unchanged.
-REVIEWED_RELEASE_SHA256 = "2f96e47db78c1aa610047cd892a206e736d5075915e2cd33046da005084ad6ca"
+# September 28, 2026: four reviewed Atlas essays, source records and share cards;
+# refreshed Flywheel and Articulate release copy across the registry and home.
+REVIEWED_RELEASE_SHA256 = "ad2449a22f2143f720db1337d7133a5037197342adf3bbf3531b6bdccc5e767b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -555,7 +570,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # who runs the board in the live board note and marks coherence-membrane; it is
     # index-9egMTEOG.js with the same sheet, and index-BzE0lc-H.js, never published,
     # is gone.
-    current_js = "index-9egMTEOG.js"
+    current_js = "index-DMn8Bp7X.js"
     for unpublished_js in (
         "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
         "index-BzE0lc-H.js",

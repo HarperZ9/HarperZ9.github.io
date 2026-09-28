@@ -113,27 +113,34 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     # 2026-09-25 round 3: the companion products share #companions; Service Desk keeps its row id.
     service_desk_section = source[source.index('<section class="mv" id="companions"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
-    # 2026-09-25: Flywheel 1.0.4 is the current release; the 1.0.1 records stay as history.
-    assert 'href="#next-release">1.0.4 release</a>' in source
+    # 2026-09-28: refresh the current release, retaining dated corrections and add-ons.
+    assert 'href="#next-release">1.1.0 release</a>' in source
     assert "0.6 candidate" not in source
     assert "Install the Python engine from PyPI" in release_section
-    assert "published at <span translate=\"no\">2026-09-26T01:50:41Z</span>" in release_section
-    assert "SHA-256 <span translate=\"no\">a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881</span>" in release_section
-    assert "The Windows desktop installer is still unsigned" in release_section
+    assert "on 28 September 2026" in release_section
+    assert "/releases/download/v1.1.0/SHA256SUMS.txt" in release_section
+    assert "a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881" not in release_section
+    assert "The installer is unsigned" in release_section
     assert "pip install flywheel-verify" in source
     assert "flywheel up" in source
-    assert "Windows desktop: 1.0.4" in source
-    assert "Flywheel-Setup-1.0.4-x64.exe" in source
-    assert "/releases/download/v1.0.4" in source
+    assert "Windows desktop: 1.1.0" in source
+    assert "Flywheel-Setup-1.1.0-x64.exe" in source
+    assert "/releases/download/v1.1.0" in source
     assert "Flywheel-Setup-0.6.0-x64.exe" not in source
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
     assert "service-desk-incident-env e2e --out ./incident-runs" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
-    assert "clean-machine installation" in source
-    # 2026-09-25 human-first notebook: the release null reads in plain words.
-    assert "acceptance testing on a physical Android or other mobile device" in source
+    assert "Windows Server runner and a stub model" in release_section
+    assert "without driving screens" in release_section
+    assert "does not measure answer quality" in release_section
+    assert "consumer Windows 11, offline use or mobile devices" in release_section
+    assert "Index fell below its expected class without Git" in release_section
+    assert "Telos is excluded" in release_section
+    assert "Known issues" in release_section
+    assert "dated correction to 1.0.4" in release_section
+    assert "did not run the installer again" in release_section
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
     assert "v0.3.10" not in source

@@ -5,7 +5,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Articulate | Zentropy Labs</title>
-<meta name="description" content="Articulate is a Python command-line tool that checks prose for hedging, filler, stock phrasing and other patterns common in machine-written text, and scores how machine-textured a passage reads. Its checks run locally with no network call, and a check can leave a receipt that replays the verdict later and keeps no verbatim source text.">
+<meta name="description" content="Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.">
 <link rel="canonical" href="https://harperz9.github.io/articulate.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
@@ -50,15 +50,15 @@
 
   <section aria-labelledby="in-short">
     <h2 id="in-short">In short</h2>
-    <p>Articulate checks prose for the habits that make writing hard to read and hard to trust, such as hedging, filler words and stock phrases. Its checks run on your own computer with no network connection. This site checks its pages with it.</p>
+    <p>Articulate flags named prose patterns, such as hedging, filler words and stock phrases, for editorial review. Its checks run on your own computer with no network connection. This site checks its pages with it.</p>
     <p><a href="#install">Install it</a> &middot; <a href="https://github.com/HarperZ9/articulate" translate="no">Source on GitHub</a> &middot; <a href="https://pypi.org/project/articulate-writing/" translate="no">PyPI</a></p>
   </section>
 
   <section aria-labelledby="what-title">
     <h2 id="what-title">What it is</h2>
-    <p data-purpose>Articulate is a Python command-line tool that checks prose for hedging, filler, stock phrasing and other patterns common in machine-written text, and scores how machine-textured a passage reads. Its checks run locally with no network call, and a check can leave a receipt that replays the verdict later and keeps no verbatim source text.</p>
+    <p data-purpose>Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.</p>
     <p>Each check runs in a writing mode, such as a memo that argues a case or technical documentation that explains. The mode sets which patterns count and how strictly. Fiction, memoir, screenplays and poetry each get their own reading. Under a fiction mode, a character's quoted line is never scored as the author's prose.</p>
-    <p>Flywheel 1.0.4 runs Articulate as one of its lanes, pinned to version 0.4.0. The <a href="figures/system-capability-map.html">system map</a> shows where it sits among the other tools.</p>
+    <p>Flywheel 1.1.0 bundles Articulate 0.5.0 as one of its lanes. Its installed-app check exercised score and check, but not the hosted editor. The <a href="figures/system-capability-map.html">system map</a> shows where it sits among the other tools.</p>
   </section>
 
   <section aria-labelledby="install">
@@ -81,7 +81,7 @@ articulate check notes.md --mode technical-docs/explain --gate</code></pre>
     <p>A rewrite that names the change and gives a measured number passes the gate. The numbers here are made up for the example.</p>
     <blockquote class="sample">This release adds a build cache. On our test project, a clean build took 41 seconds and a cached build took 9.</blockquote>
     <pre class="cmd"><code>[articulate] notes.md [technical-docs/explain]: unverifiable (below the signal floor)  texture 0/100</code></pre>
-    <p>The command exits with 0. The word unverifiable refers to the texture score: two sentences are too short to say how machine-textured the text reads.</p>
+    <p>The command exits with 0. The word unverifiable refers to the texture score: the example is below the tool's signal floor. Neither a score nor an unverifiable result establishes authorship.</p>
   </section>
 
   <section aria-labelledby="clean-title">
@@ -99,13 +99,20 @@ articulate verify notes.receipt.json notes.md</code></pre>
 
   <section aria-labelledby="editing-title">
     <h2 id="editing-title">Editing</h2>
-    <p>Three tools read and rewrite prose. Judge names problems a pattern rule cannot see, such as a claim with no position behind it. Fix rewrites a passage to the standard and checks its own result. Polish repeats until the prose clears a bar for concreteness, commitment, economy, rhythm and one restatable fact per paragraph. They run through <code>articulate-mcp</code>, the MCP server that comes with the package, and they need a language model, either a local one or the <code translate="no">claude</code> command-line tool (Claude Code).</p>
+    <p>Three tools read and rewrite prose. Judge names problems a pattern rule cannot see, such as a claim with no position behind it. Fix rewrites a passage to the standard and checks its own result. Polish repeats until the prose clears a bar for concreteness, commitment, economy, rhythm and one restatable fact per paragraph. They run through <code>articulate-mcp</code>, the MCP server that comes with the package, and use the <code translate="no">claude</code> command-line tool (Claude Code) to send the draft to a hosted model. The local-only claim covers prose checks and receipts, not these editing calls.</p>
     <p>In an editor, the <code>articulate-lsp</code> server shows findings inline in any editor that speaks the Language Server Protocol, such as VS Code, a JetBrains IDE or Neovim.</p>
+  </section>
+
+  <section aria-labelledby="fairness-title">
+    <h2 id="fairness-title">The later fairness check failed</h2>
+    <p>Version 0.5.0 remains the published release. Later source removes authorship language and records a failed confirmatory release gate; version 0.6.0 is not published. That source change does not alter the installed 0.5.0 package.</p>
+    <p>Under strict profiles on the PERSUADE 2.0 school-essay corpus, the evaluated ruleset blocked 80 of 1,330 learner essays and 1,889 of 13,467 other essays. The learner-minus-other gap was -8.0 percentage points, with a 95% interval of [-9.3, -6.5]. The gate checks differences in either direction and failed; rule-level and wrapping checks also failed.</p>
+    <p>The default profile blocked none of the essays, which does not clear the failed gate. The learner label is a school classification; first language was not measured. These results establish neither authorship nor the cause of the group difference. Read the <a href="https://github.com/HarperZ9/articulate/blob/bd43ccd748d0304b10f9efc650a5b0307dda380f/docs/fairness-confirmatory.md">confirmatory result and its limits</a> before relying on the checks.</p>
   </section>
 
   <section aria-labelledby="releases-title">
     <h2 id="releases-title">Releases</h2>
-    <p>Articulate 0.1.0 reached PyPI on 18 September 2026. Version 0.4.1 followed on 24 September 2026. Versions 0.4.2 and 0.5.0 both shipped on 26 September 2026, for seven releases in that span. In 0.5.0 the editing tools start the <code translate="no">claude</code> command-line tool (Claude Code) in a private empty folder with user settings only, so a document folder cannot run commands through them. The detector and its findings are the same as in 0.4.1.</p>
+    <p>Articulate 0.1.0 reached PyPI on 18 September 2026. Version 0.4.1 followed on 24 September 2026. Versions 0.4.2 and 0.5.0 both shipped on 26 September 2026. In 0.5.0 the editing tools start the <code translate="no">claude</code> command-line tool (Claude Code) in a private empty folder with user settings only, so a document folder cannot run commands through them. The detector and its findings are the same as in 0.4.1.</p>
     <p>This page was written with AI assistance and checked with Articulate.</p>
   </section>
 
