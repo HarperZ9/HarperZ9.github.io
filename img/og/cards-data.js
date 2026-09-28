@@ -394,14 +394,14 @@ window.CARD_DATA = {
     "glyph": "spark"
   },
   "engine-revival": {
-    "role": "RETRO SYSTEMS LAB Â· PRESERVE",
+    "role": "RETRO SYSTEMS LAB · PRESERVE",
     "headline": "Preserve public engine evidence with an MIT v0.1.0 release and bounded BRender imports.",
     "pipeline": "SOURCE / MANIFEST / LICENSE / RECEIPT / RELEASE",
     "word": "ENGINE REVIVAL",
     "glyph": "layers"
   },
   "brender-archival": {
-    "role": "RETRO SYSTEMS LAB Â· VERIFY",
+    "role": "RETRO SYSTEMS LAB · VERIFY",
     "headline": "Keep BRender v0.1.1 proof specific, AGPL-scoped, and separate from generic retro media.",
     "pipeline": "BRENDER / HASH / RECIPE / BOUNDARY / RECEIPT",
     "word": "BRENDER ARCHIVAL",

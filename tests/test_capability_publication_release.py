@@ -413,7 +413,7 @@ RELEASE_PATHS = (
 # paragraphs and nine-case record remain unchanged.
 # September 28, 2026: four reviewed Atlas essays, source records and share cards;
 # refreshed Flywheel and Articulate release copy across the registry and home.
-REVIEWED_RELEASE_SHA256 = "1f281641144fed719316fb667ba1a6b6c174a51288066ff795c0d780d23b6e09"
+REVIEWED_RELEASE_SHA256 = "ad2449a22f2143f720db1337d7133a5037197342adf3bbf3531b6bdccc5e767b"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
