@@ -13,13 +13,13 @@
     "publications/data/listings/checking-the-machines.json": "4ecb3a808dc1fdd234c07fd6e81f28fead8b5067960cecd3d1c16cc0fc8334d1",
     "publications/data/listings/frontier-safety.json": "6e94d4d705599d6ac7d3aa156762b2f63dcc964da4d3f3f666c4065bc1ee6fc8",
     "publications/data/listings/openai-hugging-face-incident.json": "76c3d474df2aaa52b71c4714bcb9c890f540bdeac0fe6b44f155e05707fd5821",
-    "publications/data/listings/who-knew-first.json": "4808bda7b80ea3d8c8ece8c465771a014318f302c4e9c11abb4d52a9daa99f38"
+    "publications/data/listings/who-knew-first.json": "81dc291076cd1d284b8ef4c6e9ed8ad8140a1b43d84e7e239d236d00a5b41f1f"
   },
   "outputs": {
     "availability-is-not-reach.html": "08bfaef1bb4be98fdeb10b11e33951dc87fdd7615c321813f60fe1f95de2e2f1",
     "borrowed-ground.html": "56d419908735487f5da46ed11877095dc8241a31a6fa80cc896a4a9b2e024889",
-    "feed.json": "afbd963c6b364c986779e88941257eb6d89ce1256df76cd6b209afc66a830eb4",
-    "feed.xml": "1806036fdb4f4642eafeedc04974e37d80e6ba5b8240d8cd6d835fee2e10a335",
+    "feed.json": "31561066f345b95251c1e285c78524a851f4b590569bcac93a8401663f7b329d",
+    "feed.xml": "5f9d2379e9b1a8ecf14c39f6609276988bbe2c7e3bf32de9d08b18f614234b92",
     "figures/availability-is-not-reach.html": "ee7035a6bc6dae19ee01fb54000b0a95eca5b0e10e64829e6d75d0a6a8d649af",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -37,8 +37,8 @@
     "figures/the-second-hearing-evidence-map.svg": "e496868610c789fc9954e432dfb02e1b5b67a883cf215bb3d06a7a0495f0b580",
     "growth-needs-a-before.html": "7d6e67c085806208ed5f09f247b71e23a5eaec817763683ce38535a5bb4e51d2",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "2f50fb9eb58059feff9240350f625e947f204fb8c0adfb52d60a2712e6f2db3b",
-    "publications.html": "171c8f13400f0c850c9d4bcb82595d3ce05963c4a43cb43a7570c97f1a9ca06f",
-    "publications/data/index.json": "44f26e845fb03a5535b1e6f233e37261e6192605e0237630c08aa493a0e53c54",
+    "publications.html": "8fb9a7cece8782813c103bbb272da10681c2731a1f64a39df6b64ee43d07483d",
+    "publications/data/index.json": "e5166976906f693045431d873c348565bd255bf71e48c38fcfab73c9bb32aa5a",
     "sitemap.xml": "54d628ca74a79cbcad5428f589999683e58e878dedb1612ccf5b52fc7f1e7343",
     "the-sandbox-was-never-just-a-box.html": "24b9ff1e7deec9d55f45b3cf77504b80e4486f31fbce2f6f7cad64346de5e4b3",
     "the-second-hearing.html": "3cf006f388a4a7c569a0107da9ed1f220e68522f297e31f65e331d02c6cdc577",
