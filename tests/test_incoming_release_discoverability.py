@@ -239,22 +239,13 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     release = evidence["flywheel-release-v1-0-1"]
     pypi = evidence["flywheel-pypi-v1-0-1"]
     service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
-    assert flywheel["purpose"] == (
-        "Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: "
-        "run any frontier or local model behind one interface, with the Rowan desktop assistant, "
-        "a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) "
-        "for research, memory, and writing. Its check-output command grades an answer against "
-        "the source that decides it, ships finance, medicine, and law packs, and can emit a "
-        "Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent "
-        "witness re-runs offline. Data stays local; the code is source-available under "
-        "FSL-1.1-MIT."
-    )
+    assert flywheel["purpose"] == "Flywheel runs AI tasks with a model you choose and keeps a record you can recheck. Version 1.1.0 is available as a Python package and a Windows installer. Lane cards in the app run tools and show the setup they need. Flywheel keeps its own records on your machine; request content goes to the model provider you choose."
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
-    assert flywheel["releaseState"] == "stable Python engine v1.0.4; unsigned Windows desktop v1.0.4; ten Python lanes bundle from vendored source; no measured accuracy uplift over single-shot; clean-machine, mobile, and node-lane bundling not claimed"
+    assert flywheel["releaseState"] == 'Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded'
     assert flywheel["entryCommand"] == "pip install flywheel-verify"
-    # 2026-09-25: Flywheel 1.0.4 is the current release; the 1.0.1 records stay as history.
-    assert flywheel["evidence"][0]["id"] == "flywheel-release-v1-0-4"
-    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v1-0-4"
+    # 2026-09-28: Flywheel 1.1.0 is current; earlier release records stay as history.
+    assert flywheel["evidence"][0]["id"] == "flywheel-release-v1-1-0"
+    assert flywheel["evidence"][1]["id"] == "flywheel-pypi-v1-1-0"
     assert release["type"] == "release"
     assert release["status"] == "verified"
     assert release["href"] == "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.1"
@@ -324,36 +315,36 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     service_desk_section = page[page.index('<section class="mv" id="companions"'):]
     service_desk_section = service_desk_section[: service_desk_section.index("</section>")]
     assert '<li id="service-desk">' in service_desk_section
-    assert 'href="#next-release">1.0.4 release</a>' in page
+    assert 'href="#next-release">1.1.0 release</a>' in page
     assert "0.6 candidate" not in page
     # 2026-09-25 round 3: the install lead names the version as the thing installed.
     assert "Install the Python engine from PyPI" in release_section
-    assert "The Windows installer asset is <span translate=\"no\">56,355,754</span> bytes" in release_section
-    assert "published smoke receipt reports <span translate=\"no\">PASS</span>" in release_section
-    assert "The Windows desktop installer is still unsigned" in release_section
+    assert "published checksums" in release_section
+    assert "15 of its 17 lanes" in release_section
+    assert "The installer is unsigned" in release_section
     assert "pip install flywheel-verify" in page
-    assert "Windows desktop: 1.0.4" in page
-    assert "Flywheel-Setup-1.0.4-x64.exe" in page
-    assert "/releases/download/v1.0.4" in page
+    assert "Windows desktop: 1.1.0" in page
+    assert "Flywheel-Setup-1.1.0-x64.exe" in page
+    assert "/releases/download/v1.1.0" in page
     assert "Flywheel-Setup-0.6.0-x64.exe" not in page
     assert "Service Desk Incident Environment 0.1.0" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0-py3-none-any.whl" in service_desk_section
     assert "flywheel_env_service_desk_incident-0.1.0.tar.gz" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
-    assert "Flywheel v1.0.4" in catalog
+    assert "Flywheel v1.1.0" in catalog
     assert "flywheel-release-v1-0-1" in home_projection
     assert "flywheel-pypi-v1-0-1" in home_projection
     assert "flywheel-release-v1-0-4" in home_projection
     assert "flywheel-service-desk-env-v0-1-0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_projection
     assert "Service Desk Incident Environment 0.1.0" in home_registry
-    assert "Flywheel v1.0.4" in home_registry
+    assert "Flywheel v1.1.0" in home_registry
 
     for relative in ("home/index.html", "index.html"):
         fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
-        assert release_link and release_link.group(1) == evidence["flywheel-release-v1-0-4"]["href"]
+        assert release_link and release_link.group(1) == evidence["flywheel-release-v1-1-0"]["href"]
         install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
         assert install and install.group(1) == flywheel["entryCommand"]
 
@@ -394,7 +385,7 @@ def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
         "skill-reader-flow-review-v0.1.0/SHA256SUMS"
     ) in section
     assert "6,379 bytes" in section
-    assert "f57f8485da37d3af44a1d182994d465fc74e0a8a46aa8c35ef3969b32d57537b" in section
+    assert "download checksums</a>" in section
     # 2026-09-25 round 4: the copyable prompt is restored word for word from the published page,
     # including its quoted sample passage; only the command token takes the reading-face styling.
     assert 'Use <span class="fw-token">$reader-flow-review</span> to review this passage for reader flow while preserving voice and uncertainty' in section
@@ -623,7 +614,7 @@ def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> N
     pins = ("gather-engine</code> 1.8.2", "flywheel-relay</code> 0.2.5",
             "forum-engine</code> 1.14.0", "crucible-bench</code> 1.2.0",
             "flywheel-canon</code> 0.2.0")
-    pin_note = page[page.index("Flywheel 1.0.4, the current release"):]
+    pin_note = page[page.index("Flywheel 1.0.4, an earlier release"):]
     pin_note = pin_note[: pin_note.index("</p>")]
     positions = [pin_note.index(pin) for pin in pins]
     assert positions == sorted(positions), "the pin list does not follow the plate order"

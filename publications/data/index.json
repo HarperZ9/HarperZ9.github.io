@@ -42,6 +42,16 @@
       "idempotency_key": "1466f2d6912bb82e6b8e886584abd675d4085a5b483626c53bd95ecc062789e3"
     },
     {
+      "id": "support-has-more-than-one-record",
+      "route": "support-has-more-than-one-record.html",
+      "category": "psychology-trauma-recovery",
+      "form": "essay",
+      "published_at": "2026-09-28",
+      "updated_at": "2026-09-28",
+      "record_sha256": "50694936f80173ae10b20b86ef368e67cbe4c5b172132fa937a4271e44144cda",
+      "idempotency_key": "da2ed7d4da3a392e09954fc99ce59456f9f5a6de0c24c680e913dfe2e779ca8c"
+    },
+    {
       "id": "the-sandbox-was-never-just-a-box",
       "route": "the-sandbox-was-never-just-a-box.html",
       "category": "agent-evaluation",
@@ -52,6 +62,16 @@
       "idempotency_key": "83c5cd283f223412abf65fd0d6f38a9340c4bca9ed32c4f51d7a2ff93e8005fe"
     },
     {
+      "id": "the-scene-the-song-did-not-tell-you",
+      "route": "the-scene-the-song-did-not-tell-you.html",
+      "category": "music-listening",
+      "form": "essay",
+      "published_at": "2026-09-28",
+      "updated_at": "2026-09-28",
+      "record_sha256": "aca585538a713a7d62ef047c18bcc7ab3e8660339a689e8036958def104e1419",
+      "idempotency_key": "19d5e918fa47a2985444d3fa0d1e07741f8045d91d1761492490bf9bdf430fe1"
+    },
+    {
       "id": "the-second-hearing",
       "route": "the-second-hearing.html",
       "category": "music-listening",
@@ -60,6 +80,26 @@
       "updated_at": "2026-09-25",
       "record_sha256": "757a90fc7dc650bd2408d3198be79a0cf077ff371b2f3bb2bc87d5010aad6649",
       "idempotency_key": "41b1a4a725fbed6c41b1db75709e75e664149099c582d715f64e02fbac62533d"
+    },
+    {
+      "id": "the-timestamp-is-not-the-order",
+      "route": "the-timestamp-is-not-the-order.html",
+      "category": "tools-practical-computing",
+      "form": "essay",
+      "published_at": "2026-09-28",
+      "updated_at": "2026-09-28",
+      "record_sha256": "12529cbb04a624ac9c181cb08fa4ce3ff4d8659fa3af205ab593b0ce887db456",
+      "idempotency_key": "8f9797cdcc46af5f743e99abe4d9306b950fd175728021127d9020cc82209795"
+    },
+    {
+      "id": "what-the-formula-counts",
+      "route": "what-the-formula-counts.html",
+      "category": "education-learning-systems",
+      "form": "essay",
+      "published_at": "2026-09-28",
+      "updated_at": "2026-09-28",
+      "record_sha256": "12024430370cc7a85874281daa3a62a0e188f941f1d7c6b2a8af2b8c1c5d4441",
+      "idempotency_key": "5fbccfb6bd4ee745b016c3aa803bb975be63ce051314ebedd3acc7268d9b3d74"
     },
     {
       "id": "what-the-label-changes",

@@ -124,7 +124,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "flywheel.html",
     "routeTitle": "Flywheel",
-    "routeSummary": "Flywheel is a self-hostable, model-agnostic AI workstation and coding harness: run any frontier or local model behind one interface, with the Rowan desktop assistant, a permission-gated coding agent, and fifteen built-in lanes (ten bundle natively) for research, memory, and writing. Its check-output command grades an answer against the source that decides it, ships finance, medicine, and law packs, and can emit a Lean 4 proof; accepted results carry sealed, re-derivable receipts an independent witness re-runs offline. Data stays local; the code is source-available under FSL-1.1-MIT.",
+    "routeSummary": "Flywheel runs AI tasks with a model you choose and keeps a record you can recheck. Version 1.1.0 is available as a Python package and a Windows installer. Lane cards in the app run tools and show the setup they need. Flywheel keeps its own records on your machine; request content goes to the model provider you choose.",
     "imagePath": "img/og/flywheel.png"
   },
   "relay": {
@@ -394,14 +394,14 @@ window.CARD_DATA = {
     "glyph": "spark"
   },
   "engine-revival": {
-    "role": "RETRO SYSTEMS LAB · PRESERVE",
+    "role": "RETRO SYSTEMS LAB Â· PRESERVE",
     "headline": "Preserve public engine evidence with an MIT v0.1.0 release and bounded BRender imports.",
     "pipeline": "SOURCE / MANIFEST / LICENSE / RECEIPT / RELEASE",
     "word": "ENGINE REVIVAL",
     "glyph": "layers"
   },
   "brender-archival": {
-    "role": "RETRO SYSTEMS LAB · VERIFY",
+    "role": "RETRO SYSTEMS LAB Â· VERIFY",
     "headline": "Keep BRender v0.1.1 proof specific, AGPL-scoped, and separate from generic retro media.",
     "pipeline": "BRENDER / HASH / RECIPE / BOUNDARY / RECEIPT",
     "word": "BRENDER ARCHIVAL",
@@ -638,5 +638,33 @@ window.CARD_DATA = {
     "pipeline": "SHARED INFRASTRUCTURE / CONTAINMENT / INDEPENDENT OBSERVATION",
     "word": "BOUNDARY",
     "glyph": "seal"
+  },
+  "support-has-more-than-one-record": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ESSAY",
+    "word": "Support",
+    "headline": "Support Has More Than One Record"
+  },
+  "what-the-formula-counts": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ESSAY",
+    "word": "Readability",
+    "headline": "What the Formula Counts"
+  },
+  "the-scene-the-song-did-not-tell-you": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ESSAY",
+    "word": "Music and scenes",
+    "headline": "The Scene the Song Did Not Tell You"
+  },
+  "the-timestamp-is-not-the-order": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ESSAY",
+    "word": "Timestamps",
+    "headline": "The Timestamp Is Not the Order"
   }
 };

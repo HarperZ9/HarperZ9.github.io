@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "id": "what-the-formula-counts",
+  "route": "what-the-formula-counts.html",
+  "category": "education-learning-systems",
+  "form": "essay",
+  "title": "What the Formula Counts",
+  "summary": "A readability score measures selected text features. Comprehension, audience fit and accessibility require evidence of their own.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "observed_at": "2026-09-28T17:31:57Z",
+  "thesis": "Use readability scores to locate possible friction, and reserve claims about understanding for evidence about readers.",
+  "opening": {
+    "question": "What changes when a document receives a lower reading-grade score?",
+    "finding": "The formula’s counted features change. That result does not directly show what a reader understood or could do.",
+    "evidence": "Formula calibration, official communication guidance and a randomized trial distinguish scoring from reader outcomes.",
+    "limit": "A null result across two health topics and grades 8 to 14 does not settle the value of simpler wording, organization, translation or visual explanation."
+  },
+  "sections": [
+    {
+      "id": "essay",
+      "heading": "A score and a reader",
+      "paragraphs": [
+        "After an edit, a document gets a lower reading-grade score. Something has changed: the features counted by the formula. Whether a reader now understands the document needs other evidence. Writers should use the score to locate possible friction and reserve claims about understanding for evidence about readers.",
+        "Readability formulas usually count features such as word length and sentence length. Those features can help identify passages worth revising. They miss whether a term is familiar to the intended audience, whether an explanation comes in the right order, and whether the reader knows what to do next. AHRQ's guidance recommends using formulas for diagnosis and warns that a grade score cannot show that a report is suitable overall. AHRQ's formula guidance",
+        "A formula's history matters too. The Flesch-Kincaid recalibration drew on Navy enlisted personnel and technical-training passages. That origin does not make the calculation useless today. Putting its grade label on a new audience, though, takes judgment about that audience and their task. A label from one calibration cannot stand in for a fresh comprehension test. Kincaid and colleagues' report",
+        "A recent randomized trial puts the distinction to work. Researchers compared health information targeted at grades 8, 10, 12 and 14, analyzing 2,235 complete, valid responses from Australian adults. They detected no difference in knowledge between the versions at the reported threshold. The result covers two health topics, immediate outcomes and a lowest target of grade 8. It leaves open the value of simpler wording below that range, of better organization, of translation and of visual explanation. The Readability Study",
+        "The strongest objection is practical: testing with the audience takes time, and a score is cheap. That argues for using the score to triage. The score still observes only what it counts. A team with limited resources can inspect difficult passages, review the message and action instructions, and disclose that reader understanding remains untested. Cost explains why a team accepts the uncertainty; the uncertainty remains.",
+        "Broader review tools help, though none replaces a reader. The CDC Clear Communication Index asks about audience, message, design, numbers and recommendations. PEMAT separates understandability from actionability and states that accuracy and completeness fall outside its scope. Each tool's limits belong beside its results. CDC Index, PEMAT guide",
+        "Accessibility needs its own evidence as well. WCAG's Level AAA reading-level criterion calls for supplemental or less demanding content under specified conditions. A document can pass a formula check and still fall short of the wider standard. W3C's explanation of SC 3.1.5",
+        "A workable editorial sequence has three steps: inspect what the formula flags, judge the whole document against its purpose, then test the important claims about readers with the intended audience. This workflow is a proposal and has not been validated as a general protocol. Its value is that each result keeps its own meaning. A document can become easier to score before anyone has shown it became easier to use."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "ahrq-formulas",
+      "title": "Tip 6. Use Caution With Readability Formulas for Quality Reports",
+      "url": "https://www.ahrq.gov/talkingquality/resources/writing/tip6.html",
+      "publisher": "Agency for Healthcare Research and Quality",
+      "role": "Official formula guidance; created February 2015 and last reviewed May 2015.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "kincaid",
+      "title": "Derivation of New Readability Formulas (Automated Readability Index, Fog Count and Flesch Reading Ease Formula) for Navy Enlisted Personnel",
+      "url": "https://stars.library.ucf.edu/istlibrary/56/",
+      "publisher": "Naval Technical Training Command; University of Central Florida repository",
+      "role": "Historical primary calibration report, 1975; Navy personnel and technical-training passages.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "mac",
+      "title": "The Readability Study: A Randomised Trial of Health Information Written at Different Grade Reading Levels",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12119439/",
+      "publisher": "Journal of General Internal Medicine",
+      "role": "Randomized reader-outcome trial; first published online, with June 2025 issue publication.",
+      "published_at": "2024-12-20",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "cdc-index",
+      "title": "CDC Clear Communication Index User Guide",
+      "url": "https://www.cdc.gov/ccindex/pdf/clear-communication-user-guide.pdf",
+      "publisher": "Centers for Disease Control and Prevention",
+      "role": "Official material-review guide, August 2019; audience, message and action criteria.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "pemat",
+      "title": "The Patient Education Materials Assessment Tool and User’s Guide",
+      "url": "https://www.ahrq.gov/sites/default/files/publications2/files/pemat_guide.pdf",
+      "publisher": "Agency for Healthcare Research and Quality",
+      "role": "Official understandability and actionability guide, November 2013; updated August 2014.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "wcag-reading",
+      "title": "Understanding Success Criterion 3.1.5: Reading Level",
+      "url": "https://www.w3.org/WAI/WCAG21/Understanding/reading-level.html",
+      "publisher": "World Wide Web Consortium",
+      "role": "Informative explanation of WCAG 2.1 Level AAA reading-level criterion; living guidance.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    }
+  ],
+  "claims": [
+    {
+      "id": "formula-scope",
+      "text": "Readability formulas commonly count word and sentence length without directly observing understanding.",
+      "source_ids": [
+        "ahrq-formulas"
+      ],
+      "scope": "Formula features and diagnostic use described by AHRQ.",
+      "uncertainty": "Different formulas and readers can yield different interpretations.",
+      "doesNotProve": "Overall suitability, comprehension, audience fit or accessibility.",
+      "status": "verified"
+    },
+    {
+      "id": "calibration",
+      "text": "The Flesch-Kincaid recalibration used Navy enlisted personnel and technical-training passages.",
+      "source_ids": [
+        "kincaid"
+      ],
+      "scope": "1975 report; 531 personnel, four technical schools, two bases and 18 training-manual passages.",
+      "uncertainty": "A calibration population and task do not represent every later audience.",
+      "doesNotProve": "An equivalent comprehension result for a present-day reader.",
+      "status": "verified"
+    },
+    {
+      "id": "trial-null",
+      "text": "The trial did not detect a knowledge difference between the targeted grade conditions at its reported threshold.",
+      "source_ids": [
+        "mac"
+      ],
+      "scope": "2,235 complete, valid analyzed responses from 2,639 randomized Australian adults; target grades 8, 10, 12 and 14; two health topics.",
+      "uncertainty": "Immediate outcomes, online recruitment and the grade-eight lower boundary limit inference.",
+      "doesNotProve": "Equivalence, failure of all plain-language work, or the value of lower grades, visuals, translation and organization.",
+      "status": "verified"
+    },
+    {
+      "id": "review-tools",
+      "text": "The CDC Index and PEMAT examine material features beyond a readability formula.",
+      "source_ids": [
+        "cdc-index",
+        "pemat"
+      ],
+      "scope": "CDC audience, message, design, numbers and recommendations; PEMAT understandability and actionability.",
+      "uncertainty": "PEMAT leaves accuracy and completeness outside its scope.",
+      "doesNotProve": "Reader comprehension, behavior change or overall material quality.",
+      "status": "verified"
+    },
+    {
+      "id": "accessibility",
+      "text": "WCAG’s Level AAA reading-level criterion is one part of a broader accessibility standard.",
+      "source_ids": [
+        "wcag-reading"
+      ],
+      "scope": "SC 3.1.5 supplemental or less demanding content under its stated conditions.",
+      "uncertainty": "The cited Understanding page is informative guidance.",
+      "doesNotProve": "Full WCAG conformance from a formula result.",
+      "status": "verified"
+    },
+    {
+      "id": "editorial-sequence",
+      "text": "Inspect formula flags, review the whole document and test important reader claims with the intended audience.",
+      "source_ids": [
+        "ahrq-formulas",
+        "cdc-index",
+        "pemat",
+        "mac"
+      ],
+      "scope": "Proposed editorial workflow.",
+      "uncertainty": "Resources constrain testing, and the sequence is not a universal validated protocol.",
+      "doesNotProve": "That a lower score makes a document easier to use.",
+      "status": "inferred"
+    }
+  ],
+  "figures": [],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
+  "personal_voice_adopted": false
+}

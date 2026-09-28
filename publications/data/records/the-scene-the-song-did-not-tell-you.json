@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "id": "the-scene-the-song-did-not-tell-you",
+  "route": "the-scene-the-song-did-not-tell-you.html",
+  "category": "music-listening",
+  "form": "essay",
+  "title": "The Scene the Song Did Not Tell You",
+  "summary": "Music-evoked stories can share patterns while retaining personal meaning. Those reports do not by themselves demonstrate creative accomplishment.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "observed_at": "2026-09-28T17:31:57Z",
+  "thesis": "Shared musical cues and listener context can shape imagined scenes without establishing one correct story or a general creative benefit.",
+  "opening": {
+    "question": "What can an imagined scene tell us about music, its listener and creativity?",
+    "finding": "Reported scenes can show shared structure and individual consistency while leaving biography and creative accomplishment unestablished.",
+    "evidence": "Cross-cultural narrative reports, repeated imagery reports and contrasting laboratory creativity tasks supply separate kinds of evidence.",
+    "limit": "Selected excerpts, prompted reports and short tasks cannot establish everyday prevalence, private history or a universal effect on creativity."
+  },
+  "sections": [
+    {
+      "id": "essay",
+      "heading": "Shared cues and individual meaning",
+      "paragraphs": [
+        "Instrumental music can call up a scene without supplying its words: open country, a pursuit, a return. When listeners imagine different scenes, their responses can still follow a pattern, and a shared pattern still leaves room for more than one story. The useful question is how the sound and the listener's context constrain what can be imagined.",
+        "In one cross-cultural study, participants described the stories they imagined while hearing instrumental excerpts. Stories from people in a common cultural setting shared more structure than stories across the settings compared. The study covered three locations and two cultural settings. It supports a limited account of shared interpretation and leaves open how often people listen this way in daily life. Margulis and colleagues",
+        "A separate study asked listeners what imagery three orchestral film-music excerpts called up. Of 353 initial participants, 254 repeated the survey three weeks later. Among the reports eligible for the consistency analysis, the coded themes were more consistent within one person over time than between people. That pattern fits both shared cues and personal associations. The data cannot show that every listener forms images, that an image carries a fixed meaning, or that an imagined event happened in the listener's life. Hashim and colleagues",
+        "The difference starts to matter when a claim about imagination turns into a claim about creativity. A vivid scene may be valuable to its listener. That does not tell an observer whether music improved a piece of writing, a composition or a solution to a problem. Each of those outcomes has to be observed on its own terms.",
+        "A serious objection: some experiments do find a creative benefit. Ritter and Ferguson reported better divergent-thinking performance in a planned comparison of happy music with silence. Their analyzed comparisons on convergent tasks found no significant difference, and they excluded a creative-insight task from analysis because performance varied too little. Threadgold and colleagues found poorer performance under music on another family of convergent verbal problems. The studies used different tasks, samples and conditions, so their results cannot be averaged into a verdict on whether music makes people creative. Ritter and Ferguson, Threadgold and colleagues",
+        "For someone who listens to music while working, this suggests a concrete question: which part of the task gets easier or harder under which listening conditions? Generating possibilities and choosing one precise answer can make different demands. A practical comparison could look at the actual work and avoid claiming that one short task captures all creative value. This is a suggested way to frame the question; it offers no evidence that the comparison will improve performance.",
+        "The same restraint protects interpretation. A listener can explain what a scene means to them, and a researcher can describe what a task drew out. A shared pattern gives an observer no access to the listener's biography, and neither does a scoring model. That ethical limit is an editorial judgment about what the available evidence supports.",
+        "Music can shape what a listener imagines and still leave much of the meaning with the listener. A stronger account keeps both contributions in view. It asks what changed in the reported response, and it leaves creative accomplishment, private history and personal value to the evidence each one would need."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "margulis",
+      "title": "Narratives imagined in response to instrumental music reveal culture-bounded intersubjectivity",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8795501/",
+      "publisher": "Proceedings of the National Academy of Sciences",
+      "role": "Cross-cultural narrative comparison; first published online, with January 25, 2022 issue publication.",
+      "published_at": "2022-01-21",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "hashim",
+      "title": "Music listening evokes story-like visual imagery with both idiosyncratic and shared content",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0293412",
+      "publisher": "PLOS ONE",
+      "role": "Imagery reports and retest consistency; the linked correction should be read with the article.",
+      "published_at": "2023-10-26",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "hashim-correction",
+      "title": "Correction: Music listening evokes story-like visual imagery with both idiosyncratic and shared content",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0317174",
+      "publisher": "PLOS ONE",
+      "role": "Corrects country-of-residence entries and thematic-table formatting; the essay uses neither affected country counts nor table proportions.",
+      "published_at": "2025-01-03",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "ritter",
+      "title": "Happy creativity: Listening to happy music facilitates divergent thinking",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182210",
+      "publisher": "PLOS ONE",
+      "role": "Planned happy-music versus silence contrast and separately analyzed convergent tasks.",
+      "published_at": "2017-09-06",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "threadgold",
+      "title": "Background music stints creativity: Evidence from compound remote associate tasks",
+      "url": "https://doi.org/10.1002/acp.3532",
+      "publisher": "Applied Cognitive Psychology",
+      "role": "Three convergent verbal-task experiments; first published online, with September 2019 issue publication.",
+      "published_at": "2019-02-02",
+      "observed_at": "2026-09-28"
+    }
+  ],
+  "claims": [
+    {
+      "id": "culture-bounded",
+      "text": "Imagined narratives shared more structure within a cultural setting than across the compared settings.",
+      "source_ids": [
+        "margulis"
+      ],
+      "scope": "622 participants across three locations and two cultural settings, responding to instrumental excerpts.",
+      "uncertainty": "The task elicits reports under selected listening conditions.",
+      "doesNotProve": "Universal semantics, one correct story or everyday prevalence of narrative listening.",
+      "status": "verified"
+    },
+    {
+      "id": "imagery-consistency",
+      "text": "Eligible coded imagery reports showed more consistency within a person over time than between people.",
+      "source_ids": [
+        "hashim",
+        "hashim-correction"
+      ],
+      "scope": "353 initial participants and 254 returning after three weeks; three orchestral film-music excerpts. These are recruitment counts, not one denominator for every consistency analysis.",
+      "uncertainty": "Reports containing only absent or vague imagery were excluded from Jaccard comparisons; usable coded content could remain when it co-occurred.",
+      "doesNotProve": "That every listener visualizes, imagery has a fixed meaning or imagined events occurred in the listener’s life.",
+      "status": "verified"
+    },
+    {
+      "id": "happy-music",
+      "text": "The planned happy-music versus silence comparison favored divergent-thinking performance.",
+      "source_ids": [
+        "ritter"
+      ],
+      "scope": "155 participants across four music conditions and silence; six excluded from Alternative Uses Task analyses.",
+      "uncertainty": "Short laboratory tasks and selected music; exploratory comparisons did not survive the reported multiple-comparison correction.",
+      "doesNotProve": "A general, durable or practical creative-work benefit.",
+      "status": "verified"
+    },
+    {
+      "id": "convergent-boundary",
+      "text": "The analyzed convergent-task comparisons in Ritter and Ferguson found no significant difference.",
+      "source_ids": [
+        "ritter"
+      ],
+      "scope": "Analyzed convergent tasks; the creative-insight task was excluded for insufficient performance variation.",
+      "uncertainty": "An excluded task supplies no analyzed null result, and lack of significance does not establish equivalence.",
+      "doesNotProve": "That all administered tasks had tested null results or music has no effect on convergence.",
+      "status": "verified"
+    },
+    {
+      "id": "verbal-tasks",
+      "text": "Threadgold and colleagues found poorer performance under music on convergent verbal problems.",
+      "source_ids": [
+        "threadgold"
+      ],
+      "scope": "Three Compound Remote Associate Task experiments with opportunity samples of 30, 18 and 36.",
+      "uncertainty": "Small samples, selected conditions and one task family constrain generalization.",
+      "doesNotProve": "Universal harm from music or a verdict on all creativity.",
+      "status": "verified"
+    },
+    {
+      "id": "interpretation-limit",
+      "text": "Music-evoked reports do not warrant an observer’s inference about a listener’s biography or all creative value.",
+      "source_ids": [
+        "margulis",
+        "hashim",
+        "ritter",
+        "threadgold"
+      ],
+      "scope": "Editorial interpretation and suggested comparison using the actual work.",
+      "uncertainty": "The proposed comparison is not a validated performance intervention.",
+      "doesNotProve": "Private history, creative accomplishment or guaranteed improvement.",
+      "status": "inferred"
+    }
+  ],
+  "figures": [],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
+  "personal_voice_adopted": false
+}

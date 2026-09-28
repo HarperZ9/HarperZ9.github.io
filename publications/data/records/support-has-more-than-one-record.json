@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "id": "support-has-more-than-one-record",
+  "route": "support-has-more-than-one-record.html",
+  "category": "psychology-trauma-recovery",
+  "form": "essay",
+  "title": "Support Has More Than One Record",
+  "summary": "A helper’s report, a recipient’s account and a measured outcome answer different questions about whether support worked.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-09-28",
+  "updated_at": "2026-09-28",
+  "observed_at": "2026-09-28T17:31:57Z",
+  "thesis": "Support offered, support recognized and benefit measured need separate evidence.",
+  "opening": {
+    "question": "What can disagreement between a helper and a recipient tell us about support?",
+    "finding": "A report mismatch does not establish intention, delivery or benefit. Studies of support visibility find results that depend on the task, context and outcome.",
+    "evidence": "Couple diary studies and a laboratory comparison of visible, less visible and no support supply the evidence.",
+    "limit": "Diary associations do not establish causation, and the speech-task experiments do not establish a general relationship or clinical recommendation."
+  },
+  "sections": [
+    {
+      "id": "essay",
+      "heading": "Reports, recognition and benefit",
+      "paragraphs": [
+        "A helper says they gave help. The recipient says they received none. Before deciding who is wrong, ask whether the two are describing the same thing. The act, whether the recipient noticed it, and what it changed are separate observations, and a fair account of support has room for each.",
+        "Research on \"invisible support\" draws this line clearly. Some diary studies classify a day as invisible support when the provider reports helping and the recipient does not report receiving help. The foundational study associated that pattern with adjustment among couples facing a major stressor. What the classification records is a disagreement between two reports. On its own, it cannot show that the provider hid the act on purpose, that the act happened as described, or that hiding it produced the outcome. Bolger, Zuckerman and Kessler",
+        "Experimental evidence deserves weight here. In three experiments with 257 women who expected to give a stressful speech, less visible support reduced emotional reactivity compared with visible support and with no support. The finding covers particular ways of helping during a short laboratory task. It gives reason to study how help is delivered, and it stops short of showing a general benefit from keeping recipients unaware. Bolger and Amarel",
+        "The strongest objection is that this caution could bury a useful result. If subtle support sometimes helps, why hesitate to recommend it? Because later studies complicate the rule. Research with younger and older couples found benefits associated with visible support in everyday and goal-related settings. Support during stress could come with a personal cost and a benefit to the relationship at the same time. One label could hide outcomes that point in different directions. Jakubiak, Feeney and Ferrer",
+        "Timing matters too. A hard day can lead someone to seek or receive more help, so distress and support showing up together leaves open whether the support caused the distress. Diary studies can compare same-day and next-day patterns, yet they cannot remove every difference between the situations in which help is offered. Girme and colleagues",
+        "The ethical conclusion is narrower than a helping technique. A provider's claim should remain open to the recipient's account, and a recipient's failure to report an act should not be recast as proof of successful invisible care. This is a proposed standard for reading disagreement: it has not been tested as an intervention, and it makes no clinical recommendation. Intention, consent and benefit each remain for separate examination.",
+        "Anyone weighing a claim that support worked can ask four questions. Who reported the act? What kind of help was involved, and over what time window? Which outcome changed? What else could produce the pattern? These questions keep the useful evidence and stop an appealing story of good intentions from serving as its own proof."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "bolger-2000",
+      "title": "Invisible support and adjustment to stress",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11138764/",
+      "publisher": "Journal of Personality and Social Psychology",
+      "role": "Foundational couple diary study, published December 2000; report disagreement and adjustment.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "bolger-2007",
+      "title": "Effects of social support visibility on adjustment to stress: Experimental evidence",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17352603/",
+      "publisher": "Journal of Personality and Social Psychology",
+      "role": "Laboratory experiments, published March 2007; bounded speech-stress comparison.",
+      "published_at": null,
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "jakubiak",
+      "title": "Benefits of daily support visibility versus invisibility across the adult life span",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6994384/",
+      "publisher": "Journal of Personality and Social Psychology",
+      "role": "Daily couple studies; counterevidence to a universal benefit from invisible support. First published online; May 2020 issue.",
+      "published_at": "2019-08-01",
+      "observed_at": "2026-09-28"
+    },
+    {
+      "id": "girme",
+      "title": "Does Support Need to Be Seen? Daily Invisible Support Promotes Next Day Relationship Well-being",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6205907/",
+      "publisher": "Journal of Family Psychology",
+      "role": "Three couple diary studies; same-day and next-day associations. First published online; October 2018 issue.",
+      "published_at": "2018-09-13",
+      "observed_at": "2026-09-28"
+    }
+  ],
+  "claims": [
+    {
+      "id": "report-mismatch",
+      "text": "Provider-only reporting classifies a disagreement between support reports.",
+      "source_ids": [
+        "bolger-2000",
+        "girme",
+        "jakubiak"
+      ],
+      "scope": "Paired reports in couple diary studies.",
+      "uncertainty": "Timing, recall, salience and classification can differ between reporters.",
+      "doesNotProve": "Objective delivery, deliberate concealment, recipient error or benefit.",
+      "status": "verified"
+    },
+    {
+      "id": "foundational-association",
+      "text": "The foundational diary study associated recipient-unreported support with adjustment.",
+      "source_ids": [
+        "bolger-2000"
+      ],
+      "scope": "Couples facing a major stressor.",
+      "uncertainty": "The study is observational and setting-specific.",
+      "doesNotProve": "That concealment caused adjustment or is generally beneficial.",
+      "status": "verified"
+    },
+    {
+      "id": "bounded-experiment",
+      "text": "Less visible support reduced emotional reactivity in a laboratory speech-stress comparison.",
+      "source_ids": [
+        "bolger-2007"
+      ],
+      "scope": "257 women across three experiments expecting a stressful speech task.",
+      "uncertainty": "The task, sample, support manipulation and possible face-threatening cues constrain generalization.",
+      "doesNotProve": "A durable recovery effect, benefit from deception or general clinical recommendation.",
+      "status": "verified"
+    },
+    {
+      "id": "visible-benefits",
+      "text": "Visible support can be associated with personal or relationship benefits depending on context.",
+      "source_ids": [
+        "jakubiak",
+        "girme"
+      ],
+      "scope": "Younger and older couples; daily, stress-related and goal-related support.",
+      "uncertainty": "Support type, timing and measured outcome differ across analyses.",
+      "doesNotProve": "That visibility is uniformly beneficial or harmful.",
+      "status": "verified"
+    },
+    {
+      "id": "timing",
+      "text": "Distress can precede support, complicating interpretation of their association.",
+      "source_ids": [
+        "girme"
+      ],
+      "scope": "Same-day and next-day diary patterns.",
+      "uncertainty": "Observational timing cannot remove every difference in when help is offered.",
+      "doesNotProve": "That support caused distress.",
+      "status": "verified"
+    },
+    {
+      "id": "interpretation-standard",
+      "text": "Accounts of support should keep report, recognition, intention and outcome open to separate examination.",
+      "source_ids": [
+        "bolger-2000",
+        "bolger-2007",
+        "jakubiak",
+        "girme"
+      ],
+      "scope": "Proposed reading questions and ethical standard.",
+      "uncertainty": "The proposal has not been tested as an intervention.",
+      "doesNotProve": "A clinical recommendation, a diagnosis or permission to conceal help.",
+      "status": "inferred"
+    }
+  ],
+  "figures": [],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
+  "personal_voice_adopted": false
+}

@@ -3,6 +3,36 @@
   "derivedFrom": "harperz9-systems/v4",
   "records": [
     {
+      "id": "flywheel-release-v1-1-0",
+      "type": "release",
+      "label": "Flywheel v1.1.0",
+      "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.1.0",
+      "date": "2026-09-28",
+      "status": "verified",
+      "summary": "GitHub lists Flywheel 1.1.0 as a published release with a Windows installer. The release reports that 15 of 17 lanes reached their expected classes in an installed-app check. Index fell below its expected class without Git; Telos is excluded. The check used a stub model on a Windows Server runner and called app routes without driving screens. It did not measure answer quality or test consumer Windows 11 or offline use. This metadata review did not run the installer. Read the release notes for known issues with the engine install command.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "flywheel-pypi-v1-1-0",
+      "type": "release",
+      "label": "flywheel-verify 1.1.0 on PyPI",
+      "href": "https://pypi.org/project/flywheel-verify/1.1.0/",
+      "date": "2026-09-28",
+      "status": "verified",
+      "summary": "PyPI serves flywheel-verify 1.1.0 as a wheel and source archive. This metadata review confirms distribution; it did not install the package or repeat runtime acceptance.",
+      "systemId": "flywheel"
+    },
+    {
+      "id": "articulate-fairness-confirmatory",
+      "type": "report",
+      "label": "Failed confirmatory fairness release gate",
+      "href": "https://github.com/HarperZ9/articulate/blob/bd43ccd748d0304b10f9efc650a5b0307dda380f/docs/fairness-confirmatory.md",
+      "date": "2026-09-28",
+      "status": "reported",
+      "summary": "Later source records a failed fairness release gate. Version 0.6.0 is not published. The result describes one ruleset on one school-essay corpus; it establishes neither authorship nor the cause of the group difference.",
+      "systemId": "articulate"
+    },
+    {
       "id": "relay-release-v0-5-0",
       "type": "release",
       "label": "Relay v0.5.0",
@@ -229,7 +259,8 @@
       "href": "https://github.com/HarperZ9/flywheel/releases/tag/v1.0.4",
       "date": "2026-09-25",
       "status": "verified",
-      "summary": "The v1.0.4 GitHub release, titled Flywheel 1.0.4, was published at 2026-09-26T01:50:41Z, and the v1.0.4 tag resolves to source commit 5d8b89d5f51e7ee3c096a1921dd4e601c8c75dd7. The release attaches Flywheel-Setup-1.0.4-x64.exe at 56,355,754 bytes with SHA-256 a91b9bc71862f89b72c1a4655576134bbd0cd0d762128c9b05a1f186304a2881, a SHA256SUMS.txt that lists the same value, and a frozen gateway smoke receipt reporting PASS for 1.0.4. Installed acceptance passed on the tagged commit. The installer is unsigned; this is distribution evidence, not proof of clean-machine installation."
+      "summary": "Flywheel 1.0.4 was published with a Windows installer and a smoke receipt that reported PASS. The dated 28 September correction records that the release checker counted Forum exit code 1 as passing. The rebuilt tag ran Bulletin reads; nine bundled lanes reached status or doctor only. Forum, local-model and writing did not start, and Articulate, Calibrate Pro, Learn and Telos were not bundled. The older pass does not establish that lane main actions worked. Read the correction for the rebuilt-tag findings.",
+      "systemId": "flywheel"
     },
     {
       "id": "flywheel-pypi-v1-0-4",
@@ -238,7 +269,8 @@
       "href": "https://pypi.org/project/flywheel-verify/1.0.4/",
       "date": "2026-09-25",
       "status": "verified",
-      "summary": "PyPI serves flywheel-verify 1.0.4, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.4-py3-none-any.whl is 2,259,991 bytes with SHA-256 8b3524b147937bff8bfd86efe522ee2468891297c75721683b7a401bb186f508; the source archive flywheel_verify-1.0.4.tar.gz is 3,432,483 bytes with SHA-256 1f5b7e80551ccb3d3ca9bc6af1d1a88735ee40792666d551a69777b4e5cd890c. A clean virtual environment installed it and flywheel --version printed flywheel 1.0.4."
+      "summary": "PyPI serves flywheel-verify 1.0.4, installed with pip install flywheel-verify. The wheel flywheel_verify-1.0.4-py3-none-any.whl is 2,259,991 bytes with SHA-256 8b3524b147937bff8bfd86efe522ee2468891297c75721683b7a401bb186f508; the source archive flywheel_verify-1.0.4.tar.gz is 3,432,483 bytes with SHA-256 1f5b7e80551ccb3d3ca9bc6af1d1a88735ee40792666d551a69777b4e5cd890c. A clean virtual environment installed it and flywheel --version printed flywheel 1.0.4.",
+      "systemId": "flywheel"
     },
     {
       "id": "flywheel-gather-lane-code",

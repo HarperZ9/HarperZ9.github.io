@@ -1,13 +1,17 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-25T00:00:00Z",
+  "built_at": "2026-09-28T00:00:00Z",
   "inputs": {
     "publications/data/records/availability-is-not-reach.json": "1642e558886e3e2ce954753c7e1c82a2ba645a67bb3414c35e7cd259bba57c0a",
     "publications/data/records/borrowed-ground.json": "b399f790d2d69438297af8342cb8d0e33fcd5966c49abc8fed2e6a0e133e8a56",
     "publications/data/records/growth-needs-a-before.json": "fd3a661d3b52eedf0d6a9c71b0c20af29a13ff4cc7f960ab3231b13a7fbd266d",
     "publications/data/records/ltj-bukem-the-man-behind-the-atmosphere.json": "1910b971cd1dbc4b07cd5f3693f203a6f5dec2c5e0dfda203ec8637da711b5dc",
+    "publications/data/records/support-has-more-than-one-record.json": "50694936f80173ae10b20b86ef368e67cbe4c5b172132fa937a4271e44144cda",
     "publications/data/records/the-sandbox-was-never-just-a-box.json": "3fa090133bf1148bb908e0c745c7489e19345e0d32cf9c46efa999d9904e7474",
+    "publications/data/records/the-scene-the-song-did-not-tell-you.json": "aca585538a713a7d62ef047c18bcc7ab3e8660339a689e8036958def104e1419",
     "publications/data/records/the-second-hearing.json": "757a90fc7dc650bd2408d3198be79a0cf077ff371b2f3bb2bc87d5010aad6649",
+    "publications/data/records/the-timestamp-is-not-the-order.json": "12529cbb04a624ac9c181cb08fa4ce3ff4d8659fa3af205ab593b0ce887db456",
+    "publications/data/records/what-the-formula-counts.json": "12024430370cc7a85874281daa3a62a0e188f941f1d7c6b2a8af2b8c1c5d4441",
     "publications/data/records/what-the-label-changes.json": "5069e1af88b2ad61afd27833d7a9ae199c43d0b76d6bc93e8e7af286ffcef2ea",
     "publications/data/listings/a-witness-should-not-become-a-ruler.json": "773b1d757b6d918105905cc6748438cea4c58cae881de1de837fb23537067fa2",
     "publications/data/listings/checking-the-machines.json": "4ecb3a808dc1fdd234c07fd6e81f28fead8b5067960cecd3d1c16cc0fc8334d1",
@@ -18,8 +22,8 @@
   "outputs": {
     "availability-is-not-reach.html": "08bfaef1bb4be98fdeb10b11e33951dc87fdd7615c321813f60fe1f95de2e2f1",
     "borrowed-ground.html": "56d419908735487f5da46ed11877095dc8241a31a6fa80cc896a4a9b2e024889",
-    "feed.json": "31561066f345b95251c1e285c78524a851f4b590569bcac93a8401663f7b329d",
-    "feed.xml": "5f9d2379e9b1a8ecf14c39f6609276988bbe2c7e3bf32de9d08b18f614234b92",
+    "feed.json": "ad41f71dd4c5c5115354f4b7f92efb56b0664a7cb265a831eecafc300ad64cf9",
+    "feed.xml": "5def5a458ec3cbd817533cc6ecaaf5cd86cbfe9cf58d7dc278be9ccb90dbe1fb",
     "figures/availability-is-not-reach.html": "ee7035a6bc6dae19ee01fb54000b0a95eca5b0e10e64829e6d75d0a6a8d649af",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -37,12 +41,16 @@
     "figures/the-second-hearing-evidence-map.svg": "e496868610c789fc9954e432dfb02e1b5b67a883cf215bb3d06a7a0495f0b580",
     "growth-needs-a-before.html": "7d6e67c085806208ed5f09f247b71e23a5eaec817763683ce38535a5bb4e51d2",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "2f50fb9eb58059feff9240350f625e947f204fb8c0adfb52d60a2712e6f2db3b",
-    "publications.html": "8fb9a7cece8782813c103bbb272da10681c2731a1f64a39df6b64ee43d07483d",
-    "publications/data/index.json": "e5166976906f693045431d873c348565bd255bf71e48c38fcfab73c9bb32aa5a",
-    "sitemap.xml": "54d628ca74a79cbcad5428f589999683e58e878dedb1612ccf5b52fc7f1e7343",
+    "publications.html": "772d705c983b8efe5b8eef84daf27c5de18194102f619ff24300d4fcf6afd086",
+    "publications/data/index.json": "40f3fec8f5bf36bc48e63a89fb8f017fd2cae6b25f977ec54335fd0f2bf3e7b1",
+    "sitemap.xml": "f6bc32f0d324187145e7109dc116e333ad337defded48bdf2a36e9d58edcd8a0",
+    "support-has-more-than-one-record.html": "a26a7c35281fd1edcb997fce729f157d10c8e7abba2a2c2be9e43a0078f5963f",
     "the-sandbox-was-never-just-a-box.html": "24b9ff1e7deec9d55f45b3cf77504b80e4486f31fbce2f6f7cad64346de5e4b3",
+    "the-scene-the-song-did-not-tell-you.html": "f2b1c775ab7b7ab8e6837d4dd62746cf595c4bd74aecb9bbb9e430ea85b3b9a4",
     "the-second-hearing.html": "3cf006f388a4a7c569a0107da9ed1f220e68522f297e31f65e331d02c6cdc577",
+    "the-timestamp-is-not-the-order.html": "d0fbe0ac54461d0e73bbd1d34bbc9a83ab1b1de617084e1e1b1cd213efb63c4b",
+    "what-the-formula-counts.html": "a1bcabbf70cd2bc54db0fb70382c8a452a083e35075ce88cd90617bde42681f5",
     "what-the-label-changes.html": "c66e117881da2991a46b62a073f7aa80b773af35603d6b3a7c7172da219c4788",
-    "writing.html": "3f4eaf4e1aaafb0117c61ae93b1e653248cbb8c0dcee6e13590f7122dc793139"
+    "writing.html": "e6e38072e8a6a7a15e5205a2de49a33a2a161cc1a1a53f96db103185be7dd73f"
   }
 }
