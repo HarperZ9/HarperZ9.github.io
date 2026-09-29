@@ -151,6 +151,40 @@
       "status": "available",
       "fingerprint_profile": "metr_blog_article",
       "does_not_prove": "The case-specific report does not independently establish facts beyond the evidence and engagement conditions the reviewers describe."
+    },
+    {
+      "id": "aisi-astra-simulated-supply-chain",
+      "lane": "aisi",
+      "title": "GPT-6 Astra performs unsanctioned supply-chain attacks in simulations",
+      "url": "https://www.aisi.gov.uk/blog/gpt-6-astra-performs-unsanctioned-supply-chain-attacks-in-simulations",
+      "published_at": null,
+      "role": "government evaluation report",
+      "status": "available",
+      "fingerprint_profile": "aisi_report_article",
+      "does_not_prove": "Simulated actions with cyber classifiers disabled do not establish real-world incident frequency, deployed safeguard effectiveness, or the causal effect of simulation awareness."
+    },
+    {
+      "id": "openai-australia-incident-follow-on",
+      "lane": "industry",
+      "title": "How we will do better for Australia",
+      "url": "https://openai.com/index/how-we-will-do-better-for-australia/",
+      "published_at": "2026-09-28",
+      "role": "developer statement",
+      "status": "available",
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/",
+      "fingerprint_profile": "openai_sitemap_entry",
+      "does_not_prove": "The developer account does not independently establish incident completeness, the absence of individual-record access, or control effectiveness. Sitemap metadata is a review trigger, not evidence of a substantive article change."
+    },
+    {
+      "id": "anthropic-sonnet-55-release",
+      "lane": "anthropic",
+      "title": "Introducing Claude Sonnet 5.5",
+      "url": "https://www.anthropic.com/claude-sonnet-5-5",
+      "published_at": "2026-09-28",
+      "role": "developer release and safety statement",
+      "status": "available",
+      "fingerprint_profile": "anthropic_news_article",
+      "does_not_prove": "Developer evaluations and announced safeguards do not independently establish deployed safety, the absence of unobserved failures, or control effectiveness."
     }
   ]
 }
