@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -442,7 +442,9 @@
             "qualys-vmdr",
             "claude-code-in-action",
             "building-claude-api",
-            "qualys-kcs"
+            "qualys-kcs",
+            "qualys-totalcloud",
+            "qualys-edr"
           ]
         },
         {
@@ -562,7 +564,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -577,7 +579,9 @@
             "qualys-vmdr",
             "claude-code-in-action",
             "building-claude-api",
-            "qualys-kcs"
+            "qualys-kcs",
+            "qualys-totalcloud",
+            "qualys-edr"
           ]
         },
         {
@@ -1342,12 +1346,14 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security | Issued 2026-09-30; expire 2028-09-29",
+          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29",
           "evidence": [
             "qualys-policy-audit",
             "qualys-car",
             "qualys-vmdr",
-            "qualys-kcs"
+            "qualys-kcs",
+            "qualys-totalcloud",
+            "qualys-edr"
           ]
         },
         {
@@ -1549,7 +1555,7 @@
         },
         {
           "kind": "p",
-          "text": "Assessed knowledge: Qualys policy baselines, scans, reporting, exceptions, script approvals, role separation, container scanning and CI/CD gates; Claude API grading, tool use, workflow routing/chaining, and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.",
+          "text": "Assessed knowledge: Qualys compliance, cloud/container security, vulnerability prioritization, EDR investigation/response, and script approvals; Claude API grading, tool use, workflows and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -1568,7 +1574,9 @@
             "qualys-car",
             "claude-code-in-action",
             "building-claude-api",
-            "qualys-kcs"
+            "qualys-kcs",
+            "qualys-totalcloud",
+            "qualys-edr"
           ]
         }
       ],
@@ -1945,6 +1953,48 @@
         "Sensor selection and Kubernetes workload prioritization",
         "Runtime visibility",
         "Software composition analysis and secrets scanning"
+      ]
+    },
+    {
+      "id": "qualys-totalcloud",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys TotalCloud Exam",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 83.33,
+      "assessment_result": "25 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/totalcloud",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Cloud and SaaS security posture management (CSPM/SSPM)",
+        "Cloud connectors and FlexScan",
+        "Cloud risk prioritization and reporting"
+      ]
+    },
+    {
+      "id": "qualys-edr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Endpoint Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/endpoint-detection-and-response",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Endpoint deployment prerequisites",
+        "Triage and response roles",
+        "Event and process-tree investigation",
+        "Quarantine and remediation",
+        "Malware profile settings"
       ]
     }
   ],

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "first-observation",
+  "edition_date": "2026-09-30",
+  "source_id": "openai-australia-incident-follow-on",
+  "url": "https://openai.com/index/how-we-will-do-better-for-australia/",
+  "lane": "industry",
+  "fingerprint_profile": "openai_sitemap_entry",
+  "checker_observed_at": "2026-09-30T15:16:06Z",
+  "fingerprint_sha256": "2e011d8313cb102ef76b86113f62e498d4d0930da8bcd3eeff69a1fb33fe3d89",
+  "normalized_characters": 6519,
+  "checker_packet_sha256": "6b38258d6166264ab04739261f82464e544ecf4c952eb0083f02ead6fe5fa065",
+  "review": {
+    "status": "reviewed",
+    "reviewer": "OpenAI Codex",
+    "reviewed_at": "2026-09-30T15:23:45Z",
+    "read_in_full": true,
+    "times_recorded": true
+  },
+  "supports_item_ids": [
+    "openai-2026-06-australia-government-systems"
+  ],
+  "does_not_prove": "A receipt shows that one checker run fingerprinted this page and a named reviewer attested reading it. It does not prove the page's claims, that the reviewer's attestation is authentic beyond git history, that the packet came from a real fetch, or that the page is unchanged after the observation."
+}

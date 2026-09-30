@@ -426,7 +426,9 @@ RELEASE_PATHS = (
 # assessment-awarded completion badges; issuer scope remains explicit.
 # September 30, 2026: reviewed Qualys Kubernetes and Container Security
 # direct-exam certification added without optional-course or production claims.
-REVIEWED_RELEASE_SHA256 = "6f44c940fbcd21a5b44a2dcfe3a991211d117762058a4324fa8a7de4aca36cc1"
+# September 30, 2026: reviewed TotalCloud/EDR direct-exam credentials and
+# current-main Frontier Safety integration; published incoming content unchanged.
+REVIEWED_RELEASE_SHA256 = "417383f63eff14607559c683768aef91c9ad07c0291d562331669d98bbf3fa76"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "kind": "first-observation",
+  "edition_date": "2026-09-30",
+  "source_id": "aisi-astra-simulated-supply-chain",
+  "url": "https://www.aisi.gov.uk/blog/gpt-6-astra-performs-unsanctioned-supply-chain-attacks-in-simulations",
+  "lane": "aisi",
+  "fingerprint_profile": "aisi_report_article",
+  "checker_observed_at": "2026-09-30T15:16:06Z",
+  "fingerprint_sha256": "3cf6a43eb757a2862c98eb906ff412d61e0c8e53d6f6a31aa8a8fab35cea813e",
+  "normalized_characters": 13124,
+  "checker_packet_sha256": "6b38258d6166264ab04739261f82464e544ecf4c952eb0083f02ead6fe5fa065",
+  "review": {
+    "status": "reviewed",
+    "reviewer": "OpenAI Codex",
+    "reviewed_at": "2026-09-30T15:23:45Z",
+    "read_in_full": true,
+    "times_recorded": true
+  },
+  "supports_item_ids": [
+    "aisi-2026-09-28-astra-simulated-supply-chain"
+  ],
+  "does_not_prove": "A receipt shows that one checker run fingerprinted this page and a named reviewer attested reading it. It does not prove the page's claims, that the reviewer's attestation is authentic beyond git history, that the packet came from a real fetch, or that the page is unchanged after the observation."
+}

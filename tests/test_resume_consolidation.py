@@ -122,6 +122,16 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert (kcs['earned'], kcs['expires']) == ('2026-09-30', '2028-09-29')
     assert kcs['assessment_result'] == '29 of 30 correct; passed on the first attempt'
     assert kcs['title'] in cv
+    for key, title, result in (
+        ('qualys-totalcloud', 'Qualys TotalCloud Exam', '25 of 30 correct; passed on the first attempt'),
+        ('qualys-edr', 'Endpoint Detection and Response', '29 of 30 correct; passed on the first attempt'),
+    ):
+        credential = next(c for c in credentials if c['id'] == key)
+        assert credential['title'] == title and title in cv
+        assert credential['kind'] == 'Vendor certification' and credential['course_completed'] is False
+        assert credential['designation'] == 'Qualys Certified Specialist'
+        assert (credential['earned'], credential['expires']) == ('2026-09-30', '2028-09-29')
+        assert credential['assessment_result'] == result
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

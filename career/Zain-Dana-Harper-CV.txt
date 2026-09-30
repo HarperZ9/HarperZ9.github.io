@@ -200,7 +200,7 @@ Credentials and Continuing Education
 
 September 2026 completions. Verification: harperz9.github.io/career/source-ledger.md.
 
-Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security | Issued 2026-09-30; expire 2028-09-29
+Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
 
 Microsoft Applied Skills | Earned September 29, 2026
 
@@ -262,4 +262,4 @@ Developed an AGI Strategy action plan for label-independent AI incident notice, 
 
 Standards and Frameworks: Training and Research
 
-Assessed knowledge: Qualys policy baselines, scans, reporting, exceptions, script approvals, role separation, container scanning and CI/CD gates; Claude API grading, tool use, workflow routing/chaining, and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.
+Assessed knowledge: Qualys compliance, cloud/container security, vulnerability prioritization, EDR investigation/response, and script approvals; Claude API grading, tool use, workflows and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.

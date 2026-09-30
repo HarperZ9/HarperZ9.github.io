@@ -18,6 +18,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT = json.loads((ROOT / "frontier-safety" / "data" / "current.json").read_text(encoding="utf-8"))
 DATE = CURRENT["edition_date"]
+LIVE_HAS_CONCLUSIONS = "conclusions_addendum" in CURRENT
 EDITION_PATH = ROOT / "frontier-safety" / "data" / "editions" / f"{DATE}.json"
 ADDENDUM_PATH = ROOT / "frontier-safety" / "data" / "conclusions" / f"{DATE}.json"
 HEADINGS = {"shows": "The evidence shows", "points_to": "The evidence points to", "grey": "Still grey"}
@@ -81,6 +82,7 @@ def articles(section: str) -> dict[str, str]:
 # The live edition.
 
 
+@pytest.mark.skipif(not LIVE_HAS_CONCLUSIONS, reason="current edition has no conclusions companion")
 def test_live_conclusions_are_the_sealed_companion_and_stay_outside_the_digest() -> None:
     addendum = json.loads(ADDENDUM_PATH.read_text(encoding="utf-8"))
     assert CURRENT["conclusions_addendum"] == {"added_on": addendum["added_on"], "conclusions": addendum["conclusions"]}
@@ -91,6 +93,7 @@ def test_live_conclusions_are_the_sealed_companion_and_stay_outside_the_digest()
     BUILDER.validate_edition(CURRENT)
 
 
+@pytest.mark.skipif(not LIVE_HAS_CONCLUSIONS, reason="current edition has no conclusions companion")
 def test_live_page_places_conclusions_between_the_summary_and_the_lanes() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
     section = live_section()
@@ -107,6 +110,7 @@ def test_live_page_places_conclusions_between_the_summary_and_the_lanes() -> Non
     assert "after this edition&#x27;s record was published" in section
 
 
+@pytest.mark.skipif(not LIVE_HAS_CONCLUSIONS, reason="current edition has no conclusions companion")
 def test_each_conclusion_reads_as_one_bold_sentence_with_its_support_in_a_closed_disclosure() -> None:
     found = articles(live_section())
     entries = CURRENT["conclusions_addendum"]["conclusions"]
@@ -125,11 +129,13 @@ def test_each_conclusion_reads_as_one_bold_sentence_with_its_support_in_a_closed
         assert article.count("<strong>") == 2, item["id"]  # the lead, and the what-would-change label
 
 
+@pytest.mark.skipif(not LIVE_HAS_CONCLUSIONS, reason="current edition has no conclusions companion")
 def test_the_key_defines_each_strength_heading() -> None:
     key = live_section().split('<dl class="conclusions-key">', 1)[1].split("</dl>", 1)[0]
     assert re.findall(r"<dt>([^<]+)</dt>", key) == [HEADINGS[k] for k in ("shows", "points_to", "grey")]
 
 
+@pytest.mark.skipif(not LIVE_HAS_CONCLUSIONS, reason="current edition has no conclusions companion")
 def test_every_evidence_link_lands_on_the_page_or_a_cited_source() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
     section = live_section()
@@ -147,6 +153,22 @@ def test_every_evidence_link_lands_on_the_page_or_a_cited_source() -> None:
         else:
             assert re.fullmatch(r"frontier-safety/archive/\d{4}-\d{2}-\d{2}\.html", href), href
             assert (ROOT / href).exists(), href
+
+
+def test_live_page_links_the_latest_dated_conclusions_when_current_has_none() -> None:
+    if LIVE_HAS_CONCLUSIONS:
+        pytest.skip("current edition renders its conclusions inline")
+    records = sorted(
+        path.stem
+        for path in (ROOT / "frontier-safety" / "data" / "conclusions").glob("*.json")
+        if path.stem != "checksums"
+    )
+    assert records
+    latest = records[-1]
+    page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
+    assert '<section class="mv conclusions"' not in page
+    assert f'href="frontier-safety/conclusions/{latest}.html"' in page
+    assert (ROOT / "frontier-safety" / "conclusions" / f"{latest}.html").is_file()
 
 
 def test_addendum_never_reaches_the_dated_artifacts() -> None:

@@ -350,27 +350,37 @@ body.frontier-briefing:not(#_) .record-limits .source-line a{
   text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
 }
 
-/* 6. Controls: a ruled table on hairlines. Status is a word at text weight. */
-body.frontier-briefing:not(#_) .controls .table-wrap{max-width:none;margin:clamp(1.5rem,3vw,2.25rem) 0 0;overflow-x:auto}
-body.frontier-briefing:not(#_) .controls-table{width:100%;border-collapse:collapse;table-layout:auto}
-body.frontier-briefing:not(#_) .controls-table caption{
+/* 6. Evidence tables: ruled source and control matrices on hairlines. */
+body.frontier-briefing:not(#_) :is(.source-evidence,.controls) .table-wrap{max-width:none;margin:clamp(1.5rem,3vw,2.25rem) 0 0;overflow-x:auto}
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table){width:100%;border-collapse:collapse;table-layout:auto}
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) caption{
   caption-side:top;max-width:66ch;padding:0 0 1.25rem;text-align:left;
   font-family:var(--font-sans);font-size:.9375rem;line-height:1.6;color:var(--soft);
 }
-body.frontier-briefing:not(#_) .controls-table caption strong{font-weight:700;color:var(--ink)}
-body.frontier-briefing:not(#_) .controls-table :is(th,td){
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) caption strong{font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) :is(th,td){
   min-width:0;padding:1rem 1.5rem 1.15rem 0;border:0;border-top:1px solid var(--line);
   vertical-align:top;text-align:left;background:none;
   font-family:var(--font-sans);font-size:1rem;line-height:1.6;letter-spacing:0;text-transform:none;color:var(--soft);
 }
-body.frontier-briefing:not(#_) .controls-table thead th{
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) thead th{
   padding-block:.6rem;border-top:0;border-bottom:1px solid var(--line-strong);
   font-size:.9375rem;font-weight:600;color:var(--soft);
 }
-body.frontier-briefing:not(#_) .controls-table tbody th{
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody th{
   width:11rem;font-size:1.125rem;font-weight:720;letter-spacing:-.01em;line-height:1.35;color:var(--ink);
 }
-body.frontier-briefing:not(#_) .controls-table tbody td:last-child{padding-right:0}
+body.frontier-briefing:not(#_) .source-evidence-table tbody th{width:16rem}
+body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody td:last-child{padding-right:0}
+body.frontier-briefing:not(#_) .source-evidence-table tbody td{min-width:10rem}
+body.frontier-briefing:not(#_) .source-evidence-table tbody td:last-child{min-width:18rem}
+body.frontier-briefing:not(#_) .source-evidence-table td strong{color:var(--ink)}
+body.frontier-briefing:not(#_) .source-evidence-table .matrix-source-links{display:block;margin-top:.75rem;font-size:.9375rem;line-height:1.5}
+body.frontier-briefing:not(#_) .source-evidence-table .matrix-source-links strong{display:block;margin:0 0 .3rem;font-weight:700;color:var(--ink)}
+body.frontier-briefing:not(#_) .source-evidence-table .matrix-source-links a{
+  display:block;width:fit-content;max-width:100%;margin:0 0 .35rem;color:var(--ink);
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;
+}
 body.frontier-briefing:not(#_) .controls-table .status-word{
   display:inline-block;margin:0 0 .2rem;font-family:var(--font-sans);font-size:1rem;
   font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);
@@ -453,17 +463,17 @@ body.frontier-briefing:not(#_) .footer-seal .seal{
 /* A phone stacks each control row. The explicit table roles in the markup keep the
    row and column semantics when the cells stop displaying as a table. */
 @media screen and (max-width:44rem){
-  body.frontier-briefing:not(#_) .controls .table-wrap{overflow:visible}
-  body.frontier-briefing:not(#_) .controls-table,
-  body.frontier-briefing:not(#_) .controls-table :is(caption,thead,tbody,tr,th,td){display:block;width:auto}
-  body.frontier-briefing:not(#_) .controls-table thead{
+  body.frontier-briefing:not(#_) :is(.source-evidence,.controls) .table-wrap{overflow:visible}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table),
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) :is(caption,thead,tbody,tr,th,td){display:block;width:auto}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) thead{
     position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;
   }
-  body.frontier-briefing:not(#_) .controls-table tbody tr{padding:1rem 0 1.15rem;border-top:1px solid var(--line-strong)}
-  body.frontier-briefing:not(#_) .controls-table tbody :is(th,td){padding:0;border:0}
-  body.frontier-briefing:not(#_) .controls-table tbody th{margin-bottom:.6rem}
-  body.frontier-briefing:not(#_) .controls-table tbody td + td{margin-top:.9rem}
-  body.frontier-briefing:not(#_) .controls-table td::before{
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody tr{padding:1rem 0 1.15rem;border-top:1px solid var(--line-strong)}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody :is(th,td){min-width:0;padding:0;border:0}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody th{margin-bottom:.6rem}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody td + td{margin-top:.9rem}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) td::before{
     content:attr(data-label);
     content:attr(data-label) / "";
     display:block;margin-bottom:.2rem;font-size:.9375rem;font-weight:600;color:var(--ink);
@@ -503,8 +513,8 @@ body.frontier-briefing:not(#_) .footer-seal .seal{
   body.frontier-briefing:not(#_) .edition-readout > div:first-child dd{font-size:16pt!important;line-height:1.1}
   body.frontier-briefing:not(#_) .record-body h3{font-size:12pt!important}
   body.frontier-briefing:not(#_) .rail-mark .rail-label{font-size:11pt}
-  body.frontier-briefing:not(#_) .controls-table tbody th{font-size:10.5pt!important}
-  body.frontier-briefing:not(#_) :is(.edition-readout dt,.edition-readout > div:not(:first-child) dd,.record-meta,.source-line,.briefing-links,.boundary strong,.rail-mark strong,.controls-table caption,.controls-table thead th,.status-word,.control-sources,.conclusion-change,.conclusion-evidence li){font-size:10pt!important}
+  body.frontier-briefing:not(#_) :is(.source-evidence-table,.controls-table) tbody th{font-size:10.5pt!important}
+  body.frontier-briefing:not(#_) :is(.edition-readout dt,.edition-readout > div:not(:first-child) dd,.record-meta,.source-line,.briefing-links,.boundary strong,.rail-mark strong,.source-evidence-table caption,.source-evidence-table thead th,.controls-table caption,.controls-table thead th,.status-word,.matrix-source-links,.control-sources,.conclusion-change,.conclusion-evidence li){font-size:10pt!important}
   /* print.css clears every fill and fades every border; the drawn marks keep both, so
      shape still carries status on paper. */
   body.frontier-briefing:not(#_) :is(.rail-symbol,.record[data-status="correction"] .status-mark){border-color:#000!important}

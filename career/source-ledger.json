@@ -628,6 +628,50 @@
         "Software composition analysis and secrets scanning"
       ],
       "status": "Issuer diploma and direct-exam pass verified September 30, 2026; no optional course/lab completion or production implementation claimed."
+    },
+    {
+      "id": "qualys-totalcloud",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys TotalCloud Exam",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 83.33,
+      "assessment_result": "25 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/totalcloud",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Cloud and SaaS security posture management (CSPM/SSPM)",
+        "Cloud connectors and FlexScan",
+        "Cloud risk prioritization and reporting"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; assessed vendor-product knowledge, not optional course/lab completion or production experience."
+    },
+    {
+      "id": "qualys-edr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Endpoint Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/endpoint-detection-and-response",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Endpoint deployment prerequisites",
+        "Triage and response roles",
+        "Event and process-tree investigation",
+        "Quarantine and remediation",
+        "Malware profile settings"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; assessed vendor-product knowledge, not optional course/lab completion or production experience."
     }
   ],
   "limits": [

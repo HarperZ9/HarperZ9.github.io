@@ -533,3 +533,19 @@ Assessed knowledge covers the container image/remediation lifecycle, registry sc
 Provider program description: https://www.qualys.com/training/course/kubernetes-and-container-security
 
 This program page is not an individual credential verification link. Private diploma download links are excluded. The credential is Qualys's vendor-product certification; no CNCF/Linux Foundation CKS designation is claimed.
+
+## TotalCloud and Endpoint Detection and Response
+
+### qualys-totalcloud
+
+Qualys Certified Specialist: Qualys TotalCloud Exam. The issuer diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 25/30 correct (83.33% rounded). Assessed topics cover CSPM/SSPM, connectors, FlexScan, cloud risk prioritization, and reporting.
+
+Provider program description: https://www.qualys.com/training/course/totalcloud
+
+### qualys-edr
+
+Qualys Certified Specialist: Endpoint Detection and Response. The issuer diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 29/30 correct (96.67% rounded). Assessed topics cover deployment prerequisites, triage/response roles, event and process-tree investigation, quarantine/remediation, and malware profile settings.
+
+Provider program description: https://www.qualys.com/training/course/endpoint-detection-and-response
+
+Both diplomas were visually verified. These are vendor-product certifications earned through direct exams; the optional courses and labs were not completed. No production implementation or general Expert designation is claimed. Program pages identify the curricula, not individual credential verification. Private diploma download links are excluded.

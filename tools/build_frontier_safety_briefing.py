@@ -96,6 +96,8 @@ ALLOWED_SOURCE_HOSTS = {
 }
 ALLOWED_LANES = {"aisi", "anthropic", "industry"}
 ALLOWED_STATES = {"baseline", "changed", "unchanged", "correction"}
+VISUAL_ANALYSIS_EFFECTIVE_DATE = "2026-09-30"
+VISUAL_ANALYSIS_FIELDS = {"unit", "transformation", "limitations"}
 ALLOWED_SOCIAL_PUBLICATION_STATES = {"not_posted", "posted"}
 LEGACY_OPTIONAL_SOCIAL_PUBLICATION_DATES = {"2026-08-24"}
 X_SOCIAL_POST_HOSTS = {"x.com", "www.x.com", "twitter.com", "www.twitter.com"}
@@ -282,6 +284,20 @@ def validate_edition(edition: dict) -> None:
             _require_choice(item, "status", ALLOWED_STATES, context)
             _require_choice(item, "source_role", ALLOWED_ROLES, context)
             _require_choice(item, "confidence", ALLOWED_CONFIDENCE, context)
+            visual_analysis = item.get("visual_analysis")
+            needs_visual_analysis = (
+                edition["edition_date"] >= VISUAL_ANALYSIS_EFFECTIVE_DATE
+                and item["status"] in {"changed", "correction"}
+            )
+            if needs_visual_analysis and not isinstance(visual_analysis, dict):
+                raise EditionError(f"{context}.visual_analysis must describe the source matrix")
+            if visual_analysis is not None:
+                if not isinstance(visual_analysis, dict) or set(visual_analysis) != VISUAL_ANALYSIS_FIELDS:
+                    raise EditionError(
+                        f"{context}.visual_analysis must contain exactly unit, transformation, and limitations"
+                    )
+                for key in sorted(VISUAL_ANALYSIS_FIELDS):
+                    _require_text(visual_analysis, key, f"{context}.visual_analysis")
             sources = item.get("sources")
             if not isinstance(sources, list) or not sources:
                 raise EditionError(f"{context}.sources must be non-empty")
