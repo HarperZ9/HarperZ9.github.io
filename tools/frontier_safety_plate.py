@@ -19,8 +19,8 @@ from frontier_safety_conclusions_render import render_section as render_conclusi
 
 
 # The plate layer's reviewed revision, registered in the site contract's
-# REVIEWED_ASSET_REVISIONS (25 September 2026, void-and-bone pass).
-FRONTIER_EDITION_CSS_ASSET_VERSION = "20260925-void-plates"
+# REVIEWED_ASSET_REVISIONS (30 September 2026, changed-source evidence matrix).
+FRONTIER_EDITION_CSS_ASSET_VERSION = "20260930-source-evidence-matrix"
 ART_CSS_ASSET_VERSION = "20260925-human-notebook"
 COVER_ART_STEM = "art/aperture/cover-frontier-safety"
 # Mirrors art/aperture/covers.json, where render-site-art records each cover's alt text.
@@ -126,6 +126,52 @@ def _render_lanes(lanes: list[dict]) -> tuple[str, str]:
     return "".join(rail), "".join(sections)
 
 
+def _render_source_evidence_matrix(edition: dict) -> str:
+    """Render one semantic row per changed source record.
+
+    The controls table answers whether a control is announced or tested. This matrix
+    answers a different question: what each newly material source measures, when, and
+    under which transformations and limits.
+    """
+    changed = [
+        item
+        for lane in edition["lanes"]
+        for item in lane["items"]
+        if item["status"] in {"changed", "correction"} and "visual_analysis" in item
+    ]
+    if not changed:
+        return ""
+    rows = []
+    for item in changed:
+        analysis = item["visual_analysis"]
+        rows.append(
+            f'<tr role="row" id="source-evidence-{_e(item["id"])}">'
+            f'<th scope="row" role="rowheader">{_e(item["title"])}'
+            f'<span class="matrix-source-links"><strong>Sources</strong> {_source_links(item["sources"])}</span></th>'
+            f'<td role="cell" data-label="Event time">{_e(item["event_time"])}</td>'
+            f'<td role="cell" data-label="Published">{_e(item["published_at"])}</td>'
+            f'<td role="cell" data-label="Unit">{_e(analysis["unit"])}</td>'
+            f'<td role="cell" data-label="Transformation">{_e(analysis["transformation"])}</td>'
+            f'<td role="cell" data-label="Limitations and non-proof"><strong>Limitations</strong> '
+            f'{_e(analysis["limitations"])} <strong>Does not prove</strong> {_e(item["does_not_prove"])}</td>'
+            "</tr>"
+        )
+    caption = (
+        f'<caption class="analysis-note"><strong>Changed-source evidence matrix for edition '
+        f'{_e(edition["edition_date"])}.</strong> Source, event and publication dates, unit, '
+        'transformation, limitations and non-proof are kept separate. Sources: each row links '
+        'to its reviewed public record. Row count is not a severity measure or evidence of '
+        'source completeness.</caption>'
+    )
+    return f"""<section class="mv wide-section source-evidence">
+    <header><h2>Changed-source evidence matrix</h2><p>One row per material record added in this edition.</p></header>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Changed-source evidence matrix"><table class="data data--wide source-evidence-table" role="table">
+      {caption}<thead role="rowgroup"><tr role="row"><th role="columnheader">Source record</th><th role="columnheader">Event time</th><th role="columnheader">Published</th><th role="columnheader">Unit</th><th role="columnheader">Transformation</th><th role="columnheader">Limitations and non-proof</th></tr></thead>
+      <tbody role="rowgroup">{"".join(rows)}</tbody>
+    </table></div>
+  </section>"""
+
+
 def _control_source_names(edition: dict) -> dict[str, str]:
     """Name each control source by the reviewed title a record gives the same URL, or
     by its public host when no record cites it. A name never covers two URLs."""
@@ -206,6 +252,8 @@ def _render_main(edition: dict, paths: dict[str, str], controls_caption: str, re
   </section>
 
   {lanes}
+
+  {_render_source_evidence_matrix(edition)}
 
   <section class="mv wide-section controls">
     <header><h2>Controls and their status</h2></header>

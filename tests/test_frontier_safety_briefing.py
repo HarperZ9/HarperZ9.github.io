@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import html
 import json
 import re
 from pathlib import Path
@@ -238,6 +239,42 @@ def test_page_metadata_social_copy_and_site_links() -> None:
     assert 200 <= len(linkedin) <= 3000
     assert "https://harperz9.github.io/frontier-safety.html" in x_copy
     assert "https://harperz9.github.io/frontier-safety.html" in linkedin
+
+
+def test_changed_source_evidence_matrix_keeps_dates_units_transformations_and_limits_distinct() -> None:
+    edition = read_json(f"frontier-safety/data/editions/{CURRENT_EDITION_DATE}.json")
+    changed = [
+        item
+        for lane in edition["lanes"]
+        for item in lane["items"]
+        if item["status"] == "changed"
+    ]
+    assert len(changed) == 3
+    for item in changed:
+        assert set(item["visual_analysis"]) == {"unit", "transformation", "limitations"}
+        assert all(item["visual_analysis"].values())
+
+    pages = [
+        (ROOT / "frontier-safety.html").read_text(encoding="utf-8"),
+        (ROOT / "frontier-safety" / "archive" / f"{CURRENT_EDITION_DATE}.html").read_text(
+            encoding="utf-8"
+        ),
+    ]
+    for page in pages:
+        section = page.split('<section class="mv wide-section source-evidence">', 1)[1].split(
+            "</section>", 1
+        )[0]
+        assert 'aria-label="Changed-source evidence matrix"' in section
+        assert "Source, event and publication dates, unit, transformation, limitations and non-proof" in section
+        assert '<section class="mv wide-section controls">' in page
+        for item in changed:
+            assert f'id="source-evidence-{item["id"]}"' in section
+            assert html.escape(item["event_time"], quote=True) in section
+            assert html.escape(item["published_at"], quote=True) in section
+            for field in ("unit", "transformation", "limitations"):
+                assert html.escape(item["visual_analysis"][field], quote=True) in section
+            for source in item["sources"]:
+                assert html.escape(source["url"], quote=True) in section
 
 
 def test_briefing_uses_the_shared_site_design_canon() -> None:
