@@ -564,7 +564,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Google DeepMind advanced small-language-model skill badge (100/100). Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -581,7 +581,8 @@
             "building-claude-api",
             "qualys-kcs",
             "qualys-totalcloud",
-            "qualys-edr"
+            "qualys-edr",
+            "google-deepmind-slm"
           ]
         },
         {
@@ -1528,6 +1529,13 @@
         },
         {
           "kind": "p",
+          "text": "Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.",
+          "evidence": [
+            "google-deepmind-slm"
+          ]
+        },
+        {
+          "kind": "p",
           "text": "Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026",
           "evidence": [
             "anthropic-mcp-advanced",
@@ -1995,6 +2003,27 @@
         "Event and process-tree investigation",
         "Quarantine and remediation",
         "Malware profile settings"
+      ]
+    },
+    {
+      "id": "google-deepmind-slm",
+      "provider": "Google Skills / Google DeepMind",
+      "kind": "Assessed skill badge",
+      "title": "Google DeepMind: Train A Small Language Model",
+      "official_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; all four coding checkpoints passed on the first lab attempt",
+      "url": "https://www.skills.google/course_templates/1453",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "Character tokenization and reconstruction",
+        "Random and greedy n-gram generation",
+        "Overlapping token-sequence segmentation",
+        "Padded next-token training inputs and targets"
       ]
     }
   ],

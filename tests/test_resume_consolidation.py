@@ -132,6 +132,12 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
         assert credential['designation'] == 'Qualys Certified Specialist'
         assert (credential['earned'], credential['expires']) == ('2026-09-30', '2028-09-29')
         assert credential['assessment_result'] == result
+    slm = next(c for c in credentials if c['id'] == 'google-deepmind-slm')
+    assert slm['kind'] == 'Assessed skill badge' and slm['official_level'] == 'Advanced'
+    assert (slm['score'], slm['maximum_score']) == (100, 100)
+    assert (slm['checkpoints_passed'], slm['checkpoints_total']) == (4, 4)
+    assert slm['url_role'] == 'Official course description'
+    assert slm['title'] in cv and 'four coding checkpoints' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

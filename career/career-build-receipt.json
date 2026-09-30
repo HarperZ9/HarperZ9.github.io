@@ -1,47 +1,47 @@
 {
   "artifacts": [
     {
-      "byte_length": 44997,
-      "extraction_sha256": "af89ecc0a4e81541fd197ab748ab0715a945d225e9c8266c98ac97cf3c3914d0",
+      "byte_length": 45088,
+      "extraction_sha256": "138b871c9e1c35be025354bf9aefb6d86462c108fd6024d28ae2a393e194e2e3",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "871053afecd4a25f2b81b4a3a69768c84367421e249e8f198324ba7c35006c69",
+      "sha256": "cb3a7a3cfebb5e850d66eed9b40198a89b2863668c832daf89d81cc14c49cb6f",
       "source": "cv.html"
     },
     {
-      "byte_length": 16246,
-      "extraction_sha256": "40bbf9355cd168c1e7aca804726ea4d918581c695634c5c696779d2578950c03",
+      "byte_length": 16383,
+      "extraction_sha256": "eada2dc471399b55fd8b981618001a6f096b3bfc7974a902701fe478d1f91dba",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 5,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "a72f5eb51b31fc373660b0cb682f430ddb2ba9095cfdbfc790aaad7c47f10f56",
+      "sha256": "c4a9265db02e5080287eebdfd48ce32b588bbafb907fa90c85aecc57341839d4",
       "source": "cv.html"
     },
     {
-      "byte_length": 38696,
-      "extraction_sha256": "82745798a08a89ab98e5db1a4f85c8957f3770299a9a0ac9671977c03d91332f",
+      "byte_length": 38738,
+      "extraction_sha256": "c102fa01c0a91559848232f4b5291222fafca76d9de3cba89201f0143f22e3ff",
       "format": "docx",
       "lane_id": "evaluation-python-tools",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx",
-      "sha256": "d07fc83c2a496d7f70f2b36b7cf8208ed9ac8fd18594af11e64cbd00557d83e1",
+      "sha256": "1aa917d5bdda008ca605d6526e65dd7460df3c300d974064333c66f5364787be",
       "source": "resume-evaluation-tooling.html"
     },
     {
-      "byte_length": 4057,
-      "extraction_sha256": "6278cc7f4725e8dfb3840c9337d14141fee9e658ab8aff86c2aa7580d0e210b5",
+      "byte_length": 4118,
+      "extraction_sha256": "1ae52de3faca7424f5fa8aeab612fd8a56d8b862ec1b5a3bddcad5885b042a43",
       "format": "pdf",
       "lane_id": "evaluation-python-tools",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
-      "sha256": "fd8f2cb870c82e4b1e6f87bb533e4167305eefe24a50c8cec0b66247293faa02",
+      "sha256": "fcc867944a2888c7ca3a921c1b896fdccf942a3c80be2edcd9fbc71d0a89e75f",
       "source": "resume-evaluation-tooling.html"
     },
     {
@@ -114,15 +114,15 @@
   "build_inputs": [
     {
       "path": "tools/build_career_artifacts.py",
-      "sha256": "fc2c2e96f00cddde9bf2a797057396cc6d1ee7e3e6db17bf2ff8f43844a0c2cd"
+      "sha256": "08a04f86bf52dfd4c4869146a66bb76d51b055f911db3a06b35423d1bda229e5"
     },
     {
       "path": "tools/render_career_pages.py",
-      "sha256": "f87a519161cdaaf702c3cd9a54919cd09f5dec5dadc85213613b127d85647f98"
+      "sha256": "e73cfd379bc1432030a2d75dd5d8b7ce224c839730d9e2ee8d6a6666b2404a04"
     },
     {
       "path": "career/resume-source.json",
-      "sha256": "e11fba77dab6649031056e94638f9d471b7655490238eb01ad335d82799d0434"
+      "sha256": "dd750ef6a5045d63cf4df91b75312ef53da101e284d1037b829df33c048cd033"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -147,11 +147,11 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "e10444d3cb9001421fafd6fbe8dcc843339bde68944b3fcc0ac621739ee1ddd8"
+      "sha256": "fb2d0fc4e4face410b708614c31c6c309fc81b919e8fb11f1876cf55315395a0"
     },
     {
       "path": "resume-evaluation-tooling.html",
-      "sha256": "bd89da198647e3c960f500a8df7aa20e3cf7b0830b3a741cb097ca5f500da93b"
+      "sha256": "9314680675043f19e225cba63fc4774ae86a9ca57282f348ead1cc360550cade"
     },
     {
       "path": "resume-grounds.html",

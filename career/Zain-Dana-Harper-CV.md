@@ -254,6 +254,8 @@ Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module 
 
 ### Additional Advanced and Strategy Coursework
 
+Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.
+
 Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026
 
 BlueDot Impact: AGI Strategy | Course completed in 2026

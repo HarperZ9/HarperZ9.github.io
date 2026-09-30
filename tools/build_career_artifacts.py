@@ -156,7 +156,7 @@ def _build_pdf(path: Path, blocks: tuple[Block, ...]) -> None:
             styles[key].leading = 12.5
         styles["h3"].spaceBefore = 5
         styles["h2"].spaceBefore = 7
-        styles["li"].spaceAfter = 2
+        styles["li"].spaceAfter = 1
         styles["p"].allowWidows = 0
     story = []
     for block in blocks:

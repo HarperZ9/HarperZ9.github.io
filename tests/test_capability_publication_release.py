@@ -428,7 +428,9 @@ RELEASE_PATHS = (
 # direct-exam certification added without optional-course or production claims.
 # September 30, 2026: reviewed TotalCloud/EDR direct-exam credentials and
 # current-main Frontier Safety integration; published incoming content unchanged.
-REVIEWED_RELEASE_SHA256 = "417383f63eff14607559c683768aef91c9ad07c0291d562331669d98bbf3fa76"
+# September 30, 2026: reviewed Google DeepMind Advanced assessed skill badge,
+# bounded coding result, and CV-only bullet spacing; no broader training claim.
+REVIEWED_RELEASE_SHA256 = "e1871a869eef30ec58f687db414560fb414251102f2da260ac31d1ea56619aa1"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

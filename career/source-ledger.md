@@ -549,3 +549,13 @@ Qualys Certified Specialist: Endpoint Detection and Response. The issuer diploma
 Provider program description: https://www.qualys.com/training/course/endpoint-detection-and-response
 
 Both diplomas were visually verified. These are vendor-product certifications earned through direct exams; the optional courses and labs were not completed. No production implementation or general Expert designation is claimed. Program pages identify the curricula, not individual credential verification. Private diploma download links are excluded.
+
+## Google DeepMind advanced skill badge
+
+### google-deepmind-slm
+
+Google DeepMind: Train A Small Language Model. Google Skills / Google DeepMind issued this Advanced assessed skill badge September 30, 2026. The first challenge-lab attempt scored 100/100, passing all four coding checkpoints. Assessed skills cover character tokenization/reconstruction, random and greedy n-gram generation, overlapping token-sequence segmentation, and padded next-token training inputs and targets.
+
+Official course description: https://www.skills.google/course_templates/1453
+
+This is an assessed skill badge, not professional Google Cloud certification. The recorded challenge scope does not establish an executed transformer-training run, production deployment, or model-quality improvement. The official course title is retained while the assessed scope is stated separately.

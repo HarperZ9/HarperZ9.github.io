@@ -672,6 +672,28 @@
         "Malware profile settings"
       ],
       "status": "Issuer diploma and direct-exam pass verified September 30, 2026; assessed vendor-product knowledge, not optional course/lab completion or production experience."
+    },
+    {
+      "id": "google-deepmind-slm",
+      "provider": "Google Skills / Google DeepMind",
+      "kind": "Assessed skill badge",
+      "title": "Google DeepMind: Train A Small Language Model",
+      "official_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; all four coding checkpoints passed on the first lab attempt",
+      "url": "https://www.skills.google/course_templates/1453",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "Character tokenization and reconstruction",
+        "Random and greedy n-gram generation",
+        "Overlapping token-sequence segmentation",
+        "Padded next-token training inputs and targets"
+      ],
+      "status": "Issuer-awarded Advanced skill badge recorded September 30, 2026; direct coding challenge passed on first attempt. Assessment scope is tokenization, n-gram generation, segmentation, and padded training data."
     }
   ],
   "limits": [
