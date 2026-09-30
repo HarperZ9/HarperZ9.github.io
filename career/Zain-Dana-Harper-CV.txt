@@ -254,7 +254,11 @@ Linux Foundation Course-Completion Certificates
 
 Additional Coursework and Skill Badges
 
+Cisco Networking Academy: Ethical Hacker | Intermediate course certificate and learning badge, 2026-09-30; 100% knowledge exam. Assessed scoping, reporting, vulnerability assessment, and security concepts.
+
 Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.
+
+Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.
 
 Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026
 

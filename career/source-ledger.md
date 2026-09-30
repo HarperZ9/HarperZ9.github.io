@@ -569,3 +569,23 @@ UNESCO via Coursera: Global MOOC on the Ethics of AI, developed with LG AI Resea
 https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K
 
 Assessed topics cover AI ethics and responsible governance; human rights, fairness, and data protection; proportional risk controls; transparency, accountability, and incident reporting; and environmental impacts and sustainability. This records direct graded-assessment completion. It does not claim the advertised study hours or completion of optional videos/readings, nor professional legal, regulatory, auditor, or AI-safety accreditation.
+
+## Google multi-agent systems skill badge
+
+### google-multi-agent
+
+Google Cloud / Google Skills: Use Agent Skills with Multi-Agent Systems, earned September 30, 2026. The first submitted challenge-lab attempt scored 100/100 across six accepted checkpoints. The official course page lists Intermediate; the challenge is Advanced. This assessed skill badge does not confer professional Google certification.
+
+Official course description: https://www.skills.google/paths/4459/course_templates/1842
+
+Assessed scope covers ADK skill loading, Pydantic structured evaluator output, format validation, loop/sequential orchestration, A2A remote-agent configuration, and Cloud Run deployment. Five services deployed in the assessment environment. Both local and cloud sample generation failed because the supplied environment's model-access policy denied model use. No end-to-end generation success, production implementation, independent mastery, or study-hour claim is made.
+
+## Cisco Networking Academy Ethical Hacker
+
+### cisco-ethical-hacker
+
+Cisco Networking Academy issued the Ethical Hacker course completion certificate and Cisco-issued Credly learning badge to Zain Dana Harper on September 30, 2026. The credential is Intermediate / student level. The first submitted knowledge exam achieved 50/50 (100%). Certificate identifier: ae761ad4-5671-4153-b2c9-19e7f8e42e67. Badge identifier: be9be111-860f-4c06-a416-71aa0cc48e34.
+
+https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url
+
+Assessed knowledge covers penetration-test scoping/reporting, vulnerability assessment/mitigation, web/network/cloud/mobile/IoT security concepts, and security-tool/code analysis. The record is direct knowledge-exam completion: optional labs, capstone, and lesson materials were not completed, and catalog hours are not claimed as study time. It does not confer CEH, a Cisco Professional certification, or the separate Cisco Certificate in Ethical Hacking that requires a CTF. No production penetration-testing experience is claimed.

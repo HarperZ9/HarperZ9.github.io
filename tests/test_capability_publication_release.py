@@ -432,7 +432,9 @@ RELEASE_PATHS = (
 # bounded coding result, and CV-only bullet spacing; no broader training claim.
 # September 30, 2026: reviewed UNESCO intermediate AI ethics course certificate
 # and governance scope; issuer URL preserved, no study-hours or accreditation claim.
-REVIEWED_RELEASE_SHA256 = "d57ea911cfc6946fd6263aec080ba260b8caadcd941ca35b2bd964a432e6affd"
+# September 30, 2026: reviewed Google multi-agent skill badge and Cisco learning
+# credential; model-policy generation failure and knowledge-exam scope preserved.
+REVIEWED_RELEASE_SHA256 = "8661a6593debd8b59f6db6bb3342c78a5b141d91c60cd00d8d0d833717fc3d10"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

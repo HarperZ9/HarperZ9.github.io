@@ -716,6 +716,54 @@
         "Environmental impacts and sustainability"
       ],
       "status": "Issued intermediate course certificate verified September 30, 2026; direct graded-assessment completion, not professional accreditation."
+    },
+    {
+      "id": "google-multi-agent",
+      "provider": "Google Cloud / Google Skills",
+      "kind": "Assessed skill badge",
+      "title": "Use Agent Skills with Multi-Agent Systems",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 6,
+      "checkpoints_total": 6,
+      "assessment_result": "100/100; all six checkpoints accepted on the first submitted lab attempt",
+      "url": "https://www.skills.google/paths/4459/course_templates/1842",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "ADK skill loading",
+        "Pydantic structured evaluator output and format validation",
+        "Loop and sequential orchestration",
+        "A2A remote-agent configuration",
+        "Cloud Run deployment"
+      ],
+      "lab_services_deployed": 5,
+      "execution_limit": "Five services deployed in the assessment environment, but local and cloud sample generation were blocked by its model-access policy. No end-to-end generation success or production implementation claimed.",
+      "status": "Issuer completion page confirmed the awarded skill badge September 30, 2026. Accepted checkpoints and lab service deployment do not establish successful end-to-end generation."
+    },
+    {
+      "id": "cisco-ethical-hacker",
+      "provider": "Cisco Networking Academy",
+      "kind": "Course certificate and learning badge",
+      "title": "Ethical Hacker",
+      "official_level": "Intermediate / student level",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "50/50; 100% on the first submitted knowledge-exam attempt",
+      "certificate_id": "ae761ad4-5671-4153-b2c9-19e7f8e42e67",
+      "badge_id": "be9be111-860f-4c06-a416-71aa0cc48e34",
+      "url": "https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url",
+      "course_url": "https://www.netacad.com/courses/ethical-hacker?courseLang=en-US",
+      "completion_evidence": "Cisco issued the course certificate and Credly learning badge to Zain Dana Harper on September 30, 2026. Direct knowledge exam completed; optional labs, capstone, and lesson materials were not completed.",
+      "assessed_skills": [
+        "Penetration-test scoping and reporting knowledge",
+        "Vulnerability assessment and mitigation concepts",
+        "Web, network, cloud, mobile, and IoT security concepts",
+        "Security-tool and code-analysis knowledge"
+      ],
+      "status": "Issuer certificate and public Credly learning badge verified September 30, 2026; direct knowledge-exam completion, not professional certification or practical pentest experience."
     }
   ],
   "limits": [

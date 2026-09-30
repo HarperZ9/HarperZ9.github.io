@@ -144,6 +144,20 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert unesco['certificate_id'] == '7I5YVE5P0W5K'
     assert unesco['url'] == 'https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K'
     assert unesco['title'] in cv and 'Intermediate course certificate' in cv
+    multi_agent = next(c for c in credentials if c['id'] == 'google-multi-agent')
+    assert multi_agent['kind'] == 'Assessed skill badge'
+    assert (multi_agent['course_level'], multi_agent['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (multi_agent['score'], multi_agent['maximum_score'], multi_agent['checkpoints_passed']) == (100, 100, 6)
+    assert multi_agent['lab_services_deployed'] == 5
+    assert 'local and cloud sample generation were blocked' in multi_agent['execution_limit']
+    assert multi_agent['title'] in cv and 'model-access policy blocked local and cloud generation' in cv
+    cisco = next(c for c in credentials if c['id'] == 'cisco-ethical-hacker')
+    assert cisco['kind'] == 'Course certificate and learning badge'
+    assert cisco['official_level'] == 'Intermediate / student level'
+    assert cisco['score_percent'] == 100 and cisco['earned'] == '2026-09-30'
+    assert cisco['badge_id'] == 'be9be111-860f-4c06-a416-71aa0cc48e34'
+    assert 'optional labs, capstone, and lesson materials were not completed' in cisco['completion_evidence']
+    assert 'Cisco Networking Academy: Ethical Hacker' in cv and '100% knowledge exam' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

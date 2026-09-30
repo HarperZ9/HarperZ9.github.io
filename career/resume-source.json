@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Cisco Ethical Hacker course certificate. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -444,7 +444,8 @@
             "building-claude-api",
             "qualys-kcs",
             "qualys-totalcloud",
-            "qualys-edr"
+            "qualys-edr",
+            "cisco-ethical-hacker"
           ]
         },
         {
@@ -564,7 +565,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Google DeepMind advanced small-language-model skill badge (100/100). Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Google skill badges: advanced small-language-model coding; multi-agent systems. Cisco Ethical Hacker course certificate. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -583,7 +584,9 @@
             "qualys-totalcloud",
             "qualys-edr",
             "google-deepmind-slm",
-            "unesco-ai-ethics"
+            "unesco-ai-ethics",
+            "google-multi-agent",
+            "cisco-ethical-hacker"
           ]
         },
         {
@@ -1530,9 +1533,23 @@
         },
         {
           "kind": "p",
+          "text": "Cisco Networking Academy: Ethical Hacker | Intermediate course certificate and learning badge, 2026-09-30; 100% knowledge exam. Assessed scoping, reporting, vulnerability assessment, and security concepts.",
+          "evidence": [
+            "cisco-ethical-hacker"
+          ]
+        },
+        {
+          "kind": "p",
           "text": "Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.",
           "evidence": [
             "google-deepmind-slm"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.",
+          "evidence": [
+            "google-multi-agent"
           ]
         },
         {
@@ -2053,6 +2070,52 @@
         "Proportional risk controls",
         "Transparency, accountability, and incident reporting",
         "Environmental impacts and sustainability"
+      ]
+    },
+    {
+      "id": "google-multi-agent",
+      "provider": "Google Cloud / Google Skills",
+      "kind": "Assessed skill badge",
+      "title": "Use Agent Skills with Multi-Agent Systems",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 6,
+      "checkpoints_total": 6,
+      "assessment_result": "100/100; all six checkpoints accepted on the first submitted lab attempt",
+      "url": "https://www.skills.google/paths/4459/course_templates/1842",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "ADK skill loading",
+        "Pydantic structured evaluator output and format validation",
+        "Loop and sequential orchestration",
+        "A2A remote-agent configuration",
+        "Cloud Run deployment"
+      ],
+      "lab_services_deployed": 5,
+      "execution_limit": "Five services deployed in the assessment environment, but local and cloud sample generation were blocked by its model-access policy. No end-to-end generation success or production implementation claimed."
+    },
+    {
+      "id": "cisco-ethical-hacker",
+      "provider": "Cisco Networking Academy",
+      "kind": "Course certificate and learning badge",
+      "title": "Ethical Hacker",
+      "official_level": "Intermediate / student level",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "50/50; 100% on the first submitted knowledge-exam attempt",
+      "certificate_id": "ae761ad4-5671-4153-b2c9-19e7f8e42e67",
+      "badge_id": "be9be111-860f-4c06-a416-71aa0cc48e34",
+      "url": "https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url",
+      "course_url": "https://www.netacad.com/courses/ethical-hacker?courseLang=en-US",
+      "completion_evidence": "Cisco issued the course certificate and Credly learning badge to Zain Dana Harper on September 30, 2026. Direct knowledge exam completed; optional labs, capstone, and lesson materials were not completed.",
+      "assessed_skills": [
+        "Penetration-test scoping and reporting knowledge",
+        "Vulnerability assessment and mitigation concepts",
+        "Web, network, cloud, mobile, and IoT security concepts",
+        "Security-tool and code-analysis knowledge"
       ]
     }
   ],
