@@ -521,3 +521,15 @@ Anthropic Claude Academy: Building with the Claude API. The issuer awarded Zain 
 https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194
 
 The Claude records establish issuer-awarded completion badges based on required quizzes. They do not claim completion of every lesson or advertised study hour, an executed API project, professional Architect certification, or production experience. No charged API calls were needed for these assessments.
+
+## Qualys Kubernetes and Container Security certification
+
+### qualys-kcs
+
+Qualys Certified Specialist: Qualys Kubernetes and Container Security. The diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 29/30 correct (96.67% rounded). The issuer diploma was visually verified. The optional course and labs were not completed; no production implementation is claimed.
+
+Assessed knowledge covers the container image/remediation lifecycle, registry scanning, CI/CD policy gates, sensor selection, Kubernetes workload prioritization, runtime visibility, software composition analysis, and secrets scanning.
+
+Provider program description: https://www.qualys.com/training/course/kubernetes-and-container-security
+
+This program page is not an individual credential verification link. Private diploma download links are excluded. The credential is Qualys's vendor-product certification; no CNCF/Linux Foundation CKS designation is claimed.

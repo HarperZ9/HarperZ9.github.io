@@ -230,7 +230,7 @@ def router_body(source: dict, *, hire: bool) -> str:
     skills = [item for item in credentials if item['kind'] == 'Applied Skills credential']
     advanced = [item for item in credentials if item['kind'].startswith('Advanced ') and item['provider'] == 'Microsoft Learn']
     additions = ['<section><h2>Credentials and advanced coursework</h2>',
-                 '<p>Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response. All issued September 30, 2026; expire September 29, 2028. <a href="career/source-ledger.md#qualys-policy-audit">Credential evidence</a>.</p>',
+                 '<p>Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security. All issued September 30, 2026; expire September 29, 2028. <a href="career/source-ledger.md#qualys-policy-audit">Credential evidence</a>.</p>',
                  '<p>Microsoft Applied Skills credentials earned September 29, 2026:</p><ul>']
     additions += [f'<li><a href="{escape(item["url"], quote=True)}">{escape(item["title"])}</a></li>' for item in skills]
     additions += ['</ul><p>Advanced Microsoft Learn coursework:</p><ul>']

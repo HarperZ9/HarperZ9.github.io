@@ -424,7 +424,9 @@ RELEASE_PATHS = (
 # Specialist designations added; CV widow guard and spacing independently reviewed.
 # September 30, 2026: reviewed VMDR direct-exam credential and two Claude
 # assessment-awarded completion badges; issuer scope remains explicit.
-REVIEWED_RELEASE_SHA256 = "baeb74c8d9af3a80eaa1630c60ca1d178cea2e3966ed3be87654246594323a38"
+# September 30, 2026: reviewed Qualys Kubernetes and Container Security
+# direct-exam certification added without optional-course or production claims.
+REVIEWED_RELEASE_SHA256 = "6f44c940fbcd21a5b44a2dcfe3a991211d117762058a4324fa8a7de4aca36cc1"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

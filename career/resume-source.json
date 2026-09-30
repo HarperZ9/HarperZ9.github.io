@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -441,7 +441,8 @@
             "qualys-car",
             "qualys-vmdr",
             "claude-code-in-action",
-            "building-claude-api"
+            "building-claude-api",
+            "qualys-kcs"
           ]
         },
         {
@@ -561,7 +562,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -575,7 +576,8 @@
             "qualys-car",
             "qualys-vmdr",
             "claude-code-in-action",
-            "building-claude-api"
+            "building-claude-api",
+            "qualys-kcs"
           ]
         },
         {
@@ -1340,11 +1342,12 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response | Issued 2026-09-30; expire 2028-09-29",
+          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security | Issued 2026-09-30; expire 2028-09-29",
           "evidence": [
             "qualys-policy-audit",
             "qualys-car",
-            "qualys-vmdr"
+            "qualys-vmdr",
+            "qualys-kcs"
           ]
         },
         {
@@ -1546,7 +1549,7 @@
         },
         {
           "kind": "p",
-          "text": "Assessed knowledge: Qualys policy baselines, scans, reporting, exceptions, script approvals and role separation; Claude API grading, tool use, workflow routing/chaining, and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.",
+          "text": "Assessed knowledge: Qualys policy baselines, scans, reporting, exceptions, script approvals, role separation, container scanning and CI/CD gates; Claude API grading, tool use, workflow routing/chaining, and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -1564,7 +1567,8 @@
             "qualys-policy-audit",
             "qualys-car",
             "claude-code-in-action",
-            "building-claude-api"
+            "building-claude-api",
+            "qualys-kcs"
           ]
         }
       ],
@@ -1919,6 +1923,28 @@
         "Tool use and MCP",
         "Workflow routing, chaining, and parallelization",
         "API-key security"
+      ]
+    },
+    {
+      "id": "qualys-kcs",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys Kubernetes and Container Security",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/kubernetes-and-container-security",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Container image and remediation lifecycle",
+        "Registry scanning and CI/CD policy gates",
+        "Sensor selection and Kubernetes workload prioritization",
+        "Runtime visibility",
+        "Software composition analysis and secrets scanning"
       ]
     }
   ],

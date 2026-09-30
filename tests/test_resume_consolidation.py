@@ -115,6 +115,13 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
         assert item['kind'] == 'Course-completion badge'
         assert item['url'].startswith('https://academy.claude.com/verify/')
         assert item['title'] in cv
+    kcs = next(c for c in credentials if c['id'] == 'qualys-kcs')
+    assert kcs['title'] == 'Qualys Kubernetes and Container Security'
+    assert kcs['kind'] == 'Vendor certification' and kcs['course_completed'] is False
+    assert kcs['designation'] == 'Qualys Certified Specialist'
+    assert (kcs['earned'], kcs['expires']) == ('2026-09-30', '2028-09-29')
+    assert kcs['assessment_result'] == '29 of 30 correct; passed on the first attempt'
+    assert kcs['title'] in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

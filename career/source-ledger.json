@@ -605,6 +605,29 @@
         "API-key security"
       ],
       "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "qualys-kcs",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys Kubernetes and Container Security",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/kubernetes-and-container-security",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Container image and remediation lifecycle",
+        "Registry scanning and CI/CD policy gates",
+        "Sensor selection and Kubernetes workload prioritization",
+        "Runtime visibility",
+        "Software composition analysis and secrets scanning"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; no optional course/lab completion or production implementation claimed."
     }
   ],
   "limits": [
