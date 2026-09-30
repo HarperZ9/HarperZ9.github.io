@@ -1,6 +1,6 @@
 # Zain Dana Harper
 
-Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
@@ -8,7 +8,7 @@ AI Systems Engineering | Evaluation | Python Developer Tools
 
 ## Professional Summary
 
-Independent systems engineer who builds AI tools and verifies their outputs. Owns architecture, implementation, testing, and release delivery across Flywheel and companion systems. Contributes upstream fixes that prevent evaluation crashes, configuration data loss, and misleading API responses.
+Independent systems engineer building AI tools and verifying outputs. Owns architecture, testing, and release delivery across Flywheel and companion systems; contributes upstream fixes for evaluation crashes, configuration data loss, and API errors.
 
 ## Technical Skills
 
@@ -18,13 +18,15 @@ Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI
 
 ### Independent Systems Engineer | Independent practice | 2023 to Present
 
-- Built and shipped Flywheel, a Python/Flutter workstation unifying Rowan, model routing, and tool-driven tasks; packaged its engine in a Windows installer to remove a separate Python setup step.
+Sole proprietor since September 2026
+
+- Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.
 
 - Authored 324 exhaustive terminal-state cases and a 337-case component suite with 5,058 frozen expectations, giving evaluators reproducible checks for failed outputs and repairs.
 
-- Built Articulate for auditable writing analysis and Accountable Surface for scoped approvals, postcondition checks, and computer-use adapters, making edits and actions inspectable.
+- Built Articulate writing analysis and Accountable Surface interfaces for scoped approvals, postcondition checks, and computer-use adapters.
 
-- Developed BuildLang capability checks and Phantom audit/restore workflows, making permissions and reversible system changes explicit in the implementation.
+- Developed BuildLang capability checks and Phantom audit/restore workflows for explicit permissions and reversible changes.
 
 ### Arboriculture and Field Operations | Legendary Tree
 
@@ -50,6 +52,8 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Datasette #2815: validated composite-key arity so malformed row URLs return a client error rather than a server failure or misleading result. Merged.
 
-## Education
+## Credentials, Training, and Education
+
+Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

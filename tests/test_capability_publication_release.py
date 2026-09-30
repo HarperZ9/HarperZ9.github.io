@@ -413,7 +413,10 @@ RELEASE_PATHS = (
 # paragraphs and nine-case record remain unchanged.
 # September 28, 2026: four reviewed Atlas essays, source records and share cards;
 # refreshed Flywheel and Articulate release copy across the registry and home.
-REVIEWED_RELEASE_SHA256 = "ad2449a22f2143f720db1337d7133a5037197342adf3bbf3531b6bdccc5e767b"
+# September 30, 2026: reviewed career documents add issued Applied Skills,
+# completed coursework, public-interest writing, Kent location and availability.
+# The source-ledger categories and five-page CV passed independent review.
+REVIEWED_RELEASE_SHA256 = "ba680cb39eb7171b68adf53270549c1a2500068f1e579058b2025b410bbc56e6"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

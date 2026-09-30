@@ -1,6 +1,6 @@
 # Zain Dana Harper
 
-Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
@@ -39,6 +39,8 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 - Wrote implementation guides, API documentation, and release notes that translated technical changes into usable instructions for developers and customers.
 
 ### Independent Systems Engineer | Independent practice | 2023 to Present
+
+Sole proprietor since September 2026
 
 - Built tools and documentation for repeatable workflows; used tests, structured records, and explicit checks to make work easier to inspect and hand off.
 

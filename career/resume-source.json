@@ -1,9 +1,9 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-09-20",
+  "reviewed": "2026-09-30",
   "identity": {
     "name": "Zain Dana Harper",
-    "location": "Seattle, Washington",
+    "location": "Kent, Washington",
     "email": "zaindharper@gmail.com",
     "linkedin": "https://www.linkedin.com/in/zaindanaharper/",
     "github": "https://github.com/HarperZ9",
@@ -13,7 +13,8 @@
     "independent_engineering": "Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.",
     "freelance_writing": "Start year 2017 is known. No current status, end year, or continuous employment is inferred.",
     "arboriculture": "Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.",
-    "networking_support": "2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment."
+    "networking_support": "2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.",
+    "sole_proprietorship": "Owner-confirmed September 30, 2026: sole proprietorship began September 2026, separately from independent project practice since 2023. No LLC or registered trade name is claimed."
   },
   "groups": {
     "identity": [
@@ -23,7 +24,7 @@
       },
       {
         "kind": "contact",
-        "text": "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
+        "text": "Kent, Washington | zaindharper@gmail.com | harperz9.github.io"
       },
       {
         "kind": "p",
@@ -37,10 +38,17 @@
       },
       {
         "kind": "meta",
-        "text": "Seattle / remote | 2023 to Present",
+        "text": "Kent / remote | 2023 to Present",
         "evidence": [
           "history",
           "current-project-work"
+        ]
+      },
+      {
+        "kind": "meta",
+        "text": "Sole proprietor since September 2026",
+        "evidence": [
+          "sole-proprietorship"
         ]
       }
     ],
@@ -210,7 +218,7 @@
       },
       {
         "kind": "contact",
-        "text": "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
+        "text": "Kent, Washington | zaindharper@gmail.com | harperz9.github.io"
       },
       {
         "kind": "contact",
@@ -224,6 +232,13 @@
         "evidence": [
           "history",
           "current-project-work"
+        ]
+      },
+      {
+        "kind": "meta",
+        "text": "Sole proprietor since September 2026",
+        "evidence": [
+          "sole-proprietorship"
         ]
       }
     ],
@@ -351,7 +366,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Flywheel, a Python/Flutter AI workstation with Rowan task orchestration, model routing, and permission-checked tools; shipped a Windows installer with a bundled engine for installation without a separate Python setup.",
+          "text": "Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.",
           "evidence": [
             "flywheel"
           ]
@@ -407,7 +422,28 @@
           ]
         },
         {
-          "ref": "resume-education"
+          "kind": "h2",
+          "text": "Credentials, Training, and Education"
+        },
+        {
+          "kind": "p",
+          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "evidence": [
+            "ms-ai-security",
+            "ms-entra",
+            "ms-storage",
+            "lfd121",
+            "sc100-apps-data",
+            "sc100-mcra-mcsb",
+            "bluedot-agi-strategy"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
+          "evidence": [
+            "history"
+          ]
         }
       ],
       "page_target": 1
@@ -431,7 +467,7 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems engineer who builds AI tools and verifies their outputs. Owns architecture, implementation, testing, and release delivery across Flywheel and companion systems. Contributes upstream fixes that prevent evaluation crashes, configuration data loss, and misleading API responses."
+          "text": "Independent systems engineer building AI tools and verifying outputs. Owns architecture, testing, and release delivery across Flywheel and companion systems; contributes upstream fixes for evaluation crashes, configuration data loss, and API errors."
         },
         {
           "kind": "h2",
@@ -450,7 +486,7 @@
         },
         {
           "kind": "li",
-          "text": "Built and shipped Flywheel, a Python/Flutter workstation unifying Rowan, model routing, and tool-driven tasks; packaged its engine in a Windows installer to remove a separate Python setup step.",
+          "text": "Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.",
           "evidence": [
             "flywheel"
           ]
@@ -464,7 +500,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate for auditable writing analysis and Accountable Surface for scoped approvals, postcondition checks, and computer-use adapters, making edits and actions inspectable.",
+          "text": "Built Articulate writing analysis and Accountable Surface interfaces for scoped approvals, postcondition checks, and computer-use adapters.",
           "evidence": [
             "articulate",
             "accountable-surface"
@@ -472,7 +508,7 @@
         },
         {
           "kind": "li",
-          "text": "Developed BuildLang capability checks and Phantom audit/restore workflows, making permissions and reversible system changes explicit in the implementation.",
+          "text": "Developed BuildLang capability checks and Phantom audit/restore workflows for explicit permissions and reversible changes.",
           "evidence": [
             "buildlang",
             "phantom"
@@ -513,7 +549,28 @@
           ]
         },
         {
-          "ref": "resume-education"
+          "kind": "h2",
+          "text": "Credentials, Training, and Education"
+        },
+        {
+          "kind": "p",
+          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "evidence": [
+            "ms-ai-security",
+            "ms-entra",
+            "ms-storage",
+            "lfd121",
+            "sc100-apps-data",
+            "sc100-mcra-mcsb",
+            "bluedot-agi-strategy"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
+          "evidence": [
+            "history"
+          ]
         }
       ],
       "page_target": 1
@@ -711,12 +768,19 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. My work connects a practical question to a verifiable implementation: what happened, what evidence supports it, and who authorized the next action. I combine a self-directed programming history with prior technical networking support and eleven years of full-time arboriculture and customer-facing operations.",
+          "text": "Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. Combines self-directed programming with technical networking support and eleven years of full-time arboriculture and customer-facing operations.",
           "evidence": [
             "history",
             "flywheel",
             "buildlang",
             "emet"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Open to technical and nontechnical AI governance and evaluation roles. Available for regular travel to San Francisco and London.",
+          "evidence": [
+            "career-availability"
           ]
         },
         {
@@ -803,9 +867,10 @@
         },
         {
           "kind": "p",
-          "text": "Primary owned platform. The September 19, 2026 v1.0.1 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
+          "text": "Primary owned platform. The September 29, 2026 v1.1.2 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
           "evidence": [
-            "flywheel"
+            "flywheel",
+            "flywheel-v1.1.2-release"
           ]
         },
         {
@@ -860,9 +925,10 @@
         },
         {
           "kind": "p",
-          "text": "Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.3.0 was released September 20, 2026.",
+          "text": "Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.5.2, released September 29, 2026, adds guarded host editing through local MCP and a released plugin.",
           "evidence": [
-            "articulate"
+            "articulate",
+            "articulate-v0.5.2-release"
           ]
         },
         {
@@ -1105,9 +1171,65 @@
         },
         {
           "kind": "p",
-          "text": "My independent research examines how an AI system can leave evidence that another system or person can check without inheriting its authority. Workstreams include evaluation provenance and verifier independence; live-state drift; proof-carrying action envelopes; the relationship between memory, uncertainty, and behavior; and explicit human authorization for consequential actions. Robotics is a research interest, not a claim of professional robotics deployment experience.",
+          "text": "My independent research examines evidence that another person or system can check without inheriting an AI system's authority. Work includes evaluation provenance and verifier independence; live-state drift; proof-carrying actions; memory, uncertainty, and behavior; and human authorization for consequential actions. Robotics is a research interest.",
           "evidence": [
             "history"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "AI Accountability, Disclosure, and Public-Interest Writing"
+        },
+        {
+          "kind": "p",
+          "text": "Independent essays on AI accountability, disclosure, conflicts of interest, and human consequences, relevant to public-interest and whistleblower-protection work.",
+          "evidence": [
+            "who-knew-first",
+            "borrowed-ground"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Who Knew First"
+        },
+        {
+          "kind": "p",
+          "text": "September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. Separates source claims, inference, and unresolved attribution. harperz9.github.io/who-knew-first.html",
+          "evidence": [
+            "who-knew-first"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "An Open Letter on Checking the Machines"
+        },
+        {
+          "kind": "p",
+          "text": "September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. harperz9.github.io/checking-the-machines.html",
+          "evidence": [
+            "checking-the-machines"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Borrowed Ground"
+        },
+        {
+          "kind": "p",
+          "text": "September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html",
+          "evidence": [
+            "borrowed-ground"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "The Sandbox Was Never Just a Box"
+        },
+        {
+          "kind": "p",
+          "text": "September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html",
+          "evidence": [
+            "sandbox-essay"
           ]
         },
         {
@@ -1122,89 +1244,57 @@
           ]
         },
         {
-          "kind": "h3",
-          "text": "EMET: An Authority-Incapable Byte-Level Integrity Witness"
-        },
-        {
-          "kind": "p",
-          "text": "Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267",
+          "kind": "li",
+          "text": "EMET: An Authority-Incapable Byte-Level Integrity Witness. Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "BuildLang: Accountable Compute via Typed Capability Effects"
-        },
-        {
-          "kind": "p",
-          "text": "Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253",
+          "kind": "li",
+          "text": "BuildLang: Accountable Compute via Typed Capability Effects. Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work"
-        },
-        {
-          "kind": "p",
-          "text": "Preprint, 2026. doi.org/10.5281/zenodo.21232206",
+          "kind": "li",
+          "text": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work. Preprint, 2026. doi.org/10.5281/zenodo.21232206",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions"
-        },
-        {
-          "kind": "p",
-          "text": "Preprint, 2026. doi.org/10.5281/zenodo.21231406",
+          "kind": "li",
+          "text": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions. Preprint, 2026. doi.org/10.5281/zenodo.21231406",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "The Personhood-Gate Handoff"
-        },
-        {
-          "kind": "p",
-          "text": "Research note, 2026. doi.org/10.5281/zenodo.21234475",
+          "kind": "li",
+          "text": "The Personhood-Gate Handoff. Research note, 2026. doi.org/10.5281/zenodo.21234475",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "Re-Perceived Effects"
-        },
-        {
-          "kind": "p",
-          "text": "Research note, 2026. doi.org/10.5281/zenodo.21231311",
+          "kind": "li",
+          "text": "Re-Perceived Effects. Research note, 2026. doi.org/10.5281/zenodo.21231311",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "The Witnessing Spine"
-        },
-        {
-          "kind": "p",
-          "text": "Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927",
+          "kind": "li",
+          "text": "The Witnessing Spine. Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927",
           "evidence": [
             "publications"
           ]
         },
         {
-          "kind": "h3",
-          "text": "Conferred Existence"
-        },
-        {
-          "kind": "p",
-          "text": "Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724",
+          "kind": "li",
+          "text": "Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724",
           "evidence": [
             "publications"
           ]
@@ -1220,18 +1310,228 @@
           ]
         },
         {
-          "kind": "h2",
-          "text": "Research and Portfolio Links"
-        },
-        {
           "kind": "p",
           "text": "ORCID: 0009-0001-7175-5393 | orcid.org/0009-0001-7175-5393"
         },
         {
           "kind": "p",
           "text": "Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.io/portfolio.html"
+        },
+        {
+          "kind": "h2",
+          "text": "Credentials and Continuing Education"
+        },
+        {
+          "kind": "p",
+          "text": "Completed September 2026. Credential links, identifiers, and assessment results: harperz9.github.io/career/source-ledger.md."
+        },
+        {
+          "kind": "h3",
+          "text": "Microsoft Applied Skills"
+        },
+        {
+          "kind": "li",
+          "text": "Secure AI solutions in the cloud | Earned September 29, 2026 | Credential ED8852810C3B3FBC",
+          "evidence": [
+            "ms-ai-security"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Get started with identities and access using Microsoft Entra | Earned September 29, 2026 | Credential 3D93C65204CB43EE",
+          "evidence": [
+            "ms-entra"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Secure storage for Azure Files and Azure Blob Storage | Earned September 29, 2026 | Credential 4117A3B4196233D2",
+          "evidence": [
+            "ms-storage"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Advanced Microsoft Learn Coursework"
+        },
+        {
+          "kind": "p",
+          "text": "SC-100: Design security solutions for applications and data. Completed four module assessments and the architecture case study.",
+          "evidence": [
+            "sc100-apps-data"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module completed September 30, 2026: security architecture, Zero Trust, insider and supply-chain risk, and AI security controls.",
+          "evidence": [
+            "sc100-mcra-mcsb"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Linux Foundation Course-Completion Certificates"
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1012: Secure AI/ML-Driven Software Development",
+          "evidence": [
+            "lfel1012"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks",
+          "evidence": [
+            "lfs120"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFD121: Developing Secure Software",
+          "evidence": [
+            "lfd121"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS182: Securing Your Software Supply Chain with Sigstore",
+          "evidence": [
+            "lfs182"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1001: Understanding the EU Cyber Resilience Act (CRA)",
+          "evidence": [
+            "lfel1001"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS118: Ethical Principles for Conversational AI",
+          "evidence": [
+            "lfs118"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1006: Securing Projects with OpenSSF Scorecard",
+          "evidence": [
+            "lfel1006"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1005: Security Self-Assessments for Open Source Projects",
+          "evidence": [
+            "lfel1005"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1007: Automating Supply Chain Security: SBOMs and Signatures",
+          "evidence": [
+            "lfel1007"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFD125: Security for Software Development Managers",
+          "evidence": [
+            "lfd125"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS180: Introduction to DevSecOps for Managers",
+          "evidence": [
+            "lfs180"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "SKF100: OWASP Top 10 Security Threats",
+          "evidence": [
+            "skf100"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS184: Introduction to JavaScript Security",
+          "evidence": [
+            "lfs184"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFC108: Cybersecurity Essentials",
+          "evidence": [
+            "lfc108"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1004: Authentication and Authorization for Web/API",
+          "evidence": [
+            "lfel1004"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFEL1008: Migrating AI Workflows Across Platforms",
+          "evidence": [
+            "lfel1008"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "LFS147: Introduction to AI/ML Toolkits with Kubeflow",
+          "evidence": [
+            "lfs147"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "BlueDot Impact Coursework"
+        },
+        {
+          "kind": "p",
+          "text": "AGI Strategy | Course completed in 2026",
+          "evidence": [
+            "bluedot-agi-strategy"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.",
+          "evidence": [
+            "bluedot-action-plan"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Topics Practiced in Training"
+        },
+        {
+          "kind": "p",
+          "text": "Cloud AI security; Microsoft Entra identity and access; Azure storage encryption, immutable retention, and replication; secure software development; Sigstore, SBOMs, OpenSSF Scorecard; conversational AI ethics and compliance; application and data security architecture; MCRA, MCSB, Zero Trust, model provenance, and prompt-injection defenses. These topics describe assessed labs and coursework, separately from professional experience.",
+          "evidence": [
+            "ms-ai-security",
+            "ms-entra",
+            "ms-storage",
+            "lfd121",
+            "lfs182",
+            "lfel1007",
+            "lfel1006",
+            "lfs118",
+            "lfs120",
+            "sc100-apps-data",
+            "sc100-mcra-mcsb"
+          ]
         }
-      ]
+      ],
+      "page_target": 5
     }
   ],
   "impact_policy": {
@@ -1240,5 +1540,242 @@
     "measurements": "324 exhaustive terminal-state cases; 337 component-forge cases; 5,058 frozen expectations. Counts measure evaluation coverage, not customer adoption or model performance.",
     "organization_value": "Employer bullets describe scoping, service restoration, decision support, consistent handoffs, and risk communication. These are functional contributions, not quantified business outcomes.",
     "page_policy": "Each targeted resume is one page. The separate full CV retains the expanded record."
+  },
+  "credentials": [
+    {
+      "id": "ms-ai-security",
+      "provider": "Microsoft",
+      "kind": "Applied Skills credential",
+      "title": "Secure AI solutions in the cloud",
+      "earned": "2026-09-29",
+      "score_percent": 87,
+      "credential_id": "ED8852810C3B3FBC",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud"
+    },
+    {
+      "id": "ms-entra",
+      "provider": "Microsoft",
+      "kind": "Applied Skills credential",
+      "title": "Get started with identities and access using Microsoft Entra",
+      "earned": "2026-09-29",
+      "score_percent": 100,
+      "credential_id": "3D93C65204CB43EE",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra"
+    },
+    {
+      "id": "ms-storage",
+      "provider": "Microsoft",
+      "kind": "Applied Skills credential",
+      "title": "Secure storage for Azure Files and Azure Blob Storage",
+      "earned": "2026-09-29",
+      "score_percent": 86,
+      "credential_id": "4117A3B4196233D2",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage"
+    },
+    {
+      "id": "lfel1012",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Secure AI/ML-Driven Software Development",
+      "course_code": "LFEL1012",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/secure-aiml-driven-software-development-lfel1012-2025?id=1e7f37e6-80c2-4b0d-a314-13053994a969"
+    },
+    {
+      "id": "lfs120",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Conversational AI: Ensuring Compliance and Mitigating Risks",
+      "course_code": "LFS120",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/conversational-ai-ensuring-compliance-and-mitigating-risks-lfs120?id=ac430a39-e3b4-4fb9-8f43-99770a75f35c"
+    },
+    {
+      "id": "lfd121",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Developing Secure Software",
+      "course_code": "LFD121",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/developing-secure-software-lfd121?id=91be7725-2244-4254-9f37-d9a41ec87168"
+    },
+    {
+      "id": "lfs182",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Securing Your Software Supply Chain with Sigstore",
+      "course_code": "LFS182",
+      "completed": "2026-09",
+      "score_percent": 90,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/securing-your-software-supply-chain-with-sigstore-lfs182?id=facd2c27-7e97-4303-b2a6-db4f2f33c477"
+    },
+    {
+      "id": "lfel1001",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Understanding the EU Cyber Resilience Act (CRA)",
+      "course_code": "LFEL1001",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/understanding-the-eu-cyber-resilience-act-cra-lfel1001?id=fe3547ff-a925-4094-9c34-9b0000046658"
+    },
+    {
+      "id": "lfs118",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Ethical Principles for Conversational AI",
+      "course_code": "LFS118",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/ethical-principles-for-conversational-ai-lfs118?id=caa07911-50ba-4d16-9a16-c0504b895ffd"
+    },
+    {
+      "id": "lfel1006",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Securing Projects with OpenSSF Scorecard",
+      "course_code": "LFEL1006",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/securing-projects-with-openssf-scorecard-lfel1006?id=21ddbf9f-6b9f-4e83-91cf-50251ef8699a"
+    },
+    {
+      "id": "lfel1005",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Security Self-Assessments for Open Source Projects",
+      "course_code": "LFEL1005",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/security-self-assessments-for-open-source-projects-lfel1005?id=3eaa4c88-1569-4a37-bdea-22dae30b8f6d"
+    },
+    {
+      "id": "lfel1007",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Automating Supply Chain Security: SBOMs and Signatures",
+      "course_code": "LFEL1007",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/automating-supply-chain-security-sboms-and-signatures-lfel1007?id=11bc8f0a-d7c2-4edd-ae82-2f9ed1ec229d"
+    },
+    {
+      "id": "lfd125",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Security for Software Development Managers",
+      "course_code": "LFD125",
+      "completed": "2026-09",
+      "score_percent": 90,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/security-for-software-development-managers-lfd125?id=69c98fcc-3d2f-476e-b795-4c5b6c8d8cd9"
+    },
+    {
+      "id": "lfs180",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Introduction to DevSecOps for Managers",
+      "course_code": "LFS180",
+      "completed": "2026-09",
+      "score_percent": 80,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-devsecops-for-managers-lfs180?id=717c6a23-8d28-499c-8022-68b650ff314a"
+    },
+    {
+      "id": "skf100",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "OWASP Top 10 Security Threats",
+      "course_code": "SKF100",
+      "completed": "2026-09",
+      "score_percent": 90,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/owasp-top-10-security-threats-skf100?id=075ce22e-dc2a-41db-ac51-e970e3cc3a05"
+    },
+    {
+      "id": "lfs184",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Introduction to JavaScript Security",
+      "course_code": "LFS184",
+      "completed": "2026-09",
+      "score_percent": 80,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-javascript-security-lfs184?id=ae6ab7d0-7754-4c96-8d90-6583f6a5ffcb"
+    },
+    {
+      "id": "lfc108",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Cybersecurity Essentials",
+      "course_code": "LFC108",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/cybersecurity-essentials-lfc108?id=0bac67dd-3da5-41e1-90be-cde6cfa20ec8"
+    },
+    {
+      "id": "lfel1004",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Authentication and Authorization for Web/API",
+      "course_code": "LFEL1004",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/authentication-and-authorization-for-webapi-lfel1004?id=abfb47ee-a752-4bb9-81cb-ccf7f401a11e"
+    },
+    {
+      "id": "lfel1008",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Migrating AI Workflows Across Platforms",
+      "course_code": "LFEL1008",
+      "completed": "2026-09",
+      "score_percent": 100,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/migrating-ai-workflows-across-platforms-lfel1008?id=9e5e968b-e1ec-409e-a799-595f2ea9c405"
+    },
+    {
+      "id": "lfs147",
+      "provider": "Linux Foundation",
+      "kind": "Course-completion certificate",
+      "title": "Introduction to AI/ML Toolkits with Kubeflow",
+      "course_code": "LFS147",
+      "completed": "2026-09",
+      "score_percent": 90,
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-aiml-toolkits-with-kubeflow-lfs147?id=bece7e91-8827-4b09-a5ae-446da8e10afb"
+    },
+    {
+      "id": "sc100-apps-data",
+      "provider": "Microsoft Learn",
+      "kind": "Advanced learning-path completion",
+      "title": "Design security solutions for applications and data",
+      "completed": "2026-09",
+      "assessment_result": "Four module assessments passed at 100%; architecture case study completed",
+      "url": "https://learn.microsoft.com/en-us/training/modules/case-study-apps-data/5-summary#completion"
+    },
+    {
+      "id": "sc100-mcra-mcsb",
+      "provider": "Microsoft Learn",
+      "kind": "Advanced module completion",
+      "title": "Design solutions that align with the Microsoft Cybersecurity Reference Architecture (MCRA) and Microsoft cloud security benchmark (MCSB)",
+      "completed": "2026-09-30",
+      "assessment_result": "Nine units completed; module assessment passed at 100%; achievement awarded",
+      "url": "https://learn.microsoft.com/en-us/training/modules/design-solutions-microsoft-cybersecurity-cloud-security-benchmark/5-summary#completion"
+    },
+    {
+      "id": "bluedot-agi-strategy",
+      "provider": "BlueDot Impact",
+      "kind": "Course completion",
+      "title": "AGI Strategy",
+      "completed": "2026",
+      "confirmed": "2026-09-30",
+      "completion_evidence": "Owner-confirmed course completion on September 30, 2026; no certificate identifier, certificate URL, or score supplied.",
+      "url": "https://bluedot.org/courses/agi-strategy",
+      "url_role": "Provider course description, not individual completion verification"
+    }
+  ],
+  "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",
+  "availability": {
+    "roles": "Open to technical and nontechnical AI governance and evaluation roles.",
+    "travel": "Available for regular travel to San Francisco and London.",
+    "source": "Owner confirmed September 30, 2026; travel availability does not imply relocation or work authorization in another country."
   }
 }

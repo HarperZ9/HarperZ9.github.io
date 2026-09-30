@@ -1,6 +1,6 @@
 # Career source ledger
 
-Reviewed September 20, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
+Reviewed September 30, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
 
 ## Recovery and authority
 
@@ -189,3 +189,243 @@ Each targeted resume is one page; the full CV preserves the expanded record. Bul
 Source: https://github.com/HarperZ9/terminal-state-fixtures/blob/c5f411e81e88ebcd753681471f4245118599a2ae/README.md (Environments; The claims are tests).
 
 American-English spelling and grammar are reviewed across the canonical source and generated text; proper names and technical terms retain their project spelling.
+
+## Credentials and continuing education
+
+Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.
+
+Provider completion screens were checked during the September 2026 coursework session. The following links identify the completed records; access to some Linux Foundation records may require sign-in. Scores describe the recorded assessment, not workplace performance.
+
+### ms-ai-security
+
+Microsoft: Secure AI solutions in the cloud (Applied Skills credential).
+
+Credential ID: ED8852810C3B3FBC. Assessment score: 87%.
+
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud
+
+### ms-entra
+
+Microsoft: Get started with identities and access using Microsoft Entra (Applied Skills credential).
+
+Credential ID: 3D93C65204CB43EE. Assessment score: 100%.
+
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra
+
+### ms-storage
+
+Microsoft: Secure storage for Azure Files and Azure Blob Storage (Applied Skills credential).
+
+Credential ID: 4117A3B4196233D2. Assessment score: 86%.
+
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage
+
+### lfel1012
+
+Linux Foundation: Secure AI/ML-Driven Software Development (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/secure-aiml-driven-software-development-lfel1012-2025?id=1e7f37e6-80c2-4b0d-a314-13053994a969
+
+### lfs120
+
+Linux Foundation: Conversational AI: Ensuring Compliance and Mitigating Risks (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/conversational-ai-ensuring-compliance-and-mitigating-risks-lfs120?id=ac430a39-e3b4-4fb9-8f43-99770a75f35c
+
+### lfd121
+
+Linux Foundation: Developing Secure Software (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/developing-secure-software-lfd121?id=91be7725-2244-4254-9f37-d9a41ec87168
+
+### lfs182
+
+Linux Foundation: Securing Your Software Supply Chain with Sigstore (Course-completion certificate).
+
+Assessment score: 90%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/securing-your-software-supply-chain-with-sigstore-lfs182?id=facd2c27-7e97-4303-b2a6-db4f2f33c477
+
+### lfel1001
+
+Linux Foundation: Understanding the EU Cyber Resilience Act (CRA) (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/understanding-the-eu-cyber-resilience-act-cra-lfel1001?id=fe3547ff-a925-4094-9c34-9b0000046658
+
+### lfs118
+
+Linux Foundation: Ethical Principles for Conversational AI (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/ethical-principles-for-conversational-ai-lfs118?id=caa07911-50ba-4d16-9a16-c0504b895ffd
+
+### lfel1006
+
+Linux Foundation: Securing Projects with OpenSSF Scorecard (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/securing-projects-with-openssf-scorecard-lfel1006?id=21ddbf9f-6b9f-4e83-91cf-50251ef8699a
+
+### lfel1005
+
+Linux Foundation: Security Self-Assessments for Open Source Projects (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/security-self-assessments-for-open-source-projects-lfel1005?id=3eaa4c88-1569-4a37-bdea-22dae30b8f6d
+
+### lfel1007
+
+Linux Foundation: Automating Supply Chain Security: SBOMs and Signatures (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/automating-supply-chain-security-sboms-and-signatures-lfel1007?id=11bc8f0a-d7c2-4edd-ae82-2f9ed1ec229d
+
+### lfd125
+
+Linux Foundation: Security for Software Development Managers (Course-completion certificate).
+
+Assessment score: 90%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/security-for-software-development-managers-lfd125?id=69c98fcc-3d2f-476e-b795-4c5b6c8d8cd9
+
+### lfs180
+
+Linux Foundation: Introduction to DevSecOps for Managers (Course-completion certificate).
+
+Assessment score: 80%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-devsecops-for-managers-lfs180?id=717c6a23-8d28-499c-8022-68b650ff314a
+
+### skf100
+
+Linux Foundation: OWASP Top 10 Security Threats (Course-completion certificate).
+
+Assessment score: 90%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/owasp-top-10-security-threats-skf100?id=075ce22e-dc2a-41db-ac51-e970e3cc3a05
+
+### lfs184
+
+Linux Foundation: Introduction to JavaScript Security (Course-completion certificate).
+
+Assessment score: 80%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-javascript-security-lfs184?id=ae6ab7d0-7754-4c96-8d90-6583f6a5ffcb
+
+### lfc108
+
+Linux Foundation: Cybersecurity Essentials (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/cybersecurity-essentials-lfc108?id=0bac67dd-3da5-41e1-90be-cde6cfa20ec8
+
+### lfel1004
+
+Linux Foundation: Authentication and Authorization for Web/API (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/authentication-and-authorization-for-webapi-lfel1004?id=abfb47ee-a752-4bb9-81cb-ccf7f401a11e
+
+### lfel1008
+
+Linux Foundation: Migrating AI Workflows Across Platforms (Course-completion certificate).
+
+Assessment score: 100%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/migrating-ai-workflows-across-platforms-lfel1008?id=9e5e968b-e1ec-409e-a799-595f2ea9c405
+
+### lfs147
+
+Linux Foundation: Introduction to AI/ML Toolkits with Kubeflow (Course-completion certificate).
+
+Assessment score: 90%.
+
+https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-aiml-toolkits-with-kubeflow-lfs147?id=bece7e91-8827-4b09-a5ae-446da8e10afb
+
+### sc100-apps-data
+
+Microsoft Learn: Design security solutions for applications and data (Advanced learning-path completion).
+
+Four module assessments passed at 100%; architecture case study completed.
+
+https://learn.microsoft.com/en-us/training/modules/case-study-apps-data/5-summary#completion
+
+### sc100-mcra-mcsb
+
+Microsoft Learn: Design solutions that align with the Microsoft Cybersecurity Reference Architecture (MCRA) and Microsoft cloud security benchmark (MCSB) (Advanced module completion). Nine units completed; module assessment passed at 100%; achievement awarded. Completed September 30, 2026.
+
+https://learn.microsoft.com/en-us/training/modules/design-solutions-microsoft-cybersecurity-cloud-security-benchmark/5-summary#completion
+
+## Recent public-interest writing
+
+Public pages were inspected September 30, 2026. Publication does not establish independent validation of every underlying incident or external adoption of proposed governance methods.
+
+### who-knew-first
+
+Who Knew First. September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. Separates source claims, inference, and unresolved attribution. harperz9.github.io/who-knew-first.html
+
+### checking-the-machines
+
+An Open Letter on Checking the Machines. September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. The proposed trial has not run. harperz9.github.io/checking-the-machines.html
+
+### borrowed-ground
+
+Borrowed Ground. September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html
+
+### sandbox-essay
+
+The Sandbox Was Never Just a Box. September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html
+
+## Interpretation limits for public-interest writing
+
+The proposed trial in An Open Letter on Checking the Machines has not run. The reviewed writing does not establish professional whistleblower-support or confidential case-handling experience. Career copy describes essays and proposals relevant to that field; it does not claim casework or external adoption.
+
+## September 29 release updates
+
+These release records supersede older current-version references for the career summary. Earlier sources remain historical evidence; a standalone companion release does not prove it is bundled in every Flywheel release.
+
+### flywheel-v1.1.2-release
+
+GitHub release verified September 30, 2026; Windows installer and bundled engine assets; no external adoption claim. Published 2026-09-29T19:11:43Z.
+
+https://github.com/HarperZ9/flywheel/releases/tag/v1.1.2
+
+### articulate-v0.5.2-release
+
+GitHub release verified September 30, 2026; guarded local host editing and released plugin; no GUI or external adoption claim. Published 2026-09-29T17:32:20Z.
+
+https://github.com/HarperZ9/articulate/releases/tag/v0.5.2
+
+## September 30 owner confirmations
+
+### sole-proprietorship
+
+The owner confirmed beginning a sole proprietorship in September 2026. Independent project practice began in 2023; the two dates describe different activities. No LLC or registered trade name is claimed.
+
+### career-availability
+
+The owner confirmed interest in technical and nontechnical AI governance and evaluation roles and availability for regular travel to San Francisco and London. Travel availability does not establish relocation plans or work authorization in another country.
+
+### bluedot-agi-strategy
+
+BlueDot Impact: AGI Strategy. The owner confirmed course completion September 30, 2026. The provider page verifies the course title and identity; it does not verify individual completion. No certificate identifier, certificate URL, or assessment score was supplied or inferred.
+
+https://bluedot.org/courses/agi-strategy
+
+### bluedot-action-plan
+
+The owner's AGI Strategy action-plan form was reviewed September 30, 2026. Its proposals cover label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results. These are proposed methods, not a deployed policy or an established causal relationship between incident labels and disclosure timing. Private document and submission URLs are excluded.

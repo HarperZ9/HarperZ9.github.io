@@ -1,6 +1,6 @@
 # Zain Dana Harper: Resumes
 
-Updated 2026-09-20.
+Updated 2026-09-30.
 
 Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
@@ -55,5 +55,6 @@ Start year 2023 from historical career record; current independent project activ
 Start year 2017 is known. No current status, end year, or continuous employment is inferred.
 Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.
 2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.
+Owner-confirmed September 30, 2026: sole proprietorship began September 2026, separately from independent project practice since 2023. No LLC or registered trade name is claimed.
 
 Detailed source ledger: https://harperz9.github.io/career/source-ledger.md

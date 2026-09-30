@@ -1,6 +1,6 @@
 # Zain Dana Harper
 
-Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
@@ -18,7 +18,9 @@ Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSoc
 
 ### Independent Systems Engineer | Independent practice | 2023 to Present
 
-- Built Flywheel, a Python/Flutter AI workstation with Rowan task orchestration, model routing, and permission-checked tools; shipped a Windows installer with a bundled engine for installation without a separate Python setup.
+Sole proprietor since September 2026
+
+- Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.
 
 - Designed offline verification and 324 exhaustive terminal-state fixtures so teams can distinguish incorrect outputs from provider failures rather than rely on an agent's success claim.
 
@@ -48,6 +50,8 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Voxwire #44: added offline WebSocket recording/replay tests, verifying saved audio and events without live provider dependencies. Merged.
 
-## Education
+## Credentials, Training, and Education
+
+Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

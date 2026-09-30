@@ -29,7 +29,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, PageBreak
 from pypdf import PdfReader
 
 
-SOURCE_EPOCH = 1789931178  # 2026-09-20T19:06:18Z
+SOURCE_EPOCH = 1790755200  # 2026-09-30T08:00:00Z
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,6 +1,6 @@
 # Zain Dana Harper
 
-Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
@@ -8,13 +8,17 @@ Curriculum Vitae | Systems Engineering, AI Infrastructure, and Field Operations
 
 ## Profile
 
-Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. My work connects a practical question to a verifiable implementation: what happened, what evidence supports it, and who authorized the next action. I combine a self-directed programming history with prior technical networking support and eleven years of full-time arboriculture and customer-facing operations.
+Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. Combines self-directed programming with technical networking support and eleven years of full-time arboriculture and customer-facing operations.
+
+Open to technical and nontechnical AI governance and evaluation roles. Available for regular travel to San Francisco and London.
 
 ## Professional Experience
 
 ### Independent Systems Engineer | Independent practice
 
-Seattle / remote | 2023 to Present
+Kent / remote | 2023 to Present
+
+Sole proprietor since September 2026
 
 - Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
 
@@ -50,7 +54,7 @@ Self-directed programming began with game modding, reverse engineering, bot and 
 
 ### Flywheel | Model-agnostic AI workstation and coding harness
 
-Primary owned platform. The September 19, 2026 v1.0.1 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
+Primary owned platform. The September 29, 2026 v1.1.2 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
 
 - Routes tasks to hosted or local models through an OpenAI-compatible gateway; keeps model selection separate from the task record and exposes command-line, desktop, and API entry points.
 
@@ -68,7 +72,7 @@ The v0.2.0 release provides source and wheel artifacts on GitHub. The project re
 
 ### Articulate | Writing analysis and accountable editing
 
-Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.3.0 was released September 20, 2026.
+Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.5.2, released September 29, 2026, adds guarded host editing through local MCP and a released plugin.
 
 ### Agent tools, memory, and coordination
 
@@ -140,43 +144,47 @@ AI-assisted development is part of the workflow. Architecture, integration, sour
 
 ## Research Agenda
 
-My independent research examines how an AI system can leave evidence that another system or person can check without inheriting its authority. Workstreams include evaluation provenance and verifier independence; live-state drift; proof-carrying action envelopes; the relationship between memory, uncertainty, and behavior; and explicit human authorization for consequential actions. Robotics is a research interest, not a claim of professional robotics deployment experience.
+My independent research examines evidence that another person or system can check without inheriting an AI system's authority. Work includes evaluation provenance and verifier independence; live-state drift; proof-carrying actions; memory, uncertainty, and behavior; and human authorization for consequential actions. Robotics is a research interest.
+
+## AI Accountability, Disclosure, and Public-Interest Writing
+
+Independent essays on AI accountability, disclosure, conflicts of interest, and human consequences, relevant to public-interest and whistleblower-protection work.
+
+### Who Knew First
+
+September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. Separates source claims, inference, and unresolved attribution. harperz9.github.io/who-knew-first.html
+
+### An Open Letter on Checking the Machines
+
+September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. harperz9.github.io/checking-the-machines.html
+
+### Borrowed Ground
+
+September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html
+
+### The Sandbox Was Never Just a Box
+
+September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html
 
 ## Selected Publications and Research Records
 
 Independent systems papers, preprints, research notes, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.
 
-### EMET: An Authority-Incapable Byte-Level Integrity Witness
+- EMET: An Authority-Incapable Byte-Level Integrity Witness. Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267
 
-Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267
+- BuildLang: Accountable Compute via Typed Capability Effects. Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253
 
-### BuildLang: Accountable Compute via Typed Capability Effects
+- Witnessed Independence: Recording Whether a Verifier Graded Its Own Work. Preprint, 2026. doi.org/10.5281/zenodo.21232206
 
-Systems paper, 2026. Capability effects and accountable compilation. doi.org/10.5281/zenodo.21231253
+- Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions. Preprint, 2026. doi.org/10.5281/zenodo.21231406
 
-### Witnessed Independence: Recording Whether a Verifier Graded Its Own Work
+- The Personhood-Gate Handoff. Research note, 2026. doi.org/10.5281/zenodo.21234475
 
-Preprint, 2026. doi.org/10.5281/zenodo.21232206
+- Re-Perceived Effects. Research note, 2026. doi.org/10.5281/zenodo.21231311
 
-### Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions
+- The Witnessing Spine. Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927
 
-Preprint, 2026. doi.org/10.5281/zenodo.21231406
-
-### The Personhood-Gate Handoff
-
-Research note, 2026. doi.org/10.5281/zenodo.21234475
-
-### Re-Perceived Effects
-
-Research note, 2026. doi.org/10.5281/zenodo.21231311
-
-### The Witnessing Spine
-
-Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927
-
-### Conferred Existence
-
-Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724
+- Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724
 
 ## Education
 
@@ -184,8 +192,70 @@ High School Diploma | Wilsonville High School, Wilsonville, Oregon | 2013
 
 Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge is grounded in field work, not a separately claimed professional license.
 
-## Research and Portfolio Links
-
 ORCID: 0009-0001-7175-5393 | orcid.org/0009-0001-7175-5393
 
 Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.io/portfolio.html
+
+## Credentials and Continuing Education
+
+Completed September 2026. Credential links, identifiers, and assessment results: harperz9.github.io/career/source-ledger.md.
+
+### Microsoft Applied Skills
+
+- Secure AI solutions in the cloud | Earned September 29, 2026 | Credential ED8852810C3B3FBC
+
+- Get started with identities and access using Microsoft Entra | Earned September 29, 2026 | Credential 3D93C65204CB43EE
+
+- Secure storage for Azure Files and Azure Blob Storage | Earned September 29, 2026 | Credential 4117A3B4196233D2
+
+### Advanced Microsoft Learn Coursework
+
+SC-100: Design security solutions for applications and data. Completed four module assessments and the architecture case study.
+
+Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module completed September 30, 2026: security architecture, Zero Trust, insider and supply-chain risk, and AI security controls.
+
+### Linux Foundation Course-Completion Certificates
+
+- LFEL1012: Secure AI/ML-Driven Software Development
+
+- LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks
+
+- LFD121: Developing Secure Software
+
+- LFS182: Securing Your Software Supply Chain with Sigstore
+
+- LFEL1001: Understanding the EU Cyber Resilience Act (CRA)
+
+- LFS118: Ethical Principles for Conversational AI
+
+- LFEL1006: Securing Projects with OpenSSF Scorecard
+
+- LFEL1005: Security Self-Assessments for Open Source Projects
+
+- LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
+
+- LFD125: Security for Software Development Managers
+
+- LFS180: Introduction to DevSecOps for Managers
+
+- SKF100: OWASP Top 10 Security Threats
+
+- LFS184: Introduction to JavaScript Security
+
+- LFC108: Cybersecurity Essentials
+
+- LFEL1004: Authentication and Authorization for Web/API
+
+- LFEL1008: Migrating AI Workflows Across Platforms
+
+- LFS147: Introduction to AI/ML Toolkits with Kubeflow
+
+### BlueDot Impact Coursework
+
+AGI Strategy | Course completed in 2026
+
+Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
+
+### Topics Practiced in Training
+
+Cloud AI security; Microsoft Entra identity and access; Azure storage encryption, immutable retention, and replication; secure software development; Sigstore, SBOMs, OpenSSF Scorecard; conversational AI ethics and compliance; application and data security architecture; MCRA, MCSB, Zero Trust, model provenance, and prompt-injection defenses. These topics describe assessed labs and coursework, separately from professional experience.
