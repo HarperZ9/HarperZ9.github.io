@@ -544,6 +544,67 @@
       ],
       "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Guided tutorial steps were reviewed; no independent live-production lab execution is claimed.",
       "designation": "Qualys Certified Specialist"
+    },
+    {
+      "id": "qualys-vmdr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Vulnerability Management Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course not completed.",
+      "url": "https://www.qualys.com/training/course/vmdr",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "claude-code-in-action",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude Code in action",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "8 of 8 correct; passed on the first attempt",
+      "url": "https://academy.claude.com/verify/0c5799efa34fc755ed73d4f9e3506963",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quiz completion; no lesson-hour or project-execution claim.",
+      "assessed_skills": [
+        "Claude Code verification hooks",
+        "MCP and tool use",
+        "API-key security"
+      ],
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "building-claude-api",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Building with the Claude API",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required assessments passed on first attempts: 8/8, 6/6, 5/5, 7/7, 7/7, 6/6, 7/7, and 23/23; total 69/69",
+      "assessment_scores": [
+        8,
+        6,
+        5,
+        7,
+        7,
+        6,
+        7,
+        23
+      ],
+      "url": "https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quizzes; no 67-lesson, nine-hour, or API-project execution claim.",
+      "assessed_skills": [
+        "Prompt, code, and model grading",
+        "Tool use and MCP",
+        "Workflow routing, chaining, and parallelization",
+        "API-key security"
+      ],
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
     }
   ],
   "limits": [

@@ -76,7 +76,7 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
         assert f"{course['course_code']}: {course['title']}" in cv
     assert 'The SC-100 certification exam has not been taken.' in SOURCE['credential_policy']
     assert 'Advanced Microsoft Learn Coursework' in cv
-    assert 'Completed coursework:' in cv and 'Research references:' in cv
+    assert 'Coursework:' in cv and 'Research references:' in cv
     assert SOURCE['identity']['location'] == 'Kent, Washington'
     bluedot = next(c for c in credentials if c['id'] == 'bluedot-agi-strategy')
     assert bluedot['kind'] == 'Course completion'
@@ -104,6 +104,17 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert qualys['designation'] == car['designation'] == 'Qualys Certified Specialist'
     assert 'Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation' in cv
     assert 'Issued 2026-09-30; expire 2028-09-29' in cv
+    vmdr = next(c for c in credentials if c['id'] == 'qualys-vmdr')
+    assert vmdr['kind'] == 'Vendor certification' and vmdr['course_completed'] is False
+    assert vmdr['title'] == 'Vulnerability Management Detection and Response'
+    assert 'direct open-book certification exam' in vmdr['completion_evidence']
+    api = next(c for c in credentials if c['id'] == 'building-claude-api')
+    assert len(api['assessment_scores']) == 8 and sum(api['assessment_scores']) == 69
+    code = next(c for c in credentials if c['id'] == 'claude-code-in-action')
+    for item in (api, code):
+        assert item['kind'] == 'Course-completion badge'
+        assert item['url'].startswith('https://academy.claude.com/verify/')
+        assert item['title'] in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

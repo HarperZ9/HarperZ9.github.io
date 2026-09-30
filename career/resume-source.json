@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -438,7 +438,10 @@
             "bluedot-agi-strategy",
             "anthropic-mcp-advanced",
             "qualys-policy-audit",
-            "qualys-car"
+            "qualys-car",
+            "qualys-vmdr",
+            "claude-code-in-action",
+            "building-claude-api"
           ]
         },
         {
@@ -558,7 +561,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -569,7 +572,10 @@
             "bluedot-agi-strategy",
             "anthropic-mcp-advanced",
             "qualys-policy-audit",
-            "qualys-car"
+            "qualys-car",
+            "qualys-vmdr",
+            "claude-code-in-action",
+            "building-claude-api"
           ]
         },
         {
@@ -1334,10 +1340,11 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation | Issued 2026-09-30; expire 2028-09-29",
+          "text": "Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response | Issued 2026-09-30; expire 2028-09-29",
           "evidence": [
             "qualys-policy-audit",
-            "qualys-car"
+            "qualys-car",
+            "qualys-vmdr"
           ]
         },
         {
@@ -1512,9 +1519,11 @@
         },
         {
           "kind": "p",
-          "text": "Anthropic Claude Academy: Model Context Protocol: Advanced topics | Completion badge, September 30, 2026",
+          "text": "Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026",
           "evidence": [
-            "anthropic-mcp-advanced"
+            "anthropic-mcp-advanced",
+            "claude-code-in-action",
+            "building-claude-api"
           ]
         },
         {
@@ -1537,7 +1546,7 @@
         },
         {
           "kind": "p",
-          "text": "Assessed Qualys knowledge: policy baselines, scans, reports, exceptions; script approvals, role separation, scheduled jobs. Completed coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA; MCP sampling, roots, JSON-RPC and transports. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions and scope: harperz9.github.io/career/standards-reference.md.",
+          "text": "Assessed knowledge: Qualys policy baselines, scans, reporting, exceptions, script approvals and role separation; Claude API grading, tool use, workflow routing/chaining, and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -1553,7 +1562,9 @@
             "standards-reference-20260930",
             "anthropic-mcp-advanced",
             "qualys-policy-audit",
-            "qualys-car"
+            "qualys-car",
+            "claude-code-in-action",
+            "building-claude-api"
           ]
         }
       ],
@@ -1851,6 +1862,64 @@
         "Script Result Check user-defined controls and CAR APIs"
       ],
       "designation": "Qualys Certified Specialist"
+    },
+    {
+      "id": "qualys-vmdr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Vulnerability Management Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course not completed.",
+      "url": "https://www.qualys.com/training/course/vmdr",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false
+    },
+    {
+      "id": "claude-code-in-action",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude Code in action",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "8 of 8 correct; passed on the first attempt",
+      "url": "https://academy.claude.com/verify/0c5799efa34fc755ed73d4f9e3506963",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quiz completion; no lesson-hour or project-execution claim.",
+      "assessed_skills": [
+        "Claude Code verification hooks",
+        "MCP and tool use",
+        "API-key security"
+      ]
+    },
+    {
+      "id": "building-claude-api",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Building with the Claude API",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required assessments passed on first attempts: 8/8, 6/6, 5/5, 7/7, 7/7, 6/6, 7/7, and 23/23; total 69/69",
+      "assessment_scores": [
+        8,
+        6,
+        5,
+        7,
+        7,
+        6,
+        7,
+        23
+      ],
+      "url": "https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quizzes; no 67-lesson, nine-hour, or API-project execution claim.",
+      "assessed_skills": [
+        "Prompt, code, and model grading",
+        "Tool use and MCP",
+        "Workflow routing, chaining, and parallelization",
+        "API-key security"
+      ]
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",

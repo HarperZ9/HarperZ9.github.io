@@ -422,7 +422,9 @@ RELEASE_PATHS = (
 # update; issuer dates and assessed knowledge added to career formats.
 # September 30, 2026: CAR credential and both issuer-verified Qualys Certified
 # Specialist designations added; CV widow guard and spacing independently reviewed.
-REVIEWED_RELEASE_SHA256 = "5cf9cef9ed60233052bb8f1b65595cb68618a9fb03074a6943806845ba23e813"
+# September 30, 2026: reviewed VMDR direct-exam credential and two Claude
+# assessment-awarded completion badges; issuer scope remains explicit.
+REVIEWED_RELEASE_SHA256 = "baeb74c8d9af3a80eaa1630c60ca1d178cea2e3966ed3be87654246594323a38"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -497,3 +497,27 @@ The provider course page identifies the curriculum, not this learner's individua
 ### Issuer designation
 
 Both rendered Qualys diplomas explicitly display "Qualys Certified Specialist" above their credential fields: Policy Audit and Custom Assessment and Remediation. The designation was visually verified September 30, 2026; the exact course titles, issue dates, and expiry dates remain as recorded above. This is a vendor-product designation.
+
+## September 30 VMDR and Claude badges
+
+### qualys-vmdr
+
+Qualys Certified Specialist: Vulnerability Management Detection and Response. The diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book certification exam passed with 29/30 correct (96.67% rounded). The optional course was not completed; no five-hour course, lab execution, or production-engagement claim is made. The issuer diploma was visually verified.
+
+Provider program description: https://www.qualys.com/training/course/vmdr
+
+This program page is not an individual credential verification link. Private diploma download links are excluded.
+
+### claude-code-in-action
+
+Anthropic Claude Academy: Claude Code in action. The issuer awarded Zain Dana Harper a course-completion badge September 30, 2026. The required assessment passed 8/8 (100%) on the first attempt. Assessed topics include verification hooks, MCP/tool use, and API-key security.
+
+https://academy.claude.com/verify/0c5799efa34fc755ed73d4f9e3506963
+
+### building-claude-api
+
+Anthropic Claude Academy: Building with the Claude API. The issuer awarded Zain Dana Harper a course-completion badge September 30, 2026. All eight required assessments passed on their first attempts: 8/8, 6/6, 5/5, 7/7, 7/7, 6/6, 7/7, and final 23/23, totaling 69/69 (100%). Assessed knowledge covers prompt/code/model grading, tool use, MCP, workflow routing/chaining/parallelization, and API-key security.
+
+https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194
+
+The Claude records establish issuer-awarded completion badges based on required quizzes. They do not claim completion of every lesson or advertised study hour, an executed API project, professional Architect certification, or production experience. No charged API calls were needed for these assessments.
