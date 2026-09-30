@@ -694,6 +694,28 @@
         "Padded next-token training inputs and targets"
       ],
       "status": "Issuer-awarded Advanced skill badge recorded September 30, 2026; direct coding challenge passed on first attempt. Assessment scope is tokenization, n-gram generation, segmentation, and padded training data."
+    },
+    {
+      "id": "unesco-ai-ethics",
+      "provider": "UNESCO via Coursera",
+      "kind": "Course certificate",
+      "title": "Global MOOC on the Ethics of AI",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "100%; first submitted graded-assessment attempt",
+      "certificate_id": "7I5YVE5P0W5K",
+      "url": "https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K",
+      "course_url": "https://www.coursera.org/learn/global-mooc-on-the-ethics-of-ai",
+      "completion_evidence": "Issuer certificate record identifies Zain Dana Harper and September 30, 2026 completion; the graded assessment recorded 100%.",
+      "assessed_skills": [
+        "AI ethics and responsible governance",
+        "Human rights, fairness, and data protection",
+        "Proportional risk controls",
+        "Transparency, accountability, and incident reporting",
+        "Environmental impacts and sustainability"
+      ],
+      "status": "Issued intermediate course certificate verified September 30, 2026; direct graded-assessment completion, not professional accreditation."
     }
   ],
   "limits": [

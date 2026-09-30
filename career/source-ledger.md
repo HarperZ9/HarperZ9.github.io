@@ -559,3 +559,13 @@ Google DeepMind: Train A Small Language Model. Google Skills / Google DeepMind i
 Official course description: https://www.skills.google/course_templates/1453
 
 This is an assessed skill badge, not professional Google Cloud certification. The recorded challenge scope does not establish an executed transformer-training run, production deployment, or model-quality improvement. The official course title is retained while the assessed scope is stated separately.
+
+## UNESCO AI ethics course certificate
+
+### unesco-ai-ethics
+
+UNESCO via Coursera: Global MOOC on the Ethics of AI, developed with LG AI Research. The issuer awarded Zain Dana Harper this Intermediate course certificate September 30, 2026. The first submitted graded assessment achieved 100%. Certificate identifier: 7I5YVE5P0W5K.
+
+https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K
+
+Assessed topics cover AI ethics and responsible governance; human rights, fairness, and data protection; proportional risk controls; transparency, accountability, and incident reporting; and environmental impacts and sustainability. This records direct graded-assessment completion. It does not claim the advertised study hours or completion of optional videos/readings, nor professional legal, regulatory, auditor, or AI-safety accreditation.

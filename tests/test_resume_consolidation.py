@@ -138,6 +138,12 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert (slm['checkpoints_passed'], slm['checkpoints_total']) == (4, 4)
     assert slm['url_role'] == 'Official course description'
     assert slm['title'] in cv and 'four coding checkpoints' in cv
+    unesco = next(c for c in credentials if c['id'] == 'unesco-ai-ethics')
+    assert unesco['kind'] == 'Course certificate' and unesco['official_level'] == 'Intermediate'
+    assert unesco['score_percent'] == 100 and unesco['earned'] == '2026-09-30'
+    assert unesco['certificate_id'] == '7I5YVE5P0W5K'
+    assert unesco['url'] == 'https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K'
+    assert unesco['title'] in cv and 'Intermediate course certificate' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

@@ -1,24 +1,24 @@
 {
   "outputs": [
     {
-      "byte_length": 18179,
+      "byte_length": 18356,
       "path": "career/Zain-Dana-Harper-CV.md",
-      "sha256": "984f619bba19f25224d1029ec6d748b5884a0f7ac678005ae2c90a57dc133f46"
+      "sha256": "57ebfeb049b9f79558da5bb89d59894696ac366915fda0cc400f6791cb7de64d"
     },
     {
-      "byte_length": 18043,
+      "byte_length": 18220,
       "path": "career/Zain-Dana-Harper-CV.txt",
-      "sha256": "965dfd7f615efbf336e1e63ee50f3e30a3da520b5ef322ef7dbc809883050b9b"
+      "sha256": "115b4849df55affb49e98d21728cfb0daa55725ae3ed35f9f2abacaaa694f013"
     },
     {
-      "byte_length": 3200,
+      "byte_length": 3237,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.md",
-      "sha256": "c85a6169165c0ab2b55dea145a016e2ab54c99e129498c3667ecf30c9ef6bedc"
+      "sha256": "335e05ca56d4cc691273c2d64d1414f7cc967030d320a0c16c9076f4030bb2dd"
     },
     {
-      "byte_length": 3167,
+      "byte_length": 3204,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt",
-      "sha256": "cc34f2264469755819d03ee023ce23dada4b06b5f83e32a1063a6dd3ec993a95"
+      "sha256": "667d69ff6b13ed4df62e608c80b46617594d44684274b216fa31f90c977f1f22"
     },
     {
       "byte_length": 2373,
@@ -51,24 +51,24 @@
       "sha256": "020f80a26730cc7f7f660e8e5f79c1894946c8e891228ff658b45028b6af5b91"
     },
     {
-      "byte_length": 26961,
+      "byte_length": 27189,
       "path": "cv.html",
-      "sha256": "fb2d0fc4e4face410b708614c31c6c309fc81b919e8fb11f1876cf55315395a0"
+      "sha256": "c2fa33df31101dcefa2c97a63de1d5b50f10031fcbf5ee7cd5719fe11383ae0a"
     },
     {
-      "byte_length": 18179,
+      "byte_length": 18356,
       "path": "cv.md",
-      "sha256": "984f619bba19f25224d1029ec6d748b5884a0f7ac678005ae2c90a57dc133f46"
+      "sha256": "57ebfeb049b9f79558da5bb89d59894696ac366915fda0cc400f6791cb7de64d"
     },
     {
-      "byte_length": 14095,
+      "byte_length": 14420,
       "path": "hire.html",
-      "sha256": "ba5e5ccc7d7c31340972f47e1de0631ebd0b02c07081f9608256865a9c12c288"
+      "sha256": "14a7d8e25c8c80e1b917416924e2ea0745d4259035199025f5eed42fe6900a30"
     },
     {
-      "byte_length": 9238,
+      "byte_length": 9275,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "9314680675043f19e225cba63fc4774ae86a9ca57282f348ead1cc360550cade"
+      "sha256": "0c6b184d19b380bd30926aa2df60b180c5ec81d971850068f6a3d13cbac42044"
     },
     {
       "byte_length": 8099,
@@ -86,9 +86,9 @@
       "sha256": "74b714184b30d48c468e1fd1bacc6326fd61246193e517ff449a912a346efa1d"
     },
     {
-      "byte_length": 13983,
+      "byte_length": 14308,
       "path": "resume.html",
-      "sha256": "1460a0cb8a5dafe4bb0a862b83624b873471a8367268997f11b055a1e6e9aeae"
+      "sha256": "dc3735e549617920a8240f48375c9f6496389262c160a282bd0d102a51965507"
     },
     {
       "byte_length": 3488,
@@ -96,11 +96,11 @@
       "sha256": "cec1eb08854f631bd018b768b826b28b2780cb24359a86e9eafb3258532439b6"
     }
   ],
-  "renderer_sha256": "e73cfd379bc1432030a2d75dd5d8b7ce224c839730d9e2ee8d6a6666b2404a04",
+  "renderer_sha256": "d465191803f289ca9785f8752de52664919a998fd71d245e9d34bdf740f39b94",
   "reviewed": "2026-09-30",
   "schema": "harperz9-career-text-build/v1",
   "source": {
     "path": "career/resume-source.json",
-    "sha256": "dd750ef6a5045d63cf4df91b75312ef53da101e284d1037b829df33c048cd033"
+    "sha256": "78b6938af900a44480dec4423892875c9484813c5e654a0ee17016d510b6429d"
   }
 }

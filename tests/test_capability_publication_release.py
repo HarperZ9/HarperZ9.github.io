@@ -430,7 +430,9 @@ RELEASE_PATHS = (
 # current-main Frontier Safety integration; published incoming content unchanged.
 # September 30, 2026: reviewed Google DeepMind Advanced assessed skill badge,
 # bounded coding result, and CV-only bullet spacing; no broader training claim.
-REVIEWED_RELEASE_SHA256 = "e1871a869eef30ec58f687db414560fb414251102f2da260ac31d1ea56619aa1"
+# September 30, 2026: reviewed UNESCO intermediate AI ethics course certificate
+# and governance scope; issuer URL preserved, no study-hours or accreditation claim.
+REVIEWED_RELEASE_SHA256 = "d57ea911cfc6946fd6263aec080ba260b8caadcd941ca35b2bd964a432e6affd"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

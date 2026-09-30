@@ -252,11 +252,13 @@ Linux Foundation Course-Completion Certificates
 
 - LFS147: Introduction to AI/ML Toolkits with Kubeflow
 
-Additional Advanced and Strategy Coursework
+Additional Coursework and Skill Badges
 
 Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.
 
 Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026
+
+UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%. Assessed human rights, fairness, risk controls, incident reporting, and sustainability.
 
 BlueDot Impact: AGI Strategy | Course completed in 2026
 
