@@ -147,6 +147,7 @@ RELEASE_PATHS = (
     "briefings/index.html",
     "career/career-artifacts.json",
     "career/career-build-receipt.json",
+    "career/standards-reference.md",
     "career/open-source-census.json",
     "career/Zain-Dana-Harper-CV.docx",
     "career/Zain-Dana-Harper-CV.pdf",
@@ -415,8 +416,9 @@ RELEASE_PATHS = (
 # refreshed Flywheel and Articulate release copy across the registry and home.
 # September 30, 2026: reviewed career documents add issued Applied Skills,
 # completed coursework, public-interest writing, Kent location and availability.
-# The source-ledger categories and five-page CV passed independent review.
-REVIEWED_RELEASE_SHA256 = "ba680cb39eb7171b68adf53270549c1a2500068f1e579058b2025b410bbc56e6"
+# The source-ledger categories, quantitative outcomes, standards reference and
+# five-page CV passed independent review. The MCP badge was issuer-verified.
+REVIEWED_RELEASE_SHA256 = "97dfa7283be649cecfc39bdae08e92e4b4260451fda726e224d779ee723e5063"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

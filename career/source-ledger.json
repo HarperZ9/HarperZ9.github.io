@@ -473,6 +473,33 @@
       "id": "bluedot-action-plan",
       "status": "Reviewed owner action-plan form readback September 30, 2026. Describes proposed governance and verification methods, not a deployed policy or causal finding. Private submission/document URL is not published.",
       "url": "https://bluedot.org/courses/agi-strategy"
+    },
+    {
+      "id": "metr-interop-controls",
+      "status": "Executed pinned count_odds interoperability check with three deterministic controls; merged PR and hosted run verified September 30, 2026. Correct, wrong, and completion-text fallback controls; no general benchmark or endorsement claim.",
+      "url": "https://github.com/HarperZ9/flywheel/pull/234",
+      "run_url": "https://github.com/HarperZ9/flywheel/actions/runs/34750411689",
+      "documentation_url": "https://github.com/HarperZ9/flywheel/blob/8c5cfa4ddb6a78bf2da80a6180ce6358cdd1df6f/docs/METR-INTEROP.md"
+    },
+    {
+      "id": "standards-reference-20260930",
+      "status": "Official issuer/government/project references checked September 30, 2026; 25 selected items categorized as standards, technical reports, frameworks, guidance, principles, or law. Reference research, not certification or conformity evidence.",
+      "url": "https://harperz9.github.io/career/standards-reference.md",
+      "reference_count": 25
+    },
+    {
+      "id": "anthropic-mcp-advanced",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Advanced course-completion badge",
+      "title": "Model Context Protocol: Advanced topics",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "10 of 10 correct; first attempt",
+      "credential_id": "4b3322d1-62a9-4398-a3a2-e05dd0fe1c25",
+      "verification_code": "4dd2c6b9f121940a0a43e78f83171867",
+      "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
+      "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date.",
+      "status": "Provider assessment and public verified-completion badge checked September 30, 2026; advanced course completion, not a professional Expert certification."
     }
   ],
   "limits": [

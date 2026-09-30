@@ -91,7 +91,7 @@
 <section>
 <h2>Evaluation, Systems, and Security Engineering</h2>
 <h3>Terminal State Fixtures and Crucible</h3>
-<p>Designed exhaustive terminal-state evaluation cases and deterministic scoring that inspect the environment after an agent runs. The MLflow fixture family includes 324 cases; the component-forge suite includes 337 cases and 5,058 frozen expectations. These are fixture counts, not measured model-performance gains. Crucible provides structured worker/verifier evaluation with explicit match, drift, and missing-evidence outcomes. Third-party private staging is not represented as public hosting or endorsement.</p>
+<p>Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.</p>
 <h3 class="career-fields"><span>EMET</span><span class="career-sep"> | </span><span>Byte-integrity witnessing</span></h3>
 <p>Developed Python, Rust, Node, and Go implementations around shared conformance cases and portable verification records. The witness checks byte-level integrity, anchors, and source correspondence; it does not grant permission, certify semantic truth, or replace an operator decision. Cross-language checking makes implementation differences visible.</p>
 <h3 class="career-fields"><span>BuildLang</span><span class="career-sep"> | </span><span>Rust compiler and developer tooling</span></h3>
@@ -110,14 +110,14 @@
 </section>
 <section>
 <h2>Selected Open-Source Contributions</h2>
-<p>The following changes were accepted into externally maintained repositories. They are contributions, not employment at those organizations. The broader public contribution record separately tracks merged, open, and closed without merge outcomes.</p>
+<p>Six selected contributions merged across six external repositories, covering bug fixes, tests, and documentation. These are contributions, not employment; the broader record tracks merged, open, and closed without merge outcomes.</p>
 <ul class="career-bullets">
 <li>DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. <a href="https://github.com/confident-ai/deepeval/pull/2822">github.com/confident-ai/deepeval/pull/2822</a></li>
 <li>TOMLKit #549: preserved dotted-key siblings when replacing a value with an array of tables; merged July 14, 2026. <a href="https://github.com/python-poetry/tomlkit/pull/549">github.com/python-poetry/tomlkit/pull/549</a></li>
-<li>Datasette #2815: corrected error handling for malformed composite primary-key row URLs; merged July 7, 2026. <a href="https://github.com/simonw/datasette/pull/2815">github.com/simonw/datasette/pull/2815</a></li>
+<li>Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400; tested too few and too many key components in HTML and JSON. Merged July 7, 2026. <a href="https://github.com/simonw/datasette/pull/2815">github.com/simonw/datasette/pull/2815</a></li>
 <li>Free Law Project #820: documented runnable database-free fast tests; merged August 25, 2026. <a href="https://github.com/freelawproject/litigant-portal/pull/820">github.com/freelawproject/litigant-portal/pull/820</a></li>
 <li>Hebbian Robotics #157: tested reserved-column drift against the actual queryable episode schema; merged August 25, 2026. <a href="https://github.com/Hebbian-Robotics/hflow/pull/157">github.com/Hebbian-Robotics/hflow/pull/157</a></li>
-<li>Voxwire #44: added offline WebSocket recording and replay regression coverage; merged August 15, 2026. <a href="https://github.com/vectorvoyager358/voxwire/pull/44">github.com/vectorvoyager358/voxwire/pull/44</a></li>
+<li>Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching saved PCM audio and JSONL records to emitted events. Merged August 15, 2026. <a href="https://github.com/vectorvoyager358/voxwire/pull/44">github.com/vectorvoyager358/voxwire/pull/44</a></li>
 </ul>
 </section>
 <section>
@@ -172,11 +172,11 @@
 <section>
 <h2>Credentials and Continuing Education</h2>
 <p>Completed September 2026. Credential links, identifiers, and assessment results: <a href="https://harperz9.github.io/career/source-ledger.md">harperz9.github.io/career/source-ledger.md</a>.</p>
-<h3>Microsoft Applied Skills</h3>
+<h3 class="career-fields"><span>Microsoft Applied Skills</span><span class="career-sep"> | </span><span>Earned September 29, 2026</span></h3>
 <ul class="career-bullets">
-<li>Secure AI solutions in the cloud | Earned September 29, 2026 | Credential ED8852810C3B3FBC</li>
-<li>Get started with identities and access using Microsoft Entra | Earned September 29, 2026 | Credential 3D93C65204CB43EE</li>
-<li>Secure storage for Azure Files and Azure Blob Storage | Earned September 29, 2026 | Credential 4117A3B4196233D2</li>
+<li>Secure AI solutions in the cloud</li>
+<li>Get started with identities and access using Microsoft Entra</li>
+<li>Secure storage for Azure Files and Azure Blob Storage</li>
 </ul>
 <h3>Advanced Microsoft Learn Coursework</h3>
 <p>SC-100: Design security solutions for applications and data. Completed four module assessments and the architecture case study.</p>
@@ -201,11 +201,12 @@
 <li>LFEL1008: Migrating AI Workflows Across Platforms</li>
 <li>LFS147: Introduction to AI/ML Toolkits with Kubeflow</li>
 </ul>
-<h3>BlueDot Impact Coursework</h3>
-<p class="career-fields"><span>AGI Strategy</span><span>Course completed in 2026</span></p>
+<h3>Additional Advanced and Strategy Coursework</h3>
+<p class="career-fields"><span>Anthropic Claude Academy: Model Context Protocol: Advanced topics</span><span>Completion badge, September 30, 2026</span></p>
+<p class="career-fields"><span>BlueDot Impact: AGI Strategy</span><span>Course completed in 2026</span></p>
 <p>Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.</p>
-<h3>Topics Practiced in Training</h3>
-<p>Cloud AI security; Microsoft Entra identity and access; Azure storage encryption, immutable retention, and replication; secure software development; Sigstore, SBOMs, OpenSSF Scorecard; conversational AI ethics and compliance; application and data security architecture; MCRA, MCSB, Zero Trust, model provenance, and prompt-injection defenses. These topics describe assessed labs and coursework, separately from professional experience.</p>
+<h3>Standards and Frameworks: Training and Research</h3>
+<p>Completed coursework: MCRA/MCSB, Zero Trust, OWASP Top 10 web security, and EU Cyber Resilience Act; MCP sampling, roots, JSON-RPC, stdio, Streamable HTTP/SSE. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Current editions and scope: <a href="https://harperz9.github.io/career/standards-reference.md">harperz9.github.io/career/standards-reference.md</a>.</p>
 </section>
 </article>
 <aside class="career-source-note">

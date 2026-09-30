@@ -82,7 +82,7 @@ Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfa
 
 ### Terminal State Fixtures and Crucible
 
-Designed exhaustive terminal-state evaluation cases and deterministic scoring that inspect the environment after an agent runs. The MLflow fixture family includes 324 cases; the component-forge suite includes 337 cases and 5,058 frozen expectations. These are fixture counts, not measured model-performance gains. Crucible provides structured worker/verifier evaluation with explicit match, drift, and missing-evidence outcomes. Third-party private staging is not represented as public hosting or endorsement.
+Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.
 
 ### EMET | Byte-integrity witnessing
 
@@ -112,19 +112,19 @@ Color and creative-tool work includes Build Color, Calibrate Pro, Studio Engine,
 
 ## Selected Open-Source Contributions
 
-The following changes were accepted into externally maintained repositories. They are contributions, not employment at those organizations. The broader public contribution record separately tracks merged, open, and closed without merge outcomes.
+Six selected contributions merged across six external repositories, covering bug fixes, tests, and documentation. These are contributions, not employment; the broader record tracks merged, open, and closed without merge outcomes.
 
 - DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. github.com/confident-ai/deepeval/pull/2822
 
 - TOMLKit #549: preserved dotted-key siblings when replacing a value with an array of tables; merged July 14, 2026. github.com/python-poetry/tomlkit/pull/549
 
-- Datasette #2815: corrected error handling for malformed composite primary-key row URLs; merged July 7, 2026. github.com/simonw/datasette/pull/2815
+- Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400; tested too few and too many key components in HTML and JSON. Merged July 7, 2026. github.com/simonw/datasette/pull/2815
 
 - Free Law Project #820: documented runnable database-free fast tests; merged August 25, 2026. github.com/freelawproject/litigant-portal/pull/820
 
 - Hebbian Robotics #157: tested reserved-column drift against the actual queryable episode schema; merged August 25, 2026. github.com/Hebbian-Robotics/hflow/pull/157
 
-- Voxwire #44: added offline WebSocket recording and replay regression coverage; merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44
+- Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching saved PCM audio and JSONL records to emitted events. Merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44
 
 ## Technical Competencies
 
@@ -200,13 +200,13 @@ Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.
 
 Completed September 2026. Credential links, identifiers, and assessment results: harperz9.github.io/career/source-ledger.md.
 
-### Microsoft Applied Skills
+### Microsoft Applied Skills | Earned September 29, 2026
 
-- Secure AI solutions in the cloud | Earned September 29, 2026 | Credential ED8852810C3B3FBC
+- Secure AI solutions in the cloud
 
-- Get started with identities and access using Microsoft Entra | Earned September 29, 2026 | Credential 3D93C65204CB43EE
+- Get started with identities and access using Microsoft Entra
 
-- Secure storage for Azure Files and Azure Blob Storage | Earned September 29, 2026 | Credential 4117A3B4196233D2
+- Secure storage for Azure Files and Azure Blob Storage
 
 ### Advanced Microsoft Learn Coursework
 
@@ -250,12 +250,14 @@ Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module 
 
 - LFS147: Introduction to AI/ML Toolkits with Kubeflow
 
-### BlueDot Impact Coursework
+### Additional Advanced and Strategy Coursework
 
-AGI Strategy | Course completed in 2026
+Anthropic Claude Academy: Model Context Protocol: Advanced topics | Completion badge, September 30, 2026
+
+BlueDot Impact: AGI Strategy | Course completed in 2026
 
 Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
 
-### Topics Practiced in Training
+### Standards and Frameworks: Training and Research
 
-Cloud AI security; Microsoft Entra identity and access; Azure storage encryption, immutable retention, and replication; secure software development; Sigstore, SBOMs, OpenSSF Scorecard; conversational AI ethics and compliance; application and data security architecture; MCRA, MCSB, Zero Trust, model provenance, and prompt-injection defenses. These topics describe assessed labs and coursework, separately from professional experience.
+Completed coursework: MCRA/MCSB, Zero Trust, OWASP Top 10 web security, and EU Cyber Resilience Act; MCP sampling, roots, JSON-RPC, stdio, Streamable HTTP/SSE. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Current editions and scope: harperz9.github.io/career/standards-reference.md.

@@ -58,7 +58,7 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     credentials = SOURCE['credentials']
     applied = [c for c in credentials if c['kind'] == 'Applied Skills credential']
     courses = [c for c in credentials if c['kind'] == 'Course-completion certificate']
-    advanced = [c for c in credentials if c['kind'].startswith('Advanced ')]
+    advanced = [c for c in credentials if c['kind'].startswith('Advanced ') and c['provider'] == 'Microsoft Learn']
     assert len(applied) == 3
     assert {c['credential_id'] for c in applied} == {
         'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2'
@@ -76,7 +76,7 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
         assert f"{course['course_code']}: {course['title']}" in cv
     assert 'The SC-100 certification exam has not been taken.' in SOURCE['credential_policy']
     assert 'Advanced Microsoft Learn Coursework' in cv
-    assert 'separately from professional experience' in cv
+    assert 'Completed coursework:' in cv and 'Research references:' in cv
     assert SOURCE['identity']['location'] == 'Kent, Washington'
     bluedot = next(c for c in credentials if c['id'] == 'bluedot-agi-strategy')
     assert bluedot['kind'] == 'Course completion'
@@ -84,6 +84,11 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert bluedot['url_role'] == 'Provider course description, not individual completion verification'
     assert 'score_percent' not in bluedot and 'credential_id' not in bluedot
     assert 'AGI Strategy | Course completed in 2026' in cv
+    mcp = next(c for c in credentials if c['id'] == 'anthropic-mcp-advanced')
+    assert mcp['kind'] == 'Advanced course-completion badge'
+    assert mcp['score_percent'] == 100
+    assert mcp['url'] == 'https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867'
+    assert 'Model Context Protocol: Advanced topics' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 
@@ -99,3 +104,22 @@ def test_public_interest_work_retains_its_evidence_limits():
     ledger = (ROOT / 'career/source-ledger.md').read_text()
     assert 'does not establish professional whistleblower-support' in ledger
     assert 'The proposed trial in An Open Letter on Checking the Machines has not run.' in ledger
+
+
+def test_quantified_outcomes_keep_their_scope_and_reference_types():
+    cv = (ROOT / 'career/Zain-Dana-Harper-CV.txt').read_text()
+    assert '337 cases and 5,058 frozen expectations' in cv
+    assert 'synthetic component-evaluation families' in cv
+    assert 'count_odds interoperability check with three deterministic controls' in cv
+    assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
+    assert 'Six selected contributions merged across six external repositories' in cv
+    references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
+    rows = [line for line in references.splitlines() if line.startswith('| [')]
+    assert len(rows) == 25
+    assert 'MCSB v2 remains preview' in references
+    assert '1.2 remains an initial public draft' in references
+    assert any('| Law |' in row for row in rows)
+    assert any('| Framework or profile |' in row for row in rows)
+    assert 'it is not a certificate' in references
+    assert 'harperz9.github.io/career/standards-reference.md' in cv
+    assert all(c['provider'] not in {'NIST', 'ISO', 'IEEE'} for c in SOURCE['credentials'])

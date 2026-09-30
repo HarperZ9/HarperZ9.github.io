@@ -308,7 +308,7 @@
       },
       {
         "kind": "li",
-        "text": "Diagnosed Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; guided customers through resolutions and documented steps for consistent support handoffs.",
+        "text": "Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.",
         "evidence": [
           "history"
         ]
@@ -320,7 +320,7 @@
       },
       {
         "kind": "li",
-        "text": "Wrote implementation guides, API documentation, and release notes that translated technical changes into usable instructions for developers and customers.",
+        "text": "Wrote implementation guides, API documentation, and release notes for developers and customers.",
         "evidence": [
           "history"
         ]
@@ -373,7 +373,7 @@
         },
         {
           "kind": "li",
-          "text": "Designed offline verification and 324 exhaustive terminal-state fixtures so teams can distinguish incorrect outputs from provider failures rather than rely on an agent's success claim.",
+          "text": "Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.",
           "evidence": [
             "flywheel",
             "terminal-state-fixtures"
@@ -398,7 +398,7 @@
         },
         {
           "kind": "h2",
-          "text": "Selected Open-Source Contributions"
+          "text": "Selected Open-Source Contributions: 6 Merged"
         },
         {
           "kind": "li",
@@ -416,7 +416,7 @@
         },
         {
           "kind": "li",
-          "text": "Voxwire #44: added offline WebSocket recording/replay tests, verifying saved audio and events without live provider dependencies. Merged.",
+          "text": "Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching persisted audio and JSONL records to emitted events. Merged.",
           "evidence": [
             "voxwire"
           ]
@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -435,7 +435,8 @@
             "lfd121",
             "sc100-apps-data",
             "sc100-mcra-mcsb",
-            "bluedot-agi-strategy"
+            "bluedot-agi-strategy",
+            "anthropic-mcp-advanced"
           ]
         },
         {
@@ -467,7 +468,7 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems engineer building AI tools and verifying outputs. Owns architecture, testing, and release delivery across Flywheel and companion systems; contributes upstream fixes for evaluation crashes, configuration data loss, and API errors."
+          "text": "Independent systems engineer building AI evaluation tools, reproducible tests, and releases; contributes maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors."
         },
         {
           "kind": "h2",
@@ -493,25 +494,26 @@
         },
         {
           "kind": "li",
-          "text": "Authored 324 exhaustive terminal-state cases and a 337-case component suite with 5,058 frozen expectations, giving evaluators reproducible checks for failed outputs and repairs.",
+          "text": "Built 324 exhaustive terminal-state fixtures and 337 synthetic component cases with 5,058 frozen expectations, distinguishing failed outputs from valid results within defined schemas.",
           "evidence": [
             "terminal-state-fixtures"
           ]
         },
         {
           "kind": "li",
-          "text": "Built Articulate writing analysis and Accountable Surface interfaces for scoped approvals, postcondition checks, and computer-use adapters.",
+          "text": "Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.",
           "evidence": [
             "articulate",
-            "accountable-surface"
+            "accountable-surface",
+            "buildlang",
+            "phantom"
           ]
         },
         {
           "kind": "li",
-          "text": "Developed BuildLang capability checks and Phantom audit/restore workflows for explicit permissions and reversible changes.",
+          "text": "Executed a pinned METR count_odds task-image check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.",
           "evidence": [
-            "buildlang",
-            "phantom"
+            "metr-interop-controls"
           ]
         },
         {
@@ -525,7 +527,7 @@
         },
         {
           "kind": "h2",
-          "text": "Selected Open-Source Contributions"
+          "text": "Selected Open-Source Contributions: 6 Merged"
         },
         {
           "kind": "li",
@@ -543,7 +545,7 @@
         },
         {
           "kind": "li",
-          "text": "Datasette #2815: validated composite-key arity so malformed row URLs return a client error rather than a server failure or misleading result. Merged.",
+          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400, with regression coverage. Merged.",
           "evidence": [
             "datasette"
           ]
@@ -554,7 +556,7 @@
         },
         {
           "kind": "p",
-          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -562,7 +564,8 @@
             "lfd121",
             "sc100-apps-data",
             "sc100-mcra-mcsb",
-            "bluedot-agi-strategy"
+            "bluedot-agi-strategy",
+            "anthropic-mcp-advanced"
           ]
         },
         {
@@ -956,10 +959,10 @@
         },
         {
           "kind": "p",
-          "text": "Designed exhaustive terminal-state evaluation cases and deterministic scoring that inspect the environment after an agent runs. The MLflow fixture family includes 324 cases; the component-forge suite includes 337 cases and 5,058 frozen expectations. These are fixture counts, not measured model-performance gains. Crucible provides structured worker/verifier evaluation with explicit match, drift, and missing-evidence outcomes. Third-party private staging is not represented as public hosting or endorsement.",
+          "text": "Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.",
           "evidence": [
             "terminal-state-fixtures",
-            "crucible"
+            "metr-interop-controls"
           ]
         },
         {
@@ -1049,7 +1052,7 @@
         },
         {
           "kind": "p",
-          "text": "The following changes were accepted into externally maintained repositories. They are contributions, not employment at those organizations. The broader public contribution record separately tracks merged, open, and closed without merge outcomes.",
+          "text": "Six selected contributions merged across six external repositories, covering bug fixes, tests, and documentation. These are contributions, not employment; the broader record tracks merged, open, and closed without merge outcomes.",
           "evidence": [
             "flp",
             "hflow",
@@ -1075,7 +1078,7 @@
         },
         {
           "kind": "li",
-          "text": "Datasette #2815: corrected error handling for malformed composite primary-key row URLs; merged July 7, 2026. github.com/simonw/datasette/pull/2815",
+          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400; tested too few and too many key components in HTML and JSON. Merged July 7, 2026. github.com/simonw/datasette/pull/2815",
           "evidence": [
             "datasette"
           ]
@@ -1096,7 +1099,7 @@
         },
         {
           "kind": "li",
-          "text": "Voxwire #44: added offline WebSocket recording and replay regression coverage; merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44",
+          "text": "Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching saved PCM audio and JSONL records to emitted events. Merged August 15, 2026. github.com/vectorvoyager358/voxwire/pull/44",
           "evidence": [
             "voxwire"
           ]
@@ -1327,25 +1330,25 @@
         },
         {
           "kind": "h3",
-          "text": "Microsoft Applied Skills"
+          "text": "Microsoft Applied Skills | Earned September 29, 2026"
         },
         {
           "kind": "li",
-          "text": "Secure AI solutions in the cloud | Earned September 29, 2026 | Credential ED8852810C3B3FBC",
+          "text": "Secure AI solutions in the cloud",
           "evidence": [
             "ms-ai-security"
           ]
         },
         {
           "kind": "li",
-          "text": "Get started with identities and access using Microsoft Entra | Earned September 29, 2026 | Credential 3D93C65204CB43EE",
+          "text": "Get started with identities and access using Microsoft Entra",
           "evidence": [
             "ms-entra"
           ]
         },
         {
           "kind": "li",
-          "text": "Secure storage for Azure Files and Azure Blob Storage | Earned September 29, 2026 | Credential 4117A3B4196233D2",
+          "text": "Secure storage for Azure Files and Azure Blob Storage",
           "evidence": [
             "ms-storage"
           ]
@@ -1493,11 +1496,18 @@
         },
         {
           "kind": "h3",
-          "text": "BlueDot Impact Coursework"
+          "text": "Additional Advanced and Strategy Coursework"
         },
         {
           "kind": "p",
-          "text": "AGI Strategy | Course completed in 2026",
+          "text": "Anthropic Claude Academy: Model Context Protocol: Advanced topics | Completion badge, September 30, 2026",
+          "evidence": [
+            "anthropic-mcp-advanced"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "BlueDot Impact: AGI Strategy | Course completed in 2026",
           "evidence": [
             "bluedot-agi-strategy"
           ]
@@ -1511,11 +1521,11 @@
         },
         {
           "kind": "h3",
-          "text": "Topics Practiced in Training"
+          "text": "Standards and Frameworks: Training and Research"
         },
         {
           "kind": "p",
-          "text": "Cloud AI security; Microsoft Entra identity and access; Azure storage encryption, immutable retention, and replication; secure software development; Sigstore, SBOMs, OpenSSF Scorecard; conversational AI ethics and compliance; application and data security architecture; MCRA, MCSB, Zero Trust, model provenance, and prompt-injection defenses. These topics describe assessed labs and coursework, separately from professional experience.",
+          "text": "Completed coursework: MCRA/MCSB, Zero Trust, OWASP Top 10 web security, and EU Cyber Resilience Act; MCP sampling, roots, JSON-RPC, stdio, Streamable HTTP/SSE. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Current editions and scope: harperz9.github.io/career/standards-reference.md.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -1527,7 +1537,9 @@
             "lfs118",
             "lfs120",
             "sc100-apps-data",
-            "sc100-mcra-mcsb"
+            "sc100-mcra-mcsb",
+            "standards-reference-20260930",
+            "anthropic-mcp-advanced"
           ]
         }
       ],
@@ -1770,6 +1782,19 @@
       "completion_evidence": "Owner-confirmed course completion on September 30, 2026; no certificate identifier, certificate URL, or score supplied.",
       "url": "https://bluedot.org/courses/agi-strategy",
       "url_role": "Provider course description, not individual completion verification"
+    },
+    {
+      "id": "anthropic-mcp-advanced",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Advanced course-completion badge",
+      "title": "Model Context Protocol: Advanced topics",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "10 of 10 correct; first attempt",
+      "credential_id": "4b3322d1-62a9-4398-a3a2-e05dd0fe1c25",
+      "verification_code": "4dd2c6b9f121940a0a43e78f83171867",
+      "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
+      "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date."
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",
