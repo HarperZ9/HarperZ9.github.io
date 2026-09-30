@@ -418,7 +418,9 @@ RELEASE_PATHS = (
 # completed coursework, public-interest writing, Kent location and availability.
 # The source-ledger categories, quantitative outcomes, standards reference and
 # five-page CV passed independent review. The MCP badge was issuer-verified.
-REVIEWED_RELEASE_SHA256 = "97dfa7283be649cecfc39bdae08e92e4b4260451fda726e224d779ee723e5063"
+# September 30, 2026: independently reviewed Qualys Policy Audit certification
+# update; issuer dates and assessed knowledge added to career formats.
+REVIEWED_RELEASE_SHA256 = "739d5152b3c756989ecf37a4d4825a54b5d86c86c384e0279036f679c05d2e07"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

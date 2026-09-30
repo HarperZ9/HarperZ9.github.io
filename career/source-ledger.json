@@ -500,6 +500,27 @@
       "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
       "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date.",
       "status": "Provider assessment and public verified-completion badge checked September 30, 2026; advanced course completion, not a professional Expert certification."
+    },
+    {
+      "id": "qualys-policy-audit",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Policy Audit",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 86.67,
+      "assessment_result": "26 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Authenticated LMS reports course complete and exam passed; issuer diploma names Zain Dana Harper and Qualys Policy Audit, with issue and expiry dates. No credential identifier is printed.",
+      "url": "https://www.qualys.com/training/course/policy-audit",
+      "url_role": "Provider course description, not individual credential verification",
+      "assessed_skills": [
+        "Technical controls and policy baselines",
+        "Authenticated compliance scanning using scanner and cloud-agent data",
+        "Policy, scorecard, and interactive reports",
+        "Exception request and approval workflows",
+        "Windows/Unix user-defined checks and control cardinality"
+      ],
+      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Assessment result describes vendor-product knowledge, not a production engagement or Expert designation."
     }
   ],
   "limits": [

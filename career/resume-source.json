@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Policy Audit certification. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -436,7 +436,8 @@
             "sc100-apps-data",
             "sc100-mcra-mcsb",
             "bluedot-agi-strategy",
-            "anthropic-mcp-advanced"
+            "anthropic-mcp-advanced",
+            "qualys-policy-audit"
           ]
         },
         {
@@ -556,7 +557,7 @@
         },
         {
           "kind": "p",
-          "text": "Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Policy Audit certification. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -565,7 +566,8 @@
             "sc100-apps-data",
             "sc100-mcra-mcsb",
             "bluedot-agi-strategy",
-            "anthropic-mcp-advanced"
+            "anthropic-mcp-advanced",
+            "qualys-policy-audit"
           ]
         },
         {
@@ -1326,7 +1328,14 @@
         },
         {
           "kind": "p",
-          "text": "Completed September 2026. Credential links, identifiers, and assessment results: harperz9.github.io/career/source-ledger.md."
+          "text": "September 2026 completions. Verification: harperz9.github.io/career/source-ledger.md."
+        },
+        {
+          "kind": "p",
+          "text": "Qualys Policy Audit certification | Issued 2026-09-30; expires 2028-09-29",
+          "evidence": [
+            "qualys-policy-audit"
+          ]
         },
         {
           "kind": "h3",
@@ -1525,7 +1534,7 @@
         },
         {
           "kind": "p",
-          "text": "Completed coursework: MCRA/MCSB, Zero Trust, OWASP Top 10 web security, and EU Cyber Resilience Act; MCP sampling, roots, JSON-RPC, stdio, Streamable HTTP/SSE. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Current editions and scope: harperz9.github.io/career/standards-reference.md.",
+          "text": "Assessed Qualys knowledge: policy baselines, authenticated scans, reports, exceptions. Completed coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA; MCP sampling, roots, JSON-RPC and transports. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions and scope: harperz9.github.io/career/standards-reference.md.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -1539,7 +1548,8 @@
             "sc100-apps-data",
             "sc100-mcra-mcsb",
             "standards-reference-20260930",
-            "anthropic-mcp-advanced"
+            "anthropic-mcp-advanced",
+            "qualys-policy-audit"
           ]
         }
       ],
@@ -1795,6 +1805,26 @@
       "verification_code": "4dd2c6b9f121940a0a43e78f83171867",
       "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
       "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date."
+    },
+    {
+      "id": "qualys-policy-audit",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Policy Audit",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 86.67,
+      "assessment_result": "26 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Authenticated LMS reports course complete and exam passed; issuer diploma names Zain Dana Harper and Qualys Policy Audit, with issue and expiry dates. No credential identifier is printed.",
+      "url": "https://www.qualys.com/training/course/policy-audit",
+      "url_role": "Provider course description, not individual credential verification",
+      "assessed_skills": [
+        "Technical controls and policy baselines",
+        "Authenticated compliance scanning using scanner and cloud-agent data",
+        "Policy, scorecard, and interactive reports",
+        "Exception request and approval workflows",
+        "Windows/Unix user-defined checks and control cardinality"
+      ]
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",

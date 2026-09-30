@@ -469,3 +469,15 @@ Anthropic Claude Academy: Model Context Protocol: Advanced topics. The assessmen
 https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867
 
 The record establishes the provider-awarded advanced course-completion badge and assessment result. It does not establish a professional Expert certification or completion of every lesson. Assessed topics include sampling, roots, JSON-RPC messages, stdio, Streamable HTTP, and SSE.
+
+## Qualys Policy Audit certification
+
+### qualys-policy-audit
+
+Qualys issued the Policy Audit certification to Zain Dana Harper on September 30, 2026, expiring September 29, 2028. The authenticated LMS showed the course complete and the first exam attempt passed with 26/30 correct (86.67% when rounded to two decimals). The diploma prints no credential identifier. Its session-based download link is not presented as an enduring public verification URL.
+
+Assessed vendor-product knowledge covers technical controls and policy baselines; authenticated compliance scans using scanner/cloud-agent data; policy, scorecard, and interactive reports; exception requests and approvals; Windows/Unix user-defined checks and control cardinality. This records certification and assessed product knowledge, not production client engagements or an Expert designation.
+
+Official course description: https://www.qualys.com/training/course/policy-audit
+
+The provider course page describes the curriculum; it does not independently verify this learner's certification.

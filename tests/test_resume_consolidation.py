@@ -89,6 +89,13 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert mcp['score_percent'] == 100
     assert mcp['url'] == 'https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867'
     assert 'Model Context Protocol: Advanced topics' in cv
+    qualys = next(c for c in credentials if c['id'] == 'qualys-policy-audit')
+    assert qualys['kind'] == 'Vendor certification'
+    assert (qualys['earned'], qualys['expires']) == ('2026-09-30', '2028-09-29')
+    assert qualys['assessment_result'] == '26 of 30 correct; passed on the first attempt'
+    assert 'credential_id' not in qualys
+    assert 'not individual credential verification' in qualys['url_role']
+    assert 'Qualys Policy Audit certification | Issued 2026-09-30; expires 2028-09-29' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 
