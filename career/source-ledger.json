@@ -520,7 +520,30 @@
         "Exception request and approval workflows",
         "Windows/Unix user-defined checks and control cardinality"
       ],
-      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Assessment result describes vendor-product knowledge, not a production engagement or Expert designation."
+      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Assessment result describes vendor-product knowledge, not a production engagement or Expert designation.",
+      "designation": "Qualys Certified Specialist"
+    },
+    {
+      "id": "qualys-car",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Custom Assessment and Remediation",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Authenticated LMS reports course complete and exam passed; issuer diploma names Zain Dana Harper and Custom Assessment and Remediation, with issue and expiry dates.",
+      "url": "https://www.qualys.com/training/course/custom-assessment-and-remediation-car",
+      "url_role": "Provider course description, not individual credential verification",
+      "assessed_skills": [
+        "Script creation and import; testing on up to ten assets",
+        "Author, manager, and operations role separation; script approvals",
+        "Scheduled jobs and result inspection",
+        "Custom QIDs and VMDR integration",
+        "Script Result Check user-defined controls and CAR APIs"
+      ],
+      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Guided tutorial steps were reviewed; no independent live-production lab execution is claimed.",
+      "designation": "Qualys Certified Specialist"
     }
   ],
   "limits": [

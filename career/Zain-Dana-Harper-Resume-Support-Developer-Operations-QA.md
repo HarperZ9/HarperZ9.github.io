@@ -52,6 +52,6 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 ## Credentials, Training, and Education
 
-Qualys Policy Audit certification. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.
+Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Coursework: Linux Foundation Developing Secure Software (LFD121); advanced SC-100 application/data security and MCRA/MCSB; Anthropic advanced MCP; BlueDot Impact AGI Strategy. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

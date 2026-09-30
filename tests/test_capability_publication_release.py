@@ -420,7 +420,9 @@ RELEASE_PATHS = (
 # five-page CV passed independent review. The MCP badge was issuer-verified.
 # September 30, 2026: independently reviewed Qualys Policy Audit certification
 # update; issuer dates and assessed knowledge added to career formats.
-REVIEWED_RELEASE_SHA256 = "739d5152b3c756989ecf37a4d4825a54b5d86c86c384e0279036f679c05d2e07"
+# September 30, 2026: CAR credential and both issuer-verified Qualys Certified
+# Specialist designations added; CV widow guard and spacing independently reviewed.
+REVIEWED_RELEASE_SHA256 = "5cf9cef9ed60233052bb8f1b65595cb68618a9fb03074a6943806845ba23e813"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

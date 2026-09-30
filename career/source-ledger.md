@@ -481,3 +481,19 @@ Assessed vendor-product knowledge covers technical controls and policy baselines
 Official course description: https://www.qualys.com/training/course/policy-audit
 
 The provider course page describes the curriculum; it does not independently verify this learner's certification.
+
+## Qualys Custom Assessment and Remediation certification
+
+### qualys-car
+
+Qualys issued the Custom Assessment and Remediation certification to Zain Dana Harper on September 30, 2026, expiring September 29, 2028. The authenticated LMS showed the course complete and the first exam attempt passed with 29/30 correct (96.67% when rounded to two decimals). The course's four two-question checks each passed on the first attempt. No private diploma download link is published.
+
+Assessed vendor-product knowledge covers script creation/import and testing on up to ten assets; author, manager, and operations role separation; script approvals; scheduled jobs and results; custom QIDs and VMDR integration; Script Result Check user-defined controls; and CAR APIs. Official transcripts and ten guided tutorial step sequences were reviewed. This is a certification and assessed-knowledge record; it does not claim independently executed live-production labs or client deployments.
+
+Official course description: https://www.qualys.com/training/course/custom-assessment-and-remediation-car
+
+The provider course page identifies the curriculum, not this learner's individual credential.
+
+### Issuer designation
+
+Both rendered Qualys diplomas explicitly display "Qualys Certified Specialist" above their credential fields: Policy Audit and Custom Assessment and Remediation. The designation was visually verified September 30, 2026; the exact course titles, issue dates, and expiry dates remain as recorded above. This is a vendor-product designation.
