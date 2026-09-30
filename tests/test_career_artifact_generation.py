@@ -134,7 +134,7 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(tmp_path: P
     for path in output.iterdir():
         if path.suffix == ".pdf":
             reader = PdfReader(path)
-            assert len(reader.pages) == (4 if path.stem.endswith("-CV") else 1), path.name
+            assert len(reader.pages) == (5 if path.stem.endswith("-CV") else 1), path.name
         text = _artifact_text(path)
         assert len(text.split()) >= 250, path.name
         for value in ("Stream/Convergys", "2014 to 2015", "Legendary Tree",
@@ -152,7 +152,7 @@ def test_generated_pdfs_render_visible_content_inside_letter_page(tmp_path: Path
     assert proc.returncode == 0, proc.stdout + proc.stderr
     for path in sorted(output.glob("*.pdf")):
         document = fitz.open(path)
-        assert document.page_count == (4 if path.stem.endswith("-CV") else 1)
+        assert document.page_count == (5 if path.stem.endswith("-CV") else 1)
         for page in document:
             assert round(page.rect.width) == 612 and round(page.rect.height) == 792
             blocks = [b for b in page.get_text("blocks") if b[4].strip()]
@@ -175,7 +175,7 @@ def test_cv_contact_fields_stay_visibly_separated_in_both_formats(
     output = tmp_path / "career"
     proc = _build(output, tmp_path / "receipt.json")
     assert proc.returncode == 0, proc.stdout + proc.stderr
-    expected = "Seattle, Washington | zaindharper@gmail.com | harperz9.github.io"
+    expected = "Kent, Washington | zaindharper@gmail.com | harperz9.github.io"
     for suffix in ("pdf", "docx"):
         path = output / f"Zain-Dana-Harper-CV.{suffix}"
         assert expected in _artifact_text(path), path.name
@@ -254,7 +254,7 @@ def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> 
     committed_receipt = json.loads(
         (ROOT / "career" / "career-build-receipt.json").read_text(encoding="utf-8")
     )
-    assert committed_receipt["source_epoch"] == 1789931178
+    assert committed_receipt["source_epoch"] == 1790755200
     committed_inputs = {
         row["path"]: row for row in committed_receipt["build_inputs"]
     }
@@ -289,7 +289,7 @@ def test_receipt_binds_artifact_and_extraction_hashes_without_local_paths(
 
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     assert receipt["schema"] == "harperz9-career-build/v1"
-    assert receipt["source_epoch"] == 1789931178
+    assert receipt["source_epoch"] == 1790755200
     build_inputs = {row["path"]: row for row in receipt["build_inputs"]}
     for relative in (
         "tools/build_career_artifacts.py",

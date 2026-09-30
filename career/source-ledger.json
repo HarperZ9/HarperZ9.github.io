@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-evidence/v1",
-  "reviewed": "2026-09-20",
+  "reviewed": "2026-09-30",
   "sources": [
     {
       "id": "accountable-surface",
@@ -195,6 +195,311 @@
       "id": "voxwire",
       "status": "merged status, authorship, and change scope checked 2026-09-20",
       "url": "https://github.com/vectorvoyager358/voxwire/pull/44"
+    },
+    {
+      "id": "ms-ai-security",
+      "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud",
+      "provider": "Microsoft",
+      "title": "Secure AI solutions in the cloud",
+      "earned": "2026-09-29",
+      "score_percent": 87,
+      "credential_id": "ED8852810C3B3FBC"
+    },
+    {
+      "id": "ms-entra",
+      "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra",
+      "provider": "Microsoft",
+      "title": "Get started with identities and access using Microsoft Entra",
+      "earned": "2026-09-29",
+      "score_percent": 100,
+      "credential_id": "3D93C65204CB43EE"
+    },
+    {
+      "id": "ms-storage",
+      "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage",
+      "provider": "Microsoft",
+      "title": "Secure storage for Azure Files and Azure Blob Storage",
+      "earned": "2026-09-29",
+      "score_percent": 86,
+      "credential_id": "4117A3B4196233D2"
+    },
+    {
+      "id": "lfel1012",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/secure-aiml-driven-software-development-lfel1012-2025?id=1e7f37e6-80c2-4b0d-a314-13053994a969",
+      "provider": "Linux Foundation",
+      "title": "Secure AI/ML-Driven Software Development",
+      "course_code": "LFEL1012",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfs120",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/conversational-ai-ensuring-compliance-and-mitigating-risks-lfs120?id=ac430a39-e3b4-4fb9-8f43-99770a75f35c",
+      "provider": "Linux Foundation",
+      "title": "Conversational AI: Ensuring Compliance and Mitigating Risks",
+      "course_code": "LFS120",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfd121",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/developing-secure-software-lfd121?id=91be7725-2244-4254-9f37-d9a41ec87168",
+      "provider": "Linux Foundation",
+      "title": "Developing Secure Software",
+      "course_code": "LFD121",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfs182",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/securing-your-software-supply-chain-with-sigstore-lfs182?id=facd2c27-7e97-4303-b2a6-db4f2f33c477",
+      "provider": "Linux Foundation",
+      "title": "Securing Your Software Supply Chain with Sigstore",
+      "course_code": "LFS182",
+      "completed": "2026-09",
+      "score_percent": 90
+    },
+    {
+      "id": "lfel1001",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/understanding-the-eu-cyber-resilience-act-cra-lfel1001?id=fe3547ff-a925-4094-9c34-9b0000046658",
+      "provider": "Linux Foundation",
+      "title": "Understanding the EU Cyber Resilience Act (CRA)",
+      "course_code": "LFEL1001",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfs118",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/ethical-principles-for-conversational-ai-lfs118?id=caa07911-50ba-4d16-9a16-c0504b895ffd",
+      "provider": "Linux Foundation",
+      "title": "Ethical Principles for Conversational AI",
+      "course_code": "LFS118",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfel1006",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/securing-projects-with-openssf-scorecard-lfel1006?id=21ddbf9f-6b9f-4e83-91cf-50251ef8699a",
+      "provider": "Linux Foundation",
+      "title": "Securing Projects with OpenSSF Scorecard",
+      "course_code": "LFEL1006",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfel1005",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/security-self-assessments-for-open-source-projects-lfel1005?id=3eaa4c88-1569-4a37-bdea-22dae30b8f6d",
+      "provider": "Linux Foundation",
+      "title": "Security Self-Assessments for Open Source Projects",
+      "course_code": "LFEL1005",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfel1007",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/automating-supply-chain-security-sboms-and-signatures-lfel1007?id=11bc8f0a-d7c2-4edd-ae82-2f9ed1ec229d",
+      "provider": "Linux Foundation",
+      "title": "Automating Supply Chain Security: SBOMs and Signatures",
+      "course_code": "LFEL1007",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfd125",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/security-for-software-development-managers-lfd125?id=69c98fcc-3d2f-476e-b795-4c5b6c8d8cd9",
+      "provider": "Linux Foundation",
+      "title": "Security for Software Development Managers",
+      "course_code": "LFD125",
+      "completed": "2026-09",
+      "score_percent": 90
+    },
+    {
+      "id": "lfs180",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-devsecops-for-managers-lfs180?id=717c6a23-8d28-499c-8022-68b650ff314a",
+      "provider": "Linux Foundation",
+      "title": "Introduction to DevSecOps for Managers",
+      "course_code": "LFS180",
+      "completed": "2026-09",
+      "score_percent": 80
+    },
+    {
+      "id": "skf100",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/owasp-top-10-security-threats-skf100?id=075ce22e-dc2a-41db-ac51-e970e3cc3a05",
+      "provider": "Linux Foundation",
+      "title": "OWASP Top 10 Security Threats",
+      "course_code": "SKF100",
+      "completed": "2026-09",
+      "score_percent": 90
+    },
+    {
+      "id": "lfs184",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-javascript-security-lfs184?id=ae6ab7d0-7754-4c96-8d90-6583f6a5ffcb",
+      "provider": "Linux Foundation",
+      "title": "Introduction to JavaScript Security",
+      "course_code": "LFS184",
+      "completed": "2026-09",
+      "score_percent": 80
+    },
+    {
+      "id": "lfc108",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/cybersecurity-essentials-lfc108?id=0bac67dd-3da5-41e1-90be-cde6cfa20ec8",
+      "provider": "Linux Foundation",
+      "title": "Cybersecurity Essentials",
+      "course_code": "LFC108",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfel1004",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/authentication-and-authorization-for-webapi-lfel1004?id=abfb47ee-a752-4bb9-81cb-ccf7f401a11e",
+      "provider": "Linux Foundation",
+      "title": "Authentication and Authorization for Web/API",
+      "course_code": "LFEL1004",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfel1008",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/migrating-ai-workflows-across-platforms-lfel1008?id=9e5e968b-e1ec-409e-a799-595f2ea9c405",
+      "provider": "Linux Foundation",
+      "title": "Migrating AI Workflows Across Platforms",
+      "course_code": "LFEL1008",
+      "completed": "2026-09",
+      "score_percent": 100
+    },
+    {
+      "id": "lfs147",
+      "status": "Course-completion certificate; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://trainingportal.linuxfoundation.org/learn/certificates/introduction-to-aiml-toolkits-with-kubeflow-lfs147?id=bece7e91-8827-4b09-a5ae-446da8e10afb",
+      "provider": "Linux Foundation",
+      "title": "Introduction to AI/ML Toolkits with Kubeflow",
+      "course_code": "LFS147",
+      "completed": "2026-09",
+      "score_percent": 90
+    },
+    {
+      "id": "sc100-apps-data",
+      "status": "Advanced learning-path completion; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
+      "url": "https://learn.microsoft.com/en-us/training/modules/case-study-apps-data/5-summary#completion",
+      "provider": "Microsoft Learn",
+      "title": "Design security solutions for applications and data",
+      "completed": "2026-09",
+      "assessment_result": "Four module assessments passed at 100%; architecture case study completed"
+    },
+    {
+      "id": "who-knew-first",
+      "status": "Public publication inspected September 30, 2026; independent writing, not peer reviewed; no professional whistleblower-support claim",
+      "url": "https://harperz9.github.io/who-knew-first.html"
+    },
+    {
+      "id": "checking-the-machines",
+      "status": "Public publication inspected September 30, 2026; independent writing, not peer reviewed; no professional whistleblower-support claim",
+      "url": "https://harperz9.github.io/checking-the-machines.html"
+    },
+    {
+      "id": "borrowed-ground",
+      "status": "Public publication inspected September 30, 2026; independent writing, not peer reviewed; no professional whistleblower-support claim",
+      "url": "https://harperz9.github.io/borrowed-ground.html"
+    },
+    {
+      "id": "sandbox-essay",
+      "status": "Public publication inspected September 30, 2026; independent writing, not peer reviewed; no professional whistleblower-support claim",
+      "url": "https://harperz9.github.io/the-sandbox-was-never-just-a-box.html"
+    },
+    {
+      "id": "sc100-mcra-mcsb",
+      "provider": "Microsoft Learn",
+      "kind": "Advanced module completion",
+      "title": "Design solutions that align with the Microsoft Cybersecurity Reference Architecture (MCRA) and Microsoft cloud security benchmark (MCSB)",
+      "completed": "2026-09-30",
+      "assessment_result": "Nine units completed; module assessment passed at 100%; achievement awarded",
+      "url": "https://learn.microsoft.com/en-us/training/modules/design-solutions-microsoft-cybersecurity-cloud-security-benchmark/5-summary#completion",
+      "status": "Advanced module completion verified in authenticated Microsoft Learn interface September 30, 2026; not professional certification"
+    },
+    {
+      "id": "flywheel-v1.1.2-release",
+      "url": "https://github.com/HarperZ9/flywheel/releases/tag/v1.1.2",
+      "published": "2026-09-29T19:11:43Z",
+      "status": "GitHub release verified September 30, 2026; Windows installer and bundled engine assets; no external adoption claim"
+    },
+    {
+      "id": "articulate-v0.5.2-release",
+      "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.5.2",
+      "published": "2026-09-29T17:32:20Z",
+      "status": "GitHub release verified September 30, 2026; guarded local host editing and released plugin; no GUI or external adoption claim"
+    },
+    {
+      "id": "sole-proprietorship",
+      "status": "Owner-confirmed September 30, 2026: sole proprietorship began September 2026. No LLC or registered trade name claimed.",
+      "url": "https://harperz9.github.io/career/resume-source.json"
+    },
+    {
+      "id": "career-availability",
+      "status": "Owner-confirmed September 30, 2026: open to technical and nontechnical AI governance/evaluation roles, with regular San Francisco and London travel. No relocation or foreign work-authorization claim.",
+      "url": "https://harperz9.github.io/career/resume-source.json"
+    },
+    {
+      "id": "bluedot-agi-strategy",
+      "provider": "BlueDot Impact",
+      "kind": "Course completion",
+      "title": "AGI Strategy",
+      "completed": "2026",
+      "confirmed": "2026-09-30",
+      "completion_evidence": "Owner-confirmed course completion on September 30, 2026; no certificate identifier, certificate URL, or score supplied.",
+      "url": "https://bluedot.org/courses/agi-strategy",
+      "url_role": "Provider course description, not individual completion verification",
+      "status": "Owner-confirmed September 30, 2026; official provider page verified for course identity, not completion."
+    },
+    {
+      "id": "bluedot-action-plan",
+      "status": "Reviewed owner action-plan form readback September 30, 2026. Describes proposed governance and verification methods, not a deployed policy or causal finding. Private submission/document URL is not published.",
+      "url": "https://bluedot.org/courses/agi-strategy"
+    },
+    {
+      "id": "metr-interop-controls",
+      "status": "Executed pinned count_odds interoperability check with three deterministic controls; merged PR and hosted run verified September 30, 2026. Correct, wrong, and completion-text fallback controls; no general benchmark or endorsement claim.",
+      "url": "https://github.com/HarperZ9/flywheel/pull/234",
+      "run_url": "https://github.com/HarperZ9/flywheel/actions/runs/34750411689",
+      "documentation_url": "https://github.com/HarperZ9/flywheel/blob/8c5cfa4ddb6a78bf2da80a6180ce6358cdd1df6f/docs/METR-INTEROP.md"
+    },
+    {
+      "id": "standards-reference-20260930",
+      "status": "Official issuer/government/project references checked September 30, 2026; 25 selected items categorized as standards, technical reports, frameworks, guidance, principles, or law. Reference research, not certification or conformity evidence.",
+      "url": "https://harperz9.github.io/career/standards-reference.md",
+      "reference_count": 25
+    },
+    {
+      "id": "anthropic-mcp-advanced",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Advanced course-completion badge",
+      "title": "Model Context Protocol: Advanced topics",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "10 of 10 correct; first attempt",
+      "credential_id": "4b3322d1-62a9-4398-a3a2-e05dd0fe1c25",
+      "verification_code": "4dd2c6b9f121940a0a43e78f83171867",
+      "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
+      "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date.",
+      "status": "Provider assessment and public verified-completion badge checked September 30, 2026; advanced course completion, not a professional Expert certification."
     }
   ],
   "limits": [

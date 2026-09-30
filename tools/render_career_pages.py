@@ -206,10 +206,14 @@ RESUME_COVER = art_figure('cover-resume', 'cover', 1600, 800)
 
 def router_body(source: dict, *, hire: bool) -> str:
     docs = {doc['id']: doc for doc in source['documents']}
-    contact = contacts('Seattle, Washington | zaindharper@gmail.com | harperz9.github.io')
+    identity = source['identity']
+    contact = contacts(f"{identity['location']} | {identity['email']} | {identity['website'].removeprefix('https://')}")
     cls = 'hire-sheet' if hire else 'sheet doc-rail'
     intro = ('I build systems that make complex work inspectable: AI workstations, developer tools, evaluation infrastructure, and controlled-action interfaces. I also bring eleven years of arboriculture, customer service, estimating, and field coordination.' if hire else 'Choose the resume that matches the work. Each targeted resume is one page and includes experience, skills, and selected evidence, with the same content in HTML, PDF, DOCX, plain text, and Markdown. The full CV adds the wider project and research record.')
     out = [f'<article class="{cls}">', '<header class="career-mast"><h1>Zain Dana Harper</h1>' + (PILLAR_WORK if hire else ''), '<p class="career-subtitle">Systems engineering, developer tools, and practical operations.</p>', contact, f'<p>{intro}</p></header>'] + ([] if hire else [RESUME_COVER]) + ['<section id="technical-lanes"><h2>Resumes</h2><div class="career-cards">']
+    if hire:
+        availability = source['availability']
+        out[4] = out[4].replace('</header>', f'<p>{escape(availability["roles"])} {escape(availability["travel"])}</p><p>Sole proprietor since September 2026.</p></header>')
     cards = [
         ('support-operations-qa', 'engineering-path', 'Support, developer operations, and software quality', 'Technical support, developer operations, and QA experience: reproducible troubleshooting, accepted tests and documentation for Free Law Project, Hebbian Robotics, and Voxwire, software delivery, and customer communication.'),
         ('evaluation-python-tools', 'technical-operations-path', 'AI systems, evaluation, and Python tooling', 'Flywheel, Rowan, controlled-action interfaces, writing tools, and verification infrastructure, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
@@ -222,6 +226,22 @@ def router_body(source: dict, *, hire: bool) -> str:
             out += ['<p class="career-variant"><a href="resume-public-operations.html">Public operations and facilities-support variant</a></p>', downloads(docs['public-operations'], include_html=False)]
         out += ['</div>']
     out += ['</div></section>', '<section><h2>Full CV and portfolio</h2><p>The full CV retains the expanded record separately from the one-page resumes. It covers AI systems, compilers, security and verification tooling, graphics, technical writing, the earlier programming trajectory, and independent research.</p>', downloads(docs['page:cv']), '<p><a href="portfolio.html">Explore the portfolio</a> · <a href="flywheel.html">Flywheel platform</a> · <a href="publications.html">Publications</a></p></section>', '<section><h2>Research and contribution record</h2><p>Eight independent research records include <a href="https://doi.org/10.5281/zenodo.21230267">EMET</a> and other DOI-indexed papers and manuscripts. These records are not peer reviewed. The <a href="portfolio.html">contribution record</a> distinguishes merged, open, and closed without merge outcomes.</p></section>', '<section><h2>Using the files</h2><p>Use the file type requested by the employer. PDF preserves the reviewed layout; DOCX supports editing and document-based submissions; plain text is useful for application fields. Review any information filled in automatically after upload.</p></section>', '<section><h2>Contact</h2><p><a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a> · <a href="https://www.linkedin.com/in/zaindanaharper/">LinkedIn</a> · <a href="https://github.com/HarperZ9">GitHub</a></p></section>', '</article>', source_note(source)]
+    credentials = source.get('credentials', [])
+    skills = [item for item in credentials if item['kind'] == 'Applied Skills credential']
+    advanced = [item for item in credentials if item['kind'].startswith('Advanced ') and item['provider'] == 'Microsoft Learn']
+    additions = ['<section><h2>Credentials and advanced coursework</h2>',
+                 '<p>Microsoft Applied Skills credentials earned September 29, 2026:</p><ul>']
+    additions += [f'<li><a href="{escape(item["url"], quote=True)}">{escape(item["title"])}</a></li>' for item in skills]
+    additions += ['</ul><p>Advanced Microsoft Learn coursework:</p><ul>']
+    additions += [f'<li><a href="{escape(item["url"], quote=True)}">{escape(item["title"])}</a></li>' for item in advanced]
+    additions += ['</ul><p>Anthropic Claude Academy: <a href="https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867">Model Context Protocol: Advanced topics</a>, verified course-completion badge issued September 30, 2026.</p><p>BlueDot Impact: <a href="https://bluedot.org/courses/agi-strategy">AGI Strategy</a>, completed in 2026.</p><p>The full CV lists 17 Linux Foundation course-completion certificates, including Developing Secure Software, Sigstore, conversational AI ethics, and AI compliance. Coursework topics describe training separately from employment experience.</p>',
+                  '<p><a href="cv.html">Full credential inventory</a> · <a href="career/source-ledger.md">Provider links and completion evidence</a> · <a href="career/standards-reference.md">Standards and frameworks reference index</a></p></section>',
+                  '<section><h2>AI accountability and public-interest writing</h2>',
+                  '<p>Independent engineering and research focused on AI evaluation, disclosure, and accountability. Builds software for inspectable agent actions and repeatable checks; publishes analysis of incident reporting, evaluator independence, human consequences, and the limits of technical evidence.</p>',
+                  '<p><a href="who-knew-first.html">Who Knew First</a> examines disclosure timelines and evaluator conflicts of interest. <a href="checking-the-machines.html">An Open Letter on Checking the Machines</a> proposes contestable AI decisions and accountable responses to objections. <a href="borrowed-ground.html">Borrowed Ground</a> connects human interdependence to responsibility and the limits of technical authority.</p>',
+                  '<p>Independent writing on AI accountability, disclosure, conflicts of interest, and human consequences, relevant to public-interest and whistleblower-protection work.</p></section>']
+    insert_at = next(i for i, fragment in enumerate(out) if fragment.startswith('<section><h2>Using the files'))
+    out[insert_at:insert_at] = additions
     return '\n'.join(out)
 
 

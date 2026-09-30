@@ -1,6 +1,6 @@
 # Zain Dana Harper
 
-Seattle, Washington | zaindharper@gmail.com | harperz9.github.io
+Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
 linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
@@ -32,13 +32,15 @@ Seattle area | April 25, 2015 to June 2, 2026
 
 Xbox/Microsoft product contract | Wilsonville, Oregon
 
-- Diagnosed Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; guided customers through resolutions and documented steps for consistent support handoffs.
+- Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
 ### Freelance Technical Writer | Independent projects | Began 2017
 
-- Wrote implementation guides, API documentation, and release notes that translated technical changes into usable instructions for developers and customers.
+- Wrote implementation guides, API documentation, and release notes for developers and customers.
 
 ### Independent Systems Engineer | Independent practice | 2023 to Present
+
+Sole proprietor since September 2026
 
 - Built and released software tools for repeatable workflows, applying systematic troubleshooting, testing, and structured records to complex tasks.
 
