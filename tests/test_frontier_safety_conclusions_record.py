@@ -16,14 +16,30 @@ from pathlib import Path
 
 import pytest
 
-from test_frontier_safety_conclusions import BUILDER, CURRENT, DATE, EDITION_PATH, EXPECTED, ROOT, record
+from test_frontier_safety_conclusions import BUILDER, EXPECTED, ROOT
 
 import frontier_safety_conclusions_record as conclusions  # noqa: E402  (the builder put tools/ on sys.path)
 
 
 DATA = ROOT / "frontier-safety" / "data"
+DATE = "2026-09-23"
+EDITION_PATH = DATA / "editions" / f"{DATE}.json"
+CURRENT_DATE = json.loads((DATA / "current.json").read_text(encoding="utf-8"))["edition_date"]
+_ARCHIVED = json.loads((DATA / "archive" / f"{DATE}.json").read_text(encoding="utf-8"))
+_COMPANION = json.loads((DATA / "conclusions" / f"{DATE}.json").read_text(encoding="utf-8"))
+CURRENT = {
+    **_ARCHIVED,
+    "conclusions_addendum": {
+        "added_on": _COMPANION["added_on"],
+        "conclusions": _COMPANION["conclusions"],
+    },
+}
 RECORD_PAGE = ROOT / "frontier-safety" / "conclusions" / f"{DATE}.html"
-NEXT = "2026-09-30"
+NEXT = "2026-10-01"
+
+
+def record() -> dict:
+    return json.loads(EDITION_PATH.read_text(encoding="utf-8"))
 
 
 @pytest.fixture
@@ -33,10 +49,12 @@ def published(tmp_path: Path) -> Path:
     for folder in ("archive", "conclusions", "editions"):
         shutil.copytree(DATA / folder, data / folder)
     shutil.copy(DATA / "history.json", data / "history.json")
-    for relative in (f"frontier-safety/archive/{DATE}.html", f"frontier-safety/social/{DATE}-x.txt",
-                     f"frontier-safety/social/{DATE}-linkedin.txt"):
-        (tmp_path / relative).parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy(ROOT / relative, tmp_path / relative)
+    for edition_date in (DATE, CURRENT_DATE):
+        for relative in (f"frontier-safety/archive/{edition_date}.html",
+                         f"frontier-safety/social/{edition_date}-x.txt",
+                         f"frontier-safety/social/{edition_date}-linkedin.txt"):
+            (tmp_path / relative).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(ROOT / relative, tmp_path / relative)
     return tmp_path
 
 
@@ -57,9 +75,12 @@ def test_the_companion_matches_its_sealed_checksum() -> None:
 
 def test_the_addendum_build_is_byte_stable(tmp_path: Path) -> None:
     BUILDER.build(EDITION_PATH, tmp_path)
-    for relative in ("frontier-safety.html", "frontier-safety/data/current.json",
-                     f"frontier-safety/conclusions/{DATE}.html"):
-        assert (tmp_path / relative).read_bytes() == (ROOT / relative).read_bytes(), relative
+    relative_paths = ("frontier-safety.html", "frontier-safety/data/current.json",
+                      f"frontier-safety/conclusions/{DATE}.html")
+    first = {relative: (tmp_path / relative).read_bytes() for relative in relative_paths}
+    BUILDER.build(EDITION_PATH, tmp_path)
+    assert {relative: (tmp_path / relative).read_bytes() for relative in relative_paths} == first
+    assert first[f"frontier-safety/conclusions/{DATE}.html"] == RECORD_PAGE.read_bytes()
     stripped = deepcopy(CURRENT)
     stripped.pop("conclusions_addendum")
     archived = tmp_path / "frontier-safety" / "data" / "archive" / f"{DATE}.json"
@@ -121,24 +142,20 @@ def test_the_builder_keeps_the_addendum_out_of_the_edition_file(published: Path)
 
 
 def test_the_conclusions_survive_the_next_edition(published: Path) -> None:
-    following = record()
-    following["edition_date"] = NEXT
-    edition_path(published, NEXT).write_text(json.dumps(following), encoding="utf-8")
-    BUILDER.build(edition_path(published, NEXT), published)
+    BUILDER.build(DATA / "editions" / f"{CURRENT_DATE}.json", published)
     kept = published / "frontier-safety" / "conclusions" / f"{DATE}.html"
     assert kept.read_bytes() == RECORD_PAGE.read_bytes()
     live = (published / "frontier-safety.html").read_text(encoding="utf-8")
     assert '<section class="mv conclusions"' not in live
     assert f'href="frontier-safety/conclusions/{DATE}.html">Conclusions on the edition of 23 September 2026</a>' in live
-    archive = (published / "frontier-safety" / "archive" / f"{NEXT}.html").read_text(encoding="utf-8")
+    archive = (published / "frontier-safety" / "archive" / f"{CURRENT_DATE}.html").read_text(encoding="utf-8")
     assert "frontier-safety/conclusions/" not in archive  # a dated archive never links a later record
 
 
 def test_the_live_page_links_the_dated_record() -> None:
     live = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
-    note = live.split('<p class="conclusions-note">', 1)[1].split("</p>", 1)[0]
-    assert f'<a href="frontier-safety/conclusions/{DATE}.html">Dated record of these conclusions</a>' in note
     assert f'href="frontier-safety/conclusions/{DATE}.html">Conclusions on the edition of' in live
+    assert '<section class="mv conclusions"' not in live
 
 
 def test_the_record_page_carries_every_conclusion_in_the_plate_design() -> None:

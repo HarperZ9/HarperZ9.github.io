@@ -314,3 +314,31 @@ This was a monitoring false-positive review, not a new factual development. It d
 - Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
 - X destination: `@zaindanaharper` (`ZentropyLabs.ai`); exact-edition draft retained with `not_posted` state pending action-time confirmation.
 - LinkedIn destination: `Zain Harper`; exact-edition draft retained with `not_posted` state pending action-time confirmation.
+
+## 2026-09-30 publication receipt
+
+- Edition: 2026-09-30
+- Observation time: `2026-09-30T15:16:06Z`
+- Publication state: reviewed normal changed edition; no amendment or correction to earlier archives
+- Live edition target: [https://harperz9.github.io/frontier-safety.html](https://harperz9.github.io/frontier-safety.html)
+- Dated archive target: [https://harperz9.github.io/frontier-safety/archive/2026-09-30.html](https://harperz9.github.io/frontier-safety/archive/2026-09-30.html)
+- Edition hash: `80475fef88b9131269f25f2f4d49aab080c5615833b9174e0026257cd279e376`
+- Idempotency key: `67874149ab60c72738ff9c751d1a8bd95055b3693e64c06425a1a69c2dca1e6c`
+- Reviewed content commit: `9653456bce70e83ea79e583dff2e1f4f1af648c2`
+- Pull request: [#274](https://github.com/HarperZ9/HarperZ9.github.io/pull/274)
+- Source check: the curated checker ran exactly once for this refresh. It reported 16 registered sources, six changed, three unbaselined, nine review-required, and zero errors; packet SHA-256 `35ac18b188a13cb402bf27b5e41914154d0c2215049111ac26e1a2a2ac347761`.
+- Material change: AISI reports simulated supply-chain attack behavior by GPT-6 Astra with cyber classifiers disabled; OpenAI separately reports June training and evaluation activity affecting four Australian government sites; Anthropic says Sonnet 5.5 launched with cyber safeguards and fallbacks. Each item remains scoped to its source role and does not become an independent control-effectiveness claim.
+- Incident boundary: the Australia activity is a separate June event and does not amend the canonical August 26 OpenAI and Hugging Face dossier. The public Alabama record located for this edition still describes an investigation and does not establish a procedural disposition.
+- Nonmaterial and held-out review: all 13 previously monitored fingerprints matched the September 29 packet. Unregistered OpenAI safety-case guidance, Anthropic's later incident follow-up, NVIDIA's agent-safety platform, CERT/CC advisories, standards updates, and academic candidates require separate intake and did not enter this edition.
+- Reviewed source state: unchanged at SHA-256 `764d7d7ad131ee04db6f7e75e3eb55fd29dec269f04d87e2fac3e0e7b8748a5f`. The three first-observation receipts do not advance reviewed baselines.
+- Visual analysis: a separate three-row changed-source matrix records linked sources, event and publication dates, units, transformations, limitations, and non-proofs. The controls matrix remains separate.
+- Reproducibility: the complete changed-file hash set was byte-identical across two consecutive successful Frontier Safety and publication-index builds after the final matrix revision.
+- Verification: 470 targeted Frontier Safety, deployment, metadata, and site-contract tests passed with five expected lifecycle skips; 35 navigation tests passed; 1,492 internal links across 184 pages had zero failures; the public-artifact, private-path, credential, claim-language, release-spine, accessibility, diff, and Articulate gates passed. The complete Windows Python suite reported 909 passes, five expected lifecycle skips, and three unrelated baseline failures: two Checking the Machines raw-byte hashes and generated career-text drift.
+- Independent review: the first release review identified the missing changed-source matrix and failed the release. After the matrix and its regression contract were added, the same reviewer returned PASS with high confidence and no further actionable finding.
+- Visual review: current and dated-archive pages passed Chrome desktop and exact 390-by-844 inspection with no document-level horizontal overflow. The desktop matrix exposes a labeled keyboard-focusable horizontal region when needed; the mobile matrix stacks into labeled cells. The light and dark editorial browser regression passed contrast, typography, measure, and reflow checks.
+- Guarded workflow boundary: the manual publication workflow was not dispatched because it would rerun the curated checker and violate this refresh's exactly-once source-check requirement. Pull-request CI remains the external merge gate.
+- Merge receipt: pending at the time this pre-publication receipt was committed.
+- Pages build receipt: pending at the time this pre-publication receipt was committed.
+- Live hash verification: required after Pages succeeds; pending at the time this pre-publication receipt was committed.
+- X destination: `@zaindanaharper` (`ZentropyLabs.ai`); exact-edition draft retained with `not_posted` state pending action-time confirmation.
+- LinkedIn destination: `Zain Harper`; exact-edition draft retained with `not_posted` state pending action-time confirmation.

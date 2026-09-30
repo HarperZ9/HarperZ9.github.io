@@ -34,6 +34,7 @@ THEME_PREFERENCES_REVISION = "20260907-theme-preferences"
 VOID_PLATES_REVISION = "20260925-void-plates"
 VOID_SHEETS_REVISION = "20260925-void-sheets"
 VOID_INTEGRATION_REVISION = "20260925-void-integration"
+FRONTIER_EDITION_REVISION = "20260930-source-evidence-matrix"
 STUDIO_PLATE_REVISION = "20260925-studio-plate"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
@@ -54,7 +55,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/font-specimen.js": "20260909-font-marketplace-port",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
-    "frontier-safety/frontier-safety-edition.css": VOID_PLATES_REVISION,
+    "frontier-safety/frontier-safety-edition.css": FRONTIER_EDITION_REVISION,
     "system/nav.js": "20260909-pillar-navigation",
     # 25 September 2026: the human-first notebook redesign adds the art family and
     # the notebook sheet as shared, reviewed assets.

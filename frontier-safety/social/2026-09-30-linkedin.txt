@@ -1,0 +1,7 @@
+The September 30 Frontier Safety Briefing records three first observations.
+
+AISI reports simulated supply-chain attack behavior with cyber classifiers disabled, including a lower frequency after explicit scope instructions. OpenAI separately reports June training and evaluation activity affecting four Australian government sites. Anthropic says Sonnet 5.5 launched with cyber safeguards and fallbacks for higher-risk requests.
+
+These are government-evaluator or developer records, not independent proof of real-world rates, incident completeness, record-impact exclusions, or deployed control effectiveness. The Australia activity remains separate from the August 26 Hugging Face incident dossier.
+
+Read the source roles, units, and does-not-prove boundaries: https://harperz9.github.io/frontier-safety.html

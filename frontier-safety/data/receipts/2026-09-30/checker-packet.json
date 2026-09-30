@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-09-30T15:16:06Z",
+  "sources": [
+    {
+      "id": "aisi-unsanctioned-agent-behaviour",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing",
+      "sha256": "0c0b5e65920b52a9ff97b1b6bcfbf2a97121455e893f898a38915b0886e773b4",
+      "normalized_characters": 17264,
+      "etag": null,
+      "last_modified": "Wed, 30 Sep 2026 12:13:48 GMT"
+    },
+    {
+      "id": "aisi-ai-safety-research-sabotage",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://www.aisi.gov.uk/blog/evaluating-whether-ai-models-would-sabotage-ai-safety-research",
+      "sha256": "fef8517fe47e739e2ed5b054228ad195b907b0cef503a425db8f58655f9b0568",
+      "normalized_characters": 8028,
+      "etag": null,
+      "last_modified": "Wed, 30 Sep 2026 15:16:07 GMT"
+    },
+    {
+      "id": "anthropic-three-cyber-eval-incidents",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals",
+      "sha256": "90c9148dfd01c15b0b200bd4ca9c5a45b6668d49cf09c005a56c6c5554e47539",
+      "normalized_characters": 20686,
+      "etag": null,
+      "last_modified": null
+    },
+    {
+      "id": "anthropic-august-2026-risk-report",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://www.anthropic.com/aug-2026-risk-report",
+      "sha256": "d76815f8c0bd284a33c7017d642d0734ba903ae63f7c1e6ca7778b35b2c40fa4",
+      "normalized_characters": 4569677,
+      "etag": "\"e03df5b8ed2c6a0da64703a4e6952a80\"",
+      "last_modified": "Fri, 14 Aug 2026 17:41:18 GMT",
+      "fingerprint_url": "https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf"
+    },
+    {
+      "id": "openai-hugging-face-incident",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "sha256": "d4b2a5de2b2d067b254126cf11a5ae8e9d502ede6f17bbc861f8dca9c3e2526d",
+      "normalized_characters": 7531,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://openai.com/sitemap.xml/security/"
+    },
+    {
+      "id": "hugging-face-agent-intrusion-timeline",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+      "sha256": "7af0da69aba8bcd8a6279a42d6654cd9f256a96afd1b5c87f9f5e46790ef3abc",
+      "normalized_characters": 38335,
+      "etag": "\"d3699be265fffe628cc89825f522ef06604b84def6c0ca391ff1997c84d5f60a\"",
+      "last_modified": null,
+      "fingerprint_url": "https://raw.githubusercontent.com/huggingface/blog/main/agent-intrusion-technical-timeline.md"
+    },
+    {
+      "id": "openai-third-party-cyber-evaluations",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://openai.com/index/third-party-cyber-evaluations-involving-openai-models/",
+      "sha256": "6908843298492a4bb9285c1a2b410d1f0942bda9d224f2af30e79dd4992a2a33",
+      "normalized_characters": 7939,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://openai.com/sitemap.xml/security/"
+    },
+    {
+      "id": "openai-pacing-model-development",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://openai.com/index/pacing-model-development-cyber-capabilities/",
+      "sha256": "6f0f756eea6014d98aa07cdec240bf9cc5ed079bbde9f53cc44c04f15b45c029",
+      "normalized_characters": 7259,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/"
+    },
+    {
+      "id": "openai-private-safety-processing-preview",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://openai.com/index/offering-zero-data-retention-for-frontier-models/",
+      "sha256": "d39dee7d2014d8cc51688252c4570472ed7ec657a91514af65f25fe30b6c81d9",
+      "normalized_characters": 7599,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/"
+    },
+    {
+      "id": "metr-incident-investigation-method",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://metr.org/blog/2026-07-28-investigating-ai-propensities-after-incidents/",
+      "sha256": "d6577726b885f8dafa8ec0be0d244ff63b7dd46f1f798e05e5aa43708a63c0de",
+      "normalized_characters": 16495,
+      "etag": "\"b822df2d4a73b18c599e207b88c9846b-ssl\"",
+      "last_modified": null
+    },
+    {
+      "id": "nvd-cve-2025-3248",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-3248",
+      "sha256": "340c5961a3a7119e85e464563cad0c8452ca6cfd9fb886734f69a3fe594dd440",
+      "normalized_characters": 3791,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2025-3248"
+    },
+    {
+      "id": "sysdig-jadepuffer",
+      "status": "available",
+      "changed": false,
+      "review_required": false,
+      "url": "https://www.sysdig.com/blog/jadepuffer-agentic-ransomware-for-automated-database-extortion",
+      "sha256": "7acdecb003a1a0aa4d55b58277c7b16958ae0054d22435567d746b784f15b443",
+      "normalized_characters": 22053,
+      "etag": null,
+      "last_modified": "Tue, 29 Sep 2026 08:05:08 GMT"
+    },
+    {
+      "id": "openai-metr-redwood-joint-review",
+      "status": "available",
+      "changed": true,
+      "review_required": true,
+      "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+      "sha256": "898ab0a2879b9f9fddf397b198d2d963b2b53b1d6702ee042a49ef7ca7be3546",
+      "normalized_characters": 206011,
+      "etag": "\"273e38db45eb5ce39f95040874eed9ab-ssl\"",
+      "last_modified": null
+    },
+    {
+      "id": "aisi-astra-simulated-supply-chain",
+      "status": "unbaselined",
+      "changed": false,
+      "review_required": true,
+      "url": "https://www.aisi.gov.uk/blog/gpt-6-astra-performs-unsanctioned-supply-chain-attacks-in-simulations",
+      "sha256": "3cf6a43eb757a2862c98eb906ff412d61e0c8e53d6f6a31aa8a8fab35cea813e",
+      "normalized_characters": 13124,
+      "etag": null,
+      "last_modified": "Wed, 30 Sep 2026 12:24:25 GMT"
+    },
+    {
+      "id": "openai-australia-incident-follow-on",
+      "status": "unbaselined",
+      "changed": false,
+      "review_required": true,
+      "url": "https://openai.com/index/how-we-will-do-better-for-australia/",
+      "sha256": "2e011d8313cb102ef76b86113f62e498d4d0930da8bcd3eeff69a1fb33fe3d89",
+      "normalized_characters": 6519,
+      "etag": null,
+      "last_modified": null,
+      "fingerprint_url": "https://openai.com/sitemap.xml/company/"
+    },
+    {
+      "id": "anthropic-sonnet-55-release",
+      "status": "unbaselined",
+      "changed": false,
+      "review_required": true,
+      "url": "https://www.anthropic.com/claude-sonnet-5-5",
+      "sha256": "4256430f61afa4b9cfad6aaac56e75fc509021e519498a3eb840c4a6738ff5b9",
+      "normalized_characters": 16551,
+      "etag": null,
+      "last_modified": null
+    }
+  ],
+  "changed_source_ids": [
+    "openai-hugging-face-incident",
+    "openai-third-party-cyber-evaluations",
+    "openai-pacing-model-development",
+    "openai-private-safety-processing-preview",
+    "metr-incident-investigation-method",
+    "openai-metr-redwood-joint-review"
+  ],
+  "error_source_ids": [],
+  "unbaselined_source_ids": [
+    "aisi-astra-simulated-supply-chain",
+    "openai-australia-incident-follow-on",
+    "anthropic-sonnet-55-release"
+  ],
+  "review_required_source_ids": [
+    "openai-hugging-face-incident",
+    "openai-third-party-cyber-evaluations",
+    "openai-pacing-model-development",
+    "openai-private-safety-processing-preview",
+    "metr-incident-investigation-method",
+    "openai-metr-redwood-joint-review",
+    "aisi-astra-simulated-supply-chain",
+    "openai-australia-incident-follow-on",
+    "anthropic-sonnet-55-release"
+  ]
+}

@@ -418,7 +418,7 @@ RELEASE_PATHS = (
 # completed coursework, public-interest writing, Kent location and availability.
 # The source-ledger categories, quantitative outcomes, standards reference and
 # five-page CV passed independent review. The MCP badge was issuer-verified.
-REVIEWED_RELEASE_SHA256 = "97dfa7283be649cecfc39bdae08e92e4b4260451fda726e224d779ee723e5063"
+REVIEWED_RELEASE_SHA256 = "b806bae2722e098dc2b10b2c352fce6dd44567c6185de5dd403c20d64a6a6ce2"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
