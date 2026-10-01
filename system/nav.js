@@ -2,8 +2,8 @@
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, ROUTE_REGISTRY, SECONDARY_GROUPS, WRITING_SECTIONS, routeFamily } from "./routes.js?v=20260925-void-plates";
 
-const BRAND_LABEL = "Zentropy Labs";
-const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
+const BRAND_LABEL = "Zain Dana Harper";
+const BRAND_MARK_SRC = "brand/aperture-mark.png";
 
 const DESKTOP_GPU_ART_QUERIES = [
   "(prefers-reduced-motion: reduce)",

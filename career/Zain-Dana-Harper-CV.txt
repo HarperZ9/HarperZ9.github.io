@@ -18,7 +18,7 @@ About 13 years of self-directed programming | Career transition began June 2026
 
 Sole proprietor since September 2026; no paid software clients
 
-- Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
+- Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
 
 - Develop model-agnostic workflows, evaluation harnesses, controlled-action interfaces, and source-linked records that can be checked without relying on a model to approve its own answer.
 

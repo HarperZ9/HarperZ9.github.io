@@ -2,7 +2,7 @@
 
    The color layer under retro-engine.js. Canonical Ottosson OKLab (matches
    coherence-membrane color.py), the historical hardware palettes from
-   palettes.py, two ZentropyLabs customs, and a median-cut extractor so any
+   palettes.py, two custom palettes, and a median-cut extractor so any
    image can be pixel-arted in its OWN colors. Zero dependencies. */
 
 // --- OKLab (canonical, Bjorn Ottosson) --------------------------------------
@@ -37,7 +37,7 @@ export function oklabToSrgb(L, a, b) {
 
 // --- Palettes (RGB 0..255) --------------------------------------------------
 // Hardware values match coherence-membrane palettes.py; pico8 is the canonical
-// PICO-8 set; outrun + aurora are ZentropyLabs customs (not historical).
+// PICO-8 set; outrun + aurora are custom palettes (not historical).
 export const RETRO_PALETTES = {
   gameboy: [[15, 56, 15], [48, 98, 48], [139, 172, 15], [155, 188, 15]],
   cga: [[0, 0, 0], [0, 255, 255], [255, 0, 255], [255, 255, 255]],

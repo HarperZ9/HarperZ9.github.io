@@ -244,9 +244,8 @@ function App() {
 function TopNav() {
   return (
     <nav className="topnav" aria-label="Primary">
-      <a className="brand" href="#identity" aria-label="Zain Dana Harper and Zentropy Labs home">
+      <a className="brand" href="#identity" aria-label="Zain Dana Harper home">
         <span className="brand-name">Zain Dana Harper</span>
-        <span className="brand-lab">Zentropy Labs</span>
       </a>
       <div className="topnav-links">
         {PRIMARY_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
@@ -267,11 +266,11 @@ function TopNav() {
 function IdentityHero() {
   return (
     <header id="identity" className="hero">
-      <h1 className="hero-title">Zentropy Labs</h1>
+      <h1 className="hero-title">Zain Dana Harper</h1>
       <div className="hero-copy reveal in">
         <p className="hero-line">Flywheel and public tools for re-derivable AI evaluation.</p>
         <p className="hero-lab">
-          Zentropy Labs builds Flywheel and a set of public tools for checking AI results. Each check leaves a record that
+          Zain Dana Harper builds Flywheel and a set of public tools for checking AI results. Each check leaves a record that
           someone else can rerun on their own computer to see whether the result holds. Read the newest investigation below,
           or install Flywheel and try a check yourself.
         </p>
@@ -843,7 +842,7 @@ function HiringRoutes() {
 function Footer() {
   return (
     <footer className="site-footer">
-      <p>Zain Dana Harper and Zentropy Labs. Flywheel, re-derivable evaluation tools, public evidence records, retro rendering, security tooling, and hiring routes.</p>
+      <p>Zain Dana Harper. Flywheel, re-derivable evaluation tools, public evidence records, retro rendering, security tooling, and hiring routes.</p>
       <nav className="footer-links" aria-label="Footer">
         {FOOTER_ROUTES.map((route) => <a href={`/${route.href}`} key={route.href}>{route.label}</a>)}
         <a href="https://github.com/HarperZ9" rel="noopener">GitHub</a>

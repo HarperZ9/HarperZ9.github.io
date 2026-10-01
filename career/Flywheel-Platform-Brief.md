@@ -1,6 +1,6 @@
 # Flywheel: a workspace for the whole project
 
-Zain Dana Harper | Zentropy Labs | September 6, 2026
+Zain Dana Harper | September 6, 2026
 
 This is the reflowable text companion to the eight-slide PDF. Vision, implemented software and commercial evidence are distinguished below.
 
@@ -126,7 +126,7 @@ Sources: [Inspectable implementation](https://github.com/HarperZ9/flywheel)
 
 ## 7. Built independently. Early commercial proof.
 
-Zain Dana Harper | Solo builder, Zentropy Labs / Flywheel
+Zain Dana Harper | Solo builder, Flywheel
 
 ### Public work
 

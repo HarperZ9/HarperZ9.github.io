@@ -1,4 +1,4 @@
-"""Contracts for the site-wide ZentropyLabs static shell."""
+"""Contracts for the site-wide Zain Dana Harper static shell."""
 
 from __future__ import annotations
 
@@ -396,10 +396,10 @@ def assert_reviewed_asset_revision(relative: Path, target: str) -> None:
 def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     nav = read("system/nav.js")
 
-    assert "Zentropy Labs" in nav
+    assert "Zain Dana Harper" in nav
     assert "zentropyLabs" not in nav
     assert "<span>TELOS</span>" not in nav
-    assert "brand/zentropy-avatar.png" in nav
+    assert "brand/aperture-mark.png" in nav
     assert "function shouldUseDesktopGpuArt" in nav
     assert '"(prefers-reduced-motion: reduce)"' in nav
     assert '"(pointer: fine)"' in nav
@@ -816,7 +816,7 @@ def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
 
 def test_current_zentropy_assets_are_shipped() -> None:
     expected_assets = {
-        "brand/zentropy-avatar.png": 450_000,
+        "brand/aperture-mark.png": 450_000,
         "brand/ZentropyDisplay.ttf": 50_000,
         "img/og/portfolio-home.png": 550_000,
         "img/og/forum.png": 560_000,

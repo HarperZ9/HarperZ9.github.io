@@ -1,5 +1,9 @@
 # Zentropy Labs artwork
 
+> Retired 1 October 2026. Zentropy Labs is no longer in use; the site and the
+> repositories publish under the operating name Zain Dana Harper. This file is
+> kept as the record of the retired brand.
+
 Use [DESIGN-RULES.md](DESIGN-RULES.md) for the site's visual system. The canonical
 website is HarperZ9/HarperZ9.github.io. Neighboring repository artwork is updated
 through that repository's own reviewed release, not automatically from here.

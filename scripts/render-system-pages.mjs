@@ -221,9 +221,9 @@ const CATALOG_HEAD = renderIndexHead({
   href: "catalog.html",
   title: "Product catalog",
   description:
-    "Publicly listed Zentropy Labs product records, including controlled-private boundary pages, grouped by domain.",
+    "Publicly listed product records, including controlled-private boundary pages, grouped by domain.",
   social: "Publicly listed product records, including controlled-private boundary pages, grouped by domain.",
-  cardAlt: "Zentropy Labs product catalog card.",
+  cardAlt: "Zain Dana Harper product catalog card.",
   noscript: '<a href="catalog.html">Catalog</a> <a href="overview.html">Systems</a> <a href="security.html">Security</a>',
 });
 const OVERVIEW_HEAD = renderIndexHead({
@@ -231,10 +231,10 @@ const OVERVIEW_HEAD = renderIndexHead({
   href: "overview.html",
   title: "Products",
   description:
-    "Zentropy Labs products grouped by primary domain, with type, maturity, release state, and direct product routes.",
+    "Products grouped by primary domain, with type, maturity, release state, and direct product routes.",
   social: "Products grouped by primary domain with direct routes to definitions and evidence.",
-  cardAlt: "Zentropy Labs product overview card.",
-  noscript: '<a href="index.html">Zentropy Labs</a> <a href="catalog.html">Catalog</a> <a href="hire.html">Hire / work</a>',
+  cardAlt: "Zain Dana Harper product overview card.",
+  noscript: '<a href="index.html">Zain Dana Harper</a> <a href="catalog.html">Catalog</a> <a href="hire.html">Hire / work</a>',
 });
 
 await writeFile(

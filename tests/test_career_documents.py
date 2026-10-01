@@ -403,7 +403,7 @@ def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> 
 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    brand = src.index('<h1 className="hero-title">Zentropy Labs</h1>')
+    brand = src.index('<h1 className="hero-title">Zain Dana Harper</h1>')
     mission = src.index("Flywheel and public tools for re-derivable AI evaluation.")
     audience = src.index("claims a skeptic can rerun")
     hiring = src.index("Hiring, contracting, and collaboration")

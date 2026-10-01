@@ -107,7 +107,7 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     assert "<noscript>" in src
     for value in (
         "Zain Dana Harper",
-        "Zentropy Labs",
+        "Zain Dana Harper",
         "Flywheel and public tools for re-derivable AI evaluation, built by Zain Dana Harper.",
         "Mission: re-derivable verification",
         "Flagship platform: Flywheel",

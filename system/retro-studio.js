@@ -1255,7 +1255,7 @@ function boot() {
     try {
       const m = await import("./zoetrope-compose.js?v=20260812-cohesion");
       const disc = document.createElement("canvas");
-      m.composeDisc(disc, captureFrames(12, 2.4), { diameterPx: 2400, label: "zentropyLabs retro engine" });
+      m.composeDisc(disc, captureFrames(12, 2.4), { diameterPx: 2400, label: "Zain Dana Harper retro engine" });
       saveBlob("retro-spin-disc.png", await new Promise((r) => disc.toBlob(r, "image/png")));
       status(loopActive() ? "disc saved: print, cut, pin, spin at a mirror" : "disc saved: a still source spins into a still image", "ok");
     } catch (e) { status("disc failed: " + e.message, "err"); }

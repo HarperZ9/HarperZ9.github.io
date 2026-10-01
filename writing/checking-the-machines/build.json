@@ -2,19 +2,19 @@
   "schema": "checking-machines-build/v1",
   "revised": "2026-09-20",
   "edited": "2026-09-25",
-  "source_sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5",
+  "source_sha256": "0cbf152ed01f332b67f6b6f49f30c09d6f4309eba82a2fa2f64a370dfbdfb80c",
   "outputs": [
     {
       "path": "checking-the-machines.html",
-      "sha256": "28f576fa9ee62c70eafc6043e9df753e5490da5548d407e7f5dd688f55eab295"
+      "sha256": "9ecc5ef58802df25e3ffccaf5e7dd562ba617fbf329db174da0e5633b49fefa9"
     },
     {
       "path": "writing/checking-the-machines/01.md",
-      "sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5"
+      "sha256": "0cbf152ed01f332b67f6b6f49f30c09d6f4309eba82a2fa2f64a370dfbdfb80c"
     },
     {
       "path": "writing/checking-the-machines/source-notes.json",
-      "sha256": "51281539b7975f452b43a2f95b13c2f9ce28ca7a147e501f830a41b1238d6dab"
+      "sha256": "facaf15d6db909b2084a5c09f4e0e7c98cb3c6b026c24edcfd21c9271c79580d"
     },
     {
       "path": "writing/checking-the-machines/reading-and-revision-note.md",
@@ -30,15 +30,15 @@
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx",
-      "sha256": "e4d61ef9f0edac714efbcb7286b5be3a146fe8726356325ce187ad174e33706e"
+      "sha256": "2bbca466f6fafa6e4d1518a0476802eda85a56ee42e83d47c3be49a035f690aa"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf",
-      "sha256": "87b59e82d35b24de774526aaa48d2ea138c6bd83bb921b606b2edcdf06531304"
+      "sha256": "b830618f1e6a7aaa090b000f0dbb4c8bb60c4bb4269e2dc923a477f27eae3dfb"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt",
-      "sha256": "6d6672e153d6edeca8ea3cb767719e73cf5fecf63e9755ec93433cde0e39af4f"
+      "sha256": "a5911a213759906bb5975a96f88c0c5c9432dcb6a6b22e122a528b4982f0cb29"
     }
   ]
 }

@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 
 
-USER_AGENT = "ZentropyLabs-Frontier-Safety-Briefing/1.0 (+https://harperz9.github.io/frontier-safety.html)"
+USER_AGENT = "HarperZ9-Frontier-Safety-Briefing/1.0 (+https://harperz9.github.io/frontier-safety.html)"
 MAX_BYTES = 3_000_000
 MAX_PDF_BYTES = 10_000_000
 MIN_NORMALIZED_CHARACTERS = 200

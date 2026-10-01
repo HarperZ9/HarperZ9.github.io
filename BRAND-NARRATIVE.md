@@ -1,5 +1,9 @@
 # Zentropy Labs Brand Narrative
 
+> Retired 1 October 2026. Zentropy Labs is no longer in use; the site and the
+> repositories publish under the operating name Zain Dana Harper. This file is
+> kept as the record of the retired brand.
+
 `BRAND.md` is the visual mark. `DESIGN-RULES.md` is the page-level design contract.
 This file is the public language contract: how the family is positioned, what holds the
 many lanes together, and what language should be retired from broad site surfaces.

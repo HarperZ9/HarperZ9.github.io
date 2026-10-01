@@ -35,10 +35,10 @@ const sections = pillars.map(([family, id, title, href, summary]) => {
 const shortcuts = pillars.map(([, id, title]) => `<a href="#${id}">${title}</a>`).join('');
 const page = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Site index · Zentropy Labs</title>
+<title>Site index · Zain Dana Harper</title>
 <meta name="description" content="Find Flywheel workflows, standalone tools, safety and verification work, publications, graphics, fonts and collaboration routes.">
 <link rel="canonical" href="https://harperz9.github.io/site-index.html">
-<meta property="og:title" content="Site index · Zentropy Labs"><meta property="og:type" content="website">
+<meta property="og:title" content="Site index · Zain Dana Harper"><meta property="og:type" content="website">
 <meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
 <meta property="og:description" content="A clear map of the workshop, with Flywheel as the main engine.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -47,7 +47,7 @@ const page = `<!doctype html>
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 <script type="module" src="system/site-index.js?v=20260925-void-plates"></script>
 </head><body><a class="skip-link" href="#main">Skip to index</a><div id="site-nav" class="site-nav"></div>
-<main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context masthead-path">Zentropy Labs / Explore</p><h1>Find your way in.</h1>
+<main id="main" class="sheet site-directory"><header class="directory-head"><p class="directory-context masthead-path">Zain Dana Harper / Explore</p><h1>Find your way in.</h1>
 <p class="lead">Start with <a href="flywheel.html">Flywheel</a> for the central engine and its integrated workflows. Explore individual tools when you need them, or enter through research, graphics, typography and collaboration.</p>
 <p>Each project page explains its purpose, current status and evidence. A listing here does not imply that every capability is installed or operational in Flywheel.</p>
 <p><a href="catalog.html">Browse the product catalog by capability</a> · <a href="site-index.html" aria-current="page">Site index</a></p></header>

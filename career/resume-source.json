@@ -827,7 +827,7 @@
         },
         {
           "kind": "li",
-          "text": "Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.",
+          "text": "Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.",
           "evidence": [
             "flywheel",
             "buildlang",

@@ -94,8 +94,8 @@ def test_uncited_control_sources_on_one_host_keep_distinct_names() -> None:
 
 def test_brand_and_browser_bar_follow_the_site() -> None:
     page = (ROOT / "frontier-safety.html").read_text(encoding="utf-8")
-    assert "ZentropyLabs" not in page
-    assert "Compiled by Zain Dana Harper · Zentropy Labs ·" in page
+    assert "Zentropy" not in page
+    assert "Compiled by Zain Dana Harper ·" in page
     assert (
         '<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ebe5d8">'
         in page

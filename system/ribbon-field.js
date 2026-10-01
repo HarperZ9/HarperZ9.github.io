@@ -1,4 +1,4 @@
-/* ribbon-field.js: the signature white-sculptural hero for Zentropy Labs.
+/* ribbon-field.js: the signature white-sculptural hero for Zain Dana Harper.
 
    A single sculptural object rotating in a white void: a vertical stack of thin
    ceramic slats that twist into a helix and slowly flow and reorder, grounded by a

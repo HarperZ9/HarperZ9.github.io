@@ -1,25 +1,25 @@
 {
   "artifacts": [
     {
-      "byte_length": 45507,
-      "extraction_sha256": "bf3e7ec1d67f1c8f9071a8227c4ae5e810788ff3bec37c02e04af952662aa70d",
+      "byte_length": 45487,
+      "extraction_sha256": "453648cdd7e6f9fde8b1e29318e626a5dff162a61e27384a7e8094817354a2ed",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "01bae263c960b5526c5eb74b6fe2fdd4fbbc65d3558f6a9f47fe74df68f074b1",
+      "sha256": "b5f92a9728244559ddafc1e73afe3ee161d4b232acf36e7f0e02fffd3e887a07",
       "source": "cv.html"
     },
     {
-      "byte_length": 16959,
-      "extraction_sha256": "a86b0414391f2aa73f2804f909f5a5b8319f47354720f65e8ab74378ac7aa4ba",
+      "byte_length": 16931,
+      "extraction_sha256": "611ee5a3d856e7c8c6c5ce59f876cbc16335da66fe9c509209b1bfbbf3af83a7",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 5,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "723cd87f87c42d48cf3f247a2f9a146564264661e0d902ce42c311c658f81886",
+      "sha256": "8f4dbad0e2bf7d763e9b71321054045b9fb90a71f0d120e19740e867f10f7a0f",
       "source": "cv.html"
     },
     {
@@ -122,7 +122,7 @@
     },
     {
       "path": "career/resume-source.json",
-      "sha256": "395401106267a520810e0324f46399065294b4cfec6a69105354605c89adf057"
+      "sha256": "32c344d7b95478e94f07778df14fd2b11052042a7d7e11117d547d92061be6fa"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -147,7 +147,7 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "18e35768f2c6d61e2191c7e01a0f2a2ce345d0382e215d533047e346f926982b"
+      "sha256": "4a3d93a8e842ca8415666680f2412de5741cc30fa7c20a385d42317b3be28c1a"
     },
     {
       "path": "resume-evaluation-tooling.html",

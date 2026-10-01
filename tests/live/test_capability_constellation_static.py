@@ -153,7 +153,7 @@ def test_required_live_routes_and_assets_exist() -> None:
         assert (ROOT / route).is_file(), route
 
     home = _text("index.html")
-    assert "<title>Zentropy Labs | Re-derivable AI evaluation</title>" in home
+    assert "<title>Zain Dana Harper | Re-derivable AI evaluation</title>" in home
     assert "Flywheel and public tools for re-derivable AI evaluation" in home
     assert "Inspect Flywheel" in home
     assert "Flagship platform: Flywheel" in home

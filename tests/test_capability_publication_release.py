@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-BIA-0d5A.js",
+    "assets/index-CyztdbmV.js",
     "assets/index-DbZyfUEO.css",
     "who-knew-first-series.html",
     "verified-is-not-trustworthy.html",
@@ -47,6 +47,7 @@ RELEASE_PATHS = (
     "publications/data/listings/the-terms-for-telling.json",
     "img/og/the-terms-for-telling.png",
     "assets/index-Dmke1bnx.js",
+    "assets/index-BIA-0d5A.js",
     "the-number-has-a-vintage.html",
     "publications/data/records/the-number-has-a-vintage.json",
     "img/og/the-number-has-a-vintage.png",
@@ -515,7 +516,10 @@ RELEASE_PATHS = (
 # card; the series hub, the Writing hub, the series panel on Who Pays the Referees, feeds,
 # sitemap, build receipt, route registry, site index and home bundle (index-BIA-0d5A.js) are
 # regenerated.
-REVIEWED_RELEASE_SHA256 = "991b29c1d5dc22aaf1b64bfec1cc1c7bf5904460a8c5fe4ef8aef9cf101f7c38"
+# October 1, 2026: Zentropy Labs is retired. Page titles, bylines, the home bundle
+# (index-CyztdbmV.js), the open letter signature, the CV and the two affected social
+# cards name Zain Dana Harper.
+REVIEWED_RELEASE_SHA256 = "0a1c344fd7129f10126c88f85ff243298e7a31f4432588b783b6e79e42c7d499"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -685,7 +689,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: The Terms for Telling joins the Who Knew First routes, so the bundle
     # rebuilt from the registry is index-BIA-0d5A.js with the same sheet. index-Dmke1bnx.js
     # stays as retained history.
-    current_js = "index-BIA-0d5A.js"
+    # October 1, 2026: Zentropy Labs is retired and the home names Zain Dana Harper, so the
+    # bundle rebuilt from the registry is index-CyztdbmV.js with the same sheet.
+    # index-BIA-0d5A.js stays as retained history.
+    current_js = "index-CyztdbmV.js"
+    previous_terms_js = "index-BIA-0d5A.js"
+    assert previous_terms_js not in source
+    assert (ROOT / "assets" / previous_terms_js).is_file()
+    assert f"assets/{previous_terms_js}" in RELEASE_PATHS
     previous_writing_hub_js = "index-Dmke1bnx.js"
     assert previous_writing_hub_js not in source
     assert (ROOT / "assets" / previous_writing_hub_js).is_file()
