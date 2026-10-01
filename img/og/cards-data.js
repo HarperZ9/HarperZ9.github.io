@@ -666,5 +666,12 @@ window.CARD_DATA = {
     "role": "EDITORIAL ESSAY",
     "word": "Timestamps",
     "headline": "The Timestamp Is Not the Order"
+  },
+  "who-pays-the-referees": {
+    "publication": true,
+    "editorial": true,
+    "role": "EVIDENCE ESSAY",
+    "word": "Referees",
+    "headline": "Who Pays the Referees"
   }
 };

@@ -17,13 +17,14 @@
     "publications/data/listings/checking-the-machines.json": "4ecb3a808dc1fdd234c07fd6e81f28fead8b5067960cecd3d1c16cc0fc8334d1",
     "publications/data/listings/frontier-safety.json": "6e94d4d705599d6ac7d3aa156762b2f63dcc964da4d3f3f666c4065bc1ee6fc8",
     "publications/data/listings/openai-hugging-face-incident.json": "76c3d474df2aaa52b71c4714bcb9c890f540bdeac0fe6b44f155e05707fd5821",
-    "publications/data/listings/who-knew-first.json": "81dc291076cd1d284b8ef4c6e9ed8ad8140a1b43d84e7e239d236d00a5b41f1f"
+    "publications/data/listings/who-knew-first.json": "81dc291076cd1d284b8ef4c6e9ed8ad8140a1b43d84e7e239d236d00a5b41f1f",
+    "publications/data/listings/who-pays-the-referees.json": "34301f873b88e127160e66adcc0c84416eb5b0c7a0609139bc7d31586ebe6ad9"
   },
   "outputs": {
     "availability-is-not-reach.html": "08bfaef1bb4be98fdeb10b11e33951dc87fdd7615c321813f60fe1f95de2e2f1",
     "borrowed-ground.html": "56d419908735487f5da46ed11877095dc8241a31a6fa80cc896a4a9b2e024889",
-    "feed.json": "ce96cb840f56e6f0c59a8a6828fc27b54ad9762055e52dfefc6c19414bea160e",
-    "feed.xml": "45bde08df8ef60a88f358fe2c2a0e57e1f7fcfddded608ee95635002ed84185c",
+    "feed.json": "aa7a6d2aee463965ef9065758f28d5e83272074120bd0ecefe3e3ca32bb956a6",
+    "feed.xml": "522801395003a137d055cd774aa23ae13e093f939c81edf3987c1772b4240867",
     "figures/availability-is-not-reach.html": "ee7035a6bc6dae19ee01fb54000b0a95eca5b0e10e64829e6d75d0a6a8d649af",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -41,9 +42,9 @@
     "figures/the-second-hearing-evidence-map.svg": "e496868610c789fc9954e432dfb02e1b5b67a883cf215bb3d06a7a0495f0b580",
     "growth-needs-a-before.html": "7d6e67c085806208ed5f09f247b71e23a5eaec817763683ce38535a5bb4e51d2",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "2f50fb9eb58059feff9240350f625e947f204fb8c0adfb52d60a2712e6f2db3b",
-    "publications.html": "a95d1f2f951a8fce872b62c4948b412813de4b86a806a222a0ef519f9ec70233",
-    "publications/data/index.json": "20f9dbc5e1b12b6ed737825fa0e74510b419c72a48790ae026bd19a599b65195",
-    "sitemap.xml": "8902b467f192425e71550c27106507a3dbeebdfdb45cf7c8a3afe8fdd9ae5b3c",
+    "publications.html": "d4637e4a3987f35e1fc0c3705d7562e4db07ea40b04fb1bf1661ef9403f6e95c",
+    "publications/data/index.json": "98618dd2f3fa28c6041f41db5341d6093566555112ca0dd22ca49eefb01001ad",
+    "sitemap.xml": "ee6325fb4e9abe31e2e4a1e0ef4980414c6eb5eb12289a102fe85a075fc7c635",
     "support-has-more-than-one-record.html": "a26a7c35281fd1edcb997fce729f157d10c8e7abba2a2c2be9e43a0078f5963f",
     "the-sandbox-was-never-just-a-box.html": "24b9ff1e7deec9d55f45b3cf77504b80e4486f31fbce2f6f7cad64346de5e4b3",
     "the-scene-the-song-did-not-tell-you.html": "f2b1c775ab7b7ab8e6837d4dd62746cf595c4bd74aecb9bbb9e430ea85b3b9a4",
@@ -51,6 +52,6 @@
     "the-timestamp-is-not-the-order.html": "d0fbe0ac54461d0e73bbd1d34bbc9a83ab1b1de617084e1e1b1cd213efb63c4b",
     "what-the-formula-counts.html": "a1bcabbf70cd2bc54db0fb70382c8a452a083e35075ce88cd90617bde42681f5",
     "what-the-label-changes.html": "c66e117881da2991a46b62a073f7aa80b773af35603d6b3a7c7172da219c4788",
-    "writing.html": "e6e38072e8a6a7a15e5205a2de49a33a2a161cc1a1a53f96db103185be7dd73f"
+    "writing.html": "43674fb58597850bdf88e104bf396ada34688a1a51fb3ba2f45e0f2a9fd92179"
   }
 }

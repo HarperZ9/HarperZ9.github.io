@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "id": "who-pays-the-referees",
+  "route": "who-pays-the-referees.html",
+  "form": "evidence essay",
+  "category": "agent-evaluation",
+  "title": "Who Pays the Referees",
+  "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first.",
+  "published_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "date_source": null,
+  "hubs": [
+    "publications",
+    "writing"
+  ],
+  "topics": [
+    "evaluation",
+    "conflicts of interest",
+    "disclosure"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, source-bounded"
+}

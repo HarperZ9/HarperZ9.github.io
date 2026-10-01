@@ -5,6 +5,14 @@
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
     {
+      "id": "https://harperz9.github.io/who-pays-the-referees.html",
+      "url": "https://harperz9.github.io/who-pays-the-referees.html",
+      "title": "Who Pays the Referees",
+      "content_text": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first.",
+      "date_published": "2026-10-01T00:00:00Z",
+      "date_modified": "2026-10-01T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/frontier-safety.html",
       "url": "https://harperz9.github.io/frontier-safety.html",
       "title": "Frontier Safety briefing",

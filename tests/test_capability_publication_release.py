@@ -13,6 +13,10 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-B5IIN--D.js",
+    "who-pays-the-referees.html",
+    "publications/data/listings/who-pays-the-referees.json",
+    "img/og/who-pays-the-referees.png",
     "assets/index-DMn8Bp7X.js",
     "support-has-more-than-one-record.html",
     "publications/data/records/support-has-more-than-one-record.json",
@@ -443,7 +447,10 @@ RELEASE_PATHS = (
 # September 30 local completion: reviewed Advanced SecOps course badge;
 # grouped coursework retains issuer levels and limits, without practical-lab claims.
 # 2026-09-30: reviewed personal-project/employment classification and career-transition correction.
-REVIEWED_RELEASE_SHA256 = "98ecddff6a3c3a61a2435eb39662ee049597ebcf12bacd5236a574e7e7e5077a"
+# October 1, 2026: Who Pays the Referees, the first series piece after Who Knew
+# First, joins the publication index, feeds, sitemap, route registry, site index
+# and home bundle with its listing and share card.
+REVIEWED_RELEASE_SHA256 = "180cd58ed016cd5f1b2aba5dbd897e6facf6fec4e68db84d9706a4b4e66cc6c7"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -600,7 +607,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # who runs the board in the live board note and marks coherence-membrane; it is
     # index-9egMTEOG.js with the same sheet, and index-BzE0lc-H.js, never published,
     # is gone.
-    current_js = "index-DMn8Bp7X.js"
+    # October 1, 2026: Who Pays the Referees joins the Research routes, so the home
+    # bundle rebuilt from the registry is index-B5IIN--D.js with the same sheet.
+    # index-DMn8Bp7X.js stays as retained history.
+    current_js = "index-B5IIN--D.js"
+    previous_atlas_js = "index-DMn8Bp7X.js"
+    assert previous_atlas_js not in source
+    assert (ROOT / "assets" / previous_atlas_js).is_file()
+    assert f"assets/{previous_atlas_js}" in RELEASE_PATHS
     for unpublished_js in (
         "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
         "index-BzE0lc-H.js",
