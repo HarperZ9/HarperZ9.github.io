@@ -505,3 +505,24 @@ test("syncScrollRegion drops a table wrapper that fits from the tab order and re
   assert.equal(wrap.getAttribute("tabindex"), "0");
   assert.equal(wrap.getAttribute("role"), "region");
 });
+
+// The header wordmark once read "Zain Dana Harper Zain Dana Harper" after a name sweep
+// rewrote the secondary label to the same name. Visible text and the accessible name
+// must each carry the name exactly once, and the wordmark must not repeat any phrase.
+test("header wordmark names the site once visually and once to assistive technology", () => {
+  const mount = { innerHTML: "", querySelector() { return null; } };
+  renderNav({ location: { pathname: "/catalog.html" }, getElementById() { return mount; } });
+  const home = mount.innerHTML.match(/<a class="sn-home"[^>]*>[\s\S]*?<\/a>/)?.[0];
+  assert.ok(home, "header home link missing");
+  const label = home.match(/aria-label="([^"]*)"/)?.[1] || "";
+  const visible = home
+    .replace(/<([a-z]+)[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/\1>/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const count = (text) => text.split("Zain Dana Harper").length - 1;
+  assert.equal(count(visible), 1, `visible wordmark: "${visible}"`);
+  assert.equal(count(label), 1, `accessible name: "${label}"`);
+  assert.doesNotMatch(visible, /\b(\w+(?: \w+)+) \1\b/, `wordmark repeats a phrase: "${visible}"`);
+  assert.doesNotMatch(label, /\b(\w+(?: \w+)+)\b.*\b\1\b/, `accessible name repeats a phrase: "${label}"`);
+});

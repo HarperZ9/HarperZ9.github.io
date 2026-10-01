@@ -354,7 +354,7 @@ export function renderNav(doc = document) {
   const homeHref = localHrefForPage("index.html", routePath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
   mount.innerHTML =
-    `<a class="sn-home" href="${homeHref}" aria-label="Zain Dana Harper and ${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">Zain Dana Harper<span class="sn-brand-lab"> ${BRAND_LABEL}</span></span></a>`
+    `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
     + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")
