@@ -85,13 +85,21 @@ Error generating stack: `+e.message+`
           "label": "Work with me",
           "href": "work-with-me.html",
           "summary": "AI evaluation review, harness integration, agent safety review and incident investigation, with the scope, limits and published evidence for each.",
+          "primary": false,
           "searchText": "Work with me Services Evaluation design review Harness integration and re-runnable scoring Agent safety and pre-audit review Incident review, from public records or commissioned Independence and conflicts review Recurring monitoring brief How prices are set Before you engage Work I do not take Case studies from published work Running an outside evaluation task through a second harness A fairness gate that failed and stopped a release Finding and disclosing a defect in my own verifier A cross-lab incident record from public sources Reporting a benchmark comparison as not measured What you will not find yet Contact AI evaluation review, harness integration, agent safety review and incident investigation, with the scope, limits and published evidence for each. Work with me Zain Dana Harper | Work with me AI evaluation review, harness integration, agent safety review and incident investigation, with the scope, limits and published evidence for each."
         },
         {
           "label": "Independence policy",
           "href": "independence.html",
           "summary": "Who pays for my evaluation work, which interests could bend it, which AI models help produce it, when I decline work and how findings get corrected.",
-          "searchText": "Independence policy Interests disclosed now One standard for every lab and client Funding Model use Declaring conflicts When I decline work How findings are published How findings are corrected Related Who pays for my evaluation work, which interests could bend it, which AI models help produce it, when I decline work and how findings get corrected. Independence policy Zain Dana Harper | Independence policy Who pays for my evaluation work, which interests could bend it, which AI models help produce it, when I decline work and how findings get corrected."
+          "primary": false,
+          "searchText": "Independence policy Interests disclosed now Applications I have submitted One standard for every lab and client Funding Model use Declaring conflicts When I decline work How findings are published Escalation and notice How findings are corrected Related Who pays for my evaluation work, which interests could bend it, which AI models help produce it, when I decline work and how findings get corrected. Independence policy Zain Dana Harper | Independence policy Who pays for my evaluation work, which interests could bend it, which AI models help produce it, when I decline work and how findings get corrected."
+        },
+        {
+          "label": "Income ledger",
+          "href": "income-ledger.html",
+          "summary": "Every payment, grant and API credit from my AI evaluation and investigation work, with its exact source, amount and share of trailing income.",
+          "searchText": "Income ledger Entries How to read an entry Applications still open Related Every payment, grant and API credit from my AI evaluation and investigation work, with its exact source, amount and share of trailing income. Income ledger Zain Dana Harper | Income ledger Every payment, grant and API credit from my AI evaluation and investigation work, with its exact source, amount and share of trailing income."
         }
       ]
     },

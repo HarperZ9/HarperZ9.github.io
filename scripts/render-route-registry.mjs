@@ -407,7 +407,7 @@ function familyForHref(href, metadata) {
   if (/^(who-knew-first|who-knew-first-series|who-pays-the-referees|the-terms-for-telling)\.html$/.test(href)) return "Who Knew First";
   if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose|verified-is-not-trustworthy|conferred-existence-essay)\.html$/.test(href)) return "Writing";
   if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
-  if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire|work-with-me|independence)\.html/.test(href)) return "Work";
+  if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire|work-with-me|independence|income-ledger)\.html/.test(href)) return "Work";
   if (/^(fonts|typeface)\.html$/.test(href)) return "Fonts";
   return metadata?.family || "Systems";
 }
