@@ -8,6 +8,14 @@ const outputPath = resolve(root, "system", "routes.js");
 const homeOutputPath = resolve(root, "home", "src", "site-routes.ts");
 const current = await readFile(outputPath, "utf8");
 const systemRegistry = JSON.parse(await readFile(resolve(root, "system", "systems.json"), "utf8"));
+// The Writing hub's sections and the generated publication index. A trimmed test tree
+// may carry neither; the menu group and the home strip are then empty.
+const readJsonIfPresent = async (...parts) => {
+  const path = resolve(root, ...parts);
+  return existsSync(path) ? JSON.parse(await readFile(path, "utf8")) : null;
+};
+const writingSections = (await readJsonIfPresent("publications", "data", "sections.json")) || { hub: "publications.html", sections: [] };
+const publicationIndex = (await readJsonIfPresent("publications", "data", "index.json")) || {};
 const ROUTE_CACHE_STAMP = "20260925-void-plates";
 const encoded = current.match(/ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");/)?.[1];
 if (!encoded) throw new Error("system/routes.js does not contain a readable route registry");
@@ -61,7 +69,7 @@ const incidentBrief = {
   href: "frontier-safety-openai-hugging-face-incident.html",
   summary: "August 26 incident-source comparison with public-safe control-plane visualization.",
 };
-if (!research.routes.some((route) => route.href === incidentBrief.href)) {
+if (!findRouteByHref(incidentBrief.href)) {
   const frontierIndex = research.routes.findIndex((route) => route.href === "frontier-safety.html");
   research.routes.splice(frontierIndex >= 0 ? frontierIndex : research.routes.length, 0, incidentBrief);
 }
@@ -266,7 +274,10 @@ function authoredSourceMetadata() {
       const article = match[2];
       const isGeneratedEditorial = /\bgenerated-editorial\b/i.test(attrs);
       if (options.generatedOnly && !isGeneratedEditorial) continue;
-      const family = options.familyForGenerated && isGeneratedEditorial ? options.familyForGenerated : options.family;
+      const inResearch = /\bdata-collection="research"/i.test(attrs);
+      const family = options.researchFamily && inResearch
+        ? options.researchFamily
+        : options.familyForGenerated && isGeneratedEditorial ? options.familyForGenerated : options.family;
       const link = article.match(/<h[23]\b[^>]*>\s*<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>\s*<\/h[23]>/i);
       if (!link) continue;
       const afterHeading = article.slice(article.indexOf(link[0]) + link[0].length);
@@ -279,11 +290,12 @@ function authoredSourceMetadata() {
     }
   }
 
-  collectArticleMetadata(readPublicHtml("publications.html"));
-  collectArticleMetadata(readPublicHtml("writing.html"), { familyForGenerated: "Research" });
+  // Every row on the Writing hub files its piece under Writing, except the research
+  // section's rows, which stay with Research. The hub is generated from sections.json.
   const generatedPublications = readPublicHtml("publications.html")
     .match(/<!-- BEGIN GENERATED EDITORIAL PUBLICATIONS -->([\s\S]*?)<!-- END GENERATED EDITORIAL PUBLICATIONS -->/i)?.[1] || "";
-  collectArticleMetadata(generatedPublications, { family: "Research" });
+  collectArticleMetadata(generatedPublications, { family: "Writing", researchFamily: "Research" });
+  collectArticleMetadata(readPublicHtml("publications.html"));
 
   return map;
 }
@@ -387,13 +399,13 @@ function familyForHref(href, metadata) {
   if (system) return familyForSystem(system);
   if (href.startsWith("analytics/")) return "Research";
   if (href.startsWith("research-")) return "Research";
-  if (href.startsWith("briefings/")) return "Research";
-  if (href.startsWith("frontier-safety")) return "Research";
+  if (href.startsWith("briefings/")) return "Writing";
+  if (href.startsWith("frontier-safety")) return "Writing";
   if (href.startsWith("systems/")) return "Systems";
   if (href.startsWith("demos/")) return "Systems";
   if (href.startsWith("security-") || href.includes("proof") || href.includes("receipt")) return "Security";
-  if (href === "who-knew-first.html") return "Who Knew First";
-  if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose)\.html$/.test(href)) return "Research";
+  if (/^(who-knew-first|who-knew-first-series|who-pays-the-referees)\.html$/.test(href)) return "Who Knew First";
+  if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose|verified-is-not-trustworthy|conferred-existence-essay)\.html$/.test(href)) return "Writing";
   if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
   if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire)\.html/.test(href)) return "Work";
   if (/^(fonts|typeface)\.html$/.test(href)) return "Fonts";
@@ -402,7 +414,9 @@ function familyForHref(href, metadata) {
 
 function reconcilePublicRoutes() {
   systems.prefixes = [...new Set([...(systems.prefixes || []), "systems/", "demos/"])];
-  research.prefixes = [...new Set([...(research.prefixes || []), "research-", "briefings/", "figures/", "frontier-safety/", "analytics/"])];
+  research.prefixes = [...new Set([...(research.prefixes || []), "research-", "figures/", "analytics/"])]
+    .filter((prefix) => !["briefings/", "frontier-safety/"].includes(prefix));
+  writingFamily.prefixes = ["briefings/", "frontier-safety/"];
 
   const sourceMetadata = authoredSourceMetadata();
   for (const system of systemRegistry.systems) {
@@ -428,18 +442,37 @@ registry.families.push({
   ],
 });
 
+// Writing is the reading pillar: one hub (publications.html) with five sections. The
+// retired writing.html index is a redirect page, so no route points at it.
+for (const family of registry.families) {
+  family.routes = family.routes.filter((route) => !route.href.startsWith("writing.html"));
+}
+// The renderer reads its own last output, so the family may already exist; keep its
+// routes and move it to sit right after Research.
+const existingWriting = registry.families.find((family) => family.label === "Writing");
+registry.families = registry.families.filter((family) => family !== existingWriting);
+registry.families.splice(registry.families.indexOf(research) + 1, 0,
+  { label: "Writing", hubHref: "publications.html", routes: existingWriting ? existingWriting.routes : [] });
+const writingFamily = familyByLabel("Writing");
+research.hubHref = "research.html";
+// The hub heads its family, first in the list.
+writingFamily.routes.unshift(findRouteByHref("publications.html")
+  ? takeRoute("publications.html")
+  : { label: "Writing", href: "publications.html" });
+
 // Who Knew First is a primary pillar with a family of its own, placed after
-// Research, so its pillar lights on its own page and on nothing else.
+// Writing, so its pillar lights on its own page and series and on nothing else.
 const whoKnewFirstLabel = "Who Knew First";
 registry.families = registry.families.filter((family) => family.label !== whoKnewFirstLabel);
-registry.families.splice(registry.families.indexOf(research) + 1, 0, { label: whoKnewFirstLabel, routes: [] });
+registry.families.splice(registry.families.indexOf(writingFamily) + 1, 0, { label: whoKnewFirstLabel, hubHref: "who-knew-first-series.html", routes: [] });
 const whoKnewFirstFamily = familyByLabel(whoKnewFirstLabel);
 
-const pillarOrder = ["flywheel.html", "research.html", "who-knew-first.html", "studio.html", "fonts.html", "hire.html"];
+const pillarOrder = ["flywheel.html", "research.html", "publications.html", "who-knew-first.html", "studio.html", "fonts.html", "hire.html"];
 for (const family of registry.families) {
   for (const route of family.routes) {
     route.primary = pillarOrder.includes(route.href);
     if (route.href === "hire.html") route.label = "Work";
+    if (route.href === "publications.html") route.label = "Writing";
     // Flywheel sits in the Systems family without heading it, so its pillar
     // lights only on flywheel.html, never on a catalog, index or research page.
     if (route.href === "flywheel.html") route.lightsFamily = false;
@@ -458,7 +491,7 @@ if (!systems.routes.some((route) => route.href === "glossary.html")) {
 if (!systems.routes.some((route) => route.href === "articulate.html")) {
   systems.routes.push({ label: "Articulate", href: "articulate.html", summary: "A writing checker for hedging, filler and stock phrasing that runs on your own computer." });
 }
-if (!research.routes.some((route) => route.href === "a-witness-should-not-become-a-ruler.html")) {
+if (!findRouteByHref("a-witness-should-not-become-a-ruler.html")) {
   research.routes.push({ label: "A witness should not become a ruler", href: "a-witness-should-not-become-a-ruler.html", summary: "AI-prepared editorial working draft; personal author review pending." });
 }
 reconcilePublicRoutes();
@@ -467,6 +500,50 @@ if (findRouteByHref("who-knew-first.html")) {
   whoKnewFirst.label = whoKnewFirstLabel;
   whoKnewFirst.primary = true;
 }
+for (const href of ["who-knew-first-series.html", "who-pays-the-referees.html"]) {
+  if (findRouteByHref(href)) moveRoute(href, whoKnewFirstFamily, "who-knew-first.html");
+}
+// Reading pages the hub lists only as a sub-line or a dated list still belong to Writing.
+for (const href of ["pick-the-lock-for-everyone-talk.html", "briefings/index.html", "frontier-safety/conclusions/2026-09-23.html"]) {
+  const found = findRouteByHref(href);
+  if (found && found.family.label !== "Writing") moveRoute(href, writingFamily, null);
+}
+const writingPillar = findRouteByHref("publications.html");
+if (writingPillar) {
+  writingPillar.route.label = "Writing";
+  writingPillar.route.primary = true;
+  // The retired index redirects here; if a reader lands on it, the Writing pillar lights.
+  writingPillar.route.aliases = ["writing.html"];
+}
+// Works with several pages carry names that tell them apart, matching the Writing hub.
+const disambiguatedLabels = {
+  "why.html": "Why it's built this way",
+  "current-story.html": "Current Story",
+  "pick-the-lock-for-everyone-talk.html": "Pick the Lock for Everyone: spoken edition",
+  "research-conferred-existence.html": "Conferred Existence: research note",
+  "conferred-existence.html": "Conferred Existence: the full corpus",
+  "frontier-safety-openai-hugging-face-incident.html": "The OpenAI and Hugging Face incident: an essay",
+  "briefings/2026-08-26-openai-hugging-face-incident/": "The OpenAI and Hugging Face incident",
+  "frontier-safety/conclusions/2026-09-23.html": "Frontier Safety conclusions, 23 September 2026",
+};
+for (const [href, label] of Object.entries(disambiguatedLabels)) {
+  const found = findRouteByHref(href);
+  if (found) found.route.label = label;
+}
+// The menu's Writing group: one link per section of the Writing hub, from sections.json.
+const writingMenu = writingSections.sections.map((section) => ({
+  label: section.name,
+  href: `${writingSections.hub}#${section.id}`,
+  family: "Writing",
+}));
+// The home page's newest-writing strip, from the generated publication index.
+const newestWriting = (publicationIndex.newest || []).map((item) => ({
+  title: item.title,
+  href: item.route.startsWith("/") ? item.route : `/${item.route}`,
+  kind: item.kind,
+  publishedAt: item.published_at,
+  summary: item.summary,
+}));
 const serialized = JSON.stringify(JSON.stringify(registry, null, 2));
 const output = `// Generated by scripts/render-route-registry.mjs. Edit the renderer, then rerun it.
 export const ROUTE_CACHE_STAMP = ${JSON.stringify(ROUTE_CACHE_STAMP)};
@@ -482,6 +559,7 @@ export const SECONDARY_GROUPS = ROUTE_REGISTRY.families.map((family) => ({
   routes: family.routes.filter((route) => !route.primary).map((route) => ({ ...route, family: family.label, primary: false })),
 })).filter((group) => group.routes.length);
 export const EXTERNAL_ACTIONS = ROUTE_REGISTRY.externalActions;
+export const WRITING_SECTIONS = ${JSON.stringify(writingMenu)};
 
 function normaliseRoute(pathname) {
   try {
@@ -532,11 +610,14 @@ export const SECONDARY_GROUPS = ROUTE_REGISTRY.families.map((family) => ({
   routes: family.routes.filter((route) => !route.primary).map((route) => ({ ...route, family: family.label, primary: false })),
 })).filter((group) => group.routes.length);
 export const EXTERNAL_ACTIONS = ROUTE_REGISTRY.externalActions;
+export const WRITING_SECTIONS = ${JSON.stringify(writingMenu)};
+export type NewestWriting = { title: string; href: string; kind: string; publishedAt: string; summary: string };
+export const NEWEST_WRITING: NewestWriting[] = ${JSON.stringify(newestWriting, null, 2)};
 
 export type RouteFamily = string;
 export type Route = { label: string; href: string; aliases?: string[]; family: RouteFamily; primary: boolean; summary?: string; searchText?: string; maturity?: string; breadcrumbLabel?: string };
 type RegistryRoute = { label: string; href: string; aliases?: string[]; primary?: boolean; summary?: string; searchText?: string; maturity?: string; breadcrumbLabel?: string };
-type RegistryFamily = { label: RouteFamily; prefixes?: string[]; routes: RegistryRoute[] };
+type RegistryFamily = { label: RouteFamily; hubHref?: string; prefixes?: string[]; routes: RegistryRoute[] };
 type RouteRegistry = { families: RegistryFamily[]; externalActions: Array<{ label: string; href: string; external: true }> };
 function normaliseRoute(pathname: string) {
   try {

@@ -13,6 +13,30 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-Dmke1bnx.js",
+    "assets/index-DbZyfUEO.css",
+    "who-knew-first-series.html",
+    "verified-is-not-trustworthy.html",
+    "conferred-existence-essay.html",
+    "writing/index.html",
+    "publications/index.html",
+    "papers/index.html",
+    "publications/data/sections.json",
+    "publications/data/papers.json",
+    "publications/data/series/who-knew-first.json",
+    "img/og/who-knew-first-series.png",
+    "system/series.css",
+    "publications/data/listings/models-propose-oracles-dispose.json",
+    "publications/data/listings/no-receipt-no-accept.json",
+    "publications/data/listings/pick-the-lock-for-everyone.json",
+    "publications/data/listings/the-summary-is-not-the-record.json",
+    "publications/data/listings/verified-is-not-trustworthy.json",
+    "publications/data/listings/conferred-existence-essay.json",
+    "publications/data/listings/frontier-safety-openai-hugging-face-incident.json",
+    "publications/data/listings/witnessing-spine.json",
+    "publications/data/listings/conferred-existence.json",
+    "publications/data/listings/why.json",
+    "publications/data/listings/current-story.json",
     "assets/index-D7LI6_j0.js",
     "assets/index-DkLmGDFh.js",
     "assets/index-B5IIN--D.js",
@@ -475,7 +499,14 @@ RELEASE_PATHS = (
 # follow-up releases; the publication index, feeds, build receipt, route registry, site
 # index and home bundle (index-D7LI6_j0.js) are regenerated on that base. The bundle
 # built on the old base, index-BLnRqjW-.js, was never published and is gone.
-REVIEWED_RELEASE_SHA256 = "12dae9b8078c8364a0cd1f9069006039655553bc9aa2349b07a22ec0f6d41e16"
+# October 1, 2026: one home for reading. publications.html becomes the Writing hub with five
+# sections generated from publications/data/sections.json; the eleven hand-written rows become
+# listings; writing.html and the writing/, publications/ and papers/ folders become redirect
+# pages; the two inline essays move to pages of their own; the Who Knew First series hub,
+# back-link lines on every piece, the Writing pillar and menu group, the Frontier Safety
+# edition list, the briefings index, sitemap, feeds, build receipt, route registry, site
+# index and home bundle (index-Dmke1bnx.js, index-DbZyfUEO.css) are regenerated.
+REVIEWED_RELEASE_SHA256 = "30946aa281b43bc59bb02ccb8d2e4d32c8200665f88cd6e01d9c624573433bee"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -642,7 +673,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # Knew First follow-up base, so the bundle rebuilt from the registry is
     # index-D7LI6_j0.js with the same sheet. index-DkLmGDFh.js stays as retained
     # history; index-BLnRqjW-.js, built on the old base, was never published.
-    current_js = "index-D7LI6_j0.js"
+    current_js = "index-Dmke1bnx.js"
+    previous_vintage_js = "index-D7LI6_j0.js"
+    assert previous_vintage_js not in source
+    assert (ROOT / "assets" / previous_vintage_js).is_file()
+    assert f"assets/{previous_vintage_js}" in RELEASE_PATHS
+    # The bundles built during this change, index-DO0BUWdN.js and index-LG6YNxx3.js, were never published.
+    assert not (ROOT / "assets" / "index-DO0BUWdN.js").exists()
+    assert not (ROOT / "assets" / "index-LG6YNxx3.js").exists()
     previous_followup_js = "index-DkLmGDFh.js"
     assert previous_followup_js not in source
     assert (ROOT / "assets" / previous_followup_js).is_file()
@@ -676,7 +714,10 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    current_css = "index-DPe17JSn.css"
+    current_css = "index-DbZyfUEO.css"
+    previous_copy_pass_css = "index-DPe17JSn.css"
+    assert previous_copy_pass_css not in source
+    assert (ROOT / "assets" / previous_copy_pass_css).is_file()
     previous_human_first_pair = ("index-TO_R52sc.js", "index-DJj37yQz.css")
     previous_capability_first_pair = ("index-JJHLIJUt.js", "index-eZ1QGP52.css")
     previous_capability_first_home_js = "index-4wTyKocM.js"

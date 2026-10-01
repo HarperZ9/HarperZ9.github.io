@@ -1,9 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "records": [
     {
       "id": "availability-is-not-reach",
       "route": "availability-is-not-reach.html",
+      "title": "Availability Is Not Reach",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "education-access",
       "form": "public-interest analysis",
       "published_at": "2026-09-01",
@@ -14,6 +17,9 @@
     {
       "id": "borrowed-ground",
       "route": "borrowed-ground.html",
+      "title": "Borrowed Ground",
+      "collection": "essays",
+      "kind": "Essay",
       "category": "philosophy",
       "form": "philosophical essay",
       "published_at": "2026-09-10",
@@ -24,6 +30,9 @@
     {
       "id": "growth-needs-a-before",
       "route": "growth-needs-a-before.html",
+      "title": "Growth Needs a Before",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "psychology-recovery",
       "form": "evidence essay",
       "published_at": "2026-09-05",
@@ -34,6 +43,9 @@
     {
       "id": "ltj-bukem-the-man-behind-the-atmosphere",
       "route": "ltj-bukem-the-man-behind-the-atmosphere.html",
+      "title": "LTJ Bukem: The Man Behind the Atmosphere",
+      "collection": "essays",
+      "kind": "Essay",
       "category": "music-listening",
       "form": "biographical and critical essay",
       "published_at": "2026-09-09",
@@ -44,6 +56,9 @@
     {
       "id": "support-has-more-than-one-record",
       "route": "support-has-more-than-one-record.html",
+      "title": "Support Has More Than One Record",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "psychology-trauma-recovery",
       "form": "essay",
       "published_at": "2026-09-28",
@@ -54,6 +69,9 @@
     {
       "id": "the-number-has-a-vintage",
       "route": "the-number-has-a-vintage.html",
+      "title": "The Number Has a Vintage",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "evidence-public-life",
       "form": "essay",
       "published_at": "2026-10-01",
@@ -64,6 +82,9 @@
     {
       "id": "the-sandbox-was-never-just-a-box",
       "route": "the-sandbox-was-never-just-a-box.html",
+      "title": "The Sandbox Was Never Just a Box",
+      "collection": "essays",
+      "kind": "Essay",
       "category": "agent-evaluation",
       "form": "editorial analysis",
       "published_at": "2026-09-10",
@@ -74,6 +95,9 @@
     {
       "id": "the-scene-the-song-did-not-tell-you",
       "route": "the-scene-the-song-did-not-tell-you.html",
+      "title": "The Scene the Song Did Not Tell You",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "music-listening",
       "form": "essay",
       "published_at": "2026-09-28",
@@ -84,6 +108,9 @@
     {
       "id": "the-second-hearing",
       "route": "the-second-hearing.html",
+      "title": "The Second Hearing",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "music-listening",
       "form": "evidence essay",
       "published_at": "2026-09-01",
@@ -94,6 +121,9 @@
     {
       "id": "the-timestamp-is-not-the-order",
       "route": "the-timestamp-is-not-the-order.html",
+      "title": "The Timestamp Is Not the Order",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "tools-practical-computing",
       "form": "essay",
       "published_at": "2026-09-28",
@@ -104,6 +134,9 @@
     {
       "id": "what-the-formula-counts",
       "route": "what-the-formula-counts.html",
+      "title": "What the Formula Counts",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "education-learning-systems",
       "form": "essay",
       "published_at": "2026-09-28",
@@ -114,6 +147,9 @@
     {
       "id": "what-the-label-changes",
       "route": "what-the-label-changes.html",
+      "title": "What the Label Changes",
+      "collection": "atlas",
+      "kind": "Atlas essay",
       "category": "art-perception",
       "form": "evidence-led visual essay",
       "published_at": "2026-09-02",
@@ -126,60 +162,181 @@
     {
       "id": "openai-hugging-face-incident",
       "route": "/briefings/2026-08-26-openai-hugging-face-incident/",
+      "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
+      "collection": "series",
+      "kind": "Dossier",
       "published_at": "2026-08-26",
-      "updated_at": "2026-08-27",
-      "hubs": [
-        "publications"
-      ]
+      "updated_at": "2026-08-27"
     },
     {
       "id": "a-witness-should-not-become-a-ruler",
       "route": "a-witness-should-not-become-a-ruler.html",
+      "title": "A witness should not become a ruler",
+      "collection": "essays",
+      "kind": "Essay",
       "published_at": "2026-09-09",
-      "updated_at": "2026-09-09",
-      "hubs": [
-        "publications",
-        "writing"
-      ]
+      "updated_at": "2026-09-09"
     },
     {
       "id": "checking-the-machines",
       "route": "checking-the-machines.html",
+      "title": "An open letter on checking the machines",
+      "collection": "essays",
+      "kind": "Open letter",
       "published_at": "2026-09-19",
-      "updated_at": "2026-09-20",
-      "hubs": [
-        "publications",
-        "writing"
-      ]
+      "updated_at": "2026-09-20"
+    },
+    {
+      "id": "conferred-existence-essay",
+      "route": "conferred-existence-essay.html",
+      "title": "Conferred Existence",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-06-20",
+      "updated_at": "2026-06-20"
+    },
+    {
+      "id": "conferred-existence",
+      "route": "conferred-existence.html",
+      "title": "Conferred Existence: the full corpus",
+      "collection": "research",
+      "kind": "Research corpus",
+      "published_at": "2026-08-13",
+      "updated_at": "2026-08-13"
+    },
+    {
+      "id": "current-story",
+      "route": "current-story.html",
+      "title": "Current Story",
+      "collection": "essays",
+      "kind": "Visual sequence",
+      "published_at": "2026-07-23",
+      "updated_at": "2026-07-23"
+    },
+    {
+      "id": "frontier-safety-openai-hugging-face-incident",
+      "route": "frontier-safety-openai-hugging-face-incident.html",
+      "title": "The OpenAI and Hugging Face incident: an essay",
+      "collection": "series",
+      "kind": "Essay",
+      "published_at": "2026-08-28",
+      "updated_at": "2026-08-28"
     },
     {
       "id": "frontier-safety",
       "route": "frontier-safety.html",
+      "title": "Frontier Safety briefing",
+      "collection": "briefings",
+      "kind": "Briefing",
       "published_at": "2026-08-24",
-      "updated_at": "2026-09-30",
-      "hubs": [
-        "publications"
-      ]
+      "updated_at": "2026-09-30"
+    },
+    {
+      "id": "models-propose-oracles-dispose",
+      "route": "models-propose-oracles-dispose.html",
+      "title": "Models Propose, Oracles Dispose",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-07-29",
+      "updated_at": "2026-09-25"
+    },
+    {
+      "id": "no-receipt-no-accept",
+      "route": "no-receipt-no-accept.html",
+      "title": "No Receipt, No Accept",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-07-28",
+      "updated_at": "2026-09-25"
+    },
+    {
+      "id": "pick-the-lock-for-everyone",
+      "route": "pick-the-lock-for-everyone.html",
+      "title": "Pick the Lock for Everyone",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-07-22",
+      "updated_at": "2026-07-24"
+    },
+    {
+      "id": "the-summary-is-not-the-record",
+      "route": "the-summary-is-not-the-record.html",
+      "title": "The Summary Is Not the Record",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-07-08",
+      "updated_at": "2026-07-08"
+    },
+    {
+      "id": "verified-is-not-trustworthy",
+      "route": "verified-is-not-trustworthy.html",
+      "title": "Verified Is Not Trustworthy",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-06-20",
+      "updated_at": "2026-06-20"
     },
     {
       "id": "who-knew-first",
       "route": "who-knew-first.html",
+      "title": "Who Knew First",
+      "collection": "series",
+      "kind": "Investigation",
       "published_at": "2026-09-23",
-      "updated_at": "2026-10-01",
-      "hubs": [
-        "publications",
-        "writing"
-      ]
+      "updated_at": "2026-10-01"
     },
     {
       "id": "who-pays-the-referees",
       "route": "who-pays-the-referees.html",
+      "title": "Who Pays the Referees",
+      "collection": "series",
+      "kind": "Series piece",
       "published_at": "2026-10-01",
-      "updated_at": "2026-10-01",
-      "hubs": [
-        "publications",
-        "writing"
-      ]
+      "updated_at": "2026-10-01"
+    },
+    {
+      "id": "why",
+      "route": "why.html",
+      "title": "Why it's built this way",
+      "collection": "essays",
+      "kind": "Essay",
+      "published_at": "2026-06-22",
+      "updated_at": "2026-06-22"
+    },
+    {
+      "id": "witnessing-spine",
+      "route": "witnessing-spine.html",
+      "title": "The Witnessing Spine",
+      "collection": "research",
+      "kind": "Research corpus",
+      "published_at": "2026-06-20",
+      "updated_at": "2026-06-20"
+    }
+  ],
+  "newest": [
+    {
+      "id": "who-pays-the-referees",
+      "route": "who-pays-the-referees.html",
+      "title": "Who Pays the Referees",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first."
+    },
+    {
+      "id": "the-number-has-a-vintage",
+      "route": "the-number-has-a-vintage.html",
+      "title": "The Number Has a Vintage",
+      "kind": "Atlas essay",
+      "published_at": "2026-10-01",
+      "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses."
+    },
+    {
+      "id": "what-the-formula-counts",
+      "route": "what-the-formula-counts.html",
+      "title": "What the Formula Counts",
+      "kind": "Atlas essay",
+      "published_at": "2026-09-28",
+      "summary": "A readability score measures selected text features. Comprehension, audience fit and accessibility require evidence of their own."
     }
   ]
 }

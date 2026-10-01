@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "the-summary-is-not-the-record",
+  "route": "the-summary-is-not-the-record.html",
+  "form": "maintainer note",
+  "category": "agents",
+  "title": "The Summary Is Not the Record",
+  "summary": "Claims, evidence, checks, action state, and the unsupported remainder a handoff should keep visible.",
+  "published_at": "2026-07-08",
+  "updated_at": "2026-07-08",
+  "date_source": null,
+  "topics": [
+    "ai",
+    "agents",
+    "verification"
+  ],
+  "ai_assistance": null
+}

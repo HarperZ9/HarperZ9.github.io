@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ESSAY = ROOT / "no-receipt-no-accept.html"
-WRITING = ROOT / "writing.html"
+WRITING = ROOT / "publications.html"  # the Writing hub since 1 October 2026
 SITEMAP = ROOT / "sitemap.xml"
 LOADER = ROOT / "system" / "essay-loader.js"
 PARTS_DIR = ROOT / "writing" / "no-receipt-no-accept"

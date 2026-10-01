@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "id": "current-story",
+  "route": "current-story.html",
+  "form": "visual sequence",
+  "category": "creative-work",
+  "title": "Current Story",
+  "summary": "Seventeen images shown in the order they were made: a chronological visual sequence selected by Zain Dana Harper.",
+  "published_at": "2026-07-23",
+  "updated_at": "2026-07-23",
+  "date_source": null,
+  "topics": [
+    "art",
+    "creativity"
+  ],
+  "ai_assistance": null
+}

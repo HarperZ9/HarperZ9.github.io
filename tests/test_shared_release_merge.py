@@ -54,15 +54,22 @@ def test_route_registry_is_the_union_of_hiring_capability_and_legacy_routes() ->
         "security.html", "security-toolkit.html", "phantom.html", "private-practice.html",
         "behavior-transform.html", "systems/behavior-transform.html", "emet.html",
     } <= hrefs["Security"]
+    assert {"research.html", "research-conferred-existence.html"} <= hrefs["Research"]
+    # 1 October 2026: reading moved to its own Writing pillar; writing.html is a redirect.
     assert {
-        "research.html", "writing.html", "publications.html", "frontier-safety.html",
+        "publications.html", "frontier-safety.html",
         "models-propose-oracles-dispose.html", "briefings/index.html",
-    } <= hrefs["Research"]
+    } <= hrefs["Writing"]
+    # The retired index survives only as an alias that lights the Writing pillar.
+    routes = [route for family in families.values() for route in family["routes"]]
+    assert not any(route["href"].startswith("writing.html") for route in routes)
+    assert "writing.html" in hrefs["Writing"]
     assert {"studio.html", "gallery.html", "retro.html", "loom.html", "session-archive.html"} <= hrefs["Studio"]
 
     assert "systems/" in families["Systems"].get("prefixes", [])
     assert "security-" in families["Security"].get("prefixes", [])
-    assert {"research-", "briefings/", "frontier-safety/"} <= set(families["Research"].get("prefixes", []))
+    assert "research-" in families["Research"].get("prefixes", [])
+    assert {"briefings/", "frontier-safety/"} <= set(families["Writing"].get("prefixes", []))
 
     # An explicit route wins over a broad nested-family prefix. Behavior Transform
     # lives under /systems for compatibility, but belongs to the security family.

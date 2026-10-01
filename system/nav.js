@@ -1,6 +1,6 @@
 // nav.js, one source of truth for the site navigation. Injected into #site-nav on every page;
 // active state derived from the path. No framework; <noscript> fallback lives in the page markup.
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js?v=20260925-void-plates";
+import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, ROUTE_REGISTRY, SECONDARY_GROUPS, WRITING_SECTIONS, routeFamily } from "./routes.js?v=20260925-void-plates";
 
 const BRAND_LABEL = "Zentropy Labs";
 const BRAND_MARK_SRC = "brand/zentropy-avatar.png";
@@ -139,6 +139,12 @@ function routeHeaderTarget(doc) {
   return { container: compact, h1 };
 }
 
+function familyHubHref(label) {
+  const families = (ROUTE_REGISTRY && ROUTE_REGISTRY.families) || [];
+  const family = families.find((item) => item.label === label);
+  return (family && family.hubHref) || "";
+}
+
 function buildRoutePath(doc, family, route) {
   const path = doc.createElement("nav");
   path.className = "route-header__path";
@@ -149,8 +155,11 @@ function buildRoutePath(doc, family, route) {
   home.textContent = "Zain Dana Harper";
   path.appendChild(home);
 
-  const category = doc.createElement("span");
+  // A family with a hub page (Writing, Research) links its crumb back to that hub.
   const categoryLabel = family || "Public work";
+  const hubHref = familyHubHref(family);
+  const category = doc.createElement(hubHref ? "a" : "span");
+  if (hubHref) category.href = localHrefForPage(hubHref, locationPath(doc));
   category.textContent = categoryLabel;
   const exactNavigation = [...PRIMARY_ROUTES, { href: "site-index.html" }].some(
     route => localRoute(route.href, true) === localRoute(locationPath(doc), true));
@@ -169,9 +178,9 @@ function buildRoutePath(doc, family, route) {
 
 export function buildRouteHeader(doc = document) {
   if (!doc || !doc.body || isHomeDocument(doc)) return null;
-  // A page that carries its own masthead or breadcrumb already shows its path.
-  // One path per page, so the route header stays out of its way.
-  if (doc.querySelector(".masthead, .masthead-path")) return null;
+  // A page that carries its own masthead, breadcrumb or back-link line (.docnav)
+  // already shows its path. One path per page, so the route header stays out of its way.
+  if (doc.querySelector(".masthead, .masthead-path, .docnav")) return null;
   const existing = doc.querySelector("[data-route-header='mounted']");
   if (existing) return existing;
   const target = routeHeaderTarget(doc);
@@ -354,6 +363,7 @@ export function renderNav(doc = document) {
     + `<summary>Menu</summary>`
     + `<div class="sn-more-list" aria-label="Site menu">`
     + menuGroup("Primary", PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
+    + menuGroup("Writing", WRITING_SECTIONS || [], active, routePath, "sn-menu-secondary sn-menu-writing")
     + menuGroup("Explore", [{ label: "Site index", href: "site-index.html", family: "Systems" }], active, routePath, "sn-menu-secondary")
     + menuGroup("Actions", EXTERNAL_ACTIONS, active, routePath, "sn-menu-secondary")
     + `</div></details>`

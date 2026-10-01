@@ -17,12 +17,17 @@ def test_publications_is_an_editorial_front_door_before_a_catalog() -> None:
     page = read("publications.html")
     text = " ".join(re.sub(r"<[^>]+>", "", page).split())
 
-    assert "Writing and research" in text
-    assert page.index('id="reading-paths"') < page.index('id="publication-index"')
+    # 1 October 2026: the page is the Writing hub. The five sections come first; the
+    # older anchors keep their blocks below them so outside links still land.
+    assert "<h1>Writing</h1>" in page
+    for section in ("series", "essays", "atlas", "briefings", "research"):
+        assert f'href="#{section}"' in page
+        assert f'id="{section}"' in page
+    assert page.index('id="newest"') < page.index('id="publication-index"')
     assert page.index('id="publication-index"') < page.index('id="research-records"')
-    assert 'href="#reading-paths"' in page
-    assert 'href="#publication-index"' in page
-    assert 'href="#research-records"' in page
+    assert page.index('id="research-records"') < page.index('id="start-here"')
+    assert page.index('id="start-here"') < page.index('id="reading-paths"')
+    assert page.index('id="reading-paths"') < page.index('id="publication-method"')
 
 
 def test_reading_paths_cover_the_requested_interests_without_fake_posts() -> None:
@@ -62,8 +67,8 @@ def test_published_index_has_current_briefings_and_existing_essays() -> None:
         "no-receipt-no-accept.html",
         "pick-the-lock-for-everyone.html",
         "the-summary-is-not-the-record.html",
-        "writing.html#verified",
-        "writing.html#conferred",
+        "verified-is-not-trustworthy.html",
+        "conferred-existence-essay.html",
     ):
         assert f'href="{href}"' in page, href
 
@@ -103,7 +108,7 @@ def test_publication_skip_link_is_immediate_and_visible_when_focused() -> None:
 
 def test_publication_visual_system_has_accessibility_fallbacks() -> None:
     page = read("publications.html")
-    writing = read("writing.html")
+    writing = read("verified-is-not-trustworthy.html")
     css = read("system/publications.css")
 
     assert "system/fonts/conso-regular.woff2" in page

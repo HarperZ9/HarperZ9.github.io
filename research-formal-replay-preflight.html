@@ -23,8 +23,13 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="writing.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="overview.html">Flagships</a> <a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="publications.html">Writing</a> <a href="cv.html">About</a></nav></noscript>
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+
+<div class="docnav">
+  <span class="where">Research &middot; Notes</span>
+  <span class="switch"><a href="research.html">Research program</a><a href="publications.html#research">All notes and papers</a></span>
+</div>
 
 <main id="main">
 <article class="sheet">
@@ -101,7 +106,6 @@
     <p class="entry-note">The theorem-prover ladder now reaches explicit vector finite-operator vocabulary, but only for finite integer algebra.</p>
     <ul class="bul">
       <li>Lean sources: <span translate="no">PeriodicCancellationPreflight.lean</span>, <span translate="no">CyclicFiniteSumPreflight.lean</span>, <span translate="no">CyclicSummationByPartsPreflight.lean</span>, <span translate="no">TypedFiniteGridSummationByPartsPreflight.lean</span>, <span translate="no">FiniteEdgeOperatorPreflight.lean</span>, and <span translate="no">VectorFiniteOperatorPreflight.lean</span>.</li>
-      <li>Receipts: <span translate="no">lean-periodic-cancellation-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-finite-sum-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-summation-by-parts-replay-2026-07-02.json</span>, <span translate="no">lean-typed-finite-grid-sbp-replay-2026-07-02.json</span>, <span translate="no">lean-finite-edge-owner-sbp-replay-2026-07-02.json</span>, and <span translate="no">lean-vector-finite-operator-sbp-replay-2026-07-02.json</span>.</li>
       <li>Toolchain: Lean <span translate="no">4.31.0</span>, Lake <span translate="no">5.0.0</span>, elan <span translate="no">4.2.3</span>.</li>
       <li>Verdict: <b>VECTOR_FINITE_OPERATOR_SBP_MATCH</b> for finite vector/operator summation by parts only.</li>
     </ul>
@@ -109,11 +113,14 @@
 
   <section>
     <h2>Verification receipts</h2>
+    <details class="source-record"><summary>Source record for checking</summary>
     <ul class="bul">
+      <li>Lean replay receipts: <span translate="no">lean-periodic-cancellation-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-finite-sum-replay-2026-07-02.json</span>, <span translate="no">lean-cyclic-summation-by-parts-replay-2026-07-02.json</span>, <span translate="no">lean-typed-finite-grid-sbp-replay-2026-07-02.json</span>, <span translate="no">lean-finite-edge-owner-sbp-replay-2026-07-02.json</span>, and <span translate="no">lean-vector-finite-operator-sbp-replay-2026-07-02.json</span>.</li>
       <li>Crucible: <span translate="no">twentieth-wave-tooling-run-2026-07-02.json</span> reports <span translate="no">MATCH 3 / DRIFT 0 / UNVERIFIABLE 0</span> for bounded local packet claims.</li>
       <li>Learn: <span translate="no">twentieth-wave-vector-finite-operator.prooflesson.json</span> reverified as <span translate="no">VERIFIED</span> from its recorded hash chain.</li>
       <li>Gather: three twentieth-wave stores verify as content-addressed <span translate="no">MATCH</span> stores, still demoted to source leads.</li>
     </ul>
+    </details>
   </section>
 
   <section>

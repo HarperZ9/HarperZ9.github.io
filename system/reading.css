@@ -31,6 +31,11 @@ body.doc:has(.longform)::before,
 body.doc:has(.longform)>#gl,
 body.doc:has(.longform)>#motes{display:none!important}
 body.doc:has(.longform) .sheet{border:0;padding-inline:0;width:min(100%,62ch);max-width:62ch}
+/* On a phone 62ch is wider than the screen, so the column keeps a 1rem side gutter. */
+@media (max-width:40rem){body.doc:has(.longform) .sheet{padding-inline:1rem}}
+/* Long URLs and capitalized status words wrap instead of running past a phone screen. */
+body.doc .sheet :is(p,li,dt){overflow-wrap:break-word}
+body.doc .sheet dd{overflow-wrap:anywhere}
 body.doc:has(.longform) :is(.article-head h1,.article-head .lead,.article-body,.article-body h2,.article-body h3,.companion,.article-footer){font-family:var(--reading-type)}
 body.doc:has(.longform) .article-body{max-width:62ch;font-size:var(--t-body);line-height:1.7}
 body.doc:has(.longform) .article-head h1{font-size:var(--t-display);font-weight:500;line-height:1.08;letter-spacing:-.015em;text-wrap:balance}

@@ -14,9 +14,10 @@ def test_frontier_safety_brief_is_linked_and_source_bound() -> None:
     assert page.is_file(), "frontier-safety incident brief page is missing"
 
     shell = read("frontier-safety-openai-hugging-face-incident.html")
-    writing = read("writing.html")
+    # 1 October 2026: the Writing hub lists the essay beside the dossier it belongs to.
+    writing = read("publications.html")
     assert 'href="frontier-safety-openai-hugging-face-incident.html"' in writing
-    assert "openai / hugging face incident" in writing.lower()
+    assert "the openai and hugging face incident: an essay" in writing.lower()
 
     expected_parts = [
         "writing/frontier-safety-openai-hugging-face-incident/01.md",
@@ -46,19 +47,19 @@ def test_frontier_safety_brief_is_linked_and_source_bound() -> None:
         assert phrase.lower() in source.lower(), phrase
 
 
-def test_frontier_safety_brief_is_registered_under_research() -> None:
+def test_frontier_safety_brief_is_registered_under_writing() -> None:
     routes_source = read("system/routes.js")
     match = re.search(r'ROUTE_REGISTRY_JSON = ("(?:[^"\\]|\\.)*");', routes_source)
     assert match, "generated route registry JSON is missing"
     registry = json.loads(json.loads(match.group(1)))
 
-    research = next(family for family in registry["families"] if family["label"] == "Research")
+    research = next(family for family in registry["families"] if family["label"] == "Writing")
     route = next(
         route
         for route in research["routes"]
         if route["href"] == "frontier-safety-openai-hugging-face-incident.html"
     )
-    assert route["label"] == "OpenAI / Hugging Face incident"
+    assert route["label"] == "The OpenAI and Hugging Face incident: an essay"
 
 
 def test_frontier_safety_brief_has_accessible_visual_evidence() -> None:

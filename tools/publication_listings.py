@@ -4,7 +4,8 @@ A full record in publications/data/records renders its own article page. Some wo
 are written by hand or built by another generator: Who Knew First, the open letter,
 the Frontier Safety briefing, the incident dossier and the witness essay. A full
 record would overwrite those pages. A listing puts such a work into the dated index
-on publications.html and writing.html and into the feeds, and never renders its page.
+on publications.html and into the feeds, and never renders its page. Which section of
+publications.html lists it is set in publications/data/sections.json, not here.
 
 Files: publications/data/listings/<id>.json, one per work. Each listing is validated
 with the same public-text rules as full records, its route must exist in the site,
@@ -30,9 +31,8 @@ from tools.publication_model import (
 
 LISTING_FIELDS = {
     "schema_version", "id", "route", "form", "category", "title", "summary",
-    "published_at", "updated_at", "date_source", "hubs", "topics", "ai_assistance",
+    "published_at", "updated_at", "date_source", "topics", "ai_assistance",
 }
-HUBS = {"publications", "writing"}
 TEXT_FIELDS = ("route", "form", "category", "title", "summary")
 
 
@@ -101,9 +101,6 @@ def validate_listing(data: dict, root: Path, context: str) -> None:
     _validate_date(data["updated_at"], f"{context}.updated_at")
     if data["published_at"] > data["updated_at"]:
         raise PublicationError(f"{context}.updated_at precedes published_at")
-    hubs = data["hubs"]
-    if not isinstance(hubs, list) or not hubs or not set(hubs) <= HUBS or len(set(hubs)) != len(hubs):
-        raise PublicationError(f"{context}.hubs must list publications and/or writing")
     topics = data["topics"]
     if not isinstance(topics, list) or not all(isinstance(t, str) and t.strip() for t in topics):
         raise PublicationError(f"{context}.topics must be a list of words")

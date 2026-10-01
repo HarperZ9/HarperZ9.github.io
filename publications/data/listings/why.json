@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "why",
+  "route": "why.html",
+  "form": "long-form argument",
+  "category": "philosophy",
+  "title": "Why it's built this way",
+  "summary": "The philosophy under the tools: why a made mind gets real senses, a memory, and a record it cannot fake, and why the work never leans on it.",
+  "published_at": "2026-06-22",
+  "updated_at": "2026-06-22",
+  "date_source": null,
+  "topics": [
+    "philosophy",
+    "systems",
+    "minds"
+  ],
+  "ai_assistance": null
+}

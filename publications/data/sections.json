@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "hub": "publications.html",
+  "sections": [
+    {
+      "id": "series",
+      "name": "Investigations and the series",
+      "short": "Investigations",
+      "more": "More investigations",
+      "explainer": "Long investigations from public records, and the series that follows Who Knew First.",
+      "members": [
+        {"id": "who-pays-the-referees", "kind": "Series piece", "topic": "AI evaluation", "series": {"id": "who-knew-first", "part": 1}},
+        {"id": "who-knew-first", "kind": "Investigation", "topic": "AI incidents", "series": {"id": "who-knew-first", "part": 0}},
+        {"id": "openai-hugging-face-incident", "kind": "Dossier", "topic": "AI incidents", "label": "The OpenAI and Hugging Face incident"},
+        {"id": "frontier-safety-openai-hugging-face-incident", "kind": "Essay", "topic": "AI incidents"}
+      ]
+    },
+    {
+      "id": "essays",
+      "name": "Essays and letters",
+      "short": "Essays and letters",
+      "more": "More essays",
+      "explainer": "Signed essays, letters and arguments, each with its sources and what it does not claim.",
+      "members": [
+        {"id": "checking-the-machines", "kind": "Open letter", "topic": "verification"},
+        {"id": "a-witness-should-not-become-a-ruler", "kind": "Essay", "topic": "verification and education"},
+        {"id": "borrowed-ground", "kind": "Essay", "topic": "philosophy"},
+        {"id": "the-sandbox-was-never-just-a-box", "kind": "Essay", "topic": "agent evaluation"},
+        {"id": "ltj-bukem-the-man-behind-the-atmosphere", "kind": "Essay", "topic": "music and listening"},
+        {"id": "models-propose-oracles-dispose", "kind": "Essay", "topic": "verification"},
+        {"id": "no-receipt-no-accept", "kind": "Essay", "topic": "verification"},
+        {"id": "pick-the-lock-for-everyone", "kind": "Essay", "topic": "creative work", "related": [{"label": "Pick the Lock for Everyone: spoken edition", "href": "pick-the-lock-for-everyone-talk.html"}]},
+        {"id": "the-summary-is-not-the-record", "kind": "Essay", "topic": "AI agents"},
+        {"id": "verified-is-not-trustworthy", "kind": "Essay", "topic": "verification"},
+        {"id": "conferred-existence-essay", "kind": "Essay", "topic": "philosophy"},
+        {"id": "why", "kind": "Essay", "topic": "philosophy"},
+        {"id": "current-story", "kind": "Visual sequence", "topic": "creative work"}
+      ]
+    },
+    {
+      "id": "atlas",
+      "name": "Atlas",
+      "short": "Atlas",
+      "more": "More Atlas essays",
+      "explainer": "Short evidence essays that each test one public claim, from jobs numbers to repeat listening.",
+      "members": [
+        {"id": "the-number-has-a-vintage", "kind": "Atlas essay", "topic": "official statistics"},
+        {"id": "what-the-formula-counts", "kind": "Atlas essay", "topic": "education and learning"},
+        {"id": "the-timestamp-is-not-the-order", "kind": "Atlas essay", "topic": "practical computing"},
+        {"id": "the-scene-the-song-did-not-tell-you", "kind": "Atlas essay", "topic": "music and listening"},
+        {"id": "support-has-more-than-one-record", "kind": "Atlas essay", "topic": "psychology and recovery"},
+        {"id": "what-the-label-changes", "kind": "Atlas essay", "topic": "art and perception"},
+        {"id": "the-second-hearing", "kind": "Atlas essay", "topic": "music and listening"},
+        {"id": "growth-needs-a-before", "kind": "Atlas essay", "topic": "psychology and recovery"},
+        {"id": "availability-is-not-reach", "kind": "Atlas essay", "topic": "education and access"}
+      ]
+    },
+    {
+      "id": "briefings",
+      "name": "Frontier Safety briefings",
+      "short": "Frontier Safety",
+      "more": "All editions",
+      "explainer": "A recurring briefing on frontier AI safety, with every dated edition kept.",
+      "members": [
+        {"id": "frontier-safety", "kind": "Briefing", "topic": "AI safety"}
+      ],
+      "editions": true
+    },
+    {
+      "id": "research",
+      "name": "Research notes and papers",
+      "short": "Research",
+      "more": "More research",
+      "explainer": "Working notes and archived papers from the research program. Nothing here is peer reviewed.",
+      "members": [
+        {"id": "witnessing-spine", "kind": "Research corpus", "topic": "verification"},
+        {"id": "conferred-existence", "kind": "Research corpus", "topic": "philosophy"}
+      ],
+      "notes": {
+        "glob": "research-*.html",
+        "labels": {"research-conferred-existence.html": "Conferred Existence: research note"}
+      },
+      "papers": "publications/data/papers.json"
+    }
+  ]
+}

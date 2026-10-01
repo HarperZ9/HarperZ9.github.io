@@ -12,7 +12,7 @@ test("generated registry provides the static navigation taxonomy", () => {
   assert.equal(routeFamily("/raw.html"), "Studio");
   assert.equal(routeFamily("/systems/relay.html"), "Systems");
   assert.equal(routeFamily("/systems/behavior-transform.html"), "Security");
-  assert.equal(routeFamily("/briefings/2026-08-26-openai-hugging-face-incident/"), "Research");
+  assert.equal(routeFamily("/briefings/2026-08-26-openai-hugging-face-incident/"), "Writing");
   assert.ok(PRIMARY_ROUTES.length > 0);
   assert.ok(SECONDARY_GROUPS.length > 0);
 });
@@ -28,10 +28,14 @@ test("active section is derived from the route registry", () => {
   assert.equal(navActive("/behavior-transform.html"), "Security");
   assert.equal(navActive("/buildlang.html"), "Security");
   assert.equal(navActive("/research.html"), "Research");
-  assert.equal(navActive("/models-propose-oracles-dispose.html"), "Research");
-  assert.equal(navActive("/briefings/2026-08-26-openai-hugging-face-incident/"), "Research");
+  // 1 October 2026: essays, briefings and the retired writing index belong to Writing.
+  assert.equal(navActive("/models-propose-oracles-dispose.html"), "Writing");
+  assert.equal(navActive("/briefings/2026-08-26-openai-hugging-face-incident/"), "Writing");
+  assert.equal(navActive("/frontier-safety/archive/2026-09-09.html"), "Writing");
   assert.equal(navActive("/research-proof-carrying-research-loops.html"), "Research");
-  assert.equal(navActive("/writing.html"), "Research");
+  assert.equal(navActive("/writing.html"), "Writing");
+  assert.equal(navActive("/publications.html"), "Writing");
+  assert.equal(navActive("/who-knew-first-series.html"), "Who Knew First");
   assert.equal(navActive("/studio.html"), "Studio");
   assert.equal(navActive("/gallery.html"), "Studio");
   assert.equal(navActive("/session-archive.html"), "Studio");
@@ -109,6 +113,9 @@ test("pillars light only for the page family they head", () => {
   assert.deepEqual(lit("/research.html"), ["research.html"]);
   assert.deepEqual(lit("/research-proof-carrying-research-loops.html"), ["research.html"]);
   assert.deepEqual(lit("/who-knew-first.html"), ["who-knew-first.html"]);
+  assert.deepEqual(lit("/who-pays-the-referees.html"), ["who-knew-first.html"]);
+  assert.deepEqual(lit("/the-number-has-a-vintage.html"), ["publications.html"]);
+  assert.deepEqual(lit("/publications.html"), ["publications.html"]);
   assert.deepEqual(lit("/flywheel.html"), ["flywheel.html"]);
   assert.deepEqual(lit("/site-index.html"), []);
   assert.deepEqual(lit("/overview.html"), []);
@@ -116,10 +123,11 @@ test("pillars light only for the page family they head", () => {
   assert.deepEqual(lit("/gallery.html"), ["studio.html"]);
 });
 
-test("Who Knew First is the third primary pillar", () => {
+test("Writing and Who Knew First follow Research in the primary pillars", () => {
   assert.deepEqual(PRIMARY_ROUTES.map((route) => route.href), [
     "flywheel.html",
     "research.html",
+    "publications.html",
     "who-knew-first.html",
     "studio.html",
     "fonts.html",
@@ -356,7 +364,9 @@ test("unknown prefixed route header leaves category context unmarked", () => {
   buildRouteHeader(doc);
 
   const path = frame.querySelector(".route-header__path");
-  assert.equal(path.children[1].textContent, "Research");
+  // A frozen Frontier Safety edition files under Writing, and the crumb links back to the hub.
+  assert.equal(path.children[1].textContent, "Writing");
+  assert.equal(path.children[1].href, "/publications.html");
   assert.equal(path.children[1].getAttribute("aria-current"), null);
   assert.equal(path.querySelectorAll('[aria-current="page"]').length, 0);
 });

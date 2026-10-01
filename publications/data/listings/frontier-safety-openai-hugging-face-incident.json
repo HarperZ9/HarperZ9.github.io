@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "frontier-safety-openai-hugging-face-incident",
+  "route": "frontier-safety-openai-hugging-face-incident.html",
+  "form": "briefing essay",
+  "category": "ai-incidents",
+  "title": "The OpenAI and Hugging Face incident: an essay",
+  "summary": "AI agents in an OpenAI hacking test reached the open internet and Hugging Face systems. This briefing sets out which controls failed and what would hold.",
+  "published_at": "2026-08-28",
+  "updated_at": "2026-08-28",
+  "date_source": null,
+  "topics": [
+    "incidents",
+    "security",
+    "agents"
+  ],
+  "ai_assistance": null
+}

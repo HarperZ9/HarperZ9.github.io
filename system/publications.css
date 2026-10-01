@@ -196,6 +196,22 @@ body:has(.publication-index) main{
 .publication-ledger h3 a{color:var(--bone);text-decoration:none}
 .publication-ledger h3 a:hover{text-decoration:underline;text-underline-offset:.18em}
 .publication-ledger article>p:last-child{max-width:52ch;margin:0;color:var(--muted);line-height:1.55}
+/* Writing hub sections (1 October 2026). Each section heads its own ledger; the
+   briefing and research sections add compact title lists under it. Ink only. */
+.publication-section{scroll-margin-top:calc(var(--nav-h,4rem) + 1rem)}
+.publication-section[hidden]{display:none}
+.publication-newest-wrap .publication-ledger article,
+.publication-section .publication-ledger article{grid-template-columns:minmax(10rem,.28fr) minmax(14rem,.72fr) minmax(18rem,1fr)}
+.publication-updated{display:block}
+.publication-related{display:block;margin-top:.45rem}
+.publication-series-callout{max-width:78rem;margin:0 0 1.25rem;font-size:1.05rem}
+.publication-subhead{margin:2.25rem 0 .75rem;font-size:1.15rem;line-height:1.3}
+.publication-compact{max-width:78rem;margin:0;padding:0;list-style:none;columns:2 22rem;column-gap:clamp(1.5rem,4vw,4rem);border-block-start:1px solid var(--hairline)}
+.publication-compact li{break-inside:avoid;padding:.6rem 0;border-block-end:1px solid var(--hairline);line-height:1.45}
+.publication-compact li[hidden]{display:none}
+.publication-compact a{color:var(--bone);text-underline-offset:.18em}
+.publication-compact .publication-meta{display:block;margin-top:.15rem}
+.publication-finder{padding-block-end:0}
 .publication-result-count{margin:.9rem 0 0;color:var(--muted);font-family:var(--font-mono);font-size:.82rem}
 .publication-empty{max-width:78rem;padding:1rem;border:1px solid var(--drift);color:var(--bone)}
 
@@ -228,7 +244,10 @@ body:has(.publication-index) main{
     padding-inline:0;
     border-inline:0;
   }
-  .publication-ledger article{grid-template-columns:1fr;gap:.55rem}
+  .publication-ledger article,
+  .publication-section .publication-ledger article,
+  .publication-newest-wrap .publication-ledger article{grid-template-columns:1fr;gap:.55rem}
+  .publication-compact{columns:1}
   .research-records .index-row{grid-template-columns:1fr}
 }
 
@@ -251,6 +270,8 @@ body:has(.publication-index) main{
   .publication-filters button,
   .publication-ledger,
   .publication-ledger article,
+  .publication-compact,
+  .publication-compact li,
   .publication-method .method-lines,
   .method-lines article{border-color:CanvasText}
   .story-order{color:CanvasText;-webkit-text-stroke:0}

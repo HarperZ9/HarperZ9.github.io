@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "no-receipt-no-accept",
+  "route": "no-receipt-no-accept.html",
+  "form": "long-form essay",
+  "category": "verification",
+  "title": "No Receipt, No Accept",
+  "summary": "Review debt, verifier independence, honest nulls, labor, and machines whose claims anyone can check.",
+  "published_at": "2026-07-28",
+  "updated_at": "2026-09-25",
+  "date_source": null,
+  "topics": [
+    "ai",
+    "systems",
+    "verification",
+    "labor"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, publicly disclosed"
+}
