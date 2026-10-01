@@ -84,3 +84,20 @@ def test_public_surface_rules_hold() -> None:
     assert "Claude Opus 5.5" in text and "same-maker check" in text
     assert "a later piece in this series that is not yet published" in text
     assert "600 Black men from Macon County, Alabama" in text
+
+
+def test_dated_update_and_the_benton_count_correction() -> None:
+    page = source()
+    update = re.search(r'<aside class="tft-update" id="update-20261001".*?</aside>', page, re.S).group(0)
+    assert page.index('id="update-20261001"') < page.index('<section id="routes"')
+    labels = re.findall(r'<p class="wpr-np tft-label">(.*?)</p>', update, re.S)
+    assert len(labels) == 2 and all("Does not prove" in label for label in labels)
+    assert "That timing does not show causation" in update
+    assert "are not repeated here" in update
+    assert "three of its researchers resigned in public in 2026" in page
+    assert "three public resignations in 2026" in page
+    assert "and two public resignations in 2026" not in page
+    corrections = re.search(r'<section id="corrections".*?</section>', page, re.S).group(0)
+    assert "1 October 2026, correction, the Conflict note and section 2" in corrections
+    assert "None yet." not in corrections
+    assert "Added for the 1 October update" in page

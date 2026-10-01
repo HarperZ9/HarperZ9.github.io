@@ -519,7 +519,7 @@ RELEASE_PATHS = (
 # October 1, 2026: Zentropy Labs is retired. Page titles, bylines, the home bundle
 # (index-CyztdbmV.js), the open letter signature, the CV and the two affected social
 # cards name Zain Dana Harper.
-REVIEWED_RELEASE_SHA256 = "0a1c344fd7129f10126c88f85ff243298e7a31f4432588b783b6e79e42c7d499"
+REVIEWED_RELEASE_SHA256 = "744fdf4b04afbb267b9a97faa30dc0630a58f9bd98a7d56ba9a3a2447f51c6b4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
