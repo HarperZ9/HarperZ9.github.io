@@ -31,7 +31,19 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         assert len(pdf) == (5 if item['id'] == 'page:cv' else 1)
         assert not docx.tables
         assert len(text.split()) >= 250
-        assert '2023 to Present' in text
+        assert 'Self-Directed Projects' in text
+        assert 'Employment' in text
+        assert 'June 2026' in text
+        assert '13 years' in text
+        assert 'Professional Experience' not in text
+        sections = re.split(r'(?m)^(Self-Directed Projects|Employment)$', text)
+        scope = {sections[i]: sections[i + 1] for i in range(1, len(sections), 2)}
+        assert 'About 13 years' in scope['Self-Directed Projects']
+        assert 'Legendary Tree' in scope['Employment']
+        assert '13 years self-directed' not in scope['Employment']
+        assert 'Independent Systems Engineer' not in scope['Employment']
+        assert 'Independent Systems Engineer' not in text
+        assert '2023 to Present' not in text
         assert 'April 25, 2015 to June 2, 2026' in text
         assert '2014 to 2015' in text
         assert 'Began 2017' in text
@@ -49,7 +61,9 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
 def test_evaluation_metrics_are_coverage_not_financial_or_performance_claims():
     text = (ROOT / 'career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt').read_text()
     assert all(value in text for value in ('324', '337', '5,058'))
-    assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', text, re.I)
+    # Issuer assessment scores are distinct from unsubstantiated performance/ROI claims.
+    performance_text = text.replace('95% assessment', 'credential assessment')
+    assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', performance_text, re.I)
     assert all(name in text for name in ('Flywheel', 'Articulate', 'Accountable Surface', 'BuildLang', 'Phantom'))
 
 
@@ -59,9 +73,9 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     applied = [c for c in credentials if c['kind'] == 'Applied Skills credential']
     courses = [c for c in credentials if c['kind'] == 'Course-completion certificate']
     advanced = [c for c in credentials if c['kind'].startswith('Advanced ') and c['provider'] == 'Microsoft Learn']
-    assert len(applied) == 3
+    assert len(applied) == 4
     assert {c['credential_id'] for c in applied} == {
-        'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2'
+        'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2', 'B6385A86C4A25301'
     }
     assert len(courses) == 17
     assert len(advanced) == 2
@@ -76,7 +90,7 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
         assert f"{course['course_code']}: {course['title']}" in cv
     assert 'The SC-100 certification exam has not been taken.' in SOURCE['credential_policy']
     assert 'Advanced Microsoft Learn Coursework' in cv
-    assert 'Completed coursework:' in cv and 'Research references:' in cv
+    assert 'Coursework:' in cv and 'Research references:' in cv
     assert SOURCE['identity']['location'] == 'Kent, Washington'
     bluedot = next(c for c in credentials if c['id'] == 'bluedot-agi-strategy')
     assert bluedot['kind'] == 'Course completion'
@@ -89,8 +103,117 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert mcp['score_percent'] == 100
     assert mcp['url'] == 'https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867'
     assert 'Model Context Protocol: Advanced topics' in cv
+    qualys = next(c for c in credentials if c['id'] == 'qualys-policy-audit')
+    assert qualys['kind'] == 'Vendor certification'
+    assert (qualys['earned'], qualys['expires']) == ('2026-09-30', '2028-09-29')
+    assert qualys['assessment_result'] == '26 of 30 correct; passed on the first attempt'
+    assert 'credential_id' not in qualys
+    assert 'not individual credential verification' in qualys['url_role']
+    car = next(c for c in credentials if c['id'] == 'qualys-car')
+    assert car['kind'] == 'Vendor certification'
+    assert (car['earned'], car['expires']) == ('2026-09-30', '2028-09-29')
+    assert car['assessment_result'] == '29 of 30 correct; passed on the first attempt'
+    assert 'credential_id' not in car
+    assert 'not individual credential verification' in car['url_role']
+    assert qualys['designation'] == car['designation'] == 'Qualys Certified Specialist'
+    assert 'Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation' in cv
+    assert 'Issued 2026-09-30; expire 2028-09-29' in cv
+    vmdr = next(c for c in credentials if c['id'] == 'qualys-vmdr')
+    assert vmdr['kind'] == 'Vendor certification' and vmdr['course_completed'] is False
+    assert vmdr['title'] == 'Vulnerability Management Detection and Response'
+    assert 'direct open-book certification exam' in vmdr['completion_evidence']
+    api = next(c for c in credentials if c['id'] == 'building-claude-api')
+    assert len(api['assessment_scores']) == 8 and sum(api['assessment_scores']) == 69
+    code = next(c for c in credentials if c['id'] == 'claude-code-in-action')
+    for item in (api, code):
+        assert item['kind'] == 'Course-completion badge'
+        assert item['url'].startswith('https://academy.claude.com/verify/')
+        assert item['title'] in cv
+    kcs = next(c for c in credentials if c['id'] == 'qualys-kcs')
+    assert kcs['title'] == 'Qualys Kubernetes and Container Security'
+    assert kcs['kind'] == 'Vendor certification' and kcs['course_completed'] is False
+    assert kcs['designation'] == 'Qualys Certified Specialist'
+    assert (kcs['earned'], kcs['expires']) == ('2026-09-30', '2028-09-29')
+    assert kcs['assessment_result'] == '29 of 30 correct; passed on the first attempt'
+    assert kcs['title'] in cv
+    for key, title, result in (
+        ('qualys-totalcloud', 'Qualys TotalCloud Exam', '25 of 30 correct; passed on the first attempt'),
+        ('qualys-edr', 'Endpoint Detection and Response', '29 of 30 correct; passed on the first attempt'),
+    ):
+        credential = next(c for c in credentials if c['id'] == key)
+        assert credential['title'] == title and title in cv
+        assert credential['kind'] == 'Vendor certification' and credential['course_completed'] is False
+        assert credential['designation'] == 'Qualys Certified Specialist'
+        assert (credential['earned'], credential['expires']) == ('2026-09-30', '2028-09-29')
+        assert credential['assessment_result'] == result
+    slm = next(c for c in credentials if c['id'] == 'google-deepmind-slm')
+    assert slm['kind'] == 'Assessed skill badge' and slm['official_level'] == 'Advanced'
+    assert (slm['score'], slm['maximum_score']) == (100, 100)
+    assert (slm['checkpoints_passed'], slm['checkpoints_total']) == (4, 4)
+    assert slm['url_role'] == 'Official course description'
+    assert slm['title'] in cv and 'four coding checkpoints' in cv
+    unesco = next(c for c in credentials if c['id'] == 'unesco-ai-ethics')
+    assert unesco['kind'] == 'Course certificate' and unesco['official_level'] == 'Intermediate'
+    assert unesco['score_percent'] == 100 and unesco['earned'] == '2026-09-30'
+    assert unesco['certificate_id'] == '7I5YVE5P0W5K'
+    assert unesco['url'] == 'https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K'
+    assert unesco['title'] in cv and 'Intermediate course certificate' in cv
+    multi_agent = next(c for c in credentials if c['id'] == 'google-multi-agent')
+    assert multi_agent['kind'] == 'Assessed skill badge'
+    assert (multi_agent['course_level'], multi_agent['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (multi_agent['score'], multi_agent['maximum_score'], multi_agent['checkpoints_passed']) == (100, 100, 6)
+    assert multi_agent['lab_services_deployed'] == 5
+    assert 'local and cloud sample generation were blocked' in multi_agent['execution_limit']
+    assert multi_agent['title'] in cv and 'model-access policy blocked local and cloud generation' in cv
+    cisco = next(c for c in credentials if c['id'] == 'cisco-ethical-hacker')
+    assert cisco['kind'] == 'Course certificate and learning badge'
+    assert cisco['official_level'] == 'Intermediate / student level'
+    assert cisco['score_percent'] == 100 and cisco['earned'] == '2026-09-30'
+    assert cisco['badge_id'] == 'be9be111-860f-4c06-a416-71aa0cc48e34'
+    assert 'optional labs, capstone, and lesson materials were not completed' in cisco['completion_evidence']
+    assert 'Cisco Networking Academy: Ethical Hacker' in cv and '100% knowledge exam' in cv
+    devops = next(c for c in credentials if c['id'] == 'ms-devops-security')
+    assert devops['kind'] == 'Applied Skills credential' and devops['official_level'] == 'Intermediate'
+    assert devops['score_percent'] == 95 and devops['earned'] == '2026-09-30'
+    assert devops['credential_id'] == 'B6385A86C4A25301'
+    assert devops['title'] in cv and 'Intermediate; 95% assessment' in cv
+    assert 'did not establish a successful deployment' in devops['runtime_limit']
+    evaluation_course = next(c for c in credentials if c['id'] == 'google-mlops-model-evaluation')
+    assert evaluation_course['kind'] == 'Course-completion badge'
+    assert evaluation_course['official_level'] == 'Intermediate'
+    assert evaluation_course['assessment_scores_percent'] == [100, 85]
+    assert 'score_percent' not in evaluation_course
+    assert evaluation_course['url_role'] == 'Official course description'
+    assert evaluation_course['title'] in cv
+    bedrock = next(c for c in credentials if c['id'] == 'claude-amazon-bedrock')
+    assert bedrock['kind'] == 'Course-completion badge' and bedrock['score_percent'] == 100
+    assert len(bedrock['assessment_question_counts']) == 8 and sum(bedrock['assessment_question_counts']) == 57
+    assert bedrock['title'] in cv
+    predictive = next(c for c in credentials if c['id'] == 'google-bigquery-predictive')
+    assert predictive['kind'] == 'Assessed skill badge'
+    assert (predictive['course_level'], predictive['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (predictive['score'], predictive['maximum_score'], predictive['checkpoints_passed']) == (100, 100, 7)
+    assert predictive['title'] in cv
+    assert predictive['earned'] == '2026-10-01' and predictive['local_completion_date'] == '2026-09-30'
+    assert predictive['url'] == 'https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url'
+    assert 'loaded_event_rows' not in predictive and 'model_evaluate' not in predictive
+    ml_models = next(c for c in credentials if c['id'] == 'google-bigquery-ml-models')
+    assert ml_models['kind'] == 'Assessed skill badge'
+    assert ml_models['course_level'] == ml_models['challenge_level'] == 'Intermediate'
+    assert (ml_models['score'], ml_models['maximum_score'], ml_models['checkpoints_passed']) == (100, 100, 4)
+    assert ml_models['lab_models_trained'] == 3 and ml_models['title'] in cv
+    assert ml_models['earned'] == '2026-10-01' and ml_models['local_completion_date'] == '2026-09-30'
+    assert ml_models['url'] == 'https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url'
+    assert 'general performance-improvement claim' in ml_models['execution_scope']
+    secops = next(c for c in credentials if c['id'] == 'google-secops-deep-dive')
+    assert secops['kind'] == 'Course-completion badge' and secops['official_level'] == 'Advanced'
+    assert secops['score_percent'] == 96 and secops['local_completion_date'] == '2026-09-30'
+    assert 'earned' not in secops and secops['url_role'] == 'Official course description'
+    assert secops['title'] in cv and '96% knowledge assessment' in cv
     assert 'Sole proprietor since September 2026' in cv
-    assert 'Available for regular travel to San Francisco and London.' in cv
+    assert 'Willing to relocate to London; available for regular travel to San Francisco.' in cv
+    assert 'no professional programming experience' in cv
+    assert 'no paid software clients' in cv
 
 
 def test_public_interest_work_retains_its_evidence_limits():

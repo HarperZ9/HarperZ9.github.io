@@ -418,7 +418,32 @@ RELEASE_PATHS = (
 # completed coursework, public-interest writing, Kent location and availability.
 # The source-ledger categories, quantitative outcomes, standards reference and
 # five-page CV passed independent review. The MCP badge was issuer-verified.
-REVIEWED_RELEASE_SHA256 = "b806bae2722e098dc2b10b2c352fce6dd44567c6185de5dd403c20d64a6a6ce2"
+# September 30, 2026: independently reviewed Qualys Policy Audit certification
+# update; issuer dates and assessed knowledge added to career formats.
+# September 30, 2026: CAR credential and both issuer-verified Qualys Certified
+# Specialist designations added; CV widow guard and spacing independently reviewed.
+# September 30, 2026: reviewed VMDR direct-exam credential and two Claude
+# assessment-awarded completion badges; issuer scope remains explicit.
+# September 30, 2026: reviewed Qualys Kubernetes and Container Security
+# direct-exam certification added without optional-course or production claims.
+# September 30, 2026: reviewed TotalCloud/EDR direct-exam credentials and
+# current-main Frontier Safety integration; published incoming content unchanged.
+# September 30, 2026: reviewed Google DeepMind Advanced assessed skill badge,
+# bounded coding result, and CV-only bullet spacing; no broader training claim.
+# September 30, 2026: reviewed UNESCO intermediate AI ethics course certificate
+# and governance scope; issuer URL preserved, no study-hours or accreditation claim.
+# September 30, 2026: reviewed Google multi-agent skill badge and Cisco learning
+# credential; model-policy generation failure and knowledge-exam scope preserved.
+# September 30, 2026: reviewed Azure DevOps Applied Skills credential and
+# Google model-evaluation course badge; assessment and runtime limits retained.
+# October 1 issuer record, September 30 local completion: reviewed BigQuery
+# validation badge and Claude Bedrock coursework; full LF inventory grouped intact.
+# October 1 issuer record: reviewed Create ML Models with BigQuery ML badge;
+# grouped lab-scope records preserve distinct levels, checkpoints, and date evidence.
+# September 30 local completion: reviewed Advanced SecOps course badge;
+# grouped coursework retains issuer levels and limits, without practical-lab claims.
+# 2026-09-30: reviewed personal-project/employment classification and career-transition correction.
+REVIEWED_RELEASE_SHA256 = "98ecddff6a3c3a61a2435eb39662ee049597ebcf12bacd5236a574e7e7e5077a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

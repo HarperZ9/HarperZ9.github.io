@@ -138,7 +138,7 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(tmp_path: P
         text = _artifact_text(path)
         assert len(text.split()) >= 250, path.name
         for value in ("Stream/Convergys", "2014 to 2015", "Legendary Tree",
-                      "April 25, 2015 to June 2, 2026", "2017", "2023 to Present"):
+                      "April 25, 2015 to June 2, 2026", "2017", "June 2026", "Self-Directed Projects", "Employment"):
             assert value in text, (path.name, value)
         for forbidden in ("2017 to Present", "2015 to Present", "family business",
                           "Operations and Commercial Arboriculture Lead", "Xbox Division | Microsoft"):

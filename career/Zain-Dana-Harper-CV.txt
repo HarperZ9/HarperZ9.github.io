@@ -8,17 +8,15 @@ Curriculum Vitae | Systems Engineering, AI Infrastructure, and Field Operations
 
 Profile
 
-Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. Combines self-directed programming with technical networking support and eleven years of full-time arboriculture and customer-facing operations.
+Self-directed software builder and technical writer with about 13 years of personal programming. Builds AI workstations, evaluation tools, language tooling, and graphics systems. Began a career transition in June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
 
-Open to technical and nontechnical AI governance and evaluation roles. Available for regular travel to San Francisco and London.
+Open to technical and nontechnical AI governance and evaluation roles. Willing to relocate to London; available for regular travel to San Francisco.
 
-Professional Experience
+Self-Directed Projects
 
-Independent Systems Engineer | Independent practice
+About 13 years of self-directed programming | Career transition began June 2026
 
-Kent / remote | 2023 to Present
-
-Sole proprietor since September 2026
+Sole proprietor since September 2026; no paid software clients
 
 - Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
 
@@ -31,6 +29,8 @@ Freelance Technical Writer, Documentation, and Product Operations
 Independent practice | Began 2017; project-based work
 
 - Produced technical and compliance documentation, API and implementation guides, proposals, release notes, and operational playbooks. Turned implementation details into material usable by customers, developers, and reviewers.
+
+Employment
 
 Commercial Arboriculture and Field Operations | Legendary Tree
 
@@ -48,7 +48,7 @@ Subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015
 
 Programming Background
 
-Self-directed programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure. This is a project history, not a claim of equivalent years of paid software employment.
+Personal programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure.
 
 AI Platform and Agent Systems
 
@@ -198,15 +198,19 @@ Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.
 
 Credentials and Continuing Education
 
-Completed September 2026. Credential links, identifiers, and assessment results: harperz9.github.io/career/source-ledger.md.
+2026 completions. Verification: harperz9.github.io/career/source-ledger.md.
 
-Microsoft Applied Skills | Earned September 29, 2026
+Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
+
+Microsoft Applied Skills | Earned September 2026
 
 - Secure AI solutions in the cloud
 
 - Get started with identities and access using Microsoft Entra
 
 - Secure storage for Azure Files and Azure Blob Storage
+
+- Implement security through a pipeline using Azure DevOps | Intermediate; 95% assessment
 
 Advanced Microsoft Learn Coursework
 
@@ -216,48 +220,34 @@ Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module 
 
 Linux Foundation Course-Completion Certificates
 
-- LFEL1012: Secure AI/ML-Driven Software Development
+LFEL1012: Secure AI/ML-Driven Software Development; LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks; LFD121: Developing Secure Software
 
-- LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks
+LFS182: Securing Your Software Supply Chain with Sigstore; LFEL1001: Understanding the EU Cyber Resilience Act (CRA); LFS118: Ethical Principles for Conversational AI
 
-- LFD121: Developing Secure Software
+LFEL1006: Securing Projects with OpenSSF Scorecard; LFEL1005: Security Self-Assessments for Open Source Projects; LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
 
-- LFS182: Securing Your Software Supply Chain with Sigstore
+LFD125: Security for Software Development Managers; LFS180: Introduction to DevSecOps for Managers; SKF100: OWASP Top 10 Security Threats
 
-- LFEL1001: Understanding the EU Cyber Resilience Act (CRA)
+LFS184: Introduction to JavaScript Security; LFC108: Cybersecurity Essentials; LFEL1004: Authentication and Authorization for Web/API
 
-- LFS118: Ethical Principles for Conversational AI
+LFEL1008: Migrating AI Workflows Across Platforms; LFS147: Introduction to AI/ML Toolkits with Kubeflow
 
-- LFEL1006: Securing Projects with OpenSSF Scorecard
+Additional Coursework and Skill Badges
 
-- LFEL1005: Security Self-Assessments for Open Source Projects
+Cisco Networking Academy: Ethical Hacker | Intermediate course certificate and learning badge, 2026-09-30; 100% knowledge exam. Assessed scoping, reporting, vulnerability assessment, and security concepts.
 
-- LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
+Google skill badges, completed 2026-09-30: Google DeepMind: Train A Small Language Model (Advanced; 100/100, four coding checkpoints); Use Agent Skills with Multi-Agent Systems (Intermediate course/Advanced challenge; 100/100, six checkpoints). Scope: tokenization, n-grams, data preparation, and agent orchestration. Multi-agent lab: five Cloud Run services deployed; model-access policy blocked local and cloud generation.
 
-- LFD125: Security for Software Development Managers
+Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge). Both courses Intermediate. Lab work: SQL features, logistic regression, later-window evaluation, and predictions.
 
-- LFS180: Introduction to DevSecOps for Managers
+Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation (Intermediate); Google Security Operations - Deep Dive (Advanced; 96% knowledge assessment). Topics: model-evaluation methods, YARA-L, SIEM processing/enrichment, and SOAR.
 
-- SKF100: OWASP Top 10 Security Threats
+Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API; Claude with Amazon Bedrock | Issued September 30, 2026
 
-- LFS184: Introduction to JavaScript Security
-
-- LFC108: Cybersecurity Essentials
-
-- LFEL1004: Authentication and Authorization for Web/API
-
-- LFEL1008: Migrating AI Workflows Across Platforms
-
-- LFS147: Introduction to AI/ML Toolkits with Kubeflow
-
-Additional Advanced and Strategy Coursework
-
-Anthropic Claude Academy: Model Context Protocol: Advanced topics | Completion badge, September 30, 2026
+UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%. Assessed human rights, fairness, risk controls, incident reporting, and sustainability.
 
 BlueDot Impact: AGI Strategy | Course completed in 2026
 
 Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
 
-Standards and Frameworks: Training and Research
-
-Completed coursework: MCRA/MCSB, Zero Trust, OWASP Top 10 web security, and EU Cyber Resilience Act; MCP sampling, roots, JSON-RPC, stdio, Streamable HTTP/SSE. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Current editions and scope: harperz9.github.io/career/standards-reference.md.
+Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Scope: harperz9.github.io/career/standards-reference.md.

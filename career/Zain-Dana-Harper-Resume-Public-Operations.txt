@@ -6,7 +6,7 @@ linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
 Field Operations | Facilities Support | Public-Facing Service
 
-Professional Summary
+Summary
 
 Field-operations professional with eleven years in commercial arboriculture and prior technical support experience. Turns site observations into workable plans, coordinates crews and vendors, and explains changes clearly to customers. Brings practical safety judgment and documentation skills to grounds, facilities-support, and public-operations roles.
 
@@ -14,7 +14,7 @@ Core Skills
 
 Site and hazard assessment; work planning; estimates and proposals; scheduling; crew and vendor coordination; ground-based field safety; public-facing communication; operational documentation; technical troubleshooting.
 
-Professional Experience
+Employment
 
 Arboriculture and Field Operations | Legendary Tree
 
@@ -34,15 +34,15 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
+Self-Directed Projects
+
+About 13 years self-directed | Career transition began June 2026
+
+- Built tools and documentation for repeatable workflows; used tests, structured records, and explicit checks to make work easier to inspect and hand off.
+
 Freelance Technical Writer | Independent projects | Began 2017
 
 - Wrote implementation guides, API documentation, and release notes for developers and customers.
-
-Independent Systems Engineer | Independent practice | 2023 to Present
-
-Sole proprietor since September 2026
-
-- Built tools and documentation for repeatable workflows; used tests, structured records, and explicit checks to make work easier to inspect and hand off.
 
 Education
 

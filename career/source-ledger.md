@@ -8,7 +8,7 @@ The live website repository remains the deployment authority. Fuller material wa
 
 ## Employment and date policy
 
-**Independent Engineering:** Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.
+**Independent Engineering:** Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.
 
 **Freelance Writing:** Start year 2017 is known. No current status, end year, or continuous employment is inferred.
 
@@ -414,11 +414,11 @@ https://github.com/HarperZ9/articulate/releases/tag/v0.5.2
 
 ### sole-proprietorship
 
-The owner confirmed beginning a sole proprietorship in September 2026. Independent project practice began in 2023; the two dates describe different activities. No LLC or registered trade name is claimed.
+Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.
 
 ### career-availability
 
-The owner confirmed interest in technical and nontechnical AI governance and evaluation roles and availability for regular travel to San Francisco and London. Travel availability does not establish relocation plans or work authorization in another country.
+The owner confirmed interest in technical and nontechnical AI governance and evaluation roles, willingness to relocate to London, and availability for regular travel to San Francisco. Willingness to relocate does not establish work authorization in another country.
 
 ### bluedot-agi-strategy
 
@@ -469,3 +469,185 @@ Anthropic Claude Academy: Model Context Protocol: Advanced topics. The assessmen
 https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867
 
 The record establishes the provider-awarded advanced course-completion badge and assessment result. It does not establish a professional Expert certification or completion of every lesson. Assessed topics include sampling, roots, JSON-RPC messages, stdio, Streamable HTTP, and SSE.
+
+## Qualys Policy Audit certification
+
+### qualys-policy-audit
+
+Qualys issued the Policy Audit certification to Zain Dana Harper on September 30, 2026, expiring September 29, 2028. The authenticated LMS showed the course complete and the first exam attempt passed with 26/30 correct (86.67% when rounded to two decimals). The diploma prints no credential identifier. Its session-based download link is not presented as an enduring public verification URL.
+
+Assessed vendor-product knowledge covers technical controls and policy baselines; authenticated compliance scans using scanner/cloud-agent data; policy, scorecard, and interactive reports; exception requests and approvals; Windows/Unix user-defined checks and control cardinality. This records certification and assessed product knowledge, not production client engagements or an Expert designation.
+
+Official course description: https://www.qualys.com/training/course/policy-audit
+
+The provider course page describes the curriculum; it does not independently verify this learner's certification.
+
+## Qualys Custom Assessment and Remediation certification
+
+### qualys-car
+
+Qualys issued the Custom Assessment and Remediation certification to Zain Dana Harper on September 30, 2026, expiring September 29, 2028. The authenticated LMS showed the course complete and the first exam attempt passed with 29/30 correct (96.67% when rounded to two decimals). The course's four two-question checks each passed on the first attempt. No private diploma download link is published.
+
+Assessed vendor-product knowledge covers script creation/import and testing on up to ten assets; author, manager, and operations role separation; script approvals; scheduled jobs and results; custom QIDs and VMDR integration; Script Result Check user-defined controls; and CAR APIs. Official transcripts and ten guided tutorial step sequences were reviewed. This is a certification and assessed-knowledge record; it does not claim independently executed live-production labs or client deployments.
+
+Official course description: https://www.qualys.com/training/course/custom-assessment-and-remediation-car
+
+The provider course page identifies the curriculum, not this learner's individual credential.
+
+### Issuer designation
+
+Both rendered Qualys diplomas explicitly display "Qualys Certified Specialist" above their credential fields: Policy Audit and Custom Assessment and Remediation. The designation was visually verified September 30, 2026; the exact course titles, issue dates, and expiry dates remain as recorded above. This is a vendor-product designation.
+
+## September 30 VMDR and Claude badges
+
+### qualys-vmdr
+
+Qualys Certified Specialist: Vulnerability Management Detection and Response. The diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book certification exam passed with 29/30 correct (96.67% rounded). The optional course was not completed; no five-hour course, lab execution, or production-engagement claim is made. The issuer diploma was visually verified.
+
+Provider program description: https://www.qualys.com/training/course/vmdr
+
+This program page is not an individual credential verification link. Private diploma download links are excluded.
+
+### claude-code-in-action
+
+Anthropic Claude Academy: Claude Code in action. The issuer awarded Zain Dana Harper a course-completion badge September 30, 2026. The required assessment passed 8/8 (100%) on the first attempt. Assessed topics include verification hooks, MCP/tool use, and API-key security.
+
+https://academy.claude.com/verify/0c5799efa34fc755ed73d4f9e3506963
+
+### building-claude-api
+
+Anthropic Claude Academy: Building with the Claude API. The issuer awarded Zain Dana Harper a course-completion badge September 30, 2026. All eight required assessments passed on their first attempts: 8/8, 6/6, 5/5, 7/7, 7/7, 6/6, 7/7, and final 23/23, totaling 69/69 (100%). Assessed knowledge covers prompt/code/model grading, tool use, MCP, workflow routing/chaining/parallelization, and API-key security.
+
+https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194
+
+The Claude records establish issuer-awarded completion badges based on required quizzes. They do not claim completion of every lesson or advertised study hour, an executed API project, professional Architect certification, or production experience. No charged API calls were needed for these assessments.
+
+## Qualys Kubernetes and Container Security certification
+
+### qualys-kcs
+
+Qualys Certified Specialist: Qualys Kubernetes and Container Security. The diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 29/30 correct (96.67% rounded). The issuer diploma was visually verified. The optional course and labs were not completed; no production implementation is claimed.
+
+Assessed knowledge covers the container image/remediation lifecycle, registry scanning, CI/CD policy gates, sensor selection, Kubernetes workload prioritization, runtime visibility, software composition analysis, and secrets scanning.
+
+Provider program description: https://www.qualys.com/training/course/kubernetes-and-container-security
+
+This program page is not an individual credential verification link. Private diploma download links are excluded. The credential is Qualys's vendor-product certification; no CNCF/Linux Foundation CKS designation is claimed.
+
+## TotalCloud and Endpoint Detection and Response
+
+### qualys-totalcloud
+
+Qualys Certified Specialist: Qualys TotalCloud Exam. The issuer diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 25/30 correct (83.33% rounded). Assessed topics cover CSPM/SSPM, connectors, FlexScan, cloud risk prioritization, and reporting.
+
+Provider program description: https://www.qualys.com/training/course/totalcloud
+
+### qualys-edr
+
+Qualys Certified Specialist: Endpoint Detection and Response. The issuer diploma names Zain Dana Harper, issued September 30, 2026 and expiring September 29, 2028. The first direct open-book exam passed with 29/30 correct (96.67% rounded). Assessed topics cover deployment prerequisites, triage/response roles, event and process-tree investigation, quarantine/remediation, and malware profile settings.
+
+Provider program description: https://www.qualys.com/training/course/endpoint-detection-and-response
+
+Both diplomas were visually verified. These are vendor-product certifications earned through direct exams; the optional courses and labs were not completed. No production implementation or general Expert designation is claimed. Program pages identify the curricula, not individual credential verification. Private diploma download links are excluded.
+
+## Google DeepMind advanced skill badge
+
+### google-deepmind-slm
+
+Google DeepMind: Train A Small Language Model. Google Skills / Google DeepMind issued this Advanced assessed skill badge September 30, 2026. The first challenge-lab attempt scored 100/100, passing all four coding checkpoints. Assessed skills cover character tokenization/reconstruction, random and greedy n-gram generation, overlapping token-sequence segmentation, and padded next-token training inputs and targets.
+
+Official course description: https://www.skills.google/course_templates/1453
+
+This is an assessed skill badge, not professional Google Cloud certification. The recorded challenge scope does not establish an executed transformer-training run, production deployment, or model-quality improvement. The official course title is retained while the assessed scope is stated separately.
+
+## UNESCO AI ethics course certificate
+
+### unesco-ai-ethics
+
+UNESCO via Coursera: Global MOOC on the Ethics of AI, developed with LG AI Research. The issuer awarded Zain Dana Harper this Intermediate course certificate September 30, 2026. The first submitted graded assessment achieved 100%. Certificate identifier: 7I5YVE5P0W5K.
+
+https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K
+
+Assessed topics cover AI ethics and responsible governance; human rights, fairness, and data protection; proportional risk controls; transparency, accountability, and incident reporting; and environmental impacts and sustainability. This records direct graded-assessment completion. It does not claim the advertised study hours or completion of optional videos/readings, nor professional legal, regulatory, auditor, or AI-safety accreditation.
+
+## Google multi-agent systems skill badge
+
+### google-multi-agent
+
+Google Cloud / Google Skills: Use Agent Skills with Multi-Agent Systems, earned September 30, 2026. The first submitted challenge-lab attempt scored 100/100 across six accepted checkpoints. The official course page lists Intermediate; the challenge is Advanced. This assessed skill badge does not confer professional Google certification.
+
+Official course description: https://www.skills.google/paths/4459/course_templates/1842
+
+Assessed scope covers ADK skill loading, Pydantic structured evaluator output, format validation, loop/sequential orchestration, A2A remote-agent configuration, and Cloud Run deployment. Five services deployed in the assessment environment. Both local and cloud sample generation failed because the supplied environment's model-access policy denied model use. No end-to-end generation success, production implementation, independent mastery, or study-hour claim is made.
+
+## Cisco Networking Academy Ethical Hacker
+
+### cisco-ethical-hacker
+
+Cisco Networking Academy issued the Ethical Hacker course completion certificate and Cisco-issued Credly learning badge to Zain Dana Harper on September 30, 2026. The credential is Intermediate / student level. The first submitted knowledge exam achieved 50/50 (100%). Certificate identifier: ae761ad4-5671-4153-b2c9-19e7f8e42e67. Badge identifier: be9be111-860f-4c06-a416-71aa0cc48e34.
+
+https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url
+
+Assessed knowledge covers penetration-test scoping/reporting, vulnerability assessment/mitigation, web/network/cloud/mobile/IoT security concepts, and security-tool/code analysis. The record is direct knowledge-exam completion: optional labs, capstone, and lesson materials were not completed, and catalog hours are not claimed as study time. It does not confer CEH, a Cisco Professional certification, or the separate Cisco Certificate in Ethical Hacking that requires a CTF. No production penetration-testing experience is claimed.
+
+## Microsoft Azure DevOps pipeline security
+
+### ms-devops-security
+
+Microsoft Applied Skills: Implement security through a pipeline using Azure DevOps. Intermediate credential earned September 30, 2026 with a 95% assessment result. The issuer record names Zain Dana Harper and reports Active / Online Verifiable. Credential identifier: B6385A86C4A25301.
+
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops
+
+Assessed configuration work covers restricted agent pools and YAML bindings, secure-file authorization and approval checks, managed identities and federated service connections, scoped Key Vault permissions, repository/pipeline separation, and parameterized deployment templates. Service-connection verification and sample-pipeline validation did not establish a successful deployment. The grade records the provider's assessment outcome; no production deployment or Expert certification is claimed.
+
+## Google model-evaluation coursework
+
+### google-mlops-model-evaluation
+
+Google Skills / Google Cloud issued Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation as an Intermediate course-completion badge September 30, 2026. Two required knowledge quizzes passed on their first attempts with 100% and 85%, respectively. No aggregate grade is inferred.
+
+Official course description: https://www.skills.google/course_templates/1080
+
+The assessed knowledge concerns predictive/generative model-evaluation concepts, metrics and methodology selection, and generative AI evaluation considerations. This course-completion badge does not establish a practical lab result, professional certification, study hours, optional lesson completion, or production implementation.
+
+## Claude with Amazon Bedrock and BigQuery predictive analysis
+
+### claude-amazon-bedrock
+
+Anthropic Claude Academy issued Claude with Amazon Bedrock as a course-completion badge September 30, 2026. All eight required knowledge quizzes passed at 100% on first attempts: 57/57 questions in total, including a 21/21 final. Badge identifier: 59286159-b6c8-4c31-b950-df5b6243a862.
+
+https://academy.claude.com/verify/52320d73caed0587e8c055e2eac4b90f
+
+This records required-quiz completion. It does not establish an AWS certification, AWS deployment experience, optional lesson completion, or study hours.
+
+### google-bigquery-predictive
+
+Google Skills / Google Cloud awarded Perform Predictive Data Analysis in BigQuery as an assessed skill badge. Local course completion was September 30, 2026; the public issuer badge displays October 1, 2026 as its issue date and classifies it as Intermediate Validation. No cause for the date difference is inferred. The Intermediate course has an Advanced challenge. The first lab session completed all seven checkpoints at 100/100. Assessed work included SQL ingestion, SQL feature UDFs, logistic-regression training, and predictions on held-out data.
+
+Public issuer verification: https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url
+
+Official course description: https://www.skills.google/course_templates/656
+
+The work took place in a provider assessment environment. No production deployment, general model-quality claim, or training-example count is inferred. Dataset-loading counts and assessment-only model metrics are excluded from these career claims.
+
+## Create ML Models with BigQuery ML
+
+### google-bigquery-ml-models
+
+Google Skills / Google Cloud awarded Create ML Models with BigQuery ML as an assessed skill badge after the first lab session achieved 100/100 across four checkpoints. Local completion was September 30, 2026; the public issuer record gives October 1, 2026 as its issue date and classifies the badge as Intermediate Validation. No cause for the date difference is inferred. Both the course and challenge are Intermediate.
+
+Public issuer verification: https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url
+
+Official course description: https://www.skills.google/course_templates/626
+
+Assessed lab work covered three logistic-regression models, feature engineering, evaluation on a later date window, and prediction generation. This is assessment-environment work; no professional certification, production deployment, or general model-performance improvement is claimed. Detailed evaluation metrics and dataset counts remain outside the career record.
+
+## Google Security Operations coursework
+
+### google-secops-deep-dive
+
+Google Skills / Google Cloud awarded Google Security Operations - Deep Dive as an Advanced course-completion badge. Local completion was September 30, 2026; no independent issuer date is inferred. The first submitted knowledge assessment displayed 96%.
+
+Official course description: https://www.skills.google/course_templates/972
+
+Assessed topics cover YARA-L detection concepts, SIEM ingestion/normalization/entity enrichment, and SOAR integrations and administrative settings. This records knowledge-assessment completion; no practical lab, optional lesson completion, study hours, professional certification, employment experience, or production implementation is claimed.

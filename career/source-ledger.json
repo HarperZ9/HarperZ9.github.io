@@ -58,7 +58,7 @@
     },
     {
       "id": "current-project-work",
-      "status": "Owner-confirmed 2026-09-20: current independent project work and programming trajectory; no private correspondence published",
+      "status": "Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture. No private correspondence published.",
       "url": "https://harperz9.github.io/career/resume-source.json"
     },
     {
@@ -449,12 +449,12 @@
     },
     {
       "id": "sole-proprietorship",
-      "status": "Owner-confirmed September 30, 2026: sole proprietorship began September 2026. No LLC or registered trade name claimed.",
+      "status": "Owner-confirmed September 30, 2026: sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.",
       "url": "https://harperz9.github.io/career/resume-source.json"
     },
     {
       "id": "career-availability",
-      "status": "Owner-confirmed September 30, 2026: open to technical and nontechnical AI governance/evaluation roles, with regular San Francisco and London travel. No relocation or foreign work-authorization claim.",
+      "status": "Owner-confirmed September 30, 2026: open to technical and nontechnical AI governance/evaluation roles, willing to relocate to London, and available for regular San Francisco travel. No foreign work-authorization claim.",
       "url": "https://harperz9.github.io/career/resume-source.json"
     },
     {
@@ -500,6 +500,415 @@
       "url": "https://academy.claude.com/verify/4dd2c6b9f121940a0a43e78f83171867",
       "completion_evidence": "Public provider verification page displays verified completion badge, learner Zain Dana Harper, and September 30, 2026 issue date.",
       "status": "Provider assessment and public verified-completion badge checked September 30, 2026; advanced course completion, not a professional Expert certification."
+    },
+    {
+      "id": "qualys-policy-audit",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Policy Audit",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 86.67,
+      "assessment_result": "26 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Authenticated LMS reports course complete and exam passed; issuer diploma names Zain Dana Harper and Qualys Policy Audit, with issue and expiry dates. No credential identifier is printed.",
+      "url": "https://www.qualys.com/training/course/policy-audit",
+      "url_role": "Provider course description, not individual credential verification",
+      "assessed_skills": [
+        "Technical controls and policy baselines",
+        "Authenticated compliance scanning using scanner and cloud-agent data",
+        "Policy, scorecard, and interactive reports",
+        "Exception request and approval workflows",
+        "Windows/Unix user-defined checks and control cardinality"
+      ],
+      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Assessment result describes vendor-product knowledge, not a production engagement or Expert designation.",
+      "designation": "Qualys Certified Specialist"
+    },
+    {
+      "id": "qualys-car",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Custom Assessment and Remediation",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Authenticated LMS reports course complete and exam passed; issuer diploma names Zain Dana Harper and Custom Assessment and Remediation, with issue and expiry dates.",
+      "url": "https://www.qualys.com/training/course/custom-assessment-and-remediation-car",
+      "url_role": "Provider course description, not individual credential verification",
+      "assessed_skills": [
+        "Script creation and import; testing on up to ten assets",
+        "Author, manager, and operations role separation; script approvals",
+        "Scheduled jobs and result inspection",
+        "Custom QIDs and VMDR integration",
+        "Script Result Check user-defined controls and CAR APIs"
+      ],
+      "status": "Vendor certification and diploma verified in authenticated Qualys LMS September 30, 2026. Guided tutorial steps were reviewed; no independent live-production lab execution is claimed.",
+      "designation": "Qualys Certified Specialist"
+    },
+    {
+      "id": "qualys-vmdr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Vulnerability Management Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course not completed.",
+      "url": "https://www.qualys.com/training/course/vmdr",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "claude-code-in-action",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude Code in action",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "8 of 8 correct; passed on the first attempt",
+      "url": "https://academy.claude.com/verify/0c5799efa34fc755ed73d4f9e3506963",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quiz completion; no lesson-hour or project-execution claim.",
+      "assessed_skills": [
+        "Claude Code verification hooks",
+        "MCP and tool use",
+        "API-key security"
+      ],
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "building-claude-api",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Building with the Claude API",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required assessments passed on first attempts: 8/8, 6/6, 5/5, 7/7, 7/7, 6/6, 7/7, and 23/23; total 69/69",
+      "assessment_scores": [
+        8,
+        6,
+        5,
+        7,
+        7,
+        6,
+        7,
+        23
+      ],
+      "url": "https://academy.claude.com/verify/9bb7484598acf2dc498ce19043172194",
+      "completion_evidence": "Issuer verified completion badge names Zain Dana Harper and issue date. Awarded through required quizzes; no 67-lesson, nine-hour, or API-project execution claim.",
+      "assessed_skills": [
+        "Prompt, code, and model grading",
+        "Tool use and MCP",
+        "Workflow routing, chaining, and parallelization",
+        "API-key security"
+      ],
+      "status": "Issuer-awarded credential verified September 30, 2026; assessment route and completion scope recorded explicitly."
+    },
+    {
+      "id": "qualys-kcs",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys Kubernetes and Container Security",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact product title, issue date and expiry. Earned through the direct open-book certification exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/kubernetes-and-container-security",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Container image and remediation lifecycle",
+        "Registry scanning and CI/CD policy gates",
+        "Sensor selection and Kubernetes workload prioritization",
+        "Runtime visibility",
+        "Software composition analysis and secrets scanning"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; no optional course/lab completion or production implementation claimed."
+    },
+    {
+      "id": "qualys-totalcloud",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Qualys TotalCloud Exam",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 83.33,
+      "assessment_result": "25 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/totalcloud",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Cloud and SaaS security posture management (CSPM/SSPM)",
+        "Cloud connectors and FlexScan",
+        "Cloud risk prioritization and reporting"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; assessed vendor-product knowledge, not optional course/lab completion or production experience."
+    },
+    {
+      "id": "qualys-edr",
+      "provider": "Qualys",
+      "kind": "Vendor certification",
+      "title": "Endpoint Detection and Response",
+      "designation": "Qualys Certified Specialist",
+      "earned": "2026-09-30",
+      "expires": "2028-09-29",
+      "score_percent": 96.67,
+      "assessment_result": "29 of 30 correct; passed on the first attempt",
+      "completion_evidence": "Issuer diploma visually verified with learner Zain Dana Harper, exact title, issue and expiry dates. Direct open-book exam; optional course and labs not completed.",
+      "url": "https://www.qualys.com/training/course/endpoint-detection-and-response",
+      "url_role": "Provider program description, not individual credential verification",
+      "course_completed": false,
+      "assessed_skills": [
+        "Endpoint deployment prerequisites",
+        "Triage and response roles",
+        "Event and process-tree investigation",
+        "Quarantine and remediation",
+        "Malware profile settings"
+      ],
+      "status": "Issuer diploma and direct-exam pass verified September 30, 2026; assessed vendor-product knowledge, not optional course/lab completion or production experience."
+    },
+    {
+      "id": "google-deepmind-slm",
+      "provider": "Google Skills / Google DeepMind",
+      "kind": "Assessed skill badge",
+      "title": "Google DeepMind: Train A Small Language Model",
+      "official_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; all four coding checkpoints passed on the first lab attempt",
+      "url": "https://www.skills.google/course_templates/1453",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "Character tokenization and reconstruction",
+        "Random and greedy n-gram generation",
+        "Overlapping token-sequence segmentation",
+        "Padded next-token training inputs and targets"
+      ],
+      "status": "Issuer-awarded Advanced skill badge recorded September 30, 2026; direct coding challenge passed on first attempt. Assessment scope is tokenization, n-gram generation, segmentation, and padded training data."
+    },
+    {
+      "id": "unesco-ai-ethics",
+      "provider": "UNESCO via Coursera",
+      "kind": "Course certificate",
+      "title": "Global MOOC on the Ethics of AI",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "100%; first submitted graded-assessment attempt",
+      "certificate_id": "7I5YVE5P0W5K",
+      "url": "https://www.coursera.org/account/accomplishments/verify/7I5YVE5P0W5K",
+      "course_url": "https://www.coursera.org/learn/global-mooc-on-the-ethics-of-ai",
+      "completion_evidence": "Issuer certificate record identifies Zain Dana Harper and September 30, 2026 completion; the graded assessment recorded 100%.",
+      "assessed_skills": [
+        "AI ethics and responsible governance",
+        "Human rights, fairness, and data protection",
+        "Proportional risk controls",
+        "Transparency, accountability, and incident reporting",
+        "Environmental impacts and sustainability"
+      ],
+      "status": "Issued intermediate course certificate verified September 30, 2026; direct graded-assessment completion, not professional accreditation."
+    },
+    {
+      "id": "google-multi-agent",
+      "provider": "Google Cloud / Google Skills",
+      "kind": "Assessed skill badge",
+      "title": "Use Agent Skills with Multi-Agent Systems",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 6,
+      "checkpoints_total": 6,
+      "assessment_result": "100/100; all six checkpoints accepted on the first submitted lab attempt",
+      "url": "https://www.skills.google/paths/4459/course_templates/1842",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "ADK skill loading",
+        "Pydantic structured evaluator output and format validation",
+        "Loop and sequential orchestration",
+        "A2A remote-agent configuration",
+        "Cloud Run deployment"
+      ],
+      "lab_services_deployed": 5,
+      "execution_limit": "Five services deployed in the assessment environment, but local and cloud sample generation were blocked by its model-access policy. No end-to-end generation success or production implementation claimed.",
+      "status": "Issuer completion page confirmed the awarded skill badge September 30, 2026. Accepted checkpoints and lab service deployment do not establish successful end-to-end generation."
+    },
+    {
+      "id": "cisco-ethical-hacker",
+      "provider": "Cisco Networking Academy",
+      "kind": "Course certificate and learning badge",
+      "title": "Ethical Hacker",
+      "official_level": "Intermediate / student level",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "50/50; 100% on the first submitted knowledge-exam attempt",
+      "certificate_id": "ae761ad4-5671-4153-b2c9-19e7f8e42e67",
+      "badge_id": "be9be111-860f-4c06-a416-71aa0cc48e34",
+      "url": "https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url",
+      "course_url": "https://www.netacad.com/courses/ethical-hacker?courseLang=en-US",
+      "completion_evidence": "Cisco issued the course certificate and Credly learning badge to Zain Dana Harper on September 30, 2026. Direct knowledge exam completed; optional labs, capstone, and lesson materials were not completed.",
+      "assessed_skills": [
+        "Penetration-test scoping and reporting knowledge",
+        "Vulnerability assessment and mitigation concepts",
+        "Web, network, cloud, mobile, and IoT security concepts",
+        "Security-tool and code-analysis knowledge"
+      ],
+      "status": "Issuer certificate and public Credly learning badge verified September 30, 2026; direct knowledge-exam completion, not professional certification or practical pentest experience."
+    },
+    {
+      "id": "ms-devops-security",
+      "provider": "Microsoft",
+      "kind": "Applied Skills credential",
+      "title": "Implement security through a pipeline using Azure DevOps",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "score_percent": 95,
+      "credential_id": "B6385A86C4A25301",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops",
+      "assessment_result": "95%; Applied Skills credential earned",
+      "verification_status": "Active; online verifiable",
+      "assessed_skills": [
+        "Restricted agent pools and YAML pool bindings",
+        "Secure-file authorization and approval checks",
+        "Managed identities and federated service connections",
+        "Scoped Key Vault permissions",
+        "Repository and pipeline separation",
+        "Parameterized deployment templates"
+      ],
+      "runtime_limit": "The assessment accepted lab configuration. Service-connection verification and sample-pipeline validation did not establish a successful deployment; no production deployment is claimed.",
+      "status": "Issued Microsoft Applied Skills credential and 95% result verified September 30, 2026; learner Zain Dana Harper, Active and online verifiable."
+    },
+    {
+      "id": "google-mlops-model-evaluation",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Course-completion badge",
+      "title": "Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "assessment_result": "Two required knowledge quizzes passed on first attempts: 100% and 85%",
+      "assessment_scores_percent": [
+        100,
+        85
+      ],
+      "url": "https://www.skills.google/course_templates/1080",
+      "url_role": "Official course description",
+      "completion_evidence": "Issuer completion page confirmed the course badge. Required knowledge quizzes completed; no optional lesson completion, practical lab, study-hour, or production-implementation claim.",
+      "assessed_skills": [
+        "Predictive and generative model-evaluation concepts",
+        "Evaluation metrics and methodology selection",
+        "Generative AI evaluation considerations"
+      ],
+      "status": "Issued course-completion badge confirmed September 30, 2026; knowledge-quiz completion, not an assessed practical skill badge or professional certification."
+    },
+    {
+      "id": "claude-amazon-bedrock",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude with Amazon Bedrock",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required knowledge quizzes passed at 100% on first attempts; 57/57 total, including a 21/21 final",
+      "assessment_question_counts": [
+        4,
+        7,
+        4,
+        4,
+        5,
+        4,
+        8,
+        21
+      ],
+      "badge_id": "59286159-b6c8-4c31-b950-df5b6243a862",
+      "url": "https://academy.claude.com/verify/52320d73caed0587e8c055e2eac4b90f",
+      "course_url": "https://academy.claude.com/courses/claude-with-amazon-bedrock",
+      "completion_evidence": "Issuer course-completion badge awarded after required knowledge quizzes; no AWS certification, deployment experience, or study-hour claim.",
+      "status": "Issuer award confirmed September 30, 2026; credential type and assessment-only scope retained."
+    },
+    {
+      "id": "google-bigquery-predictive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Perform Predictive Data Analysis in BigQuery",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-10-01",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 7,
+      "checkpoints_total": 7,
+      "assessment_result": "100/100; seven checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url",
+      "url_role": "Public issuer badge verification",
+      "assessed_skills": [
+        "SQL data ingestion",
+        "SQL feature UDFs",
+        "Logistic-regression model training",
+        "Held-out prediction generation"
+      ],
+      "execution_scope": "Completed in the provider assessment environment; no production deployment, general model-performance claim, or inferred training-data count.",
+      "local_completion_date": "2026-09-30",
+      "issuer_classification": "Intermediate Validation",
+      "course_url": "https://www.skills.google/course_templates/656",
+      "badge_id": "a89c09d0-1424-44c3-9eed-7ccb50e45d9f",
+      "status": "Issuer badge accepted and public record verified. Local course completion September 30, 2026; issuer displays issue date October 1, 2026. No cause for date difference inferred."
+    },
+    {
+      "id": "google-bigquery-ml-models",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Create ML Models with BigQuery ML",
+      "course_level": "Intermediate",
+      "challenge_level": "Intermediate",
+      "local_completion_date": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; four checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url",
+      "url_role": "Public issuer badge verification",
+      "course_url": "https://www.skills.google/course_templates/626",
+      "badge_id": "6e495603-0a8e-441a-88fc-7b62d15a4bfd",
+      "lab_models_trained": 3,
+      "assessed_skills": [
+        "BigQuery ML logistic-regression modeling",
+        "Feature engineering",
+        "Evaluation on a later date window",
+        "Prediction generation"
+      ],
+      "execution_scope": "Three logistic-regression models created in the assessment environment. No professional certification, production deployment, or general performance-improvement claim.",
+      "earned": "2026-10-01",
+      "issuer_classification": "Intermediate Validation",
+      "status": "Issuer public badge verified as Google Cloud Intermediate Validation, issue date October 1, 2026. Local completion September 30 remains distinct; no cause for date difference inferred."
+    },
+    {
+      "id": "google-secops-deep-dive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Course-completion badge",
+      "title": "Google Security Operations - Deep Dive",
+      "official_level": "Advanced",
+      "local_completion_date": "2026-09-30",
+      "score_percent": 96,
+      "assessment_result": "96% displayed on the first submitted knowledge assessment",
+      "url": "https://www.skills.google/course_templates/972",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "YARA-L detection concepts",
+        "SIEM ingestion, normalization, and entity enrichment",
+        "SOAR integration and administrative-setting concepts"
+      ],
+      "completion_evidence": "Issuer course-completion page confirmed the badge following the required knowledge assessment. No practical lab, optional lesson, study-hour, professional-certification, or production-implementation claim.",
+      "status": "Advanced course-completion badge confirmed after a required knowledge assessment; local completion September 30, 2026. No independent issuer date is inferred."
     }
   ],
   "limits": [

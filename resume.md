@@ -51,10 +51,10 @@ https://harperz9.github.io/cv.html
 
 ## Work-history and source notes
 
-Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.
+Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.
 Start year 2017 is known. No current status, end year, or continuous employment is inferred.
 Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.
 2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.
-Owner-confirmed September 30, 2026: sole proprietorship began September 2026, separately from independent project practice since 2023. No LLC or registered trade name is claimed.
+Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.
 
 Detailed source ledger: https://harperz9.github.io/career/source-ledger.md

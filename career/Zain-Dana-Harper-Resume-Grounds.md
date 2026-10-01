@@ -6,7 +6,7 @@ linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
 Arboriculture | Field Operations | Estimating and Customer Service
 
-## Professional Summary
+## Summary
 
 Non-climbing arboriculture professional with eleven years of full-time experience turning customer requests and site conditions into realistic work scopes. Combines estimating, crew coordination, ground-based safety support, and client education with technical troubleshooting and clear operational documentation.
 
@@ -14,7 +14,7 @@ Non-climbing arboriculture professional with eleven years of full-time experienc
 
 Site and hazard assessment; estimates and proposals; work planning and scheduling; ground-based tree care; rigging and clearance awareness; client education; crew and vendor coordination; arboriculture and plant-health knowledge; documentation.
 
-## Professional Experience
+## Employment
 
 ### Arboriculture and Field Operations | Legendary Tree
 
@@ -34,15 +34,15 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
+## Self-Directed Projects
+
+About 13 years self-directed | Career transition began June 2026
+
+- Built and released software tools for repeatable workflows, applying systematic troubleshooting, testing, and structured records to complex tasks.
+
 ### Freelance Technical Writer | Independent projects | Began 2017
 
 - Wrote implementation guides, API documentation, and release notes for developers and customers.
-
-### Independent Systems Engineer | Independent practice | 2023 to Present
-
-Sole proprietor since September 2026
-
-- Built and released software tools for repeatable workflows, applying systematic troubleshooting, testing, and structured records to complex tasks.
 
 ## Education
 
