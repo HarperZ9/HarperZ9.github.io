@@ -1,0 +1,477 @@
+{
+  "schema_version": 1,
+  "id": "the-number-has-a-vintage",
+  "route": "the-number-has-a-vintage.html",
+  "category": "evidence-public-life",
+  "form": "essay",
+  "title": "The Number Has a Vintage",
+  "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses.",
+  "author": "Zain Dana Harper",
+  "published_at": "2026-10-01",
+  "updated_at": "2026-10-01",
+  "observed_at": "2026-10-01T11:08:21Z",
+  "thesis": "An employment estimate should travel with its vintage, adjustment status, series definition and revision stage, because each version of the number answers a different question.",
+  "opening": {
+    "question": "When an official employment estimate is revised, what can its first and later versions establish, and when does a comparison stop being like for like?",
+    "finding": "The first release records what was knowable at the time. Later releases can improve the historical series. Mixing those roles, or mixing adjustment basis and revision stage, can turn an ordinary revision into a false comparison.",
+    "evidence": "Bureau of Labor Statistics revision policy, benchmark releases and methods pages for the national Current Employment Statistics survey, with the Philadelphia Fed real-time data set as an example of research by vintage.",
+    "limit": "The March 2026 benchmark is preliminary until February 2027. Two benchmark years are examples and give no trend or accuracy score, and a revision alone says nothing about motive."
+  },
+  "sections": [
+    {
+      "id": "one-month",
+      "heading": "One month, several official numbers",
+      "paragraphs": [
+        "On 28 August 2026 the U.S. Bureau of Labor Statistics published a preliminary benchmark revision for March 2026 total nonfarm payroll employment: minus 79,000, or minus 0.1 percent. The same release says the official establishment survey estimates were left unchanged by this preview. The final benchmark is scheduled for February 2027, with the January 2027 jobs report. So the number arrives with a status attached. It is an official preview of a level difference, and the official series has yet to absorb it. BLS preliminary benchmark, March 2026",
+        "That status belongs beside the number whenever it is repeated. A jobs estimate is a value, and it is also a version: a particular release, at a particular stage, with a particular adjustment. Later releases can improve the historical series. The first release stays the right record of what people could know at the time. Confusing those roles is how an ordinary revision becomes a false comparison."
+      ]
+    },
+    {
+      "id": "revision-ladder",
+      "heading": "Four ways the same month changes",
+      "paragraphs": [
+        "BLS describes its revisions as a balance between speed and accuracy. For the national Current Employment Statistics survey, a first estimate appears about three weeks after the reference month. It is revised in each of the next two monthly releases as more sample reports arrive, and then held until the annual benchmark. BLS revisions policy, CES questions and answers",
+        "Once a year, the March level is re-anchored to counts drawn mainly from unemployment insurance tax records, which BLS says cover about 97 percent of employment in the survey's scope. Other sources estimate the rest. The months around March are then adjusted to the new level. Seasonal models are re-estimated each year as well, and seasonally adjusted figures can change for the previous five years. BLS can also reconstruct historical series when industry classifications, scope or data errors change. Under a new industry code structure, a series can be converted whole, combined with another, split, or published in less detail. CES questions and answers, CES methods: calculation, Industry classification overview",
+        "Each mechanism changes a different part of the record. Later sample reports change one month's estimate. A benchmark changes a level and the months around it. Seasonal re-estimation changes the adjusted series. A reconstruction can change what a label covers."
+      ]
+    },
+    {
+      "id": "which-vintage",
+      "heading": "Which release answers which question",
+      "paragraphs": [
+        "BLS publishes vintage tables that keep each value it released for a reference month, release by release, with the first and third estimates set beside a recent one. That design lets a reader answer two separate questions. What did the agency say at the time? What does the current history say now? CES vintage data",
+        "Someone judging a forecast, a policy call or a news story made in June 2025 should use the information available in June 2025. A later benchmark can improve the history without giving that person information they never had. The Federal Reserve Bank of Philadelphia maintains a real-time data set of dated snapshots for this kind of work, described by Dean Croushore and Tom Stark in a 2001 journal article. Philadelphia Fed real-time data set, Croushore and Stark, 2001",
+        "For the best current account of what happened to employment, the latest consistent vintage is usually the right input. Freezing a first estimate forever would throw away later sample reports and the wider benchmark counts. Neither vintage is the one true number. The question decides which vintage fits."
+      ]
+    },
+    {
+      "id": "comparisons",
+      "heading": "How a comparison quietly breaks",
+      "paragraphs": [
+        "The March 2025 benchmark shows how many official numbers can describe one month. The preliminary benchmark, released on 9 September 2025, found the benchmark count 911,000 below the survey's not seasonally adjusted estimate, a gap of 0.6 percent. The final benchmark revision, released on 11 February 2026, put that gap at 861,000, or 0.5 percent, on the same basis. Measured against the sample-based estimate published before the benchmark, the total not seasonally adjusted revision was minus 862,000. The seasonally adjusted March level fell by 898,000 in the revision, or 0.6 percent. Figure 1 sets these records side by side. BLS preliminary benchmark, March 2025, CES benchmark article, March 2025, CES benchmark technical notes",
+        "The 50,000 gap between the preliminary and final not seasonally adjusted benchmarks is a change between two stages of measurement. It records no new hiring or layoffs. The 1,000 gap between the 861,000 and 862,000 figures comes from a reconstruction of two banking series, which lowered the March 2025 estimate by 1,000 before benchmarking. A seasonally adjusted figure cannot stand in for an unadjusted one, because seasonal processing is a separate step.",
+        "Other mismatches are common. A benchmark changes a level, and a level change is a different quantity from one month's payroll gain. A forecast judged against today's revised history is held to information it never had. A series label can stay the same while a reconstruction changes what it covers. Summary statistics carry the same risk. The BLS table of monthly revisions reports a mean revision, which shows direction, and a mean absolute revision, which shows size. A mean near zero can hide large revisions that offset each other. The same table leaves out later benchmark, seasonal and other updates, so it cannot show how far first releases sit from the current history. CES monthly revisions table",
+        "A revision alone does not establish fabrication, political interference or a directional bias. Planned revisions are part of the declared method. BLS describes the benchmark revision as the difference between two separately produced counts, each with its own errors. A claim of interference would need its own evidence. Revisions still deserve scrutiny, and that scrutiny needs a defined statistic and a like-for-like comparison. CES methods: calculation, BLS revisions policy"
+      ]
+    },
+    {
+      "id": "six-fields",
+      "heading": "Six fields to carry with a public number",
+      "paragraphs": [
+        "A short practice follows from these mechanisms. When citing an official employment number, carry six fields: the series identity or exact label, the reference period, the value and its units, the adjustment status, the release date or vintage, and the revision stage. Add the source link, and when the value is preliminary, the date of the next scheduled revision. Figure 2 lists the question each field answers. The checklist is an editorial proposal drawn from these sources. BLS has not adopted it, and it has not been tested with readers.",
+        "Matching all six fields makes two values comparable. It does not show that a comparison matters, that a change has a cause, or that either estimate is free of error. A revised number can be different and still legitimate. The useful question is which vintage answers the decision at hand, and whether the two values were measured the same way."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "prebmk-2026",
+      "title": "Current Employment Statistics Preliminary Benchmark (National), March 2026",
+      "url": "https://www.bls.gov/news.release/archives/prebmk_08282026.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Preliminary March 2026 benchmark, its status as a preview and the scheduled final revision",
+      "published_at": "2026-08-28",
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "prebmk-2025",
+      "title": "Current Employment Statistics Preliminary Benchmark (National), March 2025",
+      "url": "https://www.bls.gov/news.release/archives/prebmk_09092025.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Preliminary March 2025 benchmark and its not seasonally adjusted basis",
+      "published_at": "2025-09-09",
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "benchmark-2025",
+      "title": "CES National Benchmark Article: estimates revised to incorporate March 2025 benchmarks",
+      "url": "https://www.bls.gov/web/empsit/cesbmart.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Final March 2025 revisions on both adjustment bases, the banking reconstruction and benchmark coverage. This current-article page is replaced each February; BLS also keeps the 2025 article as a dated PDF",
+      "published_at": "2026-02-11",
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "benchmark-notes",
+      "title": "Technical Notes for the CES National Benchmark",
+      "url": "https://www.bls.gov/web/empsit/cestn.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Preliminary and final total nonfarm benchmark revisions by year, seasonal re-estimation and benchmark error as a net of two processes. Page last modified 11 February 2026",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "ces-faq",
+      "title": "CES Frequently Asked Questions",
+      "url": "https://www.bls.gov/web/empsit/cesfaq.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Monthly revision schedule, five-year seasonal revisions, benchmark coverage, wedge procedure and reconstructions. Page last modified 20 April 2026",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "ces-vintage",
+      "title": "CES Vintage Data Information",
+      "url": "https://www.bls.gov/web/empsit/cesvininfo.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Structure of the vintage tables, with first, third and recent releases for each reference month. Page last modified 6 March 2026",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "ces-revisions",
+      "title": "Nonfarm Payroll Employment: Revisions between over-the-month estimates, 1979-present",
+      "url": "https://www.bls.gov/web/empsit/cesnaicsrev.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Monthly revision table, definitions of mean and mean absolute revision, and its exclusion of later updates. Page last modified 17 September 2026",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "bls-revisions",
+      "title": "Revisions",
+      "url": "https://www.bls.gov/about-bls/revisions.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Agency policy on revisions from later data, seasonal recalculation, benchmarking and classification updates",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "hom-calculation",
+      "title": "Handbook of Methods, Current Employment Statistics: Calculation",
+      "url": "https://www.bls.gov/opub/hom/ces/calculation.htm",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "Benchmark construction, noncovered employment and the benchmark revision as a net of errors in two processes. Page last modified 28 February 2025",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "ces-naics",
+      "title": "CES Industry Classification Overview",
+      "url": "https://www.bls.gov/ces/naics/",
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "role": "How a new industry code structure converts, combines, splits or reduces the detail of CES series, with histories usually rebuilt to 1990. Page last modified 11 February 2026",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "rtdsm",
+      "title": "Real-Time Data Set for Macroeconomists",
+      "url": "https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/real-time-data-set-for-macroeconomists",
+      "publisher": "Federal Reserve Bank of Philadelphia",
+      "role": "Maintained data set of dated snapshots, or vintages, for research, policy analysis and forecasting. Living page, updated monthly",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    },
+    {
+      "id": "croushore-stark",
+      "title": "A Real-Time Data Set for Macroeconomists",
+      "url": "https://doi.org/10.1016/S0304-4076(01)00072-0",
+      "publisher": "Dean Croushore and Tom Stark, Journal of Econometrics 105(1), pages 111 to 130",
+      "role": "Journal article describing the real-time data set, November 2001. The bibliographic record was checked; the full text sits behind a publisher paywall and was not read",
+      "published_at": null,
+      "observed_at": "2026-10-01"
+    }
+  ],
+  "claims": [
+    {
+      "id": "march-2026-preview",
+      "text": "The preliminary March 2026 total nonfarm benchmark revision was minus 79,000, or minus 0.1 percent, and it did not update official estimates.",
+      "source_ids": [
+        "prebmk-2026"
+      ],
+      "scope": "National CES total nonfarm, not seasonally adjusted March level; release of 28 August 2026, with the final revision scheduled for February 2027.",
+      "uncertainty": "Preliminary at the observation date; the final value is unknown, and the schedule can change.",
+      "doesNotProve": "A loss of 79,000 jobs in any month, a revision to a monthly payroll-change headline, or the final benchmark.",
+      "status": "verified"
+    },
+    {
+      "id": "monthly-revisions",
+      "text": "National CES first estimates are revised in each of the next two monthly releases as more sample reports arrive, then held until the annual benchmark.",
+      "source_ids": [
+        "ces-faq",
+        "ces-revisions"
+      ],
+      "scope": "National CES monthly estimation.",
+      "uncertainty": "The third estimate is the final sample-based value and can still change at benchmark or through reconstruction.",
+      "doesNotProve": "That the third release is the final historical value or that any revision is small.",
+      "status": "verified"
+    },
+    {
+      "id": "benchmark-coverage",
+      "text": "Unemployment insurance records cover about 97 percent of employment in CES scope; other sources estimate the rest of the benchmark level.",
+      "source_ids": [
+        "ces-faq",
+        "benchmark-2025",
+        "hom-calculation"
+      ],
+      "scope": "BLS description of the annual benchmark source.",
+      "uncertainty": "Coverage is broad, and the noncovered part is estimated.",
+      "doesNotProve": "That the benchmark source is a complete or error-free census.",
+      "status": "verified"
+    },
+    {
+      "id": "seasonal-five-years",
+      "text": "Seasonally adjusted CES estimates can be revised for five years when seasonal models are re-estimated each year.",
+      "source_ids": [
+        "ces-faq",
+        "benchmark-notes"
+      ],
+      "scope": "National CES seasonal adjustment.",
+      "uncertainty": "Reconstructed series can be re-adjusted over longer spans.",
+      "doesNotProve": "That every year changes materially or in the same direction.",
+      "status": "verified"
+    },
+    {
+      "id": "reconstruction",
+      "text": "CES can reconstruct historical series when classifications, scope or data errors change, and a new industry structure can convert, combine, split or reduce the detail of series.",
+      "source_ids": [
+        "ces-faq",
+        "ces-naics",
+        "benchmark-2025"
+      ],
+      "scope": "Documented mechanisms; whether a named series changed requires its own note.",
+      "uncertainty": "The effect differs by series and by year.",
+      "doesNotProve": "That every historical comparison is broken or that a reconstruction records a real economic event.",
+      "status": "verified"
+    },
+    {
+      "id": "vintage-tables",
+      "text": "BLS vintage tables record what was published for the same reference month at successive releases.",
+      "source_ids": [
+        "ces-vintage"
+      ],
+      "scope": "Official vintage data structure, with first, third and recent releases set out together.",
+      "uncertainty": "Which vintage fits depends on the question asked.",
+      "doesNotProve": "That any one displayed vintage is the right input for every question.",
+      "status": "verified"
+    },
+    {
+      "id": "real-time-versus-latest",
+      "text": "Real-time vintages and the latest vintage answer different evaluation questions.",
+      "source_ids": [
+        "ces-vintage",
+        "rtdsm",
+        "croushore-stark"
+      ],
+      "scope": "Methodological distinction drawn from the vintage tables and the stated purpose of real-time data sets.",
+      "uncertainty": "The Croushore and Stark article was identified by its bibliographic record; its full text was not read.",
+      "doesNotProve": "That older vintages are better estimates of history or that the latest data are unsuitable for historical analysis.",
+      "status": "inferred"
+    },
+    {
+      "id": "march-2025-stages",
+      "text": "For March 2025 the not seasonally adjusted benchmark revision moved from minus 911,000 preliminary to minus 861,000 final, a 50,000 difference between stages.",
+      "source_ids": [
+        "prebmk-2025",
+        "benchmark-notes",
+        "benchmark-2025"
+      ],
+      "scope": "National CES total nonfarm, values in thousands, rounded for publication, after removing scope changes.",
+      "uncertainty": "Two stages of one benchmark year.",
+      "doesNotProve": "A monthly job loss, a new employment event, or a tendency of preliminary benchmarks to move toward zero.",
+      "status": "verified"
+    },
+    {
+      "id": "march-2025-bases",
+      "text": "The final March 2025 revision was minus 898,000 seasonally adjusted, minus 862,000 not seasonally adjusted against the previously published estimate, and minus 861,000 as the benchmark revision after a banking reconstruction.",
+      "source_ids": [
+        "benchmark-2025",
+        "benchmark-notes"
+      ],
+      "scope": "BLS benchmark article tables 2, 3 and 4 and technical note table 5.",
+      "uncertainty": "The 1,000 difference comes from a reconstruction that lowered the March 2025 estimate before benchmarking; values are rounded.",
+      "doesNotProve": "That one adjustment basis is better or that the figures can be substituted for one another.",
+      "status": "verified"
+    },
+    {
+      "id": "net-of-two-errors",
+      "text": "The benchmark revision is the difference between two separately produced counts and reflects the net of errors in both.",
+      "source_ids": [
+        "hom-calculation",
+        "benchmark-notes",
+        "prebmk-2026"
+      ],
+      "scope": "BLS method description; BLS treats the figure as a proxy for total survey error.",
+      "uncertainty": "The split of error between the two processes is not measured by this figure.",
+      "doesNotProve": "Which process caused how much error, or any motive.",
+      "status": "verified"
+    },
+    {
+      "id": "mean-versus-absolute",
+      "text": "Mean revision shows direction and mean absolute revision shows size, and the monthly revision table excludes later benchmark, seasonal and other updates.",
+      "source_ids": [
+        "ces-revisions"
+      ],
+      "scope": "Definitions and notes of the BLS monthly revision table.",
+      "uncertainty": "Time windows and sample-design periods must stay visible.",
+      "doesNotProve": "That a mean near zero means small revisions, or how far first releases sit from current history.",
+      "status": "verified"
+    },
+    {
+      "id": "revision-not-motive",
+      "text": "A revision alone does not establish fabrication, political interference or directional bias.",
+      "source_ids": [
+        "bls-revisions",
+        "hom-calculation",
+        "ces-revisions"
+      ],
+      "scope": "Inference from the declared revision mechanisms and the need for a defined directional statistic.",
+      "uncertainty": "A specific interference claim would need separate evidence.",
+      "doesNotProve": "That interference is impossible, that every process decision is neutral, or that revisions should escape scrutiny.",
+      "status": "inferred"
+    },
+    {
+      "id": "six-field-check",
+      "text": "A like-for-like comparison needs a matching series identity, reference period, units, adjustment status, vintage and revision stage.",
+      "source_ids": [
+        "ces-faq",
+        "ces-vintage",
+        "ces-revisions",
+        "ces-naics",
+        "rtdsm"
+      ],
+      "scope": "Editorial checklist drawn from the documented mechanisms; BLS has not adopted it.",
+      "uncertainty": "The checklist has not been tested with readers and may need additions for other statistics.",
+      "doesNotProve": "That a matched comparison is meaningful, causal or free of measurement error.",
+      "status": "inferred"
+    }
+  ],
+  "figures": [
+    {
+      "id": "vintage-benchmark-records",
+      "title": "Figure 1. Five benchmark records that look more comparable than they are",
+      "claim": "Release stage and adjustment basis change what an employment revision means. Each row is a separate published record, and the rows are not combined.",
+      "type": "evidence-table",
+      "columns": [
+        "Record",
+        "Released",
+        "Adjustment basis",
+        "Published revision",
+        "Did it update the official series?",
+        "Comparison boundary"
+      ],
+      "resultColumn": "Published revision",
+      "rows": [
+        [
+          "March 2025 preliminary benchmark",
+          "9 September 2025",
+          "Not seasonally adjusted",
+          "minus 911,000 (minus 0.6 percent)",
+          "No. It previewed the later benchmark.",
+          "Compare with the final benchmark revision only as a change between stages."
+        ],
+        [
+          "March 2025 final benchmark revision",
+          "11 February 2026",
+          "Not seasonally adjusted",
+          "minus 861,000 (minus 0.5 percent)",
+          "Yes, through the annual benchmark.",
+          "The 50,000 change from the preliminary stage records no new employment event."
+        ],
+        [
+          "March 2025 total revision against the previously published estimate",
+          "11 February 2026",
+          "Not seasonally adjusted",
+          "minus 862,000 (minus 0.5 percent)",
+          "Yes, through the annual benchmark.",
+          "Differs from the benchmark revision by 1,000 because a banking reconstruction lowered the estimate first."
+        ],
+        [
+          "March 2025 final revision",
+          "11 February 2026",
+          "Seasonally adjusted",
+          "minus 898,000 (minus 0.6 percent)",
+          "Yes, in the revised seasonally adjusted series.",
+          "Do not substitute for a not seasonally adjusted row; seasonal processing differs."
+        ],
+        [
+          "March 2026 preliminary benchmark",
+          "28 August 2026",
+          "Not seasonally adjusted",
+          "minus 79,000 (minus 0.1 percent)",
+          "No. The final benchmark is scheduled for February 2027.",
+          "Preliminary at the observation date."
+        ]
+      ],
+      "scope": "National CES total nonfarm employment, March 2025 and March 2026 benchmarks.",
+      "units": "Revision level in jobs and the published percent revision.",
+      "denominator": "The corresponding total nonfarm employment estimate for each record, as defined by BLS. The percentages are transcribed and not recomputed from rounded values.",
+      "date": "Releases from 9 September 2025 to 28 August 2026, observed 1 October 2026.",
+      "provenance": [
+        "prebmk-2025",
+        "prebmk-2026",
+        "benchmark-2025",
+        "benchmark-notes"
+      ],
+      "transformation": "Published levels and percentages are transcribed. The only computed value is the 50,000 difference between the final and preliminary not seasonally adjusted March 2025 benchmark revisions (minus 861,000 less minus 911,000). Years, industries and adjustment bases are not averaged.",
+      "uncertainty": "Published figures are rounded. The March 2026 value is preliminary. Detailed industries can revise differently from the total.",
+      "limitations": "Two benchmark years are examples. They are not a trend, an accuracy distribution, a performance score or a political comparison.",
+      "doesNotProve": "Monthly job losses, the final March 2026 value, any motive, or that one adjustment basis is better than the other.",
+      "alt": "Table of five benchmark records for March 2025 and March 2026, giving release date, adjustment basis, published revision, whether the official series was updated, and the limit on comparing each row."
+    },
+    {
+      "id": "vintage-like-for-like-check",
+      "title": "Figure 2. The like-for-like check",
+      "claim": "Six fields to match before comparing two official employment numbers, with the mismatch each field prevents.",
+      "type": "checklist",
+      "columns": [
+        "Field to carry",
+        "Question to ask",
+        "A mismatch can create"
+      ],
+      "rows": [
+        [
+          "Series identity and definition",
+          "Is this the same series, scope, geography and industry definition?",
+          "A resemblance in labels between different populations or reconstructed categories"
+        ],
+        [
+          "Reference period",
+          "Do both values describe the same month or the same change interval?",
+          "A release-date comparison mistaken for an event-date comparison"
+        ],
+        [
+          "Value and units",
+          "Is this a level, a monthly change, a percentage, an index or a revision amount?",
+          "Arithmetic across unlike quantities"
+        ],
+        [
+          "Adjustment status",
+          "Are both values seasonally adjusted, or both not seasonally adjusted?",
+          "A difference caused by separate seasonal processing"
+        ],
+        [
+          "Vintage or release date",
+          "What information was available at each publication date?",
+          "Hindsight carried into a real-time evaluation"
+        ],
+        [
+          "Revision stage",
+          "First, second or third estimate, preliminary or final benchmark, or reconstruction?",
+          "An ordinary process stage described as a new real-world event"
+        ]
+      ],
+      "scope": "One proposed reporting check for official employment estimates.",
+      "units": "None across the figure; the value row requires the units the source declares.",
+      "denominator": "Not applicable. The six rows are reporting fields, not sampled observations.",
+      "date": "Proposed 1 October 2026 from sources observed the same day.",
+      "provenance": [
+        "ces-faq",
+        "ces-vintage",
+        "ces-revisions",
+        "ces-naics",
+        "rtdsm",
+        "croushore-stark"
+      ],
+      "transformation": "Qualitative mapping from each field to the mismatch it prevents. No score, ranking, weight or pooled metric is computed.",
+      "uncertainty": "The checklist has not been tested as a reader-comprehension tool and may need additions for other statistics.",
+      "limitations": "It checks whether two values describe the same thing. It does not judge estimator quality, cause or policy meaning.",
+      "doesNotProve": "That a comparison is useful or that the source series is free of error.",
+      "alt": "Table of six fields to match before comparing official employment numbers: series identity, reference period, value and units, adjustment status, vintage, and revision stage, each with its question and the mismatch it prevents."
+    }
+  ],
+  "corrections": [],
+  "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
+  "personal_voice_adopted": false
+}

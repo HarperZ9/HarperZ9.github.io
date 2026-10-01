@@ -1,0 +1,72 @@
+{
+  "id": "vintage-benchmark-records",
+  "title": "Figure 1. Five benchmark records that look more comparable than they are",
+  "claim": "Release stage and adjustment basis change what an employment revision means. Each row is a separate published record, and the rows are not combined.",
+  "type": "evidence-table",
+  "columns": [
+    "Record",
+    "Released",
+    "Adjustment basis",
+    "Published revision",
+    "Did it update the official series?",
+    "Comparison boundary"
+  ],
+  "resultColumn": "Published revision",
+  "rows": [
+    [
+      "March 2025 preliminary benchmark",
+      "9 September 2025",
+      "Not seasonally adjusted",
+      "minus 911,000 (minus 0.6 percent)",
+      "No. It previewed the later benchmark.",
+      "Compare with the final benchmark revision only as a change between stages."
+    ],
+    [
+      "March 2025 final benchmark revision",
+      "11 February 2026",
+      "Not seasonally adjusted",
+      "minus 861,000 (minus 0.5 percent)",
+      "Yes, through the annual benchmark.",
+      "The 50,000 change from the preliminary stage records no new employment event."
+    ],
+    [
+      "March 2025 total revision against the previously published estimate",
+      "11 February 2026",
+      "Not seasonally adjusted",
+      "minus 862,000 (minus 0.5 percent)",
+      "Yes, through the annual benchmark.",
+      "Differs from the benchmark revision by 1,000 because a banking reconstruction lowered the estimate first."
+    ],
+    [
+      "March 2025 final revision",
+      "11 February 2026",
+      "Seasonally adjusted",
+      "minus 898,000 (minus 0.6 percent)",
+      "Yes, in the revised seasonally adjusted series.",
+      "Do not substitute for a not seasonally adjusted row; seasonal processing differs."
+    ],
+    [
+      "March 2026 preliminary benchmark",
+      "28 August 2026",
+      "Not seasonally adjusted",
+      "minus 79,000 (minus 0.1 percent)",
+      "No. The final benchmark is scheduled for February 2027.",
+      "Preliminary at the observation date."
+    ]
+  ],
+  "scope": "National CES total nonfarm employment, March 2025 and March 2026 benchmarks.",
+  "units": "Revision level in jobs and the published percent revision.",
+  "denominator": "The corresponding total nonfarm employment estimate for each record, as defined by BLS. The percentages are transcribed and not recomputed from rounded values.",
+  "date": "Releases from 9 September 2025 to 28 August 2026, observed 1 October 2026.",
+  "provenance": [
+    "prebmk-2025",
+    "prebmk-2026",
+    "benchmark-2025",
+    "benchmark-notes"
+  ],
+  "transformation": "Published levels and percentages are transcribed. The only computed value is the 50,000 difference between the final and preliminary not seasonally adjusted March 2025 benchmark revisions (minus 861,000 less minus 911,000). Years, industries and adjustment bases are not averaged.",
+  "uncertainty": "Published figures are rounded. The March 2026 value is preliminary. Detailed industries can revise differently from the total.",
+  "limitations": "Two benchmark years are examples. They are not a trend, an accuracy distribution, a performance score or a political comparison.",
+  "doesNotProve": "Monthly job losses, the final March 2026 value, any motive, or that one adjustment basis is better than the other.",
+  "alt": "Table of five benchmark records for March 2025 and March 2026, giving release date, adjustment basis, published revision, whether the official series was updated, and the limit on comparing each row."
+}

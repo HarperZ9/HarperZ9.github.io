@@ -673,5 +673,12 @@ window.CARD_DATA = {
     "role": "EVIDENCE ESSAY",
     "word": "Referees",
     "headline": "Who Pays the Referees"
+  },
+  "the-number-has-a-vintage": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ESSAY",
+    "word": "Vintages",
+    "headline": "The Number Has a Vintage"
   }
 };

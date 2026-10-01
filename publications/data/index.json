@@ -52,6 +52,16 @@
       "idempotency_key": "da2ed7d4da3a392e09954fc99ce59456f9f5a6de0c24c680e913dfe2e779ca8c"
     },
     {
+      "id": "the-number-has-a-vintage",
+      "route": "the-number-has-a-vintage.html",
+      "category": "evidence-public-life",
+      "form": "essay",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01",
+      "record_sha256": "a28651928e1336f016e0eef4c9a7a03484a552abf988fb6c637db55b5bad14cc",
+      "idempotency_key": "ccb40c70754a13e3af26f7ef25f3a6000a9b26cb2e7c7847088e6506b8db652d"
+    },
+    {
       "id": "the-sandbox-was-never-just-a-box",
       "route": "the-sandbox-was-never-just-a-box.html",
       "category": "agent-evaluation",
