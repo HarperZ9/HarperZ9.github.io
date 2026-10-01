@@ -193,6 +193,11 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert ml_models['earned'] == '2026-10-01' and ml_models['local_completion_date'] == '2026-09-30'
     assert ml_models['url'] == 'https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url'
     assert 'general performance-improvement claim' in ml_models['execution_scope']
+    secops = next(c for c in credentials if c['id'] == 'google-secops-deep-dive')
+    assert secops['kind'] == 'Course-completion badge' and secops['official_level'] == 'Advanced'
+    assert secops['score_percent'] == 96 and secops['local_completion_date'] == '2026-09-30'
+    assert 'earned' not in secops and secops['url_role'] == 'Official course description'
+    assert secops['title'] in cv and '96% knowledge assessment' in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

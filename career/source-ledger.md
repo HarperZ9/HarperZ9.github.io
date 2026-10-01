@@ -641,3 +641,13 @@ Public issuer verification: https://www.credly.com/badges/6e495603-0a8e-441a-88f
 Official course description: https://www.skills.google/course_templates/626
 
 Assessed lab work covered three logistic-regression models, feature engineering, evaluation on a later date window, and prediction generation. This is assessment-environment work; no professional certification, production deployment, or general model-performance improvement is claimed. Detailed evaluation metrics and dataset counts remain outside the career record.
+
+## Google Security Operations coursework
+
+### google-secops-deep-dive
+
+Google Skills / Google Cloud awarded Google Security Operations - Deep Dive as an Advanced course-completion badge. Local completion was September 30, 2026; no independent issuer date is inferred. The first submitted knowledge assessment displayed 96%.
+
+Official course description: https://www.skills.google/course_templates/972
+
+Assessed topics cover YARA-L detection concepts, SIEM ingestion/normalization/entity enrichment, and SOAR integrations and administrative settings. This records knowledge-assessment completion; no practical lab, optional lesson completion, study hours, professional certification, employment experience, or production implementation is claimed.

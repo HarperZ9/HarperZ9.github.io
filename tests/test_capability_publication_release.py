@@ -440,7 +440,9 @@ RELEASE_PATHS = (
 # validation badge and Claude Bedrock coursework; full LF inventory grouped intact.
 # October 1 issuer record: reviewed Create ML Models with BigQuery ML badge;
 # grouped lab-scope records preserve distinct levels, checkpoints, and date evidence.
-REVIEWED_RELEASE_SHA256 = "87588eba840c3b5f879e47ce307206b19578a727a8b756475621182b68a23a50"
+# September 30 local completion: reviewed Advanced SecOps course badge;
+# grouped coursework retains issuer levels and limits, without practical-lab claims.
+REVIEWED_RELEASE_SHA256 = "cf59d480942a5b9f517ad236016eea4bd95d7df49bfa19edf21b06837c7a7608"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

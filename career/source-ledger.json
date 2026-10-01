@@ -890,6 +890,25 @@
       "earned": "2026-10-01",
       "issuer_classification": "Intermediate Validation",
       "status": "Issuer public badge verified as Google Cloud Intermediate Validation, issue date October 1, 2026. Local completion September 30 remains distinct; no cause for date difference inferred."
+    },
+    {
+      "id": "google-secops-deep-dive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Course-completion badge",
+      "title": "Google Security Operations - Deep Dive",
+      "official_level": "Advanced",
+      "local_completion_date": "2026-09-30",
+      "score_percent": 96,
+      "assessment_result": "96% displayed on the first submitted knowledge assessment",
+      "url": "https://www.skills.google/course_templates/972",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "YARA-L detection concepts",
+        "SIEM ingestion, normalization, and entity enrichment",
+        "SOAR integration and administrative-setting concepts"
+      ],
+      "completion_evidence": "Issuer course-completion page confirmed the badge following the required knowledge assessment. No practical lab, optional lesson, study-hour, professional-certification, or production-implementation claim.",
+      "status": "Advanced course-completion badge confirmed after a required knowledge assessment; local completion September 30, 2026. No independent issuer date is inferred."
     }
   ],
   "limits": [

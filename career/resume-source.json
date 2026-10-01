@@ -427,7 +427,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Cisco Ethical Hacker course certificate. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Cisco Ethical Hacker course certificate. Coursework: Google SecOps; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -446,7 +446,8 @@
             "qualys-totalcloud",
             "qualys-edr",
             "cisco-ethical-hacker",
-            "ms-devops-security"
+            "ms-devops-security",
+            "google-secops-deep-dive"
           ]
         },
         {
@@ -566,7 +567,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: Google SecOps; LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -592,7 +593,8 @@
             "google-mlops-model-evaluation",
             "claude-amazon-bedrock",
             "google-bigquery-predictive",
-            "google-bigquery-ml-models"
+            "google-bigquery-ml-models",
+            "google-secops-deep-dive"
           ]
         },
         {
@@ -1487,15 +1489,9 @@
         },
         {
           "kind": "p",
-          "text": "Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2026-09-30; 100/100, four coding checkpoints. Tokenization, n-gram generation, segmentation, and padded training data.",
+          "text": "Google skill badges, completed 2026-09-30: Google DeepMind: Train A Small Language Model (Advanced; 100/100, four coding checkpoints); Use Agent Skills with Multi-Agent Systems (Intermediate course/Advanced challenge; 100/100, six checkpoints). Scope: tokenization, n-grams, data preparation, and agent orchestration. Multi-agent lab: five Cloud Run services deployed; model-access policy blocked local and cloud generation.",
           "evidence": [
-            "google-deepmind-slm"
-          ]
-        },
-        {
-          "kind": "p",
-          "text": "Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.",
-          "evidence": [
+            "google-deepmind-slm",
             "google-multi-agent"
           ]
         },
@@ -1509,9 +1505,10 @@
         },
         {
           "kind": "p",
-          "text": "Google Skills: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation | Intermediate course-completion badge, 2026-09-30. Predictive/generative evaluation methods.",
+          "text": "Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation (Intermediate); Google Security Operations - Deep Dive (Advanced; 96% knowledge assessment). Topics: model-evaluation methods, YARA-L, SIEM processing/enrichment, and SOAR.",
           "evidence": [
-            "google-mlops-model-evaluation"
+            "google-mlops-model-evaluation",
+            "google-secops-deep-dive"
           ]
         },
         {
@@ -2197,6 +2194,24 @@
       "execution_scope": "Three logistic-regression models created in the assessment environment. No professional certification, production deployment, or general performance-improvement claim.",
       "earned": "2026-10-01",
       "issuer_classification": "Intermediate Validation"
+    },
+    {
+      "id": "google-secops-deep-dive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Course-completion badge",
+      "title": "Google Security Operations - Deep Dive",
+      "official_level": "Advanced",
+      "local_completion_date": "2026-09-30",
+      "score_percent": 96,
+      "assessment_result": "96% displayed on the first submitted knowledge assessment",
+      "url": "https://www.skills.google/course_templates/972",
+      "url_role": "Official course description",
+      "assessed_skills": [
+        "YARA-L detection concepts",
+        "SIEM ingestion, normalization, and entity enrichment",
+        "SOAR integration and administrative-setting concepts"
+      ],
+      "completion_evidence": "Issuer course-completion page confirmed the badge following the required knowledge assessment. No practical lab, optional lesson, study-hour, professional-certification, or production-implementation claim."
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",
