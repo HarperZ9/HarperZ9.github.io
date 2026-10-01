@@ -506,7 +506,7 @@ RELEASE_PATHS = (
 # back-link lines on every piece, the Writing pillar and menu group, the Frontier Safety
 # edition list, the briefings index, sitemap, feeds, build receipt, route registry, site
 # index and home bundle (index-Dmke1bnx.js, index-DbZyfUEO.css) are regenerated.
-REVIEWED_RELEASE_SHA256 = "d4ab5dbe893087c40480f2ce55ab2baee61c64c9844d06f2d5b56068d0f20259"
+REVIEWED_RELEASE_SHA256 = "30946aa281b43bc59bb02ccb8d2e4d32c8200665f88cd6e01d9c624573433bee"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -50,11 +50,15 @@
     <p class="lead">Twenty items were gathered, four were dropped, and sixteen were kept, digested, and stored in a content-addressed object store. Each item lives under its own sha256, so the hash printed on a card is also the key that retrieves the item. The two seals below let any reader re-derive the full inventory and confirm nothing was swapped after the fact.</p>
     <dl class="kv">
       <dt>Corpus</dt><dd>a content-addressed object store of 16 frontier AI sources (10 arXiv papers, 5 talks; one talk carries both a metadata and a transcript object)</dd>
-      <dt>Digest seal</dt><dd><span translate="no">0f364c2173e27ee1848ffa87eb2c99ac232f9bfcc144f2d7feec6af37cd33399</span></dd>
-      <dt>Run seal</dt><dd><span translate="no">e1ba77514c2f6b3f714ff23c537c2db614f3c580af5f0cabea25b8c19a3d45b4</span></dd>
       <dt>Counts</dt><dd>gathered 20, dropped 4, kept and digested 16, stored 16</dd>
       <dt>Scope tags</dt><dd>reasoning, agents, evaluation, reproducibility, interpretability, test-time, coding, benchmark, verifier, world-model, ai-for-science</dd>
     </dl>
+    <details class="source-record"><summary>Source record for checking</summary>
+    <dl class="kv">
+      <dt>Digest seal</dt><dd><span translate="no">0f364c2173e27ee1848ffa87eb2c99ac232f9bfcc144f2d7feec6af37cd33399</span></dd>
+      <dt>Run seal</dt><dd><span translate="no">e1ba77514c2f6b3f714ff23c537c2db614f3c580af5f0cabea25b8c19a3d45b4</span></dd>
+    </dl>
+    </details>
     <p class="note">Each item is stored under <span translate="no">objects/&lt;first-2-hex&gt;/&lt;rest-of-sha256&gt;</span>, so the hash in a card is the retrieval key. The seals above are the re-verification handle, not a claim of correctness. Gathering and citing a source is not the same as adjudicating its claim.</p>
   </section>
 

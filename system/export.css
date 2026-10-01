@@ -30,6 +30,8 @@
   border-top:1px solid color-mix(in oklab, currentColor 18%, transparent);
 }
 .export-footer .page-footer-line{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;margin:0}
+/* Phone pages drop the body's side padding; the footer keeps its own 1rem gutter. */
+@media (max-width:40rem){.export-footer{padding-inline:1rem}}
 
 .export-menu{display:inline-block}
 
