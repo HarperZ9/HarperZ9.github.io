@@ -50,7 +50,7 @@ def test_every_series_page_carries_the_table() -> None:
 
 def test_rows_follow_the_publication_order_and_mark_the_current_page() -> None:
     rows = series_rows(SERIES)
-    assert [row["title"] for row in rows] == ["Why I Do This", "Who Knew First", "Who Pays the Referees", "The Terms for Telling",
+    assert [row["title"] for row in rows] == ["A Bullshitter Knows a Bullshitter", "Who Knew First", "Who Pays the Referees", "The Terms for Telling",
                                               "Who Kept the Books", "The Maker Is Part of the Story",
                                               "A Check It Cannot Predict"]
     numbered = [row for row in rows if row["n"] != "start"]
@@ -103,7 +103,7 @@ def test_narrow_screens_stack_rows_instead_of_scrolling() -> None:
 
 
 def test_the_opener_row_comes_first_on_every_page_and_has_no_blade() -> None:
-    """Why I Do This is the "Start here" row: above the anchor, linked, and the aperture's core."""
+    """A Bullshitter Knows a Bullshitter is the "Start here" row: above the anchor, linked, and the aperture's core."""
     opener = SERIES["opener"]
     for route in carrier_routes(SERIES):
         table = block(route)

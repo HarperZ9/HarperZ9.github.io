@@ -678,8 +678,8 @@ window.CARD_DATA = {
     "publication": true,
     "editorial": true,
     "role": "PERSONAL ESSAY",
-    "word": "Why",
-    "headline": "Why I Do This"
+    "word": "Bullshitters",
+    "headline": "A Bullshitter Knows a Bullshitter"
   },
   "the-terms-for-telling": {
     "publication": true,

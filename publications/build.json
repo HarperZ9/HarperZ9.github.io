@@ -30,15 +30,15 @@
     "publications/data/listings/verified-is-not-trustworthy.json": "df7a1711de5453bf50f1eb72ffc01276d62785b59a53b25358caea7698f2825e",
     "publications/data/listings/who-knew-first.json": "2bfdf43af1a3632cead6a01409393dc39875f7c4c7198e9e5e25e519fe5ed810",
     "publications/data/listings/who-pays-the-referees.json": "07679345cb93fb7af2ffc7794549d3272c1fc428f6507be11749d4289ddd803b",
-    "publications/data/listings/why-i-do-this.json": "fd2f55ce8c7b28f44f6ea4a115e06388582ff019473eee9ea07a1ecb5c8bcea8",
+    "publications/data/listings/why-i-do-this.json": "a53ffd7f17900c7ed3bc3d908669934325a5a7349b2cd1199f224a45e611c695",
     "publications/data/listings/why.json": "12c48883dc8e92bf1a89e2e9e7ab24da52c7ca1dd7231fc887779d74ad246728",
     "publications/data/listings/witnessing-spine.json": "1117e14d3804f62859bde6930ec8b758077ca303343fa3eae92285e9ef881e1b"
   },
   "outputs": {
     "availability-is-not-reach.html": "72824c62f58f802af4eba28bbf8b1fe48372bd26c17855f612fa232d7757fb6d",
     "borrowed-ground.html": "b631319d4f124f714db3a2b3054b8900d0f6d067bc932fc34e76a58ecbfc34ef",
-    "feed.json": "730a2889aa64d3e2fe5347b5c0b50135cd0ea863b1aeb86775faca8c3a98004d",
-    "feed.xml": "7f6bb3e4fb64ee30dd71b75a8ae3e53e581dd78169a80534f1b2f0ef56784efa",
+    "feed.json": "501b5e2bedb8a1790f2f5866c9fac7a969a5ad37f7753dc78e63458a5fc79ad7",
+    "feed.xml": "3484a92364c577ce71dfcf8a722bfd012b237e4f9fe07596e346c208c303b86b",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -62,8 +62,8 @@
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
     "growth-needs-a-before.html": "16f64a0fd8a571f1f8b057476423ddcc5ee0c755873a7ab71684e750bc99fe2d",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "e11bb54828582ad28b46ba795fae7a31364e92c666310100d2b8a332318124e1",
-    "publications.html": "5dfe71efdb3ea648b17263d1ddce3e2153acf8283cd803509f70f4f9ab1695ab",
-    "publications/data/index.json": "625e9e422943d15026543563866d4c21d5ddf998064d09f77997ff9020515980",
+    "publications.html": "8d504aa496bc0662f9a8db9850c931f6055b20df1c827960824e9f2cdff42ef1",
+    "publications/data/index.json": "95e293f15c4543d308605983f2784d5a2bc8a3cdb51eadbc9957fbf5841e7c07",
     "sitemap.xml": "0d993408fcd9ca9c5a772903a9c19c56718cd0d40691cb7f335c8aefc291f51c",
     "support-has-more-than-one-record.html": "6d1a49de6e6a343cce7d258a4ece277d4da952e3062750606cd9eedf58f250b0",
     "the-number-has-a-vintage.html": "70e3860cb04bf42d2c7700600871c19097a7da9302d297b52c271f3e1a9d0346",
@@ -73,6 +73,6 @@
     "the-timestamp-is-not-the-order.html": "2afe21a8756e749e6964092db50030abc51ee0a582cab86ee0f83a9dcb314179",
     "what-the-formula-counts.html": "dd36fa78dce5f939233ea3b954bdd4ad89e6bd303a021cb5802453bc90a73eb2",
     "what-the-label-changes.html": "188be66181a5855be379e84ee83a7e6bee5863426563373923f31282e08c4123",
-    "who-knew-first-series.html": "56d4d0894fe966e91e78862fce30adefdded4b052bf8cd4103a79fc1d2151e32"
+    "who-knew-first-series.html": "07676f9bff7cbc5c3fe3f83663d2d3ae8558ed1e7286a3af474012d6edf6972c"
   }
 }

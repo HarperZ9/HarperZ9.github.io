@@ -306,7 +306,7 @@
     {
       "id": "why-i-do-this",
       "route": "why-i-do-this.html",
-      "title": "Why I Do This",
+      "title": "A Bullshitter Knows a Bullshitter",
       "collection": "series",
       "kind": "Series opener",
       "published_at": "2026-10-01",
@@ -335,7 +335,7 @@
     {
       "id": "why-i-do-this",
       "route": "why-i-do-this.html",
-      "title": "Why I Do This",
+      "title": "A Bullshitter Knows a Bullshitter",
       "kind": "Series opener",
       "published_at": "2026-10-01",
       "summary": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series."

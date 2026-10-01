@@ -4,7 +4,7 @@
   "route": "who-knew-first-series.html",
   "title": "Who Knew First, and what it opened",
   "summary": "Who Knew First and the five pieces that each test one question it raises, with the published ones linked and the planned ones named.",
-  "opener": {"text": "Why I Do This", "href": "why-i-do-this.html", "question": "Who is asking the questions in this series, and why does he build tools to check AI?"},
+  "opener": {"text": "A Bullshitter Knows a Bullshitter", "href": "why-i-do-this.html", "question": "Who is asking the questions in this series, and why does he build tools to check AI?"},
   "anchor": {"text": "Who Knew First", "href": "who-knew-first.html", "question": "When an AI agent crosses a boundary, who gets to name the incident, and how fast does anyone else hear about it?"},
   "intro": "Who Knew First is a record of nine 2026 incidents in which an AI agent crossed a boundary. It argues one thing: whoever holds an incident's logs gets to name it, and the name decides how fast anyone else hears about it. The pieces below each test one question that argument raises. They stand alone, and each says how it connects.",
   "parts": [

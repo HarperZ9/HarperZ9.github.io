@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-B3PP6LeH.js",
+    "assets/index-C1IxEots.js",
     "assets/index-FBDE3rFM.js",
     "why-i-do-this.html",
     "publications/data/listings/why-i-do-this.json",
@@ -546,7 +546,11 @@ RELEASE_PATHS = (
 # a Start here row on every series page, the series hub and the Writing hub link it, and the
 # feeds, sitemap, build receipt, route registry, site index and home bundle
 # (index-B3PP6LeH.js) are regenerated. index-FBDE3rFM.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "0d319b7a2e77234edb8ad3593a3f152fdb8889b4bf3838cd5decd64177350519"
+# October 1, 2026, before publication: the author retitles the opener A Bullshitter Knows a
+# Bullshitter; the slug why-i-do-this.html stays. The listing, series opener, card, feeds,
+# build receipt, route registry, site index, series tables and home bundle
+# (index-C1IxEots.js) are regenerated. index-B3PP6LeH.js was never published and is gone.
+REVIEWED_RELEASE_SHA256 = "2298224709126d88794efd0b2c158c7224881f360023209154fb55a02354b7be"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -728,7 +732,11 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: Why I Do This joins the Who Knew First routes as the series opener, so
     # the bundle rebuilt from the registry is index-B3PP6LeH.js with the same sheet.
     # index-FBDE3rFM.js stays as retained history.
-    current_js = "index-B3PP6LeH.js"
+    # October 1, 2026, before publication: the opener is retitled A Bullshitter Knows a
+    # Bullshitter, so the bundle rebuilt from the registry is index-C1IxEots.js with the same
+    # sheet. index-B3PP6LeH.js was never published and is gone.
+    current_js = "index-C1IxEots.js"
+    assert not (ROOT / "assets" / "index-B3PP6LeH.js").exists()
     previous_fonts_js = "index-FBDE3rFM.js"
     assert previous_fonts_js not in source
     assert (ROOT / "assets" / previous_fonts_js).is_file()
