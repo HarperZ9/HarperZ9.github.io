@@ -2,7 +2,7 @@
   "schema": "checking-machines-build/v1",
   "revised": "2026-09-20",
   "edited": "2026-09-25",
-  "source_sha256": "ef61404c0092b49d3249a2641f7acd73a8fcf4578ff1914a19fb9b227ba1074e",
+  "source_sha256": "0cbf152ed01f332b67f6b6f49f30c09d6f4309eba82a2fa2f64a370dfbdfb80c",
   "outputs": [
     {
       "path": "checking-the-machines.html",
@@ -10,19 +10,19 @@
     },
     {
       "path": "writing/checking-the-machines/01.md",
-      "sha256": "ef61404c0092b49d3249a2641f7acd73a8fcf4578ff1914a19fb9b227ba1074e"
+      "sha256": "0cbf152ed01f332b67f6b6f49f30c09d6f4309eba82a2fa2f64a370dfbdfb80c"
     },
     {
       "path": "writing/checking-the-machines/source-notes.json",
-      "sha256": "7e6731ef1fa98f761980995e113be424c49535ce88fb0550d45971eb388b4b90"
+      "sha256": "facaf15d6db909b2084a5c09f4e0e7c98cb3c6b026c24edcfd21c9271c79580d"
     },
     {
       "path": "writing/checking-the-machines/reading-and-revision-note.md",
-      "sha256": "5d6d33af1862e9706e52551acdca2b30e3cc7c98fcfaf26124a5e1eef447faea"
+      "sha256": "7c51f8b26fbad5f18b438ec4ec590da4b89decea48ceb6412592a61c5fe85498"
     },
     {
       "path": "writing/checking-the-machines/pilot-protocol.md",
-      "sha256": "dd4c2f92b9c21f808cd19903cb1bd950f74f6443eddc69289a09a887b87d80aa"
+      "sha256": "d3d729622ef53010a0c4d3cab7d9dd466d5c97409aacd0051221724e124ed98c"
     },
     {
       "path": "writing/checking-the-machines/articulate-receipt.json",
