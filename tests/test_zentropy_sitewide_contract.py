@@ -44,6 +44,8 @@ STUDIO_PLATE_REVISION = "20260925-studio-plate"
 # its two marked pages (articulate.html, site-index.html) lay out the same with the
 # old doc.css whether or not the tokens are marked.
 COPY_PASS_REVISION = "20260927-copy-pass"
+# 1 October 2026: the Writing hub (publications.html), its filter script and the series hub sheet.
+SITE_IA_REVISION = "20261001-site-ia"
 READING_IMPORT_REVISION = VOID_PLATES_REVISION
 SYSTEM_CSS_REVISION = COPY_PASS_REVISION
 REVIEWED_ASSET_REVISIONS = {
@@ -74,6 +76,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/hubs-fonts.css": VOID_PLATES_REVISION,
     "system/hubs-guides.css": VOID_PLATES_REVISION,
     "system/print.css": VOID_PLATES_REVISION,
+    "system/publications.css": SITE_IA_REVISION,
+    "system/publications.js": SITE_IA_REVISION,
+    "system/series.css": SITE_IA_REVISION,
     "system/studio.js": STUDIO_PLATE_REVISION,
     "system/studio-plate.css": STUDIO_PLATE_REVISION,
     "system/studio-deck.css": STUDIO_PLATE_REVISION,
@@ -832,7 +837,7 @@ def test_representative_pages_keep_route_art_metadata() -> None:
         "overview.html",
         "catalog.html",
         "research.html",
-        "writing.html",
+        "publications.html",
         "forum.html",
         "gather.html",
     )

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "conferred-existence-essay",
+  "route": "conferred-existence-essay.html",
+  "form": "philosophy essay",
+  "category": "philosophy",
+  "title": "Conferred Existence",
+  "summary": "A premise about conferred existence, artificial minds, authority, standing, and the difference between fact and permission.",
+  "published_at": "2026-06-20",
+  "updated_at": "2026-06-20",
+  "date_source": null,
+  "topics": [
+    "philosophy",
+    "ai",
+    "minds"
+  ],
+  "ai_assistance": "AI-assisted research substrate, disclosed in the essay"
+}

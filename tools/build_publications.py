@@ -19,7 +19,24 @@ from xml.sax.saxutils import escape as xml_escape
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools import publication_article
+from tools.publication_article import (
+    _render_figure_metadata,
+    _render_table,
+    _source_publication_label,
+    render_article,
+)
+from tools.publication_hub import newest_first, render_newest, render_sections
 from tools.publication_listings import listing_sha256, load_listing
+from tools.publication_sections import (
+    SECTIONS_PATH,
+    check_coverage,
+    docnav,
+    load_sections,
+    load_series,
+    membership,
+)
+from tools.publication_series import render_series_page
 from tools.publication_model import (
     PublicationError,
     canonical_json_bytes,
@@ -32,26 +49,9 @@ from tools.publication_model import (
 ROOT = Path(__file__).resolve().parents[1]
 SITE_URL = "https://harperz9.github.io/"
 ASSET_REVISION = "20260925-void-plates"
-COVER_ALT_PATH = ROOT / "art" / "aperture" / "covers.json"
-
-
-def _cover_figure(record_id: str) -> str:
-    """The record's aperture cover, when the art family has one, with its shared alt text."""
-    slug = f"cover-{record_id}"
-    if not (ROOT / "art" / "aperture" / f"{slug}-light.svg").is_file() or not COVER_ALT_PATH.is_file():
-        return ""
-    alt = json.loads(COVER_ALT_PATH.read_text(encoding="utf-8"))["alt"].get(slug)
-    if not alt:
-        return ""
-    alt = html.escape(alt, quote=True)
-    return (
-        '<figure class="art art-cover">'
-        f'<img class="art-light" src="art/aperture/{slug}-light.svg" width="1600" height="800" alt="{alt}" loading="lazy" decoding="async">'
-        f'<img class="art-dark" src="art/aperture/{slug}-dark.svg" width="1600" height="800" alt="{alt}" loading="lazy" decoding="async">'
-        "</figure>"
-    )
+assert ASSET_REVISION == publication_article.ASSET_REVISION, "article and figure sheets share one revision"
 PUBLICATIONS_MARKER = "GENERATED EDITORIAL PUBLICATIONS"
-WRITING_MARKER = "GENERATED EDITORIAL ESSAYS"
+NEWEST_MARKER = "GENERATED NEWEST WRITING"
 SITEMAP_MARKER = "GENERATED EDITORIAL ROUTES"
 RESULT_COUNT_PATTERN = re.compile(
     r"(<p[^>]*data-publication-result-count[^>]*>).*?(</p>)", re.DOTALL
@@ -113,62 +113,6 @@ def load_existing_briefings(root: Path) -> list[dict]:
         briefings.append({key: item[key] for key in required})
     return briefings
 
-
-def _table_cell(figure: dict, index: int, value: str) -> str:
-    """One body cell: the row key as a row header, every other cell labelled by its column."""
-    label = html.escape(figure["columns"][index], quote=True)
-    result = ' data-result=""' if figure["columns"][index] == figure.get("resultColumn") else ""
-    tag = 'th scope="row"' if index == 0 else "td"
-    close = "th" if index == 0 else "td"
-    return f'<{tag} data-label="{label}"{result}>{html.escape(value)}</{close}>'
-
-
-def _render_table(figure: dict) -> str:
-    """The figure's data table, marked up so a phone can stack it into labelled records.
-
-    Every cell carries its column as data-label; the table carries data-stack. A table whose
-    row keys are all four characters or fewer (S2, S7) is marked data-key="short", and the
-    column the record names as resultColumn carries data-result.
-    """
-    result_column = figure.get("resultColumn")
-    result_mark = ' data-result=""'
-    headings = "".join(
-        f'<th scope="col"{result_mark if value == result_column else ""}>{html.escape(value)}</th>'
-        for value in figure["columns"]
-    )
-    rows = "".join(
-        "<tr>" + "".join(_table_cell(figure, index, value) for index, value in enumerate(row)) + "</tr>"
-        for row in figure["rows"]
-    )
-    short = all(len(row[0]) <= 4 for row in figure["rows"])
-    key = ' data-key="short"' if short else ""
-    return (
-        '<div class="publication-table-wrap" role="region" tabindex="0" aria-label="Figure data">'
-        f'<table class="publication-figure-table" data-stack{key}>'
-        f"<caption>{html.escape(figure['title'])}. {html.escape(figure['claim'])}</caption>"
-        f"<thead><tr>{headings}</tr></thead><tbody>{rows}</tbody></table></div>"
-    )
-
-
-def _render_figure_metadata(figure: dict) -> str:
-    """The record under the table. What the figure does not prove comes first and is named."""
-    pairs = (
-        ("Scope", figure["scope"]),
-        ("Units", figure["units"]),
-        ("Denominator", figure["denominator"]),
-        ("Date", figure["date"]),
-        ("Transformation", figure["transformation"]),
-        ("Uncertainty", figure["uncertainty"]),
-        ("Limitations", figure["limitations"]),
-    )
-    does_not_prove = html.escape(figure["doesNotProve"])
-    return (
-        '<dl class="publication-evidence">'
-        '<dt data-term="does-not-prove">Does not prove</dt>'
-        f'<dd data-term="does-not-prove">{does_not_prove}</dd>'
-        + "".join(f"<dt>{html.escape(label)}</dt><dd>{html.escape(value)}</dd>" for label, value in pairs)
-        + "</dl>"
-    )
 
 
 def _svg_lines(value: str, width: int) -> list[str]:
@@ -276,12 +220,6 @@ def render_figure_svg(figure: dict) -> str:
 '''
 
 
-def _source_publication_label(source: dict) -> str:
-    published_at = source["published_at"]
-    if published_at is None:
-        return "Publication date unavailable"
-    return f"Published {published_at}"
-
 
 def render_figure_html(figure: dict, sources: list[dict]) -> str:
     cited_sources = [source for source in sources if source["id"] in figure["provenance"]]
@@ -294,125 +232,12 @@ def render_figure_html(figure: dict, sources: list[dict]) -> str:
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(figure["title"])}</title><link rel="stylesheet" href="../system/publication-article.css?v={ASSET_REVISION}"><link rel="stylesheet" href="../system/figure.css?v=20260927-copy-pass"><script type="module" src="../system/theme-entry.js?v=20260907-theme-preferences"></script></head>
-<body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Publications</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
+<body class="figure-document figure-publication-document"><nav class="publication-static-nav" aria-label="Publication"><a href="../publications.html">Writing</a></nav><main class="publication-article publication-figure-page"><h1>{html.escape(figure["title"])}</h1>
 <p class="publication-thesis">{html.escape(figure["claim"])}</p>
 {_render_table(figure)}{_render_figure_metadata(figure)}
 <section aria-label="Figure sources"><h2>Sources</h2><ol>{source_links}</ol></section></main></body></html>
 '''
 
-
-def _render_figure_in_article(figure: dict) -> str:
-    return (
-        f'<section class="publication-figure" id="figure-{html.escape(figure["id"])}">'
-        f'<h2>{html.escape(figure["title"])}</h2>'
-        f'<p>{html.escape(figure["claim"])}</p>'
-        f'<img src="figures/{html.escape(figure["id"])}.svg" alt="{html.escape(figure["alt"], quote=True)}">'
-        f'<p class="publication-figure-limit"><strong>What this cannot show.</strong> {html.escape(figure["doesNotProve"])}</p>'
-        '<details class="publication-figure-detail"><summary>Read the data and method</summary>'
-        + _render_table(figure)
-        + _render_figure_metadata(figure)
-        + f'<p><a href="figures/{html.escape(figure["id"])}.html">Open the figure and its sources</a></p>'
-        + "</details></section>"
-    )
-
-
-def render_article(record: dict, *, review_materials: tuple[str, ...] = ()) -> str:
-    canonical = SITE_URL + record["route"]
-    contents = "".join(
-        f'<li><a href="#{html.escape(section["id"], quote=True)}">{html.escape(section["heading"])}</a></li>'
-        for section in record["sections"]
-    )
-    opening = "".join(
-        f'<p class="publication-opening-{key}"><strong>{label}.</strong> {html.escape(record["opening"][key])}</p>'
-        for key, label in (
-            ("question", "Question"),
-            ("finding", "Finding"),
-            ("evidence", "Evidence"),
-            ("limit", "Limit"),
-        )
-    )
-    sections = "".join(
-        f'<section id="{html.escape(section["id"])}"><h2>{html.escape(section["heading"])}</h2>'
-        + "".join(f"<p>{html.escape(paragraph)}</p>" for paragraph in section["paragraphs"])
-        + "</section>"
-        for section in record["sections"]
-    )
-    figures = "".join(_render_figure_in_article(figure) for figure in record["figures"])
-    sources = "".join(
-        f'<li id="source-{html.escape(source["id"])}"><a href="{html.escape(source["url"], quote=True)}" rel="external noopener">{html.escape(source["title"])}</a>. '
-        f'{html.escape(source["publisher"])}. {html.escape(source["role"])}. {html.escape(_source_publication_label(source))}; observed {html.escape(source["observed_at"])}.</li>'
-        for source in record["sources"]
-    )
-    claim_notes = "".join(
-        f'<li><p><strong>{html.escape(claim["text"])}</strong></p>'
-        f'<p class="publication-meta">{html.escape(claim["id"])} · {html.escape(claim["status"])}</p>'
-        '<p>Sources: '
-        + ", ".join(f'<a href="#source-{html.escape(source_id, quote=True)}">{html.escape(source_id)}</a>' for source_id in claim["source_ids"])
-        + f'</p><dl class="publication-evidence"><dt>Scope</dt><dd>{html.escape(claim["scope"])}</dd>'
-        f'<dt>Uncertainty</dt><dd>{html.escape(claim["uncertainty"])}</dd>'
-        f'<dt>Does not prove</dt><dd>{html.escape(claim["doesNotProve"])}</dd></dl></li>'
-        for claim in record["claims"]
-    )
-    corrections = (
-        "<ul>" + "".join(f"<li>{html.escape(value)}</li>" for value in record["corrections"]) + "</ul>"
-        if record["corrections"]
-        else "<p>No corrections recorded.</p>"
-    )
-    review_links = [
-        f'<a href="publications/data/records/{html.escape(record["id"], quote=True)}.json">Publication record</a>'
-    ]
-    for name, label in (("essay.md", "Manuscript"), ("source-map.json", "Source map")):
-        if name in review_materials:
-            review_links.append(
-                f'<a href="writing/{html.escape(record["id"], quote=True)}/{name}">{label}</a>'
-            )
-    review_navigation = '<nav aria-label="Review material">' + ' · '.join(review_links) + '</nav>'
-    return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{html.escape(record["title"]) } · Zain Dana Harper</title>
-<meta name="description" content="{html.escape(record["summary"], quote=True)}"><link rel="canonical" href="{canonical}">
-<meta property="og:type" content="article"><meta property="og:title" content="{html.escape(record["title"], quote=True)}">
-<meta property="og:description" content="{html.escape(record["summary"], quote=True)}"><meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
-<meta property="og:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
-<meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
-<link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"><script type="module" src="system/theme-entry.js?v=20260907-theme-preferences"></script></head>
-<body><a class="skip-link" href="#main">Skip to content</a><nav class="publication-static-nav" aria-label="Publication"><a class="publication-home" href="index.html">Zain Dana Harper</a><a href="research.html">Research</a><a href="publications.html">Publications</a><a href="writing.html">Writing</a><a href="cv.html">About</a></nav>
-<main id="main" class="publication-article"><article><header><p class="publication-kicker">{html.escape(record["form"])} · {html.escape(record["category"].replace("-", " "))}</p>
-<h1>{html.escape(record["title"])}</h1><p class="publication-thesis">{html.escape(record["thesis"])}</p>
-<p class="publication-meta">By {html.escape(record["author"])} · Published {html.escape(record["published_at"])} · Updated {html.escape(record["updated_at"])}</p></header>
-{_cover_figure(record["id"])}
-<details class="publication-contents"><summary>In this article</summary><nav aria-label="Article sections"><ol>{contents}<li><a href="#sources">Sources</a></li></ol></nav></details>
-<details class="publication-opening"><summary>Research summary and limits</summary>{opening}</details>
-{sections}{figures}
-<section id="sources"><h2>Sources</h2><ol>{sources}</ol></section>
-<details class="publication-claim-notes" id="claim-ledger"><summary>Claim notes and limitations</summary><ol class="publication-claims">{claim_notes}</ol></details>
-<section id="corrections"><h2>Corrections</h2>{corrections}</section>
-<footer><h2>Authorship and process</h2><p>{html.escape(record["ai_assistance"])}</p>{review_navigation}</footer>
-</article></main></body></html>
-'''
-
-
-def _render_publication_entry(record: dict) -> str:
-    words = [record["category"], record["form"], *record.get("topics", [])]
-    topics = html.escape(" ".join(words).replace("-", " "))
-    return (
-        f'<article data-publication-entry data-topics="{topics}">'
-        f'<p class="publication-meta">{html.escape(record["form"].title())} · {html.escape(record["updated_at"])}</p>'
-        f'<h3><a href="{html.escape(record["route"])}">{html.escape(record["title"])}</a></h3>'
-        f'<p>{html.escape(record["summary"])}</p></article>'
-    )
-
-
-def _render_writing_entry(record: dict) -> str:
-    return (
-        f'<article class="sheet essay generated-editorial" id="{html.escape(record["id"])}">'
-        f'<p class="role">{html.escape(record["form"])} · {html.escape(record["category"].replace("-", " "))}</p>'
-        f'<h2><a href="{html.escape(record["route"])}">{html.escape(record["title"])}</a></h2>'
-        f'<p>{html.escape(record["summary"])}</p></article>'
-    )
 
 
 def _feed_item(record: dict) -> dict:
@@ -458,6 +283,17 @@ def _validate_record_set(records: list[dict]) -> None:
         raise PublicationError("duplicate publication idempotency key")
 
 
+def _series_pages(root: Path, sections: dict, pieces: list[dict]) -> dict[str, str]:
+    """Each series named by a section member gets its hub page, built from its definition."""
+    ids = sorted({member["series"]["id"] for _section, member in membership(sections).values() if member.get("series")})
+    by_id = {piece["id"]: piece for piece in pieces}
+    pages = {}
+    for series_id in ids:
+        series = load_series(root, series_id)
+        pages[series["route"]] = render_series_page(series, by_id)
+    return pages
+
+
 def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None = None) -> dict[str, bytes]:
     _validate_record_set(records)
     listings = list(listings or [])
@@ -469,24 +305,23 @@ def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None
         if listing["route"].lstrip("/") in record_routes:
             raise PublicationError(f"listing {listing['id']} shares a route with a full record")
     publications_source = (root / "publications.html").read_text(encoding="utf-8")
-    writing_source = (root / "writing.html").read_text(encoding="utf-8")
     sitemap_source = (root / "sitemap.xml").read_text(encoding="utf-8")
     existing_briefings = load_existing_briefings(root)
+    sections = load_sections(root)
+    check_coverage(sections, records + listings)
+    members = membership(sections)
 
     records = sorted(records, key=lambda record: (record["updated_at"], record["route"]), reverse=True)
-
-    def newest_first(items: list[dict]) -> list[dict]:
-        return sorted(items, key=lambda item: (item["updated_at"], item["route"]), reverse=True)
-
-    publication_items = newest_first(records + [x for x in listings if "publications" in x["hubs"]])
-    writing_items = newest_first(records + [x for x in listings if "writing" in x["hubs"]])
-    publication_entries = "\n".join(_render_publication_entry(item) for item in publication_items)
-    writing_entries = "\n".join(_render_writing_entry(item) for item in writing_items)
+    pieces = records + listings
+    series_pages = _series_pages(root, sections, pieces)
     route_entries = "\n".join(
-        f"  <url><loc>{SITE_URL}{html.escape(record['route'])}</loc></url>" for record in records
+        f"  <url><loc>{SITE_URL}{html.escape(route)}</loc></url>"
+        for route in [record["route"] for record in records] + sorted(series_pages)
     )
-    publications_source = replace_marker_block(publications_source, PUBLICATIONS_MARKER, publication_entries)
-    writing_source = replace_marker_block(writing_source, WRITING_MARKER, writing_entries)
+    publications_source = replace_marker_block(
+        publications_source, PUBLICATIONS_MARKER, render_sections(root, sections, pieces)
+    )
+    publications_source = replace_marker_block(publications_source, NEWEST_MARKER, render_newest(sections, pieces))
     sitemap_source = replace_marker_block(sitemap_source, SITEMAP_MARKER, route_entries)
     count = publications_source.count("data-publication-entry")
     publications_source, count_replacements = RESULT_COUNT_PATTERN.subn(
@@ -499,20 +334,27 @@ def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None
 
     outputs: dict[str, bytes] = {
         "publications.html": _text_bytes(publications_source),
-        "writing.html": _text_bytes(writing_source),
         "sitemap.xml": _text_bytes(sitemap_source),
+        **{route: _text_bytes(page) for route, page in series_pages.items()},
     }
     index_records: list[dict] = []
     for record in records:
+        section, member = members[record["id"]]
         review_materials = tuple(
             name for name in ("essay.md", "source-map.json")
             if (root / "writing" / record["id"] / name).is_file()
         )
-        outputs[record["route"]] = _text_bytes(render_article(record, review_materials=review_materials))
+        placement = {"docnav": docnav(sections, record["id"]), "kind": member["kind"], "topic": member.get("topic")}
+        outputs[record["route"]] = _text_bytes(
+            render_article(record, review_materials=review_materials, placement=placement)
+        )
         index_records.append(
             {
                 "id": record["id"],
                 "route": record["route"],
+                "title": record["title"],
+                "collection": section["id"],
+                "kind": member["kind"],
                 "category": record["category"],
                 "form": record["form"],
                 "published_at": record["published_at"],
@@ -527,21 +369,34 @@ def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None
             outputs[prefix + ".json"] = _json_bytes(figure)
             outputs[prefix + ".html"] = _text_bytes(render_figure_html(figure, record["sources"]))
 
-    index = {"schema_version": 1, "records": sorted(index_records, key=lambda item: item["route"])}
+    index = {"schema_version": 2, "records": sorted(index_records, key=lambda item: item["route"])}
     if listings:
         index["listings"] = sorted(
             (
                 {
                     "id": listing["id"],
                     "route": listing["route"],
+                    "title": listing["title"],
+                    "collection": members[listing["id"]][0]["id"],
+                    "kind": members[listing["id"]][1]["kind"],
                     "published_at": listing["published_at"],
                     "updated_at": listing["updated_at"],
-                    "hubs": listing["hubs"],
                 }
                 for listing in listings
             ),
             key=lambda item: item["route"],
         )
+    index["newest"] = [
+        {
+            "id": item["id"],
+            "route": item["route"],
+            "title": members[item["id"]][1].get("label") or item["title"],
+            "kind": members[item["id"]][1]["kind"],
+            "published_at": item["published_at"],
+            "summary": item["summary"],
+        }
+        for item in newest_first(pieces)[:3]
+    ]
     outputs["publications/data/index.json"] = _json_bytes(index)
     feed_items = existing_briefings + [_feed_item(record) for record in records]
     known_urls = {item["url"] for item in feed_items}

@@ -24,12 +24,11 @@ def visible_text(value: str) -> str:
     return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", value)).split())
 
 
-def test_listing_validates_and_joins_both_hubs() -> None:
-    listing, stored = load_listing(ROOT / "publications/data/listings/who-pays-the-referees.json", ROOT)
+def test_listing_validates_and_joins_the_hub_and_the_series() -> None:
+    listing, _stored = load_listing(ROOT / "publications/data/listings/who-pays-the-referees.json", ROOT)
     assert listing["route"] == "who-pays-the-referees.html"
-    assert stored["hubs"] == ["publications", "writing"]
     assert listing["published_at"] == listing["updated_at"] == "2026-10-01"
-    for hub in ("publications.html", "writing.html"):
+    for hub in ("publications.html", "who-knew-first-series.html"):
         assert 'href="who-pays-the-referees.html"' in (ROOT / hub).read_text(encoding="utf-8")
     feed = json.loads((ROOT / "feed.json").read_text(encoding="utf-8"))
     assert "https://harperz9.github.io/who-pays-the-referees.html" in [item["url"] for item in feed["items"]]
@@ -42,7 +41,7 @@ def test_series_panel_names_planned_pieces_without_linking_them() -> None:
     for title in PLANNED:
         assert title in panel
     assert panel.count("Planned.") == 4
-    assert re.findall(r'href="([^"]+)"', panel) == ["who-knew-first.html"]
+    assert re.findall(r'href="([^"]+)"', panel) == ["who-knew-first.html", "who-knew-first-series.html"]
     for slug in PLANNED_SLUGS:
         assert slug not in page
 

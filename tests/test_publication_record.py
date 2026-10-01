@@ -107,7 +107,11 @@ def test_every_record_is_readable_without_leaving_the_site() -> None:
     src = read("publications.html")
     for href in re.findall(r'href="(papers/[^"]+)"', src):
         assert (ROOT / href).is_file(), f"publications.html offers a missing PDF: {href}"
-    assert len(re.findall(r'href="papers/', src)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
+    record = src[src.index('id="research-records"'):src.index('id="more-papers"')]
+    assert len(re.findall(r'href="papers/', record)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
+    # 1 October 2026: the Writing hub's research section also lists every PDF in papers/.
+    for pdf in (ROOT / "papers").glob("*.pdf"):
+        assert f'href="papers/{pdf.name}"' in src, f"publications.html does not list {pdf.name}"
     for page in ("conferred-existence.html", "witnessing-spine.html"):
         assert (ROOT / page).is_file(), f"{page} was never rendered"
         assert f'href="{page}"' in src, f"publications.html does not link {page}"

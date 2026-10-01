@@ -97,7 +97,12 @@ test('everyday menu offers pillars rather than the whole directory', () => {
   renderNav({ location: { pathname: '/catalog.html' }, getElementById() { return mount; } });
   const menu = mount.innerHTML.split('<div class="sn-more-list"')[1];
   const hrefs = [...menu.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
-  assert.ok(hrefs.length <= 8, `menu exposes ${hrefs.length} destinations`);
+  // Pillars, the five Writing sections (added 1 October 2026), Site index and GitHub.
+  assert.ok(hrefs.length <= 14, `menu exposes ${hrefs.length} destinations`);
+  assert.deepEqual(hrefs.filter(href => href.startsWith('publications.html#')), [
+    'publications.html#series', 'publications.html#essays', 'publications.html#atlas',
+    'publications.html#briefings', 'publications.html#research',
+  ]);
   assert.equal(new Set(hrefs).size, hrefs.length);
   assert.equal(PRIMARY_ROUTES[0].href, 'flywheel.html');
   assert.ok(hrefs.includes('site-index.html'));
@@ -179,23 +184,31 @@ test('Accountable Surface route search text carries the current release state', 
   assert.ok(indexMatches('latest GitHub release v0.2.0').includes('accountable-surface.html'));
 });
 
-test('research lane owns writing, publication archives, and current essays', () => {
+test('the Writing pillar owns the hub and every essay; Research keeps its notes', () => {
+  // 1 October 2026: reading has one home, publications.html, labeled Writing.
   for (const href of [
-    'research.html',
-    'writing.html',
     'publications.html',
     'a-witness-should-not-become-a-ruler.html',
     'ltj-bukem-the-man-behind-the-atmosphere.html',
+    'the-number-has-a-vintage.html',
+    'verified-is-not-trustworthy.html',
+    'frontier-safety.html',
   ]) {
     const found = routeByHref(href);
     assert.ok(found, `${href} is missing from the route registry`);
-    assert.equal(found.family, 'Research', `${href} should be grouped under Research`);
+    assert.equal(found.family, 'Writing', `${href} should be grouped under Writing`);
   }
+  for (const href of ['research.html', 'research-conferred-existence.html']) {
+    assert.equal(routeByHref(href).family, 'Research', `${href} should stay under Research`);
+  }
+  assert.equal(routeByHref('writing.html'), null, 'the retired writing index is a redirect, not a route');
 
   const primaryHrefs = PRIMARY_ROUTES.map(route => route.href);
   assert.ok(primaryHrefs.includes('research.html'));
-  assert.ok(!primaryHrefs.includes('writing.html'));
-  assert.ok(!primaryHrefs.includes('publications.html'));
+  assert.ok(primaryHrefs.includes('publications.html'));
+  assert.equal(PRIMARY_ROUTES.find(route => route.href === 'publications.html').label, 'Writing');
+  const writing = ROUTE_REGISTRY.families.find(family => family.label === 'Writing');
+  assert.equal(writing.hubHref, 'publications.html');
 });
 
 test('research hub visibly funnels projects, essays, and evidence paths', () => {
@@ -205,8 +218,8 @@ test('research hub visibly funnels projects, essays, and evidence paths', () => 
 
   for (const copy of [
     'Research projects',
-    'Essays and writing',
-    'Publications and evidence',
+    'Essays and letters',
+    'All writing',
     'A witness should not become a ruler',
     'LTJ Bukem',
   ]) {
@@ -214,7 +227,7 @@ test('research hub visibly funnels projects, essays, and evidence paths', () => 
   }
 
   for (const href of [
-    'writing.html',
+    'publications.html#essays',
     'publications.html',
     'a-witness-should-not-become-a-ruler.html',
     'ltj-bukem-the-man-behind-the-atmosphere.html',
@@ -223,20 +236,17 @@ test('research hub visibly funnels projects, essays, and evidence paths', () => 
   }
 });
 
-test('writing and publication archives expose their Research lane parent', () => {
-  for (const [page, current] of [
-    ['writing.html', 'Essays and writing'],
-    ['publications.html', 'Publications and evidence'],
-  ]) {
-    const source = readFileSync(new URL(`../${page}`, import.meta.url), 'utf8');
-    const text = htmlText(source);
-    assert.match(source, /<nav\b[^>]*aria-label="Research lane"/);
-    assert.match(source, /<a href="research\.html">Research<\/a>/);
-    assert.match(text, new RegExp(current.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-  }
+test('the Writing hub carries its own path and the old writing index redirects to it', () => {
+  const source = readFileSync(new URL('../publications.html', import.meta.url), 'utf8');
+  assert.match(source, /<nav\b[^>]*class="research-lane-crumb masthead-path"[^>]*aria-label="Breadcrumb"/);
+  assert.match(htmlText(source), /Home \/ Writing/);
+  const stub = readFileSync(new URL('../writing.html', import.meta.url), 'utf8');
+  assert.match(stub, /<meta name="robots" content="noindex,follow">/);
+  assert.match(stub, /<link rel="canonical" href="https:\/\/harperz9\.github\.io\/publications\.html">/);
+  assert.match(stub, /<meta http-equiv="refresh" content="0; url=publications\.html">/);
 });
 
-test('route renderer classifies sitemap articles from writing sources under Research', () => {
+test('route renderer classifies sitemap articles from the Writing hub under Writing', () => {
   const root = mkdtempSync(join(tmpdir(), 'pillar-writing-route-renderer-'));
   try {
     mkdirSync(join(root, 'scripts'), { recursive: true });
@@ -289,17 +299,16 @@ test('route renderer classifies sitemap articles from writing sources under Rese
     }));
     writeFixture(root, 'sitemap.xml', '<urlset><url><loc>https://harperz9.github.io/new-source-backed-essay.html</loc></url></urlset>');
     writeFixture(root, 'research.html', '<!doctype html><title>Research</title><h1>Research</h1>');
-    writeFixture(root, 'writing.html', '<!doctype html><article class="generated-editorial"><p class="role">Evidence essay · 2026</p><h2><a href="new-source-backed-essay.html">New Source Backed Essay</a></h2><p>Source-linked essay summary.</p></article>');
-    writeFixture(root, 'publications.html', '<!doctype html><article><p class="publication-meta">Evidence essay · 2026</p><h3><a href="new-source-backed-essay.html">New Source Backed Essay</a></h3><p>Publication archive summary.</p></article>');
+    writeFixture(root, 'publications.html', '<!doctype html><!-- BEGIN GENERATED EDITORIAL PUBLICATIONS --><article data-publication-entry data-collection="essays"><p class="publication-meta">Essay · 1 October 2026</p><h3><a href="new-source-backed-essay.html">New Source Backed Essay</a></h3><p>Source-linked essay summary.</p></article><!-- END GENERATED EDITORIAL PUBLICATIONS -->');
     writeFixture(root, 'new-source-backed-essay.html', '<!doctype html><title>New Source Backed Essay</title><h1>New Source Backed Essay</h1>');
     writeFixture(root, 'raw.html', '<!doctype html><title>RAW</title><h1>RAW</h1>');
 
     execFileSync(process.execPath, [join(root, 'scripts', 'render-route-registry.mjs')], { cwd: root, stdio: 'pipe' });
 
     const registry = readGeneratedRegistry(root);
-    const researchFamily = registry.families.find(family => family.label === 'Research');
+    const writingFamily = registry.families.find(family => family.label === 'Writing');
     const systemsFamily = registry.families.find(family => family.label === 'Systems');
-    assert.ok(researchFamily.routes.some(route => route.href === 'new-source-backed-essay.html'));
+    assert.ok(writingFamily.routes.some(route => route.href === 'new-source-backed-essay.html'));
     assert.ok(!systemsFamily.routes.some(route => route.href === 'new-source-backed-essay.html'));
     const renderedIndex = readFileSync(join(root, 'site-index.html'), 'utf8');
     assert.match(renderedIndex, /Source-linked essay summary/);
@@ -401,14 +410,19 @@ test('Who Knew First is a primary pillar with a family of its own', () => {
   // 2026-09-25 human-first notebook: the investigation joins the primary
   // navigation after Research. Its family holds only its own page, so its
   // pillar lights there and nowhere else, and Flywheel lights only on its own page.
+  // 1 October 2026: Writing joins the pillars between Research and Who Knew First.
   assert.deepEqual(PRIMARY_ROUTES.map(route => route.href), [
-    'flywheel.html', 'research.html', 'who-knew-first.html', 'studio.html', 'fonts.html', 'hire.html',
+    'flywheel.html', 'research.html', 'publications.html', 'who-knew-first.html', 'studio.html', 'fonts.html', 'hire.html',
   ]);
   const found = routeByHref('who-knew-first.html');
   assert.equal(found.family, 'Who Knew First');
   assert.equal(found.route.primary, true);
   const families = ROUTE_REGISTRY.families.map(family => family.label);
-  assert.equal(families.indexOf('Who Knew First'), families.indexOf('Research') + 1);
+  assert.equal(families.indexOf('Writing'), families.indexOf('Research') + 1);
+  assert.equal(families.indexOf('Who Knew First'), families.indexOf('Writing') + 1);
+  for (const href of ['who-knew-first-series.html', 'who-pays-the-referees.html']) {
+    assert.equal(routeByHref(href).family, 'Who Knew First', `${href} lights the Who Knew First pillar`);
+  }
   const flywheel = routeByHref('flywheel.html');
   assert.equal(flywheel.route.lightsFamily, false);
   const mirror = readGeneratedRegistry(PROJECT_ROOT, join('home', 'src', 'site-routes.ts'));

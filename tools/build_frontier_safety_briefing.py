@@ -548,7 +548,9 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 """
 
 
-def render_html(edition: dict, *, archive: bool, records: tuple[str, ...] = ()) -> str:
+def render_html(
+    edition: dict, *, archive: bool, records: tuple[str, ...] = (), editions: tuple[str, ...] = ()
+) -> str:
     """Render an edition while preserving every published archive byte for byte.
 
     The inaugural 2026-08-24 archive shipped with the document shell, and the
@@ -556,7 +558,9 @@ def render_html(edition: dict, *, archive: bool, records: tuple[str, ...] = ()) 
     shell. Their HTML is an immutable publication artifact, so each continues
     through the renderer it shipped with. The live page and every later archive
     use the plate shell: a poster title, the edition as a dated plate, the
-    briefing cover as its art plate and numbered hairline sections.
+    briefing cover as its art plate and numbered hairline sections. The live page also
+    lists every dated edition (editions, newest first); an archive lists none, so its
+    bytes never change when a later edition ships.
     """
 
     date = edition["edition_date"]
@@ -578,6 +582,7 @@ def render_html(edition: dict, *, archive: bool, records: tuple[str, ...] = ()) 
             nav=nav_version, reveal=REVEAL_ASSET_VERSION, site_css=FRONTIER_CSS_ASSET_VERSION
         ),
         records=() if archive else records,
+        editions=() if archive else editions,
     )
 
 
@@ -911,7 +916,12 @@ def build(edition_path: Path, output_root: Path = ROOT) -> dict:
     outputs = {
         fs_root / "data" / "current.json": _json_bytes(live),
         output_root / "frontier-safety.html": _text_bytes(
-            render_html(live, archive=False, records=tuple(path.stem for path in record_pages))
+            render_html(
+                live,
+                archive=False,
+                records=tuple(path.stem for path in record_pages),
+                editions=tuple(sorted({item["date"] for item in _load_history(history_path)["editions"]} | {date}, reverse=True)),
+            )
         ),
         **{path: _text_bytes(page) for path, page in record_pages.items()},
         **dated_outputs,

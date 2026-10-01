@@ -9,9 +9,6 @@
   "published_at": "2026-08-24",
   "updated_at": "2026-08-24",
   "date_source": "frontier-safety/data/current.json#edition_date",
-  "hubs": [
-    "publications"
-  ],
   "topics": [
     "briefing",
     "safety"

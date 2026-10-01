@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "witnessing-spine",
+  "route": "witnessing-spine.html",
+  "form": "archived research corpus",
+  "category": "verification",
+  "title": "The Witnessing Spine",
+  "summary": "One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.",
+  "published_at": "2026-06-20",
+  "updated_at": "2026-06-20",
+  "date_source": null,
+  "topics": [
+    "verification",
+    "research",
+    "philosophy"
+  ],
+  "ai_assistance": "AI-assisted research substrate, disclosed on the page"
+}

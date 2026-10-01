@@ -23,6 +23,12 @@ def test_every_listing_validates_and_points_at_a_real_page() -> None:
         "who-knew-first", "checking-the-machines", "frontier-safety",
         "openai-hugging-face-incident", "a-witness-should-not-become-a-ruler",
         "who-pays-the-referees",
+        # 1 October 2026: the hand-written rows on publications.html and writing.html
+        # became listings, so the Writing hub is generated from one source.
+        "models-propose-oracles-dispose", "no-receipt-no-accept", "pick-the-lock-for-everyone",
+        "the-summary-is-not-the-record", "verified-is-not-trustworthy", "conferred-existence-essay",
+        "frontier-safety-openai-hugging-face-incident", "witnessing-spine", "conferred-existence",
+        "why", "current-story",
     }
     for path in LISTINGS:
         listing, stored = load_listing(path, ROOT)
@@ -37,22 +43,24 @@ def test_briefing_listing_reads_its_date_from_the_current_edition() -> None:
     assert listing["updated_at"] == current["edition_date"]
 
 
-def test_listings_join_the_hubs_they_name_and_stay_out_of_the_sitemap_block() -> None:
+def test_every_listing_joins_the_writing_hub_and_stays_out_of_the_sitemap_block() -> None:
     publications = _generated((ROOT / "publications.html").read_text(encoding="utf-8"), "GENERATED EDITORIAL PUBLICATIONS")
-    writing = _generated((ROOT / "writing.html").read_text(encoding="utf-8"), "GENERATED EDITORIAL ESSAYS")
     sitemap = _generated((ROOT / "sitemap.xml").read_text(encoding="utf-8"), "GENERATED EDITORIAL ROUTES")
     for path in LISTINGS:
         listing, _stored = load_listing(path, ROOT)
         href = f'href="{listing["route"]}"'
-        assert (href in publications) == ("publications" in listing["hubs"])
-        assert (href in writing) == ("writing" in listing["hubs"])
+        assert publications.count(href) == 1, listing["id"]
         assert listing["route"].lstrip("/") not in sitemap
 
 
-def test_publications_index_leads_with_the_newest_work() -> None:
+def test_each_writing_section_leads_with_its_newest_work() -> None:
     publications = _generated((ROOT / "publications.html").read_text(encoding="utf-8"), "GENERATED EDITORIAL PUBLICATIONS")
-    dates = re.findall(r'class="publication-meta">[^<]*· (\d{4}-\d{2}-\d{2})</p>', publications)
-    assert dates and dates == sorted(dates, reverse=True)
+    sections = re.findall(r'<section class="mv publication-section" id="([a-z]+)".*?</section>', publications, re.S)
+    assert sections == ["series", "essays", "atlas", "briefings", "research"]
+    for block in re.findall(r'<div class="publication-ledger" data-publication-ledger>(.*?)</div>', publications, re.S):
+        # The first date on a row is its first publication; a revision date follows it.
+        dates = re.findall(r'class="publication-meta">[^<]*· <time datetime="(\d{4}-\d{2}-\d{2})">', block)
+        assert dates and dates == sorted(dates, reverse=True)
     assert publications.index('href="who-knew-first.html"') < publications.index('href="checking-the-machines.html"')
 
 
@@ -76,7 +84,7 @@ def _write(tmp_path: Path, **changes) -> Path:
 @pytest.mark.parametrize("changes, message", [
     ({"summary": "An em dash — here."}, "em dash"),
     ({"route": "no-such-page.html"}, "does not exist"),
-    ({"hubs": ["elsewhere"]}, "hubs"),
+    ({"hubs": ["publications"]}, "exactly the listing fields"),
     ({"updated_at": "2026-09-01"}, "precedes"),
     ({"extra": 1}, "exactly the listing fields"),
 ])

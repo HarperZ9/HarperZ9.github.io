@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "pick-the-lock-for-everyone",
+  "route": "pick-the-lock-for-everyone.html",
+  "form": "personal essay",
+  "category": "creative-work",
+  "title": "Pick the Lock for Everyone",
+  "summary": "Shame, creative labor, mutualistic tools, source-bounded generative art, and becoming answerable.",
+  "published_at": "2026-07-22",
+  "updated_at": "2026-07-24",
+  "date_source": null,
+  "topics": [
+    "psychology",
+    "art",
+    "creativity",
+    "labor"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, publicly disclosed"
+}

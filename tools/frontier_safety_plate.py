@@ -237,7 +237,28 @@ def _render_hero(edition: dict, paths: dict[str, str], digest: str) -> str:
 </div>"""
 
 
-def _render_main(edition: dict, paths: dict[str, str], controls_caption: str, records: tuple[str, ...]) -> str:
+def _render_editions(root: str, editions: tuple[str, ...], records: tuple[str, ...]) -> str:
+    """The live page's list of every dated edition, so none sits more than a click away."""
+    if not editions:
+        return ""
+    rows = "".join(
+        f'<li><a href="{root}frontier-safety/archive/{_e(d)}.html">Edition of {human_date(d)}</a></li>' for d in editions
+    ) + "".join(
+        f'<li><a href="{root}frontier-safety/conclusions/{_e(d)}.html">Conclusions on the edition of {human_date(d)}</a></li>'
+        for d in records
+    )
+    return f"""
+  <section class="mv wide-section editions" id="editions">
+    <header><h2>Every dated edition</h2></header>
+    <p class="body-text">Each edition stays at its own address and does not change after it ships.</p>
+    <ul class="edition-list">{rows}</ul>
+  </section>
+"""
+
+
+def _render_main(
+    edition: dict, paths: dict[str, str], controls_caption: str, records: tuple[str, ...], editions: tuple[str, ...] = ()
+) -> str:
     rail, lanes = _render_lanes(edition["lanes"])
     kept = "".join(f' · <a href="{paths["root"]}frontier-safety/conclusions/{d}.html">Conclusions on the edition of {human_date(d)}</a>' for d in records)
     questions = "".join(f"<li>{_e(q)}</li>" for q in edition["open_questions"])
@@ -276,7 +297,7 @@ def _render_main(edition: dict, paths: dict[str, str], controls_caption: str, re
       <div><h3>Does not prove</h3><p>This edition does not prove source completeness, model intent, incident prevalence, control effectiveness, or independent endorsement. It records the strongest current public claims within the monitored set and names their limits.</p></div>
     </div>
   </section>
-</main>"""
+{_render_editions(paths['root'], editions, records)}</main>"""
 
 
 def _render_head(date: str, paths: dict[str, str], assets: ShellAssets) -> str:
@@ -309,6 +330,17 @@ def _render_head(date: str, paths: dict[str, str], assets: ShellAssets) -> str:
 </head>"""
 
 
+def _docnav(archive: bool) -> str:
+    """The live page's back-link line. Archives are frozen and carry none."""
+    if archive:
+        return ""
+    return (
+        '<nav class="docnav" aria-label="Where this briefing sits"><span class="where">Writing · Frontier Safety</span>'
+        '<span class="switch"><a href="publications.html">All writing</a><a href="publications.html#briefings">More briefings</a>'
+        '<a href="#editions">All editions</a></span></nav>\n'
+    )
+
+
 def render_plate_html(
     edition: dict,
     *,
@@ -317,6 +349,7 @@ def render_plate_html(
     controls_caption: str,
     assets: ShellAssets,
     records: tuple[str, ...] = (),
+    editions: tuple[str, ...] = (),
 ) -> str:
     """Render one edition in the plate shell. The caller has validated it. records lists
     the dates of dated conclusions pages the live page links to; archives pass none."""
@@ -332,10 +365,10 @@ def render_plate_html(
 <div id="site-nav" class="site-nav"></div>
 <noscript><nav class="site-nav"><a href="{root}index.html">Home</a> <a href="{root}research.html">Research</a></nav></noscript>
 <script type="module" src="{root}system/nav.js?v={assets.nav}"></script>
-
+{_docnav(archive)}
 {_render_hero(edition, paths, digest)}
 
-{_render_main(edition, paths, controls_caption, records)}
+{_render_main(edition, paths, controls_caption, records, editions)}
 
 <footer class="footer-seal" role="contentinfo">
   <p class="seal">Compiled by Zain Dana Harper · Zentropy Labs · <a href="{root}research.html">Research index</a> · <a href="{paths['data']}">JSON edition</a> · <a href="{root}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>

@@ -35,17 +35,22 @@ def fixture_site(tmp_path: Path) -> Path:
     records.mkdir(parents=True)
     (records / "example-work.json").write_bytes(FIXTURE.read_bytes())
     (root / "publications.html").write_text(
+        '<!-- BEGIN GENERATED NEWEST WRITING -->\n'
+        '<!-- END GENERATED NEWEST WRITING -->\n'
         '<div data-publication-ledger>\n'
         '<!-- BEGIN GENERATED EDITORIAL PUBLICATIONS -->\n'
         '<!-- END GENERATED EDITORIAL PUBLICATIONS -->\n'
         '</div><p data-publication-result-count>0 published items shown.</p>\n',
         encoding="utf-8",
     )
-    (root / "writing.html").write_text(
-        '<main><!-- BEGIN GENERATED EDITORIAL ESSAYS -->\n'
-        '<!-- END GENERATED EDITORIAL ESSAYS --></main>\n',
-        encoding="utf-8",
-    )
+    # Every piece sits in exactly one Writing section (publications/data/sections.json).
+    sections = json.loads((ROOT / "publications" / "data" / "sections.json").read_text(encoding="utf-8"))
+    for section in sections["sections"]:
+        section["members"] = []
+        for key in ("notes", "papers", "editions"):
+            section.pop(key, None)
+    sections["sections"][2]["members"] = [{"id": "example-work", "kind": "Atlas essay", "topic": "examples"}]
+    (root / "publications" / "data" / "sections.json").write_text(json.dumps(sections, indent=2), encoding="utf-8")
     (root / "sitemap.xml").write_text(
         '<urlset><!-- BEGIN GENERATED EDITORIAL ROUTES -->\n'
         '<!-- END GENERATED EDITORIAL ROUTES --></urlset>\n',
@@ -86,9 +91,13 @@ def snapshot(root: Path) -> dict[str, bytes]:
     }
 
 
+NAV_SCRIPT = '<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>'
+
+
 def assert_only_theme_entry_script(page: str) -> None:
+    """The theme entry, plus the shared site menu since 1 October 2026; nothing else."""
     script_tags = re.findall(r"<script\b[^>]*>.*?</script>", page, flags=re.DOTALL)
-    assert script_tags == [ARTICLE_THEME_ENTRY_SCRIPT]
+    assert sorted(script_tags) == sorted([ARTICLE_THEME_ENTRY_SCRIPT, NAV_SCRIPT])
 
 
 def test_standalone_figure_links_its_actual_source(tmp_path: Path) -> None:
@@ -254,13 +263,12 @@ def test_feed_preserves_canonical_briefing_and_adds_editorial_record(tmp_path: P
         BRIEFING_URL,
     ]
     assert "example-work.html" in (root / "publications.html").read_text(encoding="utf-8")
-    assert "example-work.html" in (root / "writing.html").read_text(encoding="utf-8")
     assert "example-work.html" in (root / "sitemap.xml").read_text(encoding="utf-8")
 
 
 def test_missing_marker_fails_before_writes(tmp_path: Path) -> None:
     root = fixture_site(tmp_path)
-    (root / "writing.html").write_text("<main></main>\n", encoding="utf-8")
+    (root / "publications.html").write_text("<main></main>\n", encoding="utf-8")
     before = snapshot(root)
 
     with pytest.raises(PublicationError, match="marker"):
@@ -344,8 +352,11 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
         in article
     )
     assert article.count('rel="stylesheet"') == 1
-    assert '<nav class="publication-static-nav"' in article
-    assert '<noscript><nav' not in article
+    # 1 October 2026: the shared site menu replaces the page's own bar; the small bar
+    # stays as the no-script fallback.
+    assert '<div id="site-nav" class="site-nav"></div>' in article
+    assert '<noscript><nav class="publication-static-nav"' in article
+    assert article.count('<nav class="publication-static-nav"') == 1
 
 
 def test_article_preserves_opening_evidence_in_a_closed_native_disclosure() -> None:
