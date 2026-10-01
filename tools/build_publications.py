@@ -37,6 +37,8 @@ from tools.publication_sections import (
     membership,
 )
 from tools.publication_series import render_series_page
+from tools.series_table import load_context as load_series_table_context
+from tools.series_table import render_table as render_series_table
 from tools.publication_model import (
     PublicationError,
     canonical_json_bytes,
@@ -290,7 +292,9 @@ def _series_pages(root: Path, sections: dict, pieces: list[dict]) -> dict[str, s
     pages = {}
     for series_id in ids:
         series = load_series(root, series_id)
-        pages[series["route"]] = render_series_page(series, by_id)
+        _series, _items, minutes = load_series_table_context(root, series_id)
+        table = render_series_table(series, by_id, minutes, series["route"])
+        pages[series["route"]] = render_series_page(series, by_id, table)
     return pages
 
 

@@ -79,6 +79,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.css": SITE_IA_REVISION,
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": SITE_IA_REVISION,
+    "system/series-table.css": "20261001-series-table",
     "system/studio.js": STUDIO_PLATE_REVISION,
     "system/studio-plate.css": STUDIO_PLATE_REVISION,
     "system/studio-deck.css": STUDIO_PLATE_REVISION,
