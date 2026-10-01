@@ -43,7 +43,14 @@ def _part(index: int, part: dict, items_by_id: dict[str, dict]) -> str:
     )
 
 
-def render_series_page(series: dict, items_by_id: dict[str, dict]) -> str:
+def _table_block(table: str) -> str:
+    if not table:
+        return ""
+    return f"<!-- BEGIN GENERATED SERIES TABLE -->\n{table}\n<!-- END GENERATED SERIES TABLE -->\n"
+
+
+def render_series_page(series: dict, items_by_id: dict[str, dict], table: str = "") -> str:
+    """The hub page. ``table`` is the shared Continue-the-series table (tools/series_table.py)."""
     canonical = SITE_URL + series["route"]
     published = sum(1 for part in series["parts"] if part["id"])
     planned = len(series["parts"])
@@ -74,6 +81,7 @@ def render_series_page(series: dict, items_by_id: dict[str, dict]) -> str:
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <link rel="stylesheet" href="system/series.css?v=20261001-site-ia">
+<link rel="stylesheet" href="system/series-table.css?v=20261001-series-table">
 </head>
 <body class="doc series-hub" data-route-art="off">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -88,7 +96,7 @@ def render_series_page(series: dict, items_by_id: dict[str, dict]) -> str:
 <h1>{title}</h1>
 <p class="lead">{_intro(series)}</p>
 </header>
-<ol class="series-parts">{parts}</ol>
+{_table_block(table)}<ol class="series-parts">{parts}</ol>
 <p class="series-closing">{_e(series["closing"])}</p>
 <p class="series-related">Related: {related}</p>
 </article>

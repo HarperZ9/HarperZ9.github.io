@@ -1,0 +1,107 @@
+/* Continue the series: one table, rendered by tools/series_table.py on every series page.
+
+   The figure is an aperture. Each blade is one piece of the series, drawn as a fan of fine
+   lines: ink once it is published, a faint broken fan while it is planned, the one hot mark
+   for the page you are on. Hovering or focusing a row lights its blade; hovering a blade
+   lights its row. The table works the same with no stylesheet and no pointer. */
+
+.series-continue{width:min(60rem,calc(100vw - 32px));margin:2.8rem 0 2.4rem 50%;transform:translateX(-50%);box-sizing:border-box;padding-top:1.5rem;border-top:1px solid var(--rule-strong,rgba(0,0,0,.42))}
+.sc-head{display:flex;align-items:center;gap:clamp(.9rem,2.4vw,1.6rem);margin:0 0 1.1rem}
+.sc-head h2{margin:0 0 .35rem;font-size:clamp(1.35rem,1.1rem + .8vw,1.8rem);line-height:1.12}
+.sc-lede{margin:0;font-size:.95rem;line-height:1.55;max-width:60ch;color:var(--ink-soft,var(--ink))}
+.sc-aperture{flex:none;width:clamp(84px,10vw,124px);height:auto;overflow:visible}
+.sc-halo{fill:none;stroke:var(--rule-strong,rgba(0,0,0,.42));stroke-width:.35}
+.sc-core{fill:var(--ink)}
+.sc-blade{fill:none;stroke-width:.62;stroke-linecap:round;pointer-events:none;
+  transition:opacity .28s ease,stroke-width .28s ease}
+.sc-blade-published{stroke:var(--ink);opacity:.86}
+.sc-blade-current{stroke:var(--hot,var(--drift,#8a3b12));opacity:1;stroke-width:.7}
+.sc-blade-planned{stroke:var(--ink-muted,#3a3d42);opacity:.42;stroke-dasharray:1.1 2.1}
+.sc-hit{fill:transparent;stroke:none;cursor:default}
+
+.sc-wrap{max-width:100%}
+.sc-table{width:100%;border-collapse:collapse;font-size:.92rem;line-height:1.45}
+.sc-caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.sc-table thead th{font-family:var(--font-mono,"Conso",ui-monospace,monospace);font-size:.7rem;font-weight:400;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted,#3a3d42);text-align:left;
+  padding:0 .7rem .55rem 0;border-bottom:1px solid var(--rule-strong,rgba(0,0,0,.42))}
+.sc-table td,.sc-table tbody th{vertical-align:top;text-align:left;padding:.85rem .7rem .85rem 0;
+  border-bottom:1px solid var(--rule,rgba(0,0,0,.22))}
+.sc-row{transition:background-color .28s ease}
+.sc-title{font-weight:600;width:24%}
+.sc-title a{text-decoration-thickness:1px;text-underline-offset:.2em}
+.sc-question{width:40%}
+.sc-status,.sc-time,.sc-part span{font-family:var(--font-mono,"Conso",ui-monospace,monospace);font-size:.76rem;
+  color:var(--ink-muted,#3a3d42)}
+.sc-status time{white-space:nowrap}
+.sc-time{white-space:nowrap;text-align:right!important;padding-right:0!important}
+.sc-table thead th:last-child{text-align:right;padding-right:0;white-space:nowrap}
+.sc-table thead th:first-child{padding-left:.55rem}
+.sc-none{opacity:.7}
+.sc-here{display:inline-block;margin-top:.25rem;color:var(--hot,var(--drift,#8a3b12));letter-spacing:.04em}
+.sc-current .sc-title{color:var(--ink)}
+.sc-current td:first-child{box-shadow:inset 2px 0 0 var(--hot,var(--drift,#8a3b12))}
+
+/* The part cell carries a small orb and the thread that joins the series, row to row. */
+.sc-table .sc-part{position:relative;white-space:nowrap;width:6rem;padding-left:.55rem}
+.sc-part span{display:inline-block;vertical-align:top;margin:.4rem 0 0 .45rem}
+.sc-orb{display:inline-block;vertical-align:top;overflow:visible}
+.sc-orb g{transform-origin:0 0;transition:transform .45s ease}
+.sc-ring{fill:none;stroke:var(--ink);stroke-width:.55}
+.sc-orb-lit .sc-ring:nth-child(1){opacity:.95}
+.sc-orb-lit .sc-ring:nth-child(2){opacity:.7}
+.sc-orb-lit .sc-ring:nth-child(3){opacity:.5;stroke-dasharray:3.4 1.6}
+.sc-orb-lit .sc-ring:nth-child(4){opacity:.32;stroke-dasharray:1 2.2}
+.sc-ring-open{stroke:var(--ink-muted,#3a3d42);opacity:.8;stroke-dasharray:1.2 2.4}
+.sc-current .sc-ring{stroke:var(--hot,var(--drift,#8a3b12))}
+.sc-current .sc-core{fill:var(--hot,var(--drift,#8a3b12))}
+.sc-row .sc-part::before,.sc-row .sc-part::after{content:"";position:absolute;left:calc(.55rem + 14px);
+  border-left:1px solid var(--rule-strong,rgba(0,0,0,.42))}
+.sc-row .sc-part::before{top:0;height:.85rem}
+.sc-row .sc-part::after{top:calc(.85rem + 28px);bottom:0}
+.sc-row:first-child .sc-part::before,.sc-row:last-child .sc-part::after{display:none}
+.sc-planned .sc-part::before,.sc-planned .sc-part::after{border-left-style:dashed;opacity:.6}
+
+/* Linked hover: a row lights its blade, a blade lights its row, the others recede. */
+.series-continue:has(.sc-row:hover,.sc-row:focus-within,.sc-hit:hover) .sc-blade{opacity:.16}
+.sc-row:hover,.sc-row:focus-within{background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.sc-row:hover .sc-orb g,.sc-row:focus-within .sc-orb g{transform:rotate(60deg) scale(1.1)}
+.series-continue:has(.sc-row[data-part="0"]:is(:hover,:focus-within),.sc-hit[data-part="0"]:hover) .sc-blade[data-part="0"],
+.series-continue:has(.sc-row[data-part="1"]:is(:hover,:focus-within),.sc-hit[data-part="1"]:hover) .sc-blade[data-part="1"],
+.series-continue:has(.sc-row[data-part="2"]:is(:hover,:focus-within),.sc-hit[data-part="2"]:hover) .sc-blade[data-part="2"],
+.series-continue:has(.sc-row[data-part="3"]:is(:hover,:focus-within),.sc-hit[data-part="3"]:hover) .sc-blade[data-part="3"],
+.series-continue:has(.sc-row[data-part="4"]:is(:hover,:focus-within),.sc-hit[data-part="4"]:hover) .sc-blade[data-part="4"],
+.series-continue:has(.sc-row[data-part="5"]:is(:hover,:focus-within),.sc-hit[data-part="5"]:hover) .sc-blade[data-part="5"]{
+  opacity:1;stroke-width:1.05}
+.series-continue:has(.sc-hit[data-part="0"]:hover) .sc-row[data-part="0"],
+.series-continue:has(.sc-hit[data-part="1"]:hover) .sc-row[data-part="1"],
+.series-continue:has(.sc-hit[data-part="2"]:hover) .sc-row[data-part="2"],
+.series-continue:has(.sc-hit[data-part="3"]:hover) .sc-row[data-part="3"],
+.series-continue:has(.sc-hit[data-part="4"]:hover) .sc-row[data-part="4"],
+.series-continue:has(.sc-hit[data-part="5"]:hover) .sc-row[data-part="5"]{
+  background:color-mix(in srgb,var(--ink) 6%,transparent)}
+
+/* Narrow screens: each row becomes a card, orb and thread on the left, nothing scrolls sideways. */
+@media (max-width:44rem){
+  .sc-table,.sc-table tbody,.sc-table tr,.sc-table td,.sc-table tbody th{display:block}
+  .sc-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .sc-row{display:grid!important;grid-template-columns:3.4rem minmax(0,1fr);column-gap:.6rem;
+    border-bottom:1px solid var(--rule,rgba(0,0,0,.22));padding:0}
+  .sc-table td,.sc-table tbody th{border:0;padding:0 0 .35rem;max-width:none;min-width:0;width:auto!important}
+  .sc-part{grid-row:1 / span 4;width:auto;white-space:normal;padding:.85rem 0 .85rem .55rem!important}
+  .sc-part span{display:block;margin:.3rem 0 0;font-size:.66rem;line-height:1.2}
+  .sc-head{align-items:flex-start}
+  .sc-aperture{width:72px;margin-top:.3rem}
+  .sc-title{padding-top:.85rem!important}
+  .sc-status,.sc-time{display:inline-block!important;text-align:left!important}
+  .sc-time{padding-bottom:.85rem!important}
+  .sc-time::before{content:"Reading time · "}
+  .sc-current td:first-child{box-shadow:none}
+  .sc-current{box-shadow:inset 2px 0 0 var(--hot,var(--drift,#8a3b12))}
+  .sc-row .sc-part::after{top:calc(.85rem + 28px + 1.5rem)}
+  .sc-row .sc-part::before{height:.85rem}
+}
+@media (prefers-reduced-motion:reduce){.sc-blade,.sc-row,.sc-orb g{transition:none}.sc-row:hover .sc-orb g,.sc-row:focus-within .sc-orb g{transform:none}}
+@media (forced-colors:active){.sc-blade,.sc-ring{stroke:CanvasText}.sc-core{fill:CanvasText}.sc-current td:first-child,.sc-current{box-shadow:inset 3px 0 0 Highlight}}
+@media print{.series-continue{width:auto;margin-left:0;transform:none}.sc-aperture{display:none}.sc-row .sc-part::before,.sc-row .sc-part::after{display:none}}
+.series-hub .series-continue{border-top:0;padding-top:0;margin-top:1.6rem}

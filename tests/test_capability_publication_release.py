@@ -527,7 +527,7 @@ RELEASE_PATHS = (
 # work), the independence policy and the public income ledger join the Work routes and the
 # sitemap; the route registry, site index, publication build receipt and home bundle
 # (index-BkvbD78Z.js) are regenerated. index-CyztdbmV.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "818bea43ad268cac3393f36daeec482eff3620c9b9a500daf97537bab03402a1"
+REVIEWED_RELEASE_SHA256 = "c834e6680c3ff29c54c7b3956e3fb9e01986074a66d177a23831684c0aef2dec"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
