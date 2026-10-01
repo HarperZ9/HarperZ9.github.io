@@ -450,7 +450,10 @@ RELEASE_PATHS = (
 # October 1, 2026: Who Pays the Referees, the first series piece after Who Knew
 # First, joins the publication index, feeds, sitemap, route registry, site index
 # and home bundle with its listing and share card.
-REVIEWED_RELEASE_SHA256 = "180cd58ed016cd5f1b2aba5dbd897e6facf6fec4e68db84d9706a4b4e66cc6c7"
+# October 1, 2026 review: four sourcing fixes in who-pays-the-referees.html (Alphabet's
+# stake wording, "at least four labs", a dated status line, one scoped series item); no
+# other release path changed.
+REVIEWED_RELEASE_SHA256 = "87b8da5b288f066ace573595938baf2f5c5e54f322477c08c61638b005eba62f"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
