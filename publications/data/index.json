@@ -160,6 +160,16 @@
         "publications",
         "writing"
       ]
+    },
+    {
+      "id": "who-pays-the-referees",
+      "route": "who-pays-the-referees.html",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01",
+      "hubs": [
+        "publications",
+        "writing"
+      ]
     }
   ]
 }
