@@ -268,6 +268,15 @@
       "updated_at": "2026-07-08"
     },
     {
+      "id": "the-terms-for-telling",
+      "route": "the-terms-for-telling.html",
+      "title": "The Terms for Telling",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "updated_at": "2026-10-01"
+    },
+    {
       "id": "verified-is-not-trustworthy",
       "route": "verified-is-not-trustworthy.html",
       "title": "Verified Is Not Trustworthy",
@@ -323,20 +332,20 @@
       "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first."
     },
     {
+      "id": "the-terms-for-telling",
+      "route": "the-terms-for-telling.html",
+      "title": "The Terms for Telling",
+      "kind": "Series piece",
+      "published_at": "2026-10-01",
+      "summary": "The party that holds a record also writes the terms for the people inside who could tell. In the cases checked, telling was protected where a forum outside the employer reached the merits, or public pressure forced a reversal."
+    },
+    {
       "id": "the-number-has-a-vintage",
       "route": "the-number-has-a-vintage.html",
       "title": "The Number Has a Vintage",
       "kind": "Atlas essay",
       "published_at": "2026-10-01",
       "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses."
-    },
-    {
-      "id": "what-the-formula-counts",
-      "route": "what-the-formula-counts.html",
-      "title": "What the Formula Counts",
-      "kind": "Atlas essay",
-      "published_at": "2026-09-28",
-      "summary": "A readability score measures selected text features. Comprehension, audience fit and accessibility require evidence of their own."
     }
   ]
 }

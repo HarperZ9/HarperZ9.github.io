@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-Dmke1bnx.js",
+    "assets/index-BIA-0d5A.js",
     "assets/index-DbZyfUEO.css",
     "who-knew-first-series.html",
     "verified-is-not-trustworthy.html",
@@ -43,6 +43,10 @@ RELEASE_PATHS = (
     "who-pays-the-referees.html",
     "publications/data/listings/who-pays-the-referees.json",
     "img/og/who-pays-the-referees.png",
+    "the-terms-for-telling.html",
+    "publications/data/listings/the-terms-for-telling.json",
+    "img/og/the-terms-for-telling.png",
+    "assets/index-Dmke1bnx.js",
     "the-number-has-a-vintage.html",
     "publications/data/records/the-number-has-a-vintage.json",
     "img/og/the-number-has-a-vintage.png",
@@ -507,7 +511,11 @@ RELEASE_PATHS = (
 # edition list, the briefings index, sitemap, feeds, build receipt, route registry, site
 # index and home bundle (index-Dmke1bnx.js, index-DbZyfUEO.css) are regenerated.
 # October 1, 2026: Who Pays the Referees gains four dated corrections; the page is rehashed.
-REVIEWED_RELEASE_SHA256 = "10a1e73519753222d4611182c0ba7b819398c71fc32a7e8214499564492ee409"
+# October 1, 2026: The Terms for Telling, series piece 2, is published with its listing and
+# card; the series hub, the Writing hub, the series panel on Who Pays the Referees, feeds,
+# sitemap, build receipt, route registry, site index and home bundle (index-BIA-0d5A.js) are
+# regenerated.
+REVIEWED_RELEASE_SHA256 = "991b29c1d5dc22aaf1b64bfec1cc1c7bf5904460a8c5fe4ef8aef9cf101f7c38"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -674,7 +682,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # Knew First follow-up base, so the bundle rebuilt from the registry is
     # index-D7LI6_j0.js with the same sheet. index-DkLmGDFh.js stays as retained
     # history; index-BLnRqjW-.js, built on the old base, was never published.
-    current_js = "index-Dmke1bnx.js"
+    # October 1, 2026: The Terms for Telling joins the Who Knew First routes, so the bundle
+    # rebuilt from the registry is index-BIA-0d5A.js with the same sheet. index-Dmke1bnx.js
+    # stays as retained history.
+    current_js = "index-BIA-0d5A.js"
+    previous_writing_hub_js = "index-Dmke1bnx.js"
+    assert previous_writing_hub_js not in source
+    assert (ROOT / "assets" / previous_writing_hub_js).is_file()
+    assert f"assets/{previous_writing_hub_js}" in RELEASE_PATHS
     previous_vintage_js = "index-D7LI6_j0.js"
     assert previous_vintage_js not in source
     assert (ROOT / "assets" / previous_vintage_js).is_file()

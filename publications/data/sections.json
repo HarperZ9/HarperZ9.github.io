@@ -9,6 +9,7 @@
       "more": "More investigations",
       "explainer": "Long investigations from public records, and the series that follows Who Knew First.",
       "members": [
+        {"id": "the-terms-for-telling", "kind": "Series piece", "topic": "whistleblowers and disclosure", "series": {"id": "who-knew-first", "part": 2}},
         {"id": "who-pays-the-referees", "kind": "Series piece", "topic": "AI evaluation", "series": {"id": "who-knew-first", "part": 1}},
         {"id": "who-knew-first", "kind": "Investigation", "topic": "AI incidents", "series": {"id": "who-knew-first", "part": 0}},
         {"id": "openai-hugging-face-incident", "kind": "Dossier", "topic": "AI incidents", "label": "The OpenAI and Hugging Face incident"},

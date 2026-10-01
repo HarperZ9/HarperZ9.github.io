@@ -674,6 +674,13 @@ window.CARD_DATA = {
     "word": "Referees",
     "headline": "Who Pays the Referees"
   },
+  "the-terms-for-telling": {
+    "publication": true,
+    "editorial": true,
+    "role": "EVIDENCE ESSAY",
+    "word": "Telling",
+    "headline": "The Terms for Telling"
+  },
   "the-number-has-a-vintage": {
     "publication": true,
     "editorial": true,
