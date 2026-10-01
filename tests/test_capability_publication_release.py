@@ -434,7 +434,9 @@ RELEASE_PATHS = (
 # and governance scope; issuer URL preserved, no study-hours or accreditation claim.
 # September 30, 2026: reviewed Google multi-agent skill badge and Cisco learning
 # credential; model-policy generation failure and knowledge-exam scope preserved.
-REVIEWED_RELEASE_SHA256 = "8661a6593debd8b59f6db6bb3342c78a5b141d91c60cd00d8d0d833717fc3d10"
+# September 30, 2026: reviewed Azure DevOps Applied Skills credential and
+# Google model-evaluation course badge; assessment and runtime limits retained.
+REVIEWED_RELEASE_SHA256 = "bb1b56fcf809800867c9e0cb9e56f6ac8fa42d87135ae558ad646df396af4da6"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

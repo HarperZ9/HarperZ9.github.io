@@ -764,6 +764,51 @@
         "Security-tool and code-analysis knowledge"
       ],
       "status": "Issuer certificate and public Credly learning badge verified September 30, 2026; direct knowledge-exam completion, not professional certification or practical pentest experience."
+    },
+    {
+      "id": "ms-devops-security",
+      "provider": "Microsoft",
+      "kind": "Applied Skills credential",
+      "title": "Implement security through a pipeline using Azure DevOps",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "score_percent": 95,
+      "credential_id": "B6385A86C4A25301",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops",
+      "assessment_result": "95%; Applied Skills credential earned",
+      "verification_status": "Active; online verifiable",
+      "assessed_skills": [
+        "Restricted agent pools and YAML pool bindings",
+        "Secure-file authorization and approval checks",
+        "Managed identities and federated service connections",
+        "Scoped Key Vault permissions",
+        "Repository and pipeline separation",
+        "Parameterized deployment templates"
+      ],
+      "runtime_limit": "The assessment accepted lab configuration. Service-connection verification and sample-pipeline validation did not establish a successful deployment; no production deployment is claimed.",
+      "status": "Issued Microsoft Applied Skills credential and 95% result verified September 30, 2026; learner Zain Dana Harper, Active and online verifiable."
+    },
+    {
+      "id": "google-mlops-model-evaluation",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Course-completion badge",
+      "title": "Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation",
+      "official_level": "Intermediate",
+      "earned": "2026-09-30",
+      "assessment_result": "Two required knowledge quizzes passed on first attempts: 100% and 85%",
+      "assessment_scores_percent": [
+        100,
+        85
+      ],
+      "url": "https://www.skills.google/course_templates/1080",
+      "url_role": "Official course description",
+      "completion_evidence": "Issuer completion page confirmed the course badge. Required knowledge quizzes completed; no optional lesson completion, practical lab, study-hour, or production-implementation claim.",
+      "assessed_skills": [
+        "Predictive and generative model-evaluation concepts",
+        "Evaluation metrics and methodology selection",
+        "Generative AI evaluation considerations"
+      ],
+      "status": "Issued course-completion badge confirmed September 30, 2026; knowledge-quiz completion, not an assessed practical skill badge or professional certification."
     }
   ],
   "limits": [

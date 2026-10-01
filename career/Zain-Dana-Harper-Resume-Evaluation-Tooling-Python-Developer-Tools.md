@@ -54,6 +54,6 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 ## Credentials, Training, and Education
 
-Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security. Google skill badges: advanced small-language-model coding; multi-agent systems. Cisco Ethical Hacker course certificate. Coursework: LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.
+Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Google skill badges: advanced small-language-model coding; multi-agent systems. Cisco Ethical Hacker course certificate. Coursework: Google MLOps model evaluation; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

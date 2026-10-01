@@ -49,7 +49,9 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
 def test_evaluation_metrics_are_coverage_not_financial_or_performance_claims():
     text = (ROOT / 'career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt').read_text()
     assert all(value in text for value in ('324', '337', '5,058'))
-    assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', text, re.I)
+    # Issuer assessment scores are distinct from unsubstantiated performance/ROI claims.
+    performance_text = text.replace('95% assessment', 'credential assessment')
+    assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', performance_text, re.I)
     assert all(name in text for name in ('Flywheel', 'Articulate', 'Accountable Surface', 'BuildLang', 'Phantom'))
 
 
@@ -59,9 +61,9 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     applied = [c for c in credentials if c['kind'] == 'Applied Skills credential']
     courses = [c for c in credentials if c['kind'] == 'Course-completion certificate']
     advanced = [c for c in credentials if c['kind'].startswith('Advanced ') and c['provider'] == 'Microsoft Learn']
-    assert len(applied) == 3
+    assert len(applied) == 4
     assert {c['credential_id'] for c in applied} == {
-        'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2'
+        'ED8852810C3B3FBC', '3D93C65204CB43EE', '4117A3B4196233D2', 'B6385A86C4A25301'
     }
     assert len(courses) == 17
     assert len(advanced) == 2
@@ -158,6 +160,19 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert cisco['badge_id'] == 'be9be111-860f-4c06-a416-71aa0cc48e34'
     assert 'optional labs, capstone, and lesson materials were not completed' in cisco['completion_evidence']
     assert 'Cisco Networking Academy: Ethical Hacker' in cv and '100% knowledge exam' in cv
+    devops = next(c for c in credentials if c['id'] == 'ms-devops-security')
+    assert devops['kind'] == 'Applied Skills credential' and devops['official_level'] == 'Intermediate'
+    assert devops['score_percent'] == 95 and devops['earned'] == '2026-09-30'
+    assert devops['credential_id'] == 'B6385A86C4A25301'
+    assert devops['title'] in cv and 'Intermediate; 95% assessment' in cv
+    assert 'did not establish a successful deployment' in devops['runtime_limit']
+    evaluation_course = next(c for c in credentials if c['id'] == 'google-mlops-model-evaluation')
+    assert evaluation_course['kind'] == 'Course-completion badge'
+    assert evaluation_course['official_level'] == 'Intermediate'
+    assert evaluation_course['assessment_scores_percent'] == [100, 85]
+    assert 'score_percent' not in evaluation_course
+    assert evaluation_course['url_role'] == 'Official course description'
+    assert evaluation_course['title'] in cv
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

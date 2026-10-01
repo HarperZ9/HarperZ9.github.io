@@ -202,13 +202,15 @@ September 2026 completions. Verification: harperz9.github.io/career/source-ledge
 
 Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
 
-Microsoft Applied Skills | Earned September 29, 2026
+Microsoft Applied Skills | Earned September 2026
 
 - Secure AI solutions in the cloud
 
 - Get started with identities and access using Microsoft Entra
 
 - Secure storage for Azure Files and Azure Blob Storage
+
+- Implement security through a pipeline using Azure DevOps | Intermediate; 95% assessment
 
 Advanced Microsoft Learn Coursework
 
@@ -260,6 +262,8 @@ Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2
 
 Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.
 
+Google Skills: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation | Intermediate course-completion badge, 2026-09-30. Predictive/generative evaluation methods.
+
 Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026
 
 UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%. Assessed human rights, fairness, risk controls, incident reporting, and sustainability.
@@ -268,6 +272,4 @@ BlueDot Impact: AGI Strategy | Course completed in 2026
 
 Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
 
-Standards and Frameworks: Training and Research
-
-Assessed knowledge: Qualys compliance, cloud/container security, vulnerability prioritization, EDR investigation/response, and script approvals; Claude API grading, tool use, workflows and verification hooks. Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Editions: harperz9.github.io/career/standards-reference.md.
+Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Scope: harperz9.github.io/career/standards-reference.md.

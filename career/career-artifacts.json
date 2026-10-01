@@ -1,44 +1,44 @@
 {
   "artifacts": [
     {
-      "byte_length": 4052,
-      "extraction_sha256": "cf269eb42dd16dbe840f8fc927f8683eba8b00f29898e939cdd91e405f59fded",
+      "byte_length": 4090,
+      "extraction_sha256": "fae6b18afb27921d32df8069d6b417a2ca534066085ab73e4c8186173cb21c56",
       "format": "pdf",
       "lane_id": "support-operations-qa",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
-      "sha256": "aab310f397fc96c944f655e31feab634e8c6d435aacea613e628776f928c9368"
+      "sha256": "7de231c7455e3b147aa3db8204dcb3ddf2eae190e9c7ae05dbead8ca3b19809b"
     },
     {
-      "byte_length": 38691,
-      "extraction_sha256": "fb895a9d2030ad78d2683d68de108625da1cefeef5721387fabe5f90bc7edf40",
+      "byte_length": 38717,
+      "extraction_sha256": "d9c119b636be7d2bc9d8925f28645792581ebcffe336c7fb976b19d8029b8024",
       "format": "docx",
       "lane_id": "support-operations-qa",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx",
-      "sha256": "711658dc0701566b85609d9097e0069c761946517dfe012256d6d1143da81699"
+      "sha256": "0ccbdc91efc10636c45a1e6ffa932f291913dff4fa47a96501d6fe6451384eb9"
     },
     {
-      "byte_length": 4167,
-      "extraction_sha256": "acab0368301ef895f92f8c5ed6c7dea90fcf0634712753e71a6663a698603ae9",
+      "byte_length": 4214,
+      "extraction_sha256": "8f9194ed283ecc7a814c9856a5d16a8454b1f460c0ceb9f5fdfad2e31f87e399",
       "format": "pdf",
       "lane_id": "evaluation-python-tools",
       "mime_type": "application/pdf",
       "page_count": 1,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
-      "sha256": "0147b2b6b7d5c3def45a23dfbd6687baf9d14d75d268eb9b5190c6474e852550"
+      "sha256": "80e43564650a5c64d68d287a9db8b075182173963855771ff4228c04f35253cb"
     },
     {
-      "byte_length": 38777,
-      "extraction_sha256": "f9cf37098cd925cb44cd90d19b9a9b4013ed2c089dfe9dd11a0a3dc57c26b9c8",
+      "byte_length": 38814,
+      "extraction_sha256": "3c37a098aefeaa8d925b3262aaaedd2a3080388a0b984b7a3158ad5e36c404ff",
       "format": "docx",
       "lane_id": "evaluation-python-tools",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx",
-      "sha256": "77234db0b014c8db288d1e97b541b1e15ff9b5dcb3f1c88ebd7fd506e7af4732"
+      "sha256": "815c098dd16f74918a85b0bd30de578c6c84e845c702560366df2061b4779d6b"
     },
     {
       "byte_length": 3415,
@@ -102,23 +102,23 @@
     },
     {
       "byte_length": 16763,
-      "extraction_sha256": "1ee1d443d0fb42cfc59265050ef6700dfffb3ba949095900606bdb992089c952",
+      "extraction_sha256": "aa9c4be9711c4451ed2dcfa2acb3e63aed154568dae5ceb658a7d0ca1fcb6572",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 5,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "f643613d4d21a574474b2bd8f2803d63f20471a6687f0c297c5baa91c9d978e4"
+      "sha256": "1516113e0cc2de4166a00e9fa7f96c8d7def6afcb58ac869bfa5e41490006308"
     },
     {
-      "byte_length": 45334,
-      "extraction_sha256": "9d6da2a2f64aabcca0949d6a40d1f938567fbbff421fe016a0facaf049590d00",
+      "byte_length": 45338,
+      "extraction_sha256": "99398d3943103607659690f3cfb9cb3dc794dbfdc247b996a1e28dccef767345",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "589d366e510bc9df32f07b93e20b4edab455a7d1df29c46323053072b0b4c56d"
+      "sha256": "4fbc5fef4f5826f4389c19931092d36f8a8f80b7a561cc9721c8085b691b7374"
     },
     {
       "byte_length": 4387,
@@ -144,24 +144,24 @@
   "authority_sha256": "8c5a030161fc2de8873dcc870e1315e0d6dc9c728f74727c683787bd5e152d34",
   "current_html": [
     {
-      "byte_length": 15009,
-      "extraction_sha256": "f52e76e5b8cfb8898be5f5aae0e7861102c7bffca4bea44d33c6fd9b1eb355ba",
+      "byte_length": 15397,
+      "extraction_sha256": "2cafe0b1e9576f313c5e3767e33d41a6bc6812153b5ea394928d174bde4ce85d",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "hire.html",
-      "sha256": "51b54e4d0003ceee6373ba7f5813c993aeda0f669525f53d8b7e83e63aa67ecb"
+      "sha256": "976b0c0ea01c7d303693de9600c0cb8d6a487b1a1abe3f9b72532e37f6b11a5d"
     },
     {
-      "byte_length": 14897,
-      "extraction_sha256": "81d25746fe16c27653c6f515a9c4bbc9abb8d06f77edc73aa4b1d9a8d56f75c7",
+      "byte_length": 15285,
+      "extraction_sha256": "3f3845102dcda715249a808ee2f4eea56d958f9bd28866d97058d09264fe4e1b",
       "format": "html",
       "lane_id": null,
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume.html",
-      "sha256": "ffe7df5f6303d15a6064ed341f9cf6c0a4d51a6f971a300ea53cb615f7e22d0b"
+      "sha256": "bb210b930bbc351c4d664711b96a6b82902b8a0a99b8e4b84e8866a3e66c891b"
     },
     {
       "byte_length": 7091,
@@ -184,14 +184,14 @@
       "sha256": "fac734e4990cae7cb97be6e39957274cd92292ef3bfc60d73134cb69ee79f509"
     },
     {
-      "byte_length": 27743,
-      "extraction_sha256": "9d6da2a2f64aabcca0949d6a40d1f938567fbbff421fe016a0facaf049590d00",
+      "byte_length": 27802,
+      "extraction_sha256": "99398d3943103607659690f3cfb9cb3dc794dbfdc247b996a1e28dccef767345",
       "format": "html",
       "lane_id": "page:cv",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "cv.html",
-      "sha256": "7687609409704257c3e9423c1f6a4da72c41da50f5090d45d7e9f9a0cd0e5b69"
+      "sha256": "0fb0df5075591179f136bf8ca29e39c9c15467bf1c77b67386dcafb2b03eb02b"
     },
     {
       "byte_length": 4650,
@@ -204,24 +204,24 @@
       "sha256": "7f1b8cdb40afeae772927b3c753ac3587f1743a7b374700c7abe7a495c2469e6"
     },
     {
-      "byte_length": 9118,
-      "extraction_sha256": "fb895a9d2030ad78d2683d68de108625da1cefeef5721387fabe5f90bc7edf40",
+      "byte_length": 9167,
+      "extraction_sha256": "d9c119b636be7d2bc9d8925f28645792581ebcffe336c7fb976b19d8029b8024",
       "format": "html",
       "lane_id": "support-operations-qa",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-support-operations.html",
-      "sha256": "97c8bd58ddd741ed83777347e94921cc879503d4fe26e5bc2c0a0d67a73b80a3"
+      "sha256": "61418f7db23bf646b504e92e5059df69525abc604bf27b6748207427fd723758"
     },
     {
-      "byte_length": 9327,
-      "extraction_sha256": "f9cf37098cd925cb44cd90d19b9a9b4013ed2c089dfe9dd11a0a3dc57c26b9c8",
+      "byte_length": 9407,
+      "extraction_sha256": "3c37a098aefeaa8d925b3262aaaedd2a3080388a0b984b7a3158ad5e36c404ff",
       "format": "html",
       "lane_id": "evaluation-python-tools",
       "mime_type": "text/html; charset=utf-8",
       "page_count": null,
       "path": "resume-evaluation-tooling.html",
-      "sha256": "b2c6f131da9eb2b36a3c815746ae60e96d5970a22cf11b732cbcfe54fcae2f15"
+      "sha256": "81a04ecd1de6b51a6cb7d026d2f1f08d931039bffcdfae750c524b578d64899d"
     },
     {
       "byte_length": 8132,

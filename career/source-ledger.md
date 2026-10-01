@@ -589,3 +589,23 @@ Cisco Networking Academy issued the Ethical Hacker course completion certificate
 https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url
 
 Assessed knowledge covers penetration-test scoping/reporting, vulnerability assessment/mitigation, web/network/cloud/mobile/IoT security concepts, and security-tool/code analysis. The record is direct knowledge-exam completion: optional labs, capstone, and lesson materials were not completed, and catalog hours are not claimed as study time. It does not confer CEH, a Cisco Professional certification, or the separate Cisco Certificate in Ethical Hacking that requires a CTF. No production penetration-testing experience is claimed.
+
+## Microsoft Azure DevOps pipeline security
+
+### ms-devops-security
+
+Microsoft Applied Skills: Implement security through a pipeline using Azure DevOps. Intermediate credential earned September 30, 2026 with a 95% assessment result. The issuer record names Zain Dana Harper and reports Active / Online Verifiable. Credential identifier: B6385A86C4A25301.
+
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops
+
+Assessed configuration work covers restricted agent pools and YAML bindings, secure-file authorization and approval checks, managed identities and federated service connections, scoped Key Vault permissions, repository/pipeline separation, and parameterized deployment templates. Service-connection verification and sample-pipeline validation did not establish a successful deployment. The grade records the provider's assessment outcome; no production deployment or Expert certification is claimed.
+
+## Google model-evaluation coursework
+
+### google-mlops-model-evaluation
+
+Google Skills / Google Cloud issued Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation as an Intermediate course-completion badge September 30, 2026. Two required knowledge quizzes passed on their first attempts with 100% and 85%, respectively. No aggregate grade is inferred.
+
+Official course description: https://www.skills.google/course_templates/1080
+
+The assessed knowledge concerns predictive/generative model-evaluation concepts, metrics and methodology selection, and generative AI evaluation considerations. This course-completion badge does not establish a practical lab result, professional certification, study hours, optional lesson completion, or production implementation.
