@@ -7,6 +7,7 @@ import json
 import re
 
 from tools import plugin_support_markdown as md
+from tools.plugin_icons import icon_files
 from tools.plugin_support_sources import (
     ToolSource, lead_paragraph, runtime_requirement, sentences_matching, try_it,
 )
@@ -26,6 +27,10 @@ STYLE = """<style>
 .plugin-table th,.plugin-table td{text-align:left;padding:.6em .8em;border-bottom:1px solid rgba(128,128,128,.3);vertical-align:top}
 .plugin-table th[scope=row],.plugin-table td a{white-space:nowrap}
 .table-wrap{overflow-x:auto;max-width:72rem;margin:1.6rem auto 0}
+.plugin-icon{display:block;width:40px;height:40px}
+.icon-plate{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;margin-top:1.2rem}
+.icon-plate img{display:block;width:128px;height:128px}
+.icon-plate .glyph{width:48px;height:48px;padding:8px;background:var(--ground-paper)}
 </style>"""
 
 
@@ -178,6 +183,17 @@ def help_body(tool: ToolSource) -> str:
     return "\n  ".join(body)
 
 
+def icon_body(tool: ToolSource) -> str:
+    slug, label = tool.slug, esc(tool.label)
+    pngs = " &middot; ".join(f'<a href="../icons/png/{slug}-{n}.png">{n}</a>' for n in (48, 64, 128, 256, 512, 1024))
+    return (f'<div class="icon-plate"><img src="../icons/png/{slug}-256.png" width="128" height="128" '
+            f'alt="{label} plugin icon"><img class="glyph" src="../icons/{slug}-glyph.svg" width="48" '
+            f'height="48" alt="{label} composer glyph"></div>\n'
+            f'  <p class="body-text">Square icon for directory listings. Vector master: '
+            f'<a href="../icons/{slug}.svg">{slug}.svg</a>. PNG, in pixels: {pngs}. Composer glyph: '
+            f'<a href="../icons/{slug}-glyph.svg">light</a> &middot; <a href="../icons/{slug}-glyph-dark.svg">dark</a>.</p>')
+
+
 def support_page(tool: ToolSource) -> str:
     label = esc(tool.label)
     prompts = "".join(f"<li>{md.inline(p)}</li>" for p in try_it(tool.readme))
@@ -189,6 +205,7 @@ def support_page(tool: ToolSource) -> str:
         section("try", "Try it", f'<ul class="policy-list">{prompts}</ul>'),
         section("install", "Before you install", install),
         section("help", "Get help", help_body(tool)),
+        section("icon", "Icon", icon_body(tool)),
         section("source", "Source", source_note(tool, "readme", "The text above")
                 + "\n  " + links(tool, "support")),
     ]
@@ -201,10 +218,11 @@ def support_page(tool: ToolSource) -> str:
 
 def hub_page(tools: list[ToolSource]) -> str:
     rows = "".join(
-        f'<tr><th scope="row" translate="no">{esc(t.label)}</th><td>{esc(t.manifest["description"])}</td>'
+        f'<tr><td><img class="plugin-icon" src="icons/png/{t.slug}-128.png" width="40" height="40" alt=""></td>'
+        f'<th scope="row" translate="no">{esc(t.label)}</th><td>{esc(t.manifest["description"])}</td>'
         f'<td><a href="{t.slug}/support.html">Support</a> &middot; <a href="{t.slug}/privacy.html">Privacy</a>'
         f' &middot; <a href="{t.slug}/terms.html">Terms</a></td></tr>' for t in tools)
-    table = ('<div class="table-wrap"><table class="plugin-table"><thead><tr><th scope="col">Plugin</th>'
+    table = ('<div class="table-wrap"><table class="plugin-table"><thead><tr><th scope="col">Icon</th><th scope="col">Plugin</th>'
              f'<th scope="col">What it does</th><th scope="col">Pages</th></tr></thead><tbody>{rows}</tbody></table></div>')
     intro = ('<p class="body-text">Each flagship tool ships a plugin for local AI clients. These pages give '
              "each plugin's support details, privacy policy and terms of use. Every page quotes the tool's "
@@ -224,6 +242,8 @@ def index_json(tools: list[ToolSource]) -> str:
         "privacy_url": f"{SITE}/plugins/{t.slug}/privacy.html",
         "terms_url": f"{SITE}/plugins/{t.slug}/terms.html",
         "support_contact": f"{t.repo_url}/issues",
+        "icon_svg": f"{SITE}/plugins/icons/{t.slug}.svg",
+        "icon_png_512": f"{SITE}/plugins/icons/png/{t.slug}-512.png",
     } for t in tools]
     return json.dumps({"schema": "plugin-support-index/1", "plugins": entries}, indent=2) + "\n"
 
@@ -234,4 +254,5 @@ def render_all(tools: list[ToolSource]) -> dict[str, str]:
         files[f"plugins/{tool.slug}/support.html"] = support_page(tool)
         files[f"plugins/{tool.slug}/privacy.html"] = privacy_page(tool)
         files[f"plugins/{tool.slug}/terms.html"] = terms_page(tool)
+        files.update(icon_files(tool.slug, tool.label))
     return files

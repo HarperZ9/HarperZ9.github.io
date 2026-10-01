@@ -1,0 +1,622 @@
+{
+  "schema": "plugin-icons/1",
+  "renderer": "Chromium via Playwright",
+  "icons": [
+    {
+      "png": "plugins/icons/png/articulate-48.png",
+      "size": 48,
+      "source": "plugins/icons/articulate-small.svg",
+      "source_sha256": "ee001308fe8d9b8ed6e566e3e41463c3fafedfb89ecadb4630bd873b84f50467",
+      "sha256": "1eadee9716db63936913fdf1e2a10efcbd408c6a9922a91703ebe4276103a4de"
+    },
+    {
+      "png": "plugins/icons/png/articulate-64.png",
+      "size": 64,
+      "source": "plugins/icons/articulate-small.svg",
+      "source_sha256": "ee001308fe8d9b8ed6e566e3e41463c3fafedfb89ecadb4630bd873b84f50467",
+      "sha256": "27d6cbf156c16c58284c6b716f56826e6e1b1a15214bfeda9fb9d0a4534b7cba"
+    },
+    {
+      "png": "plugins/icons/png/articulate-128.png",
+      "size": 128,
+      "source": "plugins/icons/articulate-mid.svg",
+      "source_sha256": "348129160e7674180853c57eff0e32655ff12dd22d9365251b412518a54ccf66",
+      "sha256": "b59c7afc2969f5669e89daf051d9a4eff657e36f4cde64fd210001eb640292ba"
+    },
+    {
+      "png": "plugins/icons/png/articulate-256.png",
+      "size": 256,
+      "source": "plugins/icons/articulate-mid.svg",
+      "source_sha256": "348129160e7674180853c57eff0e32655ff12dd22d9365251b412518a54ccf66",
+      "sha256": "bfc4e80b63eb474347bb5c962a105e74291bc51b12212375fb387d421030a830"
+    },
+    {
+      "png": "plugins/icons/png/articulate-512.png",
+      "size": 512,
+      "source": "plugins/icons/articulate.svg",
+      "source_sha256": "4c346fa8c40869045f278fe8fd7fd3a9e0dc01418c10dc32a29a03afb0e8ae9a",
+      "sha256": "be9ef3cc8bbc3b9be892fc1f2e0f1a18ad38a014e5352aedc652960bf107cb04"
+    },
+    {
+      "png": "plugins/icons/png/articulate-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/articulate.svg",
+      "source_sha256": "4c346fa8c40869045f278fe8fd7fd3a9e0dc01418c10dc32a29a03afb0e8ae9a",
+      "sha256": "845e51c87e93904fed135ba0fb03d011265320f4b9b555ebeb0e42cdc50b5edf"
+    },
+    {
+      "png": "plugins/icons/png/articulate-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/articulate-glyph.svg",
+      "source_sha256": "235206ce8e53d1c6030e92bae3d25616e20dc11f09e4e19cdd2c855d9e0f1a3e",
+      "sha256": "96e6a05cfc9051e1f1899e8d2c7fa082261b11aa312112145395946ba5b26a75"
+    },
+    {
+      "png": "plugins/icons/png/articulate-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/articulate-glyph-dark.svg",
+      "source_sha256": "dd490ec5bb4a36be7fd3211664242f09f16397a288bdfec58a72bfec97f1b3f3",
+      "sha256": "6110d2aa993cd9a16afcdc0491f293547743c8d93c254bb2dde562c93e99c107"
+    },
+    {
+      "png": "plugins/icons/png/canon-48.png",
+      "size": 48,
+      "source": "plugins/icons/canon-small.svg",
+      "source_sha256": "1481fa45d1b7c0d9c010449750291f20bd6c4a43f19e4f935d0205d2e7cce54b",
+      "sha256": "66b86213244ce86c0566df827536cfecbd62a98e6b31f960ae45702ab0596b7e"
+    },
+    {
+      "png": "plugins/icons/png/canon-64.png",
+      "size": 64,
+      "source": "plugins/icons/canon-small.svg",
+      "source_sha256": "1481fa45d1b7c0d9c010449750291f20bd6c4a43f19e4f935d0205d2e7cce54b",
+      "sha256": "2404b7440d73025a56e899801aabcf0d63525a1cf58a5346c18101ac3ddcdcd1"
+    },
+    {
+      "png": "plugins/icons/png/canon-128.png",
+      "size": 128,
+      "source": "plugins/icons/canon-mid.svg",
+      "source_sha256": "30c87683c1ebc6ece2d39a0f3054e980deb8784a9a877760f7bbb3f9d042ed53",
+      "sha256": "feaf5cc2aa7536523713553189956223bdf3761e0624cec806b9f3bece7ef48f"
+    },
+    {
+      "png": "plugins/icons/png/canon-256.png",
+      "size": 256,
+      "source": "plugins/icons/canon-mid.svg",
+      "source_sha256": "30c87683c1ebc6ece2d39a0f3054e980deb8784a9a877760f7bbb3f9d042ed53",
+      "sha256": "9a6a8230af2034c09cb29401bf3e291c09d0968f0c44d05d93dfe06adb1e8853"
+    },
+    {
+      "png": "plugins/icons/png/canon-512.png",
+      "size": 512,
+      "source": "plugins/icons/canon.svg",
+      "source_sha256": "820efe2e225beec7341b47e21830c25f35059d1afcfc938161168e3610ef9ef3",
+      "sha256": "1ac567691acc95fd24fb8d1bead1e0f69d2633417e92d278d0efb92c75c7a2a9"
+    },
+    {
+      "png": "plugins/icons/png/canon-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/canon.svg",
+      "source_sha256": "820efe2e225beec7341b47e21830c25f35059d1afcfc938161168e3610ef9ef3",
+      "sha256": "07400d8cbbf99373a8edeb13f5b37d9fe8211a6e3e52529d2edc7a69018cfd27"
+    },
+    {
+      "png": "plugins/icons/png/canon-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/canon-glyph.svg",
+      "source_sha256": "25c52f8bf7ac8c036b31dca9cf909122ad59eab332f8636ad844eec5418faefb",
+      "sha256": "b0c1affbf39f947abd88e697254beff02a5057be6412e6a9c52e229e18720147"
+    },
+    {
+      "png": "plugins/icons/png/canon-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/canon-glyph-dark.svg",
+      "source_sha256": "d76bc69b32791b31c00fbe59ebaecac2d6ab3ae522645db61113dd4d2855af92",
+      "sha256": "1fd7475798452b6e3c0dbe9b408827ed6bbbb4c167ef9b09f8bc4e179d3ccece"
+    },
+    {
+      "png": "plugins/icons/png/crucible-48.png",
+      "size": 48,
+      "source": "plugins/icons/crucible-small.svg",
+      "source_sha256": "4b664d1febdf61370dfb66ba235a5efb67fb3ad341c8a5faa7c3a6590efcfcc2",
+      "sha256": "8f2a6c6c37d244fc0ad243e6773fdc1423c009429f486eaf8fef3eacd9eb5d78"
+    },
+    {
+      "png": "plugins/icons/png/crucible-64.png",
+      "size": 64,
+      "source": "plugins/icons/crucible-small.svg",
+      "source_sha256": "4b664d1febdf61370dfb66ba235a5efb67fb3ad341c8a5faa7c3a6590efcfcc2",
+      "sha256": "7ff5ed4bb7b3a08272116801f93b6a8f6e286e7c2327388ec0de10f612665716"
+    },
+    {
+      "png": "plugins/icons/png/crucible-128.png",
+      "size": 128,
+      "source": "plugins/icons/crucible-mid.svg",
+      "source_sha256": "09728171b46bc371099f965670d80bcdedf7330e5c8828cf6cb410f044a9ab27",
+      "sha256": "1fc5630bce8d26c1db537d66ca884295e133519efffb9aaa5473249e5ccaf72f"
+    },
+    {
+      "png": "plugins/icons/png/crucible-256.png",
+      "size": 256,
+      "source": "plugins/icons/crucible-mid.svg",
+      "source_sha256": "09728171b46bc371099f965670d80bcdedf7330e5c8828cf6cb410f044a9ab27",
+      "sha256": "747073bb95a9588c5df29b7d556f2c1f51e6d0bfbc0bfbaf2f61839789f1479b"
+    },
+    {
+      "png": "plugins/icons/png/crucible-512.png",
+      "size": 512,
+      "source": "plugins/icons/crucible.svg",
+      "source_sha256": "23a359f586861fb27577e50a49e91e36d64756e01a74df617f72eb65ca64f3e1",
+      "sha256": "02b1e5868e8ab1e74aecbf6fcce69e69df0f999166f69078d8971f810a3e9d74"
+    },
+    {
+      "png": "plugins/icons/png/crucible-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/crucible.svg",
+      "source_sha256": "23a359f586861fb27577e50a49e91e36d64756e01a74df617f72eb65ca64f3e1",
+      "sha256": "7a14b837ac2fef3ce1d832dafb4e8f977f7cc2369ec85628c64d36cc376e0457"
+    },
+    {
+      "png": "plugins/icons/png/crucible-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/crucible-glyph.svg",
+      "source_sha256": "dd87585a9239bb58ea7b59c1ca1e11b6e3893473c0a9eb0eab2d6de6dc95c5fd",
+      "sha256": "356dd6a8e88d502b609e02d7f13ce16b3af527f216883dc0217e00e4db43fff2"
+    },
+    {
+      "png": "plugins/icons/png/crucible-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/crucible-glyph-dark.svg",
+      "source_sha256": "5f9607ca83b8429155999c72272f618152760055d37ce8a85fb8b1883fefaf9a",
+      "sha256": "02d553297ff91dedbeeb14e8d279edf865e19b92f8a74a49b679242ba086561c"
+    },
+    {
+      "png": "plugins/icons/png/forum-48.png",
+      "size": 48,
+      "source": "plugins/icons/forum-small.svg",
+      "source_sha256": "51e798b978b9db8cdda86d9747bbf9e876cbfb83b9c3643943a59131b37c5d26",
+      "sha256": "b0a564e704c2323ccf4f079e77ae30570f67c6a80da6d42595451084aaa769af"
+    },
+    {
+      "png": "plugins/icons/png/forum-64.png",
+      "size": 64,
+      "source": "plugins/icons/forum-small.svg",
+      "source_sha256": "51e798b978b9db8cdda86d9747bbf9e876cbfb83b9c3643943a59131b37c5d26",
+      "sha256": "22ade381f786442a42454aac123ac071aeab85f491dca2107281427c7f0d7547"
+    },
+    {
+      "png": "plugins/icons/png/forum-128.png",
+      "size": 128,
+      "source": "plugins/icons/forum-mid.svg",
+      "source_sha256": "8768294e6ae62b06748efc3f1a8a296728050182445a56f1fe6b37779831c2a3",
+      "sha256": "77937d75322823a3408c4b4331ca086cff5d51dd7bc91467446e23b4872b1228"
+    },
+    {
+      "png": "plugins/icons/png/forum-256.png",
+      "size": 256,
+      "source": "plugins/icons/forum-mid.svg",
+      "source_sha256": "8768294e6ae62b06748efc3f1a8a296728050182445a56f1fe6b37779831c2a3",
+      "sha256": "d8c00f5998676b015da4f8e9c928b9cd1f4eddcb893ec31facce81626eb6f000"
+    },
+    {
+      "png": "plugins/icons/png/forum-512.png",
+      "size": 512,
+      "source": "plugins/icons/forum.svg",
+      "source_sha256": "ead7081263d546e41f279bd47940a9dec263d1997c672ed637af82fd8f71ceb8",
+      "sha256": "8e0c639b8754e2cb3593e27105d4146d034ba0c919437337021edd962a4ecbba"
+    },
+    {
+      "png": "plugins/icons/png/forum-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/forum.svg",
+      "source_sha256": "ead7081263d546e41f279bd47940a9dec263d1997c672ed637af82fd8f71ceb8",
+      "sha256": "f0effa2263e5f94208384ebf5a050fcf6cba60da2b22dd4debfb8fe069695347"
+    },
+    {
+      "png": "plugins/icons/png/forum-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/forum-glyph.svg",
+      "source_sha256": "77228cae821c7a5f4c2578d1f7355718f7edd73819465a0e62268792254eaae0",
+      "sha256": "e279b994e74e1b95c965160b45547e1be8d79f37cf4ee7ec632931a771c3fcea"
+    },
+    {
+      "png": "plugins/icons/png/forum-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/forum-glyph-dark.svg",
+      "source_sha256": "c3d1a3e0f84c6624b73b477376a3839906a083714ea6a47676dacf860b275901",
+      "sha256": "7cf77a9a63c1f9553cb9204c76ed1e3d5ba32403ce9feabe9295fdbaf7a0edd0"
+    },
+    {
+      "png": "plugins/icons/png/gather-48.png",
+      "size": 48,
+      "source": "plugins/icons/gather-small.svg",
+      "source_sha256": "6e2d0305e722e33a8323c5d60cb74f6f5b81edf2c27e32d08b8a373a7cd99e4c",
+      "sha256": "420db864280e30ec0c5daed89b1a9ca8682fb494c543a9ae6ee5d87bc055f63a"
+    },
+    {
+      "png": "plugins/icons/png/gather-64.png",
+      "size": 64,
+      "source": "plugins/icons/gather-small.svg",
+      "source_sha256": "6e2d0305e722e33a8323c5d60cb74f6f5b81edf2c27e32d08b8a373a7cd99e4c",
+      "sha256": "9e77c7ff4676531b945f4eded5372e9d8e6ada4f997dd10a6183c74445917044"
+    },
+    {
+      "png": "plugins/icons/png/gather-128.png",
+      "size": 128,
+      "source": "plugins/icons/gather-mid.svg",
+      "source_sha256": "a1770bb3bb35fb928ad6f43bab880e157e60d23dbd7e9f00aee9ebd50caae282",
+      "sha256": "db7cbeb6e13f3df5a14bf98dffba824c2c194128c8a76169ddca981588cd0aba"
+    },
+    {
+      "png": "plugins/icons/png/gather-256.png",
+      "size": 256,
+      "source": "plugins/icons/gather-mid.svg",
+      "source_sha256": "a1770bb3bb35fb928ad6f43bab880e157e60d23dbd7e9f00aee9ebd50caae282",
+      "sha256": "57f0921ffc7091dd3ac260bbe73680c6d07cc7dbd73b8ef217f74bcab863e1cc"
+    },
+    {
+      "png": "plugins/icons/png/gather-512.png",
+      "size": 512,
+      "source": "plugins/icons/gather.svg",
+      "source_sha256": "236ea0a7937e83d37fbd980643a5ca6a43ca31b1fe8ca41b9f50fb6e207195f8",
+      "sha256": "2dec8fd1b8baa9735921dd588ac8c486f1a738c153749dd5aacc51b3b982e2e9"
+    },
+    {
+      "png": "plugins/icons/png/gather-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/gather.svg",
+      "source_sha256": "236ea0a7937e83d37fbd980643a5ca6a43ca31b1fe8ca41b9f50fb6e207195f8",
+      "sha256": "dadbe514da4838926309be0aff73d45576ba9aa4044ba59b3c9c9b6d73f0aab7"
+    },
+    {
+      "png": "plugins/icons/png/gather-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/gather-glyph.svg",
+      "source_sha256": "b35fd19feecb2b1607ed8070a173e8c8b5adb5b51c4b914f0746b6d3df23353d",
+      "sha256": "55d29143bea7c77a2b7c12472dc4256b70a18d38e2341624a1411f0c0cbf5b65"
+    },
+    {
+      "png": "plugins/icons/png/gather-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/gather-glyph-dark.svg",
+      "source_sha256": "fb62413d1574343b62a32793af37690936b74ee712ff7467ff8553ed82467653",
+      "sha256": "2aa971e8c79b13908803cc5e3d36dac83b529ed175ac4b042ff89cb4e3f1fd11"
+    },
+    {
+      "png": "plugins/icons/png/index-48.png",
+      "size": 48,
+      "source": "plugins/icons/index-small.svg",
+      "source_sha256": "b6afe3cfd4d91443bf07ae44e5ccf7f2a6c84416bbc1a50b4460f66608a1ef29",
+      "sha256": "9a91b23824e64e221295ef07cb20677a8df1a78e30b4c92c22f2e6d1fc57e11a"
+    },
+    {
+      "png": "plugins/icons/png/index-64.png",
+      "size": 64,
+      "source": "plugins/icons/index-small.svg",
+      "source_sha256": "b6afe3cfd4d91443bf07ae44e5ccf7f2a6c84416bbc1a50b4460f66608a1ef29",
+      "sha256": "54c9494fc6ce2061ea5592bd71a4a96256c9873cc9ec6a1f1b477c911372ff4f"
+    },
+    {
+      "png": "plugins/icons/png/index-128.png",
+      "size": 128,
+      "source": "plugins/icons/index-mid.svg",
+      "source_sha256": "c97ab16253bb56b357e01d6aa3c889008965ab8ee30c8819ee81a67068132262",
+      "sha256": "843f42b3982ed90a4307ec4de92025f6a91841a92882e95bde933b4f290812fc"
+    },
+    {
+      "png": "plugins/icons/png/index-256.png",
+      "size": 256,
+      "source": "plugins/icons/index-mid.svg",
+      "source_sha256": "c97ab16253bb56b357e01d6aa3c889008965ab8ee30c8819ee81a67068132262",
+      "sha256": "403721501e9f6536e529d239501a4e8ce2fb31aa771fb639647d7aa179c48c02"
+    },
+    {
+      "png": "plugins/icons/png/index-512.png",
+      "size": 512,
+      "source": "plugins/icons/index.svg",
+      "source_sha256": "81a21315798d01312181d3d1b6773aede42761163971ecb77e4cf9a074d5ca33",
+      "sha256": "b72b3daabc3353de82d775933c78822c90778494df41d1d2e02695c3e3341ab3"
+    },
+    {
+      "png": "plugins/icons/png/index-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/index.svg",
+      "source_sha256": "81a21315798d01312181d3d1b6773aede42761163971ecb77e4cf9a074d5ca33",
+      "sha256": "e4cf3929e68d41f0302ee1fdbe0042a3334acf75d2fc78ff0c8895813905ce98"
+    },
+    {
+      "png": "plugins/icons/png/index-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/index-glyph.svg",
+      "source_sha256": "16908a82ac05ebe89da9430313557a9f14c6047230a0e2d57473b7f45d84278a",
+      "sha256": "9f5fa026146a3f30e9a9bf1e294fac690d198ae17a666de839b1e57e3800ec1d"
+    },
+    {
+      "png": "plugins/icons/png/index-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/index-glyph-dark.svg",
+      "source_sha256": "4d26218d1118799063cf1956118f2faa19178fd04d67f391df1b1bade81af246",
+      "sha256": "4dcf579b69e308315216014491dddf1bbb288825f572eae1757a262e0f4403ff"
+    },
+    {
+      "png": "plugins/icons/png/learn-48.png",
+      "size": 48,
+      "source": "plugins/icons/learn-small.svg",
+      "source_sha256": "75b04c77966d6c55e07798b3f59c89b78e5cdc9590b3749550827722872d3f48",
+      "sha256": "108a3201d6dda936f00ec16bca788dbbafa42a78957de05b9b77cbbed6a68bd7"
+    },
+    {
+      "png": "plugins/icons/png/learn-64.png",
+      "size": 64,
+      "source": "plugins/icons/learn-small.svg",
+      "source_sha256": "75b04c77966d6c55e07798b3f59c89b78e5cdc9590b3749550827722872d3f48",
+      "sha256": "167183b84fde794b732633146ac9f78e0f7fd536eb33516849c43502b35df857"
+    },
+    {
+      "png": "plugins/icons/png/learn-128.png",
+      "size": 128,
+      "source": "plugins/icons/learn-mid.svg",
+      "source_sha256": "82fb7894156f2584337450c97c7407f0c0e8c064346e89170d4229deaf181214",
+      "sha256": "173dbc8b165de0cbb1ffaf30ad153640b5c6834f08779a18999a72fb3428ef2b"
+    },
+    {
+      "png": "plugins/icons/png/learn-256.png",
+      "size": 256,
+      "source": "plugins/icons/learn-mid.svg",
+      "source_sha256": "82fb7894156f2584337450c97c7407f0c0e8c064346e89170d4229deaf181214",
+      "sha256": "df49674584af02b8702cc2847c29dd08c19b4b1ee6b4df4daf72a31455af12bb"
+    },
+    {
+      "png": "plugins/icons/png/learn-512.png",
+      "size": 512,
+      "source": "plugins/icons/learn.svg",
+      "source_sha256": "2bed92315a04f3701461b76f0fde5b78ebe1180cb2b7f25349411a60accf3495",
+      "sha256": "d7d09df24123ffb4158879e88e040cee6eb26e084abeeaf299466478360856c6"
+    },
+    {
+      "png": "plugins/icons/png/learn-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/learn.svg",
+      "source_sha256": "2bed92315a04f3701461b76f0fde5b78ebe1180cb2b7f25349411a60accf3495",
+      "sha256": "d5555eb4c9fd0399d0d2d41f25d3f447494833109b12f2fe02c62a4b91b316f3"
+    },
+    {
+      "png": "plugins/icons/png/learn-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/learn-glyph.svg",
+      "source_sha256": "b6f3a02a540870169d7ea04695ed0ebd43697c5a03ffa5a3b0337f08018e83e0",
+      "sha256": "6e3ee8168fc101a1faa218ab7e51c0d5ba1a79c656b328da87e04a587309fd5b"
+    },
+    {
+      "png": "plugins/icons/png/learn-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/learn-glyph-dark.svg",
+      "source_sha256": "40ffd8c9549eb881b91a2c3067af6687a90d617b911307c3c7dd5bb2fc7b14fe",
+      "sha256": "3ae43de8cc8d688568ab177972c78d1e0a88320d74a14fd95fb0c4a6c771e44a"
+    },
+    {
+      "png": "plugins/icons/png/mneme-48.png",
+      "size": 48,
+      "source": "plugins/icons/mneme-small.svg",
+      "source_sha256": "6087625edb6709c155a1c55c7efafdbc32bf54d532089314c3b04eb587f390e8",
+      "sha256": "61e3e6825d09f8788204e8a44f7bdd72ffb6e6f4674f99e40b12e753a4e8cce8"
+    },
+    {
+      "png": "plugins/icons/png/mneme-64.png",
+      "size": 64,
+      "source": "plugins/icons/mneme-small.svg",
+      "source_sha256": "6087625edb6709c155a1c55c7efafdbc32bf54d532089314c3b04eb587f390e8",
+      "sha256": "6db016a9540bd891aace7cc3fdded4727f36fcab0322bde97795f61b579a13cc"
+    },
+    {
+      "png": "plugins/icons/png/mneme-128.png",
+      "size": 128,
+      "source": "plugins/icons/mneme-mid.svg",
+      "source_sha256": "b4cf49476fc62d7f560cb67ff14f95b9c4e42289e10d75880f04d06cf09eae69",
+      "sha256": "6fc187b5a2fc6e5ed79eb1ab84fb3f62cb7a2596ad69d480b2f6ae451bc1075f"
+    },
+    {
+      "png": "plugins/icons/png/mneme-256.png",
+      "size": 256,
+      "source": "plugins/icons/mneme-mid.svg",
+      "source_sha256": "b4cf49476fc62d7f560cb67ff14f95b9c4e42289e10d75880f04d06cf09eae69",
+      "sha256": "97534a8b46fb58b0124a3dd2f519cfbf55225ac349e250a950949100f95edb11"
+    },
+    {
+      "png": "plugins/icons/png/mneme-512.png",
+      "size": 512,
+      "source": "plugins/icons/mneme.svg",
+      "source_sha256": "f6dc6ef3fb4b395d1e80c7c68b292a7144f0822355003215d2b777aa95865e08",
+      "sha256": "ac617ad01025a09fac1176fb05505362d1a546371c7d1340685a67df838de8ad"
+    },
+    {
+      "png": "plugins/icons/png/mneme-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/mneme.svg",
+      "source_sha256": "f6dc6ef3fb4b395d1e80c7c68b292a7144f0822355003215d2b777aa95865e08",
+      "sha256": "0767fb572672f28471f157fbc082bf17fdcd319063f127fd7ef203d8ebe36ac8"
+    },
+    {
+      "png": "plugins/icons/png/mneme-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/mneme-glyph.svg",
+      "source_sha256": "a11995c71b90f631723ed69c3cb8a60a6f70adb43ce536a63c3edaec3d03000a",
+      "sha256": "f9cdd43fa569a8ae4bbe71140508118089b3b7c1f6e40a657f0aebae1e1c5700"
+    },
+    {
+      "png": "plugins/icons/png/mneme-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/mneme-glyph-dark.svg",
+      "source_sha256": "c8b57b66b887ea5e154ac1d6522ad181ca1163da8e7e093415dd76181633482b",
+      "sha256": "3b1bcf77e5947d00d28fc092e93a10713ee6752dfe9a45f1abdb0813c33b8088"
+    },
+    {
+      "png": "plugins/icons/png/plexus-48.png",
+      "size": 48,
+      "source": "plugins/icons/plexus-small.svg",
+      "source_sha256": "b85d7938cfb3c086f4b431dd7d6934b8d5019b9273479d2756fc6b2ffd9d35c2",
+      "sha256": "1f68025658770024b777e446c7e4215a8786a18234d407cc2a1d774ec71ded02"
+    },
+    {
+      "png": "plugins/icons/png/plexus-64.png",
+      "size": 64,
+      "source": "plugins/icons/plexus-small.svg",
+      "source_sha256": "b85d7938cfb3c086f4b431dd7d6934b8d5019b9273479d2756fc6b2ffd9d35c2",
+      "sha256": "ff710362bc016880b52932d1afe229cc7f070decccc6aaefbf080c73e9cc7b76"
+    },
+    {
+      "png": "plugins/icons/png/plexus-128.png",
+      "size": 128,
+      "source": "plugins/icons/plexus-mid.svg",
+      "source_sha256": "2abbe404466cd59bfd547708d9192143889f4b867b9ac5732b7591b05601c044",
+      "sha256": "28d559497282eb61b30dda4501ccdda784c97cf8170b3800369dc8330a3c038b"
+    },
+    {
+      "png": "plugins/icons/png/plexus-256.png",
+      "size": 256,
+      "source": "plugins/icons/plexus-mid.svg",
+      "source_sha256": "2abbe404466cd59bfd547708d9192143889f4b867b9ac5732b7591b05601c044",
+      "sha256": "09bac38d1d2cbbc7ac51b69d79b705d7888be6c4509c26210a8f01899af3e1a9"
+    },
+    {
+      "png": "plugins/icons/png/plexus-512.png",
+      "size": 512,
+      "source": "plugins/icons/plexus.svg",
+      "source_sha256": "46e694724bd4a3132e620809089257f7981c22a8bdd32f9aa549bcd51759445e",
+      "sha256": "9006876559e5c3d5dc47fd2396a7dfae54b18ea635b22c39c5581fbbf6e1b8b4"
+    },
+    {
+      "png": "plugins/icons/png/plexus-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/plexus.svg",
+      "source_sha256": "46e694724bd4a3132e620809089257f7981c22a8bdd32f9aa549bcd51759445e",
+      "sha256": "3ac51776251d647ac8f652fe17373a66fa3d7ef66df4370ad9900e2536a08f76"
+    },
+    {
+      "png": "plugins/icons/png/plexus-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/plexus-glyph.svg",
+      "source_sha256": "c3996ba8f9a3d932ce2f1f3a6f7ed9b1167d3816444460cffbfd963a2934a3fa",
+      "sha256": "485a29032a5f73ac6907c8fe662822df0c011e7f10ebf6789f3690bd86c05062"
+    },
+    {
+      "png": "plugins/icons/png/plexus-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/plexus-glyph-dark.svg",
+      "source_sha256": "f5a6e0dfdbbca361396b04673ae50fef103345beddc5057af4f3202a3a31bb57",
+      "sha256": "7c51642a4af8c89569ac5a2faa6bc2b9883481149fd2802bd38dd071a8ee94cd"
+    },
+    {
+      "png": "plugins/icons/png/relay-48.png",
+      "size": 48,
+      "source": "plugins/icons/relay-small.svg",
+      "source_sha256": "45ba8b9fec9c3e46aa4b313da2095f718fe5839d1a3e33ae84ca0752445f66d8",
+      "sha256": "ddbbd76b0faf5ee2729eb3bbc9a38207eb893fe8b6092a1faebbcb5308c8b72f"
+    },
+    {
+      "png": "plugins/icons/png/relay-64.png",
+      "size": 64,
+      "source": "plugins/icons/relay-small.svg",
+      "source_sha256": "45ba8b9fec9c3e46aa4b313da2095f718fe5839d1a3e33ae84ca0752445f66d8",
+      "sha256": "4187bc1a08b70ed3f25e7351a4c67c9929a04de51e6a6d87ccd0a8196d42d4e2"
+    },
+    {
+      "png": "plugins/icons/png/relay-128.png",
+      "size": 128,
+      "source": "plugins/icons/relay-mid.svg",
+      "source_sha256": "54452fda19c9509711495698ad42d61f296334445f79a0dbce69cc1d52784fca",
+      "sha256": "8a2e03a624469fc55d75125789d25d0a17a4c68e437081d98d1b773254bb3de5"
+    },
+    {
+      "png": "plugins/icons/png/relay-256.png",
+      "size": 256,
+      "source": "plugins/icons/relay-mid.svg",
+      "source_sha256": "54452fda19c9509711495698ad42d61f296334445f79a0dbce69cc1d52784fca",
+      "sha256": "700bfa7c236029c06c8ac01432f658bde92588e2544e645a17cda80d42932f63"
+    },
+    {
+      "png": "plugins/icons/png/relay-512.png",
+      "size": 512,
+      "source": "plugins/icons/relay.svg",
+      "source_sha256": "5680a53ee84f46a0000317bac4e938cd0800e7caeca20fa1b6a64e138109221b",
+      "sha256": "54e0c37797b2df0025996f6241abdbc0570ff080c0b3edc4f0aa5d589200dc8f"
+    },
+    {
+      "png": "plugins/icons/png/relay-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/relay.svg",
+      "source_sha256": "5680a53ee84f46a0000317bac4e938cd0800e7caeca20fa1b6a64e138109221b",
+      "sha256": "0edd56193348829baf8bcf53fb88003b992172fe771a0a00c0e2990cb7e80186"
+    },
+    {
+      "png": "plugins/icons/png/relay-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/relay-glyph.svg",
+      "source_sha256": "75cef744eaa6428b8756b75941baba55a183648758a9487708c7f78d7c880643",
+      "sha256": "b5cae016b80552b047d8744ce0a0cf550c44078f93098623aa61bf66586afff5"
+    },
+    {
+      "png": "plugins/icons/png/relay-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/relay-glyph-dark.svg",
+      "source_sha256": "2b728086d12ddb02f55fff64ed8e545f0544aa6241d04f798f5a0a27d74aea34",
+      "sha256": "e9924d63f90e0e1171a1e9654ae3dee032f322c442593e761e0ce1a95ba8df99"
+    },
+    {
+      "png": "plugins/icons/png/telos-48.png",
+      "size": 48,
+      "source": "plugins/icons/telos-small.svg",
+      "source_sha256": "8294de525a5f1fdf36ea1246c4cf68d9faced45f8cd508a52dd8a442ec92d9d8",
+      "sha256": "c0cd1b917317f1f140f1c26ccea103820c738c24a4977c7ad22e424bf85d6e46"
+    },
+    {
+      "png": "plugins/icons/png/telos-64.png",
+      "size": 64,
+      "source": "plugins/icons/telos-small.svg",
+      "source_sha256": "8294de525a5f1fdf36ea1246c4cf68d9faced45f8cd508a52dd8a442ec92d9d8",
+      "sha256": "edccd225a5680e2cc9a862dde33e0a9f73be96d4b436cafec9c44891c2eda843"
+    },
+    {
+      "png": "plugins/icons/png/telos-128.png",
+      "size": 128,
+      "source": "plugins/icons/telos-mid.svg",
+      "source_sha256": "09ee1e545ef65e76d839bc3c0a030708c5d3025951ea277839c292e86efbfc98",
+      "sha256": "1e8c073bd07ee614f0089100c33bb3e44dbe4f181469615641aa217e31692118"
+    },
+    {
+      "png": "plugins/icons/png/telos-256.png",
+      "size": 256,
+      "source": "plugins/icons/telos-mid.svg",
+      "source_sha256": "09ee1e545ef65e76d839bc3c0a030708c5d3025951ea277839c292e86efbfc98",
+      "sha256": "166fcf539a53746ef4173bf610c0b3bddbf816b4ce6c42708cdbff7107d568d1"
+    },
+    {
+      "png": "plugins/icons/png/telos-512.png",
+      "size": 512,
+      "source": "plugins/icons/telos.svg",
+      "source_sha256": "ec893cdc7aa4d09ff70e4f21464dc300a801ac6d65284d84e6698e45c8909ed0",
+      "sha256": "6d52e67d4bc261cab639499ae4e8b6de064e8a11f5586d05c4d2047eee70d6a3"
+    },
+    {
+      "png": "plugins/icons/png/telos-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/telos.svg",
+      "source_sha256": "ec893cdc7aa4d09ff70e4f21464dc300a801ac6d65284d84e6698e45c8909ed0",
+      "sha256": "767330f8ac66db352bbdd382e653fb4b36e7c2d94cb71208a81b55323732711f"
+    },
+    {
+      "png": "plugins/icons/png/telos-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/telos-glyph.svg",
+      "source_sha256": "c143aa9e32af6d6bd1e3399c6d817fcba902921d6234883dcf87e971b61ee7ce",
+      "sha256": "21c9c0e57fcf5562ca7092ae8334f450aaaf95e37342e1bfd062063ff9c628b0"
+    },
+    {
+      "png": "plugins/icons/png/telos-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/telos-glyph-dark.svg",
+      "source_sha256": "0be2ceee72ff6547071ca3b4848e92e7f1e9b9ae0541084f6a889f28d3256b4d",
+      "sha256": "17ed8239e056e0a38f82a377352a32f3a45e98db5b3036ac25ee347509b34878"
+    }
+  ]
+}

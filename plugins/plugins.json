@@ -9,7 +9,9 @@
       "support_url": "https://harperz9.github.io/plugins/articulate/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/articulate/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/articulate/terms.html",
-      "support_contact": "https://github.com/HarperZ9/articulate/issues"
+      "support_contact": "https://github.com/HarperZ9/articulate/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/articulate.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/articulate-512.png"
     },
     {
       "tool": "Canon",
@@ -19,7 +21,9 @@
       "support_url": "https://harperz9.github.io/plugins/canon/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/canon/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/canon/terms.html",
-      "support_contact": "https://github.com/HarperZ9/canon/issues"
+      "support_contact": "https://github.com/HarperZ9/canon/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/canon.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/canon-512.png"
     },
     {
       "tool": "Crucible",
@@ -29,7 +33,9 @@
       "support_url": "https://harperz9.github.io/plugins/crucible/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/crucible/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/crucible/terms.html",
-      "support_contact": "https://github.com/HarperZ9/crucible/issues"
+      "support_contact": "https://github.com/HarperZ9/crucible/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/crucible.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/crucible-512.png"
     },
     {
       "tool": "Forum",
@@ -39,7 +45,9 @@
       "support_url": "https://harperz9.github.io/plugins/forum/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/forum/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/forum/terms.html",
-      "support_contact": "https://github.com/HarperZ9/forum/issues"
+      "support_contact": "https://github.com/HarperZ9/forum/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/forum.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/forum-512.png"
     },
     {
       "tool": "Gather",
@@ -49,7 +57,9 @@
       "support_url": "https://harperz9.github.io/plugins/gather/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/gather/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/gather/terms.html",
-      "support_contact": "https://github.com/HarperZ9/gather/issues"
+      "support_contact": "https://github.com/HarperZ9/gather/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/gather.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/gather-512.png"
     },
     {
       "tool": "Index",
@@ -59,7 +69,9 @@
       "support_url": "https://harperz9.github.io/plugins/index/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/index/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/index/terms.html",
-      "support_contact": "https://github.com/HarperZ9/index/issues"
+      "support_contact": "https://github.com/HarperZ9/index/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/index.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/index-512.png"
     },
     {
       "tool": "Learn",
@@ -69,7 +81,9 @@
       "support_url": "https://harperz9.github.io/plugins/learn/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/learn/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/learn/terms.html",
-      "support_contact": "https://github.com/HarperZ9/learn/issues"
+      "support_contact": "https://github.com/HarperZ9/learn/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/learn.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/learn-512.png"
     },
     {
       "tool": "Mneme",
@@ -79,7 +93,9 @@
       "support_url": "https://harperz9.github.io/plugins/mneme/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/mneme/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/mneme/terms.html",
-      "support_contact": "https://github.com/HarperZ9/mneme/issues"
+      "support_contact": "https://github.com/HarperZ9/mneme/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/mneme.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/mneme-512.png"
     },
     {
       "tool": "Plexus",
@@ -89,7 +105,9 @@
       "support_url": "https://harperz9.github.io/plugins/plexus/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/plexus/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/plexus/terms.html",
-      "support_contact": "https://github.com/HarperZ9/plexus/issues"
+      "support_contact": "https://github.com/HarperZ9/plexus/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/plexus.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/plexus-512.png"
     },
     {
       "tool": "Relay",
@@ -99,7 +117,9 @@
       "support_url": "https://harperz9.github.io/plugins/relay/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/relay/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/relay/terms.html",
-      "support_contact": "https://github.com/HarperZ9/relay/issues"
+      "support_contact": "https://github.com/HarperZ9/relay/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/relay.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/relay-512.png"
     },
     {
       "tool": "Telos",
@@ -109,7 +129,9 @@
       "support_url": "https://harperz9.github.io/plugins/telos/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/telos/privacy.html",
       "terms_url": "https://harperz9.github.io/plugins/telos/terms.html",
-      "support_contact": "https://github.com/HarperZ9/telos/issues"
+      "support_contact": "https://github.com/HarperZ9/telos/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/telos.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/telos-512.png"
     }
   ]
 }
