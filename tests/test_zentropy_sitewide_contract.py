@@ -53,8 +53,10 @@ REVIEWED_ASSET_REVISIONS = {
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
     "system/bulletin-work.js": "20260909-open-work",
-    "system/font-marketplace.css": "20260909-font-marketplace-port",
-    "system/font-specimen.js": "20260909-font-marketplace-port",
+    # 1 October 2026: the typefaces take the Zain name, so the sheet and script
+    # that name them take a new stamp.
+    "system/font-marketplace.css": "20261001-zain-typefaces",
+    "system/font-specimen.js": "20261001-zain-typefaces",
     "frontier-safety/frontier-safety-site.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety.css": READING_CASCADE_REVISION,
     "frontier-safety/frontier-safety-edition.css": FRONTIER_EDITION_REVISION,
@@ -438,6 +440,7 @@ def test_shared_styles_define_zentropy_material_system() -> None:
     for rel in SHARED_STYLE_SHEETS:
         css = read(rel)
         assert "ZentropyDisplay" not in css, rel
+        assert "ZainDisplay" not in css, rel
         if rel == "system/figure.css":
             assert_figure_material_roles_and_contrast(css)
         else:
@@ -476,6 +479,7 @@ def test_shared_styles_define_zentropy_material_system() -> None:
     assert "Telos Display retired" not in doc_css
     assert "Kilon retired" not in doc_css
     assert "ZentropyDisplay" not in figure_css
+    assert "ZainDisplay" not in figure_css
 
 
 def test_shared_styles_define_paper_data_surfaces() -> None:
@@ -818,6 +822,8 @@ def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
 def test_current_zentropy_assets_are_shipped() -> None:
     expected_assets = {
         "brand/aperture-mark.png": 450_000,
+        "brand/ZainDisplay.ttf": 50_000,
+        # Pre-rename URL kept for external embeds; same bytes as ZainDisplay.ttf.
         "brand/ZentropyDisplay.ttf": 50_000,
         "img/og/portfolio-home.png": 550_000,
         "img/og/forum.png": 560_000,

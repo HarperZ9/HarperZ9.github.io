@@ -34,18 +34,18 @@ function monoLatinReady(record){
 
     const family=page.locator('[data-font-specimen-family]');
     assert.equal(await family.inputValue(),'editorial-preview','The foundry opens in its original face, not a third-party site font');
-    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zentropy Editorial Preview'&&face.status==='loaded'));
-    assert.match(await page.locator('[data-font-specimen-preview]').evaluate(el=>getComputedStyle(el).fontFamily),/Zentropy Editorial Preview/);
+    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zain Editorial Preview'&&face.status==='loaded'));
+    assert.match(await page.locator('[data-font-specimen-preview]').evaluate(el=>getComputedStyle(el).fontFamily),/Zain Editorial Preview/);
     assert(await page.locator('[data-font-specimen-poster]').isDisabled(),'Initial original preview cannot be exported to Poster');
     assert(await page.locator('[data-font-specimen-css]').isDisabled(),'Initial original preview cannot export CSS');
     await original.locator('[data-font-try="editorial-preview"]').click();
     assert.equal(await family.inputValue(),'editorial-preview','Collection action opens the actual selected typeface in the lab');
     await page.locator('[data-font-specimen-text]').fill('Quiet forms. Clear ideas.');
-    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zentropy Editorial Preview'&&face.status==='loaded'));
-    assert.match(await page.locator('[data-font-specimen-preview]').evaluate(el=>getComputedStyle(el).fontFamily),/Zentropy Editorial Preview/);
+    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zain Editorial Preview'&&face.status==='loaded'));
+    assert.match(await page.locator('[data-font-specimen-preview]').evaluate(el=>getComputedStyle(el).fontFamily),/Zain Editorial Preview/);
     const widths=await page.evaluate(()=>{
       const c=document.createElement('canvas'),x=c.getContext('2d');
-      x.font='48px "Zentropy Editorial Preview"';const original=x.measureText('Quiet forms. Clear ideas.').width;
+      x.font='48px "Zain Editorial Preview"';const original=x.measureText('Quiet forms. Clear ideas.').width;
       x.font='48px serif';return {original,fallback:x.measureText('Quiet forms. Clear ideas.').width};
     });
     assert(Math.abs(widths.original-widths.fallback)>1,'Original file renders, not a fallback pretending to be inventory');
@@ -65,14 +65,14 @@ function monoLatinReady(record){
     assert.equal(monoRecord.saleEnabled,false);
     assert(monoLatinReady(monoRecord),'Mono metadata must advertise the reviewed 171-codepoint Latin preview');
     await page.locator('[data-font-specimen-text]').fill('Illusion / Il1 / null\n0123456789 / 363969\nconst total = items.length;');
-    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zentropy Mono Preview'&&face.status==='loaded'));
+    await page.waitForFunction(()=>[...document.fonts].some(face=>face.family.replaceAll('"','')==='Zain Mono Preview'&&face.status==='loaded'));
     const monoMetrics=await page.locator('[data-font-specimen-preview]').evaluate(el=>{
       const ctx=document.createElement('canvas').getContext('2d');
-      ctx.font='40px "Zentropy Mono Preview"';
+      ctx.font='40px "Zain Mono Preview"';
       return {family:getComputedStyle(el).fontFamily,weight:getComputedStyle(el).fontWeight,
         widths:[...'Il1Wm0369'].map(char=>ctx.measureText(char).width)};
     });
-    assert.match(monoMetrics.family,/Zentropy Mono Preview/);
+    assert.match(monoMetrics.family,/Zain Mono Preview/);
     assert.equal(monoMetrics.weight,'400');
     assert(monoMetrics.widths.every(width=>Math.abs(width-24.8)<0.02),'All tested glyphs retain the 620-unit monospace advance');
     assert(await page.locator('[data-font-specimen-poster]').isDisabled());
@@ -81,13 +81,13 @@ function monoLatinReady(record){
     await page.waitForFunction(()=>document.querySelector('[data-font-coverage-warning]')?.hidden);
     const latinRender=await page.evaluate(marks=>{
       const ctx=document.createElement('canvas').getContext('2d');
-      ctx.font='40px "Zentropy Mono Preview"';
+      ctx.font='40px "Zain Mono Preview"';
       const normal=['é','e\u0301','Å','A\u030A','ã','i\u030A','ı','Ÿ'].map(text=>ctx.measureText(text).width);
       const markWidths=marks.map(code=>ctx.measureText(String.fromCodePoint(code)).width);
       function alpha(text){
         const canvas=document.createElement('canvas');canvas.width=180;canvas.height=190;
         const local=canvas.getContext('2d');
-        local.fillStyle='#000';local.font='150px "Zentropy Mono Preview"';local.textBaseline='alphabetic';
+        local.fillStyle='#000';local.font='150px "Zain Mono Preview"';local.textBaseline='alphabetic';
         local.fillText(text,30,160);
         return local.getImageData(0,0,canvas.width,canvas.height).data;
       }
@@ -132,7 +132,7 @@ function monoLatinReady(record){
     // Failed font requests must surface a loading error instead of silently
     // presenting the system fallback as the original family.
     const broken=await browser.newContext();
-    await broken.route('**/type/preview/zentropy-mono-regular.woff2*',route=>route.abort());
+    await broken.route('**/type/preview/zain-mono-regular.woff2*',route=>route.abort());
     const failed=await broken.newPage();await failed.goto(base+'/fonts.html');
     const failedMono=failed.locator('[data-font-asset-status="mono-preview"]');
     await failedMono.waitFor({state:'visible'});

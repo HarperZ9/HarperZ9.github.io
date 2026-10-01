@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-FBDE3rFM.js",
     "assets/index-BkvbD78Z.js",
     "work-with-me.html",
     "independence.html",
@@ -156,6 +157,9 @@ RELEASE_PATHS = (
     "system/font-specimen.js",
     "type/preview/editorial.json",
     "type/preview/mono.json",
+    "type/preview/zain-editorial-regular.woff2",
+    "type/preview/zain-mono-regular.woff2",
+    # Compatibility copies at the pre-rename URLs, byte-identical to the Zain files.
     "type/preview/zentropy-editorial-regular.woff2",
     "type/preview/zentropy-mono-regular.woff2",
     "img/og/typeface.png",
@@ -527,7 +531,12 @@ RELEASE_PATHS = (
 # work), the independence policy and the public income ledger join the Work routes and the
 # sitemap; the route registry, site index, publication build receipt and home bundle
 # (index-BkvbD78Z.js) are regenerated. index-CyztdbmV.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "c834e6680c3ff29c54c7b3956e3fb9e01986074a66d177a23831684c0aef2dec"
+# October 1, 2026: the typefaces are renamed Zain Editorial and Zain Mono (name table,
+# files, CSS, specimen copy); the old font URLs stay as byte-identical copies, and the
+# route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
+# re-render also picks up the Continue the series text from #286.
+# index-BkvbD78Z.js stays as retained history.
+REVIEWED_RELEASE_SHA256 = "85e8b147248954a685515e52d8b8b7684b654e4f581b555736f12a3ae2fcce4c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -624,8 +633,8 @@ def test_font_marketplace_files_are_part_of_the_reviewed_release_spine() -> None
         "system/font-specimen.js",
         "type/preview/editorial.json",
         "type/preview/mono.json",
-        "type/preview/zentropy-editorial-regular.woff2",
-        "type/preview/zentropy-mono-regular.woff2",
+        "type/preview/zain-editorial-regular.woff2",
+        "type/preview/zain-mono-regular.woff2",
     }
     assert required <= set(RELEASE_PATHS)
 
@@ -703,7 +712,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: Work with me, the independence policy and the income ledger join the
     # Work routes, so the bundle rebuilt from the registry is index-BkvbD78Z.js with the same sheet.
     # index-CyztdbmV.js stays as retained history.
-    current_js = "index-BkvbD78Z.js"
+    # October 1, 2026: the typefaces are renamed Zain Editorial and Zain Mono, so the
+    # bundle rebuilt from the registry is index-FBDE3rFM.js with the same sheet.
+    # index-BkvbD78Z.js stays as retained history.
+    current_js = "index-FBDE3rFM.js"
+    previous_work_js = "index-BkvbD78Z.js"
+    assert previous_work_js not in source
+    assert (ROOT / "assets" / previous_work_js).is_file()
+    assert f"assets/{previous_work_js}" in RELEASE_PATHS
     previous_name_js = "index-CyztdbmV.js"
     assert previous_name_js not in source
     assert (ROOT / "assets" / previous_name_js).is_file()

@@ -28,12 +28,12 @@ MONO_LATIN_COVERAGE = [
 COMBINING_MARK_CODES = {768, 769, 770, 771, 776, 778, 807}
 EXPECTED_PREVIEWS = {
     'editorial': {
-        'family': 'Zentropy Editorial Preview',
+        'family': 'Zain Editorial Preview',
         'coverage': EDITORIAL_COVERAGE,
         'glyph_count': 110,
     },
     'mono': {
-        'family': 'Zentropy Mono Preview',
+        'family': 'Zain Mono Preview',
         'coverage': MONO_LATIN_COVERAGE,
         'glyph_count': 172,
     },
@@ -57,9 +57,34 @@ def enabled_tags(font, table_name, script_tag):
 
 def test_preview_export_has_only_reviewed_public_files():
     assert {path.name for path in PREVIEW.iterdir()} == {
-        'editorial.json', 'zentropy-editorial-regular.woff2',
-        'mono.json', 'zentropy-mono-regular.woff2',
+        'editorial.json', 'zain-editorial-regular.woff2',
+        'mono.json', 'zain-mono-regular.woff2',
+        *COMPAT_COPIES,
     }
+
+
+# 1 October 2026: the families were renamed from Zentropy to Zain. The old file
+# URLs stay live for external embeds, as byte-identical copies of the new files.
+COMPAT_COPIES = {
+    'zentropy-editorial-regular.woff2': 'zain-editorial-regular.woff2',
+    'zentropy-mono-regular.woff2': 'zain-mono-regular.woff2',
+}
+
+
+@pytest.mark.parametrize('old_name', sorted(COMPAT_COPIES))
+def test_pre_rename_font_urls_serve_the_renamed_files(old_name):
+    assert (PREVIEW / old_name).read_bytes() == (PREVIEW / COMPAT_COPIES[old_name]).read_bytes()
+
+
+@pytest.mark.parametrize('slug', ['editorial', 'mono'])
+def test_preview_name_table_carries_the_zain_family_and_author(slug):
+    with TTFont(PREVIEW / f'zain-{slug}-regular.woff2') as font:
+        names = {record.nameID: record.toUnicode() for record in font['name'].names}
+    assert names[1] == names[16] == EXPECTED_PREVIEWS[slug]['family']
+    assert names[6] == EXPECTED_PREVIEWS[slug]['family'].replace(' ', '') + '-Regular'
+    assert names[5] == 'Version 0.002'
+    assert names[8] == names[9] == 'Zain Dana Harper'
+    assert all('zentropy' not in value.lower() for value in names.values())
 
 
 @pytest.mark.parametrize('slug', ['editorial', 'mono'])
@@ -76,7 +101,7 @@ def test_preview_metadata_matches_reviewed_public_contract(slug):
     assert record['saleEnabled'] is False
     assert record['style'] == 'Regular'
     assert record['family'] == expected['family']
-    assert record['file'] == f'zentropy-{slug}-regular.woff2'
+    assert record['file'] == f'zain-{slug}-regular.woff2'
     data = (PREVIEW / record['file']).read_bytes()
     assert data[:4] == b'wOF2'
     assert len(data) == record['bytes'] < 16_384

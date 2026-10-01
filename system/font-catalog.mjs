@@ -29,27 +29,27 @@ const MONO_LATIN_PREVIEW_COVERAGE = [
 // are not inventory. New styles belong to their family, not a new product.
 export const ORIGINAL_FAMILIES = [{
   id: 'editorial',
-  name: 'Zentropy Editorial',
+  name: 'Zain Editorial',
   classification: 'High-contrast serif',
   status: 'development-preview',
   styles: [{
     id: 'editorial-preview',
-    label: 'Zentropy Editorial Preview',
+    label: 'Zain Editorial Preview',
     style: 'Regular',
-    stack: '"Zentropy Editorial Preview", Georgia, serif',
+    stack: '"Zain Editorial Preview", Georgia, serif',
     metadata: 'type/preview/editorial.json',
     coverage: EDITORIAL_PREVIEW_COVERAGE,
   }],
 }, {
   id: 'mono',
-  name: 'Zentropy Mono',
+  name: 'Zain Mono',
   classification: 'Fixed-pitch text',
   status: 'development-preview',
   styles: [{
     id: 'mono-preview',
-    label: 'Zentropy Mono Preview',
+    label: 'Zain Mono Preview',
     style: 'Regular',
-    stack: '"Zentropy Mono Preview", monospace',
+    stack: '"Zain Mono Preview", monospace',
     metadata: 'type/preview/mono.json',
     coverage: MONO_LATIN_PREVIEW_COVERAGE,
   }],

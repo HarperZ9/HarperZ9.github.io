@@ -1,4 +1,4 @@
-import { SITE_PAIRING, ORIGINAL_FAMILIES, specimenFamilies } from './font-catalog.mjs?v=20260909-font-marketplace-port';
+import { SITE_PAIRING, ORIGINAL_FAMILIES, specimenFamilies } from './font-catalog.mjs?v=20261001-zain-typefaces';
 
 const DEFAULT_TEXT = "Letters should keep their shape when the work gets dense.";
 const DEFAULT_FAMILY = "editorial-preview";
@@ -328,10 +328,10 @@ function bootSpecimen(root) {
       return;
     }
     const css = [
-      '/* Typography settings from Zentropy Font Lab.',
+      '/* Typography settings from Zain Font Lab.',
       '   Load the named font separately under its license. Font files are not included.',
-      '   Apply class="zentropy-type" to your text. */',
-      '.zentropy-type {',
+      '   Apply class="zain-type" to your text. */',
+      '.zain-type {',
       `  font-family: ${selected.stack};`,
       `  font-size: ${Math.round(boundedNumber(size, 40))}px;`,
       `  line-height: ${boundedNumber(line, 1.25).toFixed(2)};`,
@@ -344,11 +344,11 @@ function bootSpecimen(root) {
       url = URL.createObjectURL(new Blob([css], { type: 'text/css;charset=utf-8' }));
       anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = 'zentropy-typography.css';
+      anchor.download = 'zain-typography.css';
       anchor.hidden = true;
       document.body.append(anchor);
       anchor.click();
-      status.textContent = 'CSS download started. Load the named typeface in your project, then apply the zentropy-type class to your text.';
+      status.textContent = 'CSS download started. Load the named typeface in your project, then apply the zain-type class to your text.';
     } catch (_) {
       status.textContent = 'The CSS could not be downloaded. Your settings are still here.';
     } finally {
