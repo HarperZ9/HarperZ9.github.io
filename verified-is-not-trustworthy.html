@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verified Is Not Trustworthy · Zain Dana Harper</title>
+<meta name="description" content="Five domains expose the same gap between a narrow technical check and the larger property people trust it to warrant.">
+<link rel="canonical" href="https://harperz9.github.io/verified-is-not-trustworthy.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Verified Is Not Trustworthy">
+<meta property="og:description" content="Five domains expose the same gap between a narrow technical check and the larger property people trust it to warrant.">
+<meta property="og:url" content="https://harperz9.github.io/verified-is-not-trustworthy.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/witnessing-spine.png">
+<meta property="og:image:alt" content="Verified Is Not Trustworthy">
+<meta property="article:published_time" content="2026-06-20">
+<meta property="article:author" content="Zain Dana Harper">
+<meta property="article:section" content="Writing">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Verified Is Not Trustworthy">
+<meta name="twitter:description" content="Five domains expose the same gap between a narrow technical check and the larger property people trust it to warrant.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/witnessing-spine.png">
+<link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
+<style>
+  .essay p{margin:0 0 .95rem;max-width:56ch;line-height:1.62}
+  .essay p:first-of-type{margin-top:.1rem}
+  .essay strong,.essay b{color:var(--teal);font-weight:600}
+  .essay h2{font-family:var(--display);font-weight:600;
+    font-size:1.16rem;letter-spacing:-.012em;color:var(--ink);margin:1.6rem 0 .55rem}
+  .essay hr{border:none;border-top:1px solid var(--rule);margin:1.7rem 0}
+  .essay ul{list-style:none;margin:.4rem 0 .95rem;padding:0}
+  .essay ul li{position:relative;padding-left:1.15rem;margin:0 0 .4rem;max-width:56ch;line-height:1.52}
+  .essay ul li::before{content:"";position:absolute;left:.05rem;top:.62em;width:.34rem;height:.34rem;
+    background:var(--teal);border-radius:50%}
+  .essay-sub{font-family:var(--body);font-style:italic;color:var(--ink-soft);
+    font-size:1.05rem;line-height:1.55;margin:.1rem 0 0;max-width:60ch}
+  .essay-meta{font-family:var(--mono);font-size:.62rem;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--tag);margin:.7rem 0 0;line-height:1.7}
+  .essay-sig{font-family:var(--body);font-style:italic;color:var(--ink-soft);
+    font-size:.97rem;line-height:1.55;margin:1.4rem 0 0;padding-top:.95rem;border-top:1px solid var(--rule);max-width:62ch}
+  .totop{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--teal-soft);text-decoration:none;border-bottom:1px solid transparent}
+  .totop:hover{border-color:var(--teal-soft)}
+</style>
+</head>
+<body class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="index.html">Home</a> <a href="publications.html">Writing</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<nav class="docnav" aria-label="Where this piece sits"><span class="where">Writing · Essays and letters</span><span class="switch"><a href="publications.html">All writing</a><a href="publications.html#essays">More essays</a><a href="witnessing-spine.html">The Witnessing Spine</a></span></nav>
+
+<main id="main">
+<article class="sheet essay">
+  <header class="mast">
+    <p class="role" style="margin-bottom:.55rem">Essay</p>
+    <h1 class="mast-title">Verified Is Not Trustworthy</h1>
+    <p class="essay-sub">A pattern that turns up in five different corners of finance and technology, and what it says about how we decide what to trust.</p>
+    <p class="essay-meta">Zain Dana Harper · 2026 · companion to <a class="inline" href="https://doi.org/10.5281/zenodo.20778927">The Witnessing Spine</a></p>
+  </header>
+
+  <p>There is a move we make constantly and rarely notice. A system verifies something (a signature checks out, a certificate is current, a backtest looks strong, a transaction is valid on-chain), and on the strength of that verification, we trust the thing. We treat the check and the trust as one act. They are not. A check confirms a narrow, technical fact. Trust is a claim about a much larger property the check does not actually establish. Most of the time the gap between them is harmless. Sometimes it is where the entire failure lives.</p>
+
+  <p>Over the past stretch I ran five adversarial reviews, each one taking the strongest honest case <em>for</em> an industry claim and testing it against the primary literature until it broke. They were meant to be independent: different sectors, different evidence, different experts. Financial-AI provenance. Modernizing mainframe COBOL with AI. Whether machine learning beats classical methods in markets. Whether DeFi is "trustless." Whether security certifications mean a vendor is secure. Five unrelated questions.</p>
+
+  <p>They broke in the same place.</p>
+
+  <p><strong>Provenance.</strong> Regulators now require that the origin and lineage of a financial model be documented and auditable. The tooling can sign the bytes and name the signer, but it cannot witness that the training data was clean, and the enterprise platforms record lineage as ordinary, editable database rows. <em>Documented</em> is not <em>verified</em>.</p>
+
+  <p><strong>COBOL.</strong> AI can translate the code, and the demos are real. But the hard part of moving a bank off a forty-year-old system was never translation: it is proving the new program behaves identically to the old one, with no written specification to check against, in a domain where a sub-penny rounding difference is a regulatory event. <em>Translated</em> is not <em>equivalent</em>.</p>
+
+  <p><strong>Quant ML.</strong> Machine learning does add genuine value in specific market tasks. But "reliably beats classical methods" is inflated by costs that get quietly omitted, by edges (profitable advantages) that live in stocks too small to trade at size, and by the enormous number of model variants silently tried before one looks good. <em>A strong backtest</em> is not <em>realized return</em>.</p>
+
+  <p><strong>DeFi.</strong> "Don't trust, verify" is the slogan. But cryptographic verification confirms a transaction is <em>valid</em>: it says nothing about whether the price feed was manipulated, the bridge validators were compromised, or three large holders control the governance vote. There is even a theorem: you cannot connect two blockchains without trusting some third party. Trust isn't removed; it moves somewhere less visible. <em>Verified</em> is not <em>safe</em>.</p>
+
+  <p><strong>Enterprise security.</strong> A SOC 2 or FedRAMP certificate attests that described controls were tested over a past window, within a scope the vendor itself chose. Companies holding current certifications are breached regularly, often through the build pipeline the audit never looked at: the automated steps that turn source code into shipped software. <em>Attested</em> is not <em>assured</em>.</p>
+
+  <p>Five sectors. One shape: <strong>a verified-looking artifact mistaken for the property it is taken to warrant.</strong> Once you see it, you cannot unsee it. And the most striking part is that the last review closed back onto the first: the fix for un-inspectable software supply chains (reproducible builds, signed provenance you can re-check yourself) is the same mechanism the provenance review identified for regulated AI. It is one gap, not five.</p>
+
+  <p>There is also a way to close it, and it is the same move every time. Don't accept the artifact's self-report. Re-derive the property from evidence <em>outside</em> the thing that's claiming it. Account honestly for what you did and did not check. And give a three-valued verdict instead of a binary one: it matches, it drifts, or it cannot be verified, and never quietly fill that last case with a guess. Much of the harm in all five sectors comes from treating "cannot be verified" as "fine."</p>
+
+  <p>I want to be exact about what this is, because the work is <em>about</em> not over-claiming and would be a hypocrite otherwise. This is a research synthesis, not a proof. It is AI-assisted: research agents gathered and cross-checked sources in parallel; I did the synthesis, adjudicated the verdicts, and independently re-verified the load-bearing claims, and several first-pass claims were corrected or dropped along the way, which is the discipline working rather than failing. The strongest claim here (that these five are the <em>same</em> gap rather than five merely similar ones) I label as an argument, not a theorem. It is exactly as strong as its evidence, and no stronger.</p>
+
+  <p>The full corpus (five sourced reviews and a synthesis, with a SHA-256 manifest staking a dated claim on every file) is public:</p>
+  <ul>
+    <li><strong>GitHub:</strong> <a class="inline" href="https://github.com/HarperZ9/witnessing-spine" translate="no">github.com/HarperZ9/witnessing-spine</a></li>
+    <li><strong>Zenodo:</strong> <a class="inline" href="https://doi.org/10.5281/zenodo.20778927">10.5281/zenodo.20778927</a></li>
+  </ul>
+
+  <p>If it's wrong, that is the most useful thing you could tell me. It is built to be attacked.</p>
+
+  <p class="essay-sig">Zain Dana Harper is an independent researcher in Seattle. This corpus is a companion to a longer philosophical argument, <a class="inline" href="conferred-existence-essay.html">Conferred Existence</a>, on the same theme: that nothing (a model, a market, a machine, or a person) carries its own warrant. &nbsp;<a class="totop" href="#">↑ top</a></p>
+</article>
+</main>
+</body>
+</html>

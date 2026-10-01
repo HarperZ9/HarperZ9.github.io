@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import LiveBoard from "./LiveBoard";
-import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
+import { EXTERNAL_ACTIONS, NEWEST_WRITING, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
 import "./App.css";
@@ -285,7 +285,7 @@ function IdentityHero() {
         <nav className="edition-links" aria-label="Mission routes">
           <a href="/career/Flywheel-Platform-Brief.pdf">The Flywheel platform brief</a>
           <a href="/catalog.html">Public tool catalog</a>
-          <a href="/publications.html">Essays and publications</a>
+          <a href="/publications.html">Writing</a>
           <a href="/checking-the-machines.html">Open letter: checking the machines</a>
         </nav>
       </div>
@@ -398,6 +398,36 @@ function WkfSquare({ first }: { first: "outsider" | "operator" | "same-day" }) {
   );
 }
 
+const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August",
+  "September", "October", "November", "December"];
+
+function humanDate(value: string) {
+  const [year, month, day] = value.split("-").map(Number);
+  return `${day} ${MONTH_NAMES[month - 1]} ${year}`;
+}
+
+// The three newest pieces across every Writing section. Generated into site-routes.ts
+// from publications/data/index.json by scripts/render-route-registry.mjs.
+function NewestWriting() {
+  return (
+    <section className="newest-writing" aria-labelledby="newest-writing-title">
+      <div className="newest-writing-head">
+        <h3 id="newest-writing-title">Newest writing</h3>
+        <a className="text-link" href="/publications.html">All writing</a>
+      </div>
+      <ol className="newest-writing-list">
+        {NEWEST_WRITING.map((item) => (
+          <li key={item.href}>
+            <p className="recent-meta">{item.kind} · <time dateTime={item.publishedAt}>{humanDate(item.publishedAt)}</time></p>
+            <h4><a href={item.href}>{item.title}</a></h4>
+            <p>{item.summary}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 function RecentWork() {
   return (
     <section id="recent-work" className="section recent-section" aria-labelledby="recent-title">
@@ -411,6 +441,7 @@ function RecentWork() {
           <p className="recent-meta">Investigation and op-ed. Record published 23 September 2026, op-ed added 25 September 2026.</p>
           <p>By the record's account, the organization that ran the model held the decisive facts in each of nine AI agent incidents from 2026. In six of them, someone else told the public first.</p>
           <p><a className="text-link" href="/who-knew-first.html">Read the investigation</a></p>
+          <p className="recent-series">Part of a series: <a href="/who-knew-first-series.html">Who Knew First, and what it opened</a></p>
         </div>
         <figure className="nine-square" aria-labelledby="wkf-chart-title">
           <figcaption>
@@ -433,6 +464,7 @@ function RecentWork() {
           </p>
         </figure>
       </article>
+      <NewestWriting />
       <div className="recent-grid">
         {RECENT_WORK.map((item) => (
           <article className="recent-card" key={item.href}>

@@ -37,6 +37,16 @@
 }
 .site-nav *{box-sizing:border-box}
 .site-nav a{color:inherit;text-decoration:none}
+/* The back-link line under the bar on a piece of writing: section, then the way back
+   to its hub. A floor only; doc.css and publication-article.css refine it. */
+.docnav{
+  width:min(100% - 2rem,62rem);margin:1rem auto .5rem;
+  display:flex;justify-content:space-between;align-items:baseline;gap:.4rem 1rem;flex-wrap:wrap;
+  font-family:var(--font-sans);font-size:.9rem;position:relative;z-index:1;
+}
+.docnav .switch{display:flex;flex-wrap:wrap;gap:.2rem 1.15rem}
+.docnav a{color:inherit;text-underline-offset:.2em;min-block-size:44px;display:inline-flex;align-items:center}
+@media print{.docnav{display:none}}
 @media (forced-colors: active){
   .site-nav,
   .site-nav .sn-home-field,
@@ -162,6 +172,11 @@
     position:absolute;left:var(--gutter,1rem);right:var(--gutter,1rem);top:calc(100% + .25rem);
     min-width:0;max-width:none;max-height:calc(100dvh - 5rem);overflow:auto;
   }
+}
+/* Seven pillars, GitHub and the brand fill the bar near the 64rem fold. Between the fold
+   and 80rem the lab name after the person's name steps aside so no link sits under it. */
+@media(min-width:64.0625rem) and (max-width:80rem){
+  #site-nav.site-nav .sn-brand-lab{display:none}
 }
 /* The brand word fits beside the menu button down to 360px. The older sheets hide
    it at 430px with !important; the id rule here outranks them. */

@@ -680,5 +680,12 @@ window.CARD_DATA = {
     "role": "EDITORIAL ESSAY",
     "word": "Vintages",
     "headline": "The Number Has a Vintage"
+  },
+  "who-knew-first-series": {
+    "publication": true,
+    "editorial": true,
+    "role": "SERIES",
+    "word": "Series",
+    "headline": "Who Knew First, and what it opened"
   }
 };

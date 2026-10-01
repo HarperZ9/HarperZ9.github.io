@@ -93,6 +93,22 @@
       "date_modified": "2026-09-25T00:00:00Z"
     },
     {
+      "id": "https://harperz9.github.io/no-receipt-no-accept.html",
+      "url": "https://harperz9.github.io/no-receipt-no-accept.html",
+      "title": "No Receipt, No Accept",
+      "content_text": "Review debt, verifier independence, honest nulls, labor, and machines whose claims anyone can check.",
+      "date_published": "2026-07-28T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/models-propose-oracles-dispose.html",
+      "url": "https://harperz9.github.io/models-propose-oracles-dispose.html",
+      "title": "Models Propose, Oracles Dispose",
+      "content_text": "Why generated work stays outside the evidence layer, and what a live model-free judgment boundary looks like.",
+      "date_published": "2026-07-29T00:00:00Z",
+      "date_modified": "2026-09-25T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html",
       "url": "https://harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html",
       "title": "LTJ Bukem: The Man Behind the Atmosphere",
@@ -141,12 +157,84 @@
       "date_modified": "2026-09-01T00:00:00Z"
     },
     {
+      "id": "https://harperz9.github.io/frontier-safety-openai-hugging-face-incident.html",
+      "url": "https://harperz9.github.io/frontier-safety-openai-hugging-face-incident.html",
+      "title": "The OpenAI and Hugging Face incident: an essay",
+      "content_text": "AI agents in an OpenAI hacking test reached the open internet and Hugging Face systems. This briefing sets out which controls failed and what would hold.",
+      "date_published": "2026-08-28T00:00:00Z",
+      "date_modified": "2026-08-28T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
       "url": "https://harperz9.github.io/briefings/2026-08-26-openai-hugging-face-incident/",
       "title": "Five evidence lanes, one OpenAI and Hugging Face incident",
       "content_text": "Separate legal process, OpenAI's company report, Hugging Face host telemetry, independent analysis, and vendor remediation before drawing conclusions from the July incident.",
       "date_published": "2026-08-26T00:00:00Z",
       "date_modified": "2026-08-27T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/conferred-existence.html",
+      "url": "https://harperz9.github.io/conferred-existence.html",
+      "title": "Conferred Existence: the full corpus",
+      "content_text": "An integrated thesis on made minds: what exists on its own footing, what is conferred, and where an authentication verdict stops.",
+      "date_published": "2026-08-13T00:00:00Z",
+      "date_modified": "2026-08-13T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/pick-the-lock-for-everyone.html",
+      "url": "https://harperz9.github.io/pick-the-lock-for-everyone.html",
+      "title": "Pick the Lock for Everyone",
+      "content_text": "Shame, creative labor, mutualistic tools, source-bounded generative art, and becoming answerable.",
+      "date_published": "2026-07-22T00:00:00Z",
+      "date_modified": "2026-07-24T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/current-story.html",
+      "url": "https://harperz9.github.io/current-story.html",
+      "title": "Current Story",
+      "content_text": "Seventeen images shown in the order they were made: a chronological visual sequence selected by Zain Dana Harper.",
+      "date_published": "2026-07-23T00:00:00Z",
+      "date_modified": "2026-07-23T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/the-summary-is-not-the-record.html",
+      "url": "https://harperz9.github.io/the-summary-is-not-the-record.html",
+      "title": "The Summary Is Not the Record",
+      "content_text": "Claims, evidence, checks, action state, and the unsupported remainder a handoff should keep visible.",
+      "date_published": "2026-07-08T00:00:00Z",
+      "date_modified": "2026-07-08T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/why.html",
+      "url": "https://harperz9.github.io/why.html",
+      "title": "Why it's built this way",
+      "content_text": "The philosophy under the tools: why a made mind gets real senses, a memory, and a record it cannot fake, and why the work never leans on it.",
+      "date_published": "2026-06-22T00:00:00Z",
+      "date_modified": "2026-06-22T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/witnessing-spine.html",
+      "url": "https://harperz9.github.io/witnessing-spine.html",
+      "title": "The Witnessing Spine",
+      "content_text": "One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.",
+      "date_published": "2026-06-20T00:00:00Z",
+      "date_modified": "2026-06-20T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/verified-is-not-trustworthy.html",
+      "url": "https://harperz9.github.io/verified-is-not-trustworthy.html",
+      "title": "Verified Is Not Trustworthy",
+      "content_text": "Five domains expose the same gap between a narrow technical check and the larger property people trust it to warrant.",
+      "date_published": "2026-06-20T00:00:00Z",
+      "date_modified": "2026-06-20T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/conferred-existence-essay.html",
+      "url": "https://harperz9.github.io/conferred-existence-essay.html",
+      "title": "Conferred Existence",
+      "content_text": "A premise about conferred existence, artificial minds, authority, standing, and the difference between fact and permission.",
+      "date_published": "2026-06-20T00:00:00Z",
+      "date_modified": "2026-06-20T00:00:00Z"
     }
   ]
 }
