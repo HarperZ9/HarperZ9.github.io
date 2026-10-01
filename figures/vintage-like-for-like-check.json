@@ -1,0 +1,60 @@
+{
+  "id": "vintage-like-for-like-check",
+  "title": "Figure 2. The like-for-like check",
+  "claim": "Six fields to match before comparing two official employment numbers, with the mismatch each field prevents.",
+  "type": "checklist",
+  "columns": [
+    "Field to carry",
+    "Question to ask",
+    "A mismatch can create"
+  ],
+  "rows": [
+    [
+      "Series identity and definition",
+      "Is this the same series, scope, geography and industry definition?",
+      "A resemblance in labels between different populations or reconstructed categories"
+    ],
+    [
+      "Reference period",
+      "Do both values describe the same month or the same change interval?",
+      "A release-date comparison mistaken for an event-date comparison"
+    ],
+    [
+      "Value and units",
+      "Is this a level, a monthly change, a percentage, an index or a revision amount?",
+      "Arithmetic across unlike quantities"
+    ],
+    [
+      "Adjustment status",
+      "Are both values seasonally adjusted, or both not seasonally adjusted?",
+      "A difference caused by separate seasonal processing"
+    ],
+    [
+      "Vintage or release date",
+      "What information was available at each publication date?",
+      "Hindsight carried into a real-time evaluation"
+    ],
+    [
+      "Revision stage",
+      "First, second or third estimate, preliminary or final benchmark, or reconstruction?",
+      "An ordinary process stage described as a new real-world event"
+    ]
+  ],
+  "scope": "One proposed reporting check for official employment estimates.",
+  "units": "None across the figure; the value row requires the units the source declares.",
+  "denominator": "Not applicable. The six rows are reporting fields, not sampled observations.",
+  "date": "Proposed 1 October 2026 from sources observed the same day.",
+  "provenance": [
+    "ces-faq",
+    "ces-vintage",
+    "ces-revisions",
+    "ces-naics",
+    "rtdsm",
+    "croushore-stark"
+  ],
+  "transformation": "Qualitative mapping from each field to the mismatch it prevents. No score, ranking, weight or pooled metric is computed.",
+  "uncertainty": "The checklist has not been tested as a reader-comprehension tool and may need additions for other statistics.",
+  "limitations": "It checks whether two values describe the same thing. It does not judge estimator quality, cause or policy meaning.",
+  "doesNotProve": "That a comparison is useful or that the source series is free of error.",
+  "alt": "Table of six fields to match before comparing official employment numbers: series identity, reference period, value and units, adjustment status, vintage, and revision stage, each with its question and the mismatch it prevents."
+}

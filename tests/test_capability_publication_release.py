@@ -13,11 +13,21 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-D7LI6_j0.js",
     "assets/index-DkLmGDFh.js",
     "assets/index-B5IIN--D.js",
     "who-pays-the-referees.html",
     "publications/data/listings/who-pays-the-referees.json",
     "img/og/who-pays-the-referees.png",
+    "the-number-has-a-vintage.html",
+    "publications/data/records/the-number-has-a-vintage.json",
+    "img/og/the-number-has-a-vintage.png",
+    "figures/vintage-benchmark-records.html",
+    "figures/vintage-benchmark-records.json",
+    "figures/vintage-benchmark-records.svg",
+    "figures/vintage-like-for-like-check.html",
+    "figures/vintage-like-for-like-check.json",
+    "figures/vintage-like-for-like-check.svg",
     "assets/index-DMn8Bp7X.js",
     "support-has-more-than-one-record.html",
     "publications/data/records/support-has-more-than-one-record.json",
@@ -460,7 +470,12 @@ RELEASE_PATHS = (
 # (index-DkLmGDFh.js). who-pays-the-referees.html replaces its dated "not yet on that
 # page" line with the published follow-up. The original author paragraphs and the
 # nine-case record remain unchanged.
-REVIEWED_RELEASE_SHA256 = "ba73c4817f37d92d7dba3ca7b70c8b07efd16a193ad2863baad7a4005d5ebac4"
+# October 1, 2026: reviewed Atlas essay The Number Has a Vintage, its source record,
+# two figures and share card, rebased onto the Who Pays the Referees and Who Knew First
+# follow-up releases; the publication index, feeds, build receipt, route registry, site
+# index and home bundle (index-D7LI6_j0.js) are regenerated on that base. The bundle
+# built on the old base, index-BLnRqjW-.js, was never published and is gone.
+REVIEWED_RELEASE_SHA256 = "12dae9b8078c8364a0cd1f9069006039655553bc9aa2349b07a22ec0f6d41e16"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -623,7 +638,15 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: Who Knew First's dated follow-up moves its route date to
     # 2026-10-01, so the bundle rebuilt from the registry is index-DkLmGDFh.js with the
     # same sheet. index-B5IIN--D.js stays as retained history.
-    current_js = "index-DkLmGDFh.js"
+    # October 1, 2026: The Number Has a Vintage joins the Research routes on the Who
+    # Knew First follow-up base, so the bundle rebuilt from the registry is
+    # index-D7LI6_j0.js with the same sheet. index-DkLmGDFh.js stays as retained
+    # history; index-BLnRqjW-.js, built on the old base, was never published.
+    current_js = "index-D7LI6_j0.js"
+    previous_followup_js = "index-DkLmGDFh.js"
+    assert previous_followup_js not in source
+    assert (ROOT / "assets" / previous_followup_js).is_file()
+    assert f"assets/{previous_followup_js}" in RELEASE_PATHS
     previous_referees_js = "index-B5IIN--D.js"
     assert previous_referees_js not in source
     assert (ROOT / "assets" / previous_referees_js).is_file()
@@ -634,7 +657,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert f"assets/{previous_atlas_js}" in RELEASE_PATHS
     for unpublished_js in (
         "index-RXS41pPF.js", "index-CUXkFuw-.js", "index-Brb2IBwO.js", "index-CGMskzEB.js",
-        "index-BzE0lc-H.js",
+        "index-BzE0lc-H.js", "index-BLnRqjW-.js",
     ):
         assert not (ROOT / "assets" / unpublished_js).exists()
         assert f"assets/{unpublished_js}" not in RELEASE_PATHS
