@@ -117,14 +117,24 @@ def test_series_hub_carries_the_plan_text_and_links_only_published_parts() -> No
         assert not re.search(hash_shape, page), "no hashes on a reader surface"
 
 
-def test_series_parts_match_the_aside_on_the_published_piece() -> None:
-    """The hub and the aside on Who Pays the Referees name the same five questions."""
-    aside = re.search(r'<aside class="wpr-series".*?</aside>', read("who-pays-the-referees.html"), re.S).group(0)
-    items = re.findall(r"<li[^>]*><strong>(.*?)\.</strong> <span class=\"wpr-label\">[^<]*</span> (.*?)</li>", aside)
-    assert [(title, question) for title, question in items] == [
-        (part["title"], part["question"]) for part in SERIES["parts"]
-    ]
-    assert 'href="who-knew-first-series.html"' in aside
+def test_series_parts_match_the_aside_on_each_published_piece() -> None:
+    """The hub and the aside on every published part name the same five questions and statuses."""
+    published = [part for part in SERIES["parts"] if part["id"]]
+    assert [part["id"] for part in published] == ["who-pays-the-referees", "the-terms-for-telling"]
+    for page_part in published:
+        aside = re.search(r'<aside class="wpr-series".*?</aside>', read(f'{page_part["id"]}.html'), re.S).group(0)
+        items = re.findall(r"<li[^>]*><strong>(.*?)\.</strong> <span class=\"wpr-label\">([^<]*)</span> (.*?)</li>", aside)
+        assert [(text(title), question) for title, _status, question in items] == [
+            (part["title"], part["question"]) for part in SERIES["parts"]
+        ]
+        for (title, status, _question), part in zip(items, SERIES["parts"]):
+            if part["id"] == page_part["id"]:
+                assert status == "This piece." and "href=" not in title
+            elif part["id"]:
+                assert status.startswith("Published") and f'href="{part["id"]}.html"' in title
+            else:
+                assert status == "Planned." and "href=" not in title
+        assert 'href="who-knew-first-series.html"' in aside
 
 
 def test_redirect_stubs_cover_every_old_anchor_and_match_their_generator() -> None:

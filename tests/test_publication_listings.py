@@ -22,7 +22,7 @@ def test_every_listing_validates_and_points_at_a_real_page() -> None:
     assert {path.stem for path in LISTINGS} == {
         "who-knew-first", "checking-the-machines", "frontier-safety",
         "openai-hugging-face-incident", "a-witness-should-not-become-a-ruler",
-        "who-pays-the-referees",
+        "who-pays-the-referees", "the-terms-for-telling",
         # 1 October 2026: the hand-written rows on publications.html and writing.html
         # became listings, so the Writing hub is generated from one source.
         "models-propose-oracles-dispose", "no-receipt-no-accept", "pick-the-lock-for-everyone",

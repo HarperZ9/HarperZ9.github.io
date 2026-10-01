@@ -11,8 +11,8 @@ from tools.publication_listings import load_listing
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "who-pays-the-referees.html"
-PLANNED = ("The Terms for Telling", "Who Kept the Books", "The Maker Is Part of the Story", "A Check It Cannot Predict")
-PLANNED_SLUGS = ("the-terms-for-telling", "who-kept-the-books", "the-maker", "a-check-it-cannot-predict")
+PLANNED = ("Who Kept the Books", "The Maker Is Part of the Story", "A Check It Cannot Predict")
+PLANNED_SLUGS = ("who-kept-the-books", "the-maker", "a-check-it-cannot-predict")
 
 
 def source() -> str:
@@ -35,13 +35,15 @@ def test_listing_validates_and_joins_the_hub_and_the_series() -> None:
     assert "<loc>https://harperz9.github.io/who-pays-the-referees.html</loc>" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")
 
 
-def test_series_panel_names_planned_pieces_without_linking_them() -> None:
+def test_series_panel_links_published_pieces_and_names_planned_ones_without_links() -> None:
     page = source()
     panel = re.search(r'<aside class="wpr-series".*?</aside>', page, re.S).group(0)
     for title in PLANNED:
         assert title in panel
-    assert panel.count("Planned.") == 4
-    assert re.findall(r'href="([^"]+)"', panel) == ["who-knew-first.html", "who-knew-first-series.html"]
+    assert panel.count("Planned.") == 3
+    assert "Published 1 October 2026." in panel
+    assert re.findall(r'href="([^"]+)"', panel) == [
+        "who-knew-first.html", "the-terms-for-telling.html", "who-knew-first-series.html"]
     for slug in PLANNED_SLUGS:
         assert slug not in page
 
