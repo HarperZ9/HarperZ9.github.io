@@ -436,7 +436,9 @@ RELEASE_PATHS = (
 # credential; model-policy generation failure and knowledge-exam scope preserved.
 # September 30, 2026: reviewed Azure DevOps Applied Skills credential and
 # Google model-evaluation course badge; assessment and runtime limits retained.
-REVIEWED_RELEASE_SHA256 = "bb1b56fcf809800867c9e0cb9e56f6ac8fa42d87135ae558ad646df396af4da6"
+# October 1 issuer record, September 30 local completion: reviewed BigQuery
+# validation badge and Claude Bedrock coursework; full LF inventory grouped intact.
+REVIEWED_RELEASE_SHA256 = "f82276ed245c63135d00ca131aaa477a828312eea18c40ecd35c41efda95f127"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

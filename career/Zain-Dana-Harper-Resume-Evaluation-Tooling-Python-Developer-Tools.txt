@@ -54,6 +54,6 @@ Selected Open-Source Contributions: 6 Merged
 
 Credentials, Training, and Education
 
-Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Google skill badges: advanced small-language-model coding; multi-agent systems. Cisco Ethical Hacker course certificate. Coursework: Google MLOps model evaluation; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.
+Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction, MLOps evaluation. Coursework: LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

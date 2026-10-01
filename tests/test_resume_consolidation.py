@@ -173,6 +173,18 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert 'score_percent' not in evaluation_course
     assert evaluation_course['url_role'] == 'Official course description'
     assert evaluation_course['title'] in cv
+    bedrock = next(c for c in credentials if c['id'] == 'claude-amazon-bedrock')
+    assert bedrock['kind'] == 'Course-completion badge' and bedrock['score_percent'] == 100
+    assert len(bedrock['assessment_question_counts']) == 8 and sum(bedrock['assessment_question_counts']) == 57
+    assert bedrock['title'] in cv
+    predictive = next(c for c in credentials if c['id'] == 'google-bigquery-predictive')
+    assert predictive['kind'] == 'Assessed skill badge'
+    assert (predictive['course_level'], predictive['challenge_level']) == ('Intermediate', 'Advanced')
+    assert (predictive['score'], predictive['maximum_score'], predictive['checkpoints_passed']) == (100, 100, 7)
+    assert predictive['title'] in cv
+    assert predictive['earned'] == '2026-10-01' and predictive['local_completion_date'] == '2026-09-30'
+    assert predictive['url'] == 'https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url'
+    assert 'loaded_event_rows' not in predictive and 'model_evaluate' not in predictive
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

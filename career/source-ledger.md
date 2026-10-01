@@ -609,3 +609,23 @@ Google Skills / Google Cloud issued Machine Learning Operations (MLOps) with Age
 Official course description: https://www.skills.google/course_templates/1080
 
 The assessed knowledge concerns predictive/generative model-evaluation concepts, metrics and methodology selection, and generative AI evaluation considerations. This course-completion badge does not establish a practical lab result, professional certification, study hours, optional lesson completion, or production implementation.
+
+## Claude with Amazon Bedrock and BigQuery predictive analysis
+
+### claude-amazon-bedrock
+
+Anthropic Claude Academy issued Claude with Amazon Bedrock as a course-completion badge September 30, 2026. All eight required knowledge quizzes passed at 100% on first attempts: 57/57 questions in total, including a 21/21 final. Badge identifier: 59286159-b6c8-4c31-b950-df5b6243a862.
+
+https://academy.claude.com/verify/52320d73caed0587e8c055e2eac4b90f
+
+This records required-quiz completion. It does not establish an AWS certification, AWS deployment experience, optional lesson completion, or study hours.
+
+### google-bigquery-predictive
+
+Google Skills / Google Cloud awarded Perform Predictive Data Analysis in BigQuery as an assessed skill badge. Local course completion was September 30, 2026; the public issuer badge displays October 1, 2026 as its issue date and classifies it as Intermediate Validation. No cause for the date difference is inferred. The Intermediate course has an Advanced challenge. The first lab session completed all seven checkpoints at 100/100. Assessed work included SQL ingestion, SQL feature UDFs, logistic-regression training, and predictions on held-out data.
+
+Public issuer verification: https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url
+
+Official course description: https://www.skills.google/course_templates/656
+
+The work took place in a provider assessment environment. No production deployment, general model-quality claim, or training-example count is inferred. Dataset-loading counts and assessment-only model metrics are excluded from these career claims.

@@ -198,7 +198,7 @@ Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.
 
 Credentials and Continuing Education
 
-September 2026 completions. Verification: harperz9.github.io/career/source-ledger.md.
+2026 completions. Verification: harperz9.github.io/career/source-ledger.md.
 
 Qualys Certified Specialist: Policy Audit; Custom Assessment and Remediation; Vulnerability Management Detection and Response; Qualys Kubernetes and Container Security; Qualys TotalCloud Exam; Endpoint Detection and Response | Issued 2026-09-30; expire 2028-09-29
 
@@ -220,39 +220,17 @@ Design solutions that align with MCRA and MCSB. Advanced Microsoft Learn module 
 
 Linux Foundation Course-Completion Certificates
 
-- LFEL1012: Secure AI/ML-Driven Software Development
+LFEL1012: Secure AI/ML-Driven Software Development; LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks; LFD121: Developing Secure Software
 
-- LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks
+LFS182: Securing Your Software Supply Chain with Sigstore; LFEL1001: Understanding the EU Cyber Resilience Act (CRA); LFS118: Ethical Principles for Conversational AI
 
-- LFD121: Developing Secure Software
+LFEL1006: Securing Projects with OpenSSF Scorecard; LFEL1005: Security Self-Assessments for Open Source Projects; LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
 
-- LFS182: Securing Your Software Supply Chain with Sigstore
+LFD125: Security for Software Development Managers; LFS180: Introduction to DevSecOps for Managers; SKF100: OWASP Top 10 Security Threats
 
-- LFEL1001: Understanding the EU Cyber Resilience Act (CRA)
+LFS184: Introduction to JavaScript Security; LFC108: Cybersecurity Essentials; LFEL1004: Authentication and Authorization for Web/API
 
-- LFS118: Ethical Principles for Conversational AI
-
-- LFEL1006: Securing Projects with OpenSSF Scorecard
-
-- LFEL1005: Security Self-Assessments for Open Source Projects
-
-- LFEL1007: Automating Supply Chain Security: SBOMs and Signatures
-
-- LFD125: Security for Software Development Managers
-
-- LFS180: Introduction to DevSecOps for Managers
-
-- SKF100: OWASP Top 10 Security Threats
-
-- LFS184: Introduction to JavaScript Security
-
-- LFC108: Cybersecurity Essentials
-
-- LFEL1004: Authentication and Authorization for Web/API
-
-- LFEL1008: Migrating AI Workflows Across Platforms
-
-- LFS147: Introduction to AI/ML Toolkits with Kubeflow
+LFEL1008: Migrating AI Workflows Across Platforms; LFS147: Introduction to AI/ML Toolkits with Kubeflow
 
 Additional Coursework and Skill Badges
 
@@ -262,9 +240,11 @@ Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2
 
 Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.
 
+Google: Perform Predictive Data Analysis in BigQuery | Skill badge, issued 2026-10-01; 100/100, seven checkpoints. Intermediate course/Advanced challenge. Lab work: SQL ingestion, feature UDFs, logistic regression, held-out predictions.
+
 Google Skills: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation | Intermediate course-completion badge, 2026-09-30. Predictive/generative evaluation methods.
 
-Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026
+Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API; Claude with Amazon Bedrock | Issued September 30, 2026
 
 UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%. Assessed human rights, fairness, risk controls, incident reporting, and sustainability.
 

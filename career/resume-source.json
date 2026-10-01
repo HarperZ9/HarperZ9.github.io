@@ -566,7 +566,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Google skill badges: advanced small-language-model coding; multi-agent systems. Cisco Ethical Hacker course certificate. Coursework: Google MLOps model evaluation; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy; UNESCO AI ethics course certificate. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction, MLOps evaluation. Coursework: LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -589,7 +589,9 @@
             "google-multi-agent",
             "cisco-ethical-hacker",
             "ms-devops-security",
-            "google-mlops-model-evaluation"
+            "google-mlops-model-evaluation",
+            "claude-amazon-bedrock",
+            "google-bigquery-predictive"
           ]
         },
         {
@@ -1350,7 +1352,7 @@
         },
         {
           "kind": "p",
-          "text": "September 2026 completions. Verification: harperz9.github.io/career/source-ledger.md."
+          "text": "2026 completions. Verification: harperz9.github.io/career/source-ledger.md."
         },
         {
           "kind": "p",
@@ -1419,121 +1421,55 @@
           "text": "Linux Foundation Course-Completion Certificates"
         },
         {
-          "kind": "li",
-          "text": "LFEL1012: Secure AI/ML-Driven Software Development",
+          "kind": "p",
+          "text": "LFEL1012: Secure AI/ML-Driven Software Development; LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks; LFD121: Developing Secure Software",
           "evidence": [
-            "lfel1012"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFS120: Conversational AI: Ensuring Compliance and Mitigating Risks",
-          "evidence": [
-            "lfs120"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFD121: Developing Secure Software",
-          "evidence": [
+            "lfel1012",
+            "lfs120",
             "lfd121"
           ]
         },
         {
-          "kind": "li",
-          "text": "LFS182: Securing Your Software Supply Chain with Sigstore",
+          "kind": "p",
+          "text": "LFS182: Securing Your Software Supply Chain with Sigstore; LFEL1001: Understanding the EU Cyber Resilience Act (CRA); LFS118: Ethical Principles for Conversational AI",
           "evidence": [
-            "lfs182"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFEL1001: Understanding the EU Cyber Resilience Act (CRA)",
-          "evidence": [
-            "lfel1001"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFS118: Ethical Principles for Conversational AI",
-          "evidence": [
+            "lfs182",
+            "lfel1001",
             "lfs118"
           ]
         },
         {
-          "kind": "li",
-          "text": "LFEL1006: Securing Projects with OpenSSF Scorecard",
+          "kind": "p",
+          "text": "LFEL1006: Securing Projects with OpenSSF Scorecard; LFEL1005: Security Self-Assessments for Open Source Projects; LFEL1007: Automating Supply Chain Security: SBOMs and Signatures",
           "evidence": [
-            "lfel1006"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFEL1005: Security Self-Assessments for Open Source Projects",
-          "evidence": [
-            "lfel1005"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFEL1007: Automating Supply Chain Security: SBOMs and Signatures",
-          "evidence": [
+            "lfel1006",
+            "lfel1005",
             "lfel1007"
           ]
         },
         {
-          "kind": "li",
-          "text": "LFD125: Security for Software Development Managers",
+          "kind": "p",
+          "text": "LFD125: Security for Software Development Managers; LFS180: Introduction to DevSecOps for Managers; SKF100: OWASP Top 10 Security Threats",
           "evidence": [
-            "lfd125"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFS180: Introduction to DevSecOps for Managers",
-          "evidence": [
-            "lfs180"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "SKF100: OWASP Top 10 Security Threats",
-          "evidence": [
+            "lfd125",
+            "lfs180",
             "skf100"
           ]
         },
         {
-          "kind": "li",
-          "text": "LFS184: Introduction to JavaScript Security",
+          "kind": "p",
+          "text": "LFS184: Introduction to JavaScript Security; LFC108: Cybersecurity Essentials; LFEL1004: Authentication and Authorization for Web/API",
           "evidence": [
-            "lfs184"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFC108: Cybersecurity Essentials",
-          "evidence": [
-            "lfc108"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFEL1004: Authentication and Authorization for Web/API",
-          "evidence": [
+            "lfs184",
+            "lfc108",
             "lfel1004"
           ]
         },
         {
-          "kind": "li",
-          "text": "LFEL1008: Migrating AI Workflows Across Platforms",
+          "kind": "p",
+          "text": "LFEL1008: Migrating AI Workflows Across Platforms; LFS147: Introduction to AI/ML Toolkits with Kubeflow",
           "evidence": [
-            "lfel1008"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "LFS147: Introduction to AI/ML Toolkits with Kubeflow",
-          "evidence": [
+            "lfel1008",
             "lfs147"
           ]
         },
@@ -1564,6 +1500,13 @@
         },
         {
           "kind": "p",
+          "text": "Google: Perform Predictive Data Analysis in BigQuery | Skill badge, issued 2026-10-01; 100/100, seven checkpoints. Intermediate course/Advanced challenge. Lab work: SQL ingestion, feature UDFs, logistic regression, held-out predictions.",
+          "evidence": [
+            "google-bigquery-predictive"
+          ]
+        },
+        {
+          "kind": "p",
           "text": "Google Skills: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation | Intermediate course-completion badge, 2026-09-30. Predictive/generative evaluation methods.",
           "evidence": [
             "google-mlops-model-evaluation"
@@ -1571,11 +1514,12 @@
         },
         {
           "kind": "p",
-          "text": "Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API | Issued September 30, 2026",
+          "text": "Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in action; Building with the Claude API; Claude with Amazon Bedrock | Issued September 30, 2026",
           "evidence": [
             "anthropic-mcp-advanced",
             "claude-code-in-action",
-            "building-claude-api"
+            "building-claude-api",
+            "claude-amazon-bedrock"
           ]
         },
         {
@@ -2173,6 +2117,56 @@
         "Evaluation metrics and methodology selection",
         "Generative AI evaluation considerations"
       ]
+    },
+    {
+      "id": "claude-amazon-bedrock",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude with Amazon Bedrock",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required knowledge quizzes passed at 100% on first attempts; 57/57 total, including a 21/21 final",
+      "assessment_question_counts": [
+        4,
+        7,
+        4,
+        4,
+        5,
+        4,
+        8,
+        21
+      ],
+      "badge_id": "59286159-b6c8-4c31-b950-df5b6243a862",
+      "url": "https://academy.claude.com/verify/52320d73caed0587e8c055e2eac4b90f",
+      "course_url": "https://academy.claude.com/courses/claude-with-amazon-bedrock",
+      "completion_evidence": "Issuer course-completion badge awarded after required knowledge quizzes; no AWS certification, deployment experience, or study-hour claim."
+    },
+    {
+      "id": "google-bigquery-predictive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Perform Predictive Data Analysis in BigQuery",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-10-01",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 7,
+      "checkpoints_total": 7,
+      "assessment_result": "100/100; seven checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url",
+      "url_role": "Public issuer badge verification",
+      "assessed_skills": [
+        "SQL data ingestion",
+        "SQL feature UDFs",
+        "Logistic-regression model training",
+        "Held-out prediction generation"
+      ],
+      "execution_scope": "Completed in the provider assessment environment; no production deployment, general model-performance claim, or inferred training-data count.",
+      "local_completion_date": "2026-09-30",
+      "issuer_classification": "Intermediate Validation",
+      "course_url": "https://www.skills.google/course_templates/656",
+      "badge_id": "a89c09d0-1424-44c3-9eed-7ccb50e45d9f"
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",

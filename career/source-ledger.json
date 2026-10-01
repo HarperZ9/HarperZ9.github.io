@@ -809,6 +809,58 @@
         "Generative AI evaluation considerations"
       ],
       "status": "Issued course-completion badge confirmed September 30, 2026; knowledge-quiz completion, not an assessed practical skill badge or professional certification."
+    },
+    {
+      "id": "claude-amazon-bedrock",
+      "provider": "Anthropic Claude Academy",
+      "kind": "Course-completion badge",
+      "title": "Claude with Amazon Bedrock",
+      "earned": "2026-09-30",
+      "score_percent": 100,
+      "assessment_result": "Eight required knowledge quizzes passed at 100% on first attempts; 57/57 total, including a 21/21 final",
+      "assessment_question_counts": [
+        4,
+        7,
+        4,
+        4,
+        5,
+        4,
+        8,
+        21
+      ],
+      "badge_id": "59286159-b6c8-4c31-b950-df5b6243a862",
+      "url": "https://academy.claude.com/verify/52320d73caed0587e8c055e2eac4b90f",
+      "course_url": "https://academy.claude.com/courses/claude-with-amazon-bedrock",
+      "completion_evidence": "Issuer course-completion badge awarded after required knowledge quizzes; no AWS certification, deployment experience, or study-hour claim.",
+      "status": "Issuer award confirmed September 30, 2026; credential type and assessment-only scope retained."
+    },
+    {
+      "id": "google-bigquery-predictive",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Perform Predictive Data Analysis in BigQuery",
+      "course_level": "Intermediate",
+      "challenge_level": "Advanced",
+      "earned": "2026-10-01",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 7,
+      "checkpoints_total": 7,
+      "assessment_result": "100/100; seven checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url",
+      "url_role": "Public issuer badge verification",
+      "assessed_skills": [
+        "SQL data ingestion",
+        "SQL feature UDFs",
+        "Logistic-regression model training",
+        "Held-out prediction generation"
+      ],
+      "execution_scope": "Completed in the provider assessment environment; no production deployment, general model-performance claim, or inferred training-data count.",
+      "local_completion_date": "2026-09-30",
+      "issuer_classification": "Intermediate Validation",
+      "course_url": "https://www.skills.google/course_templates/656",
+      "badge_id": "a89c09d0-1424-44c3-9eed-7ccb50e45d9f",
+      "status": "Issuer badge accepted and public record verified. Local course completion September 30, 2026; issuer displays issue date October 1, 2026. No cause for date difference inferred."
     }
   ],
   "limits": [
