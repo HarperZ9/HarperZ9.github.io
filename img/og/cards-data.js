@@ -674,6 +674,13 @@ window.CARD_DATA = {
     "word": "Referees",
     "headline": "Who Pays the Referees"
   },
+  "why-i-do-this": {
+    "publication": true,
+    "editorial": true,
+    "role": "PERSONAL ESSAY",
+    "word": "Why",
+    "headline": "Why I Do This"
+  },
   "the-terms-for-telling": {
     "publication": true,
     "editorial": true,

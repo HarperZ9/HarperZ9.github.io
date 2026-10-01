@@ -13,7 +13,12 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-B3PP6LeH.js",
     "assets/index-FBDE3rFM.js",
+    "why-i-do-this.html",
+    "publications/data/listings/why-i-do-this.json",
+    "img/og/why-i-do-this.png",
+    "system/series-table.css",
     "assets/index-BkvbD78Z.js",
     "work-with-me.html",
     "independence.html",
@@ -536,7 +541,12 @@ RELEASE_PATHS = (
 # route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
 # re-render also picks up the Continue the series text from #286.
 # index-BkvbD78Z.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "85e8b147248954a685515e52d8b8b7684b654e4f581b555736f12a3ae2fcce4c"
+# October 1, 2026: Why I Do This, the author's own account, opens the Who Knew First series
+# as its "Start here" piece, with its listing and card. The Continue the series table gains
+# a Start here row on every series page, the series hub and the Writing hub link it, and the
+# feeds, sitemap, build receipt, route registry, site index and home bundle
+# (index-B3PP6LeH.js) are regenerated. index-FBDE3rFM.js stays as retained history.
+REVIEWED_RELEASE_SHA256 = "0d319b7a2e77234edb8ad3593a3f152fdb8889b4bf3838cd5decd64177350519"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -715,7 +725,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: the typefaces are renamed Zain Editorial and Zain Mono, so the
     # bundle rebuilt from the registry is index-FBDE3rFM.js with the same sheet.
     # index-BkvbD78Z.js stays as retained history.
-    current_js = "index-FBDE3rFM.js"
+    # October 1, 2026: Why I Do This joins the Who Knew First routes as the series opener, so
+    # the bundle rebuilt from the registry is index-B3PP6LeH.js with the same sheet.
+    # index-FBDE3rFM.js stays as retained history.
+    current_js = "index-B3PP6LeH.js"
+    previous_fonts_js = "index-FBDE3rFM.js"
+    assert previous_fonts_js not in source
+    assert (ROOT / "assets" / previous_fonts_js).is_file()
+    assert f"assets/{previous_fonts_js}" in RELEASE_PATHS
     previous_work_js = "index-BkvbD78Z.js"
     assert previous_work_js not in source
     assert (ROOT / "assets" / previous_work_js).is_file()

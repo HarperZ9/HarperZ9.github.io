@@ -1,0 +1,88 @@
+"""Public contracts for Why I Do This, the author's own account that opens the Who Knew First series."""
+
+from __future__ import annotations
+
+import html
+import json
+import re
+from pathlib import Path
+
+from tools.publication_listings import load_listing
+
+ROOT = Path(__file__).resolve().parents[1]
+PAGE = ROOT / "why-i-do-this.html"
+
+
+def source() -> str:
+    return PAGE.read_text(encoding="utf-8")
+
+
+def visible_text(value: str) -> str:
+    value = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", value, flags=re.I | re.S)
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", value)).split())
+
+
+def essay_text() -> str:
+    page = source()
+    return visible_text(re.search(r'<div class="wid-voice">(.*?)</div>', page, re.S).group(1))
+
+
+def test_listing_validates_and_joins_the_hubs_the_series_and_the_feeds() -> None:
+    listing, _stored = load_listing(ROOT / "publications/data/listings/why-i-do-this.json", ROOT)
+    assert listing["route"] == "why-i-do-this.html"
+    assert listing["form"] == "personal essay"
+    for hub in ("publications.html", "who-knew-first-series.html", "who-knew-first.html",
+                "who-pays-the-referees.html", "the-terms-for-telling.html"):
+        assert 'href="why-i-do-this.html"' in (ROOT / hub).read_text(encoding="utf-8"), hub
+    feed = json.loads((ROOT / "feed.json").read_text(encoding="utf-8"))
+    assert "https://harperz9.github.io/why-i-do-this.html" in [item["url"] for item in feed["items"]]
+    assert "<loc>https://harperz9.github.io/why-i-do-this.html</loc>" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+    assert (ROOT / "img/og/why-i-do-this.png").is_file()
+
+
+def test_the_series_hub_and_the_writing_hub_name_it_as_the_opener() -> None:
+    hub = (ROOT / "who-knew-first-series.html").read_text(encoding="utf-8")
+    opener = re.search(r'<p class="series-opener">(.*?)</p>', hub, re.S).group(1)
+    assert "Start here:" in opener and 'href="why-i-do-this.html"' in opener
+    assert hub.index('class="series-opener"') < hub.index("</header>")
+    writing = (ROOT / "publications.html").read_text(encoding="utf-8")
+    series = writing.split('id="series" data-publication-section', 1)[1].split("</section>", 1)[0]
+    first = re.search(r"<article\b.*?</article>", series, re.S).group(0)
+    assert "Series opener" in first and 'href="why-i-do-this.html"' in first
+
+
+def test_it_is_first_person_and_keeps_the_consented_wording() -> None:
+    text = essay_text()
+    assert len(re.findall(r"\bI\b", text)) > 80
+    assert "From early on, my curiosity was focused on inference, interpretability, social engineering, " \
+           "manipulation, language and escalation techniques." in text
+    assert "whether any of it was authorized is not what matters here" in text
+    for item in ("I am going to have a son in November", "I left on poor terms", "I have ADHD",
+                 "I have been a bullshitter my whole life", "My words and my actions do not align"):
+        assert item in text, item
+
+
+def test_public_surface_rules_hold() -> None:
+    page = source()
+    text = visible_text(page)
+    assert "unauthorized" not in text.casefold()
+    assert "—" not in page and "–" not in page
+    assert re.search(r"(?<![A-Za-z0-9+.-])[A-Za-z]:[\\/]", re.sub(r"https?://\S+", "", text)) is None
+    for internal in ("transcript", "TRACE", "pre-check", "Draft manuscript"):
+        assert internal not in text, internal
+    # Family members are named by relation only.
+    assert "my father" in text.casefold() or "My father" in text
+
+
+def test_sources_and_the_ai_note_come_after_the_essay() -> None:
+    page = source()
+    body_end = page.index('<div class="wpr-series-continue">')
+    assert page.index('id="how-made"') > body_end and page.index('id="sources"') > body_end
+    essay = re.search(r'<div class="wid-voice">(.*?)</div>', page, re.S).group(1)
+    assert len(re.findall(r"<a\b", essay)) <= 1  # one inline link, to the June page it quotes
+    how = visible_text(re.search(r'<section id="how-made".*?</section>', page, re.S).group(0))
+    assert "Claude Opus 5.5, a model built by Anthropic" in how
+    assert "voice memo on 1 October 2026" in how
+    sources = re.search(r'<section id="sources".*?</section>', page, re.S).group(0)
+    for href in ("who-knew-first.html", "who-knew-first-series.html", "why.html", "flywheel.html", "articulate.html"):
+        assert f'href="{href}"' in sources, href

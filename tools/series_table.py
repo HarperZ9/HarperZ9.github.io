@@ -1,7 +1,9 @@
 """Render the "Continue the series" table from the series definition, and keep every copy current.
 
-One definition (publications/data/series/<id>.json) drives every table: the anchor piece,
-each published part and the series hub carry the same rows, with the current page marked.
+One definition (publications/data/series/<id>.json) drives every table: the opener, the anchor
+piece, each published part and the series hub carry the same rows, with the current page marked.
+The opener is the optional "Start here" row above the anchor: the author's own account of why
+the series exists. It has no blade in the aperture; it is the core the blades turn around.
 A part with an id is published and linked, with its reading time measured from its page.
 A part without an id is planned: plain text, no link, no reading time.
 
@@ -31,7 +33,7 @@ from tools.publication_sections import human_date, load_series  # noqa: E402
 BEGIN = "<!-- BEGIN GENERATED SERIES TABLE -->"
 END = "<!-- END GENERATED SERIES TABLE -->"
 WORDS_PER_MINUTE = 230
-STYLESHEET = "system/series-table.css?v=20261001-series-table"
+STYLESHEET = "system/series-table.css?v=20261001-series-opener"
 
 
 def _e(value: object) -> str:
@@ -68,10 +70,20 @@ def reading_minutes(page: str) -> int:
 
 
 def series_rows(series: dict) -> list[dict]:
-    """The anchor first, then the parts in order. Each row: part label, title, question, route or None."""
+    """The opener (if any), the anchor, then the parts in order.
+
+    Each row: part label, title, question, route or None. The opener's n is "start", so the
+    numbered rows 0 to 5 keep their blades and their hover links.
+    """
     anchor = series["anchor"]
-    rows = [{"n": 0, "label": "Anchor", "title": anchor["text"], "question": anchor["question"],
-             "route": anchor["href"], "id": anchor["href"].removesuffix(".html")}]
+    rows = []
+    opener = series.get("opener")
+    if opener:
+        rows.append({"n": "start", "label": "Start here", "title": opener["text"],
+                     "question": opener["question"], "route": opener["href"],
+                     "id": opener["href"].removesuffix(".html")})
+    rows.append({"n": 0, "label": "Anchor", "title": anchor["text"], "question": anchor["question"],
+                 "route": anchor["href"], "id": anchor["href"].removesuffix(".html")})
     for number, part in enumerate(series["parts"], start=1):
         rows.append({"n": number, "label": f"Part {number}", "title": part["title"],
                      "question": part["one_line"], "id": part["id"],
@@ -84,7 +96,7 @@ def carrier_routes(series: dict) -> list[str]:
     return [row["route"] for row in series_rows(series) if row["route"]] + [series["route"]]
 
 
-def _orb(n: int, state: str) -> str:
+def _orb(n: int | str, state: str) -> str:
     """A small aperture glyph: rings of fine line for a published piece, one broken ring for a planned one."""
     if state == "planned":
         rings = '<circle r="9" class="sc-ring sc-ring-open"/>'
@@ -112,11 +124,13 @@ def _blade(n: int, state: str) -> str:
             f'<path class="sc-hit" data-part="{n}" d="{hit}"/>')
 
 
-def _aperture(states: list[str]) -> str:
+def _aperture(states: list[str], core: str = "published") -> str:
+    """Six blades for the anchor and the five parts. The core is the opener: hot on its own page."""
     blades = "".join(_blade(n, state) for n, state in enumerate(states))
     halo = "".join(f'<circle r="{r}" class="sc-halo"/>' for r in (6, 10, 14, 58))
+    core_class = "sc-core sc-core-current" if core == "current" else "sc-core"
     return (f'<svg class="sc-aperture" viewBox="-60 -60 120 120" aria-hidden="true" focusable="false">'
-            f'{halo}{blades}<circle r="2.4" class="sc-core"/></svg>')
+            f'{halo}{blades}<circle r="2.4" class="{core_class}"/></svg>')
 
 
 def _row(row: dict, state: str, items_by_id: dict[str, dict], minutes: dict[str, int]) -> str:
@@ -131,7 +145,8 @@ def _row(row: dict, state: str, items_by_id: dict[str, dict], minutes: dict[str,
         time = f'{minutes[row["route"]]} min'
     else:
         title, status, time = _e(row["title"]), "Planned", '<span class="sc-none">Not yet</span>'
-    attrs = f' data-part="{n}" class="sc-row sc-{state}"' + (' aria-current="page"' if current else "")
+    opener = " sc-opener" if n == "start" else ""
+    attrs = f' data-part="{n}" class="sc-row sc-{state}{opener}"' + (' aria-current="page"' if current else "")
     return (f'<tr{attrs}><td class="sc-part" data-label="Part">{_orb(n, "planned" if state == "planned" else "lit")}'
             f'<span>{_e(row["label"])}</span></td>'
             f'<th scope="row" class="sc-title">{title}</th>'
@@ -149,16 +164,26 @@ def render_table(series: dict, items_by_id: dict[str, dict], minutes: dict[str, 
                  current_route: str | None = None) -> str:
     rows = series_rows(series)
     states = _states(rows, current_route)
-    published = sum(1 for row in rows if row["route"])
+    numbered = [(row, state) for row, state in zip(rows, states) if row["n"] != "start"]
+    opener = [(row, state) for row, state in zip(rows, states) if row["n"] == "start"]
+    published = sum(1 for row, _state in numbered if row["route"])
     body = "".join(_row(row, state, items_by_id, minutes) for row, state in zip(rows, states))
     hub = "" if current_route == series["route"] else (
         f' <a href="{_e(series["route"])}">The series hub</a> explains how the pieces connect.')
+    start = ""
+    if opener and current_route != series["route"]:  # the hub names the opener under its own lead
+        row, state = opener[0]
+        start = (f' <em>{_e(row["title"])}</em> opens it: who is asking the questions, and why.'
+                 if state == "current" else
+                 f' Start with <a href="{_e(row["route"])}"><em>{_e(row["title"])}</em></a>: '
+                 f'who is asking the questions, and why.')
     return (
         f'<section class="series-continue" id="continue-the-series" aria-labelledby="continue-the-series-h">'
-        f'<div class="sc-head">{_aperture(states)}<div><h2 id="continue-the-series-h">Continue the series</h2>'
+        f'<div class="sc-head">{_aperture([state for _row_, state in numbered], opener[0][1] if opener else "published")}'
+        f'<div><h2 id="continue-the-series-h">Continue the series</h2>'
         f'<p class="sc-lede"><em>{_e(series["anchor"]["text"])}</em> and the five pieces that each test one '
-        f'question it raises. {published} of {len(rows)} are published; the rest are named without links '
-        f'until they are.{hub}</p></div></div>'
+        f'question it raises. {published} of {len(numbered)} are published; the rest are named without links '
+        f'until they are.{start}{hub}</p></div></div>'
         f'<div class="sc-wrap"><table class="sc-table"><caption class="sc-caption">Reading order for the '
         f'{_e(series["anchor"]["text"])} series</caption><thead><tr><th scope="col">Part</th>'
         f'<th scope="col">Title</th><th scope="col">The question it answers</th><th scope="col">Status</th>'
