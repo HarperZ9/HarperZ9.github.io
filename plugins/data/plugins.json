@@ -1,0 +1,240 @@
+{
+  "schema": "plugin-support-sources/1",
+  "site": "https://harperz9.github.io",
+  "tools": [
+    {
+      "slug": "articulate",
+      "label": "Articulate",
+      "repo": "HarperZ9/articulate",
+      "ref": "ac826ff2eebf8e6f179d23dce9c1ca1ac92f5120",
+      "ref_name": "plugin-v0.6.0",
+      "sources": {
+        "privacy": "PRIVACY.md",
+        "readme": "README.md",
+        "manifest": ".claude-plugin/plugin.json",
+        "license": "LICENSE",
+        "security": "SECURITY.md"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "canon",
+      "label": "Canon",
+      "repo": "HarperZ9/canon",
+      "ref": "c3ff3cd322657d37cb095d0d619a4119e0b964fd",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "crucible",
+      "label": "Crucible",
+      "repo": "HarperZ9/crucible",
+      "ref": "77c6f41148d698169bc7e8bcd44f25317a59861d",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE",
+        "security": "SECURITY.md"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "forum",
+      "label": "Forum",
+      "repo": "HarperZ9/forum",
+      "ref": "9663678ea7741f1cc9fbbc29f7d1a83238d06dfe",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/config.json",
+        "license": "LICENSE",
+        "security": "SECURITY.md"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "gather",
+      "label": "Gather",
+      "repo": "HarperZ9/gather",
+      "ref": "cc1beb244fb88c0ba81c86ddf650d7706a2b4143",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "index",
+      "label": "Index",
+      "repo": "HarperZ9/index",
+      "ref": "006688fc1fc21614053fb1d98db3724b46fd9278",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "learn",
+      "label": "Learn",
+      "repo": "HarperZ9/learn",
+      "ref": "f8d3560dc7935d80124546e1406ef1c359fab601",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/config.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "paragraphs": [
+          "Grant.",
+          "Restrictions.",
+          "No warranty."
+        ],
+        "note": "The license also carries an integrity clause: graded assessments are never auto-completed and always halt for the human. Read it in full in the license file."
+      }
+    },
+    {
+      "slug": "mneme",
+      "label": "Mneme",
+      "repo": "HarperZ9/mneme",
+      "ref": "e16f7d588b3ae3024ee5213b9e44fc8582371a05",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "plexus",
+      "label": "Plexus",
+      "repo": "HarperZ9/plexus",
+      "ref": "b7909451dff50fbf01182a2d558b1dc03b500854",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "relay",
+      "label": "Relay",
+      "repo": "HarperZ9/relay",
+      "ref": "94f3e1af8565e6773b1dfdbc8d5462e683f3b35c",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/.claude-plugin/plugin.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    },
+    {
+      "slug": "telos",
+      "label": "Telos",
+      "repo": "HarperZ9/telos",
+      "ref": "40677b23349bac56fc94a9cd6d4b29aba7362cba",
+      "ref_name": "main",
+      "sources": {
+        "privacy": "client-plugin/PRIVACY.md",
+        "readme": "client-plugin/README.md",
+        "manifest": "client-plugin/config.json",
+        "license": "LICENSE"
+      },
+      "license_quote": {
+        "sections": [
+          "License Grant",
+          "Permitted Purpose",
+          "Disclaimer"
+        ],
+        "future": "Grant of Future License"
+      }
+    }
+  ]
+}

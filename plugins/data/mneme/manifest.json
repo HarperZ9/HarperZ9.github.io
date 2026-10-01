@@ -1,0 +1,9 @@
+{
+  "author": {
+    "name": "Zain Dana Harper"
+  },
+  "description": "Local memory in a SQLite file you choose, with provenance on every recalled memory.",
+  "license": "FSL-1.1-MIT",
+  "name": "mneme-local",
+  "version": "0.6.0"
+}
