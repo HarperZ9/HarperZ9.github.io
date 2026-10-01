@@ -1,0 +1,24 @@
+{
+  "name": "articulate-writing",
+  "displayName": "Articulate Writing",
+  "version": "0.6.0",
+  "description": "Checks prose locally and verifies host-model edits against protected spans. The checker makes no network calls; the calling model reads the text in the conversation.",
+  "author": {
+    "name": "Zain Dana Harper",
+    "url": "https://github.com/HarperZ9"
+  },
+  "homepage": "https://github.com/HarperZ9/articulate/blob/release/0.5.x/docs/claude-plugin.md",
+  "repository": "https://github.com/HarperZ9/articulate",
+  "license": "FSL-1.1-MIT",
+  "keywords": [
+    "writing",
+    "prose",
+    "linter",
+    "editing",
+    "documentation",
+    "style"
+  ],
+  "metadata": {
+    "privacyPolicy": "https://github.com/HarperZ9/articulate/blob/release/0.5.x/claude-plugin/PRIVACY.md"
+  }
+}

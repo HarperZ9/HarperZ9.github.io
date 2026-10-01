@@ -1,0 +1,212 @@
+{
+  "articulate": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "1b315a2ccaf7517f9e644b0d894dd21f1659cab412b5d51e8cdca1bb81f385a2"
+    },
+    "privacy": {
+      "path": "PRIVACY.md",
+      "sha256": "8b99b1c2615a4b85a7175d754419ae8d21797b0ca93a829435469283cb01f434"
+    },
+    "readme": {
+      "path": "README.md",
+      "sha256": "5c4d1a91ad79ebedc2b06c1f5f0977269ebea6025a62d6a42b3e3d5dd8e0f7f8"
+    },
+    "security": {
+      "path": "SECURITY.md",
+      "sha256": "a8bc6fd8225e82ff7277653d0903657ce19394d9c8a6458f8ced0b1d68ababc4"
+    }
+  },
+  "canon": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "c0cf7b244f871226d262f58dc2ec9e850b8a754c562c18a7f37495da3e7f421c"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "e29a2f08b08da4c11e74ace48119f496f5581aa334c499d7af61ee21ce055390"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "34bb4351e96fbdf26496a148962a23f168ba574d694b659a2412df0ee71dad24"
+    }
+  },
+  "crucible": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "8ed289f713cf9f172df8461c238f04203ca08d3ec8a6a5d0e7d66bceeb8bd6e9"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "8d1ceeeec663421e610abd93f049a8e80eba3e9e58c283d467d78adc485a9679"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "3dc1a21143ba4d39260a7dc2be0d416ec0b6ca1821df475edc244d58755439a7"
+    },
+    "security": {
+      "path": "SECURITY.md",
+      "sha256": "6663d4f24d2c37e8b5c919d6a2713d0fc3e7b5d57f72fdf2722b340d23ce8e0a"
+    }
+  },
+  "forum": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/config.json",
+      "sha256": "e0b88523d69140520333b7dec6ed07889fab0ed41a5ea77b9cf850cd4d4851f3"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "6c1461dd226ad50cfb3d8053d98ece23c7495134ce34b7ce7d74922f30a7e6fa"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "525215eb0663e3d57b58ab47afe227d10f188cd113e5c6ceee5a5db185efbb61"
+    },
+    "security": {
+      "path": "SECURITY.md",
+      "sha256": "97a0c237ba52a40f40321093f14d5abcce65bb811f4a1bc9411fb5766c934baf"
+    }
+  },
+  "gather": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "7791dd066ad5db741cd4c118f1f8d6c4b13634a2f84886a28b50cd8c812760ea"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "85a044fba34877c6925c8d1eea87dc673e05ed5f34b28419a5c4c9fd385bdfc7"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "a8697e003cfefde9debdb2c74a597e52b78b8f2f1e9e930c2d3a4407297943c4"
+    }
+  },
+  "index": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "a0761a136ad8406d05d500dc540811b9652f4a6978753ebfe253a9f8d8635a41"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "b320661ce2c193d1c12895f0826f7c80594b96902bb97f74baa98304b07fef10"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "0f184a6ea30122776055e4aaf80d3d9605b037519a731da52a7858a96bf2bb6a"
+    }
+  },
+  "learn": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "451a4d9d91378003b10ebf0995d3dfa128f2eb374d3599315e076ef841c80dc1"
+    },
+    "manifest": {
+      "path": "client-plugin/config.json",
+      "sha256": "d314d74b3b072ee382c286f0a5df69b5a1aed1df16cf0a200f634ba49b9ba9f9"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "45a99b3e055895a175501352d7041c4575e3075dc4cb6576ba96c7f06d824ad0"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "12b2fc4f181749b87e08ba5d7cd54d630f9d6764118af97f73bf12ec9c59661d"
+    }
+  },
+  "mneme": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "62fc6b025b02d86da0253e735b35f1fdcbc2c013f336b788e3b05ce2d52c8ff3"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "db08c14c34ebc5c82e5b12904984f6087f5d4ea057317165f20f41113eb6923f"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "cc955ab0d8c9650289d098953a6a0360d1e1b7978f275b7f5ad6733f6e34778b"
+    }
+  },
+  "plexus": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "03ca588f3774d8fc56aeb62cf2a5e9cd3bd33a5def07877b4f90d19a314bc258"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "a0334f49f03c2ee7ee39801f6ed54ffce697bf41a289f7a58e1677b8fc4e3e9c"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "65f9df7a0f969195b0df325d050e4b8a33308567976fd290cd5d451502d93f77"
+    }
+  },
+  "relay": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": "client-plugin/.claude-plugin/plugin.json",
+      "sha256": "bade9892dc61bdc5529629073e88e444c2e0559e5b981a7c7d868336c65a8373"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "282d5e352068e16f6d2aa786cb8b639b0dc66801ae9886a6ed9cf788138b2650"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "f97b7118ecda1552c2fd0d92b15481c55a4c7ea0a5259891ca4a31bd69465783"
+    }
+  },
+  "telos": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "b572d61e662ea3f0c14a089fb75d06cf50ea15a7a1fcbe5a681321006337a528"
+    },
+    "manifest": {
+      "path": "client-plugin/config.json",
+      "sha256": "f6a1300231d5b45b799e5f442d0630f514f25f2e356986c25eabc3388842931f"
+    },
+    "privacy": {
+      "path": "client-plugin/PRIVACY.md",
+      "sha256": "3a1e1a56fa9636ee6b52abe290c4b4f51a39890c9fe9b55295d5b8bdd162cc02"
+    },
+    "readme": {
+      "path": "client-plugin/README.md",
+      "sha256": "00873b67860d3464a4be8e65c035c154a17449e00ce747fd4dbc2db762233de0"
+    }
+  }
+}

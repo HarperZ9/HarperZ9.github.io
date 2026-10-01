@@ -19,3 +19,4 @@ artifacts/*.zip binary
 
 # Spatial world packages are byte-receipted: no EOL conversion, ever.
 art/spatial/** -text
+plugins/data/** text eol=lf

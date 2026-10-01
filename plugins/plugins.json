@@ -1,0 +1,115 @@
+{
+  "schema": "plugin-support-index/1",
+  "plugins": [
+    {
+      "tool": "Articulate",
+      "plugin": "articulate-writing",
+      "description": "Checks prose locally and verifies host-model edits against protected spans. The checker makes no network calls; the calling model reads the text in the conversation.",
+      "repository": "https://github.com/HarperZ9/articulate",
+      "support_url": "https://harperz9.github.io/plugins/articulate/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/articulate/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/articulate/terms.html",
+      "support_contact": "https://github.com/HarperZ9/articulate/issues"
+    },
+    {
+      "tool": "Canon",
+      "plugin": "canon-local",
+      "description": "Search and read project context from a local database you choose, scoped to one project.",
+      "repository": "https://github.com/HarperZ9/canon",
+      "support_url": "https://harperz9.github.io/plugins/canon/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/canon/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/canon/terms.html",
+      "support_contact": "https://github.com/HarperZ9/canon/issues"
+    },
+    {
+      "tool": "Crucible",
+      "plugin": "crucible-local",
+      "description": "Check claims against local evidence files and get a verdict for each claim.",
+      "repository": "https://github.com/HarperZ9/crucible",
+      "support_url": "https://harperz9.github.io/plugins/crucible/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/crucible/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/crucible/terms.html",
+      "support_contact": "https://github.com/HarperZ9/crucible/issues"
+    },
+    {
+      "tool": "Forum",
+      "plugin": "forum-routing",
+      "description": "Preview how a request would be routed and whether it is ready to run, before it runs.",
+      "repository": "https://github.com/HarperZ9/forum",
+      "support_url": "https://harperz9.github.io/plugins/forum/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/forum/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/forum/terms.html",
+      "support_contact": "https://github.com/HarperZ9/forum/issues"
+    },
+    {
+      "tool": "Gather",
+      "plugin": "gather-local",
+      "description": "Read local documents and get a digest receipt for each one your assistant can cite.",
+      "repository": "https://github.com/HarperZ9/gather",
+      "support_url": "https://harperz9.github.io/plugins/gather/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/gather/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/gather/terms.html",
+      "support_contact": "https://github.com/HarperZ9/gather/issues"
+    },
+    {
+      "tool": "Index",
+      "plugin": "index-local",
+      "description": "Map a local repository and find symbol definitions and references with file and line evidence.",
+      "repository": "https://github.com/HarperZ9/index",
+      "support_url": "https://harperz9.github.io/plugins/index/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/index/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/index/terms.html",
+      "support_contact": "https://github.com/HarperZ9/index/issues"
+    },
+    {
+      "tool": "Learn",
+      "plugin": "learn-study",
+      "description": "Plan study sessions, record your practice answers and see what to review next.",
+      "repository": "https://github.com/HarperZ9/learn",
+      "support_url": "https://harperz9.github.io/plugins/learn/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/learn/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/learn/terms.html",
+      "support_contact": "https://github.com/HarperZ9/learn/issues"
+    },
+    {
+      "tool": "Mneme",
+      "plugin": "mneme-local",
+      "description": "Local memory in a SQLite file you choose, with provenance on every recalled memory.",
+      "repository": "https://github.com/HarperZ9/mneme",
+      "support_url": "https://harperz9.github.io/plugins/mneme/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/mneme/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/mneme/terms.html",
+      "support_contact": "https://github.com/HarperZ9/mneme/issues"
+    },
+    {
+      "tool": "Plexus",
+      "plugin": "plexus-local",
+      "description": "Show which local tools produce and consume each capability, and the route between them.",
+      "repository": "https://github.com/HarperZ9/plexus",
+      "support_url": "https://harperz9.github.io/plugins/plexus/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/plexus/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/plexus/terms.html",
+      "support_contact": "https://github.com/HarperZ9/plexus/issues"
+    },
+    {
+      "tool": "Relay",
+      "plugin": "relay-local",
+      "description": "Run a local coding agent in a project folder you choose, with a model endpoint you configure.",
+      "repository": "https://github.com/HarperZ9/relay",
+      "support_url": "https://harperz9.github.io/plugins/relay/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/relay/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/relay/terms.html",
+      "support_contact": "https://github.com/HarperZ9/relay/issues"
+    },
+    {
+      "tool": "Telos",
+      "plugin": "telos-workbench",
+      "description": "Check local workbench readiness and build proof packets a verifier can recompute.",
+      "repository": "https://github.com/HarperZ9/telos",
+      "support_url": "https://harperz9.github.io/plugins/telos/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/telos/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/telos/terms.html",
+      "support_contact": "https://github.com/HarperZ9/telos/issues"
+    }
+  ]
+}
