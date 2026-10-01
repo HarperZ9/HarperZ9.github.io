@@ -506,7 +506,8 @@ RELEASE_PATHS = (
 # back-link lines on every piece, the Writing pillar and menu group, the Frontier Safety
 # edition list, the briefings index, sitemap, feeds, build receipt, route registry, site
 # index and home bundle (index-Dmke1bnx.js, index-DbZyfUEO.css) are regenerated.
-REVIEWED_RELEASE_SHA256 = "30946aa281b43bc59bb02ccb8d2e4d32c8200665f88cd6e01d9c624573433bee"
+# October 1, 2026: Who Pays the Referees gains four dated corrections; the page is rehashed.
+REVIEWED_RELEASE_SHA256 = "PENDING"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
