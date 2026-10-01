@@ -1,0 +1,9 @@
+{
+  "author": {
+    "name": "Zain Dana Harper"
+  },
+  "description": "Search and read project context from a local database you choose, scoped to one project.",
+  "license": "FSL-1.1-MIT",
+  "name": "canon-local",
+  "version": "0.6.0"
+}

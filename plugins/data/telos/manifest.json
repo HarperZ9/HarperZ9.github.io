@@ -1,0 +1,19 @@
+{
+  "name": "telos-workbench",
+  "description": "Check local workbench readiness and build proof packets a verifier can recompute.",
+  "version_file": "package.json",
+  "roots": [
+    "demo"
+  ],
+  "files": [
+    "LICENSE",
+    "package.json",
+    "verify_packet.mjs",
+    "tools/uia.ps1",
+    "tools/device.ps1"
+  ],
+  "entry": "server/demo/telos-mcp.mjs",
+  "runtime": "node",
+  "skill": "telos-workbench",
+  "tool": "telos"
+}
