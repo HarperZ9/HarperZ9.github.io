@@ -31,3 +31,24 @@ def test_second_october_follow_up_is_logged_under_corrections() -> None:
     corrections = page[page.index('<h2 id="corrections">'):page.index('<h2 id="sources">')]
     assert 'href="#findings-20261001-transluce">second dated follow-up</a>' in corrections
     assert "It does not change the nine cases, chart or author paragraphs." in corrections
+
+
+def test_third_october_follow_up_carries_the_subpoena_and_the_asymmetric_list() -> None:
+    page = PAGE.read_text(encoding="utf-8")
+    second_end = page.index("<!-- follow-up:20261001-transluce:end -->")
+    start = page.index("<!-- follow-up:20261001-subpoena:start -->")
+    end = page.index("<!-- follow-up:20261001-subpoena:end -->")
+    assert second_end < start < end < page.index("<!-- oped:end -->")
+    block = page[start:end]
+    assert '<h3 id="findings-20261001-subpoena">' in block
+    assert "What this does not prove:" in block and "That timing does not show causation" in block
+    assert "drafted with an Anthropic-built model" in block
+    assert "first posted preliminary findings on September 28" in block
+    assert "the count is this page's" in block
+    assert "\u2014" not in block and "\u2013" not in block and "@" not in block
+    cited = set(re.findall(r'href="#source-(s\d+)"', block))
+    assert {"s144", "s145", "s146"} <= cited
+    for sid in cited:
+        assert f'<li id="source-{sid}">' in page
+    corrections = page[page.index('<h2 id="corrections">'):page.index('<h2 id="sources">')]
+    assert 'href="#findings-20261001-subpoena">third dated follow-up</a>' in corrections

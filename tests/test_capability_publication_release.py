@@ -536,7 +536,9 @@ RELEASE_PATHS = (
 # route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
 # re-render also picks up the Continue the series text from #286.
 # index-BkvbD78Z.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "85e8b147248954a685515e52d8b8b7684b654e4f581b555736f12a3ae2fcce4c"
+# October 1, 2026: Who Knew First gains a third dated follow-up and The Terms for Telling a
+# further dated update; both pages are rehashed.
+REVIEWED_RELEASE_SHA256 = "354fd0b2a3e3e0a3fda7a7d15c8608687439854cbf94779d4cd3f523cfea507c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
