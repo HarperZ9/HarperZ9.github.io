@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DkLmGDFh.js",
     "assets/index-B5IIN--D.js",
     "who-pays-the-referees.html",
     "publications/data/listings/who-pays-the-referees.json",
@@ -453,7 +454,13 @@ RELEASE_PATHS = (
 # October 1, 2026 review: four sourcing fixes in who-pays-the-referees.html (Alphabet's
 # stake wording, "at least four labs", a dated status line, one scoped series item); no
 # other release path changed.
-REVIEWED_RELEASE_SHA256 = "87b8da5b288f066ace573595938baf2f5c5e54f322477c08c61638b005eba62f"
+# October 1, 2026: Who Knew First's dated follow-up and five dated corrections update
+# its listing and, rebased onto the Who Pays the Referees release, the regenerated
+# publication index, feeds, build receipt, route registry, site index and home bundle
+# (index-DkLmGDFh.js). who-pays-the-referees.html replaces its dated "not yet on that
+# page" line with the published follow-up. The original author paragraphs and the
+# nine-case record remain unchanged.
+REVIEWED_RELEASE_SHA256 = "ba73c4817f37d92d7dba3ca7b70c8b07efd16a193ad2863baad7a4005d5ebac4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -613,7 +620,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: Who Pays the Referees joins the Research routes, so the home
     # bundle rebuilt from the registry is index-B5IIN--D.js with the same sheet.
     # index-DMn8Bp7X.js stays as retained history.
-    current_js = "index-B5IIN--D.js"
+    # October 1, 2026: Who Knew First's dated follow-up moves its route date to
+    # 2026-10-01, so the bundle rebuilt from the registry is index-DkLmGDFh.js with the
+    # same sheet. index-B5IIN--D.js stays as retained history.
+    current_js = "index-DkLmGDFh.js"
+    previous_referees_js = "index-B5IIN--D.js"
+    assert previous_referees_js not in source
+    assert (ROOT / "assets" / previous_referees_js).is_file()
+    assert f"assets/{previous_referees_js}" in RELEASE_PATHS
     previous_atlas_js = "index-DMn8Bp7X.js"
     assert previous_atlas_js not in source
     assert (ROOT / "assets" / previous_atlas_js).is_file()

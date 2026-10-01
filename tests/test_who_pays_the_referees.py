@@ -77,4 +77,4 @@ def test_public_surface_rules_hold() -> None:
     for internal in ("OPTIONAL AUTHOR PARAGRAPH", "Author to confirm", "row IDs", "1 October follow-up", "writing-profile"):
         assert internal not in page
     assert "Claude Opus 5.5" in text and "same-maker check" in text
-    assert "not yet on that page" in text
+    assert "a dated follow-up on Who Knew First published five corrections to that page; four of them came from this pass" in text
