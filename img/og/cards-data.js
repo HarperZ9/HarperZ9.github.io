@@ -149,10 +149,10 @@ window.CARD_DATA = {
     "glyph": "layers"
   },
   "portfolio-home": {
-    "role": "ZENTROPY LABS / PRODUCT OVERVIEW",
+    "role": "ZAIN DANA HARPER / PRODUCT OVERVIEW",
     "headline": "Public tools, four recorded workflows, and evidence you can inspect.",
     "pipeline": "MAP / ROUTE / VERIFY / REMEMBER / IMPROVE",
-    "word": "ZENTROPY LABS",
+    "word": "ZAIN DANA HARPER",
     "glyph": "aperture"
   },
   "profile": {
@@ -555,7 +555,7 @@ window.CARD_DATA = {
   "typeface": {
     "role": "TYPE SPECIMEN",
     "word": "Room for the words.",
-    "headline": "Typography at Zentropy Labs.",
+    "headline": "Typography on this site.",
     "editorial": true,
     "pipeline": "OUTLINE / FIT / HINT / SPECIMEN"
   },

@@ -1,4 +1,4 @@
-"""Contracts for the mission-first Zentropy Labs homepage."""
+"""Contracts for the mission-first Zain Dana Harper homepage."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ HOME_CSS = ROOT / "home" / "src" / "App.css"
 HOME_INDEX = ROOT / "home" / "index.html"
 SYSTEMS = ROOT / "system" / "systems.json"
 CANONICAL_META_DESCRIPTION = (
-    "Zentropy Labs builds Flywheel and public tools for re-derivable AI evaluation, "
+    "Zain Dana Harper builds Flywheel and public tools for re-derivable AI evaluation, "
     "with release evidence, limits, and pilot routes."
 )
 
@@ -56,7 +56,7 @@ def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     source = read(HOME_SOURCE)
     hero = section(source, "identity", "mission")
 
-    assert "Zentropy Labs" in hero
+    assert "Zain Dana Harper" in hero
     assert "Flywheel and public tools for re-derivable AI evaluation." in hero
     assert "someone else can rerun on their own computer" in hero
     assert 'href="/start-here.html"' in hero
@@ -216,7 +216,7 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
 
     for value in (
-        "<title>Zentropy Labs | Re-derivable AI evaluation</title>",
+        "<title>Zain Dana Harper | Re-derivable AI evaluation</title>",
         f'<meta name="description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta property="og:description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta name="twitter:description" content="{CANONICAL_META_DESCRIPTION}" />',

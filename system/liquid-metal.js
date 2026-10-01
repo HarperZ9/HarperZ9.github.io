@@ -1,4 +1,4 @@
-/* liquid-metal.js: a living liquid-chrome WebGL1 background for Zentropy Labs.
+/* liquid-metal.js: a living liquid-chrome WebGL1 background for Zain Dana Harper.
 
    Self-contained vanilla JS, no dependencies, no build step. Mounts to an
    existing <canvas id="metal-canvas"> and animates a full-screen field that is

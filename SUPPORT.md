@@ -1,6 +1,6 @@
 # Support
 
-This site is the public launch and portfolio surface for Zentropy Labs.
+This site is the public launch and portfolio surface for Zain Dana Harper.
 
 ## Public Issues
 

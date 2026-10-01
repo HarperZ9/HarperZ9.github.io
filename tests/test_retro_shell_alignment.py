@@ -85,7 +85,7 @@ def test_retro_evidence_pages_use_the_canonical_zentropy_navigation() -> None:
 
         fallback_links = [link for link in parser.links if link.get("href")]
         assert [link.get("text", "").strip() for link in fallback_links[:5]] == [
-            "Zentropy Labs",
+            "Zain Dana Harper",
             "Hire / work",
             "Systems",
             "Research",

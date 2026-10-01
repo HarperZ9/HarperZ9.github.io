@@ -2,27 +2,27 @@
   "schema": "checking-machines-build/v1",
   "revised": "2026-09-20",
   "edited": "2026-09-25",
-  "source_sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5",
+  "source_sha256": "ef61404c0092b49d3249a2641f7acd73a8fcf4578ff1914a19fb9b227ba1074e",
   "outputs": [
     {
       "path": "checking-the-machines.html",
-      "sha256": "28f576fa9ee62c70eafc6043e9df753e5490da5548d407e7f5dd688f55eab295"
+      "sha256": "9ecc5ef58802df25e3ffccaf5e7dd562ba617fbf329db174da0e5633b49fefa9"
     },
     {
       "path": "writing/checking-the-machines/01.md",
-      "sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5"
+      "sha256": "ef61404c0092b49d3249a2641f7acd73a8fcf4578ff1914a19fb9b227ba1074e"
     },
     {
       "path": "writing/checking-the-machines/source-notes.json",
-      "sha256": "51281539b7975f452b43a2f95b13c2f9ce28ca7a147e501f830a41b1238d6dab"
+      "sha256": "7e6731ef1fa98f761980995e113be424c49535ce88fb0550d45971eb388b4b90"
     },
     {
       "path": "writing/checking-the-machines/reading-and-revision-note.md",
-      "sha256": "7c51f8b26fbad5f18b438ec4ec590da4b89decea48ceb6412592a61c5fe85498"
+      "sha256": "5d6d33af1862e9706e52551acdca2b30e3cc7c98fcfaf26124a5e1eef447faea"
     },
     {
       "path": "writing/checking-the-machines/pilot-protocol.md",
-      "sha256": "d3d729622ef53010a0c4d3cab7d9dd466d5c97409aacd0051221724e124ed98c"
+      "sha256": "dd4c2f92b9c21f808cd19903cb1bd950f74f6443eddc69289a09a887b87d80aa"
     },
     {
       "path": "writing/checking-the-machines/articulate-receipt.json",
@@ -30,15 +30,15 @@
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx",
-      "sha256": "e4d61ef9f0edac714efbcb7286b5be3a146fe8726356325ce187ad174e33706e"
+      "sha256": "2bbca466f6fafa6e4d1518a0476802eda85a56ee42e83d47c3be49a035f690aa"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf",
-      "sha256": "87b59e82d35b24de774526aaa48d2ea138c6bd83bb921b606b2edcdf06531304"
+      "sha256": "b830618f1e6a7aaa090b000f0dbb4c8bb60c4bb4269e2dc923a477f27eae3dfb"
     },
     {
       "path": "writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt",
-      "sha256": "6d6672e153d6edeca8ea3cb767719e73cf5fecf63e9755ec93433cde0e39af4f"
+      "sha256": "a5911a213759906bb5975a96f88c0c5c9432dcb6a6b22e122a528b4982f0cb29"
     }
   ]
 }

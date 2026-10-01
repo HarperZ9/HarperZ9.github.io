@@ -104,7 +104,7 @@ def render_record_page(edition: dict, *, caption: str, assets: plate.ShellAssets
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Compiled by Zain Dana Harper · Zentropy Labs · <a href="{archive}">Dated archive of this edition</a> · <a href="{ROOT_PREFIX}frontier-safety.html">Current briefing</a> · <a href="{ROOT_PREFIX}research.html">Research index</a></p>
+  <p class="seal">Compiled by Zain Dana Harper · <a href="{archive}">Dated archive of this edition</a> · <a href="{ROOT_PREFIX}frontier-safety.html">Current briefing</a> · <a href="{ROOT_PREFIX}research.html">Research index</a></p>
 </footer>
 <script src="{ROOT_PREFIX}system/reveal.js?v={assets.reveal}" defer></script>
 </body>

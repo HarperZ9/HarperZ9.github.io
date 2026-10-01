@@ -217,7 +217,7 @@ function pageMetadata(href) {
   if (!source) return { label: fallbackLabel(href), href };
   const h1 = firstMatch(source, /<h1\b[^>]*>([\s\S]*?)<\/h1>/i);
   const title = firstMatch(source, /<title\b[^>]*>([\s\S]*?)<\/title>/i)
-    .replace(/\s+(?:·|\|)\s+(?:Zain Dana Harper|Zentropy Labs).*$/i, "");
+    .replace(/\s+(?:·|\|)\s+(?:Zain Dana Harper|Zain Dana Harper).*$/i, "");
   const summary = firstMatch(source, /<meta\s+name="description"\s+content="([^"]*)"/i)
     || firstMatch(source, /<p\b[^>]*class="[^"]*(?:lede|lead|dek|body-text)[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
   const structuredText = [...source.matchAll(/<(h[1-3]|dt|caption)\b[^>]*>([\s\S]*?)<\/\1>/gi)]

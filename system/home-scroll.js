@@ -1,4 +1,4 @@
-/* home-scroll.js: scroll choreography for the Zentropy Labs home.
+/* home-scroll.js: scroll choreography for the Zain Dana Harper home.
 
    Two small jobs, both with IntersectionObserver so there is no scroll handler on
    the main thread:

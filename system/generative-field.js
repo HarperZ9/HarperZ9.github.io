@@ -1,4 +1,4 @@
-// First-party procedural field for shared Zentropy Labs pages.
+// First-party procedural field for shared Zain Dana Harper pages.
 // Synthesizes route-seeded orbit fields, contour ridges, crystal fragments,
 // fluid metaballs, iso-contours, ASCII dither, flow traces, pointer wakes, and
 // motes, plus the fixture vocabulary: crystal lens apertures, scanline

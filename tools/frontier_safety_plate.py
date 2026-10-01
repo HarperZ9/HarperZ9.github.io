@@ -317,7 +317,7 @@ def _render_head(date: str, paths: dict[str, str], assets: ShellAssets) -> str:
 <meta property="og:description" content="{DESCRIPTION}">
 <meta property="og:url" content="{paths['canonical']}">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural Zentropy Labs artwork card used for the Frontier Safety Briefing.">
+<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{DESCRIPTION}">
@@ -371,7 +371,7 @@ def render_plate_html(
 {_render_main(edition, paths, controls_caption, records, editions)}
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Compiled by Zain Dana Harper · Zentropy Labs · <a href="{root}research.html">Research index</a> · <a href="{paths['data']}">JSON edition</a> · <a href="{root}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
+  <p class="seal">Compiled by Zain Dana Harper · <a href="{root}research.html">Research index</a> · <a href="{paths['data']}">JSON edition</a> · <a href="{root}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
 </footer>
 <script src="{root}system/reveal.js?v={assets.reveal}" defer></script>
 </body>

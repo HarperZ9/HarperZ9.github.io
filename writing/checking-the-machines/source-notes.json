@@ -8,7 +8,7 @@
   "edited": "2026-09-25",
   "kind": "signed open letter",
   "status": "author-directed revision of September 20 authorized for publication; plain-language edition of September 25 pending author review; proposed trial not run",
-  "signature": "Zain Dana Harper / Zentropy Labs",
+  "signature": "Zain Dana Harper",
   "claims": [
     {
       "id": "note-1",
@@ -207,7 +207,7 @@
     }
   ],
   "unpinned_references": [],
-  "source_sha256": "c5e6f6dae34a88cc2fda528bec752a283a17b07e327031b19a400021ffbd42d5",
+  "source_sha256": "ef61404c0092b49d3249a2641f7acd73a8fcf4578ff1914a19fb9b227ba1074e",
   "ai_assistance": {
     "state": "AI-assisted, author-directed",
     "detail": "ChatGPT assisted with the September 20 revision's research, drafting and publication preparation. Earlier drafting used Claude. Claude assisted with the September 25 plain-language rewrite. No human-only authorship or peer review is claimed.",

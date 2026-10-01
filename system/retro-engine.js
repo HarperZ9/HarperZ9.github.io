@@ -4,7 +4,7 @@
    on a canvas and extended at the two stages a tube would add:
 
      source -> OKLab field -> box-downscale (pixelate) -> palette
-     (named hardware, ZentropyLabs custom, or auto-extracted from the image)
+     (named hardware, custom, or auto-extracted from the image)
      -> palette-aware dither (ordered 2/4/8, blue-ish noise, or error
      diffusion; retro-dither.js) -> optional SDF depth-shade
      -> nearest-neighbor upscale -> tube stage (beam scanlines, phosphor

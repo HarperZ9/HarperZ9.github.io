@@ -470,7 +470,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural ZentropyLabs artwork card used for the Frontier Safety Briefing.">
+<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
@@ -539,7 +539,7 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
   </section>
 
   <footer class="briefing-footer">
-    <p>Compiled by Zain Dana Harper · ZentropyLabs · <a href="{root_prefix}research.html">Research index</a></p>
+    <p>Compiled by Zain Dana Harper · <a href="{root_prefix}research.html">Research index</a></p>
     <p><a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
   </footer>
 </main>
@@ -651,7 +651,7 @@ def _render_site_shell_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural ZentropyLabs artwork card used for the Frontier Safety Briefing.">
+<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
@@ -715,7 +715,7 @@ def _render_site_shell_html(edition: dict, *, archive: bool) -> str:
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">Compiled by Zain Dana Harper · ZentropyLabs · <a href="{root_prefix}research.html">Research index</a> · <a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
+  <p class="seal">Compiled by Zain Dana Harper · <a href="{root_prefix}research.html">Research index</a> · <a href="{data_href}">JSON edition</a> · <a href="{root_prefix}frontier-safety/archive/{_e(date)}.html">Dated archive</a></p>
 </footer>
 <script src="{root_prefix}system/reveal.js?v={REVEAL_ASSET_VERSION}" defer></script>
 </body>

@@ -178,8 +178,7 @@ def write_pdf(source: str):
             name=b[4:].lower().replace(' ','-')
             flow.append(Paragraph(f'<a name="{name}"/>'+escape(b[4:]),styles["h2"]))
         elif b=="Zain Dana Harper":
-            flow.append(KeepTogether([Paragraph("<b>Zain Dana Harper</b>",styles["body"]),Paragraph("Zentropy Labs",styles["body"])]))
-        elif b=="Zentropy Labs":continue
+            flow.append(KeepTogether([Paragraph("<b>Zain Dana Harper</b>",styles["body"])]))
         else:flow.append(Paragraph(pdf_inline(b),styles["body"]))
     def footer(canvas,doc):
         canvas.saveState();canvas.setFont("Times-Roman",9)
@@ -196,7 +195,7 @@ def write_page():
     header='''<header class="article-head">
 <p class="role">Open letter · Verification and accountability</p><h1>An Open Letter on Checking the Machines</h1>
 <p class="lead">Evidence we can examine. Authority we can question. A life to return to.</p>
-<p class="article-meta">Zain Dana Harper · Zentropy Labs</p>
+<p class="article-meta">Zain Dana Harper</p>
 <p class="article-meta"><time datetime="2026-09-19">September 19, 2026</time> <span class="sep">/</span> Revised <time datetime="2026-09-20">September 20, 2026</time> <span class="sep">/</span> <span data-word-count></span> source words including notes and links <span class="sep">/</span> Author-directed, AI-assisted</p>
 <nav class="letter-downloads" aria-label="Download this letter"><a href="writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.pdf">PDF</a><a href="writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.docx">Word</a><a href="writing/checking-the-machines/downloads/An-Open-Letter-on-Checking-the-Machines.txt">Plain text</a><a href="writing/checking-the-machines/01.md">Markdown</a><a href="#notes-and-sources">Sources</a></nav>
 </header>'''
@@ -230,7 +229,7 @@ def write_source_notes(source: str):
         "schema": "essay-source-notes/v1", "title": TITLE, "slug": "checking-the-machines",
         "date": "2026-09-19", "revised": REVISED, "evidence_cutoff": REVISED,
         "kind": "signed open letter", "status": "author-directed revision authorized for publication; proposed trial not run",
-        "signature": "Zain Dana Harper / Zentropy Labs", "claims": notes,
+        "signature": "Zain Dana Harper", "claims": notes,
         "unpinned_references": [],
         "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
         "ai_assistance": {"state": "AI-assisted, author-directed", "detail": "ChatGPT assisted with this revision's research, drafting and publication preparation. Earlier drafting used Claude. No human-only authorship or peer review is claimed."},

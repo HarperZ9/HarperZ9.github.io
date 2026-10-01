@@ -2,12 +2,12 @@
 
 ![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
 
-> Static public site for Zain Dana Harper and Zentropy Labs: Flywheel, its
+> Static public site for Zain Dana Harper: Flywheel, its
 > supporting systems, the Retro Systems Lab, research publications, and
 > hiring and collaboration routes.
 
 HarperZ9.github.io is the public workshop surface for **Zain Dana Harper** and
-Zentropy Labs. Flywheel is the primary platform; the other products are
+Zain Dana Harper. Flywheel is the primary platform; the other products are
 engines, plug-ins, adapters, evaluation layers, infrastructure, research, or
 standalone creative tools. The site gives a visitor a clear way in: hire or
 collaborate, inspect a product, read a sourced publication, or open the code
@@ -113,4 +113,4 @@ git status --short
 
 ---
 
-**[Zentropy Labs](https://github.com/ZentropyLabs-ai)** · order out of entropy. An independent lab building evidence-first tools that leave a re-checkable artifact behind. Built by Zain Dana Harper in Seattle. The full workbench is at [harperz9.github.io](https://harperz9.github.io).
+Built by **[Zain Dana Harper](https://harperz9.github.io)** in Seattle: evidence-first tools that leave a re-checkable artifact behind. The full workbench is at [harperz9.github.io](https://harperz9.github.io).
