@@ -91,11 +91,19 @@ def test_it_is_first_person_and_keeps_the_consented_wording() -> None:
     assert "I still push a boundary now and then and work on my purple-team tools, but my main focus is "            "honesty, verification, re-derivability and independence." in text
     assert "open or closed, in any nation" in text
     # The author's own words replace passages the drafting model composed (1 October 2026).
-    assert "I was building tools that existed to break AI, using AI to do so, and that purple team methodology " \
-           "is special to me, because it aligns with my personal and mental turmoil through impulsiveness, and " \
-           "traveling that line where accountability begins." in text
+    assert "I was building tools that existed to break AI, using AI to do so." in text
+    # The author's spoken answer on purple teaming, redemption and the alder (1 October 2026).
+    for item in ("our own human forest floor", "I never completed college"):
+        assert item in text, item
     for composed in ("In June I published a page", "Read the work and check it"):
         assert composed not in text, composed
+
+
+def test_the_alder_comes_before_the_son() -> None:
+    text = essay_text()
+    alder = text.index("In arboriculture I learned what the alder does.")
+    son = text.index("I am going to have a son in November.")
+    assert alder < son
 
 
 def test_public_surface_rules_hold() -> None:

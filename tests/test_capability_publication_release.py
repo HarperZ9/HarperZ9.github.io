@@ -552,7 +552,10 @@ RELEASE_PATHS = (
 # (index-C1IxEots.js) are regenerated. index-B3PP6LeH.js was never published and is gone.
 # October 1, 2026, before publication: the purple-team passage, the June-page bridge and the
 # close of why-i-do-this.html now use the author's own words. No derived file changes.
-REVIEWED_RELEASE_SHA256 = "8aca035bd5e867ed0f90ffe95f4726941c41302d8cbaaf377348f014daac9836"
+# October 1, 2026, before publication: why-i-do-this.html gains the author's spoken answer on
+# purple teaming, redemption and the alder. Its reading time moves from 8 to 10 minutes, so the
+# series tables and the build receipt are regenerated.
+REVIEWED_RELEASE_SHA256 = "e686b2609202760996fc1124cb34cc94186b07446d542008012ca4d0535905d9"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
