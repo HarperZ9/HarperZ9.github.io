@@ -101,6 +101,6 @@
   "schema": "harperz9-career-text-build/v1",
   "source": {
     "path": "career/resume-source.json",
-    "sha256": "395401106267a520810e0324f46399065294b4cfec6a69105354605c89adf057"
+    "sha256": "11900d5331af053defcf0597d1a49f0675579aa0747f1b566979069b808d231c"
   }
 }
