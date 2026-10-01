@@ -442,7 +442,8 @@ RELEASE_PATHS = (
 # grouped lab-scope records preserve distinct levels, checkpoints, and date evidence.
 # September 30 local completion: reviewed Advanced SecOps course badge;
 # grouped coursework retains issuer levels and limits, without practical-lab claims.
-REVIEWED_RELEASE_SHA256 = "cf59d480942a5b9f517ad236016eea4bd95d7df49bfa19edf21b06837c7a7608"
+# 2026-09-30: reviewed personal-project/employment classification and career-transition correction.
+REVIEWED_RELEASE_SHA256 = "98ecddff6a3c3a61a2435eb39662ee049597ebcf12bacd5236a574e7e7e5077a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

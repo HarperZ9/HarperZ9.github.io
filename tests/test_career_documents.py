@@ -212,13 +212,13 @@ def test_committed_html_release_rows_bind_current_bytes() -> None:
 def test_experience_dates_use_the_adopted_low_claim_boundary() -> None:
     """Known dates survive the compact layout; current projects are not paid tenure."""
     source = json.loads(read("career/resume-source.json"))
-    assert "not continuous paid employment" in source["date_policy"]["independent_engineering"]
+    assert "no professional programming experience" in source["date_policy"]["independent_engineering"]
     assert "No current status, end year" in source["date_policy"]["freelance_writing"]
     for name in STATUS_BOUNDARY_DOCS:
         src = read(name)
         for value in ("Stream/Convergys", "Wilsonville, Oregon", "2014 to 2015",
                       "Legendary Tree", "April 25, 2015 to June 2, 2026",
-                      "2017", "2023 to Present", "High School Diploma"):
+                      "2017", "June 2026", "Self-Directed Projects", "Employment", "High School Diploma"):
             assert value in src, (name, value)
         assert "Not direct Microsoft employment" in src
         assert "Operations and Commercial Arboriculture Lead" not in src
@@ -231,7 +231,7 @@ def test_public_markdown_career_sources_preserve_the_same_date_and_employer_boun
     """Public text sources retain the same employment facts and exclude invented tenure."""
     for name in MARKDOWN_STATUS_BOUNDARY_DOCS:
         src = read(name)
-        for value in ("2017", "2023", "Legendary Tree", "Stream/Convergys",
+        for value in ("2017", "June 2026", "Legendary Tree", "Stream/Convergys",
                       "April 25, 2015 to June 2, 2026", "2014 to 2015"):
             assert value in src, (name, value)
         for forbidden in ("2017-present", "2015-present", "Xbox Division | Microsoft",

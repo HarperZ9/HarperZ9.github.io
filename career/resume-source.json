@@ -10,11 +10,11 @@
     "website": "https://harperz9.github.io"
   },
   "date_policy": {
-    "independent_engineering": "Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.",
+    "independent_engineering": "Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.",
     "freelance_writing": "Start year 2017 is known. No current status, end year, or continuous employment is inferred.",
     "arboriculture": "Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.",
     "networking_support": "2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.",
-    "sole_proprietorship": "Owner-confirmed September 30, 2026: sole proprietorship began September 2026, separately from independent project practice since 2023. No LLC or registered trade name is claimed."
+    "sole_proprietorship": "Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed."
   },
   "groups": {
     "identity": [
@@ -33,20 +33,15 @@
     ],
     "engineer": [
       {
-        "kind": "h3",
-        "text": "Independent Systems Engineer | Independent practice"
-      },
-      {
         "kind": "meta",
-        "text": "Kent / remote | 2023 to Present",
+        "text": "About 13 years of self-directed programming | Career transition began June 2026",
         "evidence": [
-          "history",
           "current-project-work"
         ]
       },
       {
         "kind": "meta",
-        "text": "Sole proprietor since September 2026",
+        "text": "Sole proprietor since September 2026; no paid software clients",
         "evidence": [
           "sole-proprietorship"
         ]
@@ -204,7 +199,7 @@
     "engineering-origin": [
       {
         "kind": "p",
-        "text": "Self-directed programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure. This is a project history, not a claim of equivalent years of paid software employment.",
+        "text": "Personal programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure.",
         "evidence": [
           "current-project-work",
           "history"
@@ -227,18 +222,10 @@
     ],
     "resume-engineer": [
       {
-        "kind": "h3",
-        "text": "Independent Systems Engineer | Independent practice | 2023 to Present",
-        "evidence": [
-          "history",
-          "current-project-work"
-        ]
-      },
-      {
         "kind": "meta",
-        "text": "Sole proprietor since September 2026",
+        "text": "About 13 years self-directed | Career transition began June 2026",
         "evidence": [
-          "sole-proprietorship"
+          "current-project-work"
         ]
       }
     ],
@@ -343,11 +330,11 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Summary"
+          "text": "Summary"
         },
         {
           "kind": "p",
-          "text": "Systems engineer who turns reported failures into reproducible tests, usable fixes, and clear customer guidance. Combines independently shipped software and accepted upstream contributions with Xbox networking support and eleven years of client-facing field operations."
+          "text": "Self-directed software builder transitioning from eleven years of full-time arboriculture. Turns reported failures into reproducible tests and usable fixes; combines released personal projects with technical support and customer-facing field operations."
         },
         {
           "kind": "h2",
@@ -359,7 +346,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Experience"
+          "text": "Self-Directed Projects"
         },
         {
           "ref": "resume-engineer"
@@ -388,13 +375,17 @@
           ]
         },
         {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Employment"
+        },
+        {
           "ref": "resume-field-value"
         },
         {
           "ref": "resume-support-value"
-        },
-        {
-          "ref": "resume-writer-value"
         },
         {
           "kind": "h2",
@@ -475,11 +466,11 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Summary"
+          "text": "Summary"
         },
         {
           "kind": "p",
-          "text": "Independent systems engineer building AI evaluation tools, reproducible tests, and releases; contributes maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors."
+          "text": "Self-directed software builder transitioning from arboriculture into AI evaluation and Python tooling, with maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors."
         },
         {
           "kind": "h2",
@@ -491,7 +482,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Experience"
+          "text": "Self-Directed Projects"
         },
         {
           "ref": "resume-engineer"
@@ -522,19 +513,23 @@
         },
         {
           "kind": "li",
-          "text": "Executed a pinned METR count_odds task-image check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.",
+          "text": "Executed a pinned METR count_odds check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.",
           "evidence": [
             "metr-interop-controls"
           ]
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Employment"
         },
         {
           "ref": "resume-field-value"
         },
         {
           "ref": "resume-support-value"
-        },
-        {
-          "ref": "resume-writer-value"
         },
         {
           "kind": "h2",
@@ -567,7 +562,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: Google SecOps; LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: security, AI governance, and developer tools. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -622,7 +617,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Summary"
+          "text": "Summary"
         },
         {
           "kind": "p",
@@ -638,7 +633,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Experience"
+          "text": "Employment"
         },
         {
           "ref": "resume-field"
@@ -675,7 +670,8 @@
           "ref": "resume-support-value"
         },
         {
-          "ref": "resume-writer-value"
+          "kind": "h2",
+          "text": "Self-Directed Projects"
         },
         {
           "ref": "resume-engineer"
@@ -687,6 +683,9 @@
             "flywheel",
             "history"
           ]
+        },
+        {
+          "ref": "resume-writer-value"
         },
         {
           "ref": "resume-education"
@@ -709,7 +708,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Summary"
+          "text": "Summary"
         },
         {
           "kind": "p",
@@ -725,7 +724,7 @@
         },
         {
           "kind": "h2",
-          "text": "Professional Experience"
+          "text": "Employment"
         },
         {
           "ref": "resume-field"
@@ -762,7 +761,8 @@
           "ref": "resume-support-value"
         },
         {
-          "ref": "resume-writer-value"
+          "kind": "h2",
+          "text": "Self-Directed Projects"
         },
         {
           "ref": "resume-engineer"
@@ -774,6 +774,9 @@
             "flywheel",
             "history"
           ]
+        },
+        {
+          "ref": "resume-writer-value"
         },
         {
           "ref": "resume-education"
@@ -800,7 +803,7 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. Combines self-directed programming with technical networking support and eleven years of full-time arboriculture and customer-facing operations.",
+          "text": "Self-directed software builder and technical writer with about 13 years of personal programming. Builds AI workstations, evaluation tools, language tooling, and graphics systems. Began a career transition in June 2026 after eleven years of full-time production arboriculture; no professional programming experience.",
           "evidence": [
             "history",
             "flywheel",
@@ -810,14 +813,14 @@
         },
         {
           "kind": "p",
-          "text": "Open to technical and nontechnical AI governance and evaluation roles. Available for regular travel to San Francisco and London.",
+          "text": "Open to technical and nontechnical AI governance and evaluation roles. Willing to relocate to London; available for regular travel to San Francisco.",
           "evidence": [
             "career-availability"
           ]
         },
         {
           "kind": "h2",
-          "text": "Professional Experience"
+          "text": "Self-Directed Projects"
         },
         {
           "ref": "engineer"
@@ -861,6 +864,10 @@
           "evidence": [
             "history"
           ]
+        },
+        {
+          "kind": "h2",
+          "text": "Employment"
         },
         {
           "ref": "field"
@@ -2217,7 +2224,7 @@
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",
   "availability": {
     "roles": "Open to technical and nontechnical AI governance and evaluation roles.",
-    "travel": "Available for regular travel to San Francisco and London.",
-    "source": "Owner confirmed September 30, 2026; travel availability does not imply relocation or work authorization in another country."
+    "travel": "Willing to relocate to London; available for regular travel to San Francisco.",
+    "source": "Owner confirmed September 30, 2026; willingness to relocate does not establish work authorization in another country."
   }
 }

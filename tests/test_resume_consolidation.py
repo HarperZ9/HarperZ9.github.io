@@ -31,7 +31,19 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         assert len(pdf) == (5 if item['id'] == 'page:cv' else 1)
         assert not docx.tables
         assert len(text.split()) >= 250
-        assert '2023 to Present' in text
+        assert 'Self-Directed Projects' in text
+        assert 'Employment' in text
+        assert 'June 2026' in text
+        assert '13 years' in text
+        assert 'Professional Experience' not in text
+        sections = re.split(r'(?m)^(Self-Directed Projects|Employment)$', text)
+        scope = {sections[i]: sections[i + 1] for i in range(1, len(sections), 2)}
+        assert 'About 13 years' in scope['Self-Directed Projects']
+        assert 'Legendary Tree' in scope['Employment']
+        assert '13 years self-directed' not in scope['Employment']
+        assert 'Independent Systems Engineer' not in scope['Employment']
+        assert 'Independent Systems Engineer' not in text
+        assert '2023 to Present' not in text
         assert 'April 25, 2015 to June 2, 2026' in text
         assert '2014 to 2015' in text
         assert 'Began 2017' in text
@@ -199,7 +211,9 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert 'earned' not in secops and secops['url_role'] == 'Official course description'
     assert secops['title'] in cv and '96% knowledge assessment' in cv
     assert 'Sole proprietor since September 2026' in cv
-    assert 'Available for regular travel to San Francisco and London.' in cv
+    assert 'Willing to relocate to London; available for regular travel to San Francisco.' in cv
+    assert 'no professional programming experience' in cv
+    assert 'no paid software clients' in cv
 
 
 def test_public_interest_work_retains_its_evidence_limits():

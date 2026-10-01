@@ -6,25 +6,29 @@ linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
 Technical Support | Developer Operations | Quality Assurance
 
-Professional Summary
+Summary
 
-Systems engineer who turns reported failures into reproducible tests, usable fixes, and clear customer guidance. Combines independently shipped software and accepted upstream contributions with Xbox networking support and eleven years of client-facing field operations.
+Self-directed software builder transitioning from eleven years of full-time arboriculture. Turns reported failures into reproducible tests and usable fixes; combines released personal projects with technical support and customer-facing field operations.
 
 Technical Skills
 
 Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSocket, TCP/IP, DNS, NAT; issue reproduction, regression testing, release packaging, technical documentation.
 
-Professional Experience
+Self-Directed Projects
 
-Independent Systems Engineer | Independent practice | 2023 to Present
-
-Sole proprietor since September 2026
+About 13 years self-directed | Career transition began June 2026
 
 - Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.
 
 - Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
 
 - Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.
+
+Freelance Technical Writer | Independent projects | Began 2017
+
+- Wrote implementation guides, API documentation, and release notes for developers and customers.
+
+Employment
 
 Arboriculture and Field Operations | Legendary Tree
 
@@ -37,10 +41,6 @@ Technical Networking Support | Stream/Convergys | 2014 to 2015
 Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
-
-Freelance Technical Writer | Independent projects | Began 2017
-
-- Wrote implementation guides, API documentation, and release notes for developers and customers.
 
 Selected Open-Source Contributions: 6 Merged
 

@@ -6,19 +6,17 @@ linkedin.com/in/zaindanaharper | github.com/HarperZ9
 
 AI Systems Engineering | Evaluation | Python Developer Tools
 
-## Professional Summary
+## Summary
 
-Independent systems engineer building AI evaluation tools, reproducible tests, and releases; contributes maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors.
+Self-directed software builder transitioning from arboriculture into AI evaluation and Python tooling, with maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors.
 
 ## Technical Skills
 
 Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, MCP, APIs, deterministic testing, typed capabilities, approval gates, offline verification.
 
-## Professional Experience
+## Self-Directed Projects
 
-### Independent Systems Engineer | Independent practice | 2023 to Present
-
-Sole proprietor since September 2026
+About 13 years self-directed | Career transition began June 2026
 
 - Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.
 
@@ -26,7 +24,13 @@ Sole proprietor since September 2026
 
 - Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.
 
-- Executed a pinned METR count_odds task-image check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.
+- Executed a pinned METR count_odds check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.
+
+### Freelance Technical Writer | Independent projects | Began 2017
+
+- Wrote implementation guides, API documentation, and release notes for developers and customers.
+
+## Employment
 
 ### Arboriculture and Field Operations | Legendary Tree
 
@@ -40,10 +44,6 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
-### Freelance Technical Writer | Independent projects | Began 2017
-
-- Wrote implementation guides, API documentation, and release notes for developers and customers.
-
 ## Selected Open-Source Contributions: 6 Merged
 
 - DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters; added regression tests to protect evaluation reliability. Merged.
@@ -54,6 +54,6 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 ## Credentials, Training, and Education
 
-Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: Google SecOps; LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.
+Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: security, AI governance, and developer tools. Full record: harperz9.github.io/cv.html.
 
 High School Diploma | Wilsonville High School, Oregon | 2013

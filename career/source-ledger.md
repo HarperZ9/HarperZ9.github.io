@@ -8,7 +8,7 @@ The live website repository remains the deployment authority. Fuller material wa
 
 ## Employment and date policy
 
-**Independent Engineering:** Start year 2023 from historical career record; current independent project activity confirmed by owner on 2026-09-20 and current public releases. Present refers to project practice, not continuous paid employment.
+**Independent Engineering:** Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.
 
 **Freelance Writing:** Start year 2017 is known. No current status, end year, or continuous employment is inferred.
 
@@ -414,11 +414,11 @@ https://github.com/HarperZ9/articulate/releases/tag/v0.5.2
 
 ### sole-proprietorship
 
-The owner confirmed beginning a sole proprietorship in September 2026. Independent project practice began in 2023; the two dates describe different activities. No LLC or registered trade name is claimed.
+Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.
 
 ### career-availability
 
-The owner confirmed interest in technical and nontechnical AI governance and evaluation roles and availability for regular travel to San Francisco and London. Travel availability does not establish relocation plans or work authorization in another country.
+The owner confirmed interest in technical and nontechnical AI governance and evaluation roles, willingness to relocate to London, and availability for regular travel to San Francisco. Willingness to relocate does not establish work authorization in another country.
 
 ### bluedot-agi-strategy
 

@@ -8,17 +8,15 @@ Curriculum Vitae | Systems Engineering, AI Infrastructure, and Field Operations
 
 ## Profile
 
-Independent systems engineer and technical writer building AI workstations, evaluation and accountability tools, language tooling, and graphics systems. Combines self-directed programming with technical networking support and eleven years of full-time arboriculture and customer-facing operations.
+Self-directed software builder and technical writer with about 13 years of personal programming. Builds AI workstations, evaluation tools, language tooling, and graphics systems. Began a career transition in June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
 
-Open to technical and nontechnical AI governance and evaluation roles. Available for regular travel to San Francisco and London.
+Open to technical and nontechnical AI governance and evaluation roles. Willing to relocate to London; available for regular travel to San Francisco.
 
-## Professional Experience
+## Self-Directed Projects
 
-### Independent Systems Engineer | Independent practice
+About 13 years of self-directed programming | Career transition began June 2026
 
-Kent / remote | 2023 to Present
-
-Sole proprietor since September 2026
+Sole proprietor since September 2026; no paid software clients
 
 - Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools under the Zentropy Labs project identity. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
 
@@ -31,6 +29,8 @@ Sole proprietor since September 2026
 Independent practice | Began 2017; project-based work
 
 - Produced technical and compliance documentation, API and implementation guides, proposals, release notes, and operational playbooks. Turned implementation details into material usable by customers, developers, and reviewers.
+
+## Employment
 
 ### Commercial Arboriculture and Field Operations | Legendary Tree
 
@@ -48,7 +48,7 @@ Subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015
 
 ## Programming Background
 
-Self-directed programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure. This is a project history, not a claim of equivalent years of paid software employment.
+Personal programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure.
 
 ## AI Platform and Agent Systems
 
