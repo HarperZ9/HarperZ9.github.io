@@ -45,6 +45,10 @@ names is public and needs no key.
 - [Publications](https://harperz9.github.io/publications.html): papers and
   public records.
 - [Hire or collaborate](https://harperz9.github.io/hire.html): the routes in.
+- [Work with me](https://harperz9.github.io/work-with-me.html): evaluation and
+  investigation services, scoped quotes, limits and case studies from published work.
+- [Independence policy](https://harperz9.github.io/independence.html): funding,
+  disclosed interests, model use, conflicts and corrections.
 
 ## How to read a claim here
 
