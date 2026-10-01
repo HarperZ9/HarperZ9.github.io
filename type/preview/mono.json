@@ -1,7 +1,7 @@
 {
   "schema": "zentropy.font-preview/v1",
   "id": "mono-regular",
-  "family": "Zentropy Mono Preview",
+  "family": "Zain Mono Preview",
   "style": "Regular",
   "status": "development-preview",
   "saleEnabled": false,
@@ -10,7 +10,7 @@
     "Technical writing",
     "Code specimens"
   ],
-  "sourceRelationship": "Original Zentropy Text construction adapted for fixed-pitch setting, with manually refined outlines; limited development preview.",
+  "sourceRelationship": "Original Zain Text construction adapted for fixed-pitch setting, with manually refined outlines; limited development preview.",
   "limitations": [
     "Regular only",
     "Not a finished commercial family",
@@ -192,7 +192,7 @@
   ],
   "coverageCount": 171,
   "glyphCount": 172,
-  "file": "zentropy-mono-regular.woff2",
-  "sha256": "32c376c3662bcdb893c7a48a5f5ee9e1c2c86c79b5afe479e3eca42fa242aa97",
-  "bytes": 5472
+  "file": "zain-mono-regular.woff2",
+  "sha256": "c6a05f290d83b11bdf6227e487a38c0d011a1ded34a5ca469f89de0715a5ca11",
+  "bytes": 5452
 }

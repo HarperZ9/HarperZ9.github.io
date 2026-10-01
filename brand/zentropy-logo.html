@@ -6,9 +6,9 @@
      warm atmospheric ground + horizon glow (warm pole), a cool luminous halftone
      aperture-orb + lens-flare (clean pole), heavy grain + datamosh tearing +
      warm/cool chromatic split (gritty pole), over a water-reflection. Letterforms
-     minted by the Studio forge (ZentropyDisplay.ttf, seed 58). ?static=1 freezes. -->
+     minted by the Studio forge (ZainDisplay.ttf, seed 58). ?static=1 freezes. -->
 <style>
-  @font-face{font-family:"ZentropyDisplay";src:url("ZentropyDisplay.ttf") format("truetype");font-display:block}
+  @font-face{font-family:"ZainDisplay";src:url("ZainDisplay.ttf") format("truetype");font-display:block}
   html,body{margin:0;background:#070406;overflow:hidden}
   canvas{display:block}
 </style>
@@ -47,7 +47,7 @@
   var RAMP=[[10,20,28],[16,86,112],[54,168,196],[150,226,240],[244,255,255]];
   function ramp(L){L=L<0?0:L>1?1:L;var t=L*(RAMP.length-1),i=Math.floor(t);if(i>RAMP.length-2)i=RAMP.length-2;var f=t-i,a=RAMP[i],b=RAMP[i+1];return 'rgb('+Math.round(a[0]+(b[0]-a[0])*f)+','+Math.round(a[1]+(b[1]-a[1])*f)+','+Math.round(a[2]+(b[2]-a[2])*f)+')';}
   function labs(){var sz=capH*0.26,ly=cy+capH*0.5+sz*1.25;ctx.fillStyle='#eaf6f8';ctx.textAlign='center';ctx.textBaseline='alphabetic';
-    ctx.font='700 '+sz+'px "ZentropyDisplay",system-ui,sans-serif';
+    ctx.font='700 '+sz+'px "ZainDisplay",system-ui,sans-serif';
     var ss='LABS',ws=sz*0.36,tw=0;for(var i=0;i<ss.length;i++)tw+=ctx.measureText(ss[i]).width+ws;tw-=ws;var lx=W/2-tw/2;
     for(var i2=0;i2<ss.length;i2++){ctx.fillText(ss[i2],lx+ctx.measureText(ss[i2]).width/2,ly);lx+=ctx.measureText(ss[i2]).width+ws;}
     ctx.strokeStyle='rgba(255,170,110,0.6)';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(W/2-tw/2-ws,ly+sz*0.32);ctx.lineTo(W/2+tw/2+ws,ly+sz*0.32);ctx.stroke();}

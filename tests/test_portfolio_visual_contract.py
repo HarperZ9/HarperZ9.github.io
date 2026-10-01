@@ -153,6 +153,7 @@ def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
         assert value not in combined
 
     assert "ZentropyDisplay" not in combined
+    assert "ZainDisplay" not in combined
     assert "Project Telos" not in combined
     assert "brand-wordmark" not in combined
     assert "brand-route" not in combined

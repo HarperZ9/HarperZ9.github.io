@@ -1,7 +1,7 @@
 {
   "schema": "zentropy.font-preview/v1",
   "id": "editorial-regular",
-  "family": "Zentropy Editorial Preview",
+  "family": "Zain Editorial Preview",
   "style": "Regular",
   "status": "development-preview",
   "saleEnabled": false,
@@ -10,7 +10,7 @@
     "Editorial headlines",
     "Display typography"
   ],
-  "sourceRelationship": "Original Zentropy editorial serif development family; limited preview subset.",
+  "sourceRelationship": "Original Zain editorial serif development family; limited preview subset.",
   "limitations": [
     "Regular only",
     "Not a finished commercial family",
@@ -130,7 +130,7 @@
   ],
   "coverageCount": 109,
   "glyphCount": 110,
-  "file": "zentropy-editorial-regular.woff2",
-  "sha256": "d8b8734f5afdb76b40fbede019c977c5e50819e935954b690d4b2f9954893864",
-  "bytes": 6348
+  "file": "zain-editorial-regular.woff2",
+  "sha256": "a64911ddab7d3339dfc0693c2bf01c591fbe14548857d116c4cc4750aec8c191",
+  "bytes": 6384
 }

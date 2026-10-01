@@ -1,14 +1,14 @@
 @font-face {
-  font-family: "Zentropy Editorial Preview";
-  src: url("../type/preview/zentropy-editorial-regular.woff2") format("woff2");
+  font-family: "Zain Editorial Preview";
+  src: url("../type/preview/zain-editorial-regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Zentropy Mono Preview";
-  src: url("../type/preview/zentropy-mono-regular.woff2?v=32c376c3") format("woff2");
+  font-family: "Zain Mono Preview";
+  src: url("../type/preview/zain-mono-regular.woff2?v=c6a05f29") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -116,13 +116,13 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
 }
 
 .font-editorial-preview {
-  font-family: "Zentropy Editorial Preview", Georgia, serif;
+  font-family: "Zain Editorial Preview", Georgia, serif;
   font-weight: 400;
   font-synthesis: none;
 }
 
 .font-mono-preview {
-  font-family: "Zentropy Mono Preview", monospace;
+  font-family: "Zain Mono Preview", monospace;
   font-weight: 400;
   font-synthesis: none;
 }
@@ -446,13 +446,13 @@ html[data-theme] body.font-marketplace-page .font-market a.font-action.font-acti
 
 .font-live-preview[data-font-family="editorial-preview"],
 .font-static-line[data-font-family="editorial-preview"] {
-  font-family: "Zentropy Editorial Preview", Georgia, serif;
+  font-family: "Zain Editorial Preview", Georgia, serif;
   font-weight: 400;
 }
 
 .font-live-preview[data-font-family="mono-preview"],
 .font-static-line[data-font-family="mono-preview"] {
-  font-family: "Zentropy Mono Preview", monospace;
+  font-family: "Zain Mono Preview", monospace;
   font-weight: 400;
 }
 

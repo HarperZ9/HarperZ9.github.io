@@ -91,7 +91,7 @@ function contrast(foreground, background) {
       assert.equal(proof.catalogState, 'preview');
       assert.equal(proof.commerce, 'false');
       assert.match(proof.catalogText, /No fonts are available to purchase yet\./);
-      assert.match(proof.collectionText, /Zentropy Editorial/);
+      assert.match(proof.collectionText, /Zain Editorial/);
       assert.match(proof.collectionText, /A serif for titles\. A mono for code and technical notes\./);
       assert.match(proof.collectionText, /Editorial serif/);
       assert.match(proof.collectionText, /Technical mono/);
@@ -117,10 +117,10 @@ function contrast(foreground, background) {
       assert.equal(proof.productDetailsOpen, false, `${theme}/${width}: metadata details should stay collapsed by default`);
       assert.equal(proof.visibleControlCount, 0, `${theme}/${width}: no-JS must not expose dead specimen controls`);
       assert.match(proof.staticSpecimenText, /Static specimen/i);
-      assert.match(proof.staticSpecimenText, /Zentropy Editorial/i);
-      assert.match(proof.staticSpecimenText, /Zentropy Mono/i);
-      assert.match(proof.staticFamilies[0], /Zentropy Editorial Preview/);
-      assert.match(proof.staticFamilies[1], /Zentropy Mono Preview/);
+      assert.match(proof.staticSpecimenText, /Zain Editorial/i);
+      assert.match(proof.staticSpecimenText, /Zain Mono/i);
+      assert.match(proof.staticFamilies[0], /Zain Editorial Preview/);
+      assert.match(proof.staticFamilies[1], /Zain Mono Preview/);
       assert.equal(proof.forbidden, null);
       assert.deepEqual(proof.clipped, [], `${theme}/${width}: content cannot be clipped offscreen`);
       // 2026-09-25: the void-and-bone surface sets the grounds (bone #ebe5d8, void #060608).
@@ -329,8 +329,8 @@ function contrast(foreground, background) {
       assert.equal(compareDefaults.left, 'editorial-preview');
       assert.equal(compareDefaults.right, 'mono-preview');
       assert.deepEqual(compareDefaults.groupLabels, [
-        'Zentropy Editorial · Original preview',
-        'Zentropy Mono · Original preview',
+        'Zain Editorial · Original preview',
+        'Zain Mono · Original preview',
         'Existing site fonts · not original fonts for sale',
       ]);
       assert.deepEqual(compareDefaults.rows.map(row => row.familyState), ['editorial-preview', 'mono-preview']);
@@ -517,10 +517,10 @@ function contrast(foreground, background) {
         };
       });
       assert.equal(originalProof.familyState, 'editorial-preview');
-      assert.match(originalProof.family, /Zentropy Editorial Preview/i);
+      assert.match(originalProof.family, /Zain Editorial Preview/i);
       assert.match(originalProof.unsupported, /é/);
       assert.match(originalProof.unsupported, /Poster and CSS export stay off/i);
-      assert.match(originalProof.status, /Zentropy Editorial Preview/);
+      assert.match(originalProof.status, /Zain Editorial Preview/);
       assert.equal(originalProof.posterDisabled, true, `${theme}/${width}: preview face must not be transferable to Poster`);
       assert.equal(originalProof.cssDisabled, true, `${theme}/${width}: preview face must not export CSS`);
       assert.deepEqual(originalProof.network, [], `${theme}/${width}: original preview must not send visitor text`);

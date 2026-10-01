@@ -57,7 +57,7 @@ def test_fonts_page_publishes_limited_preview_collection_without_checkout_claims
     assert 'data-font-try="mono-preview"' in collection
     assert 'data-font-try="editorial-preview"' in collection
     assert "Try this face" in collection
-    assert "Zentropy Editorial" in collection
+    assert "Zain Editorial" in collection
     assert "Editorial serif" in collection
     assert "Technical mono" in collection
     assert "Regular preview" not in collection
@@ -83,7 +83,7 @@ def test_fonts_page_publishes_limited_preview_collection_without_checkout_claims
     assert "Only reviewed" not in collection
     assert "source-free" not in collection
     assert "public page honest" not in collection
-    assert 'type/preview/zentropy-editorial-regular.woff2' in source
+    assert 'type/preview/zain-editorial-regular.woff2' in source
     fallback = source.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
     for href in ("flywheel.html", "bulletin.html", "typeface.html"):
         assert f'href="{href}"' in fallback
@@ -200,13 +200,13 @@ def test_font_marketplace_does_not_publish_private_or_derived_font_assets() -> N
     ):
         assert private_marker not in combined, private_marker
     assert '@font-face' in styles
-    assert 'font-family: "Zentropy Editorial Preview"' in styles
-    assert 'url("../type/preview/zentropy-editorial-regular.woff2") format("woff2")' in styles
+    assert 'font-family: "Zain Editorial Preview"' in styles
+    assert 'url("../type/preview/zain-editorial-regular.woff2") format("woff2")' in styles
     assert 'font-display: swap' in styles
     assert ".font-collection {" in styles
     assert "grid-column: 1 / -1" in styles
     assert "box-shadow" in styles
-    assert combined.count("zentropy-editorial-regular.woff2") >= 1
+    assert combined.count("zain-editorial-regular.woff2") >= 1
     assert "woff2" in combined
 
 
@@ -258,7 +258,7 @@ def test_interactive_specimen_is_public_static_and_progressive() -> None:
     assert 'Hanken Grotesk' in lab
     assert 'Conso' in lab
     assert 'value="editorial-preview"' in lab
-    assert 'Zentropy Editorial Preview' in lab
+    assert 'Zain Editorial Preview' in lab
     assert 'data-font-coverage-warning' in lab
     assert 'data-font-asset-status' in source
     assert 'data-font-specimen-poster' in lab
