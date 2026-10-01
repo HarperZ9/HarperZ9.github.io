@@ -550,7 +550,9 @@ RELEASE_PATHS = (
 # Bullshitter; the slug why-i-do-this.html stays. The listing, series opener, card, feeds,
 # build receipt, route registry, site index, series tables and home bundle
 # (index-C1IxEots.js) are regenerated. index-B3PP6LeH.js was never published and is gone.
-REVIEWED_RELEASE_SHA256 = "2298224709126d88794efd0b2c158c7224881f360023209154fb55a02354b7be"
+# October 1, 2026, before publication: the purple-team passage, the June-page bridge and the
+# close of why-i-do-this.html now use the author's own words. No derived file changes.
+REVIEWED_RELEASE_SHA256 = "8aca035bd5e867ed0f90ffe95f4726941c41302d8cbaaf377348f014daac9836"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

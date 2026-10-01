@@ -90,6 +90,12 @@ def test_it_is_first_person_and_keeps_the_consented_wording() -> None:
     # The author kept these as written (1 October 2026).
     assert "I still push a boundary now and then and work on my purple-team tools, but my main focus is "            "honesty, verification, re-derivability and independence." in text
     assert "open or closed, in any nation" in text
+    # The author's own words replace passages the drafting model composed (1 October 2026).
+    assert "I was building tools that existed to break AI, using AI to do so, and that purple team methodology " \
+           "is special to me, because it aligns with my personal and mental turmoil through impulsiveness, and " \
+           "traveling that line where accountability begins." in text
+    for composed in ("In June I published a page", "Read the work and check it"):
+        assert composed not in text, composed
 
 
 def test_public_surface_rules_hold() -> None:
@@ -109,7 +115,7 @@ def test_sources_and_the_ai_note_come_after_the_essay() -> None:
     body_end = page.index('<div class="wpr-series-continue">')
     assert page.index('id="how-made"') > body_end and page.index('id="sources"') > body_end
     essay = re.search(r'<div class="wid-voice">(.*?)</div>', page, re.S).group(1)
-    assert len(re.findall(r"<a\b", essay)) <= 1  # one inline link, to the June page it quotes
+    assert len(re.findall(r"<a\b", essay)) <= 1  # at most one inline link; the June page is cited under Sources
     how = visible_text(re.search(r'<section id="how-made".*?</section>', page, re.S).group(0))
     assert "Claude Opus 5.5, a model built by Anthropic" in how
     assert "voice memo on 1 October 2026" in how
