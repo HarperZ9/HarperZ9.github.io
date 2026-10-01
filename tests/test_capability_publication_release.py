@@ -507,7 +507,7 @@ RELEASE_PATHS = (
 # edition list, the briefings index, sitemap, feeds, build receipt, route registry, site
 # index and home bundle (index-Dmke1bnx.js, index-DbZyfUEO.css) are regenerated.
 # October 1, 2026: Who Pays the Referees gains four dated corrections; the page is rehashed.
-REVIEWED_RELEASE_SHA256 = "PENDING"
+REVIEWED_RELEASE_SHA256 = "10a1e73519753222d4611182c0ba7b819398c71fc32a7e8214499564492ee409"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
