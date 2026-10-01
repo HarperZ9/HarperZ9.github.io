@@ -629,3 +629,15 @@ Public issuer verification: https://www.credly.com/badges/a89c09d0-1424-44c3-9ee
 Official course description: https://www.skills.google/course_templates/656
 
 The work took place in a provider assessment environment. No production deployment, general model-quality claim, or training-example count is inferred. Dataset-loading counts and assessment-only model metrics are excluded from these career claims.
+
+## Create ML Models with BigQuery ML
+
+### google-bigquery-ml-models
+
+Google Skills / Google Cloud awarded Create ML Models with BigQuery ML as an assessed skill badge after the first lab session achieved 100/100 across four checkpoints. Local completion was September 30, 2026; the public issuer record gives October 1, 2026 as its issue date and classifies the badge as Intermediate Validation. No cause for the date difference is inferred. Both the course and challenge are Intermediate.
+
+Public issuer verification: https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url
+
+Official course description: https://www.skills.google/course_templates/626
+
+Assessed lab work covered three logistic-regression models, feature engineering, evaluation on a later date window, and prediction generation. This is assessment-environment work; no professional certification, production deployment, or general model-performance improvement is claimed. Detailed evaluation metrics and dataset counts remain outside the career record.

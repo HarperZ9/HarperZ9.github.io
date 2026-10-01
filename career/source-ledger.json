@@ -861,6 +861,35 @@
       "course_url": "https://www.skills.google/course_templates/656",
       "badge_id": "a89c09d0-1424-44c3-9eed-7ccb50e45d9f",
       "status": "Issuer badge accepted and public record verified. Local course completion September 30, 2026; issuer displays issue date October 1, 2026. No cause for date difference inferred."
+    },
+    {
+      "id": "google-bigquery-ml-models",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Create ML Models with BigQuery ML",
+      "course_level": "Intermediate",
+      "challenge_level": "Intermediate",
+      "local_completion_date": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; four checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url",
+      "url_role": "Public issuer badge verification",
+      "course_url": "https://www.skills.google/course_templates/626",
+      "badge_id": "6e495603-0a8e-441a-88fc-7b62d15a4bfd",
+      "lab_models_trained": 3,
+      "assessed_skills": [
+        "BigQuery ML logistic-regression modeling",
+        "Feature engineering",
+        "Evaluation on a later date window",
+        "Prediction generation"
+      ],
+      "execution_scope": "Three logistic-regression models created in the assessment environment. No professional certification, production deployment, or general performance-improvement claim.",
+      "earned": "2026-10-01",
+      "issuer_classification": "Intermediate Validation",
+      "status": "Issuer public badge verified as Google Cloud Intermediate Validation, issue date October 1, 2026. Local completion September 30 remains distinct; no cause for date difference inferred."
     }
   ],
   "limits": [

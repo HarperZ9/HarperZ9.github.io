@@ -566,7 +566,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction, MLOps evaluation. Coursework: LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: LFD121; Cisco Ethical Hacker; Claude API/Code/MCP/Bedrock; BlueDot AGI Strategy; UNESCO AI ethics. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -591,7 +591,8 @@
             "ms-devops-security",
             "google-mlops-model-evaluation",
             "claude-amazon-bedrock",
-            "google-bigquery-predictive"
+            "google-bigquery-predictive",
+            "google-bigquery-ml-models"
           ]
         },
         {
@@ -1500,9 +1501,10 @@
         },
         {
           "kind": "p",
-          "text": "Google: Perform Predictive Data Analysis in BigQuery | Skill badge, issued 2026-10-01; 100/100, seven checkpoints. Intermediate course/Advanced challenge. Lab work: SQL ingestion, feature UDFs, logistic regression, held-out predictions.",
+          "text": "Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge). Both courses Intermediate. Lab work: SQL features, logistic regression, later-window evaluation, and predictions.",
           "evidence": [
-            "google-bigquery-predictive"
+            "google-bigquery-predictive",
+            "google-bigquery-ml-models"
           ]
         },
         {
@@ -2167,6 +2169,34 @@
       "issuer_classification": "Intermediate Validation",
       "course_url": "https://www.skills.google/course_templates/656",
       "badge_id": "a89c09d0-1424-44c3-9eed-7ccb50e45d9f"
+    },
+    {
+      "id": "google-bigquery-ml-models",
+      "provider": "Google Skills / Google Cloud",
+      "kind": "Assessed skill badge",
+      "title": "Create ML Models with BigQuery ML",
+      "course_level": "Intermediate",
+      "challenge_level": "Intermediate",
+      "local_completion_date": "2026-09-30",
+      "score": 100,
+      "maximum_score": 100,
+      "checkpoints_passed": 4,
+      "checkpoints_total": 4,
+      "assessment_result": "100/100; four checkpoints accepted in the first lab session",
+      "url": "https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url",
+      "url_role": "Public issuer badge verification",
+      "course_url": "https://www.skills.google/course_templates/626",
+      "badge_id": "6e495603-0a8e-441a-88fc-7b62d15a4bfd",
+      "lab_models_trained": 3,
+      "assessed_skills": [
+        "BigQuery ML logistic-regression modeling",
+        "Feature engineering",
+        "Evaluation on a later date window",
+        "Prediction generation"
+      ],
+      "execution_scope": "Three logistic-regression models created in the assessment environment. No professional certification, production deployment, or general performance-improvement claim.",
+      "earned": "2026-10-01",
+      "issuer_classification": "Intermediate Validation"
     }
   ],
   "credential_policy": "Applied Skills credentials, course-completion certificates, and learning-path achievements are listed separately. Coursework topics describe training, not employment experience. The SC-100 certification exam has not been taken. These learner records do not confer organizational accreditation.",

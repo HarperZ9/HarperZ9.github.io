@@ -240,7 +240,7 @@ Google DeepMind: Train A Small Language Model | Advanced assessed skill badge, 2
 
 Google Cloud: Use Agent Skills with Multi-Agent Systems | Skill badge, 2026-09-30; 100/100, six checkpoints. Intermediate course; Advanced challenge. Five lab Cloud Run services deployed; model-access policy blocked local and cloud generation.
 
-Google: Perform Predictive Data Analysis in BigQuery | Skill badge, issued 2026-10-01; 100/100, seven checkpoints. Intermediate course/Advanced challenge. Lab work: SQL ingestion, feature UDFs, logistic regression, held-out predictions.
+Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge). Both courses Intermediate. Lab work: SQL features, logistic regression, later-window evaluation, and predictions.
 
 Google Skills: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation | Intermediate course-completion badge, 2026-09-30. Predictive/generative evaluation methods.
 

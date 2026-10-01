@@ -185,6 +185,14 @@ def test_credentials_keep_issuer_type_and_completion_evidence_separate():
     assert predictive['earned'] == '2026-10-01' and predictive['local_completion_date'] == '2026-09-30'
     assert predictive['url'] == 'https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url'
     assert 'loaded_event_rows' not in predictive and 'model_evaluate' not in predictive
+    ml_models = next(c for c in credentials if c['id'] == 'google-bigquery-ml-models')
+    assert ml_models['kind'] == 'Assessed skill badge'
+    assert ml_models['course_level'] == ml_models['challenge_level'] == 'Intermediate'
+    assert (ml_models['score'], ml_models['maximum_score'], ml_models['checkpoints_passed']) == (100, 100, 4)
+    assert ml_models['lab_models_trained'] == 3 and ml_models['title'] in cv
+    assert ml_models['earned'] == '2026-10-01' and ml_models['local_completion_date'] == '2026-09-30'
+    assert ml_models['url'] == 'https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url'
+    assert 'general performance-improvement claim' in ml_models['execution_scope']
     assert 'Sole proprietor since September 2026' in cv
     assert 'Available for regular travel to San Francisco and London.' in cv
 

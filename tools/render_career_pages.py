@@ -230,6 +230,7 @@ def router_body(source: dict, *, hire: bool) -> str:
     skills = [item for item in credentials if item['kind'] == 'Applied Skills credential']
     advanced = [item for item in credentials if item['kind'].startswith('Advanced ') and item['provider'] == 'Microsoft Learn']
     additions = ['<section><h2>Credentials and advanced coursework</h2>',
+                 '<p>Google: <a href="https://www.credly.com/badges/6e495603-0a8e-441a-88fc-7b62d15a4bfd/public_url">Create ML Models with BigQuery ML</a>: Intermediate skill badge, 100/100, four checkpoints.</p>',
                  '<p>Google: <a href="https://www.credly.com/badges/a89c09d0-1424-44c3-9eed-7ccb50e45d9f/public_url">Perform Predictive Data Analysis in BigQuery</a>, skill badge issued 2026-10-01; 100/100, seven checkpoints. Intermediate course/Advanced challenge.</p>',
                  '<p>Google Skills: <a href="https://www.skills.google/course_templates/1080">Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation</a>, Intermediate course-completion badge, 2026-09-30. Required quizzes: 100% and 85%.</p>',
                  '<p>Cisco Networking Academy: <a href="https://www.credly.com/badges/be9be111-860f-4c06-a416-71aa0cc48e34/public_url">Ethical Hacker</a>, Intermediate course certificate and learning badge issued September 30, 2026; 100% knowledge-exam result.</p>',
