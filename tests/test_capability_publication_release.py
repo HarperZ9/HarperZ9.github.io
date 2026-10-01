@@ -13,6 +13,10 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-BkvbD78Z.js",
+    "work-with-me.html",
+    "independence.html",
+    "income-ledger.html",
     "assets/index-CyztdbmV.js",
     "assets/index-DbZyfUEO.css",
     "who-knew-first-series.html",
@@ -519,7 +523,11 @@ RELEASE_PATHS = (
 # October 1, 2026: Zentropy Labs is retired. Page titles, bylines, the home bundle
 # (index-CyztdbmV.js), the open letter signature, the CV and the two affected social
 # cards name Zain Dana Harper.
-REVIEWED_RELEASE_SHA256 = "744fdf4b04afbb267b9a97faa30dc0630a58f9bd98a7d56ba9a3a2447f51c6b4"
+# October 1, 2026: Work with me (services, scoped quotes, limits, case studies from published
+# work), the independence policy and the public income ledger join the Work routes and the
+# sitemap; the route registry, site index, publication build receipt and home bundle
+# (index-BkvbD78Z.js) are regenerated. index-CyztdbmV.js stays as retained history.
+REVIEWED_RELEASE_SHA256 = "818bea43ad268cac3393f36daeec482eff3620c9b9a500daf97537bab03402a1"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -692,7 +700,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: Zentropy Labs is retired and the home names Zain Dana Harper, so the
     # bundle rebuilt from the registry is index-CyztdbmV.js with the same sheet.
     # index-BIA-0d5A.js stays as retained history.
-    current_js = "index-CyztdbmV.js"
+    # October 1, 2026: Work with me, the independence policy and the income ledger join the
+    # Work routes, so the bundle rebuilt from the registry is index-BkvbD78Z.js with the same sheet.
+    # index-CyztdbmV.js stays as retained history.
+    current_js = "index-BkvbD78Z.js"
+    previous_name_js = "index-CyztdbmV.js"
+    assert previous_name_js not in source
+    assert (ROOT / "assets" / previous_name_js).is_file()
+    assert f"assets/{previous_name_js}" in RELEASE_PATHS
     previous_terms_js = "index-BIA-0d5A.js"
     assert previous_terms_js not in source
     assert (ROOT / "assets" / previous_terms_js).is_file()
