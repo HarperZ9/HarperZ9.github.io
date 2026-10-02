@@ -21,6 +21,7 @@ STYLE = """<style>
 /* Page-scoped: policy lists and subheads at reading size inside the shared chassis. */
 .policy-list{max-width:min(100%,58ch);margin:1.2em 0 0;padding-left:1.4em;font-size:clamp(1.05rem,1.3vw,1.18rem);line-height:1.7;color:var(--bone)}
 .policy-list li+li{margin-top:.5em}
+.policy-code{max-width:100%;margin:1.2em 0 0;padding:.9em 1em;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.55;color:var(--bone);border:1px solid color-mix(in srgb,var(--bone) 18%,transparent)}
 .mv h3{max-width:min(100%,58ch);margin:2em 0 .6em;font-size:1.05rem;font-weight:600;color:var(--bone)}
 .inner-clean .seal{font-size:.875rem;letter-spacing:0;color:var(--muted)}
 .plugin-table{width:100%;border-collapse:collapse;font-size:.95rem;color:var(--bone)}
@@ -197,8 +198,10 @@ def icon_body(tool: ToolSource) -> str:
 def support_page(tool: ToolSource) -> str:
     label = esc(tool.label)
     prompts = "".join(f"<li>{md.inline(p)}</li>" for p in try_it(tool.readme))
+    runtime = runtime_requirement(tool.readme)
+    runtime = esc(runtime) if runtime else "none; the plugin carries instructions only"
     install = (f'<p class="body-text">Plugin name: <code translate="no">{esc(tool.manifest["name"])}</code>. '
-               f"Runtime: {esc(runtime_requirement(tool.readme))}. The full install steps are in the "
+               f"Runtime: {runtime}. The full install steps are in the "
                f'<a href="{tool.file_url("readme")}" rel="noopener">plugin README</a>.</p>')
     parts = [
         section("what", "What it does", f'<p class="body-text">{md.inline(lead_paragraph(tool.readme))}</p>'),

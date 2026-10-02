@@ -153,15 +153,16 @@ def try_it(readme: str) -> list[str]:
     return items
 
 
-REQUIREMENT = re.compile(
-    r"requires (?:an installed )?((?:Python|Node\.js) [0-9.]+(?:\+| or (?:later|newer)))")
+REQUIREMENT = re.compile(r"((?:Python|Node\.js) [0-9.]+(?:\+| or (?:later|newer)))")
 
 
-def runtime_requirement(readme: str) -> str:
+def runtime_requirement(readme: str) -> str | None:
+    """The first runtime a README names, such as "Python 3.11 or later", or None.
+
+    A plugin that carries only instructions, such as a skill, names no runtime.
+    """
     match = REQUIREMENT.search(" ".join(readme.split()))
-    if not match:
-        raise ValueError("README states no runtime requirement")
-    return match.group(1)
+    return match.group(1) if match else None
 
 
 def sentences_matching(text: str, pattern: str) -> list[str]:

@@ -1,7 +1,8 @@
 """A small Markdown subset renderer for the plugin policy snapshots.
 
 It handles what the tools' PRIVACY.md and LICENSE files use: headings,
-paragraphs, bulleted and numbered lists, bold, inline code and bare URLs.
+paragraphs, bulleted and numbered lists, fenced code blocks, bold, inline code
+and bare URLs.
 Everything else is escaped as text.
 """
 
@@ -47,6 +48,12 @@ NUMBER = re.compile(r"^\s*\d+\.\s+")
 
 def render_block(block: str, heading_level: int) -> str:
     first = block.splitlines()[0]
+    if first.startswith("```"):
+        lines = block.splitlines()[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        code = html.escape("\n".join(lines), quote=False)
+        return f'<pre class="policy-code"><code translate="no">{code}</code></pre>'
     if first.startswith("#"):
         title = first.lstrip("#").strip()
         return f"<h{heading_level}>{inline(title)}</h{heading_level}>"
@@ -61,14 +68,16 @@ def render_block(block: str, heading_level: int) -> str:
 
 
 def merged_blocks(markdown: str) -> list[str]:
-    """Join list items separated by blank lines into one list block."""
+    """Join list items, and indented paragraphs that continue them, into one list block."""
     out: list[str] = []
     for block in blocks(markdown):
         first = block.splitlines()[0]
         previous = out[-1].splitlines()[0] if out else ""
         numbered = NUMBER.match(first) and NUMBER.match(previous)
         bulleted = BULLET.match(first) and BULLET.match(previous)
-        if numbered or bulleted:
+        # An indented paragraph after a list item continues that item.
+        continued = first[:1].isspace() and (NUMBER.match(previous) or BULLET.match(previous))
+        if numbered or bulleted or continued:
             out[-1] += "\n" + block
         else:
             out.append(block)
