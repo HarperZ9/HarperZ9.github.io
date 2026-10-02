@@ -153,7 +153,7 @@ const convOpts = () => ({
   roundTrip: { supported: false, verdict: "UNVERIFIABLE", notes: ["n1"] }, warnings: ["w1"],
 });
 
-test("T0.4 conversion receipt: 20 single-field edits each change the receipt hash; tampering fails verify", async () => {
+test("T0.4 eq: conversion receipt: 20 single-field edits each change the receipt hash; tampering fails verify", async () => {
   const sealed = await buildConversionReceipt(convOpts());
   assert.ok(verifyReceipt(sealed), "an untouched receipt verifies");
   const again = await buildConversionReceipt(convOpts());
@@ -187,7 +187,7 @@ test("T0.4 conversion receipt: 20 single-field edits each change the receipt has
 const MESH = { vertices: [[0, 0, 0], [1, 0, 0], [0, 1, 0], [1, 1, 0]], faces: [[0, 1, 2], [1, 3, 2]] };
 const OBJ_OUT = "v 0 0 0\nv 1 0 0\nv 0 1 0\nv 1 1 0\nf 1 2 3\nf 2 4 3\n";
 
-test("T0.4 export receipt: 20 single-field edits each change the receipt hash; tampering fails verify", async () => {
+test("T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify", async () => {
   const sealed = await buildReceipt("obj", null, { mesh: MESH }, OBJ_OUT);
   assert.ok(verifyReceipt(sealed));
   const pure = await buildReceipt("obj", null, { mesh: MESH }, OBJ_OUT, { subtle: null });
@@ -219,7 +219,7 @@ test("T0.4 export receipt: 20 single-field edits each change the receipt hash; t
   assert.notEqual((await buildReceipt("obj", null, { mesh: moved }, OBJ_OUT)).originHash, sealed.originHash, "a moved vertex moves originHash");
 });
 
-test("T0.4 certificate pointer: 20 single-field edits each change the SHA-256 pointer", () => {
+test("T0.4 eq: certificate pointer: 20 single-field edits each change the SHA-256 pointer", () => {
   const cert = { ...buildCertificate({ criterion: "quote:x", oracleVerdict: stringOracle("xyz", "x") }) };
   cert.iteration = 3;
   cert.claim = "x appears in the source"; // non-empty, so "claim emptied" is a real edit
