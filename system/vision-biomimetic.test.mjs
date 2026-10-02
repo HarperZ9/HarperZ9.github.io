@@ -1,14 +1,15 @@
 // vision-biomimetic.test.mjs -- node-testable PURE math for Telos's biomimetic-vision readouts.
 // Every test asserts a concrete vision-science property: SSIM self-identity + ordering, spectral-residual
 // saliency locating a blob, Laplacian-pyramid reconstruction + fine-octave flatness, DoG edge response,
-// CSF peak/falloff, Gabor orientation selectivity, and WPIR fidelity ordering. Synthetic typed arrays;
+// CSF peak/falloff and Gabor orientation selectivity (the WPIR test left with WPIR in Telos Track A
+// step T1). Synthetic typed arrays;
 // no canvas. Mirrors the contract sense.test.mjs holds for the rest of sense-core.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   srgbToLinear, toLinearLuma, gaussianBlur, gaussianPyramid, laplacianPyramid,
   dogEdges, gaborOrientationEnergy, spectralResidualSaliency, csfWeight,
-  ssim, wpir, perCellSpatialCoords, redundancyFlags,
+  ssim, perCellSpatialCoords, redundancyFlags,
 } from "./lib/sense-core/vision-biomimetic.mjs";
 
 // -- fixtures ------------------------------------------------------------------
@@ -131,20 +132,8 @@ test("gaborOrientationEnergy: a vertical grating peaks at the aligned (90deg) or
   assert.equal(bestH, "0", `horizontal grating peaks at 0deg (energies ${JSON.stringify(eh)})`);
 });
 
-// -- (7) WPIR ------------------------------------------------------------------
-test("wpir: high (~1) when reconstruction ~ original, lower when degraded", () => {
-  const W = 32, H = 32;
-  const orig = fromFn(W, H, (x, y) => 0.5 + 0.3 * Math.sin(x / 3) * Math.cos(y / 4));
-  const cols = 8, rows = 8;
-  const weights = new Array(cols * rows).fill(1);
-  const good = wpir(orig, orig, W, H, weights, cols, rows);
-  const bad = wpir(addNoise(orig, W, H, 0.25), orig, W, H, weights, cols, rows);
-  assert.ok(good > 0.999, `WPIR(identical) ${good} ~ 1`);
-  assert.ok(bad < good, `WPIR(degraded) ${bad} < WPIR(identical) ${good}`);
-  // CSF weighting is honored: zero-weight cells must not change a perfect score
-  const partial = new Array(cols * rows).fill(0).map((_, i) => (i < 4 ? 1 : 0));
-  assert.ok(wpir(orig, orig, W, H, partial, cols, rows) > 0.999, "weighted WPIR still 1 on identical input");
-});
+// -- (7) WPIR was deleted in Telos Track A step T1: it scored a Laplacian pyramid against its own
+// exact reconstruction and read 1 on every input. Its test left with it.
 
 // -- (8) per-cell coords + redundancy ------------------------------------------
 test("perCellSpatialCoords: row-major fractional coords tile the unit square", () => {

@@ -53,11 +53,14 @@ test("dominantColors finds the majority colour first", () => {
   assert.ok(dom[0].b > 100 && dom[0].g > 100, "majority bin is the teal-ish colour");
 });
 
-test("hueName names hues and reads greys/blacks honestly", () => {
-  assert.equal(hueName(180, 0.8, 0.7), "teal");       // pure teal sits at 180°
+// Updated in Telos Track A step T1: hueName now converts HSV back to sRGB and names it by rule
+// R-hue-v1 (OKLCh basic colour words). The old HSV buckets ("teal", "amber", "indigo", "near-black")
+// are gone; the full 19-colour reference test lives in tests/telos-track-a/t1-channels.test.mjs.
+test("hueName reads HSV through the R-hue-v1 basic colour words, greys and blacks included", () => {
+  assert.equal(hueName(120, 1, 1), "green");           // lime is green (nearest-prototype said yellow)
   assert.equal(hueName(30, 0.9, 0.9), "orange");
-  assert.equal(hueName(0, 0.02, 0.5), "grey");        // desaturated -> grey, not red
-  assert.equal(hueName(0, 0.9, 0.05), "near-black");  // no value -> black
+  assert.equal(hueName(0, 0.02, 0.5), "grey");         // desaturated -> grey, not red
+  assert.equal(hueName(0, 0.9, 0.05), "black");        // no value -> black
 });
 
 test("edgeDensity: a flat field is smooth (~0), striped is busy (high)", () => {
@@ -81,11 +84,12 @@ test("regionSplit separates a half-light / half-dark frame", () => {
 
 test("describeFrame names the dominant hue AND busy/smooth, in one sentence", () => {
   // Busy + teal-dominant: a wide frame of teal vertical stripes (real edges, teal majority).
+  // R-hue-v1 places teal in the green sector (Telos Track A step T1); there is no "teal" basic word.
   const W = 32, H = 16;
   const busyTeal = mkRGBA(W, H, x => ((Math.floor(x / 2) & 1) ? [0, 190, 190] : [0, 120, 120]));
   const fb = richFeatures(busyTeal, W, H, 4);
   const sb = describeFrame(fb);
-  assert.match(sb, /teal/, "names the dominant hue");
+  assert.match(sb, /green/, "names the dominant hue");
   assert.match(sb, /busy/, "calls it busy");
   assert.match(sb, /wide/, "names the wide orientation");
 
@@ -228,17 +232,15 @@ test("Tier-2 colour: OKLCH dominant colours with spatial centroids sit beside th
   assert.deepEqual(fp.colourVolumeTag, { gamut: "srgb", transfer: "srgb", peakNits: 80 });
 });
 
-test("Tier-2 fidelity: wpre + wpir are numbers given pixels; pbe is null when there is no audio", () => {
+// Updated in Telos Track A step T1: WPIR and PBE read 1 on every input and left the packet.
+test("Tier-2 fidelity: wpre is a number given pixels; wpir and pbe are gone from the packet", () => {
   const W = 32, H = 32;
   const px = mkRGBA(W, H, (x, y) => [(x * 8) & 255, (y * 8) & 255, ((x ^ y) * 8) & 255]);
   const fp = assembleFullPerception(px, W, H, 4, { source: "x", audio: null });
   assert.ok(fp.fidelity && typeof fp.fidelity === "object");
   assert.equal(typeof fp.fidelity.wpre, "number");
   assert.ok(fp.fidelity.wpre >= 0);
-  assert.equal(typeof fp.fidelity.wpir, "number");
-  assert.ok(fp.fidelity.wpir >= 0 && fp.fidelity.wpir <= 1);
-  // no audio source -> pbe is honest null (never a fabricated band error).
-  assert.equal(fp.fidelity.pbe, null);
+  assert.deepEqual(Object.keys(fp.fidelity), ["wpre"]);
   assert.equal(fp.audioPerceptual, null);
   assert.equal(fp.audio, null);
 });
@@ -247,10 +249,10 @@ test("Tier-2 audio: perceptual fields are null without a source, populated with 
   const W = 8, H = 8;
   const px = mkRGBA(W, H, () => [100, 100, 100]);
 
-  // no audio -> audioPerceptual null, fidelity.pbe null (honest absence).
+  // no audio -> audioPerceptual null (honest absence).
   const noAudio = assembleFullPerception(px, W, H, 4, {});
   assert.equal(noAudio.audioPerceptual, null);
-  assert.equal(noAudio.fidelity.pbe, null);
+  assert.equal("pbe" in noAudio.fidelity, false);
 
   // with synthetic analyser buffers: a 440 Hz tone the time-domain YIN should recover.
   const fftSize = 2048, bins = fftSize / 2 + 1, sampleRate = 48000;
@@ -268,18 +270,23 @@ test("Tier-2 audio: perceptual fields are null without a source, populated with 
   assert.deepEqual(fp.audio.spectrumBands, [1, 2]);
   assert.equal(fp.audio.freqBytes, undefined);   // raw typed arrays are stripped from the scalar key
 
-  // the NEW perceptual axis: ERB bands, ISO-226 loudness, YIN pitch, spectral shape, chroma, PBE.
+  // the perceptual axis: ERB bands, YIN pitch, spectral shape, chroma. Updated in Telos Track A step
+  // T1: ISO 226 loudness needs a caller-supplied dBFS-to-SPL offset and is absent without one, and the
+  // PBE band metric left the packet.
   const a = fp.audioPerceptual;
   assert.equal(a.erbBands.length, 36);
   assert.equal(a.chroma12.length, 12);
   assert.equal(typeof a.spectralCentroidHz, "number");
   assert.equal(typeof a.spectralRolloffHz, "number");
-  assert.ok(typeof a.iso226.phon === "number" && typeof a.iso226.sone === "number");
+  assert.equal("iso226" in a, false, "no loudness without an SPL offset");
   // YIN resolves the fundamental near 440 Hz (it works on the time-domain difference function).
   assert.ok(Math.abs(a.yinPitch.f0 - 440) < 5, `f0 ${a.yinPitch.f0} ~ 440`);
-  // PBE is now a real bounded band error, and fidelity.pbe mirrors its mean.
-  assert.equal(typeof a.pbe.mean, "number");
-  assert.equal(fp.fidelity.pbe, a.pbe.mean);
+  assert.equal("pbe" in a, false);
+  assert.equal("pbe" in fp.fidelity, false);
+  // with an offset, loudness appears and is evaluated at the loudest bin's frequency.
+  const cal = assembleFullPerception(px, W, H, 4, { audio: { ...audio, splOffsetDb: 120 }, source: "audio" });
+  assert.equal(typeof cal.audioPerceptual.iso226.phon, "number");
+  assert.ok(Math.abs(cal.audioPerceptual.iso226.atHz - 440) < sampleRate / fftSize, "phon taken at the peak bin");
 });
 
 test("Tier-2 vision: multiScale carries the biomimetic extension AND keeps every original grid", () => {
@@ -406,7 +413,7 @@ test("reconstructionFidelity: self-consistent packet >= 0.8; a mismatched grid s
 
 test("perceptionDetail carries shapes + braille; describeFrameLong narrates shapes, gates fidelity", () => {
   const W = 64, H = 64;
-  // near-black field with a teal square top-right
+  // near-black field with a teal square top-right (R-hue-v1 names teal "green"; Track A step T1)
   const px = mkRGBA(W, H, (x, y) =>
     (x >= 40 && x < 56 && y >= 8 && y < 24) ? [0, 200, 200] : [24, 24, 24]);
   const det = perceptionDetail(px, W, H, 4);
@@ -419,7 +426,7 @@ test("perceptionDetail carries shapes + braille; describeFrameLong narrates shap
   const text = describeFrameLong(rich, det);
   assert.match(text, /largest form sits/, "narrates the largest shape");
   assert.match(text, /% of the frame/, "narrates the shape's area fraction");
-  assert.match(text, /teal/, "names the square's hue somewhere in the read");
+  assert.match(text, /green/, "names the square's hue somewhere in the read");
   assert.doesNotMatch(text, /rebuilt from this packet/, "no fidelity clause unless the caller passes one");
 
   det.fidelity = reconstructionFidelity(px, W, H, 4, det);

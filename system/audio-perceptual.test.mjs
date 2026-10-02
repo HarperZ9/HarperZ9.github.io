@@ -9,7 +9,7 @@ import {
   iso226Phon, iso226Spl, phonToSone,
   aWeightDb,
   fftBinFreqs, spectralCentroid, spectralRolloff, spectralSpread,
-  yinPitch, chroma12, pbe,
+  yinPitch, chroma12,
 } from "./lib/sense-core/audio-perceptual.mjs";
 
 // ---------------------------------------------------------------------------
@@ -287,19 +287,5 @@ test("chroma12: a 440 Hz tone (A4) lights the A pitch class strongest", () => {
   assert.ok(Math.abs(mx - 1) < 1e-9, "peak-normalized chroma maxes at 1");
 });
 
-// ---------------------------------------------------------------------------
-// PBE - Perceptual Band Error.
-// ---------------------------------------------------------------------------
-
-test("pbe: identical band readouts give zero error; a single off band is flagged worst", () => {
-  const ref = [1, 2, 3, 4, 5];
-  const same = pbe(ref, ref);
-  assert.ok(Math.abs(same.mean) < 1e-9, "identical -> mean error 0");
-  assert.ok(Math.abs(same.std) < 1e-9, "identical -> std 0");
-
-  const telos = [1, 2, 30, 4, 5]; // band index 2 is wildly off
-  const off = pbe(telos, ref);
-  assert.equal(off.worstBand, 2, "worst band is the divergent one");
-  assert.ok(off.mean > 0, "non-zero mean error");
-  assert.equal(off.perBand.length, ref.length, "per-band error length matches");
-});
+// PBE (Perceptual Band Error) was deleted in Telos Track A step T1 together with its test. Its
+// replacement checks live in tests/telos-track-a/t1-channels.test.mjs (the packet carries no pbe key).
