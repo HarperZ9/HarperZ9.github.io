@@ -1,0 +1,149 @@
+{
+ "result": "t7-explore-posthoc",
+ "label": "post hoc exploration; not a pre-registered result",
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "prereg_t4t7_sha256": "75cbd7d12857b3d9143c4cd14169731388f33be5e495093943b6d29fdd2061eb",
+ "amendment_4_sha256": "5cfebb1d0fac2718e751585e31fa012427d7a2c066af699c68bec8dd323e632f",
+ "tasks": [
+  {
+   "source": "PBC",
+   "task": "cell_class",
+   "full_accuracy": 0.414,
+   "conditional_value": {
+    "L0": {
+     "mean": 0.026999999999999996,
+     "lo": -0.007999999999999991,
+     "hi": 0.064,
+     "n": 100,
+     "clusters": 100
+    },
+    "L1": {
+     "mean": -0.012000000000000002,
+     "lo": -0.03900000000000001,
+     "hi": 0.013999999999999999,
+     "n": 100,
+     "clusters": 100
+    },
+    "L2": {
+     "mean": 0.024,
+     "lo": -0.011000000000000005,
+     "hi": 0.06,
+     "n": 100,
+     "clusters": 100
+    }
+   },
+   "positive_control": {
+    "mean": 0.19099999999999998,
+    "lo": 0.079,
+    "hi": 0.30099999999999993,
+    "n": 100,
+    "clusters": 100
+   }
+  },
+  {
+   "source": "KATHER2016",
+   "task": "tissue_class",
+   "full_accuracy": 0.32,
+   "conditional_value": {
+    "L0": {
+     "mean": -0.0060000000000000045,
+     "lo": -0.06506164191650324,
+     "hi": 0.05274801587301586,
+     "n": 100,
+     "clusters": 10
+    },
+    "L1": {
+     "mean": 0.0030000000000000005,
+     "lo": -0.022988793103448275,
+     "hi": 0.025974281623887922,
+     "n": 100,
+     "clusters": 10
+    },
+    "L2": {
+     "mean": -0.033,
+     "lo": -0.045865103936311366,
+     "hi": -0.018181818181818184,
+     "n": 100,
+     "clusters": 10
+    }
+   },
+   "positive_control": {
+    "mean": 0.065,
+    "lo": -0.012904174573055023,
+    "hi": 0.14546179883945834,
+    "n": 100,
+    "clusters": 10
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "condition",
+   "full_accuracy": 0.9620000000000001,
+   "conditional_value": {
+    "L0": {
+     "mean": -0.009,
+     "lo": -0.035,
+     "hi": 0.011,
+     "n": 100,
+     "clusters": 50
+    },
+    "L1": {
+     "mean": 0.0,
+     "lo": -0.003999999999999999,
+     "hi": 0.003999999999999999,
+     "n": 100,
+     "clusters": 50
+    },
+    "L2": {
+     "mean": 0.004,
+     "lo": -0.005999999999999998,
+     "hi": 0.013999999999999999,
+     "n": 100,
+     "clusters": 50
+    }
+   },
+   "positive_control": {
+    "mean": 0.004999999999999999,
+    "lo": 0.0009999999999999998,
+    "hi": 0.010999999999999996,
+    "n": 100,
+    "clusters": 50
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "channel",
+   "full_accuracy": 1.0,
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50
+    },
+    "L1": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50
+    },
+    "L2": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50
+    }
+   },
+   "positive_control": {
+    "mean": -0.01,
+    "lo": -0.03,
+    "hi": 0.0,
+    "n": 100,
+    "clusters": 50
+   }
+  }
+ ]
+}
