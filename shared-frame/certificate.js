@@ -13,6 +13,7 @@
 //
 // Zero external dependencies (stdlib / Web APIs only). Static, no build step. ASCII hyphens only.
 import { structuralFitnessVerdict } from "./verdict.js";
+import { receiptSha256 } from "./canonical.js";
 
 // The verdict vocabulary EXTENDS verdict.js's lowercase set. It does NOT borrow the ledger's MATCH/DRIFT
 // namespace (that is a different surface: re-verifying a stored fact, not certifying an artifact).
@@ -300,18 +301,33 @@ export function supersede(oldCert, newCert, newId) {
   };
 }
 
-// A small, stable, zero-dependency content fingerprint for a certificate (FNV-1a over its core fields),
-// used only as a default supersede pointer when no id/hash is supplied. NOT a cryptographic hash: the
-// SHA-256 provenance chain (move B, crypto.subtle) is the real one; this just needs to be deterministic.
+// The content pointer for a certificate, used as the default supersede pointer when no id/hash is
+// supplied: SHA-256 over the canonical bytes (project-telos.canonical-bytes/v1) of its core fields,
+// 64 hex characters. Telos Track A step T2 replaced the 32-bit FNV-1a here: a supersede pointer is a
+// receipt link, and a 32-bit pointer collides by the birthday bound after about 77,000 certificates.
+// Numbers that are not safe integers and evidence values that are not strings are carried as strings,
+// so the pointer re-derives byte for byte in any language that follows the canonical rules.
+function pointerValue(v) {
+  if ((typeof v === "number" && Number.isSafeInteger(v)) || typeof v === "string" || typeof v === "boolean" || v === null) return v;
+  if (Array.isArray(v)) return v.map(pointerValue);
+  if (v && typeof v === "object") {
+    const out = {};
+    for (const k of Object.keys(v)) if (v[k] !== undefined) out[k] = pointerValue(v[k]);
+    return out;
+  }
+  return String(v);
+}
 export function certificateHash(cert) {
   if (!cert || typeof cert !== "object") return "0";
-  const core = JSON.stringify([cert.criterion || "", cert.claim || "", cert.verdict || "", cert.oracle || "", cert.iteration || 0, cert.evidence || []]);
-  let h = 0x811c9dc5;
-  for (let i = 0; i < core.length; i++) {
-    h ^= core.charCodeAt(i);
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  return ("00000000" + h.toString(16)).slice(-8);
+  return receiptSha256({
+    schema: "project-telos.certificate-pointer/v1",
+    criterion: String(cert.criterion || ""),
+    claim: String(cert.claim || ""),
+    verdict: String(cert.verdict || ""),
+    oracle: String(cert.oracle || ""),
+    iteration: pointerValue(cert.iteration || 0),
+    evidence: pointerValue(Array.isArray(cert.evidence) ? cert.evidence : []),
+  });
 }
 
 // weakestAxis: given named quality-dimension scores, return the minimum-scoring dimension name: the axis

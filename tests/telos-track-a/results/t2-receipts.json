@@ -1,0 +1,56 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t2-receipts",
+ "node": "v25.2.1",
+ "results": {
+  "kat": [
+   {
+    "len": 0,
+    "ok": true
+   },
+   {
+    "len": 3,
+    "ok": true
+   },
+   {
+    "len": 56,
+    "ok": true
+   },
+   {
+    "len": 112,
+    "ok": true
+   },
+   {
+    "len": 1000000,
+    "ok": true
+   }
+  ],
+  "nodeAgreement": {
+   "n": 1000,
+   "agree": 1000
+  },
+  "crossLanguage": {
+   "n": 1000,
+   "textAgree": 1000,
+   "hashAgree": 1000,
+   "firstMismatch": []
+  },
+  "editSuites": {
+   "conversionReceipt": {
+    "edits": 20,
+    "changed": 20,
+    "unchanged": []
+   },
+   "exportReceipt": {
+    "edits": 20,
+    "changed": 20,
+    "unchanged": []
+   },
+   "certificatePointer": {
+    "edits": 20,
+    "changed": 20,
+    "unchanged": []
+   }
+  }
+ }
+}

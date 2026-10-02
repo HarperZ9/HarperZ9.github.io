@@ -74,7 +74,10 @@ test("buildConversionReceipt records conserved and dropped fields plus hashes", 
   assert.deepEqual(receipt.droppedFields, ["vector-editability"]);
   assert.equal(receipt.fidelityVerdict, "DRIFT");
   assert.equal(receipt.roundTrip.verdict, "UNVERIFIABLE");
-  assert.ok(receipt.originHash.length >= 8);
-  assert.ok(receipt.resultHash.length >= 8);
-  assert.ok(["sha-256", "fnv1a-fallback"].includes(receipt.hashAlgo));
+  // Telos Track A step T2: SHA-256 always (no FNV-1a fallback) and a sealed receipt digest.
+  assert.match(receipt.originHash, /^[0-9a-f]{64}$/);
+  assert.match(receipt.resultHash, /^[0-9a-f]{64}$/);
+  assert.equal(receipt.hashAlgo, "sha-256");
+  assert.equal(receipt.canonical, "project-telos.canonical-bytes/v1");
+  assert.match(receipt.receiptSha256, /^[0-9a-f]{64}$/);
 });

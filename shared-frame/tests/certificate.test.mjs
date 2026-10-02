@@ -238,7 +238,7 @@ test("supersede derives a content-hash pointer when no id is supplied", () => {
   const b = buildCertificate({ criterion: "quote:y", oracleVerdict: stringOracle("xyz", "y") });
   const stale = supersede(a, b);
   assert.equal(stale.supersededBy, certificateHash(b));
-  assert.match(stale.supersededBy, /^[0-9a-f]{8}$/);   // deterministic 8-hex fingerprint
+  assert.match(stale.supersededBy, /^[0-9a-f]{64}$/);  // SHA-256 content pointer (Telos Track A step T2)
 });
 
 // ---- weakestAxis: pure minimum ---------------------------------------------------------------------
