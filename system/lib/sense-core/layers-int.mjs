@@ -12,6 +12,9 @@
 //   L2  chromatic branch at N: L on N x N cells, a and b on N/2 x N/2, 6 bits, 64-symbol alphabet;
 //       achromatic branch at N: L only, 8 bits, hex.
 // Cell values are OKLab of the cell's mean colour in linear light (Q24 means, rounded half up).
+// Track A T4/T6: every layer also runs on Q24 linear planes (the output of resample-int.mjs), L0 takes an
+// optional keep(i) predicate (pixels outside drawn overlays), and L3 lists caller overlays. The byte path
+// gives the same text as before: it maps bytes through LIN_Q24 and runs the linear path.
 // ASCII only.
 import { LIN_Q24, oklabQ36FromLinearQ24, binQ36, floorDiv, isqrt, OKLAB_INT_SCHEMA } from "./oklab-int.mjs";
 
@@ -21,15 +24,25 @@ export const L1_CELLS = 8;
 export const L2_CHROMATIC_N = Object.freeze([12, 32]);
 export const L2_ACHROMATIC_N = Object.freeze([16, 24]);
 
+// Q24 linear planes of an sRGB byte image: Float64Array of w * h * 3 exact integers.
+export function linearQ24FromRgba(px, w, h, ch = 4) {
+  const lin = new Float64Array(w * h * 3);
+  for (let i = 0; i < w * h; i++) {
+    const o = i * ch, q = i * 3;
+    lin[q] = LIN_Q24[px[o]]; lin[q + 1] = LIN_Q24[px[o + 1]]; lin[q + 2] = LIN_Q24[px[o + 2]];
+  }
+  return lin;
+}
+
 // Integral images of the Q24 linear channels: (w + 1) x (h + 1) per channel, exact integer sums.
-function integralLinear(px, w, h, ch) {
+function integralLinear(lin, w, h) {
   const W = w + 1;
   const S = [new Float64Array(W * (h + 1)), new Float64Array(W * (h + 1)), new Float64Array(W * (h + 1))];
   for (let y = 0; y < h; y++) {
     let rr = 0, rg = 0, rb = 0;
     for (let x = 0; x < w; x++) {
-      const i = (y * w + x) * ch;
-      rr += LIN_Q24[px[i]]; rg += LIN_Q24[px[i + 1]]; rb += LIN_Q24[px[i + 2]];
+      const i = (y * w + x) * 3;
+      rr += lin[i]; rg += lin[i + 1]; rb += lin[i + 2];
       const o = (y + 1) * W + (x + 1), up = y * W + (x + 1);
       S[0][o] = S[0][up] + rr; S[1][o] = S[1][up] + rg; S[2][o] = S[2][up] + rb;
     }
@@ -67,28 +80,33 @@ function gridRows(values, rows, cols, fmt, sep) {
   return lines.join("\n");
 }
 
-// L0: per-pixel integer OKLab statistics.
-export function layerL0(px, w, h, ch = 4) {
-  const n = w * h;
-  const L8 = new Int32Array(n), S2 = new Float64Array(n);
-  for (let i = 0; i < n; i++) {
-    const o = i * ch;
-    const [L, a, b] = oklabQ36FromLinearQ24(LIN_Q24[px[o]], LIN_Q24[px[o + 1]], LIN_Q24[px[o + 2]]);
-    L8[i] = binQ36(L, "L", 8);
+// L0: per-pixel integer OKLab statistics over the pixels keep(i) admits (all pixels when keep is null).
+export function layerL0Linear(lin, w, h, keep = null) {
+  const L8 = [], S2 = [];
+  for (let i = 0; i < w * h; i++) {
+    if (keep && !keep(i)) continue;
+    const q = i * 3;
+    const [L, a, b] = oklabQ36FromLinearQ24(lin[q], lin[q + 1], lin[q + 2]);
+    L8.push(binQ36(L, "L", 8));
     const a16 = floorDiv(a + 524288, 1048576), b16 = floorDiv(b + 524288, 1048576);
-    S2[i] = a16 * a16 + b16 * b16;
+    S2.push(a16 * a16 + b16 * b16);
   }
-  L8.sort();
-  S2.sort();
+  const n = L8.length;
+  if (n === 0) throw new Error("layerL0: no pixel admitted (overlay_covers_frame)");
+  const L8s = Int32Array.from(L8).sort(), S2s = Float64Array.from(S2).sort();
   const rank = (p) => floorDiv((n - 1) * p, 100);
-  const s95 = S2[rank(95)];
+  const s95 = S2s[rank(95)];
   const achromatic = s95 * 2500 < 4294967296 ? 1 : 0; // sqrt(s95) / 65536 < 0.02, exactly
   const c95milli = floorDiv(isqrt(s95) * 1000 + 32768, 65536);
   return {
     achromatic,
     text: `L0 ${w}x${h} srgb8 declared:unverified achromatic:${achromatic} `
-      + `L8p5/50/95:${L8[rank(5)]}/${L8[rank(50)]}/${L8[rank(95)]} chroma-p95-milli:${c95milli}`,
+      + `L8p5/50/95:${L8s[rank(5)]}/${L8s[rank(50)]}/${L8s[rank(95)]} chroma-p95-milli:${c95milli}`,
   };
+}
+
+export function layerL0(px, w, h, ch = 4) {
+  return layerL0Linear(linearQ24FromRgba(px, w, h, ch), w, h);
 }
 
 function chromaticLayer(tag, I, w, h, n) {
@@ -110,18 +128,49 @@ function achromaticLayer(I, w, h, n) {
 // Every layer and both L2 branches, for conformance. The packet a reader gets carries one branch,
 // chosen by the L0 achromatic flag (layerPacket below).
 export function layerTextAll(px, w, h, ch = 4) {
-  const I = integralLinear(px, w, h, ch);
-  const parts = [layerL0(px, w, h, ch).text, chromaticLayer("L1", I, w, h, L1_CELLS)];
+  const lin = linearQ24FromRgba(px, w, h, ch);
+  const I = integralLinear(lin, w, h);
+  const parts = [layerL0Linear(lin, w, h).text, chromaticLayer("L1", I, w, h, L1_CELLS)];
   for (const n of L2_CHROMATIC_N) parts.push(chromaticLayer("L2", I, w, h, n));
   for (const n of L2_ACHROMATIC_N) parts.push(achromaticLayer(I, w, h, n));
   return parts.join("\n") + "\n";
 }
 
-// L0, L1 and the L2 branch the achromatic flag selects, at grid size n (n is the chromatic N; the
-// achromatic branch uses n / 2 cells per side at 8 bits, which costs about the same tokens).
+// L0, L1 and the L2 branch the achromatic flag selects, on Q24 linear planes. n is the chromatic N; the
+// achromatic branch uses floor(n / 2) cells per side at 8 bits (pre-registered in Track A T4 to T7).
+// opts.keep restricts L0 to the pixels it admits; opts.layers picks among "L0", "L1", "L2".
+export function layerPacketLinear(lin, w, h, n = 32, opts = {}) {
+  const want = new Set(opts.layers || ["L0", "L1", "L2"]);
+  const I = integralLinear(lin, w, h);
+  const l0 = layerL0Linear(lin, w, h, opts.keep || null);
+  const out = { schema: OKLAB_INT_SCHEMA, achromatic: l0.achromatic, layers: {} };
+  if (want.has("L0")) out.layers.L0 = l0.text;
+  if (want.has("L1")) out.layers.L1 = chromaticLayer("L1", I, w, h, L1_CELLS);
+  if (want.has("L2")) out.layers.L2 = l0.achromatic ? achromaticLayer(I, w, h, Math.max(1, floorDiv(n, 2))) : chromaticLayer("L2", I, w, h, n);
+  out.text = ["L0", "L1", "L2"].filter((k) => k in out.layers).map((k) => out.layers[k]).join("\n") + "\n";
+  return out;
+}
+
 export function layerPacket(px, w, h, ch = 4, n = 32) {
-  const I = integralLinear(px, w, h, ch);
-  const l0 = layerL0(px, w, h, ch);
-  const l2 = l0.achromatic ? achromaticLayer(I, w, h, Math.max(1, floorDiv(n, 2))) : chromaticLayer("L2", I, w, h, n);
-  return { schema: OKLAB_INT_SCHEMA, achromatic: l0.achromatic, text: [l0.text, chromaticLayer("L1", I, w, h, L1_CELLS), l2].join("\n") + "\n" };
+  const p = layerPacketLinear(linearQ24FromRgba(px, w, h, ch), w, h, n);
+  return { schema: p.schema, achromatic: p.achromatic, text: p.text };
+}
+
+// L3, overlay-only form: one line per caller overlay with its inclusive pixel bbox and its area in
+// thousandths of the frame (round half up). mask: w * h bytes, nonzero inside. An empty mask lists
+// bbox "none".
+export function layerL3Overlays(overlays, w, h) {
+  const lines = [`L3 overlays:${overlays.length} coords:px bbox:x0,y0,x1,y1 area:permille`];
+  for (const o of overlays) {
+    let x0 = w, y0 = h, x1 = -1, y1 = -1, count = 0;
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      if (!o.mask[y * w + x]) continue;
+      count++;
+      if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+    }
+    const permille = floorDiv(2000 * count + w * h, 2 * w * h);
+    const box = count ? `${x0},${y0},${x1},${y1}` : "none";
+    lines.push(`region id:${o.id} bbox:${box} area:${permille} overlay:true`);
+  }
+  return lines.join("\n");
 }

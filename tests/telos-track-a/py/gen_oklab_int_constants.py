@@ -14,6 +14,7 @@ getcontext().prec = 60
 Q20 = Decimal(2) ** 20
 Q24 = Decimal(2) ** 24
 Q36 = Decimal(2) ** 36
+Q40 = Decimal(2) ** 40
 
 # Ottosson (2020, 2021 coefficients), as published; identical to sense-core colour-perceptual.mjs.
 M1 = [["0.4122214708", "0.5363325363", "0.0514459929"],
@@ -45,7 +46,12 @@ def constants():
     m1 = [[rnd(Decimal(c) * Q20) for c in row] for row in M1]
     m2 = [[rnd(Decimal(c) * Q20) for c in row] for row in M2]
     ranges = {k: [rnd(Decimal(lo) * Q36), rnd(Decimal(hi) * Q36)] for k, (lo, hi) in RANGES.items()}
-    return {"schema": "project-telos.oklab-int/v2", "lin_q24": lut, "m1_q20": m1, "m2_q20": m2, "ranges_q36": ranges}
+    # Exact-mean path (oklab-mean-exact.mjs, Track A T4): linear table and both matrices at 2^40.
+    lut40 = [rnd(srgb_to_linear(i) * Q40) for i in range(256)]
+    m1_40 = [[rnd(Decimal(c) * Q40) for c in row] for row in M1]
+    m2_40 = [[rnd(Decimal(c) * Q40) for c in row] for row in M2]
+    return {"schema": "project-telos.oklab-int/v2", "lin_q24": lut, "m1_q20": m1, "m2_q20": m2, "ranges_q36": ranges,
+            "lin_q40": lut40, "m1_q40": m1_40, "m2_q40": m2_40}
 
 
 if __name__ == "__main__":

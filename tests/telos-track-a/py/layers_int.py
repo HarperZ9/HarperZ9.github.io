@@ -24,17 +24,25 @@ def _isqrt(n):
     return math.isqrt(n)
 
 
-def integral_linear(px, w, h, ch):
+def linear_q24_from_rgba(px, w, h, ch=4):
+    lin = [0] * (w * h * 3)
+    for i in range(w * h):
+        o, q = i * ch, i * 3
+        lin[q], lin[q + 1], lin[q + 2] = LIN_Q24[px[o]], LIN_Q24[px[o + 1]], LIN_Q24[px[o + 2]]
+    return lin
+
+
+def integral_linear(lin, w, h):
     W = w + 1
     S = [[0] * (W * (h + 1)) for _ in range(3)]
     for y in range(h):
         run = [0, 0, 0]
         for x in range(w):
-            i = (y * w + x) * ch
+            i = (y * w + x) * 3
             o = (y + 1) * W + (x + 1)
             up = y * W + (x + 1)
             for k in range(3):
-                run[k] += LIN_Q24[px[i + k]]
+                run[k] += lin[i + k]
                 S[k][o] = S[k][up] + run[k]
     return S, W
 
@@ -61,16 +69,20 @@ def grid_rows(values, rows, cols, fmt, sep):
     return "\n".join(sep.join(fmt(v) for v in values[r * cols:(r + 1) * cols]) for r in range(rows))
 
 
-def layer_l0(px, w, h, ch=4):
-    n = w * h
+def layer_l0_linear(lin, w, h, keep=None):
     L8, S2 = [], []
-    for i in range(n):
-        o = i * ch
-        L, a, b = oklab_q36_from_linear_q24(LIN_Q24[px[o]], LIN_Q24[px[o + 1]], LIN_Q24[px[o + 2]])
+    for i in range(w * h):
+        if keep is not None and not keep(i):
+            continue
+        q = i * 3
+        L, a, b = oklab_q36_from_linear_q24(lin[q], lin[q + 1], lin[q + 2])
         L8.append(bin_q36(L, "L", 8))
         a16 = (a + 524288) // 1048576
         b16 = (b + 524288) // 1048576
         S2.append(a16 * a16 + b16 * b16)
+    n = len(L8)
+    if n == 0:
+        raise ValueError("layer_l0: no pixel admitted (overlay_covers_frame)")
     L8.sort()
     S2.sort()
     rank = lambda p: ((n - 1) * p) // 100
@@ -80,6 +92,10 @@ def layer_l0(px, w, h, ch=4):
     text = (f"L0 {w}x{h} srgb8 declared:unverified achromatic:{achromatic} "
             f"L8p5/50/95:{L8[rank(5)]}/{L8[rank(50)]}/{L8[rank(95)]} chroma-p95-milli:{c95milli}")
     return achromatic, text
+
+
+def layer_l0(px, w, h, ch=4):
+    return layer_l0_linear(linear_q24_from_rgba(px, w, h, ch), w, h)
 
 
 def chromatic_layer(tag, I, w, h, n):
@@ -100,11 +116,36 @@ def achromatic_layer(I, w, h, n):
 
 
 def layer_text_all(px, w, h, ch=4):
-    I = integral_linear(px, w, h, ch)
-    parts = [layer_l0(px, w, h, ch)[1], chromatic_layer("L1", I, w, h, L1_CELLS)]
+    lin = linear_q24_from_rgba(px, w, h, ch)
+    I = integral_linear(lin, w, h)
+    parts = [layer_l0_linear(lin, w, h)[1], chromatic_layer("L1", I, w, h, L1_CELLS)]
     parts += [chromatic_layer("L2", I, w, h, n) for n in L2_CHROMATIC_N]
     parts += [achromatic_layer(I, w, h, n) for n in L2_ACHROMATIC_N]
     return "\n".join(parts) + "\n"
+
+
+def layer_packet_linear(lin, w, h, n=32, keep=None):
+    """L0, L1 and the L2 branch the flag selects; returns (achromatic, text)."""
+    I = integral_linear(lin, w, h)
+    achromatic, l0 = layer_l0_linear(lin, w, h, keep)
+    l2 = achromatic_layer(I, w, h, max(1, n // 2)) if achromatic else chromatic_layer("L2", I, w, h, n)
+    return achromatic, "\n".join([l0, chromatic_layer("L1", I, w, h, L1_CELLS), l2]) + "\n"
+
+
+def layer_packet(px, w, h, ch=4, n=32):
+    return layer_packet_linear(linear_q24_from_rgba(px, w, h, ch), w, h, n)
+
+
+def layer_l3_overlays(overlays, w, h):
+    lines = [f"L3 overlays:{len(overlays)} coords:px bbox:x0,y0,x1,y1 area:permille"]
+    for oid, mask in overlays:
+        xs = [i % w for i in range(w * h) if mask[i]]
+        ys = [i // w for i in range(w * h) if mask[i]]
+        count = len(xs)
+        permille = (2000 * count + w * h) // (2 * w * h)
+        box = f"{min(xs)},{min(ys)},{max(xs)},{max(ys)}" if count else "none"
+        lines.append(f"region id:{oid} bbox:{box} area:{permille} overlay:true")
+    return "\n".join(lines)
 
 
 def _entry(name, px, w, h):

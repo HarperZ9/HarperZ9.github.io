@@ -10,3 +10,6 @@ export * from "./perception-extras.mjs";
 // Track A step T3: the integer OKLab path and its layer text (byte-identical in Node and Python).
 export * from "./oklab-int.mjs";
 export * from "./layers-int.mjs";
+// Track A steps T4 and T6: the Telos resampling filter and the exact OKLab mean of the measurement contract.
+export * from "./resample-int.mjs";
+export * from "./oklab-mean-exact.mjs";
