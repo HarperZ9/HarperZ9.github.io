@@ -6,7 +6,7 @@
       "slug": "articulate",
       "label": "Articulate",
       "repo": "HarperZ9/articulate",
-      "ref": "6c302141db980e547577ddba225b22febbc01da0",
+      "ref": "623dcfd1b11a4a0a8b0ef781204d54bf4530b34c",
       "ref_name": "release/0.5.x",
       "sources": {
         "privacy": "claude-plugin/PRIVACY.md",
@@ -28,7 +28,7 @@
       "slug": "canon",
       "label": "Canon",
       "repo": "HarperZ9/canon",
-      "ref": "e71a4316159fa02b74a5f44426f6a3c574142860",
+      "ref": "37e5084e4127964fdeddcde2cf64180c64d3ec3f",
       "ref_name": "main",
       "sources": {
         "privacy": "client-plugin/PRIVACY.md",
@@ -93,7 +93,7 @@
       "slug": "gather",
       "label": "Gather",
       "repo": "HarperZ9/gather",
-      "ref": "01074841a5d71f8d9498b2aea80469fa2f2afead",
+      "ref": "1bbf4608d4ebbc7e8226b3962146d4952de2983f",
       "ref_name": "main",
       "sources": {
         "privacy": "client-plugin/PRIVACY.md",
@@ -114,7 +114,7 @@
       "slug": "index",
       "label": "Index",
       "repo": "HarperZ9/index",
-      "ref": "a3b905a243e4af23a231f258c1d13b6106c71443",
+      "ref": "276bad1689135f77d33d873f19f8312ec18cd611",
       "ref_name": "main",
       "sources": {
         "privacy": "client-plugin/PRIVACY.md",
@@ -156,7 +156,7 @@
       "slug": "mneme",
       "label": "Mneme",
       "repo": "HarperZ9/mneme",
-      "ref": "1b02d09942afc9cca8ec0831be3f927c6193c136",
+      "ref": "7ee351b472aa495e2226c20b3f38b73cd0cdf86f",
       "ref_name": "main",
       "sources": {
         "privacy": "client-plugin/PRIVACY.md",
@@ -198,7 +198,7 @@
       "slug": "relay",
       "label": "Relay",
       "repo": "HarperZ9/relay",
-      "ref": "15b3c82a3e42608923de382ac6834b915936838a",
+      "ref": "df074818232ea0bc8d353a68dc04efcfab7cb9df",
       "ref_name": "main",
       "sources": {
         "privacy": "client-plugin/PRIVACY.md",

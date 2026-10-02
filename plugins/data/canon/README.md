@@ -62,6 +62,6 @@ Query results go to the connected client, and that client's model provider handl
 
 ## Troubleshooting and limits
 
-A missing binding, relative database path, linked path component, unresolved placeholder or malformed boolean stops startup. Correct the binding and restart the client. A write refusal requires an operator decision about the launch grant. Keep the full archive together and verify its hashes against `SHA256SUMS`.
+A missing binding, relative database path, linked path component, unresolved placeholder or malformed boolean stops startup. Correct the binding and restart the client. A refused tool call returns one fixed code with a short hint and never echoes your arguments or stored text: `ARGUMENT_REFUSED`, `SCOPE_MISMATCH`, `STORE_ID_MISMATCH`, `STORE_BUSY` (retry) or `WRITE_NOT_GRANTED` (turn on **Allow context writes** and restart). Any other failure returns "context request refused or store unavailable". Keep the full archive together and verify its hashes against `SHA256SUMS`.
 
 Local protocol checks do not establish installed-client compatibility, marketplace acceptance or clean-machine compatibility. Unsigned Windows artifacts may receive platform warnings. Build receipts distinguish development and release candidates and record source and native dependency hashes.
