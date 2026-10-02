@@ -86,7 +86,7 @@ Tool results go to the connected client, and that client's model provider handle
 
 ## Other clients
 
-The source ZIP requires Python 3.11 or newer. Extract the entire archive, then point a local stdio MCP client at an absolute Python executable with arguments `-I -S -B /absolute/path/server/serve.py`. Set `RELAY_MCP_ROOT` to an absolute existing project directory in the client's server environment. The plugin folder and the source ZIP carry their own copy of Relay under `server/src`, so the server never loads code from outside the folder it was installed in. If that copy is missing, the server prints one line asking you to reinstall the plugin and exits.
+The source ZIP requires Python 3.11 or newer. Extract the entire archive, then point a local stdio MCP client at an absolute Python executable with arguments `-I -S -B /absolute/path/server/serve.py`. Set `RELAY_MCP_ROOT` to an absolute existing project directory in the client's server environment. The plugin folder and the source ZIP carry their own copy of the Relay modules the server loads under `server/src`, so the server never loads code from outside the folder it was installed in. If that copy is missing, the server prints one line asking you to reinstall the plugin and exits.
 
 The Windows x64 native ZIP includes Python and needs no separate Python or Node installation. Extract everything and use the absolute `server/relay-local.exe` path. A client supporting binary MCPB extensions may open the matching MCPB, which offers the same settings as Claude Code. Both archives use identical executable bytes.
 

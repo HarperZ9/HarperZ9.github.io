@@ -10,11 +10,11 @@
     },
     "privacy": {
       "path": "claude-plugin/PRIVACY.md",
-      "sha256": "8164d4976b4786322a1fcbd9e7afa1655968c8c9a1af3ef1ed7d6c0f99bc91bc"
+      "sha256": "c318e5d841c474f6400ce038e05d0dfe77f94f5e99bb779a4cf37d496db4b74c"
     },
     "readme": {
       "path": "claude-plugin/README.md",
-      "sha256": "d871eedafa65a9c1a76c7f636d91b1b9d67fee7063a240dcf2f225733c3e202e"
+      "sha256": "2895edeaf196d424d893b99cd9ec4bcb72855ee7de251ee43a0924c139a55e72"
     },
     "security": {
       "path": "claude-plugin/SECURITY.md",
@@ -36,7 +36,7 @@
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "6e6fc55866ff9ac9c5f2fbc6007b83e38fa88a49ffc4657404c93e139a5713b2"
+      "sha256": "ea92ccb6e5227c8c2ba312f11704268aa213452188a6e776af6e9011724902ca"
     }
   },
   "crucible": {
@@ -130,11 +130,11 @@
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "4ecafe97bdde2e47699e8381e834cfa22894152f03197e6b6f854794932b40af"
+      "sha256": "d2aa2af71081427a9ac9f914d5fa9845a0e90c836ee036759a73aed82c95e957"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "58030e0caf4154bb4947c9278bba7b16dfc9dcdcde0b94765729cbd037640de4"
+      "sha256": "1a7cac90380b632cadabcd3ba6de9f3d884659907b63ec5ee063b79c91003a6e"
     }
   },
   "learn": {
@@ -166,11 +166,11 @@
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "0805f06163b83ae27451fcc3dd7c1b9ed656f653c54127bf567b78765c08f3ae"
+      "sha256": "a7c4bf4e53f5a17878ae9164affb3a79f710c1187e94a996e52cf98576c989bf"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "82a25eef3c020819e2d5b0ad228feca9ed799096a8e44b00259d7f058b43af6d"
+      "sha256": "594f50de3f800e60f8d13b6596bc2a76bc26d47b4e8a515b7e07462a9d58f935"
     }
   },
   "plexus": {
@@ -206,7 +206,7 @@
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "51970e14ed0c463628e75f22dbed623b62ae6c3aafed920f4122c34e49118344"
+      "sha256": "387db826d45c6c5df881586305d8790978672abf6f0ced301681a497f4d6e5e7"
     }
   },
   "telos": {

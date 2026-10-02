@@ -12,7 +12,7 @@ https://github.com/HarperZ9/articulate/blob/release/0.5.x/claude-plugin/PRIVACY.
 
 **Network.** With those two values, every tool runs on your computer. The server opens no network connection and sends nothing to the author or to any other service. Claude still reads the text as part of your conversation, and your Claude provider handles that conversation.
 
-**Bundled code that stays off.** The bundled source also holds optional model backends from the Articulate command line tool. Those backends read `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ARTICULATE_OPENAI_API_KEY` and other `ARTICULATE_*` settings, and they call a model provider or a local Ollama server. The plugin's launch value `ARTICULATE_MCP_TOOLS=local` sends every tool to its local path, so the plugin never calls those backends and never reads those keys.
+**Code left out.** The Articulate command line tool also has optional model backends that read provider API keys and call a model provider, a local Ollama server or the `claude` program. This plugin does not include them: the folder carries only the modules its local tools and hook import. If someone changes the plugin's launch values to ask for a model backend, the tool answers that this build does not include one.
 
 **Files it writes.** None. The `-B` flag keeps Python from writing bytecode into the plugin folder.
 
