@@ -449,3 +449,21 @@ Printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-3`.
 - When emitted, its `bins` array is removed before the payload scan, as emitted layer texts are. Every
   other field is scanned as pre-registered. Thresholds are unchanged.
 <!-- prereg-track-a-amend-3:end -->
+
+## Amendment 4 (mixed L2 branches within a source, T7)
+
+Written 2026-10-02 after the T5 run and before any T6 or T7 analysis ran. Reason: the T5 encoding showed
+that 13 of the 100 Kather images take the achromatic L2 branch (12 "empty", 1 "adipose") while the other
+87 take the chromatic branch, so L2 feature vectors differ in length inside one source. Pre-registration 2
+does not say how to build features then. Printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-4`.
+
+<!-- prereg-track-a-amend-4:start -->
+## Amendment 4: zero-filled branch blocks
+
+- When a source mixes L2 branches, every image's L2 features are the concatenation of a chromatic block
+  (N x N L bins and N/2 x N/2 a, b bin pairs) and an achromatic block (N/2 x N/2 L8 bins). The block of the
+  branch the image did not take is all zeros. The same rule applies to L2 alone at N_match in the
+  head-to-head. A source with one branch keeps that branch's block only.
+- The branch is visible to the probe through the zero pattern as well as through the L0 flag. Both are
+  in the packet a reader receives, so this adds no information from outside the packet.
+<!-- prereg-track-a-amend-4:end -->
