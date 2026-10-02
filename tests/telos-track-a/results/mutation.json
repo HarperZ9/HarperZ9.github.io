@@ -1,0 +1,585 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "mutation",
+ "node": "v25.2.1",
+ "registry": "tests/telos-track-a/mutation/registry.json",
+ "auditFramesDirSet": true,
+ "baseline": {
+  "files": [
+   {
+    "file": "t1-channels.test.mjs",
+    "failed": [],
+    "passed": 17,
+    "exit": 0
+   },
+   {
+    "file": "t2-receipts.test.mjs",
+    "failed": [],
+    "passed": 10,
+    "exit": 0
+   },
+   {
+    "file": "t3-oklab-int.test.mjs",
+    "failed": [],
+    "passed": 7,
+    "exit": 0
+   },
+   {
+    "file": "t0-witness.test.mjs",
+    "failed": [],
+    "passed": 4,
+    "exit": 0
+   }
+  ],
+  "allPassed": true
+ },
+ "mutations": [
+  {
+   "id": "M01-orient-y-down",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "the original fault: angles in image rows with names that assume y up",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.orient.gratings",
+    "t1.orient.halfplanes"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.815
+  },
+  {
+   "id": "M02-orient-no-floor",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "no coherence floor: an isotropic frame names a direction",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.orient.disk"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.787
+  },
+  {
+   "id": "M03-pitch-octave",
+   "file": "system/lib/sense-core/audio-perceptual.mjs",
+   "fault": "an octave error in the scalar pitch",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.pitch.notes"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T1.P eq: the assembled packet's scalar pitch is the YIN value the caller passes through"
+   ],
+   "seconds": 0.793
+  },
+  {
+   "id": "M04-pitch-no-silence",
+   "file": "system/lib/sense-core/audio-perceptual.mjs",
+   "fault": "no silence floor: YIN invents a pitch for a flat buffer",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.pitch.silence"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.868
+  },
+  {
+   "id": "M05-pitch-method-dropped",
+   "file": "system/lib/sense-core/assemble.mjs",
+   "fault": "the packet stops saying which pitch method ran",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.pitch.packet"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.852
+  },
+  {
+   "id": "M06-loud-dbfs-as-spl",
+   "file": "system/lib/sense-core/perception-extras.mjs",
+   "fault": "the original fault: analyser dBFS taken as dB SPL",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.loud.offset"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.743
+  },
+  {
+   "id": "M07-loud-default-offset",
+   "file": "system/lib/sense-core/perception-extras.mjs",
+   "fault": "a default offset makes uncalibrated loudness appear",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.loud.absent"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.728
+  },
+  {
+   "id": "M08-wpir-back",
+   "file": "system/lib/sense-core/assemble.mjs",
+   "fault": "the deleted constant WPIR returns to the packet",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.removed.packet"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.775
+  },
+  {
+   "id": "M09-ledger-pbe-back",
+   "file": "shared-frame/fidelity-log.js",
+   "fault": "the ledger record carries PBE again",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.removed.ledger"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.857
+  },
+  {
+   "id": "M10-hue-prototype",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "a prototype changed in JavaScript only (lightpink for pink)",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.hue.19",
+    "t1.hue.twin"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.809
+  },
+  {
+   "id": "M11-hue-achromatic",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "the achromatic threshold moved in JavaScript only",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.hue.twin"
+   ],
+   "survived": [
+    "t1.hue.19"
+   ],
+   "otherFailures": [
+    "T1.hue probe: at least 44 of the 46 author-labelled probe colours match (comparator reported)"
+   ],
+   "seconds": 0.861
+  },
+  {
+   "id": "M12-sym-axis-swap",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "the left-right correlation computed on the top-bottom mirror",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.sym.iff"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T1.S: the long description says mirrored only for a true mirror"
+   ],
+   "seconds": 0.792
+  },
+  {
+   "id": "M13-shape-bins-at-zero",
+   "file": "system/lib/sense-core/features.mjs",
+   "fault": "the original fault: hue bins that start at 0 degrees",
+   "testFile": "t1-channels.test.mjs",
+   "killed": [
+    "t1.shape.wrap"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.808
+  },
+  {
+   "id": "M14-sha-constant",
+   "file": "shared-frame/sha256.js",
+   "fault": "one SHA-256 round constant off by one",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.kat",
+    "t2.node"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T2.webcrypto eq: Web Crypto and the forced pure path give the same digest",
+    "T2.xlang eq: 1,000 seeded receipts re-derive identically in an independent Python canonicaliser",
+    "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
+   ],
+   "seconds": 0.875
+  },
+  {
+   "id": "M15-sha-length",
+   "file": "shared-frame/sha256.js",
+   "fault": "the padding length field off by one byte",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.kat",
+    "t2.node"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T2.webcrypto eq: Web Crypto and the forced pure path give the same digest",
+    "T2.xlang eq: 1,000 seeded receipts re-derive identically in an independent Python canonicaliser",
+    "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
+   ],
+   "seconds": 0.924
+  },
+  {
+   "id": "M16-pure-path",
+   "file": "shared-frame/sha256.js",
+   "fault": "the file:// fallback hashes different bytes from Web Crypto",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.webcrypto"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
+   ],
+   "seconds": 0.951
+  },
+  {
+   "id": "M17-canon-unsorted",
+   "file": "shared-frame/canonical.js",
+   "fault": "insertion order instead of sorted keys",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.xlang"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T2.canon: the rules reject what cannot cross languages and order keys by UTF-16 unit"
+   ],
+   "seconds": 0.948
+  },
+  {
+   "id": "M18-canon-escape-case",
+   "file": "shared-frame/canonical.js",
+   "fault": "upper-case hex in control-character escapes",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.xlang"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.904
+  },
+  {
+   "id": "M19-seal-skips-field",
+   "file": "shared-frame/canonical.js",
+   "fault": "the receipt hash leaves out one field",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t0.4.conversion",
+    "t0.4.export"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.942
+  },
+  {
+   "id": "M20-pointer-drops-evidence",
+   "file": "shared-frame/certificate.js",
+   "fault": "the certificate pointer ignores its evidence",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t0.4.certificate"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.937
+  },
+  {
+   "id": "M21-python-codepoint-sort",
+   "file": "tests/telos-track-a/py/canonical_receipt.py",
+   "fault": "the Python twin sorts keys by code point instead of UTF-16 unit",
+   "testFile": "t2-receipts.test.mjs",
+   "killed": [
+    "t2.xlang"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.956
+  },
+  {
+   "id": "M22-lut-entry",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "fault": "one linear-table entry off by one in JavaScript only",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.const"
+   ],
+   "survived": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "otherFailures": [],
+   "seconds": 26.734
+  },
+  {
+   "id": "M23-cbrt-floor",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "fault": "floor instead of nearest cube root",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.cbrt",
+    "t3.images",
+    "t3.frames"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 26.518
+  },
+  {
+   "id": "M24-bin-floor",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "fault": "bins truncate instead of rounding half up",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 26.547
+  },
+  {
+   "id": "M25-cell-mean-floor",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "cell means truncate instead of rounding half up",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.frames"
+   ],
+   "survived": [
+    "t3.images"
+   ],
+   "otherFailures": [],
+   "seconds": 22.613
+  },
+  {
+   "id": "M26-percentile-rank",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "a different nearest-rank rule for L0 percentiles",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 18.87
+  },
+  {
+   "id": "M27-python-bin-floor",
+   "file": "tests/telos-track-a/py/oklab_int.py",
+   "fault": "the Python twin truncates bins",
+   "testFile": "t3-oklab-int.test.mjs",
+   "killed": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 18.71
+  },
+  {
+   "id": "M28-prereg-slice",
+   "file": "tests/telos-track-a/prereg-hash.mjs",
+   "fault": "the hash tool reads the block one byte short",
+   "testFile": "t0-witness.test.mjs",
+   "killed": [
+    "t0.1.hash",
+    "t0.2.citation"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.321
+  },
+  {
+   "id": "M28b-prereg-crlf",
+   "file": "tests/telos-track-a/prereg-hash.mjs",
+   "fault": "the hash tool stops folding CRLF; this can only fail on a checkout whose PREREGISTRATION.md has CRLF line endings",
+   "testFile": "t0-witness.test.mjs",
+   "killed": [],
+   "survived": [
+    "t0.1.hash",
+    "t0.2.citation"
+   ],
+   "otherFailures": [],
+   "seconds": 0.312
+  },
+  {
+   "id": "M29-result-cites-other-hash",
+   "file": "tests/telos-track-a/results/t1-channels.json",
+   "fault": "a result file cites a hash other than the pre-registration",
+   "testFile": "t0-witness.test.mjs",
+   "killed": [
+    "t0.2.citation"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.297
+  }
+ ],
+ "slow": [
+  {
+   "id": "S01-cube-lut-entry",
+   "fault": "one linear-table entry off by one: the full-cube gate must report mismatches",
+   "exit": 1,
+   "killed": true,
+   "gate": {
+    "coloursDiffering": 7,
+    "perChannel": {
+     "L6": 0,
+     "a6": 3,
+     "b6": 3,
+     "L8": 1
+    },
+    "first": [
+     {
+      "rgb": [
+       11,
+       46,
+       69
+      ],
+      "a": [
+       18,
+       26,
+       32,
+       74
+      ],
+      "b": [
+       18,
+       25,
+       32,
+       74
+      ]
+     },
+     {
+      "rgb": [
+       78,
+       109,
+       11
+      ],
+      "a": [
+       31,
+       20,
+       50,
+       126
+      ],
+      "b": [
+       31,
+       20,
+       51,
+       126
+      ]
+     },
+     {
+      "rgb": [
+       86,
+       107,
+       11
+      ],
+      "a": [
+       31,
+       21,
+       50,
+       126
+      ],
+      "b": [
+       31,
+       21,
+       51,
+       126
+      ]
+     },
+     {
+      "rgb": [
+       95,
+       36,
+       11
+      ],
+      "a": [
+       22,
+       38,
+       46,
+       88
+      ],
+      "b": [
+       22,
+       37,
+       46,
+       88
+      ]
+     },
+     {
+      "rgb": [
+       137,
+       11,
+       93
+      ],
+      "a": [
+       27,
+       49,
+       34,
+       108
+      ],
+      "b": [
+       27,
+       49,
+       34,
+       107
+      ]
+     }
+    ],
+    "pass": false
+   }
+  }
+ ],
+ "summary": {
+  "equalityTests": 27,
+  "killedAtLeastOnce": 27,
+  "neverKilled": [],
+  "mutations": 30,
+  "mutationsWithSurvivors": [
+   {
+    "id": "M11-hue-achromatic",
+    "survived": [
+     "t1.hue.19"
+    ]
+   },
+   {
+    "id": "M22-lut-entry",
+    "survived": [
+     "t3.images",
+     "t3.frames"
+    ]
+   },
+   {
+    "id": "M25-cell-mean-floor",
+    "survived": [
+     "t3.images"
+    ]
+   },
+   {
+    "id": "M28b-prereg-crlf",
+    "survived": [
+     "t0.1.hash",
+     "t0.2.citation"
+    ]
+   }
+  ],
+  "slowKilled": "1/1"
+ }
+}
