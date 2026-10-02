@@ -1,4 +1,4 @@
-"""Generate the integer constants of project-telos.oklab-int/v1 at 60-digit decimal precision.
+"""Generate the integer constants of project-telos.oklab-int/v2 at 60-digit decimal precision.
 
 The JavaScript (system/lib/sense-core/oklab-int.mjs) and the Python twin (oklab_int.py) embed these
 values as integer literals. tests/telos-track-a/t3-oklab-int.test.mjs re-runs this script and checks
@@ -12,6 +12,7 @@ from decimal import Decimal, getcontext, ROUND_HALF_EVEN
 getcontext().prec = 60
 
 Q20 = Decimal(2) ** 20
+Q24 = Decimal(2) ** 24
 Q36 = Decimal(2) ** 36
 
 # Ottosson (2020, 2021 coefficients), as published; identical to sense-core colour-perceptual.mjs.
@@ -40,11 +41,11 @@ def srgb_to_linear(i):
 
 
 def constants():
-    lut = [rnd(srgb_to_linear(i) * Q20) for i in range(256)]
+    lut = [rnd(srgb_to_linear(i) * Q24) for i in range(256)]
     m1 = [[rnd(Decimal(c) * Q20) for c in row] for row in M1]
     m2 = [[rnd(Decimal(c) * Q20) for c in row] for row in M2]
     ranges = {k: [rnd(Decimal(lo) * Q36), rnd(Decimal(hi) * Q36)] for k, (lo, hi) in RANGES.items()}
-    return {"schema": "project-telos.oklab-int/v1", "lin_q20": lut, "m1_q20": m1, "m2_q20": m2, "ranges_q36": ranges}
+    return {"schema": "project-telos.oklab-int/v2", "lin_q24": lut, "m1_q20": m1, "m2_q20": m2, "ranges_q36": ranges}
 
 
 if __name__ == "__main__":

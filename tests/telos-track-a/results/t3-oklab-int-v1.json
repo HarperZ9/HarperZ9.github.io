@@ -2,23 +2,21 @@
  "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
  "result": "t3-oklab-int",
  "node": "v25.2.1",
- "schema": "project-telos.oklab-int/v2",
- "amendment_1_sha256": "cd97b6079121bfe06818ff33882da8d45c009515f8574d406257aa0dd7329b4e",
  "auditFramesDirSet": true,
  "results": {
-  "cubeRoot": {
-   "inputs": 16105,
-   "notNearest": 0,
-   "jsPyDiff": 0
+  "cbrtTable": {
+   "entries": 65537,
+   "jsPyDiff": 0,
+   "notCorrectlyRounded": 0
   },
   "integerVsFloat": {
    "n": 20000,
-   "maxAbs": 0.0000366289703830347,
-   "meanMaxAbs": 0.000012104909459271201,
+   "maxAbs": 0.0007534248418900186,
+   "meanMaxAbs": 0.000018809691170529765,
    "worstAt": [
-    238,
-    87,
-    123
+    2,
+    2,
+    19
    ]
   },
   "randomImages": {
@@ -26,7 +24,7 @@
    "imageAgree": 1000,
    "textAgree": 1000,
    "firstMismatch": [],
-   "jsTextSetSha256": "a20d63111be44a5244018e9cb2b211bf1ecaaa96e61c3934cdd3638ea908163a",
+   "jsTextSetSha256": "23059026f512a0f8d3aa3586b2fb99ce3dea005e23f233f6144155f9c027f5c8",
    "achromaticFlagged": 238
   },
   "auditFrames": {
@@ -34,7 +32,7 @@
    "imageAgree": 36,
    "textAgree": 36,
    "firstMismatch": [],
-   "jsTextSetSha256": "92e41af59d0e1f3544b0cbee551418e533f26d69bb93324391c739f0a78e169b",
+   "jsTextSetSha256": "08eb9a51ab192f445d4f88bbd6c5d846f36ce8bb665779412617fd6d7e7fff17",
    "achromaticFlagged": [
     "art_w085",
     "art_w115",

@@ -1,5 +1,6 @@
 // t3-oklab-int.test.mjs: Telos Track A step T3, the integer colour path and Node/Python conformance.
-// Rules and thresholds: tests/telos-track-a/PREREGISTRATION.md, section T3. The full-cube comparison
+// Rules and thresholds: tests/telos-track-a/PREREGISTRATION.md, section T3 and amendment 1 (path v2;
+// v1 results are kept in results/t3-oklab-int-v1.json). The full-cube comparison
 // (16,777,216 colours) runs in conformance-cube.mjs because it takes about a minute.
 // Run: node --test tests/telos-track-a/t3-oklab-int.test.mjs
 //   with TELOS_AUDIT_FRAMES=<dir holding index.json and the .rgba frames> for the 36 audit frames.
@@ -12,13 +13,14 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  LIN_Q20, M1_Q20, M2_Q20, RANGES_Q36, CBRT_Q16, oklabQ36FromSrgb8, binsOfSrgb8,
+  LIN_Q24, M1_Q20, M2_Q20, RANGES_Q36, cbrtQ44toQ16, oklabQ36FromSrgb8, binsOfSrgb8, OKLAB_INT_SCHEMA,
 } from "../../system/lib/sense-core/oklab-int.mjs";
 import { layerTextAll } from "../../system/lib/sense-core/layers-int.mjs";
 import { linearRgbToOklab, srgbToLinear } from "../../system/lib/sense-core/colour-perceptual.mjs";
 import { randomImages } from "./lib/images.mjs";
 import { xorshift32 } from "./lib/rng.mjs";
 import { writeResult } from "./lib/results.mjs";
+import { amendment1Sha256 } from "./prereg-hash.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PY = join(HERE, "py");
@@ -28,36 +30,50 @@ const py = (args, opts = {}) => execFileSync("python", args, { cwd: PY, encoding
 
 test("T3.const eq: both embedded constant sets equal a fresh 60-digit regeneration", () => {
   const gen = JSON.parse(py(["gen_oklab_int_constants.py"]));
-  const js = { lin_q20: [...LIN_Q20], m1_q20: M1_Q20.map((r) => [...r]), m2_q20: M2_Q20.map((r) => [...r]),
+  assert.equal(gen.schema, OKLAB_INT_SCHEMA);
+  const js = { lin_q24: [...LIN_Q24], m1_q20: M1_Q20.map((r) => [...r]), m2_q20: M2_Q20.map((r) => [...r]),
     ranges_q36: { L: [...RANGES_Q36.L], a: [...RANGES_Q36.a], b: [...RANGES_Q36.b] } };
-  const pyEmbedded = JSON.parse(py(["-c", "import json,oklab_int as o;print(json.dumps({'lin_q20':list(o.LIN_Q20),"
+  const pyEmbedded = JSON.parse(py(["-c", "import json,oklab_int as o;print(json.dumps({'lin_q24':list(o.LIN_Q24),"
     + "'m1_q20':[list(r) for r in o.M1_Q20],'m2_q20':[list(r) for r in o.M2_Q20],'ranges_q36':{k:list(v) for k,v in o.RANGES_Q36.items()}}))"]));
-  for (const k of ["lin_q20", "m1_q20", "m2_q20", "ranges_q36"]) {
+  for (const k of ["lin_q24", "m1_q20", "m2_q20", "ranges_q36"]) {
     assert.deepEqual(js[k], gen[k], `JS ${k}`);
     assert.deepEqual(pyEmbedded[k], gen[k], `Python ${k}`);
   }
 });
 
-test("T3.cbrt eq: the JS and Python cube-root tables are identical and correctly rounded", () => {
-  const pyTable = JSON.parse(py(["-c", "import json,oklab_int as o;print(json.dumps(o.CBRT_Q16))"]));
-  assert.equal(pyTable.length, 65537);
-  let diff = 0;
-  for (let x = 0; x <= 65536; x++) if (pyTable[x] !== CBRT_Q16[x]) diff++;
-  assert.equal(diff, 0);
-  // Correct rounding against BigInt arithmetic: (2t - 1)^3 <= 8 x 2^32 < (2t + 1)^3 for t = table[x].
+// Inputs the cube root sees: every LMS value of a seeded colour sample plus the range ends and
+// 4,096 values spread over [0, 2^44 + 2^25].
+function cbrtInputs() {
+  const next = xorshift32(20261002);
+  const xs = [0, 1, 2, 15, 16, 17, 2 ** 44, 2 ** 44 + 2 ** 24, 2 ** 44 + 2 ** 25];
+  for (let i = 0; i < 4096; i++) xs.push(Math.floor((i / 4095) * (2 ** 44 + 2 ** 25)));
+  for (let i = 0; i < 4000; i++) {
+    const r = LIN_Q24[next() & 255], g = LIN_Q24[next() & 255], b = LIN_Q24[next() & 255];
+    for (const row of M1_Q20) xs.push(row[0] * r + row[1] * g + row[2] * b);
+  }
+  return xs;
+}
+
+test("T3.cbrt eq: the cube root is the exact nearest integer (BigInt check) and Python agrees", () => {
+  const xs = cbrtInputs();
   let bad = 0;
-  for (let x = 0; x <= 65536; x++) {
-    const t = BigInt(CBRT_Q16[x]), n8 = BigInt(x) * 8n * 4294967296n;
+  for (const x of xs) {
+    const t = BigInt(cbrtQ44toQ16(x)), n8 = BigInt(x) * 16n * 8n;
     const lo = t === 0n ? -1n : (2n * t - 1n) ** 3n, hi = (2n * t + 1n) ** 3n;
     if (!(lo <= n8 && n8 < hi)) bad++;
   }
-  results.cbrtTable = { entries: 65537, jsPyDiff: diff, notCorrectlyRounded: bad };
+  const pyOut = JSON.parse(py(["-c", "import json,sys,oklab_int as o;xs=json.load(sys.stdin);print(json.dumps([o.cbrt_q44_to_q16(x) for x in xs]))"],
+    { input: JSON.stringify(xs) }));
+  let diff = 0;
+  xs.forEach((x, k) => { if (pyOut[k] !== cbrtQ44toQ16(x)) diff++; });
+  results.cubeRoot = { inputs: xs.length, notNearest: bad, jsPyDiff: diff };
   assert.equal(bad, 0);
+  assert.equal(diff, 0);
 });
 
-// Reported, not gated. A 2e-4 bound was first written here without being pre-registered; v1 measured
-// 7.5e-4 on this sample (2.0e-3 at worst on the cube, near black), so the bound was wrong, and the
-// check now only records the deviation. See BUILD-T0-T3 and the v2 amendment.
+// Reported here on a sample; the pre-registered accuracy gate (amendment 1: at most 1e-4 per channel)
+// runs over the full cube in conformance-cube.mjs. Note for the record: v1 measured 7.5e-4 on this
+// sample, after a 2e-4 bound that had not been pre-registered was written here and failed.
 test("T3.accuracy (reported): deviation of integer OKLab from float OKLab on 20,000 seeded colours", () => {
   const next = xorshift32(20261002);
   let worst = 0, sum = 0, worstAt = null;
@@ -140,5 +156,5 @@ test("T3.frames eq: layer text is byte-identical in Node and Python on the 36 au
   });
 
 test("T3 results file", () => {
-  writeResult("t3-oklab-int", { auditFramesDirSet: Boolean(FRAMES), results });
+  writeResult("t3-oklab-int", { schema: OKLAB_INT_SCHEMA, amendment_1_sha256: amendment1Sha256(), auditFramesDirSet: Boolean(FRAMES), results });
 });

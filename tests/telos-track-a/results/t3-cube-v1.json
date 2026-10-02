@@ -1,0 +1,147 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t3-cube",
+ "node": "v25.2.1",
+ "schema": "project-telos.oklab-int/v1",
+ "colours": 16777216,
+ "gate": {
+  "coloursDiffering": 0,
+  "perChannel": {
+   "L6": 0,
+   "a6": 0,
+   "b6": 0,
+   "L8": 0
+  },
+  "first": [],
+  "pass": true
+ },
+ "sha256": {
+  "nodeInt": "bb6e5598070f3cd9b702aeb065d521e5d006d9b8c948be07383c12ddd26f1013",
+  "pythonInt": "bb6e5598070f3cd9b702aeb065d521e5d006d9b8c948be07383c12ddd26f1013",
+  "nodeFloat": "5fb15aeaee42178ae6ffd305f5dccdd85ca1021515e1fe0abe1c62faaefd34f5",
+  "numpyFloat": "5fb15aeaee42178ae6ffd305f5dccdd85ca1021515e1fe0abe1c62faaefd34f5"
+ },
+ "seconds": {
+  "nodeInt": 3.56,
+  "pythonInt": 2.135
+ },
+ "reported": {
+  "integerVsNumpyFloat": {
+   "coloursDiffering": 75079,
+   "perChannel": {
+    "L6": 4936,
+    "a6": 37266,
+    "b6": 13167,
+    "L8": 20120
+   },
+   "first": [
+    {
+     "rgb": [
+      0,
+      0,
+      3
+     ],
+     "a": [
+      3,
+      29,
+      35,
+      11
+     ],
+     "b": [
+      3,
+      28,
+      35,
+      11
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      0,
+      54
+     ],
+     "a": [
+      9,
+      27,
+      26,
+      38
+     ],
+     "b": [
+      9,
+      28,
+      26,
+      38
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      1,
+      6
+     ],
+     "a": [
+      4,
+      28,
+      35,
+      18
+     ],
+     "b": [
+      5,
+      28,
+      35,
+      18
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      1,
+      14
+     ],
+     "a": [
+      5,
+      28,
+      33,
+      21
+     ],
+     "b": [
+      5,
+      28,
+      33,
+      22
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      1,
+      39
+     ],
+     "a": [
+      8,
+      28,
+      28,
+      32
+     ],
+     "b": [
+      8,
+      28,
+      28,
+      33
+     ]
+    }
+   ]
+  },
+  "nodeFloatVsNumpyFloat": {
+   "coloursDiffering": 0,
+   "perChannel": {
+    "L6": 0,
+    "a6": 0,
+    "b6": 0,
+    "L8": 0
+   },
+   "first": [],
+   "linearTableEntriesDiffering": 1
+  }
+ }
+}

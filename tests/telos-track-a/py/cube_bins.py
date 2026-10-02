@@ -1,6 +1,7 @@
 """Full-cube bins for the Track A T3 conformance run (numpy).
 
 CLI: python cube_bins.py int <out.bin>      integer path (oklab_int.encode_cube_numpy)
+     python cube_bins.py accuracy <out.json> max |integer - float64 OKLab| per channel (amendment 1)
      python cube_bins.py float <out.bin>    float64 prototype path with the same bin rule as
                                             conformance-cube.mjs's float path (floor(x + 0.5)),
                                             plus <out.bin>.lut with the 256 float linear values
@@ -52,7 +53,11 @@ if __name__ == "__main__":
     if mode == "int":
         from oklab_int import encode_cube_numpy
         encode_cube_numpy().tofile(dst)
+    elif mode == "accuracy":
+        import json
+        from oklab_int import cube_accuracy_numpy
+        json.dump(cube_accuracy_numpy(), open(dst, "w"))
     elif mode == "float":
         float_cube(dst)
     else:
-        raise SystemExit("mode must be int or float")
+        raise SystemExit("mode must be int, accuracy or float")

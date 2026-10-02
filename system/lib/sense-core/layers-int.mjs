@@ -1,4 +1,5 @@
-// layers-int.mjs: Telos layer text on the integer OKLab path, `oklab-int/v1` (Track A step T3).
+// layers-int.mjs: Telos layer text on the integer OKLab path, `oklab-int/v2` (Track A step T3,
+// amendment 1).
 //
 // The layer encoders behind the resolution spec's token budgets were a Python prototype; this is the
 // Telos JavaScript twin, and tests/telos-track-a/py/layers_int.py is its Python twin. Both are built on
@@ -10,17 +11,17 @@
 //   L1  OKLab L on 8 x 8 cells, a and b on 4 x 4 cells, 6 bits each, 64-symbol alphabet.
 //   L2  chromatic branch at N: L on N x N cells, a and b on N/2 x N/2, 6 bits, 64-symbol alphabet;
 //       achromatic branch at N: L only, 8 bits, hex.
-// Cell values are OKLab of the cell's mean colour in linear light (Q20 means, rounded half up).
+// Cell values are OKLab of the cell's mean colour in linear light (Q24 means, rounded half up).
 // ASCII only.
-import { LIN_Q20, oklabQ36FromLinearQ20, binQ36, floorDiv, isqrt, OKLAB_INT_SCHEMA } from "./oklab-int.mjs";
+import { LIN_Q24, oklabQ36FromLinearQ24, binQ36, floorDiv, isqrt, OKLAB_INT_SCHEMA } from "./oklab-int.mjs";
 
-export const LAYER_TEXT_SCHEMA = "oklab-int/v1";
+export const LAYER_TEXT_SCHEMA = "oklab-int/v2";
 export const B64_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
 export const L1_CELLS = 8;
 export const L2_CHROMATIC_N = Object.freeze([12, 32]);
 export const L2_ACHROMATIC_N = Object.freeze([16, 24]);
 
-// Integral images of the Q20 linear channels: (w + 1) x (h + 1) per channel, exact integer sums.
+// Integral images of the Q24 linear channels: (w + 1) x (h + 1) per channel, exact integer sums.
 function integralLinear(px, w, h, ch) {
   const W = w + 1;
   const S = [new Float64Array(W * (h + 1)), new Float64Array(W * (h + 1)), new Float64Array(W * (h + 1))];
@@ -28,7 +29,7 @@ function integralLinear(px, w, h, ch) {
     let rr = 0, rg = 0, rb = 0;
     for (let x = 0; x < w; x++) {
       const i = (y * w + x) * ch;
-      rr += LIN_Q20[px[i]]; rg += LIN_Q20[px[i + 1]]; rb += LIN_Q20[px[i + 2]];
+      rr += LIN_Q24[px[i]]; rg += LIN_Q24[px[i + 1]]; rb += LIN_Q24[px[i + 2]];
       const o = (y + 1) * W + (x + 1), up = y * W + (x + 1);
       S[0][o] = S[0][up] + rr; S[1][o] = S[1][up] + rg; S[2][o] = S[2][up] + rb;
     }
@@ -36,7 +37,7 @@ function integralLinear(px, w, h, ch) {
   return { S, W };
 }
 
-// Q20 mean linear colour of each cell of a rows x cols grid (floor-based bounds, as the site's other
+// Q24 mean linear colour of each cell of a rows x cols grid (floor-based bounds, as the site's other
 // grids), rounded half up. Returns an array of [r, g, b], row-major.
 function cellMeans(I, w, h, rows, cols) {
   const { S, W } = I;
@@ -72,7 +73,7 @@ export function layerL0(px, w, h, ch = 4) {
   const L8 = new Int32Array(n), S2 = new Float64Array(n);
   for (let i = 0; i < n; i++) {
     const o = i * ch;
-    const [L, a, b] = oklabQ36FromLinearQ20(LIN_Q20[px[o]], LIN_Q20[px[o + 1]], LIN_Q20[px[o + 2]]);
+    const [L, a, b] = oklabQ36FromLinearQ24(LIN_Q24[px[o]], LIN_Q24[px[o + 1]], LIN_Q24[px[o + 2]]);
     L8[i] = binQ36(L, "L", 8);
     const a16 = floorDiv(a + 524288, 1048576), b16 = floorDiv(b + 524288, 1048576);
     S2[i] = a16 * a16 + b16 * b16;
@@ -92,9 +93,9 @@ export function layerL0(px, w, h, ch = 4) {
 
 function chromaticLayer(tag, I, w, h, n) {
   const m = Math.max(1, floorDiv(n, 2));
-  const Lv = cellMeans(I, w, h, n, n).map(([r, g, b]) => binQ36(oklabQ36FromLinearQ20(r, g, b)[0], "L", 6));
+  const Lv = cellMeans(I, w, h, n, n).map(([r, g, b]) => binQ36(oklabQ36FromLinearQ24(r, g, b)[0], "L", 6));
   const ab = cellMeans(I, w, h, m, m).map(([r, g, b]) => {
-    const [, A, B] = oklabQ36FromLinearQ20(r, g, b);
+    const [, A, B] = oklabQ36FromLinearQ24(r, g, b);
     return b64(binQ36(A, "a", 6)) + b64(binQ36(B, "b", 6));
   });
   return `${tag} ${LAYER_TEXT_SCHEMA} cells:${n}x${n} chroma:${m}x${m} bits:L6,ab6 alphabet:b64\nL:\n`
@@ -102,7 +103,7 @@ function chromaticLayer(tag, I, w, h, n) {
 }
 
 function achromaticLayer(I, w, h, n) {
-  const Lv = cellMeans(I, w, h, n, n).map(([r, g, b]) => binQ36(oklabQ36FromLinearQ20(r, g, b)[0], "L", 8));
+  const Lv = cellMeans(I, w, h, n, n).map(([r, g, b]) => binQ36(oklabQ36FromLinearQ24(r, g, b)[0], "L", 8));
   return `L2 ${LAYER_TEXT_SCHEMA} cells:${n}x${n} bits:L8 alphabet:hex branch:achromatic\n` + gridRows(Lv, n, n, hex2, "");
 }
 

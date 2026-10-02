@@ -1,5 +1,6 @@
 // conformance-cube.mjs: Track A step T3, all 16,777,216 sRGB colours through the integer OKLab path in
-// Node and in Python (numpy), compared bin for bin at L6/ab6 and L8. Gate (pre-registered): 0 mismatches.
+// Node and in Python (numpy), compared bin for bin at L6/ab6 and L8. Gates (pre-registered): 0 mismatches;
+// and (amendment 1, path v2) at most 1e-4 per channel between integer and float64 OKLab.
 // Reported, not gated: integer bins against the float64 prototype's bins, and Node float bins against
 // numpy float bins (the review's inference that float cube roots disagree across engines).
 // Run: node tests/telos-track-a/conformance-cube.mjs        (about a minute; writes results/t3-cube.json
@@ -13,6 +14,9 @@ import { fileURLToPath } from "node:url";
 import { encodeCube, OKLAB_INT_SCHEMA } from "../../system/lib/sense-core/oklab-int.mjs";
 import { linearRgbToOklab } from "../../system/lib/sense-core/colour-perceptual.mjs";
 import { writeResult } from "./lib/results.mjs";
+import { amendment1Sha256 } from "./prereg-hash.mjs";
+
+const ACCURACY_GATE = 1e-4; // amendment 1
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PY = join(HERE, "py");
@@ -59,6 +63,11 @@ try {
   const tPy = Date.now() - t;
   const pyInt = new Uint8Array(readFileSync(join(dir, "int.bin")));
   const gate = compare(jsInt, pyInt);
+  t = Date.now();
+  execFileSync("python", ["cube_bins.py", "accuracy", join(dir, "acc.json")], { cwd: PY, stdio: "inherit" });
+  const accuracy = JSON.parse(readFileSync(join(dir, "acc.json"), "utf8"));
+  const tAcc = Date.now() - t;
+  const accuracyPass = ["L", "a", "b"].every((k) => accuracy.maxAbs[k] <= ACCURACY_GATE);
 
   execFileSync("python", ["cube_bins.py", "float", join(dir, "float.bin")], { cwd: PY, stdio: "inherit" });
   const pyFloat = new Uint8Array(readFileSync(join(dir, "float.bin")));
@@ -70,20 +79,22 @@ try {
 
   const body = {
     schema: OKLAB_INT_SCHEMA,
+    amendment_1_sha256: amendment1Sha256(),
     colours: 16777216,
     gate: { ...gate, pass: gate.coloursDiffering === 0 && pyInt.length === jsInt.length },
+    accuracyGate: { bound: ACCURACY_GATE, ...accuracy, pass: accuracyPass },
     sha256: { nodeInt: sha(jsInt), pythonInt: sha(pyInt), nodeFloat: sha(jsFloat), numpyFloat: sha(pyFloat) },
-    seconds: { nodeInt: tJs / 1000, pythonInt: tPy / 1000 },
+    seconds: { nodeInt: tJs / 1000, pythonInt: tPy / 1000, accuracy: tAcc / 1000 },
     reported: {
       integerVsNumpyFloat: compare(jsInt, pyFloat),
       nodeFloatVsNumpyFloat: { ...compare(jsFloat, pyFloat), linearTableEntriesDiffering: lutDiff },
     },
   };
   writeResult("t3-cube", body);
-  console.log(JSON.stringify({ gate: body.gate, seconds: body.seconds,
+  console.log(JSON.stringify({ gate: body.gate, accuracyGate: body.accuracyGate, seconds: body.seconds,
     integerVsNumpyFloat: body.reported.integerVsNumpyFloat.perChannel,
     nodeFloatVsNumpyFloat: body.reported.nodeFloatVsNumpyFloat.perChannel, lutDiff }, null, 1));
-  process.exitCode = body.gate.pass ? 0 : 1;
+  process.exitCode = body.gate.pass && body.accuracyGate.pass ? 0 : 1;
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }
