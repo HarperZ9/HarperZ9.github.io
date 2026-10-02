@@ -165,9 +165,26 @@ def main(argv):
         for f in index:
             px = open(os.path.join(arg, f["name"] + ".rgba"), "rb").read()
             out.append(_entry(f["name"], px, f["w"], f["h"]))
+    elif mode == "packets":
+        packets_main(arg, dst, int(argv[4]) if len(argv) > 4 else 1)
+        return
     else:
-        raise SystemExit("mode must be random or frames")
+        raise SystemExit("mode must be random, frames or packets")
     json.dump({"schema": OKLAB_INT_SCHEMA, "entries": out}, open(dst, "w", encoding="utf-8"))
+
+
+
+def packets_main(work, dst, step=1):
+    """Packet text (n = 32) of every base image in a prep_t5t7 working directory, every step-th one."""
+    index = json.load(open(os.path.join(work, "index.json")))
+    out = {}
+    for corpus in ("audit", "s0"):
+        for k, e in enumerate(index["corpora"][corpus]):
+            if k % step:
+                continue
+            px = open(os.path.join(work, "base", corpus, e["name"] + ".rgba"), "rb").read()
+            out[f"{corpus}/{e['name']}"] = layer_packet(px, e["w"], e["h"], 4, 32)[1]
+    json.dump(out, open(dst, "w", encoding="utf-8"))
 
 
 if __name__ == "__main__":
