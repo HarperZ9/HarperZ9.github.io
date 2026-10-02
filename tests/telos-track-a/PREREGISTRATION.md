@@ -214,3 +214,199 @@ Thresholds:
   measuring is about 4e-5 (Q16 rounding of the cube root, times the M2 row sums).
 - Reported, not gated: bin disagreement between v2 and the float prototype, beside v1's.
 <!-- prereg-track-a-amend-1:end -->
+
+## Pre-registration 2 (steps T4 to T7)
+
+Written 2026-10-02, after the T0 to T3 results and before any code for T4 to T7 existed and before any
+T4 to T7 number was measured. Nothing in the slice 0 store had been encoded, tokenized or probed by this
+session when the block below was written. The block has its own hash (`prereg_t4t7_sha256` in every T4
+to T7 result file, printed by `node tests/telos-track-a/prereg-hash.mjs --t4t7`). The v1 block, the
+amendment 1 block and their hashes are unchanged. The binding status note at the top of this file applies.
+
+<!-- prereg-track-a-t4t7:start -->
+## Scope
+
+Steps T4 to T7 of Track A (PLAN.md section 2.2): the measurement contract that accepts a caller's image
+(T4), declared token budgets with non-inferiority margins (T5), nuisance invariance (T6) and task value
+measured on real labelled images (T7). CPU only. Images: the 36 audit frames (TELOS_AUDIT_FRAMES) and the
+300 clean rows of the slice 0 store `slice0-v2` (TELOS_SLICE0_STORE for the PNG files, TELOS_SLICE0_RECORDS
+for `records_clean.jsonl` of build run3a). No MMBU dev image is read. Where a threshold below differs from
+the plan or the spec, the reason is given beside it.
+
+## Shared definitions
+
+- Packet: `layerPacket(px, w, h, 4, 32)` of system/lib/sense-core/layers-int.mjs: L0, L1 and the L2 branch
+  the L0 achromatic flag selects (chromatic: N = 32, L6/ab6; achromatic: floor(32 / 2) = 16 cells per side,
+  L8 hex). This fixes the open issue from T3: the achromatic branch at N / 2 cells is pre-registered here.
+- Decoding a layer: bin v of a channel with range [LO, HI] and n = 2^bits - 1 dequantizes to
+  LO + v (HI - LO) / n, with the integer path ranges L [0, 1], a [-0.234, 0.277], b [-0.312, 0.199].
+- Slice 0 decode: PIL `Image.open(...).convert("RGBA")` of each store PNG; every row's pixel SHA-256 of the
+  RGB bytes is checked against `pixel_sha256` in its record before use.
+- Bootstrap: percentile intervals, 10,000 resamples, numpy default_rng seed 20261002. On slice 0, resampling
+  is by cluster: Kather by `group` (slide), BBBC010 by `group` (well), PBC by row (PBC has no group ids).
+  On the audit frames, by frame.
+- Tokenizer: Qwen3.5-2B `tokenizer.json` from the local Hugging Face cache (snapshot
+  15852e8c16360a2fea060d615a32b45270f8a8fc, file SHA-256 recorded in the result), `encode(text,
+  add_special_tokens=False)`, each layer's text counted on its own.
+- Equality tests carry "eq:" in their names and are registered with at least one paired mutation (T0.3).
+  The T0 witness rules extend to the T4 to T7 suites and result files.
+
+## T4. Measurement contract v2 (`telos.measurement.layers` accepts a caller's image)
+
+Repository: the Telos MCP repo (worktree from origin/main, branch feat/telos-measurement-v2). The tool
+keeps its v1 demo packet when called with no arguments. With arguments it reads a request
+`project-telos.measurement-request/v2` and returns `project-telos.measurement-layers/v2`.
+
+Request:
+- `image`: exactly one of `{rgba, width, height}` (base64 of raw 8-bit RGBA) or `{path, width, height}`
+  (a raw 8-bit RGBA file). PNG and JPEG decoding are out of scope for v2; JPEG stays with the caller.
+- `declared`: `colour_space` in srgb, display-p3, rec2020, unknown (absent means unknown; recorded as a
+  declaration); `alpha` in none, straight, premultiplied (premultiplied is un-premultiplied in integers,
+  c' = min(255, floor((c 255 + floor(a / 2)) / a)) for a > 0, and 0 for a = 0, before any statistic, and
+  the step is recorded); `bit_depth` 8 only, otherwise `unsupported_bit_depth`.
+- `layers`: subset of L0, L1, L2, L3 (default L0 to L2, plus L3 when overlays are given); `n`: L2 grid,
+  integer 1 to 64, default 32; `roi` `{x, y, w, h}` in native pixels; `resample` `{long_edge, filter:
+  "area-linear"}`; `overlays`: list of `{id, mask}` with mask the base64 of width x height bytes, nonzero
+  inside; `run_id`, `frame_id` echoed into events.
+- Limits: width and height at least 1 and width x height at most 16,777,216, otherwise `image_too_large`;
+  rgba length not equal to width x height x 4 gives `pixel_dimensions_mismatch`.
+- Paths: allowed roots come from the server environment TELOS_MEASUREMENT_ROOTS (path-list separator).
+  A path is accepted only when it is absolute, is not a UNC or device path, and its real path (after every
+  symlink and junction) lies inside the real path of an allowed root (case-insensitive on Windows).
+  Otherwise `path_outside_allowed_root`. No roots configured means every path is refused.
+
+Processing order: decode, un-premultiply, roi crop, resample, layers. Resampling uses the Telos filter
+`resample-int/v1`: exact-area box filter on Q24 linear values in integers (output pixel = round half up of
+the area-weighted mean of the source pixels it covers), shared with T6. Layers are the sense-core
+integer path (L0 to L2 as in the packet definition, at the caller's n after the privacy cap). L0 is computed
+on pixels outside the union of overlay masks. L3 (overlay-only in v2) lists each overlay as id, bbox
+`x0,y0,x1,y1` (inclusive integer pixels), area in thousandths of the frame, and `overlay:true`.
+
+Response: `input_receipt` (rgba_sha256 of the decoded RGBA bytes after un-premultiply, width, height,
+decoder `raw-rgba8`, declared fields, colour_status `declared` or `unverifiable`, alpha step, roi,
+resample, and `sha256` over the canonical bytes of the rest); `layers[]` (id, text, cells, params,
+preserves, discards, `measurement_sha256`); `oklab_mean` (OKLab of the mean linear colour, 9-decimal
+strings, from an exact BigInt path: Q24 linear means, M1 and M2 coefficients at 2^40, nearest integer
+cube root); a luma histogram (16 bins of integer Rec. 709 luma); `events[]` with uncertainty status
+`computed` and the input receipt hash (review F20: `witnessed` is reserved for pixels Telos rendered
+itself); `status` "UNVERIFIABLE" with reason `no_criterion_supplied`; `failure_codes` and `warnings`;
+`receipt_sha256` over the canonical bytes (`project-telos.canonical-bytes/v1`) of everything else.
+Errors return a structured rejection `{status: "REJECTED", failure_code}` with exit status 0.
+
+Privacy (review F7): every emitted layer has at most floor(w h / 16) cells after roi and resample. L0 counts
+as 1 cell, L1 as 80, L2 chromatic as N^2 + floor(N / 2)^2, L2 achromatic as floor(N / 2)^2, L3 as 1 per
+overlay. L2's N is capped to the largest value that fits and the cap is reported as a warning; a layer
+that cannot fit at N = 1 (or L1 at all) is dropped and listed with `privacy_cell_bound`, never truncated.
+After assembly the response is serialized and scanned with every emitted layer text removed: a base64 or
+hex run (characters A-Z a-z 0-9 + / = _ -) longer than 64 characters, or a decimal list (numbers joined by
+commas, semicolons or spaces) longer than 64 characters, replaces the response with a `raw_payload_leak`
+rejection.
+
+Thresholds (the spec's checks (a) to (e), review F6, F7, F20, F27):
+- (a) a constant 64 x 64 image (sRGB 200, 120, 40) puts its histogram in one bin, and `oklab_mean` is within
+  1e-6 of exp-resolution/colour.py's float OKLab on each channel; the same holds for 200 seeded constant
+  colours (xorshift32 seed 20261002).
+- (b) rgba length mismatch returns `pixel_dimensions_mismatch`; (c) a path outside every root, a UNC path, a
+  relative path, and a junction inside an allowed root that points outside it each return
+  `path_outside_allowed_root`, and a file inside the root is accepted.
+- (d) two runs in one process and two runs in separate processes give an identical `receipt_sha256`; an
+  independent Python canonicaliser re-derives `input_receipt.sha256` and `receipt_sha256` on 100 seeded
+  responses (100 of 100). Runs on a second Node major version and on Linux are recorded as not run when no
+  such runtime is on the machine.
+- Paired sensitivity (F6): a one-code-value change to one pixel changes `input_receipt.sha256`,
+  `receipt_sha256` and the changed layer's `measurement_sha256` on 20 of 20 seeded images; a change to one
+  declared field changes both receipt hashes; 20 single-field edits of a response each change
+  `receipt_sha256` (20 of 20).
+- (e) on 100 seeded random images (sizes 1 to 96 per side) and a 64 x 64 noise image no run as defined
+  above appears outside permitted layer blocks; on a 32 x 32 input with n = 32 every emitted layer has at
+  most 64 cells (L1 dropped, L2 capped at N = 7); a response with an injected 65-character hex run is
+  rejected with `raw_payload_leak`.
+- Status: every event from caller pixels carries `computed` and the input receipt hash; no `witnessed`
+  appears in a v2 response; the packet status is UNVERIFIABLE.
+- Layer identity: the vendored sense-core files in the Telos repo are byte-identical to the site's
+  (checked in the site suite when TELOS_MCP_ROOT is set), and the v2 layer text equals the site's
+  `layerPacket` text on the same pixels for 50 seeded images.
+
+## T5. Declared token budgets and prefix rebuilds (U2, review F10)
+
+- Budgets declared now (C8): L0 at most 80 tokens; L1 at most 100 (both from the spec); L2 chromatic at
+  N = 32 at most 1,300 and L2 achromatic at 16 x 16 at most 650 (the spec's measured prototype means, 1,034
+  and 520, times 1.25, rounded up to 50). Threshold: every layer at or under its budget on every image of
+  both corpora (36 audit frames, 300 slice 0 images).
+- Prefix rebuilds at native size: R0 from L0 is a flat image at OKLab (L = p50 bin / 255, a = b = 0). R1 from
+  L0 and L1: L from the 8 x 8 grid, a and b from the 4 x 4 grid. R2 from L0 to L2: chromatic, L from the
+  N x N grid and a, b from the N/2 grid; achromatic, L from the 16 x 16 L8 grid and a, b from L1. Grids are
+  upsampled bilinearly with the exp-resolution `bilinear` rule; OKLab goes to linear with the inverse
+  Ottosson matrices and is clipped to [0, 1].
+- Terms: mean CIEDE2000 over pixels (exp-resolution `de2000` on CIELAB) and SSIM on linear luma
+  (exp-resolution `ssim`, sigma 1.5). Loss at step k (R(k-1) to R(k)): CIEDE2000(R(k)) - CIEDE2000(R(k-1))
+  and SSIM(R(k-1)) - SSIM(R(k)).
+- Thresholds per corpus and step: the upper end of the paired 95% interval of the mean loss is at most 0.5
+  (CIEDE2000) and 0.02 (SSIM); no single image has a loss above 2.0 (CIEDE2000) or 0.05 (SSIM).
+- Noise floor ("hold"): the packet text of every image encoded twice in Node, and the Python twin's text,
+  are byte-identical (equality test), so the noise floor of every term is 0 and "hold" means a loss of
+  exactly 0. Node and Python texts are compared on all 300 slice 0 images in the runner and on every tenth
+  image in the test suite.
+
+## T6. Nuisance invariance (C13, review F9)
+
+- Corpora: the 24 art frames and the 300 slice 0 images. Nuisances: JPEG re-encode at quality 75, 85 and 95
+  (PIL with its default chroma subsampling; version recorded); resize by 0.5, 0.75, 1.5 and 2 with
+  `resample-int/v1` (output size max(1, round(w s)) by max(1, round(h s)), round half up); a 1-pixel shift
+  right with the left column repeated. C2 probe: every pixel's float OKLab L lowered by 0.04 (colour.py
+  matrices), converted back to sRGB bytes with clipping and round half to even (numpy).
+- Distance per layer between the packet of the clean image and the packet of the altered image, each packet
+  computed on its own image with its own branch: L0, the mean of |dp5|, |dp50|, |dp95| (L8 bins / 255) and
+  |d chroma-p95| (thousandths / 1000); L1 and L2, each layer decoded to OKLab on a 32 x 32 grid (cell
+  (i, j) of the grid reads cell floor(i c / 32), floor(j c / 32) of each channel grid with c cells per side;
+  the achromatic L2 takes a and b from its own packet's L1), then the mean Euclidean OKLab distance over
+  the 1,024 grid cells.
+- Threshold: for each layer, nuisance and corpus, the median over images of (nuisance distance / C2
+  distance) is at most 0.25. An image whose C2 distance is 0 enters with ratio 0 when its nuisance distance
+  is 0 and infinity otherwise, and the count is reported. Achromatic flag flips under each nuisance are
+  reported, not gated.
+- Overlays: on every greyscale image (the 100 BBBC010 rows and every audit frame with chroma-p95 below
+  0.02), a red (255, 0, 0) rectangle outline centred on the frame, its outer box at half the frame size,
+  thickness chosen as the smallest integer whose pixel count reaches 2% (and 10%) of the frame (count
+  recorded). Thresholds (equality tests): the L0 flag computed outside the mask on the composited image
+  equals the clean image's flag; L0, L1 and L2 computed on the clean image with the overlay passed beside
+  it equal the clean image's text; L3 lists the outline with `overlay:true`, its exact bbox and its area in
+  thousandths. Reported, not gated: the flag on the composited image when no mask is passed.
+- `resample-int/v1` has a Python twin; equality tests: Node and Python outputs are identical on 50 seeded
+  images at the four scales, and scale 1 returns the input's linear values unchanged.
+
+## T7. Task value (C12, review F1 and F21)
+
+- Tasks (scope "in-source only"; held-out-source value needs slice 1): PBC `cell_class` (8 classes), Kather
+  `tissue_class` (8), BBBC010 `condition` (2, primary for that source) and BBBC010 `channel` (2, reported:
+  the two channels differ in mean intensity by construction).
+- Features per layer, parsed from the Node packet text: L0 the five numbers (p5, p50, p95, chroma
+  thousandths, flag); L1 the 64 L bins and 16 a, b bin pairs; L2 every bin of its branch. A parser
+  round-trip (features re-encoded to the identical text) is an equality test.
+- Probe: one-vs-rest ridge classifier on z-scored features (statistics from the training fold; zero-variance
+  features dropped), one-hot targets, prediction by argmax. Penalty lambda = c p with p the feature count and
+  c chosen inside each training fold from {1e-3, 1e-2, 1e-1, 1, 10, 100} by exact leave-one-out accuracy
+  (ties go to the larger c). Outer loop: 5-fold group cross-validation (groups as in the bootstrap; group to
+  fold by a seeded shuffle; PBC rows stratified by class), repeated with seeds 1 to 10; each image's score is
+  its mean correctness over the 10 repeats.
+- Configurations: all seven non-empty subsets of {L0, L1, L2}. Conditional value of layer X: per image,
+  score(L0 to L2) - score(L0 to L2 without X); paired 95% cluster-bootstrap interval of the mean. A layer
+  carries task value on a task only when the lower end is above 0. Value per 100 tokens is printed beside it
+  (mean value / mean tokens of X on that source x 100).
+- Controls (gate): wrong-image (every image's full feature vector replaced by another image's, a uniform
+  random derangement within the source) and shuffled-layer (each layer block replaced by another image's
+  block, an independent derangement per layer). Each control runs 20 draws, each draw one outer
+  cross-validation with its own seed; the control's statistic is the mean accuracy over draws and its upper
+  bound is the mean plus 1.96 standard deviations over sqrt(20). Threshold: the upper bound is at most the
+  majority-class rate + 0.02 on every task. Single-draw Wilson intervals are reported. Reason fixed before
+  measuring: at n = 100 the Wilson upper bound of one draw at the chance rate exceeds the majority rate by
+  more than 2 points, so the plan's bound is applied to the mean over draws.
+- Positive control (check of the check, gate): a planted block P, the one-hot label of each image with the
+  label replaced by a uniform random class with probability 0.5, added to the full packet; P's conditional
+  value must have a lower end above 0 on every task.
+- Head-to-head (reported): the shipped `colorGridHex(px, w, h, 4, 16)` as JSON text (768 byte features)
+  against the OKLab L2 alone at N = 32, and against L2 alone at N_match, the N in {8, 12, 16, 20, 24, 28, 32,
+  40, 48} whose mean token count on the source is nearest the colour grid's (the achromatic branch at
+  floor(N / 2) per side when the flag is set). Paired per-image score differences with cluster-bootstrap
+  intervals; tokens of both printed.
+<!-- prereg-track-a-t4t7:end -->

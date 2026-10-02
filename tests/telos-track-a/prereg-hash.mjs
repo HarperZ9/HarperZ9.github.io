@@ -31,6 +31,14 @@ export function amendment1Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
   return createHash("sha256").update(Buffer.from(preregBlock(text, A1_START, A1_END), "utf8")).digest("hex");
 }
 
+// Pre-registration 2 (steps T4 to T7) has its own block and hash; the earlier blocks are unchanged.
+const P2_START = "<!-- prereg-track-a-t4t7:start -->";
+const P2_END = "<!-- prereg-track-a-t4t7:end -->";
+export function t4t7Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
+  return createHash("sha256").update(Buffer.from(preregBlock(text, P2_START, P2_END), "utf8")).digest("hex");
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  console.log(process.argv.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
+  const a = process.argv;
+  console.log(a.includes("--t4t7") ? t4t7Sha256() : a.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
 }
