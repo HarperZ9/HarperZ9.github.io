@@ -9,6 +9,8 @@
 // Pure + browser-free so node can import and test the maths directly. The browser passes real
 // canvas pixels (Uint8ClampedArray RGBA); the tests pass synthetic typed arrays.
 
+import { srgbToLinear as _srgbToLinear, linearRgbToOklab as _linearRgbToOklab } from "./colour-perceptual.mjs";
+
 // ── (1) The faithful representation: box-average to an n×n RGB grid ───────────
 // The ACTUAL frame, downsampled — the real pixels averaged into n×n cells. Not an invented
 // description: a true, lower-resolution copy. This is the representation a native model consumes.
@@ -51,16 +53,83 @@ export function representation(source, n = 32, read) {
 }
 
 // ── (2) Richer measured features (additive — eye.js's `features` is untouched) ─
-const HUE_NAMES = [
-  [15, "red"], [45, "orange"], [70, "amber"], [90, "yellow"], [160, "green"],
-  [200, "teal"], [255, "blue"], [290, "indigo"], [330, "magenta"], [360, "red"],
-];
-// Name a hue (degrees 0..360) + saturation/value, so greys read honestly as "grey", not a stray hue.
+// Colour words, rule R-hue-v1 (Track A step T1). The earlier HSV hue buckets named an eosin pink
+// "red", a hematoxylin purple "indigo" and a dark slate "blue". Words now come from OKLCh:
+//   - achromatic when chroma C < 0.035 (build-color's achromatic threshold): black below L 0.35,
+//     white at L 0.85 and above, grey between (build-color's lightness bands, collapsed);
+//   - otherwise the hue sector of the nearest prototype hue among pink, red, orange, yellow, green,
+//     blue and purple (prototypes: build-color's 11 basic colours);
+//   - brown for dark orange, dark yellow and dark brownish red; red for dark pink. Every split is the
+//     mean of two prototype values, so no constant here was tuned by hand.
+// Nearest prototype in OKLab (the earlier proposal) was rejected: it names lime "yellow", cyan
+// "white" and sky blue "pink". Every word ships with its margin, the OKLab distance to the boundary
+// that decided it, so a reader can tell a confident word from a coin toss.
+const BASIC_PROTOTYPES = Object.freeze({
+  red: [255, 0, 0], orange: [255, 165, 0], yellow: [255, 255, 0], green: [0, 128, 0],
+  blue: [0, 0, 255], purple: [128, 0, 128], pink: [255, 192, 203], brown: [139, 69, 19],
+  white: [255, 255, 255], grey: [128, 128, 128], black: [0, 0, 0],
+});
+const HUE_BEARING = ["pink", "red", "orange", "yellow", "green", "blue", "purple"];
+const C_ACHROMATIC = 0.035, L_BLACK = 0.35, L_WHITE = 0.85;
+
+function oklchOfBytes(r, g, b) {
+  const [L, a, bb] = _linearRgbToOklab(_srgbToLinear(r / 255), _srgbToLinear(g / 255), _srgbToLinear(b / 255));
+  let h = Math.atan2(bb, a) * 180 / Math.PI;
+  if (h < 0) h += 360;
+  return { L, C: Math.hypot(a, bb), h };
+}
+const PROTO_LCH = Object.freeze(Object.fromEntries(
+  Object.entries(BASIC_PROTOTYPES).map(([n, v]) => [n, oklchOfBytes(v[0], v[1], v[2])])));
+const L_BROWN_SPLIT = (PROTO_LCH.orange.L + PROTO_LCH.brown.L) / 2;
+const H_RED_BROWN = (PROTO_LCH.red.h + PROTO_LCH.brown.h) / 2;
+const L_DARK_PINK = (PROTO_LCH.red.L + PROTO_LCH.purple.L) / 2;
+const circDeg = (a, b) => { const d = Math.abs(a - b) % 360; return Math.min(d, 360 - d); };
+// OKLab distance from a colour at chroma c to a hue ray `deg` degrees away (the chord).
+const arcDist = (c, deg) => 2 * c * Math.sin(Math.min(deg, 90) * Math.PI / 360);
+
+// The word and its margin for one sRGB byte triple. Pure and deterministic.
+export function colourWord(r, g, b) {
+  const { L, C, h } = oklchOfBytes(r, g, b);
+  if (C < C_ACHROMATIC) {
+    const mC = C_ACHROMATIC - C;
+    if (L < L_BLACK) return { name: "black", margin: Math.min(mC, L_BLACK - L) };
+    if (L >= L_WHITE) return { name: "white", margin: Math.min(mC, L - L_WHITE) };
+    return { name: "grey", margin: Math.min(mC, L - L_BLACK, L_WHITE - L) };
+  }
+  const ds = HUE_BEARING.map((n) => [circDeg(h, PROTO_LCH[n].h), n])
+    .sort((x, y) => (x[0] - y[0]) || (x[1] < y[1] ? -1 : x[1] > y[1] ? 1 : 0));
+  const sector = ds[0][1];
+  let margin = Math.min(arcDist(C, (ds[1][0] - ds[0][0]) / 2), C - C_ACHROMATIC);
+  const brownish = sector === "orange" || sector === "yellow" || (sector === "red" && h >= H_RED_BROWN);
+  if (sector === "red") margin = Math.min(margin, arcDist(C, Math.abs(h - H_RED_BROWN)));
+  if (brownish) {
+    margin = Math.min(margin, Math.abs(L - L_BROWN_SPLIT));
+    if (L < L_BROWN_SPLIT) return { name: "brown", margin };
+  }
+  if (sector === "pink") {
+    margin = Math.min(margin, Math.abs(L - L_DARK_PINK));
+    if (L < L_DARK_PINK) return { name: "red", margin };
+  }
+  return { name: sector, margin };
+}
+
+// The basic colour word for sRGB bytes (0..255): one of black, white, grey, red, orange, yellow,
+// green, blue, purple, pink, brown.
+export function colourName(r, g, b) {
+  return colourWord(r, g, b).name;
+}
+
+function hsvToRgbBytes(hDeg, s, v) {
+  const h = (((hDeg % 360) + 360) % 360) / 60, i = Math.floor(h), f = h - i;
+  const p = v * (1 - s), q = v * (1 - s * f), t = v * (1 - s * (1 - f));
+  const [r, g, b] = [[v, t, p], [q, v, p], [p, v, t], [p, q, v], [t, p, v], [v, p, q]][i % 6];
+  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+// Kept for callers that hold HSV: converts back to sRGB bytes and names the colour by R-hue-v1.
 export function hueName(hDeg, sat, val) {
-  if (val < 0.12) return "near-black";
-  if (sat < 0.12) return val > 0.8 ? "near-white" : "grey";
-  for (const [edge, name] of HUE_NAMES) if (hDeg < edge) return name;
-  return "red";
+  const [r, g, b] = hsvToRgbBytes(hDeg, sat, val);
+  return colourName(r, g, b);
 }
 
 function rgbToHsv(r, g, b) {
@@ -137,12 +206,14 @@ export function richFeatures(px, w, h, ch = 4) {
   const dom = dominantColors(px, w, h, ch, 5);
   const top = dom[0] || { r: 0, g: 0, b: 0 };
   const hsv = rgbToHsv(top.r, top.g, top.b);
+  const word = colourWord(top.r, top.g, top.b);
   const regions = regionSplit(px, w, h, ch);
   const aspect = h ? w / h : 1;
   return {
     dominantColors: dom.map(d => d.hex),
     dominantSwatches: dom,                       // full {hex,r,g,b,frac} for the swatch meters
-    hueName: hueName(hsv.h, hsv.s, hsv.v),
+    hueName: word.name,
+    hueMargin: +word.margin.toFixed(4),
     hueDeg: hsv.h,
     edgeDensity: edgeDensity(px, w, h, ch),
     lightRegions: regions.light,
@@ -240,11 +311,10 @@ export function regionGrid(px, w, h, ch = 4, cells = 3) {
         }
       }
       const mr = Math.round(r / count), mg = Math.round(g / count), mb = Math.round(b / count);
-      const hsv = rgbToHsv(mr, mg, mb);
       row.push({
         luma: +(sum / count / 255).toFixed(3),
         edge: +(edge / count).toFixed(3),
-        hue: hueName(hsv.h, hsv.s, hsv.v),
+        hue: colourName(mr, mg, mb),
         hex: "#" + [mr, mg, mb].map((v) => v.toString(16).padStart(2, "0")).join(""),
       });
     }
@@ -274,9 +344,15 @@ export function colorGridHex(px, w, h, ch = 4, cells = 16) {
 
 // Edge-orientation histogram: fraction of strong edges near horizontal /
 // vertical / the two diagonals, plus the dominant direction name.
+// Angles are taken with y pointing UP on the displayed image (Track A step T1): the earlier version
+// used image rows (y down) with names that assume y up, so a rising "/" edge read "falling diagonal".
+// `coherence` is the length of the mean doubled-angle unit vector (0 = no preferred orientation,
+// 1 = one orientation). Below COHERENCE_FLOOR the frame has no dominant orientation and says "none"
+// (an isotropic disk used to read "rising diagonal" through a tie rule).
+const COHERENCE_FLOOR = 0.2;
 export function edgeOrientations(px, w, h, ch = 4, threshold = 40) {
   const bins = [0, 0, 0, 0]; // 0=horizontal edge, 1=rising diagonal, 2=vertical, 3=falling diagonal
-  let strong = 0;
+  let strong = 0, vx = 0, vy = 0;
   for (let y = 1; y < h - 1; y++) {
     for (let x = 1; x < w - 1; x++) {
       const sx = -lumaAt(px, ch, w, x - 1, y - 1) - 2 * lumaAt(px, ch, w, x - 1, y) - lumaAt(px, ch, w, x - 1, y + 1)
@@ -286,39 +362,50 @@ export function edgeOrientations(px, w, h, ch = 4, threshold = 40) {
       const mag = Math.hypot(sx, sy);
       if (mag < threshold) continue;
       strong++;
-      // Gradient angle -> edge angle (perpendicular). Fold into 4 bins over 180 degrees.
-      const a = (Math.atan2(sy, sx) * 180 / Math.PI + 90 + 360) % 180;
+      // Gradient angle with y up (negate the row-wise sy) -> edge angle (perpendicular), folded
+      // into 4 bins over 180 degrees.
+      const a = (Math.atan2(-sy, sx) * 180 / Math.PI + 90 + 360) % 180;
       bins[Math.round(a / 45) % 4]++;
+      const t = a * Math.PI / 90; // twice the edge angle, in radians
+      vx += Math.cos(t); vy += Math.sin(t);
     }
   }
   const total = strong || 1;
   const names = ["horizontal", "rising diagonal", "vertical", "falling diagonal"];
   const norm = bins.map((v) => +(v / total).toFixed(3));
-  const domIdx = norm.indexOf(Math.max(...norm));
+  const domIdx = bins.indexOf(Math.max(...bins));
+  const coherence = strong ? Math.hypot(vx, vy) / strong : 0;
   return { horizontal: norm[0], risingDiagonal: norm[1], vertical: norm[2], fallingDiagonal: norm[3],
-    dominant: strong ? names[domIdx] : "none", strongEdgeCount: strong };
+    dominant: strong && coherence >= COHERENCE_FLOOR ? names[domIdx] : "none",
+    coherence: +coherence.toFixed(3), strongEdgeCount: strong };
 }
 
-// Mirror-symmetry scores (0..1): 1 = perfectly mirrored luminance.
+// Mirror symmetry per axis as the Pearson correlation between luma and its mirror image, in [-1, 1]
+// (Track A step T1). `horizontal` mirrors left-right and `vertical` mirrors top-bottom. 1 = exactly
+// mirrored; near 0 = no relation (white noise); negative = the two halves run opposite ways. A flat
+// frame has nothing to correlate and reports null. The earlier score, 1 - mean |difference| / 255,
+// had no chance baseline: a low-contrast frame scored near 1 whatever its layout, and noise 0.78.
+export const MIRROR_THRESHOLD = 0.9;
 export function symmetryScores(px, w, h, ch = 4) {
-  let hDiff = 0, vDiff = 0, count = 0;
+  const n = w * h;
+  const flat = { horizontal: null, vertical: null, measure: "pearson-luma-mirror" };
+  if (!n) return flat;
+  const l = new Float64Array(n);
+  let mean = 0;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const v = lumaAt(px, ch, w, x, y); l[y * w + x] = v; mean += v; }
+  mean /= n;
+  let varSum = 0, hCov = 0, vCov = 0;
   for (let y = 0; y < h; y++) {
-    for (let x = 0; x < Math.floor(w / 2); x++) {
-      hDiff += Math.abs(lumaAt(px, ch, w, x, y) - lumaAt(px, ch, w, w - 1 - x, y));
-      count++;
-    }
-  }
-  let vDiffTotal = 0, vCount = 0;
-  for (let y = 0; y < Math.floor(h / 2); y++) {
     for (let x = 0; x < w; x++) {
-      vDiffTotal += Math.abs(lumaAt(px, ch, w, x, y) - lumaAt(px, ch, w, x, h - 1 - y));
-      vCount++;
+      const d = l[y * w + x] - mean;
+      varSum += d * d;
+      hCov += d * (l[y * w + (w - 1 - x)] - mean);
+      vCov += d * (l[(h - 1 - y) * w + x] - mean);
     }
   }
-  return {
-    horizontal: +(1 - hDiff / (count * 255 || 1)).toFixed(3),
-    vertical: +(1 - vDiffTotal / (vCount * 255 || 1)).toFixed(3),
-  };
+  if (!(varSum > 1e-9 * n)) return flat;
+  const r = (c) => +Math.max(-1, Math.min(1, c / varSum)).toFixed(3);
+  return { horizontal: r(hCov), vertical: r(vCov), measure: "pearson-luma-mirror" };
 }
 
 // ASCII luminance render: the no-vision view of the frame. `cols` characters
@@ -426,7 +513,9 @@ export function shapeInventory(px, w, h, ch = 4, maxShapes = 8) {
     const l = (R[i] * 299 + G[i] * 587 + B[i] * 114) / 1000;
     const hsv = rgbToHsv(R[i], G[i], B[i]);
     if (hsv.s < 0.15 || hsv.v < 0.12) labels[i] = Math.min(3, (l / 64) | 0);
-    else labels[i] = 4 + (Math.floor(hsv.h / 45) % 8) * 2 + (l >= 128 ? 1 : 0);
+    // Hue bins of 45 degrees centred on 0 (Track A step T1): bins that started AT 0 split a red whose
+    // hue crosses 0/360 (354 and 6 degrees) into separate components.
+    else labels[i] = 4 + (Math.floor(((hsv.h + 22.5) % 360) / 45) % 8) * 2 + (l >= 128 ? 1 : 0);
   }
   // 4-connected flood fill (iterative, O(cells)).
   const comp = new Int32Array(cells).fill(-1);
@@ -458,7 +547,6 @@ export function shapeInventory(px, w, h, ch = 4, maxShapes = 8) {
     .slice(0, Math.max(0, maxShapes))
     .map((s) => {
       const mr = s.sr / s.area, mg = s.sg / s.area, mb = s.sb / s.area;
-      const hsv = rgbToHsv(mr, mg, mb);
       return {
         areaFrac: +(s.area / cells).toFixed(4),
         bbox: [
@@ -467,7 +555,7 @@ export function shapeInventory(px, w, h, ch = 4, maxShapes = 8) {
         ],
         cx: +(s.sx / s.area / gw).toFixed(3),
         cy: +(s.sy / s.area / gh).toFixed(3),
-        hue: hueName(hsv.h, hsv.s, hsv.v),
+        hue: colourName(Math.round(mr), Math.round(mg), Math.round(mb)),
         luma: +(((mr * 299 + mg * 587 + mb * 114) / 1000) / 255).toFixed(3),
         edge: +(s.boundary / s.area).toFixed(3),
       };
@@ -566,10 +654,8 @@ export function describeFrameLong(rich, detail) {
   const sw = rich.dominantSwatches || [];
   if (sw.length) {
     parts.push("Palette: " + sw.slice(0, 5)
-      .map((s) => {
-        const hsv = rgbToHsv(s.r, s.g, s.b);
-        return hueName(hsv.h, hsv.s, hsv.v) + " " + s.hex + " " + (s.frac * 100).toFixed(0) + "%";
-      }).join(", ") + ".");
+      .map((s) => colourName(s.r, s.g, s.b) + " " + s.hex + " " + (s.frac * 100).toFixed(0) + "%")
+      .join(", ") + ".");
   }
   if (detail && detail.grid3) {
     const flat = [];
@@ -594,15 +680,22 @@ export function describeFrameLong(rich, detail) {
   }
   if (detail && detail.edgeOrientations && detail.edgeOrientations.dominant !== "none") {
     const e = detail.edgeOrientations;
-    parts.push("Edges lean " + e.dominant + " (h " + e.horizontal + ", v " + e.vertical
-      + ", diagonals " + e.risingDiagonal + "/" + e.fallingDiagonal + ").");
+    parts.push("Edges lean " + e.dominant + " (coherence " + e.coherence + "; h " + e.horizontal
+      + ", v " + e.vertical + ", diagonals rising " + e.risingDiagonal + " / falling " + e.fallingDiagonal + ").");
   }
   if (detail && detail.symmetry) {
     const s = detail.symmetry;
-    const sym = s.horizontal > 0.9 && s.vertical > 0.9 ? "strongly symmetric both ways"
-      : s.horizontal > 0.9 ? "mirrored left-right" : s.vertical > 0.9 ? "mirrored top-bottom"
-      : s.horizontal < 0.6 && s.vertical < 0.6 ? "asymmetric" : "loosely balanced";
-    parts.push("Composition reads " + sym + " (mirror scores h " + s.horizontal + ", v " + s.vertical + ").");
+    if (s.horizontal == null && s.vertical == null) {
+      parts.push("Composition is flat (no luma variation to mirror).");
+    } else {
+      const mh = s.horizontal != null && s.horizontal >= MIRROR_THRESHOLD;
+      const mv = s.vertical != null && s.vertical >= MIRROR_THRESHOLD;
+      const lowH = s.horizontal == null || s.horizontal < 0.5;
+      const lowV = s.vertical == null || s.vertical < 0.5;
+      const sym = mh && mv ? "mirrored both ways" : mh ? "mirrored left-right" : mv ? "mirrored top-bottom"
+        : lowH && lowV ? "asymmetric" : "loosely balanced";
+      parts.push("Composition reads " + sym + " (mirror correlation h " + s.horizontal + ", v " + s.vertical + ").");
+    }
   }
   // Fidelity clause ONLY when the caller passes a measured detail.fidelity (this function
   // never computes it - the caller runs reconstructionFidelity and hands the result in).

@@ -1,6 +1,6 @@
 // readout.js: ONE structured readout, three consumers (spec 3.2). Built once per state change
 // from two sources: sense-core numbers measured off the composed frame (box-average luminance
-// grid, dominant colours named via the vendored hueName) and the scene facts carried by the
+// grid, dominant colours named via the vendored colourName) and the scene facts carried by the
 // report (system, seed, state, invariant value, drift ratio, refusal verdict, receipt hash,
 // verdict). The three consumers read the SAME object:
 //   1. aria-live  -> readoutSentence(): one sentence, announced once per state change.
@@ -8,22 +8,9 @@
 //   3. measurimeter: untouched; it perceives the shared canvas on its own path.
 // Node-safe: the sense-core read is guarded so report.js / tests can import the pure builders.
 // ASCII only; no em or en dashes.
-import { boxAverage, dominantColors, hueName } from "../lib/sense-core/features.mjs";
+import { boxAverage, dominantColors, colourName } from "../lib/sense-core/features.mjs";
 
 const r4 = (x) => (typeof x === "number" && Number.isFinite(x) ? Math.round(x * 1e4) / 1e4 : x);
-
-function rgbToHsv(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
-  let h = 0;
-  if (d > 0) {
-    if (mx === r) h = ((g - b) / d) % 6;
-    else if (mx === g) h = (b - r) / d + 2;
-    else h = (r - g) / d + 4;
-    h = (h * 60 + 360) % 360;
-  }
-  return { h, s: mx === 0 ? 0 : d / mx, v: mx };
-}
 
 // The measured half of the readout: box-average luminance grid mean + the named dominant colours
 // of the composed frame. Returns null when no canvas pixels are readable (node, or before paint).
@@ -35,10 +22,10 @@ export function senseFrame(canvas, readPixels) {
   const grid = boxAverage(px, canvas.width, canvas.height, 4, 8);
   let sum = 0, cells = 0;
   for (const row of grid.grid) for (const [r, g, b] of row) { sum += (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255; cells++; }
-  const dom = dominantColors(px, canvas.width, canvas.height, 4, 3).map((d) => {
-    const hsv = rgbToHsv(d.r, d.g, d.b);
-    return { hex: d.hex, name: hueName(hsv.h, hsv.s, hsv.v), frac: r4(d.frac) };
-  });
+  // Colour words from OKLCh (rule R-hue-v1, Telos Track A step T1), named from the sRGB bytes.
+  const dom = dominantColors(px, canvas.width, canvas.height, 4, 3).map((d) => (
+    { hex: d.hex, name: colourName(d.r, d.g, d.b), frac: r4(d.frac) }
+  ));
   return { luminanceMean: r4(cells ? sum / cells : 0), gridSize: grid.w, dominantColors: dom };
 }
 

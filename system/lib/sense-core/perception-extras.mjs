@@ -19,11 +19,11 @@ import {
 } from "./colour-perceptual.mjs";
 import {
   erbBands, fftBinFreqs, spectralCentroid, spectralRolloff,
-  chroma12, yinPitch, iso226Phon, phonToSone, pbe,
+  chroma12, yinPitch, iso226Phon, phonToSone,
 } from "./audio-perceptual.mjs";
 import {
-  toLinearLuma, laplacianPyramid, spectralResidualSaliency, ssim, wpir,
-  csfWeight, srgbToLinear, perCellSpatialCoords, redundancyFlags,
+  toLinearLuma, laplacianPyramid, spectralResidualSaliency,
+  perCellSpatialCoords, redundancyFlags,
 } from "./vision-biomimetic.mjs";
 
 // ---- caps (named so the send-time cost is auditable) ---------------------------------------------
@@ -94,7 +94,14 @@ function bytesToSamples(timeBytes) {
 
 // The full psychoacoustic readout. Returns null when no real buffers are present (honest absence).
 // audio.freqBytes / audio.timeBytes are the analyser's Uint8Array outputs; sampleRate + fftSize size
-// the frequency axis; minDb/maxDb are the analyser's decibel range (for the SPL recovery above).
+// the frequency axis; minDb/maxDb are the analyser's decibel range.
+//
+// Loudness (Track A step T1): the analyser reports dB relative to full scale (dBFS, -100..-30 by
+// default), not sound pressure. ISO 226 needs dB SPL, and treating dBFS as SPL put every band below
+// the hearing threshold (sone 0 for every sound). So phon and sone are computed only when the caller
+// supplies `splOffsetDb`, a calibration from analyser dB to dB SPL; then SPL is the loudest bin's dB
+// plus the offset, evaluated at that bin's frequency. Without an offset the `iso226` key is absent.
+// The PBE band metric was deleted in the same step (it compared two different quantities).
 export function audioPerception(audio) {
   if (!audio || !audio.freqBytes || !audio.freqBytes.length || !audio.sampleRate || !audio.fftSize) {
     return null; // no audio source -> these fields are absent, never faked.
@@ -106,12 +113,6 @@ export function audioPerception(audio) {
   // ERB-rate bands (primary perceptual spectral axis, Glasberg-Moore).
   const erb = erbBands(mag, sampleRate, fftSize, 36);
 
-  // ISO 226 loudness at the LOUDEST ERB band: dB-SPL of that band -> phon -> sone (honest single
-  // loudness readout over the dominant perceptual band; the per-band power array rides alongside).
-  const loud = loudestBand(erb, db, freqs);
-  const phon = loud ? iso226Phon(loud.splDb, loud.centerHz) : 0;
-  const sone = phonToSone(phon);
-
   // YIN pitch on the time-domain samples (resolves the missing fundamental peak-picking misses).
   let yin = { f0: 0, probability: 0, tau: 0 };
   if (timeBytes && timeBytes.length >= 4) yin = yinPitch(bytesToSamples(timeBytes), sampleRate);
@@ -121,67 +122,37 @@ export function audioPerception(audio) {
   const rolloffHz = spectralRolloff(mag, freqs, 0.85);
   const chroma = chroma12(mag, freqs);
 
-  // PBE (Perceptual Band Error): per-ERB-band gap between RAW power and ISO-226 LOUDNESS over the SAME
-  // 36 ERB bands. telosBands = each band's loudness (sone, via ISO-226 at the band centre); refBands =
-  // each band's raw power. Both share the identical band support, so the relative error stays bounded
-  // (a near-zero-power band is also near-zero-loudness). The worst band is where raw energy most
-  // misrepresents perceived loudness = the weakest axis the loop fixes next. This anchors the reference
-  // in the ISO-226 standard (external, stable), NOT a fabricated ground truth; a full ISO-532-3
-  // Moore-Glasberg reference is a Tier-3 native addition. Honest by construction.
-  const loudnessBands = erbLoudnessBands(erb, db, freqs);
-  const pbeRes = pbe(normSum(loudnessBands), normSum(erb.bands));
-
-  return {
+  const out = {
     erbBands: erb.bands.map(v => round(v, 8)),
     erbCentersHz: erb.centersHz.map(v => round(v, 2)),
-    iso226: { phon: round(phon, 3), sone: round(sone, 4), atBandHz: loud ? round(loud.centerHz, 2) : null },
     yinPitch: { f0: round(yin.f0, 3), probability: round(yin.probability, 4) },
     spectralCentroidHz: round(centroidHz, 3),
     spectralRolloffHz: round(rolloffHz, 3),
     chroma12: chroma.map(v => round(v, 5)),
-    pbe: { mean: round(pbeRes.mean, 5), worstBand: pbeRes.worstBand },
   };
-}
-
-// The ERB band carrying the most power, with a representative dB-SPL (the max recovered-dB bin inside
-// that band's frequency range). Returns null if no band has energy.
-function loudestBand(erb, db, freqs) {
-  let bi = -1, best = -Infinity;
-  for (let i = 0; i < erb.bands.length; i++) if (erb.bands[i] > best) { best = erb.bands[i]; bi = i; }
-  if (bi < 0 || best <= 0) return null;
-  const lo = erb.edgesHz[bi], hi = erb.edgesHz[bi + 1];
-  let splDb = -Infinity;
-  for (let k = 0; k < freqs.length; k++) if (freqs[k] >= lo && freqs[k] < hi && db[k] > splDb) splDb = db[k];
-  if (!Number.isFinite(splDb)) splDb = -100;
-  return { centerHz: erb.centersHz[bi], splDb };
-}
-
-// Per-ERB-band LOUDNESS in sones: take each band's representative dB-SPL (the max recovered-dB bin in
-// the band) -> ISO-226 phon at the band centre -> sone. Zero loudness for bands below threshold. This
-// is the loudness readout PBE compares against the band's raw power (same support), so the worst band
-// is where raw energy and perceived loudness diverge most.
-function erbLoudnessBands(erb, db, freqs) {
-  const out = new Array(erb.bands.length).fill(0);
-  for (let i = 0; i < erb.bands.length; i++) {
-    if (erb.bands[i] <= 0) continue;
-    const lo = erb.edgesHz[i], hi = erb.edgesHz[i + 1];
-    let splDb = -Infinity;
-    for (let k = 0; k < freqs.length; k++) if (freqs[k] >= lo && freqs[k] < hi && db[k] > splDb) splDb = db[k];
-    if (!Number.isFinite(splDb)) continue;
-    out[i] = phonToSone(iso226Phon(splDb, erb.centersHz[i]));
+  const off = audio.splOffsetDb;
+  if (typeof off === "number" && Number.isFinite(off)) {
+    const peak = loudestBin(freqBytes, db, freqs);
+    if (peak) {
+      const splDb = peak.db + off;
+      const phon = iso226Phon(splDb, peak.hz);
+      out.iso226 = {
+        phon: round(phon, 3), sone: round(phonToSone(phon), 4), atHz: round(peak.hz, 2),
+        splDb: round(splDb, 3), splOffsetDb: off, basis: "analyser-dB-plus-caller-offset",
+      };
+    } else {
+      out.iso226 = null; // an offset was given but no bin rose above the analyser floor
+    }
   }
   return out;
 }
 
-// Normalize a band array to sum 1 (so the ERB-vs-mel PBE compares SHAPES, not absolute gain). A
-// zero-energy array is returned unchanged (PBE then reads ~0 error, honest for silence).
-function normSum(bands) {
-  let s = 0;
-  for (let i = 0; i < bands.length; i++) s += bands[i];
-  if (s <= 0) return bands.slice ? bands.slice() : Array.from(bands);
-  const out = new Array(bands.length);
-  for (let i = 0; i < bands.length; i++) out[i] = bands[i] / s;
-  return out;
+// The loudest FFT bin above DC: its recovered dB and centre frequency. Null when every bin sits at the
+// analyser floor (byte 0), so there is nothing to call loud.
+function loudestBin(freqBytes, db, freqs) {
+  let k = -1, best = 0;
+  for (let i = 1; i < freqBytes.length; i++) if (freqBytes[i] > best) { best = freqBytes[i]; k = i; }
+  return k < 0 ? null : { db: db[k], hz: freqs[k] };
 }
 
 // ---- VISION ---------------------------------------------------------------------------------------
@@ -261,7 +232,8 @@ function cellMeanMap(map, w, h, cols, rows) {
 }
 
 // The biomimetic vision readout, on a downsampled working luma. Returns the additive multiScale
-// extension fields + the WPIR fidelity score. `cols`/`rows` is the aspect-native cell grid.
+// extension fields. `cols`/`rows` is the aspect-native cell grid. (The WPIR score that used to ride
+// here was deleted in Track A step T1: it compared the pyramid with its own exact reconstruction.)
 export function visionPerception(px, w, h) {
   // Aspect-native cell grid: VISION_CELLS on the long edge, the short edge scaled to the frame ratio
   // (never padded to square). Clamp to >= 2 so neighbours exist for redundancy.
@@ -276,13 +248,8 @@ export function visionPerception(px, w, h) {
   const work = downsampleRGBA(px, w, h, tw, th);
   const lin = toLinearLuma(work, tw, th);
 
-  // Laplacian pyramid -> reconstruct -> CSF-weighted SSIM (WPIR) of the readout vs the linear original.
+  // Laplacian pyramid: its finest band energy is the high-frequency contrast readout below.
   const pyr = laplacianPyramid(lin, tw, th, 5);
-  const recon = pyr.reconstruct();
-  // Per-cell CSF weights: map each cell to a coarse cycles-per-degree proxy by its grid row (vertical
-  // eccentricity from center) so center cells weigh more, matching the foveal CSF peak.
-  const csfW = cellCsfWeights(cols, rows);
-  const wpirScore = wpir(recon.data, lin, tw, th, csfW, cols, rows);
 
   // Contrast split: low-freq from the coarse cell-mean variance, high-freq from the fine bandpass
   // energy (the finest Laplacian level). Maps the CSF axis scalar contrast misses.
@@ -310,21 +277,7 @@ export function visionPerception(px, w, h) {
     redundantCells: redundant,
     gridRoles: { coarse: "global_context", fine: "local_detail" },
     workingResolution: { w: tw, h: th, note: "heavy vision math runs here, not at full backing res" },
-    wpir: round(wpirScore, 5),
   };
-}
-
-// Per-cell CSF weights: a cell's vertical+horizontal distance from center maps to an eccentricity in
-// degrees (assume ~10 deg field across the frame); csfWeight at a mid spatial frequency. Center -> 1.
-function cellCsfWeights(cols, rows) {
-  const out = new Array(cols * rows);
-  const FIELD_DEG = 10; // assumed visual field the frame subtends (a fixed, documented proxy).
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-    const dx = (c + 0.5) / cols - 0.5, dy = (r + 0.5) / rows - 0.5;
-    const ecc = Math.hypot(dx, dy) * FIELD_DEG;
-    out[r * cols + c] = csfWeight(4, ecc); // 4 cpd = the foveal CSF peak frequency
-  }
-  return out;
 }
 
 // Population standard deviation of a numeric array (the coarse-grid contrast measure).

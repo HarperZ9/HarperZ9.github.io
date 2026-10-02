@@ -10,7 +10,9 @@
 // (Glasberg-Moore 1990), ISO 226:2003 equal-loudness loudness in phons and sones,
 // IEC 61672 A-weighting, YIN pitch (de Cheveigne and Kawahara 2002) that resolves the
 // missing fundamental, mel filterbank + MFCC (Davis-Mermelstein 1980, HTK mel), spectral
-// shape descriptors, a 12-bin chroma vector, and the PBE per-band fidelity metric.
+// shape descriptors and a 12-bin chroma vector. The PBE per-band metric was deleted in Track A
+// step T1: it compared loudness bands against power bands, two different quantities, and read 1
+// for every sound because the analyser's dBFS sat below the hearing threshold.
 //
 // Conventions used throughout:
 // - fftMag is a real magnitude spectrum: index 0 is DC, index k is bin k of an fftSize-point
@@ -429,28 +431,22 @@ export function chroma12(fftMag, freqs) {
 }
 
 // ---------------------------------------------------------------------------
-// (8) PBE - Perceptual Band Error (the audio self-improvement metric).
+// (8) Scalar pitch from the analyser's 8-bit time-domain buffer (Track A step T1).
 // ---------------------------------------------------------------------------
-// Per-band relative error between Telos's loudness readout (telosBands) and a reference
-// (refBands), reported as { mean, std, perBand, worstBand }. The worst band is the weakest axis
-// the self-improvement loop targets next. relErr_i = |T_i - G_i| / (G_i + eps).
-export function pbe(telosBands, refBands) {
-  const n = Math.min(telosBands.length, refBands.length);
-  if (n === 0) return { mean: 0, std: 0, perBand: [], worstBand: -1 };
-  const perBand = new Array(n);
-  let sum = 0, worst = 0, worstIdx = 0;
-  for (let i = 0; i < n; i++) {
-    const e = Math.abs(telosBands[i] - refBands[i]) / (Math.abs(refBands[i]) + EPS);
-    perBand[i] = e;
-    sum += e;
-    if (e > worst) { worst = e; worstIdx = i; }
-  }
-  const mean = sum / n;
-  let varSum = 0;
-  for (let i = 0; i < n; i++) {
-    const d = perBand[i] - mean;
-    varSum += d * d;
-  }
-  const std = Math.sqrt(varSum / n);
-  return { mean, std, perBand, worstBand: worstIdx };
+// The packet's scalar `audio.pitch` used to be the FFT peak bin, which picks a harmonic: it read
+// 398 Hz for a 200 Hz missing-fundamental tone and 211 Hz for 220 Hz. This runs YIN on the
+// time-domain bytes (getByteTimeDomainData: 0..255, 128 = silence) and rounds f0 to 0.1 Hz.
+// A buffer whose RMS is below one quantisation step (1/128) is silence and reads 0.
+export const PITCH_SILENCE_RMS = 1 / 128;
+export function pitchFromTimeBytes(timeBytes, sampleRate) {
+  const none = { f0: 0, probability: 0, method: "yin" };
+  if (!timeBytes || timeBytes.length < 4 || !(sampleRate > 0)) return none;
+  const n = timeBytes.length;
+  const x = new Float64Array(n);
+  let ss = 0;
+  for (let i = 0; i < n; i++) { const v = (timeBytes[i] - 128) / 128; x[i] = v; ss += v * v; }
+  if (Math.sqrt(ss / n) < PITCH_SILENCE_RMS) return none;
+  const r = yinPitch(x, sampleRate);
+  if (!(r.f0 > 0) || !Number.isFinite(r.f0)) return none;
+  return { f0: Math.round(r.f0 * 10) / 10, probability: r.probability, method: "yin" };
 }
