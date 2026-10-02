@@ -536,7 +536,7 @@ RELEASE_PATHS = (
 # route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
 # re-render also picks up the Continue the series text from #286.
 # index-BkvbD78Z.js stays as retained history.
-REVIEWED_RELEASE_SHA256 = "85e8b147248954a685515e52d8b8b7684b654e4f581b555736f12a3ae2fcce4c"
+REVIEWED_RELEASE_SHA256 = "65c0c63bd5a2b71487686d26e568cd40e2f0a4da3bbf33291b8f1f5b69e9eed0"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
