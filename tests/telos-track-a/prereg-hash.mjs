@@ -45,8 +45,15 @@ export function amendment2Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
   return createHash("sha256").update(Buffer.from(preregBlock(text, A2_START, A2_END), "utf8")).digest("hex");
 }
 
+// Amendment 3 (the luma histogram under the privacy scan, T4).
+const A3_START = "<!-- prereg-track-a-amend-3:start -->";
+const A3_END = "<!-- prereg-track-a-amend-3:end -->";
+export function amendment3Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
+  return createHash("sha256").update(Buffer.from(preregBlock(text, A3_START, A3_END), "utf8")).digest("hex");
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const a = process.argv;
-  console.log(a.includes("--amendment-2") ? amendment2Sha256() : a.includes("--t4t7") ? t4t7Sha256()
-    : a.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
+  console.log(a.includes("--amendment-3") ? amendment3Sha256() : a.includes("--amendment-2") ? amendment2Sha256()
+    : a.includes("--t4t7") ? t4t7Sha256() : a.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
 }

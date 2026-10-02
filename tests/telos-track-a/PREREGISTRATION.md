@@ -432,3 +432,20 @@ Printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-2`.
   clean image's flag; L0, L1 and L2 from the clean image with the overlay passed and `overlays_drawn` false
   equal the clean image's text; L3 as before. Everything else in pre-registration 2 is unchanged.
 <!-- prereg-track-a-amend-2:end -->
+
+## Amendment 3 (the luma histogram under the privacy scan, T4)
+
+Written 2026-10-02, after amendment 2 (bda70d4), while writing the T4 code and before any T4 test or
+measurement ran. Reason: pre-registration 2 puts a 16-bin luma histogram in the response and also refuses
+any decimal list longer than 64 characters outside layer text. Sixteen counts of a frame with more than a
+few thousand pixels exceed 64 characters, so the scan would refuse almost every honest response.
+Printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-3`.
+
+<!-- prereg-track-a-amend-3:start -->
+## Amendment 3: the histogram is a bounded summary block
+
+- The luma histogram counts as 16 cells under the privacy bound. When floor(w h / 16) is below 16 it is
+  dropped and listed with `privacy_cell_bound`.
+- When emitted, its `bins` array is removed before the payload scan, as emitted layer texts are. Every
+  other field is scanned as pre-registered. Thresholds are unchanged.
+<!-- prereg-track-a-amend-3:end -->
