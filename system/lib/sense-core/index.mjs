@@ -7,3 +7,6 @@ export * from "./colour-perceptual.mjs";
 export * from "./audio-perceptual.mjs";
 export * from "./vision-biomimetic.mjs";
 export * from "./perception-extras.mjs";
+// Track A step T3: the integer OKLab path and its layer text (byte-identical in Node and Python).
+export * from "./oklab-int.mjs";
+export * from "./layers-int.mjs";

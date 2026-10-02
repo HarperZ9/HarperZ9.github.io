@@ -1,0 +1,49 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t3-oklab-int",
+ "node": "v25.2.1",
+ "auditFramesDirSet": true,
+ "results": {
+  "cbrtTable": {
+   "entries": 65537,
+   "jsPyDiff": 0,
+   "notCorrectlyRounded": 0
+  },
+  "integerVsFloat": {
+   "n": 20000,
+   "maxAbs": 0.0007534248418900186,
+   "meanMaxAbs": 0.000018809691170529765,
+   "worstAt": [
+    2,
+    2,
+    19
+   ]
+  },
+  "randomImages": {
+   "n": 1000,
+   "imageAgree": 1000,
+   "textAgree": 1000,
+   "firstMismatch": [],
+   "jsTextSetSha256": "23059026f512a0f8d3aa3586b2fb99ce3dea005e23f233f6144155f9c027f5c8",
+   "achromaticFlagged": 238
+  },
+  "auditFrames": {
+   "n": 36,
+   "imageAgree": 36,
+   "textAgree": 36,
+   "firstMismatch": [],
+   "jsTextSetSha256": "08eb9a51ab192f445d4f88bbd6c5d846f36ce8bb665779412617fd6d7e7fff17",
+   "achromaticFlagged": [
+    "art_w085",
+    "art_w115",
+    "syn_stripes1px",
+    "syn_checker1px",
+    "syn_diag_rising",
+    "syn_diag_falling",
+    "syn_lowcontrast_asym",
+    "syn_radiograph_like",
+    "syn_textlike"
+   ]
+  }
+ }
+}
