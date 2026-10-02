@@ -555,7 +555,10 @@ RELEASE_PATHS = (
 # October 1, 2026, before publication: why-i-do-this.html gains the author's spoken answer on
 # purple teaming, redemption and the alder. Its reading time moves from 8 to 10 minutes, so the
 # series tables and the build receipt are regenerated.
-REVIEWED_RELEASE_SHA256 = "e686b2609202760996fc1124cb34cc94186b07446d542008012ca4d0535905d9"
+# October 1, 2026, before publication: the alder paragraph in why-i-do-this.html now uses the
+# author's words of 16 September 2026 on the red alder and on truth, and the next paragraph gains
+# his sentence on stewards. Its reading time stays at 10 minutes, so no derived file changes.
+REVIEWED_RELEASE_SHA256 = "f6bc2627baa3d37ae601c3ff9474a4698d3cb9af2e526e33738a00f216b73cc5"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -95,13 +95,17 @@ def test_it_is_first_person_and_keeps_the_consented_wording() -> None:
     # The author's spoken answer on purple teaming, redemption and the alder (1 October 2026).
     for item in ("our own human forest floor", "I never completed college"):
         assert item in text, item
+    # The author's words of 16 September 2026 on the red alder, on truth and on stewards (1 October 2026).
+    for item in ("red alder", "our bones settle in the earth",
+                 "We as humans are stewards, and it is time we come back to acting within our role."):
+        assert item in text, item
     for composed in ("In June I published a page", "Read the work and check it"):
         assert composed not in text, composed
 
 
 def test_the_alder_comes_before_the_son() -> None:
     text = essay_text()
-    alder = text.index("In arboriculture I learned what the alder does.")
+    alder = text.index("In arboriculture I learned what the red alder does.")
     son = text.index("I am going to have a son in November.")
     assert alder < son
 
