@@ -29,9 +29,7 @@ import {
   _selftest,
   importReceipt,
   hashBytes,
-  fnv1a,
   HASH_SHA256,
-  HASH_FNV1A,
 } from "./importers.js";
 
 // ---------------------------------------------------------------------------
@@ -441,9 +439,9 @@ describe("importFile() browser-only paths (skipped in Node)", () => {
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
-// hashBytes() + fnv1a() -- the import-side hashing primitive, both paths
+// hashBytes() -- the import-side hashing primitive, Web Crypto and the pure path
 // ---------------------------------------------------------------------------
-describe("import hashBytes() -- SHA-256 path and FNV-1a fallback", () => {
+describe("import hashBytes() -- SHA-256 through Web Crypto and through the pure path", () => {
   it("should report sha-256 with a 64-hex digest when crypto.subtle is present", async () => {
     const { hash, hashAlgo } = await hashBytes(new Uint8Array([1, 2, 3]));
     assert.equal(hashAlgo, HASH_SHA256);
@@ -455,15 +453,12 @@ describe("import hashBytes() -- SHA-256 path and FNV-1a fallback", () => {
     assert.equal(hash, "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
   });
 
-  it("should fall back to FNV-1a (flagged honestly) when subtle is forced null", async () => {
-    const { hash, hashAlgo } = await hashBytes(new Uint8Array([1, 2, 3]), { subtle: null });
-    assert.equal(hashAlgo, HASH_FNV1A, "forced no-subtle must report the fnv1a fallback");
-    assert.notEqual(hashAlgo, HASH_SHA256, "must never claim sha-256 when it used the fallback");
-    assert.match(hash, /^[0-9a-f]{8}$/);
-  });
-
-  it("fnv1a() should be deterministic", () => {
-    assert.equal(fnv1a(new Uint8Array([9, 9, 9])), fnv1a(new Uint8Array([9, 9, 9])));
+  // Telos Track A step T2: the FNV-1a fallback is gone; the pure path gives the Web Crypto digest.
+  it("should give the same SHA-256 when subtle is forced null (the file:// path)", async () => {
+    const web = await hashBytes(new Uint8Array([1, 2, 3]));
+    const pure = await hashBytes(new Uint8Array([1, 2, 3]), { subtle: null });
+    assert.equal(pure.hashAlgo, HASH_SHA256);
+    assert.equal(pure.hash, web.hash);
   });
 });
 
@@ -479,7 +474,7 @@ describe("importReceipt() -- field shape and honesty", () => {
     assert.equal(receipt.sizeBytes, 256, "sizeBytes must reflect file.size");
     assert.equal(typeof receipt.originHash, "string");
     assert.ok(receipt.originHash.length > 0, "originHash must be non-empty");
-    assert.ok(receipt.hashAlgo === HASH_SHA256 || receipt.hashAlgo === HASH_FNV1A);
+    assert.equal(receipt.hashAlgo, HASH_SHA256);
   });
 
   it("should hash REAL bytes (hashScope=content) when the file exposes arrayBuffer()", async () => {
@@ -500,12 +495,14 @@ describe("importReceipt() -- field shape and honesty", () => {
     assert.equal(receipt.sizeBytes, 999, "sizeBytes is still reported truthfully from file.size");
   });
 
-  it("should use the forced FNV-1a fallback end-to-end and flag it", async () => {
+  it("should hash with SHA-256 end-to-end on the forced pure path (no FNV-1a fallback)", async () => {
     const blob = new Blob([new Uint8Array([1, 1, 1])]);
     blob.name = "x.bin";
     const receipt = await importReceipt(blob, { subtle: null });
-    assert.equal(receipt.hashAlgo, HASH_FNV1A);
-    assert.match(receipt.originHash, /^[0-9a-f]{8}$/);
+    const web = await importReceipt(blob);
+    assert.equal(receipt.hashAlgo, HASH_SHA256);
+    assert.match(receipt.originHash, /^[0-9a-f]{64}$/);
+    assert.equal(receipt.originHash, web.originHash);
   });
 
   it("should be deterministic for the same input", async () => {
@@ -558,6 +555,7 @@ describe("importFile() -- receipt is attached on every return path", () => {
       null,
       { subtle: null }
     );
-    assert.equal(result.receipt.hashAlgo, HASH_FNV1A, "forced no-subtle path must propagate to the receipt");
+    assert.equal(result.receipt.hashAlgo, HASH_SHA256, "the forced no-subtle path still reports sha-256");
+    assert.match(result.receipt.originHash, /^[0-9a-f]{64}$/);
   });
 });
