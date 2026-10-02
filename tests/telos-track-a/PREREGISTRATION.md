@@ -410,3 +410,25 @@ Thresholds (the spec's checks (a) to (e), review F6, F7, F20, F27):
   floor(N / 2) per side when the flag is set). Paired per-image score differences with cluster-bootstrap
   intervals; tokens of both printed.
 <!-- prereg-track-a-t4t7:end -->
+
+## Amendment 2 (overlay semantics, T4 and T6)
+
+Written 2026-10-02, after pre-registration 2 was committed (497eab0) and before any T4 to T7 code or
+measurement existed. Reason: pre-registration 2 contradicts itself. T4 computes L0 on pixels outside the
+overlay masks; T6 requires that L0 computed on a clean image with the overlay passed beside it equals the
+clean image's L0. Excluding mask pixels from a clean image can move its percentiles, so both cannot hold.
+The review's intent (F9) is that layers describe the clean image and that the flag ignores drawn pixels.
+Printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-2`.
+
+<!-- prereg-track-a-amend-2:start -->
+## Amendment 2: `overlays_drawn`
+
+- The v2 request gains `overlays_drawn` (boolean, default false). When false, the image is clean: L0, L1
+  and L2 are computed on every pixel and the overlays appear only in L3. When true, the overlays are drawn
+  in the pixels: L0 (every statistic, the flag included) is computed on pixels outside the union of the
+  masks, L1 and L2 are computed on all pixels as given, and the warning `overlay_in_pixels` is emitted.
+- A mask that covers every pixel with `overlays_drawn` true is rejected with `overlay_covers_frame`.
+- T6 overlay thresholds read: the flag from the composited image with `overlays_drawn` true equals the
+  clean image's flag; L0, L1 and L2 from the clean image with the overlay passed and `overlays_drawn` false
+  equal the clean image's text; L3 as before. Everything else in pre-registration 2 is unchanged.
+<!-- prereg-track-a-amend-2:end -->
