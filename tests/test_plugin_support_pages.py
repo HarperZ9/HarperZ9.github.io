@@ -15,14 +15,14 @@ from tools import plugin_support_sources as sources
 
 ROOT = Path(__file__).resolve().parents[1]
 FLAGSHIPS = {"articulate", "canon", "crucible", "forum", "gather", "index",
-             "learn", "mneme", "plexus", "relay", "telos"}
+             "learn", "mneme", "plexus", "relay", "telos", "flywheel"}
 PAGES = ("support", "privacy", "terms")
 
 
 def page_text(rel: str) -> str:
     raw = (ROOT / rel).read_text(encoding="utf-8")
     body = raw.split('<main id="main">', 1)[1].split("</main>", 1)[0]
-    body = re.sub(r"</?(p|li|ul|ol|h[1-6]|section|div|tr|td|th)[^>]*>", " ", body)
+    body = re.sub(r"</?(p|li|ul|ol|h[1-6]|section|div|tr|td|th)\b[^>]*>", " ", body)
     return " ".join(html.unescape(re.sub(r"<[^>]+>", "", body)).split())
 
 
@@ -49,7 +49,11 @@ def test_privacy_pages_reproduce_every_source_paragraph() -> None:
         for block in re.split(r"\n\s*\n", tool.privacy.strip()):
             if block.startswith("#"):
                 continue
-            assert flat(block) in rendered, f"{tool.slug}: missing {block[:60]!r}"
+            # A list, nested items included, renders as items without their "- "
+            # markers, and a fenced code block renders without its fence lines.
+            text = re.sub(r"(?m)^\s*- ", "", block)
+            text = re.sub(r"(?m)^```.*$", "", text)
+            assert flat(text) in rendered, f"{tool.slug}: missing {block[:60]!r}"
 
 
 def test_terms_pages_quote_the_license_verbatim() -> None:

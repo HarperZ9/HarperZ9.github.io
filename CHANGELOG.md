@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-02 - Plugin support pages refreshed for the Claude plugin directory
+
+- Every plugin support, privacy and terms page is rebuilt from its repository's
+  current files: canon, crucible, gather, index, mneme, plexus and relay from
+  `main`, articulate from `release/0.5.x`. Each privacy page now carries the
+  plugin's "What this plugin runs and handles" disclosure.
+- New Flywheel Evidence Task pages at `plugins/flywheel/`, built from
+  `HarperZ9/flywheel-evidence-task`, with a flywheel icon (swept spokes around
+  the shared aperture core) in every icon size.
+- The policy renderer shows fenced code blocks and indented list
+  continuations. A support page for a skill-only plugin states that it needs
+  no runtime.
+- The privacy-page test now turns block tags into spaces as intended (its
+  pattern held a backspace byte where `\b` belonged) and compares list and
+  code blocks by their text.
+
 ## 2026-10-01 - Zentropy Labs logotype and avatar retired
 
 - `brand/zentropy-logo.html` and `brand/zentropy-avatar.html` are now redirect

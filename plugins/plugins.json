@@ -112,7 +112,7 @@
     {
       "tool": "Relay",
       "plugin": "relay-local",
-      "description": "Run a local coding agent in a project folder you choose, with a model endpoint you configure.",
+      "description": "Run a local coding agent in a project folder you choose, using a model server on your computer or a hosted model API you configure.",
       "repository": "https://github.com/HarperZ9/relay",
       "support_url": "https://harperz9.github.io/plugins/relay/support.html",
       "privacy_url": "https://harperz9.github.io/plugins/relay/privacy.html",
@@ -132,6 +132,18 @@
       "support_contact": "https://github.com/HarperZ9/telos/issues",
       "icon_svg": "https://harperz9.github.io/plugins/icons/telos.svg",
       "icon_png_512": "https://harperz9.github.io/plugins/icons/png/telos-512.png"
+    },
+    {
+      "tool": "Flywheel",
+      "plugin": "flywheel-evidence-task",
+      "description": "Check a Flywheel or Bulletin claim and get a source-linked evidence packet with measurements, false-success controls and each premise labeled checked, reported or unknown.",
+      "repository": "https://github.com/HarperZ9/flywheel-evidence-task",
+      "support_url": "https://harperz9.github.io/plugins/flywheel/support.html",
+      "privacy_url": "https://harperz9.github.io/plugins/flywheel/privacy.html",
+      "terms_url": "https://harperz9.github.io/plugins/flywheel/terms.html",
+      "support_contact": "https://github.com/HarperZ9/flywheel-evidence-task/issues",
+      "icon_svg": "https://harperz9.github.io/plugins/icons/flywheel.svg",
+      "icon_png_512": "https://harperz9.github.io/plugins/icons/png/flywheel-512.png"
     }
   ]
 }

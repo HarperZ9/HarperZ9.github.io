@@ -20,6 +20,7 @@
 /* Page-scoped: policy lists and subheads at reading size inside the shared chassis. */
 .policy-list{max-width:min(100%,58ch);margin:1.2em 0 0;padding-left:1.4em;font-size:clamp(1.05rem,1.3vw,1.18rem);line-height:1.7;color:var(--bone)}
 .policy-list li+li{margin-top:.5em}
+.policy-code{max-width:100%;margin:1.2em 0 0;padding:.9em 1em;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.55;color:var(--bone);border:1px solid color-mix(in srgb,var(--bone) 18%,transparent)}
 .mv h3{max-width:min(100%,58ch);margin:2em 0 .6em;font-size:1.05rem;font-weight:600;color:var(--bone)}
 .inner-clean .seal{font-size:.875rem;letter-spacing:0;color:var(--muted)}
 .plugin-table{width:100%;border-collapse:collapse;font-size:.95rem;color:var(--bone)}
@@ -53,14 +54,26 @@
   <p class="body-text">Canon's client package supplies no telemetry, hosted storage, network listener or model compute. Context content is untrusted data. Secret scrubbing reduces accidental exposure but does not establish that content is safe to share. Review sensitive inputs and retrieved material before sending them to a provider.</p>
   <p class="body-text">Stored data persists until the owner removes it through a separate authorized workflow. This client does not expose purge. Backups, exported results and provider copies are outside its removal boundary. Scope IDs are selectors, not authentication. Filesystem permissions and the host account remain part of the security boundary.</p>
 </section>
+<section class="mv" id="what-this-plugin-runs-and-handles" aria-labelledby="what-this-plugin-runs-and-handles-h">
+  <h2 id="what-this-plugin-runs-and-handles-h">What this plugin runs and handles</h2>
+  <p class="body-text"><strong>Hooks.</strong> This plugin has no hooks.</p>
+  <p class="body-text"><strong>MCP server.</strong> The plugin starts one local MCP server named <code translate="no">canon</code>. Claude Code runs this command:</p>
+  <p class="body-text"><code translate="no">python3 -I -S -B ${CLAUDE_PLUGIN_ROOT}/server/serve.py --context-db ${user_config.context_db} --workspace-id ${user_config.workspace_id} --project-id ${user_config.project_id} --context-write=${user_config.context_write}</code></p>
+  <p class="body-text"><code translate="no">${CLAUDE_PLUGIN_ROOT}</code> is the folder where Claude Code installed the plugin. The four <code translate="no">${user_config...}</code> values are the answers you give when you enable the plugin: the database file path, the workspace ID, the project ID, and whether writes are allowed. Writes start off. The server talks to Claude Code over standard input and output only.</p>
+  <p class="body-text"><strong>Network.</strong> The server opens no network connection. It sends nothing to the author or to any other service.</p>
+  <p class="body-text"><strong>Programs.</strong> The server starts no other program.</p>
+  <p class="body-text"><strong>Files it reads.</strong> It reads the SQLite database file you chose. When that database uses WAL mode, it also reads the matching <code translate="no">-wal</code> file next to it.</p>
+  <p class="body-text"><strong>Files it writes.</strong> With writes off, it writes no file. With writes on, it writes context you store into the database file you chose. While a write runs, SQLite keeps a temporary journal file next to the database (the database name plus <code translate="no">-journal</code>, or <code translate="no">-wal</code> and <code translate="no">-shm</code> in WAL mode). Stored context stays in the database until you remove it. The server keeps no other copy.</p>
+  <p class="body-text"><strong>Environment variables and credentials.</strong> Canon's own code reads no environment variables and no credentials. When the server reads its launch arguments, Python's argument parser reads the usual terminal and language settings: <code translate="no">COLUMNS</code>, <code translate="no">LINES</code>, <code translate="no">LANG</code>, <code translate="no">LANGUAGE</code>, <code translate="no">LC_ALL</code> and <code translate="no">LC_MESSAGES</code>. On Windows, Canon loads Python's <code translate="no">ctypes</code> module for its database file lock. In some Python releases, 3.13.14 among them, loading <code translate="no">ctypes</code> also reads <code translate="no">APPDATA</code>, <code translate="no">PYTHONUSERBASE</code> and <code translate="no">_PYTHON_PROJECT_BASE</code>; Canon does not use those values. The <code translate="no">-I</code> flag makes Python ignore its own <code translate="no">PYTHON*</code> variables.</p>
+</section>
 <section class="mv" id="retention-and-support" aria-labelledby="retention-and-support-h">
   <h2 id="retention-and-support-h">Retention and support</h2>
-  <p class="body-text">Canon keeps no copy of your data outside the database you selected. Content stays in that database until you remove it with Canon's purge command or delete the file. Canon sends nothing over a network and collects no usage statistics.</p>
+  <p class="body-text">Canon keeps no copy of your data outside the database you selected. Content stays in that database until you delete the file. This plugin has no purge tool; the separate Canon command-line tool can purge records if you install it. Canon sends nothing over a network and collects no usage statistics.</p>
   <p class="body-text">Support and security reports: <a href="https://github.com/HarperZ9/canon/issues" rel="noopener">https://github.com/HarperZ9/canon/issues</a></p>
 </section>
 <section class="mv" id="source" aria-labelledby="source-h">
   <h2 id="source-h">Source</h2>
-  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/canon/blob/c3ff3cd322657d37cb095d0d619a4119e0b964fd/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Canon repository.</p>
+  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/canon/blob/e71a4316159fa02b74a5f44426f6a3c574142860/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Canon repository.</p>
   <div class="channels"><a href="support.html">Support</a> &nbsp;&middot;&nbsp; <a href="terms.html">Terms of use</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9/canon" translate="no">HarperZ9/canon</a> &nbsp;&middot;&nbsp; <a href="../index.html">All plugins</a></div>
 </section>
 </main>

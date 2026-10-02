@@ -617,6 +617,62 @@
       "source": "plugins/icons/telos-glyph-dark.svg",
       "source_sha256": "0be2ceee72ff6547071ca3b4848e92e7f1e9b9ae0541084f6a889f28d3256b4d",
       "sha256": "17ed8239e056e0a38f82a377352a32f3a45e98db5b3036ac25ee347509b34878"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-48.png",
+      "size": 48,
+      "source": "plugins/icons/flywheel-small.svg",
+      "source_sha256": "240f07f6e7c97267d80bb019b1028bac445582cb9ebb851d5182ff267970afec",
+      "sha256": "750b83f8539e8269370f789d0a7376aca839a4ff0e3889d7b7b9f23c8059c967"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-64.png",
+      "size": 64,
+      "source": "plugins/icons/flywheel-small.svg",
+      "source_sha256": "240f07f6e7c97267d80bb019b1028bac445582cb9ebb851d5182ff267970afec",
+      "sha256": "41353844e0c3fd9383a73efb0d4d2a38b9abfb118b156befe071737bfc555019"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-128.png",
+      "size": 128,
+      "source": "plugins/icons/flywheel-mid.svg",
+      "source_sha256": "178c2c3b4959dafdd643be17335a4d74c26c6855aea40088b3285a8e96874f1f",
+      "sha256": "34a9cbd329835c9ed671b0e4f09aca3e0cf40dcf15f9a60cda09b2a2c0ab7a8b"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-256.png",
+      "size": 256,
+      "source": "plugins/icons/flywheel-mid.svg",
+      "source_sha256": "178c2c3b4959dafdd643be17335a4d74c26c6855aea40088b3285a8e96874f1f",
+      "sha256": "3d586c341eb1397723ef4067e511958996f2830f90049e4d7502bdd3c8ff0715"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-512.png",
+      "size": 512,
+      "source": "plugins/icons/flywheel.svg",
+      "source_sha256": "27deee622ce8e768b4c0cdeb20689ad9e3ed43bde9581bef02f71958138fd1ba",
+      "sha256": "5a80c59285210fcfe530cf9bfede0a90e680351d8932e3be6f39d5836c358a8e"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-1024.png",
+      "size": 1024,
+      "source": "plugins/icons/flywheel.svg",
+      "source_sha256": "27deee622ce8e768b4c0cdeb20689ad9e3ed43bde9581bef02f71958138fd1ba",
+      "sha256": "c1be995aa5694156064e256da0e7ae1b72e5f9c56960da8fce9ceb452e229337"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-glyph-128.png",
+      "size": 128,
+      "source": "plugins/icons/flywheel-glyph.svg",
+      "source_sha256": "34b1093dbeafea87b8842ae217344adeee23328104cca762184ff10ba920b62d",
+      "sha256": "fc25ab0fcae8e9f30ed01d48e07f5e1ead8b476485099e566e027096e4630cb9"
+    },
+    {
+      "png": "plugins/icons/png/flywheel-glyph-dark-128.png",
+      "size": 128,
+      "source": "plugins/icons/flywheel-glyph-dark.svg",
+      "source_sha256": "8de6235105e85f60c204a1fa169ea3eaa68fb6612e44fa9e9af81d3c88f3b40b",
+      "sha256": "3fabbe86c080f39b1a4b80a2f7227a3b9a54c403738295b6244a39cd2cdc31dd"
     }
   ]
 }

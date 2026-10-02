@@ -20,6 +20,7 @@
 /* Page-scoped: policy lists and subheads at reading size inside the shared chassis. */
 .policy-list{max-width:min(100%,58ch);margin:1.2em 0 0;padding-left:1.4em;font-size:clamp(1.05rem,1.3vw,1.18rem);line-height:1.7;color:var(--bone)}
 .policy-list li+li{margin-top:.5em}
+.policy-code{max-width:100%;margin:1.2em 0 0;padding:.9em 1em;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.55;color:var(--bone);border:1px solid color-mix(in srgb,var(--bone) 18%,transparent)}
 .mv h3{max-width:min(100%,58ch);margin:2em 0 .6em;font-size:1.05rem;font-weight:600;color:var(--bone)}
 .inner-clean .seal{font-size:.875rem;letter-spacing:0;color:var(--muted)}
 .plugin-table{width:100%;border-collapse:collapse;font-size:.95rem;color:var(--bone)}
@@ -51,6 +52,18 @@
   <h2 id="policy-h">Policy</h2>
   <p class="body-text">Plexus runs on the user's computer. The publisher operates no backend for this package. The connected client and its model can see tool arguments and results under that client's terms. No model is included. Any model endpoint configured by the user belongs to that user. Local access is granted to the running process by the operating system; a client permission dialog is not an OS sandbox. Do not connect private stores or directories to an untrusted client. Stop the client process to disconnect.</p>
 </section>
+<section class="mv" id="what-this-plugin-runs-and-handles" aria-labelledby="what-this-plugin-runs-and-handles-h">
+  <h2 id="what-this-plugin-runs-and-handles-h">What this plugin runs and handles</h2>
+  <p class="body-text"><strong>Hooks.</strong> This plugin has no hooks.</p>
+  <p class="body-text"><strong>MCP server.</strong> The plugin starts one local server named <code translate="no">plexus</code>. Claude Code runs it with this command:</p>
+  <p class="body-text"><code translate="no">python3 -I -S -B ${CLAUDE_PLUGIN_ROOT}/server/serve.py</code></p>
+  <p class="body-text"><code translate="no">${CLAUDE_PLUGIN_ROOT}</code> is the folder where Claude Code installed the plugin. <code translate="no">-I</code> makes Python ignore <code translate="no">PYTHON*</code> environment variables and the user's site folder. <code translate="no">-S</code> skips the <code translate="no">site</code> module. <code translate="no">-B</code> stops Python from writing bytecode cache files. The command has no <code translate="no">${user_config.*}</code> values, because Plexus needs no settings. The server talks to Claude Code only through its standard input and output.</p>
+  <p class="body-text"><strong>Network.</strong> Plexus opens no network connection. Its code imports no networking module and starts no other program.</p>
+  <p class="body-text"><strong>Files read.</strong> Plexus reads the tool manifests built into its own code. When you or the model name a folder in a call, it also reads the <code translate="no">*.interop.json</code> files in that folder.</p>
+  <p class="body-text"><strong>Files written.</strong> Plexus writes no file and no folder. Each answer is built in memory and returned to Claude Code. Nothing stays after the call returns.</p>
+  <p class="body-text"><strong>Environment variables and credentials.</strong> Plexus's own code reads no environment variable and no credential. The shared launcher <code translate="no">server/serve.py</code> names <code translate="no">MNEME_STATE</code> and <code translate="no">RELAY_MCP_ROOT</code>, but only inside branches that run for the Mneme and Relay packages. The Plexus package never reaches them.</p>
+  <p class="body-text">Python's standard library reads six variables while the server starts. The launcher parses its command line with <code translate="no">argparse</code>. That module reads <code translate="no">COLUMNS</code> and <code translate="no">LINES</code> to size help and error text for the terminal. It looks up message translations through <code translate="no">gettext</code>, which reads <code translate="no">LANGUAGE</code>, <code translate="no">LC_ALL</code>, <code translate="no">LC_MESSAGES</code> and <code translate="no">LANG</code>. These values only set text width and language. Plexus does not store them or send them anywhere. A trace of the packaged server through <code translate="no">initialize</code>, <code translate="no">tools/list</code> and every tool found no other read.</p>
+</section>
 <section class="mv" id="what-it-reads-stores-and-sends" aria-labelledby="what-it-reads-stores-and-sends-h">
   <h2 id="what-it-reads-stores-and-sends-h">What it reads, stores and sends</h2>
   <p class="body-text">Plexus reads its built-in tool manifests and, when a call names one, a folder of <code translate="no">*.interop.json</code> manifests. It stores nothing, opens no network connection and starts no process.</p>
@@ -61,7 +74,7 @@
 </section>
 <section class="mv" id="source" aria-labelledby="source-h">
   <h2 id="source-h">Source</h2>
-  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/plexus/blob/b7909451dff50fbf01182a2d558b1dc03b500854/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Plexus repository.</p>
+  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/plexus/blob/1ff54bf6125cf365171672802eecee913c970757/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Plexus repository.</p>
   <div class="channels"><a href="support.html">Support</a> &nbsp;&middot;&nbsp; <a href="terms.html">Terms of use</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9/plexus" translate="no">HarperZ9/plexus</a> &nbsp;&middot;&nbsp; <a href="../index.html">All plugins</a></div>
 </section>
 </main>

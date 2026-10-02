@@ -34,7 +34,7 @@ COUNTS = {
     "articulate": (34, 18, 8), "canon": (16, 10, 5), "crucible": (132, 60, 18),
     "forum": (15, 8, 4), "gather": (44, 22, 9), "index": (16, 10, 5),
     "learn": (30, 18, 9), "mneme": (22, 11, 5), "plexus": (17, 11, 7),
-    "relay": (15, 8, 4), "telos": (64, 36, 12),
+    "relay": (15, 8, 4), "telos": (64, 36, 12), "flywheel": (36, 18, 8),
 }
 PNG_SIZES = {48: "small", 64: "small", 128: "mid", 256: "mid", 512: "full", 1024: "full"}
 GLYPH_PNG = 128
