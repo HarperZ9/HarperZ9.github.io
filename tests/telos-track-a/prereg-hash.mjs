@@ -11,19 +11,26 @@ export const PREREG_PATH = join(dirname(fileURLToPath(import.meta.url)), "PREREG
 const START = "<!-- prereg-track-a-v1:start -->";
 const END = "<!-- prereg-track-a-v1:end -->";
 
-export function preregBlock(text) {
+export function preregBlock(text, start = START, end = END) {
   const t = text.replace(/\r\n/g, "\n");
-  const s = t.indexOf(START);
-  const e = t.indexOf(END);
+  const s = t.indexOf(start);
+  const e = t.indexOf(end);
   if (s < 0 || e < 0 || e < s) throw new Error("prereg markers missing or out of order");
-  if (t.indexOf(START, s + 1) >= 0 || t.indexOf(END, e + 1) >= 0) throw new Error("prereg markers repeated");
-  return t.slice(s + START.length, e);
+  if (t.indexOf(start, s + 1) >= 0 || t.indexOf(end, e + 1) >= 0) throw new Error("prereg markers repeated");
+  return t.slice(s + start.length, e);
 }
 
 export function preregSha256(text = readFileSync(PREREG_PATH, "utf8")) {
   return createHash("sha256").update(Buffer.from(preregBlock(text), "utf8")).digest("hex");
 }
 
+// Amendment 1 (T3 integer path v2) has its own block and hash; the v1 block and its hash are unchanged.
+const A1_START = "<!-- prereg-track-a-amend-1:start -->";
+const A1_END = "<!-- prereg-track-a-amend-1:end -->";
+export function amendment1Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
+  return createHash("sha256").update(Buffer.from(preregBlock(text, A1_START, A1_END), "utf8")).digest("hex");
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
-  console.log(preregSha256());
+  console.log(process.argv.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
 }
