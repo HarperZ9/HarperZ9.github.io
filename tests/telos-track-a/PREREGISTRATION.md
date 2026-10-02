@@ -180,3 +180,37 @@ table or a correctly rounded routine; this uses a table built by an exact intege
   colours and keeping the first colour per boundary kind with a margin between 0.003 and 0.01. Their
   reference names are the twin's output, so the 19-colour test checks agreement between two
   implementations of one rule; the extended probe is the only check of the rule against meaning.
+
+## Amendment 1 (T3 integer path v2)
+
+Written 2026-10-02 after the v1 results existed and before any v2 code. Relative to v1 this is post hoc;
+relative to v2 it is a pre-registration. The block below has its own hash (`amendment_1_sha256` in the
+v2 result files, printed by `node tests/telos-track-a/prereg-hash.mjs --amendment-1`). The v1 block above
+is unchanged and its hash is unchanged.
+
+<!-- prereg-track-a-amend-1:start -->
+## T3 amendment 1: integer path v2
+
+Reason: v1 met every pre-registered gate, and v1 deviates from float64 OKLab by up to 2.0e-3 near black
+(measured on a 1-in-27 sample of the cube; worst at sRGB 0,0,3). The cause is rounding LMS to Q16 before
+the table cube root, where the cube root amplifies small differences. 2.0e-3 is about half an L8 bin, and
+the achromatic branch carries L8; dark frames (radiographs, fluorescence) sit in that range.
+
+Path `project-telos.oklab-int/v2`, replacing v1 (v1 stays in the history and in the `-v1` result files):
+- sRGB byte to linear: a 256-entry table of round(lin(i / 255) x 2^24), generated at 60-digit precision.
+- Linear to LMS: M1 coefficients round(c x 2^20); LMS kept unrounded in Q44, clamped below at 0.
+- Cube root: the integer nearest cbrt(x / 2^44) x 2^16, computed as the exact nearest integer cube root
+  of 16 x: a floating-point first guess, then integer corrections until f^3 <= 16 x < (f + 1)^3, then
+  f + 1 when 8 x 16 x >= (2f + 1)^3. The result does not depend on the float guess.
+- LMS' to OKLab: M2 coefficients round(c x 2^20), Q36, unrounded. Bins and ranges as in v1.
+- Cell means on Q24 linear values, rounded half up. Layer text header `oklab-int/v2`; otherwise the v1
+  format.
+
+Thresholds:
+- Conformance (as v1): 0 bin mismatches between Node and Python over all 16,777,216 colours at L6/ab6 and
+  L8; byte-identical layer text on the 1,000 seeded random images and the 36 audit frames.
+- Accuracy (new gate): over the full cube, the maximum absolute difference between v2 OKLab and float64
+  OKLab (numpy, Ottosson matrices, np.cbrt) is at most 1e-4 on each of L, a and b. The estimate before
+  measuring is about 4e-5 (Q16 rounding of the cube root, times the M2 row sums).
+- Reported, not gated: bin disagreement between v2 and the float prototype, beside v1's.
+<!-- prereg-track-a-amend-1:end -->
