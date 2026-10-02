@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-01 - Zentropy Labs logotype and avatar retired
+
+- `brand/zentropy-logo.html` and `brand/zentropy-avatar.html` are now redirect
+  pages written by `tools/redirect_stubs.py`. They carry `noindex`, show no
+  retired name or art, and send a reader to `typeface.html` and the home page.
+- Removed the retired art: `brand/zentropy-logo.png`, its four WebP sizes,
+  `brand/zentropy-face.json`, `brand/zentropy-specimen.svg` and
+  `brand/zentropy-avatar.png` (a byte-identical copy of
+  `brand/aperture-mark.png`, which the header still uses).
+- Removed three superseded home bundles that no page, test or bundle
+  references: `assets/index-BOzfAcuL.js`, `assets/index-EaeROAAw.js` and
+  `assets/index-NqGo0RlY.js`.
+- Kept on purpose: `--zentropy-*` CSS variable names, `zentropy.*/v1` record
+  format names, the old font URLs, the dated 24 and 25 August archives, and the
+  superseded bundles that the release tests pin. None renders as page text.
+
 ## 2026-10-01 - Typefaces renamed Zain
 
 - The site typefaces now carry the Zain name: Zain Editorial Preview, Zain Mono
