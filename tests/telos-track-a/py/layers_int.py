@@ -1,4 +1,4 @@
-"""Python twin of system/lib/sense-core/layers-int.mjs: layer text oklab-int/v1, integers only.
+"""Python twin of system/lib/sense-core/layers-int.mjs: layer text oklab-int/v2, integers only.
 
 CLI:
   python layers_int.py random <count> <out.json>          seeded random images (images.py)
@@ -10,9 +10,9 @@ import json
 import os
 import sys
 
-from oklab_int import LIN_Q20, OKLAB_INT_SCHEMA, bin_q36, oklab_q36_from_linear_q20
+from oklab_int import LIN_Q24, OKLAB_INT_SCHEMA, bin_q36, oklab_q36_from_linear_q24
 
-LAYER_TEXT_SCHEMA = "oklab-int/v1"
+LAYER_TEXT_SCHEMA = "oklab-int/v2"
 B64 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_"
 L1_CELLS = 8
 L2_CHROMATIC_N = (12, 32)
@@ -34,7 +34,7 @@ def integral_linear(px, w, h, ch):
             o = (y + 1) * W + (x + 1)
             up = y * W + (x + 1)
             for k in range(3):
-                run[k] += LIN_Q20[px[i + k]]
+                run[k] += LIN_Q24[px[i + k]]
                 S[k][o] = S[k][up] + run[k]
     return S, W
 
@@ -66,7 +66,7 @@ def layer_l0(px, w, h, ch=4):
     L8, S2 = [], []
     for i in range(n):
         o = i * ch
-        L, a, b = oklab_q36_from_linear_q20(LIN_Q20[px[o]], LIN_Q20[px[o + 1]], LIN_Q20[px[o + 2]])
+        L, a, b = oklab_q36_from_linear_q24(LIN_Q24[px[o]], LIN_Q24[px[o + 1]], LIN_Q24[px[o + 2]])
         L8.append(bin_q36(L, "L", 8))
         a16 = (a + 524288) // 1048576
         b16 = (b + 524288) // 1048576
@@ -84,17 +84,17 @@ def layer_l0(px, w, h, ch=4):
 
 def chromatic_layer(tag, I, w, h, n):
     m = max(1, n // 2)
-    Lv = [bin_q36(oklab_q36_from_linear_q20(*c)[0], "L", 6) for c in cell_means(I, w, h, n, n)]
+    Lv = [bin_q36(oklab_q36_from_linear_q24(*c)[0], "L", 6) for c in cell_means(I, w, h, n, n)]
     ab = []
     for c in cell_means(I, w, h, m, m):
-        _, A, B = oklab_q36_from_linear_q20(*c)
+        _, A, B = oklab_q36_from_linear_q24(*c)
         ab.append(B64[bin_q36(A, "a", 6)] + B64[bin_q36(B, "b", 6)])
     return (f"{tag} {LAYER_TEXT_SCHEMA} cells:{n}x{n} chroma:{m}x{m} bits:L6,ab6 alphabet:b64\nL:\n"
             + grid_rows(Lv, n, n, lambda v: B64[v], "") + "\nab:\n" + grid_rows(ab, m, m, lambda s: s, " "))
 
 
 def achromatic_layer(I, w, h, n):
-    Lv = [bin_q36(oklab_q36_from_linear_q20(*c)[0], "L", 8) for c in cell_means(I, w, h, n, n)]
+    Lv = [bin_q36(oklab_q36_from_linear_q24(*c)[0], "L", 8) for c in cell_means(I, w, h, n, n)]
     return (f"L2 {LAYER_TEXT_SCHEMA} cells:{n}x{n} bits:L8 alphabet:hex branch:achromatic\n"
             + grid_rows(Lv, n, n, lambda v: format(v, "02x"), ""))
 

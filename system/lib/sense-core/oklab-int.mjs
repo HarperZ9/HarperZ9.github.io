@@ -1,47 +1,54 @@
-// oklab-int.mjs: the integer OKLab path, project-telos.oklab-int/v1 (Telos Track A step T3).
+// oklab-int.mjs: the integer OKLab path, project-telos.oklab-int/v2 (Telos Track A step T3,
+// amendment 1).
 //
 // Float OKLab needs a cube root, and ECMAScript leaves Math.cbrt and Math.pow implementation-
-// approximated, so a value on a quantisation edge can land in different bins in V8, SpiderMonkey and
-// numpy. This path uses integers only, so Node, every browser and the Python twin
+// approximated, so a value on a quantisation edge could land in different bins in V8, SpiderMonkey and
+// numpy. This path uses exact integer arithmetic, so Node, every browser and the Python twin
 // (tests/telos-track-a/py/oklab_int.py) produce the same bins and the same layer text, byte for byte.
 //
-//   sRGB byte -> linear:  a 256-entry table of round(lin(i / 255) * 2^20), computed once at 60-digit
+//   sRGB byte -> linear:  a 256-entry table of round(lin(i / 255) * 2^24), computed once at 60-digit
 //                         precision (tests/telos-track-a/py/gen_oklab_int_constants.py) and embedded.
-//   linear -> LMS:        Ottosson's M1 with coefficients round(c * 2^20); Q20 = floor((sum + 2^19) / 2^20);
-//                         Q16 = floor((Q20 + 8) / 16), clamped to [0, 65536].
-//   cube root:            a 65,537-entry table of the integer nearest cbrt(x / 65536) * 65536, built here
-//                         by an exact integer routine (no floating point).
+//   linear -> LMS:        Ottosson's M1 with coefficients round(c * 2^20); LMS kept unrounded in Q44.
+//   cube root:            the integer nearest cbrt(x / 2^44) * 2^16, i.e. the nearest integer cube root of
+//                         16 x. A Math.cbrt first guess is corrected with integer comparisons until
+//                         f^3 <= 16 x < (f + 1)^3, so the result never depends on the engine's cbrt.
 //   LMS' -> OKLab:        Ottosson's M2 with coefficients round(c * 2^20); L, a, b in Q36, unrounded.
 //   bins:                 bin = clamp(floor((2 (V - LO) n + S) / (2 S)), 0, n), n = 2^bits - 1, S = HI - LO.
 //
-// Every intermediate stays below 2^53, so plain Numbers hold exact integers; floorDiv() corrects the
-// one place where float division could round across an integer. ASCII only.
+// v1 rounded LMS to Q16 before a table cube root and deviated from float OKLab by up to 2.0e-3 near
+// black; v2 removes that rounding. Every intermediate stays below 2^53, so plain Numbers hold exact
+// integers; floorDiv() corrects the one place where float division could round across an integer.
+// ASCII only.
 
-export const OKLAB_INT_SCHEMA = "project-telos.oklab-int/v1";
+export const OKLAB_INT_SCHEMA = "project-telos.oklab-int/v2";
 
-export const LIN_Q20 = Object.freeze([
-  0, 318, 637, 955, 1273, 1591, 1910, 2228, 2546, 2864, 3183, 3509,
-  3855, 4220, 4605, 5009, 5433, 5878, 6343, 6828, 7335, 7863, 8413, 8984,
-  9578, 10193, 10832, 11492, 12176, 12883, 13614, 14368, 15145, 15947, 16773, 17624,
-  18499, 19399, 20324, 21274, 22250, 23251, 24278, 25331, 26410, 27516, 28648, 29807,
-  30993, 32205, 33445, 34713, 36008, 37331, 38681, 40060, 41467, 42903, 44367, 45860,
-  47381, 48932, 50512, 52121, 53760, 55428, 57127, 58855, 60613, 62402, 64221, 66071,
-  67951, 69862, 71805, 73778, 75783, 77819, 79886, 81985, 84117, 86280, 88475, 90702,
-  92962, 95254, 97579, 99937, 102328, 104751, 107208, 109698, 112222, 114779, 117370, 119994,
-  122653, 125345, 128072, 130833, 133628, 136458, 139323, 142222, 145156, 148125, 151130, 154169,
-  157244, 160355, 163501, 166683, 169900, 173154, 176443, 179769, 183131, 186530, 189964, 193436,
-  196944, 200489, 204072, 207691, 211347, 215041, 218772, 222540, 226346, 230190, 234071, 237991,
-  241948, 245944, 249978, 254050, 258161, 262310, 266498, 270724, 274990, 279294, 283637, 288020,
-  292442, 296903, 301404, 305944, 310523, 315143, 319802, 324502, 329241, 334021, 338840, 343700,
-  348601, 353542, 358523, 363546, 368609, 373713, 378858, 384044, 389271, 394539, 399849, 405201,
-  410594, 416028, 421504, 427022, 432582, 438184, 443828, 449515, 455243, 461014, 466827, 472683,
-  478582, 484523, 490507, 496534, 502604, 508717, 514873, 521072, 527315, 533601, 539930, 546303,
-  552720, 559181, 565685, 572234, 578826, 585462, 592143, 598868, 605637, 612451, 619309, 626211,
-  633159, 640151, 647188, 654270, 661397, 668569, 675786, 683048, 690356, 697709, 705108, 712552,
-  720042, 727577, 735159, 742786, 750459, 758178, 765944, 773755, 781613, 789517, 797468, 805465,
-  813509, 821599, 829736, 837920, 846151, 854429, 862753, 871125, 879545, 888011, 896525, 905086,
-  913695, 922351, 931055, 939807, 948606, 957453, 966349, 975292, 984283, 993323, 1002411, 1011547,
-  1020731, 1029964, 1039246, 1048576,
+export const LIN_Q24 = Object.freeze([
+  0, 5092, 10185, 15277, 20369, 25462, 30554, 35646, 40739, 45831,
+  50923, 56146, 61682, 67524, 73676, 80144, 86931, 94043, 101483, 109255,
+  117364, 125813, 134607, 143749, 153244, 163095, 173306, 183880, 194821, 206133,
+  217819, 229883, 242327, 255157, 268373, 281981, 295983, 310382, 325182, 340386,
+  355996, 372016, 388449, 405298, 422565, 440255, 458369, 476910, 495881, 515286,
+  535127, 555406, 576126, 597291, 618902, 640963, 663476, 686443, 709868, 733752,
+  758099, 782910, 808189, 833938, 860159, 886854, 914027, 941680, 969814, 998433,
+  1027538, 1057133, 1087218, 1117798, 1148873, 1180447, 1212520, 1245097, 1278179, 1311767,
+  1345865, 1380475, 1415598, 1451237, 1487394, 1524071, 1561270, 1598994, 1637244, 1676023,
+  1715332, 1755173, 1795550, 1836463, 1877915, 1919907, 1962442, 2005522, 2049149, 2093324,
+  2138049, 2183328, 2229161, 2275550, 2322497, 2370005, 2418074, 2466708, 2515908, 2565675,
+  2616012, 2666920, 2718402, 2770458, 2823092, 2876304, 2930097, 2984472, 3039432, 3094977,
+  3151110, 3207832, 3265145, 3323052, 3381553, 3440650, 3500346, 3560641, 3621538, 3683038,
+  3745144, 3807855, 3871176, 3935106, 3999648, 4064803, 4130573, 4196960, 4263965, 4331589,
+  4399836, 4468706, 4538200, 4608321, 4679069, 4750448, 4822457, 4895099, 4968376, 5042288,
+  5116838, 5192027, 5267856, 5344328, 5421443, 5499204, 5577611, 5656667, 5736372, 5816729,
+  5897738, 5979402, 6061722, 6144699, 6228335, 6312631, 6397589, 6483210, 6569496, 6656448,
+  6744068, 6832357, 6921317, 7010948, 7101253, 7192233, 7283889, 7376223, 7469237, 7562930,
+  7657306, 7752366, 7848110, 7944540, 8041658, 8139465, 8237963, 8337152, 8437035, 8537612,
+  8638885, 8740855, 8843524, 8946893, 9050964, 9155737, 9261215, 9367397, 9474287, 9581885,
+  9690192, 9799210, 9908940, 10019383, 10130542, 10242416, 10355008, 10468318, 10582349, 10697100,
+  10812575, 10928773, 11045697, 11163346, 11281724, 11400831, 11520668, 11641236, 11762538, 11884573,
+  12007344, 12130852, 12255098, 12380082, 12505807, 12632274, 12759484, 12887438, 13016137, 13145583,
+  13275776, 13406719, 13538412, 13670857, 13804054, 13938006, 14072712, 14208175, 14344396, 14481375,
+  14619114, 14757615, 14896878, 15036905, 15177696, 15319253, 15461578, 15604671, 15748533, 15893166,
+  16038571, 16184750, 16331702, 16479430, 16627934, 16777216,
 ]);
 export const M1_Q20 = Object.freeze([[432246, 562385, 53945], [222197, 713765, 112614], [92592, 295404, 660581]]);
 export const M2_Q20 = Object.freeze([[220677, 832169, -4270], [2074082, -2546563, 472482], [27162, 820796, -847958]]);
@@ -64,33 +71,24 @@ export function isqrt(n) {
   return r;
 }
 
-// The integer nearest cbrt(x / 65536) * 65536 for x in [0, 65536]: floor cube root of x * 2^32 by
-// binary search, then round up when 8 x 2^32 >= (2f + 1)^3 (i.e. when the true root is >= f + 1/2).
-function cbrtQ16Exact(x) {
-  const n = x * 4294967296; // x * 2^32 <= 2^48
-  let lo = 0, hi = 65537;
-  while (lo < hi) {
-    const mid = Math.floor((lo + hi + 1) / 2);
-    if (mid * mid * mid <= n) lo = mid; else hi = mid - 1;
-  }
-  const t = 2 * lo + 1;
-  return n * 8 >= t * t * t ? lo + 1 : lo;
+// The integer nearest cbrt(x / 2^44) * 2^16 for an integer 0 <= x <= 2^44 + 2^25: the floor cube root f
+// of n = 16 x (n <= 2^48.0001), then f + 1 when 8 n >= (2f + 1)^3 (the true root is >= f + 1/2).
+export function cbrtQ44toQ16(x) {
+  const n = x * 16;
+  let f = Math.round(Math.cbrt(n));
+  while (f > 0 && f * f * f > n) f -= 1;
+  while ((f + 1) * (f + 1) * (f + 1) <= n) f += 1;
+  const t = 2 * f + 1;
+  return n * 8 >= t * t * t ? f + 1 : f;
 }
-export const CBRT_Q16 = (() => {
-  const t = new Int32Array(65537);
-  for (let x = 0; x <= 65536; x++) t[x] = cbrtQ16Exact(x);
-  return t;
-})();
 
-const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
-
-// Linear RGB in Q20 -> OKLab in Q36, as [L, a, b] integers.
-export function oklabQ36FromLinearQ20(r, g, b) {
-  const m = M1_Q20, p = M2_Q20, cb = CBRT_Q16;
-  const l = clamp(floorDiv(floorDiv(m[0][0] * r + m[0][1] * g + m[0][2] * b + 524288, 1048576) + 8, 16), 0, 65536);
-  const mm = clamp(floorDiv(floorDiv(m[1][0] * r + m[1][1] * g + m[1][2] * b + 524288, 1048576) + 8, 16), 0, 65536);
-  const s = clamp(floorDiv(floorDiv(m[2][0] * r + m[2][1] * g + m[2][2] * b + 524288, 1048576) + 8, 16), 0, 65536);
-  const l_ = cb[l], m_ = cb[mm], s_ = cb[s];
+// Linear RGB in Q24 -> OKLab in Q36, as [L, a, b] integers.
+export function oklabQ36FromLinearQ24(r, g, b) {
+  const m = M1_Q20, p = M2_Q20;
+  const l = Math.max(0, m[0][0] * r + m[0][1] * g + m[0][2] * b);
+  const mm = Math.max(0, m[1][0] * r + m[1][1] * g + m[1][2] * b);
+  const s = Math.max(0, m[2][0] * r + m[2][1] * g + m[2][2] * b);
+  const l_ = cbrtQ44toQ16(l), m_ = cbrtQ44toQ16(mm), s_ = cbrtQ44toQ16(s);
   return [
     p[0][0] * l_ + p[0][1] * m_ + p[0][2] * s_,
     p[1][0] * l_ + p[1][1] * m_ + p[1][2] * s_,
@@ -100,8 +98,10 @@ export function oklabQ36FromLinearQ20(r, g, b) {
 
 // sRGB bytes -> OKLab in Q36.
 export function oklabQ36FromSrgb8(r8, g8, b8) {
-  return oklabQ36FromLinearQ20(LIN_Q20[r8], LIN_Q20[g8], LIN_Q20[b8]);
+  return oklabQ36FromLinearQ24(LIN_Q24[r8], LIN_Q24[g8], LIN_Q24[b8]);
 }
+
+const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
 
 // The bin of a Q36 channel value at `bits` bits over that channel's range (round half up, clamped).
 export function binQ36(v, channel, bits) {
@@ -119,9 +119,9 @@ export function binsOfSrgb8(r8, g8, b8) {
 // Encode the full 8-bit sRGB cube: 4 bytes per colour (L6, a6, b6, L8), colour index (r << 16) | (g << 8) | b.
 export function encodeCube() {
   const out = new Uint8Array(16777216 * 4);
-  const lut = LIN_Q20;
+  const lut = LIN_Q24;
   for (let r = 0; r < 256; r++) for (let g = 0; g < 256; g++) for (let b = 0; b < 256; b++) {
-    const [L, A, B] = oklabQ36FromLinearQ20(lut[r], lut[g], lut[b]);
+    const [L, A, B] = oklabQ36FromLinearQ24(lut[r], lut[g], lut[b]);
     const o = ((r << 16) | (g << 8) | b) * 4;
     out[o] = binQ36(L, "L", 6); out[o + 1] = binQ36(A, "a", 6); out[o + 2] = binQ36(B, "b", 6); out[o + 3] = binQ36(L, "L", 8);
   }
