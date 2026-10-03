@@ -598,7 +598,9 @@ RELEASE_PATHS = (
 # release is rehashed (merged over the media fixes).
 # October 3, 2026: the type forge (type-forge.html and system/type-forge/) joins the release, and
 # fonts.html and typeface.html link to it; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "dbfce4cbcb337548bae156221ba3d48f39983b02ac6d08598e91aef56e6d3f2d"
+# October 3, 2026: the type forge joins the route registry and the site index, and the
+# publication receipt records the sitemap that lists it; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "658590bde012f5b46c0958572e296705e11c980a493fb61da8ba80042ec1425d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
