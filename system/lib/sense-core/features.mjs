@@ -152,38 +152,52 @@ function toHex(r, g, b) {
 // Dominant colours via a coarse 4×4×4 RGB histogram (64 bins). Returns up to `k` bins by population,
 // each as {hex, r, g, b, frac} — the average colour of the bin, weighted by how much of the frame it is.
 export function dominantColors(px, w, h, ch, k = 5) {
+  // Typed-array bins in place of a Map: same sums, same averages and the same order. A Map
+  // keeps first-seen order and Array.sort is stable, so ties keep first-seen order here too.
   const n = w * h;
-  const bins = new Map(); // key -> {r,g,b,count}
+  const sr = new Float64Array(64), sg = new Float64Array(64), sb = new Float64Array(64);
+  const cnt = new Float64Array(64), seen = [];
   for (let i = 0; i < n; i++) {
     const o = i * ch, r = px[o], g = px[o + 1], b = px[o + 2];
     const key = (r >> 6) * 16 + (g >> 6) * 4 + (b >> 6);
-    let e = bins.get(key);
-    if (!e) { e = { r: 0, g: 0, b: 0, count: 0 }; bins.set(key, e); }
-    e.r += r; e.g += g; e.b += b; e.count++;
+    if (cnt[key] === 0) seen.push(key);
+    sr[key] += r; sg[key] += g; sb[key] += b; cnt[key]++;
   }
-  return [...bins.values()]
-    .sort((a, b) => b.count - a.count)
+  return seen
+    .sort((a, b) => cnt[b] - cnt[a])
     .slice(0, k)
-    .map(e => ({
-      hex: toHex(e.r / e.count, e.g / e.count, e.b / e.count),
-      r: Math.round(e.r / e.count), g: Math.round(e.g / e.count), b: Math.round(e.b / e.count),
-      frac: e.count / n,
-    }));
+    .map(key => {
+      const c = cnt[key];
+      return {
+        hex: toHex(sr[key] / c, sg[key] / c, sb[key] / c),
+        r: Math.round(sr[key] / c), g: Math.round(sg[key] / c), b: Math.round(sb[key] / c),
+        frac: c / n,
+      };
+    });
 }
 
 // Edge density via a Sobel gradient magnitude on luma, thresholded. Fraction of interior pixels with
 // a strong edge → "busy" vs "smooth". (eye.js has an `applyEdges` renderer; this only measures.)
 export function edgeDensity(px, w, h, ch, threshold = 48) {
   if (w < 3 || h < 3) return 0;
-  const luma = (x, y) => { const i = (y * w + x) * ch; return (px[i] * 299 + px[i + 1] * 587 + px[i + 2] * 114) / 1000; };
+  // Luma once per pixel (the same expression the per-tap closure used, so the same doubles),
+  // then the Sobel taps in the same order. Squared magnitudes decide every pixel that is clearly
+  // above or below the threshold; the narrow band around it falls back to Math.hypot, so the
+  // count is the one the original loop gave.
+  const L = new Float64Array(w * h);
+  for (let i = 0, o = 0, n = w * h; i < n; i++, o += ch) L[i] = (px[o] * 299 + px[o + 1] * 587 + px[o + 2] * 114) / 1000;
+  const t2 = threshold * threshold, hi = t2 * (1 + 1e-9), lo = t2 * (1 - 1e-9);
   let strong = 0, total = 0;
   for (let y = 1; y < h - 1; y++) {
+    const r0 = (y - 1) * w, r1 = y * w, r2 = (y + 1) * w;
     for (let x = 1; x < w - 1; x++) {
-      const sx = -luma(x - 1, y - 1) - 2 * luma(x - 1, y) - luma(x - 1, y + 1)
-        + luma(x + 1, y - 1) + 2 * luma(x + 1, y) + luma(x + 1, y + 1);
-      const sy = -luma(x - 1, y - 1) - 2 * luma(x, y - 1) - luma(x + 1, y - 1)
-        + luma(x - 1, y + 1) + 2 * luma(x, y + 1) + luma(x + 1, y + 1);
-      if (Math.hypot(sx, sy) >= threshold) strong++;
+      const a = L[r0 + x - 1], b = L[r0 + x], c = L[r0 + x + 1];
+      const d = L[r1 + x - 1], f = L[r1 + x + 1];
+      const g = L[r2 + x - 1], k = L[r2 + x], m = L[r2 + x + 1];
+      const sx = -a - 2 * d - g + c + 2 * f + m;
+      const sy = -a - 2 * b - c + g + 2 * k + m;
+      const s2 = sx * sx + sy * sy;
+      if (s2 >= hi || (s2 > lo && Math.hypot(sx, sy) >= threshold)) strong++;
       total++;
     }
   }
