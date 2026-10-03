@@ -611,6 +611,9 @@ RELEASE_PATHS = (
 # October 3, 2026: No Receipt, No Accept is re-rendered from its approved Markdown (the
 # 25 September rewrite) and its PDF is typeset with LaTeX with a build receipt; the release
 # is rehashed.
+# October 3, 2026: every paper and essay PDF and .tex carries the author's name, the license,
+# the DOI and the first-public date, the seven systems papers' LaTeX is published, and the hub
+# links each LaTeX source; the release is rehashed.
 REVIEWED_RELEASE_SHA256 = "efe735d4b331a15e9d25741df449384ef1cc2da882712bf86fc6b6131c1c2199"
 
 BRIEFING_FIGURES = (
