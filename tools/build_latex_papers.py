@@ -2,13 +2,19 @@
 
     TECTONIC=path/to/tectonic python tools/build_latex_papers.py            # the six site papers
     TECTONIC=... python tools/build_latex_papers.py --research PATH          # and the seven LaTeX papers
+    TECTONIC=... python tools/build_latex_papers.py --corpus-workspace PATH  # and the two corpora
     python tools/build_latex_papers.py --check                               # no engine needed
 
-Two source families feed papers/:
+Three source families feed papers/:
 - The six philosophy papers in writing/papers/. tools/paper_latex.py turns each approved
   source into papers/tex/<name>.tex, which anyone can rebuild.
 - Seven systems papers and notes whose LaTeX sources live in a private research repository.
   Each is read with `git show` at the pinned commit below, so no branch is switched.
+- The two archived corpora, Conferred Existence and The Witnessing Spine. Their deposited
+  sources live in their own public repositories; each is read with `git show HEAD:<file>`
+  from a workspace that holds both checkouts, and the receipt names the repository, commit
+  and source hash. tools/corpus_latex.py adds the dated foreword and corrections the web
+  pages carry. The .tex file is committed, so the PDF can be rebuilt without the workspace.
 
 Every build runs Tectonic offline (`--only-cached`) against one pinned bundle, with
 SOURCE_DATE_EPOCH fixed, two times in separate folders. The PDF is written only when both
@@ -32,6 +38,9 @@ from pathlib import Path
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools import corpus_latex
+from tools.corpus_corrections import CORRECTIONS, CORRECTIONS_OPENING
+from tools.corpus_forewords import FOREWORDS
 from tools.paper_latex import document
 from tools.paper_page import EARLIER_CORRECTIONS
 from tools.render_papers import PAPERS
@@ -53,6 +62,11 @@ RESEARCH = {  # site PDF name -> source folder under papers/latex-sources/
     "re-perceived-effects": "actuator-certificate-note",
     "faithfulness-conserved-quantity": "faithfulness-conservation-note",
 }
+CORPORA = {  # site PDF name -> (web page, public repository, deposited file)
+    "conferred-existence": ("conferred-existence.html", "senses-and-sensibility", "CONFERRED-EXISTENCE.txt"),
+    "witnessing-spine": ("witnessing-spine.html", "witnessing-spine", "SYNTHESIS-the-witnessing-spine.md"),
+}
+CORPUS_KIND = "deposited corpus source, converted by tools/corpus_latex.py"
 DOES_NOT_PROVE = ("Two identical builds show that this PDF follows from this source, engine and bundle. "
                   "They do not show that the paper's claims are true, and a different engine or bundle "
                   "may give different bytes.")
@@ -83,6 +97,32 @@ def research_sources(repo: Path) -> dict[str, tuple[bytes, dict]]:
                              capture_output=True, check=True).stdout
         out[name] = (tex, {"kind": "LaTeX in the private research repository", "commit": RESEARCH_COMMIT,
                            "path": path, "sha256": sha(tex)})
+    return out
+
+
+def corpus_inputs(page: str) -> dict[str, str]:
+    """The site files a corpus PDF adds to its deposit, with their hashes."""
+    paths = ["tools/corpus_latex.py", "tools/corpus_corrections.py"] + ([FOREWORDS[page]] if page in FOREWORDS else [])
+    return {path: sha((ROOT / path).read_bytes().replace(b"\r\n", b"\n")) for path in paths}
+
+
+def corpus_sources(workspace: Path) -> dict[str, tuple[bytes, dict]]:
+    from tools.render_corpus import CORPORA as PAGES
+    out = {}
+    for name, (page, repo, file) in CORPORA.items():
+        checkout = workspace / "public" / repo
+        commit = subprocess.run(["git", "-C", str(checkout), "rev-parse", "HEAD"],
+                                capture_output=True, text=True, check=True).stdout.strip()
+        raw = subprocess.run(["git", "-C", str(checkout), "show", f"HEAD:{file}"], capture_output=True, check=True).stdout
+        corpus = next(c for c in PAGES if c["out"].name == page)
+        foreword = (ROOT / FOREWORDS[page]).read_text(encoding="utf-8") if page in FOREWORDS else ""
+        corrections = CORRECTIONS.get(page, [])
+        origin = f"github.com/HarperZ9/{repo}, file {file} at commit {commit[:12]}"
+        tex = corpus_latex.document(corpus, raw.decode("utf-8"), foreword, corrections,
+                                    CORRECTIONS_OPENING if corrections else "", origin).encode("utf-8")
+        out[name] = (tex, {"kind": CORPUS_KIND, "repository": f"github.com/HarperZ9/{repo}", "commit": commit,
+                           "path": file, "sha256": sha(raw.replace(b"\r\n", b"\n")), "tex": f"papers/tex/{name}.tex",
+                           "tex_sha256": sha(tex), "page": page, "site_inputs": corpus_inputs(page)})
     return out
 
 
@@ -149,7 +189,14 @@ def check() -> int:
                 problems.append(f"{path.name}: the Markdown source changed since the build")
             if (ROOT / source["tex"]).read_bytes() != tex:
                 problems.append(f"{path.name}: papers/tex is stale against tools/paper_latex.py")
-    missing = sorted(set(site) - {p.stem for p in RECEIPTS.glob("*.json")})
+        if receipt["source"].get("kind") == CORPUS_KIND:
+            source = receipt["source"]
+            tex_path = ROOT / source["tex"]
+            if not tex_path.is_file() or sha(tex_path.read_bytes()) != source["tex_sha256"]:
+                problems.append(f"{path.name}: papers/tex differs from the receipt")
+            if corpus_inputs(source["page"]) != source["site_inputs"]:
+                problems.append(f"{path.name}: the converter, a foreword or a correction changed since the build")
+    missing = sorted((set(site) | set(CORPORA)) - {p.stem for p in RECEIPTS.glob("*.json")})
     problems += [f"{name}: no receipt" for name in missing]
     for line in problems:
         print(line)
@@ -161,15 +208,22 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--research", type=Path, help="checkout of the private research repository")
+    parser.add_argument("--corpus-workspace", type=Path, help="workspace holding public/<corpus repository>")
+    parser.add_argument("--only", nargs="*", help="build only these PDF names")
     args = parser.parse_args()
     if args.check:
         return check()
     exe = os.environ.get("TECTONIC") or shutil.which("tectonic")
     if not exe:
         raise SystemExit("no Tectonic binary: set TECTONIC or put tectonic on PATH")
-    status = build(exe, site_sources(), SITE_EPOCH)
+    def chosen(sources: dict) -> dict:
+        return {k: v for k, v in sources.items() if not args.only or k in args.only}
+
+    status = build(exe, chosen(site_sources()), SITE_EPOCH)
     if args.research:
-        status |= build(exe, research_sources(args.research), RESEARCH_EPOCH)
+        status |= build(exe, chosen(research_sources(args.research)), RESEARCH_EPOCH)
+    if args.corpus_workspace:
+        status |= build(exe, chosen(corpus_sources(args.corpus_workspace)), SITE_EPOCH)
     return status
 
 

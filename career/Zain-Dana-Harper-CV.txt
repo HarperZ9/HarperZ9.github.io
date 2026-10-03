@@ -168,7 +168,7 @@ September 2026. Compared public security reports to examine shared-service expos
 
 Selected Publications and Research Records
 
-Independent systems papers, preprints, research notes, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.
+Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.
 
 - EMET: An Authority-Incapable Byte-Level Integrity Witness. Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. doi.org/10.5281/zenodo.21230267
 
@@ -182,9 +182,19 @@ Independent systems papers, preprints, research notes, and archived manuscripts 
 
 - Re-Perceived Effects. Research note, 2026. doi.org/10.5281/zenodo.21231311
 
+- Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Research note, 2026. doi.org/10.5281/zenodo.22768398
+
 - The Witnessing Spine. Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927
 
 - Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724
+
+- Sourcehood Without a Source: The Arity Gap and the Free Will Debate. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126117
+
+- The Seam That Holds While It Is Crossed. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126357
+
+- Self-Given Is Not Self-Grounding. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126458
+
+- The Conservation of Faithfulness. Working paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126484
 
 Education
 

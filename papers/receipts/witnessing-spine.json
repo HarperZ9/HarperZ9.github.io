@@ -1,0 +1,35 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/witnessing-spine.pdf",
+  "source": {
+    "kind": "deposited corpus source, converted by tools/corpus_latex.py",
+    "repository": "github.com/HarperZ9/witnessing-spine",
+    "commit": "f9873c441daf7ada21e70db87bf2380afeb6c302",
+    "path": "SYNTHESIS-the-witnessing-spine.md",
+    "sha256": "ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191",
+    "tex": "papers/tex/witnessing-spine.tex",
+    "tex_sha256": "f2d0ee19cca5302b046a2ba75e1aa417691b3d093856afb2ac44eb060dd299c5",
+    "page": "witnessing-spine.html",
+    "site_inputs": {
+      "tools/corpus_latex.py": "487dcec591aedf980b3649f836604b2a44e2f45ab9f14fe8a7d2ae99ee2d25b8",
+      "tools/corpus_corrections.py": "2ae9bacf2883fdaabdcd19c2ac7f127ca7e47ebbaa8070b733d924f30be68d52",
+      "writing/papers/witnessing-spine-foreword.md": "48e2058643d42de16fdfad782c1de150c080bd1f5dad0335d3f89fd11dfc60fc"
+    }
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "f2da19c4a13d7b743cf73a2c92ad3ce1b176f8ac1743189299a37e0cd5053bb2",
+  "pdf_bytes": 63554,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/witnessing-spine.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

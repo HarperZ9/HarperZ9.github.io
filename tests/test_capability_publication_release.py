@@ -13,6 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-BniK76UM.js",
+    "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
     "assets/index-DtNiguMs.js",
@@ -600,7 +602,13 @@ RELEASE_PATHS = (
 # fonts.html and typeface.html link to it; the release is rehashed.
 # October 3, 2026: the type forge joins the route registry and the site index, and the
 # publication receipt records the sitemap that lists it; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "658590bde012f5b46c0958572e296705e11c980a493fb61da8ba80042ec1425d"
+# October 3, 2026: the research record counts twelve DOI records (the four October editions
+# join it on the Writing hub, the CV, the resumes and the dossier), the two archived corpora are
+# typeset with LaTeX with build receipts, and the home bundle is index-G7cmpE16.js; the release
+# is rehashed. Later the same day a Zenodo search by ORCID returned thirteen records: the formal
+# note on faithfulness (15 September 2026) joins the record, the bundle is index-BniK76UM.js, and
+# the release is rehashed again.
+REVIEWED_RELEASE_SHA256 = "4c8074b2f8914a03d65713081a8bcba098c903f4c6f1c7175e7e2fcde2c80243"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -794,7 +802,21 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 3, 2026: RAW's registry record now describes the C++23 reference renderer, so
     # the bundle rebuilt from the registry is index-DDpFxCuj.js with the same sheet.
     # index-DI6YWfTZ.js stays as retained history.
-    current_js = "index-DDpFxCuj.js"
+    # October 3, 2026: the Writing hub's research record counts twelve DOI records and lists
+    # the four October editions in it, so the bundle rebuilt from the registry is
+    # index-G7cmpE16.js with the same sheet. index-DDpFxCuj.js stays as retained history.
+    # October 3, 2026: a Zenodo search by ORCID returned thirteen records, so the research
+    # record adds the formal note on faithfulness and counts thirteen; the bundle rebuilt from
+    # the registry is index-BniK76UM.js with the same sheet. index-G7cmpE16.js stays as history.
+    current_js = "index-BniK76UM.js"
+    previous_count_js = "index-G7cmpE16.js"
+    assert previous_count_js not in source
+    assert (ROOT / "assets" / previous_count_js).is_file()
+    assert f"assets/{previous_count_js}" in RELEASE_PATHS
+    previous_record_js = "index-DDpFxCuj.js"
+    assert previous_record_js not in source
+    assert (ROOT / "assets" / previous_record_js).is_file()
+    assert f"assets/{previous_record_js}" in RELEASE_PATHS
     previous_raw_js = "index-DI6YWfTZ.js"
     assert previous_raw_js not in source
     assert (ROOT / "assets" / previous_raw_js).is_file()
