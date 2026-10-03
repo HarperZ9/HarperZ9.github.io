@@ -17,8 +17,8 @@ function shouldUseDesktopGpuArt(win = typeof window !== "undefined" ? window : u
   return !reducedMotion.matches && finePointer.matches && desktopWidth.matches;
 }
 
-function shouldMountAmbientField(doc = document) {
-  if (!shouldUseDesktopGpuArt(window)) return false;
+export function shouldMountAmbientField(doc = document, win = typeof window !== "undefined" ? window : undefined) {
+  if (!shouldUseDesktopGpuArt(win)) return false;
   const body = doc && doc.body;
   if (!body) return false;
   // The Studio is its own live instrument: a full-page ambient field animating
@@ -26,7 +26,9 @@ function shouldMountAmbientField(doc = document) {
   // roughly a tenth of the frame budget) and buys nothing, because the canvas
   // is already the subject. Ambient art stays on the reading surfaces.
   if (body.classList.contains("studio-page") || body.classList.contains("studio-app")) return false;
-  return body.classList.contains("gallery");
+  // A page opts in with data-ambient-field="true" on <body> (the Gallery does).
+  // The older class gate never matched: gallery.html had no "gallery" class.
+  return body.dataset.ambientField === "true" || body.classList.contains("gallery");
 }
 
 // Plates are not the ambient field, and gating them together was a mistake that
@@ -522,7 +524,9 @@ if (typeof document !== "undefined") {
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
     if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
-      import("./generative-field.js?v=20260925-void-plates").catch(() => {});
+      import("./generative-field.js?v=20260925-void-plates")
+        .then((mod) => { if (typeof mod.mountGenerativeField === "function") mod.mountGenerativeField(document); })
+        .catch(() => {});
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);

@@ -3487,14 +3487,8 @@ export function drawImageFit(canvas, imgLike, opts = {}) {
   return { width, height };
 }
 
-if (typeof document !== "undefined" && !document.body?.dataset.deferGenerativeField) {
-  const bootField = () => {
-    mountGenerativeField();
-    mountSpecimens();
-  };
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootField, { once: true });
-  } else {
-    bootField();
-  }
-}
+// No import side effect. Importing this module used to mount the ambient field
+// on any page that loaded it for a plate, so nine reading pages ran two hidden
+// full-screen canvases at about 12 fps (85 to 90 ms of script per second).
+// nav.js now calls mountGenerativeField() where the page opts in and
+// mountSpecimens() wherever a plate appears.
