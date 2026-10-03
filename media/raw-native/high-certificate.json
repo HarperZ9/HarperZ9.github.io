@@ -1,0 +1,1 @@
+{"claim":"screen-space AO matches ray-traced ground truth within tolerance","verdict":"verified","oracle":"raw-rt-ao-v1","evidence":[["pixels","239854"],["rmse","0.0827"],["maxError","0.6250"],["tolerance","0.1200"]],"channels":{"ao_fidelity":0.923585,"motion_coherence":1,"hdr_headroom":0.875542}}

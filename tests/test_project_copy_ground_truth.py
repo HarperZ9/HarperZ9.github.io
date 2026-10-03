@@ -313,7 +313,7 @@ def test_current_independent_systems_are_not_missing_from_registry() -> None:
     records = {record["id"]: record for record in registry["systems"]}
 
     assert records["chorus"]["productType"] == "discourse synthesis system"
-    assert records["raw"]["productType"] == "Skyrim D3D11 rendering platform"
+    assert records["raw"]["productType"] == "C++23 CPU reference renderer"
     assert records["chorus"]["architectureRole"] != "flywheel-component"
     assert records["raw"]["architectureRole"] != "flywheel-component"
 
