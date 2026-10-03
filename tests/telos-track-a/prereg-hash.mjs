@@ -59,9 +59,17 @@ export function amendment4Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
   return createHash("sha256").update(Buffer.from(preregBlock(text, A4_START, A4_END), "utf8")).digest("hex");
 }
 
+// Pre-registration 3 (T7 redesign, T5 L1 budget and upsampler, T6 art-lane scope).
+const P3_START = "<!-- prereg-track-a-t7v2:start -->";
+const P3_END = "<!-- prereg-track-a-t7v2:end -->";
+export function t7v2Sha256(text = readFileSync(PREREG_PATH, "utf8")) {
+  return createHash("sha256").update(Buffer.from(preregBlock(text, P3_START, P3_END), "utf8")).digest("hex");
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const a = process.argv;
   if (a.includes("--amendment-4")) { console.log(amendment4Sha256()); process.exit(0); }
+  if (a.includes("--t7v2")) { console.log(t7v2Sha256()); process.exit(0); }
   console.log(a.includes("--amendment-3") ? amendment3Sha256() : a.includes("--amendment-2") ? amendment2Sha256()
     : a.includes("--t4t7") ? t4t7Sha256() : a.includes("--amendment-1") ? amendment1Sha256() : preregSha256());
 }
