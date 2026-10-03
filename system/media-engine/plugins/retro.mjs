@@ -135,7 +135,16 @@ void main(){
   o = vec4(floor(floor(c*255.0 + 0.5)*vf/256.0)/255.0, 1.0);
 }`;
 
+// The source is the default live shader, or any frame handed in as params.source (a canvas or image
+// from another plugin: a Gallery plate, Loom cloth, font glyphs). A handed-in frame is copied once,
+// so the sender can keep drawing on its own canvas.
 function makeSource(params) {
+  if (params.source) {
+    const c = document.createElement("canvas");
+    c.width = params.source.width || 1024; c.height = params.source.height || 640;
+    c.getContext("2d").drawImage(params.source, 0, 0);
+    return { canvas: c, still: true, frame() {}, dispose() {} };
+  }
   const c = document.createElement("canvas"); c.width = 1024; c.height = 640;
   const runner = createShaderRunner(c, params.frag || DEFAULT_FRAG);
   if (!runner.ok) throw new Error("retro source shader: " + runner.error);
@@ -294,5 +303,32 @@ export const retro = {
   create({ canvas, params, backend }) {
     if (backend !== "canvas2d") { const g = gpuBackend(canvas, params); if (g) return g; }
     return cpuBackend(canvas, params);
+  },
+};
+
+// The Retro pipeline drawing into a 2D canvas the host already owns (the Studio's stage), with the
+// tube on the GPU behind createRetroRenderer(). The host keeps reading, measuring and exporting its
+// canvas as before.
+export const retro2d = {
+  id: "retro-2d",
+  version: "1.0.0",
+  backends: ["canvas2d"],
+  create({ canvas, params }) {
+    const src = makeSource(params), renderer = createRetroRenderer();
+    let p = { ...RETRO_DEFAULTS, ...params };
+    return {
+      // A handed-in still frame needs one draw per change, not an animation loop.
+      static: !!src.still,
+      get backend() { return renderer.backend === "webgl2" ? "canvas2d+webgl2-tube" : "canvas2d"; },
+      lastMeasure: null,
+      frame(t) {
+        src.frame(t);
+        const upscale = Math.max(2, Math.min(12, Math.round(900 / p.targetWidth)));
+        this.lastMeasure = renderer.render(src.canvas, canvas, { ...p, scanlines: p.scanlines && p.scanStrength > 0.02, upscale });
+      },
+      setParams(n) { p = { ...RETRO_DEFAULTS, ...n }; },
+      readPixels() { return new Uint8Array(canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data.buffer); },
+      dispose() { src.dispose(); renderer.dispose(); },
+    };
   },
 };

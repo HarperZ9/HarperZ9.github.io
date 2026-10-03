@@ -535,7 +535,22 @@ const SOURCES = {
   plotmaps:  { block: "src-plotmaps",  mode: "generate" },
   voxels:    { block: "src-voxels",    mode: "generate" },
   sketch:    { block: "src-sketch",    mode: "generate" },
+  // Media engine surfaces (studio-engine.js): every media page on the site, entered from here.
+  retro:     { block: "src-engine",    mode: "generate", engine: true },
+  gallery:   { block: "src-engine",    mode: "generate", engine: true },
+  loom:      { block: "src-engine",    mode: "generate", engine: true },
+  splats:    { block: "src-engine",    mode: "generate", engine: true },
+  brender:   { block: "src-engine",    mode: "generate", engine: true },
+  revival:   { block: "src-engine",    mode: "generate", engine: true },
+  raw:       { block: "src-engine",    mode: "generate", engine: true },
 };
+
+// The engine surfaces load on first entry, like the other heavy sources.
+let _engineSurface = null;
+function loadEngineSurface() {
+  return _engineSurface ? Promise.resolve(_engineSurface)
+    : import("./studio-engine.js").then((m) => (_engineSurface = m));
+}
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
 // its DOM inside #poster-mount and renders onto the shared studio canvas.
@@ -589,6 +604,7 @@ function setSource(next) {
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
+    if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -606,8 +622,9 @@ function setSource(next) {
     window.__studioExportWebmVisible(sourceIsAnimated(next));
   }
   mode = SOURCES[next].mode;
-  for (const [name, cfg] of Object.entries(SOURCES)) {
-    const el = $(cfg.block); if (el) el.hidden = name !== next;
+  // Several engine surfaces share one rail block, so compare blocks rather than names.
+  for (const cfg of Object.values(SOURCES)) {
+    const el = $(cfg.block); if (el) el.hidden = cfg.block !== SOURCES[next].block;
   }
   document.querySelectorAll("#studio-source button").forEach(b =>
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
@@ -615,6 +632,13 @@ function setSource(next) {
   syncTabindex(next);
   syncStudioRendererConsole(next);
   if (next === "poster") enterPosterWorkshop(epoch);
+  if (SOURCES[next].engine) {
+    loadEngineSurface().then((m) => {
+      if (epoch !== _sourceEpoch) return;
+      return m.enterEngineSurface(next, { canvas: $("studio-canvas"), mount: $("engine-mount"),
+        isCurrent: () => epoch === _sourceEpoch, setSource });
+    }).catch((e) => { console.error("[studio] engine surface " + next + " failed:", e); });
+  }
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
@@ -4627,7 +4651,7 @@ function liveTick(ts) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic, engineStatic: _engineSurface ? _engineSurface.engineSurfaceStatic() : true });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }

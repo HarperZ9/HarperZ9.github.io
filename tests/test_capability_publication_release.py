@@ -591,7 +591,7 @@ RELEASE_PATHS = (
 # join it on the Writing hub, the CV, the resumes and the dossier), the two archived corpora are
 # typeset with LaTeX with build receipts, and the home bundle is index-G7cmpE16.js; the release
 # is rehashed.
-REVIEWED_RELEASE_SHA256 = "2f689a1647097bb1e250fdda002e57f275d60bdaae4ffb60bf67765de989cda1"
+REVIEWED_RELEASE_SHA256 = "bc37558880739beb27a318f36dd5a29eddc2b5da88a62154d81d45bf4aa69943"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
