@@ -1,0 +1,96 @@
+{
+  "schema": "explainer-receipt/v1",
+  "slug": "receipt-loop",
+  "title": "From a proposed answer to a kept receipt",
+  "page": "flywheel.html#loop",
+  "spec": {
+    "path": "media/explainers/receipt-loop/spec.json",
+    "sha256": "f5f11f19c4268edc3bf6c71edac37d8b07d8980ee0ab258d831ee1789bd9af0e"
+  },
+  "params": {
+    "budget": 4,
+    "first_pass": 2
+  },
+  "live": {
+    "plugin": "system/media-engine/plugins/explainer.mjs",
+    "state": "system/explainer/state.mjs",
+    "note": "The page's live version draws from the same spec; its frame receipts carry this spec hash."
+  },
+  "render_code": {
+    "tools/explainer/draw.py": "552d54ecc5ee16310033e27f23e4b44506e06945220a2a581b9a69d7bab59da6",
+    "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
+    "tools/explainer/scene.py": "97f4a39c9385cd4cd26f47a19ef7f18a47200126453c4101e4a78e732a273caa",
+    "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
+    "tools/explainer/render.py": "6ac2ab73782e287fd009de15ab4cc346455cabbe7ca112ee8f6491880caa124a"
+  },
+  "fonts": {
+    "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
+    "system/fonts/conso-regular.woff2": "0e4a48ca69d9f6b6a1916eb1c6459fe6947bd4a9f999c684f1237beda1c24f78"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "pillow": "12.2.0",
+    "numpy": "2.4.5",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "voice": "Microsoft Zira Desktop",
+    "os": "Windows-11-10.0.26220-SP0"
+  },
+  "outputs": {
+    "receipt-loop.mp4": "2886f8c0515a8eb8f974d7df483e2b48e8026ee9dfdc103892fcff3772dd799c",
+    "receipt-loop.srt": "47ac9b6e1193bb34a01f30b1b6a3dd3747b29e91ea0e3bb7879c68f004ce92ef",
+    "receipt-loop.vtt": "b14a426178d519c4dfe9f5ac4fa9c077d2608f2f28c84eed915ab2af7a5542ce",
+    "poster.png": "633708966c7fbcc6c3a7f0e586cc13439fab542db844734fa5feaf77e7cb4832",
+    "aperture.png": "53db474d7c8edc5d1cf781a99d2cef1fa233ade8a528567a954a6c8f86c1b6bc"
+  },
+  "narration_wav_sha256": "1d2f3b734282442c4b110303947fd9302c2e19b1c86923ed1f77d8ed3688ce62",
+  "frames": 1941,
+  "fps": 30,
+  "seconds": 64.7,
+  "frame_chain_sha256": "d4f2621676e8b556d2bc6419711fe659d689e1d8bb270e7a78f49d9ace67379d",
+  "timeline": [
+    {
+      "scene": "title",
+      "start": 0.0,
+      "end": 3.733,
+      "text": "From a proposed answer to a kept receipt."
+    },
+    {
+      "scene": "propose",
+      "start": 3.733,
+      "end": 12.567,
+      "text": "A local model proposes answers. It is cheap and replaceable, and asking it for more candidates widens the pool."
+    },
+    {
+      "scene": "check",
+      "start": 12.567,
+      "end": 22.767,
+      "text": "No learned model sits on this step. An external check, such as a test run or a source comparison, accepts or rejects the answer."
+    },
+    {
+      "scene": "receipt",
+      "start": 22.767,
+      "end": 33.067,
+      "text": "A pass writes a receipt named by a fingerprint of its own contents, so anyone can re-check it offline, and a change to any byte makes that check fail."
+    },
+    {
+      "scene": "budget",
+      "start": 33.067,
+      "end": 43.533,
+      "text": "When the attempt budget runs out, Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you."
+    },
+    {
+      "scene": "cache",
+      "start": 43.533,
+      "end": 54.167,
+      "text": "Passed answers go into a proof cache with their receipts. The next identical request costs nothing, and the cache re-checks the answer before it serves it."
+    },
+    {
+      "scene": "close",
+      "start": 54.167,
+      "end": 64.7,
+      "text": "The drawing shows the order of the steps. It does not show that the loop raises accuracy. On the shipped benchmark the interval includes zero."
+    }
+  ],
+  "rerun": "python -m tools.explainer.render media/explainers/receipt-loop --verify",
+  "does_not_prove": "Matching hashes show the same bytes came out of the same spec, code and tools. They do not show that the explanation is correct or that it teaches. The narration voice ships with Windows, so the audio rebuilds only on a machine with the same voice."
+}

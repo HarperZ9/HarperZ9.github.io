@@ -1,0 +1,159 @@
+{
+  "schema": "learn-items/1",
+  "topic": "The cost to verify",
+  "explainer": "cost-to-verify",
+  "checks": [
+    {
+      "after": "debt",
+      "items": [
+        "ctv-checking-cost",
+        "ctv-review-debt"
+      ]
+    },
+    {
+      "after": "close",
+      "items": [
+        "ctv-who-pays",
+        "ctv-closing-side"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "ctv-checking-cost",
+      "objective": "verification-cost",
+      "prompt": "Models get better at drafting. What happens to the cost of checking what they draft?",
+      "choices": [
+        {
+          "id": "falls",
+          "text": "It falls by the same amount"
+        },
+        {
+          "id": "same",
+          "text": "It stays where it was"
+        },
+        {
+          "id": "vanishes",
+          "text": "It disappears once the model is good enough"
+        }
+      ],
+      "answer": "same",
+      "misconceptions": {
+        "falls": {
+          "leaf": "misrecruited.verification_discount",
+          "note": "This assumes checking got the same discount as claiming. In the essay it did not: a skilled person still spends hours."
+        },
+        "vanishes": {
+          "leaf": "misrecruited.better_models_close_gap",
+          "note": "This treats a better-shaped claim as a checked one. A right claim and a wrong one can look identical on the page."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#3-review-debt",
+        "quote": "Verification did not get the discount."
+      }
+    },
+    {
+      "id": "ctv-review-debt",
+      "objective": "review-debt",
+      "prompt": "What does the essay call review debt?",
+      "choices": [
+        {
+          "id": "gap",
+          "text": "The gap between the cost of claiming and the cost of checking"
+        },
+        {
+          "id": "drafting",
+          "text": "The time a model spends drafting"
+        },
+        {
+          "id": "backlog",
+          "text": "A journal's queue of papers waiting for review"
+        }
+      ],
+      "answer": "gap",
+      "misconceptions": {
+        "drafting": {
+          "leaf": "misrecruited.debt_is_drafting_time",
+          "note": "Drafting is the cheap side. The debt is what checking costs beyond it."
+        },
+        "backlog": {
+          "leaf": "misrecruited.debt_is_queue",
+          "note": "A queue is one place the debt shows up. The debt itself is the cost gap, wherever it lands."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#3-review-debt",
+        "quote": "That gap between the cost of claiming and the cost of checking is a debt."
+      }
+    },
+    {
+      "id": "ctv-who-pays",
+      "objective": "who-pays",
+      "prompt": "When nobody checks, who ends up paying review debt?",
+      "choices": [
+        {
+          "id": "least-power",
+          "text": "Whoever has the least power to refuse it"
+        },
+        {
+          "id": "maker",
+          "text": "The company that made the model"
+        },
+        {
+          "id": "nobody",
+          "text": "Nobody, as long as the output looks right"
+        }
+      ],
+      "answer": "least-power",
+      "misconceptions": {
+        "maker": {
+          "leaf": "misrecruited.debt_lands_on_maker",
+          "note": "The essay traces the bill downhill: to the person debugging at two in the morning, the unpaid reviewer, the clerk, the patient."
+        },
+        "nobody": {
+          "leaf": "misrecruited.looks_right_is_right",
+          "note": "Looking right is the shape of a claim. The debt is still there, with a hidden invoice."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#3-review-debt",
+        "quote": "it always lands on the person with the least power to refuse it"
+      }
+    },
+    {
+      "id": "ctv-closing-side",
+      "objective": "closing-side",
+      "prompt": "From which side can the gap close?",
+      "choices": [
+        {
+          "id": "checking",
+          "text": "The checking side: make the check cheap to rerun"
+        },
+        {
+          "id": "claiming",
+          "text": "The claiming side: better models"
+        },
+        {
+          "id": "both",
+          "text": "Either side, equally"
+        }
+      ],
+      "answer": "checking",
+      "misconceptions": {
+        "claiming": {
+          "leaf": "misrecruited.better_models_close_gap",
+          "note": "Better models lower the cost of claiming and leave checking where it was, so the gap grows."
+        },
+        "both": {
+          "leaf": "misrecruited.symmetric_gap",
+          "note": "Every gain on the claiming side widens the gap. Only cheaper checking narrows it."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#3-review-debt",
+        "quote": "The gap can close only from the verification side."
+      }
+    }
+  ]
+}

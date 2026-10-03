@@ -1,0 +1,284 @@
+{
+  "slug": "receipt-loop",
+  "title": "From a proposed answer to a kept receipt",
+  "seed": 20261005,
+  "page": "flywheel.html#loop",
+  "poster": {
+    "scene": "receipt",
+    "at": 0.8
+  },
+  "source": "flywheel.html#loop: the loop drawing, its step notes and its does-not-prove line",
+  "params": [
+    {
+      "id": "budget",
+      "label": "Attempt budget (candidates)",
+      "kind": "range",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "digits": 0,
+      "scene": "check"
+    },
+    {
+      "id": "first_pass",
+      "label": "First candidate that passes the check",
+      "kind": "choice",
+      "default": 2,
+      "scene": "check",
+      "options": [
+        {
+          "value": 0,
+          "label": "none of them"
+        },
+        {
+          "value": 1,
+          "label": "candidate 1"
+        },
+        {
+          "value": 2,
+          "label": "candidate 2"
+        },
+        {
+          "value": 3,
+          "label": "candidate 3"
+        },
+        {
+          "value": 4,
+          "label": "candidate 4"
+        },
+        {
+          "value": 5,
+          "label": "candidate 5"
+        },
+        {
+          "value": 6,
+          "label": "candidate 6"
+        }
+      ]
+    }
+  ],
+  "derived": {
+    "passed": {
+      "if": {
+        "all": [
+          {
+            "ge": [
+              {
+                "param": "first_pass"
+              },
+              1
+            ]
+          },
+          {
+            "le": [
+              {
+                "param": "first_pass"
+              },
+              {
+                "param": "budget"
+              }
+            ]
+          }
+        ]
+      },
+      "then": 1,
+      "else": 0
+    }
+  },
+  "scenes": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "From a proposed answer to a kept receipt",
+      "say": "From a proposed answer to a kept receipt.",
+      "min": 3.5
+    },
+    {
+      "key": "propose",
+      "heading": "A local model proposes",
+      "say": "A local model proposes answers. It is cheap and replaceable, and asking it for more candidates widens the pool.",
+      "min": 4.5,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "local model",
+          "value": "proposes candidates"
+        },
+        {
+          "type": "note",
+          "at": 0.5,
+          "text": "Cheap and replaceable. More candidates widen the pool."
+        }
+      ]
+    },
+    {
+      "key": "check",
+      "heading": "An external check decides",
+      "say": "No learned model sits on this step. An external check, such as a test run or a source comparison, accepts or rejects the answer.",
+      "min": 5.0,
+      "marks": [
+        {
+          "type": "tries",
+          "at": 0.1,
+          "max": 6,
+          "budget": {
+            "param": "budget"
+          },
+          "first_pass": {
+            "param": "first_pass"
+          }
+        },
+        {
+          "type": "note",
+          "at": 0.6,
+          "text": "Only the external check can accept an answer."
+        }
+      ]
+    },
+    {
+      "key": "receipt",
+      "heading": {
+        "if": {
+          "eq": [
+            {
+              "param": "passed"
+            },
+            1
+          ]
+        },
+        "then": "A pass writes a receipt",
+        "else": "No pass, no receipt"
+      },
+      "say": "A pass writes a receipt named by a fingerprint of its own contents, so anyone can re-check it offline, and a change to any byte makes that check fail.",
+      "min": 5.5,
+      "marks": [
+        {
+          "type": "tries",
+          "at": 0.0,
+          "carry": true,
+          "max": 6,
+          "budget": {
+            "param": "budget"
+          },
+          "first_pass": {
+            "param": "first_pass"
+          }
+        },
+        {
+          "type": "card",
+          "at": 0.2,
+          "label": "outcome",
+          "value": {
+            "if": {
+              "eq": [
+                {
+                  "param": "passed"
+                },
+                1
+              ]
+            },
+            "then": "candidate {first_pass} passed: receipt written",
+            "else": "no candidate passed: no receipt"
+          },
+          "verdict": {
+            "if": {
+              "eq": [
+                {
+                  "param": "passed"
+                },
+                1
+              ]
+            },
+            "then": "PASS",
+            "else": "FAIL"
+          }
+        }
+      ]
+    },
+    {
+      "key": "budget",
+      "heading": "When the budget runs out",
+      "say": "When the attempt budget runs out, Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you.",
+      "min": 5.5,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "attempt budget",
+          "value": "{budget} candidates"
+        },
+        {
+          "type": "card",
+          "at": 0.3,
+          "label": "stronger tier",
+          "value": {
+            "if": {
+              "eq": [
+                {
+                  "param": "passed"
+                },
+                1
+              ]
+            },
+            "then": "not needed this time",
+            "else": "named; you decide whether to call it"
+          },
+          "verdict": {
+            "if": {
+              "eq": [
+                {
+                  "param": "passed"
+                },
+                1
+              ]
+            },
+            "then": null,
+            "else": "HOLD"
+          },
+          "risk": {
+            "if": {
+              "eq": [
+                {
+                  "param": "passed"
+                },
+                1
+              ]
+            },
+            "then": null,
+            "else": "elevated"
+          }
+        }
+      ]
+    },
+    {
+      "key": "cache",
+      "heading": "The proof cache re-checks",
+      "say": "Passed answers go into a proof cache with their receipts. The next identical request costs nothing, and the cache re-checks the answer before it serves it.",
+      "min": 5.5,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "proof cache",
+          "value": "stores passed answers with their receipts"
+        },
+        {
+          "type": "card",
+          "at": 0.3,
+          "label": "next identical request",
+          "value": "re-check, then serve"
+        }
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Order, not uplift",
+      "say": "The drawing shows the order of the steps. It does not show that the loop raises accuracy. On the shipped benchmark the interval includes zero.",
+      "min": 5.0,
+      "command": "python -m tools.explainer.render media/explainers/receipt-loop --verify"
+    }
+  ]
+}

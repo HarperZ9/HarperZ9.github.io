@@ -82,19 +82,30 @@
           "type": "card",
           "at": 0.05,
           "label": "criterion",
-          "value": "render under 1.50 s, set by someone else"
+          "value": "render under {limit} s, set by someone else"
         },
         {
           "type": "card",
           "at": 0.3,
           "label": "measured",
-          "value": "render: 1.84 s"
+          "value": "render: {measured} s"
         }
       ]
     },
     {
       "key": "split",
-      "heading": "Receipt holds, claim fails",
+      "heading": {
+        "if": {
+          "eq": [
+            {
+              "param": "holds"
+            },
+            1
+          ]
+        },
+        "then": "Receipt holds, claim holds",
+        "else": "Receipt holds, claim fails"
+      },
       "say": "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.",
       "min": 5.0,
       "marks": [
@@ -108,9 +119,20 @@
         {
           "type": "card",
           "at": 0.25,
-          "label": "verdict: render under 1.50 s",
-          "value": "measured 1.84 s",
-          "verdict": "DRIFT"
+          "label": "verdict: render under {limit} s",
+          "value": "measured {measured} s",
+          "verdict": {
+            "if": {
+              "eq": [
+                {
+                  "param": "holds"
+                },
+                1
+              ]
+            },
+            "then": "MATCH",
+            "else": "DRIFT"
+          }
         }
       ]
     },
@@ -122,5 +144,45 @@
       "min": 4.5,
       "command": "python -m tools.explainer.render media/explainers/receipt-is-not-a-verdict --verify"
     }
-  ]
+  ],
+  "params": [
+    {
+      "id": "limit",
+      "label": "Pass line, set by someone else (seconds)",
+      "kind": "range",
+      "min": 1.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.5,
+      "digits": 2,
+      "scene": "split"
+    },
+    {
+      "id": "measured",
+      "label": "Measured render time (seconds)",
+      "kind": "range",
+      "min": 1.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.84,
+      "digits": 2,
+      "scene": "split"
+    }
+  ],
+  "derived": {
+    "holds": {
+      "if": {
+        "le": [
+          {
+            "param": "measured"
+          },
+          {
+            "param": "limit"
+          }
+        ]
+      },
+      "then": 1,
+      "else": 0
+    }
+  }
 }

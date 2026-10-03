@@ -81,8 +81,11 @@
             {
               "label": "draft a review",
               "value": 1,
-              "to": 0.3,
-              "display": "cheaper each year",
+              "to": {
+                "param": "speedup",
+                "over": 1
+              },
+              "display": "{speedup} times cheaper",
               "strong": true,
               "carry": true
             },
@@ -94,6 +97,15 @@
             }
           ],
           "scale": 30
+        },
+        {
+          "type": "grid",
+          "at": 0.3,
+          "count": 100,
+          "filled": {
+            "param": "checked"
+          },
+          "label": "{checked} of every 100 claims checked. Illustrative values."
         },
         {
           "type": "note",
@@ -133,6 +145,30 @@
       "say": "The gap closes only from the checking side: make the check cheap to rerun. This video ships with its own receipt.",
       "min": 5.0,
       "command": "python -m tools.explainer.render media/explainers/cost-to-verify --verify"
+    }
+  ],
+  "params": [
+    {
+      "id": "speedup",
+      "label": "How many times cheaper drafting gets",
+      "kind": "range",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 3,
+      "digits": 0,
+      "scene": "debt"
+    },
+    {
+      "id": "checked",
+      "label": "Claims checked, out of every 100 drafted",
+      "kind": "range",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 20,
+      "digits": 0,
+      "scene": "debt"
     }
   ]
 }

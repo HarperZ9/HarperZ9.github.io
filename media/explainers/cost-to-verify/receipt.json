@@ -5,13 +5,23 @@
   "page": "no-receipt-no-accept.html#3-review-debt",
   "spec": {
     "path": "media/explainers/cost-to-verify/spec.json",
-    "sha256": "57e47a03ccebed7d8a5227f909ca8075ccb66c452701a1cb6cd6fb5dabaf93d0"
+    "sha256": "13ba5f563719851ebf944ec07ba8a984d1a17fb78bf9b3f19470a8d821a68ea8"
+  },
+  "params": {
+    "speedup": 3,
+    "checked": 20
+  },
+  "live": {
+    "plugin": "system/media-engine/plugins/explainer.mjs",
+    "state": "system/explainer/state.mjs",
+    "note": "The page's live version draws from the same spec; its frame receipts carry this spec hash."
   },
   "render_code": {
-    "tools/explainer/draw.py": "74c21401f1c995a1ac8531579abf6e9ed9ee8a0435db8dcf9197e869b507df8c",
+    "tools/explainer/draw.py": "552d54ecc5ee16310033e27f23e4b44506e06945220a2a581b9a69d7bab59da6",
     "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
+    "tools/explainer/scene.py": "97f4a39c9385cd4cd26f47a19ef7f18a47200126453c4101e4a78e732a273caa",
     "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
-    "tools/explainer/render.py": "ee158c839cdbc3e839def1493dd5caaa26e044cc84da4bcca0fcee80d24876d3"
+    "tools/explainer/render.py": "6ac2ab73782e287fd009de15ab4cc346455cabbe7ca112ee8f6491880caa124a"
   },
   "fonts": {
     "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
@@ -26,16 +36,17 @@
     "os": "Windows-11-10.0.26220-SP0"
   },
   "outputs": {
-    "cost-to-verify.mp4": "a9905eee38b2a5d92a7741712205f0cbeaf1bfcfeac2fbc48084ce092f96f133",
+    "cost-to-verify.mp4": "94bfd830783c4c42e9f7466a5f12bd9eb89951854481c3fe7f4126a3437a7d0c",
     "cost-to-verify.srt": "31bf996e0683fc3a74c03700b29e5d1660ca581aadbfdd6606a2480cf7219d42",
     "cost-to-verify.vtt": "e4b208836c87a0ad3404445b7bf368274c8a04be94fefc6eac447d3b64f0c97d",
-    "poster.png": "4f6b3518065ceff2e6abb807a0e74063d4b7326d0c5a6876c6dd0f1866f19aa4"
+    "poster.png": "8b69a52ad380cbbb934ea7171ad2845f736d0ec5dfa4327b8a0065ed27fb8ea6",
+    "aperture.png": "0f47e854c8938e6e1cc738ee7ae4bab952d9d075752a1ebd13527ec4bb803358"
   },
   "narration_wav_sha256": "b1e4804b38155d571820e414c76d854f5dd35e5450bc4d21e5aad79e9ce199f1",
   "frames": 1250,
   "fps": 30,
   "seconds": 41.667,
-  "frame_chain_sha256": "7e7db7be006571b662125e6483cbae2be21de9a3ee11ff6acacd3892dde16dd6",
+  "frame_chain_sha256": "a2d19aa41b79e4201af2374e25282694b0aa0973c84f95cd576c78230638dbcb",
   "timeline": [
     {
       "scene": "title",

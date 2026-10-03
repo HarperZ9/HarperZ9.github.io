@@ -608,7 +608,11 @@ RELEASE_PATHS = (
 # is rehashed. Later the same day a Zenodo search by ORCID returned thirteen records: the formal
 # note on faithfulness (15 September 2026) joins the record, the bundle is index-BniK76UM.js, and
 # the release is rehashed again.
-REVIEWED_RELEASE_SHA256 = "4c8074b2f8914a03d65713081a8bcba098c903f4c6f1c7175e7e2fcde2c80243"
+# October 3, 2026: the explainers go live in the page. No Receipt, No Accept and the Flywheel page
+# carry live, interactive explainers driven by the media engine from the same specs as their
+# videos, with Learn recall checks; the two essay explainers are re-rendered and the Flywheel loop
+# explainer is new. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "1fff5c4ee62668c20575bbaa04794fd8825d94083782c7395d0f33ce6e51582e"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

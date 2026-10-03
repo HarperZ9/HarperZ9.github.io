@@ -1,0 +1,159 @@
+{
+  "schema": "learn-items/1",
+  "topic": "A receipt is not a verdict",
+  "explainer": "receipt-is-not-a-verdict",
+  "checks": [
+    {
+      "after": "rerun",
+      "items": [
+        "rinv-records",
+        "rinv-same-hash"
+      ]
+    },
+    {
+      "after": "close",
+      "items": [
+        "rinv-criterion",
+        "rinv-split"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "rinv-records",
+      "objective": "receipt-contents",
+      "prompt": "What does a receipt record?",
+      "choices": [
+        {
+          "id": "what-ran",
+          "text": "What ran: the command, the inputs and the hash of the output"
+        },
+        {
+          "id": "holds",
+          "text": "Whether the claim holds up"
+        },
+        {
+          "id": "opinion",
+          "text": "A reviewer's opinion of the work"
+        }
+      ],
+      "answer": "what-ran",
+      "misconceptions": {
+        "holds": {
+          "leaf": "misrecruited.receipt_as_verdict",
+          "note": "Whether a claim holds is a verdict, and a verdict needs a criterion. A receipt only records what happened."
+        },
+        "opinion": {
+          "leaf": "misrecruited.receipt_as_review",
+          "note": "A receipt carries no judgement. It is a record a stranger can rerun."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+        "quote": "A receipt records what ran: the command, the inputs and the hash of the output."
+      }
+    },
+    {
+      "id": "rinv-same-hash",
+      "objective": "hash-meaning",
+      "prompt": "Rerun the command and the hash matches. What does that show?",
+      "choices": [
+        {
+          "id": "same-bytes",
+          "text": "The same bytes came out"
+        },
+        {
+          "id": "right",
+          "text": "The output is right"
+        },
+        {
+          "id": "honest",
+          "text": "The author is honest"
+        }
+      ],
+      "answer": "same-bytes",
+      "misconceptions": {
+        "right": {
+          "leaf": "misrecruited.receipt_as_verdict",
+          "note": "A matching hash shows the bytes are the same. Whether they are right needs a criterion the author did not write."
+        },
+        "honest": {
+          "leaf": "misrecruited.hash_as_character",
+          "note": "A hash says nothing about a person. It fingerprints bytes."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+        "quote": "That shows the same bytes came out. It says nothing about whether they are right."
+      }
+    },
+    {
+      "id": "rinv-criterion",
+      "objective": "verdict-criterion",
+      "prompt": "What does a verdict need that a receipt does not have?",
+      "choices": [
+        {
+          "id": "outside",
+          "text": "A criterion the author did not write"
+        },
+        {
+          "id": "longer",
+          "text": "A longer hash"
+        },
+        {
+          "id": "second-run",
+          "text": "A second run by the author"
+        }
+      ],
+      "answer": "outside",
+      "misconceptions": {
+        "longer": {
+          "leaf": "slip.hash_strength",
+          "note": "Hash length changes how hard a forgery is. It does not judge the output."
+        },
+        "second-run": {
+          "leaf": "misrecruited.self_check",
+          "note": "An author rerunning their own work shows the same bytes again. The criterion has to come from outside the author."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+        "quote": "A verdict needs a criterion the author did not write, such as a test suite, a proof checker or a measured threshold."
+      }
+    },
+    {
+      "id": "rinv-split",
+      "objective": "receipt-vs-verdict",
+      "prompt": "In the example, the rerun matches and the independent test reports drift. What follows?",
+      "choices": [
+        {
+          "id": "receipt-holds",
+          "text": "The receipt holds, and the claim fails"
+        },
+        {
+          "id": "both-hold",
+          "text": "Both hold, because the hashes match"
+        },
+        {
+          "id": "both-fail",
+          "text": "Both fail, because the test drifted"
+        }
+      ],
+      "answer": "receipt-holds",
+      "misconceptions": {
+        "both-hold": {
+          "leaf": "misrecruited.receipt_as_verdict",
+          "note": "Matching hashes vouch for the record. The test is what judged the claim."
+        },
+        "both-fail": {
+          "leaf": "misrecruited.verdict_voids_receipt",
+          "note": "The drift is a fact about the claim. The receipt still records truthfully what ran."
+        }
+      },
+      "source": {
+        "ref": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+        "quote": "The receipt holds, and the claim fails."
+      }
+    }
+  ]
+}

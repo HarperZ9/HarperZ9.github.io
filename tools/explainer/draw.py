@@ -77,40 +77,40 @@ class Painter:
 
     def level_tag(self, d, right: float, y: float, mark: dict, hot: bool, a: float) -> None:
         """Verdict word in mono, its liability level in words under it, right-aligned."""
-        level = risk_of(mark)
+        level = mark["risk"]
         col = RISK[level] if hot else QUIET
         word = (mark.get("verdict") or level).upper()
         self.text(d, (right - d.textlength(word, font=self.f["mono"]), y), word, "mono", col, a)
         sub = f"{level} liability"
         self.text(d, (right - d.textlength(sub, font=self.f["small"]), y + 34), sub, "small", col if hot else QUIET, a)
 
-    def card(self, d, y: int, mark: dict, hot: bool, a: float) -> int:
+    def card(self, d, y: int, mark: dict, a: float) -> int:
+        hot = mark["hot"]
         d.rectangle([140, y, W - 140, y + 84], outline=fade(HAIR, a), width=1)
         self.text(d, (164, y + 12), mark["label"], "small", QUIET, a)
         self.text(d, (164, y + 40), mark["value"], "mono", INK, a)
-        if risk_of(mark):
+        if mark["risk"]:
             if hot:
-                d.rectangle([W - 152, y, W - 140, y + 84], fill=fade(RISK[risk_of(mark)], a))
+                d.rectangle([W - 152, y, W - 140, y + 84], fill=fade(RISK[mark["risk"]], a))
             self.level_tag(d, W - 176, y + 14, mark, hot, a)
         return y + 100
 
-    def note(self, d, y: int, mark: dict, hot: bool, a: float) -> int:
-        x = 164
-        if risk_of(mark):
-            col = RISK[risk_of(mark)] if hot else QUIET
+    def note(self, d, y: int, mark: dict, a: float) -> int:
+        x, hot = 164, mark["hot"]
+        if mark["risk"]:
+            col = RISK[mark["risk"]] if hot else QUIET
             d.rectangle([140, y + 8, 152, y + 20], fill=fade(col, a))
-            label = f"{mark['text']}  ({risk_of(mark)} liability)"
+            label = f"{mark['text']}  ({mark['risk']} liability)"
             self.text(d, (x, y), label, "small", col if hot else QUIET, a)
         else:
             self.text(d, (x, y), mark["text"], "small", QUIET, a)
         return y + 44
 
-    def bars(self, d, y: int, mark: dict, u: float, a: float) -> int:
-        """Horizontal bars; a bar with "to" moves from value to to across its scene."""
-        top = mark.get("scale") or max(max(item["value"], item.get("to", 0)) for item in mark["items"])
+    def bars(self, d, y: int, mark: dict) -> int:
+        """Horizontal bars; frame_state has already moved a bar with "to" along its scene."""
+        top = mark["scale"]
         for item in mark["items"]:
-            v = item["value"] + (item.get("to", item["value"]) - item["value"]) * ease((u - 0.2) / 0.6)
-            ia = 1.0 if item.get("carry") else a  # a carried bar was already on screen in the scene before
+            v, ia = item["value"], item["alpha"]
             length = max(4, (W - 300 - 470) * v / top * ease(ia))  # room for the value label
             self.text(d, (140, y + 6), item["label"], "body", INK, ia)
             d.rectangle([470, y + 10, 470 + length, y + 44], fill=fade(INK if item.get("strong") else QUIET, ia * 0.9))
@@ -118,34 +118,62 @@ class Painter:
             y += 72
         return y + 8
 
+    def grid(self, d, y: int, mark: dict, a: float) -> int:
+        """One cell per claim, 25 to a row: checked cells filled in ink, the rest outlined."""
+        cell, gap, per_row = 18, 6, 25
+        for i in range(mark["count"]):
+            x0, y0 = 140 + (i % per_row) * (cell + gap), y + (i // per_row) * (cell + gap)
+            if i < mark["filled"]:
+                d.rectangle([x0, y0, x0 + cell, y0 + cell], fill=fade(INK, a))
+            else:
+                d.rectangle([x0, y0, x0 + cell, y0 + cell], outline=fade(QUIET, a), width=1)
+        rows = -(-mark["count"] // per_row)
+        self.text(d, (140, y + rows * (cell + gap) + 4), mark["label"], "small", QUIET, a)
+        return y + rows * (cell + gap) + 44
 
-def draw_scene(p: Painter, scene: dict, u: float, img: Image.Image) -> None:
-    """u runs 0..1 across the scene. A mark appears at its "at" fraction and fades in quickly."""
+    def tries(self, d, y: int, mark: dict) -> int:
+        """One box per candidate, left to right: its number and what the check said."""
+        n = len(mark["slots"])
+        width = (W - 280 - 12 * (n - 1)) / n
+        for slot in mark["slots"]:
+            a = slot["alpha"] * (1.0 if slot["in_budget"] else 0.45)
+            if a <= 0:
+                continue
+            x0 = 140 + (slot["n"] - 1) * (width + 12)
+            solid = slot["word"] == "PASS"
+            d.rectangle([x0, y, x0 + width, y + 84], outline=fade(INK if solid else HAIR, a), width=2 if solid else 1)
+            self.text(d, (x0 + 14, y + 12), f"candidate {slot['n']}", "small", QUIET, a)
+            self.text(d, (x0 + 14, y + 42), slot["word"], "small" if " " in slot["word"] else "mono", INK if solid else QUIET, a)
+        return y + 104
+
+
+def draw_frame(p: Painter, state: dict, img: Image.Image) -> None:
+    """Draw one frame from scene.frame_state(): the same state the live engine plugin draws."""
     d = ImageDraw.Draw(img)
-    if scene.get("layout") in ("title", "close"):
-        close = scene["layout"] == "close"  # the closing scene also carries a caption, so it sits higher
+    a = state["heading_alpha"]
+    if state["layout"] in ("title", "close"):
+        close = state["layout"] == "close"  # the closing scene also carries a caption, so it sits higher
         img.alpha_composite(p.art, ((W - 560) // 2, -40 if close else 8))
-        line = scene.get("heading", "")
-        a = ease(u / 0.15)
+        line = state["heading"]
         p.text(d, ((W - d.textlength(line, font=p.f["h1"])) / 2, 482 if close else 580), line, "h1", INK, a)
-        if scene.get("command"):
-            cmd = scene["command"]
+        if state.get("command"):
+            cmd = state["command"]
             p.text(d, ((W - d.textlength(cmd, font=p.f["small"])) / 2, 556), cmd, "small", QUIET, a)
         return
-    p.text(d, (140, 96), scene["heading"], "h1", INK, 1.0 if scene.get("carry_heading") else ease(u / 0.12))
-    marks = scene.get("marks", [])
-    alphas = [ease((u - m.get("at", 0.0)) / 0.12) for m in marks]
-    shown = [m if alpha > 0 else {} for m, alpha in zip(marks, alphas)]
-    hot = hot_index(shown)
+    p.text(d, (140, 96), state["heading"], "h1", INK, a)
     y = 210
-    for i, (mark, alpha) in enumerate(zip(marks, alphas)):
-        kind = mark["type"]
+    for mark in state["marks"]:
+        kind, alpha = mark["type"], mark["alpha"]
         if kind == "card":
-            y = p.card(d, y, mark, i == hot, alpha) if alpha > 0 else y + 100
+            y = p.card(d, y, mark, alpha) if alpha > 0 else y + 100
         elif kind == "note":
-            y = p.note(d, y, mark, i == hot, alpha) if alpha > 0 else y + 44
+            y = p.note(d, y, mark, alpha) if alpha > 0 else y + 44
         elif kind == "bars":
-            y = p.bars(d, y, mark, u, alpha)
+            y = p.bars(d, y, mark)
+        elif kind == "grid":
+            y = p.grid(d, y, mark, alpha) if alpha > 0 else y + 4 * 24 + 44
+        elif kind == "tries":
+            y = p.tries(d, y, mark)
         else:
             raise ValueError(f"unknown mark type {kind!r}")
 
