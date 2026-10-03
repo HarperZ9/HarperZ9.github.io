@@ -1,0 +1,14 @@
+{
+  "schema": "harperz9-scholarly-records/v1",
+  "note": "Each record's title, date and DOI were read from the Zenodo records API on 2026-10-03. The DOI is the one publications.html cites. Two of them (Proof Packets, Re-Perceived Effects) are Zenodo concept DOIs that resolve to the latest version (v3, 2026-09-15); the date given is the first version, 2026-07-07.",
+  "records": [
+    {"doi": "10.5281/zenodo.21230267", "title": "EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted Work", "date": "2026-07-07", "pdf": "papers/emet-integrity-witness.pdf", "kind": "Systems paper"},
+    {"doi": "10.5281/zenodo.21231253", "title": "BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable Receipts", "date": "2026-07-07", "pdf": "papers/buildlang-capability-effects.pdf", "kind": "Systems paper"},
+    {"doi": "10.5281/zenodo.21232206", "title": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work", "date": "2026-07-07", "pdf": "papers/witnessed-independence.pdf", "kind": "Preprint"},
+    {"doi": "10.5281/zenodo.21231406", "title": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions", "date": "2026-07-07", "pdf": "papers/proof-packets.pdf", "kind": "Preprint"},
+    {"doi": "10.5281/zenodo.21234475", "title": "The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line", "date": "2026-07-07", "pdf": "papers/personhood-gate-handoff.pdf", "kind": "Research note"},
+    {"doi": "10.5281/zenodo.21231311", "title": "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation", "date": "2026-07-07", "pdf": "papers/re-perceived-effects.pdf", "kind": "Research note"},
+    {"doi": "10.5281/zenodo.20773724", "title": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds, and the Limits of Authentication", "date": "2026-06-20", "pdf": "papers/conferred-existence.pdf", "landing": "conferred-existence.html", "kind": "Archived corpus"},
+    {"doi": "10.5281/zenodo.20778927", "title": "The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector Technology and a Cross-Sector Convergence on Verifiable Trust", "date": "2026-06-20", "pdf": "papers/witnessing-spine.pdf", "landing": "witnessing-spine.html", "kind": "Archived corpus"}
+  ]
+}

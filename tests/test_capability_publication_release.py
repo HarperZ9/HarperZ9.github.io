@@ -576,10 +576,13 @@ RELEASE_PATHS = (
 # October 3, 2026: the six philosophy papers published in their October edition from
 # writing/papers/ (tools/render_papers.py), three new paper PDFs listed in papers.json, and the
 # Witnessing Spine foreword added; the release is rehashed.
+# October 3, 2026: search and citation metadata (JSON-LD, citation tags, feed links) written into
+# page heads by tools/structured_data.py and the system record renderer; the release is rehashed.
 # October 3, 2026: the confirmed second-read corrections on Who Knew First, Who Pays the Referees
 # and The Terms for Telling, and the arity correction on the Conferred Existence essay, each with
-# a dated note; the series reading time follows; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "b3a1e971506a5276d7b1fbe0a5f4a2305707d4793c57932034f9c3a1fe268dc1"
+# a dated note, merged over the structured-data release; the series reading time follows; the
+# release is rehashed.
+REVIEWED_RELEASE_SHA256 = "fbc55dd5250bf0edb7b0c4b484c2b67e161f100fc42228cf05bc22569867568d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

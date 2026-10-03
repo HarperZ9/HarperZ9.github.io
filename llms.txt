@@ -52,6 +52,91 @@ names is public and needs no key.
 - [Income ledger](https://harperz9.github.io/income-ledger.html): all income
   from this work with its exact source, including API credits.
 
+## Papers with a DOI
+
+Each paper is deposited on Zenodo under CC BY 4.0. None of them is peer
+reviewed. The label after each title says what kind of record it is.
+
+- [EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted
+  Work](https://doi.org/10.5281/zenodo.21230267): Systems paper, 2026-07-07.
+  PDF: https://harperz9.github.io/papers/emet-integrity-witness.pdf
+- [BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable
+  Receipts](https://doi.org/10.5281/zenodo.21231253): Systems paper, 2026-07-07.
+  PDF: https://harperz9.github.io/papers/buildlang-capability-effects.pdf
+- [Witnessed Independence: Recording Whether a Verifier Graded Its Own
+  Work](https://doi.org/10.5281/zenodo.21232206): Preprint, 2026-07-07. PDF:
+  https://harperz9.github.io/papers/witnessed-independence.pdf
+- [Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent
+  Actions](https://doi.org/10.5281/zenodo.21231406): Preprint, 2026-07-07. PDF:
+  https://harperz9.github.io/papers/proof-packets.pdf
+- [The Personhood-Gate Handoff: Drawing the Automation Boundary at the
+  False-Signal Line](https://doi.org/10.5281/zenodo.21234475): Research note,
+  2026-07-07. PDF: https://harperz9.github.io/papers/personhood-gate-handoff.pdf
+- [Re-Perceived Effects: A Well-Formedness Contract for Accountable
+  Actuation](https://doi.org/10.5281/zenodo.21231311): Research note,
+  2026-07-07. PDF: https://harperz9.github.io/papers/re-perceived-effects.pdf
+- [Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the
+  Standing of Made Minds, and the Limits of
+  Authentication](https://doi.org/10.5281/zenodo.20773724): Archived corpus,
+  2026-06-20. PDF: https://harperz9.github.io/papers/conferred-existence.pdf
+- [The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector
+  Technology and a Cross-Sector Convergence on Verifiable
+  Trust](https://doi.org/10.5281/zenodo.20778927): Archived corpus, 2026-06-20.
+  PDF: https://harperz9.github.io/papers/witnessing-spine.pdf
+
+## Essays
+
+Each entry repeats the summary the feed gives for it.
+
+- [A Bullshitter Knows a
+  Bullshitter](https://harperz9.github.io/why-i-do-this.html): In my own words:
+  who I am, why I build tools that check AI, and what I want the work to do.
+  Start here for the Who Knew First series.
+- [Who Knew First](https://harperz9.github.io/who-knew-first.html): An op-ed and
+  the record behind it. By the record's account, the organization that ran the
+  model held the decisive facts in each of nine AI agent incidents from 2026,
+  and in six of them someone else told the public first.
+- [Who Pays the
+  Referees](https://harperz9.github.io/who-pays-the-referees.html): Every party
+  that checks frontier AI depends on the labs it checks for access, compute,
+  money or the right to publish. A ledger of which of those terms are public,
+  party by party, with Anthropic first.
+- [The Terms for
+  Telling](https://harperz9.github.io/the-terms-for-telling.html): The party
+  that holds a record also writes the terms for the people inside who could
+  tell. In the cases checked, telling was protected where a forum outside the
+  employer reached the merits, or public pressure forced a reversal.
+- [The Number Has a
+  Vintage](https://harperz9.github.io/the-number-has-a-vintage.html): An
+  official jobs estimate changes as later data arrive. Each version answers a
+  different question, and a fair comparison names which one it uses.
+- [No Receipt, No Accept](https://harperz9.github.io/no-receipt-no-accept.html):
+  Review debt, verifier independence, honest nulls, labor, and machines whose
+  claims anyone can check.
+- [Pick the Lock for
+  Everyone](https://harperz9.github.io/pick-the-lock-for-everyone.html): Shame,
+  creative labor, mutualistic tools, source-bounded generative art, and becoming
+  answerable.
+- [Models Propose, Oracles
+  Dispose](https://harperz9.github.io/models-propose-oracles-dispose.html): Why
+  generated work stays outside the evidence layer, and what a live model-free
+  judgment boundary looks like.
+- [An open letter on checking the
+  machines](https://harperz9.github.io/checking-the-machines.html): A signed
+  letter to the people who build AI systems: a person should be able to question
+  a machine's answer without first winning an argument with its owner.
+- [Verified Is Not
+  Trustworthy](https://harperz9.github.io/verified-is-not-trustworthy.html):
+  Five domains expose the same gap between a narrow technical check and the
+  larger property people trust it to warrant.
+
+## Feeds
+
+Both feeds list the essays, papers and briefings published here.
+
+- [Atom feed](https://harperz9.github.io/feed.xml)
+- [JSON Feed](https://harperz9.github.io/feed.json)
+
 ## How to read a claim here
 
 Evidence carries a status. `verified` means the artifact named in the record

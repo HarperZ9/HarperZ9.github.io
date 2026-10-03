@@ -12,6 +12,7 @@
 // that would split a marked package name in the release fact into its own flex
 // item, so the key moves with the markup, as system.css's does for the .ident rule.
 import { artPlate, escapeCopy, escapeHtml, linkRow, maturityState, MIDDOT } from "./system-page-parts.mjs";
+import { breadcrumbNode, isPublicSource, ldScript, ORIGIN, softwareNode } from "./structured-data-parts.mjs";
 
 const CATALOG_REVISION = "20260927-copy-pass";
 export const CATALOG_SHEET = `system/catalog.css?v=${CATALOG_REVISION}`;
@@ -113,6 +114,15 @@ function social(system, ctx) {
     .join("");
 }
 
+// A record with a public repository is described to search engines as source
+// code, using the same name, purpose and repository the page itself shows.
+function structuredData(system) {
+  if (!isPublicSource(system.sourceHref) || system.accessMode === "request") return "";
+  const url = `${ORIGIN}/${system.href}`;
+  const trail = [["Home", `${ORIGIN}/`], ["Catalog", `${ORIGIN}/catalog.html`], [system.name, url]];
+  return `\n${ldScript([softwareNode(system, url), breadcrumbNode(trail)])}`;
+}
+
 export function renderHead(system, ctx) {
   const name = escapeHtml(system.name);
   const purpose = escapeCopy(system.purpose);
@@ -127,6 +137,7 @@ export function renderHead(system, ctx) {
     `<link rel="canonical" href="https://harperz9.github.io/${href}">\n`,
     `  ${social(system, ctx)}\n`,
     `<meta name="color-scheme" content="light dark">${THEME_COLOR}`,
+    structuredData(system),
     shellOpen(RECORD_SHEETS),
     bodyOpen(
       RECORD_NAV,
