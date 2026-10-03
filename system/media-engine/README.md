@@ -12,6 +12,8 @@ One scheduler, one seed and receipt layer, one colour module, and a plugin per v
 
 Measured on the Retro Engine page at 1440 x 900 (Chromium, five interleaved rounds): script time fell from 1,044 to 301 ms per second on screen, from 1,018 to 2.3 off screen, and from 1,053 to 2.2 with reduced motion. Frame time fell from 83 to 16.7 ms. These are one machine's numbers; no low-end or mobile device has been measured.
 
+A second step moved the Retro front half (downscale, OKLab, palette, dither) into a worker. Main-thread script time on screen fell from 312 to 20 ms per second (median of five interleaved rounds, range 19 to 23), with the output still changing 20.3 times a second. The work moved, so it is still counted: the worker spends about 8.4 ms per frame, about 170 ms per second. The worker's grid is the page's grid byte for byte. The first live frame also runs on the main thread, and if the two ever differ the worker is retired and the page keeps its own front half.
+
 ## Files
 
 | File | Holds |
@@ -25,6 +27,7 @@ Measured on the Retro Engine page at 1440 x 900 (Chromium, five interleaved roun
 | `risk.css` | The risk tokens as CSS custom properties, generated from `colour.mjs` |
 | `gl2.mjs` | WebGL2 helpers: context, program, full-screen triangle, render targets |
 | `plugins/retro.mjs` | The Retro pipeline, tube stage on the GPU; `createRetroRenderer()` for `retro-studio.js` |
+| `retro-worker.mjs` | The Retro front half off the main thread: the same `quantizeGrid` from `retro-engine.js` on the same bytes |
 | `plugins/aperture.mjs` | The hero aperture used on the Gallery, Retro Engine and Loom pages |
 | `plugins/plate.mjs` | A Gallery plate, drawn once from its seed |
 | `plugins/loom.mjs` | Any frame woven into cloth with the Loom's draft maths; `wif()` gives the weaver's file |

@@ -4519,6 +4519,21 @@ function paintSwatches(rich) {
   }
 }
 
+// The --ink token, read once and again only when the theme changes. Reading it every live tick
+// forced a style recalculation after the panel's own DOM writes (about 70 ms/s while animating).
+let _ink = null;
+function inkColour() {
+  if (_ink === null) {
+    try { _ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim(); } catch (_) { _ink = ""; }
+  }
+  return _ink;
+}
+try {
+  const resetInk = () => { _ink = null; };
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", resetInk);
+  new MutationObserver(resetInk).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+} catch (e) { console.error("[studio] theme watch unavailable; the sparkline keeps its first ink:", e); }
+
 // ── motion sparkline: push the latest frame-to-frame Δ (hamming/64), draw the history ──
 function pushMotion(deltaFrac) {
   motionHist.push(deltaFrac); motionHist.shift();
@@ -4527,9 +4542,7 @@ function pushMotion(deltaFrac) {
   const W = c.width, H = c.height;
   ctx.clearRect(0, 0, W, H);
   // Ink, like every other reading in the panel: interface colour is kept for verdicts.
-  let ink = "";
-  try { ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim(); } catch (_) {}
-  ctx.strokeStyle = ink || "#ece5d6"; ctx.lineWidth = 1.5; ctx.beginPath();
+  ctx.strokeStyle = inkColour() || "#ece5d6"; ctx.lineWidth = 1.5; ctx.beginPath();
   for (let i = 0; i < motionHist.length; i++) {
     const x = i / (motionHist.length - 1) * W;
     const y = H - Math.max(0, Math.min(1, motionHist[i])) * (H - 3) - 1.5;
@@ -4578,6 +4591,10 @@ function paintMeta(w, h, rich) {
     ["source", currentSourceLabel()],
     ["fps", liveLoopRunning ? (liveFps ? liveFps.toFixed(0) : "…") : "static"],
   ];
+  // Rebuild only when a value changed; the live loop calls this twelve times a second.
+  const key = JSON.stringify(rows);
+  if (host.dataset.key === key) return;
+  host.dataset.key = key;
   host.innerHTML = "";
   for (const [k, v] of rows) {
     const row = document.createElement("div"); row.className = "mm-meter";

@@ -614,7 +614,9 @@ RELEASE_PATHS = (
 # October 3, 2026: every paper and essay PDF and .tex carries the author's name, the license,
 # the DOI and the first-public date, the seven systems papers' LaTeX is published, and the hub
 # links each LaTeX source; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "efe735d4b331a15e9d25741df449384ef1cc2da882712bf86fc6b6131c1c2199"
+# October 3, 2026: retro.html loads retro-studio.js at a new stamp (the Retro front half moves to
+# a worker), and studio.html loads studio.js at a new stamp; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "dc1a248a2d34ca5b0823d20e12ec872849b8cace6f194eebe9093a21d7971485"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

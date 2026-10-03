@@ -40,11 +40,24 @@ export const aperture = {
       for (const k in UNIFORMS) if (loc["u_" + k]) gl.uniform1f(loc["u_" + k], preset[k]);
     };
     apply();
+    // Reading clientWidth every frame forced a layout on each one (15 ms/s on the Retro page, where
+    // the panel writes text between frames). The box is read on mount and when it resizes.
+    let boxW = canvas.clientWidth, boxH = canvas.clientHeight;
+    const ro = typeof ResizeObserver === "function" ? new ResizeObserver(() => { boxW = canvas.clientWidth; boxH = canvas.clientHeight; }) : null;
+    if (ro) ro.observe(canvas);
     const size = () => {
+      if (!ro) { boxW = canvas.clientWidth; boxH = canvas.clientHeight; }
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      const w = Math.max(1, Math.round(canvas.clientWidth * dpr)), h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+      const w = Math.max(1, Math.round(boxW * dpr)), h = Math.max(1, Math.round(boxH * dpr));
       if (w !== canvas.width || h !== canvas.height) { canvas.width = w; canvas.height = h; }
     };
+    // The light pole changes with the theme switch or the system scheme; read it when either does.
+    let light = lightPole();
+    const mq = typeof matchMedia === "function" ? matchMedia("(prefers-color-scheme: light)") : null;
+    const onScheme = () => { light = lightPole(); };
+    if (mq && mq.addEventListener) mq.addEventListener("change", onScheme);
+    const mo = typeof MutationObserver === "function" ? new MutationObserver(onScheme) : null;
+    if (mo) mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return {
       backend: used,
       frame(t) {
@@ -54,7 +67,7 @@ export const aperture = {
         gl.uniform2f(loc.u_res, canvas.width, canvas.height);
         // hero-aperture.js advances u_time at 0.0019 per millisecond; t arrives in seconds.
         gl.uniform1f(loc.u_time, reduced ? 0 : t * 1.9);
-        gl.uniform1f(loc.u_light, (p.light ?? lightPole()) ? 1 : 0);
+        gl.uniform1f(loc.u_light, (p.light ?? light) ? 1 : 0);
         if (tri) { tri.draw(); return; }
         gl.bindBuffer(gl.ARRAY_BUFFER, buf);
         gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
@@ -67,6 +80,9 @@ export const aperture = {
         return out;
       },
       dispose() {
+        if (ro) ro.disconnect();
+        if (mo) mo.disconnect();
+        if (mq && mq.removeEventListener) mq.removeEventListener("change", onScheme);
         if (tri) tri.dispose(); if (buf) gl.deleteBuffer(buf);
         gl.deleteProgram(prog);
         const ext = gl.getExtension("WEBGL_lose_context"); if (ext) ext.loseContext();

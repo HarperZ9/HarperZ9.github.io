@@ -4,6 +4,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { ditherPlate, farSideIndex, DITHER_MODES } from "./retro-dither.js";
+import { labPalette, srgbToOklab, linearToOklab, SRGB8_TO_LINEAR } from "./retro-palettes.js";
 import { beamTable, maskTable, crtActive, MASK_MODES } from "./retro-crt.js";
 
 const BW = [{ lab: [0, 0, 0] }, { lab: [1, 0, 0] }];
@@ -87,4 +88,13 @@ test("a pixel midway between white and orange still brackets with orange", () =>
 
 test("a pixel with nothing on its far side gets no bracketing partner", () => {
   assert.equal(farSideIndex(1.05, -0.02, -0.02, 0, TINTS), -1);
+});
+
+// The byte table in front of the OKLab conversion must give exactly what the per-pixel
+// conversion does, so the frame stays byte-identical.
+test("the byte table gives srgbToOklab's exact OKLab for every byte", () => {
+  for (let k = 0; k < 256; k++) {
+    assert.deepEqual(linearToOklab(SRGB8_TO_LINEAR[k], SRGB8_TO_LINEAR[255 - k], SRGB8_TO_LINEAR[(k * 7) & 255]),
+      srgbToOklab(k / 255, (255 - k) / 255, ((k * 7) & 255) / 255));
+  }
 });
