@@ -16,9 +16,9 @@
 //
 // mountHeroAperture(canvas, { hue, blades, seed, radius, reduced }) -> { destroy() }
 
-const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
+export const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
-const FRAG = `precision highp float;
+export const FRAG = `precision highp float;
 uniform vec2  u_res;
 uniform float u_time;
 uniform float u_seed;
@@ -94,7 +94,7 @@ void main(){
 // Loom's is the finest because a loom's unit is a single thread.
 // Shader constants, set once at mount. A canvas whose data-aperture key is not in the table above
 // still renders a coherent form from these rather than a black box.
-const UNIFORMS = { seed: 3.1, hue: 0.53, blades: 44, radius: 0.30, gain: 1.0 };
+export const UNIFORMS = { seed: 3.1, hue: 0.53, blades: 44, radius: 0.30, gain: 1.0 };
 
 // hue is kept for the shared preset shape; the shader no longer reads it (26 September 2026).
 export const APERTURES = {
