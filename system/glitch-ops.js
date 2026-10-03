@@ -1,27 +1,14 @@
 import { OPS2 as OPS_CHEM, OP_META2 as META_CHEM } from "./glitch-ops-wave2.js";
 import { OPS2 as OPS_OPT, OP_META2 as META_OPT } from "./glitch-ops-wave2-optical.js";
 import { OPS2 as OPS_TIME, OP_META2 as META_TIME } from "./glitch-ops-wave2-temporal.js";
+import { rngFrom } from "./media-engine/seed.mjs";
+export { rngFrom };
 /* glitch-ops.js — a stackable rack of manipulation + transformation effects.
 
    Each op takes a canvas and mutates it in place, so they compose in any order
    (the effects rack applies them in sequence). Anything random is driven by a
    seeded PRNG, so a given seed reproduces the same glitch exactly — chaos you
    can keep, in the site's reproducible-by-seed idiom. Zero dependencies. */
-
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-export function rngFrom(seed) {
-  if (typeof seed === "function") return seed;
-  let h = 2166136261; const s = String(seed == null ? 1 : seed);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return mulberry32(h >>> 0);
-}
 
 const scratch = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
 const luma = (d, i) => (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;

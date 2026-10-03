@@ -8,16 +8,8 @@
 
 // A tiny deterministic PRNG (mulberry32) so trajectories and initial conditions are
 // reproducible across runs (re-checkability of the whole experiment).
-export function rng(seed) {
-  let a = seed >>> 0;
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
+import { mulberry32 as rng } from "../media-engine/seed.mjs";
+export { rng };
 const uniform = (r, lo, hi) => lo + (hi - lo) * r();
 
 // Simple harmonic oscillator: x'' = -omega^2 x. Invariant E = 0.5 v^2 + 0.5 omega^2 x^2.

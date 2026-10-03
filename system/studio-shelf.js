@@ -27,19 +27,13 @@
 // The shelf never touches the DOM and never imports the modules whose work it remembers; the
 // recipe fields mirror studio.js's plot/voxel state and voxel-forge's meta by shape, not by
 // import, so this file stays testable in node with a Map-backed storage stub.
+// hash32 is the FNV-1a the whole plot family uses, from media-engine/seed.mjs.
+import { fnv1a32 as hash32 } from "./media-engine/seed.mjs";
 
 export const STORAGE_KEY = "studio.shelf.v1";
 export const THUMB_CAP = 40000; // chars of dataURL — one greedy thumb must not eat the quota
 
 const APP = "studio-shelf";
-
-// Same FNV-1a everything else in the plot family uses (plotter.js, plot-maps.js, …): tiny,
-// stable across engines, and already proven on seed strings.
-function hash32(str) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < str.length; i += 1) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
-  return h >>> 0;
-}
 
 // Canonical JSON: object keys sorted at every depth, undefined collapsed to null. JSON.stringify
 // alone is NOT canonical — key order follows insertion, so the same recipe built by two code

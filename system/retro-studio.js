@@ -7,6 +7,8 @@
    whole chain. Everything is local; nothing uploads. */
 
 import { renderRetro } from "./retro-engine.js?v=20260902-crt";
+import { pageEngine } from "./media-engine/page.mjs";
+import { createRetroRenderer } from "./media-engine/plugins/retro.mjs";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
 import { applyOps, OP_META, rngFrom } from "./glitch-ops.js?v=20260813-wave2";
 import { SHADER_PRESETS } from "./shader-presets.js?v=20260812-wave7";
@@ -424,13 +426,18 @@ function boot() {
       + ` · output ${m.w}×${m.h}`;
   }
 
+  // The tube stage runs on the GPU when WebGL2 is there (media-engine/plugins/retro.mjs); the
+  // output stays this 2D canvas, so effects, feedback, sonification and export read it as before.
+  const retroRenderer = createRetroRenderer();
+  out.dataset.backend = retroRenderer.backend;
+
   function retroPass(t = 0) {
     const s = sourceCanvas(); if (!s.width) return;
     try {
       // renderRetro reports the grid it just built ({w,h,palette,cells,colors});
       // the call site used to drop it, so the one surface whose whole subject is
       // the pixel grid never told you what the grid was.
-      lastMeasure = renderRetro(s, out, opts()) || null;
+      lastMeasure = retroRenderer.render(s, out, opts()) || null;
       if (activeFx.size) applyOps(out, buildFx(t));
     }
     catch (e) { status("render error: " + e.message, "err"); }
@@ -507,24 +514,43 @@ function boot() {
     return true;
   }
 
+  // The page's media engine owns the loop: it runs only while the stage is on screen and the tab
+  // is visible, or while sound is on (the frame is being played as audio). Under reduced motion
+  // the loop never starts, and every change draws one still frame through the !animRaf paths.
+  const engine = pageEngine();
+  let loopHandle = null;
+  engine.register({
+    id: "retro-studio-loop", version: "1.0.0", backends: ["canvas2d"],
+    create: () => ({
+      frame(t) {
+        const now = t * 1000;
+        pumpAudio(t);
+        modPass(t);
+        if (state === "shader") renderShaderFrame(t);
+        if (state === "scope") renderScopeFrame(t);
+        if (now - lastRetro > 45) { retroPass(t); lastRetro = now; }
+      },
+      dispose() {},
+    }),
+  });
   function startLoop() {
     stopLoop();
     if (state === "shader") ensureShader();
-    const loop = (now) => {
-      const t = now / 1000;
-      pumpAudio(t);
-      modPass(t);
-      if (state === "shader") renderShaderFrame(t);
-      if (state === "scope") renderScopeFrame(t);
-      if (now - lastRetro > 45) { retroPass(t); lastRetro = now; }
-      animRaf = requestAnimationFrame(loop);
-    };
-    animRaf = requestAnimationFrame(loop);
+    animRaf = 1;
+    loopHandle = engine.mount(out, "retro-studio-loop", { keepAlive: () => !!(audio && audio.isOn()) });
   }
-  function stopLoop() { if (animRaf) cancelAnimationFrame(animRaf); animRaf = 0; }
+  function stopLoop() { if (loopHandle) loopHandle.dispose(); loopHandle = null; animRaf = 0; }
+  // One still frame at a fixed time, for reduced motion and for a stopped loop.
+  function stillFrame() {
+    const t = 1.3;
+    pumpAudio(t);
+    if (state === "shader") { ensureShader(); renderShaderFrame(t); }
+    if (state === "scope") renderScopeFrame(t);
+    retroPass(t);
+  }
 
   // Decide whether to animate or draw one still frame.
-  function sync() { if (loopActive()) startLoop(); else { stopLoop(); retroPass(0); }
+  function sync() { if (loopActive() && !engine.reduced) startLoop(); else { stopLoop(); stillFrame(); }
     try { sessionSnapshot(); } catch (_) {} }
 
   function refreshSource() {

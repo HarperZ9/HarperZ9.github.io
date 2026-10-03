@@ -12,26 +12,7 @@
 // pen-plotter G-code (toGcode). The raw polylines come back too so the page
 // can REPLAY the plot stroke-by-stroke - watching it draw is half the pleasure.
 // Deterministic per (frame, seed): same pixels, same seed, same plot.
-
-function hash32(str) {
-  let h = 2166136261;
-  const s = String(str);
-  for (let i = 0; i < s.length; i += 1) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return function next() {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+import { fnv1a32 as hash32, mulberry32 as mulberry } from "./media-engine/seed.mjs";
 
 function lumaField(px, w, h, ch = 4) {
   const out = new Float32Array(w * h);

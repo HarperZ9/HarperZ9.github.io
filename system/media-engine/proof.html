@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Media engine proof</title>
+<style>
+@font-face{font-family:"Hanken Grotesk";src:url("../fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Conso";src:url("../fonts/conso-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{--void:#060608;--bone:#ebe5d8;--ink:#15130f;--rule:rgba(21,19,15,.18);--ground:var(--bone);--text:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ground:var(--void);--text:var(--bone);--rule:rgba(235,229,216,.18)}}
+:root[data-theme="dark"]{--ground:var(--void);--text:var(--bone);--rule:rgba(235,229,216,.18)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font:400 17px/1.55 "Hanken Grotesk",system-ui,sans-serif}
+main{max-width:1120px;margin:0 auto;padding:48px 16px 96px}
+h1{font-weight:800;font-size:clamp(40px,7vw,76px);line-height:.95;letter-spacing:-.02em;margin:0 0 20px}
+h2{font-weight:700;font-size:28px;margin:56px 0 8px}
+p{max-width:38rem;margin:0 0 16px}
+.plate{background:#000;border:1px solid var(--rule);padding:12px;margin:16px 0}
+.plate canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.row figure{margin:0}
+.row canvas{aspect-ratio:1;width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.row figcaption{font:400 14px/1.4 "Conso",ui-monospace,monospace;margin-top:6px}
+details{border-top:1px solid var(--rule);margin-top:40px;padding-top:12px}
+summary{cursor:pointer;font-weight:600}
+pre{font:400 13px/1.5 "Conso",ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+@media (max-width:640px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>One engine,<br>two surfaces.</h1>
+  <p>The Retro Engine's tube and the site's aperture, drawn by one scheduler. Each frame carries a receipt: the request, its hash, and the hash of the pixels it produced.</p>
+
+  <h2>Retro Engine</h2>
+  <p>The page's default live shader through pixelate, palette, dither and the full tube stage. The tube now runs on the GPU.</p>
+  <figure class="plate"><canvas id="retro" width="960" height="600" aria-label="A live shader rendered as a 240-pixel-wide grid in the outrun palette, shown through a curved CRT tube with scanlines and a phosphor grille."></canvas></figure>
+
+  <h2>Aperture</h2>
+  <p>One form, three instruments. The same shader the Gallery, Retro Engine and Loom heroes ship.</p>
+  <div class="row">
+    <figure><canvas id="ap-gallery" aria-hidden="true"></canvas><figcaption>Gallery, 44 blades</figcaption></figure>
+    <figure><canvas id="ap-retro" aria-hidden="true"></canvas><figcaption>Retro Engine, 16 blades</figcaption></figure>
+    <figure><canvas id="ap-loom" aria-hidden="true"></canvas><figcaption>Loom, 72 blades</figcaption></figure>
+  </div>
+
+  <details>
+    <summary>How we know</summary>
+    <pre id="stats">measuring</pre>
+  </details>
+</main>
+<script type="module">
+import { createEngine } from "./core.mjs";
+import { retro } from "./plugins/retro.mjs";
+import { aperture } from "./plugins/aperture.mjs";
+
+const q = new URLSearchParams(location.search);
+const engine = createEngine().register(retro).register(aperture);
+const handles = {};
+const only = q.get("only");
+if (only !== "aperture") {
+  handles.retro = engine.mount(document.getElementById("retro"), "retro", {
+    backend: q.get("retro") === "cpu" ? "canvas2d" : "webgl2",
+    seed: "folded-light",
+    // retro-studio.js runs the retro pass at most every 45 ms; keep that cadence unless asked.
+    minFrameMs: q.has("fullrate") ? 0 : 45,
+  });
+}
+if (only !== "retro") {
+  for (const k of ["gallery", "retro", "loom"]) handles["ap-" + k] = engine.mount(document.getElementById("ap-" + k), "aperture", { params: { preset: k }, seed: k });
+}
+
+// Draw the same request through both backends on scratch canvases and compare the bytes.
+async function compare(t = 1.3, params = {}) {
+  const a = document.createElement("canvas"), b = document.createElement("canvas");
+  const e2 = createEngine({ reduced: true }).register(retro);
+  const cpu = e2.mount(a, "retro", { backend: "canvas2d", seed: "folded-light", params });
+  const gpu = e2.mount(b, "retro", { backend: "webgl2", seed: "folded-light", params });
+  const ra = await cpu.receipt(t, { keepPixels: true }), rb = await gpu.receipt(t, { keepPixels: true }), rb2 = await gpu.receipt(t);
+  const pa = ra.pixels, pb = rb.pixels;
+  let sum = 0, max = 0, within2 = 0, within8 = 0, n = 0;
+  for (let i = 0; i < pa.length; i += 4) for (let c = 0; c < 3; c++) {
+    const d = Math.abs(pa[i + c] - pb[i + c]); sum += d; max = Math.max(max, d); n++;
+    if (d <= 2) within2++; if (d <= 8) within8++;
+  }
+  const out = { size: [a.width, a.height, b.width, b.height], meanAbs: +(sum / n).toFixed(3), maxAbs: max,
+    within2: +(within2 / n).toFixed(4), within8: +(within8 / n).toFixed(4),
+    cpuRequestHash: ra.requestHash.slice(0, 16), gpuRequestHash: rb.requestHash.slice(0, 16),
+    gpuRepeatSamePixels: rb.pixelHash === rb2.pixelHash, cpuPixelHash: (ra.pixelHash || "").slice(0, 16), gpuPixelHash: (rb.pixelHash || "").slice(0, 16) };
+  cpu.dispose(); gpu.dispose(); e2.dispose();
+  return out;
+}
+
+const statsEl = document.getElementById("stats");
+setInterval(() => {
+  const lines = Object.entries(handles).map(([k, h]) => `${k.padEnd(11)} ${h.backend.padEnd(9)} ${String(h.stats.frames).padStart(6)} frames  ${h.stats.cpuMs.toFixed(2)} ms CPU per frame  ${h.stats.visible ? "on screen" : "off screen"}`);
+  statsEl.textContent = lines.join("\n");
+}, 1000);
+window.__mediaEngineProof = { engine, handles, compare };
+</script>
+</body>
+</html>

@@ -22,25 +22,11 @@
      timeWarp        a slit scan folded into two dimensions: a smooth seeded
                      field decides how far into the past each region is
 
-   The PRNG helper is restated here rather than imported, to keep the module
-   standalone; the arithmetic is identical to glitch-ops.js, so one seed yields
-   the same stream in both. */
+   The PRNG comes from media-engine/seed.mjs, the same one glitch-ops.js uses,
+   so one seed yields the same stream in both. */
 
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-export function rngFrom(seed) {
-  if (typeof seed === "function") return seed;
-  let h = 2166136261; const s = String(seed == null ? 1 : seed);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return mulberry32(h >>> 0);
-}
-
+import { rngFrom } from "./media-engine/seed.mjs";
+export { rngFrom };
 const scratch = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
 const cl255 = (v) => (v < 0 ? 0 : v > 255 ? 255 : v);

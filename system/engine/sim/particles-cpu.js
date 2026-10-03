@@ -25,6 +25,11 @@
 //   { bass, intensity, highMod, pulse, hue, hueShift, level, treble, centroid }
 // These are exactly the fields reactive-visuals.js drawParticles reads, so the mapping is identity.
 
+// A seeded PRNG (mulberry32, from media-engine/seed.mjs) so the sim can be seeded: no bare
+// Math.random in the cook path when a seed is supplied. When no rng is passed, we fall back to
+// Math.random to preserve the exact "feel" of today's drawParticles (which used Math.random).
+import { mulberry32 } from "../../media-engine/seed.mjs";
+
 // ---------------------------------------------------------------------------
 // OKLab helpers (transcribed verbatim from reactive-visuals.js so colors match today exactly)
 // ---------------------------------------------------------------------------
@@ -46,19 +51,6 @@ function oklchToRgba(L, C, H, alpha) {
 }
 function lerp(a, b, t) { return a + (b - a) * t; }
 function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
-
-// A small deterministic PRNG so the sim can be seeded (no bare Math.random in the cook path when a
-// seed is supplied). Mulberry32. When no rng is passed, we fall back to Math.random to preserve the
-// exact "feel" of today's drawParticles (which used Math.random throughout).
-function mulberry32(seed) {
-  let s = seed >>> 0;
-  return function () {
-    s |= 0; s = (s + 0x6D2B79F5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 // Per-particle SoA layout in a single Float32Array (FLOATS_PER_PARTICLE fields each). Flat typed
 // arrays are what transfer zero-copy to a worker, so the CPU backend uses the SAME memory layout the
