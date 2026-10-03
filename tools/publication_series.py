@@ -43,6 +43,16 @@ def _part(index: int, part: dict, items_by_id: dict[str, dict]) -> str:
     )
 
 
+def _opener(series: dict) -> str:
+    """The "Start here" line under the hub's lead: the author's own account, read before the evidence."""
+    opener = series.get("opener")
+    if not opener:
+        return ""
+    return (f'<p class="series-opener"><strong>Start here:</strong> '
+            f'<a href="{_e(opener["href"])}"><em>{_e(opener["text"])}</em></a>. {_e(opener["question"])}</p>'
+            + chr(10))
+
+
 def _table_block(table: str) -> str:
     if not table:
         return ""
@@ -80,8 +90,8 @@ def render_series_page(series: dict, items_by_id: dict[str, dict], table: str = 
 <meta name="twitter:image" content="{SITE_URL}img/og/who-knew-first-series.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
-<link rel="stylesheet" href="system/series.css?v=20261001-site-ia">
-<link rel="stylesheet" href="system/series-table.css?v=20261001-series-table">
+<link rel="stylesheet" href="system/series.css?v=20261001-series-opener">
+<link rel="stylesheet" href="system/series-table.css?v=20261001-series-opener">
 </head>
 <body class="doc series-hub" data-route-art="off">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -95,7 +105,7 @@ def render_series_page(series: dict, items_by_id: dict[str, dict], table: str = 
 <p class="role">Series · {NUMBER_WORDS[planned]} pieces · {NUMBER_WORDS[published]} published</p>
 <h1>{title}</h1>
 <p class="lead">{_intro(series)}</p>
-</header>
+{_opener(series)}</header>
 {_table_block(table)}<ol class="series-parts">{parts}</ol>
 <p class="series-closing">{_e(series["closing"])}</p>
 <p class="series-related">Related: {related}</p>

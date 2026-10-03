@@ -1,11 +1,3 @@
-## Marketplace source distribution
-
-This folder packages the source plugin from release 0.6.0. It requires Python 3.9 or later, available as `python3`. It includes the tool source and no model or bundled runtime. The connected client supplies any model used in the conversation.
-
-The separate [Windows x64 native download](https://github.com/HarperZ9/articulate/releases/download/v0.6.0/articulate-writing-0.6.0-win-x64.mcpb) includes its runtime. That download is a manual MCPB package and is not part of this source plugin. Directory approval and availability remain unverified.
-
-This branch contains the installable plugin. Build commands in the release README below apply to the [product source tag](https://github.com/HarperZ9/articulate/tree/v0.6.0). DISTRIBUTION.json records the published asset digest and every packaging change; any SOURCE.json describes the original release payload.
-
 # Articulate Writing
 
 Articulate Writing checks prose on your computer before you ship it. It names
@@ -32,6 +24,14 @@ nowhere; the calling model reads the text as part of your conversation.
 - `fix`, `judge` and `polish` run offline in the plugin: `auto` or `host` returns
   a host plan, and `none` runs deterministic checks or edits. Explicit network,
   subprocess and sampling backends are refused before execution.
+- An edit-time hook runs after the model writes or edits a prose file
+  (`.md`, `.mdx`, `.markdown`, `.txt`, `.rst`, `.adoc`, `.tex`). When the edit
+  carries the text before and after, it names numbers, links, quotes,
+  citations, modals, scope words, negations and names that the edit dropped,
+  added or changed. It also lists style findings in the new text. The model
+  gets this as context on its next step. The hook never blocks an edit, and
+  `ARTICULATE_EDIT_HOOK=off` turns it off. Codex runs a plugin hook only after
+  you review and trust it.
 - `articulate.status` reports the server version, and `articulate.doctor`
   reports a setup summary you can paste into an issue.
 - The `prose-review` skill tells the calling model when to run the checks, how to report
@@ -49,14 +49,19 @@ nowhere; the calling model reads the text as part of your conversation.
 
 ## Install
 
-This plugin targets package version 0.6.0. Build from its matching package tag as
-[the build guide](https://github.com/HarperZ9/articulate/blob/release/0.5.x/docs/claude-plugin.md)
-describes, then use the local build folder:
+Install Articulate Writing from the Claude plugin directory, or add this
+repository's `claude-plugin` folder as a marketplace. The folder carries its own
+copy of the checker, so there is nothing else to install:
 
 ```bash
-claude plugin marketplace add ./build/claude-plugin
+claude plugin marketplace add ./claude-plugin
 claude plugin install articulate-writing@articulate-writing
 ```
+
+Run the first command from a checkout of this repository on the
+`release/0.5.x` branch. To build a separate plugin repository for local
+development, follow
+[the build guide](https://github.com/HarperZ9/articulate/blob/release/0.5.x/docs/claude-plugin.md).
 
 The same release also prepares Windows x64 native ZIP and binary MCPB packages
 with a Python runtime included. See the
@@ -87,8 +92,8 @@ process. This does not provide a checker in an ordinary web chat.
 
 | What | Detail |
 |:-|:-|
-| Processes | One: `python3 -I -S -B -X utf8` running the plugin's `server/serve.py`. Claude Code starts it with the session and stops it at the end. It runs the first `python3` on your PATH, which is a virtual environment's Python when you have one activated. |
-| Files | It loads its own source from the plugin folder and the Python standard library, and no installed package: `-S` skips every site-packages folder. It opens none of your files and writes no file: no log, no cache, no bytecode. |
+| Processes | The server: `python3 -I -S -B -X utf8` running the plugin's `server/serve.py`. Claude Code starts it with the session and stops it at the end. The hook: the same command running `server/edit_hook.py` once after each file write or edit, which exits when it has answered. Both run the first `python3` on your PATH, which is a virtual environment's Python when you have one activated. |
+| Files | It loads its own source from the plugin folder and the Python standard library, and no installed package: `-S` skips every site-packages folder. It opens none of your files and writes no file: no log, no cache, no bytecode. The hook reads the edit from the event the host sends on standard input and does not open the edited file. |
 | Network | None. It opens no connection. |
 | Other programs | None. |
 | Settings | It sets `ARTICULATE_MCP_TOOLS=local` and `ARTICULATE_LOCAL_ONLY=1` for its own process and changes no host setting. |
@@ -100,13 +105,28 @@ the plugin does not call another model.
 
 ## Privacy Policy
 
-Last updated: 2026-09-30. This policy covers the Articulate Writing plugin for
+Last updated: 2026-10-01. This policy covers the Articulate Writing plugin for
 local Claude Code and Codex hosts. It is also published at
 https://github.com/HarperZ9/articulate/blob/release/0.5.x/claude-plugin/PRIVACY.md.
 
+### What this plugin runs and handles
+
+**Hooks.** The plugin has one hook. After Claude writes or edits a file (the PostToolUse event for Write, Edit, MultiEdit and apply_patch), Claude Code runs `python3 -I -S -B -X utf8 "${CLAUDE_PLUGIN_ROOT}/server/edit_hook.py"` for up to 15 seconds. The hook reads the edit event Claude Code sends on standard input, which holds the file name and the text before and after the edit. For prose files (.md, .txt, .rst, .tex and similar) it returns advice about changed meaning and style to Claude. It opens no file, writes no file, starts no program and makes no network call. It never blocks the edit. Claude Code's event also carries the session ID, the path of the conversation transcript and the working folder. The hook ignores them and never opens the transcript.
+
+**MCP server.** The plugin starts one local MCP server named `articulate` with `python3 -I -S -B -X utf8 ${CLAUDE_PLUGIN_ROOT}/server/serve.py`. `${CLAUDE_PLUGIN_ROOT}` is the folder where Claude Code installed the plugin. The launch sets two environment values: `ARTICULATE_MCP_TOOLS=local` and `ARTICULATE_LOCAL_ONLY=1`. The server talks to Claude Code over standard input and output only.
+
+**Network.** With those two values, every tool runs on your computer. The server opens no network connection and sends nothing to the author or to any other service. Claude still reads the text as part of your conversation, and your Claude provider handles that conversation.
+
+**Code left out.** The Articulate command line tool also has optional model backends that read provider API keys and call a model provider, a local Ollama server or the `claude` program. This plugin does not include them: the folder carries only the modules its local tools and hook import. If someone changes the plugin's launch values to ask for a model backend, the tool answers that this build does not include one.
+
+**Files it writes.** None. The `-B` flag keeps Python from writing bytecode into the plugin folder.
+
+**Environment variables and credentials.** The server reads `ARTICULATE_MCP_TOOLS` and `ARTICULATE_LOCAL_ONLY`, which the plugin sets itself. The hook reads `ARTICULATE_EDIT_HOOK` from your environment; set it to `off` to turn the hook off. Neither reads a credential. The `-I` flag also makes Python ignore its own `PYTHON*` variables.
+
 **Data collected.** The plugin reads only the text the calling host passes to
-one of its tools. It does not read your files, conversation history or saved
-memory. It collects no account details, usage statistics or telemetry.
+one of its tools, and the edit event the host passes to its hook after the
+model writes or edits a file. It does not open your files or read conversation
+history or saved memory. It collects no account details, usage statistics or telemetry.
 
 **Use and storage.** The plugin checks text and prepares or validates host edits
 in memory on your computer, then returns the result to the host. It writes no

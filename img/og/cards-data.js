@@ -674,6 +674,13 @@ window.CARD_DATA = {
     "word": "Referees",
     "headline": "Who Pays the Referees"
   },
+  "why-i-do-this": {
+    "publication": true,
+    "editorial": true,
+    "role": "PERSONAL ESSAY",
+    "word": "Bullshitters",
+    "headline": "A Bullshitter Knows a Bullshitter"
+  },
   "the-terms-for-telling": {
     "publication": true,
     "editorial": true,

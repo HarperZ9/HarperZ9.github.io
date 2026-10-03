@@ -420,7 +420,7 @@ test('Who Knew First is a primary pillar with a family of its own', () => {
   const families = ROUTE_REGISTRY.families.map(family => family.label);
   assert.equal(families.indexOf('Writing'), families.indexOf('Research') + 1);
   assert.equal(families.indexOf('Who Knew First'), families.indexOf('Writing') + 1);
-  for (const href of ['who-knew-first-series.html', 'who-pays-the-referees.html', 'the-terms-for-telling.html']) {
+  for (const href of ['why-i-do-this.html', 'who-knew-first-series.html', 'who-pays-the-referees.html', 'the-terms-for-telling.html']) {
     assert.equal(routeByHref(href).family, 'Who Knew First', `${href} lights the Who Knew First pillar`);
   }
   const flywheel = routeByHref('flywheel.html');

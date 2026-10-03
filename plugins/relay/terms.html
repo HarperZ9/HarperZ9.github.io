@@ -20,6 +20,7 @@
 /* Page-scoped: policy lists and subheads at reading size inside the shared chassis. */
 .policy-list{max-width:min(100%,58ch);margin:1.2em 0 0;padding-left:1.4em;font-size:clamp(1.05rem,1.3vw,1.18rem);line-height:1.7;color:var(--bone)}
 .policy-list li+li{margin-top:.5em}
+.policy-code{max-width:100%;margin:1.2em 0 0;padding:.9em 1em;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.55;color:var(--bone);border:1px solid color-mix(in srgb,var(--bone) 18%,transparent)}
 .mv h3{max-width:min(100%,58ch);margin:2em 0 .6em;font-size:1.05rem;font-weight:600;color:var(--bone)}
 .inner-clean .seal{font-size:.875rem;letter-spacing:0;color:var(--muted)}
 .plugin-table{width:100%;border-collapse:collapse;font-size:.95rem;color:var(--bone)}
@@ -49,8 +50,8 @@
 <main id="main">
 <section class="mv" id="governs" aria-labelledby="governs-h">
   <h2 id="governs-h">What governs use</h2>
-  <p class="body-text">Relay has no separate terms-of-service document. The license in its repository sets the terms of use: <a href="https://github.com/HarperZ9/relay/blob/94f3e1af8565e6773b1dfdbc8d5462e683f3b35c/LICENSE" rel="noopener">Functional Source License, Version 1.1, MIT Future License</a>.</p>
-  <p class="body-text">From the privacy policy: The publisher operates no backend for this package.</p>
+  <p class="body-text">Relay has no separate terms-of-service document. The license in its repository sets the terms of use: <a href="https://github.com/HarperZ9/relay/blob/df074818232ea0bc8d353a68dc04efcfab7cb9df/LICENSE" rel="noopener">Functional Source License, Version 1.1, MIT Future License</a>.</p>
+  <p class="body-text">From the privacy policy: The publisher operates no backend for this package and receives nothing from it. The local model servers and any hosted model API you configure belong to you or your provider. When you set a hosted provider and a call asks for online tiers, they also go to that provider's API or the gateway URL you set, with the API key from the plugin settings. Relay sends the conversation: the system prompt, your prompt, project text the run read, and tool results. - One hosted model API, only when you set a hosted provider and a call passes <code translate="no">online: true</code>. Relay tries the local servers first and uses the hosted API when they are down or the call names it. Relay sends the conversation, including project text the run read, and your own key from the sensitive Hosted model API key setting. A health check for a hosted tier only tests that a key is set and sends nothing. - Shell commands, only when command execution is allowed. Relay then sets only the ones your hosted settings need. - <code translate="no">RELAY_RUN_ROOT</code>: folder for saved background run records. Relay uses one credential: the Hosted model API key setting. Your hosted model provider's privacy policy covers what you send to it.</p>
 </section>
 <section class="mv" id="license" aria-labelledby="license-h">
   <h2 id="license-h">License terms</h2>
@@ -69,7 +70,7 @@
 </section>
 <section class="mv" id="source" aria-labelledby="source-h">
   <h2 id="source-h">Source</h2>
-  <p class="note-line">The license text comes from <a href="https://github.com/HarperZ9/relay/blob/94f3e1af8565e6773b1dfdbc8d5462e683f3b35c/LICENSE" rel="noopener"><code translate="no">LICENSE</code></a> in the Relay repository.</p>
+  <p class="note-line">The license text comes from <a href="https://github.com/HarperZ9/relay/blob/df074818232ea0bc8d353a68dc04efcfab7cb9df/LICENSE" rel="noopener"><code translate="no">LICENSE</code></a> in the Relay repository.</p>
   <div class="channels"><a href="support.html">Support</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacy policy</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9/relay" translate="no">HarperZ9/relay</a> &nbsp;&middot;&nbsp; <a href="../index.html">All plugins</a></div>
 </section>
 </main>

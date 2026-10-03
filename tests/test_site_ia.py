@@ -86,7 +86,7 @@ def test_every_piece_sits_in_exactly_one_writing_section() -> None:
 
 def test_each_piece_carries_the_kind_word_from_sections_json() -> None:
     kinds = {member["id"]: member["kind"] for section in SECTIONS["sections"] for member in section["members"]}
-    allowed = {"Investigation", "Series piece", "Essay", "Open letter", "Atlas essay", "Dossier",
+    allowed = {"Investigation", "Series opener", "Series piece", "Essay", "Open letter", "Atlas essay", "Dossier",
                "Briefing", "Research corpus", "Visual sequence"}
     assert set(kinds.values()) <= allowed
     rows = re.findall(r'<article data-publication-entry[^>]*><p class="publication-meta">([^·<]+) ·.*?<h3><a href="([^"]+)"',

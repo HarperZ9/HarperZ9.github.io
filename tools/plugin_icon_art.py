@@ -204,8 +204,29 @@ def telos(rng: random.Random, n: int) -> list[str]:
     return out
 
 
+def flywheel(rng: random.Random, n: int) -> list[str]:
+    """A heavy rim on swept spokes: stored momentum, each turn checked against the last."""
+    out = []
+    for k, r in enumerate((R * 0.97, R * 0.93, R * 0.89, R * 0.85)):
+        pts = [polar(r, 2 * math.pi * j / 180) for j in range(180)]
+        out.append(curve(pts, 1.0 - 0.14 * k, closed=True))
+    hub = R * 0.22
+    for i in range(n):
+        a0 = 2 * math.pi * i / n + rng.uniform(-0.01, 0.01)
+        sweep = 0.62
+        pts = []
+        for k in range(41):
+            t = k / 40
+            r = hub + (R * 0.85 - hub) * t
+            pts.append(polar(r, a0 + sweep * t * t))
+        out.append(curve(pts, 0.55 + 0.45 * (i % 2)))
+    for k, r in enumerate((hub, hub * 0.82)):
+        out.append(curve([polar(r, 2 * math.pi * j / 90) for j in range(90)], 0.8 - 0.2 * k, closed=True))
+    return out
+
+
 MOTIFS = {
     "articulate": articulate, "canon": canon, "crucible": crucible, "forum": forum,
     "gather": gather, "index": index, "learn": learn, "mneme": mneme,
-    "plexus": plexus, "relay": relay, "telos": telos,
+    "plexus": plexus, "relay": relay, "telos": telos, "flywheel": flywheel,
 }

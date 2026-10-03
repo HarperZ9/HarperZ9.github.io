@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT))
 from tools.series_table import BEGIN, END, carrier_routes, reading_minutes, series_rows  # noqa: E402
 
 SERIES = json.loads((ROOT / "publications/data/series/who-knew-first.json").read_text(encoding="utf-8"))
-EXPECTED_CARRIERS = ["who-knew-first.html", "who-pays-the-referees.html", "the-terms-for-telling.html",
+EXPECTED_CARRIERS = ["why-i-do-this.html", "who-knew-first.html", "who-pays-the-referees.html", "the-terms-for-telling.html",
                      "who-knew-first-series.html"]
 
 
@@ -50,14 +50,15 @@ def test_every_series_page_carries_the_table() -> None:
 
 def test_rows_follow_the_publication_order_and_mark_the_current_page() -> None:
     rows = series_rows(SERIES)
-    assert [row["title"] for row in rows] == ["Who Knew First", "Who Pays the Referees", "The Terms for Telling",
+    assert [row["title"] for row in rows] == ["A Bullshitter Knows a Bullshitter", "Who Knew First", "Who Pays the Referees", "The Terms for Telling",
                                               "Who Kept the Books", "The Maker Is Part of the Story",
                                               "A Check It Cannot Predict"]
+    numbered = [row for row in rows if row["n"] != "start"]
     for route in carrier_routes(SERIES):
         found = re.findall(r'<tr data-part="(\d)" class="sc-row sc-(\w+)"( aria-current="page")?>(.*?)</tr>',
                            block(route), re.S)
         assert [int(n) for n, *_ in found] == list(range(6)), route
-        for (n, state, current, cells), row in zip(found, rows):
+        for (n, state, current, cells), row in zip(found, numbered):
             assert row["title"] in text(cells)
             assert row["question"] in text(cells)
             is_here = row["route"] == route
@@ -99,3 +100,23 @@ def test_narrow_screens_stack_rows_instead_of_scrolling() -> None:
     assert "grid-template-columns:3.4rem minmax(0,1fr)" in narrow
     assert "width:auto!important" in narrow
     assert "min(60rem,calc(100vw - 32px))" in css
+
+
+def test_the_opener_row_comes_first_on_every_page_and_has_no_blade() -> None:
+    """A Bullshitter Knows a Bullshitter is the "Start here" row: above the anchor, linked, and the aperture's core."""
+    opener = SERIES["opener"]
+    for route in carrier_routes(SERIES):
+        table = block(route)
+        rows = re.findall(r'<tr data-part="([^"]+)" class="sc-row ([^"]+)"( aria-current="page")?>(.*?)</tr>', table, re.S)
+        assert rows[0][0] == "start" and "sc-opener" in rows[0][1], route
+        cells = rows[0][3]
+        assert "Start here" in text(cells) and opener["text"] in text(cells) and opener["question"] in text(cells)
+        here = route == opener["href"]
+        assert bool(rows[0][2]) == here and ("sc-current" in rows[0][1]) == here, route
+        assert ('href="why-i-do-this.html"' in cells) != here, route
+        assert table.count('class="sc-blade ') == 6 and 'data-part="start"' not in table.split("</svg>", 1)[0]
+        assert ('class="sc-core sc-core-current"' in table) == here, route
+        lede = re.search(r'<p class="sc-lede">(.*?)</p>', table, re.S).group(1)
+        assert "of 6 are published" in text(lede), route
+        assert ("opens it" in text(lede)) == here, route
+        assert ('href="why-i-do-this.html"' in lede) == (not here and route != SERIES["route"]), route

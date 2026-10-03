@@ -304,6 +304,15 @@
       "updated_at": "2026-10-01"
     },
     {
+      "id": "why-i-do-this",
+      "route": "why-i-do-this.html",
+      "title": "A Bullshitter Knows a Bullshitter",
+      "collection": "series",
+      "kind": "Series opener",
+      "published_at": "2026-10-02",
+      "updated_at": "2026-10-02"
+    },
+    {
       "id": "why",
       "route": "why.html",
       "title": "Why it's built this way",
@@ -324,6 +333,14 @@
   ],
   "newest": [
     {
+      "id": "why-i-do-this",
+      "route": "why-i-do-this.html",
+      "title": "A Bullshitter Knows a Bullshitter",
+      "kind": "Series opener",
+      "published_at": "2026-10-02",
+      "summary": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series."
+    },
+    {
       "id": "who-pays-the-referees",
       "route": "who-pays-the-referees.html",
       "title": "Who Pays the Referees",
@@ -338,14 +355,6 @@
       "kind": "Series piece",
       "published_at": "2026-10-01",
       "summary": "The party that holds a record also writes the terms for the people inside who could tell. In the cases checked, telling was protected where a forum outside the employer reached the merits, or public pressure forced a reversal."
-    },
-    {
-      "id": "the-number-has-a-vintage",
-      "route": "the-number-has-a-vintage.html",
-      "title": "The Number Has a Vintage",
-      "kind": "Atlas essay",
-      "published_at": "2026-10-01",
-      "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses."
     }
   ]
 }

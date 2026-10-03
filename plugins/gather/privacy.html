@@ -20,6 +20,7 @@
 /* Page-scoped: policy lists and subheads at reading size inside the shared chassis. */
 .policy-list{max-width:min(100%,58ch);margin:1.2em 0 0;padding-left:1.4em;font-size:clamp(1.05rem,1.3vw,1.18rem);line-height:1.7;color:var(--bone)}
 .policy-list li+li{margin-top:.5em}
+.policy-code{max-width:100%;margin:1.2em 0 0;padding:.9em 1em;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--mono,ui-monospace,monospace);font-size:.92rem;line-height:1.55;color:var(--bone);border:1px solid color-mix(in srgb,var(--bone) 18%,transparent)}
 .mv h3{max-width:min(100%,58ch);margin:2em 0 .6em;font-size:1.05rem;font-weight:600;color:var(--bone)}
 .inner-clean .seal{font-size:.875rem;letter-spacing:0;color:var(--muted)}
 .plugin-table{width:100%;border-collapse:collapse;font-size:.95rem;color:var(--bone)}
@@ -53,7 +54,22 @@
 </section>
 <section class="mv" id="what-it-stores-and-sends" aria-labelledby="what-it-stores-and-sends-h">
   <h2 id="what-it-stores-and-sends-h">What it stores and sends</h2>
-  <p class="body-text">This profile stores nothing on disk. Network access is off unless the person who installs the plugin names exact HTTPS origins at launch; then <code translate="no">gather.fetch</code> reads those origins only, without credentials or redirects.</p>
+  <p class="body-text">This profile stores nothing on disk. Network access is off unless the person who installs the plugin names exact origins at launch: public HTTPS origins in the allowed public origins setting, or literal loopback origins such as <code translate="no">http://127.0.0.1:8080</code> in the local service setting. Then <code translate="no">gather.fetch</code> sends GET requests to those origins only, without credentials, cookies, custom headers or redirects. The URL path and query chosen by the model reach that origin. The hostnames of granted origins are looked up through the system DNS resolver. No other destination is contacted.</p>
+</section>
+<section class="mv" id="what-this-plugin-runs-and-handles" aria-labelledby="what-this-plugin-runs-and-handles-h">
+  <h2 id="what-this-plugin-runs-and-handles-h">What this plugin runs and handles</h2>
+  <p class="body-text"><strong>Hooks.</strong> This plugin has no hooks.</p>
+  <p class="body-text"><strong>MCP server.</strong> The plugin starts one MCP server named <code translate="no">gather</code>. Claude Code runs this command:</p>
+  <pre class="policy-code"><code translate="no">python3 -I -S -B ${CLAUDE_PLUGIN_ROOT}/server/serve.py --workspace ${user_config.workspace} --allow-origins-json ${user_config.allowed_origins} --allow-loopback-origins-json ${user_config.loopback_origins}</code></pre>
+  <ul class="policy-list"><li><code translate="no">-I -S -B</code> start Python in isolated mode. Python then ignores its own <code translate="no">PYTHON*</code> environment variables and your user packages, skips the site module, and writes no bytecode files.</li><li><code translate="no">${CLAUDE_PLUGIN_ROOT}</code> is the folder where Claude Code installed the plugin.</li><li><code translate="no">${user_config.workspace}</code> is the folder you chose as the readable workspace. The server reads files only inside it.</li><li><code translate="no">${user_config.allowed_origins}</code> is your list of public HTTPS origins. The default <code translate="no">[]</code> allows none.</li><li><code translate="no">${user_config.loopback_origins}</code> is your list of services on your own computer, such as <code translate="no">http://127.0.0.1:8080</code>. The default <code translate="no">[]</code> allows none.</li></ul>
+  <p class="body-text">The server offers <code translate="no">gather.docs</code>, which reads one text file in the workspace per call. If you allow at least one origin, it also offers <code translate="no">gather.fetch</code>, which reads one web address on an allowed origin per call. The server cannot start other programs.</p>
+  <p class="body-text"><strong>Network.</strong> With both origin lists empty, the server makes no network connection. It blocks every socket. When you allow origins:</p>
+  <ul class="policy-list"><li>At launch, the server looks up each allowed host name through your computer's DNS resolver. It looks the name up again for each request.</li><li>Each <code translate="no">gather.fetch</code> call sends one GET request to an allowed origin. The server connects only to the addresses it found at launch.</li><li>The request carries the path and query that the model chooses.</li><li>The request carries these headers: <code translate="no">User-Agent: gather/&lt;version&gt; (+https://github.com/HarperZ9/gather)</code>, <code translate="no">Accept</code>, <code translate="no">Accept-Language: en-US,en;q=0.9</code>, <code translate="no">Accept-Encoding: identity</code>, <code translate="no">Host</code> and <code translate="no">Connection: close</code>.</li><li>The request carries no cookies, passwords, tokens or other headers. The server does not follow redirects and ignores proxy settings.</li><li>Public origins must use HTTPS and must resolve only to public addresses. A local service origin must be a loopback IP address with a port.</li></ul>
+  <p class="body-text">The server contacts no other destination.</p>
+  <p class="body-text"><strong>Files written.</strong> The server writes no files or folders. It keeps no cache and no log. It sends its answers to Claude Code on standard output, and startup errors go to standard error. Nothing stays after a call returns.</p>
+  <p class="body-text"><strong>Environment variables and credentials.</strong> Gather's own code reads no environment variables and no credentials when this plugin runs. Python's standard library reads these:</p>
+  <ul class="policy-list"><li><code translate="no">COLUMNS</code> and <code translate="no">LINES</code>: the argument parser uses them to set the width of help and error text.</li><li><code translate="no">LANG</code>, <code translate="no">LANGUAGE</code>, <code translate="no">LC_ALL</code> and <code translate="no">LC_MESSAGES</code>: the argument parser uses them to choose the language of its messages.</li><li><code translate="no">SSLKEYLOGFILE</code>: Python checks it each time <code translate="no">gather.fetch</code> prepares a request. Isolated mode makes Python ignore it, so no TLS key log is written.</li><li><code translate="no">SSL_CERT_FILE</code> and <code translate="no">SSL_CERT_DIR</code>: the TLS library can use them to find trusted certificates for HTTPS requests.</li></ul>
+  <p class="body-text">Some modules the server loads also contain code that reads <code translate="no">GATHER_ALLOW_EXEC</code>, <code translate="no">GATHER_ALLOW_NETWORK</code>, <code translate="no">GATHER_AUTH_ENV_ALLOW</code>, <code translate="no">GATHER_CHILD_ENV</code> and <code translate="no">SystemRoot</code>. That code serves the full Gather server and child programs. This plugin never runs it, so these variables grant nothing here.</p>
 </section>
 <section class="mv" id="retention-and-support" aria-labelledby="retention-and-support-h">
   <h2 id="retention-and-support-h">Retention and support</h2>
@@ -61,7 +77,7 @@
 </section>
 <section class="mv" id="source" aria-labelledby="source-h">
   <h2 id="source-h">Source</h2>
-  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/gather/blob/cc1beb244fb88c0ba81c86ddf650d7706a2b4143/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Gather repository.</p>
+  <p class="note-line">This policy comes from <a href="https://github.com/HarperZ9/gather/blob/1bbf4608d4ebbc7e8226b3962146d4952de2983f/client-plugin/PRIVACY.md" rel="noopener"><code translate="no">client-plugin/PRIVACY.md</code></a> in the Gather repository.</p>
   <div class="channels"><a href="support.html">Support</a> &nbsp;&middot;&nbsp; <a href="terms.html">Terms of use</a> &nbsp;&middot;&nbsp; <a href="https://github.com/HarperZ9/gather" translate="no">HarperZ9/gather</a> &nbsp;&middot;&nbsp; <a href="../index.html">All plugins</a></div>
 </section>
 </main>

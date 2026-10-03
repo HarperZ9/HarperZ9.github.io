@@ -13,7 +13,12 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DtNiguMs.js",
     "assets/index-FBDE3rFM.js",
+    "why-i-do-this.html",
+    "publications/data/listings/why-i-do-this.json",
+    "img/og/why-i-do-this.png",
+    "system/series-table.css",
     "assets/index-BkvbD78Z.js",
     "work-with-me.html",
     "independence.html",
@@ -536,9 +541,33 @@ RELEASE_PATHS = (
 # route registry, site index and home bundle (index-FBDE3rFM.js) are regenerated; the
 # re-render also picks up the Continue the series text from #286.
 # index-BkvbD78Z.js stays as retained history.
+# October 1, 2026: Why I Do This, the author's own account, opens the Who Knew First series
+# as its "Start here" piece, with its listing and card. The Continue the series table gains
+# a Start here row on every series page, the series hub and the Writing hub link it, and the
+# feeds, sitemap, build receipt, route registry, site index and home bundle
+# (index-B3PP6LeH.js) are regenerated. index-FBDE3rFM.js stays as retained history.
+# October 1, 2026, before publication: the author retitles the opener A Bullshitter Knows a
+# Bullshitter; the slug why-i-do-this.html stays. The listing, series opener, card, feeds,
+# build receipt, route registry, site index, series tables and home bundle
+# (index-C1IxEots.js) are regenerated. index-B3PP6LeH.js was never published and is gone.
+# October 1, 2026, before publication: the purple-team passage, the June-page bridge and the
+# close of why-i-do-this.html now use the author's own words. No derived file changes.
+# October 1, 2026, before publication: why-i-do-this.html gains the author's spoken answer on
+# purple teaming, redemption and the alder. Its reading time moves from 8 to 10 minutes, so the
+# series tables and the build receipt are regenerated.
+# October 1, 2026, before publication: the alder paragraph in why-i-do-this.html now uses the
+# author's words of 16 September 2026 on the red alder and on truth, and the next paragraph gains
+# his sentence on stewards. Its reading time stays at 10 minutes, so no derived file changes.
+# October 2, 2026: merged with main after the independence policy v2, the Zentropy logotype
+# retirement and the plugin page refreshes; the release is rehashed on that base.
+# October 2, 2026: the opener goes live and its publication date moves from 1 to 2 October in
+# the page, its listing, the feeds, the publication index, the build receipt, the series tables,
+# the route registry, the site index and the home bundle (index-DtNiguMs.js, replacing the
+# never-published index-C1IxEots.js).
 # October 1, 2026: Who Knew First gains a third dated follow-up and The Terms for Telling a
 # further dated update; both pages are rehashed.
-REVIEWED_RELEASE_SHA256 = "354fd0b2a3e3e0a3fda7a7d15c8608687439854cbf94779d4cd3f523cfea507c"
+# October 2, 2026: merged with main after the series opener went live; rehashed on that base.
+REVIEWED_RELEASE_SHA256 = "e6ebb97cf1308afc555be76015ba5cce1e4c1308d0fe2d7c6caaf1fdb28f9122"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -717,7 +746,22 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026: the typefaces are renamed Zain Editorial and Zain Mono, so the
     # bundle rebuilt from the registry is index-FBDE3rFM.js with the same sheet.
     # index-BkvbD78Z.js stays as retained history.
-    current_js = "index-FBDE3rFM.js"
+    # October 1, 2026: Why I Do This joins the Who Knew First routes as the series opener, so
+    # the bundle rebuilt from the registry is index-B3PP6LeH.js with the same sheet.
+    # index-FBDE3rFM.js stays as retained history.
+    # October 1, 2026, before publication: the opener is retitled A Bullshitter Knows a
+    # Bullshitter, so the bundle rebuilt from the registry is index-C1IxEots.js with the same
+    # sheet. index-B3PP6LeH.js was never published and is gone.
+    # October 2, 2026: the opener goes live with its publication date set to 2 October, so
+    # the bundle rebuilt from the registry is index-DtNiguMs.js with the same sheet.
+    # index-C1IxEots.js was never published and is gone.
+    current_js = "index-DtNiguMs.js"
+    assert not (ROOT / "assets" / "index-B3PP6LeH.js").exists()
+    assert not (ROOT / "assets" / "index-C1IxEots.js").exists()
+    previous_fonts_js = "index-FBDE3rFM.js"
+    assert previous_fonts_js not in source
+    assert (ROOT / "assets" / previous_fonts_js).is_file()
+    assert f"assets/{previous_fonts_js}" in RELEASE_PATHS
     previous_work_js = "index-BkvbD78Z.js"
     assert previous_work_js not in source
     assert (ROOT / "assets" / previous_work_js).is_file()
