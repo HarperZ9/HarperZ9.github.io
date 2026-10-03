@@ -39,6 +39,7 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from tools.corpus_corrections import CORRECTIONS, CORRECTIONS_OPENING, place_corrections
+from tools import structured_data
 from tools.corpus_forewords import foreword
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -316,6 +317,7 @@ def main() -> int:
             blurb=html.escape(blurb, quote=False),
             slug=slug, body=body, headings=headings, generated=f"{words:,}",
         )
+        page = structured_data.apply(page, structured_data.load_context(ROOT))
         c["out"].write_bytes(page.encode("utf-8"))
         print(f"{c['out'].name:30} {words:>7,} words   {headings:>3} sections   {len(page)/1024:>6.0f} kB")
     return 0

@@ -20,6 +20,7 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools import publication_article
+from tools import structured_data
 from tools.publication_article import (
     _render_figure_metadata,
     _render_table,
@@ -416,7 +417,18 @@ def planned_outputs(records: list[dict], root: Path, listings: list[dict] | None
         }
     )
     outputs["feed.xml"] = _text_bytes(_render_atom(feed_items))
+    _add_structured_data(outputs, root, [record["route"] for record in records])
     return outputs
+
+
+def _add_structured_data(outputs: dict[str, bytes], root: Path, routes: list[str]) -> None:
+    """Write the search and citation block into each built page, so the receipt covers it."""
+    published = {SITE_URL + item["url"].removeprefix(SITE_URL): item["date_published"][:10]
+                 for item in json.loads(outputs["feed.json"])["items"] if item.get("date_published")}
+    context = structured_data.load_context(root, published=published)
+    for route in [*routes, "publications.html"]:
+        page = outputs[route].decode("utf-8")
+        outputs[route] = _text_bytes(structured_data.apply(page, context))
 
 
 def _replace_file(staged: Path, destination: Path) -> None:

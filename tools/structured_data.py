@@ -1,0 +1,273 @@
+"""Search and citation metadata for page heads.
+
+Writes one generated block before </head> on each hand-authored page: schema.org
+JSON-LD, Highwire citation tags for a page that carries a DOI, and links to the
+feeds. Record pages rendered from system/systems.json get theirs from
+scripts/system-record-head.mjs. The publication builder and the corpus renderer
+call apply() on the pages they own, so their receipts cover the block.
+
+Every value comes from something the site already publishes: the page's meta
+tags, feed.xml, system/systems.json and system/scholarly-records.json.
+
+    python tools/structured_data.py          rewrite the blocks
+    python tools/structured_data.py --check  exit 1 if any block is stale
+"""
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import re
+import sys
+from dataclasses import dataclass, field
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ORIGIN = "https://harperz9.github.io"
+PERSON_ID = f"{ORIGIN}/#person"
+WEBSITE_ID = f"{ORIGIN}/#website"
+# Profiles that name the same person. Each was checked to resolve on 2026-10-03.
+SAME_AS = [
+    "https://github.com/HarperZ9",
+    "https://orcid.org/0009-0001-7175-5393",
+    "https://www.linkedin.com/in/zaindanaharper/",
+    "https://huggingface.co/zaindanaharper",
+]
+BEGIN = "<!-- structured-data:begin (tools/structured_data.py) -->"
+END = "<!-- structured-data:end -->"
+BLOCK = re.compile(r"\n?<!-- structured-data:begin[^>]*-->.*?<!-- structured-data:end -->", re.S)
+SUFFIX = re.compile(r"\s*(?:·|\|)\s*Zain Dana Harper\s*$")
+FEEDS = [
+    '<link rel="alternate" type="application/atom+xml" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.xml">',
+    '<link rel="alternate" type="application/feed+json" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.json">',
+]
+# Pages whose bytes another builder pins in its own receipt. They get no block
+# until that builder writes one itself.
+PINNED = {"checking-the-machines.html", "frontier-safety.html"}
+META = re.compile(r"<meta\s+([^>]*)>", re.I)
+
+
+@dataclass
+class Context:
+    published: dict[str, str] = field(default_factory=dict)
+    products: dict[str, dict] = field(default_factory=dict)
+    scholarly: list[dict] = field(default_factory=list)
+    landing: dict[str, dict] = field(default_factory=dict)
+
+
+def is_public_source(href: object) -> bool:
+    return isinstance(href, str) and href.startswith("https://github.com/HarperZ9/")
+
+
+def _registry(path: Path, key: str) -> list[dict]:
+    if not path.is_file():
+        return []
+    return json.loads(path.read_text(encoding="utf-8"))[key]
+
+
+def load_context(root: Path = ROOT, published: dict[str, str] | None = None) -> Context:
+    if published is None:
+        published = {}
+        feed = (root / "feed.xml").read_text(encoding="utf-8")
+        for entry in re.findall(r"<entry>(.*?)</entry>", feed, re.S):
+            url = re.search(r"<id>([^<]+)</id>", entry)
+            date = re.search(r"<published>(\d{4}-\d{2}-\d{2})", entry)
+            if url and date:
+                published[url.group(1)] = date.group(1)
+    # A trimmed site root (the builder's own test fixtures) may lack either
+    # registry; a missing one contributes no nodes rather than failing the build.
+    systems = _registry(root / "system/systems.json", "systems")
+    products = {
+        f"{ORIGIN}/{s['href']}": s for s in systems
+        if "#" not in s["href"] and is_public_source(s.get("sourceHref")) and s["accessMode"] != "request"
+    }
+    records = _registry(root / "system/scholarly-records.json", "records")
+    landing = {f"{ORIGIN}/{r['landing']}": r for r in records if r.get("landing")}
+    return Context(published, products, records, landing)
+
+
+def _meta_all(source: str, key: str) -> list[str]:
+    out = []
+    for attrs in META.findall(source):
+        name = re.search(r'(?:name|property)="([^"]+)"', attrs, re.I)
+        content = re.search(r'content="([^"]*)"', attrs, re.I)
+        if name and content and name.group(1).lower() == key:
+            out.append(html.unescape(content.group(1)))
+    return out
+
+
+def _meta(source: str, key: str) -> str | None:
+    found = _meta_all(source, key)
+    return found[0] if found else None
+
+
+def read_page(source: str) -> dict:
+    canonical = re.search(r'<link\s+rel="canonical"\s+href="([^"]+)"', source, re.I)
+    title = re.search(r"<title>([^<]*)</title>", source, re.I)
+    headline = _meta(source, "og:title") or html.unescape(title.group(1) if title else "")
+    return {
+        "canonical": canonical.group(1) if canonical else None,
+        "og_type": _meta(source, "og:type"),
+        "headline": SUFFIX.sub("", headline.strip()).strip(),
+        "description": _meta(source, "description"),
+        "image": _meta(source, "og:image"),
+        "published": _meta(source, "article:published_time"),
+        "tags": _meta_all(source, "article:tag"),
+        "skip": bool(
+            re.search(r"Generated by scripts/render-", source)
+            or re.search(r'<meta\s+name="robots"\s+content="[^"]*noindex', source, re.I)
+            or re.search(r'http-equiv="refresh"', source, re.I)
+        ),
+    }
+
+
+def author_ref() -> dict:
+    return {"@id": PERSON_ID, "@type": "Person", "name": "Zain Dana Harper"}
+
+
+def person_node() -> dict:
+    return {"@type": "Person", "@id": PERSON_ID, "name": "Zain Dana Harper", "url": f"{ORIGIN}/", "sameAs": SAME_AS}
+
+
+def breadcrumb(trail: list[tuple[str, str]]) -> dict:
+    items = [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(trail)]
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def doi_identifier(doi: str) -> dict:
+    return {"@type": "PropertyValue", "propertyID": "DOI", "value": doi}
+
+
+def scholarly_ref(record: dict) -> dict:
+    url = f"https://doi.org/{record['doi']}"
+    return {
+        "@type": "ScholarlyArticle", "@id": url, "name": record["title"], "headline": record["title"],
+        "author": author_ref(), "datePublished": record["date"], "url": url,
+        "identifier": doi_identifier(record["doi"]),
+        "encoding": {"@type": "MediaObject", "encodingFormat": "application/pdf",
+                     "contentUrl": f"{ORIGIN}/{record['pdf']}"},
+        "isAccessibleForFree": True, "license": "https://creativecommons.org/licenses/by/4.0/",
+    }
+
+
+def article_nodes(page: dict, ctx: Context) -> list[dict]:
+    url = page["canonical"]
+    record = ctx.landing.get(url)
+    node = {
+        "@type": "ScholarlyArticle" if record else "Article", "@id": f"{url}#article",
+        "headline": page["headline"], "url": url, "mainEntityOfPage": url,
+        "author": author_ref(), "publisher": {"@id": PERSON_ID}, "inLanguage": "en",
+    }
+    date = page["published"] or ctx.published.get(url)
+    optional = {"description": page["description"], "datePublished": date, "image": page["image"],
+                "keywords": page["tags"] or None}
+    node.update({k: v for k, v in optional.items() if v})
+    if record:
+        node["sameAs"] = f"https://doi.org/{record['doi']}"
+        node["identifier"] = doi_identifier(record["doi"])
+    trail = [("Home", f"{ORIGIN}/"), ("Publications", f"{ORIGIN}/publications.html"), (page["headline"], url)]
+    return [node, breadcrumb(trail)]
+
+
+def software_nodes(system: dict, url: str) -> list[dict]:
+    node = {
+        "@type": "SoftwareSourceCode", "@id": f"{url}#software", "name": system["name"],
+        "description": system["purpose"], "url": url, "codeRepository": system["sourceHref"],
+        "author": author_ref(),
+    }
+    return [node, breadcrumb([("Home", f"{ORIGIN}/"), ("Catalog", f"{ORIGIN}/catalog.html"), (system["name"], url)])]
+
+
+def citation_tags(record: dict) -> list[str]:
+    pairs = [
+        ("citation_title", record["title"]), ("citation_author", "Harper, Zain Dana"),
+        ("citation_publication_date", record["date"].replace("-", "/")), ("citation_doi", record["doi"]),
+        ("citation_pdf_url", f"{ORIGIN}/{record['pdf']}"), ("citation_publisher", "Zenodo"),
+    ]
+    return [f'<meta name="{k}" content="{html.escape(v, quote=True)}">' for k, v in pairs]
+
+
+def graph_for(page: dict, ctx: Context) -> tuple[list[dict], list[str]]:
+    url = page["canonical"]
+    if url == f"{ORIGIN}/":
+        site = {"@type": "WebSite", "@id": WEBSITE_ID, "name": "Zain Dana Harper", "url": f"{ORIGIN}/",
+                "description": page["description"], "inLanguage": "en",
+                "author": {"@id": PERSON_ID}, "publisher": {"@id": PERSON_ID}}
+        return [person_node(), site], FEEDS
+    if url == f"{ORIGIN}/person.html":
+        return [person_node(), {"@type": "ProfilePage", "url": url, "name": page["headline"],
+                                "mainEntity": {"@id": PERSON_ID}}], []
+    if url == f"{ORIGIN}/publications.html":
+        return [{"@type": "CollectionPage", "@id": f"{url}#collection", "name": page["headline"], "url": url,
+                 "description": page["description"], "author": author_ref(),
+                 "hasPart": [scholarly_ref(r) for r in ctx.scholarly]}], FEEDS
+    if page["og_type"] == "article":
+        return article_nodes(page, ctx), FEEDS
+    if url in ctx.products:
+        return software_nodes(ctx.products[url], url), []
+    return [], []
+
+
+def ld_script(graph: list[dict]) -> str:
+    payload = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, separators=(",", ":"))
+    payload = payload.replace("<", "\\u003c")
+    return f'<script type="application/ld+json">{payload}</script>'
+
+
+def block_for(source: str, ctx: Context) -> str:
+    page = read_page(source)
+    if page["skip"] or not page["canonical"]:
+        return ""
+    graph, extra = graph_for(page, ctx)
+    if not graph:
+        return ""
+    record = ctx.landing.get(page["canonical"])
+    lines = [BEGIN, *extra, *(citation_tags(record) if record else []), ld_script(graph), END]
+    return "\n" + "\n".join(lines)
+
+
+def apply(source: str, ctx: Context) -> str:
+    """Return the page with its generated block current. Idempotent."""
+    stripped = BLOCK.sub("", source)
+    if read_page(stripped)["skip"]:
+        return stripped
+    block = block_for(stripped, ctx)
+    if not block:
+        return stripped
+    at = re.search(r"</head>", stripped, re.I)
+    if not at:
+        raise ValueError("page has no </head>")
+    return stripped[: at.start()].rstrip() + block + "\n" + stripped[at.start():]
+
+
+def candidates(root: Path) -> list[Path]:
+    files = sorted(p for p in root.glob("*.html") if p.name not in PINNED)
+    files.append(root / "home/index.html")
+    files += sorted((root / "briefings").glob("*/index.html"))
+    return [p for p in files if p.is_file()]
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args(argv)
+    ctx = load_context()
+    stale = []
+    for path in candidates(ROOT):
+        source = path.read_bytes().decode("utf-8")
+        updated = apply(source, ctx)
+        if updated == source:
+            continue
+        stale.append(path.relative_to(ROOT).as_posix())
+        if not args.check:
+            path.write_bytes(updated.encode("utf-8"))
+    if args.check and stale:
+        print(f"structured data is stale in {len(stale)} page(s): {', '.join(stale)}", file=sys.stderr)
+        print("run: python tools/structured_data.py", file=sys.stderr)
+        return 1
+    print("structured data: current" if args.check else f"structured data: {len(stale)} page(s) written")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -95,8 +95,16 @@ NAV_SCRIPT = '<script type="module" src="system/nav.js?v=20260909-pillar-navigat
 
 
 def assert_only_theme_entry_script(page: str) -> None:
-    """The theme entry, plus the shared site menu since 1 October 2026; nothing else."""
-    script_tags = re.findall(r"<script\b[^>]*>.*?</script>", page, flags=re.DOTALL)
+    """The theme entry, plus the shared site menu since 1 October 2026; nothing else.
+
+    Since 3 October 2026 an article also carries one JSON-LD block. It is data
+    the browser never executes, so it is counted on its own and kept out of this list.
+    """
+    script_tags = [
+        tag for tag in re.findall(r"<script\b[^>]*>.*?</script>", page, flags=re.DOTALL)
+        if not tag.startswith('<script type="application/ld+json">')
+    ]
+    assert len(re.findall(r'<script type="application/ld\+json">', page)) <= 1
     assert sorted(script_tags) == sorted([ARTICLE_THEME_ENTRY_SCRIPT, NAV_SCRIPT])
 
 

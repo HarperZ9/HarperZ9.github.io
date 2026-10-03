@@ -576,7 +576,9 @@ RELEASE_PATHS = (
 # October 3, 2026: the six philosophy papers published in their October edition from
 # writing/papers/ (tools/render_papers.py), three new paper PDFs listed in papers.json, and the
 # Witnessing Spine foreword added; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "399f44c8cc80de758f1649680c548afecc0147424e61768cf8ba437286ba3bf3"
+# October 3, 2026: search and citation metadata (JSON-LD, citation tags, feed links) written into
+# page heads by tools/structured_data.py and the system record renderer; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "11c1598023ba9495c916babac13f3d96052711e65da7f405c1a09e86e04fe677"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

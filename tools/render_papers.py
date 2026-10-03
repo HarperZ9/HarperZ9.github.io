@@ -24,6 +24,7 @@ if __package__ in {None, ""}:
 
 from tools.paper_markdown import front_block, render
 from tools.paper_page import EARLIER_CORRECTIONS, page
+from tools import structured_data
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -73,8 +74,9 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     stale = []
+    context = structured_data.load_context(ROOT)
     for name, spec in PAPERS.items():
-        text = build(name, spec)
+        text = structured_data.apply(build(name, spec), context)
         path = ROOT / name
         if args.check:
             if path.read_text(encoding="utf-8").replace("\r\n", "\n") != text:
