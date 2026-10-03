@@ -1,22 +1,28 @@
 // system/media-engine/plugins/raw.mjs
-// RAW, the reference renderer, live in the browser: raw-native 0.3.0 compiled to WebAssembly fills
-// the engine's "raw" slot and its "wasm-raw" reference backend.
+// RAW, the reference renderer, live in the browser: raw-native 0.4.0 fills the engine's "raw" slot
+// and its "wasm-raw" reference backend.
 //
-// The plugin renders in a Worker (plugins/raw-worker.mjs), so a one-second ray-traced frame never
-// blocks the page. The release files are pinned below by SHA-256 and checked before any of their code
-// runs; they are byte copies of the v0.3.0 GitHub release assets, and raw.test.mjs re-hashes them.
+// The backend has a fast path and a fallback. Where the browser has WebGPU and JSPI, the WebGPU
+// build draws the frame on the GPU and checks it against a CPU render of the same camera, writing a
+// GPU certificate. Elsewhere the single-threaded CPU build draws it. Both run in a Worker
+// (plugins/raw-worker.mjs), so a one-second render never blocks the page. The release files are
+// pinned below by SHA-256 and checked before any of their code runs; they are byte copies of the
+// v0.4.0 GitHub release assets, and raw.test.mjs re-hashes them.
 //
-// Params: { view, size, channel, tolerance } or explicit raw-native camera fields (eye, target, up,
-// fovy, width, height). view picks one of the five published camera presets; channel picks which
-// image the canvas shows: the shaded frame, the ray-traced AO, the screen-space AO or the error map.
+// Params: { view, size, channel, tolerance, backend } or explicit raw-native camera fields (eye,
+// target, up, fovy, width, height). view picks one of the five published camera presets; channel
+// picks the shaded frame, the ray-traced AO, the screen-space AO or the error map; backend "cpu"
+// skips the GPU path.
 
-export const RAW_VERSION = "0.3.0";
+export const RAW_VERSION = "0.4.0";
 const base = (name) => new URL(`../../../media/raw-native/wasm-${RAW_VERSION}/${name}`, import.meta.url).href;
 
 export const RAW_FILES = Object.freeze({
   module: { name: "raw-native.mjs", sha256: "c02ede3e72d1e6691d6ac190319053b8a982cd9de44c64f95a00edb6f95d33c5" },
-  wasm: { name: "raw-native.wasm", sha256: "72c1a9fef0feae4e9412693407886129480b67afe97dc3c29ea729fc03203504" },
-  loader: { name: "raw-loader.mjs", sha256: "26fec5e9eff49108e8f0c2619d96e883a1c4178735d8a0caece77a019c9bdaaa" },
+  wasm: { name: "raw-native.wasm", sha256: "45e25940368d664e21088708ba1c515b0e5d9ef60a2bea4b8b93f8f31113a470" },
+  gpuModule: { name: "raw-native-gpu.mjs", sha256: "ff6565d00ae528e0509a5ec76f0f5bdaef9a0c4daed48246f660d6d03f5fe615" },
+  gpuWasm: { name: "raw-native-gpu.wasm", sha256: "2299b9d34191147c6afe5f638dc27220061ad7564126e27b63cfc3f89952d2f3" },
+  loader: { name: "raw-loader.mjs", sha256: "8a762c65c04ed52ddf76bcf4a58105d10b6062a4db80a8923e8f85f1eb7fcdee" },
 });
 
 // The five views in raw-native's README and on raw.html, with raw-native's own field names.
@@ -62,15 +68,18 @@ function rawWorker() {
   return worker;
 }
 
-const files = () => ({ loader: base(RAW_FILES.loader.name), module: base(RAW_FILES.module.name), moduleSha256: RAW_FILES.module.sha256,
-  wasm: base(RAW_FILES.wasm.name), wasmSha256: RAW_FILES.wasm.sha256 });
+const files = () => ({
+  loader: base(RAW_FILES.loader.name),
+  cpu: { module: base(RAW_FILES.module.name), moduleSha256: RAW_FILES.module.sha256, wasm: base(RAW_FILES.wasm.name), wasmSha256: RAW_FILES.wasm.sha256 },
+  gpu: { module: base(RAW_FILES.gpuModule.name), moduleSha256: RAW_FILES.gpuModule.sha256, wasm: base(RAW_FILES.gpuWasm.name), wasmSha256: RAW_FILES.gpuWasm.sha256 },
+});
 
-// Render one frame. Resolves to { version, ms, certificate, arenaCertificate, frame, ao }.
-export function renderRaw(params) {
+// Render one frame. Resolves to { backend, fallback, version, ms, certificate, gpuCertificate, frame, ao }.
+export function renderRaw(params, { preferGpu = true } = {}) {
   const id = nextId++;
   return new Promise((resolve, reject) => {
     waiting.set(id, { resolve, reject });
-    rawWorker().postMessage({ id, files: files(), params });
+    rawWorker().postMessage({ id, files: files(), params, preferGpu });
   });
 }
 
@@ -86,6 +95,21 @@ export function channelRGBA(result, channel = "frame") {
   return rgba;
 }
 
+const WORD = { verified: "MATCH", refuted: "DRIFT" };
+
+// The GPU line: the GPU certificate's verdict, its worst channel and the adapter.
+function gpuLine(result) {
+  if (result.backend !== "webgpu") {
+    return { label: "GPU path", verdict: "UNVERIFIABLE", detail: `not used, so the CPU build drew this frame: ${result.fallback || "no reason given"}` };
+  }
+  const g = result.gpuCertificate || {};
+  const worst = (g.channels || []).reduce((m, c) => (c.rmse > m.rmse ? c : m), { name: "none", rmse: 0, bound: 0 });
+  const a = g.adapter || {};
+  const t = g.timing_ms || {};
+  return { label: "GPU frame", verdict: WORD[g.verdict] || "UNVERIFIABLE",
+    detail: `checked against the CPU reference: ${g.verdict}; largest channel RMSE ${worst.rmse.toExponential(1)} (${worst.name}, bound ${worst.bound}) on ${[a.vendor, a.architecture].filter(Boolean).join(" ") || "an unnamed adapter"}; GPU ${Math.round(t.gpu)} ms, CPU reference ${Math.round(t.cpu)} ms` };
+}
+
 // What a reader should be told about one result, as status lines { label, verdict, detail }.
 // raw-native's own three words are kept in the detail; the verdict uses the site's vocabulary.
 export function rawStatus(result, error, busy = false) {
@@ -93,14 +117,16 @@ export function rawStatus(result, error, busy = false) {
   if (!result) return [{ label: "raw-native " + RAW_VERSION, verdict: "PENDING", detail: "loading and rendering in a Worker" }];
   const c = result.certificate || {};
   const x = c.exact || {};
-  const word = { verified: "MATCH", refuted: "DRIFT" }[c.verdict] || "UNVERIFIABLE";
+  const gpu = result.backend === "webgpu";
+  const pin = gpu ? RAW_FILES.gpuWasm : RAW_FILES.wasm;
   return [
-    { label: "Module", verdict: "MATCH", detail: `${result.version}; raw-native.wasm sha-256 ${RAW_FILES.wasm.sha256.slice(0, 12)} checked before it ran` },
-    { label: "AO certificate", verdict: word, detail: x.rmse != null
+    { label: "Module", verdict: "MATCH", detail: `${result.version}, ${gpu ? "WebGPU" : "CPU"} build; ${pin.name} sha-256 ${pin.sha256.slice(0, 12)} checked before it ran` },
+    gpuLine(result),
+    { label: "AO certificate", verdict: WORD[c.verdict] || "UNVERIFIABLE", detail: x.rmse != null
       ? `raw-native says ${c.verdict}: RMSE ${x.rmse.toFixed(4)} against ${x.tolerance.toFixed(2)} on ${x.pixels.toLocaleString("en-US")} covered pixels; worst pixel ${x.maxError.toFixed(3)}`
       : `raw-native says ${c.verdict || "nothing"}` },
     busy ? { label: "Render", verdict: "PENDING", detail: "rendering the new camera; the lines above describe the previous frame" } :
-    { label: "Render", verdict: "OK", detail: `${result.frame.width} x ${result.frame.height} in ${Math.round(result.ms)} ms, one thread, in this browser` },
+    { label: "Render", verdict: "OK", detail: `${result.frame.width} x ${result.frame.height} in ${Math.round(result.ms)} ms in this browser${gpu ? ", GPU frame and CPU reference together" : ", one thread"}` },
   ];
 }
 
@@ -135,20 +161,21 @@ export const raw = {
         error = null;
         busy = true;
         notify();
-        return renderRaw(rawParams(p)).then((r) => { if (mine === gen) { result = r; imageKey = ""; } },
+        return renderRaw(rawParams(p), { preferGpu: p.backend !== "cpu" }).then((r) => { if (mine === gen) { result = r; imageKey = ""; } },
           (e) => { if (mine === gen) { error = e; console.error("[raw] render failed:", e); } })
           .finally(() => { if (mine === gen) { busy = false; notify(); settle(); requestRedraw(); } });
       },
       setParams(next) {
-        const before = JSON.stringify(rawParams(p));
+        const key = () => JSON.stringify([rawParams(p), p.backend === "cpu"]);
+        const before = key();
         p = { ...p, ...next };
-        if (JSON.stringify(rawParams(p)) !== before) inst.render(); else imageKey = "";
+        if (key() !== before) inst.render(); else imageKey = "";
       },
       frame() {
         const w = canvas.width, h = canvas.height, ctx = canvas.getContext("2d");
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.fillStyle = "#000"; ctx.fillRect(0, 0, w, h);
-        if (!result) { drawText(ctx, w, h, error ? "raw-native could not run here: " + error.message : "rendering in WebAssembly"); return; }
+        if (!result) { drawText(ctx, w, h, error ? "raw-native could not run here: " + error.message : "rendering"); return; }
         const key = gen + ":" + (p.channel || "frame");
         if (key !== imageKey) {
           const { width, height } = result.frame;

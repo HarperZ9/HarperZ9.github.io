@@ -63,14 +63,14 @@
     <p class="lede" data-canonical-purpose="raw">RAW is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.</p>
     <p class="close">It lights the frame twice, once with the cheap method real-time engines use and once with a ray-traced reference, and tells you how far the cheap one drifted. You get the picture and the evidence for it from the same run.</p>
   </div>
-  <div class="seal"><span translate="no">RAW</span> 0.3.0 &middot; C++23 &middot; CPU and WebAssembly &middot; no dependencies &middot; FSL-1.1-MIT</div>
+  <div class="seal"><span translate="no">RAW</span> 0.4.0 &middot; C++23 &middot; CPU, WebAssembly and WebGPU &middot; no dependencies &middot; FSL-1.1-MIT</div>
 </div>
 
 <main id="main">
 
 <section class="mv" id="live" aria-labelledby="live-h">
   <h2 id="live-h" class="reveal">Render it here.</h2>
-  <p class="body-text reveal">This is the 0.3.0 renderer compiled to WebAssembly, running in your browser on one thread. Pick a camera and it draws the frame, lights it both ways and writes the certificate, the same as the command line. Your browser checks the module against its published SHA-256 before running it. For the default camera, the certificate it writes is byte-for-byte the one the Windows and Linux binaries write.</p>
+  <p class="body-text reveal">This is the 0.4.0 renderer running in your browser. Pick a camera and it draws the frame, lights it both ways and writes the certificate, the same as the command line. If your browser has WebGPU, the frame is drawn on your GPU, and the same camera is drawn again on the CPU to check it: a second certificate says whether the two agree. Without WebGPU, the CPU build draws the frame on one thread, and the status lines say why. Your browser checks each module against its published SHA-256 before running it.</p>
   <div class="rn-live reveal">
     <canvas id="rn-canvas" width="768" height="768" role="img" aria-label="The live RAW render: a box on a ground plane, drawn by raw-native in this browser."></canvas>
     <div class="rn-controls">
@@ -122,15 +122,15 @@ try {
 
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.3.0">0.3.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second.</p>
+  <p class="body-text reveal">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.4.0">0.4.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second.</p>
   <div class="channels reveal">
-    <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.3.0/raw-native-0.3.0-windows-x64.zip" translate="no">raw-native-0.3.0-windows-x64.zip</a>
+    <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-windows-x64.zip" translate="no">raw-native-0.4.0-windows-x64.zip</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.3.0/raw-native-0.3.0-linux-x64.tar.gz" translate="no">raw-native-0.3.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
+    <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-linux-x64.tar.gz" translate="no">raw-native-0.4.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
     &nbsp;&middot;&nbsp;
-    <span class="g">WebAssembly</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.3.0/raw-native-0.3.0-wasm.zip" translate="no">raw-native-0.3.0-wasm.zip</a>
+    <span class="g">WebAssembly</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-wasm.zip" translate="no">raw-native-0.4.0-wasm.zip</a>
     &nbsp;&middot;&nbsp;
-    <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.3.0/SHA256SUMS" translate="no">SHA256SUMS</a>
+    <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/SHA256SUMS" translate="no">SHA256SUMS</a>
   </div>
   <pre class="artifact reveal" translate="no"><span class="cmt"># check the download, then render the default view</span>
 sha256sum -c SHA256SUMS
@@ -212,7 +212,8 @@ ctest --test-dir build -C Release --output-on-failure</pre>
     <li>The screen-space method is a simple one, which is why most views come back refuted.</li>
     <li>The default tolerance is 0.12 RMSE. <code translate="no">--tolerance</code> changes it, and the certificate records the value used.</li>
     <li>A full render with the ray-traced reference takes about 0.26 seconds at 256 by 256 and 1 second at 512 by 512 on one thread of an Intel Core i7-13700KF, natively or in WebAssembly. Times on this page depend on your machine.</li>
-    <li>This page runs the single-threaded build. The threaded WebAssembly build ran about eight times faster on the same machine, but browsers allow it only on pages sent with cross-origin isolation headers, and GitHub Pages cannot send them.</li>
+    <li>On an NVIDIA RTX 4090 in Chrome, the GPU draws a 512 by 512 frame with every channel in about 14 milliseconds, and all 16 GPU certificates in the release evidence say verified. The CPU reference that checks each GPU frame still takes its full time, so a GPU render on this page is not faster end to end. One GPU, one driver and one browser have been measured.</li>
+    <li>Without WebGPU this page runs the single-threaded CPU build. The threaded WebAssembly build ran about eight times faster on the same machine, but browsers allow it only on pages sent with cross-origin isolation headers, and GitHub Pages cannot send them.</li>
     <li>Matching hashes were checked on x86-64 with two compilers and the WebAssembly build. Other processors and compilers are untested.</li>
   </ul>
 </section>
@@ -224,7 +225,7 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 
 <section class="mv" id="repo" aria-labelledby="repo-h">
   <h2 id="repo-h" class="reveal">Read the source.</h2>
-  <p class="body-text reveal">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 31 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
+  <p class="body-text reveal">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 32 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw-native" translate="no">HarperZ9/raw-native</a>
     &nbsp;&middot;&nbsp;

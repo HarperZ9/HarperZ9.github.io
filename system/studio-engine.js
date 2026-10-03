@@ -32,7 +32,7 @@ export const ENGINE_SURFACES = Object.freeze({
     intro: "Engine Revival's release media, re-hashed in your browser against the published manifest." },
   raw: { label: "RAW", page: "raw.html", slot: "raw", plugin: "slot-card",
     card: { title: "Plugin slot: RAW reference renderer", note: "WebAssembly build not published yet" },
-    intro: "RAW, the reference renderer, running in this browser: raw-native 0.3.0 compiled to WebAssembly lights one scene twice, with screen-space and ray-traced ambient occlusion, and writes a certificate saying whether the fast one held." },
+    intro: "RAW, the reference renderer, running in this browser: raw-native 0.4.0 draws one scene on your GPU where it can, checks that frame against its CPU path, and lights it twice, with screen-space and ray-traced ambient occlusion, and writes a certificate saying whether the fast one held." },
 });
 
 let current = null;   // { id, handle, mount, observer, plugin, params, input }
