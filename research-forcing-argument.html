@@ -5,30 +5,31 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Seam That Holds While It Is Crossed &middot; Zain Dana Harper</title>
-<meta name="description" content="A philosophy paper on why sorting, naming, and meaning occupy a seam in space and time, forced conventionally and conceded empty ultimately.">
+<meta name="description" content="Argues that any act of sorting or meaning, the sceptic&#x27;s included, takes up a moment while it happens, and concedes the ultimate level to Madhyamaka.">
 <link rel="canonical" href="https://harperz9.github.io/research-forcing-argument.html">
-<meta property="og:type" content="website">
+<meta property="og:type" content="article">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="The Seam That Holds While It Is Crossed &middot; Zain Dana Harper">
-<meta property="og:description" content="A philosophy paper on why sorting, naming, and meaning occupy a seam in space and time, forced conventionally and conceded empty ultimately.">
+<meta property="og:description" content="Argues that any act of sorting or meaning, the sceptic&#x27;s included, takes up a moment while it happens, and concedes the ultimate level to Madhyamaka.">
 <meta property="og:url" content="https://harperz9.github.io/research-forcing-argument.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+<meta property="article:modified_time" content="2026-10-03">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Seam That Holds While It Is Crossed &middot; Zain Dana Harper">
-<meta name="twitter:description" content="A philosophy paper on why sorting, naming, and meaning occupy a seam in space and time, forced conventionally and conceded empty ultimately.">
+<meta name="twitter:description" content="Argues that any act of sorting or meaning, the sceptic&#x27;s included, takes up a moment while it happens, and concedes the ultimate level to Madhyamaka.">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <style>
-/* Page-only: the two ledger tables stack into one record per row on phones, so no column is cut off. */
-@media (max-width:40rem){
-  .ledger-table,.ledger-table tbody,.ledger-table tr,.ledger-table td{display:block;width:auto}
-  .ledger-table colgroup{display:none}
-  .ledger-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-  .ledger-table tr{padding:.7rem 0;border-bottom:1px solid var(--rule)}
-  .ledger-table td{border:0;padding:.15rem 0}
-  .ledger-table td:first-child{font-weight:600}
-  .ledger-table td:not(:first-child)::before{content:attr(data-label);display:block;font:600 .875rem/1.4 var(--font-sans);color:var(--ink-soft)}
-}
+  /* The register marks are reader-facing structure: what is stated plainly, what is set
+     against its strongest contrary, and what is handed to the reader. They are set in the
+     mono face, in ink, so they read as labels and carry no verdict colour. */
+  .register{font-family:var(--font-mono);font-size:.8em;letter-spacing:.03em;color:var(--ink-soft)}
+  .revision-note{border-left:1px solid var(--rule-strong);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0 1.8rem;max-width:var(--measure)}
+  .paper-table{overflow-x:auto;max-width:100%;margin:.4rem 0 1.2rem}
+  .paper-rule{border:0;border-top:1px solid var(--rule);margin:2rem 0 1.4rem;max-width:var(--measure)}
+  .sheet h2{margin-top:2.2rem}
+  .sheet h3{margin-top:1.6rem}
+  blockquote{margin:1rem 0 1.2rem;padding:0 0 0 1rem;border-left:1px solid var(--rule-strong);color:var(--ink-muted);max-width:var(--measure)}
 </style>
 </head>
 <body class="doc">
@@ -47,1277 +48,269 @@
 <article class="sheet">
 
   <header class="mast">
-    <p class="role" style="margin-bottom:.55rem">Philosophy paper &middot; plain-language edition</p>
+    <p class="role" style="margin-bottom:.55rem">Philosophy paper &middot; edition of 3 October 2026</p>
     <h1>The Seam That Holds While It Is Crossed</h1>
-    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">What is forced at the conventional level whenever anything at all is sorted, named, or meant.</p>
+    <p class="role" style="color:var(--ink-soft);text-transform:none;letter-spacing:.01em;font-size:.92rem;margin:.55rem 0 .85rem">What is forced at the conventional level whenever anything is sorted, named or meant, set against the strongest positions that say otherwise</p>
     <p class="contact">
       <span>Zain Dana Harper</span><span class="sep">/</span>
-      <span>July 2026</span><span class="sep">/</span>
-      <span>Companion to <a class="inline" href="research.html">the research program</a></span><span class="sep">/</span>
+      <span>Argument built June 2026; first published 15 September 2026; this edition 3 October 2026.</span><span class="sep">/</span>
       <a class="inline" href="papers/forcing-argument.pdf">Download PDF</a>
     </p>
   </header>
 
-<h2 id="in-short">In short</h2>
-<p>Some philosophers hold that nothing stands on its own: a letter counts
-as local only because a clerk sorted it, and a word means something only
-because people use it that way. This paper asks what holds up the act of
-sorting itself, and argues that any sorting, while it happens, takes up a
-place and a moment, even the sceptic’s act of denying this; it grants
-that at the deepest level, when all sorting stops, nothing is left. If
-the subject is new to you, start with <a class="inline" href="#in-plain-terms">“In plain terms”</a>; the numbered
-argument and its open problems follow.</p>
-<p><strong>Abstract</strong></p>
-<p>Some facts seem to resist reduction to plain descriptive facts. Facts
-about what ought to be are normative facts. Facts about what experience
-is like are phenomenal facts. The two kinds do not seem to follow from facts about how things merely are. Philosophers call this resistance the
-explanatory gap: normative or phenomenal facts do not reduce to purely
-descriptive ones. A long tradition moves the gap. It stops treating the
-gap as a feature of a state of the world and treats it as a feature of
-inference, a limit on the moves thought can make from one concept to
-another.</p>
-<p>This paper moves the gap to a different place, the conferral-seam. A
-conferral is any act of sorting one thing from another, designating
-something, or meaning something. The conferral-seam is the event-form
-that every such act takes when it happens.</p>
-<p>The argument for the move is disjunctive-transcendental. A
-transcendental argument tries to show that something must hold because
-thought or experience needs it as a condition. A disjunctive argument
-has the form “either A or B.” Three structural features set this
-argument apart from the class of arguments that Barry Stroud’s 1968
-objection defeats.</p>
-<p>The first feature is where the load-bearing premise sits. It sits on
-the sceptic’s own enacted act of dissolving the framework, so the
-argument never has to establish a separate standalone fact to support
-it. The second feature is the kind of conclusion. The conclusion is an
-identity of occurrence: the seam is the conferral-event under a second
-description. The argument posits no second entity behind the first and
-claims no grounding relation. The third feature is the form. The
-argument runs as a disjunction, in which conferral is either occurring
-or has wholly ceased. Stroud’s critique targets a conditional form, and
-this argument never uses one. Together the three features close Stroud’s
-gap by removing the step it was meant to prevent.</p>
-<p>The argument faces two hardest adversaries. One is Nāgārjuna’s
-śūnyatā-śūnyatā, the emptiness of emptiness. The other is Stroud’s
-transcendental deflation. The argument survives both on honest terms.
-The thin index is spatiotemporal location, a position in space and time.
-It is forced at the conventional level (saṃvṛti, in the Buddhist
-two-truths framework), and the token-reflexive route forces it without
-circular reasoning. The thick index is the perspectival
-from-here-as-this structure: the point of view from which a sorting is
-done as this sorting, held apart from its negation. The paper declares
-the thick index and defends it in argument. It never derives it. The
-ultimate zero (paramārtha, the ultimate level) goes to Madhyamaka
-without qualification.</p>
-<p>The verdict is <strong>FORCES-CONVENTIONALLY-ONLY</strong>. The paper
-states it here, in the abstract, so the reader meets it first. The conventional
-result is a genuine, bounded contribution, and the paper states it at
-its honest size. The paper names the Candrakirti-absorption risk. It
-marks the undischarged thick index as the live viva front, the point a
-doctoral examination would press hardest. It concedes that the ultimate
-silence wins cleanly and costs nothing by way of conventional argument.
-It manufactures no false symmetry to soften that concession.</p>
-<p><strong>Keywords:</strong> transcendental argument, Stroud,
-Nāgārjuna, Madhyamaka, conferral, is/ought, conventional truth,
-token-reflexive, performative self-reference, explanatory gap</p>
-<hr />
-<h2 id="in-plain-terms">In plain terms</h2>
-<p>Picture a person at a desk sorting a pile of letters. For each letter
-she decides one thing: local or not local. Each decision is a small act.
-She treats this letter as local and as nothing else, and she drops it in
-a tray. Call any act of this kind a conferral. Sorting one thing from
-another is a conferral. So are naming and applying a rule. Meaning
-something and designating something count too.</p>
-<p>Next, take a claim about the whole world: nothing stands on its own.
-Nothing carries its status by itself. A letter counts as local only
-because someone sorted it that way. A word means something only because
-a practice fixed its meaning. Things receive their existence from
-outside. They do not produce it from inside. The property of standing on one’s own has a name: aseity. The claim says that nothing has
-aseity.</p>
-<p>This claim runs into a problem with itself. If nothing stands on its
-own, the act of sorting cannot stand on its own either. So what gives
-the sorting its own status? Only bad answers seem to be available. In
-the first, the sorting stands on its own after all, and the claim
-breaks. In the second, something else confers the sorting, something
-confers that, and the chain never ends. In the third, the whole thing
-dissolves into nothing, and no result is left to state.</p>
-<p>A careful sceptic pushes the third answer. She says the sorting,
-pressed hard enough, dissolves to zero, and nothing remains. A real
-position in Buddhist philosophy, associated with Nāgārjuna, comes close
-to this. The paper grants it at one level. At the deepest level, when
-all sorting stops, nothing is left.</p>
-<p>The paper answers the sceptic as follows. While the sorting goes on, it goes on
-somewhere and at some moment. A sort that happens at no place and no
-time is no sort. It would be the bare idea of sorting with no instance
-of it, and an idea with no instance does not occur. So wherever sorting
-happens, some spot in space and time is taken up. The paper calls that spot a seam.
-The seam is no separate thing hiding behind the sorting. It is the
-sorting itself, described a second way: an event that takes up a place
-and a time.</p>
-<p>Look at what the sceptic does when she says the sorting dissolves to
-nothing. She sorts. Her claim separates dissolved from not dissolved,
-and deep truth from surface truth. Her denial is an act of the very kind
-she says dissolves. So she cannot reach zero while she is still arguing.
-Arguing is sorting, and sorting takes up a spot. She reaches zero only when the sorting stops. Digging under the sorting does not reach it.</p>
-<p>The paper limits how much this shows. It shows that the sorting takes
-up a place and a time. That is the thin part of the claim. It does not
-show a real point of view inside the act, a real “from here, as this and
-not that.” That is the thick part. The thin part is forced. The thick
-part is argued for and not proven. At the deepest level, when sorting
-ceases, even the thin part is empty, and the paper concedes that in
-full.</p>
-<p>So the result is bounded: wherever a conferral happens, an occupied seam happens. This holds at the everyday level, for anyone who argues at
-all. No conferral comes from nowhere. The only road to nothing is the
-end of conferral. That end is the absence of the sorted world, and it is no floor lying beneath the world.</p>
-<hr />
-<h2 id="the-setting-a-framework-that-cannot-afford-a-floor">1. The
-Setting: A Framework That Cannot Afford a Floor</h2>
-<p><em>Plainly: some views deny that anything stands on its own. That
-denial then has to face itself, because the act of denying has to stand
-on something too.</em></p>
-<p>A class of philosophical frameworks begins by denying aseity across
-the board. Aseity is self-originating, self-standing existence: existing
-on one’s own, with support from nothing else. On these frameworks
-existence is conferred. It gets put into things from outside, and nothing squeezes it out of things from within. Status, authority, normative
-standing and meaning all get put into things the same way. Normative
-standing is a thing’s place measured against what ought to be. Things do
-not give off any of these by themselves.</p>
-<p>The appeal of these frameworks is real. They dissolve a recurring
-illusion: the thought that some item in the world’s inventory, pressed
-hard enough, will turn out to be the ground that needs no further
-ground. They also fit what the sciences have found. The sciences find
-layers of dependence all the way down, and no layer stands without the
-layer below it.</p>
-<p>The pressure on these frameworks turns back on themselves. If nothing
-is self-standing, the framework’s own claim cannot be self-standing. The
-sharper form of the pressure concerns the conferral. If existence is
-conferred, the framework has to account for the conferring act itself.
-That act sorts this from not-this. It picks out A and excludes A’s
-negation. It applies a convention. The act has three options. It might
-be self-standing, which is a covert aseity and refutes the framework. It
-might itself be conferred, which raises the question of what confers
-the conferring and starts an infinite regress. Or it might dissolve
-entirely to zero and leave nothing positive to say.</p>
-<p>This objection carries real weight. Nāgārjuna anticipated it and
-answered it in the <em>Vigrahavyāvartanī</em>, the “Dispeller of
-Disputes.” His reply denies that the emptiness-claim is itself a
-self-standing assertion. His image is a medicine that purges itself
-along with the illness. Madhyamaka is the “Middle Way” school of
-Buddhist philosophy, and its ultimate level is how things stand when all
-conceptual designation ceases. A no-aseity framework that takes the
-Madhyamaka move concedes that at the ultimate level the dissolution
-reaches zero, and nothing persists. The question then becomes whether
-the framework has anything to say short of the ultimate. Does any result
-hold at the conventional level, while conferral is still going on,
-before the silence that dissolves it?</p>
-<p>The paper answers that something is forced at the conventional level,
-as the event-form of every conferral that occurs. That event-form is a
-non-zero occupied seam. The seam has <em>seity</em> and no
-<em>aseity</em>. Seity is ownerless, dependently-arisen structure. It is
-real while it occurs, it belongs to no self-standing owner, and it
-arises only in dependence on other things. The seam does not stand on
-its own. The argument for it is disjunctive-transcendental in form, and
-it carries a genuine structural innovation over the class of arguments
-that Stroud defeated in 1968.</p>
-<hr />
-<h2 id="the-argument-p1-through-c">2. The Argument: P1 Through C</h2>
-<p><em>Plainly: the argument has five steps. Any act of sorting takes up
-a place and a time. Denying this is itself an act of sorting. Nothing
-lies between sorting and having stopped. Zero comes only by stopping. So
-wherever sorting happens, an occupied seam happens.</em></p>
-<h3 id="p1-conferral-is-occupation">2.1 P1: Conferral Is Occupation</h3>
-<p><em>Status: stipulated and contested. P1 is the single load-bearing
-premise. Its thin reading is forced by non-circular argument. Its thick
-reading is declared.</em></p>
-<p>Any act of conferral is performed as this discrimination and not its
-negation, and it is indexed at a standpoint. Sorting A from not-A is
-such an act, and so are meaning, designating and applying a convention.
-To be indexed at a standpoint is to be tied to a position from which the
-act is done. An occurrence indexed at nothing is no occurrence at
-all.</p>
-<p>The phrase “indexed at a standpoint” has two readings. The paper keeps
-them apart throughout.</p>
-<p>The <strong>thin index</strong> is spatiotemporal location. It says
-the conferral-event is a concrete particular at a definite position in
-space and time. This reading has a non-circular defense, given in §4.
-The defense earns more than a restatement of
-<em>pratītyasamutpāda</em>, dependent origination, the Buddhist thesis
-that things arise only in dependence on other things. A conferral with
-no thin-index residue at all is incoherent at the conventional level. It
-would be a type occurring while no token of that type occurs. A type is
-a general pattern. A token is one concrete instance of it. A type
-present with no token is a formal contradiction at the
-<em>saṃvṛti</em> level.</p>
-<p>The <strong>thick index</strong> is a standpoint <em>from which</em>
-sorting is performed <em>as this discrimination and not its
-negation</em>. It is the point-of-view structure, the from-here of the
-act. It is the directedness that marks the act as this act and holds it
-apart from its complement. The usual philosophical word for this directedness is intentional: the act aims at one specific thing. The thick reading is
-what P1’s strongest modal content would need to force the disjunction in
-full. Modal content is a claim about what must be the case. The paper
-declares the thick index. It does not derive it. The step from “located
-at position L” to “sorts from L as this sorting” reads point-of-view
-structure off a plain physical description. That step reopens Barry
-Stroud’s gap inside the predicate “conferral” itself [high confidence on
-this diagnosis; Stroud 1968, “Transcendental Arguments,” <em>Journal of
-Philosophy</em> 65: 241–256].</p>
-<p>The argument below keeps this division. The thin index carries the
-load, and the paper establishes it without circular reasoning. The paper
-presses the thick index hard in argument and concedes that it is not
-discharged. The contribution is bounded to match.</p>
-<h3 id="p2-the-dissolution-to-zero-is-itself-a-conferral">2.2 P2: The
-Dissolution-to-Zero Is Itself a Conferral</h3>
-<p><em>Status: granted. P2 survives every adversary.</em></p>
-<p>To assert, show, or even <em>intend</em> “the residue is zero” is to
-sort <em>empty</em> from <em>non-empty</em>. The same act sorts
-<em>ultimate</em> from <em>conventional</em> and <em>dissolved</em> from
-<em>undissolved</em>. The <em>Vigrahavyāvartanī</em>’s “I have no
-thesis” reply defuses one charge, the charge of asserting a
-self-standing <em>proposition</em>. A second charge stays live, the
-charge of <em>performing a partition</em>: an act that divides one thing
-off from another. Even the self-purging medicine has to be
-administered, and administering is sorting.</p>
-<p>The argument’s structural innovation turns on this point. The
-Madhyamaka sceptic runs a <em>prasaṅga</em> against the view that a
-conferring seam persists. A <em>prasaṅga</em> is a reductio. It draws an
-unwelcome consequence out of the opponent’s own position so that the
-opponent will reject the position. To run one, the sceptic must
-<em>select</em> certain consequences as unwelcome, as consequences the
-interlocutor (the person she argues with) ought to reject. To display a
-consequence as unwelcome, she must evaluate: this consequence damages
-the interlocutor’s view by his own lights, and that one does not. She
-performs that evaluative sorting. It is an act of conferral, at minimum
-a thin-indexed one, even though it asserts nothing about the
-mind-independent world.</p>
-<p>P2’s status is high. Both hardest adversaries concede that an act of
-dissolution is performed. The first is the Madhyamika, a follower of
-Madhyamaka. The second is the Stroudian deflationist, an opponent who
-follows Stroud and deflates the argument by denying that it reaches
-existence. Their dispute concerns what the act <em>carries</em>, that is, whether it carries an index. Its occurrence is common ground. P2 needs that
-concession and nothing more [high].</p>
-<h3 id="p3-exhaustive-disjunction">2.3 P3: Exhaustive Disjunction</h3>
-<p><em>Status: valid, conditional on P1.</em></p>
-<p>Take any region. Either conferral is occurring there, which is cell
-C, or conferral has wholly ceased there, which is cell Z. No third cell
-exists. Consider the apparent third option, “conferral with a zero
-residue”: a sorting performed from no index while the sorting goes on.
-Under P1 this option is <em>p</em> and not-<em>p</em> at once, a
-statement together with its own denial. By P1, conferral occurring means
-an occurrence is tokened, an actual instance is present, and so a thin
-index is occupied. Zero residue means nothing is occupied. The two
-halves contradict each other. At the conventional level this is a
-formal contradiction, and more than an implausible case.</p>
-<p>The Madhyamaka probes a further cell, C′: dependently-arisen sorting
-with no occupied index. C′ is contradictory <em>only if</em> P1’s
-thin-index reading holds. The whole weight of the conditional rests
-here. The argument inherits P1’s contestation exactly. P3 is as secure
-as P1, and no more.</p>
-<h3 id="p4-zero-is-cessation-not-ground">2.4 P4: Zero Is Cessation, Not
-Ground</h3>
-<p><em>Status: granted. P4 carries load in the decisive direction, and
-no adversary dislodges it.</em></p>
-<p>Cell Z, the total cessation of conferral, is reached only when
-conferral <em>stops</em>. Going underneath conferral never reaches it.
-No vantage point is both at zero and still conferring. The ultimate
-emptiness (<em>paramārtha</em>) is no deeper stratum on which the
-conventional world rests. It is what remains when the conventional
-world, all conferral included, stops operating.</p>
-<p>This premise does a great deal of work, and nobody contests it. The
-Madhyamika and the Stroudian deflationist both concede it. The
-Madhyamika wins at <em>paramārtha</em> by <em>dissolving</em>
-everything, the conferring activity included. That win owes nothing to a
-deeper ground. The deflationist denies that physical events carry
-point-of-view structure. He claims no ground under the conferring. He
-denies that the conferring is real as conferring. Neither objector
-claims that zero is a stratum beneath the conventional. Both claim that
-the conventional does not force what the argument says it forces.</p>
-<p>P4 turns the concession of the ultimate into a <em>license</em> for
-the conventional result. Because zero is cessation, and no ground lies there, the conventional cannot borrow zero-ness. Wherever conferral occurs, it
-occurs from a non-zero location. The ultimate level offers no such
-location. That absence refutes nothing. It marks the point where the
-subject matter itself ceases.</p>
-<h3 id="c-conclusion">2.5 C: Conclusion</h3>
-<p><em>Status: forced from P1 through P4, which means forced conditional
-on P1.</em></p>
-<p>Wherever conferral occurs, a non-zero occupied seam occurs. The seam
-is the <em>form</em> of that conferral. It is identical to the
-conferral-event under a second description, and no ground lies beneath
-that event. The only route to zero is the cessation of conferral. That
-cessation is the absence of the conferred world, and no foundation for
-it. So the dissolution of aseity cannot reach zero while any conferring
-goes on, including the conferring that performs the dissolution.</p>
-<p>The forced seam has <em>seity</em>, ownerless dependently-arisen
-structure, and no <em>aseity</em>. It does not stand on its own. It
-exists <em>while it is enacted</em>, and only then. Between conferrals,
-in cessation, there is zero. No floor persists under the world.</p>
-<hr />
-<h2
-id="the-structural-innovation-why-this-is-not-stroud-vulnerable-in-the-standard-way">3.
-The Structural Innovation: Why This Is Not Stroud-Vulnerable in the
-Standard Way</h2>
-<p><em>Plainly: Stroud’s classic objection says arguments of this kind
-show only that we must think X exists, and never that X does. Three
-features here keep that objection from finding a foothold. They do not
-make the conclusion unconditional.</em></p>
-<h3 id="strouds-objection-stated-fairly">3.1 Stroud’s Objection, Stated
-Fairly</h3>
-<p>Stroud’s 1968 paper [“Transcendental Arguments,” <em>Journal of
-Philosophy</em> 65: 241–256; high confidence] found a structural gap in
-Kant’s transcendental method as later neo-Kantians used it. Kant’s
-method tries to establish substantive conclusions by showing that
-experience requires them as conditions. The neo-Kantians are later
-philosophers who carried the method forward. Stroud targeted this
-argument form: “X is a necessary condition of experience, or thought, or
-discourse; therefore X exists.” His objection is that such an argument
-shows, at best, that we must <em>think</em> there is an X. It does not
-show that X <em>obtains</em>. A gap separates conceptual necessity, what
-we must think, from objective existence, what is the case. These
-arguments deliver “must think” at best. They reach “exists” only by
-importing verificationism, the view that whatever we cannot in principle
-verify is meaningless, or an equivalent assumption aimed at the sceptic.
-Without that assumption the argument is invalid. With it, the argument
-begs the question against the sceptic, because it assumes the very point
-in dispute.</p>
-<p>The objection is genuine and powerful. In the forty years since, philosophers have contested it and partly answered it [Robert Stern,
-“Transcendental Arguments,” <em>Stanford Encyclopedia of
-Philosophy</em>, rev. 2023, high confidence]. Its core point still
-stands as a real constraint: conceptual necessity does not by itself
-entail existence.</p>
-<h3 id="feature-one-the-premise-is-placed-on-the-opponents-act">3.2
-Feature One: The Premise Is Placed on the Opponent’s Act</h3>
-<p>Stroud’s critique targets arguments of the form “X is necessary for
-Y; therefore X exists.” The weak point is the step from
-<em>necessary-for</em> to <em>exists</em>. The existence claim needs
-more than the necessity claim supplies.</p>
-<p>The present argument removes this step. It places its load-bearing
-premise on the <em>enacted act</em> of the opponent who carries out the
-dissolution. The existence in question, the act of partitioning, comes
-from no inference about concepts. It is <em>already on the table</em>,
-granted by the opponent’s own performance of the argument. The
-Madhyamika who asserts “the residue is zero” grants that she is
-asserting and sorting. The Stroudian who dissolves the conferring-event
-down to a physical substrate grants that his dissolving is itself an act
-of evaluation. P2 infers nothing about what must exist. It describes
-what the opponent is doing <em>right now</em>, which she has already
-conceded.</p>
-<p>So Stroud’s objection finds no gap to work in here. The argument never infers existence from conceptual necessity. The opponent
-concedes the existence at the start.</p>
-<h3 id="feature-two-the-conclusion-is-an-identity-of-occurrence">3.3
-Feature Two: The Conclusion Is an Identity of Occurrence</h3>
-<p>Standard transcendental arguments of the Kantian form conclude that
-<em>X exists</em>, or that <em>X is the case</em>. That claim concerns a
-second entity, the condition, over and above the datum the argument
-starts from, which is the experience or thought in question. A datum is
-the given fact at the start. Stroud’s objection enters in the space
-between the datum and the further entity posited as its condition.</p>
-<p>The conclusion C has a different form. It does not posit the seam as
-a further entity that the conferral-event requires. The seam
-<em>is</em> that event under a second description. “A conferring-event
-is occurring” and “a non-zero occupied seam is occurring” describe the
-same occurrence. Identity relates them. No relation of grounding or
-necessitation is involved. To ground or necessitate is to make one thing
-hold in virtue of another. Identity is being the very same thing. No
-second thing needs its existence proved. The identity makes no deep
-metaphysical claim about hidden essence. A physicist makes the same move
-when she says a lightning-event is an electrical-discharge-event: one
-occurrence, described a second way, with nothing added to the world’s
-inventory.</p>
-<p>So Stroud’s objection finds no gap here either. The argument claims
-no second entity. Its conclusion is an identity, and identities posit no
-new existents.</p>
-<h3 id="feature-three-the-disjunctive-form">3.4 Feature Three: The
-Disjunctive Form</h3>
-<p>The conditional form is Stroud’s target: “X is
-necessary for Y,” or “without X, Y is impossible.” The disjunctive form
-of P3 has a different shape. The argument does not say “a seam is
-necessary for conferral to occur.” It says that conferral is occurring
-(cell C) or has wholly ceased (cell Z). Cell C <em>is</em> a seam
-occurring, by the identity of feature two. Cell Z is cessation. No third
-cell exists.</p>
-<p>The conditional form invites a question: given that the conditioned
-thing exists, why must the necessary condition exist? The disjunctive
-form does not invite it. The disjunction is <em>exhaustive</em> by
-construction, because P1 rules out cell C′, conferral with zero residue,
-as a formal contradiction. So the question whether C’s seam “must exist”
-does not arise in the same way. Anyone who is conferring is <em>already
-in cell C</em>. What stays open is whether the act of conferring,
-already conceded, is a seam-event or a non-seam-event. Feature two’s
-identity claim answers that the act is one occurrence described twice.
-The disjunction adds that no middle ground lies between the two
-cells.</p>
-<h3 id="what-the-three-features-buy-and-do-not-buy">3.5 What the Three
-Features Buy and Do Not Buy</h3>
-<p>These three features set the argument apart from the general
-Stroud-vulnerable class. Neither hardest adversary disputes them. Under
-examination, the Madhyamika and the Stroudian deflationist both concede
-that the <em>structural</em> innovation is real. They contest P1, and
-specifically whether P1 holds in its thick reading. The argument names
-that contest as its live condition.</p>
-<p>Here is what the features buy: Stroud’s 1968 objection, in its standard form, does not defeat the argument, because the gap Stroud
-found, between conceptual necessity and existence, appears nowhere in the
-argument’s chain of derivation. The features also have a limit. They do
-not buy unconditional force for C. C is forced conditional on P1, and
-P1’s thick reading is not discharged. The claim is bounded. The argument
-removed the step that Stroud’s gap was supposed to prevent, and it never
-crossed that gap.</p>
-<hr />
-<h2
-id="the-token-reflexive-defense-earning-the-thin-index-non-circularly">4.
-The Token-Reflexive Defense: Earning the Thin Index Non-Circularly</h2>
-<p><em>Plainly: the paper defends the claim that a sorting takes up a
-place and a time without assuming it. The defense uses a general fact:
-any actual event is a single instance, and a single instance has to sit
-somewhere.</em></p>
-<h3 id="what-non-circularity-requires-here">4.1 What Non-Circularity
-Requires Here</h3>
-<p>The circularity charge against transcendental arguments says the
-argument assumes its conclusion in its premises. For P1’s thin reading,
-the charge would be that the argument assumes conferral-events occupy
-positions in space and time so that it can conclude the same thing. To
-answer the charge, the defense must derive the thin index from premises
-the opponent already grants on <em>independent</em> grounds. Those
-grounds must say nothing about conferral, standpoints or discrimination.
-The derivation runs in four steps.</p>
-<h3 id="steps-one-through-four">4.2 Steps One Through Four</h3>
-<p><strong>Step one.</strong> C.S. Peirce’s type/token distinction sets
-the baseline. Peirce introduced it in 1906 and formulated it in the
-Collected Papers; this paper reports it at high confidence via
-Liebesman, “Types and Tokens,” <em>Stanford Encyclopedia of
-Philosophy</em>, first published 2026. A type “does not exist; it only
-determines things that do exist.” A token is “a single event which
-happens once and whose identity is limited to that one happening…
-significant only as occurring just when and where it does.” A type with
-no token is an uninstantiated abstract pattern, and it does not occur.
-This is no special claim about conferral. It states the general
-metaphysics of occurrence, the general account of what it takes for
-anything to happen.</p>
-<p><strong>Step two.</strong> Why do two exactly similar token events
-count as two things at all? To settle that question is to individuate
-them: to fix what makes them numerically distinct. The standard accounts
-surveyed in the SEP entry on tropes (Maurin, “Tropes,” <em>Stanford
-Encyclopedia of Philosophy</em>, rev. 2023; high confidence) fall into
-two camps. A trope is a particular instance of a property, such as this
-redness here, taken as a concrete particular. The general kind, redness
-as such, is the universal it falls under. <em>Spatiotemporal
-individuation</em> (SI) holds that exactly resembling tropes are
-numerically distinct if and only if they sit at non-zero distance in
-space and time (Campbell 1990; Lowe 1998; Schaffer 2001).
-<em>Primitivist individuation</em> (PI) holds that numerical
-distinctness is basic and needs no further explanation (Ehring 2011;
-Campbell 1990). PI does not deny that tokens occupy positions. It denies
-only that their positions <em>explain</em> their distinctness. On
-either account, a token at no position in space and time would be
-indistinguishable from an uninstantiated type. Kim’s
-property-exemplification view of events adds one more point (Kim 1966,
-1969; cited throughout Varzi, “Events,” <em>Stanford Encyclopedia of
-Philosophy</em>, rev. 2025; high confidence on attribution). On that
-view the time-constituent is a <em>constitutive component</em> of the
-event’s structure, and no label stuck on afterward.</p>
-<p><strong>Step three.</strong> Apply this to conferral. If a conferral
-occurs, if the sorting act <em>takes place</em>, it takes place as a
-token event. In Peirce’s terms, this conferral is significant as
-<em>this</em> conferral because it occurs just when and where it does. A
-conferral with zero positional residue would have no identity conditions
-to mark it off as a token. Nothing would separate it from a
-qualitatively identical conferral, or from the uninstantiated type
-“conferral in general.” Uninstantiated types do not occur. So
-“conferral occurring, at no position” amounts to “a type occurring while
-no token of that type occurs.” At the conventional level that is a
-formal contradiction.</p>
-<p><strong>Step four.</strong> The performative regress. Take the
-Prāsaṅgika who asserts “conferral occurs ownerlessly, with zero index
-residue.” She is herself performing a conferral act. She discriminates
-the Madhyamaka position from alternatives that posit <em>svabhāva</em>,
-a self-standing intrinsic nature. She does it at a moment, in a
-conversation, as <em>this</em> speaker. She grants that she is
-discriminating, so her own act concedes the antecedent, the if-part. By
-steps one through three, her assertion is a token event. Being
-<em>this</em> assertion, numerically the single one it is and not a
-qualitatively identical assertion made yesterday, requires at minimum
-that it occupy a position. The denier cannot perform the denial without
-instantiating a token, and instantiating a token requires a location. If
-she then denies that <em>that</em> denial is a located token, she
-performs one more token act of denial. The regress closes the loop. At
-the conventional level, every act of denying the thin index is itself a
-thin-indexed act.</p>
-<h3 id="why-this-is-non-circular-for-the-thin-index-only">4.3 Why This
-Is Non-Circular, for the Thin Index Only</h3>
-<p>The chain of derivation runs like this. An event <em>occurs</em> as a
-conferral-token, which anyone who argues grants. It <em>is
-individuated</em> as this token. It <em>occupies a position</em> in
-space and time. So it <em>occupies a thin index</em>. Each link comes
-from the general metaphysics of particulars. It applies to every
-occurring event and carries no special bias toward conferral. Neither
-the Peircean type/token distinction nor spatiotemporal individuation
-mentions conferral, standpoints or discrimination. The thin index falls
-out of what it is to be an occurring token, and it needs no prior
-assumption about what conferral is. The claim of non-circularity
-attaches to the thin index alone. It does not transfer to anything in
-the thick index.</p>
-<p>One limit on scope matters. The performative regress is airtight
-against anyone who is <em>arguing</em>. Every interlocutor in the C/Z
-dialectic concedes that he confers. The forcing does not deliver a
-general proof that physical events, taken purely as physical, carry a
-conferral-index. That proof would require identifying a physical event
-as a conferral-token beyond the substrate dynamics at the same
-coordinate, meaning the underlying physical activity there. The
-deflationist refuses that step. The seam binds those who take part in
-discourse. The C/Z disjunction needs exactly that, and no more.</p>
-<hr />
-<h2 id="the-thick-index-dialectical-pressure-not-forcing">5. The Thick
-Index: Dialectical Pressure, Not Forcing</h2>
-<p><em>Plainly: the point-of-view part of the claim can be pressed hard
-on anyone who argues. It cannot be proved. At the ultimate level it is
-empty, like everything else.</em></p>
-<h3
-id="what-the-thick-index-would-require-and-why-it-is-not-derived">5.1
-What the Thick Index Would Require and Why It Is Not Derived</h3>
-<p>The conventional thin-index forcing establishes that conferral, as a
-token, occupies a position in space and time. The <em>strongest</em>
-form of the C/Z disjunction would require more. It would require the
-thick index: the standpoint <em>from which</em> sorting is performed
-<em>as this discrimination and not its negation</em>. That is the
-from-here point-of-view structure, the directedness that marks the act
-as enacted-as-this-partition.</p>
-<p>The move from “located at position L” to “sorts from L as this
-sorting” reads point-of-view structure off a physical description. This
-reopens Stroud’s gap <em>inside the predicate “conferral”</em> itself.
-The gap does not lie between conferral and some further entity. It lies
-inside what it would take for the conferral to be fully determinate in
-its indexing. The paper derives the thick index at no level, the
-conventional included. Any argument that claims to derive it does one
-of two things. It may import <em>entelecheia</em> (Aristotle’s term for
-a thing’s realized inner actuality), Husserlian act-structure (Husserl’s
-analysis of the inner structure of mental acts), or perspectival
-determinacy treated as a “real relational property.”
-<em>Śūnyatā-śūnyatā</em> dissolves each of these at the ultimate level.
-Or the argument reopens Stroud’s gap in a new spot. The paper makes
-neither move.</p>
-<p>A candidate who defends this argument at a viva, an oral doctoral
-examination, must hold this boundary firmly. The three structural
-innovations of §3 escape Stroud’s critique for the conclusion as stated.
-They do not license a conclusion stronger than P1 warrants, and P1 in
-its thick reading is not warranted.</p>
-<h3 id="the-burden-shift-and-its-honest-ceiling">5.2 The Burden-Shift
-and Its Honest Ceiling</h3>
-<p>The strongest dialectical move available makes no claim that the
-thick index is proved. It raises the cost of dissolving the thick index
-to zero <em>while one is arguing</em>. The dissolutionist who presses
-the dissolution claim in discourse performs an act of evaluation. He
-picks this-consequence-as-the-correct-characterization and excludes its
-alternative. That evaluative discrimination is itself a sorting act. It
-is no first-order assertion about the world, no plain claim that
-such-and-such is the case. It works as a partition of the space of
-philosophical options. The Mādhyamika who runs a <em>prasaṅga</em>
-selects consequences as <em>unwelcome</em>, as reductios the
-interlocutor ought to reject. To display a consequence as unwelcome, she
-must evaluate: this-consequence-is-damaging, and not that one, by the
-interlocutor’s lights. She performs that evaluative tracking from a
-conventional interpretive standpoint <em>while she argues</em>.</p>
-<p>This shows that the context of argument <em>presupposes</em> the
-from-here structure in one sense: any participant conducting the
-argument must <em>treat</em> his own acts as directed, as
-this-partition-and-not-that. The boundary must hold firm here.
-Treating-as is not occupying. The presupposition is present as
-conventional performance for exactly as long as the argument runs, and
-no longer. It lapses the instant discourse lapses. The opponent can
-eliminate the thick index without pragmatic self-contradiction, that is,
-without contradicting what he says by the act of saying it. He has two
-ways. He can concede thin location and deny perspectival structure,
-which is the deflationist’s clean horn (one of two available options).
-Or he can exit to non-conceptual silence, which is the Prāsaṅgika’s
-silence-exit. The self-contradiction bites only on denial of the thin
-index. So the paper reserves “forced” for the thin result and withholds
-it from the thick index.</p>
-<h3 id="the-candrakirti-absorption-risk-named">5.3 The
-Candrakirti-Absorption Risk Named</h3>
-<p>The present argument names one specific, non-trivial risk directly.
-Call it the absorption risk: the risk that the Madhyamaka position
-absorbs and dissolves the very tools the argument uses. Candrakīrti’s
-Prāsaṅgika Madhyamaka, in the <em>Prasannapadā</em>, pressed the
-<em>vikalpa</em> point more sharply than Nāgārjuna’s own
-<em>Vigrahavyāvartanī</em> does. The <em>Prasannapadā</em> is his
-commentary on the <em>Mūlamadhyamakakārikā</em>; confidence on this
-attribution is moderate, since no independent primary-text verification
-was done here. <em>Vikalpa</em> is conceptual construction, the mind’s
-activity of carving the world into concepts. On this line
-<em>vikalpa</em> is itself the mechanism of error, and the
-conventional-truth framework is a provisional ladder with no stable
-platform under it. The worry applies directly. The conventional forcing
-of the thin index is itself a conceptual construction. On Candrakīrti’s
-account the conventional-truth framework has no stable floor. It is a
-web of designations that lean on one another, and no argument of the
-token-individuation kind in steps one through four fixes any of them.
-That argument brings in a <em>substantial</em> notion of
-token-particularity, of what makes a token one definite particular, and
-a thoroughgoing Prāsaṅgika may deny it.</p>
-<p>The objection is live, and more than formal. The available response
-holds at <em>saṃvṛti</em>. The argument needs no token-particularity in
-any ultimate sense. It needs only that the Prāsaṅgika context of
-argument conventionally individuates its own moves as discrete
-performances. That claim is thin and conventionally available.
-Candrakīrti’s objection presses further. It asks whether even this thin
-claim covertly smuggles a <em>svabhāva</em>-committed notion of
-particularity into the conventional framework. This paper has no
-worked-out response to the <em>Prasannapadā</em> on this point. It names
-the absorption risk and leaves it as a live viva front, alongside the
-thick index.</p>
-<h3 id="the-ultimate-concession-zero-without-manufactured-symmetry">5.4
-The Ultimate Concession: Zero without Manufactured Symmetry</h3>
-<p>The Prāsaṅgika wins at the ultimate level. <em>Śūnyatā-śūnyatā</em>,
-the claim that emptiness is itself empty, dissolves occurrence, token,
-position and perspectival character at the <em>paramārtha</em> level.
-Even “occurrence = tokening” and “tokening = spatiotemporal
-individuation” are <em>saṃvṛti</em> truths with no residue at the
-ultimate level. The thin index is empty at <em>paramārtha</em>. The
-thick index goes further than unearned there: it is dissolved, along
-with everything the conventional forcing uses to establish the thin
-index.</p>
-<p>A temptation arises to manufacture a symmetry at the ultimate level: to claim that the occupation move “cannot be refuted there any more than it is proved there.” The paper must decline it. The picture is asymmetric. The
-Prāsaṅgika does not assert the dissolution as a <em>paramārtha</em>
-thesis from within discourse, and she has no need to. The zero at
-<em>paramārtha</em> is no competing claim that could win or lose an
-argument. It is what remains when conceptual designation ceases. She
-wins the ultimate through the ceasing of proliferation, the end of the
-mind’s spinning-out of concepts. She needs no successful counter-thesis
-for that win. At <em>paramārtha</em> the thick index has no protected
-standing as merely unproved. It was never earned there, and at
-<em>paramārtha</em> everything is empty, the thin index included.</p>
-<p>The cost to the dissertation is real. For the <em>contribution</em>,
-the cost is bounded and not fatal. A conventional, discourse-scoped
-result is still a genuine result. It says that any act of conferral
-occurring in discourse instantiates a non-zero thin-indexed seam, by
-identity and not by grounding. The Mādhyamika gets <em>paramārtha</em>,
-and the argument gets <em>saṃvṛti</em>. Whether <em>saṃvṛti</em> is
-enough for the contribution depends on honesty. It is enough if the
-contribution is stated honestly at <em>saṃvṛti</em>, and the paper now
-states it that way.</p>
-<hr />
-<h2 id="the-cogito-at-the-act-and-performative-self-reference">6. The
-Cogito-at-the-Act and Performative Self-Reference</h2>
-<p><em>Plainly: the move “denying X is itself doing X” has two famous
-ancestors. One is Descartes’s cogito read as an act. The other is Apel
-and Habermas on arguments that refute themselves. This paper claims far
-less from the move than they did.</em></p>
-<h3 id="the-lineage">6.1 The Lineage</h3>
-<p>P1 and the argument’s P2 move have a recognizable lineage. The paper
-names it openly, and naming it makes the argument clearer than a claim
-of secret discovery would. The structure is performative
-self-reference: the act of denying X presupposes X or enacts X. It has
-two canonical ancestors in philosophy.</p>
-<p><strong>Descartes’s cogito, read as an act and not as a
-proposition.</strong> The traditional reading treats “cogito ergo sum”
-(“I think, therefore I am”) as an inference. A more defensible reading
-treats it as a performative, an utterance that does something by being
-said (Hintikka, “Cogito ergo sum: Inference or Performance?” 1962,
-<em>Philosophical Review</em> 71: 3–32; high confidence on existence and
-thesis). The act of doubting instantiates a doubter. The force here does
-not come from inference. The <em>act of doubting</em>, as an enactment,
-is itself the existence it was supposed to deny, so no step from “there
-must be a doubter for there to be doubting” is needed. The present
-argument’s P2 has the same structure, applied to the act of
-dissolving-to-zero. Performing a dissolution is itself an instance of
-the conferral it tries to dissolve.</p>
-<p><strong>Performative self-reference in Apel and Habermas.</strong>
-Karl-Otto Apel’s transcendental pragmatics (<em>Transformation of
-Philosophy</em>, 1973; <em>Towards a Transformation of Philosophy</em>,
-English 1980; moderate confidence on primary-text specifics) and Jürgen
-Habermas’s theory of communicative action (<em>The Theory of
-Communicative Action</em>, vol. 1, 1984; high confidence on thesis) each
-developed one observation. Certain philosophical positions refute
-themselves through the act of arguing, at a level beneath the
-proposition argued. Apel’s “Letztbegründung,” or ultimate grounding,
-argument claims that anyone who argues enacts the pragmatic
-presuppositions of discourse, including the sceptic who argues against
-them. Pragmatic presuppositions are what one must already be doing to
-argue at all: the participants recognize one another as able to give
-reasons, and they hold truth as a regulative ideal, an aim that guides
-inquiry without ever being fully reached. [high confidence on the claim,
-moderate on specific Apel citations without primary-text verification].
-This comes structurally close to the present argument’s P2 move.</p>
-<p>The difference matters. The present argument does not claim to
-derive <em>oughts</em>, or Habermasian validity claims, or anything
-about the semantic content of discourse, from the performative
-structure. The only content it derives is the <em>thin index</em>,
-spatiotemporal location. That derivation runs through the general
-metaphysics of token individuation and uses no pragmatic presupposition
-about the norms of discourse. The paper acknowledges the Apelian
-lineage. It disclaims the Apelian ambition outright.</p>
-<h3 id="why-the-cogito-comparison-does-not-overreach">6.2 Why the Cogito
-Comparison Does Not Overreach</h3>
-<p>The Descartes comparison informs, and it can mislead if it imports
-the first-person singular, the “I.” On its traditional reading the
-cogito secures the existence of a thinking subject. The present argument
-secures something else: a thin-indexed occurrence with no subject
-attached. It secures no subject, no perspective, nothing that could be
-called a <em>who</em>. The thin index is spatiotemporal location,
-available in principle to any event-metaphysics, and it is no
-first-personal standpoint. The seam is <em>ownerless</em>. It has
-structural seity and no aseity, and the argument says nothing about
-whether a subject stands behind it. Here the framework’s no-aseity
-commitment bears directly. The seam is forced without positing an ego, a
-soul, a transcendental subject (a self posited as the necessary ground
-of experience), or anything else the Buddhist opponent has good reason
-to reject. The paper cites the cogito for its performative form and
-leaves its first-personal content aside.</p>
-<hr />
-<h2 id="the-arity-gap-a-companion-result-that-floats-free">7. The Arity
-Gap: A Companion Result That Floats Free</h2>
-<p><em>Plainly: a separate argument shows that holding someone
-responsible is a two-place relation, which no one-place description of
-behavior can replace. It shares this paper’s move of refusing to drop a
-part the relation needs.</em></p>
-<p>The mock viva committee singled out one verdict in the free-will
-chapter as the corpus’s best independent philosophy: the
-<em>arity-gap</em> argument against eliminativist reductions of the
-reactive attitudes. The record sits in the credit panel of the mock
-viva (its section 1) and in sections 1.3 to 1.5 of the dissertation’s
-free-will chapter. This paper reports the argument as a companion. It is
-structurally independent of the forcing argument, and it shows what form
-the forcing argument must take. An eliminativist reduction claims that
-some category should be dropped from our account of the world. The
-reactive attitudes are P.F. Strawson’s term for responses such as blame,
-resentment and gratitude.</p>
-<p>The arity-gap argument runs as follows. The eliminativist reduces
-blame, resentment and the reactive attitudes in general to a
-forward-looking program for shaping behavior, and he invokes the
-phlogiston analogy. Phlogiston was a substance once posited to explain
-burning and later discarded. The case for abandoning phlogiston-talk is
-that combustion, understood as oxidation, gives a target-fixing
-description of what phlogiston-talk was tracking, and that description
-is available in the third person. A target-fixing description says, in
-other terms, what the old talk aimed at. The eliminativist owes the same
-for the reactive attitudes: a forward-looking, third-person,
-target-fixing description of what holding-responsible was tracking. He
-has none, and the reason is structural. Oxidation is a one-place
-property of the combusting stuff. Holding-responsible is a two-place
-relation, and an addressee <em>qua</em> addressee fills its second
-place: someone addressed precisely as an addressee. The arity of a
-relation is its number of places. A one-place target-fixing vocabulary
-cannot fix the target of a two-place relation. Strip out the second
-relatum, the second thing the relation relates, and you have not removed
-a phlogiston-gloss from combustion. You have eliminated one of the two
-relata, and you now describe a different relation.</p>
-<p>The paper includes this argument because it has the same logical form
-as the forcing argument’s structural innovation. The relevant structure
-cannot be reduced to something of lower arity, because the lower-arity
-description leaves out one of the relata that constitute the phenomenon.
-The forcing argument claims that the seam is <em>identical to</em> the
-conferral-event under a second description, and is no grounding relation
-behind it. In structural terms, that claim refuses the reduction to a
-one-place description, the event with the standpoint-description
-dropped. One arity observation binds both cases: one-place reductions
-cannot fix the target of a two-place relation.</p>
-<p>The arity-gap argument for the reactive attitudes is
-type-B-independent. It needs nothing about the hard problem of
-consciousness, the problem of why physical processes come with
-subjective experience. Type-B physicalism is one family of responses to
-that problem. The argument also passes the floats-free test. A
-solipsistic universe, one with only one inhabited standpoint, satisfies
-the necessity-of-locus residue in full and contains no second-personal
-remainder, because no one is there to address. The two-place structure
-(<em>from</em> a standpoint, <em>addressed to</em> a standpoint) differs
-from the one-place monadic residue (“a standpoint is occupied”). A
-monadic property is a one-place property, a property of a single thing.
-The arity gap is a genuine structural difference, and more than a verbal
-one.</p>
-<p>The paper offers the companion result because it generalizes the
-forcing argument’s own form. The escape from both Stroud and the
-Madhyamaka adds no new entity. It refuses the reduction to a lower
-arity. The seam does not sit behind the conferral; it <em>is</em> the
-conferral under a second description. In the same way, the second person
-does not sit behind the blaming; the second person is the blaming taken
-as a two-place enactment. The structure appears in both places because
-it is the correct structure for resisting certain reductive moves.</p>
-<hr />
-<h2 id="the-thinthick-distinction-and-the-remainder-laws-verdict">8. The
-Thin/Thick Distinction and the Remainder Law’s Verdict</h2>
-<p><em>Plainly: a separate filter tested the paper’s biggest claim and
-judged it a restatement. That verdict sets the size of the grand claim
-and leaves it unrefuted. The narrower membrane claim passes the same
-filter.</em></p>
-<p>The corpus’s Remainder Law put the forcing argument’s verdict,
-FORCES-CONVENTIONALLY-ONLY, to a further test. The Remainder Law is a
-post-hoc demarcation filter, a rule applied after the fact to mark off
-which claims count as genuine results. It is modelled on Popper’s move
-from methodological falsifiability to a criterion of demarcation. As
-first written, the Remainder Law rejected too much. Its clause (iii),
-“not closed by any third-person inventory,” failed Bell’s theorem under
-blind application and so certified almost nothing. Bell’s theorem, from
-physics, shows correlations that no purely local third-person inventory
-can reproduce, which is why the clause was too strong. The revision
-rewrote clause (iii) as a <em>provability</em> condition: P is not
-derivable from the separated descriptions of A and B under the governing
-theory’s inferential closure. Put simply, P does not follow by logic
-from the two descriptions taken apart. With that revision the filter
-returns a verdict on the forcing argument’s grand claim. The grand claim
-says the explanatory gap is <em>the same irreducibility the hard problem
-names</em>, forced at the seam. The verdict is REDESCRIPTION, by clause
-(ii). On the filter’s own clause-ii reading, the claim restates the
-premises in different vocabulary. The filter does not certify it as a
-result.</p>
-<p>This verdict does not refute the claim. It sets the claim’s size.
-REDESCRIPTION is the verdict the forcing argument’s own thesis had to
-expect. The grand relocation claim says consciousness’s explanatory gap
-is <em>forced</em> at the conferral seam <em>as the same gap</em>. That
-claim needs the thick index, which is undischarged. It also needs a
-rejection of type-B physicalism that the strongest objector declines to
-provide for the brute-identity move. Type-B physicalism holds that
-consciousness is physical and grants that reasoning alone cannot show
-this. Its brute-identity version treats the identity of an experience
-with a brain state as a basic fact with no further explanation. Chalmers
-2006 sets out this move and leaves it standing. The argument as stated
-does not touch the brute-identity type-B physicalist. This is a live,
-named limitation.</p>
-<p>The Remainder Law <em>does not</em> return REDESCRIPTION for the
-membrane framing. The membrane framing covers the thin-index seam, the
-result that authentication is not authorization (authn is not authz),
-and the consequences about unmeasurability and the taxonomy of failures.
-These results are type-B-independent. They pass the filter’s
-certification of provable non-entailment, which means they are more than
-logical restatements of their inputs. The contribution survives. The
-grand relocation is conditional and undischarged, and the paper says
-so.</p>
-<hr />
-<h2 id="the-verdict-printed-first-not-buried">9. The Verdict: Printed
-First, Not Buried</h2>
-<p><em>Plainly: the paper states the result at its true size. It is
-forced at the everyday level only, conditional on the main premise. The
-ultimate level is conceded, and three points stay open.</em></p>
-<p><strong>FORCES-CONVENTIONALLY-ONLY.</strong></p>
-<p>This verdict softens no stronger claim. It states the claim at the
-size it earned.</p>
-<p>What is forced. For any participant in discourse who grants that she confers, every conferral-event is identical, under a second
-description, to a non-zero thin-indexed seam-event. This holds at the
-<em>saṃvṛti</em> level, without circular reasoning, by the
-token-reflexive route. At the conventional level no conferral comes from
-zero. The only route to zero is the cessation of conferral. That
-cessation is the absence of the conferred world. It is not the world’s
-ground.</p>
-<p>What is conditional. At the conventional level the disjunction is
-exhaustive on condition that P1’s thin reading holds, and that reading
-is forced non-circularly. The argument’s strongest form needs P1’s thick
-reading, which the paper declares and defends in argument and does not
-derive. The grand relocation says this forced conventional seam is the
-same irreducibility as the hard problem. It needs the thick index and a
-rejection of type-B physicalism, and the argument establishes neither.
-The brute-identity type-B physicalist is not touched.</p>
-<p>What is conceded to Madhyamaka. The ultimate level, without condition
-and without manufactured symmetry. The Prāsaṅgika who exits to
-non-conceptual silence wins <em>paramārtha</em>. The thin index and the
-thick index are both empty there. The concession costs the argument
-nothing. It follows from the framework’s own commitment, carried down to
-its logical floor.</p>
-<p>What the three structural innovations buy. The argument survives Stroud’s 1968 objection in its standard form, because the gap that
-objection found does not appear in the derivation. The innovations are
-the premise placed on the opponent’s act, the conclusion as an identity
-of occurrence, and the disjunctive form. They remove the step that Stroud’s critique was designed to block. What they buy is a genuine structural distinction from the vulnerable class, and that distinction stops short of unconditional force.</p>
-<p>What remains live and unresolved. Three fronts stay open: P1’s thick
-joint, the Candrakirti-absorption risk to the conventional
-token-individuation argument, and the brute-identity type-B escape. A
-candidate who arrives at a viva knowing these three exactly can say at
-each one, “this is where the argument reaches its honest boundary.” That
-position is defensible, and it is genuine.</p>
-<hr />
-<h2 id="contextual-positioning-and-honest-novelty-assessment">10.
-Contextual Positioning and Honest Novelty Assessment</h2>
-<p><em>Plainly: the paper inherits its gap from Nagel and Levine and claims moderate novelty for its structural form. Madhyamaka stands unrefuted, and the paper claims less than Apel on purpose.</em></p>
-<p>The paper sits in the literature as follows.</p>
-<p><strong>Against the explanatory gap literature (Nagel 1974, “What Is
-It Like to Be a Bat?” <em>Philosophical Review</em> 83: 435–450 [high
-confidence]; Levine 1983, “Materialism and Qualia: The Explanatory Gap,”
-<em>Pacific Philosophical Quarterly</em> 64: 354–361 [high
-confidence]).</strong> The paper inherits the explanatory gap and does
-not invent it. The claimed novelty is the relocation, from a property of
-<em>states</em> to a property of <em>conferral-seams</em>. That novelty
-is moderate. The paper argues the relocation with a new structural form,
-and the underlying gap structure remains Nagel’s and Levine’s.</p>
-<p><strong>Against the standard transcendental argument
-literature.</strong> The three structural features of §3 set this
-argument apart from the general class Stroud defeated. Earlier
-literature may already contain this combination of features:
-premise-relocation, identity-conclusion and disjunctive form. The author
-cannot fully certify, from within the corpus, that it does not. The
-honest confidence on novelty is <em>moderate</em>. The survey of the
-literature did not find the combination. Its individual components
-appear in Apel, in Hintikka and in the performative-self-refutation
-traditions. Any referee in this area should look for earlier instances
-of the combined form before accepting the novelty claim.</p>
-<p><strong>Against Madhyamaka.</strong> The argument does not refute
-Madhyamaka. It accepts the ultimate-level conclusion and asks what
-follows short of it. The strategy is a recognizable one. It works inside
-the two-truths framework, the Buddhist doctrine that separates
-conventional truth from ultimate truth, and argues that conventional
-truths can be <em>forced</em> at <em>saṃvṛti</em> with
-<em>paramārtha</em> conceded. Anyone willing to accept the two-truths
-apparatus can use it. The argument’s novelty lies in the specific
-structure it forces at <em>saṃvṛti</em>. The two-truths framework itself
-is not the novel part.</p>
-<p><strong>Against Apel.</strong> The present argument does not try to
-establish communicative-rationality norms, Habermasian validity claims,
-or anything about the content of discourse from the performative
-structure. It derives only the thin index. The narrowing is deliberate.
-It makes the argument less ambitious than Apel’s Letztbegründung
-program. It also makes the argument more secure, since that program
-inherits its own set of objections from Rorty, Davidson and others.</p>
-<hr />
-<h2 id="sources">Sources</h2>
-<p>Each source carries a confidence label. The paper cites primary texts
-where they could be verified independently. It cites secondary sources,
-such as SEP entries, where access to the primary text was not
-independently confirmed.</p>
-<ul>
-<li>Stroud, Barry. 1968. “Transcendental Arguments.” <em>Journal of
-Philosophy</em> 65: 241–256. [high confidence: cited directly in SEP
-Transcendental Arguments with page reference]</li>
-<li>Stern, Robert. “Transcendental Arguments.” <em>Stanford Encyclopedia
-of Philosophy</em>, rev. 2023.
-https://plato.stanford.edu/entries/transcendental-arguments/ [high
-confidence]</li>
-<li>Nāgārjuna. <em>Vigrahavyāvartanī</em> (The Dispeller of Disputes).
-Trans. Jan Westerhoff. American Institute of Buddhist Studies / Wisdom
-Publications, 2010. [moderate confidence: cited in SEP; verse
-attribution from secondary scholarly consensus]</li>
-<li>Nāgārjuna. <em>Mūlamadhyamakakārikā</em> (Fundamental Verses on the
-Middle Way), ch. 2. [high confidence on text identity; primary-text page
-references not independently verified]</li>
-<li>Westerhoff, Jan. “Nāgārjuna.” <em>Stanford Encyclopedia of
-Philosophy</em>, first published 2010, rev. 2026.
-https://plato.stanford.edu/entries/nagarjuna/ [high confidence]</li>
-<li>Hayes, Richard, and Mark Siderits. “Madhyamaka.” <em>Stanford
-Encyclopedia of Philosophy</em>, first published 2010, rev. 2023.
-https://plato.stanford.edu/entries/madhyamaka/ [high confidence]</li>
-<li>Candrakīrti. <em>Prasannapadā</em> (Clear Words). [moderate
-confidence on attribution and relevance; no primary-text access
-confirmed; cited as absorption risk per §5.3]</li>
-<li>Descartes, René. <em>Meditations on First Philosophy</em> (1641).
-[high confidence on text and thesis]</li>
-<li>Hintikka, Jaakko. 1962. “Cogito ergo sum: Inference or Performance?”
-<em>Philosophical Review</em> 71: 3–32. [high confidence on existence
-and thesis]</li>
-<li>Apel, Karl-Otto. <em>Towards a Transformation of Philosophy</em>
-(Engl. 1980). [moderate confidence on primary-text specifics]</li>
-<li>Habermas, Jürgen. <em>The Theory of Communicative Action</em>,
-vol. 1 (Engl. 1984). [high confidence on existence and thesis]</li>
-<li>Peirce, C.S. 1906. Collected Papers (type/token distinction). Quoted
-via Liebesman 2026 SEP. [high confidence via SEP; moderate on primary
-volume/page]</li>
-<li>Liebesman, David. “Types and Tokens.” <em>Stanford Encyclopedia of
-Philosophy</em>, first published 2026. [high confidence]</li>
-<li>Maurin, Anna-Sofia. “Tropes.” <em>Stanford Encyclopedia of
-Philosophy</em>, rev. 2023. [high confidence]</li>
-<li>Varzi, Achille. “Events.” <em>Stanford Encyclopedia of
-Philosophy</em>, rev. 2025. [high confidence]</li>
-<li>Kim, Jaegwon. 1966. “On the Psycho-Physical Identity Theory.”
-<em>American Philosophical Quarterly</em> 3: 227–235; and 1969. “Events
-and Their Descriptions.” [high confidence on attribution; primary texts
-not independently retrieved]</li>
-<li>Campbell, Keith. 1990. <em>Abstract Particulars</em>. Oxford:
-Blackwell. [cited in Maurin 2023; moderate confidence on page
-numbers]</li>
-<li>Schaffer, Jonathan. 2001. “The Individuation of Tropes.”
-<em>Australasian Journal of Philosophy</em> 79(2): 247–257. [high
-confidence on existence and content]</li>
-<li>Nagel, Thomas. 1974. “What Is It Like to Be a Bat?”
-<em>Philosophical Review</em> 83: 435–450. [high confidence]</li>
-<li>Levine, Joseph. 1983. “Materialism and Qualia: The Explanatory Gap.”
-<em>Pacific Philosophical Quarterly</em> 64: 354–361. [high
-confidence]</li>
-<li>Chalmers, David. 2006. “Strong and Weak Emergence.” In Clayton and
-Davies, eds., <em>The Re-Emergence of Emergence</em>. Oxford University
-Press. [high confidence: fetched and quoted verbatim in the corpus’s
-type-B notes; type-B physicalism’s brute-identity move explicitly left
-unrefuted]</li>
-<li>Strawson, P.F. 1962. “Freedom and Resentment.” <em>Proceedings of
-the British Academy</em> 48: 1–25. [high confidence]</li>
-<li>Darwall, Stephen. 2006. <em>The Second-Person Standpoint</em>.
-Cambridge, MA: Harvard University Press. [high confidence]</li>
-<li>Pigden, Charles R. 1989. “Logic and the Autonomy of Ethics.”
-<em>Australasian Journal of Philosophy</em> 67(2): 127–151. [high
-confidence on existence and thesis; venue confirmed via standard
-bibliographic sources]</li>
-<li>Hume, David. 1739–40. <em>A Treatise of Human Nature</em>, Book III,
-Part I, Section I. [high confidence]</li>
-<li>Von Wright, Georg Henrik. 1963. <em>Norm and Action</em>. London:
-Routledge. [high confidence]</li>
-<li>Lampson, Butler, Abadi, and Wobber. 1992. “Authentication in
-Distributed Systems: Theory and Practice.” <em>ACM Transactions on
-Computer Systems</em> 10(4): 265–310. [high confidence]</li>
-<li>Abadi, Burrows, Lampson, and Plotkin. 1993. “A Calculus for Access
-Control in Distributed Systems.” <em>ACM Transactions on Programming
-Languages and Systems</em> 15(4): 706–734. [high confidence]</li>
-<li>Saltzer, Jerome, and Michael Schroeder. 1975. “The Protection of
-Information in Computer Systems.” <em>Proceedings of the IEEE</em>
-63(9): 1278–1308. [high confidence]</li>
-</ul>
-<hr />
-<p><strong>Part two: the provenance ledger</strong></p>
-<hr />
-<h2
-id="provenance-ledger-the-seam-that-holds-while-it-is-crossed">Provenance
-Ledger: <em>The Seam That Holds While It Is Crossed</em></h2>
-<p><em>This document is the paper’s existential condition. Every claim
-in the paper traces back to it. Read it before citing the paper, and
-above all before submitting the paper to a venue.</em></p>
-<hr />
-<h2 id="l1.-what-this-document-is-for">L1. What This Document Is
-For</h2>
-<p><em>Plainly: the paper’s own thesis says authorship must be inhabited
-and cannot be automated. So this ledger traces every claim back to who
-owns it.</em></p>
-<p>The paper is AI-assisted research substrate. It is no clean-room solo
-derivation, meaning one worked out from scratch, in isolation, with no
-outside help. The philosophical argument was developed step by step with
-AI assistance over several adversarial workflows. That covers P1
-through C, the three structural features, the thin/thick distinction and
-the token-reflexive defense. The ledger exists because the paper’s own
-thesis demands it. Authorship is conferred and inhabited. No system
-secretes it from within. The one act a system cannot perform for itself
-is the authored root. A human candidate who submits this paper without
-re-deriving, owning and defending each claim submits a paper whose
-provenance contradicts its thesis.</p>
-<p>The ledger does not diminish the work. It makes the work auditable.
-For AI-assisted substrate that makes claims about authorship, that is
-the only honest posture.</p>
-<hr />
-<h2
-id="l2.-what-was-derived-under-adversarial-pressure-vs.-declared">L2.
-What Was Derived Under Adversarial Pressure vs. Declared</h2>
-<p><em>Plainly: a table of which claims were tested under attack and
-which were only declared.</em></p>
-<div class="table-wrap" role="region" aria-label="What was derived and what was declared" tabindex="0" style="overflow-x:auto">
-<table class="ledger-table">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
-<thead>
-<tr>
-<th>Claim</th>
-<th>Status</th>
-<th>Location</th>
-<th>Adversarial test applied?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td data-label="Claim">Thin index forced non-circularly</td>
-<td data-label="Status">Derived, earned</td>
-<td data-label="Location">§4</td>
-<td data-label="Adversarial test applied?">Yes: 18 attack runs and 6 defense runs, each kept in full in the
-attack and defense run records</td>
-</tr>
-<tr>
-<td data-label="Claim">Thick index undischarged</td>
-<td data-label="Status">Declared and conceded</td>
-<td data-label="Location">§5.1, §9</td>
-<td data-label="Adversarial test applied?">Yes: the P1 defense verdict; unanimous across all adversaries</td>
-</tr>
-<tr>
-<td data-label="Claim">Three structural features escape Stroud</td>
-<td data-label="Status">Argued; both adversaries concede the features while attacking
-P1</td>
-<td data-label="Location">§3</td>
-<td data-label="Adversarial test applied?">Yes: the forcing argument movement; the mock viva credit panel,
-section 1</td>
-</tr>
-<tr>
-<td data-label="Claim">FORCES-CONVENTIONALLY-ONLY verdict</td>
-<td data-label="Status">Adjudicated</td>
-<td data-label="Location">§9</td>
-<td data-label="Adversarial test applied?">Yes: the P1 defense verdict; the consolidation record, section
-2.1</td>
-</tr>
-<tr>
-<td data-label="Claim">Candrakīrti absorption risk</td>
-<td data-label="Status">Named, unresolved</td>
-<td data-label="Location">§5.3</td>
-<td data-label="Adversarial test applied?">Partially: the mock viva names it as defect 5, unlitigated</td>
-</tr>
-<tr>
-<td data-label="Claim">Grand relocation (same gap as hard problem) = REDESCRIPTION</td>
-<td data-label="Status">Adjudicated</td>
-<td data-label="Location">§8</td>
-<td data-label="Adversarial test applied?">Yes: the Remainder Law test record; the type-B notes</td>
-</tr>
-<tr>
-<td data-label="Claim">Arity-gap companion result</td>
-<td data-label="Status">Adjudicated PASS: floats free of locus residue</td>
-<td data-label="Location">§7</td>
-<td data-label="Adversarial test applied?">Yes: the free-will chapter, section 1.5; the mock viva credit
-panel, section 1</td>
-</tr>
-<tr>
-<td data-label="Claim">Type-B brute-identity escape</td>
-<td data-label="Status">Named, untouched</td>
-<td data-label="Location">§8, §9</td>
-<td data-label="Adversarial test applied?">Yes: the type-B notes; Chalmers 2006 verified</td>
-</tr>
-<tr>
-<td data-label="Claim">Membrane framing type-B-independent</td>
-<td data-label="Status">Adjudicated unconditional</td>
-<td data-label="Location">§8</td>
-<td data-label="Adversarial test applied?">Yes: three workflow verdicts agree; the type-B notes</td>
-</tr>
-</tbody>
-</table>
-</div>
-<details class="how-we-know">
-<summary>How we know</summary>
-<dl class="hwk-list">
-<dt>Record files</dt>
-<dd>Each record named in the table above and in §7 is a file in the
-research corpus. Attack and defense runs:
-<code>foundations-src/p1-attack-*.md</code> and
-<code>p1-defense-*.md</code>. P1 defense verdict:
-<code>P1-DEFENSE-verdict.md</code>. Consolidation record:
-<code>CONSOLIDATION.md</code>, section 2.1. Mock viva, including the
-credit panel and defect 5: <code>MOCK-VIVA.md</code>. Remainder Law
-test: <code>REMAINDER-LAW-TEST.md</code>. Type-B notes, including the
-verbatim Chalmers 2006 quotation: <code>TYPE-B.md</code>. Free-will
-chapter: <code>dissertation/part-III-free-will.md</code>, sections 1.3
-to 1.5.</dd>
-</dl>
-</details>
-<hr />
-<h2 id="l3.-source-verification-status">L3. Source Verification
-Status</h2>
-<p><em>Plainly: a table of how far each cited source was verified, and
-what was not checked.</em></p>
-<div class="table-wrap" role="region" aria-label="Source verification status" tabindex="0" style="overflow-x:auto">
-<table class="ledger-table">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr>
-<th>Source</th>
-<th>Verification status</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td data-label="Source">Stroud 1968</td>
-<td data-label="Verification status">High: cited via SEP with page and journal reference</td>
-<td data-label="Notes">Primary text not independently retrieved; SEP Stern 2023 confirms
-the attribution</td>
-</tr>
-<tr>
-<td data-label="Source">Nāgārjuna MMK ch. 2</td>
-<td data-label="Verification status">High on text identity; moderate on primary-text specifics</td>
-<td data-label="Notes">Confirmed in SEP Westerhoff 2026</td>
-</tr>
-<tr>
-<td data-label="Source">Vigrahavyāvartanī</td>
-<td data-label="Verification status">Moderate: cited in SEP; translation Westerhoff 2010</td>
-<td data-label="Notes">The VV 29 verse attribution comes from secondary consensus</td>
-</tr>
-<tr>
-<td data-label="Source">Prasannapadā / Candrakīrti</td>
-<td data-label="Verification status">Moderate: cited as the absorption risk; no primary text
-retrieved</td>
-<td data-label="Notes">Named as mock-viva defect 5; full litigation is outstanding</td>
-</tr>
-<tr>
-<td data-label="Source">Hintikka 1962</td>
-<td data-label="Verification status">High on existence and thesis</td>
-<td data-label="Notes">SEP sources and standard bibliographies</td>
-</tr>
-<tr>
-<td data-label="Source">Apel</td>
-<td data-label="Verification status">Moderate: primary-text specifics not retrieved</td>
-<td data-label="Notes">Standard secondary literature confirms the thesis</td>
-</tr>
-<tr>
-<td data-label="Source">Peirce 1906 type/token</td>
-<td data-label="Verification status">High via SEP Liebesman 2026; moderate on primary volume and
-page</td>
-<td data-label="Notes">The SEP quotation is the load-bearing source</td>
-</tr>
-<tr>
-<td data-label="Source">Kim 1966, 1969</td>
-<td data-label="Verification status">High on attribution; primary texts not retrieved</td>
-<td data-label="Notes">Cited as foundational in Varzi SEP 2025</td>
-</tr>
-<tr>
-<td data-label="Source">Pigden 1989</td>
-<td data-label="Verification status">High on existence and thesis</td>
-<td data-label="Notes">Venue confirmed through the standard bibliographic record</td>
-</tr>
-<tr>
-<td data-label="Source">Chalmers 2006</td>
-<td data-label="Verification status">High: fetched from the primary text and quoted verbatim in the
-corpus</td>
-<td data-label="Notes">Recorded in the type-B notes</td>
-</tr>
-<tr>
-<td data-label="Source">ABLP 1992, 1993</td>
-<td data-label="Verification status">High: venue and year confirmed</td>
-<td data-label="Notes">Standard ACM bibliographic record</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr />
-<h2 id="l4.-the-existential-condition">L4. The Existential
-Condition</h2>
-<p><em>Plainly: five steps a human must complete to own and defend the
-argument honestly.</em></p>
-<p>A human candidate who re-derives and owns this argument must:</p>
-<ol type="1">
-<li>Read the primary sources. The SEP summaries are not enough. Stroud
-1968 is the load-bearing objection, and reading it changes the
-argument’s shape. Westerhoff 2010 on the VV is the closest available
-scholarly access to the text the argument invokes.</li>
-<li>Derive P1’s thin index from scratch, in writing, without reference
-to this paper. The token-reflexive route must be the candidate’s own
-thought, or it is not a thesis.</li>
-<li>Present the thick-index failure honestly in the viva. Frame it as
-the live philosophical question the argument has not closed, and do not
-reduce it to a known-limitation disclaimer. The committee will press it.
-The defense is “I know it is undischarged, here is why I cannot
-discharge it, here is why the thin result is nonetheless genuine.”</li>
-<li>Engage Candrakīrti’s <em>Prasannapadā</em> on <em>vikalpa</em>
-directly. This is defect 5 of the mock viva. It is the one place where
-the Madhyamaka tradition presses on the foundation of the
-conventional-truth framework from within, and this paper does not
-answer it.</li>
-<li>Engage Loar’s recognitional account [Brian Loar, “Phenomenal
-States,” <em>Philosophical Perspectives</em> 4: 81–108, 1990; high
-confidence on attribution; high confidence this is the relevant type-B
-physicalism source from Chalmers 2006’s framework] directly, in the
-body and not in a footnote. The paper names the brute-identity type-B
-escape and does not address it.</li>
-</ol>
-<p>Submitting the paper without completing these five steps is a
-provenance violation. The thesis’s own argument establishes why.</p>
-<hr />
-<h2 id="l5.-the-one-thing-the-paper-cannot-do-for-its-author">L5. The
-One Thing the Paper Cannot Do For Its Author</h2>
-<p><em>Plainly: no tool can supply the human who stands up and defends
-the argument as their own.</em></p>
-<p>The argument forces, at the conventional level, that any act of
-conferral instantiates a thin-indexed seam. The argument is itself a
-conferral act, and it is thin-indexed. It has a location in time, since
-it was built step by step across a research process. It has a position
-in a corpus and a set of authorial coordinates. Those coordinates belong
-to the human candidate. The paper’s provenance is who occupied the
-standpoint from which the argument was sorted and enacted as
-<em>this</em> argument. No workflow can confer that. The human who
-re-derives the argument cold, names it as their own and walks into a
-room to defend it confers it.</p>
-<p>The paper counts this as its thesis applied to itself, and not as a
-limitation.</p>
+  <aside class="revision-note" id="revision"><p class="entry-note"><b>Revised 3 October 2026.</b> This edition replaces the edition first published on 15 September 2026, in its 25 September 2026 web revision. It restores the original steelman structure: each position meets its strongest contrary, and every passage is marked plain, steelman or open. Two claims are withdrawn. One structural feature, not three, carries the escape from Stroud, and the individuation step falls, so a moment is forced while a place needs a further premise. The paper also concedes that on its thin reading the result adds nothing beyond dependent origination, and it now reads the Madhyamaka sceptic as an ally on one reading of Candrakīrti. Whether that result still does useful work is among the questions handed to the reader. A dated October 2026 update engages Julian Jaynes on the history of the point of view. The prior version, the edition of 15 September 2026, stays citable at its Zenodo record, <a class="inline" href="https://doi.org/10.5281/zenodo.22768809" rel="noopener" translate="no">doi:10.5281/zenodo.22768809</a>.</p></aside>
 
-  <p class="note">Philosophy paper, plain-language edition. Every technical claim, term of art and citation
-  from the formal version is kept. The “In short” and “In plain terms” openings and the “Plainly” lead
-  under each section are reading aids, and they add no new claims. <a class="inline" href="papers/forcing-argument.pdf">Download the PDF</a>.
-  <em>Proof before trust, including about authorship.</em></p>
+<p><b>Verdict of the original edition: FORCES-CONVENTIONALLY-ONLY.</b> <span class="register register--plain">[PLAIN]</span> The original edition held that the argument forces, at the conventional level and conditional on its first premise, that every act of sorting occupies a place and a time while it happens, and that it concedes the ultimate level to Madhyamaka. This edition keeps the verdict label. It finds that the time half of that claim survives the strongest objections brought against it here, and that the place half rests on a premise the argument has not yet supplied (section 4.4). Several fronts stay open, and section 8 lists the questions handed to the reader.</p>
+<h2 id="how-to-read-this-edition">How to read this edition</h2>
+<p><span class="register register--plain">[PLAIN]</span> Each passage carries one of three marks.</p>
+<ul class="bul"><li><span class="register register--plain">[PLAIN]</span> marks what can be said flatly: a valid derivation, a checked record, a defeat the argument takes, or an honest null.</li><li><span class="register register--steelman">[STEELMAN]</span> marks a position set against its strongest contrary, with both argued at a strength their holders would recognise. Each ends with an outcome: <i>defeat</i>, <i>survival by concession</i>, <i>standoff</i>, or <i>ally mistaken for an enemy</i>.</li><li><span class="register register--open">[OPEN]</span> marks a question handed to you. It is framed as a question, with the considerations on each side and what would settle it.</li></ul>
+<p>The author is not bound to the conclusions of the original edition (called the first edition in places below), and neither are you. Where this edition reaches a different verdict from the original, the text says so.</p>
+<p>Some claims also carry a domain tag: <b>[O]</b> for ontology, logic and the metaphysics of events, where most of this paper sits; <b>[E]</b> for ethical claims; <b>[T]</b> for theological claims; <b>[C-emp]</b> and <b>[C-met]</b> for empirical and metaphysical claims about consciousness. No inference here moves between domains without a bridging premise stated in its own sentence, so that you can reject the bridge by itself.</p>
+<p><span class="register register--plain">[PLAIN]</span> A note on the adversaries. The original edition tested this argument with AI-run adversarial workflows, in which agents argued the positions of a Mādhyamika, a Stroudian deflationist and eleven published contrary traditions. Where this paper says an adversary "concedes" something, the concession was made in those runs. It is a report of the runs and does not describe what any living scholar has granted. The steelman sections below argue each position from its published sources where those sources were checked, and say so where they were not.</p>
+<h2 id="abstract">Abstract</h2>
+<p><span class="register register--plain">[PLAIN]</span> Frameworks that deny self-standing existence (aseity) to everything face a charge: the denial seems to undo itself, because the act of conferral that the framework relies on must be self-standing, conferred by something further, or dissolved to nothing. This paper asks whether such a framework can say anything positive short of the ultimate level. Its answer, argued from inside the framework, is that one result is forced at the conventional level: any act of sorting or meaning, including the sceptic's act of dissolving everything to zero, takes up a moment while it happens, and the only road to zero is for conferral to stop. The argument rests on one contested premise, P1. It is set here against its strongest contraries. Stroud's objection to transcendental arguments is met by one structural feature, the placing of the premise in the opponent's own act; the other two features the original edition claimed turn out to follow from that one. The Madhyamaka sceptic, the original edition's chief adversary, grants the conventional result on one reading of Candrakīrti, so the argument's live opponent is the nihilist reading of the framework itself; on a stricter reading the two stand off. The paper also accepts a defeat: on its thin reading, the result cannot fail to apply, so it has no discriminating force beyond dependent origination. The thin index (a time, and on a further premise a place) is defended without circularity; the first edition's step on individuation is withdrawn, and the time rests on the premise that whatever happens happens at a time. The thick index (a point of view) is declared and never derived. The ultimate level is conceded to Madhyamaka without condition. The paper also relocates the explanatory gap to the conferral-seam (moderate novelty); a stronger form, that this is the gap the hard problem names, is conditional and undischarged. A dated update engages Julian Jaynes on the history of the point of view.</p>
+<p><i>Keywords:</i> transcendental argument, Stroud, Nāgārjuna, Madhyamaka, conferral, conventional truth, token-reflexive, performative self-reference, explanatory gap, Jaynes</p>
+<h2 id="1-the-question">1. The question</h2>
+<p><span class="register register--plain">[PLAIN]</span> A clerk sorting letters decides, for each one, local or not local. She treats this letter as local and as nothing else, and she drops it in a tray. Call any act of this kind a conferral. Sorting one thing from another is a conferral. So are naming, applying a rule, designating and meaning.</p>
+<p><span class="register register--plain">[PLAIN]</span> A class of philosophical frameworks holds that existence, status, authority, normative standing and meaning are all conferred. On these frameworks existence is put into things from outside. The other four arrive the same way, and things give off none of them from within. The frameworks deny aseity across the board. Aseity is self-originating, self-standing existence, existence with support from nothing else.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> Their appeal is real. They dissolve a recurring illusion: the thought that some item in the world's inventory, pressed hard enough, will turn out to be the ground that needs no further ground. They also fit one reading of what the sciences find: layers of dependence, with no layer that stands without the one below it. Whether any fundamental level exists is itself disputed [UNVERIFIED: Schaffer 2003, "Is There a Fundamental Level?", not opened]. The strongest contrary, the view that something must be self-standing, has its own case. Section 6 sets out Spinoza and the principle of sufficient reason, and section 9.4 takes up existential inertia. The paper takes the frameworks, and the split between conventional and ultimate truth that section 2 relies on, as a working hypothesis and leaves them unproved.</p>
+<p><span class="register register--plain">[PLAIN]</span> The denial then turns on itself. If nothing is self-standing, the framework's own claim cannot be self-standing either. The sharper form of the pressure concerns the act of conferral, which sorts this from not-this. That act has three options. It might be self-standing, which is a covert aseity and refutes the framework. It might itself be conferred, which starts a regress. Or it might dissolve entirely to zero and leave nothing positive to say. Call the third option horn (iii).</p>
+<p><span class="register register--plain">[PLAIN]</span> Nāgārjuna anticipated the charge and answered it. In the <i>Vigrahavyāvartanī</i>, the "Dispeller of Disputes", he says he has no thesis to advance, and so denies that the emptiness-claim is itself a self-standing assertion (Hayes, "Madhyamaka", SEP, rev. 2023, opened 2 October 2026, reports this reading through Candrakīrti). Madhyamaka, the Middle Way school of Buddhist philosophy, separates conventional truth (saṃvṛti) from the truth about the highest goal (paramārtha), which Hayes reads as nirvana, a stilling of conceptual thought. The ontological reading, on which the ultimate level is how things stand when all conceptual designation ceases, is this paper's gloss. A no-aseity framework that takes the Madhyamaka route concedes that at the ultimate level the dissolution reaches zero and nothing persists.</p>
+<p><span class="register register--plain">[PLAIN]</span> The paper's question is whether the framework has anything to say short of the ultimate. Does any result hold at the conventional level, while conferral is still going on?</p>
+<p><span class="register register--plain">[PLAIN]</span> The paper's answer: a conferral, while it happens, happens at some moment, and on a further premise at some place. A sort at no time would be the bare idea of sorting with no instance, and an idea with no instance does not occur. The sceptic who says that sorting dissolves to nothing is sorting when she says it. She separates dissolved from undissolved, and deep truth from surface truth. She reaches zero only when the sorting stops, and no amount of digging under the sorting gets there.</p>
+<p><span class="register register--plain">[PLAIN]</span> Stated as a thesis, forced conditional on the first premise (P1, section 2.1): at the conventional level, wherever conferral occurs, a non-zero occupied seam occurs, and the only route to zero is the cessation of conferral. The seam is the conferral-event itself under a second description, so it adds nothing to the world's inventory. It has seity and no aseity. Seity is ownerless, dependently arisen structure: real while it occurs, belonging to no self-standing owner, arising only in dependence on other things. Between conferrals there is zero, and no floor persists under the world.</p>
+<p><span class="register register--plain">[PLAIN]</span> The paper has a second aim, about the explanatory gap. Section 5.6 takes it up and keeps two gaps apart that the original edition joined.</p>
+<p><span class="register register--plain">[PLAIN]</span> Section 2 states the argument. Sections 3 to 5 set it against Stroud, against the Madhyamaka sceptic, against the primitivist about individuation, and against the deflationist about point of view. Section 6 musters the further contraries the original edition tested, and one ally it found among them. Section 7 sets the argument in the literature, and section 8 states what is shown, what is conceded and what is handed to you. The October 2026 update is section 9.</p>
+<h2 id="2-the-argument">2. The argument</h2>
+<p><span class="register register--plain">[PLAIN]</span> Four premises and a conclusion. Each carries the status the original adversarial review gave it.</p>
+<h3 id="2-1-p1-conferral-is-occupation">2.1 P1: Conferral is occupation</h3>
+<p><i>Status: stipulated and contested. P1 is the one premise the whole argument rests on. Its thin reading is forced by non-circular argument; the thick reading is declared.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <b>P1.</b> Any act of conferral is performed as this discrimination and not its negation, and it is indexed at a standpoint. An occurrence indexed at nothing is no occurrence at all.</p>
+<p><span class="register register--plain">[PLAIN]</span> To be indexed at a standpoint is to be tied to a position from which the act is done. The phrase has two readings, and the paper keeps them apart throughout.</p>
+<p><span class="register register--plain">[PLAIN]</span> The <i>thin index</i> is location. On this reading the conferral-event is a concrete particular at a definite position. The original edition said "spatiotemporal" position; section 4.4 shows that the temporal half is supported and the spatial half needs a further premise. A conferral with no thin-index residue at all would be a type occurring while no token of that type occurs. A type is a general pattern, and a token is one concrete instance of it. A type present with no token is a contradiction at the saṃvṛti level.</p>
+<p><span class="register register--plain">[PLAIN]</span> The <i>thick index</i> is a standpoint from which sorting is performed as this discrimination and not its negation: the act's from-here, the directedness that marks it as this act and holds it apart from its complement. The thick reading is a claim about point of view and directedness, so it belongs with claims about consciousness [C-met]; the thin reading does not [O]. The paper declares the thick index without deriving it. The step from "located at L" to "sorts from L as this sorting" reads point-of-view structure off a plain physical description, and that reopens Stroud's gap inside the predicate "conferral" itself [high confidence on this diagnosis].</p>
+<h3 id="2-2-p2-the-dissolution-to-zero-is-itself-a-conferral">2.2 P2: The dissolution to zero is itself a conferral</h3>
+<p><i>Status: granted. P2 survives every adversary.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <b>P2.</b> To assert, show or even intend "the residue is zero" is to sort empty from non-empty, ultimate from conventional, and dissolved from undissolved.</p>
+<p><span class="register register--plain">[PLAIN]</span> The "I have no thesis" reply defuses one charge, the charge of asserting a self-standing proposition. A second charge stays live: the charge of performing a partition. Even a reply that asserts no thesis has to be made, and making it sorts.</p>
+<p><span class="register register--plain">[PLAIN]</span> The Madhyamaka sceptic runs a prasaṅga, a reductio that draws an unwelcome consequence out of the opponent's own position. To run one she must select certain consequences as unwelcome by his own lights. That selecting is a sorting act, at minimum a thin-indexed one, though it asserts nothing about the mind-independent world. Calling it "evaluative" here means a judgment of what a view's own lights condemn [O]; it is no ethical claim.</p>
+<p><span class="register register--plain">[PLAIN]</span> In the adversarial runs, both the Mādhyamika and the Stroudian deflationist granted that an act of dissolution is performed. Their dispute with the argument concerns what the act carries. P2 needs only that the act occurs [high].</p>
+<h3 id="2-3-p3-exhaustive-disjunction">2.3 P3: Exhaustive disjunction</h3>
+<p><i>Status: valid, conditional on P1.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <b>P3.</b> For any region, either conferral is occurring there (cell C) or conferral has wholly ceased there (cell Z). No third cell exists.</p>
+<p><span class="register register--plain">[PLAIN]</span> The apparent third option is "conferral with a zero residue", a sorting performed from no index while the sorting goes on. Call it C′. Under P1, conferral occurring means an occurrence is tokened, so a thin index is occupied. Zero residue means nothing is occupied. At the conventional level that is a contradiction. C′ is contradictory only if P1's thin reading holds, so P3 is as secure as P1 and no more.</p>
+<h3 id="2-4-p4-zero-is-cessation-not-ground">2.4 P4: Zero is cessation, not ground</h3>
+<p><i>Status: granted. P4 carries load in the decisive direction, and no adversary dislodges it.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <b>P4.</b> Cell Z is reached only when conferral stops. Going underneath conferral never reaches it.</p>
+<p><span class="register register--plain">[PLAIN]</span> No vantage point is both at zero and still conferring. The ultimate emptiness is what remains when the conventional world, all conferral included, stops operating. Nothing conventional rests on it as on a deeper stratum. P4 turns the concession of the ultimate into a license for the conventional result. Because zero is cessation, the conventional cannot borrow zero-ness from a ground. The ultimate level offers no location, and that absence refutes nothing; it marks the point where the subject matter itself ceases.</p>
+<h3 id="2-5-c-conclusion">2.5 C: Conclusion</h3>
+<p><i>Status: forced from P1 through P4, which means forced conditional on P1.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <b>C.</b> Wherever conferral occurs, a non-zero occupied seam occurs.</p>
+<p><span class="register register--plain">[PLAIN]</span> The seam is identical to the conferral-event under a second description, and no ground lies beneath that event. The only route to zero is the cessation of conferral, which is the absence of the conferred world and no foundation for it. The forced seam has seity and no aseity. Between conferrals there is zero.</p>
+<h3 id="2-6-which-zero">2.6 Which zero?</h3>
+<p><span class="register register--plain">[PLAIN]</span> Two senses of "zero" are in play, and the first edition did not separate them. <b>Zero of own-being</b>: emptiness of svabhāva, intrinsic nature. This is the Madhyamaka zero; Hayes's SEP entry calls universal emptiness of inherent natures "the hallmark of the school" (opened 2 October 2026). <b>Zero of occurrence</b>: no event occupying any time or place. This is the zero C denies while conferral goes on. C says conferral is never zero in the second sense and says nothing against the first. Section 3.6 draws the consequence.</p>
+<h2 id="3-against-stroud">3. Against Stroud</h2>
+<h3 id="3-1-stroud-s-objection-at-full-strength">3.1 Stroud's objection at full strength</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> Stroud's 1968 paper found a structural gap in transcendental arguments of the kind P. F. Strawson (1959) and Sydney Shoemaker (1963) gave (Stern and Cheng, "Transcendental Arguments", SEP, rev. 7 July 2023, opened 2 October 2026). The target form is: "X is a necessary condition of experience, thought or discourse; therefore X exists." Such an argument shows at best that we must think there is an X, which falls short of showing that X obtains. Conceptual necessity is one thing and objective existence another. The arguments reach "exists" only by importing verificationism or an equivalent, and with verificationism in hand the transcendental argument becomes superfluous, since verificationism alone would answer the sceptic (Stern and Cheng 2023). Stroud's later work sharpened the point: claims about how our thinking in some ways requires that we think in other ways may be viable, while claims that non-psychological facts are necessary conditions of our thinking are not (Stern and Cheng 2023, reporting Stroud 2000). A holder of this view would put it to the present argument directly: you have shown at most that anyone who argues must take her own act to be located; whether it is located stays unshown.</p>
+<h3 id="3-2-feature-one-the-premise-rests-on-the-opponent-s-act">3.2 Feature one: the premise rests on the opponent's act</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> The reply. Stroud's target is the step from "X is necessary for Y" to "X exists". The present argument places the premise it rests on in the enacted act of the opponent who carries out the dissolution. The existence in question, the act of partitioning, comes from no inference about concepts. The opponent has granted it by performing it. The Mādhyamika who asserts "the residue is zero" grants that she is asserting. P2 describes what the opponent is doing, which she has already conceded. The location of that act then follows from the metaphysics of occurring (section 4), and it is no condition on what we must think. This is the cogito's form on Hintikka's performative reading (section 5.5).</p>
+<h3 id="3-3-what-became-of-features-two-and-three">3.3 What became of features two and three</h3>
+<p><span class="register register--plain">[PLAIN]</span> The first edition claimed two further features. Feature two: the conclusion is an identity of occurrence, the seam and the conferral-event being one occurrence described twice, so there is no second existent to prove. Feature three: the argument is disjunctive ("C or Z") and never uses the conditional "X is necessary for Y" that Stroud targets.</p>
+<p><span class="register register--plain">[PLAIN]</span> With C′ excluded by P1, "C or Z" is logically equivalent to "if conferral occurs, an index is occupied". That is a necessary-condition claim, and P1 states it outright. Logically, the disjunction is the conditional written in another form.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The first edition's reason for feature three was dialectical. Anyone who is conferring is already in cell C, so the question Stroud presses, whether a necessary condition must exist given that the conditioned thing exists, never comes up. The sceptic is asked only whether the act she has already performed is a seam-event, and the identity of feature two says it is the same event described twice. On this view the disjunction changes what she has to deny: she must deny that her own act is happening, and P2 has her grant it. The reply: the equivalence holds whatever order the claims are stated in. A sceptic who rejects the conditional rejects the disjunction with it, because the cell C′ she would occupy is ruled out only by P1. The shift in what she has to deny is a shift in emphasis, and it relies on P1 at the same point the conditional does. <i>Survival by concession:</i> feature three keeps a dialectical use in how the argument is put, and it does no logical work of its own.</p>
+<p><span class="register register--plain">[PLAIN]</span> Feature two makes C close to definitional. Once the seam is defined as the conferral-event under a second description, C follows from P1-thin and the definition. The identity is true and harmless, and it keeps the argument from positing a second entity. Stroud's gap, if it opens, opens at P1, so the identity by itself cannot keep it shut.</p>
+<p><span class="register register--plain">[PLAIN]</span> So the escape from Stroud stands or falls with feature one. The first edition's claim that "the three features" together remove Stroud's step is withdrawn in that form, since one feature does the work and the other two follow from it.</p>
+<h3 id="3-4-outcome">3.4 Outcome</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> <i>Survival by concession.</i> Stroud's 1968 objection in its standard form does not defeat the argument, because the premise reports an occurrence the opponent performs and no inference runs from what we must think to what exists. The argument survives by giving up two of its three claimed innovations, and what survives is an old form: the performative argument of Descartes read through Hintikka, applied to the act of dissolution.</p>
+<h3 id="3-5-is-the-result-modest">3.5 Is the result modest?</h3>
+<p><span class="register register--open">[OPEN]</span> Does "the opponent's act occurs" fall on the side of what is, or on the side of what we must think? <i>For "what is":</i> the sceptic argues, which is more than taking herself to argue, and her arguing is an event in the world that the argument points to. <i>For "what we must think":</i> the later Stroud can reply that every report of one's own act, including "I am now arguing", is made from inside thought, so the argument earns a conclusion about how arguers must regard their acts. On that reading the argument is a modest transcendental argument of the kind Stern (2000) defends, and in the original edition's suture test the modest reading braced the argument and did not close it. <i>What would settle it:</i> an account of whether self-ascriptions of current acts are immune to the gap Stroud found, of the kind Shoemaker's work on immunity to error through misidentification (Shoemaker 1968) might supply [UNVERIFIED: not opened this pass]. If they are immune, feature one escapes Stroud outright. If they are not, the result is modest, and it is still a result about every participant in discourse.</p>
+<h3 id="3-6-the-m-dhyamika-an-ally-on-one-reading">3.6 The Mādhyamika: an ally, on one reading</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> The first edition cast the Madhyamaka sceptic as one of two hardest adversaries. Her strongest position, stated in her terms: all things are empty of intrinsic nature; conventional truth is how things appear to and are spoken of by worldly convention; the ultimate is what remains when designation ceases; she advances no thesis of her own and only shows the problems in others' positions. Candrakīrti, on Hayes's reading, "repeatedly advocates for taking ordinary experience seriously and at face value": things arise and perish through causes and conditions, people speak and are understood, and "there is no reason to change any of that" (Hayes 2023, opened 2 October 2026).</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The same entry reports a second strand. Conventional truth, that things arise in dependence on conditions, "can therefore be understood as a kind of screen, an obstacle that stands in the way of seeing the ultimate truth" (Hayes 2023, opened 2 October 2026). Inside the tradition, how much convention grants is itself disputed; the Tibetan debate between Tsongkhapa and Gorampa and the Cowherds' volume <i>Moonshadows</i> (2011) are where that dispute is argued [UNVERIFIED: names and record only, contents not read]. So two readings of the Mādhyamika are in play. On the face-value reading, located events, speech acts and debates belong to worldly convention, and P2's act of dissolution is one of them; the zero she asserts is zero of own-being (section 2.6), and C denies only zero of occurrence. On the screen reading, granting that an event is spoken of conventionally falls short of granting that it is "occupied" or "non-zero" in this paper's sense, since those words may already reify what convention only designates. Step four of section 4.2 has the Prāsaṅgika on this second reading: she asserts zero index residue.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <i>Outcome: ally mistaken for an enemy on the face-value reading; standoff on the screen reading.</i> The first edition's statement that the argument "survives" Nāgārjuna is withdrawn in that form. On the face-value reading the two were never in conflict at saṃvṛti. The screen reading moves the dispute to the absorption question of section 5.3. At paramārtha the argument concedes everything (section 5.4).</p>
+<p><span class="register register--plain">[PLAIN]</span> Who, then, denies C? Two positions remain. The first is the nihilist reading of horn (iii): the thought, inside a no-aseity framework, that once aseity is denied nothing positive can be said at any level. C answers that reading by showing what the framework still says while conferral goes on. The second is Candrakīrti read on the screen reading, as the absorption objection of section 5.3, which asks whether token-particularity is fixed even conventionally.</p>
+<p><span class="register register--plain">[PLAIN]</span> One charge has a plain answer. The first edition's cross-examination put it in the voice of Bhāviveka and Siderits: by P1's definition, the test returns "seam found" for every actual conferral, and it cannot return "seam absent". So what it tests for is non-cessation, which Madhyamaka grants; an index of a kind she would deny lies outside its reach. The cross-examination recorded this as a defeat of the claim as written. The first edition's own verdict file had already said that if P1 is not won, the seam is "pratītyasamutpāda under a Latin coat". This edition accepts that defeat. On the thin index alone, C has no discriminating force, and its claim to earn more than dependent origination is withdrawn. Section 4.4 adds a further point: once the temporal half rests on the premise that whatever happens happens at a time, C on the thin index comes close to saying that if conferral occurs, it occurs at a time.</p>
+<p><span class="register register--open">[OPEN]</span> What stays open is whether a result with no discriminating force still does useful work. <i>For "nothing more":</i> C adds no fact a Mādhyamika lacks, and its vocabulary renames pratītyasamutpāda. <i>For "something more":</i> two answers. First, C does not need to be news to the Mādhyamika to answer the horn-(iii) nihilist, and an argument that a framework's own opponents should already accept can still close a gap in the framework's statement of itself. Second, the first edition's suture test found a stronger answer in the Prāsaṅgika's own method: the test discriminates relative to an opponent, because it voids the realist's claims of zero residue and of standing residue by the realist's own lights. That is real reductio work, and it meets Bhāviveka's charge that the Prāsaṅgika only tears down. The same test recorded the cost. The filter discriminates there because it asserts nothing beyond dependent origination, so the "something more" it earns is the method itself, with no further fact attached. <i>What would settle it:</i> a case where the test returns "seam absent" while something still happens, which would give it discriminating force of its own; or a showing that some living position inside the no-aseity family holds horn (iii) and so denies C. Neither is in hand.</p>
+<h2 id="4-the-thin-index-without-circularity">4. The thin index without circularity</h2>
+<h3 id="4-1-what-non-circularity-requires">4.1 What non-circularity requires</h3>
+<p><span class="register register--plain">[PLAIN]</span> The circularity charge says the argument assumes located conferral to conclude it. To answer it, the defense must derive the thin index from premises that say nothing about conferral, standpoints or discrimination, and that the opponent grants on independent grounds.</p>
+<h3 id="4-2-the-four-steps-as-the-original-edition-gave-them">4.2 The four steps, as the original edition gave them</h3>
+<p><span class="register register--plain">[PLAIN]</span> <b>Step one: type and token.</b> Peirce's distinction: a type "does not exist; it only determines things that do exist", and a token is "a Single event which happens once and whose identity is limited to that one happening" (Peirce 1906, quoted via Liebesman, "Types and Tokens", SEP 2026 [high confidence via SEP; moderate on the primary volume and page; not reopened this pass]). A type with no token does not occur.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Step two: individuation.</b> What makes two exactly similar tokens two? Maurin's SEP entry on tropes (rev. 16 March 2023, opened 2 October 2026) reports three accounts. Object individuation has no defender among trope theorists. Spatiotemporal individuation (SI) holds that exactly resembling tropes are distinct if and only if they are at non-zero distance (Campbell 1990; Lowe 1998; Schaffer 2001). Primitivist individuation (PI) holds that distinctness is primitive (Ehring 2011; Campbell 1990), and Maurin reports that most trope theorists prefer PI, with Schaffer an important exception. The first edition anticipated PI. It said that PI does not deny that tokens occupy positions and denies only that their positions explain their distinctness, and it concluded that on any account a token at no position would be indistinguishable from an uninstantiated type. It added Kim's view, on which an event is the exemplification of a property by an object at a time (Casati and Varzi, "Events", SEP, rev. 12 May 2025, opened 2 October 2026).</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Step three: application.</b> A conferral that occurs occurs as a token. A conferral at zero position would have no identity conditions marking it off from the uninstantiated type, so "conferral occurring at no position" is "a type occurring with no token".</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Step four: the performative regress.</b> The Prāsaṅgika who asserts "conferral occurs ownerlessly, with zero index residue" performs a conferral act: she discriminates her position from those that posit svabhāva, at a moment, in a conversation, as this speaker. By steps one to three her assertion is a token event and is located. If she denies that her denial is located, she performs one more located denial. At the conventional level every act of denying the thin index is a thin-indexed act.</p>
+<h3 id="4-3-the-primitivist-at-full-strength">4.3 The primitivist at full strength</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> The primitivist answers step two. On PI numerical distinctness is basic. Location does not explain it, and Maurin notes that PI permits exactly similar tropes to occupy the same place, the possibility called piling. So individuation theory gives no reason to think that a token needs a position to be the token it is. Kim's account adds a time and no place. A Cartesian dualist holds that mental acts occur at times and at no place, and a conferral, on many views, is a mental act. And Peirce's examples of tokens are signs, single inscriptions on a line, although his definition itself is general and ties a token to its when and where.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The reply, at its strongest. Step two was answering the wrong question. Individuation theory concerns what separates a token from its exact twin. The argument needs only what separates a token from its type. PI does not offer a case of a token at no position; piling puts two tropes at one place, which is a place. Every live account, PI included, treats tokens as concrete particulars. If being concrete requires being somewhere and somewhen, step three goes through on that premise, and individuation theory is beside the point.</p>
+<h3 id="4-4-outcome">4.4 Outcome</h3>
+<p><span class="register register--plain">[PLAIN]</span> <i>Survival by concession.</i> Step two as the first edition wrote it fails. Its claim was that, on any account, a token at no position would be indistinguishable from an uninstantiated type. On PI distinctness is primitive, so a token's being this token needs no position to secure it, and Kim's constituents supply a time and no place. The first edition's remark that PI leaves positions in place is true of the tokens trope theorists discuss; it does not show that a token needs one.</p>
+<p><span class="register register--plain">[PLAIN]</span> The temporal half of the thin index survives, on a premise this edition names: whatever happens, happens at some time. Section 4.3 found that the spatial half needs a premise about concreteness; this premise is its temporal half, and far less contested. Kim's constituents include the time. No party to the dialectic, the dualist included, denies that the sceptic's act of dissolution, as a speech act, happens at a time. A reader who holds a timeless witness consciousness may deny it of the witness while granting it of the act.</p>
+<p><span class="register register--plain">[PLAIN]</span> The spatial half needs a further premise: that a conferral's bearer is physical, or that every concrete particular has a place. The first edition supplied neither. The thin index this paper can defend without that premise is "a time, and, where the bearer is physical, a place".</p>
+<p><span class="register register--open">[OPEN]</span> Is every concrete occurrence somewhere? <i>For yes:</i> physicalism, and the view that concreteness is spatiotemporal location, are widely held, and on either view the spatial half returns. <i>For no:</i> the dualist's mental act, and some views of abstract or divine acts, occur at times and at no place; the argument was supposed to bind every arguer, and dualists argue. <i>What would settle it:</i> an argument that whatever confers must have a physical bearer, which would be a new premise for the paper to supply.</p>
+<p><span class="register register--plain">[PLAIN]</span> Against horn (iii) the argument needs only the temporal half: zero of occurrence is ruled out by a time alone.</p>
+<p><span class="register register--plain">[PLAIN]</span> The scope limit stays. The regress binds anyone who argues, because every party to the C/Z dialectic concedes that she confers. It does not prove that physical events, taken purely as physical, carry a conferral-index. The seam binds participants in discourse, and the C/Z disjunction needs that and no more.</p>
+<h2 id="5-the-thick-index-the-absorption-risk-and-the-ultimate">5. The thick index, the absorption risk and the ultimate</h2>
+<h3 id="5-1-the-deflationist-at-full-strength">5.1 The deflationist at full strength</h3>
+<p><i>Status: declared and conceded; undischarged; live viva front.</i></p>
+<p><span class="register register--steelman">[STEELMAN]</span> The Stroudian deflationist grants everything in section 4. He grants that the act occurs and is located. He denies that location carries point of view. "This event is at L" is a physical description. "This event sorts from L as this sorting" adds directedness, and nothing in the physics supplies it. Try to derive the thick index and you face two outcomes. You bring in something the emptiness of emptiness (śūnyatā-śūnyatā) dissolves, such as Aristotle's entelecheia, Husserl's structure of acts, or a point of view treated as a "real relational property". Or you open Stroud's gap again at a new spot.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The reply, at its strongest, is the burden shift. The deflationist who presses his dissolution in discourse evaluates: he picks this characterization as correct and excludes the alternative. The Mādhyamika who runs a prasaṅga selects consequences as unwelcome by the interlocutor's lights. Anyone conducting the argument must treat his own acts as directed, as this partition and not that one, for as long as the argument runs.</p>
+<p><span class="register register--plain">[PLAIN]</span> <i>Defeat, conceded.</i> Treating-as is not occupying. The presupposition holds as conventional performance and lapses when discourse lapses. The opponent can eliminate the thick index without contradicting himself in the act of saying so, in two ways: concede thin location and deny perspective (the deflationist's horn), or exit to non-conceptual silence (the Prāsaṅgika's). The self-contradiction bites only on denial of the thin index. The paper reserves "forced" for the thin result.</p>
+<h3 id="5-2-can-the-thick-index-be-closed-at-all">5.2 Can the thick index be closed at all?</h3>
+<p><span class="register register--open">[OPEN]</span> The first edition's suture test mustered ten published allies for the thick index and reported that none closes it. Indexical realism (Perry 1979, Kaplan, haecceity) would close it by making the point of view obtain as a real thisness, and the test classed that as own-being, which the no-aseity floor forbids. Retorsion arguments (Apel, Habermas), Anscombe's "The First Person" and modest transcendental arguments keep the index ownerless and brace it without closing it [all UNVERIFIED this pass; named in the first edition's suture test]. The original edition read this as a fork: an index strong enough to close is own-being, and an index clean of own-being has no force to close. It called the unclosability principled and counted it a vindication of the floor.</p>
+<p>The question for you: is that a vindication, or a gap with a good explanation? <i>For vindication:</i> if the floor says nothing has aseity, an obtaining point of view would refute the floor, so the floor predicts the index cannot be closed, and the prediction holds. <i>For a gap:</i> a framework that explains why its own open question can never be answered has also made itself unfalsifiable on that question, and the fork may be exhaustive only because "own-being" was defined to cover every middle position. <i>What would settle it:</i> a third position that makes point of view obtain without intrinsic nature, defended in the literature and tested against the floor. The original edition's test found none among ten candidates. Ten is a sample.</p>
+<h3 id="5-3-candrak-rti-s-absorption">5.3 Candrakīrti's absorption</h3>
+<p><i>Status: named, unresolved; [moderate confidence] on attribution, with no independent primary-text check.</i></p>
+<p><span class="register register--steelman">[STEELMAN]</span> Candrakīrti, in the <i>Prasannapadā</i>, presses the point about vikalpa, conceptual construction, harder than the <i>Vigrahavyāvartanī</i> does: conceptual construction is how error works, and conventional truth gives a reader nowhere fixed to stand. Applied here, the token argument of section 4 is one more conceptual construction, and it relies on a notion of token-particularity that a thoroughgoing Prāsaṅgika may deny even conventionally. Each conventional designation leans on others, and argument cannot pin any one of them down.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The objection has a sharper form, about method. Hayes reports that Candrakīrti criticised Bhāviveka, and the tradition of Dignāga on which Bhāviveka drew, for calling for independent arguments in favour of Madhyamaka conclusions; on Candrakīrti's view the Mādhyamika shows the problems in others' positions and puts forward no counter-position (Hayes 2023, opened 2 October 2026). Section 4 is an independent argument of exactly that kind, built from premises about types, tokens and events. A Prāsaṅgika can refuse it as an autonomous inference, whether or not it smuggles in svabhāva.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The reply holds at saṃvṛti. The argument needs no ultimate token-particularity. It needs only that a debate conventionally counts its own moves as separate performances, which is thin and conventionally available. To the method objection, the reply is that section 4 can be run as a prasaṅga: it draws out of the opponent's own assertion of zero residue that she has made an assertion, by her lights and at a time. Run that way it asserts nothing of its own, and it falls under Candrakīrti's method. Candrakīrti's objection still presses one step further: whether even a conventional count of assertions smuggles a svabhāva-committed notion of particularity into convention.</p>
+<p><span class="register register--open">[OPEN]</span> <i>Standoff.</i> Does conventional individuation of speech acts commit anyone to svabhāva? <i>For no:</i> Hayes's Candrakīrti takes ordinary experience at face value, and ordinary experience counts one assertion and then another (section 3.6). <i>For yes:</i> the strict reading treats every fixed count as reification. <i>What would settle it:</i> a worked reading of the <i>Prasannapadā</i> on vikalpa, from an identified edition. The paper has none, and the original edition's mock viva listed this as defect 5.</p>
+<h3 id="5-4-the-ultimate-level">5.4 The ultimate level</h3>
+<p><i>Status: conceded in full; the cost is bounded and not fatal.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> <i>Defeat at paramārtha, conceded without symmetry.</i> Śūnyatā-śūnyatā, the emptiness of emptiness, dissolves occurrence, token, position and perspectival character at the paramārtha level. "Occurrence is tokening" and "tokening is location" are saṃvṛti truths with no residue at the ultimate level. The thin index is empty there, and the thick index is dissolved.</p>
+<p><span class="register register--plain">[PLAIN]</span> The paper declines to claim a symmetry, that the occupation move "cannot be refuted there any more than it is proved there". The Prāsaṅgika does not assert the dissolution as a paramārtha thesis from within discourse. At paramārtha there is no contest for the zero to win or lose. The ultimate is reached when conceptual proliferation (prapañca) comes to rest, and she needs no counter-thesis to reach it.</p>
+<p><span class="register register--plain">[PLAIN]</span> The cost falls on the larger aims of the dissertation from which the paper came. The contribution is a conventional, discourse-scoped result: any act of conferral occurring in discourse instantiates a non-zero thin-indexed seam, by identity; grounding plays no part in the instantiation. It is enough if it is stated at saṃvṛti, and this paper states it there.</p>
+<h3 id="5-5-it-is-only-the-cogito-again">5.5 "It is only the cogito again"</h3>
+<p><i>Status: lineage acknowledged; Apelian ambition disclaimed; [high confidence] on Hintikka; [moderate confidence] on Apel specifics.</i></p>
+<p><span class="register register--steelman">[STEELMAN]</span> The objection: the argument is Descartes's cogito read as an act, or Apel's transcendental pragmatics, and adds nothing. Hintikka (1962) read "cogito ergo sum" as a performance: the act of doubting instantiates a doubter. Apel's Letztbegründung holds that anyone who argues enacts the pragmatic presuppositions of discourse, the sceptic included, and Habermas developed performative self-contradiction against the sceptic [Habermas locator UNVERIFIED: Stern and Cheng cite <i>Moralbewusstsein und kommunikatives Handeln</i> (1983; in English <i>Moral Consciousness and Communicative Action</i>, 1990), and not <i>The Theory of Communicative Action</i>; no page checked]. Stern and Cheng's SEP entry names retorsive arguments of this kind as a more modest role for transcendental arguments, and Bardon (2005) on performative transcendental arguments (opened via Stern and Cheng 2023; Bardon not opened).</p>
+<p><span class="register register--plain">[PLAIN]</span> <i>Ally mistaken for an enemy, and the lineage grows.</i> After section 3.3 the objection is half right. The argument's escape from Stroud is the cogito's performative form, applied to the act of dissolution. What it adds is narrow. It derives no subject: the cogito, read traditionally, secures a thinking subject, and this argument secures a thin-indexed occurrence with no who attached. Nor does it derive norms: Apel and Habermas derive validity claims and the norms of discourse, and this argument derives only the thin index, through the metaphysics of tokens; presuppositions about norms play no part in the derivation [O; the step to E is refused]. The seam is forced without an ego, a soul or a transcendental subject [O; the step to C-met is refused]. The paper cites the cogito for its form, acknowledges the Apelian lineage and disclaims the Apelian ambition.</p>
+<h3 id="5-6-the-explanatory-gap-and-the-remainder-law-s-verdict">5.6 The explanatory gap, and the Remainder Law's verdict</h3>
+<p><i>Status: grand relocation REDESCRIPTION, conditional and undischarged; membrane framing adjudicated unconditional; brute-identity type-B physicalism named and untouched.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> Two gaps first, kept apart. The gap between how things are and how they ought to be descends from Hume [E]. The explanatory gap between physical facts and what experience is like is the one Levine (1983) named, following Nagel (1974) [C-met]. A long tradition treats such gaps as features of inference, limits on the moves thought can make from one concept to another. The original edition treated the two as one gap and relocated it to the conferral-seam, with moderate novelty. Treating them as one rests on a bridging premise, stated here so that you can reject it by itself: <i>each gap is a failure of entailment from descriptive premises of the same logical form.</i> A reader who rejects the premise can take the relocation for either gap alone. Whether the relocation covers the normative gap, the phenomenal gap, or both is left open in this edition.</p>
+<p><span class="register register--plain">[PLAIN]</span> <i>Honest null on the stronger form.</i> The research corpus's Remainder Law, a post-hoc demarcation filter modelled on Popper's use of falsifiability as a criterion of demarcation, tested the stronger claim that the gap at the seam is the same irreducibility the hard problem of consciousness names [C-met]. As first written the filter rejected too much: its clause (iii) failed Bell's theorem under blind application. Revised as a provability condition, it returned REDESCRIPTION for the stronger claim by clause (ii): the claim restates the premises in other vocabulary. This sets the claim's size and refutes nothing. The stronger form needs the thick index, which is undischarged, and a rejection of type-B physicalism.</p>
+<p><span class="register register--plain">[PLAIN]</span> Type-B physicalism holds that consciousness is physical and grants that reasoning alone cannot show this. Its brute-identity version treats the identity of an experience with a brain state as a basic fact. The argument leaves it untouched. Loar (1990) is the type-B source a full treatment must engage [not reopened this pass]. The first edition attributed the setting-out of this move to Chalmers 2006, "Strong and Weak Emergence"; a check of that chapter on 2 October 2026 found no such passage, so that attribution is withdrawn here and the source is UNVERIFIED until the corpus's type-B notes are traced.</p>
+<p><span class="register register--plain">[PLAIN]</span> The filter did not return REDESCRIPTION for the membrane framing: the thin-index seam, the result that authentication is not authorization, and its consequences about unmeasurability and a taxonomy of failures. Those results were adjudicated type-B-independent and unconditional. The analogy between the is/ought gap and the gap between authentication and authorization is argued in the membrane paper, outside this one [E compared with O; the bridge lives in that paper].</p>
+<p><span class="register register--plain">[PLAIN]</span> On the thin index the Remainder Law can only report non-cessation; that follows from P1's definition, as in section 3.6.</p>
+<p><span class="register register--open">[OPEN]</span> Does the filter discriminate anything elsewhere? <i>For:</i> the revised filter does reject claims, the stronger relocation among them. <i>Against:</i> rejections show discriminating force only when the claims judged were not chosen with the verdict in view, and the record so far does not say how they were chosen. <i>What would settle it:</i> the filter's record of rejections across claims that were not built to pass it.</p>
+<h3 id="5-7-a-companion-result-the-arity-gap">5.7 A companion result: the arity gap</h3>
+<p><i>Status: adjudicated PASS; floats free of locus residue.</i></p>
+<p><span class="register register--plain">[PLAIN]</span> The mock viva committee singled out the arity-gap argument, from the free-will chapter of the dissertation, as the corpus's best independent philosophy. The eliminativist reduces blame and the other reactive attitudes (Strawson 1962) to a forward-looking program for shaping behavior, on the model of phlogiston. Phlogiston-talk could be dropped because oxidation, a one-place property of the burning stuff, fixed the target the old talk was tracking. Holding-responsible is a two-place relation whose second place is filled by an addressee as addressee. A one-place vocabulary cannot fix the target of a two-place relation, so the reduction eliminates a relatum and describes a different relation. The result is type-B-independent and passes the floats-free test: a universe with a single standpoint satisfies "a standpoint is occupied" and contains no one to address. It has its own paper.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> The first edition said the arity gap has "the same logical form" as the forcing argument, since both refuse a reduction to a lower arity. The objection: the seam identity is one-place, one event under two descriptions. The description the forcing argument refuses to drop is the standpoint description, which is the thick index of section 5.1, which the paper concedes is undischarged. <i>Survival by concession.</i> The comparison holds on the thick reading only, which this paper does not discharge. The comparison also carries [E] content (blame) beside [O] content (the seam), and the bridge between them is the shared premise that one-place reductions cannot fix two-place targets; a reader may accept that premise for blame and reject it for the seam.</p>
+<p><span class="register register--plain">[PLAIN]</span> The first edition's cross-examination found one defeat in this companion result, as written: a dyadic relation is not the same as desert, and Galen Strawson's Basic Argument (1986, 1994) targets basic desert, in Derk Pereboom's term (SEP, "Skepticism About Moral Responsibility", first published 18 January 2018, opened 2 October 2026; the primary texts not opened). The repair it named, separating answerability (Darwall) from basic desert, belongs to the arity-gap paper.</p>
+<h2 id="6-the-further-contraries-and-one-ally">6. The further contraries, and one ally</h2>
+<p><span class="register register--plain">[PLAIN]</span> The first edition's cross-examination set the thesis against eleven published contrary traditions, with one agent arguing each tradition and a second checking the verdict. The table reports the verdicts that bear on this paper. The sources are named in that battery and were not reopened in this pass, so each is UNVERIFIED here.</p>
+<div class="paper-table"><table class="data data--wide">
+<thead><tr><th>Contrary</th><th>Strongest form</th><th>Original verdict</th><th>Where it lands in this edition</th></tr></thead><tbody>
+<tr><td>Madhyamaka's realist opponents (Nyāya, Abhidharma, Bhāviveka; Siderits)</td><td>The thin-index test cannot fail, so it renames dependent origination</td><td>Defeat as written</td><td>Section 3.6: defeat accepted, PLAIN; its use left OPEN</td></tr>
+<tr><td>Deflationary metaontology (Carnap 1950; Thomasson)</td><td>The token-event framework that yields P1 is an optional adoption; "non-trivial" is undefended</td><td>Wounds; the escape was redescription</td><td>Below: wound kept</td></tr>
+<tr><td>Principle of sufficient reason (Leibniz; Della Rocca 2010; Pruss)</td><td>The split between saṃvṛti and paramārtha is asserted and never demonstrated</td><td>Thesis absorbs; completeness wounded</td><td>Below, OPEN</td></tr>
+<tr><td>Spinoza's causa sui</td><td>Something at the floor is self-explaining</td><td>Thesis absorbs, on a condition</td><td>Below</td></tr>
+<tr><td>Existential inertia (Schmid and Linford 2023)</td><td>Things persist without a sustaining cause</td><td>Mutual standoff</td><td>Section 9.4, OPEN</td></tr>
+<tr><td>Illusionism (Frankish 2016)</td><td>Phenomenal consciousness is an introspective illusion</td><td>Thesis absorbs; a second defeater for the stronger relocation</td><td>Below</td></tr>
+<tr><td>Eternalism (Putnam 1967; Rietdijk 1966; Stein 1968 in reply)</td><td>No open future; "not yet" talk is figurative</td><td>Wounds the figurative uses</td><td>Below</td></tr>
+<tr><td>Mathematical Platonism (Gödel; Quine and Putnam)</td><td>Abstract objects exist necessarily and depend on nothing</td><td>Seam found; the escape was a symmetric redescription</td><td>Below</td></tr>
+<tr><td>Mathematical structuralism (Shapiro)</td><td>Structures with no bearer, cause or conferrer</td><td>Half an ally</td><td>Below</td></tr>
+</tbody></table></div>
+<p><span class="register register--plain">[PLAIN]</span> <b>Where the contraries converge.</b> The cross-examination's main finding was a convergence. Five of these traditions share no premises: Spinoza, the principle of sufficient reason, Carnap and Thomasson, Madhyamaka's realist opponents, and mathematical Platonism. Each, by its own route, struck the same joint. Spinoza found the necessity P1 would need undischarged. The rationalist found the two-truths split asserted and never argued. The deflationist found the token-event framework adopted without audit. Bhāviveka and Siderits found the filter unable to fail. The Platonist found the anti-realist reading of abstract objects presupposed. In every case the damage lands on P1's claim to discriminate, to be a result and something more than dependent origination renamed. The cross-examination called this "the strongest and the most damaging finding of the run", and it is reported here at that strength. The convergence came from independent canons, and what it confirmed was the thesis's weak point, where the thesis had hoped it would confirm its structure. Section 3.6 states the consequence this edition accepts.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>The deflationist about ontology.</b> Carnap's position, at its strongest: questions of existence asked inside a framework have trivial answers, and questions asked about the framework are practical choices about which language to adopt. The token-event framework that makes P1 true is one such choice. Inside it, P1 is trivial; about it, P1 is a recommendation. The reply: the argument's opponents already speak the framework, because every party to the C/Z dialectic reports her own acts as events. The reply shows that the framework is shared by everyone the argument addresses. It leaves open whether the framework is more than a shared choice, and a Carnapian can grant the first and keep his view. <i>Wound, unrepaired:</i> the first edition judged the escape a redescription, and this edition keeps that verdict.</p>
+<p><span class="register register--open">[OPEN]</span> <b>The rationalist about grounds.</b> The PSR's holder asks why the two-truths split should be accepted at all; the paper assumes it. The first edition answered that its inferences use logical consequence and need no metaphysical PSR, and that the PSR's premise about the contingent totality imports the own-being the framework denies. That answers a charge of inconsistency. It leaves the split unargued. Section 1 now states the split as a working hypothesis. <i>The question for you:</i> is a paper that works inside the two-truths framework, and says so, complete without arguing for the framework? <i>What would settle it:</i> an argument for the framework, which this paper does not supply, or a judgment that a stated hypothesis is enough for a conventional-level result.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>Spinoza.</b> At full strength: something must be in itself and conceived through itself, a cause of itself whose essence involves existence, and a thesis that finds a non-zero residue wherever conferral occurs has found a candidate for that floor. The reply: the residue is aseic only if P1 is a self-explanatory necessary truth, and the paper refuses that antecedent in print; P1 is stipulated and contested (section 2.1). Whatever necessity the residue has depends on conferral occurring, and a cause of itself depends on nothing. <i>Thesis absorbs, on a condition:</i> the condition costs the thesis its unconditional headline, which is why the verdict reads FORCES-CONVENTIONALLY-ONLY. Spinoza is one more witness to the P1 joint.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>The illusionist.</b> At full strength: phenomenal consciousness, the what-it-is-like that the explanatory gap concerns, is an introspective illusion, so the stronger relocation of section 5.6 has no gap to locate [C-met]. The reply: the paper already holds that relocation at "undischarged" and claims nothing from it. The illusionist is a functionalist and grants the thin seam's tokening outright. <i>Thesis absorbs:</i> the illusionist lands a second defeater on a claim the paper had already conceded, and grants what the paper forces.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>The eternalist.</b> On a block-universe reading of special relativity there is no privileged now, and any talk of an open future, which the first edition's corpus used in places, is at most figurative. The cross-examination found that this defeats the figurative uses and leaves the results the argument rests on untouched. <i>Wound to the figure; thin index untouched.</i> This edition adds a reason the thin index is untouched: a token in a four-dimensional manifold still occupies its time. The cross-examination also noted that the block reading is itself contested (Stein 1968) and does not follow from the physics alone.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>The Platonist.</b> At full strength: mathematics is indispensable to our best science, so we are committed to its objects (Quine and Putnam), and mathematical intuition gives access to abstract objects that exist necessarily and depend on nothing (Gödel). Such objects would have aseity at the floor, and "no aseity anywhere" would be false. The reply available to the paper is the Madhyamaka one: abstract objects, too, are empty of own-being. The cross-examination judged that reply a redescription, and a symmetric one, because Platonist aseity is also a contested reading that no shared premise secures. The paper presupposes an anti-realist reading of abstract objects and never runs the Madhyamaka reply as a worked argument against Quine and Putnam or against Gödel. <i>Seam found; standoff by symmetric redescription.</i> The flank is undefended, and the paper says so.</p>
+<p><span class="register register--steelman">[STEELMAN]</span> <b>The structuralist.</b> Shapiro's structures have no bearer, no cause and no conferring agent. The first edition first read this as a counterexample to "no aseity anywhere". On a second look, a structure with no owner is what this paper calls seity: ownerless form. <i>Ally mistaken for an enemy,</i> for the structuralist branch only. The Platonist above remains a contrary.</p>
+<h2 id="7-relation-to-the-literature">7. Relation to the literature</h2>
+<p><span class="register register--plain">[PLAIN]</span> <b>The explanatory gap.</b> Inherited from Nagel (1974) [high confidence] and Levine (1983) [high confidence]. The claimed novelty is the relocation to conferral-seams, moderate, with the scope question of section 5.6 open.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Transcendental arguments: honest novelty assessment.</b> The first edition claimed the combination of premise-relocation, identity-conclusion and disjunctive form as its novelty, at moderate confidence. After section 3.3, two of the three are consequences of the first, and the first is the performative form of Hintikka's cogito. What remains new, if anything, is the application: the performative form turned on the act of dissolution inside a no-aseity framework, at the conventional level only. The author cannot fully certify, from within the corpus, that the literature does not already contain it. Confidence on novelty is moderate at most, and lower than the original edition stated. A referee should look for earlier performative or retorsive arguments against Madhyamaka-style dissolution before accepting it.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Madhyamaka.</b> The argument does not refute Madhyamaka. It accepts the ultimate-level conclusion, works inside the two-truths framework (Hayes 2023; Westerhoff 2026), and finds that, on the face-value reading of Candrakīrti, the Mādhyamika is an ally at the conventional level (section 3.6).</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Apel and Habermas.</b> The argument derives only the thin index, and the narrowing is deliberate.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Literature this edition names and has not engaged.</b> Stroud's later papers collected in <i>Understanding Human Knowledge</i> (2000), known here only through Stern and Cheng 2023. Stern (2000) on modest transcendental arguments. Bardon (2005) on performative transcendental arguments. Modern work on conventional truth by Siderits, and by Garfield and Priest [names only, UNVERIFIED]. Retorsion in the Thomist tradition and in Anscombe [UNVERIFIED]. Adding any of these is new argument, which the author has not yet supplied.</p>
+<h2 id="8-what-is-shown-what-is-conceded-what-is-handed-to-you">8. What is shown, what is conceded, what is handed to you</h2>
+<p><span class="register register--plain">[PLAIN]</span> <b>Forced.</b> For any participant in discourse who grants that she confers, every conferral-event is identical, under a second description, to a non-zero seam-event occupying a time, at the saṃvṛti level, without circularity. The temporal result rests on steps one and three of section 4.2, the premise that whatever happens happens at a time, and Kim's time constituent (section 4.4). Step two as first written is withdrawn. The only route to zero of occurrence is the cessation of conferral, which is the absence of the conferred world and no ground for it.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Conditional.</b> The disjunction is exhaustive on P1's thin reading. On the thin reading alone, C has no discriminating force: it reports non-cessation, which Madhyamaka grants (section 3.6). The spatial half of the thin index needs a premise the paper does not supply. The strongest form needs P1's thick reading, which is declared without derivation. The stronger relocation, to the hard problem, needs the thick index and a rejection of type-B physicalism; the argument establishes neither.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Conceded.</b> The ultimate level to Madhyamaka, without condition and without manufactured symmetry. Two of the three structural features as independent escapes from Stroud. Step two of the token argument as the first edition wrote it. The claim that the thin index earns more than dependent origination. The Chalmers 2006 attribution. The concession of the ultimate costs the conventional argument nothing, because it follows from the framework's own commitment carried to its floor.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>Outcomes against the contraries.</b> Stroud: survival by concession. The Mādhyamika at saṃvṛti: ally mistaken for an enemy on the face-value reading, standoff on the screen reading. Bhāviveka and Siderits on discriminating force: defeat as written, accepted. The primitivist: survival by concession, at a temporal index. The deflationist about point of view: defeat of the thick index, conceded. The Prāsaṅgika at paramārtha: defeat, conceded. Candrakīrti's absorption: standoff. The Carnapian: wound, unrepaired. Spinoza and the illusionist: absorbed. The eternalist: wound to the figure, thin index untouched. The Platonist: standoff by symmetric redescription, flank undefended. The structuralist: ally.</p>
+<p><span class="register register--open">[OPEN]</span> <b>Handed to you.</b> Does a result with no discriminating force still do useful work (3.6)? Is the result modest, a claim about how arguers must take their acts (3.5)? Is every concrete occurrence somewhere (4.4)? Is the thick index's unclosability a vindication or a gap (5.2)? Does conventional individuation commit anyone to svabhāva (5.3)? Does the relocation cover one gap or two (5.6)? Is a working hypothesis enough for a conventional-level result (6)? Each section names what would settle its question.</p>
+<h2 id="9-update-october-2026">9. Update, October 2026</h2>
+<p><span class="register register--plain">[PLAIN]</span> This section was added on 2 October 2026 at the author's direction. It stands apart from sections 2 to 8 and changes no premise, status line or verdict in them. It reports what Julian Jaynes claimed and what his main critics answered, then turns the author's points into questions. Domain tags as in "How to read this edition".</p>
+<h3 id="9-1-what-jaynes-claimed">9.1 What Jaynes claimed</h3>
+<p><span class="register register--plain">[PLAIN]</span> In <i>The Origin of Consciousness in the Breakdown of the Bicameral Mind</i> (Jaynes 1976), Jaynes argued that consciousness, in his narrow sense, is a learned capacity built from language [C-emp]. In an afterword dated 1990 he restated the book as four separable hypotheses (Jaynes 1990, 447 and 456). Consciousness is based on language, which generates it and gives access to it, and children learn it through language (447 to 449). Before consciousness there was a "bicameral" mentality in which people acted on verbal hallucinations they took to be the voices of gods (452). That capacity was learned only after the bicameral mentality broke down, roughly 1000 BCE in the Middle East (453). The voices have a neurological model in the right hemisphere, and that model could be mistaken while the other hypotheses hold (454 to 456). Block's review reports an earlier date, around 1300 BCE in Mesopotamia (Block 1981, 81). [Jaynes 1990 and Block 1981 locators: checked in an earlier pass on 2 October 2026; not reopened in this pass.]</p>
+<p><span class="register register--plain">[PLAIN]</span> One part bears directly on this paper. Jaynes held that consciousness borrows its spatial character from the world (449 to 450). People describe mental events with words for seeing and for place, those metaphors bring a mind-space with them, and an analog "I" develops that "sees" in that space as the body sees in physical space. He called mind-space the primary feature of consciousness and the analog "I" the second (450), and he separated consciousness from perception and from cognition in general (447 to 449) [C-emp].</p>
+<h3 id="9-2-jaynes-against-his-critics">9.2 Jaynes against his critics</h3>
+<p><span class="register register--steelman">[STEELMAN]</span> Cavanna and colleagues (2007; abstract opened 2 October 2026) name two critical issues: the neurological basis of the bicameral model and the philological accuracy of Jaynes's readings of ancient texts. Block (1981) argues that the claims fail against evidence of planning and deceit in chimpanzees and in the ancient texts Jaynes relies on (81 to 82). His central charge is that Jaynes confuses people's thought processes with their theories about those processes, so that Jaynes explains at most how people came to hold the theory that they are conscious (83). Block grants a grain of truth: people's theories of thought shape how they think to some extent (83). Dennett (1986; record opened 2 October 2026) reads the book as a claim about learned conceptual "software" on brain "hardware" that may be unchanged, and treats the neurological module as dispensable (151, 153). He answers Block with a class of phenomena that cannot exist before their concepts, such as money and baseball, and he places morality and consciousness in that class (152). Jaynes adopts the answer in 1990 and adds law and good and evil to the class (454). Cavanna and colleagues record one legacy that outlives the critiques, the concept of a non-unitary self.</p>
+<p><span class="register register--plain">[PLAIN]</span> <i>Outcome for this paper: standoff on Jaynes's history, which this paper does not need.</i> The critiques of the dating and the neurology are serious. The update below uses none of Jaynes's historical or neurological claims.</p>
+<h3 id="9-3-three-senses-of-consciousness-and-what-the-paper-declines-to-borrow">9.3 Three senses of "consciousness", and what the paper declines to borrow</h3>
+<p><span class="register register--plain">[PLAIN]</span> Jaynes means an introspectable mind-space with an analog "I", held apart from perception and cognition. Block takes the sense Jaynes usually intends to be the ability to think, plan, want, hope and deceive (Block 1981, 81). The explanatory gap of section 5.6 concerns what experience is like (Nagel 1974; Levine 1983). This update uses only Jaynes's sense, and nothing in it bears on the stronger relocation, which would need Jaynes's sense identified with the phenomenal sense [C-met]. The paper asserts no such identity.</p>
+<p><span class="register register--plain">[PLAIN]</span> Jaynes offers a history of the from-here: the analog "I" that "sees" in mind-space was learned from the body's way of seeing in the world. A reader could try to use that history to discharge the thick index. The bridging premise would read: <i>if the point-of-view structure of an act was learned through language, then every conferral performed by a language-user carries a thick index.</i> The paper declines it. The premise rests on a [C-emp] hypothesis that Block and Cavanna and colleagues contest. Even granted, it reads point of view off a history and derives none of it, so Stroud's gap inside "conferral" stays open. The thick index stays declared.</p>
+<p><span class="register register--plain">[PLAIN]</span> For money and baseball, the item exists only where its concept is in use, and that is close to what section 1's frameworks mean by conferral [O]. The paper offers that as a comparison. Dennett and Jaynes extend the class to morality and to good and evil [E] and to consciousness [C-met]; the paper adopts neither extension.</p>
+<p><span class="register register--plain">[PLAIN]</span> Jaynes's account has one shape in common with this paper. The paper establishes the thin index, a time and place, before it declares the thick index. Jaynes's story starts from the body's location in physical space and builds the analog "I" on top of it by metaphor. The match concerns order only, and no inference runs from it.</p>
+<h3 id="9-4-the-author-s-three-points-as-questions">9.4 The author's three points, as questions</h3>
+<p><span class="register register--open">[OPEN]</span> <b>First [O; T as structure only]: can anything that exists have begun from nothing?</b> The author's point, paraphrased: whatever a person takes to be the source of their life or mind, a god, a mother or another being, no one can argue that they came from nothing. <i>For the point:</i> every account of an origin names something prior, and the point holds across theologies because it needs none of them. <i>Against it:</i> the existential-inertia theorist holds that things persist without a sustaining cause, and a view with a brute first state names nothing prior to that state; the first edition's cross-examination found existential inertia in a mutual standoff with this thesis. A second contrary is the one most readers will know: physical cosmologies that describe a universe arising "from nothing", met by the reply that a quantum vacuum, with its laws, is already something [UNVERIFIED: Vilenkin 1982, Krauss 2012 and Albert's 2012 review of Krauss, none opened]. People do argue that the world came from nothing, so the point is strongest in a narrower form: every such argument, examined, names something prior under another name. <i>How it relates to this paper:</i> it runs beside P4. P4 says zero is reached only when conferral stops; the author's point says nothing that exists began from zero. Neither is a premise of the other. <i>What would settle it:</i> an argument that "began" entails a prior condition, which the brute-first-state view denies. This edition keeps the point as the author put it and leaves the choice of a narrower form open.</p>
+<p><span class="register register--open">[OPEN]</span> <b>Second [T, as structure only]: does new understanding form only where a second stream joins?</b> The author's point, paraphrased: even in prophecy, where a prophet receives a word held to be divine, the new understanding formed when a second stream of thought, divine or human, joined the discourse. The point enters as a structure that holds across belief systems. It is no evidence for P1 to P4 or for C. The paper does not treat prophetic speech as a case of conferral and takes no position on revelation. Jaynes's account of voices taken as gods is a psychological hypothesis [C-emp], and the paper reads it as neither confirming nor denying any claim about revelation. <i>For the structure:</i> on the prophetic traditions' own telling, the word is received by a named prophet, in a human language, on an occasion the tradition remembers. That description is the traditions' own, and the paper draws nothing from section 4 into it. <i>Against it:</i> a tradition may hold that the word is complete before any reception, and that the receiver adds nothing. <i>What would settle it:</i> nothing in this paper; the question belongs to each tradition, and the paper leaves it there.</p>
+<p><span class="register register--open">[OPEN]</span> <b>Third [O, about discovery]: is C a result reached only in an exchange?</b> The author's point: many things can be discovered alone, and some only in cooperation, where two minds or two principles meet. Feature one places the premise the argument rests on in the opponent's own act: the sceptic supplies, by sorting, the premise the argument needs. The regress of section 4.2 binds only someone who is arguing. On this reading C is reached at the meeting of two positions; the argument has the conclusion and the opponent's act supplies the premise. The bridging premise, stated so that you can reject it: <i>if the premise a result rests on is supplied by the opponent's performance, the result is reached only in an exchange between parties.</i> <i>For:</i> a solitary thinker can run the argument only by playing the sceptic, which is an exchange held inside one head. <i>Against:</i> the thin index of one's own act needs no opponent, and a solitary sorter occupies a time whether or not anyone disputes it.</p>
+<p><span class="register register--plain">[PLAIN]</span> Part of this has a plain answer. C's truth does not depend on an exchange: a conferral occupies a time with or without an interlocutor, so the exchange describes how the argument is found and leaves what it shows unchanged. The bridge, granted, adds no force to C and leaves the thick index where section 5.1 left it.</p>
+<p><span class="register register--open">[OPEN]</span> What stays open is the question, and how one comes to ask it. Could the paper's question, what can be said short of the ultimate, arise for someone who never met a sceptic? <i>For yes:</i> a solitary thinker can doubt her own sorting. <i>For no:</i> the question asks what survives a challenge, and a challenge needs a challenger, even an imagined one. <i>What would settle it:</i> a case of the question arising with no second voice, inner or outer, which is hard to describe without supplying one.</p>
+<p><span class="register register--plain">[PLAIN]</span> <b>What the update does not claim.</b> Jaynes supplies no premise, feature or verdict. The Madhyamaka concession is untouched, since Jaynes does not address the two truths. Whether systems trained on human language perform conferrals or occupy a from-here is a question the update leaves aside.</p>
+<h2 id="reader-s-note-on-ai-assistance-and-provenance">Reader's note on AI assistance and provenance</h2>
+<p><span class="register register--plain">[PLAIN]</span> This paper is AI-assisted research material. It was not derived by one person working alone. The author set the frame: a thesis that nothing has aseity, which must still say something short of total emptiness, and the seam between one and zero as the membrane where that something might be found. The premises P1 to P4, the structural features, the thin and thick index, the token-reflexive defense and the engagements with the literature were developed step by step with AI assistance over several adversarial workflows, beginning in June 2026. Models also drafted the prose of every published version, this one included.</p>
+<p><span class="register register--plain">[PLAIN]</span> Honest provenance would require this note on any account of authorship [E: the premise is research ethics, and it holds whether or not the thesis is true]. The thesis could add a reason specific to this paper only through a bridge it does not discharge. The bridge reads: <i>authorship belongs to whoever occupies the standpoint from which an argument is enacted.</i> Occupying a standpoint is the thick index [C-met], which section 5.1 concedes is undischarged, and the thin index this paper forces has no who attached (section 5.5). So the duty rests on the research-ethics premise alone, and the paper takes no position on whether an AI system could be an author. A human candidate who submits this paper without re-deriving, owning and defending each claim would misstate its provenance.</p>
+<h2 id="references">References</h2>
+<p><span class="register register--plain">[PLAIN]</span> Marks used here. <i>Opened this pass</i> means the record was opened on 2 October 2026 for this edition. <i>Not reopened</i> means the entry is carried from the earlier drafts and is UNVERIFIED in this pass; earlier checks are noted where they exist. No mark means a primary text was read; none was.</p>
+<p>Abadi, Martín, Michael Burrows, Butler Lampson, and Gordon Plotkin. 1993. "A Calculus for Access Control in Distributed Systems." <i>ACM TOPLAS</i> 15(4): 706-734. [high confidence] <i>Not reopened.</i></p>
+<p>Apel, Karl-Otto. 1980. <i>Towards a Transformation of Philosophy</i>. Trans. Glyn Adey and David Frisby. London: Routledge and Kegan Paul. [moderate confidence on primary-text specifics] <i>Not reopened.</i></p>
+<p>Block, N. 1981. Review of J. Jaynes, <i>The Origin of Consciousness in the Breakdown of the Bicameral Mind</i>. <i>Cognition and Brain Theory</i> 4(1): 81-83. <i>Not reopened; full text read in an earlier pass on 2 October 2026.</i></p>
+<p>Campbell, Keith. 1990. <i>Abstract Particulars</i>. Oxford: Basil Blackwell. <i>Cited as Maurin 2023 cites it.</i></p>
+<p>Candrakīrti. <i>Prasannapadā</i>. [moderate confidence on attribution and relevance; no edition identified] <i>Not reopened.</i></p>
+<p>Casati, Roberto, and Achille Varzi. "Events." <i>Stanford Encyclopedia of Philosophy</i>. Rev. 12 May 2025. <i>Opened this pass: Kim's events are exemplifications of properties by objects at times; no place constituent.</i></p>
+<p>Cavanna, A. E., M. Trimble, F. Cinti, and F. Monaco. 2007. "The 'bicameral mind' 30 years on: a critical reappraisal of Julian Jaynes' hypothesis." <i>Functional Neurology</i> 22(1): 11-15. PMID 17509238. <i>Opened this pass: abstract only.</i></p>
+<p>Chalmers, David J. 2006. "Strong and Weak Emergence." <i>UNVERIFIED for any use in this paper. An earlier check on 2 October 2026 found no type-B or brute-identity passage in it. Withdrawn as a source for section 5.6; listed until the real source is found.</i></p>
+<p>Dennett, D. C. 1986. "Julian Jaynes's software archeology." <i>Canadian Psychology</i> 27(2): 149-154. doi:10.1037/h0080051. <i>Opened this pass: Crossref record. Page locators from an earlier pass on 2 October 2026.</i></p>
+<p>Ehring, Douglas. 2011. <i>Tropes: Properties, Objects, and Mental Causation</i>. Oxford: Oxford University Press. <i>Cited as Maurin 2023 cites it.</i></p>
+<p>Habermas, Jürgen. 1983. <i>Moralbewusstsein und kommunikatives Handeln</i>. Suhrkamp. Trans. Lenhardt and Weber Nicholsen, <i>Moral Consciousness and Communicative Action</i>. MIT Press, 1990. [high confidence on existence and thesis] <i>Not reopened; corrected in the reference audit of 2 October 2026 to the work Stern and Cheng cite, in place of The Theory of Communicative Action; locator UNVERIFIED.</i></p>
+<p>Hayes, Richard. "Madhyamaka." <i>Stanford Encyclopedia of Philosophy</i>. Rev. 18 August 2023. <i>Opened this pass: sole author; emptiness of inherent natures; Candrakīrti on ordinary experience; conventional truth as "a kind of screen"; Candrakīrti's criticism of Bhāvaviveka and the tradition of Dignāga; the VV "no thesis" reply; no medicine image.</i></p>
+<p>Hintikka, Jaakko. 1962. "Cogito, Ergo Sum: Inference or Performance?" <i>Philosophical Review</i> 71(1): 3-32. [high confidence on existence and thesis] <i>Not reopened.</i></p>
+<p>Jaynes, Julian. 1976. <i>The Origin of Consciousness in the Breakdown of the Bicameral Mind</i>. Boston: Houghton Mifflin. <i>Not reopened; bibliographic record checked in an earlier pass on 2 October 2026.</i></p>
+<p>Jaynes, Julian. 1990. Afterword. In <i>The Origin of Consciousness in the Breakdown of the Bicameral Mind</i>, 447-469. <i>Not reopened; read in an earlier pass on 2 October 2026 from a course excerpt; printing not confirmed.</i></p>
+<p>Kim, Jaegwon. 1966. "On the Psycho-Physical Identity Theory." <i>American Philosophical Quarterly</i> 3: 227-235. <i>Not reopened.</i></p>
+<p>Kim, Jaegwon. 1969. "Events and Their Descriptions: Some Considerations." In N. Rescher (ed.), <i>Essays in Honor of Carl G. Hempel</i>. Dordrecht: Reidel, 198-215. <i>Not reopened.</i></p>
+<p>Lampson, Butler, Martín Abadi, Michael Burrows, and Edward Wobber. 1992. "Authentication in Distributed Systems: Theory and Practice." <i>ACM TOCS</i> 10(4): 265-310. [high confidence] <i>Not reopened; author list corrected in an earlier pass.</i></p>
+<p>Levine, Joseph. 1983. "Materialism and Qualia: The Explanatory Gap." <i>Pacific Philosophical Quarterly</i> 64(4): 354-361. [high confidence] <i>Not reopened.</i></p>
+<p>Liebesman, David. "Types and Tokens." <i>Stanford Encyclopedia of Philosophy</i>. 2026. [high confidence] <i>Not reopened.</i></p>
+<p>Loar, Brian. 1990. "Phenomenal States." <i>Philosophical Perspectives</i> 4: 81-108. <i>Not reopened.</i></p>
+<p>Lowe, E. J. 1998. <i>The Possibility of Metaphysics</i>. Oxford: Clarendon Press. <i>Cited as Maurin 2023 cites it.</i></p>
+<p>Maurin, Anna-Sofia. "Tropes." <i>Stanford Encyclopedia of Philosophy</i>. Rev. 16 March 2023. <i>Opened this pass: three accounts; majority for PI with Schaffer the exception; piling permitted on PI.</i></p>
+<p>Nāgārjuna. <i>The Dispeller of Disputes: Nāgārjuna's Vigrahavyāvartanī</i>. Trans. Jan Westerhoff. Oxford University Press, 2010. doi:10.1093/acprof:oso/9780199732692.001.0001. <i>Publisher from the Crossref record, checked in the reference audit of 2 October 2026. Westerhoff's SEP bibliography, opened this pass, gives New York and Boston: American Institute of Buddhist Studies and Wisdom Publications.</i></p>
+<p>Nagel, Thomas. 1974. "What Is It Like to Be a Bat?" <i>Philosophical Review</i> 83(4): 435-450. [high confidence] <i>Not reopened.</i></p>
+<p>Peirce, Charles Sanders. 1906. "Prolegomena to an Apology for Pragmaticism." <i>The Monist</i> 16: 492-546. Quoted via Liebesman 2026. <i>Not reopened.</i></p>
+<p>Schaffer, Jonathan. 2001. "The Individuation of Tropes." <i>Australasian Journal of Philosophy</i> 79(2): 247-257. <i>Not reopened; named in Maurin 2023.</i></p>
+<p>"Skepticism About Moral Responsibility." <i>Stanford Encyclopedia of Philosophy</i>. First published 18 January 2018. <i>Opened this pass: the Basic Argument is Galen Strawson's (1986, 1994, 2011); "basic desert" as Pereboom frames it. Author and revision date not returned.</i></p>
+<p>Shoemaker, Sydney. 1963. <i>Self-Knowledge and Self-Identity</i>. <i>Named in Stern and Cheng 2023 (opened this pass); publisher unverified.</i></p>
+<p>Shoemaker, Sydney. 1968. <i>Journal of Philosophy</i> 65(19): 555-567. <i>Record checked in the reference audit of 2 October 2026 (Crossref); title and text not opened.</i></p>
+<p>Stern, Robert, and Tony Cheng. "Transcendental Arguments." <i>Stanford Encyclopedia of Philosophy</i>. Rev. 7 July 2023. <i>Opened this pass: Stroud's targets; verificationism makes the argument superfluous; the later Stroud; Stern 2000 on modest arguments; retorsive arguments; Bardon 2005.</i></p>
+<p>Strawson, P. F. 1959. <i>Individuals</i>. <i>Named in Stern and Cheng 2023 (opened this pass); publisher unverified.</i></p>
+<p>Strawson, P. F. 1962. "Freedom and Resentment." <i>Proceedings of the British Academy</i> 48: 187-211. [high confidence] <i>Not reopened; page range corrected from the 1974 reprint range (1-25) to the journal range after the 2 October 2026 reference audit.</i></p>
+<p>Stroud, Barry. 1968. "Transcendental Arguments." <i>Journal of Philosophy</i> 65(9): 241-256. [high confidence: cited directly in SEP Transcendental Arguments with page reference] <i>Not reopened beyond Stern and Cheng 2023.</i></p>
+<p>Westerhoff, Jan. "Nāgārjuna." <i>Stanford Encyclopedia of Philosophy</i>. Rev. 31 May 2026. <i>Opened this pass: no medicine image.</i></p>
+<p>Named in sections 6 and 7 from the original edition's batteries and not opened in any pass of this rewrite, so UNVERIFIED: Anscombe 1975; Bardon 2005 (record checked in the reference audit of 2 October 2026: <i>Philosophia</i> 33(1-4): 69-95, doi:10.1007/bf02652648); Carnap 1950; Della Rocca 2010; Frankish 2016; Garfield; Gödel; Kaplan; Perry 1979, 2001; Priest; Pruss; Putnam 1967; Quine; Rietdijk 1966; Schmid and Linford 2023; Shapiro; Siderits; Spinoza, <i>Ethics</i> I; Stein 1968; Stern 2000; Stroud 2000; Thomasson.</p>
+<p>Named in a later revision pass on 2 October 2026 and not opened, so UNVERIFIED: Albert 2012 (review of Krauss); The Cowherds, <i>Moonshadows</i> (Oxford University Press, 2011; bibliographic record confirmed in an earlier review, contents not read); Gorampa; Krauss 2012; Galen Strawson 1986 and 1994 (primary texts); Pereboom 2014; Schaffer 2003, "Is There a Fundamental Level?"; Tsongkhapa; Vilenkin 1982.</p>
+<p>Darwall 2006, Hume, Pigden 1989, Saltzer and Schroeder 1975 and von Wright 1963 support the arity-gap and membrane papers. This edition no longer cites them in the body; they move with those sections.</p>
+<h2 id="appendix-provenance-ledger">Appendix: provenance ledger</h2>
+<p><span class="register register--plain">[PLAIN]</span> This ledger records which claims were derived under adversarial pressure and which were declared. Read it before citing the paper, and above all before submitting it to a venue.</p>
+<h3 id="a-1-what-was-derived-under-adversarial-pressure-and-what-was-declared">A.1 What was derived under adversarial pressure and what was declared</h3>
+<div class="paper-table"><table class="data data--wide">
+<thead><tr><th>Claim</th><th>Status</th><th>Location</th><th>Adversarial test applied?</th></tr></thead><tbody>
+<tr><td>Thin index forced non-circularly</td><td>Derived, earned; this edition: step two withdrawn; temporal half survives on a named premise, spatial half needs a further premise</td><td>§4</td><td>Yes: 18 attack runs and 6 defense runs</td></tr>
+<tr><td>Thick index undischarged</td><td>Declared and conceded</td><td>§5.1, §8</td><td>Yes: the P1 defense verdict; unanimous across all adversaries</td></tr>
+<tr><td>Structural features escape Stroud</td><td>This edition: feature one carries the escape; features two and three follow from it</td><td>§3</td><td>Yes: the forcing argument movement; the mock viva credit panel</td></tr>
+<tr><td>FORCES-CONVENTIONALLY-ONLY verdict</td><td>Adjudicated</td><td>§8</td><td>Yes: the P1 defense verdict; the consolidation record, section 2.1</td></tr>
+<tr><td>Candrakīrti absorption risk</td><td>Named, unresolved</td><td>§5.3</td><td>Partially: mock viva defect 5, unlitigated</td></tr>
+<tr><td>Grand relocation = REDESCRIPTION</td><td>Adjudicated</td><td>§5.6</td><td>Yes: the Remainder Law test record; the type-B notes</td></tr>
+<tr><td>Arity-gap companion result</td><td>Adjudicated PASS: floats free of locus residue</td><td>§5.7</td><td>Yes: the free-will chapter, section 1.5; the mock viva credit panel</td></tr>
+<tr><td>Type-B brute-identity escape</td><td>Named, untouched</td><td>§5.6, §8</td><td>Yes: the type-B notes. The Chalmers 2006 attribution is withdrawn (check of 2 October 2026)</td></tr>
+<tr><td>Membrane framing type-B-independent</td><td>Adjudicated unconditional</td><td>§5.6</td><td>Yes: three workflow verdicts agree</td></tr>
+<tr><td>Contraries muster</td><td>Two defeats as written, the discriminating-force defeat accepted (§3.6); five-tradition convergence on P1 reported (§6); standoffs and allies as reported</td><td>§3.6, §6</td><td>Yes: the cross-examination battery (22 agents) and the suture test (22 agents)</td></tr>
+</tbody></table></div>
+<h3 id="a-2-source-verification-status">A.2 Source verification status</h3>
+<p>The References section gives each source's status for this pass. Earlier passes' checks are kept there in the notes.</p>
+<h3 id="a-3-the-existential-condition">A.3 The existential condition</h3>
+<p>A human candidate who re-derives and owns this argument must:</p>
+<ol class="bul"><li>Read the primary sources. Stroud 1968 is the objection the whole argument turns on, and reading it changes the argument's shape. Westerhoff 2010 on the VV is the closest available scholarly access to the text the argument invokes.</li><li>Derive P1's thin index from scratch, in writing, without reference to this paper.</li><li>Present the thick-index failure honestly in the viva, as the live philosophical question the argument has not closed. The defense is "I know it is undischarged, here is why I cannot discharge it, here is why the thin result is nonetheless genuine."</li><li>Engage Candrakīrti's <i>Prasannapadā</i> on vikalpa directly.</li><li>Engage Loar's recognitional account [Loar 1990] directly, in the body and not in a footnote.</li></ol>
+<p>Submitting the paper without completing these five steps would misstate its provenance, on the research-ethics premise stated in the reader's note.</p>
+<h3 id="a-4-the-one-thing-the-paper-cannot-do-for-its-author">A.4 The one thing the paper cannot do for its author</h3>
+<p>The argument forces, at the conventional level, that any act of conferral instantiates a thin-indexed seam. The argument is itself a conferral act, and it has a location in time. The thin index it forces has no who attached (section 5.5), so the argument cannot say whose act it is. Assigning its coordinates to a person would need the thick index, which this paper declares without deriving. The duty in A.3 rests on research ethics: a human who re-derives the argument cold, names it as their own and walks into a room to defend it can honestly claim it, and one who has not cannot. The paper takes no position on whether an AI system could be an author.</p>
+<p><i>Proof before trust, including about authorship.</i></p>
+
+
+  <p class="note">Rendered from the approved source <span translate="no">writing/papers/forcing-argument.md</span> by <span translate="no">tools/render_papers.py</span>. The PDF is printed from this page, so the two carry the same text. <a class="inline" href="research.html">Back to the research program</a>.</p>
 
 </article>
 </main>

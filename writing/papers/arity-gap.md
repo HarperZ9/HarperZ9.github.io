@@ -1,0 +1,406 @@
+---
+title: Sourcehood Without a Source: The Arity Gap and the Free Will Debate
+subtitle: *Why the demand for self-origination was never earned, what survives without it, and where the argument for that survival still has to be won.*
+byline: Argument built June 2026; first published 15 September 2026; revised for the web 25 September 2026; this edition 3 October 2026.
+description: Argues that holding someone responsible addresses a person who can answer, and tests what survives without self-origination against its strongest rivals.
+revision_note: This edition replaces the edition first published on 15 September 2026, in its 25 September 2026 web revision. Each major position now meets its strongest contrary, and every passage is marked as a plain statement, a steelman or an open question. Several claims are withdrawn, narrowed or conceded. The contrast between a one-place and a two-place relation is withdrawn, since behavior control also relates two parties. Galen Strawson turns out not to draw the conclusion the earlier edition attacked. The demand-to-blame inference, as first stated, falls to Pereboom's manipulated Plum, and Pereboom's current account of blame is itself addressed, which leaves anger as the live dispute. Six questions are handed to the reader. A new section, dated October 2026, engages Julian Jaynes and his critics.
+---
+
+**Keywords:** free will, reactive attitudes, P.F. Strawson, second-personal standpoint, Galen Strawson, Basic Argument, conferred sourcehood, hard incompatibilism, Pereboom, answerability
+
+## How to read this edition
+
+This edition sets the paper's ideas against their strongest contraries, the way the original edition did, and reports each outcome as it fell. Some contraries defeat a claim. Others leave it standing only because the paper concedes ground, some end in a standoff, and one or two turn out to be allies the paper had treated as enemies. Every passage carries one of three marks.
+
+- **[PLAIN]** marks what can be said flatly: records checked against the source, derivations that are valid, defeats the paper accepts, and nulls. These passages carry no hedging.
+- **[STEELMAN]** marks a position set against its strongest contrary. Both sides are argued at a strength their holders would recognise, and the outcome is named.
+- **[OPEN]** marks a question handed to you. It comes with the considerations on each side and with what would settle it. The paper does not answer it for you.
+
+A second set of tags marks the domain of a claim: **[O]** for the logic of relations and action theory, **[E]** for ethics (desert, blame, the warrant of reactive attitudes), **[T]** for theology, **[C-emp]** and **[C-met]** for empirical and metaphysical claims about consciousness. The paper does not move between domains without stating the bridging premise in a sentence you can reject on its own.
+
+## Abstract
+
+[PLAIN] Holding someone responsible addresses a demand to a party who can answer it. A program of one-way behavior control treats its object as a system to adjust, and nothing in it waits on an answer. This paper argues that the hard incompatibilist's plan to replace blame with such control would eliminate holding responsible, and it names the reason the arity gap, after the arity of a relation, the number of places it has. The paper grants determinism and the first five premises of Galen Strawson's Basic Argument: nothing is the cause of itself. It argues that what survives is conferred sourcehood, an authorship given to the agent and lived in. Tested against its strongest contraries, the argument comes out mixed. Three results stand: a valid solipsism test, the partition of answerability from basic desert, and the case of forgiveness, which rests on an open question about third-person accounts of address. Four points fall or narrow. Galen Strawson does not draw the conclusion the original edition attacked. Behavior control also relates two parties, so the contrast is one of role, and the count of places does not settle it. As first stated, the demand-to-blame inference also licenses blaming Pereboom's manipulated Plum. And Pereboom's later account of blame is itself addressed, which leaves anger as the live disagreement. The paper states those results plainly and hands six questions to the reader.
+
+## 1. Introduction
+
+[PLAIN] Blame is something one person says to another who can answer back. Someone borrows money from you and does not pay it back. You can respond in two ways. In the first you blame them: "You owe me. You wronged me." You speak to them and expect that they can hear you, answer, apologize or make it right. In the second you stop treating them as someone to talk to. You decide they are unreliable, never lend to them again, and protect yourself. The other person never gets to answer, because the purpose is to manage what they do next.
+
+[STEELMAN] Hard incompatibilists hold that free will and basic desert do not exist. Some of them read blame as a costume over management: take the costume off, keep the useful management, and nothing of value is lost, while a license for cruelty goes. The original edition of this paper answered that management cannot describe what blame is about, because blame has a second person built into it and management has no place for one. This edition keeps that answer and tests it harder. The test changes its size. The answer holds against a pure management model. Against Derk Pereboom, the hard incompatibilist this paper engages most closely, it meets a view of blame that already addresses the wrongdoer, so the disagreement moves to a smaller and more interesting place (Section 4.8).
+
+[PLAIN] The free will debate has mostly been run as a search for an origin, a point where the agent, as distinct from the agent's past, is responsible for what happens next. The paper calls the demand for such a point the aseity premise: free will, if it exists, must be a kind of self-origination. Aseity is self-existence, owing one's being to nothing outside. The word comes from scholastic theology, where it names God's self-existence; the paper uses only its metaphysical sense [O]. Galen Strawson uses it for the self-causation he says finite human beings cannot have, writing of "such causal 'aseity'" (Strawson 1994, p. 15; read this session).
+
+[PLAIN] Two concessions frame the paper. Determinism is granted in full: the state of the world at any moment, together with the laws of nature, fixes every later state. The Basic Argument is granted through its fifth premise, so no one is the ultimate, self-originating source of their acts. The disagreement concerns what follows from those concessions.
+
+[PLAIN] The paper first states what is granted (Section 2) and then the core argument (Section 3). Fourteen contraries follow in Section 4, with a table of outcomes first. What stands is gathered in Section 5 and the open questions in Section 6. Section 7 turns the argument on the paper itself, and a dated update on Julian Jaynes closes it as Section 8.
+
+## 2. What is granted
+
+**2.1 Determinism and the consequence argument.** [PLAIN] Van Inwagen's consequence argument is valid, and the paper does not contest its premises (van Inwagen 1983; high confidence). If determinism is true, our acts are consequences of the laws and the remote past, which we had no choice about. The argument removes leeway, the set of alternatives in which the agent could have done otherwise. It says nothing about sourcehood, the question whether the act that in fact happened ran through the agent as a real source or bypassed the agent. Frankfurt's cases (1969; high confidence) keep the two apart: a hidden controller who would have forced the act, had the person wavered, removes leeway and leaves the person acting on their own. Sourcehood is a question about the actual sequence.
+
+**2.2 The Basic Argument, premises 1 to 5.** [PLAIN] Galen Strawson's Basic Argument (1994; also *Freedom and Belief*, 1986) can be reconstructed in six steps. Strawson states the argument several times (1994), briefly on p. 5, in ten numbered steps on pp. 5 to 7, and in a looser restatement on pp. 12 to 15; the six steps below are this paper's reconstruction.
+
+1. True moral responsibility for what one does requires true responsibility for how one is.
+2. True responsibility for how one is requires that one have brought it about that one is that way.
+3. To have brought that about, one must already have been a certain way, and have been responsible for that prior way.
+4. This regresses without end. To stop it, one must be *causa sui*, the ultimate, self-originating cause of oneself.
+5. Nothing can be *causa sui*.
+6. Therefore no one ever has true, ultimate moral responsibility.
+
+[PLAIN] The paper accepts premises 1 to 5 as stated, with "true" in Strawson's sense. Strawson quotes Nietzsche's remark that the *causa sui* is the best self-contradiction conceived so far (*Beyond Good and Evil* §21, quoted in Strawson 1994, p. 15). The chain of causes passes through the agent without stopping there, and the agent did not write the starting conditions.
+
+**2.3 What Strawson's "true" responsibility is.** [PLAIN] Strawson defines his target through the story of heaven and hell. True responsibility is the kind that, if we had it, would make it intelligible that eternal torment or bliss could be just (1994, p. 9). He also grants, in so many words, that compatibilist responsibility does not require true responsibility for how one is, and that one can have it under total determination (1994, p. 16). The original edition missed both passages. They change Section 4.1.
+
+## 3. The core argument
+
+**3.1 Holding responsible addresses someone.** [STEELMAN, with its outcome in 4.3] P.F. Strawson (1962; high confidence on text and thesis) set the reactive attitudes, resentment, gratitude, indignation and forgiveness among them, against the objective attitude, which sees another as something to be managed, treated or trained. Toward someone seen wholly objectively, he wrote, you may negotiate, but "you cannot reason with him" (Strawson 1962; read this session). The standard reading takes this as quietism: the practice is immune to metaphysical revision. Stephen Darwall (2006; high confidence) gives the reading this paper uses. To hold you responsible is to address a demand to you from inside a relation of mutual accountability, and in doing so I presuppose your standing to address me in turn [O]. That is a claim about the form of holding responsible, and it does not depend on the quietist claim that the practice resists revision.
+
+**3.2 Behavior control adjusts someone.** [PLAIN] In forward-looking behavior control, an agent (a person, a state, an institution) acts upon a system, modeled as a bundle of dispositions that can be changed, to alter its future outputs. Nothing in that description requires the system to answer, to have standing to refuse, or to take up a demand. Its answer, if any, is one more input [O].
+
+**3.3 What the replacement removes.** [PLAIN, as a description; its force is tested in 4.3] Behavior control relates two parties too. So the contrast between the two practices lies in the role of the second party, an addressee who can answer against a system to adjust, and the count of places stays at two. The original edition said that the replacement swaps a two-place relation for a one-place predicate. Taken literally that is false, and this edition withdraws the literal reading. What the paper still claims is narrower. The addressee role carries conditions the system role lacks: standing to answer and to refuse, and uptake as a success condition of the demand. Call this second-personal remainder (R). The arity gap, restated, is the claim that no description built only from the system role can fix the target of a practice whose second place is an addressee. Whether that claim holds is the question of Section 4.3, and the paper leaves it open there.
+
+**3.4 What an elimination needs.** [PLAIN] The elimination of phlogiston succeeded because combustion had a description, oxidation, that is available in the third person, tracks what the old talk tracked, and lets the old theory be measured and found empty. An elimination of the reactive attitudes owes the same: a third-personal, forward-looking description of what holding responsible was tracking, against which the second-personal content can be measured and found to add nothing [O]. The paper holds that the hard incompatibilist has not supplied it. The stronger claim, that no such description can be supplied, is the open question of 4.3.
+
+**3.5 The solipsism test.** [PLAIN] Consider a universe with exactly one inhabited standpoint. It meets the necessity-of-locus claim, that agency needs a standpoint where it happens, in full. (R) is false there, because there is no one to address and no uptake that could be a success condition for anything. A proposition that is false in a world where the locus claim is true is not entailed by the locus claim. So (R) says something beyond the bare need for a standpoint. This derivation is valid. What it shows is limited: (R) is more than the locus claim. It does not show that no third-person vocabulary can capture (R). The original abstract read it as showing that, and the original wording is withdrawn.
+
+## 4. The contraries
+
+[PLAIN] Each contrary below is stated as its holders would state it, answered as well as the paper can answer it, and given an outcome.
+
+| # | Contrary | Domain | Outcome |
+|:--|:--|:--|:--|
+| 4.1 | Galen Strawson: the Basic Argument and the ordinary sense of responsibility | O, E | Ally on the existence of compatibilist responsibility, which he holds is not the kind that matters; standoff on what ordinary practice presupposes |
+| 4.2 | Sapolsky: trace the causes and nothing is left | C-emp to E | Survives, on the paper's reading of Sapolsky |
+| 4.3 | A third-person account of address (Gricean or functionalist) | O | Open; the literal arity claim is withdrawn |
+| 4.4 | Phlogiston: keep the function, drop the wrapper | O | Survival by concession; rests on 4.3 |
+| 4.5 | Dyadicity is not desert | E | Survival by concession: answerability survives, full resentment is left open |
+| 4.6 | Pereboom's Case 1 against the demand-to-blame inference | E | Defeat of the inference as written; a repair is proposed |
+| 4.7 | Pereboom's Cases 2 and 3 | E | Open |
+| 4.8 | Pereboom's blame as moral protest | E | Ally mistaken for enemy on address; standoff on anger |
+| 4.9 | This is compatibilism under another name | O | Survival by concession |
+| 4.10 | Chaos gives free will a foothold | O | Defeat of the unpredictability form, which is withdrawn; the levels form (List) is stated and not answered |
+| 4.11 | Libertarian self-origination | O | Survives |
+| 4.12 | Physicalism against the occasionalism of agency | O, C-emp | Defeat of the original claim; a narrowed claim survives |
+| 4.13 | The *falāsifa* against *kasb*, and the three traditions | T used for O | Standoff; the claim is narrowed |
+| 4.14 | Forgiveness as a reset, demotion as a fitness loss | O, C-emp | Forgiveness survives against the reset model, on the paper's side of Question B; unilateral forgiveness is unanswered; demotion is open |
+
+### 4.1 Galen Strawson
+
+[STEELMAN] The original edition said the whole disagreement with the hard incompatibilist sits in one inference, from "no one has true, self-originating responsibility" to "no one is responsible in any sense." Galen Strawson does not make that inference. He restricts his conclusion to heaven-and-hell responsibility, and he grants compatibilist responsibility outright (Section 2.3). On that point he is an ally the original edition took for an enemy, though only on the existence of compatibilist responsibility, since he holds that it is not the responsibility that matters (pp. 16 to 17). The paper's distinction between ultimate self-origination and a responsibility that does without it is a distinction Strawson draws himself.
+
+[STEELMAN] His real position is harder to answer. Strawson argues that the true, absolute kind is the kind we ordinarily suppose ourselves to have. We tend to feel responsible for the way we are, and our sense of ourselves as choosers seems to us to make us responsible in the strongest sense, whatever the Basic Argument says (1994, pp. 15 to 16). He finds a notion of this kind across cultures, ties it more to guilt than to shame, and thinks Aristotle likely held it (pp. 8 to 9). If he is right, the reactive attitudes the paper defends carry the impossible demand inside them, and conferred sourcehood is a smaller thing than what people mean by responsibility.
+
+[STEELMAN] The paper's reply runs through P.F. Strawson and Darwall. Resentment responds to the quality of another's will toward me and addresses a demand that the other can answer. What it presupposes is that the other is an addressable member of the moral community. Whether it also presupposes that the other made themselves is the point in dispute, and the paper holds that the practice can run without that second presupposition. Galen Strawson can reply that the felt sense of ultimate responsibility is a datum, and that a reading of the practice which leaves it out has changed the subject.
+
+[OPEN] **Question A. Do ordinary reactive attitudes presuppose heaven-and-hell responsibility?** For Galen Strawson: the phenomenology he describes, the guilt he ties to it, and the retributive edge in resentment that P.F. Strawson himself links to acquiescing in the offender's suffering (Strawson 1962). Against him: people resent and forgive children, friends and themselves while knowing how they were formed, and the practice survives that knowledge in many cases. What would settle it: evidence about whether people's resentment and forgiveness change when they come to believe that the target did not make themselves, in cases where the address relation stays intact. A conceptual argument that the demand built into resentment includes the demand of self-origination would also settle it in Strawson's favor. Experimental work bears on the question. Nichols and Knobe (2007) report that people give compatibilist answers about concrete, emotionally charged cases and incompatibilist answers about abstract ones (record checked this session; findings UNVERIFIED this session). Both sides can cite that result: Strawson's side reads the abstract answers as the concept, and the paper's side reads the concrete answers as the practice. The paper has no evidence that decides between those readings. Its outcome is a standoff.
+
+### 4.2 Sapolsky: trace the causes and nothing is left
+
+[STEELMAN] Robert Sapolsky (2023; high confidence on the book's thesis) argues that once the full causal history of an act is traced, through neurons, hormones, development, culture and evolution, no room is left for desert. The paper reads him as drawing the wide conclusion that Galen Strawson declines to draw, and that reading was not checked against the book this session (UNVERIFIED). On that reading, the step from a complete causal history [C-emp] to the absence of any responsibility [E] needs a bridging premise. The premise the step needs is the aseity premise: only what originates itself can be responsible. The paper denies that premise, and its grounds are 4.5 and 4.13. It leaves every causal claim Sapolsky makes in place.
+
+[PLAIN] Outcome: the paper's reply survives against the wide conclusion. If Sapolsky, read closely, restricts his conclusion the way Galen Strawson does, this contrary joins 4.1.
+
+### 4.3 A third-person account of address
+
+[STEELMAN] The opponent the arity gap most needs to face is a theory of communication. On a Gricean account, a speaker means something by an utterance when she intends the hearer to respond in a certain way through the hearer's recognition of that intention. Uptake is a success condition, and the account states it entirely in the third person: facts about intentions, recognition and response. A functionalist can add the normative layer the same way, describing standing to refuse as a social status, a pattern of what the community allows and enforces. If that works, a third-person vocabulary can fix the target of holding responsible, the addressee role included, and (R) is the address relation under another description. A normative scorekeeping account goes further, describing deontic statuses, refusals included, as attitudes of attributing and undertaking commitments (Brandom 1994; UNVERIFIED). Third-person science reduces relations all the time. A referee would add that oxidation is itself a relation between fuel and oxidant.
+
+[STEELMAN] The paper's reply is a sketch. A Gricean description says that uptake occurred and that it was required. It may still leave out the standpoint from which the demand binds: the addressee's taking the demand as addressed to her, with authority she can contest. A status described as what the community enforces describes the system role of everyone in it, and an addressee who refuses a demand is doing something other than deviating from a pattern. Whether that difference is real, or a description of the same facts from inside, is the point in dispute.
+
+[PLAIN] Two results are fixed. In the counting sense, behavior control and holding responsible both have two places, so "a one-place vocabulary cannot fix a two-place relation" is true and does not touch the opponent. And the solipsism test does not decide this question (3.5).
+
+[OPEN] **Question B. Can a third-person account capture the addressee role?** For yes: the success of Gricean and functionalist accounts elsewhere, and the general record of reductions of relations. For no: the difference between being the object of an enforced pattern and being the one a demand is addressed to, which shows up in forgiveness (4.14) and, if Question F goes the paper's way, in the hurt of being managed; that second consideration is itself open and unsourced, and it crosses domains only by the bridge stated in Question F [C-emp to O]. What would settle it: a third-person description that distinguishes forgiving while deterring from deterring without forgiving, and releasing a claim from dropping a cost, with nothing left over. If someone produces one, the arity gap fails. If attempts keep losing the same distinctions, that is evidence for the gap, short of proof. This edition keeps "arity" in the title while the question is open.
+
+### 4.4 Phlogiston: keep the function, drop the wrapper
+
+[STEELMAN] The original edition called this the best objection in the literature and cited no one for it. This edition states plainly that the paper constructs it on the hard incompatibilist's behalf. In the objector's voice: "I am not replacing the reactive attitudes with something else. I identify what they track, signals that shape behavior, and drop only the desert-laden wrapper, as chemistry identified what phlogiston-talk tracked and dropped the theory."
+
+[STEELMAN] The reply: phlogiston was eliminated because a third-person description of combustion was on hand. The objector owes one for holding responsible, and the addressee as addressee is part of what is tracked.
+
+[PLAIN] Outcome: survival by concession. The reply is as strong as the paper's side of Question B and no stronger. The original contrast between oxidation as one-place and address as two-place is withdrawn, since oxidation is relational.
+
+### 4.5 Dyadicity is not desert
+
+[STEELMAN] The contrary, raised in the original cross-examination: proving that holding responsible has an addressee does not prove that the addressee deserves the demand. Basic desert is the warranted backward-looking attribution of blame grounded in the agent's own self-authored character. A fully second-personal address can still be aimed at someone who, by premises 1 to 5, bears no ultimate responsibility for being the kind of person who merits it [E].
+
+[STEELMAN] The reply is a partition. Gary Watson (1996) separates attributability (whose act it is) from accountability (who stands inside the practice of mutual address). David Shoemaker (2011) adds answerability: standing to be asked for reasons and drawn into justification. Answerability requires that the agent can be addressed with a demand for reasons and can respond, and on its face it asks nothing about self-origination. Darwall (2006) supplies the mechanism: second-personal authority is constituted within the community of mutual accountability and borrows nothing from either party's self-origination. A holder of the desert charge will press that Darwall ties second-personal competence to Kantian autonomy of the will, and that autonomy as he uses it may be an aseity-like element; the reply owes an account of that autonomy as a present capacity, and this edition does not yet give one. R.J. Wallace (1994) offers a second route, on which reactive attitudes are fair when the agent has the general capacity to grasp moral reasons and be moved by them. The Basic Argument's regress runs through how one became the way one is. These standings do not run through that chain, so the regress has nothing to grip.
+
+[PLAIN] The bridge in this reply is stated: the warrant of a demand for an account comes from present standing in a community of address, and none from self-origination [O to E]. You can reject that premise on its own. The reply also has a stated limit. Shoemaker places resentment and indignation on the accountability side of his scheme, the side most exposed to the desert charge. Smith (2012) argues for a unified account on which answerability is the whole of moral responsibility; if she is right, the limit narrows (record only; the article was not read this session).
+
+[PLAIN] Outcome: survival by concession. The partition warrants the demand for an account and a range of reactive responses (high confidence on the partition and its mechanism). Whether it warrants resentment at full backward-looking intensity is left open. The original edition said the inference warrants "resenting, demanding and attributing blame." This edition states the inference at the size the partition supports (4.6).
+
+### 4.6 Pereboom's Case 1 against the demand-to-blame inference
+
+[PLAIN] The original inference ran: if you stand in the address-community, have uptake-capacity for demands, and acted from an orientation that is yours in Watson's attributability sense, then holding you to account is warranted, and none of the three conditions requires self-origination. Pereboom built Case 1 so that Plum meets the standard compatibilist conditions, including the capacity to grasp and be moved by moral reasons (secondary sources only; Pereboom 2001 was not read; UNVERIFIED). A Plum who can be addressed now meets all three conditions. So the inference warrants blaming him. The paper's own verdict on Case 1 is that he is not responsible, because his sourcehood bypassed address. Both cannot hold. The inference as written is defeated by the paper's own case. The defeat is a valid derivation; its premise about how Pereboom built the case still awaits a check against his text.
+
+[STEELMAN] A repair is available. It is proposed here, and the argument does not rely on it. Add a fourth, historical condition: the orientation was formed through address and was not installed by bypass. The objection to the repair is strong. Once history matters, the Basic Argument's regress seems to return: was the agent responsible for the address that formed them? The reply is that the condition asks only how the orientation came about; whether the agent authored that history lies outside it. A history of being addressed is a history the agent did not originate, so the regress, which demands origination, has no step to take. The repair costs one thing: the original claim that the warrant is synchronic, holding at a single time with no historical fact, has to go. It also agrees with what the paper already says in 4.12, that ownership depends on relational and historical facts.
+
+[PLAIN] Outcome: defeat of the inference as written. The four-condition inference stays a proposal in this edition, and the paper claims only what 4.5 claims. Wallace's route in 4.5 turns on the general capacity to grasp and be moved by moral reasons, which Case 1 Plum was built to have, so whether the same defeat reaches the partition is also left open in this edition.
+
+### 4.7 Pereboom's Cases 2 and 3
+
+[STEELMAN] Pereboom's argument works by denying any relevant difference between adjacent cases. In Case 3, as secondary sources describe it, Plum is determined by the rigorous training practices of his home and community (UNVERIFIED at Pereboom's text). That formation runs through a community and its practices, which is the paper's own mark of ordinary formation. The original edition answered only Cases 1 and 4, with a gradient reply: second-personal constitution comes in degrees, and Case 1 is where it reaches zero, as a dimmer switch has an off position. That reply locates one zero. Pereboom's argument needs only that each adjacent pair is alike, and a located zero leaves that premise untouched.
+
+[OPEN] **Question C. Where do Cases 2 and 3 fall, and why?** One route: training that fixes the outcome treats the child's uptake as no success condition, so it counts as installing even when the trainers speak to the child. Against that route: much ordinary upbringing aims at fixed outcomes, so the route may classify ordinary formation as installing and give Pereboom his conclusion. What would settle it: a criterion of "through address" that sorts Case 3 away from ordinary upbringing without appeal to the verdict it is meant to support. The paper does not yet have one.
+
+### 4.8 Pereboom's blame as moral protest
+
+[STEELMAN] The original edition described the hard incompatibilist's positive view as a forward-looking package with no address in it: quarantine, deterrence, formation, reconciliation. That is no longer Pereboom's view, if it ever was. In 2014 Pereboom defined basic desert as deserving treatment as a sole function of having performed the action, and he gave up resentment and indignation while keeping other responsibility attitudes and judgments (NDPR review of Pereboom 2014; read this session). In 2021 he set out a conception of blame without deserved pain or harm, a stance of moral protest directed at wrongdoers, which a reviewer describes as more interpersonally assertive than his earlier "moral sadness" (Vargas, review of Pereboom 2021; read this session; the book itself was not read). Protest is addressed. On the most natural reading it expects an answer.
+
+[STEELMAN] The paper's reply has to begin with a concession. On the arity question Pereboom is an ally. His blame keeps the addressee, and his reasons for it are forward-looking. The arity argument, which shows that management without address eliminates holding responsible, does not reach a view that keeps address. What remains is a dispute about anger. Pereboom holds that resentment and indignation carry a belief that their target deserves to suffer, and that this belief is unwarranted. The paper's partition (4.5) warrants address and a range of reactive responses, and leaves full resentment open. The two positions are closer than the original edition admitted.
+
+[PLAIN] They are closer still on answerability. The Stanford Encyclopedia entry on skepticism about moral responsibility (read this session) reports that Pereboom accepts answerability responsibility, holds it legitimate to ask a wrongdoer "Why did you decide to do that?", and grounds that answerability in three forward-looking desiderata: future protection, future reconciliation and future moral formation. On the practice of asking for an account, the partition of 4.5 and Pereboom agree. What still divides them is the ground. The paper grounds answerability in present standing among those who can address one another; Pereboom grounds it in future goods. Whether the outcome against him should read "ally" on answerability is left open in this edition.
+
+[PLAIN] Outcome: ally mistaken for enemy on address; standoff on anger. The thesis is restated at its real size in Section 5.
+
+[OPEN] **Question D. Is there an addressed blame that is warranted, backward-looking, and still free of basic desert?** For yes: the answerability literature in 4.5; Scanlon's relational account of blame in *Moral Dimensions* (2008; record checked this session, content UNVERIFIED this session), which the original edition already named as a candidate for this step; and the observation that "you wronged me" looks backward and claims nothing about deserved suffering. A complication for the "yes" side: skeptics claim answerability in Scanlon's sense for themselves (Scanlon 1998; Bok 1998; as reported in the Stanford Encyclopedia entry), and Pereboom takes it to be compatible with skepticism about basic desert (4.8). For no: Pereboom's view that the anger in resentment carries the belief in deserved suffering, so whatever is left once the belief goes is protest with forward-looking reasons. What would settle it: an account of what makes backward-looking blame fitting that cites neither deserved suffering nor future benefit. If none survives scrutiny, Pereboom's moral protest is the best available view and the paper's contribution is the arity argument against pure management alone, and Section 5 reports that the paper has not yet found a published holder of pure management.
+
+### 4.9 "This is compatibilism under another name"
+
+[STEELMAN] The objection: the paper grants determinism and holds agents responsible, which makes it compatibilist, and compatibilism already places the question in the actual sequence (Frankfurt 1971; Fischer and Ravizza 1998).
+
+[PLAIN] The objection is right about the label. By the definition the paper uses, conferred sourcehood is a compatibilist position. The original edition said it "is not a version of compatibilism"; that sentence is withdrawn. What the paper adds sits at one point. Hierarchical compatibilism faces the regress of identification that Watson and Velleman press (works not named in the original edition; UNVERIFIED which ones): why does the endorsing volition carry authority, and what stops the regress of endorsement? The paper reads some answers as stopping it with a self that works like a small aseity; it names no account here, and the reading is unsourced. A Frankfurt holder would point to his later work on wholeheartedness and satisfaction, which posits no self-standing self (Frankfurt 1987, 1992; UNVERIFIED). A Korsgaard holder would say the position the paper calls its contribution is hers. Conferred sourcehood denies that the regress needs a self-standing stopping point. With Korsgaard (2009), it takes the self to be the continuing activity of constituting an author.
+
+[PLAIN] Outcome: survival by concession. The contribution is a compatibilist position that refuses the self-standing terminus. If Korsgaard already holds that position, the contribution narrows to applying her view to the Basic Argument, and the outcome would read "ally"; this edition leaves that choice open. Bratman's work on identification is the obvious neighbor and was not consulted (UNVERIFIED).
+
+### 4.10 Chaos gives free will a foothold
+
+[STEELMAN] The author proposed chaos theory as a steelman against determinism. In its strongest form: sensitive dependence on initial conditions means no finite observer can predict a person's choices from the physics, so the person's choice is the only place the outcome is settled.
+
+[STEELMAN] The proposal has a stronger published neighbor. Christian List (2019; record checked this session, content UNVERIFIED this session) argues that physical determinism is compatible with indeterminism at the level of agency, and that alternative possibilities, and free will with them, live at that level. That form makes no appeal to prediction, so the hurricane reply below does not reach it. It also presses on a concession of Section 2. The paper grants that the consequence argument removes leeway; List holds that leeway survives at the agential level of description. The paper does not answer this form. Its argument concerns sourcehood in the actual sequence (2.1), so it may not need to, and a level at which the agent is a real source may sit comfortably with conferred sourcehood. Whether List is an opponent, an ally, or both is left open in this edition.
+
+[PLAIN] The appeal as stated fails, and the original edition withdrew it in full, as any kind of support for free will. It runs together unpredictability, a fact about observers, and authorship. A hurricane's path cannot be predicted from its starting conditions, and the hurricane authors nothing. The original edition kept a narrower claim: computational irreducibility (Wolfram; UNVERIFIED) shows that a deterministic act need not dissolve into its micro-level description. That claim uses an epistemic result, the absence of a predictive shortcut, for a conclusion about what the act is. It repeats the error it withdraws. The defensible residue is about explanation: some higher-level descriptions cannot be dropped from our best explanations of a system's behavior. The argument does not depend on that residue.
+
+### 4.11 Libertarian self-origination
+
+[STEELMAN] Kane's event-causal libertarianism (1996; high confidence) tries to secure self-origination inside a naturalistic frame through undetermined self-forming actions. In a self-forming action the agent makes competing efforts at once, toward each of two options, and whichever effort succeeds was tried for, wanted and endorsed by the agent, so the outcome is no accident relative to the agent's will (Kane's reply to luck, stated from memory; UNVERIFIED).
+
+[STEELMAN] The reply is Mele's luck objection (2006; high confidence). At the moment it is undetermined, an undetermined choice is less the agent's own, because nothing about the agent settles it. Self-origination, even if secured, would give a coin flip the agent stands next to. This edition leaves the dual-efforts reply unanswered, and whether the outcome below holds against it is left open.
+
+[PLAIN] Outcome: the paper's use of the luck objection survives at the confidence the original edition gave it. Kane's effort is offered as perhaps the strongest available evidence that sourcehood was never going to be found in self-origination; "perhaps" is the original edition's own word and stays.
+
+### 4.12 Physicalism against the occasionalism of agency
+
+[PLAIN] The body of work this paper comes from claimed that authorship can drain and return without a dynamical difference. Under the framework's own physicalism that is false. The addict who watches herself relapse is in a different dynamical state from the integrated agent. The original claim is withdrawn and its falsity conceded.
+
+[STEELMAN] A narrower claim survives at moderate confidence. Two episodes can match in the agent's state at a single instant and differ in authorship, because relational and historical facts constitute authorship. Ownership supervenes on the total physical facts; the local dynamics alone leave it unfixed. This is historicism about responsibility, the family of views on which a person's history bears on whether an act is theirs (Fischer and Ravizza 1998; Mele). The original label "occasionalism" is dropped from this claim, because it invites confusion with Malebranche and al-Ghazālī. The narrowed claim depends on (R) and does not corroborate it.
+
+### 4.13 The *falāsifa* against *kasb*, and the three traditions
+
+[PLAIN] The paper draws on three traditions that hold agents responsible without granting them self-origination. In classical Ash'arī *kalām*, from al-Ash'arī (died 935) through al-Bāqillānī, al-Juwaynī and al-Ghazālī, God creates every act and the human being acquires it (*kasb*) (high confidence on the existence and core of the doctrine; moderate on the finer scholastic disputes; editions UNVERIFIED). In Yoruba thought, *orì*, the inner head, bears a destiny received before birth and lived out, and *ìwà*, character, stays answerable within it (Gbadegesin 1991; Abimbola and Hallen named without works; high confidence on the broad structure, moderate on interpretation). A saying transmitted by al-Tirmidhī counsels "tie your camel and then rely on God" (*Jāmiʿ al-Tirmidhī* 2517, Book 37, hadith 103, narrated from Anas ibn Mālik; the narration says "tie it", and the camel is the referent by context; moderate on chain and grading; high confidence that the saying is canonical and widely transmitted in this sense; locator UNVERIFIED). Al-Tirmidhī calls the narration *gharīb* from Anas and notes a parallel through ʿAmr ibn Umayya; Yaḥyā al-Qaṭṭān called it *munkar*, and the Darussalam edition grades it *ḥasan*. Apart from that locator and grading, added from an earlier pass on 2 October 2026, these records are carried from the June manuscript with its confidence labels and were not checked against the sources this session.
+
+[PLAIN] What the traditions can show is limited, and the limit is stated here as the bridge [T to O]. They count as evidence about the concept of responsibility only. Each holds agents responsible while denying them self-origination. The paper needs that combination to be coherent. Whether any tradition's theology is true is beside its point. *Kasb* has the structure the paper calls conferred sourcehood, ownership at the place of the act with origination elsewhere. In *kasb* the source is God; in 4.5 it is the community of address. The paper borrows the structure and leaves the theology aside. The tied-camel teaching holds that the decree is at work inside the acting. Read as a structure, the saying fits any order in which outcomes are fixed from outside the agent, a divine decree or the determinism of Section 2. The paper takes no position on the decree.
+
+[STEELMAN] The contrary comes from inside the same history. The *falāsifa*, philosophers in the Greek tradition, charged that *kasb* is a distinction without a difference: if God creates the act, "acquisition" names nothing the human does. The Mu'tazila pressed from the other side for real human causal power. If the charge holds, *kasb* is a held view and an incoherent one, and it cannot show that ownership without origination makes sense. The reply available to the paper is that Section 4.5 supplies what *kasb* was said to lack, a content for ownership (attributability and standing to answer) that needs no origination. That reply uses the paper's own argument to rescue the witness, so the witness adds little independent support.
+
+[PLAIN] Outcome: standoff on *kasb*, and the claim is narrowed. The original edition said the three traditions show that the aseity demand is "optional" and that ownership without origination is "a robust structure, reached independently." This edition claims that the demand is not universal: serious traditions have held agents responsible without it. The original edition also called the Western debate's step "unusual"; Galen Strawson finds the notion beyond the Western tradition (1994, pp. 8 to 9), and Western theological compatibilism exists, so the word is withdrawn.
+
+[OPEN] **Question E. Did these traditions reach the structure independently?** The original edition said their agreement is "not explicable by common inheritance." That claim has no source in the June manuscript. The narrowed claim of this section, that the demand is not universal, holds whether or not the traditions influenced each other, so the argument no longer needs independence. Islam is reported to have a long presence in Yorubaland (UNVERIFIED), so the original claim needs evidence the paper does not have. For independence: the doctrines' different vocabularies and metaphysics. Against: centuries of contact. What would settle it: historical work on whether *orì* and *ìwà* took their present shape before that contact. The original claim stays unadopted in this edition.
+
+### 4.14 Forgiveness as a reset, demotion as a fitness loss
+
+[STEELMAN] The hard incompatibilist models forgiveness as a reset of dispositions that restores cooperation, and the hurt of being managed as a loss of status that matters to a social primate. Both stories predict the behavior and the signals well.
+
+[STEELMAN] Forgiveness survives against the reset model, on the paper's side of Question B. The behavior and signals of "I have forgiven you" and "I have written you off" can be made identical. Only the first has an addressee who can refuse it: "I do not accept your forgiveness" keeps the claim alive. Dropping a cost has no one to refuse anything. The asymmetry is visible in the grammar of the practice. Pereboom (2021) treats forgiveness in a chapter of its own, and how his account handles refusal was not checked (UNVERIFIED). The result depends on Question B, because a third-person description that separates forgiving while deterring from deterring without forgiving would erase the asymmetry.
+
+[STEELMAN] A stronger contrary comes from inside the forgiveness literature. Unilateral or unconditional forgiveness, of the dead or of someone who never learns of it, has no addressee who can refuse (accounts of conditional and unconditional forgiveness, for example Griswold 2007; UNVERIFIED). A careful holder would also ask whose claim "I do not accept your forgiveness" keeps alive. The wrongdoer can refuse the offer, and the forgiver's release of resentment may stand all the same. The paper does not answer this contrary here, and how the asymmetry should be stated in light of it is left open.
+
+[PLAIN] The demotion argument needs repair. The original edition credited P.F. Strawson with noting that being moved to the objective attitude feels like a demotion. The passage on the objective attitude read this session describes it from the side of the one who takes it, and no passage on the felt demotion was found. The observation is restated as this paper's own. Herbert Morris (1968) may be its source; that work was not read (UNVERIFIED).
+
+[OPEN] **Question F. What does being managed hurt like?** The paper's claim: the shaping account predicts that being managed feels bad, and the second-personal account also predicts what the hurt is about, a withdrawn standing to answer ("stop managing me and talk to me"). The patient and prisoner reports the original edition gave have no source (UNVERIFIED), and nor do its claims that linguistics, developmental psychology and the philosophy of indexicals attest the distinction. The bridge is stated [C-emp to O]: if the felt loss is about a withdrawn standing to answer, the two-place account explains that content and the shaping account must treat it as confabulation. What would settle it: studies of how people describe the experience of being managed by clinicians, institutions or partners, coded for whether the complaint concerns lost standing or lost value.
+
+## 5. What stands
+
+[PLAIN] Determinism, the consequence argument, and premises 1 to 5 of the Basic Argument are granted. No one is the ultimate, self-originating source of their acts.
+
+[PLAIN] Galen Strawson draws his conclusion only for heaven-and-hell responsibility and grants compatibilist responsibility. The live question with him is whether ordinary attitudes presuppose the heaven-and-hell kind (Question A).
+
+[PLAIN] Holding responsible has an addressee who can answer, and the solipsism test shows that this is more than the need for a standpoint. Behavior control has two relata as well. The contrast is one of role, and whether a third-person vocabulary can capture the addressee role is open (Question B).
+
+[PLAIN] Where an opponent proposes to replace blame with management that never addresses anyone, the replacement removes the addressee. Pereboom, in his current work, is not that opponent. The paper has not yet identified a published hard incompatibilist who holds the pure management view. Sapolsky, on a reading not checked against his book, and Waller (2011; UNVERIFIED) are candidates.
+
+[STEELMAN] That opponent loses holding responsible, and the paper's claim is that this loss is an elimination. The claim stands only on the paper's side of Question B.
+
+[PLAIN] Answerability, built from Watson, Shoemaker, Darwall and Wallace, warrants the demand for an account and a range of reactive responses without self-origination. The demand-to-blame inference as stated in the original edition fails on Pereboom's Case 1. A historical repair is proposed, and full resentment is left open (Question D).
+
+[STEELMAN] Forgiveness keeps its asymmetry against the reset model: it has an addressee who can refuse it. The result rests on Question B, and unilateral forgiveness is a contrary the paper has not answered (4.14).
+
+[PLAIN] The chaos appeal and the original occasionalism of agency are withdrawn. The three traditions show that the aseity demand is not universal; whether they show more is open.
+
+[PLAIN] The thesis at its real size: conferred sourcehood is a compatibilist position that refuses a self-standing terminus for identification, keeps the addressee as the core of holding responsible, and grounds answerability in present standing among those who can address one another. Against pure management it claims an elimination. Against Pereboom it claims a smaller thing, that addressed blame may be warranted backward-looking blame, and it leaves that claim open. The arity gap is defended, not proven; the eliminativist's bullet is unbitten, not proven unbiteable, and on the role question the bullet has not yet been fired.
+
+## 6. Questions handed to the reader
+
+[OPEN] Six questions stay open, each with what would settle it in its section.
+
+- A (4.1). Do ordinary reactive attitudes presuppose heaven-and-hell responsibility?
+- B (4.3). Can a third-person account of communication capture the addressee role?
+- C (4.7). Where do Pereboom's Cases 2 and 3 fall?
+- D (4.8). Is there addressed, backward-looking blame that is warranted without basic desert?
+- E (4.13). Did the three traditions reach their shared structure independently?
+- F (4.14). What does being managed hurt like, and does the answer favor either account?
+
+[OPEN] The paper leans toward "no" on A, toward "no" on B, and toward "yes" on D. You may reasonably lean otherwise on each. The argument of Section 5 survives a "yes" on A only in its weakest form, and it does not survive a "yes" on B.
+
+## 7. The argument applied to itself
+
+[PLAIN] If second-personal authority is constituted in communities of address and cannot be self-bestowed, and if intellectual authority shares that structure, then the paper's own claim to have answered the desert charge has the same structure: it is offered to readers who can answer back and withhold uptake, and its standing comes from the quality of the argument as those readers take it up. That conditional is valid.
+
+[OPEN] The second antecedent, that intellectual authority shares the structure of moral standing, is a further premise, the bridge that carries the structure of sourcehood over to authority, and the paper offers no argument for it. For it: a claim that rests on its author's word alone does make the self-grounding move the paper criticizes. Against it: epistemic standing may rest on evidence a single inquirer can hold, with no community's uptake involved. The original edition ended on this point as a conclusion. This edition leaves it with you. The author has not yet said whether he adopts it.
+
+## 8. Update, October 2026
+
+[PLAIN] This section was added on 2 October 2026 at the author's direction. It stands apart from Sections 2 to 7 and changes no step or confidence label in them. It reports what Julian Jaynes claimed and what his critics answered, then gives the author's interpretation, marked as interpretation.
+
+**8.1 Jaynes against his critics.** [STEELMAN] In *The Origin of Consciousness in the Breakdown of the Bicameral Mind* (1976), Jaynes argued that consciousness, in his narrow sense of an introspectable mind-space with an analog "I", is a learned capacity built from language [C-emp]. In a 1990 afterword he restated the book as four separable hypotheses: consciousness is generated by language and learned by children; a "bicameral" mentality came first, in which people acted on verbal hallucinations heard as gods; consciousness arose after that mentality broke down, roughly 1000 BCE; and a neurological model places the voices in the right hemisphere, which he said could fail while the rest held (Jaynes 1990, pp. 447 to 456; pages carried from the earlier pass of 2 October; UNVERIFIED this session). Ned Block (1981) answered that Jaynes confuses the nature of people's thought processes with the nature of their theories about those processes, and that planning and deceit appear in chimpanzees and in the very ancient texts Jaynes reads (UNVERIFIED this session). Cavanna and colleagues (2007; abstract read this session) name two critical issues, the neurological basis of the model and the philological accuracy of Jaynes's readings, and note that the idea of a non-unitary self outlived the critiques. Daniel Dennett (1986; record checked this session, content UNVERIFIED this session) read the book as a claim about learned conceptual software on possibly unchanged hardware and answered Block with a class of things, such as money, that do not exist before their concepts.
+
+[PLAIN] Outcome: standoff on Jaynes's history and neurology, with the weight of criticism against his dating and his hemispheric model. This paper uses none of Jaynes's historical or neurological claims.
+
+**8.2 What the paper declines to borrow.** [PLAIN] Block reports that Jaynes held bicameral people not responsible for their actions (UNVERIFIED this session). That step, from a lack of introspective consciousness [C-emp] to a lack of responsibility [E], needs an ethical premise: responsibility requires consciousness in Jaynes's sense. The arity argument neither asserts nor needs it. It grounds answerability in standing, uptake-capacity and attributability, and whether bicameral people, if they existed, met those conditions is an empirical question the paper leaves alone. The second move, Dennett's class of concept-dependent things extended to morality and consciousness, would need the bridge *holding responsible exists only where the participants hold the concepts of address and answer*. The arity argument does not use that bridge.
+
+**8.3 The author's interpretation.** [OPEN] The author makes three points, paraphrased here.
+
+First [O, C-met]: whatever a person takes to be the source of their life or mind, a god, a mother or another being, no one can argue that they came from nothing. The paper grants that nothing causes itself; the author adds a separate denial, of origin from nothing. Together, and given that a person came from somewhere, they leave origin from another. The step from there to the condition this paper calls conferred needs a bridge, stated so you can reject it on its own: *if a person's being or mind comes from another, their authorship of their acts is conferred in this paper's sense* [C-met to O]. The point holds across theologies because it needs none of them. The question for you: is "came from nothing" ever a live option, or does the denial do no work? A third option deserves its place beside the two. Existence may have no origin at all, beginningless or brute; the original edition's cross-examination set the existential-inertia view (Schmid and Linford 2023; record checked this session, content UNVERIFIED) against no-aseity and reached a standoff. The author's own June remark that something comes from nothing through abstraction and potential sits against this point, and he has not said which governs.
+
+Second [T, as structure only]: even in prophecy, where a prophet receives a word held to be divine, the new understanding formed when a second stream of thought, divine or human, joined the discourse. This enters as a structure that holds across belief systems. It is no evidence for any step of the argument, and the paper reads it as neither confirming nor denying Jaynes's hypothesis about voices heard as gods.
+
+Third [O]: many things can be discovered alone, and some only in cooperation, where two minds or two principles meet. No premise of the paper argues this. It sits nearest to Section 7. The question for you: is there a discovery that could not, even in principle, be made by one inquirer? An example would settle it in the author's favor.
+
+**8.4 Where the interpretation touches the argument.** [OPEN] Jaynes suggested that a person may first have posited an inner self in others and only later inferred his own (as quoted in Block 1981; UNVERIFIED this session). The bridge, stated so you can reject it: *if the concept of an inner source of action was first applied to others and only then to oneself, then the first-person standpoint of sourcehood has a second-personal history* [C-emp to O]. Block's charge is the natural ground for rejecting it, since the passage may describe the history of a theory about minds while the minds stayed as they were. Granted, the premise supports conferred sourcehood as a matter of origin and history. It gives the solipsism test no support, because that test concerns logical form.
+
+**8.5 A contrary the update raises.** [STEELMAN] If Jaynes's bicameral case were real, it would be one brain whose own processing was heard as another's command. An objector can turn it on the paper: one system can produce the experience of being addressed, so the two-place structure may be an appearance over a one-place process. This needs its own bridge [C-emp to O]: a relation that one system can realize has the form of a one-place predicate. A sketched reply: on Jaynes's description, as Block reports it, the hearer had no standing to answer or refuse, which is closer to the objective attitude of 3.2 than to address. Block's own point that the plan the voice delivered was the hearer's plan pulls the other way.
+
+[OPEN] Outcome: open. The argument does not depend on how it is settled, because 3.5 concerns what a relation requires and says nothing about how a brain realizes it. The update draws no conclusion from Jaynes about desert, and says nothing about whether systems trained on human language can stand in the addressee place.
+
+## References
+
+Marks: **[opened]** means the work or its record was opened in this session (2 October 2026, evening), with what was read named. **[UNVERIFIED this session]** means the record was checked in an earlier pass on 2 October 2026 or not at all, and was not reopened here. **[proposed]** means the June manuscript does not cite it. Confidence labels in square brackets are carried from the June manuscript.
+
+Block, N. (1981). Review of J. Jaynes, *The Origin of Consciousness in the Breakdown of the Bicameral Mind*. *Cognition and Brain Theory* 4(1): 81 to 83. [UNVERIFIED this session]
+
+Brandom, R. (1994). *Making It Explicit*. Harvard University Press. [proposed] [UNVERIFIED]
+
+Cavanna, A. E., Trimble, M., Cinti, F., and Monaco, F. (2007). The "bicameral mind" 30 years on: a critical reappraisal of Julian Jaynes' hypothesis. *Functional Neurology* 22(1): 11 to 15. PMID 17509238. [opened: PubMed record and abstract]
+
+Darwall, S. (2006). *The Second-Person Standpoint*. Harvard University Press. [high confidence] [UNVERIFIED this session]
+
+Dennett, D. C. (1986). Julian Jaynes's software archeology. *Canadian Psychology* 27(2): 149 to 154. doi:10.1037/h0080051. [opened: Crossref record; content UNVERIFIED this session]
+
+Fischer, J. M. and Ravizza, M. (1998). *Responsibility and Control*. Cambridge University Press. [high confidence] [UNVERIFIED this session]
+
+Frankfurt, H. (1969). Alternate Possibilities and Moral Responsibility. *Journal of Philosophy* 66(23): 829 to 839. [high confidence] [UNVERIFIED this session]
+
+Frankfurt, H. (1971). Freedom of the Will and the Concept of a Person. *Journal of Philosophy* 68(1): 5 to 20. [high confidence] [UNVERIFIED this session]
+
+Frankfurt, H. (1987). Identification and Wholeheartedness. And (1992). The Faintest Passion. [proposed] [UNVERIFIED: titles and venues from memory]
+
+Gbadegesin, S. (1991). *African Philosophy: Traditional Yoruba Philosophy and Contemporary African Realities*. Peter Lang. [moderate confidence on interpretation] [UNVERIFIED this session]
+
+Griswold, C. (2007). *Forgiveness: A Philosophical Exploration*. Cambridge University Press. [proposed] [UNVERIFIED]
+
+Jaynes, J. (1976). *The Origin of Consciousness in the Breakdown of the Bicameral Mind*. Houghton Mifflin. [opened: Open Library record, first published 1976; text not read]
+
+Jaynes, J. (1990). Afterword. In *The Origin of Consciousness in the Breakdown of the Bicameral Mind*, pp. 447 to 469. [UNVERIFIED this session]
+
+Kane, R. (1996). *The Significance of Free Will*. Oxford University Press. [high confidence] [UNVERIFIED this session]
+
+Korsgaard, C. (2009). *Self-Constitution*. Oxford University Press. [high confidence] [UNVERIFIED this session]
+
+List, C. (2019). *Why Free Will Is Real*. Harvard University Press. doi:10.4159/9780674239807. [proposed] [opened: Crossref record; content UNVERIFIED this session]
+
+Mele, A. (2006). *Free Will and Luck*. Oxford University Press. [high confidence] [UNVERIFIED this session]
+
+Morris, H. (1968). Persons and Punishment. *The Monist* 52(4): 475 to 501. [proposed] [UNVERIFIED this session]
+
+Nichols, S. and Knobe, J. (2007). Moral Responsibility and Determinism: The Cognitive Science of Folk Intuitions. *Noûs* 41(4): 663 to 685. [proposed] [opened: Crossref record; findings UNVERIFIED this session]
+
+Nietzsche, F. *Beyond Good and Evil*, §21. Quoted in Strawson 1994, p. 15. [opened: the quotation on p. 15 of the scan; translator unverified]
+
+Pereboom, D. (2001). *Living Without Free Will*. Cambridge University Press. [high confidence] [UNVERIFIED this session; Cases 1 to 4 known from secondary sources only]
+
+Pereboom, D. (2014). *Free Will, Agency, and Meaning in Life*. Oxford University Press. [high confidence] [opened: NDPR review, for the definition of basic desert and the attitudes kept and given up; book not read]
+
+Pereboom, D. (2021). *Wrongdoing and the Moral Emotions*. Oxford University Press. [proposed] [opened: M. Vargas, review, *Philosophical Review* 2024, author's PDF; book not read]
+
+Sapolsky, R. (2023). *Determined: A Science of Life Without Free Will*. Penguin Press. [high confidence on thesis] [UNVERIFIED this session]
+
+Scanlon, T. M. (2008). *Moral Dimensions: Permissibility, Meaning, Blame*. Harvard University Press. doi:10.4159/9780674043145. [proposed] [opened: Crossref record, which lists a chapter titled "Blame"; content UNVERIFIED this session]
+
+Schmid, J. C. and Linford, D. (2023). *Existential Inertia and Classical Theistic Proofs*. Springer. doi:10.1007/978-3-031-19313-2. [proposed] [opened: Crossref record; content UNVERIFIED this session]
+
+Stanford Encyclopedia of Philosophy. Skepticism About Moral Responsibility. plato.stanford.edu/entries/skepticism-moral-responsibility. [opened: sections 1 and 3.3, through a summarizing fetch; quoted wording to be checked against the page before print]
+
+Shoemaker, D. (2011). Attributability, Answerability, and Accountability. *Ethics* 121(3): 602 to 632. [UNVERIFIED this session]
+
+Smith, A. M. (2012). Attributability, Answerability, and Accountability: In Defense of a Unified Account. *Ethics* 122(3): 575 to 589. [proposed] [UNVERIFIED this session]
+
+Strawson, G. (1986). *Freedom and Belief*. Oxford University Press. [high confidence] [UNVERIFIED this session]
+
+Strawson, G. (1994). The Impossibility of Moral Responsibility. *Philosophical Studies* 75: 5 to 24. [opened: scanned copy, pp. 9, 15 and 16 read as page images]
+
+Strawson, P. F. (1962). Freedom and Resentment. *Proceedings of the British Academy* 48: 187 to 211. [opened: a hosted text of the essay, the objective-attitude passage and the passage on indignation and punishment; pagination of that copy not matched to the journal]
+
+van Inwagen, P. (1983). *An Essay on Free Will*. Oxford University Press. [high confidence] [UNVERIFIED this session]
+
+Vargas, M. (2024). Review of D. Pereboom, *Wrongdoing and the Moral Emotions*. *Philosophical Review* 133(1): 77 to 81. doi:10.1215/00318108-10935366. [opened: author's PDF]
+
+Waller, B. (2011). *Against Moral Responsibility*. MIT Press. [proposed] [UNVERIFIED]
+
+Wallace, R. J. (1994). *Responsibility and the Moral Sentiments*. Harvard University Press. [UNVERIFIED this session]
+
+Watson, G. (1996). Two Faces of Responsibility. *Philosophical Topics* 24(2): 227 to 248. doi:10.5840/philtopics199624222. [UNVERIFIED this session; page range from the Crossref record]
+
+Listed in an earlier draft and not cited in this edition: Dennett 1984, McKenna 2012, Pereboom 1995, Talbert 2012 (all proposed, UNVERIFIED this session); Abadi et al. 1993 and Kim 1966.
+
+## Reader's note on AI assistance and provenance
+
+This paper was drafted with substantial help from AI models. Its argument was first developed by AI models in June 2026, working at my direction inside a larger research program of mine on aseity and meaning, in which free will is one station. I asked for the free will chapter, I asked that it draw on Islamic and Yoruba thought, and I proposed chaos theory as a steelman against determinism; the paper later withdrew that appeal. The arguments themselves, including the arity gap, the solipsism test and the reply to the desert charge, are AI-assisted substrate. I have not yet re-derived them on my own from the primary sources, and until I do, the paper should be read as a defended argument that I put forward for scrutiny. It is not finished work of my own. This edition was restructured on 2 October 2026 with AI assistance to set each idea against its strongest contrary, after an independent review found faults in the original argument; where the review was right, this edition says so in the text.
+
+Proof before trust, including about authorship.
+
+The provenance ledger from the June manuscript is carried as an appendix at the end of this edition. Its rows for the arity claims ("high") predate the faults recorded in Section 4 and should be read with them.
+
+## Appendix: Provenance ledger
+
+Retained from the June 2026 manuscript. Wording unchanged except that en dashes in ranges are written as "to" and the names of internal working files are replaced by plain descriptions of the same documents. Its rows for the arity claims ("high") predate the faults recorded in Section 4 and should be read with them.
+
+This ledger records, for each substantive claim in the paper, its source in the adjudicated substrate and the confidence label carried forward from that substrate. It is the paper's firewall: every claim traces to a source; unsourced claims do not appear.
+
+| Claim | Source in corpus | Confidence |
+|:--|:--|:--|
+| Free will debate conducted as search for origin; aseity premise shared by all parties | free will chapter, §0 | high (this is the chapter's stated organizing claim, internally coherent) |
+| Basic Argument (G. Strawson 1994) premises 1 to 5 stated and granted | free will chapter, §4; G. Strawson, *Philosophical Studies* 1994 | high |
+| Nietzsche *BGE* §21 as source for "best self-contradiction" | free will chapter, §4; credited as G. Strawson's cited source | high |
+| van Inwagen consequence argument, *Essay on Free Will* 1983 | free will chapter, §5 | high |
+| P.F. Strawson "Freedom and Resentment," *Proceedings of British Academy* 1962 | free will chapter, §1.1 | high |
+| Darwall *Second-Person Standpoint* 2006 | free will chapter, §1.1 | high |
+| Sapolsky *Determined* 2023 thesis | free will chapter, §1.2 | high |
+| Pereboom *Living Without Free Will* 2001; *Free Will, Agency, and Meaning in Life* 2014 | free will chapter, §1.2 and §6 | high |
+| Second-personal remainder (R): holding-responsible is two-place, not reducible to one-place shaping | free will chapter, §1.2 to 1.5; mock viva ("the corpus's best independent philosophy") | high |
+| Phlogiston objection and its failure on arity grounds | free will chapter, §1.3 | high |
+| Solipsism test proving (R) floats free of the necessity-of-locus residue | free will chapter, §1.5 | high |
+| Forgiveness asymmetry: release-of-claim vs. cost-drop; forgiveness can be refused | free will chapter, §1.4 | high |
+| Objective-stance demotion: predicts valence, not content | free will chapter, §1.4 | moderate (on the claim about what people actually report; the structural point about valence/content distinction is high) |
+| Ash'arī *kasb* doctrine: al-Ash'arī d. 935, elaborated by al-Bāqillānī, al-Juwaynī, al-Ghazālī | free will chapter, §3 | high (existence and core); moderate (finer scholastic disputes) |
+| Yoruba *orì*: Gbadegesin 1991, Abimbola, Hallen | free will chapter, §3 | high (broad structure); moderate (philosophical interpretation) |
+| Tied-camel hadith: al-Tirmidhī | free will chapter, §3 | high (canonical transmission); moderate (exact chain/grading) |
+| Frankfurt 1969 Frankfurt cases, *Journal of Philosophy* | free will chapter, §5 | high |
+| Frankfurt 1971 hierarchical account, *Journal of Philosophy* | free will chapter, §5 | high |
+| Watson/Velleman regress critique of compatibilist identification | free will chapter, §5 | high (credited in substance to both) |
+| Korsgaard *Self-Constitution* 2009 | free will chapter, §2.4 and §5 | high |
+| Fischer and Ravizza *Responsibility and Control* 1998 | free will chapter, §2.3 and §6 | high |
+| Kane *Significance of Free Will* 1996 | free will chapter, §4 | high |
+| Mele *Free Will and Luck* 2006: luck objection to Kane | free will chapter, §4 | high |
+| Pereboom four-case argument: manipulation continuum | free will chapter, §6 | high |
+| Chaos "mathematical teeth": withdrawn as equivocating epistemic unpredictability with constitutive irreducibility | contribution statement, §3 ("carries no 'mathematical teeth'"); mock viva, body/preamble table row 1; thesis document, line 52 and 215 | high (the retraction is explicit in the corpus; the equivocation charge is the adjudicated finding) |
+| Occasionalism of agency (O) withdrawn; (O′) retained as narrowed, (R)-dependent claim | free will chapter, §2.2 to 2.3 | high (on the withdrawal of the original); moderate (on (O′) as a defensible reformulation) |
+| Cross-domain convergence as genuine evidence; workflow-convergence as etiologically correlated internal consistency | mock viva, §3; consolidation record, §1 | high |
+| Mock viva verdict: "the corpus's single best piece of independent philosophy" re the free-will chapter | mock viva, §1 | high (direct quotation) |
+| Provenance firewall: AI-assisted substrate; human candidate must own and defend | consolidation record, §4 | high |
+
+**Items not claimed, per the adjudications:**
+
+- The grand forced-relocation of the explanatory gap (needs thick index; returned as REDESCRIPTION by the Remainder Law clause ii; conditional and undischarged). Not present in the arity-gap paper.
+- Chaos theory as providing "mathematical teeth" to the irreducibility thesis. Explicitly withdrawn in this paper and in the corpus.
+- The Lorenz attractor as evidence for free will or sourcehood. Never claimed in this paper.
+- Type-B physicalism rejection as proven. Declared, not proven; the membrane + thin seam + arity argument are type-B-independent and do not depend on that rejection.
+- Workflow-convergence as independent confirmation. Corrected to internal consistency; not invoked in this paper.
