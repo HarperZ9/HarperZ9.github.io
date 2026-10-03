@@ -257,11 +257,10 @@
     <title>Studio Engine can invoke RAW as an optional native bridge</title>
   </path>
   <text x="600" y="1807" text-anchor="middle" class="mono relation-label" font-size="17">can invoke as an optional native bridge</text>
-  <g data-figure-point="true" data-figure-key="raw" data-node-instance="target-15" role="graphics-symbol" aria-label="RAW. Skyrim D3D11 rendering platform.">
+  <g data-figure-point="true" data-figure-key="raw" data-node-instance="target-15" role="graphics-symbol" aria-label="RAW. C++23 CPU reference renderer.">
     <rect x="824" y="1776" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="840" y="1803" font-size="18" font-weight="700">RAW</text>
-    <text x="840" y="1827" class="mono muted" font-size="17">Skyrim D3D11 rendering</text>
-    <text x="840" y="1847" class="mono muted" font-size="17">platform</text>
+    <text x="840" y="1827" class="mono muted" font-size="17">C++23 CPU reference renderer</text>
   </g>
 <g data-figure-point="true" data-figure-key="truth-enb" data-node-instance="source-16" role="graphics-symbol" aria-label="Truth ENB. ENB shader suite.">
     <rect x="44" y="1888" width="332" height="82" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
