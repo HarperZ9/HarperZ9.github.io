@@ -1,14 +1,14 @@
 {
   "outputs": [
     {
-      "byte_length": 19180,
+      "byte_length": 19711,
       "path": "career/Zain-Dana-Harper-CV.md",
-      "sha256": "d83e9842d6bb91787f7aaf90c92f1b61d8d39bc04fdf018c443d8f2938f26127"
+      "sha256": "3feb1e91a16bbdabea92d5e39f96bceea2aa158f1f7f062cb8a1e116c0276e14"
     },
     {
-      "byte_length": 19049,
+      "byte_length": 19580,
       "path": "career/Zain-Dana-Harper-CV.txt",
-      "sha256": "a12df420d852085b216a8f9787096a6bbe179d31c5b24f34fadac8d585176af3"
+      "sha256": "bf2d98bba49118ad815702b4488bf2e43b0a6f08d49aac1eff5fe8e565a942aa"
     },
     {
       "byte_length": 3092,
@@ -51,19 +51,19 @@
       "sha256": "5b376b567daf53c68e955d7fd2b5705853e772711d61a1f54d860c8ea155d04f"
     },
     {
-      "byte_length": 27817,
+      "byte_length": 28589,
       "path": "cv.html",
-      "sha256": "4a3d93a8e842ca8415666680f2412de5741cc30fa7c20a385d42317b3be28c1a"
+      "sha256": "b900f9958186dc9b9e9cbb799bdaad9238c67dee5b6ff226a261a8e78af53db0"
     },
     {
-      "byte_length": 19180,
+      "byte_length": 19711,
       "path": "cv.md",
-      "sha256": "d83e9842d6bb91787f7aaf90c92f1b61d8d39bc04fdf018c443d8f2938f26127"
+      "sha256": "3feb1e91a16bbdabea92d5e39f96bceea2aa158f1f7f062cb8a1e116c0276e14"
     },
     {
-      "byte_length": 15722,
+      "byte_length": 15723,
       "path": "hire.html",
-      "sha256": "6246035f3c0477ced716ade0abba9d00ff99d611277edf77857b7cb4cb567bb6"
+      "sha256": "b0619c0f05cca7dd224ab2805d4eed1e4b71adf9630aaaca41f5b429667fa8a2"
     },
     {
       "byte_length": 9006,
@@ -86,9 +86,9 @@
       "sha256": "47a815d4d2114593c5d46ad67a41e0010013e570b43c5d7528346f9d89fa4c2a"
     },
     {
-      "byte_length": 15537,
+      "byte_length": 15538,
       "path": "resume.html",
-      "sha256": "af53480bde8c27a68ee014768c923cedcf3239eb3ff58e3dda32bcc0dd940300"
+      "sha256": "19c945272abcc1b365819bb42fc3b83e26957d4f05a5223988564179d2b416d3"
     },
     {
       "byte_length": 3430,
@@ -96,11 +96,11 @@
       "sha256": "8171c32287af95ea9e217f7289e1a4ccbbafb7c809af15c401d9f1216ed60d70"
     }
   ],
-  "renderer_sha256": "21379b23b75c7003fdf65301ab756b2efb5fda613d2d1f1c250143fae50ea4e1",
+  "renderer_sha256": "1796196e2d948f9f3f76b26b24dcfbf9be471ae905f598349806fc6fe40316d3",
   "reviewed": "2026-09-30",
   "schema": "harperz9-career-text-build/v1",
   "source": {
     "path": "career/resume-source.json",
-    "sha256": "32c344d7b95478e94f07778df14fd2b11052042a7d7e11117d547d92061be6fa"
+    "sha256": "b83594239de240565a390a9461ccc906e08d40d7c2475e5247df7444128e380a"
   }
 }

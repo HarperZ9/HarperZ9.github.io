@@ -6,10 +6,11 @@ which one was current. These are printed from the live pages through the print
 stylesheet in system/doc.css, which means the PDF cannot say something the page
 does not.
 
-    python tools/print_documents.py            # career documents and the two corpora
+    python tools/print_documents.py            # career documents
 
-The six philosophy papers are no longer printed here: tools/build_latex_papers.py
-typesets them with LaTeX from their approved sources and writes a build receipt.
+The papers and the two archived corpora are no longer printed here:
+tools/build_latex_papers.py typesets them with LaTeX from their sources and writes a
+build receipt for each.
 
 Needs playwright (`pip install playwright && playwright install chromium`).
 It serves the checkout on a loopback port first, because a page loaded from
@@ -33,13 +34,6 @@ PORT = 8871
 DOCUMENTS = {
     "cv.html": "Zain-Dana-Harper-CV.pdf",
     "cover-letter.html": "Zain-Dana-Harper-Cover-Letter.pdf",
-}
-
-# The two archived corpora print into papers/ beside the LaTeX papers, so
-# publications.html can offer a local copy of every record it lists.
-CORPORA = {
-    "conferred-existence.html": "conferred-existence.pdf",
-    "witnessing-spine.html": "witnessing-spine.pdf",
 }
 
 MIME = {
@@ -81,7 +75,6 @@ def main() -> int:
         browser = p.chromium.launch()
         page = browser.new_page()
         jobs = [(s, OUT / t) for s, t in DOCUMENTS.items()]
-        jobs += [(s, ROOT / "papers" / t) for s, t in CORPORA.items()]
         for source, path in jobs:
             path.parent.mkdir(parents=True, exist_ok=True)
             page.goto(base + source, wait_until="networkidle")

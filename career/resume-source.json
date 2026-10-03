@@ -1277,7 +1277,7 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems papers, preprints, research notes, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.",
+          "text": "Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.",
           "evidence": [
             "publications"
           ]
@@ -1334,6 +1334,34 @@
         {
           "kind": "li",
           "text": "Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126117",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "The Seam That Holds While It Is Crossed. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126357",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Self-Given Is Not Self-Grounding. Philosophy paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126458",
+          "evidence": [
+            "publications"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "The Conservation of Faithfulness. Working paper, edition of 3 October 2026. doi.org/10.5281/zenodo.23126484",
           "evidence": [
             "publications"
           ]
