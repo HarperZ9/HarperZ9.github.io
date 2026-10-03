@@ -29,6 +29,30 @@
     "failed": [],
     "passed": 4,
     "exit": 0
+   },
+   {
+    "file": "t4-contract.test.mjs",
+    "failed": [],
+    "passed": 3,
+    "exit": 0
+   },
+   {
+    "file": "t5-budgets.test.mjs",
+    "failed": [],
+    "passed": 4,
+    "exit": 0
+   },
+   {
+    "file": "t6-invariance.test.mjs",
+    "failed": [],
+    "passed": 4,
+    "exit": 0
+   },
+   {
+    "file": "t7-task-value.test.mjs",
+    "failed": [],
+    "passed": 2,
+    "exit": 0
    }
   ],
   "allPassed": true
@@ -45,7 +69,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.815
+   "seconds": 0.501
   },
   {
    "id": "M02-orient-no-floor",
@@ -57,7 +81,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.787
+   "seconds": 0.501
   },
   {
    "id": "M03-pitch-octave",
@@ -71,7 +95,7 @@
    "otherFailures": [
     "T1.P eq: the assembled packet's scalar pitch is the YIN value the caller passes through"
    ],
-   "seconds": 0.793
+   "seconds": 0.459
   },
   {
    "id": "M04-pitch-no-silence",
@@ -83,7 +107,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.868
+   "seconds": 0.491
   },
   {
    "id": "M05-pitch-method-dropped",
@@ -95,7 +119,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.852
+   "seconds": 0.479
   },
   {
    "id": "M06-loud-dbfs-as-spl",
@@ -107,7 +131,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.743
+   "seconds": 0.475
   },
   {
    "id": "M07-loud-default-offset",
@@ -119,7 +143,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.728
+   "seconds": 0.534
   },
   {
    "id": "M08-wpir-back",
@@ -131,7 +155,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.775
+   "seconds": 0.481
   },
   {
    "id": "M09-ledger-pbe-back",
@@ -143,7 +167,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.857
+   "seconds": 0.501
   },
   {
    "id": "M10-hue-prototype",
@@ -156,7 +180,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.809
+   "seconds": 0.503
   },
   {
    "id": "M11-hue-achromatic",
@@ -172,7 +196,7 @@
    "otherFailures": [
     "T1.hue probe: at least 44 of the 46 author-labelled probe colours match (comparator reported)"
    ],
-   "seconds": 0.861
+   "seconds": 0.482
   },
   {
    "id": "M12-sym-axis-swap",
@@ -186,7 +210,7 @@
    "otherFailures": [
     "T1.S: the long description says mirrored only for a true mirror"
    ],
-   "seconds": 0.792
+   "seconds": 0.47
   },
   {
    "id": "M13-shape-bins-at-zero",
@@ -198,7 +222,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.808
+   "seconds": 0.518
   },
   {
    "id": "M14-sha-constant",
@@ -215,7 +239,7 @@
     "T2.xlang eq: 1,000 seeded receipts re-derive identically in an independent Python canonicaliser",
     "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
    ],
-   "seconds": 0.875
+   "seconds": 0.567
   },
   {
    "id": "M15-sha-length",
@@ -232,7 +256,7 @@
     "T2.xlang eq: 1,000 seeded receipts re-derive identically in an independent Python canonicaliser",
     "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
    ],
-   "seconds": 0.924
+   "seconds": 0.546
   },
   {
    "id": "M16-pure-path",
@@ -246,7 +270,7 @@
    "otherFailures": [
     "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
    ],
-   "seconds": 0.951
+   "seconds": 0.576
   },
   {
    "id": "M17-canon-unsorted",
@@ -260,7 +284,7 @@
    "otherFailures": [
     "T2.canon: the rules reject what cannot cross languages and order keys by UTF-16 unit"
    ],
-   "seconds": 0.948
+   "seconds": 0.573
   },
   {
    "id": "M18-canon-escape-case",
@@ -272,7 +296,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.904
+   "seconds": 0.584
   },
   {
    "id": "M19-seal-skips-field",
@@ -285,7 +309,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.942
+   "seconds": 0.581
   },
   {
    "id": "M20-pointer-drops-evidence",
@@ -297,7 +321,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.937
+   "seconds": 0.614
   },
   {
    "id": "M21-python-codepoint-sort",
@@ -309,7 +333,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.956
+   "seconds": 0.581
   },
   {
    "id": "M22-lut-entry",
@@ -324,7 +348,7 @@
     "t3.frames"
    ],
    "otherFailures": [],
-   "seconds": 26.734
+   "seconds": 19.004
   },
   {
    "id": "M23-cbrt-floor",
@@ -338,7 +362,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 26.518
+   "seconds": 19.045
   },
   {
    "id": "M24-bin-floor",
@@ -351,7 +375,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 26.547
+   "seconds": 19.109
   },
   {
    "id": "M25-cell-mean-floor",
@@ -365,7 +389,7 @@
     "t3.images"
    ],
    "otherFailures": [],
-   "seconds": 22.613
+   "seconds": 19.35
   },
   {
    "id": "M26-percentile-rank",
@@ -378,7 +402,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 18.87
+   "seconds": 19.015
   },
   {
    "id": "M27-python-bin-floor",
@@ -391,7 +415,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 18.71
+   "seconds": 18.983
   },
   {
    "id": "M28-prereg-slice",
@@ -404,7 +428,7 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.321
+   "seconds": 0.303
   },
   {
    "id": "M28b-prereg-crlf",
@@ -429,129 +453,115 @@
    ],
    "survived": [],
    "otherFailures": [],
-   "seconds": 0.297
-  }
- ],
- "slow": [
+   "seconds": 0.347
+  },
   {
-   "id": "S01-cube-lut-entry",
-   "fault": "one linear-table entry off by one: the full-cube gate must report mismatches",
-   "exit": 1,
-   "killed": true,
-   "gate": {
-    "coloursDiffering": 7,
-    "perChannel": {
-     "L6": 0,
-     "a6": 3,
-     "b6": 3,
-     "L8": 1
-    },
-    "first": [
-     {
-      "rgb": [
-       11,
-       46,
-       69
-      ],
-      "a": [
-       18,
-       26,
-       32,
-       74
-      ],
-      "b": [
-       18,
-       25,
-       32,
-       74
-      ]
-     },
-     {
-      "rgb": [
-       78,
-       109,
-       11
-      ],
-      "a": [
-       31,
-       20,
-       50,
-       126
-      ],
-      "b": [
-       31,
-       20,
-       51,
-       126
-      ]
-     },
-     {
-      "rgb": [
-       86,
-       107,
-       11
-      ],
-      "a": [
-       31,
-       21,
-       50,
-       126
-      ],
-      "b": [
-       31,
-       21,
-       51,
-       126
-      ]
-     },
-     {
-      "rgb": [
-       95,
-       36,
-       11
-      ],
-      "a": [
-       22,
-       38,
-       46,
-       88
-      ],
-      "b": [
-       22,
-       37,
-       46,
-       88
-      ]
-     },
-     {
-      "rgb": [
-       137,
-       11,
-       93
-      ],
-      "a": [
-       27,
-       49,
-       34,
-       108
-      ],
-      "b": [
-       27,
-       49,
-       34,
-       107
-      ]
-     }
-    ],
-    "pass": false
-   }
+   "id": "M40-vendor-drift",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "the site source drifts from the copy the Telos MCP vendors",
+   "testFile": "t4-contract.test.mjs",
+   "killed": [
+    "t4.vendor"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 0.37
+  },
+  {
+   "id": "M41-q40-entry",
+   "file": "system/lib/sense-core/oklab-mean-exact.mjs",
+   "fault": "one exact-mean table entry off by one",
+   "testFile": "t4-contract.test.mjs",
+   "killed": [
+    "t4.const"
+   ],
+   "survived": [],
+   "otherFailures": [
+    "T4.vendor eq: the Telos MCP vendored files are byte-identical to the site sources"
+   ],
+   "seconds": 0.386
+  },
+  {
+   "id": "M42-nondeterministic-l0",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "L0 text alternates between calls",
+   "testFile": "t5-budgets.test.mjs",
+   "killed": [
+    "t5.det",
+    "t5.twin"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 18.355
+  },
+  {
+   "id": "M43-hex-uppercase",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "the achromatic branch prints upper-case hex in Node only",
+   "testFile": "t5-budgets.test.mjs",
+   "killed": [
+    "t5.twin"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 18.547
+  },
+  {
+   "id": "M44-resample-green-from-red",
+   "file": "system/lib/sense-core/resample-int.mjs",
+   "fault": "the resampler writes red into green",
+   "testFile": "t6-invariance.test.mjs",
+   "killed": [
+    "t6.resample.twin",
+    "t6.resample.identity"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 1.426
+  },
+  {
+   "id": "M45-l0-ignores-mask",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "L0 counts drawn overlay pixels",
+   "testFile": "t6-invariance.test.mjs",
+   "killed": [
+    "t6.overlay"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 1.015
+  },
+  {
+   "id": "M46-l3-permille-floor",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "fault": "L3 area rounds down in Node only",
+   "testFile": "t6-invariance.test.mjs",
+   "killed": [
+    "t6.overlay"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 1.013
+  },
+  {
+   "id": "M47-parser-hex-width",
+   "file": "tests/telos-track-a/py/track_common.py",
+   "fault": "the re-encoder drops the leading hex zero",
+   "testFile": "t7-task-value.test.mjs",
+   "killed": [
+    "t7.parse"
+   ],
+   "survived": [],
+   "otherFailures": [],
+   "seconds": 1.017
   }
  ],
+ "slow": [],
  "summary": {
-  "equalityTests": 27,
-  "killedAtLeastOnce": 27,
+  "equalityTests": 35,
+  "killedAtLeastOnce": 35,
   "neverKilled": [],
-  "mutations": 30,
+  "mutations": 38,
   "mutationsWithSurvivors": [
    {
     "id": "M11-hue-achromatic",
@@ -580,6 +590,6 @@
     ]
    }
   ],
-  "slowKilled": "1/1"
+  "slowKilled": "0/0"
  }
 }

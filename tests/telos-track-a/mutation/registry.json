@@ -136,6 +136,46 @@
    "id": "t0.2.citation",
    "file": "t0-witness.test.mjs",
    "name": "T0.2 eq: every result file cites the current pre-registration hash (and v2 files the amendment)"
+  },
+  {
+   "id": "t4.vendor",
+   "file": "t4-contract.test.mjs",
+   "name": "T4.vendor eq: the Telos MCP vendored files are byte-identical to the site sources"
+  },
+  {
+   "id": "t4.const",
+   "file": "t4-contract.test.mjs",
+   "name": "T4.const eq: the exact-mean constants equal a fresh 60-digit regeneration"
+  },
+  {
+   "id": "t5.det",
+   "file": "t5-budgets.test.mjs",
+   "name": "T5.det eq: packet text is byte-identical across two encodings on every tenth image"
+  },
+  {
+   "id": "t5.twin",
+   "file": "t5-budgets.test.mjs",
+   "name": "T5.twin eq: Node and the Python twin give byte-identical packet text on every tenth image"
+  },
+  {
+   "id": "t6.resample.twin",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.resample eq: resample-int Node and Python outputs are identical on 50 seeded images at the four scales"
+  },
+  {
+   "id": "t6.resample.identity",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.resample eq: scale 1 returns the input linear values unchanged"
+  },
+  {
+   "id": "t6.overlay",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.overlay eq: on greyscale frames the flag outside a drawn outline equals the clean flag, in Node and Python"
+  },
+  {
+   "id": "t7.parse",
+   "file": "t7-task-value.test.mjs",
+   "name": "T7.parse eq: parsed layer features re-encode to the identical text on 200 seeded and 4 dark grey images (both branches)"
   }
  ],
  "mutations": [
@@ -484,6 +524,96 @@
     "t0.2.citation"
    ],
    "fault": "a result file cites a hash other than the pre-registration"
+  },
+  {
+   "id": "M40-vendor-drift",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "// layers-int.mjs: Telos layer text",
+   "replace": "// layers-int.mjs:  Telos layer text",
+   "testFile": "t4-contract.test.mjs",
+   "kills": [
+    "t4.vendor"
+   ],
+   "fault": "the site source drifts from the copy the Telos MCP vendors"
+  },
+  {
+   "id": "M41-q40-entry",
+   "file": "system/lib/sense-core/oklab-mean-exact.mjs",
+   "find": "333731448n",
+   "replace": "333731449n",
+   "testFile": "t4-contract.test.mjs",
+   "kills": [
+    "t4.const"
+   ],
+   "fault": "one exact-mean table entry off by one"
+  },
+  {
+   "id": "M42-nondeterministic-l0",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "chroma-p95-milli:${c95milli}",
+   "replace": "chroma-p95-milli:${c95milli + ((globalThis.__tc = (globalThis.__tc || 0) + 1) % 2)}",
+   "testFile": "t5-budgets.test.mjs",
+   "kills": [
+    "t5.det",
+    "t5.twin"
+   ],
+   "fault": "L0 text alternates between calls"
+  },
+  {
+   "id": "M43-hex-uppercase",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "const hex2 = (v) => v.toString(16).padStart(2, \"0\");",
+   "replace": "const hex2 = (v) => v.toString(16).toUpperCase().padStart(2, \"0\");",
+   "testFile": "t5-budgets.test.mjs",
+   "kills": [
+    "t5.twin"
+   ],
+   "fault": "the achromatic branch prints upper-case hex in Node only"
+  },
+  {
+   "id": "M44-resample-green-from-red",
+   "file": "system/lib/sense-core/resample-int.mjs",
+   "find": "out[o + 1] = floorDiv(2 * g + w * h, den);",
+   "replace": "out[o + 1] = floorDiv(2 * r + w * h, den);",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.resample.twin",
+    "t6.resample.identity"
+   ],
+   "fault": "the resampler writes red into green"
+  },
+  {
+   "id": "M45-l0-ignores-mask",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "if (keep && !keep(i)) continue;",
+   "replace": "if (false) continue;",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.overlay"
+   ],
+   "fault": "L0 counts drawn overlay pixels"
+  },
+  {
+   "id": "M46-l3-permille-floor",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "const permille = floorDiv(2000 * count + w * h, 2 * w * h);",
+   "replace": "const permille = floorDiv(2000 * count, 2 * w * h);",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.overlay"
+   ],
+   "fault": "L3 area rounds down in Node only"
+  },
+  {
+   "id": "M47-parser-hex-width",
+   "file": "tests/telos-track-a/py/track_common.py",
+   "find": "format(int(v), \"02x\")",
+   "replace": "format(int(v), \"x\")",
+   "testFile": "t7-task-value.test.mjs",
+   "kills": [
+    "t7.parse"
+   ],
+   "fault": "the re-encoder drops the leading hex zero"
   }
  ],
  "slow": [

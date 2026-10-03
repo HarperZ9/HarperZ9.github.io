@@ -16,9 +16,12 @@ import { randomImages } from "./lib/images.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const R = JSON.parse(readFileSync(join(HERE, "results", "t7-task-value.json"), "utf8"));
 
-test("T7.parse eq: parsed layer features re-encode to the identical text on 200 seeded images (both branches)", () => {
+test("T7.parse eq: parsed layer features re-encode to the identical text on 200 seeded and 4 dark grey images (both branches)", () => {
   const texts = [];
-  for (const img of randomImages(200)) {
+  // Dark grey frames put achromatic L8 bins below 16, where a hex re-encoder can drop a leading zero
+  // (added after mutation M47 survived the seeded set alone).
+  const dark = [0, 3, 7, 12].map((v) => { const px = new Uint8Array(40 * 30 * 4); for (let i = 0; i < 1200; i++) { const g = v + (i % 5); px.set([g, g, g, 255], i * 4); } return { px, w: 40, h: 30 }; });
+  for (const img of [...randomImages(200), ...dark]) {
     const p = layerPacketLinear(linearQ24FromRgba(img.px, img.w, img.h, 4), img.w, img.h, 32);
     texts.push(p.layers.L0, p.layers.L1, p.layers.L2);
   }
