@@ -1,5 +1,9 @@
 {
  "result": "t7v2-oracle-posthoc",
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "prereg_t4t7_sha256": "75cbd7d12857b3d9143c4cd14169731388f33be5e495093943b6d29fdd2061eb",
+ "amendment_4_sha256": "5cfebb1d0fac2718e751585e31fa012427d7a2c066af699c68bec8dd323e632f",
+ "prereg_t7v2_sha256": "0d4217b7c110e4c5bb6c06e9db9f7a7d3f50127830416fb980701c7f87726261",
  "label": "post hoc diagnostic; changes no pre-registered verdict",
  "tasks": [
   {

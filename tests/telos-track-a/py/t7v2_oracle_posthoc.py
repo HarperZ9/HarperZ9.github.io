@@ -19,6 +19,7 @@ import numpy as np
 
 from probe import derangement
 from t7v2_analyze import LAYERS, TASKS, oracle
+from track_common import prereg_hashes
 
 RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
 
@@ -34,7 +35,9 @@ def in_sample(y, partners):
 def main(work):
     index = json.load(open(os.path.join(work, "index.json")))
     rec = json.load(open(os.path.join(RESULTS, "t7v2-task-value.json")))
-    out = {"result": "t7v2-oracle-posthoc", "label": "post hoc diagnostic; changes no pre-registered verdict", "tasks": []}
+    out = {"result": "t7v2-oracle-posthoc",
+           **prereg_hashes(("prereg_sha256", "prereg_t4t7_sha256", "amendment_4_sha256", "prereg_t7v2_sha256")),
+           "label": "post hoc diagnostic; changes no pre-registered verdict", "tasks": []}
     for (source, field), t in zip(TASKS, rec["tasks"]):
         entries = [e for e in index["corpora"]["t7v2"] if e["source"] == source]
         classes = sorted({e["labels"][field] for e in entries})

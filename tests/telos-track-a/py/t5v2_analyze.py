@@ -60,7 +60,7 @@ def main(v1, work):
     t2 = json.load(open(os.path.join(work, "out", "tokens.json")))
     index = json.load(open(os.path.join(work, "index.json")))
     packets = json.load(open(os.path.join(work, "out", "packets.json")))
-    out = {"result": "t5v2-budget-upsampler", **prereg_hashes(("prereg_t4t7_sha256", "prereg_t7v2_sha256")),
+    out = {"result": "t5v2-budget-upsampler", **prereg_hashes(("prereg_sha256", "prereg_t4t7_sha256", "prereg_t7v2_sha256")),
            "tokenizer_sha256": t2["tokenizer_sha256"], "l1_budget": L1_BUDGET, "budget": {}, "rebuild": {}}
     for name, tk in (("audit", t1["base"]["audit"]), ("s0", t1["base"]["s0"]), ("t7v2", t2["base"]["t7v2"])):
         v = [d["L1"] for d in tk.values()]
