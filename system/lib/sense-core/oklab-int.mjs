@@ -1,13 +1,12 @@
-// oklab-int.mjs: the integer OKLab path, project-telos.oklab-int/v2 (Telos Track A step T3,
-// amendment 1).
+// oklab-int.mjs: the integer OKLab path, project-telos.oklab-int/v2.
 //
 // Float OKLab needs a cube root, and ECMAScript leaves Math.cbrt and Math.pow implementation-
 // approximated, so a value on a quantisation edge could land in different bins in V8, SpiderMonkey and
 // numpy. This path uses exact integer arithmetic, so Node, every browser and the Python twin
-// (tests/telos-track-a/py/oklab_int.py) produce the same bins and the same layer text, byte for byte.
+// (oklab_int.py in the site repository) produce the same bins and the same layer text, byte for byte.
 //
 //   sRGB byte -> linear:  a 256-entry table of round(lin(i / 255) * 2^24), computed once at 60-digit
-//                         precision (tests/telos-track-a/py/gen_oklab_int_constants.py) and embedded.
+//                         precision (gen_oklab_int_constants.py in the site repository) and embedded.
 //   linear -> LMS:        Ottosson's M1 with coefficients round(c * 2^20); LMS kept unrounded in Q44.
 //   cube root:            the integer nearest cbrt(x / 2^44) * 2^16, i.e. the nearest integer cube root of
 //                         16 x. A Math.cbrt first guess is corrected with integer comparisons until

@@ -4737,7 +4737,7 @@ function pollAudio() {
   const bars = spectrumBands(audioFreqBuf, 32);
   const sp = $("mm-au-spectrum");
   if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
-  // Pitch is the YIN f0 of the time-domain buffer (Track A step T1), the same value the model gets.
+  // Pitch is the YIN f0 of the time-domain buffer, the same value the model gets.
   const hz = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate).f0;
   const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
   if (pf) pf.style.width = Math.min(1, hz / 4000) * 100 + "%";
@@ -5003,7 +5003,7 @@ function fullPerception() {
       // Original scalar bundle (preserved) PLUS the raw analyser buffers + params the Tier-2 perceptual
       // path (ERB/YIN/chroma) consumes. The heavy audio math runs in assembleFullPerception, which is
       // send-time only. No source -> audio stays null and every perceptual audio field is null.
-      // `pitch` is YIN on the time-domain buffer (Track A step T1). No `splOffsetDb` is passed: the
+      // `pitch` is YIN on the time-domain buffer. No `splOffsetDb` is passed: the
       // Studio has no calibration from analyser dB to dB SPL, so loudness in phon stays absent.
       const p = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate);
       audio = {

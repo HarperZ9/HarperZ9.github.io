@@ -1,4 +1,4 @@
-// resample-int.mjs: the Telos resampling filter `resample-int/v1` (Track A steps T4 and T6).
+// resample-int.mjs: the Telos resampling filter `resample-int/v1`.
 //
 // Browsers pick their own drawImage kernel, so a packet built from a browser-resized frame changes with
 // the browser. This filter is an exact-area box filter in linear light, computed in integers: each
@@ -6,7 +6,7 @@
 // half up. Along x, output column X covers source span [X w / w2, (X + 1) w / w2); in units of 1 / w2 of a
 // source pixel the overlap of X with source column i is an integer, so every weight and every sum is an
 // exact integer below 2^53 for frames up to 2^24 pixels. Node, every browser and the Python twin
-// (tests/telos-track-a/py/resample_int.py) therefore return identical values. ASCII only.
+// (resample_int.py in the site repository) therefore return identical values. ASCII only.
 import { floorDiv } from "./oklab-int.mjs";
 
 export const RESAMPLE_SCHEMA = "resample-int/v1";

@@ -5,7 +5,7 @@
 // This is the BIOMIMETIC DEEPENING of SPEC-telos-sensory-engine.md section C: linearize-first,
 // Laplacian-pyramid bandpass + Gabor orientation, DoG centre-surround, spectral-residual saliency,
 // CSF weighting, SSIM, per-cell spatial coords and redundancy flags (the section D WPIR metric was
-// deleted in Track A step T1). Reference math first; integration + GPU acceleration are separate steps.
+// deleted in October 2026). Reference math first; integration + GPU acceleration are separate steps.
 //
 // Citations (canonical formulas):
 //   sRGB EOTF: IEC 61966-2-1; Gritz and d'Eon, GPU Gems 3 ch. 24 (linearize first).
@@ -307,9 +307,9 @@ export function ssim(a, b, w, h) {
   return { mssim: w * h ? sum / (w * h) : 1, map, w, h };
 }
 
-// -- (7) WPIR was deleted in Track A step T1 (decision D2). It scored a Laplacian pyramid against
-// itself, and that pyramid reconstructs exactly, so it read 1 on every input. The fidelity vector
-// RTF-1 (step T10) replaces it.
+// -- (7) WPIR was deleted in October 2026. It scored a Laplacian pyramid against
+// itself, and that pyramid reconstructs exactly, so it read 1 on every input. A planned fidelity
+// vector, RTF-1, replaces it.
 
 // -- (8) Per-cell spatial coords + redundancy (spec section C) -----------------
 // Explicit normalized coordinates per cell of a cols x rows aspect-native grid (survives connector

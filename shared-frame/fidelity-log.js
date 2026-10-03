@@ -1,7 +1,7 @@
 // fidelity-log.js: the append-only PERCEPTION-FIDELITY ledger (the storage half of the self-improvement
 // loop). Every perception the Studio assembles appends its fidelity record here, so the loop can replay
-// how WPRE (colour palette error) moves over time. PBE (audio) and WPIR (vision) were dropped in Telos
-// Track A step T1: both read 1 on every input, so a ledger of them recorded nothing. Legacy input that
+// how WPRE (colour palette error) moves over time. PBE (audio) and WPIR (vision) were dropped in the
+// October 2026 revision: both read 1 on every input, so a ledger of them recorded nothing. Legacy input that
 // still carries those keys is normalised without them. This is the sibling of audit-log.js (which logs certificates); same append-only invariant,
 // same IndexedDB pattern, same caller-supplied timestamp. Cites: SPEC-telos-sensory-engine.md move D
 // (perception-fidelity ledger, append-only like the certificate audit trail).

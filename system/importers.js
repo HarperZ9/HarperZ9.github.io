@@ -86,7 +86,7 @@ function readAsText(file) {
 
 // ---- provenance hashing (SHA-256 everywhere) ---------------------------------
 //
-// Mirrors exporters.js's hashing primitive. Telos Track A step T2 removed the FNV-1a fallback: where
+// Mirrors exporters.js's hashing primitive. The October 2026 revision removed the FNV-1a fallback: where
 // crypto.subtle is missing (file://), the pure SHA-256 in shared-frame/sha256.js runs and gives the
 // same digest, so an import receipt never depends on the page's context. That module is pure and
 // side-effect free, so importers.js still loads on its own without the exporter registry.

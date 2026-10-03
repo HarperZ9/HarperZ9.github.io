@@ -303,7 +303,7 @@ export function supersede(oldCert, newCert, newId) {
 
 // The content pointer for a certificate, used as the default supersede pointer when no id/hash is
 // supplied: SHA-256 over the canonical bytes (project-telos.canonical-bytes/v1) of its core fields,
-// 64 hex characters. Telos Track A step T2 replaced the 32-bit FNV-1a here: a supersede pointer is a
+// 64 hex characters. The October 2026 revision replaced the 32-bit FNV-1a here: a supersede pointer is a
 // receipt link, and a 32-bit pointer collides by the birthday bound after about 77,000 certificates.
 // Numbers that are not safe integers and evidence values that are not strings are carried as strings,
 // so the pointer re-derives byte for byte in any language that follows the canonical rules.

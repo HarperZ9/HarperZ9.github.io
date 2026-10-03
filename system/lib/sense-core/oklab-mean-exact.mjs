@@ -1,10 +1,10 @@
-// oklab-mean-exact.mjs: OKLab of the mean linear colour of an image, exact to about 1e-12 (Telos Track A
-// step T4, measurement contract v2).
+// oklab-mean-exact.mjs: OKLab of the mean linear colour of an image, exact to about 1e-12, for the
+// Telos measurement contract v2.
 //
 // The layer path (oklab-int.mjs) quantises the cube root to Q16, which is right for bins and wrong for a
 // reported mean that a caller compares with float OKLab at 1e-6. This path keeps every step exact in
 // BigInt: the sRGB byte to linear table at 2^40 (generated at 60 digits by
-// tests/telos-track-a/py/gen_oklab_int_constants.py, keys lin_q40, m1_q40, m2_q40), Ottosson's M1 and M2
+// gen_oklab_int_constants.py in the site repository, keys lin_q40, m1_q40, m2_q40), Ottosson's M1 and M2
 // at 2^40, and the nearest integer cube root of a rational. The output is three fixed 9-decimal strings,
 // so it is the same in every engine and travels in canonical bytes. ASCII only.
 

@@ -7,7 +7,7 @@
 // gives the same digest; callers may use either.
 //
 // Checked against the FIPS 180-4 example vectors and against Node's built-in SHA-256 on 1,000 seeded
-// byte strings (tests/telos-track-a/t2-receipts.test.mjs). ASCII only.
+// byte strings in the site repository's receipt tests. ASCII only.
 
 const K = new Uint32Array([
   0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,

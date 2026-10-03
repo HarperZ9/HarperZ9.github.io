@@ -3,7 +3,7 @@
 // Pure ES module, no DOM, no GPU. This is the language between adapters,
 // graph nodes, renderers, receipts, CLI/MCP surfaces, and editor state.
 //
-// Receipts (Telos Track A step T2): payload hashes are always SHA-256 (Web Crypto when present, the
+// Receipts: payload hashes are always SHA-256 (Web Crypto when present, the
 // pure module otherwise; both give the same digest), and every conversion receipt is sealed with
 // `receiptSha256` over its canonical bytes (project-telos.canonical-bytes/v1), so a verifier in any
 // language can re-derive it. The earlier FNV-1a 32-bit fallback is gone.

@@ -10,8 +10,8 @@
 // (Glasberg-Moore 1990), ISO 226:2003 equal-loudness loudness in phons and sones,
 // IEC 61672 A-weighting, YIN pitch (de Cheveigne and Kawahara 2002) that resolves the
 // missing fundamental, mel filterbank + MFCC (Davis-Mermelstein 1980, HTK mel), spectral
-// shape descriptors and a 12-bin chroma vector. The PBE per-band metric was deleted in Track A
-// step T1: it compared loudness bands against power bands, two different quantities, and read 1
+// shape descriptors and a 12-bin chroma vector. The PBE per-band metric was deleted in the
+// October 2026 revision: it compared loudness bands against power bands, two different quantities, and read 1
 // for every sound because the analyser's dBFS sat below the hearing threshold.
 //
 // Conventions used throughout:
@@ -431,7 +431,7 @@ export function chroma12(fftMag, freqs) {
 }
 
 // ---------------------------------------------------------------------------
-// (8) Scalar pitch from the analyser's 8-bit time-domain buffer (Track A step T1).
+// (8) Scalar pitch from the analyser's 8-bit time-domain buffer.
 // ---------------------------------------------------------------------------
 // The packet's scalar `audio.pitch` used to be the FFT peak bin, which picks a harmonic: it read
 // 398 Hz for a 200 Hz missing-fundamental tone and 211 Hz for 220 Hz. This runs YIN on the

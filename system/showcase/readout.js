@@ -22,7 +22,7 @@ export function senseFrame(canvas, readPixels) {
   const grid = boxAverage(px, canvas.width, canvas.height, 4, 8);
   let sum = 0, cells = 0;
   for (const row of grid.grid) for (const [r, g, b] of row) { sum += (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255; cells++; }
-  // Colour words from OKLCh (rule R-hue-v1, Telos Track A step T1), named from the sRGB bytes.
+  // Colour words from OKLCh (rule R-hue-v1), named from the sRGB bytes.
   const dom = dominantColors(px, canvas.width, canvas.height, 4, 3).map((d) => (
     { hex: d.hex, name: colourName(d.r, d.g, d.b), frac: r4(d.frac) }
   ));

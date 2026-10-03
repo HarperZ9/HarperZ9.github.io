@@ -1,14 +1,14 @@
 // canonical.js: canonical bytes for receipts, `project-telos.canonical-bytes/v1`, and their SHA-256.
 //
 // A receipt verified in another language must hash to the same digest, so its bytes cannot depend on
-// how a runtime prints numbers or orders keys. The rules (pre-registered in Telos Track A step T2):
+// how a runtime prints numbers or orders keys. The rules, fixed before the code was written:
 //   - UTF-8; object keys sorted by UTF-16 code unit; no insignificant whitespace;
 //   - strings escaped as JSON with only `"`, `\`, \b, \f, \n, \r, \t and \u00XX (lowercase hex) for the
 //     other C0 controls; everything else written raw; strings with lone surrogates are rejected;
 //   - numbers only as safe integers (|n| <= 2^53 - 1), so fractional values travel as fixed-decimal
 //     strings chosen by the caller; NaN, infinities, fractions, undefined, functions, typed arrays and
 //     non-plain objects are rejected with a CanonicalError naming the path.
-// The Python twin (tests/telos-track-a/py/canonical_receipt.py) follows the same rules with the
+// The Python twin (canonical_receipt.py in the site repository) follows the same rules with the
 // standard library only. ASCII only.
 import { sha256Hex, utf8Bytes } from "./sha256.js";
 

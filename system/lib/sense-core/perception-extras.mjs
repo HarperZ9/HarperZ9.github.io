@@ -96,7 +96,7 @@ function bytesToSamples(timeBytes) {
 // audio.freqBytes / audio.timeBytes are the analyser's Uint8Array outputs; sampleRate + fftSize size
 // the frequency axis; minDb/maxDb are the analyser's decibel range.
 //
-// Loudness (Track A step T1): the analyser reports dB relative to full scale (dBFS, -100..-30 by
+// Loudness: the analyser reports dB relative to full scale (dBFS, -100..-30 by
 // default), not sound pressure. ISO 226 needs dB SPL, and treating dBFS as SPL put every band below
 // the hearing threshold (sone 0 for every sound). So phon and sone are computed only when the caller
 // supplies `splOffsetDb`, a calibration from analyser dB to dB SPL; then SPL is the loudest bin's dB
@@ -233,7 +233,7 @@ function cellMeanMap(map, w, h, cols, rows) {
 
 // The biomimetic vision readout, on a downsampled working luma. Returns the additive multiScale
 // extension fields. `cols`/`rows` is the aspect-native cell grid. (The WPIR score that used to ride
-// here was deleted in Track A step T1: it compared the pyramid with its own exact reconstruction.)
+// here was deleted in the October 2026 revision: it compared the pyramid with its own exact reconstruction.)
 export function visionPerception(px, w, h) {
   // Aspect-native cell grid: VISION_CELLS on the long edge, the short edge scaled to the frame ratio
   // (never padded to square). Clamp to >= 2 so neighbours exist for redundancy.

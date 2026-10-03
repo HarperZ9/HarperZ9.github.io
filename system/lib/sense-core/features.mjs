@@ -53,7 +53,7 @@ export function representation(source, n = 32, read) {
 }
 
 // ── (2) Richer measured features (additive — eye.js's `features` is untouched) ─
-// Colour words, rule R-hue-v1 (Track A step T1). The earlier HSV hue buckets named an eosin pink
+// Colour words, rule R-hue-v1. The earlier HSV hue buckets named an eosin pink
 // "red", a hematoxylin purple "indigo" and a dark slate "blue". Words now come from OKLCh:
 //   - achromatic when chroma C < 0.035 (build-color's achromatic threshold): black below L 0.35,
 //     white at L 0.85 and above, grey between (build-color's lightness bands, collapsed);
@@ -344,7 +344,7 @@ export function colorGridHex(px, w, h, ch = 4, cells = 16) {
 
 // Edge-orientation histogram: fraction of strong edges near horizontal /
 // vertical / the two diagonals, plus the dominant direction name.
-// Angles are taken with y pointing UP on the displayed image (Track A step T1): the earlier version
+// Angles are taken with y pointing UP on the displayed image: the earlier version
 // used image rows (y down) with names that assume y up, so a rising "/" edge read "falling diagonal".
 // `coherence` is the length of the mean doubled-angle unit vector (0 = no preferred orientation,
 // 1 = one orientation). Below COHERENCE_FLOOR the frame has no dominant orientation and says "none"
@@ -380,8 +380,8 @@ export function edgeOrientations(px, w, h, ch = 4, threshold = 40) {
     coherence: +coherence.toFixed(3), strongEdgeCount: strong };
 }
 
-// Mirror symmetry per axis as the Pearson correlation between luma and its mirror image, in [-1, 1]
-// (Track A step T1). `horizontal` mirrors left-right and `vertical` mirrors top-bottom. 1 = exactly
+// Mirror symmetry per axis as the Pearson correlation between luma and its mirror image, in [-1, 1].
+// `horizontal` mirrors left-right and `vertical` mirrors top-bottom. 1 = exactly
 // mirrored; near 0 = no relation (white noise); negative = the two halves run opposite ways. A flat
 // frame has nothing to correlate and reports null. The earlier score, 1 - mean |difference| / 255,
 // had no chance baseline: a low-contrast frame scored near 1 whatever its layout, and noise 0.78.
@@ -513,7 +513,7 @@ export function shapeInventory(px, w, h, ch = 4, maxShapes = 8) {
     const l = (R[i] * 299 + G[i] * 587 + B[i] * 114) / 1000;
     const hsv = rgbToHsv(R[i], G[i], B[i]);
     if (hsv.s < 0.15 || hsv.v < 0.12) labels[i] = Math.min(3, (l / 64) | 0);
-    // Hue bins of 45 degrees centred on 0 (Track A step T1): bins that started AT 0 split a red whose
+    // Hue bins of 45 degrees centred on 0: bins that started AT 0 split a red whose
     // hue crosses 0/360 (354 and 6 degrees) into separate components.
     else labels[i] = 4 + (Math.floor(((hsv.h + 22.5) % 360) / 45) % 8) * 2 + (l >= 128 ? 1 : 0);
   }

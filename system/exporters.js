@@ -95,7 +95,7 @@ function bytesToBase64(bytes) {
 // crypto.subtle.digest("SHA-256", ...) exists in Node 20+ (globalThis.crypto)
 // and in browsers ON A SECURE CONTEXT (https / localhost), but NOT on file://.
 // Where it is missing, the pure SHA-256 in shared-frame/sha256.js runs instead and
-// gives the same digest (Telos Track A step T2 removed the FNV-1a fallback). This
+// gives the same digest (the October 2026 revision removed the FNV-1a fallback). This
 // implements the provenance chain in the spec (originHash -> transforms ->
 // commitHash) with zero external dependencies; the receipt is sealed with
 // receiptSha256 over its canonical bytes.
@@ -157,7 +157,7 @@ function _stableJSON(value) {
 
 /**
  * hashBytesOf(value, opts) -> Promise<{ hash, hashAlgo }>
- * SHA-256 always (Telos Track A step T2): Web Crypto when available, otherwise the pure module in
+ * SHA-256 always: Web Crypto when available, otherwise the pure module in
  * shared-frame/sha256.js, which gives the same digest. The FNV-1a 32-bit fallback is gone, so a
  * receipt made on a file:// page hashes exactly like one made on https.
  * A Blob is read to bytes first so canvas/binary exports hash their real content.
@@ -616,7 +616,7 @@ function _snapshotCanvasMeta(canvas) {
 //   commitHash          string   -- hash of the OUTPUT (the emitted bytes / string)
 //   transformsApplied   [{step, criterion}] -- the directed provenance chain of steps
 //   commitHash          (above)  -- terminal node of originHash -> [steps] -> commitHash
-//   hashAlgo            "sha-256" -- always (Telos Track A step T2 removed the FNV-1a fallback)
+//   hashAlgo            "sha-256" -- always (the FNV-1a fallback is gone)
 //   format              string   -- the exporter name, for the audit trail
 //   canonical           "project-telos.canonical-bytes/v1" -- how receiptSha256 serializes the receipt
 //   receiptSha256       string   -- SHA-256 over the canonical bytes of every other field

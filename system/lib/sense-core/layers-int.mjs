@@ -1,8 +1,7 @@
-// layers-int.mjs: Telos layer text on the integer OKLab path, `oklab-int/v2` (Track A step T3,
-// amendment 1).
+// layers-int.mjs: Telos layer text on the integer OKLab path, `oklab-int/v2`.
 //
 // The layer encoders behind the resolution spec's token budgets were a Python prototype; this is the
-// Telos JavaScript twin, and tests/telos-track-a/py/layers_int.py is its Python twin. Both are built on
+// Telos JavaScript twin, and layers_int.py in the site repository is its Python twin. Both are built on
 // integers only, so they produce byte-identical text on every image (checked on the 36 audit frames
 // and 1,000 seeded random images). Layers:
 //   L0  frame size, achromatic flag (chroma p95 < 0.02), L8 bins at p5/p50/p95 (nearest rank),
@@ -12,7 +11,7 @@
 //   L2  chromatic branch at N: L on N x N cells, a and b on N/2 x N/2, 6 bits, 64-symbol alphabet;
 //       achromatic branch at N: L only, 8 bits, hex.
 // Cell values are OKLab of the cell's mean colour in linear light (Q24 means, rounded half up).
-// Track A T4/T6: every layer also runs on Q24 linear planes (the output of resample-int.mjs), L0 takes an
+// Every layer also runs on Q24 linear planes (the output of resample-int.mjs), L0 takes an
 // optional keep(i) predicate (pixels outside drawn overlays), and L3 lists caller overlays. The byte path
 // gives the same text as before: it maps bytes through LIN_Q24 and runs the linear path.
 // ASCII only.
@@ -137,7 +136,7 @@ export function layerTextAll(px, w, h, ch = 4) {
 }
 
 // L0, L1 and the L2 branch the achromatic flag selects, on Q24 linear planes. n is the chromatic N; the
-// achromatic branch uses floor(n / 2) cells per side at 8 bits (pre-registered in Track A T4 to T7).
+// achromatic branch uses floor(n / 2) cells per side at 8 bits.
 // opts.keep restricts L0 to the pixels it admits; opts.layers picks among "L0", "L1", "L2".
 export function layerPacketLinear(lin, w, h, n = 32, opts = {}) {
   const want = new Set(opts.layers || ["L0", "L1", "L2"]);

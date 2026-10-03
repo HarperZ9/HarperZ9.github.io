@@ -59,7 +59,7 @@ export function assembleFullPerception(px, w, h, ch = 4, pre = {}) {
       workingResolution: vision.workingResolution,
     },
     // Fidelity: the palette error WPRE only. WPIR (constant 1) and PBE (constant 1) were deleted in
-    // Track A step T1; the fidelity vector RTF-1 (step T10) is their replacement.
+    // the October 2026 revision; a planned fidelity vector, RTF-1, replaces them.
     fidelity: {
       wpre: colour.wpre,
     },
@@ -68,7 +68,7 @@ export function assembleFullPerception(px, w, h, ch = 4, pre = {}) {
 
 // Keep only the JSON-friendly scalar audio fields on the preserved `audio` key (strip any raw typed
 // arrays the caller passed for the perceptual path, so the original payload shape is unchanged).
-// `pitch` is the YIN f0 since Track A step T1; `pitchMethod` and `pitchProbability` say so.
+// `pitch` is the YIN f0 since the October 2026 revision; `pitchMethod` and `pitchProbability` say so.
 function scalarAudio(a) {
   if (!a || typeof a !== "object") return a || null;
   const out = {};
