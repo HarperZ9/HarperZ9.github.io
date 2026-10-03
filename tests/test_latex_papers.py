@@ -22,11 +22,12 @@ def test_every_receipt_matches_its_source_tex_and_pdf() -> None:
     assert build_latex_papers.check() == 0
 
 
-def test_receipts_cover_all_fifteen_latex_papers() -> None:
+def test_receipts_cover_all_fifteen_papers_and_the_essay() -> None:
+    # 3 October 2026: the essay No Receipt, No Accept joins the LaTeX path, so sixteen receipts.
     names = {path.stem for path in RECEIPTS}
     expected = ({Path(spec["pdf"]).stem for spec in PAPERS.values()} | set(build_latex_papers.RESEARCH)
-                | set(build_latex_papers.CORPORA))
-    assert len(expected) == 15
+                | set(build_latex_papers.CORPORA) | set(build_latex_papers.ESSAYS))
+    assert len(expected) == 16
     assert names == expected
 
 
@@ -88,3 +89,18 @@ def test_converter_escapes_specials_and_keeps_register_marks() -> None:
     assert r"5\%" in out and r"\textasciicircum{}" in out and r"\&" in out
     assert "``quoted''" in out and r"\emph{emphasis}" in out
     assert r"\url{https://doi.org/10.1/x_y}." in out
+
+
+def test_essay_pdf_is_typeset_from_the_text_its_page_renders() -> None:
+    """3 October 2026: the essay PDF is typeset from the single-file source, which carries the
+    approved revision of 25 September 2026 and the corrections of 3 October 2026. It replaces the
+    Chromium print of 28 July 2026, which stays in the repository history."""
+    for name, essay in build_latex_papers.ESSAYS.items():
+        receipt = json.loads((ROOT / "papers" / "receipts" / f"{name}.json").read_text(encoding="utf-8"))
+        assert receipt["paper"] == essay["pdf"]
+        assert receipt["source"]["path"] == essay["source"]
+        tex = (ROOT / receipt["source"]["tex"]).read_text(encoding="utf-8")
+        assert receipt["source"]["sha256"] in tex
+        page = (ROOT / essay["page"]).read_text(encoding="utf-8")
+        assert f'href="{essay["pdf"]}"' in page and f'href="papers/receipts/{name}.json"' in page
+        assert "keeps the text first published on 28 July 2026" not in page
