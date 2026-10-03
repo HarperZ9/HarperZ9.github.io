@@ -108,6 +108,16 @@ node --test "system/**/*.test.mjs"
 node tests/linkcheck.mjs
 ```
 
+## Licence
+
+Written works: CC BY 4.0. Code and everything else: the terms in LICENSE.
+
+The papers, essays, briefings and research pages are licensed CC BY 4.0.
+Papers with a Zenodo deposit carry the same licence there. Share and adapt them
+with credit to Zain Dana Harper. [`LICENSE-TEXT`](LICENSE-TEXT) lists the covered files. The
+site's code, design, art, brand and portfolio copy stay under
+[`LICENSE`](LICENSE).
+
 ## For developers
 
 Keep the public README, examples, and repository metadata aligned with current
