@@ -19,7 +19,7 @@
    the retro.py row mean by construction. Zero dependencies. */
 
 import {
-  srgbToOklab, oklabToSrgb, labPalette, medianCut, RETRO_PALETTES,
+  srgbToOklab, oklabToSrgb, linearToOklab, labPalette, medianCut, RETRO_PALETTES, SRGB8_TO_LINEAR,
 } from "./retro-palettes.js";
 
 export { RETRO_PALETTES, paletteNames } from "./retro-palettes.js";
@@ -62,36 +62,38 @@ function signedDistance(occ, w, h) {
   return out;
 }
 
-/* renderRetro(src, dst, opts) -> { w, h, palette, cells, colors, entries }
-   opts: palette ('gameboy'|...|'auto'), autoK, targetWidth, dither
-   ('none'|'bayer2'|'bayer4'|'bayer8'|'noise'|'diffusion'), ditherStrength,
-   gamma, brightness, sdfShade, scanlines, scanStrength, beam, mask
-   ('none'|'grille'|'slot'|'dot'), maskStrength, bloom, halation, curvature,
-   aberration, vignette, upscale. */
-export function renderRetro(src, dst, opts = {}) {
-  const o = {
-    palette: "gameboy", autoK: 8, targetWidth: 128, dither: "bayer4", ditherStrength: 0.8,
-    gamma: 1, brightness: 0, sdfShade: false, scanlines: true, scanStrength: 0.35, beam: 0.5,
-    mask: "none", maskStrength: 0.35, bloom: 0, halation: 0, curvature: 0, aberration: 0,
-    vignette: 0, upscale: 4, ...opts,
-  };
-  const [sw, sh] = srcDims(src);
-  if (!sw || !sh) return { w: 0, h: 0, palette: o.palette, cells: 0, colors: 0 };
-  const tw = Math.max(2, Math.min(o.targetWidth, sw));
-  const th = Math.max(2, Math.round(tw * sh / sw));
+let _grid = null;
+function gridCanvas(w, h) {
+  if (!_grid) _grid = document.createElement("canvas");
+  if (_grid.width !== w) _grid.width = w;
+  if (_grid.height !== h) _grid.height = h;
+  return _grid;
+}
 
-  const small = document.createElement("canvas");
-  small.width = tw; small.height = th;
-  const sctx = small.getContext("2d");
-  sctx.imageSmoothingEnabled = true; sctx.imageSmoothingQuality = "high";
-  sctx.drawImage(src, 0, 0, tw, th);
-  const img = sctx.getImageData(0, 0, tw, th), d = img.data;
+export const RETRO_DEFAULT_OPTS = Object.freeze({
+  palette: "gameboy", autoK: 8, targetWidth: 128, dither: "bayer4", ditherStrength: 0.8,
+  gamma: 1, brightness: 0, sdfShade: false, scanlines: true, scanStrength: 0.35, beam: 0.5,
+  mask: "none", maskStrength: 0.35, bloom: 0, halation: 0, curvature: 0, aberration: 0,
+  vignette: 0, upscale: 4,
+});
 
+// The grid size renderRetro picks for a source of sw x sh.
+export function gridSize(sw, sh, targetWidth) {
+  const tw = Math.max(2, Math.min(targetWidth, sw));
+  return [tw, Math.max(2, Math.round(tw * sh / sw))];
+}
+
+/* quantizeGrid(d, tw, th, o) -> { pal, entries }
+   The front half after the downscale, as a pure function over the grid's RGBA bytes: sRGB to
+   OKLab, palette, dither and the optional SDF shade, written back into d in place. No DOM, so
+   renderRetro and the Retro worker (retro-worker.mjs) run the same code on the same bytes. */
+export function quantizeGrid(d, tw, th, o) {
   // sRGB -> OKLab, with gamma + brightness pre-adjust on L.
   const lab = new Array(tw * th);
   for (let p = 0; p < tw * th; p++) {
     const i = p * 4;
-    let [L, a, b] = srgbToOklab(d[i] / 255, d[i + 1] / 255, d[i + 2] / 255);
+    // Same maths as srgbToOklab(d / 255): the transfer curve comes from a 256-entry table of it.
+    let [L, a, b] = linearToOklab(SRGB8_TO_LINEAR[d[i]], SRGB8_TO_LINEAR[d[i + 1]], SRGB8_TO_LINEAR[d[i + 2]]);
     if (o.gamma !== 1) L = Math.pow(clamp(L, 0, 1), 1 / o.gamma);
     L = clamp(L + o.brightness, 0, 1);
     lab[p] = [L, a, b];
@@ -112,10 +114,47 @@ export function renderRetro(src, dst, opts = {}) {
     }
   }
 
+  // Without the SDF shade every output colour is a palette entry, so each entry converts once.
+  const bytesOf = (lab) => oklabToSrgb(lab[0], lab[1], lab[2]).map((v) => Math.round(v * 255));
+  const palBytes = o.sdfShade ? null : pal.map((e) => bytesOf(e.lab));
   for (let p = 0; p < tw * th; p++) {
-    const i = p * 4, [r, g, b] = oklabToSrgb(outLab[p][0], outLab[p][1], outLab[p][2]);
-    d[i] = Math.round(r * 255); d[i + 1] = Math.round(g * 255); d[i + 2] = Math.round(b * 255); d[i + 3] = 255;
+    const i = p * 4, c = palBytes ? palBytes[idx[p]] : bytesOf(outLab[p]);
+    d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2]; d[i + 3] = 255;
   }
+  return { pal, entries: paletteEntries(pal) };
+}
+
+// The resolved palette itself, not just its name and count. "Auto (from image)" median-cuts a
+// palette out of the picture and the caller could never see which colours it chose.
+function paletteEntries(pal) {
+  return pal.map((e) => {
+    const [r, g, b] = oklabToSrgb(e.lab[0], e.lab[1], e.lab[2]);
+    const hx = (v) => Math.max(0, Math.min(255, Math.round(v * 255))).toString(16).padStart(2, "0");
+    return "#" + hx(r) + hx(g) + hx(b);
+  });
+}
+
+/* renderRetro(src, dst, opts) -> { w, h, palette, cells, colors, entries }
+   opts: palette ('gameboy'|...|'auto'), autoK, targetWidth, dither
+   ('none'|'bayer2'|'bayer4'|'bayer8'|'noise'|'diffusion'), ditherStrength,
+   gamma, brightness, sdfShade, scanlines, scanStrength, beam, mask
+   ('none'|'grille'|'slot'|'dot'), maskStrength, bloom, halation, curvature,
+   aberration, vignette, upscale. */
+export function renderRetro(src, dst, opts = {}) {
+  const o = { ...RETRO_DEFAULT_OPTS, ...opts };
+  const [sw, sh] = srcDims(src);
+  if (!sw || !sh) return { w: 0, h: 0, palette: o.palette, cells: 0, colors: 0 };
+  const [tw, th] = gridSize(sw, sh, o.targetWidth);
+
+  // One reusable grid canvas, kept on the CPU (willReadFrequently) because every frame reads it
+  // back; a fresh canvas per frame cost an allocation each time.
+  const small = gridCanvas(tw, th);
+  const sctx = small.getContext("2d", { willReadFrequently: true });
+  sctx.clearRect(0, 0, tw, th);
+  sctx.imageSmoothingEnabled = true; sctx.imageSmoothingQuality = "high";
+  sctx.drawImage(src, 0, 0, tw, th);
+  const img = sctx.getImageData(0, 0, tw, th);
+  const { pal, entries } = quantizeGrid(img.data, tw, th, o);
   sctx.putImageData(img, 0, 0);
 
   const up = Math.max(1, Math.floor(o.upscale)), dw = tw * up, dh = th * up;
@@ -125,14 +164,6 @@ export function renderRetro(src, dst, opts = {}) {
   dctx.drawImage(small, 0, 0, dw, dh);
   if (crtActive(o)) crtStage(dctx, dw, dh, { ...o, cell: up });
 
-  // The resolved palette itself, not just its name and count. "Auto (from
-  // image)" median-cuts a palette out of the picture and the caller could never
-  // see which colours it chose, let alone keep them.
-  const entries = pal.map((e) => {
-    const [r, g, b] = oklabToSrgb(e.lab[0], e.lab[1], e.lab[2]);
-    const hx = (v) => Math.max(0, Math.min(255, Math.round(v * 255))).toString(16).padStart(2, "0");
-    return "#" + hx(r) + hx(g) + hx(b);
-  });
   return { w: dw, h: dh, palette: o.palette, cells: tw * th, colors: pal.length, entries };
 }
 

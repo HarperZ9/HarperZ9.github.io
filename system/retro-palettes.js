@@ -10,8 +10,14 @@ function srgbToLinear(c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055
 function linearToSrgb(c) { return c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; }
 function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
 
+// srgbToLinear(k / 255) for every byte k, so per-pixel code reads the curve instead of calling pow.
+export const SRGB8_TO_LINEAR = Float64Array.from({ length: 256 }, (_, k) => srgbToLinear(k / 255));
+
 export function srgbToOklab(r, g, b) {
-  const lr = srgbToLinear(r), lg = srgbToLinear(g), lb = srgbToLinear(b);
+  return linearToOklab(srgbToLinear(r), srgbToLinear(g), srgbToLinear(b));
+}
+
+export function linearToOklab(lr, lg, lb) {
   const l = 0.4122214708 * lr + 0.5363325363 * lg + 0.0514459929 * lb;
   const m = 0.2119034982 * lr + 0.6806995451 * lg + 0.1073969566 * lb;
   const s = 0.0883024619 * lr + 0.2817188376 * lg + 0.6299787005 * lb;

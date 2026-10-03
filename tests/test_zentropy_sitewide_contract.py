@@ -41,6 +41,8 @@ STUDIO_PLATE_REVISION = "20260925-studio-plate"
 MEDIA_ENGINE_REVISION = "20261003-engine"
 # 3 October 2026, later: the type forge page and the Studio's Type forge surface.
 TYPE_FORGE_REVISION = "20261003-type-forge"
+# 3 October 2026, later: the Retro front half moves to a worker; retro-studio.js takes a new stamp.
+RETRO_WORKER_REVISION = "20261003-worker"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -87,7 +89,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": TYPE_FORGE_REVISION,
+    "system/studio.js": RETRO_WORKER_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
     "system/studio-plate.css": STUDIO_PLATE_REVISION,
@@ -96,7 +98,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/studio-modes.css": MEDIA_ENGINE_REVISION,
     "system/media-engine/risk.css": MEDIA_ENGINE_REVISION,
     "system/loom-studio.js": VOID_PLATES_REVISION,
-    "system/retro-studio.js": VOID_PLATES_REVISION,
+    "system/retro-studio.js": RETRO_WORKER_REVISION,
     "img/og/cards-data.js": VOID_PLATES_REVISION,
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
     "system/theme.js": THEME_PREFERENCES_REVISION,

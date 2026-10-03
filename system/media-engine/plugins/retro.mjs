@@ -14,8 +14,8 @@
 // page's 1024 x 640 source size, so the comparison against retro.html is like for like.
 
 // Same versioned URL retro-studio.js imports, so the page holds one copy of the engine.
-import { renderRetro } from "../../retro-engine.js?v=20260902-crt";
-import { crtActive } from "../../retro-crt.js";
+import { renderRetro, RETRO_DEFAULT_OPTS as RETRO_ENGINE_DEFAULTS } from "../../retro-engine.js?v=20261003-worker";
+import { crtActive, crtStage } from "../../retro-crt.js";
 import { createShaderRunner, DEFAULT_FRAG } from "../../shader-runner.js?v=20260805-react";
 import { getGL2, program, fullscreenTriangle, texture, target } from "../gl2.mjs";
 
@@ -265,30 +265,115 @@ function gpuBackend(canvas, params) {
 // export): the front half draws the grid on the CPU, the five tube passes draw into a private
 // WebGL2 canvas, and one drawImage copies the result into dst. Without WebGL2, after a lost
 // context, or when no tube effect is on, it is renderRetro itself.
+//
+// renderLive(src, dst, opts, done) is the animation path. It snapshots the source, hands the front
+// half to a worker (retro-worker.mjs runs the same quantizeGrid on the same bytes), and finishes
+// the frame when the grid comes back, calling done(measure). One frame is in flight at a time; a
+// call while one is in flight returns false and draws nothing. Stills, exports and captures keep
+// using render(), which is synchronous, and any render() call retires a frame still in flight.
 export function createRetroRenderer() {
   const glCanvas = typeof document !== "undefined" ? document.createElement("canvas") : null;
   const gl = glCanvas ? getGL2(glCanvas) : null;
   let tube = null;
   try { tube = gl ? makeTube(gl) : null; } catch (e) { console.error("[media-engine] retro tube unavailable:", e); tube = null; }
-  const grid = tube ? document.createElement("canvas") : null;
-  const api = {
-    get backend() { return tube && !gl.isContextLost() ? "webgl2" : "canvas2d"; },
-    render(src, dst, opts = {}) {
-      const o = { ...TUBE_DEFAULTS, ...opts };
-      if (!tube || gl.isContextLost() || !crtActive(o)) return renderRetro(src, dst, opts);
-      const m = renderRetro(src, grid, { ...o, ...TUBE_OFF });
-      if (!m || !m.w) return m;
-      const up = Math.max(1, Math.floor(o.upscale));
-      const w = grid.width * up, h = grid.height * up;
+  const grid = typeof document !== "undefined" ? document.createElement("canvas") : null;
+  const tubeOn = (o) => tube && !gl.isContextLost() && crtActive(o);
+
+  // Upscale the finished grid into dst: through the GPU tube, or nearest-neighbour as renderRetro
+  // does when no tube effect is on.
+  const finish = (dst, o, m) => {
+    const up = Math.max(1, Math.floor(o.upscale));
+    const w = grid.width * up, h = grid.height * up;
+    if (dst.width !== w || dst.height !== h) { dst.width = w; dst.height = h; }
+    const ctx = dst.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+    if (tubeOn(o)) {
       if (glCanvas.width !== w || glCanvas.height !== h) { glCanvas.width = w; glCanvas.height = h; }
       tube.render(grid, up, o);
-      if (dst.width !== w || dst.height !== h) { dst.width = w; dst.height = h; }
-      const ctx = dst.getContext("2d");
-      ctx.imageSmoothingEnabled = false;
       ctx.drawImage(glCanvas, 0, 0);
-      return { ...m, w, h };
+    } else {
+      ctx.drawImage(grid, 0, 0, w, h);
+      if (crtActive(o)) crtStage(ctx, w, h, { ...o, cell: up });
+    }
+    return { ...m, w, h };
+  };
+
+  let worker = null, workerFailed = false, inFlight = null, epoch = 0, verified = false, workerMs = 0;
+  const sameBytes = (a, b) => { if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; };
+  const workerReady = () => {
+    if (workerFailed) return false;
+    if (worker) return true;
+    if (typeof Worker !== "function" || typeof OffscreenCanvas !== "function" || typeof createImageBitmap !== "function") { workerFailed = true; return false; }
+    try {
+      worker = new Worker(new URL("../retro-worker.mjs", import.meta.url), { type: "module" });
+    } catch (e) { console.error("[media-engine] retro worker unavailable, front half stays on the main thread:", e); workerFailed = true; return false; }
+    worker.onerror = (e) => { console.error("[media-engine] retro worker failed, front half back on the main thread:", e.message || e); retire(true); };
+    worker.onmessage = ({ data }) => {
+      const job = inFlight;
+      if (!job || job.id !== data.id) return;
+      inFlight = null;
+      if (job.epoch !== epoch) return;          // a synchronous render() drew since; this frame is stale
+      if (data.error) { console.error("[media-engine] retro worker frame failed:", data.error); retire(true); job.done(api.render(job.src, job.dst, job.opts)); return; }
+      const bytes = new Uint8ClampedArray(data.bytes);
+      if (job.reference && !sameBytes(job.reference, bytes)) {
+        // The worker's grid must be the page's grid, byte for byte. If this device downscales or
+        // rounds differently off the main thread, the worker is retired and the reference is kept.
+        console.error("[media-engine] retro worker grid differs from the main-thread grid; front half stays on the main thread");
+        retire(true);
+        job.done(finish(job.dst, job.o, job.referenceMeasure));
+        return;
+      }
+      verified = verified || !!job.reference;
+      workerMs = workerMs ? workerMs * 0.9 + data.ms * 0.1 : data.ms;
+      if (grid.width !== data.tw) grid.width = data.tw;
+      if (grid.height !== data.th) grid.height = data.th;
+      grid.getContext("2d").putImageData(new ImageData(bytes, data.tw, data.th), 0, 0);
+      job.done(finish(job.dst, job.o, { palette: job.o.palette, cells: data.tw * data.th, colors: data.colors, entries: data.entries }));
+    };
+    return true;
+  };
+  const retire = (failed) => {
+    if (failed) { workerFailed = true; if (worker) worker.terminate(); worker = null; }
+    inFlight = null;
+  };
+
+  const api = {
+    get backend() { return tube && !gl.isContextLost() ? "webgl2" : "canvas2d"; },
+    get worker() { return !!worker && !workerFailed; },
+    get workerVerified() { return verified && !workerFailed; },
+    // Mean worker time per frame (EMA, ms): the front half's cost, now off the main thread.
+    get workerMs() { return +workerMs.toFixed(2); },
+    render(src, dst, opts = {}) {
+      epoch++;
+      const o = { ...TUBE_DEFAULTS, ...opts };
+      if (!tubeOn(o)) return renderRetro(src, dst, opts);
+      const m = renderRetro(src, grid, { ...o, ...TUBE_OFF });
+      if (!m || !m.w) return m;
+      return finish(dst, o, m);
+    },
+    renderLive(src, dst, opts, done) {
+      if (inFlight) return false;
+      if (!grid || !workerReady()) { done(api.render(src, dst, opts)); return true; }
+      const o = { ...RETRO_ENGINE_DEFAULTS, ...TUBE_DEFAULTS, ...opts };
+      const job = { id: Math.random(), epoch, src, dst, opts, o, done };
+      if (!verified) {
+        // The first live frame also runs on the main thread, as the reference the worker must match.
+        job.referenceMeasure = renderRetro(src, grid, { ...o, ...TUBE_OFF });
+        job.reference = grid.getContext("2d").getImageData(0, 0, grid.width, grid.height).data;
+      }
+      inFlight = job;
+      createImageBitmap(src).then((bitmap) => {
+        if (inFlight !== job) { bitmap.close(); return; }
+        worker.postMessage({ id: job.id, bitmap, opts: o }, [bitmap]);
+      }).catch((e) => {
+        console.error("[media-engine] retro source snapshot failed, drawing on the main thread:", e);
+        if (inFlight === job) { retire(true); done(api.render(src, dst, opts)); }
+      });
+      return true;
     },
     dispose() {
+      retire(false);
+      if (worker) worker.terminate();
       if (tube) tube.dispose();
       const ext = gl && gl.getExtension("WEBGL_lose_context"); if (ext) ext.loseContext();
     },
@@ -313,7 +398,7 @@ export const retro2d = {
   id: "retro-2d",
   version: "1.0.0",
   backends: ["canvas2d"],
-  create({ canvas, params }) {
+  create({ canvas, params, reduced }) {
     const src = makeSource(params), renderer = createRetroRenderer();
     let p = { ...RETRO_DEFAULTS, ...params };
     return {
@@ -322,9 +407,14 @@ export const retro2d = {
       get backend() { return renderer.backend === "webgl2" ? "canvas2d+webgl2-tube" : "canvas2d"; },
       lastMeasure: null,
       frame(t) {
-        src.frame(t);
         const upscale = Math.max(2, Math.min(12, Math.round(900 / p.targetWidth)));
-        this.lastMeasure = renderer.render(src.canvas, canvas, { ...p, scanlines: p.scanlines && p.scanStrength > 0.02, upscale });
+        const o = { ...p, scanlines: p.scanlines && p.scanStrength > 0.02, upscale };
+        // An animated source takes the worker path (the snapshot is taken right after the source
+        // draws, in the same task). A handed-in still, or any frame under reduced motion, draws
+        // synchronously so the host can read the canvas the moment the draw returns.
+        src.frame(t);
+        if (!src.still && !reduced) { renderer.renderLive(src.canvas, canvas, o, (m) => { this.lastMeasure = m; }); return; }
+        this.lastMeasure = renderer.render(src.canvas, canvas, o);
       },
       setParams(n) { p = { ...RETRO_DEFAULTS, ...n }; },
       readPixels() { return new Uint8Array(canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data.buffer); },
