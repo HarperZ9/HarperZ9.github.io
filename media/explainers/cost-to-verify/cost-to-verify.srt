@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:03,500
+The cost to verify.
+
+2
+00:00:03,500 --> 00:00:08,267
+A model can draft a literature review in forty seconds.
+
+3
+00:00:08,267 --> 00:00:15,733
+Checking that the papers exist, and say what the review claims, still takes a skilled person hours.
+
+4
+00:00:15,733 --> 00:00:24,767
+Better models make claiming cheaper. Checking costs what it always cost. The gap between the two is review debt.
+
+5
+00:00:24,767 --> 00:00:33,033
+Somebody always pays that debt. Left unchecked, it lands on whoever has the least power to refuse it.
+
+6
+00:00:33,033 --> 00:00:41,667
+The gap closes only from the checking side: make the check cheap to rerun. This video ships with its own receipt.

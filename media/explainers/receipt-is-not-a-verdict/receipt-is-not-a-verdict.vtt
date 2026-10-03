@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.500
+A receipt is not a verdict.
+
+00:00:03.500 --> 00:00:09.900
+A receipt records what ran: the command, the inputs and the hash of the output.
+
+00:00:09.900 --> 00:00:19.000
+Rerun the command and the hash matches. That shows the same bytes came out. It says nothing about whether they are right.
+
+00:00:19.000 --> 00:00:27.300
+A verdict needs a criterion the author did not write, such as a test suite, a proof checker or a measured threshold.
+
+00:00:27.300 --> 00:00:35.967
+Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.
+
+00:00:35.967 --> 00:00:43.200
+Keep both. The receipt says what happened. The verdict says whether it holds up.

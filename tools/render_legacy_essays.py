@@ -9,6 +9,13 @@ import json
 import re
 from pathlib import Path
 
+if __package__ in {None, ""}:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.explainer.embed import figure, insert_after_section
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -204,6 +211,16 @@ def render_markdown(source: str, mode: str) -> str:
     return "\n".join(rendered)
 
 
+# Explainer videos placed at the end of a section: page -> {section anchor: explainer slug}.
+# The figure comes from the explainer's committed receipt (tools/explainer/embed.py).
+EXPLAINERS: dict[str, dict[str, str]] = {
+    "no-receipt-no-accept.html": {
+        "3-review-debt": "cost-to-verify",
+        "4-the-loop-walked-end-to-end": "receipt-is-not-a-verdict",
+    },
+}
+
+
 def render_page(page: Path, parts: tuple[Path, ...], mode: str) -> bytes:
     """Return one complete page with its Markdown body embedded."""
     source = "".join(
@@ -211,6 +228,8 @@ def render_page(page: Path, parts: tuple[Path, ...], mode: str) -> bytes:
     )
     page_source = page.read_text(encoding="utf-8")
     body = render_markdown(source, mode)
+    for anchor, slug in EXPLAINERS.get(page.name, {}).items():
+        body = insert_after_section(body, anchor, figure(slug, page.parent))
     source_links = "".join(
         '<li><a class="inline" href="'
         + html.escape(part.as_posix(), quote=True)

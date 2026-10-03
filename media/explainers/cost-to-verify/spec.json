@@ -1,0 +1,138 @@
+{
+  "slug": "cost-to-verify",
+  "title": "The cost to verify",
+  "seed": 20261003,
+  "page": "no-receipt-no-accept.html#3-review-debt",
+  "poster": {
+    "scene": "debt",
+    "at": 0.8
+  },
+  "scenes": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "The cost to verify",
+      "say": "The cost to verify.",
+      "min": 3.5
+    },
+    {
+      "key": "claim",
+      "heading": "Claiming got cheap",
+      "say": "A model can draft a literature review in forty seconds.",
+      "min": 4.0,
+      "marks": [
+        {
+          "type": "bars",
+          "at": 0.1,
+          "items": [
+            {
+              "label": "draft a review",
+              "value": 1,
+              "display": "40 seconds",
+              "strong": true
+            }
+          ],
+          "scale": 30
+        }
+      ]
+    },
+    {
+      "key": "check",
+      "heading": "Checking did not",
+      "say": "Checking that the papers exist, and say what the review claims, still takes a skilled person hours.",
+      "min": 4.5,
+      "marks": [
+        {
+          "type": "bars",
+          "at": 0.05,
+          "items": [
+            {
+              "label": "draft a review",
+              "value": 1,
+              "display": "40 seconds",
+              "strong": true,
+              "carry": true
+            },
+            {
+              "label": "check the review",
+              "value": 30,
+              "display": "hours"
+            }
+          ],
+          "scale": 30
+        },
+        {
+          "type": "note",
+          "at": 0.5,
+          "text": "Bar lengths are illustrative. The figures come from the essay."
+        }
+      ]
+    },
+    {
+      "key": "debt",
+      "heading": "The gap is review debt",
+      "say": "Better models make claiming cheaper. Checking costs what it always cost. The gap between the two is review debt.",
+      "min": 5.0,
+      "marks": [
+        {
+          "type": "bars",
+          "at": 0.0,
+          "items": [
+            {
+              "label": "draft a review",
+              "value": 1,
+              "to": 0.3,
+              "display": "cheaper each year",
+              "strong": true,
+              "carry": true
+            },
+            {
+              "label": "check the review",
+              "value": 30,
+              "display": "hours",
+              "carry": true
+            }
+          ],
+          "scale": 30
+        },
+        {
+          "type": "note",
+          "at": 0.55,
+          "text": "review debt: claims nobody has checked",
+          "risk": "elevated"
+        }
+      ]
+    },
+    {
+      "key": "who",
+      "heading": "Somebody pays it",
+      "say": "Somebody always pays that debt. Left unchecked, it lands on whoever has the least power to refuse it.",
+      "min": 5.0,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "claim",
+          "value": "the review is accurate",
+          "verdict": "UNVERIFIABLE"
+        },
+        {
+          "type": "card",
+          "at": 0.35,
+          "label": "who pays",
+          "value": "the reader who relied on it",
+          "risk": "elevated",
+          "verdict": "UNCHECKED"
+        }
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Make the check cheap to rerun",
+      "say": "The gap closes only from the checking side: make the check cheap to rerun. This video ships with its own receipt.",
+      "min": 5.0,
+      "command": "python -m tools.explainer.render media/explainers/cost-to-verify --verify"
+    }
+  ]
+}
