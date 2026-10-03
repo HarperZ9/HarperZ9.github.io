@@ -3879,6 +3879,13 @@ body.inner-clean:not(.studio-page):not(.studio-app) .publication-spectrum {displ
 /* The generative renderer sets display inline after initialization. */
 body.inner-clean:not(.studio-page):not(.studio-app) > #gl,
 body.inner-clean:not(.studio-page):not(.studio-app) > #motes {display:none!important}
+/* The Gallery opts back in (data-ambient-field="true" on <body>); nav.js mounts
+   the field only there, and only for a fine pointer, a wide screen and no
+   reduced-motion request, so the same conditions gate its display here. */
+@media (prefers-reduced-motion:no-preference) and (pointer:fine) and (min-width:900px){
+  body.inner-clean[data-ambient-field="true"]:not(.studio-page):not(.studio-app) > #gl,
+  body.inner-clean[data-ambient-field="true"]:not(.studio-page):not(.studio-app) > #motes {display:block!important}
+}
 body.inner-clean:not(.studio-page):not(.studio-app),
 body.inner-clean:not(.studio-page):not(.studio-app) .frame,
 body.inner-clean:not(.studio-page):not(.studio-app) main {background:#101416}

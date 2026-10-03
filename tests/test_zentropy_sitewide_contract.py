@@ -414,7 +414,14 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "route artifact" not in nav
     assert "Project Telos home" not in nav
     assert "function shouldMountAmbientField" in nav
-    assert "shouldUseDesktopGpuArt(window)" in nav
+    assert "shouldUseDesktopGpuArt(win)" in nav
+    # The ambient field mounts by explicit call where a page opts in; importing
+    # the engine for a plate must not start a hidden full-screen animation.
+    assert 'body.dataset.ambientField === "true"' in nav
+    assert "mod.mountGenerativeField(document)" in nav
+    engine = read("system/generative-field.js")
+    assert "bootField" not in engine and "deferGenerativeField" not in engine
+    assert 'data-ambient-field="true"' in read("gallery.html")
     assert 'doc.querySelector(".frame")' in nav
     assert "route-header__path" in nav
     assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav

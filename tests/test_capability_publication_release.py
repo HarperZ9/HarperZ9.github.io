@@ -585,8 +585,8 @@ RELEASE_PATHS = (
 # release is rehashed.
 # October 3, 2026: RAW now describes the public C++23 reference renderer (raw.html, the system
 # registry, the record pages and capability maps, and the home bundle index-DDpFxCuj.js); the
-# release is rehashed (merged over the second-read corrections).
-REVIEWED_RELEASE_SHA256 = "883aca2963827e9cd34ba2d325d739f515da089203523949c198b827d69ef33c"
+# release is rehashed (merged over the media fixes).
+REVIEWED_RELEASE_SHA256 = "0ac7ab10c070cdb9a8c7e896d2031762baa08b17907778a96fa10e173bfc5f9d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
