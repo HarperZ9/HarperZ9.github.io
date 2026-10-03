@@ -16,9 +16,9 @@
 //
 // mountHeroAperture(canvas, { hue, blades, seed, radius, reduced }) -> { destroy() }
 
-const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
+export const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
-const FRAG = `precision highp float;
+export const FRAG = `precision highp float;
 uniform vec2  u_res;
 uniform float u_time;
 uniform float u_seed;
@@ -94,7 +94,7 @@ void main(){
 // Loom's is the finest because a loom's unit is a single thread.
 // Shader constants, set once at mount. A canvas whose data-aperture key is not in the table above
 // still renders a coherent form from these rather than a black box.
-const UNIFORMS = { seed: 3.1, hue: 0.53, blades: 44, radius: 0.30, gain: 1.0 };
+export const UNIFORMS = { seed: 3.1, hue: 0.53, blades: 44, radius: 0.30, gain: 1.0 };
 
 // hue is kept for the shared preset shape; the shader no longer reads it (26 September 2026).
 export const APERTURES = {
@@ -267,15 +267,16 @@ export function bootHeroAperture(canvas) {
   const reducedMotion = mq("(prefers-reduced-motion: reduce)");
   const wideEnough = mq("(min-width: 900px)").matches && mq("(pointer: fine)").matches;
   if (!wideEnough || !isHeroApertureAvailable()) { canvas.dataset.mode = "static"; return null; }
-  const preset = APERTURES[canvas.dataset.aperture] || APERTURES.gallery;
-  try {
-    const handle = mountHeroAperture(canvas, Object.assign({ reduced: reducedMotion.matches }, preset));
-    canvas.dataset.mode = reducedMotion.matches ? "still" : "live";
-    return handle;
-  } catch (_) {
-    canvas.dataset.mode = "static";
-    return null;
-  }
+  const key = APERTURES[canvas.dataset.aperture] ? canvas.dataset.aperture : "gallery";
+  // The page's media engine owns the loop (system/media-engine/page.mjs): one requestAnimationFrame
+  // for every instance on the page, drawing only on screen, in a visible tab, and as one still frame
+  // under reduced motion. mountHeroAperture stays exported for callers that want a private loop.
+  canvas.dataset.mode = reducedMotion.matches ? "still" : "live";
+  const pending = import("./media-engine/page.mjs")
+    .then(({ usePlugin }) => usePlugin("aperture"))
+    .then((engine) => engine.mount(canvas, "aperture", { params: { preset: key }, seed: key }));
+  pending.catch(() => { canvas.dataset.mode = "static"; });
+  return { destroy() { pending.then((h) => h.dispose()).catch(() => {}); } };
 }
 
 // Self-boot. The three surfaces that use this are static HTML with no bundler, so one script tag is

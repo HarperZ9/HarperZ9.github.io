@@ -27,21 +27,7 @@ import { faceAO } from "./voxel-forge.js";
 import { chainSegments } from "./plotter.js";
 import { measureSheet } from "./plot-compose.js";
 import { jitter } from "./plot-marks.js";
-
-function hash32(str) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < str.length; i += 1) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
-  return h >>> 0;
-}
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+import { fnv1a32 as hash32, mulberry32 as mulberry } from "./media-engine/seed.mjs";
 
 // Painter-identical projection, in units of one voxel edge (s = 1):
 //   X = (x - y),  Y = (x + y) / 2 - z,  depth = x + y + z (larger = nearer the eye).

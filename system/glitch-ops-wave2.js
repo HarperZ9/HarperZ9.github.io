@@ -18,20 +18,7 @@
    Every op is a single full-resolution pass (or a coarse grid sampled up),
    returns early on a zero-size canvas, and is an exact no-op at amount 0. */
 
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function rng2From(seed) {
-  if (typeof seed === "function") return seed;
-  let h = 2166136261; const s = String(seed == null ? 1 : seed);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return mulberry32(h >>> 0);
-}
+import { rngFrom as rng2From } from "./media-engine/seed.mjs";
 
 const luma = (d, i) => (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);

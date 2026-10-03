@@ -32,23 +32,9 @@ import {
 import { contourFromLuma } from "./plotter.js";
 import { clipLines, jitter } from "./plot-marks.js";
 import { applyRegister, measureSheet, REGISTERS } from "./plot-compose.js";
+import { fnv1a32 as hash32, mulberry32 as mulberry } from "./media-engine/seed.mjs";
 
 export { toneField, fitField } from "./plot-image.js";   // one door for callers that only capture
-
-function hash32(str) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < str.length; i += 1) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
-  return h >>> 0;
-}
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 // ── preparing the picture ───────────────────────────────────────────────────
 // Three decisions happen here and nowhere else: working resolution (a pen resolves far less than

@@ -13,6 +13,7 @@ import { startSpatialScene } from "./spatial-scene.js";
 import { startTexturedScene } from "./spatial-textured.js";
 import { startAtlasScene, projectAabbRect } from "./spatial-atlas.js";
 import { acquireContext } from "./spatial-gl.js";
+import { digestOrNull } from "./media-engine/receipt.mjs";
 
 const PACKAGES = Object.freeze({
   "atlas": "art/spatial/atlas/atlas.world.json",
@@ -43,11 +44,8 @@ function setVerdict(verdict) {
   el.dataset.verdict = verdict;
 }
 
-async function sha256Hex(bytes) {
-  if (!(globalThis.crypto && crypto.subtle)) return null;
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
-}
+// SHA-256 via Web Crypto, or null in an insecure context (the shared engine receipt layer).
+const sha256Hex = digestOrNull;
 
 // Fetch a package. Hybrid worlds prefetch and re-hash every receipted file;
 // the atlas verifies per scene at load time instead (81 files, 25 MB, so

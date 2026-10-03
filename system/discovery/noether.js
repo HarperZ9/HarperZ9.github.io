@@ -8,6 +8,7 @@
 // translation) and the charge is no longer conserved. Zero dependencies beyond the substrate.
 import { simulate } from "./integrator.js";
 import { conservationOracle } from "./verify.js";
+import { mulberry32 as rngFrom } from "../media-engine/seed.mjs";
 
 // --- continuous symmetry transforms: (state, system) -> transformed state ---
 
@@ -26,16 +27,6 @@ export const rotate2D = (theta) => (s, system) => {
   t[vx] = s[vx] * co - s[vy] * si; t[vy] = s[vx] * si + s[vy] * co;
   return t;
 };
-
-function rngFrom(seed) {
-  let a = seed >>> 0;
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 // Does `transform` commute with time evolution? evolve(T(s0)) vs T(evolve(s0)) along the trajectory.
 export function isInvariant(system, transform, { eps, dt = 0.01, n = 600, tol = 1e-3, seed = 1 } = {}) {

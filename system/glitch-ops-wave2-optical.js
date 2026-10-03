@@ -20,21 +20,7 @@
                 them parallel across the frame because the iris does not rotate
 */
 
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function rngFrom(seed) {
-  if (typeof seed === "function") return seed;
-  let h = 2166136261; const s = String(seed == null ? 1 : seed);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return mulberry32(h >>> 0);
-}
-
+import { rngFrom } from "./media-engine/seed.mjs";
 const scratch = (w, h) => { const c = document.createElement("canvas"); c.width = w; c.height = h; return c; };
 const luma = (d, i) => (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;
 const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
