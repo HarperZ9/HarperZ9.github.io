@@ -391,12 +391,6 @@ Error generating stack: `+e.message+`
           "summary": "The Flywheel surface routing a live prompt to a local model and sealing a receipt, then the tamper check that cannot be talked past.",
           "primary": false,
           "searchText": "Flywheel: route, receipt, tamper, refusal. The surface The tamper demonstration METR count_odds reviewer packet Run it yourself Claim boundary The Flywheel surface routing a live prompt to a local model and sealing a receipt, then the tamper check that cannot be talked past. Flywheel: route, receipt, tamper, refusal. Flywheel demo: route, receipt, tamper, refusal The Flywheel surface routing a live prompt to a local model and sealing a receipt, then the tamper check that cannot be talked past."
-        },
-        {
-          "label": "Mint a face.",
-          "href": "type-forge.html",
-          "summary": "Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt.",
-          "searchText": "Mint a face. How we know. Take it further. Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt. Mint a face. Type forge Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt."
         }
       ],
       "prefixes": [
@@ -1288,6 +1282,12 @@ Error generating stack: `+e.message+`
           "primary": false,
           "summary": "A reading specimen of the typography currently used on this site, with a look at the direction of our original type work.",
           "searchText": "Room for the words. Hanken Grotesk Conso The small things matter. Our own type, in progress. A reading specimen of the typography currently used on this site, with a look at the direction of our original type work. Room for the words. Typography A reading specimen of the typography currently used on this site, with a look at the direction of our original type work."
+        },
+        {
+          "label": "Type forge",
+          "href": "type-forge.html",
+          "summary": "Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt.",
+          "searchText": "Mint a face. How we know. Take it further. Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt. Mint a face. Type forge Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt."
         }
       ]
     }
