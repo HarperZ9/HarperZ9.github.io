@@ -105,3 +105,12 @@
 @media (forced-colors:active){.sc-blade,.sc-ring{stroke:CanvasText}.sc-core{fill:CanvasText}.sc-current td:first-child,.sc-current{box-shadow:inset 3px 0 0 Highlight}}
 @media print{.series-continue{width:auto;margin-left:0;transform:none}.sc-aperture{display:none}.sc-row .sc-part::before,.sc-row .sc-part::after{display:none}}
 .series-hub .series-continue{border-top:0;padding-top:0;margin-top:1.6rem}
+
+/* The opener: the "Start here" row above the anchor. It has no blade; the aperture's core
+   stands for it, hot on its own page, and grows while its row is hovered or focused. */
+.sc-aperture>.sc-core{transition:r .28s ease}
+.sc-aperture>.sc-core-current{fill:var(--hot,var(--drift,#8a3b12))}
+.series-continue:has(.sc-opener:is(:hover,:focus-within)) .sc-aperture>.sc-core{r:5px}
+.sc-opener .sc-part span{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.sc-aperture>.sc-core{transition:none}}
+@media (forced-colors:active){.sc-aperture>.sc-core-current{fill:Highlight}}

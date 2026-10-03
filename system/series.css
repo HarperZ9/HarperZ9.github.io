@@ -8,7 +8,8 @@
 .series-part-title{font-size:clamp(1.12rem,1rem + .5vw,1.4rem);line-height:1.25;margin:0;text-wrap:balance}
 .series-part-status{font-family:var(--font-mono,"Conso",ui-monospace,monospace);font-size:.82rem;color:var(--soft);margin:.3rem 0 .45rem}
 .series-parts>li>p:last-child{margin:0;max-width:60ch;line-height:1.55}
+.series-opener{max-width:62ch;margin:1rem 0 0;padding:.15rem 0 .15rem .9rem;border-left:3px solid var(--ink);line-height:1.55}
 .series-closing{max-width:62ch;line-height:1.6}
 .series-related{font-size:.92rem;color:var(--soft)}
 @media (max-width:30rem){.series-parts>li{grid-template-columns:1.8rem minmax(0,1fr);column-gap:.6rem}}
-@media (forced-colors:active){.series-parts>li{border-color:CanvasText}}
+@media (forced-colors:active){.series-parts>li{border-color:CanvasText}.series-opener{border-left-color:CanvasText}}
