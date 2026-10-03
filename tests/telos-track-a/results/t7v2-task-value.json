@@ -1,0 +1,1074 @@
+{
+ "result": "t7v2-task-value",
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "prereg_t4t7_sha256": "75cbd7d12857b3d9143c4cd14169731388f33be5e495093943b6d29fdd2061eb",
+ "amendment_4_sha256": "5cfebb1d0fac2718e751585e31fa012427d7a2c066af699c68bec8dd323e632f",
+ "prereg_t7v2_sha256": "0d4217b7c110e4c5bb6c06e9db9f7a7d3f50127830416fb980701c7f87726261",
+ "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+ "repeat_identical": {
+  "t7v2": {
+   "same": 2200,
+   "of": 2200
+  }
+ },
+ "tasks": [
+  {
+   "source": "PBC",
+   "task": "cell_class",
+   "scope": "in-source only",
+   "images": 1000,
+   "classes": [
+    "basophil",
+    "eosinophil",
+    "erythroblast",
+    "immature granulocyte",
+    "lymphocyte",
+    "monocyte",
+    "neutrophil",
+    "thrombocyte"
+   ],
+   "groups": 1000,
+   "majority_rate": 0.125,
+   "configs": {
+    "L0": {
+     "accuracy": 0.4699
+    },
+    "L1": {
+     "accuracy": 0.5253
+    },
+    "L2": {
+     "accuracy": 0.6376
+    },
+    "L0+L1": {
+     "accuracy": 0.6254
+    },
+    "L0+L2": {
+     "accuracy": 0.6839
+    },
+    "L1+L2": {
+     "accuracy": 0.6560999999999999
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.6916
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0355,
+     "lo": 0.023399999999999997,
+     "hi": 0.047599999999999996,
+     "n": 1000,
+     "clusters": 1000,
+     "carries_value": true,
+     "not_estimable": false,
+     "tokens_mean": 53.618,
+     "value_per_100_tokens": 0.0662091088813458
+    },
+    "L1": {
+     "mean": 0.0077,
+     "lo": -0.0009000000000000002,
+     "hi": 0.0164,
+     "n": 1000,
+     "clusters": 1000,
+     "carries_value": false,
+     "not_estimable": false,
+     "tokens_mean": 109.62,
+     "value_per_100_tokens": 0.007024265644955299
+    },
+    "L2": {
+     "mean": 0.06620000000000001,
+     "lo": 0.045800000000000014,
+     "hi": 0.08639999999999999,
+     "n": 1000,
+     "clusters": 1000,
+     "carries_value": true,
+     "not_estimable": false,
+     "tokens_mean": 997.717,
+     "value_per_100_tokens": 0.00663514804298213
+    }
+   },
+   "saturated": false,
+   "controls": {
+    "wrong_image": {
+     "draws": [
+      0.141,
+      0.102,
+      0.125,
+      0.121,
+      0.114,
+      0.134,
+      0.108,
+      0.128,
+      0.121,
+      0.105,
+      0.141,
+      0.135,
+      0.123,
+      0.148,
+      0.113,
+      0.121,
+      0.125,
+      0.129,
+      0.135,
+      0.117
+     ],
+     "oracle": [
+      0.109,
+      0.168,
+      0.074,
+      0.122,
+      0.108,
+      0.112,
+      0.137,
+      0.1,
+      0.151,
+      0.113,
+      0.159,
+      0.119,
+      0.137,
+      0.113,
+      0.113,
+      0.087,
+      0.108,
+      0.127,
+      0.137,
+      0.126
+     ],
+     "excess_mean": 0.0032999999999999974,
+     "excess_sd": 0.02753772531981307,
+     "excess_upper": 0.015368940249120552,
+     "pass": true,
+     "v1_statistic": {
+      "mean": 0.1243,
+      "upper": 0.12974825078640648,
+      "bound": 0.145,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.1208007805062944,
+      0.163946932678734
+     ]
+    },
+    "shuffled_layer": {
+     "draws": [
+      0.127,
+      0.144,
+      0.139,
+      0.136,
+      0.122,
+      0.121,
+      0.126,
+      0.12,
+      0.124,
+      0.108,
+      0.121,
+      0.133,
+      0.116,
+      0.135,
+      0.122,
+      0.125,
+      0.156,
+      0.115,
+      0.121,
+      0.138
+     ],
+     "oracle": [
+      0.128,
+      0.131,
+      0.115,
+      0.121,
+      0.108,
+      0.142,
+      0.144,
+      0.116,
+      0.117,
+      0.13,
+      0.102,
+      0.131,
+      0.129,
+      0.14,
+      0.143,
+      0.145,
+      0.133,
+      0.133,
+      0.111,
+      0.129
+     ],
+     "excess_mean": 5.000000000000074e-05,
+     "excess_sd": 0.016083581036179982,
+     "excess_upper": 0.007098940181630889,
+     "pass": true,
+     "v1_statistic": {
+      "mean": 0.12745,
+      "upper": 0.13239513006587503,
+      "bound": 0.145,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.10777968175436589,
+      0.14907518459108146
+     ]
+    }
+   },
+   "positive_controls": {
+    "P_0.5": {
+     "mean": 0.0906,
+     "lo": 0.06369749999999999,
+     "hi": 0.11769999999999999,
+     "n": 1000,
+     "clusters": 1000,
+     "detected": true
+    },
+    "P_0.25": {
+     "mean": 0.019700000000000002,
+     "lo": 0.007200000000000001,
+     "hi": 0.032299999999999995,
+     "n": 1000,
+     "clusters": 1000,
+     "detected": true
+    },
+    "P_0.1": {
+     "mean": 0.0017999999999999995,
+     "lo": -0.006300000000000001,
+     "hi": 0.009599999999999997,
+     "n": 1000,
+     "clusters": 1000,
+     "detected": false
+    },
+    "D_0.5": {
+     "mean": 0.0884,
+     "lo": 0.062299999999999994,
+     "hi": 0.1146,
+     "n": 1000,
+     "clusters": 1000,
+     "detected": true
+    },
+    "smallest_q_detected": 0.25,
+    "gate": true
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.6503000000000001,
+     "tokens_mean": 1416.85
+    },
+    "n_match": 40,
+    "oklab_L2_N32": {
+     "accuracy": 0.6376,
+     "tokens_mean": 997.717,
+     "minus_colorGrid16": {
+      "mean": -0.012700000000000003,
+      "lo": -0.0291,
+      "hi": 0.003002499999999966,
+      "n": 1000,
+      "clusters": 1000
+     }
+    },
+    "oklab_L2_N40": {
+     "accuracy": 0.6348,
+     "tokens_mean": 1489.128,
+     "minus_colorGrid16": {
+      "mean": -0.015499999999999996,
+      "lo": -0.033,
+      "hi": 0.0013000000000000008,
+      "n": 1000,
+      "clusters": 1000
+     }
+    }
+   }
+  },
+  {
+   "source": "KATHER2016",
+   "task": "tissue_class",
+   "scope": "in-source only",
+   "images": 1000,
+   "classes": [
+    "adipose",
+    "complex",
+    "debris",
+    "empty",
+    "lympho",
+    "mucosa",
+    "stroma",
+    "tumor"
+   ],
+   "groups": 10,
+   "majority_rate": 0.125,
+   "configs": {
+    "L0": {
+     "accuracy": 0.37989999999999996
+    },
+    "L1": {
+     "accuracy": 0.2452
+    },
+    "L2": {
+     "accuracy": 0.3418
+    },
+    "L0+L1": {
+     "accuracy": 0.4585
+    },
+    "L0+L2": {
+     "accuracy": 0.4089
+    },
+    "L1+L2": {
+     "accuracy": 0.34420000000000006
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.4388
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0946,
+     "lo": 0.06238999850928277,
+     "hi": 0.14023177035663406,
+     "n": 1000,
+     "clusters": 10,
+     "carries_value": true,
+     "not_estimable": false,
+     "tokens_mean": 52.873,
+     "value_per_100_tokens": 0.17891929718381785
+    },
+    "L1": {
+     "mean": 0.029900000000000003,
+     "lo": 0.008646804757178375,
+     "hi": 0.06183032021109682,
+     "n": 1000,
+     "clusters": 10,
+     "carries_value": true,
+     "not_estimable": false,
+     "tokens_mean": 109.637,
+     "value_per_100_tokens": 0.02727181517188541
+    },
+    "L2": {
+     "mean": -0.019700000000000002,
+     "lo": -0.030789664378337144,
+     "hi": -0.009800673933122488,
+     "n": 1000,
+     "clusters": 10,
+     "carries_value": false,
+     "not_estimable": false,
+     "tokens_mean": 1014.498,
+     "value_per_100_tokens": -0.001941847100733565
+    }
+   },
+   "saturated": false,
+   "controls": {
+    "wrong_image": {
+     "draws": [
+      0.069,
+      0.035,
+      0.042,
+      0.049,
+      0.042,
+      0.069,
+      0.052,
+      0.032,
+      0.027,
+      0.054,
+      0.053,
+      0.051,
+      0.067,
+      0.054,
+      0.04,
+      0.043,
+      0.07,
+      0.06,
+      0.04,
+      0.042
+     ],
+     "oracle": [
+      0.109,
+      0.168,
+      0.074,
+      0.122,
+      0.108,
+      0.112,
+      0.137,
+      0.1,
+      0.151,
+      0.113,
+      0.159,
+      0.119,
+      0.137,
+      0.113,
+      0.113,
+      0.087,
+      0.108,
+      0.127,
+      0.137,
+      0.126
+     ],
+     "excess_mean": -0.07145,
+     "excess_sd": 0.02748679108609309,
+     "excess_upper": -0.059403382663039475,
+     "pass": true,
+     "v1_statistic": {
+      "mean": 0.049550000000000004,
+      "upper": 0.05512367985785825,
+      "bound": 0.145,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.05488371422135517,
+      0.08641507236011349
+     ]
+    },
+    "shuffled_layer": {
+     "draws": [
+      0.046,
+      0.057,
+      0.037,
+      0.105,
+      0.08,
+      0.035,
+      0.051,
+      0.039,
+      0.087,
+      0.082,
+      0.044,
+      0.045,
+      0.034,
+      0.061,
+      0.08,
+      0.053,
+      0.111,
+      0.058,
+      0.044,
+      0.076
+     ],
+     "oracle": [
+      0.128,
+      0.131,
+      0.115,
+      0.121,
+      0.108,
+      0.142,
+      0.144,
+      0.116,
+      0.117,
+      0.13,
+      0.102,
+      0.131,
+      0.129,
+      0.14,
+      0.143,
+      0.145,
+      0.133,
+      0.133,
+      0.111,
+      0.129
+     ],
+     "excess_mean": -0.06614999999999999,
+     "excess_sd": 0.026061213365944094,
+     "excess_upper": -0.05472816964617408,
+     "pass": true,
+     "v1_statistic": {
+      "mean": 0.06125000000000001,
+      "upper": 0.07141048315262306,
+      "bound": 0.145,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.03466231280457309,
+      0.06081251111186951
+     ]
+    }
+   },
+   "positive_controls": {
+    "P_0.5": {
+     "mean": 0.17389999999999997,
+     "lo": 0.1327141022291884,
+     "hi": 0.22156800553136025,
+     "n": 1000,
+     "clusters": 10,
+     "detected": true
+    },
+    "P_0.25": {
+     "mean": 0.0627,
+     "lo": 0.023593353236316908,
+     "hi": 0.1091982862861193,
+     "n": 1000,
+     "clusters": 10,
+     "detected": true
+    },
+    "P_0.1": {
+     "mean": 0.0198,
+     "lo": 0.003963319951522497,
+     "hi": 0.04407507788207173,
+     "n": 1000,
+     "clusters": 10,
+     "detected": true
+    },
+    "D_0.5": {
+     "mean": 0.1546,
+     "lo": 0.10865001412807472,
+     "hi": 0.20368378160360678,
+     "n": 1000,
+     "clusters": 10,
+     "detected": true
+    },
+    "smallest_q_detected": 0.1,
+    "gate": true
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.2571,
+     "tokens_mean": 1716.625
+    },
+    "n_match": 40,
+    "oklab_L2_N32": {
+     "accuracy": 0.3418,
+     "tokens_mean": 1014.498,
+     "minus_colorGrid16": {
+      "mean": 0.08470000000000001,
+      "lo": 0.043137254901960805,
+      "hi": 0.11651129609487655,
+      "n": 1000,
+      "clusters": 10
+     }
+    },
+    "oklab_L2_N40": {
+     "accuracy": 0.34070000000000006,
+     "tokens_mean": 1547.09,
+     "minus_colorGrid16": {
+      "mean": 0.08360000000000001,
+      "lo": 0.040058024262412985,
+      "hi": 0.11665483213700698,
+      "n": 1000,
+      "clusters": 10
+     }
+    }
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "condition",
+   "scope": "in-source only",
+   "images": 200,
+   "classes": [
+    "negative control",
+    "positive control"
+   ],
+   "groups": 100,
+   "majority_rate": 0.52,
+   "configs": {
+    "L0": {
+     "accuracy": 0.7425
+    },
+    "L1": {
+     "accuracy": 0.873
+    },
+    "L2": {
+     "accuracy": 0.9655000000000001
+    },
+    "L0+L1": {
+     "accuracy": 0.9575
+    },
+    "L0+L2": {
+     "accuracy": 0.9740000000000001
+    },
+    "L1+L2": {
+     "accuracy": 0.9765
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.9780000000000001
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0015000000000000002,
+     "lo": -0.007000000000000001,
+     "hi": 0.011500000000000002,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": false,
+     "not_estimable": false,
+     "tokens_mean": 49.5,
+     "value_per_100_tokens": 0.0030303030303030307
+    },
+    "L1": {
+     "mean": 0.004000000000000001,
+     "lo": -0.006499999999999999,
+     "hi": 0.0155,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": false,
+     "not_estimable": false,
+     "tokens_mean": 133.755,
+     "value_per_100_tokens": 0.0029905424096295474
+    },
+    "L2": {
+     "mean": 0.020500000000000004,
+     "lo": 0.0035000000000000005,
+     "hi": 0.04,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": true,
+     "not_estimable": false,
+     "tokens_mean": 545.11,
+     "value_per_100_tokens": 0.0037607088477554997
+    }
+   },
+   "saturated": false,
+   "controls": {
+    "wrong_image": {
+     "draws": [
+      0.53,
+      0.455,
+      0.575,
+      0.485,
+      0.43,
+      0.445,
+      0.465,
+      0.355,
+      0.485,
+      0.52,
+      0.57,
+      0.495,
+      0.405,
+      0.565,
+      0.485,
+      0.56,
+      0.435,
+      0.54,
+      0.455,
+      0.465
+     ],
+     "oracle": [
+      0.53,
+      0.52,
+      0.53,
+      0.26,
+      0.28,
+      0.55,
+      0.54,
+      0.26,
+      0.54,
+      0.52,
+      0.52,
+      0.52,
+      0.53,
+      0.54,
+      0.52,
+      0.28,
+      0.55,
+      0.28,
+      0.28,
+      0.52
+     ],
+     "excess_mean": 0.03249999999999999,
+     "excess_sd": 0.12574514744221013,
+     "excess_upper": 0.08761024071421705,
+     "pass": false,
+     "v1_statistic": {
+      "mean": 0.48600000000000004,
+      "upper": 0.5119731626674029,
+      "bound": 0.54,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.46091557335361155,
+      0.5979536662912893
+     ]
+    },
+    "shuffled_layer": {
+     "draws": [
+      0.45,
+      0.47,
+      0.49,
+      0.51,
+      0.48,
+      0.455,
+      0.51,
+      0.48,
+      0.435,
+      0.425,
+      0.495,
+      0.5,
+      0.455,
+      0.46,
+      0.405,
+      0.465,
+      0.49,
+      0.575,
+      0.395,
+      0.44
+     ],
+     "oracle": [
+      0.505,
+      0.35,
+      0.54,
+      0.545,
+      0.415,
+      0.555,
+      0.565,
+      0.495,
+      0.28,
+      0.29,
+      0.335,
+      0.455,
+      0.585,
+      0.585,
+      0.565,
+      0.4,
+      0.485,
+      0.595,
+      0.51,
+      0.51
+     ],
+     "excess_mean": -0.008999999999999998,
+     "excess_sd": 0.09941407292097452,
+     "excess_upper": 0.03457013849439834,
+     "pass": false,
+     "v1_statistic": {
+      "mean": 0.46925,
+      "upper": 0.4871555667615586,
+      "bound": 0.54,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.38263948633754313,
+      0.519245114254289
+     ]
+    }
+   },
+   "positive_controls": {
+    "P_0.5": {
+     "mean": 0.0004999999999999999,
+     "lo": -0.008999999999999998,
+     "hi": 0.0085,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "P_0.25": {
+     "mean": 0.0034999999999999996,
+     "lo": -0.0004999999999999996,
+     "hi": 0.009,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "P_0.1": {
+     "mean": -0.0024999999999999996,
+     "lo": -0.004999999999999999,
+     "hi": -0.0004999999999999999,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "D_0.5": {
+     "mean": -0.0105,
+     "lo": -0.022000000000000002,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "smallest_q_detected": null,
+    "gate": false
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.915,
+     "tokens_mean": 1806.485
+    },
+    "n_match": 48,
+    "oklab_L2_N32": {
+     "accuracy": 0.9655000000000001,
+     "tokens_mean": 545.11,
+     "minus_colorGrid16": {
+      "mean": 0.050499999999999996,
+      "lo": 0.024,
+      "hi": 0.0795,
+      "n": 200,
+      "clusters": 100
+     }
+    },
+    "oklab_L2_N48": {
+     "accuracy": 0.9875,
+     "tokens_mean": 1184.165,
+     "minus_colorGrid16": {
+      "mean": 0.0725,
+      "lo": 0.044,
+      "hi": 0.10399999999999998,
+      "n": 200,
+      "clusters": 100
+     }
+    }
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "channel",
+   "scope": "in-source only",
+   "images": 200,
+   "classes": [
+    "fluorescence TRITC (Sytox Orange)",
+    "transmitted light"
+   ],
+   "groups": 100,
+   "majority_rate": 0.5,
+   "configs": {
+    "L0": {
+     "accuracy": 0.995
+    },
+    "L1": {
+     "accuracy": 1.0
+    },
+    "L2": {
+     "accuracy": 1.0
+    },
+    "L0+L1": {
+     "accuracy": 0.995
+    },
+    "L0+L2": {
+     "accuracy": 0.9990000000000001
+    },
+    "L1+L2": {
+     "accuracy": 1.0
+    },
+    "L0+L1+L2": {
+     "accuracy": 1.0
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": false,
+     "not_estimable": true,
+     "tokens_mean": 49.5,
+     "value_per_100_tokens": 0.0
+    },
+    "L1": {
+     "mean": 0.0009999999999999998,
+     "lo": 0.0,
+     "hi": 0.002999999999999999,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": false,
+     "not_estimable": true,
+     "tokens_mean": 133.755,
+     "value_per_100_tokens": 0.0007476356024073865
+    },
+    "L2": {
+     "mean": 0.005,
+     "lo": 0.0,
+     "hi": 0.015,
+     "n": 200,
+     "clusters": 100,
+     "carries_value": false,
+     "not_estimable": true,
+     "tokens_mean": 545.11,
+     "value_per_100_tokens": 0.0009172460604281705
+    }
+   },
+   "saturated": true,
+   "controls": {
+    "wrong_image": {
+     "draws": [
+      0.58,
+      0.465,
+      0.455,
+      0.435,
+      0.455,
+      0.575,
+      0.39,
+      0.505,
+      0.485,
+      0.455,
+      0.49,
+      0.485,
+      0.475,
+      0.395,
+      0.52,
+      0.39,
+      0.465,
+      0.515,
+      0.475,
+      0.485
+     ],
+     "oracle": [
+      0.51,
+      0.0,
+      0.51,
+      0.52,
+      0.0,
+      0.57,
+      0.0,
+      0.52,
+      0.52,
+      0.0,
+      0.51,
+      0.0,
+      0.53,
+      0.51,
+      0.53,
+      0.51,
+      0.52,
+      0.56,
+      0.54,
+      0.52
+     ],
+     "excess_mean": 0.08074999999999999,
+     "excess_sd": 0.22307229769740572,
+     "excess_upper": 0.1785157450234999,
+     "pass": false,
+     "v1_statistic": {
+      "mean": 0.47474999999999995,
+      "upper": 0.49721559228780987,
+      "bound": 0.52,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.5107194625547862,
+      0.6462651764982825
+     ]
+    },
+    "shuffled_layer": {
+     "draws": [
+      0.44,
+      0.52,
+      0.49,
+      0.495,
+      0.495,
+      0.565,
+      0.51,
+      0.535,
+      0.47,
+      0.505,
+      0.485,
+      0.475,
+      0.48,
+      0.47,
+      0.555,
+      0.485,
+      0.46,
+      0.415,
+      0.555,
+      0.545
+     ],
+     "oracle": [
+      0.41,
+      0.36,
+      0.6,
+      0.425,
+      0.475,
+      0.61,
+      0.55,
+      0.53,
+      0.58,
+      0.51,
+      0.295,
+      0.515,
+      0.535,
+      0.595,
+      0.46,
+      0.43,
+      0.39,
+      0.365,
+      0.455,
+      0.5
+     ],
+     "excess_mean": 0.018000000000000002,
+     "excess_sd": 0.08615164109381723,
+     "excess_upper": 0.05575762146835218,
+     "pass": false,
+     "v1_statistic": {
+      "mean": 0.49749999999999994,
+      "upper": 0.5148496276313749,
+      "bound": 0.52,
+      "pass_v1": true
+     },
+     "first_draw_wilson": [
+      0.3729770042058236,
+      0.509284516504375
+     ]
+    }
+   },
+   "positive_controls": {
+    "P_0.5": {
+     "mean": -0.005,
+     "lo": -0.015,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "P_0.25": {
+     "mean": -0.005,
+     "lo": -0.015,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "P_0.1": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "D_0.5": {
+     "mean": -0.0004999999999999999,
+     "lo": -0.0014999999999999996,
+     "hi": 0.0,
+     "n": 200,
+     "clusters": 100,
+     "detected": false
+    },
+    "smallest_q_detected": null,
+    "gate": "not applicable (saturated)"
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 1.0,
+     "tokens_mean": 1806.485
+    },
+    "n_match": 48,
+    "oklab_L2_N32": {
+     "accuracy": 1.0,
+     "tokens_mean": 545.11,
+     "minus_colorGrid16": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 200,
+      "clusters": 100
+     }
+    },
+    "oklab_L2_N48": {
+     "accuracy": 1.0,
+     "tokens_mean": 1184.165,
+     "minus_colorGrid16": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 200,
+      "clusters": 100
+     }
+    }
+   }
+  }
+ ],
+ "gates": {
+  "PBC cell_class wrong_image": true,
+  "PBC cell_class shuffled_layer": true,
+  "PBC cell_class positive P_0.5": true,
+  "KATHER2016 tissue_class wrong_image": true,
+  "KATHER2016 tissue_class shuffled_layer": true,
+  "KATHER2016 tissue_class positive P_0.5": true,
+  "BBBC010 condition wrong_image": false,
+  "BBBC010 condition shuffled_layer": false,
+  "BBBC010 condition positive P_0.5": false,
+  "BBBC010 channel wrong_image": false,
+  "BBBC010 channel shuffled_layer": false,
+  "BBBC010 channel positive P_0.5": "not applicable (saturated)"
+ }
+}
