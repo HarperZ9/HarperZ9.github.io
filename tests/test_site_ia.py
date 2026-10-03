@@ -158,6 +158,11 @@ def test_redirect_stubs_cover_every_old_anchor_and_match_their_generator() -> No
 DATED_CORRECTIONS = {
     "conferred-existence-essay.html": (
         ("Three traditions that never met arrived at the same seam independently:", "Three traditions arrived at the same seam:"),
+        ("quietly deletes one of the two people in the relation. You cannot collapse a two-place relation into a "
+         "one-place vocabulary without losing a relatum.",
+         "changes the role of the second person in the relation. Holding someone responsible addresses a person who "
+         "can answer and refuse. Shaping behavior adjusts a system, and no one has shown that a description built "
+         "from that role can fix the first."),
     ),
 }
 

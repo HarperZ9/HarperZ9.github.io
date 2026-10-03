@@ -38,15 +38,25 @@ FIXES = {
         ("three weeks after the reference month.",),
         ("three weeks after the reference week",),
     ),
-    "who-pays-the-referees.html": ((), ("OpenAI Foundation Board", "recuse himself")),
+    "who-pays-the-referees.html": (
+        ("two contracted red-team firms", "Foundation reportedly funds safety evaluations", "co-funded by Anthropic and AWS",
+         "used 15 payees", "Its basis is unknown", "and names none."),
+        ("OpenAI Foundation Board", "recuse himself", "Trajectory Labs, 10a Labs and Gray Swan", "past £27 million",
+         "17 payees", "including Cathedral", "now cofounder and chief scientist at Resolution"),
+    ),
     "the-terms-for-telling.html": (
         ("Section 802 of Public Law 110-261 (10 July 2008) barred", "The public sees anonymized aggregates"),
         ("Section 802 of the Foreign Intelligence Surveillance Act, which section 201", "H.R. 471", "S. 483",
-         "does not itself require its publication"),
+         "does not itself require its publication", "nearly 180 Reality Labs studies", "wrote on X, as TIME reported",
+         "dismissed the appeal of xAI's 2025 Memphis permit"),
     ),
     "who-knew-first.html": (
-        ("&#x27;$0 license fees", '<meta property="article:published_time" content="2026-09-23">'),
-        ("evaluations to improve its own AI cyberdefense", '<meta property="article:published_time" content="2026-09-25">'),
+        ("&#x27;$0 license fees", '<meta property="article:published_time" content="2026-09-23">',
+         "1 hour to 90 minutes", "mainly from work with leading labs", "44 to 74 days", "10 to 40 days",
+         "credited on 12 CVEs", "grasp of AI", "USD 125.8m.", "section 3.1.1", "only Forms 4 and 144", "Filings are confidential"),
+        ("evaluations to improve its own AI cyberdefense", '<meta property="article:published_time" content="2026-09-25">',
+         "in less than an hour", "significant revenue from work with leading labs", "54 days after the event",
+         "13 CVEs", "USD 75.8m in total receipts", "section 2.1.1", "Ben Morris in collaboration with Claude"),
     ),
     "research-conferred-existence.html": (
         ("Candrakirti's lamp", "al-Ghazali's teaching", "Benjamin's victors writing history",
@@ -59,7 +69,10 @@ FIXES = {
         ('"the difference that makes', "The Page curve:\n      information conserved and scrambled"),
         ('"a difference which makes', "estimates how slowly information leaves"),
     ),
-    "conferred-existence-essay.html": (("Three traditions that never met",), ("Three traditions arrived at the same seam:",)),
+    "conferred-existence-essay.html": (
+        ("Three traditions that never met", "into a one-place vocabulary without losing a relatum"),
+        ("Three traditions arrived at the same seam:", "addresses a person who can answer and refuse"),
+    ),
 }
 
 

@@ -579,10 +579,14 @@ RELEASE_PATHS = (
 # Witnessing Spine foreword added; the release is rehashed.
 # October 3, 2026: search and citation metadata (JSON-LD, citation tags, feed links) written into
 # page heads by tools/structured_data.py and the system record renderer; the release is rehashed.
+# October 3, 2026: the confirmed second-read corrections on Who Knew First, Who Pays the Referees
+# and The Terms for Telling, and the arity correction on the Conferred Existence essay, each with
+# a dated note, merged over the structured-data release; the series reading time follows; the
+# release is rehashed.
 # October 3, 2026: RAW now describes the public C++23 reference renderer (raw.html, the system
 # registry, the record pages and capability maps, and the home bundle index-DDpFxCuj.js); the
-# release is rehashed.
-REVIEWED_RELEASE_SHA256 = "0fcb10f1bb114008d1077e7b4d19e9110ea6ddfa93fd5a1da33718ed123ab0d1"
+# release is rehashed (merged over the second-read corrections).
+REVIEWED_RELEASE_SHA256 = "883aca2963827e9cd34ba2d325d739f515da089203523949c198b827d69ef33c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
