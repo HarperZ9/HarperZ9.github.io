@@ -22,10 +22,14 @@ RECORD = {
     "10.5281/zenodo.21231406": "published preprint",
     "10.5281/zenodo.21234475": "research note",
     "10.5281/zenodo.21231311": "research note",
+    # The formal note on faithfulness, deposited 15 September 2026 as its own Zenodo record.
+    # Added 3 October 2026, when a Zenodo search by ORCID returned it as the thirteenth record.
+    "10.5281/zenodo.22768398": "research note",
     "10.5281/zenodo.20778927": "archived corpus",
     "10.5281/zenodo.20773724": "archived corpus",
-    # The October 2026 editions, deposited 3 October 2026. Since that day they count in
-    # the record: twelve DOI records, read from the Zenodo records API and from
+    # The October 2026 editions, deposited 3 October 2026 (three are second versions of
+    # records first deposited 15 September 2026). Since that day the record holds thirteen
+    # DOI records, one per Zenodo concept, read from the Zenodo API and from
     # system/scholarly-records.json.
     "10.5281/zenodo.23126117": "philosophy paper",
     "10.5281/zenodo.23126357": "philosophy paper",
@@ -47,7 +51,7 @@ STATUS_PHRASE = {
     "philosophy paper": "philosophy paper",
     "working paper": "working paper",
 }
-WORDS = {1: "One", 2: "Two", 3: "Three", 6: "Six", 8: "Eight", 12: "Twelve"}
+WORDS = {1: "One", 2: "Two", 3: "Three", 6: "Six", 8: "Eight", 12: "Twelve", 13: "Thirteen"}
 
 
 def read(rel: str) -> str:
@@ -122,7 +126,7 @@ def test_nothing_claims_peer_review() -> None:
 
 
 def test_every_record_is_readable_without_leaving_the_site() -> None:
-    """All twelve are hosted here: ten as PDFs, and the two corpora as full-text
+    """All thirteen are hosted here: eleven as PDFs, and the two corpora as full-text
     pages rendered from the deposited sources, each with a typeset PDF as well. A link to a file that
     is not there is the exact failure this site exists to argue against."""
     src = read("publications.html")

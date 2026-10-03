@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-kUp7LAv4.js",
     "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
@@ -602,8 +603,10 @@ RELEASE_PATHS = (
 # October 3, 2026: the research record counts twelve DOI records (the four October editions
 # join it on the Writing hub, the CV, the resumes and the dossier), the two archived corpora are
 # typeset with LaTeX with build receipts, and the home bundle is index-G7cmpE16.js; the release
-# is rehashed.
-REVIEWED_RELEASE_SHA256 = "1e65061db92c61f0c3f19da64c3b7cf7de0c8b813d10bf7a460ed74e03823c19"
+# is rehashed. Later the same day a Zenodo search by ORCID returned thirteen records: the formal
+# note on faithfulness (15 September 2026) joins the record, the bundle is index-kUp7LAv4.js, and
+# the release is rehashed again.
+REVIEWED_RELEASE_SHA256 = "20b4b03b14b33c3101ae2c1f5792a96abfa1aa14fc9ea1d90076aecc058a3def"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -800,7 +803,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 3, 2026: the Writing hub's research record counts twelve DOI records and lists
     # the four October editions in it, so the bundle rebuilt from the registry is
     # index-G7cmpE16.js with the same sheet. index-DDpFxCuj.js stays as retained history.
-    current_js = "index-G7cmpE16.js"
+    # October 3, 2026: a Zenodo search by ORCID returned thirteen records, so the research
+    # record adds the formal note on faithfulness and counts thirteen; the bundle rebuilt from
+    # the registry is index-kUp7LAv4.js with the same sheet. index-G7cmpE16.js stays as history.
+    current_js = "index-kUp7LAv4.js"
+    previous_count_js = "index-G7cmpE16.js"
+    assert previous_count_js not in source
+    assert (ROOT / "assets" / previous_count_js).is_file()
+    assert f"assets/{previous_count_js}" in RELEASE_PATHS
     previous_record_js = "index-DDpFxCuj.js"
     assert previous_record_js not in source
     assert (ROOT / "assets" / previous_record_js).is_file()
