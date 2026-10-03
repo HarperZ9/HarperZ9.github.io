@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from tools.correction_batch import BATCH_DATE
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ESSAY = ROOT / "pick-the-lock-for-everyone.html"
@@ -128,7 +130,8 @@ def test_old_style_reader_face_and_revision_metadata_are_public() -> None:
     essay = read(ESSAY)
     assert 'font-family:"Times New Roman",Tinos' in essay
     assert "img/og/telos.png" in essay
-    assert 'content="2026-07-24"' in essay
+    # The revision stamp moved from 24 July to the date of the reference-correction batch.
+    assert f'<meta property="article:modified_time" content="{BATCH_DATE}">' in essay
     loader = read(LOADER)
     assert 'line.startsWith("### ")' in loader
     assert '<h3 id="${slug(label)}">' in loader

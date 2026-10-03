@@ -30,12 +30,20 @@ rule governs prose written for these surfaces, not text quoted onto them.
 from __future__ import annotations
 
 import html
+import os
 import pathlib
 import re
 import sys
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+
+from tools.corpus_corrections import CORRECTIONS, CORRECTIONS_OPENING, place_corrections
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-WORKSPACE = ROOT.parent.parent  # c:/dev
+# c:/dev when this checkout sits at c:/dev/public/portfolio-site. A worktree elsewhere
+# points CORPUS_WORKSPACE at that workspace so the deposited sources resolve.
+WORKSPACE = pathlib.Path(os.environ.get("CORPUS_WORKSPACE", ROOT.parent.parent))
 
 CORPORA = [
     {
@@ -233,8 +241,8 @@ PAGE = """<!DOCTYPE html>
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div id="site-nav" class="site-nav"></div>
-<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="publications.html">Writing</a> <a href="cv.html">Full CV</a></nav></noscript>
-<script type="module" src="system/nav.js?v=20260826-hiring-main"></script>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="research.html">Research</a> <a href="publications.html">Publications</a> <a href="publications.html">Writing</a> <a href="cv.html">Full CV</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <div class="docnav">
   <span class="where">Writing &middot; Research notes and papers</span>
@@ -295,15 +303,18 @@ def main() -> int:
             body = f'<p class="entry-note">{inline(subtitle)}</p>\n' + body
         slug = c["out"].stem
         words = len(re.sub(r"<[^>]+>", " ", body).split())
+        corrections = CORRECTIONS.get(c["out"].name, [])
+        body = place_corrections(body, corrections)
+        blurb = c["blurb"] + (CORRECTIONS_OPENING if corrections else "")
         page = PAGE.format(
             title=html.escape(c["title"], quote=True),
             desc=html.escape(c["role"], quote=True),
             role=html.escape(c["role"], quote=False),
             doi=c["doi"], licence=c["licence"],
-            blurb=html.escape(c["blurb"], quote=False),
+            blurb=html.escape(blurb, quote=False),
             slug=slug, body=body, headings=headings, generated=f"{words:,}",
         )
-        c["out"].write_text(page, encoding="utf-8")
+        c["out"].write_bytes(page.encode("utf-8"))
         print(f"{c['out'].name:30} {words:>7,} words   {headings:>3} sections   {len(page)/1024:>6.0f} kB")
     return 0
 

@@ -8,7 +8,7 @@
   "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses.",
   "author": "Zain Dana Harper",
   "published_at": "2026-10-01",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-02",
   "observed_at": "2026-10-01T11:08:21Z",
   "thesis": "An employment estimate should travel with its vintage, adjustment status, series definition and revision stage, because each version of the number answers a different question.",
   "opening": {
@@ -30,7 +30,7 @@
       "id": "revision-ladder",
       "heading": "Four ways the same month changes",
       "paragraphs": [
-        "BLS describes its revisions as a balance between speed and accuracy. For the national Current Employment Statistics survey, a first estimate appears about three weeks after the reference month. It is revised in each of the next two monthly releases as more sample reports arrive, and then held until the annual benchmark. BLS revisions policy, CES questions and answers",
+        "BLS describes its revisions as a balance between speed and accuracy. For the national Current Employment Statistics survey, a first estimate appears about three weeks after the reference week, the pay period that includes the 12th, usually on the first Friday of the next month. It is revised in each of the next two monthly releases as more sample reports arrive, and then held until the annual benchmark. BLS revisions policy, CES questions and answers",
         "Once a year, the March level is re-anchored to counts drawn mainly from unemployment insurance tax records, which BLS says cover about 97 percent of employment in the survey's scope. Other sources estimate the rest. The months around March are then adjusted to the new level. Seasonal models are re-estimated each year as well, and seasonally adjusted figures can change for the previous five years. BLS can also reconstruct historical series when industry classifications, scope or data errors change. Under a new industry code structure, a series can be converted whole, combined with another, split, or published in less detail. CES questions and answers, CES methods: calculation, Industry classification overview",
         "Each mechanism changes a different part of the record. Later sample reports change one month's estimate. A benchmark changes a level and the months around it. Seasonal re-estimation changes the adjusted series. A reconstruction can change what a label covers."
       ]
@@ -471,7 +471,9 @@
       "alt": "Table of six fields to match before comparing official employment numbers: series identity, reference period, value and units, adjustment status, vintage, and revision stage, each with its question and the mismatch it prevents."
     }
   ],
-  "corrections": [],
+  "corrections": [
+    "2 October 2026, correction, Four ways the same month changes: the first estimate appears about three weeks after the survey's reference week, usually the first Friday of the next month. An earlier version said three weeks after the reference month."
+  ],
   "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
   "personal_voice_adopted": false
 }
