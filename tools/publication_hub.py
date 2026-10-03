@@ -114,13 +114,16 @@ def _research_lists(root: Path, section: dict) -> str:
 
 
 def _paper_links(root: Path, paper: dict) -> str:
-    """The DOI and, for a PDF typeset by tools/build_latex_papers.py, its build receipt."""
+    """The DOI and, for a PDF typeset by tools/build_latex_papers.py, its build receipt and LaTeX source."""
     links = []
     if paper.get("doi"):
         links.append(f'<a href="https://doi.org/{_e(paper["doi"])}" translate="no">DOI</a>')
     receipt = f'papers/receipts/{Path(paper["file"]).stem}.json'
     if (root / receipt).is_file():
         links.append(f'<a href="{_e(receipt)}">build receipt</a>')
+    tex = f'papers/tex/{Path(paper["file"]).stem}.tex'
+    if (root / tex).is_file():
+        links.append(f'<a href="{_e(tex)}">LaTeX source</a>')
     return "".join(f" · {link}" for link in links)
 
 

@@ -4,6 +4,8 @@ subtitle: *When does a checker's pass hold for someone who did not run the check
 byline: Argument built June 2026; first published 30 June 2026; revised for the web September 2026; this edition 3 October 2026.
 description: Asks when a checker's pass holds for someone who did not run it, tests the answer against its strongest objections, and reports where it loses.
 revision_note: This edition replaces the edition of 30 June 2026, in its September 2026 web revision. It rebuilds the paper as a contest: each part of the original argument meets its strongest objection, and every passage is marked as plain statement, steelman or open question. Several claims change. The paper withdraws its inference that the denial of aseity grounds the rule for binding verdicts, narrows that rule to what a verdict means for a reader, replaces "identical" with "has the same form" for the link between the ought and the verdict, and concedes that its studies illustrate the thesis without testing it. Seven questions are handed to the reader, among them whether agreeing checks are independent witnesses. A dated October 2026 section engages Julian Jaynes and his critics.
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 ---
 
 ## How to read this paper [PLAIN]

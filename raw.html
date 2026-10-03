@@ -36,6 +36,14 @@
 .rn-limits{max-width:44rem;margin:1rem 0 0;padding-left:1.1rem;color:var(--bone);font-family:var(--font-sans);line-height:1.6}
 .rn-limits li{margin:.35rem 0}
 @media (max-width:640px){.rn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.rn-live{display:grid;grid-template-columns:minmax(0,32rem) minmax(0,1fr);gap:clamp(1rem,2.5vw,2rem);align-items:start;max-width:60rem;margin-top:1rem}
+.rn-live canvas{display:block;width:100%;height:auto;aspect-ratio:1/1;border:1px solid var(--hairline);border-radius:2px;background:#000}
+.rn-controls{display:grid;gap:.8rem;font-family:var(--font-sans);font-size:.85rem;color:var(--muted)}
+.rn-controls label{display:grid;gap:.3rem}
+.rn-controls select{font:inherit;color:var(--bone);background:transparent;border:1px solid var(--hairline);border-radius:2px;padding:.4rem .5rem;min-height:2.5rem}
+.rn-status{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;font-family:var(--font-mono);font-size:.78rem;line-height:1.5;color:var(--bone)}
+.rn-status b{font-weight:600}
+@media (max-width:760px){.rn-live{grid-template-columns:minmax(0,1fr)}}
 </style>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/raw.html#software","name":"RAW","description":"RAW is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.","url":"https://harperz9.github.io/raw.html","codeRepository":"https://github.com/HarperZ9/raw-native","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"RAW","item":"https://harperz9.github.io/raw.html"}]}]}</script>
@@ -55,24 +63,79 @@
     <p class="lede" data-canonical-purpose="raw">RAW is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.</p>
     <p class="close">It lights the frame twice, once with the cheap method real-time engines use and once with a ray-traced reference, and tells you how far the cheap one drifted. You get the picture and the evidence for it from the same run.</p>
   </div>
-  <div class="seal"><span translate="no">RAW</span> 0.2.0 &middot; C++23 &middot; CPU only &middot; no dependencies &middot; MIT</div>
+  <div class="seal"><span translate="no">RAW</span> 0.4.0 &middot; C++23 &middot; CPU, WebAssembly and WebGPU &middot; no dependencies &middot; FSL-1.1-MIT</div>
 </div>
 
 <main id="main">
 
+<section class="mv" id="live" aria-labelledby="live-h">
+  <h2 id="live-h" class="reveal">Render it here.</h2>
+  <p class="body-text reveal">This is the 0.4.0 renderer running in your browser. Pick a camera and it draws the frame, lights it both ways and writes the certificate, the same as the command line. If your browser has WebGPU, the frame is drawn on your GPU, and the same camera is drawn again on the CPU to check it: a second certificate says whether the two agree. Without WebGPU, the CPU build draws the frame on one thread, and the status lines say why. Your browser checks each module against its published SHA-256 before running it.</p>
+  <div class="rn-live reveal">
+    <canvas id="rn-canvas" width="768" height="768" role="img" aria-label="The live RAW render: a box on a ground plane, drawn by raw-native in this browser."></canvas>
+    <div class="rn-controls">
+      <label>View <select id="rn-view"><option value="default">default</option><option value="high">high</option><option value="low">low</option><option value="close">close</option><option value="wide">wide</option></select></label>
+      <label>Size <select id="rn-size"><option value="256">256 x 256</option><option value="384" selected>384 x 384</option><option value="512">512 x 512</option></select></label>
+      <label>Show <select id="rn-channel"><option value="frame">shaded frame</option><option value="ao_rt">ray-traced AO, the reference</option><option value="ao_ss">screen-space AO, the shortcut</option><option value="ao_error">error map</option></select></label>
+      <ul class="rn-status" id="rn-status" aria-live="polite"><li>Needs JavaScript and WebAssembly.</li></ul>
+    </div>
+  </div>
+  <pre class="artifact reveal" id="rn-cert" translate="no" hidden></pre>
+  <p class="artifact-cap reveal" id="rn-cert-cap" hidden>The certificate from this render. <a id="rn-cert-link" download="certificate.json" href="#">Save it</a> to keep the full record, including the SHA-256 of every file the render wrote.</p>
+</section>
+<script type="module">
+import { usePlugin } from "./system/media-engine/page.mjs";
+import "./system/media-engine/raw-register.mjs";
+const canvas = document.getElementById("rn-canvas"), status = document.getElementById("rn-status");
+const pick = { view: document.getElementById("rn-view"), size: document.getElementById("rn-size"), channel: document.getElementById("rn-channel") };
+const cert = document.getElementById("rn-cert"), cap = document.getElementById("rn-cert-cap"), link = document.getElementById("rn-cert-link");
+const params = () => ({ view: pick.view.value, size: +pick.size.value, channel: pick.channel.value });
+const hot = { MATCH: "rn-ok", DRIFT: "rn-bad" };
+try {
+  const engine = await usePlugin("raw");
+  const handle = engine.mount(canvas, "raw", { params: params() });
+  const inst = handle.instance;
+  const paint = (result) => {
+    status.replaceChildren(...inst.status().map((s) => {
+      const li = document.createElement("li"), b = document.createElement("b");
+      b.textContent = s.label + ": " + s.verdict.toLowerCase();
+      if (s.label === "AO certificate" && hot[s.verdict]) b.className = hot[s.verdict];
+      li.append(b, " " + s.detail);
+      return li;
+    }));
+    if (!result || !result.certificate) return;
+    const c = result.certificate;
+    const shown = { claim: c.claim, verdict: c.verdict, oracle: c.oracle, schema: c.schema, renderer: c.renderer, evidence: c.evidence, samples: c.samples, exact: c.exact };
+    cert.textContent = "{" + Object.entries(shown).map(([k, v]) => JSON.stringify(k) + ":" + JSON.stringify(v)).join(",\n ") + "}";
+    if (link.href.startsWith("blob:")) URL.revokeObjectURL(link.href);
+    link.href = URL.createObjectURL(new Blob([JSON.stringify(c)], { type: "application/json" }));
+    cert.hidden = cap.hidden = false;
+  };
+  inst.onResult(paint);
+  paint(inst.result);
+  for (const n of Object.values(pick)) n.addEventListener("change", () => handle.setParams(params()));
+} catch (e) {
+  console.error("[raw.html] live render failed:", e);
+  status.textContent = "The live render could not start here: " + (e.message || e) + ". The downloads below run the same renderer.";
+}
+</script>
+
 <section class="mv" id="run" aria-labelledby="run-h">
   <h2 id="run-h" class="reveal">Run it now.</h2>
-  <p class="body-text reveal">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.2.0">0.2.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a second.</p>
+  <p class="body-text reveal">Download the binary for your system from the <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.4.0">0.4.0 release</a>, check it against the published hashes, and point it at an empty folder. A 256 by 256 frame takes about a quarter of a second.</p>
   <div class="channels reveal">
-    <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.2.0/raw-native-0.2.0-windows-x64.zip" translate="no">raw-native-0.2.0-windows-x64.zip</a>
+    <span class="g">Windows x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-windows-x64.zip" translate="no">raw-native-0.4.0-windows-x64.zip</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.2.0/raw-native-0.2.0-linux-x64.tar.gz" translate="no">raw-native-0.2.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
+    <span class="g">Linux x64</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-linux-x64.tar.gz" translate="no">raw-native-0.4.0-linux-x64.tar.gz</a> (glibc 2.38 or newer)
     &nbsp;&middot;&nbsp;
-    <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.2.0/SHA256SUMS" translate="no">SHA256SUMS</a>
+    <span class="g">WebAssembly</span>: <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/raw-native-0.4.0-wasm.zip" translate="no">raw-native-0.4.0-wasm.zip</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://github.com/HarperZ9/raw-native/releases/download/v0.4.0/SHA256SUMS" translate="no">SHA256SUMS</a>
   </div>
   <pre class="artifact reveal" translate="no"><span class="cmt"># check the download, then render the default view</span>
 sha256sum -c SHA256SUMS
 raw_native_cli --out ./out
+raw_native_cli verify ./out    <span class="cmt"># recompute the error from the written files</span>
 
 <span class="cmt"># move the camera; a previous camera adds motion vectors</span>
 raw_native_cli --out ./out --width 512 --height 512 --eye 0,9,3 --target 0,0.5,0
@@ -124,7 +187,7 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 <section class="mv" id="certificate" aria-labelledby="cert-h">
   <h2 id="cert-h" class="reveal">What the certificate is for.</h2>
   <p class="body-text reveal">A rendered frame usually asks you to trust it. A certificate gives you a claim, a verdict, the oracle that judged it and the evidence the verdict rests on. The verdict is one of three words: <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null, never as a pass.</p>
-  <p class="body-text reveal">You check one by running the same command yourself. The output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows (Release and Debug) and with GCC 13.3 on Ubuntu, on my machine and on GitHub&rsquo;s build runners. Memory gets the same treatment. The renderer measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
+  <p class="body-text reveal">You can check one two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, on my machine and on GitHub&rsquo;s build runners. Memory gets the same treatment. The renderer measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
   <p class="body-text reveal">The same scene gives different verdicts from different cameras:</p>
   <div class="rn-wrap reveal">
     <table class="rn-table">
@@ -147,25 +210,26 @@ ctest --test-dir build -C Release --output-on-failure</pre>
     <li>There is one built-in test scene and no model loader yet.</li>
     <li>The ray-traced reference uses 64 samples per pixel from a fixed per-pixel hash. It is a repeatable estimate and shows visible grain.</li>
     <li>The screen-space method is a simple one, which is why most views come back refuted.</li>
-    <li>The tolerance is fixed at 0.12 RMSE in the command line.</li>
-    <li>Rendering is single-threaded: about 1.2 seconds at 256 by 256 and 4.6 seconds at 512 by 512 on an Intel Core i7-13700KF, measured while the machine was busy with other work.</li>
-    <li>Matching hashes were checked on x86-64 with two compilers. Other processors and compilers are untested.</li>
-    <li>It does not run in the browser yet. A WebAssembly build is the next step for this page.</li>
+    <li>The default tolerance is 0.12 RMSE. <code translate="no">--tolerance</code> changes it, and the certificate records the value used.</li>
+    <li>A full render with the ray-traced reference takes about 0.26 seconds at 256 by 256 and 1 second at 512 by 512 on one thread of an Intel Core i7-13700KF, natively or in WebAssembly. Times on this page depend on your machine.</li>
+    <li>On an NVIDIA RTX 4090 in Chrome, the GPU draws a 512 by 512 frame with every channel in about 14 milliseconds, and all 16 GPU certificates in the release evidence say verified. The CPU reference that checks each GPU frame still takes its full time, so a GPU render on this page is not faster end to end. One GPU, one driver and one browser have been measured.</li>
+    <li>Without WebGPU this page runs the single-threaded CPU build. The threaded WebAssembly build ran about eight times faster on the same machine, but browsers allow it only on pages sent with cross-origin isolation headers, and GitHub Pages cannot send them.</li>
+    <li>Matching hashes were checked on x86-64 with two compilers and the WebAssembly build. Other processors and compilers are untested.</li>
   </ul>
 </section>
 
 <section class="mv" id="lineage" aria-labelledby="lineage-h">
   <h2 id="lineage-h" class="reveal">Where it came from.</h2>
-  <p class="body-text reveal"><span translate="no">RAW</span> began as a Direct3D 11 effects platform for Skyrim SE: a proxy library that took over a closed game&rsquo;s frame and added its own lighting passes mid-picture. That taught me how a frame is built and how quickly an effect can look right while being wrong. The new <span translate="no">RAW</span> keeps the lesson and drops the game. It owns its whole frame, and every frame carries a check against a reference. The Skyrim code stays public as archived history.</p>
+  <p class="body-text reveal"><span translate="no">RAW</span> began as a Direct3D 11 effects platform for Skyrim SE: a proxy library that took over a closed game&rsquo;s frame and added its own lighting passes mid-picture. That taught me how a frame is built and how quickly an effect can look right while being wrong. The new <span translate="no">RAW</span> keeps the lesson and drops the game. It owns its whole frame, and every frame carries a check against a reference. The Skyrim code stays public. Work on it is paused, and I plan to return to it.</p>
 </section>
 
 <section class="mv" id="repo" aria-labelledby="repo-h">
   <h2 id="repo-h" class="reveal">Read the source.</h2>
-  <p class="body-text reveal">C++23, MIT licensed, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer and the bounded memory arena each have their own tests, 29 in all.</p>
+  <p class="body-text reveal">C++23, built from the standard library and its own headers. The rasterizer, both ambient occlusion methods, the reconcile step, the certificate writer, the verifier and the bounded memory arena each have their own tests, 32 in all. From 0.3.0 the license is FSL-1.1-MIT, and each version becomes MIT two years after its release. Version 0.2.0 stays MIT, as released.</p>
   <div class="channels reveal">
     <span class="g">GitHub</span>: <a href="https://github.com/HarperZ9/raw-native" translate="no">HarperZ9/raw-native</a>
     &nbsp;&middot;&nbsp;
-    <span class="g">Archived</span>: <a href="https://github.com/HarperZ9/raw" translate="no">HarperZ9/raw</a> (the Skyrim SE platform)
+    <span class="g">Paused</span>: <a href="https://github.com/HarperZ9/raw" translate="no">HarperZ9/raw</a> (the Skyrim SE platform)
     &nbsp;&middot;&nbsp;
     <a href="overview.html">&larr; the map</a> &nbsp;&middot;&nbsp; <a href="catalog.html">the index</a>
   </div>

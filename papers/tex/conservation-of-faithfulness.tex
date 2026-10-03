@@ -1,3 +1,11 @@
+% ----------------------------------------------------------------------
+% The Conservation of Faithfulness
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.23126484
+% First public: 2026-06-30 (site commit 450a8c4d, research-conservation-of-faithfulness.html)
+% Source SHA-256: c11e1b00bbe4115cd8d49963affd958e2af979d01a30ea2ddda653fcd17e174f (writing/papers/conservation-of-faithfulness.md)
+% ----------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{fontspec}
@@ -12,8 +20,16 @@
 \setlength{\parskip}{6pt plus 1pt}
 \setlength{\parindent}{0pt}
 \setlength{\emergencystretch}{3em}
-\hypersetup{pdftitle={The Conservation of Faithfulness},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/conservation-of-faithfulness.md},pdfkeywords={source sha256 4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc}}
+\hypersetup{pdftitle={The Conservation of Faithfulness},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/conservation-of-faithfulness.md},pdfkeywords={source sha256 c11e1b00bbe4115cd8d49963affd958e2af979d01a30ea2ddda653fcd17e174f}}
 \newcommand{\register}[1]{{\ttfamily\small #1}}
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.23126484 \textperiodcentered{} first public 30 June 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
 \begin{document}
 
 \begin{center}
@@ -514,5 +530,5 @@ These corrections were made to the earlier edition on 3 October 2026. This editi
 
 3 October 2026, correction, References: an earlier version glossed Page (1993) as ``the Page curve: information conserved and scrambled''. Page assumes black-hole evaporation is unitary and estimates how slowly information leaves in the radiation. ``Scrambling'' comes from Sekino and Susskind (2008). Hayden and Preskill (2007) describe information that stays concealed until the half-way point.
 
-\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/conservation-of-faithfulness.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc}\par}
+\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/conservation-of-faithfulness.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{c11e1b00bbe4115cd8d49963affd958e2af979d01a30ea2ddda653fcd17e174f}\par}
 \end{document}

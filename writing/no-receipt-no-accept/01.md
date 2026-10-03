@@ -1,3 +1,8 @@
+---
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+---
+
 # No Receipt, No Accept
 
 ## Machines made claims almost free to produce. Checking a claim still costs what it always did. This essay describes the machinery that closes that gap and argues for opening it to everyone.

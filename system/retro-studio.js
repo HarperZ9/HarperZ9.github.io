@@ -6,7 +6,7 @@
    glitch can animate; the preview reacts to the pointer; Randomize rolls the
    whole chain. Everything is local; nothing uploads. */
 
-import { renderRetro } from "./retro-engine.js?v=20260902-crt";
+import { renderRetro } from "./retro-engine.js?v=20261003-worker";
 import { pageEngine } from "./media-engine/page.mjs";
 import { createRetroRenderer } from "./media-engine/plugins/retro.mjs";
 import { createShaderRunner, DEFAULT_FRAG } from "./shader-runner.js?v=20260805-react";
@@ -431,15 +431,31 @@ function boot() {
   const retroRenderer = createRetroRenderer();
   out.dataset.backend = retroRenderer.backend;
 
-  function retroPass(t = 0) {
-    const s = sourceCanvas(); if (!s.width) return;
-    try {
-      // renderRetro reports the grid it just built ({w,h,palette,cells,colors});
-      // the call site used to drop it, so the one surface whose whole subject is
-      // the pixel grid never told you what the grid was.
-      lastMeasure = retroRenderer.render(s, out, opts()) || null;
-      if (activeFx.size) applyOps(out, buildFx(t));
+  // live: the animation loop's call. The front half then runs in a worker and the rest of the
+  // pass (effects, feedback, sound) finishes when the frame comes back; it returns false when the
+  // previous frame is still in flight. Every other caller draws synchronously.
+  function retroPass(t = 0, live = false) {
+    const s = sourceCanvas(); if (!s.width) return false;
+    if (live) {
+      try { return retroRenderer.renderLive(s, out, opts(), (m) => finishPass(t, m)); }
+      catch (e) { status("render error: " + e.message, "err"); return false; }
     }
+    let m = null;
+    try { m = retroRenderer.render(s, out, opts()); }
+    catch (e) { status("render error: " + e.message, "err"); }
+    finishPass(t, m);
+    return true;
+  }
+
+  function finishPass(t, m) {
+    // renderRetro reports the grid it just built ({w,h,palette,cells,colors}); the call site used
+    // to drop it, so the one surface whose whole subject is the pixel grid never told you what the
+    // grid was.
+    lastMeasure = m || null;
+    // Where the front half ran, and its mean time per frame in the worker, for anyone measuring.
+    out.dataset.frontHalf = retroRenderer.workerVerified ? "worker" : "main";
+    if (retroRenderer.workerVerified) out.dataset.workerMs = retroRenderer.workerMs;
+    try { if (activeFx.size) applyOps(out, buildFx(t)); }
     catch (e) { status("render error: " + e.message, "err"); }
     try { paintMeasure(); paintPalStrip(); } catch (_) {}
     // Feedback: the previous frame folded back over this one (zoomed and
@@ -528,7 +544,7 @@ function boot() {
         modPass(t);
         if (state === "shader") renderShaderFrame(t);
         if (state === "scope") renderScopeFrame(t);
-        if (now - lastRetro > 45) { retroPass(t); lastRetro = now; }
+        if (now - lastRetro > 45 && retroPass(t, true) !== false) lastRetro = now;
       },
       dispose() {},
     }),

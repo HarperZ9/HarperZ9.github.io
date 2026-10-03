@@ -1,3 +1,8 @@
+---
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+---
+
 # No Receipt, No Accept
 
 ## Machines made claims almost free to produce. Checking a claim still costs what it always did. This essay describes the machinery that closes that gap and argues for opening it to everyone.
@@ -402,4 +407,4 @@ Revision note, September 2026. Claude Opus 5.5 helped rewrite the prose into a p
 - 3 October 2026, correction, section 15: an earlier version said Goodhart stated this a century early. He wrote in 1975 about monetary targets. The measure-and-target wording is Marilyn Strathern's, from 1997.
 - 3 October 2026, clarification, section 22: the Latin root means to reckon together, in the sense of summing an account. The reading of a second person in it is mine.
 
-The PDF edition keeps the text first published on 28 July 2026 and does not carry these corrections.
+Since 3 October 2026 the PDF edition is typeset with LaTeX from this text and carries these corrections. The print of 28 July 2026 stays in the public history of the site's repository.

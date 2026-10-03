@@ -1,0 +1,92 @@
+% ----------------------------------------------------------------------
+% Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.21231311
+% First public: 2026-07-07 (Zenodo, first version)
+% Source SHA-256: 679f55539cad841532b0788930f1a879425bd51c2e2edc6cac9fc5788aa41957 (private research repository, papers/latex-sources/actuator-certificate-note/main.tex at commit b76c70ba00e8)
+% ----------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black,citecolor=blue!60!black}
+\title{\textbf{Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation}}
+\author{Zain Dana Harper\\[2pt]\small Seattle, WA \quad\textbar\quad \href{https://orcid.org/0009-0001-7175-5393}{ORCID 0009-0001-7175-5393}\\[2pt]\small\url{https://github.com/HarperZ9}}
+\date{July 2026}
+
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.21231311 \textperiodcentered{} first public 7 July 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
+\begin{document}
+\maketitle
+\begin{abstract}
+When an agent acts on the world, it might write a file to disk or run a command. Sometimes it moves an effector such as a motor or a valve. An effector is any part that changes the physical world. The record that the action succeeded is usually the actuator's own report, and the actuator is the part that performed the action. This note describes a small connecting piece that replaces the self-report with a re-perceived effect. Re-perceived means read back again from the world. The verdict that an action matched its intent comes from reading the world back. The actuator's account of what it did is not consulted. The connecting piece has two matching halves. Each half is an independent judging rule that runs over one shared checking step. A \emph{gate} judges a proposed action against the abilities the agent was granted, before the action runs. An \emph{effect} rule looks at the world, read back after the action runs, and compares it to what the action said it would do. For a file write, the rule compares the hash of the bytes on disk against the intended hash. A hash is a short fingerprint computed from the bytes. A process is judged by its return code. When the channel is a read, the rule records the observed bytes as evidence. Both rules are total: a malformed input becomes \textsc{Unverifiable} and never raises an error. Neither rule trusts the actuator. This is a well-formedness contract for actuation. The question it answers is whether the effect the world shows matched the intent that was admitted. The contract is not a result in robotics or control theory, and it claims nothing in any physical field. Its practical value is that it turns ``the action did what it claimed'' into a fact anyone can re-check. The same connecting piece also fits together with a stability-claim checker that holds control-certificate claims to the same must-fail rule.
+\end{abstract}
+
+\section*{In plain terms}
+Imagine you ask a helper to leave a note on the fridge. You want the note to say ``buy milk.'' The helper walks to the kitchen and comes back, then says ``done.''
+
+You now have one record that the job worked, and it came from the helper. The helper may have written the note correctly, or gotten the words wrong. The helper may also have written nothing at all and still said ``done,'' by mistake or on purpose. You cannot tell which of these happened, because the only report you have is the helper's own word.
+
+This is the problem. Whenever the part that does a job also certifies that the job worked, the report and the work share one author. If the work failed, the same author can still report success.
+
+There is a simple fix here, and it works because the fridge is right there to look at. You walk to the kitchen and read the note yourself. This note calls that step re-perceiving. You perceive the result again, straight from the world.
+
+The fix has two halves. Both run the same kind of check. The first runs before the helper acts. You check that the helper is even allowed to touch the fridge. If touching the fridge was never permitted, you stop the job before it starts. This note calls that a gate.
+
+The second half runs after the helper acts. You read the note on the fridge and compare it to what you asked for. If the words match, the result is confirmed. Different words mean the result is refused. And sometimes there is no way to read the note back at all, say the fridge is in another building. Then the honest answer is that you cannot tell, and you report exactly that. This note calls that the effect check.
+
+The rest of the paper does exactly this for a computer agent. For a file, reading the note back means reading the file off the disk and comparing its fingerprint to the intended one. A command is checked by the return code it left behind. In every case the judge that checks the result is separate from the actor that produced it, and the answer comes from the world.
+
+\section{The self-report problem}
+\emph{Plainly: the part that does a job usually also certifies that the job worked, so a failed job can still report success.}
+
+An actuator reports success. A file-writer answers ``ok.'' A command runner returns a status it computed on its own, and an effector controller signals that it reached its target setting. In each case the acting part is vouching for its own action. Each of these reports can be wrong. Under adversarial or buggy conditions a report can even be dishonest, and nothing downstream would notice. The gap is the same one that shows up wherever a producer certifies its own output: the certificate and the thing it certifies share an author. For actuation the fix is concrete, because the world is available to read again.
+
+\section{The seam}
+\emph{Plainly: two matching rules, one before the action and one after, judge it against granted abilities and against the world read back, and neither rule trusts the actor.}
+
+We express actuation accountability as two judging rules over a single checking step. The step is always the same. You perceive the result, then judge it against an independent rule. The judgment becomes a certificate anyone can re-check. The two rules have the same shape.
+
+\paragraph{Gate (before execution).} Given the set of granted abilities, a gate rule judges a proposed action. It asks whether this channel and this target are within what was granted. The action is admitted or refused \emph{before} it runs, and the admission is itself a certificate.
+
+\paragraph{Effect (after execution).} Given the executed action's declared intent, an effect rule judges the world \emph{read back again}:
+\begin{itemize}[leftmargin=*,itemsep=1pt]
+\item \textbf{File write:} the intent carries the content that was meant to land. The rule re-reads the file off disk and hashes those bytes, then compares the on-disk hash to the intended hash. It reads \textsc{Verified} only when the two hashes match. Any difference reads \textsc{Refuted}. The actuator's ``I wrote it'' is never consulted.
+\item \textbf{Process execution:} the return code, read back, decides the verdict. A non-zero code is \textsc{Refuted}, and a small head of the captured output is carried as evidence.
+\item \textbf{File read:} the hash of the observed bytes is recorded as evidence of what was read.
+\item \textbf{Unknown channel:} \textsc{Unverifiable}, with a stated reason. The seam refuses to pass a channel it cannot read back. It will not assume success.
+\end{itemize}
+Both rules are \emph{total}. A malformed action or perceived state yields \textsc{Unverifiable} and never a raised error, so a caller cannot crash the check into an accidental pass.
+
+\section{Why the verdict comes from re-perception}
+\emph{Plainly: the verdict is computed from the world read back, so the actor has no channel through which to relabel a failed write as a success.}
+
+The design commitment is that the verdict is computed from the world read back. The actuator's claim is not an input to it. This has the same shape as re-derivable verification found elsewhere: content addressing~\cite{merkle}, proof-carrying results~\cite{pcc}, and reproducible checks~\cite{reproducible}. Here the same idea applies to the effect of an action. Earlier work applied it to a stored file. Its practical force is that the actuator has no channel through which to relabel a failed write as a success. The bytes on disk either hash to the intended value or they do not, and the rule that checks them did not author the write.
+
+\section{Composition with control-certificate claims}
+\emph{Plainly: the same rule extends to stability claims, where every checked claim ships with a broken twin the checker must reject, so a pass proves the check is not empty.}
+
+The same discipline extends to a stability-claim checker. This checker tests claims of the form ``this trajectory satisfies this certified property.'' The load-bearing rule there is a \emph{must-fail} fixture. Every checked claim ships with a deliberately broken twin that the checker is required to reject. So a passing check demonstrates that the check is not empty on that shape. This is the actuation version of a checker that must be shown able to fail. It holds a control-certificate claim to the same re-checkable, non-empty standard as the file-write effect.
+
+\section{Honest scope}
+\emph{Plainly: this note gives a well-formedness contract. It does not give a physics result. The effect rule witnesses that the effect matched the declared intent, and it says nothing about whether the intent itself was correct or safe.}
+
+This is a contract about well-formedness. It does not reach into physics. The effect rule witnesses that the bytes on disk match the declared intent, or that a process returned zero. It does \emph{not} establish that the intent was correct. It does not show that a controller is stable in any control-theoretic sense. Nothing here says a physical maneuver was safe. Those are the actor's responsibility, and the seam makes no statement about them. The contribution is narrow. It turns ``the actuation did what it claimed'' from a promise the actuator issues into a fact a third party re-derives from the world. That fact is admitted ahead of time by a capability gate, and, for the control-claim case, held to a must-fail rule. Prior verified-control and provenance work does not, to our knowledge, ship a sealed receipt, re-verifiable offline, that binds a re-perceived effect to a declared intent at this level. The contribution is that packaging. It does not introduce a new control method.
+
+\begin{thebibliography}{9}
+\small
+\bibitem{pcc} Necula, G.~C. \emph{Proof-carrying code.} POPL, 1997.
+\bibitem{merkle} Merkle, R.~C. \emph{A digital signature based on a conventional encryption function.} CRYPTO, 1987.
+\bibitem{reproducible} Reproducible Builds Project. \emph{Reproducible Builds: a set of software development practices.} \url{https://reproducible-builds.org}, 2026.
+\end{thebibliography}
+\end{document}

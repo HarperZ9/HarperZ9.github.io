@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from tools.attribution import strip_front_matter
 from tools.paper_markdown import render
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,5 +25,5 @@ def foreword(page: str) -> str:
     source = FOREWORDS.get(page)
     if not source:
         return ""
-    body = render((ROOT / source).read_text(encoding="utf-8").replace("\r\n", "\n").strip())
+    body = render(strip_front_matter((ROOT / source).read_text(encoding="utf-8")).strip())
     return f'<section id="foreword" class="corpus-foreword">\n{body}\n</section>\n<hr class="corpus-rule">\n'
