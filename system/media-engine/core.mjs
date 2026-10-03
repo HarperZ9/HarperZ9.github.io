@@ -39,14 +39,27 @@ import { frameReceipt, reconcile } from "./receipt.mjs";
 export const BACKENDS = Object.freeze(["webgpu", "webgl2", "webgl", "canvas2d", "wasm-raw", "wasm"]);
 export const REFERENCE_BACKEND = "wasm-raw";
 
-// Reference renderers by backend id. A renderer is { render(request) -> Promise<Uint8Array RGBA> }
-// for the same request shape frameReceipt hashes (see scene.mjs for the camera fields).
+// Reference renderers by backend id. A renderer is { exact: true, render(request) -> Promise<Uint8Array RGBA> }
+// for the same request shape frameReceipt hashes (see scene.mjs for the camera fields). exact says
+// the renderer runs the exact path (raw-native's CPU build for pixels); a fast path such as a GPU
+// build can never act as a reference, so a renderer without it is refused.
+//
+// The scene kind chooses the reference, not the plugin's backend list: a plugin declares sceneKind
+// ("raster3d" for a 3D rasterized frame), and each reference registers the kinds it covers. A
+// plugin that lists "wasm-raw" without a sceneKind is treated as "raster3d", as before.
 const references = new Map();
-export function registerReferenceBackend(id, renderer) {
+const referenceByKind = new Map([["raster3d", REFERENCE_BACKEND]]);
+export function registerReferenceBackend(id, renderer, { kinds = [] } = {}) {
   if (!renderer || typeof renderer.render !== "function") throw new Error("media-engine: a reference backend needs render(request)");
   references.set(id, renderer);
+  for (const k of kinds) referenceByKind.set(k, id);
 }
 export function referenceBackend(id = REFERENCE_BACKEND) { return references.get(id) || null; }
+export function sceneKindOf(plugin) {
+  if (plugin && plugin.sceneKind) return plugin.sceneKind;
+  return plugin && plugin.backends && plugin.backends.includes(REFERENCE_BACKEND) ? "raster3d" : null;
+}
+export function referenceForKind(kind) { return kind ? referenceByKind.get(kind) || null : null; }
 
 const reducedQuery = typeof matchMedia === "function" ? matchMedia("(prefers-reduced-motion: reduce)") : null;
 
@@ -154,20 +167,23 @@ export function createEngine(opts = {}) {
         get instance() { return instance; },
         // Draw the frame at a fixed time and return its receipt: the request, its hash, and the
         // pixel hash of what came out. Same request + same backend + same device must agree.
-        // With { reference: true } and a plugin that lists "wasm-raw", the same request is also drawn
-        // by the reference backend and the receipt carries the reconcile result.
+        // With { reference: true } and a plugin whose scene kind has a reference (raster3d: wasm-raw),
+        // the same request is also drawn by that exact reference and the receipt carries the result.
         async receipt(t = 1.3, { keepPixels = false, reference = false, tolerance } = {}) {
           instance.frame(t, 0);
           const rgba = instance.readPixels ? instance.readPixels() : null;
           const request = { plugin: plugin.id, version: plugin.version, params: m.params, seed: String(m.seed), t, backend: m.backend };
           let ref = null, rec = null;
-          if (reference && plugin.backends.includes(REFERENCE_BACKEND)) {
-            ref = REFERENCE_BACKEND;
-            const renderer = references.get(REFERENCE_BACKEND);
-            const none = (reason) => ({ verdict: "UNVERIFIABLE", rmse: null, maxError: null, pixels: 0, reason });
-            if (!renderer) rec = none(REFERENCE_BACKEND + " is not registered on this page");
+          const kind = sceneKindOf(plugin);
+          if (reference && kind) {
+            const none = (reason) => ({ verdict: "UNVERIFIABLE", rmse: null, maxError: null, pixels: 0, kind, reason });
+            ref = referenceForKind(kind);
+            const renderer = ref && references.get(ref);
+            if (!ref) rec = none("no reference renderer for scene kind " + kind);
+            else if (!renderer) rec = none(ref + " is not registered on this page");
+            else if (renderer.exact !== true) rec = none(ref + " is not an exact path, so it cannot be a reference");
             else {
-              try { rec = reconcile(rgba, await renderer.render({ ...request, backend: REFERENCE_BACKEND }), tolerance ? { tolerance } : {}); }
+              try { rec = { ...reconcile(rgba, await renderer.render({ ...request, backend: ref }), tolerance ? { tolerance } : {}), kind }; }
               catch (e) { console.error("[media-engine] reference render failed:", e); rec = none("reference render failed"); }
             }
           }
