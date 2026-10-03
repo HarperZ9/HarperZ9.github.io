@@ -1,0 +1,180 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t3-cube",
+ "node": "v25.2.1",
+ "schema": "project-telos.oklab-int/v2",
+ "amendment_1_sha256": "cd97b6079121bfe06818ff33882da8d45c009515f8574d406257aa0dd7329b4e",
+ "colours": 16777216,
+ "gate": {
+  "coloursDiffering": 0,
+  "perChannel": {
+   "L6": 0,
+   "a6": 0,
+   "b6": 0,
+   "L8": 0
+  },
+  "first": [],
+  "pass": true
+ },
+ "accuracyGate": {
+  "bound": 0.0001,
+  "maxAbs": {
+   "L": 0.000007975708427088168,
+   "a": 0.000037893685807560695,
+   "b": 0.000012599403247604002
+  },
+  "worstAt": {
+   "L": [
+    1,
+    1,
+    7
+   ],
+   "a": [
+    254,
+    72,
+    3
+   ],
+   "b": [
+    24,
+    248,
+    3
+   ]
+  },
+  "meanAbs": {
+   "L": 0.0000030984507124971715,
+   "a": 0.000011427747970412033,
+   "b": 0.000004051651550636044
+  },
+  "pass": true
+ },
+ "sha256": {
+  "nodeInt": "0edf3957919355b53ba7664a664304d2a53157566a299582fa1e2361ace72365",
+  "pythonInt": "0edf3957919355b53ba7664a664304d2a53157566a299582fa1e2361ace72365",
+  "nodeFloat": "5fb15aeaee42178ae6ffd305f5dccdd85ca1021515e1fe0abe1c62faaefd34f5",
+  "numpyFloat": "5fb15aeaee42178ae6ffd305f5dccdd85ca1021515e1fe0abe1c62faaefd34f5"
+ },
+ "seconds": {
+  "nodeInt": 4.533,
+  "pythonInt": 3.891,
+  "accuracy": 4.02
+ },
+ "reported": {
+  "integerVsNumpyFloat": {
+   "coloursDiffering": 48760,
+   "perChannel": {
+    "L6": 3258,
+    "a6": 23975,
+    "b6": 8551,
+    "L8": 13208
+   },
+   "first": [
+    {
+     "rgb": [
+      0,
+      1,
+      144
+     ],
+     "a": [
+      19,
+      26,
+      13,
+      75
+     ],
+     "b": [
+      19,
+      26,
+      13,
+      76
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      2,
+      60
+     ],
+     "a": [
+      10,
+      27,
+      25,
+      42
+     ],
+     "b": [
+      10,
+      28,
+      25,
+      42
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      2,
+      243
+     ],
+     "a": [
+      28,
+      25,
+      1,
+      111
+     ],
+     "b": [
+      27,
+      25,
+      1,
+      111
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      4,
+      11
+     ],
+     "a": [
+      7,
+      27,
+      36,
+      26
+     ],
+     "b": [
+      7,
+      28,
+      36,
+      26
+     ]
+    },
+    {
+     "rgb": [
+      0,
+      5,
+      37
+     ],
+     "a": [
+      9,
+      28,
+      30,
+      36
+     ],
+     "b": [
+      9,
+      28,
+      30,
+      35
+     ]
+    }
+   ]
+  },
+  "nodeFloatVsNumpyFloat": {
+   "coloursDiffering": 0,
+   "perChannel": {
+    "L6": 0,
+    "a6": 0,
+    "b6": 0,
+    "L8": 0
+   },
+   "first": [],
+   "linearTableEntriesDiffering": 1
+  }
+ }
+}

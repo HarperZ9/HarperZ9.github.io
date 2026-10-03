@@ -9,24 +9,26 @@ import assert from "node:assert/strict";
 
 import { normaliseFidelityEntry, orderEntries, DB_NAME, STORE } from "../fidelity-log.js";
 
-test("normaliseFidelityEntry coerces the three metrics + source + caller timestamp", () => {
+// Updated in Telos Track A step T1: PBE and WPIR read 1 on every input and left the packet, so the
+// ledger keeps WPRE only and drops the two keys from legacy input.
+test("normaliseFidelityEntry keeps wpre + source + caller timestamp and drops pbe/wpir", () => {
   const e = normaliseFidelityEntry({ wpre: 1.8, pbe: 0.25, wpir: 0.93, source: "the Atelier / 2D", timestamp: 1750000000000 });
   assert.equal(e.wpre, 1.8);
-  assert.equal(e.pbe, 0.25);
-  assert.equal(e.wpir, 0.93);
+  assert.equal("pbe" in e, false);
+  assert.equal("wpir" in e, false);
+  assert.deepEqual(Object.keys(e).sort(), ["source", "timestamp", "wpre"]);
   assert.equal(e.source, "the Atelier / 2D");
   assert.equal(e.timestamp, 1750000000000);
 });
 
 test("a non-measurable metric is honest null, NEVER a fabricated score", () => {
-  // pbe absent (no audio) must be null, not 0 (0 would falsely claim a perfect band match).
-  const e = normaliseFidelityEntry({ wpre: 2.1, wpir: 0.9, source: "x", timestamp: 1 });
-  assert.equal(e.pbe, null);
+  // wpre absent must be null, not 0 (0 would falsely claim a perfect palette).
+  const e = normaliseFidelityEntry({ source: "x", timestamp: 1 });
+  assert.equal(e.wpre, null);
   // NaN / Infinity / non-numbers all degrade to null, never a made-up number.
-  const e2 = normaliseFidelityEntry({ wpre: NaN, pbe: Infinity, wpir: "0.9", source: "x", timestamp: 1 });
-  assert.equal(e2.wpre, null);
-  assert.equal(e2.pbe, null);
-  assert.equal(e2.wpir, null);   // a string is not a number -> null
+  assert.equal(normaliseFidelityEntry({ wpre: NaN, source: "x", timestamp: 1 }).wpre, null);
+  assert.equal(normaliseFidelityEntry({ wpre: Infinity, source: "x", timestamp: 1 }).wpre, null);
+  assert.equal(normaliseFidelityEntry({ wpre: "0.9", source: "x", timestamp: 1 }).wpre, null); // a string is not a number
 });
 
 test("the timestamp comes from the caller verbatim, not a clock; missing -> null", () => {
@@ -36,7 +38,7 @@ test("the timestamp comes from the caller verbatim, not a clock; missing -> null
 });
 
 test("the entry is frozen (append-only at the value level: no in-place mutation)", () => {
-  const e = normaliseFidelityEntry({ wpre: 1, pbe: 2, wpir: 0.5, source: "x", timestamp: 1 });
+  const e = normaliseFidelityEntry({ wpre: 1, source: "x", timestamp: 1 });
   assert.ok(Object.isFrozen(e));
   try { e.wpre = 99; } catch (_) { /* strict-mode throw is acceptable */ }
   assert.equal(e.wpre, 1);
@@ -45,8 +47,6 @@ test("the entry is frozen (append-only at the value level: no in-place mutation)
 test("an empty input degrades to all-null metrics + empty source, never a pass", () => {
   const e = normaliseFidelityEntry({});
   assert.equal(e.wpre, null);
-  assert.equal(e.pbe, null);
-  assert.equal(e.wpir, null);
   assert.equal(e.source, "");
   assert.equal(e.timestamp, null);
 });

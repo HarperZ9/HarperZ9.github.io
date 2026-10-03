@@ -1,0 +1,51 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t3-oklab-int",
+ "node": "v25.2.1",
+ "schema": "project-telos.oklab-int/v2",
+ "amendment_1_sha256": "cd97b6079121bfe06818ff33882da8d45c009515f8574d406257aa0dd7329b4e",
+ "auditFramesDirSet": true,
+ "results": {
+  "cubeRoot": {
+   "inputs": 16105,
+   "notNearest": 0,
+   "jsPyDiff": 0
+  },
+  "integerVsFloat": {
+   "n": 20000,
+   "maxAbs": 0.0000366289703830347,
+   "meanMaxAbs": 0.000012104909459271201,
+   "worstAt": [
+    238,
+    87,
+    123
+   ]
+  },
+  "randomImages": {
+   "n": 1000,
+   "imageAgree": 1000,
+   "textAgree": 1000,
+   "firstMismatch": [],
+   "jsTextSetSha256": "a20d63111be44a5244018e9cb2b211bf1ecaaa96e61c3934cdd3638ea908163a",
+   "achromaticFlagged": 238
+  },
+  "auditFrames": {
+   "n": 36,
+   "imageAgree": 36,
+   "textAgree": 36,
+   "firstMismatch": [],
+   "jsTextSetSha256": "92e41af59d0e1f3544b0cbee551418e533f26d69bb93324391c739f0a78e169b",
+   "achromaticFlagged": [
+    "art_w085",
+    "art_w115",
+    "syn_stripes1px",
+    "syn_checker1px",
+    "syn_diag_rising",
+    "syn_diag_falling",
+    "syn_lowcontrast_asym",
+    "syn_radiograph_like",
+    "syn_textlike"
+   ]
+  }
+ }
+}

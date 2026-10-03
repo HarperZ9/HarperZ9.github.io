@@ -2,7 +2,7 @@
 //
 // Tier-2 ADDITIVE: alongside every original field, this now folds in the science-grounded perception
 // modules (colour-perceptual, audio-perceptual, vision-biomimetic) via perception-extras. The heavy
-// math (OKLab k-means, Laplacian pyramid, spectral-residual FFT, SSIM/WPIR, YIN) lives in those pure
+// math (OKLab k-means, Laplacian pyramid, spectral-residual FFT, YIN) lives in those pure
 // helpers and runs ONLY here, on the send-time perception path (fullPerception() calls this), never in
 // the interactive per-frame render loop (measure()), which keeps its own cheap richFeatures/pyramid.
 //
@@ -58,22 +58,24 @@ export function assembleFullPerception(px, w, h, ch = 4, pre = {}) {
       aspectNative: vision.aspectNative,
       workingResolution: vision.workingResolution,
     },
-    // SELF-IMPROVEMENT: the three per-sense fidelity metrics in one place (null where not measurable).
+    // Fidelity: the palette error WPRE only. WPIR (constant 1) and PBE (constant 1) were deleted in
+    // the October 2026 revision; a planned fidelity vector, RTF-1, replaces them.
     fidelity: {
       wpre: colour.wpre,
-      pbe: audioPerc ? audioPerc.pbe.mean : null,
-      wpir: vision.wpir,
     },
   };
 }
 
 // Keep only the JSON-friendly scalar audio fields on the preserved `audio` key (strip any raw typed
 // arrays the caller passed for the perceptual path, so the original payload shape is unchanged).
+// `pitch` is the YIN f0 since the October 2026 revision; `pitchMethod` and `pitchProbability` say so.
 function scalarAudio(a) {
   if (!a || typeof a !== "object") return a || null;
   const out = {};
   if (typeof a.level === "number") out.level = a.level;
   if (typeof a.pitch === "number") out.pitch = a.pitch;
+  if (typeof a.pitchMethod === "string") out.pitchMethod = a.pitchMethod;
+  if (typeof a.pitchProbability === "number") out.pitchProbability = Math.round(a.pitchProbability * 1e4) / 1e4;
   if (Array.isArray(a.spectrumBands)) out.spectrumBands = a.spectrumBands;
   return out;
 }

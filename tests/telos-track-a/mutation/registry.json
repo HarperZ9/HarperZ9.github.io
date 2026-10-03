@@ -1,0 +1,633 @@
+{
+ "schema": "telos-track-a.mutation-registry/v1",
+ "note": "Each mutation is applied alone to a temporary copy of system/, shared-frame/ and tests/telos-track-a/; the paired test file runs; every id in `kills` must fail. The `find` text must occur exactly once in `file`.",
+ "equalityTests": [
+  {
+   "id": "t1.removed.packet",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.R1/R2 eq: a packet with audio carries no wpir and no pbe key anywhere"
+  },
+  {
+   "id": "t1.removed.ledger",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.R1/R2 eq: the fidelity ledger drops pbe and wpir from legacy input"
+  },
+  {
+   "id": "t1.orient.gratings",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.O eq: each grating reads its own bin at share >= 0.8 and names it dominant"
+  },
+  {
+   "id": "t1.orient.halfplanes",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.O eq: half-plane diagonal edges name their own diagonal (rising and falling)"
+  },
+  {
+   "id": "t1.orient.disk",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.O eq: an isotropic disk has coherence below 0.2 and no dominant orientation"
+  },
+  {
+   "id": "t1.pitch.notes",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.P eq: scalar pitch is YIN, within 1 semitone on C2..C7 with and without the fundamental"
+  },
+  {
+   "id": "t1.pitch.silence",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.P eq: silence reads pitch 0"
+  },
+  {
+   "id": "t1.pitch.packet",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.P eq: the assembled packet's scalar pitch is the YIN value the caller passes through"
+  },
+  {
+   "id": "t1.loud.offset",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.L eq: with an SPL offset, a 1 kHz tone reads within 1 phon of its SPL at 40, 60 and 80 dB"
+  },
+  {
+   "id": "t1.loud.absent",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.L eq: without an offset the iso226 key is absent"
+  },
+  {
+   "id": "t1.hue.19",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.hue eq: the colour word equals the reference on all 19 pre-registered colours"
+  },
+  {
+   "id": "t1.hue.twin",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.hue eq: JavaScript and the Python twin agree on the 19, the probe and 2,000 seeded colours"
+  },
+  {
+   "id": "t1.sym.iff",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.S eq: an axis reads mirrored if and only if the frame is exactly mirror-symmetric on it"
+  },
+  {
+   "id": "t1.shape.wrap",
+   "file": "t1-channels.test.mjs",
+   "name": "T1.H eq: a red that crosses 0 degrees of hue stays one component (gradient and audit frame)"
+  },
+  {
+   "id": "t2.kat",
+   "file": "t2-receipts.test.mjs",
+   "name": "T2.KAT eq: the pure SHA-256 matches the FIPS 180-4 example vectors"
+  },
+  {
+   "id": "t2.node",
+   "file": "t2-receipts.test.mjs",
+   "name": "T2.node eq: the pure SHA-256 agrees with Node's on 1,000 seeded byte strings of length 0..300"
+  },
+  {
+   "id": "t2.webcrypto",
+   "file": "t2-receipts.test.mjs",
+   "name": "T2.webcrypto eq: Web Crypto and the forced pure path give the same digest"
+  },
+  {
+   "id": "t2.xlang",
+   "file": "t2-receipts.test.mjs",
+   "name": "T2.xlang eq: 1,000 seeded receipts re-derive identically in an independent Python canonicaliser"
+  },
+  {
+   "id": "t0.4.conversion",
+   "file": "t2-receipts.test.mjs",
+   "name": "T0.4 eq: conversion receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
+  },
+  {
+   "id": "t0.4.export",
+   "file": "t2-receipts.test.mjs",
+   "name": "T0.4 eq: export receipt: 20 single-field edits each change the receipt hash; tampering fails verify"
+  },
+  {
+   "id": "t0.4.certificate",
+   "file": "t2-receipts.test.mjs",
+   "name": "T0.4 eq: certificate pointer: 20 single-field edits each change the SHA-256 pointer"
+  },
+  {
+   "id": "t3.const",
+   "file": "t3-oklab-int.test.mjs",
+   "name": "T3.const eq: both embedded constant sets equal a fresh 60-digit regeneration"
+  },
+  {
+   "id": "t3.cbrt",
+   "file": "t3-oklab-int.test.mjs",
+   "name": "T3.cbrt eq: the cube root is the exact nearest integer (BigInt check) and Python agrees"
+  },
+  {
+   "id": "t3.images",
+   "file": "t3-oklab-int.test.mjs",
+   "name": "T3.images eq: layer text is byte-identical in Node and Python on 1,000 seeded random images"
+  },
+  {
+   "id": "t3.frames",
+   "file": "t3-oklab-int.test.mjs",
+   "name": "T3.frames eq: layer text is byte-identical in Node and Python on the 36 audit frames"
+  },
+  {
+   "id": "t0.1.hash",
+   "file": "t0-witness.test.mjs",
+   "name": "T0.1 eq: the pre-registration hash re-derives identically in Python"
+  },
+  {
+   "id": "t0.2.citation",
+   "file": "t0-witness.test.mjs",
+   "name": "T0.2 eq: every result file cites the current pre-registration hash (and v2 files the amendment)"
+  },
+  {
+   "id": "t4.vendor",
+   "file": "t4-contract.test.mjs",
+   "name": "T4.vendor eq: the Telos MCP vendored files are byte-identical to the site sources"
+  },
+  {
+   "id": "t4.const",
+   "file": "t4-contract.test.mjs",
+   "name": "T4.const eq: the exact-mean constants equal a fresh 60-digit regeneration"
+  },
+  {
+   "id": "t5.det",
+   "file": "t5-budgets.test.mjs",
+   "name": "T5.det eq: packet text is byte-identical across two encodings on every tenth image"
+  },
+  {
+   "id": "t5.twin",
+   "file": "t5-budgets.test.mjs",
+   "name": "T5.twin eq: Node and the Python twin give byte-identical packet text on every tenth image"
+  },
+  {
+   "id": "t6.resample.twin",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.resample eq: resample-int Node and Python outputs are identical on 50 seeded images at the four scales"
+  },
+  {
+   "id": "t6.resample.identity",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.resample eq: scale 1 returns the input linear values unchanged"
+  },
+  {
+   "id": "t6.overlay",
+   "file": "t6-invariance.test.mjs",
+   "name": "T6.overlay eq: on greyscale frames the flag outside a drawn outline equals the clean flag, in Node and Python"
+  },
+  {
+   "id": "t7.parse",
+   "file": "t7-task-value.test.mjs",
+   "name": "T7.parse eq: parsed layer features re-encode to the identical text on 200 seeded and 4 dark grey images (both branches)"
+  }
+ ],
+ "mutations": [
+  {
+   "id": "M01-orient-y-down",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "Math.atan2(-sy, sx)",
+   "replace": "Math.atan2(sy, sx)",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.orient.gratings",
+    "t1.orient.halfplanes"
+   ],
+   "fault": "the original fault: angles in image rows with names that assume y up"
+  },
+  {
+   "id": "M02-orient-no-floor",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "dominant: strong && coherence >= COHERENCE_FLOOR ? names[domIdx] : \"none\"",
+   "replace": "dominant: strong ? names[domIdx] : \"none\"",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.orient.disk"
+   ],
+   "fault": "no coherence floor: an isotropic frame names a direction"
+  },
+  {
+   "id": "M03-pitch-octave",
+   "file": "system/lib/sense-core/audio-perceptual.mjs",
+   "find": "return { f0: Math.round(r.f0 * 10) / 10,",
+   "replace": "return { f0: Math.round(r.f0 * 5) / 10,",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.pitch.notes"
+   ],
+   "fault": "an octave error in the scalar pitch"
+  },
+  {
+   "id": "M04-pitch-no-silence",
+   "file": "system/lib/sense-core/audio-perceptual.mjs",
+   "find": "  if (Math.sqrt(ss / n) < PITCH_SILENCE_RMS) return none;\n",
+   "replace": "",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.pitch.silence"
+   ],
+   "fault": "no silence floor: YIN invents a pitch for a flat buffer"
+  },
+  {
+   "id": "M05-pitch-method-dropped",
+   "file": "system/lib/sense-core/assemble.mjs",
+   "find": "  if (typeof a.pitchMethod === \"string\") out.pitchMethod = a.pitchMethod;\n",
+   "replace": "",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.pitch.packet"
+   ],
+   "fault": "the packet stops saying which pitch method ran"
+  },
+  {
+   "id": "M06-loud-dbfs-as-spl",
+   "file": "system/lib/sense-core/perception-extras.mjs",
+   "find": "const phon = iso226Phon(splDb, peak.hz);",
+   "replace": "const phon = iso226Phon(splDb - off, peak.hz);",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.loud.offset"
+   ],
+   "fault": "the original fault: analyser dBFS taken as dB SPL"
+  },
+  {
+   "id": "M07-loud-default-offset",
+   "file": "system/lib/sense-core/perception-extras.mjs",
+   "find": "const off = audio.splOffsetDb;",
+   "replace": "const off = audio.splOffsetDb ?? 0;",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.loud.absent"
+   ],
+   "fault": "a default offset makes uncalibrated loudness appear"
+  },
+  {
+   "id": "M08-wpir-back",
+   "file": "system/lib/sense-core/assemble.mjs",
+   "find": "      wpre: colour.wpre,\n",
+   "replace": "      wpre: colour.wpre,\n      wpir: 1,\n",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.removed.packet"
+   ],
+   "fault": "the deleted constant WPIR returns to the packet"
+  },
+  {
+   "id": "M09-ledger-pbe-back",
+   "file": "shared-frame/fidelity-log.js",
+   "find": "    wpre: numOrNull(wpre),\n",
+   "replace": "    wpre: numOrNull(wpre),\n    pbe: null,\n",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.removed.ledger"
+   ],
+   "fault": "the ledger record carries PBE again"
+  },
+  {
+   "id": "M10-hue-prototype",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "pink: [255, 192, 203]",
+   "replace": "pink: [255, 182, 193]",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.hue.19",
+    "t1.hue.twin"
+   ],
+   "fault": "a prototype changed in JavaScript only (lightpink for pink)"
+  },
+  {
+   "id": "M11-hue-achromatic",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "const C_ACHROMATIC = 0.035,",
+   "replace": "const C_ACHROMATIC = 0.03,",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.hue.19",
+    "t1.hue.twin"
+   ],
+   "fault": "the achromatic threshold moved in JavaScript only"
+  },
+  {
+   "id": "M12-sym-axis-swap",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "hCov += d * (l[y * w + (w - 1 - x)] - mean);",
+   "replace": "hCov += d * (l[(h - 1 - y) * w + x] - mean);",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.sym.iff"
+   ],
+   "fault": "the left-right correlation computed on the top-bottom mirror"
+  },
+  {
+   "id": "M13-shape-bins-at-zero",
+   "file": "system/lib/sense-core/features.mjs",
+   "find": "Math.floor(((hsv.h + 22.5) % 360) / 45)",
+   "replace": "Math.floor((hsv.h % 360) / 45)",
+   "testFile": "t1-channels.test.mjs",
+   "kills": [
+    "t1.shape.wrap"
+   ],
+   "fault": "the original fault: hue bins that start at 0 degrees"
+  },
+  {
+   "id": "M14-sha-constant",
+   "file": "shared-frame/sha256.js",
+   "find": "0x428a2f98, 0x71374491",
+   "replace": "0x428a2f99, 0x71374491",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.kat",
+    "t2.node"
+   ],
+   "fault": "one SHA-256 round constant off by one"
+  },
+  {
+   "id": "M15-sha-length",
+   "file": "shared-frame/sha256.js",
+   "find": "dv.setUint32(total - 4, bitsLo, false);",
+   "replace": "dv.setUint32(total - 4, bitsLo + 8, false);",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.kat",
+    "t2.node"
+   ],
+   "fault": "the padding length field off by one byte"
+  },
+  {
+   "id": "M16-pure-path",
+   "file": "shared-frame/sha256.js",
+   "find": "  return toHex(sha256Bytes(bytes));\n}",
+   "replace": "  return toHex(sha256Bytes(bytes.subarray(1)));\n}",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.webcrypto"
+   ],
+   "fault": "the file:// fallback hashes different bytes from Web Crypto"
+  },
+  {
+   "id": "M17-canon-unsorted",
+   "file": "shared-frame/canonical.js",
+   "find": "const keys = Object.keys(v).sort();",
+   "replace": "const keys = Object.keys(v);",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.xlang"
+   ],
+   "fault": "insertion order instead of sorted keys"
+  },
+  {
+   "id": "M18-canon-escape-case",
+   "file": "shared-frame/canonical.js",
+   "find": "c.toString(16).padStart(2, \"0\")",
+   "replace": "c.toString(16).toUpperCase().padStart(2, \"0\")",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.xlang"
+   ],
+   "fault": "upper-case hex in control-character escapes"
+  },
+  {
+   "id": "M19-seal-skips-field",
+   "file": "shared-frame/canonical.js",
+   "find": "receiptSha256: receiptSha256(body) });",
+   "replace": "receiptSha256: receiptSha256(Object.fromEntries(Object.entries(body).filter(([k]) => k !== \"originHash\"))) });",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t0.4.conversion",
+    "t0.4.export"
+   ],
+   "fault": "the receipt hash leaves out one field"
+  },
+  {
+   "id": "M20-pointer-drops-evidence",
+   "file": "shared-frame/certificate.js",
+   "find": "evidence: pointerValue(Array.isArray(cert.evidence) ? cert.evidence : []),",
+   "replace": "evidence: [],",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t0.4.certificate"
+   ],
+   "fault": "the certificate pointer ignores its evidence"
+  },
+  {
+   "id": "M21-python-codepoint-sort",
+   "file": "tests/telos-track-a/py/canonical_receipt.py",
+   "find": "keys = sorted(v.keys(), key=_utf16_key)",
+   "replace": "keys = sorted(v.keys())",
+   "testFile": "t2-receipts.test.mjs",
+   "kills": [
+    "t2.xlang"
+   ],
+   "fault": "the Python twin sorts keys by code point instead of UTF-16 unit"
+  },
+  {
+   "id": "M22-lut-entry",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "find": "50923, 56146,",
+   "replace": "50923, 56147,",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.const",
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "one linear-table entry off by one in JavaScript only"
+  },
+  {
+   "id": "M23-cbrt-floor",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "find": "return n * 8 >= t * t * t ? f + 1 : f;",
+   "replace": "return f;",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.cbrt",
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "floor instead of nearest cube root"
+  },
+  {
+   "id": "M24-bin-floor",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "find": "return clamp(floorDiv(2 * (v - lo) * n + span, 2 * span), 0, n);",
+   "replace": "return clamp(floorDiv(2 * (v - lo) * n, 2 * span), 0, n);",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "bins truncate instead of rounding half up"
+  },
+  {
+   "id": "M25-cell-mean-floor",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "cell.push(floorDiv(2 * s + count, 2 * count));",
+   "replace": "cell.push(floorDiv(s, count));",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "cell means truncate instead of rounding half up"
+  },
+  {
+   "id": "M26-percentile-rank",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "const rank = (p) => floorDiv((n - 1) * p, 100);",
+   "replace": "const rank = (p) => floorDiv(n * p, 100);",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "a different nearest-rank rule for L0 percentiles"
+  },
+  {
+   "id": "M27-python-bin-floor",
+   "file": "tests/telos-track-a/py/oklab_int.py",
+   "find": "return _clamp((2 * (v - lo) * n + span) // (2 * span), 0, n)",
+   "replace": "return _clamp((2 * (v - lo) * n) // (2 * span), 0, n)",
+   "testFile": "t3-oklab-int.test.mjs",
+   "kills": [
+    "t3.images",
+    "t3.frames"
+   ],
+   "fault": "the Python twin truncates bins"
+  },
+  {
+   "id": "M28-prereg-slice",
+   "file": "tests/telos-track-a/prereg-hash.mjs",
+   "find": "return t.slice(s + start.length, e);",
+   "replace": "return t.slice(s + start.length + 1, e);",
+   "testFile": "t0-witness.test.mjs",
+   "kills": [
+    "t0.1.hash",
+    "t0.2.citation"
+   ],
+   "fault": "the hash tool reads the block one byte short"
+  },
+  {
+   "id": "M28b-prereg-crlf",
+   "file": "tests/telos-track-a/prereg-hash.mjs",
+   "find": "const t = text.replace(/\\r\\n/g, \"\\n\");",
+   "replace": "const t = text;",
+   "testFile": "t0-witness.test.mjs",
+   "kills": [
+    "t0.1.hash",
+    "t0.2.citation"
+   ],
+   "fault": "the hash tool stops folding CRLF; this can only fail on a checkout whose PREREGISTRATION.md has CRLF line endings"
+  },
+  {
+   "id": "M29-result-cites-other-hash",
+   "file": "tests/telos-track-a/results/t1-channels.json",
+   "find": "\"prereg_sha256\": \"7c13",
+   "replace": "\"prereg_sha256\": \"0c13",
+   "testFile": "t0-witness.test.mjs",
+   "kills": [
+    "t0.2.citation"
+   ],
+   "fault": "a result file cites a hash other than the pre-registration"
+  },
+  {
+   "id": "M40-vendor-drift",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "// layers-int.mjs: Telos layer text",
+   "replace": "// layers-int.mjs:  Telos layer text",
+   "testFile": "t4-contract.test.mjs",
+   "kills": [
+    "t4.vendor"
+   ],
+   "fault": "the site source drifts from the copy the Telos MCP vendors"
+  },
+  {
+   "id": "M41-q40-entry",
+   "file": "system/lib/sense-core/oklab-mean-exact.mjs",
+   "find": "333731448n",
+   "replace": "333731449n",
+   "testFile": "t4-contract.test.mjs",
+   "kills": [
+    "t4.const"
+   ],
+   "fault": "one exact-mean table entry off by one"
+  },
+  {
+   "id": "M42-nondeterministic-l0",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "chroma-p95-milli:${c95milli}",
+   "replace": "chroma-p95-milli:${c95milli + ((globalThis.__tc = (globalThis.__tc || 0) + 1) % 2)}",
+   "testFile": "t5-budgets.test.mjs",
+   "kills": [
+    "t5.det",
+    "t5.twin"
+   ],
+   "fault": "L0 text alternates between calls"
+  },
+  {
+   "id": "M43-hex-uppercase",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "const hex2 = (v) => v.toString(16).padStart(2, \"0\");",
+   "replace": "const hex2 = (v) => v.toString(16).toUpperCase().padStart(2, \"0\");",
+   "testFile": "t5-budgets.test.mjs",
+   "kills": [
+    "t5.twin"
+   ],
+   "fault": "the achromatic branch prints upper-case hex in Node only"
+  },
+  {
+   "id": "M44-resample-green-from-red",
+   "file": "system/lib/sense-core/resample-int.mjs",
+   "find": "out[o + 1] = floorDiv(2 * g + w * h, den);",
+   "replace": "out[o + 1] = floorDiv(2 * r + w * h, den);",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.resample.twin",
+    "t6.resample.identity"
+   ],
+   "fault": "the resampler writes red into green"
+  },
+  {
+   "id": "M45-l0-ignores-mask",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "if (keep && !keep(i)) continue;",
+   "replace": "if (false) continue;",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.overlay"
+   ],
+   "fault": "L0 counts drawn overlay pixels"
+  },
+  {
+   "id": "M46-l3-permille-floor",
+   "file": "system/lib/sense-core/layers-int.mjs",
+   "find": "const permille = floorDiv(2000 * count + w * h, 2 * w * h);",
+   "replace": "const permille = floorDiv(2000 * count, 2 * w * h);",
+   "testFile": "t6-invariance.test.mjs",
+   "kills": [
+    "t6.overlay"
+   ],
+   "fault": "L3 area rounds down in Node only"
+  },
+  {
+   "id": "M47-parser-hex-width",
+   "file": "tests/telos-track-a/py/track_common.py",
+   "find": "format(int(v), \"02x\")",
+   "replace": "format(int(v), \"x\")",
+   "testFile": "t7-task-value.test.mjs",
+   "kills": [
+    "t7.parse"
+   ],
+   "fault": "the re-encoder drops the leading hex zero"
+  }
+ ],
+ "slow": [
+  {
+   "id": "S01-cube-lut-entry",
+   "file": "system/lib/sense-core/oklab-int.mjs",
+   "find": "50923, 56146,",
+   "replace": "50923, 56147,",
+   "command": [
+    "node",
+    "tests/telos-track-a/conformance-cube.mjs"
+   ],
+   "expect": "exit 1",
+   "fault": "one linear-table entry off by one: the full-cube gate must report mismatches"
+  }
+ ]
+}

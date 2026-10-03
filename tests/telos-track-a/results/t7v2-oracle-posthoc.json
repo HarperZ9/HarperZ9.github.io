@@ -1,0 +1,82 @@
+{
+ "result": "t7v2-oracle-posthoc",
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "prereg_t4t7_sha256": "75cbd7d12857b3d9143c4cd14169731388f33be5e495093943b6d29fdd2061eb",
+ "amendment_4_sha256": "5cfebb1d0fac2718e751585e31fa012427d7a2c066af699c68bec8dd323e632f",
+ "prereg_t7v2_sha256": "0d4217b7c110e4c5bb6c06e9db9f7a7d3f50127830416fb980701c7f87726261",
+ "label": "post hoc diagnostic; changes no pre-registered verdict",
+ "tasks": [
+  {
+   "source": "PBC",
+   "task": "cell_class",
+   "wrong_image": {
+    "mean_accuracy": 0.1243,
+    "loo_oracle_mean": 0.121,
+    "in_sample_oracle_mean": 0.17084999999999997,
+    "excess_in_sample_mean": -0.04655,
+    "excess_in_sample_upper": -0.04082422339903044
+   },
+   "shuffled_layer": {
+    "mean_accuracy": 0.12745,
+    "loo_oracle_mean": 0.1274,
+    "in_sample_oracle_mean": 0.54985,
+    "excess_in_sample_mean": -0.4224,
+    "excess_in_sample_upper": -0.4155048689031966
+   }
+  },
+  {
+   "source": "KATHER2016",
+   "task": "tissue_class",
+   "wrong_image": {
+    "mean_accuracy": 0.049550000000000004,
+    "loo_oracle_mean": 0.121,
+    "in_sample_oracle_mean": 0.17084999999999997,
+    "excess_in_sample_mean": -0.1213,
+    "excess_in_sample_upper": -0.11497902998783124
+   },
+   "shuffled_layer": {
+    "mean_accuracy": 0.06125000000000001,
+    "loo_oracle_mean": 0.1274,
+    "in_sample_oracle_mean": 0.54985,
+    "excess_in_sample_mean": -0.48860000000000003,
+    "excess_in_sample_upper": -0.4786359085131712
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "condition",
+   "wrong_image": {
+    "mean_accuracy": 0.48600000000000004,
+    "loo_oracle_mean": 0.4534999999999999,
+    "in_sample_oracle_mean": 0.5275000000000001,
+    "excess_in_sample_mean": -0.041500000000000016,
+    "excess_in_sample_upper": -0.014688917845118811
+   },
+   "shuffled_layer": {
+    "mean_accuracy": 0.46925,
+    "loo_oracle_mean": 0.47824999999999995,
+    "in_sample_oracle_mean": 0.57325,
+    "excess_in_sample_mean": -0.10399999999999998,
+    "excess_in_sample_upper": -0.08710649704456581
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "channel",
+   "wrong_image": {
+    "mean_accuracy": 0.47474999999999995,
+    "loo_oracle_mean": 0.394,
+    "in_sample_oracle_mean": 0.5189999999999999,
+    "excess_in_sample_mean": -0.044250000000000005,
+    "excess_in_sample_upper": -0.024984572689045182
+   },
+   "shuffled_layer": {
+    "mean_accuracy": 0.49749999999999994,
+    "loo_oracle_mean": 0.4795,
+    "in_sample_oracle_mean": 0.575,
+    "excess_in_sample_mean": -0.07749999999999999,
+    "excess_in_sample_upper": -0.06071305331671751
+   }
+  }
+ ]
+}

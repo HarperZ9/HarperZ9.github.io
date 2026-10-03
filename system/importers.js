@@ -84,66 +84,25 @@ function readAsText(file) {
   });
 }
 
-// ---- provenance hashing (SHA-256 via Web Crypto, honest FNV-1a fallback) -----
+// ---- provenance hashing (SHA-256 everywhere) ---------------------------------
 //
-// Mirrors exporters.js's hashing primitive. Kept as a local copy (not an import)
-// so importers.js stays an independent, side-effect-free browser ES module: it
-// can be loaded on its own without dragging in the exporter registry. The block
-// is small and the contract (sha-256 when crypto.subtle exists, else a flagged
-// FNV-1a fallback) is identical, so the two stay honest in the same way.
+// Mirrors exporters.js's hashing primitive. The October 2026 revision removed the FNV-1a fallback: where
+// crypto.subtle is missing (file://), the pure SHA-256 in shared-frame/sha256.js runs and gives the
+// same digest, so an import receipt never depends on the page's context. That module is pure and
+// side-effect free, so importers.js still loads on its own without the exporter registry.
+import { sha256HexAsync, utf8Bytes } from "../shared-frame/sha256.js";
 
 const HASH_SHA256 = "sha-256";
-const HASH_FNV1A  = "fnv1a-fallback";
-
-function _utf8(str) {
-  if (typeof TextEncoder !== "undefined") return new TextEncoder().encode(str);
-  const out = [];
-  for (let i = 0; i < str.length; i++) {
-    let c = str.charCodeAt(i);
-    if (c < 0x80) out.push(c);
-    else if (c < 0x800) { out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f)); }
-    else { out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f)); }
-  }
-  return new Uint8Array(out);
-}
-
-function _toHex(bytes) {
-  let hex = "";
-  for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, "0");
-  return hex;
-}
-
-/** FNV-1a 32-bit content hash. NOT cryptographic; the honest file:// fallback. */
-function fnv1a(bytes) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < bytes.length; i++) {
-    h ^= bytes[i];
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  return ("00000000" + h.toString(16)).slice(-8);
-}
 
 /**
  * hashBytes(bytes, opts) -> Promise<{ hash, hashAlgo }>
- * SHA-256 via Web Crypto when available; otherwise FNV-1a, flagged honestly.
- * opts.subtle === null forces the fallback (file:// path and the fallback test).
+ * SHA-256 via Web Crypto when available, else the pure module (same digest).
+ * opts.subtle === null forces the pure path (the file:// case and its test).
  */
 async function hashBytes(bytes, opts) {
-  const u8 = bytes instanceof Uint8Array ? bytes : _utf8(String(bytes));
+  const u8 = bytes instanceof Uint8Array ? bytes : utf8Bytes(String(bytes));
   const hasOverride = opts && Object.prototype.hasOwnProperty.call(opts, "subtle");
-  const subtle = hasOverride
-    ? opts.subtle
-    : ((typeof crypto !== "undefined" && crypto.subtle) ? crypto.subtle : null);
-  if (subtle) {
-    try {
-      const buf = u8.byteOffset === 0 && u8.byteLength === u8.buffer.byteLength
-        ? u8.buffer
-        : u8.slice().buffer;
-      const digest = await subtle.digest("SHA-256", buf);
-      return { hash: _toHex(new Uint8Array(digest)), hashAlgo: HASH_SHA256 };
-    } catch (_) { /* fall through */ }
-  }
-  return { hash: fnv1a(u8), hashAlgo: HASH_FNV1A };
+  return { hash: await sha256HexAsync(u8, hasOverride ? opts.subtle : undefined), hashAlgo: HASH_SHA256 };
 }
 
 /**
@@ -176,7 +135,7 @@ async function importReceipt(file, opts) {
   if (bytes == null) {
     const name = (file && file.name) || "";
     const type = (file && file.type) || "";
-    bytes = _utf8("file-descriptor:" + name + "|" + type + "|" + sizeBytes);
+    bytes = utf8Bytes("file-descriptor:" + name + "|" + type + "|" + sizeBytes);
   }
   const { hash, hashAlgo } = await hashBytes(bytes, opts);
   return { inputFormat, sizeBytes, originHash: hash, hashAlgo, hashScope };
@@ -1219,12 +1178,10 @@ export function _selftest() {
 
 // ---- receipt internals (exported for node:test coverage) --------------------
 // The node-safe pieces of the import-receipt system: the receipt builder, the
-// hashing primitive (sha-256 and the forced fnv1a fallback), and the algo tags.
+// hashing primitive (Web Crypto and the forced pure SHA-256 path), and the algo tag.
 
 export {
   importReceipt,
   hashBytes,
-  fnv1a,
   HASH_SHA256,
-  HASH_FNV1A,
 };

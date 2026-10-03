@@ -90,17 +90,19 @@ function bytesToBase64(bytes) {
   return btoa(binary);
 }
 
-// ---- provenance hashing (SHA-256 via Web Crypto, honest FNV-1a fallback) -----
+// ---- provenance hashing (SHA-256 everywhere) ---------------------------------
 //
 // crypto.subtle.digest("SHA-256", ...) exists in Node 20+ (globalThis.crypto)
 // and in browsers ON A SECURE CONTEXT (https / localhost), but NOT on file://.
-// When it is unavailable we fall back to a fast non-crypto content hash and we
-// say so: the receipt carries hashAlgo so it is HONEST about which ran. We never
-// label an FNV-1a digest "sha-256". This implements the provenance chain in the
-// spec (originHash -> transforms -> commitHash) with zero external dependencies.
+// Where it is missing, the pure SHA-256 in shared-frame/sha256.js runs instead and
+// gives the same digest (the October 2026 revision removed the FNV-1a fallback). This
+// implements the provenance chain in the spec (originHash -> transforms ->
+// commitHash) with zero external dependencies; the receipt is sealed with
+// receiptSha256 over its canonical bytes.
+import { sha256HexAsync } from "../shared-frame/sha256.js";
+import { sealReceipt } from "../shared-frame/canonical.js";
 
 const HASH_SHA256 = "sha-256";
-const HASH_FNV1A  = "fnv1a-fallback";
 
 /**
  * Coerce any supported export input into a Uint8Array of bytes to hash.
@@ -152,36 +154,17 @@ function _stableJSON(value) {
   });
 }
 
-/** Lowercase hex string from a byte array. */
-function _toHex(bytes) {
-  let hex = "";
-  for (let i = 0; i < bytes.length; i++) hex += bytes[i].toString(16).padStart(2, "0");
-  return hex;
-}
-
-/**
- * FNV-1a 32-bit content hash. NOT cryptographic: a fast, deterministic fallback
- * used only where crypto.subtle is absent (file://). Returned as 8 hex chars so
- * it is visibly shorter than a sha-256 digest and never mistaken for one.
- */
-function fnv1a(bytes) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < bytes.length; i++) {
-    h ^= bytes[i];
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  return ("00000000" + h.toString(16)).slice(-8);
-}
 
 /**
  * hashBytesOf(value, opts) -> Promise<{ hash, hashAlgo }>
- * Uses SHA-256 via Web Crypto when available; otherwise FNV-1a, flagged honestly.
+ * SHA-256 always: Web Crypto when available, otherwise the pure module in
+ * shared-frame/sha256.js, which gives the same digest. The FNV-1a 32-bit fallback is gone, so a
+ * receipt made on a file:// page hashes exactly like one made on https.
  * A Blob is read to bytes first so canvas/binary exports hash their real content.
  *
- * opts.subtle: an explicit crypto.subtle source. Pass `null` to FORCE the FNV-1a
- * fallback (this is how the file:// path and the fallback test are exercised
- * without monkey-patching the global crypto object). When omitted, the ambient
- * globalThis.crypto.subtle is used if present.
+ * opts.subtle: an explicit crypto.subtle source. Pass `null` to FORCE the pure path (this is how the
+ * file:// path and its test are exercised without monkey-patching the global crypto object). When
+ * omitted, the ambient globalThis.crypto.subtle is used if present.
  */
 async function hashBytesOf(value, opts) {
   let bytes;
@@ -191,22 +174,7 @@ async function hashBytesOf(value, opts) {
     bytes = toBytes(value);
   }
   const hasOverride = opts && Object.prototype.hasOwnProperty.call(opts, "subtle");
-  const subtle = hasOverride
-    ? opts.subtle
-    : ((typeof crypto !== "undefined" && crypto.subtle) ? crypto.subtle : null);
-  if (subtle) {
-    try {
-      // digest needs a real ArrayBuffer view; slice to a tight copy.
-      const buf = bytes.byteOffset === 0 && bytes.byteLength === bytes.buffer.byteLength
-        ? bytes.buffer
-        : bytes.slice().buffer;
-      const digest = await subtle.digest("SHA-256", buf);
-      return { hash: _toHex(new Uint8Array(digest)), hashAlgo: HASH_SHA256 };
-    } catch (_) {
-      // Fall through to the honest non-crypto path.
-    }
-  }
-  return { hash: fnv1a(bytes), hashAlgo: HASH_FNV1A };
+  return { hash: await sha256HexAsync(bytes, hasOverride ? opts.subtle : undefined), hashAlgo: HASH_SHA256 };
 }
 
 // ---- structural discriminators (deterministic, structural-before-pixel) ------
@@ -648,8 +616,10 @@ function _snapshotCanvasMeta(canvas) {
 //   commitHash          string   -- hash of the OUTPUT (the emitted bytes / string)
 //   transformsApplied   [{step, criterion}] -- the directed provenance chain of steps
 //   commitHash          (above)  -- terminal node of originHash -> [steps] -> commitHash
-//   hashAlgo            "sha-256" | "fnv1a-fallback" -- which digest actually ran (honest)
+//   hashAlgo            "sha-256" -- always (the FNV-1a fallback is gone)
 //   format              string   -- the exporter name, for the audit trail
+//   canonical           "project-telos.canonical-bytes/v1" -- how receiptSha256 serializes the receipt
+//   receiptSha256       string   -- SHA-256 over the canonical bytes of every other field
 //
 // NO floating-point faithfulness score: the verdict is the boolean discriminator
 // plus the named criterion, per the spec's hard rule.
@@ -797,7 +767,7 @@ async function buildReceipt(name, canvas, extra, output, opts) {
     { step: "encode:" + name, criterion },
     { step: "discriminate:" + name, criterion: discriminatorPassed === null ? "no-structural-test" : "structural-check" },
   ];
-  return {
+  return sealReceipt({
     format: name,
     criterion,
     conserved,
@@ -806,9 +776,8 @@ async function buildReceipt(name, canvas, extra, output, opts) {
     originHash: originRes.hash,
     commitHash: commitRes.hash,
     transformsApplied,
-    // Both digests run on the same platform path, so one algo label is accurate.
-    hashAlgo: originRes.hashAlgo,
-  };
+    hashAlgo: HASH_SHA256,
+  });
 }
 
 // ---- registry ---------------------------------------------------------------
@@ -1205,12 +1174,11 @@ export function _selftest() {
 
 // ---- receipt internals (exported for node:test coverage) --------------------
 // These are the deterministic, node-safe pieces of the receipt system. Exporting
-// them lets the test suite assert the discriminators, the hashing path (sha-256
-// and the forced fnv1a fallback), and the receipt builder without a browser.
+// them lets the test suite assert the discriminators, the hashing path (Web
+// Crypto and the forced pure SHA-256 path), and the receipt builder without a browser.
 
 export {
   hashBytesOf,
-  fnv1a,
   buildReceipt,
   discriminateMesh,
   discriminateOBJText,
@@ -1219,5 +1187,4 @@ export {
   discriminateJSON,
   discriminatePNG,
   HASH_SHA256,
-  HASH_FNV1A,
 };

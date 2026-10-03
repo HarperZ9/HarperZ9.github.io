@@ -5,7 +5,7 @@
 // certificate stack, and the surface layer stay static. Everything per-source loads lazily
 // below, at the setSource() boundary, so first-load JS carries none of the per-source graphs.
 import { perceptualHash, features, hamming } from "../shared-frame/eye.js";
-import { representation, richFeatures, describeFrame, describeFrameLong, perceptionDetail, rmsFromBytes, spectrumBands, dominantPitchHz, assembleFullPerception, hueName } from "./sense.js";
+import { representation, richFeatures, describeFrame, describeFrameLong, perceptionDetail, rmsFromBytes, spectrumBands, pitchFromTimeBytes, assembleFullPerception, colourName } from "./sense.js";
 // Advanced perception channels (brailleRender / shapeInventory / reconstructionFidelity), which
 // ship separately in sense-core's features.mjs and reach here through sense.js's `export *` chain
 // (sense.js -> lib/sense-core/index.mjs -> features.mjs, verified). Accessed via a NAMESPACE
@@ -4455,8 +4455,8 @@ function paintMosaic(px, w, h) {
 // and a .mm-swf label below it. The label is a sibling, not a child positioned
 // absolute, so it never overflows or clips. The wrap has role="listitem" since
 // the container carries role="list".
-// Name a swatch via the vendored sense-core hueName: hex -> HSV, then the honest colour name
-// (greys read as "grey"/"near-white"/"near-black", not a stray hue). Additive: every source's
+// Name a swatch via the vendored sense-core colourName (rule R-hue-v1: OKLCh basic colour words, so
+// an eosin pink reads "pink" and greys read "grey", "white" or "black"). Additive: every source's
 // measurimeter swatches gain the name; the visible label stays the percent.
 function swatchName(s) {
   let r = s.r, g = s.g, b = s.b;
@@ -4464,17 +4464,7 @@ function swatchName(s) {
     const h = s.hex.replace("#", "");
     r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16);
   }
-  r /= 255; g /= 255; b /= 255;
-  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
-  let hue = 0;
-  if (d > 0) {
-    if (mx === r) hue = ((g - b) / d) % 6;
-    else if (mx === g) hue = (b - r) / d + 2;
-    else hue = (r - g) / d + 4;
-    hue = (hue * 60 + 360) % 360;
-  }
-  const sat = mx === 0 ? 0 : d / mx;
-  try { return hueName(hue, sat, mx); } catch (_) { return "colour"; }
+  try { return colourName(Math.round(r), Math.round(g), Math.round(b)); } catch (_) { return "colour"; }
 }
 
 function paintSwatches(rich) {
@@ -4747,10 +4737,11 @@ function pollAudio() {
   const bars = spectrumBands(audioFreqBuf, 32);
   const sp = $("mm-au-spectrum");
   if (sp) { const els = sp.querySelectorAll(".mm-bar"); bars.forEach((b, i) => { if (els[i]) els[i].style.height = Math.max(2, b * 100) + "%"; }); }
-  const hz = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
+  // Pitch is the YIN f0 of the time-domain buffer, the same value the model gets.
+  const hz = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate).f0;
   const pf = $("mm-au-pitch"), pv = $("mm-au-pitch-v");
   if (pf) pf.style.width = Math.min(1, hz / 4000) * 100 + "%";
-  if (pv) pv.textContent = hz ? hz + " Hz" : "-";
+  if (pv) pv.textContent = hz ? Math.round(hz) + " Hz" : "-";
 }
 window.__studioAttachAudio = attachAudio;
 window.__studioDetachAudio = detachAudio;
@@ -4958,8 +4949,8 @@ function buildCtx() {
       analyser.getByteTimeDomainData(audioTimeBuf);
       analyser.getByteFrequencyData(audioFreqBuf);
       const level = rmsFromBytes(audioTimeBuf);
-      const pitch = dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize);
-      audio = { level, pitch };
+      const p = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate);
+      audio = { level, pitch: p.f0, pitchMethod: p.method, pitchProbability: p.probability };
     } catch (_) { audio = null; }
   }
 
@@ -5010,11 +5001,16 @@ function fullPerception() {
       analyser.getByteTimeDomainData(audioTimeBuf);
       analyser.getByteFrequencyData(audioFreqBuf);
       // Original scalar bundle (preserved) PLUS the raw analyser buffers + params the Tier-2 perceptual
-      // path (ERB/ISO-226/YIN/chroma/PBE) consumes. The heavy audio math runs in assembleFullPerception,
-      // which is send-time only. No source -> audio stays null and every perceptual audio field is null.
+      // path (ERB/YIN/chroma) consumes. The heavy audio math runs in assembleFullPerception, which is
+      // send-time only. No source -> audio stays null and every perceptual audio field is null.
+      // `pitch` is YIN on the time-domain buffer. No `splOffsetDb` is passed: the
+      // Studio has no calibration from analyser dB to dB SPL, so loudness in phon stays absent.
+      const p = pitchFromTimeBytes(audioTimeBuf, audioCtx.sampleRate);
       audio = {
         level: rmsFromBytes(audioTimeBuf),
-        pitch: dominantPitchHz(audioFreqBuf, audioCtx.sampleRate, analyser.fftSize),
+        pitch: p.f0,
+        pitchMethod: p.method,
+        pitchProbability: p.probability,
         spectrumBands: spectrumBands(audioFreqBuf, 32),
         freqBytes: audioFreqBuf,
         timeBytes: audioTimeBuf,
@@ -5052,7 +5048,7 @@ function fullPerception() {
     perception.detail = detail;
     try { perception.longDescription = describeFrameLong(lastRich || {}, detail); } catch (_) {}
   }
-  // Self-improvement: append this perception's fidelity record (wpre/pbe/wpir) to the append-only
+  // Self-improvement: append this perception's fidelity record (wpre) to the append-only
   // perception-fidelity ledger. Guarded + fire-and-forget so it never blocks or breaks the payload.
   try { recordFidelity(perception); } catch (_) {}
   return perception;
@@ -5072,7 +5068,7 @@ async function ensureFidelityLog() {
 async function recordFidelity(perception) {
   const fdl = perception && perception.fidelity;
   if (!fdl) return;
-  const entry = { wpre: fdl.wpre, pbe: fdl.pbe, wpir: fdl.wpir, source: perception.source, timestamp: Date.now() };
+  const entry = { wpre: fdl.wpre, source: perception.source, timestamp: Date.now() };
   const log = await ensureFidelityLog();
   if (log) { try { await log.append(entry); } catch (_) {} }
 }

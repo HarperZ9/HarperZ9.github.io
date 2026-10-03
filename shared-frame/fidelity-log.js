@@ -1,7 +1,8 @@
 // fidelity-log.js: the append-only PERCEPTION-FIDELITY ledger (the storage half of the self-improvement
-// loop). Every perception the Studio assembles appends its per-sense fidelity record here, so the loop
-// can replay how WPRE (colour), PBE (audio), and WPIR (vision) move over time and target the weakest
-// sense next. This is the sibling of audit-log.js (which logs certificates); same append-only invariant,
+// loop). Every perception the Studio assembles appends its fidelity record here, so the loop can replay
+// how WPRE (colour palette error) moves over time. PBE (audio) and WPIR (vision) were dropped in the
+// October 2026 revision: both read 1 on every input, so a ledger of them recorded nothing. Legacy input that
+// still carries those keys is normalised without them. This is the sibling of audit-log.js (which logs certificates); same append-only invariant,
 // same IndexedDB pattern, same caller-supplied timestamp. Cites: SPEC-telos-sensory-engine.md move D
 // (perception-fidelity ledger, append-only like the certificate audit trail).
 //
@@ -20,16 +21,14 @@ export const DB_VERSION = 1;
 const isStr = v => typeof v === "string";
 const numOrNull = v => (typeof v === "number" && isFinite(v) ? v : null);
 
-// Normalise a { wpre, pbe, wpir, source, timestamp } input into the flat, frozen record the store holds.
-// Pure: no IndexedDB, no clock. Each metric is coerced to a finite number or honest null (a missing or
-// non-measurable sense is null, NEVER a fabricated score). timestamp is caller-supplied (coerced, never
-// invented). source is a free label (e.g. "the Atelier / 2D") describing what was perceived.
-export function normaliseFidelityEntry({ wpre, pbe, wpir, source = "", timestamp } = {}) {
+// Normalise a { wpre, source, timestamp } input into the flat, frozen record the store holds. Pure: no
+// IndexedDB, no clock. The metric is coerced to a finite number or honest null (a non-measurable sense
+// is null, NEVER a fabricated score). timestamp is caller-supplied (coerced, never invented). source is a
+// free label (e.g. "the Atelier / 2D") describing what was perceived. Any other key is dropped.
+export function normaliseFidelityEntry({ wpre, source = "", timestamp } = {}) {
   return Object.freeze({
     timestamp: typeof timestamp === "number" || isStr(timestamp) ? timestamp : null,
     wpre: numOrNull(wpre),
-    pbe: numOrNull(pbe),
-    wpir: numOrNull(wpir),
     source: isStr(source) ? source : (source == null ? "" : String(source)),
   });
 }

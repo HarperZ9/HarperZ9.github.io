@@ -1,0 +1,466 @@
+{
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "result": "t1-channels",
+ "node": "v25.2.1",
+ "results": {
+  "removed": {
+   "packetKeysChecked": 267,
+   "hits": []
+  },
+  "orientation": {
+   "horizontal": {
+    "share": 1,
+    "dominant": "horizontal",
+    "coherence": 1
+   },
+   "vertical": {
+    "share": 1,
+    "dominant": "vertical",
+    "coherence": 1
+   },
+   "rising diagonal": {
+    "share": 1,
+    "dominant": "rising diagonal",
+    "coherence": 1
+   },
+   "falling diagonal": {
+    "share": 1,
+    "dominant": "falling diagonal",
+    "coherence": 1
+   },
+   "halfPlaneRising": {
+    "dominant": "rising diagonal",
+    "rising": 0.8,
+    "falling": 0
+   },
+   "halfPlaneFalling": {
+    "dominant": "falling diagonal",
+    "rising": 0,
+    "falling": 0.801
+   },
+   "disk": {
+    "coherence": 0,
+    "dominant": "none",
+    "strong": 472
+   }
+  },
+  "pitch": [
+   {
+    "midi": 36,
+    "form": "full",
+    "trueHz": 65.406,
+    "pitch": 65.4,
+    "semitones": -0.0017,
+    "probability": 1
+   },
+   {
+    "midi": 36,
+    "form": "missing-fundamental",
+    "trueHz": 65.406,
+    "pitch": 65.4,
+    "semitones": -0.0017,
+    "probability": 1
+   },
+   {
+    "midi": 48,
+    "form": "full",
+    "trueHz": 130.813,
+    "pitch": 130.8,
+    "semitones": -0.0017,
+    "probability": 1
+   },
+   {
+    "midi": 48,
+    "form": "missing-fundamental",
+    "trueHz": 130.813,
+    "pitch": 130.8,
+    "semitones": -0.0017,
+    "probability": 1
+   },
+   {
+    "midi": 60,
+    "form": "full",
+    "trueHz": 261.626,
+    "pitch": 261.6,
+    "semitones": -0.0017,
+    "probability": 0.9995
+   },
+   {
+    "midi": 60,
+    "form": "missing-fundamental",
+    "trueHz": 261.626,
+    "pitch": 261.6,
+    "semitones": -0.0017,
+    "probability": 0.9986
+   },
+   {
+    "midi": 72,
+    "form": "full",
+    "trueHz": 523.251,
+    "pitch": 523.3,
+    "semitones": 0.0016,
+    "probability": 0.9994
+   },
+   {
+    "midi": 72,
+    "form": "missing-fundamental",
+    "trueHz": 523.251,
+    "pitch": 523.3,
+    "semitones": 0.0016,
+    "probability": 0.9983
+   },
+   {
+    "midi": 84,
+    "form": "full",
+    "trueHz": 1046.502,
+    "pitch": 1046.7,
+    "semitones": 0.0033,
+    "probability": 0.9994
+   },
+   {
+    "midi": 84,
+    "form": "missing-fundamental",
+    "trueHz": 1046.502,
+    "pitch": 1046.6,
+    "semitones": 0.0016,
+    "probability": 0.9983
+   },
+   {
+    "midi": 96,
+    "form": "full",
+    "trueHz": 2093.005,
+    "pitch": 2094.3,
+    "semitones": 0.0107,
+    "probability": 0.9994
+   },
+   {
+    "midi": 96,
+    "form": "missing-fundamental",
+    "trueHz": 2093.005,
+    "pitch": 2093.8,
+    "semitones": 0.0066,
+    "probability": 0.9983
+   }
+  ],
+  "loudness": [
+   {
+    "spl": 40,
+    "phon": 40.02,
+    "sone": 1.0014,
+    "atHz": 996.09
+   },
+   {
+    "spl": 60,
+    "phon": 60.023,
+    "sone": 4.0063,
+    "atHz": 996.09
+   },
+   {
+    "spl": 80,
+    "phon": 80.027,
+    "sone": 16.0295,
+    "atHz": 996.09
+   }
+  ],
+  "hue19": [
+   {
+    "hex": "ff0000",
+    "want": "red",
+    "got": "red",
+    "margin": 0.04853
+   },
+   {
+    "hex": "ffa500",
+    "want": "orange",
+    "got": "orange",
+    "margin": 0.05807
+   },
+   {
+    "hex": "ffff00",
+    "want": "yellow",
+    "got": "yellow",
+    "margin": 0.06006
+   },
+   {
+    "hex": "008000",
+    "want": "green",
+    "got": "green",
+    "margin": 0.05034
+   },
+   {
+    "hex": "0000ff",
+    "want": "blue",
+    "got": "blue",
+    "margin": 0.17349
+   },
+   {
+    "hex": "800080",
+    "want": "purple",
+    "got": "purple",
+    "margin": 0.06506
+   },
+   {
+    "hex": "ffc0cb",
+    "want": "pink",
+    "got": "pink",
+    "margin": 0.01419
+   },
+   {
+    "hex": "8b4513",
+    "want": "brown",
+    "got": "brown",
+    "margin": 0.00175
+   },
+   {
+    "hex": "ffffff",
+    "want": "white",
+    "got": "white",
+    "margin": 0.035
+   },
+   {
+    "hex": "808080",
+    "want": "grey",
+    "got": "grey",
+    "margin": 0.035
+   },
+   {
+    "hex": "000000",
+    "want": "black",
+    "got": "black",
+    "margin": 0.035
+   },
+   {
+    "hex": "e8aac8",
+    "want": "pink",
+    "got": "pink",
+    "margin": 0.00115
+   },
+   {
+    "hex": "5f328c",
+    "want": "purple",
+    "got": "purple",
+    "margin": 0.01917
+   },
+   {
+    "hex": "c4631a",
+    "want": "brown",
+    "got": "brown",
+    "margin": 0.00345
+   },
+   {
+    "hex": "d0b0c6",
+    "want": "purple",
+    "got": "purple",
+    "margin": 0.00842
+   },
+   {
+    "hex": "eadafb",
+    "want": "purple",
+    "got": "purple",
+    "margin": 0.00913
+   },
+   {
+    "hex": "d26837",
+    "want": "red",
+    "got": "red",
+    "margin": 0.00309
+   },
+   {
+    "hex": "a54764",
+    "want": "pink",
+    "got": "pink",
+    "margin": 0.00406
+   },
+   {
+    "hex": "44272a",
+    "want": "red",
+    "got": "red",
+    "margin": 0.00379
+   }
+  ],
+  "hueTwin": {
+   "colours": 2065,
+   "disagreements": 0,
+   "examples": []
+  },
+  "hueProbe": {
+   "n": 46,
+   "ruleHits": 44,
+   "nearestPrototypeHits": 32,
+   "ruleMisses": [
+    {
+     "hex": "d2691e",
+     "want": "brown",
+     "got": "orange",
+     "margin": 0.00085,
+     "nearestPrototype": "red"
+    },
+    {
+     "hex": "d3d3d3",
+     "want": "grey",
+     "got": "white",
+     "margin": 0.01686,
+     "nearestPrototype": "pink"
+    }
+   ],
+   "nearestPrototypeMisses": [
+    [
+     "b22222",
+     "red",
+     "brown"
+    ],
+    [
+     "8b0000",
+     "red",
+     "brown"
+    ],
+    [
+     "00ff00",
+     "green",
+     "yellow"
+    ],
+    [
+     "90ee90",
+     "green",
+     "yellow"
+    ],
+    [
+     "1e90ff",
+     "blue",
+     "grey"
+    ],
+    [
+     "87ceeb",
+     "blue",
+     "pink"
+    ],
+    [
+     "00bfff",
+     "blue",
+     "grey"
+    ],
+    [
+     "4682b4",
+     "blue",
+     "grey"
+    ],
+    [
+     "191970",
+     "blue",
+     "purple"
+    ],
+    [
+     "9370db",
+     "purple",
+     "grey"
+    ],
+    [
+     "ff69b4",
+     "pink",
+     "red"
+    ],
+    [
+     "ff1493",
+     "pink",
+     "red"
+    ],
+    [
+     "d2691e",
+     "brown",
+     "red"
+    ],
+    [
+     "d3d3d3",
+     "grey",
+     "pink"
+    ]
+   ]
+  },
+  "symmetry": {
+   "mirrorLeftRight": {
+    "horizontal": 1,
+    "vertical": 0.38,
+    "truth": {
+     "h": true,
+     "v": false
+    },
+    "read": {
+     "h": true,
+     "v": false
+    }
+   },
+   "mirrorTopBottom": {
+    "horizontal": 0.389,
+    "vertical": 1,
+    "truth": {
+     "h": false,
+     "v": true
+    },
+    "read": {
+     "h": false,
+     "v": true
+    }
+   },
+   "lowContrastHalfRamp": {
+    "horizontal": -0.594,
+    "vertical": 1,
+    "truth": {
+     "h": false,
+     "v": true
+    },
+    "read": {
+     "h": false,
+     "v": true
+    }
+   },
+   "offCentreDisk": {
+    "horizontal": -0.111,
+    "vertical": 0.345,
+    "truth": {
+     "h": false,
+     "v": false
+    },
+    "read": {
+     "h": false,
+     "v": false
+    }
+   },
+   "whiteNoise": {
+    "horizontal": 0.002,
+    "vertical": 0.005,
+    "truth": {
+     "h": false,
+     "v": false
+    },
+    "read": {
+     "h": false,
+     "v": false
+    }
+   }
+  },
+  "shapes": {
+   "hueGradient350to10": {
+    "components": 1,
+    "grid": [
+     96,
+     64
+    ],
+    "blockShare": 0.25,
+    "areaFrac": 0.25,
+    "iou": 1,
+    "hue": "red"
+   },
+   "auditRedWrap": {
+    "components": 1,
+    "grid": [
+     96,
+     64
+    ],
+    "blockShare": 0.1897,
+    "areaFrac": 0.1953,
+    "iou": 0.971,
+    "hue": "red"
+   }
+  }
+ }
+}

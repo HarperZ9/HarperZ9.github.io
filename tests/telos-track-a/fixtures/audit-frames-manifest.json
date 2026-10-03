@@ -1,0 +1,257 @@
+{
+ "source": "exp-telos-audit/frames of the Track A audit (24 art frames from art/session-archive/full box-downsampled to 192 px, 12 synthetic frames; no medical images)",
+ "frames": [
+  {
+   "name": "art_w001",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "f69285d95af74fc77967c8e3dab7924dc62d82e9b4bae23eb95e633bfe4103a5"
+  },
+  {
+   "name": "art_w007",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "9bb775340f5d18721cb610d74c343f37efe94b2ad98bcdd90622024b7f3efeed"
+  },
+  {
+   "name": "art_w013",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "f92949d0ce44c6e51d57e24fa28553760e910c87834d2c48578850319ade42bc"
+  },
+  {
+   "name": "art_w019",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "e489b0c0841f3fda4828ac70cd636f765820712d3b69ae0692bf8f7da79f1e93"
+  },
+  {
+   "name": "art_w025",
+   "w": 192,
+   "h": 108,
+   "group": "art",
+   "sha256": "1179f9d2eb63cc2001960db1398ea25d51198c1c802b873db01e892a310db34b"
+  },
+  {
+   "name": "art_w031",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "23227aa3709824828746081a213cf890c9493347869a99a09f0e4f0436224a97"
+  },
+  {
+   "name": "art_w037",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "89f022582a2ba159d95b74835827e48e97a727914e82d626c8279a1e9ed97e19"
+  },
+  {
+   "name": "art_w043",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "0948c98311bc8b5de6c7a36ac503d813f8e7048fded8cfa42053f85bea7bb9e0"
+  },
+  {
+   "name": "art_w049",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "1d109e987ecc39cf07f37940eaf1e74a6a22d372f16c9581eee434d5eefc4ce9"
+  },
+  {
+   "name": "art_w055",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "217ce0c5d6b54af93d22a122f0a185d4d841c8b56762278e629a6baa33e82a1e"
+  },
+  {
+   "name": "art_w061",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "516e74f7e95f65e82976e3cbe74a6c0a1aa5f0e62523c33979465876e0fae6aa"
+  },
+  {
+   "name": "art_w067",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "9ee35f24dfa0d7cdfbc0deecb72f273b393ce9a6500481b183503dee93f71b75"
+  },
+  {
+   "name": "art_w073",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "db0bde1b8d6c9572a779868b5cf17f34146061be7efd25854ea8d78aef319740"
+  },
+  {
+   "name": "art_w079",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "195eef181b9eb13ddafb3bb7de3a762cadd3bd4608c0f03dca2574aaa96d6027"
+  },
+  {
+   "name": "art_w085",
+   "w": 128,
+   "h": 192,
+   "group": "art",
+   "sha256": "c9a530aa6c55480e3cc8a4fb6da7c8d9ddc3570d17eb4aac972cc83c4ff861c3"
+  },
+  {
+   "name": "art_w091",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "7c7ddb24bf4e213476950ba06c0174c1d88b13f075f9a4b3dcb7a57afab005f2"
+  },
+  {
+   "name": "art_w097",
+   "w": 192,
+   "h": 108,
+   "group": "art",
+   "sha256": "5223980e43a1dc510499d56ac4d4f1557d4c05e7d9ca7acfff2af1e248672468"
+  },
+  {
+   "name": "art_w103",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "4fa945b463dce0763f045c98a1aca3edf4d8dc4acace49200c71ec1aeb53479b"
+  },
+  {
+   "name": "art_w109",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "6fbab231e0fa14a2ed45167713d4fe1e86312686053e9d0e3901cfbb6f73ff90"
+  },
+  {
+   "name": "art_w115",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "03b9a3fd6138b312aa2b45a1ca9165b98d0b18ffd07363e291158376a4391366"
+  },
+  {
+   "name": "art_w121",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "e04fa54e6f2998dc731d87a45dbf31998137b8e00fe9c342d17de72e166ed828"
+  },
+  {
+   "name": "art_w127",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "628404108f99f7936da56aa136b9501284f63cd164b3a8599d0736c46c970505"
+  },
+  {
+   "name": "art_w133",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "f6a2d93ecd1220d7105bc8f3d656037a761314c5b030603f4220714014e607e8"
+  },
+  {
+   "name": "art_w139",
+   "w": 154,
+   "h": 192,
+   "group": "art",
+   "sha256": "b524d45fa941acc50ed142f7343b0dcdf656af8290869a5dc5f95b8b36b6addc"
+  },
+  {
+   "name": "syn_ramp",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "af1fbfbd4f5be50170b060c27f928667cf5932fa6263679bc84c6c91b9b605c9"
+  },
+  {
+   "name": "syn_disk",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "04a77f31e7a0f411707c11ab6b4b674c1157efe796132ec2aea34eef6b3212ac"
+  },
+  {
+   "name": "syn_stripes1px",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "395056220f1e139aef70714524684ebb730e2995046c445cec4ca1bff8223412"
+  },
+  {
+   "name": "syn_checker1px",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "47a1bdf3780cbc73df846952e4bc2773287fa96832907914352686574ba4efbc"
+  },
+  {
+   "name": "syn_diag_rising",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "7f707b2321da62cc31257a6b5cb62ba9e262be4d94adfc7567f7b939cb9ca51c"
+  },
+  {
+   "name": "syn_diag_falling",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "67e47c04ab0c0612aa797131d97d2d723f6427f2ef12b12df46c876ea6bf371b"
+  },
+  {
+   "name": "syn_red_wrap",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "069706f531a690b666304c9fc328a4111544836621a2be3c87102ac336e9cb51"
+  },
+  {
+   "name": "syn_lowcontrast_asym",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "2e62ce3853055a016435c6f97a48c0b1c019350aed83706eee0fb82f09e88868"
+  },
+  {
+   "name": "syn_noise",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "9e4216036f55ea7e6c3272a7f8c7555099ce23d4271e6886dbbf73adc30d86d9"
+  },
+  {
+   "name": "syn_he_like",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "0fc1c8905a30816c88afcca110434078d39f11c9744db4ccb77bc0f7d601fae1"
+  },
+  {
+   "name": "syn_radiograph_like",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "cce27c936f763ccde3069e85daa8ca0740601499ff307ca46c00f3b8e3c9a94d"
+  },
+  {
+   "name": "syn_textlike",
+   "w": 192,
+   "h": 128,
+   "group": "synth",
+   "sha256": "332d859ad4af8d98a283a11969187b8a6bd3a7af8755fdda403beedb13b3bf04"
+  }
+ ]
+}

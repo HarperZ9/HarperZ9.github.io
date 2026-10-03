@@ -2,10 +2,10 @@
 // for Telos Studio's perception channel. Zero dependencies; no DOM / canvas / WebGL; no Math.random /
 // Date.now. Plain arrays / Float32Array greyscale or RGBA buffers in, with explicit width/height.
 //
-// This is the BIOMIMETIC DEEPENING of SPEC-telos-sensory-engine.md section C + the WPIR metric
-// (section D): linearize-first, Laplacian-pyramid bandpass + Gabor orientation, DoG centre-surround,
-// spectral-residual saliency, CSF weighting, SSIM, CSF-weighted SSIM (WPIR), per-cell spatial coords
-// and redundancy flags. Reference math first; integration + GPU acceleration are separate steps.
+// This is the BIOMIMETIC DEEPENING of SPEC-telos-sensory-engine.md section C: linearize-first,
+// Laplacian-pyramid bandpass + Gabor orientation, DoG centre-surround, spectral-residual saliency,
+// CSF weighting, SSIM, per-cell spatial coords and redundancy flags (the section D WPIR metric was
+// deleted in October 2026). Reference math first; integration + GPU acceleration are separate steps.
 //
 // Citations (canonical formulas):
 //   sRGB EOTF: IEC 61966-2-1; Gritz and d'Eon, GPU Gems 3 ch. 24 (linearize first).
@@ -15,7 +15,6 @@
 //   Spectral residual saliency: Hou and Zhang 2007 ("Saliency Detection: A Spectral Residual Approach").
 //   CSF: Barten 2003 (contrast sensitivity of the human eye); Ashraf/Mantiuk castleCSF 2024.
 //   SSIM: Wang, Bovik, Sheikh, Simoncelli 2004 ("Image Quality Assessment: From Error Visibility ...").
-//   WPIR (CSF-weighted SSIM): this spec, section D; SSIM (Wang 2004) x castleCSF (2024) weighting.
 
 // -- (0) Colour: linearize sRGB first ------------------------------------------
 // sRGB EOTF (IEC 61966-2-1): the standard piecewise inverse with exponent 2.4, threshold 0.04045.
@@ -308,27 +307,9 @@ export function ssim(a, b, w, h) {
   return { mssim: w * h ? sum / (w * h) : 1, map, w, h };
 }
 
-// -- (7) WPIR: CSF-weighted SSIM (spec section D) ------------------------------
-// Weighted Perceptual Information Retention: the local SSIM map weighted by per-cell CSF sensitivity
-// and normalized by the total CSF weight, over a cols x rows cell layout. 0..1; high when the
-// reconstruction matches the (already-linearized) original, lower when degraded. `csfWeights` is a
-// flat array of per-cell weights (row-major cols x rows); if omitted, all cells weigh 1 (-> mean SSIM).
-export function wpir(reconstructed, original, w, h, csfWeights, cols = 8, rows = 8) {
-  const { map } = ssim(reconstructed, original, w, h);
-  let num = 0, den = 0, idx = 0;
-  for (let cy = 0; cy < rows; cy++) {
-    const y0 = Math.floor(cy * h / rows), y1 = Math.max(y0 + 1, Math.floor((cy + 1) * h / rows));
-    for (let cx = 0; cx < cols; cx++, idx++) {
-      const x0 = Math.floor(cx * w / cols), x1 = Math.max(x0 + 1, Math.floor((cx + 1) * w / cols));
-      let cellSum = 0, count = 0;
-      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { cellSum += map[y * w + x]; count++; }
-      const cellSsim = count ? cellSum / count : 1;
-      const wgt = csfWeights && csfWeights.length ? Math.max(0, csfWeights[idx] || 0) : 1;
-      num += wgt * cellSsim; den += wgt;
-    }
-  }
-  return den ? Math.max(0, Math.min(1, num / den)) : 1;
-}
+// -- (7) WPIR was deleted in October 2026. It scored a Laplacian pyramid against
+// itself, and that pyramid reconstructs exactly, so it read 1 on every input. A planned fidelity
+// vector, RTF-1, replaces it.
 
 // -- (8) Per-cell spatial coords + redundancy (spec section C) -----------------
 // Explicit normalized coordinates per cell of a cols x rows aspect-native grid (survives connector

@@ -21,7 +21,6 @@ import {
   _selftest,
   buildReceipt,
   hashBytesOf,
-  fnv1a,
   discriminateMesh,
   discriminateOBJText,
   discriminateGLTF,
@@ -29,7 +28,6 @@ import {
   discriminateJSON,
   discriminatePNG,
   HASH_SHA256,
-  HASH_FNV1A,
 } from "./exporters.js";
 
 
@@ -630,9 +628,11 @@ describe("_selftest()", () => {
 // ===========================================================================
 
 // ---------------------------------------------------------------------------
-// hashBytesOf() + fnv1a() -- provenance hashing, both paths
+// hashBytesOf() -- provenance hashing, Web Crypto and the pure SHA-256 path
 // ---------------------------------------------------------------------------
-describe("hashBytesOf() -- SHA-256 path and FNV-1a fallback", () => {
+describe("hashBytesOf() -- SHA-256 through Web Crypto and through the pure path", () => {
+  // Telos Track A step T2: the FNV-1a fallback is gone. With subtle forced null the pure SHA-256 in
+  // shared-frame/sha256.js runs, and it must give the same digest as Web Crypto.
   it("should report hashAlgo 'sha-256' and a 64-hex digest when crypto.subtle is present", async () => {
     // Node 20+ has globalThis.crypto.subtle, so the ambient path is sha-256.
     const { hash, hashAlgo } = await hashBytesOf("hello world");
@@ -648,20 +648,22 @@ describe("hashBytesOf() -- SHA-256 path and FNV-1a fallback", () => {
     assert.equal(hash, "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
   });
 
-  it("should fall back to FNV-1a and flag it honestly when subtle is forced null", async () => {
-    const { hash, hashAlgo } = await hashBytesOf("hello world", { subtle: null });
-    assert.equal(hashAlgo, HASH_FNV1A, "forced no-subtle must use the fnv1a fallback");
-    assert.notEqual(hashAlgo, HASH_SHA256, "must NOT claim sha-256 when it used the fallback");
-    assert.match(hash, /^[0-9a-f]{8}$/, "FNV-1a digest is 8 hex chars (visibly not a sha-256)");
+  it("should give the same SHA-256 when subtle is forced null (the file:// path)", async () => {
+    const web = await hashBytesOf("hello world");
+    const pure = await hashBytesOf("hello world", { subtle: null });
+    assert.equal(pure.hashAlgo, HASH_SHA256);
+    assert.equal(pure.hash, web.hash, "the pure path and Web Crypto agree");
+    const abc = await hashBytesOf("abc", { subtle: null });
+    assert.equal(abc.hash, "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
   });
 
-  it("should be deterministic: same input -> same digest (both algos)", async () => {
+  it("should be deterministic: same input -> same digest (both paths)", async () => {
     const a = await hashBytesOf("repeatable");
     const b = await hashBytesOf("repeatable");
     assert.equal(a.hash, b.hash, "sha-256 must be deterministic");
     const c = await hashBytesOf("repeatable", { subtle: null });
     const d = await hashBytesOf("repeatable", { subtle: null });
-    assert.equal(c.hash, d.hash, "fnv1a must be deterministic");
+    assert.equal(c.hash, d.hash, "the pure path must be deterministic");
   });
 
   it("should give different digests for different inputs", async () => {
@@ -675,11 +677,6 @@ describe("hashBytesOf() -- SHA-256 path and FNV-1a fallback", () => {
     const fromBlob = await hashBytesOf(blob);
     const fromBytes = await hashBytesOf(new Uint8Array([1, 2, 3, 4, 5]));
     assert.equal(fromBlob.hash, fromBytes.hash, "Blob must hash to the same digest as its raw bytes");
-  });
-
-  it("fnv1a() should return 8 lowercase hex chars for any byte input", () => {
-    const h = fnv1a(new Uint8Array([0, 255, 128, 7]));
-    assert.match(h, /^[0-9a-f]{8}$/);
   });
 });
 
@@ -839,7 +836,9 @@ describe("StudioExporters.exportWithReceipt() -- receipt shape and truth", () =>
     assert.ok(Array.isArray(receipt.transformsApplied), "transformsApplied must be an array");
     assert.ok(receipt.transformsApplied.every(t => typeof t.step === "string" && typeof t.criterion === "string"),
       "each transform must have {step, criterion} strings");
-    assert.ok(receipt.hashAlgo === HASH_SHA256 || receipt.hashAlgo === HASH_FNV1A, "hashAlgo must be one of the two honest tags");
+    assert.equal(receipt.hashAlgo, HASH_SHA256, "hashAlgo is always sha-256 (Telos Track A step T2)");
+    assert.equal(receipt.canonical, "project-telos.canonical-bytes/v1");
+    assert.match(receipt.receiptSha256, /^[0-9a-f]{64}$/, "the receipt is sealed with its own SHA-256");
   });
 
   it("should NOT carry a bare floating-point faithfulness score", async () => {
@@ -891,14 +890,14 @@ describe("StudioExporters.exportWithReceipt() -- receipt shape and truth", () =>
     assert.notEqual(receipt.originHash, receipt.commitHash, "input and output hashes differ");
   });
 
-  it("should use sha-256 by default and fnv1a-fallback when subtle is forced null", async () => {
+  it("should give the identical sealed receipt with and without Web Crypto (Track A step T2)", async () => {
     const sha = await StudioExporters.exportWithReceipt("obj", stubCanvas, { mesh: goodMesh });
     assert.equal(sha.receipt.hashAlgo, HASH_SHA256, "default path is sha-256 in Node");
 
-    const fb = await StudioExporters.exportWithReceipt("obj", stubCanvas, { mesh: goodMesh }, { subtle: null });
-    assert.equal(fb.receipt.hashAlgo, HASH_FNV1A, "forced no-subtle path must report the fnv1a fallback");
-    // Same logical content -> the sha and fnv hashes must themselves differ (different algos).
-    assert.notEqual(sha.receipt.originHash, fb.receipt.originHash, "different algos yield different digests");
+    const pure = await StudioExporters.exportWithReceipt("obj", stubCanvas, { mesh: goodMesh }, { subtle: null });
+    assert.equal(pure.receipt.hashAlgo, HASH_SHA256, "the file:// path is sha-256 too");
+    assert.equal(pure.receipt.originHash, sha.receipt.originHash, "same content -> same digest on both paths");
+    assert.equal(pure.receipt.receiptSha256, sha.receipt.receiptSha256, "the sealed receipt does not depend on the path");
   });
 
   it("should build a JSON receipt that round-trips and reports json criterion", async () => {

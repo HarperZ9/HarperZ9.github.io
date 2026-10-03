@@ -1,0 +1,703 @@
+{
+ "result": "t7-task-value",
+ "prereg_sha256": "7c13f35793a05da63f4199edffa3fb08ce60b2ecf6135d4294a6146f81efde52",
+ "prereg_t4t7_sha256": "75cbd7d12857b3d9143c4cd14169731388f33be5e495093943b6d29fdd2061eb",
+ "amendment_4_sha256": "5cfebb1d0fac2718e751585e31fa012427d7a2c066af699c68bec8dd323e632f",
+ "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+ "tasks": [
+  {
+   "source": "PBC",
+   "task": "cell_class",
+   "scope": "in-source only",
+   "images": 100,
+   "classes": 8,
+   "groups": 100,
+   "majority_rate": 0.13,
+   "configs": {
+    "L0": {
+     "accuracy": 0.41600000000000004
+    },
+    "L1": {
+     "accuracy": 0.32
+    },
+    "L2": {
+     "accuracy": 0.38500000000000006
+    },
+    "L0+L1": {
+     "accuracy": 0.3460000000000001
+    },
+    "L0+L2": {
+     "accuracy": 0.3950000000000001
+    },
+    "L1+L2": {
+     "accuracy": 0.386
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.393
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.007000000000000001,
+     "lo": 0.0,
+     "hi": 0.015,
+     "n": 100,
+     "clusters": 100,
+     "carries_value": false,
+     "tokens_mean": 53.63,
+     "value_per_100_tokens": 0.013052396046988627
+    },
+    "L1": {
+     "mean": -0.0020000000000000013,
+     "lo": -0.011999999999999997,
+     "hi": 0.006999999999999999,
+     "n": 100,
+     "clusters": 100,
+     "carries_value": false,
+     "tokens_mean": 109.41,
+     "value_per_100_tokens": -0.0018279864729001019
+    },
+    "L2": {
+     "mean": 0.047,
+     "lo": -0.004999999999999998,
+     "hi": 0.10099999999999999,
+     "n": 100,
+     "clusters": 100,
+     "carries_value": false,
+     "tokens_mean": 999.96,
+     "value_per_100_tokens": 0.0047001880075203005
+    }
+   },
+   "controls": {
+    "wrong_image": {
+     "mean": 0.122,
+     "sd": 0.039682954049632735,
+     "upper": 0.13939182142938394,
+     "bound": 0.15,
+     "pass": true,
+     "first_draw_wilson": [
+      0.07757093858414264,
+      0.20980521894809878
+     ],
+     "draws": [
+      0.13,
+      0.08,
+      0.13,
+      0.23,
+      0.12,
+      0.13,
+      0.12,
+      0.1,
+      0.12,
+      0.15,
+      0.08,
+      0.12,
+      0.18,
+      0.08,
+      0.05,
+      0.12,
+      0.11,
+      0.1,
+      0.12,
+      0.17
+     ]
+    },
+    "shuffled_layer": {
+     "mean": 0.1075,
+     "sd": 0.03226126894101053,
+     "upper": 0.12163912451693043,
+     "bound": 0.15,
+     "pass": true,
+     "first_draw_wilson": [
+      0.09305903191162297,
+      0.23283733332157835
+     ],
+     "draws": [
+      0.15,
+      0.13,
+      0.09,
+      0.07,
+      0.15,
+      0.11,
+      0.08,
+      0.1,
+      0.11,
+      0.09,
+      0.15,
+      0.08,
+      0.08,
+      0.11,
+      0.16,
+      0.16,
+      0.07,
+      0.06,
+      0.09,
+      0.11
+     ]
+    }
+   },
+   "positive_control": {
+    "mean": 0.022,
+    "lo": 0.003999999999999998,
+    "hi": 0.04,
+    "n": 100,
+    "clusters": 100,
+    "pass": true
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.35900000000000004,
+     "tokens_mean": 1418.64
+    },
+    "oklab_L2_N32": {
+     "accuracy": 0.38500000000000006,
+     "tokens_mean": 999.96,
+     "minus_colorGrid16": {
+      "mean": 0.026000000000000002,
+      "lo": -0.002999999999999996,
+      "hi": 0.05600000000000001,
+      "n": 100,
+      "clusters": 100
+     }
+    },
+    "oklab_L2_N40": {
+     "accuracy": 0.38500000000000006,
+     "tokens_mean": 1493.83,
+     "minus_colorGrid16": {
+      "mean": 0.026000000000000002,
+      "lo": -0.005,
+      "hi": 0.05800000000000001,
+      "n": 100,
+      "clusters": 100
+     }
+    },
+    "n_match": 40
+   }
+  },
+  {
+   "source": "KATHER2016",
+   "task": "tissue_class",
+   "scope": "in-source only",
+   "images": 100,
+   "classes": 8,
+   "groups": 10,
+   "majority_rate": 0.13,
+   "configs": {
+    "L0": {
+     "accuracy": 0.35600000000000004
+    },
+    "L1": {
+     "accuracy": 0.286
+    },
+    "L2": {
+     "accuracy": 0.282
+    },
+    "L0+L1": {
+     "accuracy": 0.33299999999999996
+    },
+    "L0+L2": {
+     "accuracy": 0.286
+    },
+    "L1+L2": {
+     "accuracy": 0.28400000000000003
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.29100000000000004
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.006999999999999999,
+     "lo": 0.0,
+     "hi": 0.023256942876495806,
+     "n": 100,
+     "clusters": 10,
+     "carries_value": false,
+     "tokens_mean": 52.88,
+     "value_per_100_tokens": 0.0132375189107413
+    },
+    "L1": {
+     "mean": 0.005,
+     "lo": -0.03494126506024096,
+     "hi": 0.042105263157894736,
+     "n": 100,
+     "clusters": 10,
+     "carries_value": false,
+     "tokens_mean": 109.71,
+     "value_per_100_tokens": 0.004557469692826543
+    },
+    "L2": {
+     "mean": -0.042,
+     "lo": -0.09253731343283582,
+     "hi": -0.00796350652764393,
+     "n": 100,
+     "clusters": 10,
+     "carries_value": false,
+     "tokens_mean": 1016.22,
+     "value_per_100_tokens": -0.004132963334710988
+    }
+   },
+   "controls": {
+    "wrong_image": {
+     "mean": 0.07250000000000001,
+     "sd": 0.03537394223823073,
+     "upper": 0.08800331373745966,
+     "bound": 0.15,
+     "pass": true,
+     "first_draw_wilson": [
+      0.09305903191162297,
+      0.23283733332157835
+     ],
+     "draws": [
+      0.15,
+      0.05,
+      0.09,
+      0.08,
+      0.08,
+      0.07,
+      0.09,
+      0.03,
+      0.04,
+      0.1,
+      0.04,
+      0.05,
+      0.15,
+      0.09,
+      0.03,
+      0.09,
+      0.07,
+      0.07,
+      0.06,
+      0.02
+     ]
+    },
+    "shuffled_layer": {
+     "mean": 0.06400000000000002,
+     "sd": 0.028727393858384315,
+     "upper": 0.07659033547481645,
+     "bound": 0.15,
+     "pass": true,
+     "first_draw_wilson": [
+      0.06999337365267776,
+      0.19812268002908368
+     ],
+     "draws": [
+      0.12,
+      0.12,
+      0.04,
+      0.06,
+      0.06,
+      0.09,
+      0.09,
+      0.04,
+      0.04,
+      0.07,
+      0.06,
+      0.05,
+      0.05,
+      0.08,
+      0.07,
+      0.03,
+      0.02,
+      0.1,
+      0.06,
+      0.03
+     ]
+    }
+   },
+   "positive_control": {
+    "mean": 0.024000000000000004,
+    "lo": -0.016419833820587783,
+    "hi": 0.075,
+    "n": 100,
+    "clusters": 10,
+    "pass": false
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.296,
+     "tokens_mean": 1715.28
+    },
+    "oklab_L2_N32": {
+     "accuracy": 0.282,
+     "tokens_mean": 1016.22,
+     "minus_colorGrid16": {
+      "mean": -0.013999999999999995,
+      "lo": -0.07659673891429708,
+      "hi": 0.055660620501847884,
+      "n": 100,
+      "clusters": 10
+     }
+    },
+    "oklab_L2_N40": {
+     "accuracy": 0.29,
+     "tokens_mean": 1551.06,
+     "minus_colorGrid16": {
+      "mean": -0.005999999999999997,
+      "lo": -0.07684210526315789,
+      "hi": 0.06666666666666667,
+      "n": 100,
+      "clusters": 10
+     }
+    },
+    "n_match": 40
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "condition",
+   "scope": "in-source only",
+   "images": 100,
+   "classes": 2,
+   "groups": 50,
+   "majority_rate": 0.5,
+   "configs": {
+    "L0": {
+     "accuracy": 0.728
+    },
+    "L1": {
+     "accuracy": 0.8260000000000001
+    },
+    "L2": {
+     "accuracy": 0.9670000000000002
+    },
+    "L0+L1": {
+     "accuracy": 0.9540000000000001
+    },
+    "L0+L2": {
+     "accuracy": 0.971
+    },
+    "L1+L2": {
+     "accuracy": 0.9680000000000001
+    },
+    "L0+L1+L2": {
+     "accuracy": 0.9689999999999999
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0009999999999999998,
+     "lo": -0.002999999999999999,
+     "hi": 0.004999999999999999,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 49.5,
+     "value_per_100_tokens": 0.0020202020202020198
+    },
+    "L1": {
+     "mean": -0.001999999999999999,
+     "lo": -0.01,
+     "hi": 0.005000000000000002,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 133.71,
+     "value_per_100_tokens": -0.0014957744372148672
+    },
+    "L2": {
+     "mean": 0.015000000000000005,
+     "lo": -0.006999999999999998,
+     "hi": 0.043,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 545.15,
+     "value_per_100_tokens": 0.0027515362744198854
+    }
+   },
+   "controls": {
+    "wrong_image": {
+     "mean": 0.4245000000000001,
+     "sd": 0.08525349197972387,
+     "upper": 0.46186399026363567,
+     "bound": 0.52,
+     "pass": true,
+     "first_draw_wilson": [
+      0.3942183009238615,
+      0.5865215952256586
+     ],
+     "draws": [
+      0.49,
+      0.33,
+      0.35,
+      0.5,
+      0.44,
+      0.34,
+      0.29,
+      0.43,
+      0.32,
+      0.62,
+      0.38,
+      0.47,
+      0.51,
+      0.35,
+      0.46,
+      0.46,
+      0.37,
+      0.54,
+      0.46,
+      0.38
+     ]
+    },
+    "shuffled_layer": {
+     "mean": 0.46399999999999997,
+     "sd": 0.08653566347253355,
+     "upper": 0.5019259266965156,
+     "bound": 0.52,
+     "pass": true,
+     "first_draw_wilson": [
+      0.2727107459049014,
+      0.45764780018837914
+     ],
+     "draws": [
+      0.36,
+      0.47,
+      0.46,
+      0.56,
+      0.55,
+      0.51,
+      0.37,
+      0.5,
+      0.46,
+      0.38,
+      0.43,
+      0.43,
+      0.57,
+      0.34,
+      0.63,
+      0.47,
+      0.37,
+      0.58,
+      0.5,
+      0.34
+     ]
+    }
+   },
+   "positive_control": {
+    "mean": -0.0010000000000000015,
+    "lo": -0.019,
+    "hi": 0.016999999999999998,
+    "n": 100,
+    "clusters": 50,
+    "pass": false
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 0.875,
+     "tokens_mean": 1806.54
+    },
+    "oklab_L2_N32": {
+     "accuracy": 0.9670000000000002,
+     "tokens_mean": 545.15,
+     "minus_colorGrid16": {
+      "mean": 0.09200000000000001,
+      "lo": 0.04300000000000001,
+      "hi": 0.148,
+      "n": 100,
+      "clusters": 50
+     }
+    },
+    "oklab_L2_N48": {
+     "accuracy": 0.973,
+     "tokens_mean": 1184.34,
+     "minus_colorGrid16": {
+      "mean": 0.098,
+      "lo": 0.048999999999999995,
+      "hi": 0.156,
+      "n": 100,
+      "clusters": 50
+     }
+    },
+    "n_match": 48
+   }
+  },
+  {
+   "source": "BBBC010",
+   "task": "channel",
+   "scope": "in-source only",
+   "images": 100,
+   "classes": 2,
+   "groups": 50,
+   "majority_rate": 0.5,
+   "configs": {
+    "L0": {
+     "accuracy": 1.0
+    },
+    "L1": {
+     "accuracy": 1.0
+    },
+    "L2": {
+     "accuracy": 1.0
+    },
+    "L0+L1": {
+     "accuracy": 1.0
+    },
+    "L0+L2": {
+     "accuracy": 1.0
+    },
+    "L1+L2": {
+     "accuracy": 1.0
+    },
+    "L0+L1+L2": {
+     "accuracy": 1.0
+    }
+   },
+   "conditional_value": {
+    "L0": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 49.5,
+     "value_per_100_tokens": 0.0
+    },
+    "L1": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 133.71,
+     "value_per_100_tokens": 0.0
+    },
+    "L2": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 100,
+     "clusters": 50,
+     "carries_value": false,
+     "tokens_mean": 545.15,
+     "value_per_100_tokens": 0.0
+    }
+   },
+   "controls": {
+    "wrong_image": {
+     "mean": 0.5349999999999999,
+     "sd": 0.07715329920973805,
+     "upper": 0.5688139242573855,
+     "bound": 0.52,
+     "pass": false,
+     "first_draw_wilson": [
+      0.5020007846184025,
+      0.6906002538863971
+     ],
+     "draws": [
+      0.6,
+      0.56,
+      0.56,
+      0.62,
+      0.47,
+      0.59,
+      0.49,
+      0.6,
+      0.51,
+      0.61,
+      0.38,
+      0.41,
+      0.62,
+      0.39,
+      0.6,
+      0.52,
+      0.58,
+      0.47,
+      0.58,
+      0.54
+     ]
+    },
+    "shuffled_layer": {
+     "mean": 0.48250000000000004,
+     "sd": 0.06544382886752659,
+     "upper": 0.511182022610908,
+     "bound": 0.52,
+     "pass": true,
+     "first_draw_wilson": [
+      0.327982249185113,
+      0.5179369200110473
+     ],
+     "draws": [
+      0.42,
+      0.52,
+      0.54,
+      0.47,
+      0.47,
+      0.58,
+      0.55,
+      0.42,
+      0.58,
+      0.45,
+      0.47,
+      0.46,
+      0.41,
+      0.46,
+      0.52,
+      0.41,
+      0.45,
+      0.43,
+      0.41,
+      0.63
+     ]
+    }
+   },
+   "positive_control": {
+    "mean": 0.0,
+    "lo": 0.0,
+    "hi": 0.0,
+    "n": 100,
+    "clusters": 50,
+    "pass": false
+   },
+   "head_to_head": {
+    "colorGrid16": {
+     "accuracy": 1.0,
+     "tokens_mean": 1806.54
+    },
+    "oklab_L2_N32": {
+     "accuracy": 1.0,
+     "tokens_mean": 545.15,
+     "minus_colorGrid16": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 100,
+      "clusters": 50
+     }
+    },
+    "oklab_L2_N48": {
+     "accuracy": 1.0,
+     "tokens_mean": 1184.34,
+     "minus_colorGrid16": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 100,
+      "clusters": 50
+     }
+    },
+    "n_match": 48
+   }
+  }
+ ],
+ "parser_roundtrip": {
+  "same": 900,
+  "of": 900
+ },
+ "gates": {
+  "PBC cell_class wrong_image": true,
+  "PBC cell_class shuffled_layer": true,
+  "KATHER2016 tissue_class wrong_image": true,
+  "KATHER2016 tissue_class shuffled_layer": true,
+  "BBBC010 condition wrong_image": true,
+  "BBBC010 condition shuffled_layer": true,
+  "BBBC010 channel wrong_image": false,
+  "BBBC010 channel shuffled_layer": true,
+  "PBC cell_class positive": true,
+  "KATHER2016 tissue_class positive": false,
+  "BBBC010 condition positive": false,
+  "BBBC010 channel positive": false
+ }
+}
