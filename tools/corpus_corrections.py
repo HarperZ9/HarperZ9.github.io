@@ -38,6 +38,23 @@ CORRECTIONS: dict[str, list[dict]] = {
                 "Academy</i> 48 (1962): 187 to 211."
             ),
         },
+        {
+            "after": (
+                "fix the target of a two-place reactive-attitude relation",
+                "Oxidation is a one-place property of the combusting stuff",
+                "What carries irreducibility is the",
+                "holding-responsible is two-place in its addressee",
+                "no forward-looking first-to-third program can fix the target of a two-place relation",
+            ),
+            "note": (
+                "3 October 2026, correction, the free-will chapter and the closing synthesis: the deposit says a one-place "
+                "target-fixing vocabulary cannot fix the target of a two-place relation, and contrasts address with oxidation "
+                "as a one-place property. Behavior control also relates two parties, and oxidation is relational, so that "
+                "contrast was wrong. The October edition of the arity-gap paper withdraws it. The current claim is narrower: "
+                "the address relation needs a second party who can answer and refuse, and a description built only from the "
+                "role of a system to be adjusted has not been shown to fix it."
+            ),
+        },
     ],
     "witnessing-spine.html": [
         {
