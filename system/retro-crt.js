@@ -73,7 +73,9 @@ function phosphorPass(d, w, h, o, cell) {
   const scan = !!o.scanlines, s = clamp(+o.scanStrength || 0, 0, 1);
   const maskOn = !!(o.mask && o.mask !== "none" && o.maskStrength > 0);
   if (!scan && !maskOn) return;
-  const beam = fixed(scan && cell >= 2 ? beamTable(cell, s, o.beam) : new Float32Array(16).fill(1));
+  // The flat table must cover every index the loop reads (16 buckets x cell rows); a 16-entry
+  // table read past its end gave NaN, so scanlines at 0 with a mask on blanked most of the frame.
+  const beam = fixed(scan && cell >= 2 ? beamTable(cell, s, o.beam) : new Float32Array(16 * cell).fill(1));
   const mt = fixed(maskOn ? maskTable(o.mask, o.maskStrength) : new Float32Array(54).fill(1));
   const flatCell = scan && cell < 2;
   for (let y = 0; y < h; y++) {
