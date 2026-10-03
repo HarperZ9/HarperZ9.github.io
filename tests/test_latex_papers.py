@@ -171,3 +171,15 @@ def test_markdown_sources_carry_author_and_license_front_matter() -> None:
         front = text.split("\n---\n", 1)[0]
         assert "author: Zain Dana Harper" in front, source
         assert "license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/" in front, source
+
+
+def test_corpus_pages_name_the_same_license_as_their_pdfs() -> None:
+    # The Conferred Existence page said MIT while its PDF and the Zenodo deposit said CC BY 4.0.
+    from tools import attribution
+    from tools.render_corpus import CORPORA
+
+    for corpus in CORPORA:
+        assert corpus["licence"] == attribution.LICENSE, corpus["title"]
+        page = corpus["out"].read_text(encoding="utf-8")
+        assert f"<span>{attribution.LICENSE}</span>" in page, corpus["out"].name
+        assert "<span>MIT</span>" not in page, corpus["out"].name

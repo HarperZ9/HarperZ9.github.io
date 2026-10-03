@@ -5,9 +5,9 @@ archived corpora, Conferred Existence and The Witnessing Spine, were Zenodo
 links and nothing else, so the one thing a reader could not do with the longest
 pieces of writing on the record was read them here.
 
-Both are the author's own work, MIT and CC BY 4.0 respectively, and both are
-deposited publicly. This renders each Markdown source into a page on the shared
-document system, which means it also gets the export control and the print
+Both are the author's own work, both texts are licensed CC BY 4.0, and both
+are deposited publicly. This renders each Markdown source into a page on the
+shared document system, which means it also gets the export control and the print
 stylesheet: readable in a browser, and takeable as Markdown, text, Word, or PDF
 like anything else.
 
@@ -54,7 +54,7 @@ CORPORA = [
         "title": "Conferred Existence",
         "role": "An integrated thesis on made minds: what exists on its own footing, what is conferred, and where an authentication verdict stops.",
         "doi": "10.5281/zenodo.20773724",
-        "licence": "MIT",
+        "licence": "CC BY 4.0",
         "blurb": "Archived research corpus, deposited whole. This is the full text as deposited.",
     },
     {
