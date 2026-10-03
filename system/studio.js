@@ -17,6 +17,7 @@ import { respond } from "./respond.js";
 import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
 import { buildModelHeaders } from "./studio-model.js";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
+import { createPerceptionWorker } from "./studio-perception-client.js";
 import { probeCapability } from "./engine/capability.js";
 import { makeHardwareRenderPlan } from "./engine/render-plan.js";
 import { IR_SCHEMA, CANONICAL_MEDIA_KINDS } from "./media/ir.js";
@@ -4462,8 +4463,10 @@ function setMeter(key, frac, text) {
 
 // ── the faithful representation mosaic: box-average → n×n, painted enlarged ──
 function paintMosaic(px, w, h) {
+  paintMosaicGrid(representation({ data: px, width: w, height: h }, MOSAIC_N).grid);
+}
+function paintMosaicGrid(grid) {
   const c = $("mm-mosaic"); if (!c) return;
-  const { grid } = representation({ data: px, width: w, height: h }, MOSAIC_N);
   const ctx = c.getContext("2d", { willReadFrequently: true }); if (!ctx) return;
   // paint into an n×n offscreen then scale up with nearest-neighbour (image-rendering:pixelated).
   const n = MOSAIC_N, img = ctx.createImageData(n, n);
@@ -4555,12 +4558,21 @@ function pushMotion(deltaFrac) {
 // live loop. Updates the mosaic, meters, swatches, describe line, motion sparkline. Returns the
 // rich-features bundle so greetings can name a dominant colour + texture. NEVER calls say().
 let lastMeterPhash = null;
+// measureEpoch moves on every main-thread measure(), so a worker result for an older frame never
+// overwrites a newer settled read.
+let measureEpoch = 0;
 function measure(px, w, h, phash) {
+  measureEpoch++;
   const rich = richFeatures(px, w, h, 4);
   const f = features(px, w, h, 4);   // re-derive the gated advisory metrics for the meter bars
+  return applyMeasure(w, h, phash, rich, f, representation({ data: px, width: w, height: h }, MOSAIC_N).grid);
+}
+// The DOM half of measure(): the same writes in the same order, from numbers computed either here
+// or in the perception worker (studio-perception-worker.mjs) on the same bytes.
+function applyMeasure(w, h, phash, rich, f, mosaic) {
   lastRich = rich;
   buildMeters();
-  paintMosaic(px, w, h);
+  paintMosaicGrid(mosaic);
   paintSwatches(rich);
   setMeter("contrast", f.contrast, fmt(f.contrast, 2));
   setMeter("structure", f.entropy, fmt(f.entropy, 2));
@@ -4625,6 +4637,14 @@ const LIVE_HZ = 12, LIVE_MS = 1000 / LIVE_HZ;
 let lastTickTs = 0, lastLoopPhash = null, staticTicks = 0, fpsAcc = 0, fpsCount = 0, fpsTs = 0;
 const STATIC_STOP = 18;   // ~1.5s of an unchanging frame → idle the loop
 
+// The pure half of measure() for the perception worker's first-result check: same functions,
+// same bytes, so the worker's packet must equal this one exactly.
+const livePerception = createPerceptionWorker((px, w, h, n) => ({
+  phash: perceptualHash(px, w, h, 4), f: features(px, w, h, 4), rich: richFeatures(px, w, h, 4),
+  mosaic: representation({ data: px, width: w, height: h }, n).grid,
+}));
+let liveEpoch = 0;
+
 function liveTick(ts) {
   if (!liveLoopRunning) return;
   liveRaf = requestAnimationFrame(liveTick);
@@ -4638,6 +4658,26 @@ function liveTick(ts) {
   if (liveVid && !canvasIsGL) {
     try { drawSource(liveVid, liveVid.videoWidth, liveVid.videoHeight); } catch (e) {}
   }
+  // Granular detail refresh at ~0.5Hz while animating. That tick measures on the main thread so
+  // the detail, the meters and the hash all describe one frame, exactly as before the worker.
+  const detailDue = !liveTick._detailTs || ts - liveTick._detailTs > 2000;
+  if (!detailDue && livePerception.ready()) {
+    // A tick while the worker still measures the last frame is skipped: jobs never stack.
+    if (livePerception.busy) { pollAudio(); return; }
+    let read;
+    try { read = readPixelDataBounded(canvas, LIVE_READ_MAX_EDGE); }
+    catch (e) { return; }   // a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick
+    const epoch = measureEpoch, loop = liveEpoch;
+    livePerception.measure(read.px, read.w, read.h, MOSAIC_N).then(r => {
+      if (epoch !== measureEpoch || loop !== liveEpoch || !liveLoopRunning) return;   // stale
+      $("sc-phash").textContent = r.phash;
+      markStagePainted();
+      applyMeasure(read.w, read.h, r.phash, r.rich, r.f, r.mosaic);
+      liveAfterMeasure(ts, r.phash);
+    }, e => console.error("[studio] live perception frame dropped:", e && e.message || e));
+    pollAudio();
+    return;
+  }
   let px, phash;
   try {
     // Bounded streaming read: keeps the loop off the main thread's critical
@@ -4650,15 +4690,17 @@ function liveTick(ts) {
     $("sc-phash").textContent = phash;
     markStagePainted();
     measure(px, w, h, phash);
-    // Granular detail refresh at ~0.5Hz while animating: description-grade,
-    // computed on a downsample, cheap enough for the live loop.
-    if (!liveTick._detailTs || ts - liveTick._detailTs > 2000) {
+    if (detailDue) {
       liveTick._detailTs = ts;
       computePerceptionDetail(canvas);
       updateDetailUI(lastRich);
     }
     pollAudio();
   } catch (e) { /* a transient unreadable frame (e.g. canvas swap mid-tick), skip this tick */ return; }
+  liveAfterMeasure(ts, phash);
+}
+// fps and the static stop, after a live frame was measured (main thread or worker).
+function liveAfterMeasure(ts, phash) {
   // fps estimate over a 0.5s window
   fpsCount++; if (!fpsTs) fpsTs = ts; if (ts - fpsTs >= 500) { liveFps = fpsCount * 1000 / (ts - fpsTs); fpsCount = 0; fpsTs = ts; }
   // static detection: idle the loop after a stretch of identical frames, but ONLY for static
@@ -4684,7 +4726,7 @@ function startMeterLoop() {
   liveRaf = requestAnimationFrame(liveTick);
 }
 function stopMeterLoop() {
-  liveLoopRunning = false;
+  liveLoopRunning = false; liveEpoch++;
   if (liveRaf != null) { cancelAnimationFrame(liveRaf); liveRaf = null; }
   liveFps = 0;
   const live = $("mm-live"); if (live) live.hidden = true;
@@ -4692,7 +4734,7 @@ function stopMeterLoop() {
 window.__studioStartMeterLoop = startMeterLoop;
 window.__studioStopMeterLoop = stopMeterLoop;
 window.__studioMeasure = measure;
-window.__studioLiveState = () => ({ running: liveLoopRunning, staticTicks, fps: liveFps });
+window.__studioLiveState = () => ({ running: liveLoopRunning, staticTicks, fps: liveFps, worker: livePerception.ready(), workerVerified: livePerception.verified, workerMs: +livePerception.ms.toFixed(2) });
 
 // ══ Audio channels (Task 8d step 3) ══════════════════════════════════════════
 // Tap a media element or stream with the Web Audio API → AnalyserNode → live level (RMS), a few
