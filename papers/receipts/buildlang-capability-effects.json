@@ -1,0 +1,26 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/buildlang-capability-effects.pdf",
+  "source": {
+    "kind": "LaTeX in the private research repository",
+    "commit": "b76c70ba00e8e3a535f3def286650f08318c6c46",
+    "path": "papers/latex-sources/buildlang-paper/main.tex",
+    "sha256": "459192c680dd1627a430fc7e50e12da0782efca47a352b05ba683af2bec2af80"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1782864000",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "63a70fd54ccf1fd3df9935f66c3f5e82e47ac278b1a3a4f32fe9032adaadce6f",
+  "pdf_bytes": 89814,
+  "rerun": "The source is private; its commit and hash identify it.",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

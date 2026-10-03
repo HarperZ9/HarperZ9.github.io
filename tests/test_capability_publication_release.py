@@ -582,7 +582,7 @@ RELEASE_PATHS = (
 # and The Terms for Telling, and the arity correction on the Conferred Existence essay, each with
 # a dated note, merged over the structured-data release; the series reading time follows; the
 # release is rehashed.
-REVIEWED_RELEASE_SHA256 = "fbc55dd5250bf0edb7b0c4b484c2b67e161f100fc42228cf05bc22569867568d"
+REVIEWED_RELEASE_SHA256 = "791b162b327ba2d48c2f6f12740d917d992f45445c328329d2b3081e42232661"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

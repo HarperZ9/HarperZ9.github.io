@@ -1,0 +1,27 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/conservation-of-faithfulness.pdf",
+  "source": {
+    "kind": "site Markdown, converted by tools/paper_latex.py",
+    "path": "writing/papers/conservation-of-faithfulness.md",
+    "sha256": "4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc",
+    "tex": "papers/tex/conservation-of-faithfulness.tex",
+    "page": "research-conservation-of-faithfulness.html"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "1e81f70da18cdb0df44a63b100c2173e98881dc6b92567123b5dd0fc695cf92f",
+  "pdf_bytes": 140290,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/conservation-of-faithfulness.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

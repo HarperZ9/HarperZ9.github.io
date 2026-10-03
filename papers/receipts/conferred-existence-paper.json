@@ -1,0 +1,27 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/conferred-existence-paper.pdf",
+  "source": {
+    "kind": "site Markdown, converted by tools/paper_latex.py",
+    "path": "writing/papers/conferred-existence.md",
+    "sha256": "04679563a36ab1ebd30721424d7b370f74767f17a5e5f3b6ded38fb6725f07d2",
+    "tex": "papers/tex/conferred-existence-paper.tex",
+    "page": "research-conferred-existence.html"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "a4276cb6b1853e245bf1af5e7d764e5ffc8d246d342292c182ce3d6fcb7aead5",
+  "pdf_bytes": 132277,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/conferred-existence-paper.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

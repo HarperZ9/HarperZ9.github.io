@@ -56,8 +56,15 @@ accessible, and honest about maturity; private systems stay bounded off-page.
 ## Pages
 
 - `index.html` -- generated React home from this repository's `home/` source.
-- `papers/` -- direct PDFs of the six published papers, built from the
-  LaTeX sources with tectonic.
+- `papers/` -- the paper PDFs. `tools/build_latex_papers.py` typesets thirteen
+  of them with Tectonic 0.17.0 against one pinned bundle, twice each with
+  `SOURCE_DATE_EPOCH` fixed, and writes `papers/receipts/<name>.json` (source
+  hash, engine, bundle digest, PDF hash). The six philosophy papers start from
+  `writing/papers/*.md`, converted to `papers/tex/` by `tools/paper_latex.py`;
+  seven start from LaTeX in a private research repository at a pinned commit.
+  `python tools/build_latex_papers.py --check` confirms every receipt still
+  matches its source and PDF. The two corpus PDFs are printed from their pages
+  by `tools/print_documents.py`.
 - `overview.html` -- the compact product map, grouped by primary domain.
 - `catalog.html` -- the detailed evidence registry, including secondary-domain
   references and source records.

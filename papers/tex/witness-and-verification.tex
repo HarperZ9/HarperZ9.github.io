@@ -1,0 +1,442 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf,Ligatures=TeX]
+\setmonofont{lmmono10-regular.otf}
+\usepackage{microtype}
+\usepackage{longtable,array,booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parskip}{6pt plus 1pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\hypersetup{pdftitle={Witness and Verification Under Bounded Rationality},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/witness-and-verification.md},pdfkeywords={source sha256 d058799f92a796fe1b43cf62a42a9f466eb58a6b147cbcac940e7ad955d3e4a1}}
+\newcommand{\register}[1]{{\ttfamily\small #1}}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Witness and Verification Under Bounded Rationality\par}
+\medskip
+{\large\emph{When does a checker's pass hold for someone who did not run the check?}\par}
+\medskip
+Zain Dana Harper\par
+{\small Thesis · edition of 3 October 2026\par}
+{\small Argument built June 2026; first published 30 June 2026; revised for the web September 2026; this edition 3 October 2026.\par}
+\end{center}
+
+\begin{quote}\small
+\textbf{Revised 3 October 2026.} This edition replaces the edition of 30 June 2026, in its September 2026 web revision. It rebuilds the paper as a contest: each part of the original argument meets its strongest objection, and every passage is marked as plain statement, steelman or open question. Several claims change. The paper withdraws its inference that the denial of aseity grounds the rule for binding verdicts, narrows that rule to what a verdict means for a reader, replaces ``identical'' with ``has the same form'' for the link between the ought and the verdict, and concedes that its studies illustrate the thesis without testing it. Seven questions are handed to the reader, among them whether agreeing checks are independent witnesses. A dated October 2026 section engages Julian Jaynes and his critics.
+\end{quote}
+\section*{How to read this paper \register{[PLAIN]}}
+
+Every section or passage carries one of three marks.
+
+\register{[PLAIN]} marks what can be said flatly: what a record says, a derivation that checks, an objection the paper loses to, and a null result. These passages carry no hedges. Hedging a checked number or a lost argument would misreport it.
+
+\register{[STEELMAN]} marks a position set against the strongest contrary the paper can find. Each side is argued the way its own holders would argue it. Each contest closes with an outcome: defeat, survival by concession, standoff, or an ally mistaken for an enemy.
+
+\register{[OPEN]} marks a question handed to you. Each one says what pulls each way and what evidence or argument would settle it. Where the paper leans, it says so and calls it a lean.
+
+Claims also carry a domain tag. [EPI] is the epistemology of verification, where most of the paper lives. [EMP] is a project record or a reported physics result. [META] is the metaphysics of status and existence. Three domains are guarded: [ETH] for ethics, [THEO] for theology and [CON] for consciousness. The author asks that these three be kept apart. So no inference here enters or leaves them without a bridging premise that you can reject on its own. Bridges and other material new since June are marked [proposed].
+
+The layout follows the original edition of the author's philosophy papers. That edition set each thesis against its strongest published contraries and printed the outcomes, losses included. The author is not bound to this paper's first conclusions. Several of them change below, and each change is named where it happens.
+
+\section*{1. The question}
+
+\register{[PLAIN]} A program checks a claim and reports a pass. The pass is worth what the test behind it is worth. What a pass records when the program wrote its own test, or when nobody else can run the test, is the question under dispute. The June edition's answer was that the pass then records the program's confidence and little more. This paper asks when a pass holds for someone who did not run it.
+
+The project behind the paper is Telos, the author's workbench for AI research. It uses three verdicts [EMP]. MATCH means the claim agrees with its criterion, the standard it is checked against. DRIFT means the check ran and the claim disagrees with its criterion, or has moved away from it since an earlier pass. UNVERIFIABLE means no outside test backs the claim, because none exists, none is in reach, or none has run, so the checker does not rule. A judge is the separate checker that fills in a verdict.
+
+The June 2026 edition answered the question with a thesis. This edition calls it the witness thesis:
+
+\begin{quote}
+A verdict binds, meaning it holds as a result, only where its criterion is externally witnessed and re-derivable: someone other than the checker wrote the standard, and an independent party can run the check again and see it pass or fail. Everywhere else the verdict is a bid, backed only by the checker's present confidence, and the correct output is UNVERIFIABLE.
+\end{quote}
+
+This edition tests the thesis. Section 2 reports what the records show. Section 3 states the June argument. Section 4 sets each of its parts against the strongest contrary available. Section 5 hands over the questions the paper cannot close. A dated update follows, and the last section says what still stands.
+
+\register{[OPEN]} One question runs under the whole paper, and you may want to carry it while you read. When three checks agree, are they three witnesses, or one witness counted three times? Section 5.1 comes back to it.
+
+\section*{2. What the records show \register{[PLAIN; EMP unless tagged]}}
+
+The evidence comes from five studies. Four are project records dated 30 June 2026; the fifth is the author's earlier viable-visualization thesis. The records are unpublished. Their paths, line anchors and seal hashes sit in the June manuscript. You can rerun one check yourself, the C3 simulate leg, from its published page. Every other study claim in this section is a report you cannot yet re-derive. By the standard this paper tests, that makes it a bid for you.
+
+The names of physicists and speakers follow the June manuscript. The September web edition had removed them.
+
+\subsection*{2.1 The five studies at a glance}
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.078\linewidth}>{\raggedright\arraybackslash}p{0.378\linewidth}>{\raggedright\arraybackslash}p{0.424\linewidth}}
+\toprule
+\textbf{Study} & \textbf{What the record holds as proven} & \textbf{What the record leaves UNVERIFIABLE} \\ \midrule\endhead
+Learning Forge & Corpus sealed and re-derivable; six claim cards grounded in hashed sources; of ten modules, five grounded, two partial, three ungrounded & All six claim cards; the verdict slots stay empty until a judge runs \\
+Discovery Forge & Intake rejects any card without a falsifier; eight talks sealed and verified MATCH; the judge's refusal on all six convergence claims is on record & The talk-to-design convergence mappings; the neutrino card; the method-template card; the seven-loop card \\
+C3 result & Simulate leg MATCH: 0.99 percent mean error and 3.3 percent covariance error against a five-percent limit & Render leg: whether a physical chip does it \\
+Research diet & Eight transcripts sealed; ten items verified MATCH; the physics quoted is faithful & Every talk-to-design mapping \\
+Viable-visualization thesis & ``Proven (within its substrate)'': the master clause survived sixteen self-attacking experiments, and two of the thesis's own overclaims were caught & The cross-domain variety measure; the unification structure, held as conjecture \\
+\bottomrule\end{longtable}}
+\subsection*{2.2 The Learning Forge}
+
+The Learning Forge turns frontier AI talks and papers into learning objects. Each object carries a source with a hash and a claim with a verdict slot that a separate judge can later fill. A hash is a short fingerprint of a file; change the file and the fingerprint changes. The corpus is sealed: one hash covers the collection (the digest seal) and another covers the run that gathered it (the run seal). The hash in each card is also the key that retrieves its source, so any reader with the corpus can re-derive the inventory.
+
+All six claim cards carry an empty verdict slot, on purpose. The record gives the reason in one sentence: grounding a claim in a hashed source and adjudicating it are separate steps. The forge gathers and cites; a judge decides. The record calls the empty slot the honest state. Of ten topic modules, it marks five as grounded, two as partial and three as ungrounded, and it invents no coverage for the three.
+
+\emph{What would prove this wrong:} the seals or the inventory fail to re-derive; the module tally differs from five, two and three; or a slot turns up holding a MATCH that no judge produced.
+
+\subsection*{2.3 The Discovery Forge}
+
+The Discovery Forge turns a research source into a discovery object that carries its own re-check. Its intake rule rejects any card with no falsifier, a stated result that would prove the claim wrong. The convergence mapping, which claimed that the research talks support the design of Telos, went to the judge, and all six of its claims came back UNVERIFIABLE. The judge has no oracle, no outside measure that can tell whether a physics talk supports a software design, so it refused to assert a MATCH.
+
+The forge names three falsifiers, each a criterion it does not author.
+
+\begin{itemize}
+\item \emph{The neutrino card.} Neil Turok's prediction: if one right-handed neutrino is stable and is the dark matter, the lightest neutrino is massless (Boyle, Finn and Turok 2018, 2022), which sets a minimum for the sum of neutrino masses. The record states the test in conditional form: the prediction is falsified if galaxy-survey upper bounds on that sum fall below the minimum, and confirmed if a signal appears at that level. A third outcome is open: the bounds stay above the minimum and nothing is detected inside the window. The talk gives a window of three to four years, which is UNVERIFIED against any published source. The slot reads UNVERIFIABLE because the data is not yet in hand.
+\item \emph{The C3 result.} Section 2.4.
+\item \emph{The seven-loop card.} The talk and the record state that quadratic gravity, in a certain limit, embeds into a scalar field theory already computed to seven loops, while quantum gravity in that limit is known only at one loop (UNVERIFIED against any published source). Each loop order is a target someone else has already computed. The slot reads UNVERIFIABLE because the project has no symbolic engine able to carry seven-loop perturbation theory.
+\end{itemize}
+A fourth card borrows Bell's experimental move as a template, makes no prediction, and is marked interpretive and UNVERIFIABLE.
+
+\emph{What would prove this wrong:} a card admitted with no named falsifier.
+
+\subsection*{2.4 The C3 result}
+
+C3 starts from a talk by Thomas Ahle. A thermodynamic chip is built so that the chip itself is a stochastic differential equation, and as its noise settles it behaves, in the speaker's words, ``sort of'' according to the inverse of a matrix (words checked against the project transcript only). Aifer and colleagues (2024) describe devices of this kind. The claim has two legs. The simulate leg asks whether the mathematics works in software. The render leg asks whether a real device does it.
+
+The simulate leg runs an Ornstein-Uhlenbeck process, a model of a noisy system pulled toward an average:
+
+dx = -(A x - b) dt + sqrt(2) dW
+
+A is a symmetric positive-definite matrix of size n=4 with condition number 2.33. The run uses 6000 chains, 40000 steps and step size dt = 5e-3. The settled mean should equal A\textasciicircum{}-1 b and the settled covariance should equal A\textasciicircum{}-1. The reference values come from numpy.linalg.solve and numpy.linalg.inv, and the record names the script, c3\_sim.py. Against a five-percent limit, which the record calls principled:
+
+\begin{itemize}
+\item stationary mean against the linear solve: relative error 0.99 percent. MATCH.
+\item stationary covariance against the inverse: relative error 3.3 percent. MATCH.
+\end{itemize}
+The render leg stays UNVERIFIABLE. No measurement of a physical chip exists here, and the record says so.
+
+Three further facts can be stated flatly.
+
+\begin{enumerate}
+\item \emph{The result is known in closed form} [proposed derivation]. For this process the stationary mean solves A x = b, so it is A\textasciicircum{}-1 b. The stationary covariance S solves A S + S A\textasciicircum{}T = 2I. For symmetric A, S = A\textasciicircum{}-1 satisfies it, since A A\textasciicircum{}-1 + A\textasciicircum{}-1 A = 2I. The simulation therefore checks a software implementation of a known result.
+\item \emph{The margins fit one formula.} The record reports judge margins of 0.802 and 0.340 and does not show how they were computed. Both equal one minus the relative error divided by the five-percent limit, to three digits: 1 - 0.0099/\allowbreak{}0.05 = 0.802 and 1 - 0.033/\allowbreak{}0.05 = 0.340. The record does not state that formula; it is inferred from the numbers. So the margins are consistent with it, and the computation itself remains unexhibited. The June manuscript called the margins the weakest evidence link in the paper, because the record does not exhibit the margin computation. The fit narrows that concern, and the June reason still stands. This edition leaves the label in place, because the label is the record's.
+\item \emph{The tolerance is the project's.} Nobody outside the project set the five-percent limit, and the record states no principle for it. Of the reference values and the tolerance, only the reference values come from outside the checker.
+\end{enumerate}
+\emph{What would prove this wrong:} rerun the script on a fresh symmetric positive-definite matrix; if the mean and covariance miss A\textasciicircum{}-1 b and A\textasciicircum{}-1 beyond the limit, the MATCH becomes DRIFT. If the rerun reproduces the relative errors and the margins cannot be re-derived from the script, the margin numbers are the part to flag, and the MATCH stands. Anyone who cites C3 as evidence that a physical chip works has crossed from the simulate leg to the render leg.
+
+\subsection*{2.5 The research diet}
+
+The research diet read eight talk transcripts, sealed them, and mapped them to the design of Telos with every mapping marked interpretive. The judge refused the mappings. Two readings of the talks are faithful to their sources.
+
+\emph{Bell's move.} Bell (1964) turned an interpretive dispute into an experiment. Local hidden-variable theories, in which properties fixed in advance and influences limited by the speed of light decide what a measurement shows, imply a bound on certain correlations. Quantum mechanics predicts correlations that exceed the bound, and the excess can be measured. Experiments closed the loopholes one at a time: Freedman and Clauser (1972); Aspect, Dalibard and Roger (1982), who changed the analyzer settings during flight; and three loophole-free tests in 2015 (Hensen et al. 2015; Giustina et al. 2015; Shalm et al. 2015). The June manuscript read this as the bid-to-bound transition in physics.
+
+\emph{Turok's caveat.} Turok's talk pairs the dated neutrino prediction with the repeated caveat that ``we don't know the rules of the game'' (checked against the project transcript only). The diet reads the caveat as a working scientist's UNVERIFIABLE: a dated falsifier stated beside a plain mark on what cannot yet be grounded.
+
+The diet's cross-talk synthesis draws three convergences. Convergence 2 reads ``Carry uncertainty explicitly; partial pass is not pass''. Convergence 4 maps auto-formalization and prove-or-disprove onto MATCH, DRIFT and UNVERIFIABLE. Convergence 5 turns a dispute into a re-checkable measurement and then closes the loopholes. The mappings from talks to design are labelled as interpretation, and the judge declined them. The records refer to the author in the third person, as ``the operator'', which indicates that models working for him wrote them; the author has not yet confirmed this. So the talks appear here as faithful readings, and they give no evidence that physics verifies the design.
+
+\emph{What would prove this wrong:} the seal or the ten-item MATCH count fails to re-derive.
+
+\subsection*{2.6 The viable-visualization thesis}
+
+The viable-visualization thesis asks whether a finite system can show mathematics to a viewer faithfully within a scope declared in advance. Its central object is coverage under an explicit scope. A finite viewer has finite variety, a limited number of states it can tell apart; the term is Ashby's (Ashby 1956). Here ``viewer'' or ``perceiver'' means any viewer, human or program, and the paper makes no claim about a program's experience [proposed gloss]. The source argues that mathematics has no such limit, so no finite visualizer covers all of it. It credits the result to Ashby together with Gödel and names no work of Gödel's (UNVERIFIED). When the system cannot meet its bound, it withholds the pass and emits UNVERIFIABLE.
+
+The thesis ran sixteen experiments that attacked its own clauses. One downgraded its claim of a single conservation law to three mechanisms with one necessary variety bound. Another left a residue of cases where the picture carried too little variety, and the record reads that residue as the bound working as designed.
+
+Two facts here sit badly with the rest of the paper.
+
+First, the source is inconsistent about its own grand unification. One passage calls the unifying structure pure theory that its simulations cannot settle; a later passage calls it resolved and the arc complete. The paper reports both readings and carries the conservative one, conjecture.
+
+Second, every experiment ran against the project's own software and data. No criterion here was authored outside the project. By the rule the paper tests, P4(a) in Section 3, these verdicts should read UNVERIFIABLE. The record labels them ``Proven (within its substrate)''. Both statements report accurately, the label from the record and the output from the rule, and they disagree. Section 5.2 asks you which should yield.
+
+\emph{What would prove this wrong (the source's own conditions):} a bounded class where the variety bound is met and no rendering is comprehensible; a class where two viewers cannot reach consistent verdicts against any outside criterion; compositional fidelity failing beyond repair. For the conservative reading: an independent party re-derives the unification against a criterion authored outside the project.
+
+\subsection*{2.7 The pattern, and its limit}
+
+In four of the five studies the line between proven and open falls where an outside criterion stops. The viable-visualization study is the exception: its proven items rest on checks inside the project (Section 2.6). The line moves when a criterion arrives: the neutrino card waits on survey data, the seven-loop card on an engine. The empty slots and UNVERIFIABLE marks are the system reporting truthfully on itself. None of the open items can honestly be closed by asserting a verdict; each waits on a judge, data, sources or an engine.
+
+The studies were built to report this line. So they illustrate the witness thesis, and they cannot test it. A study designed to mark UNVERIFIABLE wherever no outside criterion exists will always agree with a thesis that says outside criteria are what bind. The argument for the thesis has to come from somewhere else, and Sections 3 and 4 look for it.
+
+\section*{3. The June argument, as it stood \register{[PLAIN]}}
+
+This section restates the June argument so that Section 4 can test it. It adds the bridges this edition supplies, each marked [proposed], and words I3 in the form Section 4.8 defends; June's own wording of I3 and C is quoted beside them.
+
+\textbf{P1. Nothing has aseity.} [META, reported from another work] The conferred-existence thesis, the author's paper on what it means for anything to exist, denies that anything is self-standing. Aseity is existence from itself, with nothing outside holding a thing up. The word comes from the Latin \emph{a se}, ``from itself'', and scholastic theology used it for God's self-existence (Catholic Encyclopedia entry ``Aseity'', from a search-result summary this session; the entry itself was not read). This paper uses the word only as a metaphysical term and makes no claim about God. The source lists existence, status, standing, the moral ought and legitimate authority as conferred and relational. This paper uses only the part about statuses; the ought and authority are [ETH] items argued in the source, and nothing here rests on them.
+
+\textbf{B1. A verdict is a status conferred on a claim.} [bridge, META to EPI; proposed] A verdict changes a claim's standing without changing the claim. After a MATCH the same sentence stands as checked. That change of standing is what P1 calls conferral.
+
+\textbf{I1. A verdict has no aseity.} [META to EPI, through B1] A MATCH has no footing of its own; a criterion outside the verifier holds it in being. Remove the outside check and the verdict is a bid.
+
+\textbf{P2. Checking is one operation in three steps.} [EPI, reported] The author's reconcile thesis: take in a shape, check it against a criterion the checker did not author, and carry a proof another party can re-check. The source says ``perceive a shape''; the word names a program's input step and makes no claim about experience [proposed gloss].
+
+\textbf{P3. The Discipline.} [EPI, quoted from the Discovery Forge record] A result must be SIMULATED or derived, then checked against a criterion it did not author. A result that is only RENDERED, drawn or displayed, or only asserted, falls short.
+
+\textbf{P4. A verdict binds only if its criterion meets two conditions.} [EPI] (a) Someone outside the checker wrote the criterion. (b) An independent party can re-derive the check, so it can be repeated and can fail.
+
+\textbf{I2. Where either condition fails, the correct output is UNVERIFIABLE.} [EPI, from P4]
+
+\textbf{I3. The boundary has the form of the conferred-existence account of the ought.} [ETH to EPI, through bridge B2, proposed: a practical standpoint and a criterion's domain are both conditions a party can be inside or outside, and in each a demand holds only for a party inside] In the source, the ought binds while a person occupies the practical standpoint and can be declined by leaving it. June read ``criterion's domain'' for ``practical standpoint'' and called the two structures identical.
+
+\textbf{C. The boundary is the honest shape of verification.} [EPI, with a normative claim in ``honest''] June's wording: the boundary is ``the honest shape of verification, not a weakness'', and it ``is where verification stops pretending''.
+
+June defended P4 in two sentences. A checker that writes its own criterion can carry one error into both claim and standard. A check nobody else can run can never be caught failing. P4 and the thesis are one proposition, so the argument rested on that defense. It named no opponent. The next section supplies them.
+
+\section*{4. The thesis against its strongest contraries \register{[STEELMAN]}}
+
+\subsection*{4.1 Does no-aseity pick out the verdicts that bind? [META, EPI]}
+
+\emph{The thesis.} A verdict, like every status, is conferred. It has no footing of its own. A self-standing verdict would be as incoherent as a self-standing existence. So a verdict holds only while something outside it holds it up, and an outside criterion is that something. A verification system that claimed to bind everywhere would be claiming aseity for its verdicts. A holder of no-aseity has a further reply to the objection below. \emph{A se} means ``from itself''. A verdict graded against a standard its own checker wrote draws its standing from the same system that issues it. At the level of the verdict-issuing system it is ``from itself'', and so P4(a) applies the denial of aseity to the checker. On this reply, applying a principle to a case does more work than repeating it.
+
+\emph{The contrary.} Grant P1 in full. A checker that grades its own claim against a standard it wrote for itself also confers a status on that claim. The resulting MATCH is conferred, relational and dependent. It lacks aseity exactly as much as the C3 MATCH does. So P1 and B1 are satisfied by the self-graded verdict that P4(a) rules out, and they cannot be the ground of P4(a). Conferral places the source outside the claim, while P4(a) needs it outside the checker, and no premise supplies that step. The same gap runs through the scope claim: binding everywhere concerns reach, and standing on one's own footing concerns ground. A verdict conferred by a criterion available everywhere, such as arithmetic, would bind everywhere and still be conferred. A deflationary reader adds that Austin's verdictives (acquitting, assessing, estimating) and Searle's status functions (``X counts as Y in C'') already explain how a verdict changes a claim's standing, with no metaphysics of existence at all (Austin 1962; Searle 1995). Against the reply from \emph{a se}, the contrary answers that choosing the checker as the unit of ``itself'', from among the claim, the checker, the project and the community, is exactly what P4(a) adds.
+
+The original edition's cross-examination of the conferred-existence thesis met the same shape. Its Madhyamaka axis found that a filter which fires on every conferring case has no power to tell cases apart. Here P1 fires on every verdict, bound or bid, so it cannot sort them.
+
+\emph{Outcome: defeat.} \register{[PLAIN]} The inference from P1 to P4(a) fails as written. A repair exists, a bridge you can reject: ``a conferral counts as a ground only if the party conferring differs from the party whose claim is conferred'' [proposed]. That bridge is P4(a) restated, so the bridge does all the work. This edition therefore moves P1 to framing. The conferred-existence thesis supplies a picture of verdicts as dependent things, and the argument for P4 must stand on epistemic grounds. The June sentences that tied scope to aseity are withdrawn. Whether anything in no-aseity can sort verdicts is handed to you in Section 5.4.
+
+\subsection*{4.2 Reliability against the outside witness [EPI]}
+
+\emph{The contrary, at full strength.} Process reliabilism holds that a belief is justified when a reliable process produced it (Goldman 1979). Most of what anyone knows comes through processes nobody else witnessed and nobody reran: your perception this morning, your memory, the calculator you trusted last week. Demanding an outside author and an independent rerun for every warranted verdict sets a bar that ordinary knowledge never meets, so the demand proves too much. A checker whose process is reliable delivers warrant whether anyone can rerun it or not. On this view P4 confuses the conditions for showing warrant to others with the conditions for having it. The contrary goes one step further. Hardwig (1985) argues that a layperson can rationally believe a claim on good reasons to think an expert has good reasons, with no evidence of their own. If he is right, warrant can reach a second party who inspects nothing, and even a P4 narrowed to readers asks too much.
+
+\emph{The thesis, at full strength.} The question this paper asks concerns a pass that someone else relies on. From outside, a reliable checker and an unreliable one that happens to agree look the same. A reader who cannot rerun the check and does not know who set the standard has only the checker's report of its own reliability, and that report comes from the process in question. Warrant that reaches a second party needs something the second party can inspect. The outside criterion and the rerun are what make reliability visible from outside. The internalist tradition presses the same point against reliabilism itself. BonJour (1980) built clairvoyance cases, Norman the best known, in which a process is reliable while the believer has no access to that reliability, and argued that such a believer is not justified.
+
+\emph{Outcome: survival by concession.} \register{[PLAIN]} The paper concedes that a checker may hold a justified verdict with no witness; whether reliabilism or internalism is right about justification is a live dispute, and this paper does not settle it. P4 survives as a claim about warrant passed to a reader: a verdict binds \emph{for a reader} only when its criterion is witnessed and re-derivable. That is narrower than June's thesis, which said nothing about whom a verdict binds. This edition adopts the narrower reading and lists it as a change. The narrowed P4 still meets Hardwig's argument from testimony, and this edition does not answer it.
+
+\subsection*{4.3 Whose criterion? [EPI]}
+
+\emph{The contrary.} P4(a) says self-authored agreement is no binding evidence. Its defense shows only that it is weaker evidence. Two cases press harder. A mathematician checks her own proof. She wrote the proof, and nobody else has read it yet. On P4(a) she has nothing, which seems wrong. A team writes its own test suite, and outside reviewers audit the suite before any result is reported. The criterion was authored inside, yet the audit seems to supply what (a) was after.
+
+\emph{The thesis.} In the first case the criterion is not hers. The axioms and the rules of inference were set long before her, and anyone can check each step against them, so (a) is met. The second case shows what (a) was protecting: a standard that the checker alone controls and nobody can challenge.
+
+\emph{Outcome: defeat of the wording, survival by concession.} \register{[PLAIN]} As worded, (a) is too strong; the audited suite is a counterexample to ``someone outside the checker wrote the criterion''. What survives is a weaker condition, (a') [proposed]: the criterion is not set by the checker alone, and others can inspect and challenge it. Control replaces authorship in the condition. That changes the claim, and whether to adopt it is left open in this edition.
+
+\subsection*{4.4 Replication against the regress and the report [EPI]}
+
+\emph{The first contrary: the experimenter's regress.} Collins (1985) argues from case studies, gravitational-wave detection among them, that in frontier science the best check on a result is a working apparatus, and the best check on the apparatus is that it gives the right result. A rerun cannot settle a dispute, because whether the rerun was competent is judged by what it found (description from bibliographic records and a review summary; the book was not opened). Collins extends the point to calibration. Calibrating an instrument with a surrogate signal assumes the surrogate acts like the signal sought, and in a dispute that assumption can itself be contested. Weber's gravitational-wave bars were calibrated with electrostatic pulses, and whether those pulses mimic a gravitational wave was open to argument (from Collins's chapter ``Detecting Gravitational Radiation'' and Franklin's account, as summarised in search results this session; neither text was read; UNVERIFIED against the primary text). A Collins holder would accept that a closed form stops the regress only while nobody contests it, and would ask who decided that a five-percent tolerance and numpy count as the calibration.
+
+\emph{The second contrary: the virtual witness.} Shapin (1984) describes how Boyle's reports were written with enough circumstantial detail that readers could picture an experiment they never saw, which enlarged the public that counted as witnesses (description from the publisher's and repository records; the article was not opened). The September review read the record's definition as saying this made replication unnecessary; that reading is UNVERIFIED this session. If it holds, matters of fact were accepted by readers who never reran anything, which is a historical case against the necessity in P4(b).
+
+\emph{The thesis.} C3 shows where the regress stops. The competence of the simulation does not have to be judged by its result, because the result is known in closed form (Section 2.4). An independent criterion breaks the circle Collins describes. The de Bruijn criterion in computer mathematics makes the same move in software: a proof assistant meets it when its proofs can be checked by a small independent program, one a skeptical user could write (Barendregt and Wiedijk 2005, read this session). Trust moves to a checker small enough for others to read. Franklin (1994) argues against Collins that the regress can be broken in practice: experimenters have epistemological strategies for deciding whether an apparatus works (from the PhilPapers record and the search-result summary this session; the article was not read).
+
+\emph{Outcome, against Collins: standoff at the frontier, survival elsewhere.} \register{[PLAIN]} Where an independent criterion exists, P4(b) does its work and the regress does not arise. Where none exists, which is the situation Collins studied, rerunning cannot settle the dispute alone, and P4(b) gives no verdict. In those cases the correct output is UNVERIFIABLE, which is what the thesis predicts, so the frontier case costs the thesis nothing it claimed and earns it nothing.
+
+\emph{Outcome, against Shapin: an ally on the aim, a standoff on necessity.} Virtual witnessing and re-derivability share an aim, a larger public able to stand as witness. A script that reproduces the C3 errors gives a reader the means to repeat the check as well as a picture of it. Whether acceptance without a rerun ever gave readers warrant is a question about warrant that neither Shapin's history nor the thesis answers.
+
+One reading is fixed here [proposed]. ``Run the check again'' means rerunning the analysis on the recorded inputs, and it excludes reproducing the event those inputs record. A supernova or a survey season happens once, and its data can be reanalysed. On this reading P4(b) puts its weight on the integrity of the record, which is the job the seals do.
+
+\subsection*{4.5 Must a criterion have an author? [META, EPI]}
+
+\emph{The contrary.} Section 2.4 says the reference values for C3 came from outside the checker. But nobody wrote the fact that A\textasciicircum{}-1 satisfies A S + S A\textasciicircum{}T = 2I. Mathematics fixed it. If mathematical facts have no author, P4(a) in its June wording cannot be met by the paper's own best case. Worse for P1: a Platonist says mathematical objects exist necessarily and on their own footing, which is aseity by another name.
+
+\emph{The thesis.} Separate the reference value from the procedure. The procedure, numpy.linalg.inv, is software that others wrote and anyone can inspect. The value is fixed by the mathematics.
+
+\emph{Outcome: an ally mistaken for an enemy, for P4, if (a') is adopted; against (a) as June worded it, a defeat.} \register{[PLAIN]} Under (a') from Section 4.3, the question is control, and authorship drops out. A criterion fixed by mathematics is the clearest case of a standard the checker does not control. The contrary, which looked like an attack on P4, gives P4 its best instance. The original edition reached a related result. It found that a structuralist account of mathematics, on which mathematics studies structures (Shapiro 1997), can be read as compatible with no-aseity. For P1 the question stays open, and Section 5.4 hands it to you.
+
+\subsection*{4.6 What does C3 show? [EPI]}
+
+\emph{The contrary.} The closed form was known before the run. A Monte Carlo pass at 0.99 and 3.3 percent could fail only through a bug or a sampling accident. The Discipline (P3) already counts a derivation as enough. So the paper's one bound verdict tests nothing about mathematics, and ``it could have come out the other way'' is true of the script alone.
+
+\emph{The thesis.} A check of an implementation is still a check. The script could have been wrong, and a physical chip would have to behave like the script, so the simulate leg is the leg a device must match.
+
+\emph{Outcome: survival by concession.} \register{[PLAIN]} Two claims were run together in June. The mathematical claim, that this process settles to A\textasciicircum{}-1 b and A\textasciicircum{}-1, is bound by derivation. The run binds a different claim: this implementation, at these settings, reproduces the known result within a tolerance the project chose. C3 remains the paper's worked example of a bound verdict, as a check of software against a known result. It carries one more limit from Section 2.4: the tolerance does not meet P4(a').
+
+\subsection*{4.7 Bound or bid, or degrees? [EPI]}
+
+\emph{The contrary.} The paper uses Popper's word ``falsifier'' and then treats a passed test as binding. For Popper (1959) a theory that survives a test it could have failed is corroborated, and corroboration never becomes verification. C3's own numbers carry a margin: 0.99 percent against a limit of five is a stronger pass than 3.3 percent. A binary of bound and bid throws that information away. Bayesian confirmation theory makes the case for degrees at full strength: evidence raises or lowers the probability of a hypothesis by amounts, and a verdict reports a posterior probability (Howson and Urbach 1989; from the publisher's and PhilPapers records this session; the book was not opened). A Popperian adds a second point. A test of a result already known in closed form has low severity, because it had little chance of failing, so C3's pass corroborates little (this joins 4.7 to 4.6).
+
+\emph{The thesis.} A verifier's output is used. Someone decides whether to build on the claim, and that decision is a yes or a no. A verdict that reports degree still has to be read against a threshold by someone.
+
+\emph{Outcome: survival by concession.} \register{[PLAIN]} In this paper ``binds'' means passed a test that could have failed, against a named criterion, which is close to Popper's corroboration. Each binding verdict is reported with its margin. The binary describes how a verdict is used and makes no claim that the evidence comes in two sizes. What ``binds'' should mean is left open in this edition.
+
+\subsection*{4.8 The ought and the verdict [ETH, EPI]}
+
+\emph{The thesis, from June.} Read ``criterion's domain'' for ``practical standpoint'', and the modal structure of the ought and of the verdict is identical. A holder of June's view has a stronger defense than June printed. After Section 4.2 the party a verdict binds is a reader, and a reader can decline a criterion by choice. On that reading the verdict's domain can be left by choosing, as the standpoint can.
+
+\emph{The contrary.} Bridge B2 shows that both are conditions a party can be inside or outside. That licenses a shared form. ``Identical'' needs more. A person leaves the practical standpoint by choice. Nothing in P4 lets a verdict leave its criterion's domain by choosing. The reply from the reader's choice moves the choosing from the verdict to the reader. Whether the modal structure survives that move is the point in dispute, and Section 5.3 bears on it.
+
+\emph{Outcome: defeat of ``identical''; ``has the same form'' survives through B2.} \register{[PLAIN]} This edition says ``has the same form'' and lists the change. Nothing in Sections 2 and 4 depends on I3; if you reject B2, drop I3 and the rest stands. Where the paper speaks of its own claims having force for a reader who cares whether a verdict is grounded, a second bridge is needed, B3 [proposed]: caring whether a verdict is grounded is a case of deciding how to act on it. If you reject B3, read ``the standpoint of a reader who cares whether a verdict is grounded'' and drop the word ``practical''. ``Binds'' keeps the P4 sense throughout, and ``has force for a reader'' names the relation between a claim and a reader.
+
+\subsection*{4.9 Five studies, one project [EPI]}
+
+\emph{The thesis.} C says the boundary is the honest shape of verification. The physics cases show the same shape in Bell's experiments and Turok's caveats, outside the project.
+
+\emph{The contrary.} All five studies belong to one project, which was built to report the boundary, and the physics cases enter as readings that project chose. Section 2.7 already grants that the studies illustrate and cannot test. A general claim about verification needs evidence the project did not select.
+
+\emph{Outcome: defeat of C as a general claim on this evidence.} \register{[PLAIN]} On the evidence here, C holds as a description of the project's checkers. As a claim about verification in general it is unsupported. It may still be true; this paper does not show it.
+
+\section*{5. Questions handed to you \register{[OPEN]}}
+
+\subsection*{5.1 Three witnesses, or one counted three times? [EPI, with an ETH aside]}
+
+Section 4.3 moved P4(a) from authorship toward control. Control has a second side. Two outside criteria can share an origin, and the checker usually picks which criterion to use. The original edition's own audit warned that agreement among checks run by one author on one corpus can be one witness questioned many times.
+
+\emph{What pulls toward independence:} C3's criterion comes from mathematics and from software the project did not write, which share no obvious origin with the claim. \emph{What pulls against:} the project chose that criterion and wrote the script that compares the run with it. For the tolerance the paper has already answered \register{[PLAIN]}: the project set it, so it fails (a') (Sections 2.4 and 4.6). What stays open is whether mathematics, numpy and the claim share an origin. \emph{What would settle it:} a recorded account of how each criterion was chosen, open to challenge; and some test of whether two checks fail together when the claim is wrong.
+
+An ethical principle sits nearby: no one should judge their own cause (the legal maxim \emph{nemo iudex in causa sua}; source and history UNVERIFIED). That principle is [ETH]. It bears on P4 only through a bridge you can reject, B4 [proposed]: a checker grading its own work faces the conflict of interest a judge in her own cause faces, so the same remedy, an outside judge, applies. The ethical principle and the epistemic condition stay separate claims.
+
+\subsection*{5.2 Can a check inside one project be a witness? [EPI]}
+
+The viable-visualization verdicts (Section 2.6) were produced by sixteen experiments that attacked their own thesis on purpose, and two of them caught real overclaims. That is adversarial checking. It was also done inside one project, on its own software, under one direction.
+
+\emph{For counting them:} an experiment designed to break a clause can fail, and some did; under (a') the question is whether the criterion was open to challenge, and the experiments were themselves challenges. \emph{Against:} every challenger shared the project's software and data, so this is the case Section 5.1 warns about. \emph{What would settle it:} an independent party re-deriving one of the results against a criterion set outside the project. Until then the paper's own rule says these verdicts are bids for a reader, and the record's label says ``Proven (within its substrate)''. The paper reports both and does not choose.
+
+\subsection*{5.3 Does a witness need a witness? [META, EPI]}
+
+If a verdict needs an outside criterion to bind, does the criterion need one too? If so, the chain never ends and nothing binds. If the chain stops, where it stops looks like a self-standing ground. A reader who holds P1 must reject that ground, and for any reader a stopping point nobody can challenge would fail (a').
+
+\emph{One answer:} binding is relational and finite. A verdict binds relative to a named criterion that the reader accepts, and the paper should write ``binds relative to C'' wherever it writes ``binds''. \emph{Another answer:} Longino (1990) places objectivity in a community's practice of criticism, so the chain ends in an open practice of criticism (description from the publisher's and secondary records; the book was not opened). \emph{What would settle it:} an account of where a chain of witnesses may stop that does not rest the stop on something self-standing. The paper leans toward the relational answer, and it is a lean.
+
+\subsection*{5.4 Is there a version of no-aseity that sorts verdicts? [META]}
+
+Section 4.1 found that P1 fires on every verdict. A version of no-aseity that did real work here would have to pick out some verdicts and not others. \emph{What pulls toward one:} conferral may come in kinds, and a conferral by a party other than the one whose claim is at stake may differ in kind. \emph{What pulls against:} that difference is P4(a') again, and it needs no metaphysics. A second question sits beside it: does no-aseity reach mathematical facts at all? A Platonist says no; a structuralist reading may say yes. \emph{What would settle it:} a case where the no-aseity analysis returns a different answer than P4 does. If no such case can be built, P1 is framing for this paper and nothing more.
+
+\subsection*{5.5 Is a person a witness of a different kind? [EPI]}
+
+The paper treats every witness as a checker or a criterion. A person who reads the C3 script, judges the tolerance reasonable and reruns it is doing something a second program could do. A person who decides which criterion counts may be doing something no program in the project does. \emph{What pulls toward a different kind:} choosing a criterion is a judgment of relevance, and no checker in the project makes one. \emph{What pulls against:} a human acceptance with no rerun and no new criterion is, by P4(b), a bid like any other, so the person adds standing only by doing what a checker could do. \emph{What would settle it:} a case where a human's acceptance changes whether a verdict binds while no criterion or rerun changes. The paper has none.
+
+\subsection*{5.6 Does the title earn ``bounded rationality''? [EPI]}
+
+\register{[PLAIN]} Simon (1955) modelled choice by agents of limited information and computing power. His agent settles for a satisfactory option. The paper's checker, meeting a claim its tools cannot reach, declines to rule. The two responses to the limit differ. \register{[OPEN]} \emph{For keeping the phrase:} both start from limited computation. \emph{Against:} because the responses differ, a reader who knows Simon's term may expect a satisficing checker. \emph{What would settle it:} a choice about the title, with the difference stated wherever the phrase appears. This edition keeps the title and leaves the question open.
+
+\section*{6. Update, October 2026}
+
+This section was added on 2 October 2026 at the author's request. It changes nothing in Sections 2 to 5, and no premise there depends on it.
+
+\textbf{What Jaynes claimed.} \register{[PLAIN; CON]} Julian Jaynes (1976) argued that introspective consciousness is learned through language and culture, and that before it people experienced their own cognition as voices they took to come from gods. He called the earlier mentality the bicameral mind, dated its breakdown to roughly three thousand years ago, read early texts as evidence, and proposed a hemispheric mechanism for the voices (summary from the Julian Jaynes Society overview and secondary summaries found by search this session; the book was not opened, so the summary is UNVERIFIED against the text). These are claims about consciousness.
+
+\textbf{The critiques.} \register{[PLAIN; CON]} Block (1981, pp. 81-83) argued that chimpanzees and the ancients plan and deceive, so they are conscious in Jaynes's own sense; that the ancient texts are full of plans and deceit; and that Jaynes confuses thought processes with theories of them (from a scan of the review read in a reference audit on 2 October 2026). A further charge often credited to Block, that Jaynes confused consciousness with the concept of consciousness, appears in substance in the review (p. 83): Jaynes explains at most the invention of the theory that people are conscious. The phrasing credited to Block is UNVERIFIED as his wording. Cavanna and colleagues (2007) examined the neurological basis of the bicameral model and the philological accuracy of Jaynes's readings, and presented a non-unitary self as one of the hypothesis's most relevant legacies (from the abstract). Dennett (1986) read Jaynes sympathetically, as raising important questions for the first time while many of his specific claims fail (from bibliographic records).
+
+\textbf{The author's three points.} \register{[PLAIN]} Paraphrased. First, whatever source of life or consciousness a person believes in, no one came from nothing. Second, even in accounts of prophecy, a new understanding formed only when a second stream of thought, divine or human, joined the first. Third, many things can be found alone, and some can be found only in cooperation. The first point's words ``or consciousness'' are [CON], and nothing here uses them. Its theological content is a structure held across beliefs and serves as evidence for no claim here [THEO, structure only]. The second point is [THEO] and plays no role in this paper.
+
+\textbf{Origin and ground.} \register{[STEELMAN; META]} \emph{The author's first point, read as support for P1:} nothing came from nothing, so everything depends on something. The steelman uses only that principle, taken on its own. It does not use the agreement across belief systems as evidence, since that agreement is among theological beliefs. \emph{The contrary:} the existential inertia thesis holds that a thing, once it exists, can continue with no sustaining cause; Schmid and Linford (2023) give it its first book-length treatment (from the publisher's record; the gloss on the thesis from Schmid's PhilArchive record and search-result summaries this session). On that view a thing can owe its start to a source and stand afterwards with none. The first point concerns origin and P1 concerns ground, and the step between them needs a bridge you can reject, B6 [proposed]: whatever needed a source to begin needs a ground to continue. \emph{Outcome: standoff.} The original edition recorded the same standoff between no-aseity and existential inertia. Without B6 the first point is consistent with P1 and gives it no support. Since Section 4.1 moved P1 to framing, nothing in this paper's argument turns on the standoff.
+
+\textbf{Findings that need two parties.} \register{[OPEN; EPI]} This question comes from the author's third point, on cooperation; the second point, on prophecy, plays no part in it. Are some findings reachable only when a second party takes part, and is a binding verdict one of them? Bridge B5 [proposed] states the weaker link the paper can claim: a verdict binds for a reader only if a second party \emph{could} take part in checking it. The author's third point is stronger. It concerns findings that exist only when a second party \emph{does} take part. The C3 MATCH exists whether or not anyone reruns it, so B5 claims only a likeness. \emph{What would settle the stronger reading:} a verdict that could not exist without two parties checking together. A proof found in dialogue may be one; this paper offers no case.
+
+\textbf{What the update does not do.} \register{[PLAIN]} Jaynes's claims are [CON], and this paper makes no claim about consciousness. Using his account of a voice heard as another's to support P4 would need a bridge from [CON] to [EPI] that the paper does not have, so the paper does not use it.
+
+\section*{7. What stands, and what stays open}
+
+\textbf{Stated plainly} \register{[PLAIN]}
+
+\begin{itemize}
+\item The records show the line between proven and open falling where an outside criterion stops in four of the five studies [EMP]. In the viable-visualization study the proven items rest on checks inside the project. The studies illustrate the witness thesis and cannot test it.
+\item C3's simulate leg is a re-checkable MATCH at 0.99 and 3.3 percent against a five-percent limit, and you can rerun it. It checks an implementation of a result already known in closed form. The tolerance is the project's choice. The margins fit one formula on the record's own numbers; the record does not exhibit the computation.
+\item C3's render leg, the neutrino card, the seven-loop card, the method-template card, every talk-to-design mapping and all six Learning Forge claim cards are UNVERIFIABLE.
+\item The inference from no-aseity to P4(a) fails (Section 4.1). P1 is framing in this edition.
+\item P4(a) in its June wording is too strong (Section 4.3). I3's ``identical'' claims more than its bridge supports (Section 4.8). C, as a claim about verification in general, is unsupported by this evidence (Section 4.9).
+\item This edition proposes a survivor narrower than June's thesis and argues for it in Sections 4.2 to 4.4: a verdict binds for a reader when its criterion is not set by the checker alone and is open to challenge, and when the reader or an independent party can rerun the analysis on the recorded inputs and see it pass or fail. Where no such criterion exists, UNVERIFIABLE is the correct output. Condition (a') is [proposed], and the survivor still meets Hardwig's argument from testimony unanswered (Section 4.2).
+\item For any reader of this paper, every study claim except C3's simulate leg is a bid until the records or hashed extracts are published.
+\end{itemize}
+\textbf{Contests and their outcomes} \register{[STEELMAN]}: no-aseity as ground, defeat; reliabilism, survival by concession; self-authored criteria, defeat of the wording and survival by concession; Collins, standoff at the frontier; Shapin, ally on the aim and standoff on necessity; unauthored mathematics, ally mistaken for enemy if (a') is adopted and defeat of (a) as worded otherwise; C3 derivation or run, survival by concession; Popper, survival by concession; ``identical'', defeat; generality, defeat; existential inertia, standoff.
+
+\textbf{Left to you} \register{[OPEN]}: whether agreeing checks are independent witnesses (5.1); whether checks inside one project can witness (5.2); where a chain of witnesses may stop (5.3); whether no-aseity can sort verdicts or reach mathematics (5.4); whether a person witnesses differently from a program (5.5); whether the title earns Simon's term (5.6); whether some findings need two parties to exist (Section 6, findings that need two parties).
+
+\textbf{This paper about itself} \register{[PLAIN; META]} The paper is a made thing, and its claims have force for a reader who cares whether a verdict is grounded. Its evidence is a set of records and seals cited in an unpublished manuscript. If those records are altered or the seals fail, the matching claims revert to bids. It names the criteria it was checked against and asks for the re-check.
+
+\section*{References}
+
+Each entry was checked on 2 October 2026 in this session against the record named in the table at the end of this section, unless it says otherwise. ``Record'' means a bibliographic record; a primary text read this session is marked ``read''.
+
+Aifer, Maxwell, Kaelan Donatella, Max Hunter Gordon, Samuel Duffield, Thomas Ahle, Daniel Simpson, Gavin Crooks, and Patrick J. Coles. 2024. ``Thermodynamic Linear Algebra.'' \emph{npj Unconventional Computing} 1: 13.
+
+Ashby, W. Ross. 1956. \emph{An Introduction to Cybernetics}. London: Chapman and Hall.
+
+Aspect, Alain, Jean Dalibard, and Gérard Roger. 1982. ``Experimental Test of Bell's Inequalities Using Time-Varying Analyzers.'' \emph{Physical Review Letters} 49: 1804-1807.
+
+Austin, J. L. 1962. \emph{How to Do Things with Words}. Oxford: Clarendon Press.
+
+Barendregt, Henk, and Freek Wiedijk. 2005. ``The Challenge of Computer Mathematics.'' \emph{Philosophical Transactions of the Royal Society A} 363(1835): 2351-2375. [read: definition of the de Bruijn criterion; volume and pages carried from an earlier pass]
+
+Bell, J. S. 1964. ``On the Einstein Podolsky Rosen Paradox.'' \emph{Physics Physique Fizika} 1(3): 195-200.
+
+Block, Ned. 1981. Review of Julian Jaynes, \emph{The Origin of Consciousness in the Breakdown of the Bicameral Mind}. \emph{Cognition and Brain Theory} 4(1): 81-83. [issue number carried from an earlier pass]
+
+BonJour, Laurence. 1980. ``Externalist Theories of Empirical Knowledge.'' \emph{Midwest Studies in Philosophy} 5: 53-73. [record: PDC file name and search summary, this pass; text not read]
+
+Boyle, Latham, Kieran Finn, and Neil Turok. 2018. ``CPT-Symmetric Universe.'' \emph{Physical Review Letters} 121: 251301.
+
+Boyle, Latham, Kieran Finn, and Neil Turok. 2022. ``The Big Bang, CPT, and Neutrino Dark Matter.'' \emph{Annals of Physics} 438: 168767.
+
+Cavanna, Andrea E., Michael Trimble, Federico Cinti, and Francesco Monaco. 2007. ``The `Bicameral Mind' 30 Years On: A Critical Reappraisal of Julian Jaynes' Hypothesis.'' \emph{Functional Neurology} 22(1): 11-15.
+
+Collins, H. M. 1985. \emph{Changing Order: Replication and Induction in Scientific Practice}. London and Beverly Hills: Sage. [London from earlier records, moderate confidence]
+
+Dennett, Daniel C. 1986. ``Julian Jaynes's Software Archeology.'' \emph{Canadian Psychology} 27: 149-154. [issue number (2) UNVERIFIED]
+
+Franklin, Allan. 1994. ``How to Avoid the Experimenters' Regress.'' \emph{Studies in History and Philosophy of Science} 25(3): 463-491. [record: PhilPapers FRAHTA-5 and search summary, this pass; text not read]
+
+Freedman, Stuart J., and John F. Clauser. 1972. ``Experimental Test of Local Hidden-Variable Theories.'' \emph{Physical Review Letters} 28(14): 938-941.
+
+Giustina, Marissa, et al. 2015. ``Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.'' \emph{Physical Review Letters} 115: 250401.
+
+Goldman, Alvin I. 1979. ``What Is Justified Belief?'' In \emph{Justification and Knowledge: New Studies in Epistemology}, edited by George S. Pappas, 1-23. Dordrecht: Reidel.
+
+Hardwig, John. 1985. ``Epistemic Dependence.'' \emph{Journal of Philosophy} 82(7): 335-349. [record: JSTOR stable 2026523 and search summary, this pass; text not read]
+
+Hensen, B., et al. 2015. ``Loophole-Free Bell Inequality Violation Using Electron Spins Separated by 1.3 Kilometres.'' \emph{Nature} 526: 682-686.
+
+Howson, Colin, and Peter Urbach. 1989. \emph{Scientific Reasoning: The Bayesian Approach}. La Salle, Illinois: Open Court. [record: PhilPapers HOWSRT and publisher listings, this pass; text not read]
+
+Jaynes, Julian. 1976. \emph{The Origin of Consciousness in the Breakdown of the Bicameral Mind}. Boston: Houghton Mifflin. [edition not confirmed]
+
+Longino, Helen E. 1990. \emph{Science as Social Knowledge: Values and Objectivity in Scientific Inquiry}. Princeton: Princeton University Press.
+
+Popper, Karl R. 1959. \emph{The Logic of Scientific Discovery}. London: Hutchinson. German original \emph{Logik der Forschung}, 1934 (imprint 1935).
+
+Schmid, Joseph C., and Daniel J. Linford. 2023. \emph{Existential Inertia and Classical Theistic Proofs}. Cham: Springer. [online November 2022; place of publication UNVERIFIED]
+
+Searle, John R. 1995. \emph{The Construction of Social Reality}. New York: Free Press.
+
+Shalm, Lynden K., et al. 2015. ``Strong Loophole-Free Test of Local Realism.'' \emph{Physical Review Letters} 115: 250402.
+
+Shapin, Steven. 1984. ``Pump and Circumstance: Robert Boyle's Literary Technology.'' \emph{Social Studies of Science} 14(4): 481-520.
+
+Shapin, Steven, and Simon Schaffer. 1985. \emph{Leviathan and the Air-Pump: Hobbes, Boyle, and the Experimental Life}. Princeton: Princeton University Press. [not re-checked this session: UNVERIFIED this session; record-checked 2 October by an earlier pass; no longer cited in the body]
+
+Shapiro, Stewart. 1997. \emph{Philosophy of Mathematics: Structure and Ontology}. New York and Oxford: Oxford University Press.
+
+Simon, Herbert A. 1955. ``A Behavioral Model of Rational Choice.'' \emph{Quarterly Journal of Economics} 69(1): 99-118.
+
+Project sources, unpublished: the conferred-existence thesis; the reconcile thesis; the Learning Forge, Discovery Forge and research-diet records of 30 June 2026; the viable-visualization thesis (draft of 24 June 2026); the C3 page, which is published. The original edition's adversarial batteries (cross-examination, aseity confrontation, suture test) are cited for structure and for two findings; they are AI-assisted research files, unpublished.
+
+Talks, from the research diet's sealed transcripts and not checked against the talks themselves: Thomas Ahle on thermodynamic computing; Neil Turok on the CPT-symmetric universe; the talk that presents Bell's move.
+
+\subsection*{Where each entry was checked}
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.242\linewidth}>{\raggedright\arraybackslash}p{0.678\linewidth}}
+\toprule
+\textbf{Work} & \textbf{Checked this session against} \\ \midrule\endhead
+Simon 1955 & EconPapers RePEc record; Semantic Scholar \\
+Goldman 1979 & PhilPapers GOLWIJ; Springer chapter record; Google Books listing (pp. 1-23); IEP \\
+Collins 1985 & Science review listing (Sage, Beverly Hills, 1985); Internet Archive; the experimenter's regress from a catalogue summary \\
+Barendregt and Wiedijk 2005 & Radboud PDF read this session: the de Bruijn criterion defined as independent checking by a small program \\
+Shapin 1984 & SAGE and Harvard records; summary of virtual witnessing as readers picturing an unseen experiment; the replication wording not reconfirmed \\
+Shapiro 1997 & PhilPapers SHAPOM-26; Google Books \\
+Schmid and Linford 2023 & Springer book record (online 30 November 2022) \\
+Austin 1962 & Wikipedia and PhilPapers AUSHTD (verdictives: acquitting, assessing, estimating) \\
+Searle 1995 & Buffalo ontology review record (``X counts as Y in C'') \\
+Popper 1959 & Wikipedia; PhilPapers; corroboration from secondary summaries \\
+Longino 1990 & Princeton University Press listing; secondary summaries \\
+Ashby 1956 & Wikipedia entry \\
+Bell 1964; Freedman and Clauser 1972; Aspect, Dalibard and Roger 1982 & INSPIRE; scirp and ADS listings \\
+Hensen et al. 2015; Giustina et al. 2015; Shalm et al. 2015 & nature.com; APS records \\
+Boyle, Finn and Turok 2018 and 2022 & Edinburgh Research Explorer, arXiv 1803.08928; ScienceDirect and ADS for 2022 (438: 168767) \\
+Aifer et al. 2024 & nature.com record s44335-024-00014-0 \\
+Jaynes 1976; Block 1981; Cavanna et al. 2007; Dennett 1986 & Wikipedia; PhilArchive BLOROJ-2; Birmingham portal and CNR Solar; PhilPapers DENJJS and Semantic Scholar \\
+BonJour 1980 & PDC record (file name msp\_1980\_0005\_0053\_0073) and search summary, revision pass; Norman case from the summary \\
+Hardwig 1985 & JSTOR stable 2026523 and search summary, revision pass \\
+Franklin 1994 & PhilPapers FRAHTA-5 and search summary (25(3): 463-491), revision pass \\
+Howson and Urbach 1989 & PhilPapers HOWSRT; publisher listings, revision pass \\
+Collins on calibration and Weber & Collins chapter handout (Pitt) and Franklin listings in search results, revision pass; texts not read: UNVERIFIED \\
+Aseity etymology & Catholic Encyclopedia and encyclopedia.com entries in search results, revision pass \\
+Existential inertia gloss & Schmid, PhilArchive SCHEIA-20, and search summaries, revision pass \\
+Jaynes summary & Julian Jaynes Society overview and secondary summaries in search results, revision pass; book not opened \\
+\emph{nemo iudex in causa sua} & not checked: UNVERIFIED \\
+Turok's three-to-four-year window; the Ahle and Turok talks & not checked: UNVERIFIED beyond the project transcripts \\
+Gödel, as named by the viable-visualization source & no work named: UNVERIFIED \\
+Shapin and Schaffer 1985 & not re-checked: UNVERIFIED this session \\
+\bottomrule\end{longtable}}
+\section*{Reader's note on AI assistance \register{[PLAIN]}}
+
+This paper was drafted by AI models. On 30 June 2026 the author set an AI session to work on documentation across his repositories. An AI subagent in that session proposed a wrap-up thesis with this title, scope and three-claim structure; the session's main model adopted the proposal, a drafting workflow wrote the manuscript, and a second workflow published it on the author's website the same day. The author did not ask for this paper by name. The ideas it applies are his: the denial of aseity in the conferred-existence thesis, and the checking routine of the reconcile thesis. The application to verdicts, the bid and bound vocabulary, the choice of studies and the wording are model work, and the project records it cites were also written by AI models working for him. This edition, rewritten on 2 October 2026 with AI assistance, sets the June argument against its strongest contraries and reports where it lost. The author has not re-derived the argument himself. Until he does, the paper is AI-assisted work under his name, put forward for scrutiny.
+
+\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/witness-and-verification.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{d058799f92a796fe1b43cf62a42a9f466eb58a6b147cbcac940e7ad955d3e4a1}\par}
+\end{document}

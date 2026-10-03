@@ -83,6 +83,24 @@ reviewed. The label after each title says what kind of record it is.
   Technology and a Cross-Sector Convergence on Verifiable
   Trust](https://doi.org/10.5281/zenodo.20778927): Archived corpus, 2026-06-20.
   PDF: https://harperz9.github.io/papers/witnessing-spine.pdf
+- [Sourcehood Without a Source: The Arity Gap and the Free Will
+  Debate](https://doi.org/10.5281/zenodo.23126117): Philosophy paper,
+  2026-10-03 edition. Page: https://harperz9.github.io/research-arity-gap.html
+- [The Seam That Holds While It Is
+  Crossed](https://doi.org/10.5281/zenodo.23126357): Philosophy paper,
+  2026-10-03 edition. Page:
+  https://harperz9.github.io/research-forcing-argument.html
+- [Self-Given Is Not Self-Grounding](https://doi.org/10.5281/zenodo.23126458):
+  Philosophy paper, 2026-10-03 edition. Page:
+  https://harperz9.github.io/research-self-given.html
+- [The Conservation of Faithfulness](https://doi.org/10.5281/zenodo.23126484):
+  Working paper, 2026-10-03 edition. It builds on the formal note at
+  https://doi.org/10.5281/zenodo.22768398. Page:
+  https://harperz9.github.io/research-conservation-of-faithfulness.html
+
+Thirteen of the PDFs in papers/ are typeset with LaTeX. Each has a build
+receipt in papers/receipts/ naming the source hash, the engine and the PDF
+hash. The two corpus PDFs are printed from their pages.
 
 ## Essays
 

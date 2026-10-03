@@ -61,13 +61,16 @@ def render_row(item: dict, section: dict, member: dict, *, entry: bool = True) -
     )
 
 
-def _compact(entries: list[tuple[str, str, str]], section_id: str, label: str) -> str:
+def _compact(entries: list[tuple[str, str, str]], section_id: str, label: str,
+             extras: list[str] | None = None) -> str:
+    """A compact list; `extras` holds trusted HTML appended inside each row's meta span."""
+    extras = extras or [""] * len(entries)
     rows = "".join(
         f'<li data-publication-entry data-topics="{_e(section_id)} {_e(title.casefold())}">'
         f'<a href="{_e(href)}">{_e(title)}</a>'
-        + (f' <span class="publication-meta">{_e(note)}</span>' if note else "")
+        + (f' <span class="publication-meta">{_e(note)}{extra}</span>' if note else "")
         + "</li>"
-        for href, title, note in entries
+        for (href, title, note), extra in zip(entries, extras)
     )
     return f'<ul class="publication-compact" aria-label="{_e(label)}">{rows}</ul>'
 
@@ -99,13 +102,26 @@ def _briefing_lists(root: Path) -> str:
 
 def _research_lists(root: Path, section: dict) -> str:
     note_rows = [(note["href"], note["title"], "") for note in research_notes(root, section)]
-    paper_rows = [(paper["file"], paper["title"], f'{paper["status"]} · PDF') for paper in papers(root, section)]
+    paper_list = papers(root, section)
+    paper_rows = [(paper["file"], paper["title"], f'{paper["status"]} · PDF') for paper in paper_list]
     return (
         '<h3 class="publication-subhead" id="research-notes">Research notes</h3>'
         + _compact(note_rows, "research", "Research notes")
         + '<h3 class="publication-subhead" id="research-papers">Papers</h3>'
-        + _compact(paper_rows, "research", "Papers as PDF files")
+        + _compact(paper_rows, "research", "Papers as PDF files",
+                   [_paper_links(root, paper) for paper in paper_list])
     )
+
+
+def _paper_links(root: Path, paper: dict) -> str:
+    """The DOI and, for a PDF typeset by tools/build_latex_papers.py, its build receipt."""
+    links = []
+    if paper.get("doi"):
+        links.append(f'<a href="https://doi.org/{_e(paper["doi"])}" translate="no">DOI</a>')
+    receipt = f'papers/receipts/{Path(paper["file"]).stem}.json'
+    if (root / receipt).is_file():
+        links.append(f'<a href="{_e(receipt)}">build receipt</a>')
+    return "".join(f" · {link}" for link in links)
 
 
 def render_sections(root: Path, sections: dict, items: list[dict]) -> str:

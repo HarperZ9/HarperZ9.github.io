@@ -1,0 +1,26 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/emet-integrity-witness.pdf",
+  "source": {
+    "kind": "LaTeX in the private research repository",
+    "commit": "b76c70ba00e8e3a535f3def286650f08318c6c46",
+    "path": "papers/latex-sources/emet-paper/main.tex",
+    "sha256": "6d819e2ad57b4a2e26924aa4e9525683aed2f25d49273fa1a1a518ace25fcec5"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1782864000",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "e8804a3462fda05f2f27905eb0fdc30191534c3bb3291660131a53c0bc24da30",
+  "pdf_bytes": 80569,
+  "rerun": "The source is private; its commit and hash identify it.",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}
