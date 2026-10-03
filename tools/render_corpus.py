@@ -39,6 +39,7 @@ if __package__ in {None, ""}:
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 from tools.corpus_corrections import CORRECTIONS, CORRECTIONS_OPENING, place_corrections
+from tools.corpus_forewords import foreword
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 # c:/dev when this checkout sits at c:/dev/public/portfolio-site. A worktree elsewhere
@@ -305,6 +306,7 @@ def main() -> int:
         words = len(re.sub(r"<[^>]+>", " ", body).split())
         corrections = CORRECTIONS.get(c["out"].name, [])
         body = place_corrections(body, corrections)
+        body = foreword(c["out"].name) + body
         blurb = c["blurb"] + (CORRECTIONS_OPENING if corrections else "")
         page = PAGE.format(
             title=html.escape(c["title"], quote=True),

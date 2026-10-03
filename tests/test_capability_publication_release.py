@@ -573,7 +573,10 @@ RELEASE_PATHS = (
 # index-DI6YWfTZ.js; the release is rehashed.
 # October 3, 2026: the correction batch merged on 3 October, so every batch note and listing date
 # moved from 2 to 3 October with tools/correction_batch.py; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "060a254af324fa5991d9984403284280693e771b314e3058a5e583233c1b7d8c"
+# October 3, 2026: the six philosophy papers published in their October edition from
+# writing/papers/ (tools/render_papers.py), three new paper PDFs listed in papers.json, and the
+# Witnessing Spine foreword added; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "399f44c8cc80de758f1649680c548afecc0147424e61768cf8ba437286ba3bf3"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

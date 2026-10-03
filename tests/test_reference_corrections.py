@@ -51,7 +51,9 @@ FIXES = {
     "research-conferred-existence.html": (
         ("Candrakirti's lamp", "al-Ghazali's teaching", "Benjamin's victors writing history",
          "Its canonical anchor is"),
-        ("Nagarjuna's lamp argument", "Saheeh International", "Blessed be He, is truth", "seventh thesis"),
+        # 3 October 2026: the October edition of this paper (tools/render_papers.py) spells the
+        # name with its diacritics, so the pin follows the new text.
+        ("Nāgārjuna's lamp argument", "Saheeh International", "Blessed be He, is truth", "seventh thesis"),
     ),
     "research-conservation-of-faithfulness.html": (
         ('"the difference that makes', "The Page curve:\n      information conserved and scrambled"),
