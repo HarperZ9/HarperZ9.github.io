@@ -1,0 +1,31 @@
+/* type-forge.html. The page's own text stays in the canon faces; only the proof area is set in the
+   minted face (--tf-family), with the canon sans as the fallback for missing glyphs. */
+.type-forge-page .tf-status { font-size: 1rem; margin: 0 0 1rem; color: var(--reading-soft); }
+.type-forge-page .tf-desk { display: grid; grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: start; }
+.type-forge-page .tf-controls fieldset { border: 0; border-top: 1px solid var(--reading-rule); margin: 0 0 1.25rem; padding: .75rem 0 0; min-width: 0; }
+.type-forge-page .tf-controls legend { font-weight: 600; font-size: 1rem; padding: 0; margin-bottom: .5rem; }
+.type-forge-page .tf-controls label { display: flex; justify-content: space-between; gap: 1rem; font-size: 1rem; margin-top: .6rem; }
+.type-forge-page .tf-controls output { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.type-forge-page .tf-controls input[type="range"] { width: 100%; min-height: 32px; margin: .2rem 0 0; accent-color: currentColor; }
+.type-forge-page .tf-controls select { width: 100%; min-height: 44px; font: inherit; margin-top: .3rem; }
+.type-forge-page .tf-weights { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-top: 1rem; }
+.type-forge-page .tf-weights button { min-height: 44px; font: inherit; font-size: 1rem; border: 1px solid var(--reading-rule); background: transparent; color: inherit; cursor: pointer; }
+.type-forge-page .tf-weights button:hover { border-color: currentColor; }
+.type-forge-page .tf-proof { min-width: 0; }
+.type-forge-page .tf-text-label { display: block; font-weight: 600; font-size: 1rem; margin-bottom: .4rem; }
+.type-forge-page #tf-text { width: 100%; font: inherit; font-size: 1.125rem; padding: .6rem .7rem; border: 1px solid var(--reading-rule); background: transparent; color: inherit; resize: vertical; }
+.type-forge-page .tf-missing { min-height: 1.5em; font-size: 1rem; color: var(--reading-soft); margin: .4rem 0 0; }
+.type-forge-page .tf-sample,
+.type-forge-page .tf-alphabet p { font-family: var(--tf-family, "Hanken Grotesk"), "Hanken Grotesk", sans-serif; overflow-wrap: anywhere; max-width: none; }
+.type-forge-page .tf-sample { font-size: clamp(2.4rem, 7vw, 5.5rem); line-height: 1.35; margin: 1.25rem 0 .5rem; }
+.type-forge-page .tf-alphabet { border-top: 1px solid var(--reading-rule); margin-top: 1.5rem; padding-top: 1rem; }
+.type-forge-page .tf-alphabet p { font-size: clamp(1.4rem, 3.2vw, 2.4rem); line-height: 1.45; margin: .4rem 0; letter-spacing: .02em; }
+.type-forge-page.tf-refused .tf-sample,
+.type-forge-page.tf-refused .tf-alphabet { opacity: .25; }
+.type-forge-page .tf-status-list { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: .5rem; font-size: 1rem; }
+.type-forge-page .tf-status-list li { border-top: 1px solid var(--reading-rule); padding-top: .5rem; overflow-wrap: anywhere; }
+/* The proof comes first in the source, so on a phone the face is on screen before the sliders that
+   change it and the tab order matches. On a wide screen the controls sit in the left column. */
+.type-forge-page .tf-controls { grid-column: 1; grid-row: 1; }
+.type-forge-page .tf-proof { grid-column: 2; grid-row: 1; }
+@media (max-width: 760px) { .type-forge-page .tf-desk { grid-template-columns: minmax(0, 1fr); } .type-forge-page .tf-controls, .type-forge-page .tf-proof { grid-column: 1; grid-row: auto; } }
