@@ -7,7 +7,7 @@
 // params: { preset: "gallery" | "retro" | "loom", light: boolean | undefined }
 
 import { VERT, FRAG, UNIFORMS, APERTURES } from "../../hero-aperture.js";
-import { program, fullscreenTriangle } from "../gl2.mjs";
+import { program, fullscreenTriangle, sharedGL2, releaseContext } from "../gl2.mjs";
 
 function lightPole() {
   const theme = document.documentElement.dataset.theme;
@@ -21,7 +21,13 @@ export const aperture = {
   backends: ["webgl2", "webgl"],
   create({ canvas, params, backend, reduced }) {
     const attrs = { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: "low-power", preserveDrawingBuffer: true };
-    let gl = backend === "webgl" ? null : canvas.getContext("webgl2", attrs);
+    // Pooled first: draw on the page's shared WebGL2 context and copy the region into this canvas
+    // through a 2D context, so the heroes hold no context of their own. A canvas that already has a
+    // WebGL context (no 2D context to be had) keeps the old path: its own context.
+    const pool = backend === "webgl" ? null : sharedGL2();
+    const ctx2d = pool ? canvas.getContext("2d") : null;
+    let gl = ctx2d ? pool.gl : null;
+    if (!gl && backend !== "webgl") gl = canvas.getContext("webgl2", attrs);
     const used = gl ? "webgl2" : "webgl";
     if (!gl) gl = canvas.getContext("webgl", attrs);
     if (!gl) throw new Error("aperture needs WebGL");
@@ -62,13 +68,18 @@ export const aperture = {
       backend: used,
       frame(t) {
         size();
+        if (ctx2d) { pool.fit(canvas.width, canvas.height); gl.bindFramebuffer(gl.FRAMEBUFFER, null); }
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.useProgram(prog);
         gl.uniform2f(loc.u_res, canvas.width, canvas.height);
         // hero-aperture.js advances u_time at 0.0019 per millisecond; t arrives in seconds.
         gl.uniform1f(loc.u_time, reduced ? 0 : t * 1.9);
         gl.uniform1f(loc.u_light, (p.light ?? light) ? 1 : 0);
-        if (tri) { tri.draw(); return; }
+        if (tri) {
+          tri.draw();
+          if (ctx2d) { ctx2d.clearRect(0, 0, canvas.width, canvas.height); pool.blit(ctx2d, canvas.width, canvas.height); }
+          return;
+        }
         gl.bindBuffer(gl.ARRAY_BUFFER, buf);
         gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -76,6 +87,7 @@ export const aperture = {
       setParams(next) { p = { ...next }; apply(); },
       readPixels() {
         const out = new Uint8Array(canvas.width * canvas.height * 4);
+        if (ctx2d) gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, out);
         return out;
       },
@@ -85,7 +97,7 @@ export const aperture = {
         if (mq && mq.removeEventListener) mq.removeEventListener("change", onScheme);
         if (tri) tri.dispose(); if (buf) gl.deleteBuffer(buf);
         gl.deleteProgram(prog);
-        const ext = gl.getExtension("WEBGL_lose_context"); if (ext) ext.loseContext();
+        if (!ctx2d) releaseContext(gl);   // the shared context outlives any one instance
       },
     };
   },

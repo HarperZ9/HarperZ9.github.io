@@ -16,6 +16,7 @@
 //
 // mountHeroAperture(canvas, { hue, blades, seed, radius, reduced }) -> { destroy() }
 
+import { probeWebGL } from "./media-engine/gl2.mjs";
 export const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
 export const FRAG = `precision highp float;
@@ -126,14 +127,10 @@ function makeProgram(gl) {
   return prog;
 }
 
+// The probe context is released at once (media-engine/gl2.mjs probeWebGL), so asking never leaves
+// a live context behind.
 export function isHeroApertureAvailable() {
-  try {
-    if (typeof document === "undefined") return false;
-    const c = document.createElement("canvas");
-    return !!(c.getContext("webgl") || c.getContext("experimental-webgl"));
-  } catch (_) {
-    return false;
-  }
+  return probeWebGL("webgl");
 }
 
 function getContext(canvas) {

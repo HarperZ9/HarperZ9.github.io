@@ -5,6 +5,7 @@
 // Mounted once per page (a module-level singleton). Skipped on coarse/touch pointers (no mouse to
 // follow) and under prefers-reduced-motion. mountCursorField(opts) -> { destroy() } | null.
 
+import { probeWebGL } from "./media-engine/gl2.mjs";
 let __cursorHandle = null;
 
 const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
@@ -50,8 +51,8 @@ export function isCursorFieldAvailable(){
     if (typeof window === "undefined" || typeof document === "undefined") return false;
     if (!(window.matchMedia && window.matchMedia("(pointer: fine)").matches)) return false;
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-    const c = document.createElement("canvas");
-    return !!(c.getContext("webgl") || c.getContext("experimental-webgl"));
+    // Released at once (media-engine/gl2.mjs), so the check leaves no live context behind.
+    return probeWebGL("webgl");
   } catch (_) { return false; }
 }
 

@@ -26,6 +26,8 @@
 //  - SharedArrayBuffer requires crossOriginIsolated (COOP/COEP), which GitHub Pages cannot set, so
 //    sab defaults false and is only a detected enhancement (high).
 
+import { probeWebGL, releaseContext } from "../media-engine/gl2.mjs";
+
 // ---------------------------------------------------------------------------
 // PURE: tier derivation (the unit under test)
 // ---------------------------------------------------------------------------
@@ -159,7 +161,14 @@ export function workerPoolSize(cap) {
 // probeCapability() -> Promise<frozen capability record>
 // Runs once at engine boot. Never throws; every absence is an honest null/false. The WebGPU probe
 // requests an adapter+device (requestAdapter resolves null when unavailable, never rejects).
-export async function probeCapability() {
+// Memoized: the Studio asks twice (boot and the engine console), and each ask used to open probe
+// contexts and a WebGPU device of its own.
+let probed = null;
+export function probeCapability() {
+  if (!probed) probed = probeOnce();
+  return probed;
+}
+async function probeOnce() {
   const cap = {
     cores: 4,
     deviceMemory: null,
@@ -201,9 +210,8 @@ export async function probeCapability() {
   // WebGL1 / WebGL2 (a throwaway canvas; mirror fractal-gl.js's isFractalGLAvailable pattern).
   try {
     if (typeof document !== "undefined") {
-      const c = document.createElement("canvas");
-      const gl1 = c.getContext("webgl") || c.getContext("experimental-webgl");
-      cap.webgl1 = !!gl1;
+      // Both probe contexts are released once read, so the probe holds no live context.
+      cap.webgl1 = probeWebGL("webgl");
       const c2 = document.createElement("canvas");
       const gl2 = c2.getContext("webgl2");
       if (gl2) {
@@ -211,6 +219,7 @@ export async function probeCapability() {
         let maxTextureSize = 0;
         try { maxTextureSize = gl2.getParameter(gl2.MAX_TEXTURE_SIZE) || 0; } catch (_) {}
         cap.webgl2 = { maxTextureSize, colorBufferFloat };
+        releaseContext(gl2);
       }
     }
   } catch (_) { /* honest-null: no WebGL is a real, reported state */ }

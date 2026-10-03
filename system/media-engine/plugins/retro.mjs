@@ -17,7 +17,7 @@
 import { renderRetro, RETRO_DEFAULT_OPTS as RETRO_ENGINE_DEFAULTS } from "../../retro-engine.js?v=20261003-worker";
 import { crtActive, crtStage } from "../../retro-crt.js";
 import { createShaderRunner, DEFAULT_FRAG } from "../../shader-runner.js?v=20260805-react";
-import { getGL2, program, fullscreenTriangle, texture, target } from "../gl2.mjs";
+import { getGL2, program, fullscreenTriangle, texture, target, sharedGL2, releaseContext } from "../gl2.mjs";
 
 // renderRetro's own defaults for the tube fields, so a caller that omits one (retro-studio.js
 // passes no beam) gets the same tube on both backends.
@@ -255,7 +255,7 @@ function gpuBackend(canvas, params) {
     },
     dispose() {
       src.dispose(); tube.dispose();
-      const ext = gl.getExtension("WEBGL_lose_context"); if (ext) ext.loseContext();
+      releaseContext(gl);
     },
   };
 }
@@ -272,8 +272,9 @@ function gpuBackend(canvas, params) {
 // call while one is in flight returns false and draws nothing. Stills, exports and captures keep
 // using render(), which is synchronous, and any render() call retires a frame still in flight.
 export function createRetroRenderer() {
-  const glCanvas = typeof document !== "undefined" ? document.createElement("canvas") : null;
-  const gl = glCanvas ? getGL2(glCanvas) : null;
+  // The tube draws on the page's shared WebGL2 context (gl2.mjs sharedGL2) and copies its region out.
+  const shared = sharedGL2();
+  const gl = shared ? shared.gl : null;
   let tube = null;
   try { tube = gl ? makeTube(gl) : null; } catch (e) { console.error("[media-engine] retro tube unavailable:", e); tube = null; }
   const grid = typeof document !== "undefined" ? document.createElement("canvas") : null;
@@ -288,9 +289,9 @@ export function createRetroRenderer() {
     const ctx = dst.getContext("2d");
     ctx.imageSmoothingEnabled = false;
     if (tubeOn(o)) {
-      if (glCanvas.width !== w || glCanvas.height !== h) { glCanvas.width = w; glCanvas.height = h; }
+      shared.fit(w, h);
       tube.render(grid, up, o);
-      ctx.drawImage(glCanvas, 0, 0);
+      shared.blit(ctx, w, h);
     } else {
       ctx.drawImage(grid, 0, 0, w, h);
       if (crtActive(o)) crtStage(ctx, w, h, { ...o, cell: up });
