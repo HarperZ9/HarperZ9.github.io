@@ -68,3 +68,54 @@ export function target(gl, w, h, opts) {
   gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   return { tex, fb, w, h, ok, dispose() { gl.deleteFramebuffer(fb); gl.deleteTexture(tex); } };
 }
+
+// Free a context's GPU resources now instead of at garbage collection. Browsers cap live contexts
+// (about 16 in Chromium), so a probe or a disposed instance should not hold one.
+export function releaseContext(gl) {
+  try {
+    const ext = gl && gl.getExtension("WEBGL_lose_context");
+    if (ext) ext.loseContext();
+  } catch (e) { console.error("[media-engine] could not release a WebGL context:", e); }
+}
+
+// Can this browser make a WebGL context of this type? Asked once per page per type; the probe
+// context is released at once, so availability checks never leave a live context behind.
+const probes = new Map();
+export function probeWebGL(type = "webgl") {
+  if (probes.has(type)) return probes.get(type);
+  let ok = false;
+  try {
+    if (typeof document !== "undefined") {
+      const c = document.createElement("canvas");
+      const gl = c.getContext(type) || (type === "webgl" ? c.getContext("experimental-webgl") : null);
+      ok = !!gl;
+      if (gl) releaseContext(gl);
+    }
+  } catch (_) { ok = false; }   // no WebGL is a real, reported state
+  probes.set(type, ok);
+  return ok;
+}
+
+// One WebGL2 context per page for the engine's GPU work. Each user draws into the bottom-left
+// w x h region of the shared drawing buffer and copies that region into its own 2D canvas in the
+// same task (blit), so the page holds one context however many instances draw. The backing grows
+// to the largest region asked for and never shrinks, so users of different sizes do not reallocate
+// it every frame. Every user sets its own program, framebuffer, viewport and texture bindings.
+let shared = null;
+export function sharedGL2() {
+  if (shared && !shared.gl.isContextLost()) return shared;
+  if (typeof document === "undefined") return null;
+  const canvas = document.createElement("canvas");
+  canvas.width = 1; canvas.height = 1;
+  const gl = getGL2(canvas);
+  if (!gl) return null;
+  shared = {
+    gl, canvas,
+    fit(w, h) {
+      if (canvas.width < w || canvas.height < h) { canvas.width = Math.max(canvas.width, w); canvas.height = Math.max(canvas.height, h); }
+    },
+    // The region the last draw left at the bottom-left of the buffer, top-down, into ctx at (dx, dy).
+    blit(ctx, w, h, dx = 0, dy = 0) { ctx.drawImage(canvas, 0, canvas.height - h, w, h, dx, dy, w, h); },
+  };
+  return shared;
+}
