@@ -23,3 +23,6 @@ artifacts/*.zip binary
 # Spatial world packages are byte-receipted: no EOL conversion, ever.
 art/spatial/** -text
 plugins/data/** text eol=lf
+
+# raw-native WebAssembly release files are pinned by SHA-256 in plugins/raw.mjs: no EOL conversion.
+media/raw-native/wasm-*/** -text

@@ -4,13 +4,15 @@
 // and Loom draw here through their engine plugins into the Studio's own canvas, so the perception
 // panel, snapshot and export read them like any other source. BRender Archival and Engine Revival
 // re-hash their receipted release media in the browser. The Splat Lab's renderer is the Spatial
-// source. RAW and the restored rasterizer are reserved WebAssembly slots. Every surface keeps its
-// own page as a door: the old URLs all still work.
+// source. RAW renders live through raw-native's WebAssembly build (raw-register.mjs fills its slot);
+// the restored rasterizer is still a reserved slot. Every surface keeps its own page as a door: the
+// old URLs all still work.
 
 import { usePlugin, knownPlugins } from "./media-engine/page.mjs";
 import { stageHandoff, takeHandoff, exportWithReceipt } from "./studio-engine-flows.js";
 import { markRisk, riskOf, RISK_LABELS } from "./media-engine/colour.mjs";
 import { SLOTS, slotReady } from "./media-engine/plugins/slots.mjs";
+import "./media-engine/raw-register.mjs";
 
 export const ENGINE_SURFACES = Object.freeze({
   retro: { label: "Retro Engine", page: "retro.html", plugin: "retro-2d", animated: true, acceptsInput: true,
@@ -28,7 +30,7 @@ export const ENGINE_SURFACES = Object.freeze({
     intro: "Engine Revival's release media, re-hashed in your browser against the published manifest." },
   raw: { label: "RAW", page: "raw.html", slot: "raw", plugin: "slot-card",
     card: { title: "Plugin slot: RAW reference renderer", note: "WebAssembly build not published yet" },
-    intro: "RAW has its own page. The engine keeps a slot for its reference renderer, compiled to WebAssembly, so the GPU plugins can be checked against a ray-traced answer." },
+    intro: "RAW, the reference renderer, running in this browser: raw-native 0.3.0 compiled to WebAssembly lights one scene twice, with screen-space and ray-traced ambient occlusion, and writes a certificate saying whether the fast one held." },
 });
 
 let current = null;   // { id, handle, mount, observer, plugin, params, input }
@@ -98,6 +100,14 @@ async function buildControls(id, surface, handle, mount) {
     const apply = () => { setP({ seed: seed.value || "folded-light", layers: [layer.value], ...(structure ? { structure: structure.value } : {}) }); measureSoon(); };
     for (const n of inputs) n.addEventListener("change", apply);
   }
+  if (id === "raw" && handle && handle.plugin.id === "raw") {
+    const { RAW_VIEWS, RAW_SIZES, RAW_CHANNELS } = await import("./media-engine/plugins/raw.mjs");
+    const view = control(mount, "View", select(Object.keys(RAW_VIEWS), "default"));
+    const size = control(mount, "Size", select(RAW_SIZES.map(String), "384"));
+    const channel = control(mount, "Show", select(RAW_CHANNELS, "frame"));
+    const apply = () => setP({ view: view.value, size: +size.value, channel: channel.value });
+    for (const n of [view, size, channel]) n.addEventListener("change", apply);
+  }
 }
 
 async function buildStatus(id, surface, handle, mount) {
@@ -122,9 +132,25 @@ async function buildStatus(id, surface, handle, mount) {
     }
   }
   if (surface.door === "spatial") statusLine(list, "Published Splat Lab scenes", "PENDING", "none yet; Spatial draws receipted packages today");
-  if (surface.slot) {
+  const filled = surface.slot && handle && handle.plugin.id === SLOTS[surface.slot].pluginId;
+  if (surface.slot && !filled) {
     const slot = SLOTS[surface.slot];
     statusLine(list, slot.name + " (" + slot.backend + ")", slot.verdict, "plugin slot reserved; waits on " + slot.waitsOn.charAt(0).toLowerCase() + slot.waitsOn.slice(1));
+  }
+  // A live plugin may report its own status (status() and onResult(), as plugins/raw.mjs does).
+  const inst = handle && handle.instance;
+  if (inst && typeof inst.status === "function") {
+    const live = el("ul", { class: "me-status", "aria-label": "Live render", "aria-live": "polite" });
+    mount.append(live);
+    const paint = () => {
+      live.replaceChildren();
+      for (const s of inst.status()) statusLine(live, s.label, s.verdict, s.detail);
+      markRisk([...list.querySelectorAll("li"), ...live.querySelectorAll("li")]);
+      measureSoon();
+    };
+    paint();
+    if (typeof inst.onResult === "function" && current) current.unsubscribe = inst.onResult(paint);
+    return;
   }
   markRisk(list.querySelectorAll("li"));
 }
@@ -192,6 +218,7 @@ export async function enterEngineSurface(id, { canvas, mount, isCurrent = () => 
 export function leaveEngineSurface() {
   if (!current) return;
   if (current.observer) current.observer.disconnect();
+  if (current.unsubscribe) current.unsubscribe();
   if (current.handle) current.handle.dispose();
   current = null;
 }
