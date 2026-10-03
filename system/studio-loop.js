@@ -40,6 +40,10 @@ export function sourceIsAnimated(activeSource, state) {
       // settles on the witness frame; once settled the loop is free to idle. With no state
       // supplied we err animated, matching the other animated sources' no-state behavior.
       return !s.showcaseSettled;
+    case "retro":
+      // The Retro Engine surface animates its shader, EXCEPT under reduced motion (one still).
+      // The other engine surfaces (gallery, loom, splats, brender, revival, raw) are static.
+      return !s.engineStatic;
     case "byo":
       return !!s.byoPlaying;   // a still image is static; a playing video is animated
     default:

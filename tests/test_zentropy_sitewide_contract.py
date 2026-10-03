@@ -36,6 +36,9 @@ VOID_SHEETS_REVISION = "20260925-void-sheets"
 VOID_INTEGRATION_REVISION = "20260925-void-integration"
 FRONTIER_EDITION_REVISION = "20260930-source-evidence-matrix"
 STUDIO_PLATE_REVISION = "20260925-studio-plate"
+# 3 October 2026: the Studio becomes the single entry for the media engine surfaces, so its
+# script and the sheet that styles the new rail block take a new stamp, as does risk.css.
+MEDIA_ENGINE_REVISION = "20261003-engine"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -82,11 +85,12 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": STUDIO_PLATE_REVISION,
+    "system/studio.js": MEDIA_ENGINE_REVISION,
     "system/studio-plate.css": STUDIO_PLATE_REVISION,
     "system/studio-deck.css": STUDIO_PLATE_REVISION,
     "system/studio-sheet.css": STUDIO_PLATE_REVISION,
-    "system/studio-modes.css": STUDIO_PLATE_REVISION,
+    "system/studio-modes.css": MEDIA_ENGINE_REVISION,
+    "system/media-engine/risk.css": MEDIA_ENGINE_REVISION,
     "system/loom-studio.js": VOID_PLATES_REVISION,
     "system/retro-studio.js": VOID_PLATES_REVISION,
     "img/og/cards-data.js": VOID_PLATES_REVISION,
