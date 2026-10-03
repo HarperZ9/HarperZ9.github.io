@@ -8,7 +8,7 @@
   "summary": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses.",
   "author": "Zain Dana Harper",
   "published_at": "2026-10-01",
-  "updated_at": "2026-10-02",
+  "updated_at": "2026-10-03",
   "observed_at": "2026-10-01T11:08:21Z",
   "thesis": "An employment estimate should travel with its vintage, adjustment status, series definition and revision stage, because each version of the number answers a different question.",
   "opening": {
@@ -472,7 +472,7 @@
     }
   ],
   "corrections": [
-    "2 October 2026, correction, Four ways the same month changes: the first estimate appears about three weeks after the survey's reference week, usually the first Friday of the next month. An earlier version said three weeks after the reference month."
+    "3 October 2026, correction, Four ways the same month changes: the first estimate appears about three weeks after the survey's reference week, usually the first Friday of the next month. An earlier version said three weeks after the reference month."
   ],
   "ai_assistance": "AI assisted with research, drafting and editorial review. The cited sources support the bounded claims; the proposed practices and ethical judgments are identified in the text.",
   "personal_voice_adopted": false

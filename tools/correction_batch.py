@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-BATCH_DATE = "2026-10-02"
+BATCH_DATE = "2026-10-03"
 
 # Files whose notes open with the batch date, in the forms the site already uses:
 # "2 October 2026, correction, ..." in essays and papers, "October 2, 2026: ..." in

@@ -10,15 +10,7 @@
       "title": "The Witnessing Spine",
       "content_text": "One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.",
       "date_published": "2026-06-20T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
-    },
-    {
-      "id": "https://harperz9.github.io/why-i-do-this.html",
-      "url": "https://harperz9.github.io/why-i-do-this.html",
-      "title": "A Bullshitter Knows a Bullshitter",
-      "content_text": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series.",
-      "date_published": "2026-10-02T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/who-pays-the-referees.html",
@@ -26,7 +18,7 @@
       "title": "Who Pays the Referees",
       "content_text": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first.",
       "date_published": "2026-10-01T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/who-knew-first.html",
@@ -34,7 +26,7 @@
       "title": "Who Knew First",
       "content_text": "An op-ed and the record behind it. By the record's account, the organization that ran the model held the decisive facts in each of nine AI agent incidents from 2026, and in six of them someone else told the public first.",
       "date_published": "2026-09-25T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/the-terms-for-telling.html",
@@ -42,7 +34,7 @@
       "title": "The Terms for Telling",
       "content_text": "The party that holds a record also writes the terms for the people inside who could tell. In the cases checked, telling was protected where a forum outside the employer reached the merits, or public pressure forced a reversal.",
       "date_published": "2026-10-01T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/the-number-has-a-vintage.html",
@@ -50,7 +42,7 @@
       "title": "The Number Has a Vintage",
       "content_text": "An official jobs estimate changes as later data arrive. Each version answers a different question, and a fair comparison names which one it uses.",
       "date_published": "2026-10-01T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/pick-the-lock-for-everyone.html",
@@ -58,7 +50,7 @@
       "title": "Pick the Lock for Everyone",
       "content_text": "Shame, creative labor, mutualistic tools, source-bounded generative art, and becoming answerable.",
       "date_published": "2026-07-22T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/no-receipt-no-accept.html",
@@ -66,7 +58,7 @@
       "title": "No Receipt, No Accept",
       "content_text": "Review debt, verifier independence, honest nulls, labor, and machines whose claims anyone can check.",
       "date_published": "2026-07-28T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/models-propose-oracles-dispose.html",
@@ -74,7 +66,7 @@
       "title": "Models Propose, Oracles Dispose",
       "content_text": "Why generated work stays outside the evidence layer, and what a live model-free judgment boundary looks like.",
       "date_published": "2026-07-29T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/conferred-existence.html",
@@ -82,7 +74,7 @@
       "title": "Conferred Existence: the full corpus",
       "content_text": "An integrated thesis on made minds: what exists on its own footing, what is conferred, and where an authentication verdict stops.",
       "date_published": "2026-08-13T00:00:00Z",
-      "date_modified": "2026-10-02T00:00:00Z"
+      "date_modified": "2026-10-03T00:00:00Z"
     },
     {
       "id": "https://harperz9.github.io/conferred-existence-essay.html",
@@ -90,6 +82,14 @@
       "title": "Conferred Existence",
       "content_text": "A premise about conferred existence, artificial minds, authority, standing, and the difference between fact and permission.",
       "date_published": "2026-06-20T00:00:00Z",
+      "date_modified": "2026-10-03T00:00:00Z"
+    },
+    {
+      "id": "https://harperz9.github.io/why-i-do-this.html",
+      "url": "https://harperz9.github.io/why-i-do-this.html",
+      "title": "A Bullshitter Knows a Bullshitter",
+      "content_text": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series.",
+      "date_published": "2026-10-02T00:00:00Z",
       "date_modified": "2026-10-02T00:00:00Z"
     },
     {

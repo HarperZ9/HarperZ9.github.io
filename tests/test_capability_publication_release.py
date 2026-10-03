@@ -571,7 +571,9 @@ RELEASE_PATHS = (
 # October 2, 2026: dated reference corrections across fourteen pages, Who Knew First's publication
 # date moved to 25 September, nine listings dated 2 October, and the home bundle rebuilt as
 # index-DI6YWfTZ.js; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "94de6dc9c6557e42273e367c4e12b00dfe3519bd5e819b1f9199679f3c8801c5"
+# October 3, 2026: the correction batch merged on 3 October, so every batch note and listing date
+# moved from 2 to 3 October with tools/correction_batch.py; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "060a254af324fa5991d9984403284280693e771b314e3058a5e583233c1b7d8c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

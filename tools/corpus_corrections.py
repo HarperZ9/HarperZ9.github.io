@@ -30,7 +30,7 @@ CORRECTIONS: dict[str, list[dict]] = {
                 "(i) You do what you do because of the way you are.",
             ),
             "note": (
-                "2 October 2026, correction, the Basic Argument passages: Galen Strawson states the Basic Argument "
+                "3 October 2026, correction, the Basic Argument passages: Galen Strawson states the Basic Argument "
                 'several times in "The Impossibility of Moral Responsibility" (1994): briefly on p. 5, in ten steps '
                 "on pp. 5 to 7, and in a looser restatement on pp. 12 to 15. The five premises given here are a "
                 'reconstruction; his numbering differs. In his own short version, "nothing can be causa sui" comes '
@@ -43,7 +43,7 @@ CORRECTIONS: dict[str, list[dict]] = {
         {
             "after": ("Three traditions that never met",),
             "note": (
-                '2 October 2026, correction, section 3: earlier text said three traditions "never met" and reached '
+                '3 October 2026, correction, section 3: earlier text said three traditions "never met" and reached '
                 "the same view independently. That claim had no source, and it is withdrawn. Islam has a long history "
                 "in Yorubaland, so contact between two of the three traditions is likely. The narrower claim stands: "
                 "serious traditions have held people responsible without requiring them to be their own cause."
@@ -52,7 +52,7 @@ CORRECTIONS: dict[str, list[dict]] = {
         {
             "after": ("target-fixing vocabulary cannot fix the target of a two-place relation",),
             "note": (
-                "2 October 2026, correction, section 3: earlier text said a one-place vocabulary cannot fix the target "
+                "3 October 2026, correction, section 3: earlier text said a one-place vocabulary cannot fix the target "
                 "of a two-place relation. Behavior control also relates two parties, so that wording was wrong. The "
                 "current claim is narrower: the address relation needs a second party who can answer and refuse, and "
                 "a description built only from the role of a system to be adjusted has not been shown to fix it."
