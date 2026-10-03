@@ -10,6 +10,11 @@
 //   run.frame         // { width, height, rgba: Uint8ClampedArray } from frame.ppm
 //   run.files         // every output file as Uint8Array, by name
 //
+// The WebGPU build (raw-native-gpu.mjs, 0.4.0) waits on the GPU, so use the
+// async forms there: await raw.renderAsync({ width: 512, height: 512, gpu: true })
+// returns the GPU frame, run.gpuCertificate (raw-gpu-cert/1) and the CPU
+// reference files under "cpu/". renderAsync and benchAsync work with every build.
+//
 // Both files are fetched as bytes and checked against the expected SHA-256
 // before any of their code runs. A mismatch throws and nothing is executed.
 // Works on the main thread and in a Worker (no DOM access).
@@ -68,6 +73,7 @@ export function paramsToFlags(p = {}) {
   if (p.fovy !== undefined) flags.push("--fovy", String(p.fovy));
   if (p.tolerance !== undefined) flags.push("--tolerance", String(p.tolerance));
   if (p.rt === false) flags.push("--no-rt");
+  if (p.gpu) flags.push("--gpu");
   if (p.threads) flags.push("--threads", String(p.threads));
   return flags;
 }
@@ -106,6 +112,39 @@ export async function loadRawNative({ moduleUrl, moduleSha256, wasmUrl, wasmSha2
     const exitCode = mod.callMain(args);
     return { exitCode, stdout: lines.join("\n") };
   }
+  // The GPU build (raw-native-gpu.mjs) suspends main() with JSPI while it waits
+  // for the GPU, so callMain returns a Promise there. These forms work with both.
+  async function runCliAsync(args) {
+    lines = [];
+    const exitCode = await mod.callMain(args);
+    return { exitCode, stdout: lines.join("\n") };
+  }
+  // Read every file under dir (one level of subdirectories, e.g. cpu/), then remove them.
+  function takeFiles(dir, prefix = "") {
+    const files = {};
+    for (const name of mod.FS.readdir(dir)) {
+      if (name === "." || name === "..") continue;
+      const path = `${dir}/${name}`;
+      if (mod.FS.isDir(mod.FS.stat(path).mode)) {
+        Object.assign(files, takeFiles(path, `${prefix}${name}/`));
+        mod.FS.rmdir(path);
+      } else {
+        files[prefix + name] = mod.FS.readFile(path);
+        mod.FS.unlink(path);
+      }
+    }
+    return files;
+  }
+  function result(files, exitCode, stdout, ms) {
+    const json = (n) => (files[n] ? JSON.parse(new TextDecoder().decode(files[n])) : null);
+    return {
+      exitCode, stdout, ms, files,
+      certificate: json("certificate.json"),
+      arenaCertificate: json("arena_certificate.json"),
+      gpuCertificate: json("gpu_certificate.json"),
+      frame: files["frame.ppm"] ? ppmToRGBA(files["frame.ppm"]) : null,
+    };
+  }
   let runIndex = 0;
   function render(params = {}) {
     const dir = `/run${runIndex++}`;
@@ -113,26 +152,32 @@ export async function loadRawNative({ moduleUrl, moduleSha256, wasmUrl, wasmSha2
     const t0 = performance.now();
     const { exitCode, stdout } = runCli(["--out", dir, ...paramsToFlags(params)]);
     const ms = performance.now() - t0;
-    const files = {};
-    for (const name of mod.FS.readdir(dir)) {
-      if (name === "." || name === "..") continue;
-      files[name] = mod.FS.readFile(`${dir}/${name}`);
-      mod.FS.unlink(`${dir}/${name}`);
-    }
+    const files = takeFiles(dir);
     mod.FS.rmdir(dir);
-    const text = (n) => (files[n] ? new TextDecoder().decode(files[n]) : null);
-    return {
-      exitCode, stdout, ms, files,
-      certificate: files["certificate.json"] ? JSON.parse(text("certificate.json")) : null,
-      arenaCertificate: files["arena_certificate.json"] ? JSON.parse(text("arena_certificate.json")) : null,
-      frame: files["frame.ppm"] ? ppmToRGBA(files["frame.ppm"]) : null,
-    };
+    return result(files, exitCode, stdout, ms);
+  }
+  async function renderAsync(params = {}) {
+    const dir = `/run${runIndex++}`;
+    mod.FS.mkdir(dir);
+    const t0 = performance.now();
+    const { exitCode, stdout } = await runCliAsync(["--out", dir, ...paramsToFlags(params)]);
+    const ms = performance.now() - t0;
+    const files = takeFiles(dir);
+    mod.FS.rmdir(dir);
+    return result(files, exitCode, stdout, ms);
   }
   function bench(params = {}, runs = 5) {
     const { exitCode, stdout } = runCli(["--bench", String(runs), ...paramsToFlags(params)]);
     if (exitCode !== 0) throw new Error(`bench failed: ${stdout}`);
     return JSON.parse(stdout.trim().split("\n").pop());
   }
-  const version = runCli(["--version"]).stdout.trim();
-  return { render, bench, runCli, version, module: mod };
+  async function benchAsync(params = {}, runs = 5) {
+    const { exitCode, stdout } = await runCliAsync(["--bench", String(runs), ...paramsToFlags(params)]);
+    if (exitCode !== 0) throw new Error(`bench failed: ${stdout}`);
+    const out = JSON.parse(stdout.trim().split("\n").pop());
+    if (out.error) throw new Error(`bench failed: ${out.error}`);
+    return out;
+  }
+  const version = (await runCliAsync(["--version"])).stdout.trim();
+  return { render, renderAsync, bench, benchAsync, runCli, runCliAsync, version, module: mod };
 }
