@@ -1,0 +1,16 @@
+/* system/media-engine/risk.css: risk tokens for status and verdict marks.
+   Generated from RISK_TOKENS in colour.mjs (colour.test.mjs keeps the two equal).
+   Every mark is quiet ink by default; only the one [data-risk-hot] mark in a view takes its
+   level colour. The level is always written in the text too, so colour is never the only cue. */
+:root{--risk-low:#186844;--risk-moderate:#5c5a66;--risk-elevated:#8f5200;--risk-high:#b3261e;--risk-ink:#15130f;--risk-quiet:#5d584e;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--risk-low:#8fdc8a;--risk-moderate:#a9a6b4;--risk-elevated:#f0a848;--risk-high:#ff7a6b;--risk-ink:#ebe5d8;--risk-quiet:#9d978a;}
+}
+:root[data-theme="dark"]{--risk-low:#8fdc8a;--risk-moderate:#a9a6b4;--risk-elevated:#f0a848;--risk-high:#ff7a6b;--risk-ink:#ebe5d8;--risk-quiet:#9d978a;}
+
+[data-risk]{color:var(--risk-quiet);font-variant-numeric:tabular-nums}
+[data-risk-hot]{font-weight:600}
+[data-risk="low"][data-risk-hot]{color:var(--risk-low)}
+[data-risk="moderate"][data-risk-hot]{color:var(--risk-moderate)}
+[data-risk="elevated"][data-risk-hot]{color:var(--risk-elevated)}
+[data-risk="high"][data-risk-hot]{color:var(--risk-high)}
+@media (forced-colors:active){[data-risk-hot]{color:CanvasText;text-decoration:underline}}

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildRouteHeader, navActive, renderNav, syncScrollRegion } from "./nav.js";
+import { buildRouteHeader, navActive, renderNav, shouldMountAmbientField, syncScrollRegion } from "./nav.js";
 import { PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./routes.js";
 import { PRIMARY_ROUTES as NAV_PRIMARY_ROUTES } from "./routes.js?v=20260925-void-plates";
 
@@ -526,4 +526,14 @@ test("header wordmark names the site once visually and once to assistive technol
   assert.equal(count(label), 1, `accessible name: "${label}"`);
   assert.doesNotMatch(visible, /\b(\w+(?: \w+)+) \1\b/, `wordmark repeats a phrase: "${visible}"`);
   assert.doesNotMatch(label, /\b(\w+(?: \w+)+)\b.*\b\1\b/, `accessible name repeats a phrase: "${label}"`);
+});
+
+test("the ambient field mounts only where a page opts in, on a desktop that allows motion", () => {
+  const desktop = { matchMedia: (q) => ({ matches: q !== "(prefers-reduced-motion: reduce)" }) };
+  const reduced = { matchMedia: () => ({ matches: true }) };
+  const doc = (dataset, classes = []) => ({ body: { dataset, classList: { contains: (c) => classes.includes(c) } } });
+  assert.equal(shouldMountAmbientField(doc({ ambientField: "true" }), desktop), true, "Gallery opt-in");
+  assert.equal(shouldMountAmbientField(doc({}), desktop), false, "reading page with a plate");
+  assert.equal(shouldMountAmbientField(doc({ ambientField: "true" }), reduced), false, "reduced motion");
+  assert.equal(shouldMountAmbientField(doc({ ambientField: "true" }, ["studio-page"]), desktop), false, "Studio");
 });

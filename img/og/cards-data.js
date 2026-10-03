@@ -506,9 +506,9 @@ window.CARD_DATA = {
     "glyph": "diamond"
   },
   "raw": {
-    "role": "NATIVE RENDERING RESEARCH ENGINE",
-    "headline": "A D3D11 rendering engine that turns frames into checkable observations",
-    "pipeline": "PROXY / PHASE-DETECT / DISPATCH / COMPOSITE / TONEMAP",
+    "role": "C++23 CPU RENDERER",
+    "headline": "Render the frame, then check the shortcut against the truth",
+    "pipeline": "RASTERIZE / RAY-TRACED AO / SCREEN-SPACE AO / RECONCILE / CERTIFICATE",
     "word": "RAW",
     "glyph": "aperture"
   },

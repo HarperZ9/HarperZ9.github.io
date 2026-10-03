@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
     "assets/index-DtNiguMs.js",
     "assets/index-FBDE3rFM.js",
@@ -582,7 +583,10 @@ RELEASE_PATHS = (
 # and The Terms for Telling, and the arity correction on the Conferred Existence essay, each with
 # a dated note, merged over the structured-data release; the series reading time follows; the
 # release is rehashed.
-REVIEWED_RELEASE_SHA256 = "d4c0efdbf7b515052c00652be79400c2f65eb5ad3ada09f81963b9d09929a72f"
+# October 3, 2026: RAW now describes the public C++23 reference renderer (raw.html, the system
+# registry, the record pages and capability maps, and the home bundle index-DDpFxCuj.js); the
+# release is rehashed (merged over the media fixes).
+REVIEWED_RELEASE_SHA256 = "3eb7dec8b4544a820a4559f6c5bf4fbb29297a2b8f7bf414a55df6096930eba8"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -773,7 +777,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 2, 2026: the reference corrections move Who Knew First's publication date to
     # 25 September and date nine listings 2 October, so the bundle rebuilt from the registry
     # is index-DI6YWfTZ.js with the same sheet. index-DtNiguMs.js stays as retained history.
-    current_js = "index-DI6YWfTZ.js"
+    # October 3, 2026: RAW's registry record now describes the C++23 reference renderer, so
+    # the bundle rebuilt from the registry is index-DDpFxCuj.js with the same sheet.
+    # index-DI6YWfTZ.js stays as retained history.
+    current_js = "index-DDpFxCuj.js"
+    previous_raw_js = "index-DI6YWfTZ.js"
+    assert previous_raw_js not in source
+    assert (ROOT / "assets" / previous_raw_js).is_file()
+    assert f"assets/{previous_raw_js}" in RELEASE_PATHS
     previous_opener_js = "index-DtNiguMs.js"
     assert previous_opener_js not in source
     assert (ROOT / "assets" / previous_opener_js).is_file()

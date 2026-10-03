@@ -14,7 +14,7 @@
         "href": "https://github.com/HarperZ9/HarperZ9.github.io/blob/main/system/systems.json"
       }
     ],
-    "retrievedAt": "2026-09-28",
+    "retrievedAt": "2026-10-03",
     "units": "registry systems and verified typed relationship records",
     "transformations": [
       "Only verified-in-source typed relation records are included.",
@@ -149,7 +149,7 @@
           "id": "raw",
           "label": "RAW",
           "status": "verified",
-          "stateLabel": "Skyrim D3D11 rendering platform",
+          "stateLabel": "C++23 CPU reference renderer",
           "group": "Graphics and media",
           "nodeType": "system"
         },
@@ -413,7 +413,7 @@
           "evidenceIds": [
             "studio-engine-raw-bridge-code",
             "studio-engine-public-source",
-            "raw-public-source-1-0-0"
+            "raw-native-release-0-2-0"
           ],
           "claimScope": "Studio Engine can locate and invoke the optional RAW native CLI bridge; its Python core remains usable without RAW.",
           "label": "can invoke as an optional native bridge",

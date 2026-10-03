@@ -28,11 +28,11 @@
     <text x="58" y="221" font-size="18" font-weight="700">Build Color</text>
     <text x="58" y="248" class="mono muted" font-size="17">color-science library and workbench</text>
   </g>
-<g data-figure-point="true" data-figure-key="raw" role="graphics-symbol" aria-label="RAW. Skyrim D3D11 rendering platform." tabindex="-1">
+<g data-figure-point="true" data-figure-key="raw" role="graphics-symbol" aria-label="RAW. C++23 CPU reference renderer." tabindex="-1">
     <rect class="focus-ring" x="497" y="189" width="426" height="96" fill="none" stroke="transparent"/>
     <rect x="500" y="192" width="420" height="90" rx="0" class="cm-node" stroke="var(--cm-l)" stroke-width="2"/>
     <text x="518" y="221" font-size="18" font-weight="700">RAW</text>
-    <text x="518" y="248" class="mono muted" font-size="17">Skyrim D3D11 rendering platform</text>
+    <text x="518" y="248" class="mono muted" font-size="17">C++23 CPU reference renderer</text>
   </g>
 <g data-figure-point="true" data-figure-key="engine-revival" role="graphics-symbol" aria-label="Engine Revival. archival/revival evidence platform." tabindex="-1">
     <rect class="focus-ring" x="37" y="311" width="426" height="96" fill="none" stroke="transparent"/>

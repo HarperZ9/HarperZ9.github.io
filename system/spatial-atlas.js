@@ -9,6 +9,7 @@
 
 import { buildRunReceipt } from "./engine/world-package.js";
 import { acquireContext } from "./spatial-gl.js";
+import { digestOrNull } from "./media-engine/receipt.mjs";
 
 // Backing ceiling for the atlas stage, matching the Studio's standard quality
 // level (system/studio.js sizeCanvas).
@@ -380,11 +381,8 @@ class AtlasScene {
     if (!response.ok) throw new Error(`${meta.model}: HTTP ${response.status}`);
     const bytes = new Uint8Array(await response.arrayBuffer());
     let verdict = "UNVERIFIABLE";
-    if (globalThis.crypto && crypto.subtle) {
-      const digest = await crypto.subtle.digest("SHA-256", bytes);
-      const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
-      verdict = hex === this.manifest.receipts[meta.model] ? "MATCH" : "DRIFT";
-    }
+    const hex = await digestOrNull(bytes);
+    if (hex != null) verdict = hex === this.manifest.receipts[meta.model] ? "MATCH" : "DRIFT";
     if (verdict === "DRIFT") throw new Error(`${meta.model}: receipt DRIFT; refusing to render`);
     const parsed = parseNGSF(bytes.buffer);
     const { indices, dropped } = orderByImportance(parsed, this.splatBudget);
