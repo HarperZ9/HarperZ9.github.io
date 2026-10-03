@@ -6,6 +6,8 @@
 // reduced motion each step is exactly one drawn frame. A wrong recall answer is told its
 // misconception and is not shown the keyed answer; a stored review survives a reload.
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8802';
@@ -35,7 +37,10 @@ async function checkFigure(page, slug) {
   await fig.locator('.xl-play').click();
   await fig.locator('.xl-scrub').evaluate((e) => { e.value = '10'; e.dispatchEvent(new Event('input')); });
   const range = fig.locator('.xl-params input[type=range]').first();
-  if (await range.count()) await range.evaluate((e) => { e.value = e.max; e.dispatchEvent(new Event('input')); });
+  if (await range.count()) {
+    await range.evaluate((e) => { e.value = e.max; e.dispatchEvent(new Event('input')); });
+    await checkCaptionFollows(page, fig, slug, range);
+  }
   const q = fig.locator('.xl-q').first();
   const key = await q.evaluate((node) => node.dataset.item);
   const choices = await q.locator('input').evaluateAll((els) => els.map((e) => e.value));
@@ -58,6 +63,26 @@ async function checkFigure(page, slug) {
   assert.deepEqual(extra, [], `${slug}: no network during interaction`);
 }
 
+// After a value changes, the caption under the stage is the one the state function computes for
+// the new values, at the step the figure jumped to. For a scene with outcome-keyed captions that
+// is the variant for the outcome now drawn (receipt-is-not-a-verdict: MATCH at the widest limit).
+async function checkCaptionFollows(page, fig, slug, range) {
+  const { resolvedScenes } = await import(require('node:url').pathToFileURL(path.join(__dirname, '..', 'system', 'explainer', 'state.mjs')).href);
+  // Read from disk, not fetched: the page must make no request while the reader interacts.
+  const spec = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'media', 'explainers', slug, 'spec.json'), 'utf8'));
+  const p = spec.params[0];
+  const max = Number(await range.evaluate((e) => e.max));
+  const want = resolvedScenes(spec, { [p.id]: max }).find((s) => s.key === p.scene);
+  await page.waitForTimeout(200);
+  const got = await fig.locator('.xl-caption').textContent();
+  assert.equal(got, want.say, `${slug}: the caption follows the changed value`);
+  const raw = spec.scenes.find((s) => s.key === p.scene);
+  if (raw.say && typeof raw.say === 'object') {
+    assert.notEqual(got, resolvedScenes(spec, {}).find((s) => s.key === p.scene).say, `${slug}: the caption left the default outcome`);
+    console.log(`ok ${slug}: caption is the ${want.outcome} variant after the change`);
+  }
+}
+
 async function checkReducedMotion(browser) {
   const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 375, height: 812 } });
   const page = await context.newPage();
@@ -72,6 +97,7 @@ async function checkReducedMotion(browser) {
   assert.equal(await frames() - before, 3, 'one still per step');
   const width = await page.evaluate(() => document.documentElement.scrollWidth);
   assert.ok(width <= 375, `no sideways scroll at 375 px (${width})`);
+  assert.ok(await fig.locator('.xl-caption').isVisible(), 'at 375 px the caption is set as text under the stage');
   await context.close();
 }
 

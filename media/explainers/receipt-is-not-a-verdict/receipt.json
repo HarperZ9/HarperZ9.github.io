@@ -5,7 +5,7 @@
   "page": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
   "spec": {
     "path": "media/explainers/receipt-is-not-a-verdict/spec.json",
-    "sha256": "cbc80faffc5062a3ebebf12315350ee13446985f51e7530b23fefa96f45f3392"
+    "sha256": "a0ef55b53b8b134bbaa123d098a04d17be3c3136c04aff585a9c654022b29890"
   },
   "params": {
     "limit": 1.5,
@@ -19,7 +19,7 @@
   "render_code": {
     "tools/explainer/draw.py": "552d54ecc5ee16310033e27f23e4b44506e06945220a2a581b9a69d7bab59da6",
     "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
-    "tools/explainer/scene.py": "97f4a39c9385cd4cd26f47a19ef7f18a47200126453c4101e4a78e732a273caa",
+    "tools/explainer/scene.py": "0fa330710cb272fecafe241b9c2b7af966f299fccc46ca0beb27ae548fd259ed",
     "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
     "tools/explainer/render.py": "6ac2ab73782e287fd009de15ab4cc346455cabbe7ca112ee8f6491880caa124a"
   },

@@ -84,6 +84,18 @@
       },
       "then": 1,
       "else": 0
+    },
+    "outcome": {
+      "if": {
+        "eq": [
+          {
+            "param": "passed"
+          },
+          1
+        ]
+      },
+      "then": "PASS",
+      "else": "FAIL"
     }
   },
   "scenes": [
@@ -151,7 +163,13 @@
         "then": "A pass writes a receipt",
         "else": "No pass, no receipt"
       },
-      "say": "A pass writes a receipt named by a fingerprint of its own contents, so anyone can re-check it offline, and a change to any byte makes that check fail.",
+      "outcome": {
+        "param": "outcome"
+      },
+      "say": {
+        "PASS": "A pass writes a receipt named by a fingerprint of its own contents, so anyone can re-check it offline, and a change to any byte makes that check fail.",
+        "FAIL": "No candidate passed the external check, so no receipt is written."
+      },
       "min": 5.5,
       "marks": [
         {
@@ -183,16 +201,7 @@
             "else": "no candidate passed: no receipt"
           },
           "verdict": {
-            "if": {
-              "eq": [
-                {
-                  "param": "passed"
-                },
-                1
-              ]
-            },
-            "then": "PASS",
-            "else": "FAIL"
+            "param": "outcome"
           }
         }
       ]
@@ -200,7 +209,13 @@
     {
       "key": "budget",
       "heading": "When the budget runs out",
-      "say": "When the attempt budget runs out, Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you.",
+      "outcome": {
+        "param": "outcome"
+      },
+      "say": {
+        "PASS": "When the attempt budget runs out, Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you.",
+        "FAIL": "The attempt budget ran out with no pass, so Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you."
+      },
       "min": 5.5,
       "marks": [
         {
