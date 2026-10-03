@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Type forge · Zain Dana Harper</title>
+<meta name="description" content="Mint and preview Zain Mint, a parametric typeface in progress, in your browser. Set the pen and proportions, type your own text, read the receipt.">
+<link rel="canonical" href="https://harperz9.github.io/type-forge.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Type forge · Zain Dana Harper">
+<meta property="og:description" content="Mint and preview Zain Mint, a parametric typeface in progress, in your browser.">
+<meta property="og:url" content="https://harperz9.github.io/type-forge.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/typeface.png">
+<meta property="og:image:alt" content="Typography specimen card reading: Room for the words. Typography on this site.">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/typeface.png">
+<meta name="twitter:image:alt" content="Typography specimen card reading: Room for the words. Typography on this site.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Type forge · Zain Dana Harper">
+<meta name="twitter:description" content="Mint and preview Zain Mint, a parametric typeface in progress.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101416" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/type-specimen.css?v=20260907">
+<link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
+<link rel="stylesheet" href="system/type-forge/forge-page.css?v=20261003-engine">
+</head>
+<body class="inner-clean typography-page type-forge-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav" aria-label="Primary"><a href="index.html">Home</a> <a href="fonts.html">Fonts</a> <a href="typeface.html">Typography</a> <a href="studio.html">Studio</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<main id="main" class="type-sheet">
+  <header class="type-opening">
+    <p class="tf-status"><strong>In progress.</strong> Zain Mint is unfinished. The site's own text stays in Hanken Grotesk and Conso.</p>
+    <h1>Mint a face.</h1>
+    <p class="type-intro">Zain Mint is a typeface drawn by rule. Set the pen and the proportions, and the forge traces the alphabet again in your browser. Type anything to read it.</p>
+  </header>
+
+  <section class="tf-desk" aria-label="Type forge">
+    <div class="tf-proof">
+      <label for="tf-text" class="tf-text-label">Your text</label>
+      <textarea id="tf-text" rows="2" spellcheck="false">Adhesion, rhythm and 2026 figures.</textarea>
+      <p class="tf-missing" id="tf-missing" role="status" aria-live="polite"></p>
+      <p class="tf-sample" id="tf-sample" aria-describedby="tf-sample-note">Adhesion, rhythm and 2026 figures.</p>
+      <p class="type-caption" id="tf-sample-note">Set in the face you just minted. It covers a to z, A to Z, 0 to 9, the period, the comma and the hyphen.</p>
+      <div class="tf-alphabet" id="tf-alphabet" translate="no">
+        <p>abcdefghijklmnopqrstuvwxyz</p>
+        <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+        <p>0123456789 . , -</p>
+      </div>
+    </div>
+    <form class="tf-controls" id="tf-controls" aria-label="Typeface parameters">
+      <fieldset>
+        <legend>Pen</legend>
+        <label for="tf-weight">Weight <output id="tf-weight-v" for="tf-weight">0.085</output></label>
+        <input type="range" id="tf-weight" name="weight" min="0.04" max="0.2" step="0.001" value="0.085">
+        <label for="tf-contrast">Contrast <output id="tf-contrast-v" for="tf-contrast">0.82</output></label>
+        <input type="range" id="tf-contrast" name="contrast" min="0.3" max="1" step="0.01" value="0.82">
+      </fieldset>
+      <fieldset>
+        <legend>Proportion</legend>
+        <label for="tf-width">Width <output id="tf-width-v" for="tf-width">1.00</output></label>
+        <input type="range" id="tf-width" name="width" min="0.7" max="1.4" step="0.01" value="1">
+        <label for="tf-x_height">x-height <output id="tf-x_height-v" for="tf-x_height">0.50</output></label>
+        <input type="range" id="tf-x_height" name="x_height" min="0.4" max="0.6" step="0.01" value="0.5">
+        <label for="tf-roundness">Roundness <output id="tf-roundness-v" for="tf-roundness">2.40</output></label>
+        <input type="range" id="tf-roundness" name="roundness" min="2" max="4" step="0.05" value="2.4">
+        <label for="tf-aperture">Aperture <output id="tf-aperture-v" for="tf-aperture">0.60</output></label>
+        <input type="range" id="tf-aperture" name="aperture" min="0" max="1" step="0.01" value="0.6">
+      </fieldset>
+      <fieldset>
+        <legend>Style</legend>
+        <label for="tf-style">Capitals</label>
+        <select id="tf-style" name="style">
+          <option value="">Drawn</option>
+          <option value="runic">Runic, carved</option>
+        </select>
+        <div class="tf-weights" role="group" aria-label="Named weights">
+          <button type="button" data-weight="0.058">Light</button>
+          <button type="button" data-weight="0.085">Regular</button>
+          <button type="button" data-weight="0.112">Medium</button>
+          <button type="button" data-weight="0.145">Bold</button>
+        </div>
+      </fieldset>
+    </form>
+
+  </section>
+
+  <section class="type-characters" aria-labelledby="tf-know-title">
+    <h2 id="tf-know-title">How we know.</h2>
+    <p>The forge is a JavaScript port of the engine Flywheel mints Zain Mint with. For the same parameters it writes the same font bytes. Four reference faces (the default, Bold, a light extended face and the runic capitals) match the original engine byte for byte, and an over-heavy weight is refused with the same words. A rule can refuse a mint. A bowl too heavy to keep its counter open is refused by name, and nothing is drawn.</p>
+    <ul class="tf-status-list" id="tf-status" aria-label="This mint"></ul>
+    <p class="type-caption">The seed is recorded in the receipt. The outlines do not read it yet, in this port or in the original, so every seed draws the same letters today.</p>
+  </section>
+
+  <section class="type-next" aria-labelledby="tf-next-title">
+    <h2 id="tf-next-title">Take it further.</h2>
+    <p>In the Studio, the same face sets your text on the stage. Send it to the Retro Engine or weave it in the Loom.</p>
+    <nav aria-label="Continue exploring"><a href="studio.html?source=type">Set type in the Studio</a><a href="fonts.html">The font lab</a><a href="typeface.html">Typography on this site</a></nav>
+  </section>
+</main>
+<footer class="type-footer"><a href="index.html">Home</a><span>Built by Zain Dana Harper.</span></footer>
+<script type="module" src="system/type-forge/forge-page.js?v=20261003-engine"></script>
+</body>
+</html>

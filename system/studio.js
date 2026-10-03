@@ -543,6 +543,7 @@ const SOURCES = {
   brender:   { block: "src-engine",    mode: "generate", engine: true },
   revival:   { block: "src-engine",    mode: "generate", engine: true },
   raw:       { block: "src-engine",    mode: "generate", engine: true },
+  type:      { block: "src-engine",    mode: "generate", engine: true },
 };
 
 // The engine surfaces load on first entry, like the other heavy sources.
