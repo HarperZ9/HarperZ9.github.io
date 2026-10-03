@@ -12,6 +12,8 @@ from pathlib import Path
 
 from tools.explainer import marks
 from tools.explainer import render
+from tools.explainer import scene
+from tools.explainer.embed import HAND_PLACED
 from tools.render_legacy_essays import EXPLAINERS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,7 +21,7 @@ FOLDERS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/recei
 
 
 def test_there_are_explainers_to_check() -> None:
-    assert {f.name for f in FOLDERS} >= {"cost-to-verify", "receipt-is-not-a-verdict"}
+    assert {f.name for f in FOLDERS} >= {"cost-to-verify", "receipt-is-not-a-verdict", "receipt-loop"}
 
 
 def test_every_receipt_matches_its_spec_code_and_outputs() -> None:
@@ -39,10 +41,12 @@ def test_receipts_carry_limits_and_no_local_paths() -> None:
 def test_status_marks_use_the_four_risk_levels() -> None:
     for folder in FOLDERS:
         spec = json.loads((folder / "spec.json").read_text(encoding="utf-8"))
-        for scene in spec["scenes"]:
-            for mark in scene.get("marks", []):
-                level = marks.risk_of(mark)
-                assert level is None or level in marks.LEVELS, (folder.name, scene["key"])
+        settings = [{}] + [{p["id"]: o["value"]} for p in spec.get("params", []) for o in p.get("options", [])]
+        for overrides in settings:
+            for resolved in scene.resolved_scenes(spec, overrides):
+                for mark in resolved.get("marks", []):
+                    level = marks.risk_of(mark)
+                    assert level is None or level in marks.LEVELS, (folder.name, resolved["key"])
 
 
 def test_one_hot_mark_per_view() -> None:
@@ -63,6 +67,7 @@ def test_risk_colours_match_the_media_engine_tokens_when_present() -> None:
 
 def test_each_explainer_is_on_its_page_with_captions_and_transcript() -> None:
     placed = {slug: page for page, sections in EXPLAINERS.items() for slug in sections.values()}
+    placed.update(HAND_PLACED)
     for folder in FOLDERS:
         slug = folder.name
         html = (ROOT / placed[slug]).read_text(encoding="utf-8")

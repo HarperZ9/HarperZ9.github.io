@@ -1,0 +1,75 @@
+/* system/explainer/explainer.css: the live explainer figure and its recall checks.
+   Ink and rules inherit from the page, so the controls sit in either page theme. The stage keeps
+   the video's dark ground. Status marks follow the risk rule: quiet ink, and one hot mark per
+   view coloured from the pole the page is drawn on (live.mjs sets data-pole from the text colour).
+   The hot colours are the risk tokens of system/media-engine/colour.mjs;
+   tests/test_explainer_live.py keeps them equal. */
+figure.explainer.xl-on{max-width:60rem}
+.xl{--xl-line:color-mix(in srgb,currentColor 22%,transparent);--xl-soft:color-mix(in srgb,currentColor 70%,transparent);
+  margin:0 0 1rem;font-family:"Hanken Grotesk",system-ui,sans-serif}
+.xl-stage{position:relative;aspect-ratio:16/9;background:#060608;border:1px solid var(--xl-line)}
+.xl-stage canvas{display:block;width:100%;height:100%}
+/* The stage draws the caption; this copy is for screen readers, read out once per step. */
+.xl-caption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0}
+.xl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.4rem 0}
+.xl-scrub{flex:1 1 12rem;min-width:8rem;accent-color:currentColor}
+.xl-clock{font-family:"Conso",ui-monospace,monospace;font-size:.85rem;color:var(--xl-soft);font-variant-numeric:tabular-nums}
+.xl-btn{font:inherit;font-size:.9rem;color:inherit;background:transparent;border:1px solid var(--xl-line);
+  padding:.45rem .8rem;min-height:44px;cursor:pointer;border-radius:2px}
+.xl-btn:hover{border-color:currentColor}
+.xl-btn:focus-visible,.xl-steps button:focus-visible,.xl input:focus-visible,.xl select:focus-visible,.xl h3:focus-visible{
+  outline:2px solid currentColor;outline-offset:2px}
+.xl-quiet{border-color:transparent;text-decoration:underline;text-underline-offset:.2em;padding-inline:.3rem}
+.xl-play{min-width:7.5rem;font-weight:600}
+.xl-steps{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0 1rem;padding:0}
+.xl-steps button{font:inherit;font-size:.82rem;color:var(--xl-soft);background:none;border:1px solid transparent;
+  padding:.35rem .55rem;min-height:36px;cursor:pointer;text-align:left}
+.xl-steps button[aria-current="step"]{color:inherit;border-color:currentColor}
+.xl-params{border:1px solid var(--xl-line);margin:0 0 1rem;padding:.6rem .9rem .8rem}
+.xl-params legend{font-weight:600;padding:0 .3rem}
+.xl-param{display:grid;grid-template-columns:minmax(0,1fr) minmax(8rem,14rem) 5.5rem;gap:.4rem .8rem;align-items:center;margin:.4rem 0}
+.xl-param label{font-size:.92rem}
+.xl-param input[type=range]{width:100%;accent-color:currentColor;min-height:32px}
+.xl-param select{font:inherit;color:inherit;background:transparent;border:1px solid var(--xl-line);padding:.3rem;min-height:40px}
+.xl-param select option{color:#111;background:#fff}
+.xl-out{font-family:"Conso",ui-monospace,monospace;font-variant-numeric:tabular-nums;font-size:.9rem}
+.xl-changed{margin:.6rem 0 0;font-size:.9rem;color:var(--xl-soft)}
+.xl-how{list-style:none;margin:0 0 1rem;padding:0;font-size:.88rem;color:var(--xl-soft)}
+.xl-how li{margin:.25rem 0}
+.xl-how code{font-family:"Conso",ui-monospace,monospace;font-size:.85em}
+.xl-due{border-left:3px solid currentColor;padding:.4rem .8rem;margin:0 0 .8rem}
+.xl-check{border-top:1px solid var(--xl-line);padding-top:.8rem;margin-top:1rem}
+.xl-check h3{font-size:1.05rem;margin:.2rem 0 .3rem}
+.xl-hint,.xl-store,.xl-summary{font-size:.88rem;color:var(--xl-soft)}
+.xl-q{border:1px solid var(--xl-line);margin:.8rem 0;padding:.6rem .9rem}
+.xl-q legend{font-weight:600;padding:0 .3rem;max-width:100%}
+.xl-q[data-due] legend::after{content:" (due for review)";font-weight:400;color:var(--xl-soft)}
+.xl-choice{display:flex;gap:.6rem;align-items:flex-start;margin:.35rem 0}
+.xl-choice input{margin-top:.35rem;width:1.1rem;height:1.1rem;flex:none;accent-color:currentColor}
+.xl-choice label{cursor:pointer}
+.xl-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.5rem}
+.xl-feedback{margin:.5rem 0 0;font-size:.95rem}
+.xl-feedback:empty{display:none}
+.xl-q[data-result="right"] .xl-feedback{font-weight:600}
+.xl-src{font-weight:400;color:var(--xl-soft)}
+.xl-video summary{cursor:pointer;margin:.4rem 0;font-size:.95rem}
+.xl [data-risk]{color:var(--xl-soft)}
+.xl [data-risk-hot]{font-weight:600}
+.xl[data-pole="dark"] [data-risk="low"][data-risk-hot]{color:#8fdc8a}
+.xl[data-pole="dark"] [data-risk="moderate"][data-risk-hot]{color:#a9a6b4}
+.xl[data-pole="dark"] [data-risk="elevated"][data-risk-hot]{color:#f0a848}
+.xl[data-pole="dark"] [data-risk="high"][data-risk-hot]{color:#ff7a6b}
+.xl[data-pole="light"] [data-risk="low"][data-risk-hot]{color:#186844}
+.xl[data-pole="light"] [data-risk="moderate"][data-risk-hot]{color:#5c5a66}
+.xl[data-pole="light"] [data-risk="elevated"][data-risk-hot]{color:#8f5200}
+.xl[data-pole="light"] [data-risk="high"][data-risk-hot]{color:#b3261e}
+@media (forced-colors:active){.xl [data-risk-hot]{color:CanvasText;text-decoration:underline}}
+@media (max-width:600px){
+  /* The stage's type is the video's, scaled down; on a phone the caption is also set as text. */
+  .xl-caption{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;
+    margin:.5rem 0;font-size:.95rem;line-height:1.5;color:var(--xl-soft)}
+  .xl-param{grid-template-columns:1fr 4.5rem}
+  .xl-param label{grid-column:1/-1}
+  .xl-bar .xl-btn{flex:1 1 auto}
+  .xl-scrub{flex-basis:100%}
+}

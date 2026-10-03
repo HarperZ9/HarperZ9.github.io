@@ -56,6 +56,8 @@ SITE_IA_REVISION = "20261001-site-ia"
 READING_IMPORT_REVISION = VOID_PLATES_REVISION
 SYSTEM_CSS_REVISION = COPY_PASS_REVISION
 REVIEWED_ASSET_REVISIONS = {
+    # 3 October 2026: the live explainers (system/explainer/) join the essay and Flywheel pages.
+    "system/explainer/explainer.css": "20261003-explainers",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",

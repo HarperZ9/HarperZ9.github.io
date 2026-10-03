@@ -1,0 +1,194 @@
+{
+  "schema": "learn-items/1",
+  "topic": "From a proposed answer to a kept receipt",
+  "explainer": "receipt-loop",
+  "checks": [
+    {
+      "after": "receipt",
+      "items": [
+        "loop-who-accepts",
+        "loop-receipt-name"
+      ]
+    },
+    {
+      "after": "close",
+      "items": [
+        "loop-budget",
+        "loop-cache",
+        "loop-not-shown"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "loop-who-accepts",
+      "objective": "who-accepts",
+      "prompt": "In the loop, which step can accept an answer?",
+      "choices": [
+        {
+          "id": "check",
+          "text": "The external check"
+        },
+        {
+          "id": "model",
+          "text": "The local model, when it is confident"
+        },
+        {
+          "id": "cache",
+          "text": "The proof cache"
+        }
+      ],
+      "answer": "check",
+      "misconceptions": {
+        "model": {
+          "leaf": "misrecruited.self_grading",
+          "note": "A model cannot reliably pick its own correct answer. No learned model sits on the step that accepts."
+        },
+        "cache": {
+          "leaf": "misrecruited.cache_as_judge",
+          "note": "The cache stores answers that already passed, and re-checks them before serving."
+        }
+      },
+      "source": {
+        "ref": "flywheel.html#loop",
+        "quote": "Only the external check can accept an answer"
+      }
+    },
+    {
+      "id": "loop-receipt-name",
+      "objective": "receipt-fingerprint",
+      "prompt": "A pass writes a receipt. What happens if one byte of it changes?",
+      "choices": [
+        {
+          "id": "fails",
+          "text": "The re-check fails"
+        },
+        {
+          "id": "passes",
+          "text": "The re-check still passes, since the answer was right"
+        },
+        {
+          "id": "nothing",
+          "text": "Nothing; the receipt is just a log"
+        }
+      ],
+      "answer": "fails",
+      "misconceptions": {
+        "passes": {
+          "leaf": "misrecruited.verdict_outlives_record",
+          "note": "The receipt is named by a fingerprint of its own contents. Change a byte and the fingerprint no longer matches."
+        },
+        "nothing": {
+          "leaf": "misrecruited.receipt_as_log",
+          "note": "The fingerprint is what makes the receipt re-checkable offline."
+        }
+      },
+      "source": {
+        "ref": "flywheel.html#loop",
+        "quote": "a change to any byte makes that check fail"
+      }
+    },
+    {
+      "id": "loop-budget",
+      "objective": "budget",
+      "prompt": "No candidate passes and the attempt budget runs out. What does Flywheel do?",
+      "choices": [
+        {
+          "id": "names",
+          "text": "Names a stronger tier and leaves the call to you"
+        },
+        {
+          "id": "calls",
+          "text": "Calls a stronger model by itself"
+        },
+        {
+          "id": "releases",
+          "text": "Releases the best candidate with a warning"
+        }
+      ],
+      "answer": "names",
+      "misconceptions": {
+        "calls": {
+          "leaf": "misrecruited.auto_escalate",
+          "note": "The page says it never calls that tier for you."
+        },
+        "releases": {
+          "leaf": "misrecruited.release_unchecked",
+          "note": "Only a pass writes a receipt. An answer that never passed is held back."
+        }
+      },
+      "source": {
+        "ref": "flywheel.html#loop",
+        "quote": "It never calls that tier for you."
+      }
+    },
+    {
+      "id": "loop-cache",
+      "objective": "proof-cache",
+      "prompt": "What does the proof cache do before it serves a stored answer again?",
+      "choices": [
+        {
+          "id": "rechecks",
+          "text": "Re-checks it"
+        },
+        {
+          "id": "serves",
+          "text": "Serves it straight from memory"
+        },
+        {
+          "id": "asks",
+          "text": "Asks the model to confirm it"
+        }
+      ],
+      "answer": "rechecks",
+      "misconceptions": {
+        "serves": {
+          "leaf": "misrecruited.cache_without_check",
+          "note": "Serving straight from memory would trust a stored answer without checking it again. The page says the cache does not do that."
+        },
+        "asks": {
+          "leaf": "misrecruited.self_grading",
+          "note": "The model is not the judge. The re-check is the same external kind."
+        }
+      },
+      "source": {
+        "ref": "flywheel.html#loop",
+        "quote": "the cache re-checks the answer before it serves it"
+      }
+    },
+    {
+      "id": "loop-not-shown",
+      "objective": "does-not-prove",
+      "prompt": "What does the loop drawing not show?",
+      "choices": [
+        {
+          "id": "uplift",
+          "text": "That the loop raises accuracy"
+        },
+        {
+          "id": "order",
+          "text": "The order of the steps"
+        },
+        {
+          "id": "decider",
+          "text": "Which step decides"
+        }
+      ],
+      "answer": "uplift",
+      "misconceptions": {
+        "order": {
+          "leaf": "misrecruited.drawing_scope",
+          "note": "The drawing does show the order of the steps. What it cannot show is an effect on accuracy."
+        },
+        "decider": {
+          "leaf": "misrecruited.drawing_scope",
+          "note": "The drawing marks the deciding step with a bar. Its limit is accuracy: no measured uplift."
+        }
+      },
+      "source": {
+        "ref": "flywheel.html#loop",
+        "quote": "It does not show that the loop raises accuracy."
+      }
+    }
+  ]
+}

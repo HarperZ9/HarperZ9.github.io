@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-RENDER_CODE = ("draw.py", "marks.py", "voice.py", "render.py")
+RENDER_CODE = ("draw.py", "marks.py", "scene.py", "voice.py", "render.py")
 DOES_NOT_PROVE = ("Matching hashes show the same bytes came out of the same spec, code and tools. They do "
                   "not show that the explanation is correct or that it teaches. The narration voice ships "
                   "with Windows, so the audio rebuilds only on a machine with the same voice.")
@@ -63,14 +63,16 @@ def build(spec_path: Path, out: Path) -> dict:
     import PIL
     from PIL import Image
 
-    from tools.explainer import draw, voice
+    from tools.explainer import draw, scene as frames, voice
 
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     slug, seed = spec["slug"], spec["seed"]
     out.mkdir(parents=True, exist_ok=True)
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     with tempfile.TemporaryDirectory() as tmp:
-        timeline, wav = voice.narrate(spec["scenes"], Path(tmp), draw.FPS)
+        scenes = frames.resolved_scenes(spec)  # every parameter at its default
+        timeline, wav = voice.narrate(scenes, Path(tmp), draw.FPS)
+        rows = [(s["key"], a, b) for s, a, b in timeline]
         narration_sha = sha(wav)
         total = round(timeline[-1][2] * draw.FPS)
         painter, chain, poster = draw.Painter(seed), hashlib.sha256(), None
@@ -79,16 +81,16 @@ def build(spec_path: Path, out: Path) -> dict:
                                stdin=subprocess.PIPE)
         for i in range(total):
             t = i / draw.FPS
-            scene, start, end = next(x for x in timeline if x[1] <= t < x[2] + 1e-9)
-            u = (t - start) / (end - start)
+            state = frames.frame_state(scenes, rows, t)
             img = Image.new("RGBA", (draw.W, draw.H), draw.GROUND)
-            draw.draw_scene(painter, scene, u, img)
-            if scene.get("layout") != "title":
-                draw.caption(painter, img, scene["say"])
+            draw.draw_frame(painter, state, img)
+            if state["layout"] != "title":
+                draw.caption(painter, img, state["say"])
             frame = img.convert("RGB")
-            if scene.get("layout") in ("title", "close"):
+            if state["layout"] in ("title", "close"):
                 frame = draw.grain(frame, seed + i)
-            if poster is None and scene["key"] == poster_at["scene"] and u >= poster_at["at"]:
+            u = state["u"]
+            if poster is None and state["scene"] == poster_at["scene"] and u >= poster_at["at"]:
                 poster = frame
             raw = frame.tobytes()
             chain.update(hashlib.sha256(raw).digest())
@@ -97,12 +99,16 @@ def build(spec_path: Path, out: Path) -> dict:
         if enc.wait() != 0:
             raise RuntimeError(f"{slug}: ffmpeg failed; its stderr is above")
     poster.save(out / "poster.png", optimize=False, compress_level=9)
+    painter.art.save(out / "aperture.png", optimize=False, compress_level=9)  # the live stage draws this same art
     write_captions(out, slug, timeline)
     version = subprocess.run([ffmpeg, "-version"], capture_output=True, text=True).stdout.splitlines()[0]
-    files = [f"{slug}.mp4", f"{slug}.srt", f"{slug}.vtt", "poster.png"]
+    files = [f"{slug}.mp4", f"{slug}.srt", f"{slug}.vtt", "poster.png", "aperture.png"]
     return {
         "schema": "explainer-receipt/v1", "slug": slug, "title": spec["title"], "page": spec["page"],
         "spec": {"path": rel(spec_path), "sha256": sha(spec_path)},
+        "params": {p["id"]: p["default"] for p in spec.get("params", [])},
+        "live": {"plugin": "system/media-engine/plugins/explainer.mjs", "state": "system/explainer/state.mjs",
+                 "note": "The page's live version draws from the same spec; its frame receipts carry this spec hash."},
         "render_code": {f"tools/explainer/{name}": sha(HERE / name) for name in RENDER_CODE},
         "fonts": {rel(path): sha(path) for path in draw.FONTS.values()},
         "toolchain": {"python": platform.python_version(), "pillow": PIL.__version__, "numpy": np.__version__,

@@ -1,0 +1,21 @@
+{
+  "package": "@harperz9/learn",
+  "source": "https://github.com/HarperZ9/learn",
+  "commit": "310b362a4fa40719ab13bca7ee210cf196f929cb",
+  "pull_request": "https://github.com/HarperZ9/learn/pull/23",
+  "entry": "browser.mjs",
+  "source_dir": "src/",
+  "note": "The browser entry and the modules it imports, copied byte for byte from src/ at the commit above. Do not edit; re-vendor from a newer commit instead.",
+  "files": {
+    "browser.mjs": "2ae2625c04e7822f60db1ac4241e161e527c897cfe28851aa098222780396a4f",
+    "LICENSE": "451a4d9d91378003b10ebf0995d3dfa128f2eb374d3599315e076ef841c80dc1",
+    "tutor/choice.mjs": "bd6d586a01bb1232c8c757fafd00b109ef134d88b141eaca7b9de408faef69dd",
+    "tutor/diagnose.mjs": "3a828d5a63670242364c3ceddda05106c816dc7e080f48c2c65da5eb10f07eaa",
+    "tutor/fsrs.mjs": "120bba69119815859aa292f59e879185b9153f5eee9db228e478da5bc8e58012",
+    "tutor/itemscheduler.mjs": "e621bf3dbc48a830be1e07755aee325718a4937243365ce6df49a93421050716",
+    "tutor/misconception.mjs": "b2a205b05c5549e6e3d5e47889fc4bb3d495e13cd7649ca285b875b5df566788",
+    "tutor/retrieval.mjs": "f424bd095f217f4c854cf8b8d3cd14f15795ecf7e2debb2712cdc7459edf1777",
+    "tutor/schedule.mjs": "334b80d32e6f9fcaab1676d1009d7609233d9334e1e89c7647aa0ff8e0c0b5a1",
+    "tutor/session.mjs": "0313c75fb5c63d838beb335fb98658a77a53c786efbbc0a2157b146649b52397"
+  }
+}

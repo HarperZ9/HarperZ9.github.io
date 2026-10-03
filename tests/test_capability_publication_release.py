@@ -616,7 +616,11 @@ RELEASE_PATHS = (
 # links each LaTeX source; the release is rehashed.
 # October 3, 2026: retro.html loads retro-studio.js at a new stamp (the Retro front half moves to
 # a worker), and studio.html loads studio.js at a new stamp; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "dc1a248a2d34ca5b0823d20e12ec872849b8cace6f194eebe9093a21d7971485"
+# October 3, 2026: the explainers go live in the page. No Receipt, No Accept and the Flywheel page
+# carry live, interactive explainers driven by the media engine from the same specs as their
+# videos, with Learn recall checks; the two essay explainers are re-rendered and the Flywheel loop
+# explainer is new. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "e1bb4200097e99c79491f3756e4788f42d16897264644fab01a73abb35293c5e"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -1,0 +1,27 @@
+1
+00:00:00,000 --> 00:00:03,733
+From a proposed answer to a kept receipt.
+
+2
+00:00:03,733 --> 00:00:12,567
+A local model proposes answers. It is cheap and replaceable, and asking it for more candidates widens the pool.
+
+3
+00:00:12,567 --> 00:00:22,767
+No learned model sits on this step. An external check, such as a test run or a source comparison, accepts or rejects the answer.
+
+4
+00:00:22,767 --> 00:00:33,067
+A pass writes a receipt named by a fingerprint of its own contents, so anyone can re-check it offline, and a change to any byte makes that check fail.
+
+5
+00:00:33,067 --> 00:00:43,533
+When the attempt budget runs out, Flywheel names a stronger tier, a more capable model you can choose to call. It never calls that tier for you.
+
+6
+00:00:43,533 --> 00:00:54,167
+Passed answers go into a proof cache with their receipts. The next identical request costs nothing, and the cache re-checks the answer before it serves it.
+
+7
+00:00:54,167 --> 00:01:04,700
+The drawing shows the order of the steps. It does not show that the loop raises accuracy. On the shipped benchmark the interval includes zero.
