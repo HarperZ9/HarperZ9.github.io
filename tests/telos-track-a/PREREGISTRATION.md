@@ -467,3 +467,114 @@ does not say how to build features then. Printed by `node tests/telos-track-a/pr
 - The branch is visible to the probe through the zero pattern as well as through the L0 flag. Both are
   in the packet a reader receives, so this adds no information from outside the packet.
 <!-- prereg-track-a-amend-4:end -->
+
+## Pre-registration 3 (T7 redesign; T5 L1 budget and upsampler; T6 art-lane scope)
+
+Written 2026-10-02 after every T4 to T7 result in BUILD-T4-T7.md existed and after the operator approved
+the T7 redesign. Relative to those results everything below is post hoc; relative to the runs it governs it
+is a pre-registration. No image of the T7 v2 corpus had been decoded, encoded, tokenized or probed by this
+session when the block below was written, and no code for these runs existed. Printed by
+`node tests/telos-track-a/prereg-hash.mjs --t7v2`. Every earlier block and its hash is unchanged.
+
+<!-- prereg-track-a-t7v2:start -->
+## Scope
+
+Three things. (1) T7 v2: task value of L0, L1 and L2 with a block-balanced probe, positive controls at
+several strengths, a wrong-image control valid for binary tasks, and a larger corpus. (2) T5 v2: the L1 token
+budget and a second upsampler for the prefix rebuilds, tested on images not used to choose them. (3) T6: the
+art-lane scope decision. CPU only. No MMBU dev image is read. Scope of every T7 number: "in-source only".
+
+## Corpus "t7v2"
+
+- Decode as the slice 0 ingest does: BBBC010 16-bit grey shifted right by 4, clipped to 255 and replicated
+  to RGB; Kather and PBC decoded to RGB; any image with an edge above 512 resized with PIL Lanczos so its
+  longer edge is 512 (the ingest's `out_size`).
+- Kather 2016 (extracted tiles): 125 tiles per class, 8 classes, drawn with numpy default_rng(20261012)
+  from the tiles not among the 300 slice 0 clean rows. Group: patient, the `CRC-Prim-HE-NN` token in the file
+  name. The source has 10 patients, so 30 slide clusters cannot be reached from it. Kather clusters stay at
+  10, and its intervals stay wide. No other source is added (a patient-tagged colorectal set with a read
+  licence is not available to this run).
+- PBC: 125 images per class folder, 8 folders, same seed, file names matching `PREFIX_NUMBER.jpg`, not among
+  the slice 0 clean rows. Labels by folder: "ig" is immature granulocytes and "platelet" is "thrombocyte"
+  (operator decision 5). Group: the row (PBC publishes no patient ids); folds stratified by class.
+- BBBC010: every frame of all 100 wells, both channels (200 frames). Group: well. Labels: condition by plate
+  column (columns 1 to 12 positive control, 13 to 24 negative control, rule R-BBBC-COL-v1). Channel by the
+  confirmed TIFF-header mapping (operator decision, evening of 2026-10-02): w1 is TRITC fluorescence
+  (Sytox Orange), w2 is transmitted light. This replaces the slice 0 node strings `bbbc:brightfield` (w1)
+  and `bbbc:gfp` (w2), which were wrong.
+- "Fresh" images: t7v2 images not among the 300 slice 0 clean rows (every Kather and PBC image and the 100
+  frames of the 50 BBBC010 wells outside slice 0). Gates in T5 v2 are judged on the fresh images.
+
+## T7 v2 probe (block-balanced)
+
+- Features per layer as in pre-registration 2 and amendment 4 (zero-filled branch blocks when a source
+  mixes L2 branches).
+- Within each training fold: z-score with training statistics, drop zero-variance features, then scale
+  every block (each layer, and each planted block) by 1 / sqrt(its kept feature count), so each block has
+  total variance 1. Ridge one-vs-rest on one-hot targets with an unpenalised intercept; penalty
+  lambda = c B with B the number of blocks; c from {1e-3, 1e-2, 1e-1, 1, 10, 100} by exact leave-one-out
+  accuracy through the hat-matrix identity (ties to the larger c). Prediction by argmax.
+- Outer loop: 5-fold group cross-validation (groups as above; PBC stratified by class), seeds 1 to 10; each
+  image's score is its mean correctness over the 10 repeats.
+- Configurations: the seven non-empty subsets of {L0, L1, L2}. Conditional value of layer X: per image,
+  score(L0 to L2) minus score(L0 to L2 without X); paired 95% cluster-bootstrap interval (10,000 draws, seed
+  20261002). X carries task value on a task only when the lower end is above 0.
+- Saturation: a task whose full-packet accuracy is at least 0.99 is "saturated". Its conditional values are
+  printed and labelled "not estimable", and its positive controls are "not applicable". Expected before
+  measuring: BBBC010 channel (1.000 in T7 v1).
+
+## T7 v2 positive controls (gate)
+
+- Planted block P_q: the one-hot label of each image, with the label replaced by a uniform random class
+  (which may be the true one) with probability 1 - q, for q in {0.5, 0.25, 0.1}; drawn with
+  default_rng(3000 + round(100 q)). Diluted block D: P_0.5 concatenated with 64 - k independent standard
+  normal features (k the class count; default_rng(3100)), as one block.
+- Each planted block's conditional value is score(L0 to L2 plus the block) minus score(L0 to L2), with the
+  paired cluster-bootstrap interval.
+- Gate: on every non-saturated task, P_0.5 has a lower end above 0. Reported, not gated: P_0.25, P_0.1 and D,
+  and the smallest q detected. A layer null on a task is read as "below the smallest detected planted
+  strength", never as "no value".
+
+## T7 v2 controls (gate)
+
+- Wrong-image: 20 draws, draw d a uniform random derangement within the source (default_rng(2000 + d)),
+  every image's full feature vector replaced by its partner's; one outer cross-validation with seed 1000 + d.
+- Shuffled-layer: 20 draws, an independent derangement per layer block (default_rng(2100 + d)).
+- Pairing oracle per draw: for each image, the leave-one-out majority true class among the other images whose
+  partners carry the same label tuple (one partner label for wrong-image; one per layer for shuffled-layer;
+  ties and empty cells go to the global majority class). It is the accuracy a reader would reach if the
+  substituted features revealed their own images' labels perfectly.
+- Statistic: excess_d = accuracy_d - oracle_d. Gate: the mean excess plus 1.96 standard deviations over
+  sqrt(20) is at most 0.02, on every task. The pre-registration 2 statistic (upper bound against the
+  majority rate + 0.02) is reported beside it, not gated.
+
+## T7 v2 head-to-head (reported)
+
+As in pre-registration 2 (shipped colorGrid16 against OKLab L2 alone at N = 32 and at N_match), run through
+the block-balanced probe (a single block), on the t7v2 corpus.
+
+## T5 v2: L1 budget and rebuild upsampler
+
+- L1 budget: 160 tokens (Qwen3.5-2B, as before). Reason, fixed before measuring: the L1 text has a fixed
+  length of 188 bytes; its header is 28 tokens; a row can cost at most one token per byte, which gives about
+  154 tokens when every row splits fully. The budget is a bound by construction, not a value fitted to an
+  observed maximum. The header is kept, because it carries the cell counts, bit depths and alphabet a reader
+  needs to decode the layer; shortening it would save about 20 tokens and would still leave 122-token frames
+  above the old budget of 100. Gate: every image of every corpus (36 audit frames, 300 slice 0 images, t7v2)
+  at or under 160, and a constructed worst case (every L row and ab row at its maximum token count found in
+  20,000 seeded random rows) at or under 160.
+- Upsampler: rebuild R1 and R2 with nearest-cell upsampling (each output pixel takes the value of the grid
+  cell containing its centre: cell floor((y + 0.5) rows / h), floor((x + 0.5) cols / w)) as well as with the
+  pre-registration 2 bilinear rule. SSIM, CIEDE2000, margins and per-image ceilings are unchanged.
+- Gate: on the fresh t7v2 images, per source, steps R0 to R1 and R1 to R2 pass every pre-registration 2 T5
+  threshold under nearest-cell. Decision rule: if nearest-cell passes where bilinear fails, the rebuild rule
+  for the SSIM term becomes nearest-cell; if both fail, the R0 to R1 SSIM failure stands as a property of L1
+  and the metric is kept. Bilinear results on the same images are reported beside it.
+
+## T6: art-lane scope (decision, no new measurement)
+
+L2 misses C13 on the 24 art frames under a 1-pixel shift (median ratio 0.444) and a 0.5 resize (0.265), and
+passes on all 300 slice 0 images. C13 for L2 is recorded as passed for the biomedical lane and failed for the
+art lane, with those two numbers, and the art lane carries the note "L2 is edge-position sensitive at 32
+cells". No threshold changes.
+<!-- prereg-track-a-t7v2:end -->

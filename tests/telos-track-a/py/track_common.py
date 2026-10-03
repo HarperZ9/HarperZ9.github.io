@@ -20,7 +20,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PREREG = os.path.join(HERE, "..", "PREREGISTRATION.md")
 BLOCKS = {"prereg_sha256": "prereg-track-a-v1", "amendment_1_sha256": "prereg-track-a-amend-1",
           "prereg_t4t7_sha256": "prereg-track-a-t4t7", "amendment_2_sha256": "prereg-track-a-amend-2",
-          "amendment_3_sha256": "prereg-track-a-amend-3", "amendment_4_sha256": "prereg-track-a-amend-4"}
+          "amendment_3_sha256": "prereg-track-a-amend-3", "amendment_4_sha256": "prereg-track-a-amend-4",
+          "prereg_t7v2_sha256": "prereg-track-a-t7v2"}
 B64 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_"
 RANGES = {"L": (0.0, 1.0), "a": (-0.234, 0.277), "b": (-0.312, 0.199)}
 
