@@ -8,9 +8,10 @@
     "sha256": "57e47a03ccebed7d8a5227f909ca8075ccb66c452701a1cb6cd6fb5dabaf93d0"
   },
   "render_code": {
-    "tools/explainer/draw.py": "e4f933b11d01ef97282d477bcaace1baa10c477096a074f444770fcb812aa377",
+    "tools/explainer/draw.py": "74c21401f1c995a1ac8531579abf6e9ed9ee8a0435db8dcf9197e869b507df8c",
+    "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
     "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
-    "tools/explainer/render.py": "175cc9e1014b70e722fae91a1c84437c6fbeb607577c6dfa1909076850a08907"
+    "tools/explainer/render.py": "ee158c839cdbc3e839def1493dd5caaa26e044cc84da4bcca0fcee80d24876d3"
   },
   "fonts": {
     "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",

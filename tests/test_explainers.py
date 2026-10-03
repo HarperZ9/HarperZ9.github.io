@@ -10,7 +10,8 @@ import json
 import re
 from pathlib import Path
 
-from tools.explainer import draw, render
+from tools.explainer import marks
+from tools.explainer import render
 from tools.render_legacy_essays import EXPLAINERS
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,24 +41,24 @@ def test_status_marks_use_the_four_risk_levels() -> None:
         spec = json.loads((folder / "spec.json").read_text(encoding="utf-8"))
         for scene in spec["scenes"]:
             for mark in scene.get("marks", []):
-                level = draw.risk_of(mark)
-                assert level is None or level in draw.LEVELS, (folder.name, scene["key"])
+                level = marks.risk_of(mark)
+                assert level is None or level in marks.LEVELS, (folder.name, scene["key"])
 
 
 def test_one_hot_mark_per_view() -> None:
-    marks = [{"verdict": "MATCH"}, {"verdict": "DRIFT"}, {"risk": "elevated"}, {}]
-    assert draw.hot_index(marks) == 1
-    assert draw.hot_index([{}, {"text": "plain"}]) == -1
+    view = [{"verdict": "MATCH"}, {"verdict": "DRIFT"}, {"risk": "elevated"}, {}]
+    assert marks.hot_index(view) == 1
+    assert marks.hot_index([{}, {"text": "plain"}]) == -1
 
 
 def test_risk_colours_match_the_media_engine_tokens_when_present() -> None:
     colour = ROOT / "system/media-engine/colour.mjs"
     if not colour.is_file():
-        return  # the engine's token file lands in its own change; draw.py carries the same values
+        return  # the engine's token file lands in its own change; marks.py carries the same values
     dark = re.search(r"dark:\s*Object\.freeze\(\{([^}]*)\}", colour.read_text(encoding="utf-8")).group(1)
     tokens = dict(re.findall(r'(\w+):\s*"(#[0-9a-fA-F]{6})"', dark))
-    assert {k: tokens[k] for k in draw.RISK} == draw.RISK
-    assert (tokens["ink"], tokens["quiet"]) == (draw.INK, draw.QUIET)
+    assert {k: tokens[k] for k in marks.RISK} == marks.RISK
+    assert (tokens["ink"], tokens["quiet"]) == (marks.INK, marks.QUIET)
 
 
 def test_each_explainer_is_on_its_page_with_captions_and_transcript() -> None:

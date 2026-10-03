@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-RENDER_CODE = ("draw.py", "voice.py", "render.py")
+RENDER_CODE = ("draw.py", "marks.py", "voice.py", "render.py")
 DOES_NOT_PROVE = ("Matching hashes show the same bytes came out of the same spec, code and tools. They do "
                   "not show that the explanation is correct or that it teaches. The narration voice ships "
                   "with Windows, so the audio rebuilds only on a machine with the same voice.")

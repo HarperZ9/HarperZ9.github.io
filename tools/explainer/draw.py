@@ -13,17 +13,11 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
+from tools.explainer.marks import GROUND, HAIR, INK, LEVELS, QUIET, RISK, VERDICT_RISK, hot_index, risk_of  # noqa: F401
+
 ROOT = Path(__file__).resolve().parents[2]
 FONTS = {"sans": ROOT / "system/fonts/hanken-grotesk.woff2", "mono": ROOT / "system/fonts/conso-regular.woff2"}
 W, H, FPS = 1280, 720, 30
-
-# The dark pole of the site's risk tokens (system/media-engine/colour.mjs, RISK_TOKENS.dark).
-GROUND = "#060608"
-INK, QUIET, HAIR = "#ebe5d8", "#9d978a", "#2a2830"
-RISK = {"low": "#8fdc8a", "moderate": "#a9a6b4", "elevated": "#f0a848", "high": "#ff7a6b"}
-LEVELS = ["low", "moderate", "elevated", "high"]
-VERDICT_RISK = {"MATCH": "low", "VERIFIED": "low", "PASS": "low", "UNVERIFIABLE": "moderate",
-                "UNKNOWN": "moderate", "DRIFT": "elevated", "STALE": "elevated", "FAIL": "high", "REFUSED": "high"}
 
 
 def rgb(hexcol: str) -> tuple[int, int, int]:
@@ -38,13 +32,6 @@ def fade(hexcol: str, alpha: float) -> tuple[int, int, int]:
 def ease(u: float) -> float:
     u = min(1.0, max(0.0, u))
     return u * u * (3 - 2 * u)
-
-
-def risk_of(mark: dict) -> str | None:
-    if mark.get("risk"):
-        return mark["risk"]
-    verdict = mark.get("verdict")
-    return VERDICT_RISK.get(verdict.upper(), "moderate") if verdict else None
 
 
 def aperture(size: int, seed: int) -> Image.Image:
@@ -130,16 +117,6 @@ class Painter:
             self.text(d, (470 + length + 16, y + 12), item["display"], "mono", QUIET, ia)
             y += 72
         return y + 8
-
-
-def hot_index(marks: list[dict]) -> int:
-    """The one mark drawn in colour: the highest liability, the first on a tie."""
-    best, rank = -1, -1
-    for i, mark in enumerate(marks):
-        level = risk_of(mark)
-        if level and LEVELS.index(level) > rank:
-            best, rank = i, LEVELS.index(level)
-    return best
 
 
 def draw_scene(p: Painter, scene: dict, u: float, img: Image.Image) -> None:
