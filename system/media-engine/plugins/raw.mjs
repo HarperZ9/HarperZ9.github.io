@@ -141,6 +141,7 @@ export const raw = {
   id: "raw",
   version: RAW_VERSION,
   backends: ["wasm-raw"],
+  sceneKind: "raster3d",
   create({ canvas, params = {}, requestRedraw = () => {} }) {
     let p = { ...params }, result = null, error = null, busy = false, gen = 0, image = null, imageKey = "";
     const listeners = new Set();
@@ -203,6 +204,7 @@ export const raw = {
 // the CPU build, the exact path, so a GPU frame is never checked against another GPU frame. It
 // returns the channel the request names, so an AO map is compared with an AO map.
 export const rawReference = {
+  exact: true,
   async render(request) {
     const params = (request && request.params) || {};
     const r = await renderRaw(rawParams(params), { preferGpu: false });
