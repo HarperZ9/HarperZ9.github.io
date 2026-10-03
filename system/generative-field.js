@@ -788,28 +788,24 @@ function drawMotes(ctx, width, height, tick, seed, palette) {
   }
 }
 
-function startEngine(scene, motes) {
+// The ambient field's drawing core, shared by its own loop (startEngine, kept for any page that
+// calls mountGenerativeField) and by the media engine's "ambient" plugin, whose scheduler owns the
+// loop, the hidden-tab stop and the reduced-motion still. step(tick) draws when the cadence allows
+// (28 ms while the reader interacts, 82 ms idle) and returns whether it drew; force draws anyway.
+function fieldCore(scene, motes) {
   const seed = hashRoute(window.location.pathname || "telos");
   const palette = routePalette(seed);
   const sceneCtx = scene.getContext("2d", { alpha: true });
   const motesCtx = motes ? motes.getContext("2d", { alpha: true }) : null;
-  const still = reducedMotion();
   let lastRendered = 0;
   lastInteraction = performance.now();
+  if (!sceneCtx) return null;
 
-  if (!sceneCtx) {
-    document.documentElement.classList.add("generative-field-failed");
-    return false;
-  }
-
-  const render = (tick = 0) => {
+  const step = (tick = 0, force = false) => {
     const livePulseCount = cullPulses(tick);
     const active = tick - lastInteraction < 1400 || livePulseCount > 0;
     const frameGap = active ? 28 : 82;
-    if (!still && tick - lastRendered < frameGap) {
-      rafId = window.requestAnimationFrame(render);
-      return;
-    }
+    if (!force && tick - lastRendered < frameGap) return false;
     lastRendered = tick;
     const dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
     sizeCanvas(scene, dpr);
@@ -822,7 +818,7 @@ function startEngine(scene, motes) {
       motesCtx.setTransform(1, 0, 0, 1, 0, 0);
       drawMotes(motesCtx, motes.width, motes.height, tick, seed, palette);
     }
-    if (!still && !document.hidden) rafId = window.requestAnimationFrame(render);
+    return true;
   };
 
   const updatePointer = (event) => {
@@ -851,10 +847,28 @@ function startEngine(scene, motes) {
     addPulse(0.5 + Math.sin(tick * 0.003 + seed) * 0.18, 0.52 + Math.cos(tick * 0.002 + seed) * 0.12, tick);
     markInteraction(tick);
   };
-
   window.addEventListener("pointermove", onPointerMove, { passive: true });
   window.addEventListener("pointerdown", onPointerDown, { passive: true });
   window.addEventListener("keydown", onKeyDown);
+  const dispose = () => {
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerdown", onPointerDown);
+    window.removeEventListener("keydown", onKeyDown);
+  };
+  return { step, dispose };
+}
+
+function startEngine(scene, motes) {
+  const core = fieldCore(scene, motes);
+  const still = reducedMotion();
+  if (!core) {
+    document.documentElement.classList.add("generative-field-failed");
+    return false;
+  }
+  const render = (tick = 0) => {
+    const drew = core.step(tick, still);
+    if (!drew || (!still && !document.hidden)) rafId = window.requestAnimationFrame(render);
+  };
   window.addEventListener("resize", () => render(performance.now()), { passive: true });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -866,6 +880,33 @@ function startEngine(scene, motes) {
   });
   render(performance.now());
   return true;
+}
+
+// The ambient field for the media engine's "ambient" plugin: the same canvases, classes and
+// drawing as mountGenerativeField, without a loop of its own. Returns null where the page opts
+// out or the field is already mounted.
+export function createAmbientField(doc = document) {
+  if (typeof window === "undefined" || !doc || !doc.body) return null;
+  if (doc.body.dataset.noGenerativeField === "true") return null;
+  if (mounted) return null;
+  const scene = ensureCanvas(doc, "gl", "generative-field-canvas");
+  const motes = reducedMotion() ? null : ensureCanvas(doc, "motes", "generative-motes-canvas", scene);
+  const core = fieldCore(scene, motes);
+  if (!core) {
+    doc.documentElement.classList.add("generative-field-failed");
+    return null;
+  }
+  doc.body.classList.add("generative-host");
+  doc.documentElement.classList.remove("generative-field-failed");
+  doc.documentElement.classList.add("generative-field-ready");
+  mounted = true;
+  return { scene, motes, step: core.step, dispose: () => { core.dispose(); mounted = false; } };
+}
+
+// True when a plate's leading layers read the theme (aperture palette), so a theme switch must
+// redraw it. The plate plugin uses this to keep the old theme hook's behaviour.
+export function specimenUsesAperture(layerNames) {
+  return (layerNames || []).some((n) => APERTURE_LAYERS.has(String(n).trim()));
 }
 
 export function mountGenerativeField(doc = document) {

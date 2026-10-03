@@ -430,7 +430,12 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     # The ambient field mounts by explicit call where a page opts in; importing
     # the engine for a plate must not start a hidden full-screen animation.
     assert 'body.dataset.ambientField === "true"' in nav
-    assert "mod.mountGenerativeField(document)" in nav
+    # It runs as the media engine's "ambient" plugin on the page's one scheduler.
+    assert 'engine.mount(scene, "ambient", {})' in nav
+    ambient = read("system/media-engine/plugins/ambient.mjs")
+    assert "createAmbientField(document)" in ambient
+    assert f'"../../generative-field.js?v={VOID_PLATES_REVISION}"' in ambient
+    assert f'"../../generative-field.js?v={VOID_PLATES_REVISION}"' in read("system/media-engine/plugins/plate.mjs")
     engine = read("system/generative-field.js")
     assert "bootField" not in engine and "deferGenerativeField" not in engine
     assert 'data-ambient-field="true"' in read("gallery.html")
