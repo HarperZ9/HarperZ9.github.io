@@ -132,7 +132,7 @@ test("T3.images eq: layer text is byte-identical in Node and Python on 1,000 see
 
 const FRAMES = process.env.TELOS_AUDIT_FRAMES;
 test("T3.frames eq: layer text is byte-identical in Node and Python on the 36 audit frames",
-  { skip: FRAMES && existsSync(join(FRAMES, "index.json")) ? false : "TELOS_AUDIT_FRAMES not set to the audit frame directory" }, () => {
+  { skip: FRAMES && existsSync(join(FRAMES, "index.json")) ? false : "needs the 36 audit frames (kept outside the repository); set TELOS_AUDIT_FRAMES to run it" }, () => {
     const manifest = JSON.parse(readFileSync(join(HERE, "fixtures", "audit-frames-manifest.json"), "utf8")).frames;
     const jsEntries = manifest.map((f) => {
       const px = readFileSync(join(FRAMES, f.name + ".rgba"));

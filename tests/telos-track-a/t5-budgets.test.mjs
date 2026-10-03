@@ -15,7 +15,7 @@ import { layerPacket } from "../../system/lib/sense-core/layers-int.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const WORK = process.env.TELOS_TRACKA_WORK;
-const haveWork = WORK && existsSync(join(WORK, "index.json")) ? false : "TELOS_TRACKA_WORK not set";
+const haveWork = WORK && existsSync(join(WORK, "index.json")) ? false : "needs the decoded image set (686 MB, kept outside the repository); set TELOS_TRACKA_WORK to run it";
 const R = JSON.parse(readFileSync(join(HERE, "results", "t5-budgets.json"), "utf8"));
 const BUDGET = { L0: 80, L1: 100, "L2:chromatic": 1300, "L2:achromatic": 650 };
 

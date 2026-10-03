@@ -26,7 +26,7 @@ const VENDORED = {
 };
 const lf = (p) => readFileSync(p, "utf8").replace(/\r\n/g, "\n");
 
-test("T4.vendor eq: the Telos MCP vendored files are byte-identical to the site sources", { skip: MCP && existsSync(join(MCP, "demo", "vendor")) ? false : "TELOS_MCP_ROOT not set" }, () => {
+test("T4.vendor eq: the Telos MCP vendored files are byte-identical to the site sources", { skip: MCP && existsSync(join(MCP, "demo", "vendor")) ? false : "needs a Telos MCP checkout that carries demo/vendor; set TELOS_MCP_ROOT to run it" }, () => {
   const drift = Object.entries(VENDORED).filter(([v, s]) => lf(join(MCP, "demo", "vendor", v)) !== lf(join(ROOT, s))).map(([v]) => v);
   assert.deepEqual(drift, []);
   const manifest = JSON.parse(readFileSync(join(MCP, "demo", "vendor", "VENDOR.json"), "utf8"));

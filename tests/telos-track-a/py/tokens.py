@@ -13,8 +13,10 @@ import sys
 
 from tokenizers import Tokenizer
 
-TOKENIZER = os.environ.get("TELOS_QWEN35_TOKENIZER", "D:/hf-cache/hub/models--Qwen--Qwen3.5-2B/snapshots/"
-                           "15852e8c16360a2fea060d615a32b45270f8a8fc/tokenizer.json")
+# tokenizer.json of Qwen/Qwen3.5-2B, snapshot 15852e8c16360a2fea060d615a32b45270f8a8fc in a Hugging Face cache.
+TOKENIZER = os.environ.get("TELOS_QWEN35_TOKENIZER")
+if not TOKENIZER:
+    sys.exit("set TELOS_QWEN35_TOKENIZER to the tokenizer.json of Qwen/Qwen3.5-2B")
 
 
 def main(work):

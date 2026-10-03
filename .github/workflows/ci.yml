@@ -25,6 +25,14 @@ jobs:
         run: python -m pytest
       - name: Navigation and font catalog contracts
         run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs
+      # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
+      # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);
+      # they skip with the reason printed. tests/telos-track-a/README.md has the full local run.
+      - name: Telos measurement layers, receipts and their Python twins
+        if: ${{ !cancelled() }}
+        run: |
+          python -m pip install numpy==2.4.5 scipy==1.17.1
+          node --test tests/telos-track-a/*.test.mjs system/sense.test.mjs system/audio-perceptual.test.mjs system/vision-biomimetic.test.mjs system/exporters.test.mjs system/importers.test.mjs system/media/ir.test.mjs shared-frame/tests/certificate.test.mjs shared-frame/tests/fidelity-log.test.mjs
       - name: Bulletin browser media and open work regressions
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
