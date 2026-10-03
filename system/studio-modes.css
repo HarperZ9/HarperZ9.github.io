@@ -128,3 +128,14 @@ html body.showcase-hero #viewport-stage{
   position:relative;top:auto;width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;min-height:0;
   border:0;outline:0;background:var(--paper);
 }
+
+/* Media engine surfaces (studio-engine.js). Status lines name their level in words; risk.css gives
+   colour only to the one hot mark in the list. */
+html body.studio-page #engine-mount .me-control{display:flex;flex-direction:column;gap:.35rem}
+html body.studio-page #engine-mount .me-control select,
+html body.studio-page #engine-mount .me-control input[type="text"]{width:100%}
+html body.studio-page #engine-mount .me-h{font:600 .875rem/1.3 var(--st-sans);margin:1.1rem 0 .4rem}
+html body.studio-page #engine-mount .me-status{list-style:none;margin:0;padding:0;display:grid;gap:.45rem;font:400 .8125rem/1.45 var(--st-mono)}
+html body.studio-page #engine-mount .me-status li{border-top:1px solid var(--st-line);padding-top:.4rem;overflow-wrap:anywhere}
+html body.studio-page #engine-mount .me-status-d{color:var(--st-muted)}
+html body.studio-page #engine-mount .at-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}

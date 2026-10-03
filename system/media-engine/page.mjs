@@ -7,9 +7,15 @@
 
 import { createEngine } from "./core.mjs";
 
+// Mutable on purpose: registerPlugin() adds a loader at run time (the RAW slot is filled this way).
 const LOADERS = {
   aperture: () => import("./plugins/aperture.mjs").then((m) => m.aperture),
   retro: () => import("./plugins/retro.mjs").then((m) => m.retro),
+  "retro-2d": () => import("./plugins/retro.mjs").then((m) => m.retro2d),
+  plate: () => import("./plugins/plate.mjs").then((m) => m.plate),
+  loom: () => import("./plugins/loom.mjs").then((m) => m.loom),
+  evidence: () => import("./plugins/evidence.mjs").then((m) => m.evidence),
+  "slot-card": () => import("./plugins/slots.mjs").then((m) => m.slotCard),
 };
 
 let engine = null;
@@ -34,6 +40,15 @@ export async function usePlugin(idOrPlugin) {
     loading.set(idOrPlugin, load().then((p) => { e.register(p); return e; }));
   }
   return loading.get(idOrPlugin);
+}
+
+// Add a plugin loader at run time. A slot in plugins/slots.mjs (raw, revival) becomes live the
+// moment a loader is registered under its pluginId, e.g.
+//   registerPlugin("raw", () => import("./plugins/raw.mjs").then((m) => m.raw));
+export function registerPlugin(id, loader) {
+  if (typeof loader !== "function") throw new Error("media-engine: registerPlugin needs a loader function");
+  LOADERS[id] = loader;
+  loading.delete(id);
 }
 
 // Plugin ids the page engine can load, for the Studio's plugin list.
