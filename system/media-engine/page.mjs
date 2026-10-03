@@ -18,6 +18,7 @@ const LOADERS = {
   evidence: () => import("./plugins/evidence.mjs").then((m) => m.evidence),
   "slot-card": () => import("./plugins/slots.mjs").then((m) => m.slotCard),
   type: () => import("./plugins/type.mjs").then((m) => m.type),
+  sketch: () => import("./plugins/sketch.mjs").then((m) => m.sketch),
 };
 
 let engine = null;
