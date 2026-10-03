@@ -37,7 +37,7 @@ jobs:
           system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs
           system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs
           system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs
-          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs
+          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs
           system/type-forge/forge.test.mjs
       # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
       # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);

@@ -152,6 +152,14 @@ let _sketch = null;
 let _sketchRegister = "drawn";
 let _sketchGuide = "none";
 let _lastSketchSheet = null;   // last built sheet — the pen surface's "Sketch" material
+// The sketch's render half is the media engine's "sketch" plugin (media-engine/plugins/sketch.mjs);
+// the pen stays here. One handle per canvas node, disposed when the Studio leaves the source.
+let _sketchEngine = null, _sketchHandle = null, _sketchHandleCanvas = null;
+const loadSketchPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("sketch")), e => { _sketchEngine = e; });
+function dropSketchHandle() {
+  if (_sketchHandle) { try { _sketchHandle.dispose(); } catch (e) { console.error("[studio] sketch plugin dispose failed:", e); } }
+  _sketchHandle = null; _sketchHandleCanvas = null;
+}
 
 // Replay theatre (system/plot-replay.js): any sheet watched stroke-by-stroke in pen order.
 let _replayMod = null;
@@ -607,6 +615,7 @@ function setSource(next) {
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
+    dropSketchHandle();
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -735,7 +744,7 @@ function setSource(next) {
   // Sketch: freehand drawing. The sketch object persists across switches, so returning shows the
   // drawing exactly as it was left. plot-maps loads alongside for the renderer and exports.
   if (next === "sketch") {
-    Promise.all([loadSketch(), loadPlotMaps(), loadPlotCompose()]).then(() => {
+    Promise.all([loadSketch(), loadPlotMaps(), loadPlotCompose(), loadSketchPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       if (!_sketch) _sketch = _sketchMod.createSketch();
       window.__studioSketch = _sketch;   // inspection hook, same register as __studioMediaAdapters
@@ -1582,18 +1591,22 @@ function sketchLetterbox(c) {
   return { side, ox: (c.width - side) / 2, oy: (c.height - side) / 2 };
 }
 function drawSketch(announce) {
-  if (!_sketch || !_plotMaps || activeSource !== "sketch") return;
+  if (!_sketch || !_plotMaps || !_sketchEngine || activeSource !== "sketch") return;
   leave3D();
   const c = $("studio-canvas");
   sizeCanvas(c);
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
-  const sheet = _sketch.toSheet({ register: _sketchRegister });
+  if (!c.getContext("2d", { willReadFrequently: true })) return;
+  if (!_sketchHandle || _sketchHandleCanvas !== c) {
+    dropSketchHandle();
+    _sketchHandle = _sketchEngine.mount(c, "sketch", { params: { sketch: _sketch } });
+    _sketchHandleCanvas = c;
+  }
+  // Drawn now, in this task, so the perceive() below reads this frame.
+  _sketchHandle.instance.setParams({ sketch: _sketch, register: _sketchRegister, guide: _sketchGuide });
+  _sketchHandle.drawNow();
+  const sheet = _sketchHandle.instance.lastSheet, rect = _sketchHandle.instance.lastRect;
+  if (!sheet) return;
   _lastSketchSheet = sheet;
-  // Guides render UNDER the drawing, support-toned, and stay out of the sheet itself.
-  const guides = _sketchGuide === "none" ? [] : _sketch.guideLayers(_sketchGuide);
-  const display = { layers: guides.concat(sheet.layers), meta: sheet.meta };
-  const rect = _plotMaps.renderPlotMap(ctx, display, c.width, c.height, {});
   if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
   const readout = $("sketch-readout");
   const sym = sheet.meta.symmetry || { mode: "none", k: 1 };

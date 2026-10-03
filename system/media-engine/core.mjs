@@ -164,6 +164,9 @@ export function createEngine(opts = {}) {
         resize() { if (instance.resize) instance.resize(); still(m); },
         // Draw one frame now (a parameter the plugin reads live changed) and wake the loop.
         redraw() { still(m); wake(); },
+        // Draw one frame synchronously, for a host that reads the canvas right after (the Studio
+        // perceives a settled frame in the same task). Counts in the instance's stats like any frame.
+        drawNow(t = performance.now() / 1000) { if (!m.disposed) drawOne(m, t, 0); },
         get instance() { return instance; },
         // Draw the frame at a fixed time and return its receipt: the request, its hash, and the
         // pixel hash of what came out. Same request + same backend + same device must agree.
