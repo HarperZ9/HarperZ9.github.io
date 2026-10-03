@@ -134,3 +134,16 @@ def test_sources_and_the_ai_note_come_after_the_essay() -> None:
     sources = re.search(r'<section id="sources".*?</section>', page, re.S).group(0)
     for href in ("who-knew-first.html", "who-knew-first-series.html", "why.html", "flywheel.html", "articulate.html"):
         assert f'href="{href}"' in sources, href
+
+
+def test_publication_date_is_the_day_the_opener_went_live() -> None:
+    # The opener went live on 2 October 2026 (Pacific); the voice memo it draws on is from 1 October.
+    listing, _stored = load_listing(ROOT / "publications/data/listings/why-i-do-this.json", ROOT)
+    assert listing["published_at"] == "2026-10-02"
+    page = source()
+    assert '<meta property="article:published_time" content="2026-10-02">' in page
+    assert '<span class="sep">/</span>October 2, 2026<span class="sep">/</span>' in page
+    assert 'Published <time datetime="2026-10-02">2 October 2026</time> <span class="sc-here">' in page
+    feed = json.loads((ROOT / "feed.json").read_text(encoding="utf-8"))
+    item = next(entry for entry in feed["items"] if entry["url"].endswith("/why-i-do-this.html"))
+    assert item["date_published"].startswith("2026-10-02")

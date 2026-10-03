@@ -13,7 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
-    "assets/index-C1IxEots.js",
+    "assets/index-DtNiguMs.js",
     "assets/index-FBDE3rFM.js",
     "why-i-do-this.html",
     "publications/data/listings/why-i-do-this.json",
@@ -560,7 +560,11 @@ RELEASE_PATHS = (
 # his sentence on stewards. Its reading time stays at 10 minutes, so no derived file changes.
 # October 2, 2026: merged with main after the independence policy v2, the Zentropy logotype
 # retirement and the plugin page refreshes; the release is rehashed on that base.
-REVIEWED_RELEASE_SHA256 = "fbd6517ff7533f072a47022e1a4a51d9d82646730f43f897c4f1d11e4bd3c14e"
+# October 2, 2026: the opener goes live and its publication date moves from 1 to 2 October in
+# the page, its listing, the feeds, the publication index, the build receipt, the series tables,
+# the route registry, the site index and the home bundle (index-DtNiguMs.js, replacing the
+# never-published index-C1IxEots.js).
+REVIEWED_RELEASE_SHA256 = "4a26216070825853f08c4a66bd88cff0cf86d2223c21f5f99315867995403bf5"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -745,8 +749,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 1, 2026, before publication: the opener is retitled A Bullshitter Knows a
     # Bullshitter, so the bundle rebuilt from the registry is index-C1IxEots.js with the same
     # sheet. index-B3PP6LeH.js was never published and is gone.
-    current_js = "index-C1IxEots.js"
+    # October 2, 2026: the opener goes live with its publication date set to 2 October, so
+    # the bundle rebuilt from the registry is index-DtNiguMs.js with the same sheet.
+    # index-C1IxEots.js was never published and is gone.
+    current_js = "index-DtNiguMs.js"
     assert not (ROOT / "assets" / "index-B3PP6LeH.js").exists()
+    assert not (ROOT / "assets" / "index-C1IxEots.js").exists()
     previous_fonts_js = "index-FBDE3rFM.js"
     assert previous_fonts_js not in source
     assert (ROOT / "assets" / previous_fonts_js).is_file()
