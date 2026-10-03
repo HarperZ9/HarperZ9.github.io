@@ -182,6 +182,8 @@ Independent systems papers, preprints, research notes, philosophy papers, a work
 
 - Re-Perceived Effects. Research note, 2026. doi.org/10.5281/zenodo.21231311
 
+- Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Research note, 2026. doi.org/10.5281/zenodo.22768398
+
 - The Witnessing Spine. Archived research corpus, 2026. doi.org/10.5281/zenodo.20778927
 
 - Conferred Existence. Long-form philosophical manuscript and archived corpus, 2026. doi.org/10.5281/zenodo.20773724

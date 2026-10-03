@@ -126,8 +126,9 @@ def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() ->
 
 def test_publications_keeps_eight_doi_records_and_adds_the_briefing() -> None:
     publications = read("publications.html")
-    # Twelve DOI records: the eight from June and July 2026 and the four October 2026 editions.
-    assert len(set(re.findall(r"10\.5281/zenodo\.\d+", publications))) == 12
+    # Thirteen DOI records: the eight from June and July 2026, the formal note of 15 September
+    # 2026 and the four October 2026 editions (3 October 2026).
+    assert len(set(re.findall(r"10\.5281/zenodo\.\d+", publications))) == 13
     assert 'href="/briefings/2026-08-26-openai-hugging-face-incident/"' in publications
     assert 'href="briefings/"' in publications
     assert 'href="feed.xml"' in publications
