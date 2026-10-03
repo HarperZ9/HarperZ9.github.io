@@ -101,3 +101,18 @@ def test_dated_update_and_the_benton_count_correction() -> None:
     assert "1 October 2026, correction, the Conflict note and section 2" in corrections
     assert "None yet." not in corrections
     assert "Added for the 1 October update" in page
+
+
+def test_further_update_ties_the_attorney_general_subpoena_to_the_sb53_recipients() -> None:
+    page = source()
+    aside = re.search(r'<aside class="tft-update" id="update-20261001-ag".*?</aside>', page, re.S).group(0)
+    assert page.index('id="update-20261001"') < page.index('id="update-20261001-ag"') < page.index('<section id="routes"')
+    labels = re.findall(r'<p class="wpr-np tft-label">(.*?)</p>', aside, re.S)
+    assert len(labels) == 1 and "Does not prove" in labels[0]
+    assert "That timing does not show causation" in aside
+    assert 'href="#where-it-worked"' in aside
+    assert "Robinson" not in page
+    assert 'href="#update-20261001-ag"' in page
+    corrections = re.search(r'<section id="corrections".*?</section>', page, re.S).group(0)
+    assert "1 October 2026, further update" in corrections
+    assert "Added for the further update" in page

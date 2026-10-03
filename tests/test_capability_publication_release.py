@@ -564,7 +564,10 @@ RELEASE_PATHS = (
 # the page, its listing, the feeds, the publication index, the build receipt, the series tables,
 # the route registry, the site index and the home bundle (index-DtNiguMs.js, replacing the
 # never-published index-C1IxEots.js).
-REVIEWED_RELEASE_SHA256 = "4a26216070825853f08c4a66bd88cff0cf86d2223c21f5f99315867995403bf5"
+# October 1, 2026: Who Knew First gains a third dated follow-up and The Terms for Telling a
+# further dated update; both pages are rehashed.
+# October 2, 2026: merged with main after the series opener went live; rehashed on that base.
+REVIEWED_RELEASE_SHA256 = "e6ebb97cf1308afc555be76015ba5cce1e4c1308d0fe2d7c6caaf1fdb28f9122"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
