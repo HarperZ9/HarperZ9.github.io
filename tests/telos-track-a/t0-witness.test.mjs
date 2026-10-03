@@ -9,7 +9,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { preregSha256, amendment1Sha256, PREREG_PATH } from "./prereg-hash.mjs";
+import { preregSha256, amendment1Sha256, t4t7Sha256, amendment2Sha256, amendment3Sha256, amendment4Sha256, PREREG_PATH } from "./prereg-hash.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RESULTS = join(HERE, "results");
@@ -31,13 +31,16 @@ test("T0.2 eq: every result file cites the current pre-registration hash (and v2
     const j = JSON.parse(readFileSync(join(RESULTS, f), "utf8"));
     if (j.prereg_sha256 !== preregSha256()) bad.push(`${f}: prereg ${j.prereg_sha256}`);
     if ("amendment_1_sha256" in j && j.amendment_1_sha256 !== amendment1Sha256()) bad.push(`${f}: amendment ${j.amendment_1_sha256}`);
+    const later = { prereg_t4t7_sha256: t4t7Sha256(), amendment_2_sha256: amendment2Sha256(), amendment_3_sha256: amendment3Sha256(), amendment_4_sha256: amendment4Sha256() };
+    for (const [k, v] of Object.entries(later)) if (k in j && j[k] !== v) bad.push(`${f}: ${k} ${j[k]}`);
+    if (/^t[4567]-/.test(f) && j.prereg_t4t7_sha256 !== later.prereg_t4t7_sha256) bad.push(`${f}: missing prereg_t4t7_sha256`);
   }
   assert.deepEqual(bad, []);
 });
 
 function equalityTestsInSuites() {
   const out = [];
-  for (const f of readdirSync(HERE).filter((n) => /^t[0123]-.*\.test\.mjs$/.test(n))) {
+  for (const f of readdirSync(HERE).filter((n) => /^t[0-7]-.*\.test\.mjs$/.test(n))) {
     const src = readFileSync(join(HERE, f), "utf8");
     for (const m of src.matchAll(/test\(\s*"([^"]*\beq:[^"]*)"/g)) out.push({ file: f, name: m[1] });
   }
@@ -53,7 +56,7 @@ test("T0.3: every equality test in the suites is registered with at least one pa
   assert.deepEqual(unpaired, [], "equality tests without a paired mutation");
 });
 
-test("T0.3: the last mutation run killed every registered equality test", { skip: existsSync(join(RESULTS, "mutation.json")) ? false : "no mutation run recorded yet" }, () => {
+test("T0.3: the last mutation run killed every registered equality test", { skip: process.env.TELOS_IN_MUTATION_RUN === "1" ? "inside a mutation run (the runner records this baseline itself)" : existsSync(join(RESULTS, "mutation.json")) ? false : "no mutation run recorded yet" }, () => {
   const run = JSON.parse(readFileSync(join(RESULTS, "mutation.json"), "utf8"));
   assert.equal(run.baseline.allPassed, true, "the unmutated copy must pass");
   const killedIds = new Set(run.mutations.flatMap((m) => m.killed));

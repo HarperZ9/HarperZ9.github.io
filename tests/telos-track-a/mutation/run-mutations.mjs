@@ -39,7 +39,7 @@ function applyMutation(dir, m) {
 // Run one test file and return { failed: Set(test names), passedCount, exit }.
 function runTests(dir, testFile) {
   const r = spawnSync(process.execPath, ["--test", "--test-reporter=tap", join("tests", "telos-track-a", testFile)],
-    { cwd: dir, encoding: "utf8", maxBuffer: 1 << 26, env: { ...process.env, TELOS_WRITE_RESULTS: "0" } });
+    { cwd: dir, encoding: "utf8", maxBuffer: 1 << 26, env: { ...process.env, TELOS_WRITE_RESULTS: "0", TELOS_IN_MUTATION_RUN: "1" } });
   const failed = new Set(), passed = new Set();
   for (const line of (r.stdout || "").split(/\r?\n/)) {
     const m = line.match(/^(not ok|ok) \d+ - (.*?)(?: # (?:SKIP|TODO).*)?$/);
