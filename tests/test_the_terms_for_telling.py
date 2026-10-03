@@ -7,6 +7,7 @@ import json
 import re
 from pathlib import Path
 
+from tools.correction_batch import BATCH_DATE
 from tools.publication_listings import load_listing
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,7 +30,8 @@ def visible_text(value: str) -> str:
 def test_listing_validates_and_joins_the_hub_the_series_and_the_feeds() -> None:
     listing, _stored = load_listing(ROOT / "publications/data/listings/the-terms-for-telling.json", ROOT)
     assert listing["route"] == "the-terms-for-telling.html"
-    assert listing["published_at"] == listing["updated_at"] == "2026-10-01"
+    assert listing["published_at"] == "2026-10-01"
+    assert listing["updated_at"] == BATCH_DATE  # the dated reference corrections
     for hub in ("publications.html", "who-knew-first-series.html", "who-pays-the-referees.html"):
         assert 'href="the-terms-for-telling.html"' in (ROOT / hub).read_text(encoding="utf-8"), hub
     feed = json.loads((ROOT / "feed.json").read_text(encoding="utf-8"))

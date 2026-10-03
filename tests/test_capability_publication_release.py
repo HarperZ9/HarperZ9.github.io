@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DI6YWfTZ.js",
     "assets/index-DtNiguMs.js",
     "assets/index-FBDE3rFM.js",
     "why-i-do-this.html",
@@ -567,7 +568,12 @@ RELEASE_PATHS = (
 # October 1, 2026: Who Knew First gains a third dated follow-up and The Terms for Telling a
 # further dated update; both pages are rehashed.
 # October 2, 2026: merged with main after the series opener went live; rehashed on that base.
-REVIEWED_RELEASE_SHA256 = "e6ebb97cf1308afc555be76015ba5cce1e4c1308d0fe2d7c6caaf1fdb28f9122"
+# October 2, 2026: dated reference corrections across fourteen pages, Who Knew First's publication
+# date moved to 25 September, nine listings dated 2 October, and the home bundle rebuilt as
+# index-DI6YWfTZ.js; the release is rehashed.
+# October 3, 2026: the correction batch merged on 3 October, so every batch note and listing date
+# moved from 2 to 3 October with tools/correction_batch.py; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "060a254af324fa5991d9984403284280693e771b314e3058a5e583233c1b7d8c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -755,7 +761,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 2, 2026: the opener goes live with its publication date set to 2 October, so
     # the bundle rebuilt from the registry is index-DtNiguMs.js with the same sheet.
     # index-C1IxEots.js was never published and is gone.
-    current_js = "index-DtNiguMs.js"
+    # October 2, 2026: the reference corrections move Who Knew First's publication date to
+    # 25 September and date nine listings 2 October, so the bundle rebuilt from the registry
+    # is index-DI6YWfTZ.js with the same sheet. index-DtNiguMs.js stays as retained history.
+    current_js = "index-DI6YWfTZ.js"
+    previous_opener_js = "index-DtNiguMs.js"
+    assert previous_opener_js not in source
+    assert (ROOT / "assets" / previous_opener_js).is_file()
+    assert f"assets/{previous_opener_js}" in RELEASE_PATHS
     assert not (ROOT / "assets" / "index-B3PP6LeH.js").exists()
     assert not (ROOT / "assets" / "index-C1IxEots.js").exists()
     previous_fonts_js = "index-FBDE3rFM.js"

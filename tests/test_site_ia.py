@@ -154,6 +154,14 @@ def test_redirect_stubs_cover_every_old_anchor_and_match_their_generator() -> No
         assert '<meta http-equiv="refresh"' in source, path
 
 
+# Wording a dated correction changed on purpose; the page's Corrections section records it.
+DATED_CORRECTIONS = {
+    "conferred-existence-essay.html": (
+        ("Three traditions that never met arrived at the same seam independently:", "Three traditions arrived at the same seam:"),
+    ),
+}
+
+
 def test_lifted_essays_keep_the_text_of_their_old_anchors() -> None:
     old = subprocess.run(["git", "show", "d64c7ed:writing.html"], cwd=ROOT, capture_output=True,
                          text=True, encoding="utf-8")
@@ -164,6 +172,8 @@ def test_lifted_essays_keep_the_text_of_their_old_anchors() -> None:
         paragraphs = [text(p) for p in re.findall(r"<p>(.*?)</p>", source, re.S)]
         new = text(read(page))
         for paragraph in paragraphs:
+            for before, after in DATED_CORRECTIONS.get(page, ()):
+                paragraph = paragraph.replace(before, after)
             assert paragraph in new, f"{page} lost a paragraph: {paragraph[:60]}"
 
 

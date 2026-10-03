@@ -75,9 +75,9 @@
       "category": "evidence-public-life",
       "form": "essay",
       "published_at": "2026-10-01",
-      "updated_at": "2026-10-01",
-      "record_sha256": "a28651928e1336f016e0eef4c9a7a03484a552abf988fb6c637db55b5bad14cc",
-      "idempotency_key": "ccb40c70754a13e3af26f7ef25f3a6000a9b26cb2e7c7847088e6506b8db652d"
+      "updated_at": "2026-10-03",
+      "record_sha256": "9d635e9bd0b4223edeb8ab623164aa8c6b92f6653070d567e7387fc9323d0252",
+      "idempotency_key": "ef8f1593408e7cb463fbcb2120bb52cb76c32c05b80b2928aca2e3cf0127bb82"
     },
     {
       "id": "the-sandbox-was-never-just-a-box",
@@ -193,7 +193,7 @@
       "collection": "essays",
       "kind": "Essay",
       "published_at": "2026-06-20",
-      "updated_at": "2026-06-20"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "conferred-existence",
@@ -202,7 +202,7 @@
       "collection": "research",
       "kind": "Research corpus",
       "published_at": "2026-08-13",
-      "updated_at": "2026-08-13"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "current-story",
@@ -238,7 +238,7 @@
       "collection": "essays",
       "kind": "Essay",
       "published_at": "2026-07-29",
-      "updated_at": "2026-09-25"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "no-receipt-no-accept",
@@ -247,7 +247,7 @@
       "collection": "essays",
       "kind": "Essay",
       "published_at": "2026-07-28",
-      "updated_at": "2026-09-25"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "pick-the-lock-for-everyone",
@@ -256,7 +256,7 @@
       "collection": "essays",
       "kind": "Essay",
       "published_at": "2026-07-22",
-      "updated_at": "2026-07-24"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "the-summary-is-not-the-record",
@@ -274,7 +274,7 @@
       "collection": "series",
       "kind": "Series piece",
       "published_at": "2026-10-01",
-      "updated_at": "2026-10-01"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "verified-is-not-trustworthy",
@@ -291,8 +291,8 @@
       "title": "Who Knew First",
       "collection": "series",
       "kind": "Investigation",
-      "published_at": "2026-09-23",
-      "updated_at": "2026-10-01"
+      "published_at": "2026-09-25",
+      "updated_at": "2026-10-03"
     },
     {
       "id": "who-pays-the-referees",
@@ -301,7 +301,7 @@
       "collection": "series",
       "kind": "Series piece",
       "published_at": "2026-10-01",
-      "updated_at": "2026-10-01"
+      "updated_at": "2026-10-03"
     },
     {
       "id": "why-i-do-this",
@@ -328,7 +328,7 @@
       "collection": "research",
       "kind": "Research corpus",
       "published_at": "2026-06-20",
-      "updated_at": "2026-06-20"
+      "updated_at": "2026-10-03"
     }
   ],
   "newest": [
