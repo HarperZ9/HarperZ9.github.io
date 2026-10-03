@@ -408,7 +408,7 @@ function familyForHref(href, metadata) {
   if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose|verified-is-not-trustworthy|conferred-existence-essay)\.html$/.test(href)) return "Writing";
   if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
   if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire|work-with-me|independence|income-ledger)\.html/.test(href)) return "Work";
-  if (/^(fonts|typeface)\.html$/.test(href)) return "Fonts";
+  if (/^(fonts|typeface|type-forge)\.html$/.test(href)) return "Fonts";
   return metadata?.family || "Systems";
 }
 
@@ -519,6 +519,8 @@ if (writingPillar) {
 const disambiguatedLabels = {
   "why.html": "Why it's built this way",
   "current-story.html": "Current Story",
+  // The forge page's h1 is a call to action; the menu and the index name the tool.
+  "type-forge.html": "Type forge",
   "pick-the-lock-for-everyone-talk.html": "Pick the Lock for Everyone: spoken edition",
   "research-conferred-existence.html": "Conferred Existence: research note",
   "conferred-existence.html": "Conferred Existence: the full corpus",
