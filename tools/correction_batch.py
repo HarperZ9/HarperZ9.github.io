@@ -38,6 +38,7 @@ NOTE_FILES = (
     "writing/no-receipt-no-accept/09.md",
     "writing/no-receipt-no-accept/no-receipt-no-accept.md",
     "writing/pick-the-lock-for-everyone-v3/13.md",
+    "writing/pick-the-lock-for-everyone/03.md",
     "writing/models-propose-oracles-dispose/03.md",
     "writing/models-propose-oracles-dispose/04.md",
     "research-conferred-existence.html",
