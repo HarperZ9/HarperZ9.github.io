@@ -608,7 +608,10 @@ RELEASE_PATHS = (
 # is rehashed. Later the same day a Zenodo search by ORCID returned thirteen records: the formal
 # note on faithfulness (15 September 2026) joins the record, the bundle is index-BniK76UM.js, and
 # the release is rehashed again.
-REVIEWED_RELEASE_SHA256 = "4c8074b2f8914a03d65713081a8bcba098c903f4c6f1c7175e7e2fcde2c80243"
+# October 3, 2026: No Receipt, No Accept is re-rendered from its approved Markdown (the
+# 25 September rewrite) and its PDF is typeset with LaTeX with a build receipt; the release
+# is rehashed.
+REVIEWED_RELEASE_SHA256 = "8fb8e8c12e9a570cf0bfaa8172719463ea4e6fa8652fdb62208a0422f60915e4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
