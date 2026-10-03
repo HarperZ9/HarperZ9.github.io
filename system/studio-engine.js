@@ -9,7 +9,8 @@
 // old URLs all still work.
 
 import { usePlugin, knownPlugins } from "./media-engine/page.mjs";
-import { stageHandoff, takeHandoff, exportWithReceipt } from "./studio-engine-flows.js";
+import { stageHandoff, takeHandoff, exportWithReceipt, exportReferenceReceipt } from "./studio-engine-flows.js";
+import { REFERENCE_BACKEND } from "./media-engine/core.mjs";
 import { markRisk, riskOf, RISK_LABELS } from "./media-engine/colour.mjs";
 import { SLOTS, slotReady } from "./media-engine/plugins/slots.mjs";
 import "./media-engine/raw-register.mjs";
@@ -216,8 +217,10 @@ export async function enterEngineSurface(id, { canvas, mount, isCurrent = () => 
       actions.append(b);
     }
     const ex = el("button", { type: "button", class: "btn" }, "Export frame and receipt");
-    ex.addEventListener("click", () => exportWithReceipt(canvas, { plugin: pluginId, version: handle.plugin.version, params: current.params,
-      seed: current.params.seed || "folded-light", backend: handle.backend, input: current.input }).catch((e) => console.error("[studio-engine] export failed:", e)));
+    ex.addEventListener("click", () => (handle.backend === REFERENCE_BACKEND
+      ? exportReferenceReceipt(handle)
+      : exportWithReceipt(canvas, { plugin: pluginId, version: handle.plugin.version, params: current.params,
+      seed: current.params.seed || "folded-light", backend: handle.backend, input: current.input })).catch((e) => console.error("[studio-engine] export failed:", e)));
     actions.append(ex);
   }
   if (surface.door && typeof setSource === "function") {

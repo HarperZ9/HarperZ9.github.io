@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { RAW_FILES, RAW_VERSION, RAW_VIEWS, rawParams, rawStatus, channelRGBA } from "./plugins/raw.mjs";
+import { RAW_FILES, RAW_VERSION, RAW_VIEWS, rawParams, rawStatus, channelRGBA, rawReference } from "./plugins/raw.mjs";
 
 const dir = new URL(`../../media/raw-native/wasm-${RAW_VERSION}/`, import.meta.url);
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
@@ -66,4 +66,23 @@ test("the vendored wasm writes the same default certificate as the native releas
   // SHA-256 of certificate.json from raw_native_cli 0.4.0 on Windows (MSVC) and Linux (GCC), default view.
   assert.equal(sha(mod.FS.readFile("/out/certificate.json")), "302c4ec95a40625904cb523cd169af3dcd43208bbaa3e354f7a59df623b1b34b");
   assert.equal(sha(mod.FS.readFile("/out/frame.ppm")), "e276f24f4a2a23e7b43b61d2e45147446468bf8d99a75809675f2cea91edb06d");
+});
+
+test("the reference backend always runs the CPU build and returns the requested channel", async () => {
+  // A stand-in Worker records what the page asks for and answers with a 1 x 1 result.
+  const asked = [];
+  const saved = globalThis.Worker;
+  globalThis.Worker = class {
+    postMessage(m) {
+      asked.push(m);
+      setTimeout(() => this.onmessage({ data: { id: m.id, ok: true, backend: "cpu", fallback: "the CPU path was asked for",
+        frame: { width: 1, height: 1, rgba: new Uint8Array([9, 8, 7, 255]) }, ao: { rt: new Uint8Array([70]), ss: new Uint8Array([60]), error: new Uint8Array([5]) } } }), 0);
+    }
+  };
+  try {
+    assert.deepEqual([...await rawReference.render({ params: { view: "high" } })], [9, 8, 7, 255]);
+    assert.deepEqual([...await rawReference.render({ params: { channel: "ao_rt" } })], [70, 70, 70, 255]);
+    assert.ok(asked.length === 2 && asked.every((m) => m.preferGpu === false), "the reference never takes the GPU path");
+    assert.deepEqual(asked[0].params.eye, RAW_VIEWS.high.eye);
+  } finally { globalThis.Worker = saved; }
 });

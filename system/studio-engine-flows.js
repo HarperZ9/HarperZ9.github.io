@@ -7,6 +7,8 @@
 //     SHA-256, so a chain of plugins stays traceable.
 //   - Export frame and receipt saves a PNG of the stage and a JSON receipt beside it: the request
 //     (plugin, version, params, seed, time, backend), its hash, and the hash of the pixels.
+//     A plugin that draws with the exact reference backend (RAW) exports its own frame instead,
+//     drawn a second time by the reference build, and the receipt carries the reconcile result.
 
 import { frameReceipt, digest } from "./media-engine/receipt.mjs";
 
@@ -58,4 +60,23 @@ function plainParams(params = {}) {
     out[k] = v;
   }
   return out;
+}
+
+// A plugin on the reference backend: its own frame at render size (not the scaled stage), a second
+// exact render of the same request, and a receipt with the reconcile result. The PNG holds exactly
+// the pixels the receipt hashes.
+export async function exportReferenceReceipt(handle) {
+  const receipt = await handle.receipt(1.3, { reference: true, keepPixels: true });
+  const px = receipt.pixels;
+  const stem = "studio-" + receipt.request.plugin + "-" + (receipt.pixelHash || "no-frame").slice(0, 12);
+  if (px && handle.instance.result && handle.instance.result.frame) {
+    const { width, height } = handle.instance.result.frame;
+    const c = document.createElement("canvas");
+    c.width = width; c.height = height;
+    c.getContext("2d").putImageData(new ImageData(new Uint8ClampedArray(px), width, height), 0, 0);
+    const png = await new Promise((resolve) => c.toBlob(resolve, "image/png"));
+    if (png) save(png, stem + ".png");
+  }
+  save(new Blob([JSON.stringify(receipt, null, 2) + "\n"], { type: "application/json" }), stem + ".receipt.json");
+  return receipt;
 }

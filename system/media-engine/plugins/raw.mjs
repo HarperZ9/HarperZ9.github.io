@@ -199,10 +199,13 @@ export const raw = {
   },
 };
 
-// The engine's reference backend: an exact raw-native render of a request's camera.
+// The engine's reference backend: an exact raw-native render of a request's camera. It always runs
+// the CPU build, the exact path, so a GPU frame is never checked against another GPU frame. It
+// returns the channel the request names, so an AO map is compared with an AO map.
 export const rawReference = {
   async render(request) {
-    const r = await renderRaw(rawParams((request && request.params) || {}));
-    return r.frame.rgba;
+    const params = (request && request.params) || {};
+    const r = await renderRaw(rawParams(params), { preferGpu: false });
+    return channelRGBA(r, params.channel);
   },
 };
