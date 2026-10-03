@@ -14,6 +14,7 @@ if __package__ in {None, ""}:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from tools.attribution import strip_front_matter
 from tools.explainer.embed import figure, insert_after_section
 
 
@@ -224,7 +225,8 @@ EXPLAINERS: dict[str, dict[str, str]] = {
 def render_page(page: Path, parts: tuple[Path, ...], mode: str) -> bytes:
     """Return one complete page with its Markdown body embedded."""
     source = "".join(
-        (page.parent / part).read_text(encoding="utf-8") for part in parts
+        strip_front_matter((page.parent / part).read_text(encoding="utf-8"))
+        for part in parts
     )
     page_source = page.read_text(encoding="utf-8")
     body = render_markdown(source, mode)

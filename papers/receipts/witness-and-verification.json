@@ -4,7 +4,7 @@
   "source": {
     "kind": "site Markdown, converted by tools/paper_latex.py",
     "path": "writing/papers/witness-and-verification.md",
-    "sha256": "d058799f92a796fe1b43cf62a42a9f466eb58a6b147cbcac940e7ad955d3e4a1",
+    "sha256": "6e69e19da5617e5fe67365dc1983d85cfbdb8700bd157d642fdf0dd09325fda3",
     "tex": "papers/tex/witness-and-verification.tex",
     "page": "research-witness-and-verification.html"
   },
@@ -20,8 +20,19 @@
   "source_date_epoch": "1790985600",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "f93e99ef97a168e0dd9074d7eb872bebabdc2fa2bbc16c620222c68bc85a497c",
-  "pdf_bytes": 104108,
+  "pdf_sha256": "102d78a828af4eddece8de078366394ee44b280275c7377f0f3cfbcc881c6f18",
+  "pdf_bytes": 107940,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": null,
+    "url": "https://harperz9.github.io/research-witness-and-verification.html",
+    "first_public": "2026-06-30",
+    "first_public_evidence": "site commit 450a8c4d, research-witness-and-verification.html"
+  },
   "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/witness-and-verification.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }

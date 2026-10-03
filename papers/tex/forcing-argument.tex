@@ -1,3 +1,11 @@
+% ----------------------------------------------------------------------
+% The Seam That Holds While It Is Crossed
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.23126357
+% First public: 2026-09-15 (Zenodo, first version (10.5281/zenodo.22768809))
+% Source SHA-256: 3c43be0011cb64c74e97cdb2bc46d92acae0e0038f7cf1130b9ffa0d5ba92fd8 (writing/papers/forcing-argument.md)
+% ----------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{fontspec}
@@ -12,8 +20,16 @@
 \setlength{\parskip}{6pt plus 1pt}
 \setlength{\parindent}{0pt}
 \setlength{\emergencystretch}{3em}
-\hypersetup{pdftitle={The Seam That Holds While It Is Crossed},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/forcing-argument.md},pdfkeywords={source sha256 f747f17a19ac388c5029a8eb95e8ab4f08a26424cf2d5973413e18f0edf487af}}
+\hypersetup{pdftitle={The Seam That Holds While It Is Crossed},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/forcing-argument.md},pdfkeywords={source sha256 3c43be0011cb64c74e97cdb2bc46d92acae0e0038f7cf1130b9ffa0d5ba92fd8}}
 \newcommand{\register}[1]{{\ttfamily\small #1}}
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.23126357 \textperiodcentered{} first public 15 September 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
 \begin{document}
 
 \begin{center}
@@ -510,5 +526,5 @@ The argument forces, at the conventional level, that any act of conferral instan
 
 \emph{Proof before trust, including about authorship.}
 
-\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/forcing-argument.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{f747f17a19ac388c5029a8eb95e8ab4f08a26424cf2d5973413e18f0edf487af}\par}
+\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/forcing-argument.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{3c43be0011cb64c74e97cdb2bc46d92acae0e0038f7cf1130b9ffa0d5ba92fd8}\par}
 \end{document}

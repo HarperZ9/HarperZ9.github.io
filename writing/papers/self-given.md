@@ -4,6 +4,8 @@ subtitle: Perspectival aseity and its strongest contraries
 byline: Argument built June 2026; first published 15 September 2026; this edition 3 October 2026.
 description: Experience may be known from itself, yet no argument examined here shows that the everyday conscious subject exists from itself.
 revision_note: This edition replaces the edition first published on 15 September 2026, in its 25 September 2026 web revision. The paper is rebuilt as a series of contests in which each position meets its strongest contrary, and its passages are marked plain, steelman or open. The earlier claim that the everyday subject dissolves into a dependent occurrence is narrowed: no argument examined establishes its aseity, and whether causal conditioning makes it dependent for its existence is left open. The lamp argument is now credited to Nāgārjuna, and Candrakīrti's target is corrected. Descartes, Strawson and Zahavi are recorded as allies on aseity, and Miri Albahari's view is added, so seity no longer includes ownerlessness. Seven open questions are handed to the reader. A dated update, October 2026, engages Julian Jaynes.
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 ---
 
 ## How to read this paper

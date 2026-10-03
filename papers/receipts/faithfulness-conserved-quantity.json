@@ -2,10 +2,13 @@
   "schema": "paper-build-receipt/v1",
   "paper": "papers/faithfulness-conserved-quantity.pdf",
   "source": {
-    "kind": "LaTeX in the private research repository",
+    "kind": "LaTeX in the private research repository, scrubbed and stamped by tools/attribution.py",
     "commit": "b76c70ba00e8e3a535f3def286650f08318c6c46",
     "path": "papers/latex-sources/faithfulness-conservation-note/main.tex",
-    "sha256": "ffb160bbd2e81d3942426b037c2afd120b89178bebbef0cef91475d8121a34dc"
+    "sha256": "ffb160bbd2e81d3942426b037c2afd120b89178bebbef0cef91475d8121a34dc",
+    "tex": "papers/tex/faithfulness-conserved-quantity.tex",
+    "tex_sha256": "baf09e899a6b971751f9b3cee19ffac54a888b2fe4e050913b6cfa7138af818e",
+    "scrubbed": []
   },
   "engine": {
     "name": "Tectonic 0.17.0",
@@ -19,8 +22,19 @@
   "source_date_epoch": "1782864000",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "7e3384cb4c80df7b50ec5d562945d61891399e58687cbb5676b39e5e2b73e4c5",
-  "pdf_bytes": 47307,
-  "rerun": "The source is private; its commit and hash identify it.",
+  "pdf_sha256": "349879ba0ada3b7c57ea6f20d56d1bf5555d25fb0cf3e27bed9a350180acf76f",
+  "pdf_bytes": 53538,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": "10.5281/zenodo.22768398",
+    "url": "https://doi.org/10.5281/zenodo.22768398",
+    "first_public": "2026-09-15",
+    "first_public_evidence": "Zenodo, first version"
+  },
+  "rerun": "SOURCE_DATE_EPOCH=1782864000 tectonic -X compile --only-cached papers/tex/faithfulness-conserved-quantity.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }

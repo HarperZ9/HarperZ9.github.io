@@ -4,6 +4,8 @@ subtitle: *Why the demand for self-origination was never earned, what survives w
 byline: Argument built June 2026; first published 15 September 2026; revised for the web 25 September 2026; this edition 3 October 2026.
 description: Argues that holding someone responsible addresses a person who can answer, and tests what survives without self-origination against its strongest rivals.
 revision_note: This edition replaces the edition first published on 15 September 2026, in its 25 September 2026 web revision. Each major position now meets its strongest contrary, and every passage is marked as a plain statement, a steelman or an open question. Several claims are withdrawn, narrowed or conceded. The contrast between a one-place and a two-place relation is withdrawn, since behavior control also relates two parties. Galen Strawson turns out not to draw the conclusion the earlier edition attacked. The demand-to-blame inference, as first stated, falls to Pereboom's manipulated Plum, and Pereboom's current account of blame is itself addressed, which leaves anger as the live dispute. Six questions are handed to the reader. A new section, dated October 2026, engages Julian Jaynes and his critics.
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 ---
 
 **Keywords:** free will, reactive attitudes, P.F. Strawson, second-personal standpoint, Galen Strawson, Basic Argument, conferred sourcehood, hard incompatibilism, Pereboom, answerability

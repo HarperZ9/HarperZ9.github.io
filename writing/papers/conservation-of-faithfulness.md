@@ -4,6 +4,8 @@ subtitle: What crosses between two minds, and where the check runs out
 byline: Idea, simulations and first working paper 23 June 2026; argument drafted 30 June 2026; revised for plain language September 2026; this edition 3 October 2026.
 description: When information crosses a lossy boundary, what can survive is faithfulness to a criterion named outside it, and no check settles which criterion is right.
 revision_note: This edition replaces the edition of September 2026. Each claim now meets its strongest contrary, and every passage is marked as plain statement, steelman contest or open question. Four claims are withdrawn or narrowed. The law now admits a floor on output size set by the criterion. A narrower law replaces the rule that one broken stage collapses a pipeline. The inference that whatever stands outside the system must be a human is withdrawn as stated, and the falsifier F0 is reported as specified and not yet run. Eight questions go to the reader, among them whether any check can certify an intended criterion and whether the party who answers for it must be a person. A dated October 2026 update engages Julian Jaynes.
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 ---
 
 ## How to read this paper

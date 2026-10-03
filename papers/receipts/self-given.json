@@ -4,7 +4,7 @@
   "source": {
     "kind": "site Markdown, converted by tools/paper_latex.py",
     "path": "writing/papers/self-given.md",
-    "sha256": "47d0b3b8e5fcc5837fd863806a516fbfcdecc4ec35b83991e76088a13b97d970",
+    "sha256": "50cc0e469edb09a4538ed31f7f06ee6e30d57fa9dfef08e4b94a385f862dff39",
     "tex": "papers/tex/self-given.tex",
     "page": "research-self-given.html"
   },
@@ -20,8 +20,19 @@
   "source_date_epoch": "1790985600",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "3d6c947bdcc2a984c4fc92625cde75f98ff397d56d3733cf19656c5bd718d5e3",
-  "pdf_bytes": 112062,
+  "pdf_sha256": "e068fe79cd7430d3d2736aad8a2ab839bfbaca9a8a9c291555cb12ada56639f8",
+  "pdf_bytes": 115704,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": "10.5281/zenodo.23126458",
+    "url": "https://doi.org/10.5281/zenodo.23126458",
+    "first_public": "2026-09-15",
+    "first_public_evidence": "Zenodo, first version (10.5281/zenodo.22768919)"
+  },
   "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/self-given.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }
