@@ -170,6 +170,16 @@ RELEASE_PATHS = (
     "type/preview/zentropy-editorial-regular.woff2",
     "type/preview/zentropy-mono-regular.woff2",
     "img/og/typeface.png",
+    # 3 October 2026: the type forge, the in-browser Zain Mint engine (in progress, no download).
+    "type-forge.html",
+    "system/type-forge/forge.mjs",
+    "system/type-forge/geometry.mjs",
+    "system/type-forge/skeletons.mjs",
+    "system/type-forge/skeletons-caps.mjs",
+    "system/type-forge/pyround.mjs",
+    "system/type-forge/ttf.mjs",
+    "system/type-forge/forge-page.js",
+    "system/type-forge/forge-page.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -586,7 +596,9 @@ RELEASE_PATHS = (
 # October 3, 2026: RAW now describes the public C++23 reference renderer (raw.html, the system
 # registry, the record pages and capability maps, and the home bundle index-DDpFxCuj.js); the
 # release is rehashed (merged over the media fixes).
-REVIEWED_RELEASE_SHA256 = "c0d914afc3aa48da14ce19c4e0a7424f1dff1b84570515141400e18f4b718ed3"
+# October 3, 2026: the type forge (type-forge.html and system/type-forge/) joins the release, and
+# fonts.html and typeface.html link to it; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "dbfce4cbcb337548bae156221ba3d48f39983b02ac6d08598e91aef56e6d3f2d"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

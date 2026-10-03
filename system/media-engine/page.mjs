@@ -16,6 +16,7 @@ const LOADERS = {
   loom: () => import("./plugins/loom.mjs").then((m) => m.loom),
   evidence: () => import("./plugins/evidence.mjs").then((m) => m.evidence),
   "slot-card": () => import("./plugins/slots.mjs").then((m) => m.slotCard),
+  type: () => import("./plugins/type.mjs").then((m) => m.type),
 };
 
 let engine = null;
