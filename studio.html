@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="system/studio-plate.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-deck.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
-<link rel="stylesheet" href="system/studio-modes.css?v=20260925-studio-plate">
+<link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
+<link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -78,10 +79,25 @@
         <button type="button" role="tab" data-source="discovery" aria-selected="false" aria-controls="src-discovery" tabindex="-1">Physics</button>
         <button type="button" role="tab" data-source="showcase" aria-selected="false" aria-controls="src-showcase" tabindex="-1">Showcase</button>
       </div>
+      <div class="source-group" role="presentation">
+        <span class="source-group-label" aria-hidden="true">Engine</span>
+        <button type="button" role="tab" data-source="retro"     aria-selected="false" aria-controls="src-engine" tabindex="-1">Retro Engine</button>
+        <button type="button" role="tab" data-source="gallery"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Gallery</button>
+        <button type="button" role="tab" data-source="loom"      aria-selected="false" aria-controls="src-engine" tabindex="-1">Loom</button>
+        <button type="button" role="tab" data-source="splats"    aria-selected="false" aria-controls="src-engine" tabindex="-1">Splat Lab</button>
+        <button type="button" role="tab" data-source="brender"   aria-selected="false" aria-controls="src-engine" tabindex="-1">BRender</button>
+        <button type="button" role="tab" data-source="revival"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Engine Revival</button>
+        <button type="button" role="tab" data-source="raw"       aria-selected="false" aria-controls="src-engine" tabindex="-1">RAW</button>
+      </div>
     </div>
     <p class="rail-own">Start with a source, then open only the controls you need.</p>
 
     <div class="rail-scroll">
+      <!-- SOURCE: media engine surfaces (studio-engine.js). One block for all seven; the module
+           fills #engine-mount with the active surface's controls, its page link, and "How we know". -->
+      <section class="src-block" id="src-engine" role="tabpanel" aria-label="Media engine surface controls" hidden>
+        <div id="engine-mount"></div>
+      </section>
       <!-- SOURCE: Atelier (Task 7). boot() finds #atelier and, since there is no #at-canvas here,
            draws into the shared #studio-canvas in the viewport. These are the exact control ids
            atelier.js boot() binds. Groups wrapped in <details> so the rail never overflows. -->
@@ -1419,7 +1435,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20260925-studio-plate"></script>
+<script type="module" src="system/studio.js?v=20261003-engine"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>
