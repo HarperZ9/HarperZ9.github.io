@@ -10,7 +10,9 @@ beside their sources in writing/):
 - The six philosophy papers in writing/papers/. tools/paper_latex.py turns each approved
   source into papers/tex/<name>.tex, which anyone can rebuild.
 - Seven systems papers and notes whose LaTeX sources live in a private research repository.
-  Each is read with `git show` at the pinned commit below, so no branch is switched.
+  Each is read with `git show` at the pinned commit, so no branch is switched. Since
+  3 October 2026 each is scrubbed (tools/attribution.scrub strips comments and refuses a
+  local path, a credential or a private note), stamped and published as papers/tex/<name>.tex.
 - The two archived corpora, Conferred Existence and The Witnessing Spine. Their deposited
   sources live in their own public repositories; each is read with `git show HEAD:<file>`
   from a workspace that holds both checkouts, and the receipt names the repository, commit
@@ -23,7 +25,9 @@ beside their sources in writing/):
 Every build runs Tectonic offline (`--only-cached`) against one pinned bundle, with
 SOURCE_DATE_EPOCH fixed, two times in separate folders. The PDF is written only when both
 runs give the same bytes. The receipt names the source hash, the engine and its binary hash,
-the bundle digest, the epoch and the PDF hash. `--check` confirms that every committed
+the bundle digest, the epoch and the PDF hash. Every .tex and PDF carries the author's
+name, the license, the DOI or page and the first-public date from tools/attribution.py, and
+each receipt records that attribution. `--check` confirms that every committed
 receipt still matches its source, its .tex file and its PDF, which is what CI runs.
 """
 
@@ -42,7 +46,8 @@ from pathlib import Path
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.latex_sources import (CORPORA, CORPUS_KIND, ESSAY_KIND, ESSAYS, RESEARCH, RESEARCH_COMMIT,  # noqa: F401
+from tools.attribution import record as attribution_record
+from tools.latex_sources import (CORPORA, CORPUS_KIND, RESEARCH_KIND, ESSAY_KIND, ESSAYS, RESEARCH, RESEARCH_COMMIT,  # noqa: F401
                                  corpus_inputs, corpus_sources, essay_sources, research_sources, sha,
                                  site_sources)
 
@@ -53,6 +58,8 @@ BUNDLE = {"name": "default_bundle_v33.tar",
           "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"}
 SITE_EPOCH = "1790985600"  # 2026-10-03T00:00:00Z, the edition date
 RESEARCH_EPOCH = "1782864000"  # 2026-07-01T00:00:00Z, the month the papers were deposited
+PRIORITY = ("The dated public record, the DOI or the commit that first published the work and the hashes in "
+            "this receipt, is what establishes priority. The name on every page is there for attribution.")
 DOES_NOT_PROVE = ("Two identical builds show that this PDF follows from this source, engine and bundle. "
                   "They do not show that the paper's claims are true, and a different engine or bundle "
                   "may give different bytes.")
@@ -98,9 +105,10 @@ def build(exe: str, sources: dict[str, tuple[bytes, dict]], epoch: str) -> int:
             "schema": "paper-build-receipt/v1", "paper": pdf_path, "source": source,
             "engine": {"name": engine, "binary_sha256": engine_sha, "flags": "-X compile --only-cached"},
             "bundle": BUNDLE, "source_date_epoch": epoch, "runs": 2, "rebuild_identical": True,
-            "pdf_sha256": sha(first), "pdf_bytes": len(first),
+            "pdf_sha256": sha(first), "pdf_bytes": len(first), "attribution": attribution_record(name),
             "rerun": (f"SOURCE_DATE_EPOCH={epoch} tectonic -X compile --only-cached {source['tex']}"
                       if "tex" in source else "The source is private; its commit and hash identify it."),
+            "priority": PRIORITY,
             "does_not_prove": DOES_NOT_PROVE,
         }
         (RECEIPTS / f"{name}.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -122,14 +130,16 @@ def check() -> int:
                 problems.append(f"{path.name}: the Markdown source changed since the build")
             if (ROOT / source["tex"]).read_bytes() != tex:
                 problems.append(f"{path.name}: papers/tex is stale against its converter")
-        if receipt["source"].get("kind") == CORPUS_KIND:
+        if receipt.get("attribution") != attribution_record(path.stem):
+            problems.append(f"{path.name}: the attribution differs from tools/attribution.py")
+        if receipt["source"].get("kind") in {CORPUS_KIND, RESEARCH_KIND}:
             source = receipt["source"]
             tex_path = ROOT / source["tex"]
             if not tex_path.is_file() or sha(tex_path.read_bytes()) != source["tex_sha256"]:
                 problems.append(f"{path.name}: papers/tex differs from the receipt")
-            if corpus_inputs(source["page"]) != source["site_inputs"]:
+            if source["kind"] == CORPUS_KIND and corpus_inputs(source["page"]) != source["site_inputs"]:
                 problems.append(f"{path.name}: the converter, a foreword or a correction changed since the build")
-    missing = sorted((set(site) | set(CORPORA)) - {p.stem for p in RECEIPTS.glob("*.json")})
+    missing = sorted((set(site) | set(CORPORA) | set(RESEARCH)) - {p.stem for p in RECEIPTS.glob("*.json")})
     problems += [f"{name}: no receipt" for name in missing]
     for line in problems:
         print(line)

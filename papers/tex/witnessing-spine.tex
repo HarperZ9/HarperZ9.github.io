@@ -1,3 +1,11 @@
+% ----------------------------------------------------------------------
+% The Witnessing Spine
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.20778927
+% First public: 2026-06-20 (Zenodo, first version)
+% Source SHA-256: ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191 (github.com/HarperZ9/witnessing-spine, file SYNTHESIS-the-witnessing-spine.md at commit f9873c441daf)
+% ----------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{fontspec}
@@ -22,6 +30,14 @@
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}{1.6ex plus 1ex}{0.3ex}{\normalfont\normalsize\itshape}}
 \makeatother
 \hypersetup{pdftitle={The Witnessing Spine},pdfauthor={Zain Dana Harper},pdfsubject={One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.},pdfkeywords={source sha256 ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191}}
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.20778927 \textperiodcentered{} first public 20 June 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
 \begin{document}
 
 \begin{center}

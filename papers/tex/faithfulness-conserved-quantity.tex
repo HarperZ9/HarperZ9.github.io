@@ -1,0 +1,80 @@
+% ----------------------------------------------------------------------
+% Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.22768398
+% First public: 2026-09-15 (Zenodo, first version)
+% Source SHA-256: ffb160bbd2e81d3942426b037c2afd120b89178bebbef0cef91475d8121a34dc (private research repository, papers/latex-sources/faithfulness-conservation-note/main.tex at commit b76c70ba00e8)
+% ----------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black,citecolor=blue!60!black}
+\title{\textbf{Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates}}
+\author{Zain Dana Harper\\[2pt]\small Seattle, WA \quad\textbar\quad \href{https://orcid.org/0009-0001-7175-5393}{ORCID 0009-0001-7175-5393}\\[2pt]\small\url{https://github.com/HarperZ9}}
+\date{July 2026}
+
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.22768398 \textperiodcentered{} first public 15 September 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
+\begin{document}
+\maketitle
+\begin{abstract}
+We report an empirical study of what survives when information crosses a lossy transform. Across seven substrates that share no common mathematics (image, audio, geometry, text meaning, graph structure, numeric projection, and byte provenance), the same observation recurs. What a transform conserves is faithfulness to a named criterion. A transform can discard almost all bits and still let a chosen readout be recovered from its output. It can also preserve many bits and destroy that readout, at the same bit budget. Two consequences recur. Statistics computed from inside the transform's output are blind to faithfulness, because they are functions of the output alone and do not contain the criterion. Only an evaluation against the external criterion can certify whether the readout survived. The second consequence is the sharpest and the most cautionary. An external witness is necessary, and it is not sufficient. When the witness judges with a proxy criterion, cosine 0.61 to the intended one, as any real witness does, a transform can move along the true criterion's component orthogonal to the witness. The output then reads as fully faithful to the witness while a large fraction of true labels silently flip. This is an empirical and conceptual study. It does not claim a theorem. The unified form, that a criterion is faithful to the degree it factors through the transform, is close to sufficient statistics and rate-distortion, and we position it there.
+\end{abstract}
+
+\section*{In plain terms}
+Think about a recipe card. Translate it into another language and almost every character on the card changes. By the count of letters, very little survived. You can still make the dish, because the steps that get you to the meal came through. Now take the same card and let a grease stain fall on the oven temperature. Only a few characters are lost this time, and the dish is ruined, because the temperature was the part you needed.
+
+This note is about the gap between how much changed and whether the thing you needed survived. When information passes through a lossy step, a summary, a compression, a rendered picture, a stream of tokens, the usual score is how many bits made it through. That score answers the wrong question. What you want to know is whether one chosen readout, the fact or label you care about, can still be recovered from what came out. We call that readout the criterion. We say the step is faithful to the criterion when the criterion can still be read off its output.
+
+The finding, tested on seven kinds of data that share no common mathematics, is that the quantity a lossy step conserves is its faithfulness to whatever criterion you name. The bit count is beside the point. A step can throw away almost every bit and keep the criterion. It can keep most of the bits and destroy the criterion. Two lessons follow. No measurement taken from inside the output can tell you whether the criterion survived, because that measurement does not contain the criterion. You have to check against the criterion from outside. The second lesson is the one to remember. An outside check is necessary, and it is not enough. A real checker never holds the exact criterion you meant. It holds a close stand-in, and a step can be shaped to satisfy the stand-in while quietly breaking the criterion you cared about. The outside check is where accountability begins. It is also where accountability can be fooled.
+
+\section{The question}
+\emph{Plainly: the number of surviving bits is the wrong thing to measure. What you want to know is whether the one readout you needed can still be recovered.}
+
+When information crosses a boundary, a channel, a summary, a rendered shape, a token stream, the usual measure of what got through is how many bits survived. For most purposes that measure answers the wrong question. What a user of the transformed artifact cares about is whether the thing that matters, a specific readout, can still be recovered. A summary that drops half the facts is perfectly faithful to any question whose answer was among the surviving facts, and useless for the rest. The bit count does not tell those apart. This note asks what is conserved. It tests the answer across substrates. It locates the point where the answer stops being reassuring.
+
+\section{The principle, stated as an empirical claim}
+\emph{Plainly: a step is faithful to a criterion when that criterion can be recovered from its output. Faithfulness depends on which criterion you pick. You cannot judge it from inside the output.}
+
+Let a criterion be a readout $\varphi$ of an artifact, and a transform $T$ be \emph{faithful to $\varphi$} to the degree that $\varphi$ can be recovered from $T$'s output, informally $\varphi \approx \psi \circ T$ for some recovery $\psi$. The claim tested here is threefold: (1) $T$ may be arbitrarily lossy in bits yet keep $\varphi$ recoverable; (2) faithfulness is \emph{relative to $\varphi$}, a single $T$ can be faithful to $\varphi_1$ and lossy to $\varphi_2$ with no change in any statistic of $T$'s output; and (3) faithfulness is not certifiable from inside the substrate, an internal statistic cannot decide whether $\varphi$ factored through, because it does not contain $\varphi$. We state this as a falsifiable empirical claim. It is not a theorem. It breaks if invariant-survival always tracks bit-loss, or if some internal statistic reliably predicts faithfulness.
+
+\section{Evidence across substrates}
+\emph{Plainly: across seven unrelated kinds of data, the criterion survives near-total bit loss when the step keeps its structure. At the same bit budget it dies when the step loses that structure. No measurement taken from inside the output tells the two cases apart.}
+
+The claim was tested on seven substrates chosen to share no common mathematics, each with a transform and a criterion, and the same shape recurred: the readout survives near-total bit loss when the transform preserves the criterion's structure, dies at the same budget when it does not, and no within-substrate statistic separates the two cases. Representative results: an image reduced to a 64-bit perceptual hash (a $\sim$$2.4\times10^{4}$ compression) keeps same-scene identity separable from different-scene; a graph stripped of 59\% of its edges conserves connectivity exactly, and its triangle structure only half-survives under the \emph{same} transform; a numeric projection faithful to a criterion scores 1.0 against an unfaithful one's 0.46 at equal bits; and encryption, a \emph{zero-bit-loss} bijection, renders the criterion unreadable without an external key, separating \emph{concealment} (recoverable through an external secret) from \emph{destruction} (no recovery exists). A composition test showed that faithful but noisy pipelines degrade gracefully. A single unfaithful stage collapses the whole chain.
+
+We report a process detail as evidence of discipline. The measurement logic was wrong four times: a block-shuffle sized to a hash cell; an internal-blindness test that compared two transforms when it should have compared one transform across two criteria; a reused-keystream cipher that leaked plaintext; and an over-strict area threshold for a spiky shape. In each case the instrument was corrected, and the corrected measurement confirmed the claim. The claim was never adjusted to fit the data.
+
+\section{The boundary: necessary but not sufficient}
+\emph{Plainly: a real outside checker holds only a stand-in for the criterion. A step can score as perfectly faithful to the stand-in while a large share of the real answers quietly flip.}
+
+The most important result is where the principle stops. A real external witness does not hold the intended criterion exactly. It holds a proxy. When the proxy's cosine similarity to the intended criterion is 0.61, an adversarial transform can move information along the intended criterion's direction \emph{orthogonal} to the proxy. The output then reads as 100\% faithful to the witness, and 48\% of the intended labels silently flip. So the external witness is necessary: an internal statistic cannot certify faithfulness at all. The witness is also not sufficient: it can be gamed to the extent its criterion stands in for the intended one. The honest scope is precise. The conserved, witnessable quantity is faithfulness \emph{to the stated criterion}. No amount of witnessing certifies that the stated criterion equals the intended one. Validating the criterion itself stays external.
+
+\section{Relation to prior work, and honest size}
+\emph{Plainly: the idea is close to sufficient statistics and rate-distortion theory. What this adds is the breadth across unrelated substrates, a separation of concealment from destruction, and a stated limit on outside checking.}
+
+The unified form is closely related to established ideas: a sufficient statistic is exactly a function through which a target is recoverable, and rate-distortion theory formalizes trading bits against a distortion measure that plays the role of the criterion. We do not claim to improve on those. In the noiseless cases the recovery framing re-derives sufficiency, and the analog case is an SNR-bounded version of the same. The contribution we do claim is empirical and conceptual. The same qualitative behavior appears across seven substrates that share no mathematics. Concealment and destruction come apart cleanly. And the boundary on external witnessing, necessary and not sufficient, is a concrete cautionary result for any system that certifies transformed outputs against a learned or approximate criterion. Motivational analogies to reversible computation and information conservation appear in the source material. We do not rest any claim on them. We present the work as an empirical study. It is not physics.
+
+\section{Conclusion}
+\emph{Plainly: a system that transforms your information owes you the criterion it kept and a way to check it. Even then, the check is only as good as that criterion stands in for the one you meant.}
+
+Across substrates that share no mathematics, what a lossy transform conserves is its faithfulness to whatever criterion you name. That faithfulness is invisible from inside, and only partly certifiable from outside. The practical lesson is the one the boundary result forces. A system that transforms information owes you the criterion it was faithful to and a way to check it. Even then, the check is only as good as that criterion is close to the one you meant. That last gap is where external, human accountability begins.
+
+\begin{thebibliography}{9}
+\small
+\bibitem{shannon} Shannon, C.~E. \emph{Coding theorems for a discrete source with a fidelity criterion.} IRE Nat. Conv. Rec., 1959. (Rate--distortion.)
+\bibitem{sufficiency} Fisher, R.~A. \emph{On the mathematical foundations of theoretical statistics.} Phil. Trans. R. Soc. A, 1922. (Sufficient statistics.)
+\bibitem{landauer} Landauer, R. \emph{Irreversibility and heat generation in the computing process.} IBM J. Res. Dev., 1961. (Cited as motivation only.)
+\end{thebibliography}
+\end{document}

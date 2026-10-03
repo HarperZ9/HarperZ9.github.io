@@ -2,10 +2,13 @@
   "schema": "paper-build-receipt/v1",
   "paper": "papers/proof-packets.pdf",
   "source": {
-    "kind": "LaTeX in the private research repository",
+    "kind": "LaTeX in the private research repository, scrubbed and stamped by tools/attribution.py",
     "commit": "b76c70ba00e8e3a535f3def286650f08318c6c46",
     "path": "papers/latex-sources/proof-packets-paper/main.tex",
-    "sha256": "0a436199f06e129c4f1591741f457edff36f72f9e96a5263c396ca3b2c990776"
+    "sha256": "0a436199f06e129c4f1591741f457edff36f72f9e96a5263c396ca3b2c990776",
+    "tex": "papers/tex/proof-packets.tex",
+    "tex_sha256": "c1d7a40e58e1189a55d5d7c6b8deabac90c34282cfaf34536534443ad4263218",
+    "scrubbed": []
   },
   "engine": {
     "name": "Tectonic 0.17.0",
@@ -19,8 +22,19 @@
   "source_date_epoch": "1782864000",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "dd229e8b983ecf3cae1ad29c589b09d0c9bf9c908d84851bf62fcbc7ae4ec78d",
-  "pdf_bytes": 54275,
-  "rerun": "The source is private; its commit and hash identify it.",
+  "pdf_sha256": "6196239a4273a19efd427765d6cb658cb4bf27ddc96b4f32237501445fd8d052",
+  "pdf_bytes": 60458,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": "10.5281/zenodo.21231406",
+    "url": "https://doi.org/10.5281/zenodo.21231406",
+    "first_public": "2026-07-07",
+    "first_public_evidence": "Zenodo, first version"
+  },
+  "rerun": "SOURCE_DATE_EPOCH=1782864000 tectonic -X compile --only-cached papers/tex/proof-packets.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }

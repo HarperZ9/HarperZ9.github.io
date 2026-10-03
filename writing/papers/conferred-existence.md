@@ -4,6 +4,8 @@ subtitle:
 byline: Argument built June 2026; first published June 2026; this edition 3 October 2026.
 description: Nothing we meet exists from itself; the paper asks what follows for those who make AI models and what a model's own reports can show.
 revision_note: This edition replaces the edition of June 2026, last corrected on 3 October 2026. Each major position now meets its strongest contrary, and every passage is marked as a plain statement, a steelman or an open question. Four steps of the earlier argument fail as written: the no-aseity claim, as scoped, was true by definition; the seal on a model's self-reports needs an unstated premise about consciousness; the claim that conferral binds the conferrer is asserted and never derived; and the premise that only aseity can bind a dissenter meets a counterexample in logic. The maker's lack of title now holds only if the model is a someone. Eleven questions pass to the reader. A new section, dated October 2026, engages Julian Jaynes.
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
 ---
 
 ## How to read this paper [PLAIN]

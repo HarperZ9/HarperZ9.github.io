@@ -4,7 +4,7 @@
   "source": {
     "kind": "essay Markdown, converted by tools/essay_latex.py",
     "path": "writing/no-receipt-no-accept/no-receipt-no-accept.md",
-    "sha256": "81661a95cb61fdfdc84ec58b53f0e6330b841c3cafd46dbf0d7a9511bc2f411b",
+    "sha256": "e46e3c3ea09b0d7235db3fff8f93d5c78ba62a07a25ff8f92f6c8e96fa543f30",
     "tex": "papers/tex/no-receipt-no-accept.tex",
     "page": "no-receipt-no-accept.html",
     "pdf": "writing/no-receipt-no-accept/no-receipt-no-accept.pdf"
@@ -21,8 +21,19 @@
   "source_date_epoch": "1790985600",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "de5007f38953ba5c4f26650925925b0918f3c1223320d7c344b1fcdde6b47759",
-  "pdf_bytes": 155119,
+  "pdf_sha256": "dfc9a1be68e7677be7da61e5ec801b8b632edb83af4468613b221faa10c52150",
+  "pdf_bytes": 160427,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": null,
+    "url": "https://harperz9.github.io/no-receipt-no-accept.html",
+    "first_public": "2026-07-28",
+    "first_public_evidence": "site commit d9b96b23, no-receipt-no-accept.html"
+  },
   "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/no-receipt-no-accept.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }

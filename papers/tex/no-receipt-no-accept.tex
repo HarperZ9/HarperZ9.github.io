@@ -1,3 +1,11 @@
+% ----------------------------------------------------------------------
+% No Receipt, No Accept
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: none; canonical page https://harperz9.github.io/no-receipt-no-accept.html
+% First public: 2026-07-28 (site commit d9b96b23, no-receipt-no-accept.html)
+% Source SHA-256: e46e3c3ea09b0d7235db3fff8f93d5c78ba62a07a25ff8f92f6c8e96fa543f30 (writing/no-receipt-no-accept/no-receipt-no-accept.md)
+% ----------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{fontspec}
@@ -22,6 +30,14 @@
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}{1.6ex plus 1ex}{0.3ex}{\normalfont\normalsize\itshape}}
 \makeatother
 \hypersetup{pdftitle={No Receipt, No Accept},pdfauthor={Zain Dana Harper},pdfsubject={Machines made claims almost free to produce. Checking a claim still costs what it always did. This essay describes the machinery that closes that gap and argues for opening it to everyone.},pdfkeywords={source sha256 81661a95cb61fdfdc84ec58b53f0e6330b841c3cafd46dbf0d7a9511bc2f411b}}
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} harperz9.github.io/\allowbreak{}no-receipt-no-accept.html \textperiodcentered{} first public 28 July 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
 \begin{document}
 
 \begin{center}

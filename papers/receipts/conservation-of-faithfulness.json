@@ -4,7 +4,7 @@
   "source": {
     "kind": "site Markdown, converted by tools/paper_latex.py",
     "path": "writing/papers/conservation-of-faithfulness.md",
-    "sha256": "4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc",
+    "sha256": "c11e1b00bbe4115cd8d49963affd958e2af979d01a30ea2ddda653fcd17e174f",
     "tex": "papers/tex/conservation-of-faithfulness.tex",
     "page": "research-conservation-of-faithfulness.html"
   },
@@ -20,8 +20,19 @@
   "source_date_epoch": "1790985600",
   "runs": 2,
   "rebuild_identical": true,
-  "pdf_sha256": "1e81f70da18cdb0df44a63b100c2173e98881dc6b92567123b5dd0fc695cf92f",
-  "pdf_bytes": 140290,
+  "pdf_sha256": "c9040798ebf6273ab8fce4e121c50034094083d0a97eb3514db5e5004a5ca9cb",
+  "pdf_bytes": 144926,
+  "attribution": {
+    "author": "Zain Dana Harper",
+    "copyright": "\u00a9 2026 Zain Dana Harper",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "doi": "10.5281/zenodo.23126484",
+    "url": "https://doi.org/10.5281/zenodo.23126484",
+    "first_public": "2026-06-30",
+    "first_public_evidence": "site commit 450a8c4d, research-conservation-of-faithfulness.html"
+  },
   "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/conservation-of-faithfulness.tex",
+  "priority": "The dated public record, the DOI or the commit that first published the work and the hashes in this receipt, is what establishes priority. The name on every page is there for attribution.",
   "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
 }

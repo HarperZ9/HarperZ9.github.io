@@ -1,3 +1,8 @@
+---
+author: Zain Dana Harper
+license: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+---
+
 ## Foreword, 2 October 2026
 
 The text below is The Witnessing Spine as I deposited it on 20 June 2026 (DOI 10.5281/zenodo.20778927). It stays as deposited, and the deposit is the version to cite. This foreword is new. The record behind it shows a short path. A verification tool and the philosophy appeared in the same week of June, and they joined into one program between 17 and 19 June, when the claim that proving identity does not grant permission became code. What follows traces that path from dated commits, file times and my own session turns. It adds no claim to the deposit and changes none of its status labels.

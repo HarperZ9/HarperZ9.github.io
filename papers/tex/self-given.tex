@@ -1,3 +1,11 @@
+% ----------------------------------------------------------------------
+% Self-Given Is Not Self-Grounding
+% Copyright (c) 2026 Zain Dana Harper. Written by Zain Dana Harper.
+% License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+% DOI: 10.5281/zenodo.23126458
+% First public: 2026-09-15 (Zenodo, first version (10.5281/zenodo.22768919))
+% Source SHA-256: 50cc0e469edb09a4538ed31f7f06ee6e30d57fa9dfef08e4b94a385f862dff39 (writing/papers/self-given.md)
+% ----------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{fontspec}
@@ -12,8 +20,16 @@
 \setlength{\parskip}{6pt plus 1pt}
 \setlength{\parindent}{0pt}
 \setlength{\emergencystretch}{3em}
-\hypersetup{pdftitle={Self-Given Is Not Self-Grounding},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/self-given.md},pdfkeywords={source sha256 47d0b3b8e5fcc5837fd863806a516fbfcdecc4ec35b83991e76088a13b97d970}}
+\hypersetup{pdftitle={Self-Given Is Not Self-Grounding},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/self-given.md},pdfkeywords={source sha256 50cc0e469edb09a4538ed31f7f06ee6e30d57fa9dfef08e4b94a385f862dff39}}
 \newcommand{\register}[1]{{\ttfamily\small #1}}
+\usepackage{xcolor}
+\makeatletter
+\def\ps@attribution{\let\@mkboth\@gobbletwo\let\@oddhead\@empty\let\@evenhead\@empty\def\@oddfoot{\parbox[b]{\dimexpr\textwidth-3em\relax}{\raggedright\scriptsize\color{black!60}\textcopyright{} 2026 Zain Dana Harper \textperiodcentered{} CC BY 4.0 \textperiodcentered{} doi.org/\allowbreak{}10.5281/\allowbreak{}zenodo.23126458 \textperiodcentered{} first public 15 September 2026}\hfill{\small\thepage}}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@attribution
+\makeatother
+\pagestyle{attribution}
+\hypersetup{pdfauthor={Zain Dana Harper}}
+\AtBeginDocument{\special{pdf:docinfo<</Copyright (Copyright 2026 Zain Dana Harper. Licensed under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/)>>}}
 \begin{document}
 
 \begin{center}
@@ -374,5 +390,5 @@ Status codes record what was done on 2026-10-02 for this edition. \textbf{Opened
 \item Williams, Gary. ``What Is It Like to Be Nonconscious? A Defense of Julian Jaynes.'' \emph{Phenomenology and the Cognitive Sciences} 10(2) (2011): 217 to 239. \emph{Opened: PhilArchive WILWII-3 record and the Julian Jaynes Society page that cites it.}
 \item Zahavi, Dan. \emph{Subjectivity and Selfhood}. MIT Press, 2005. \emph{Opened: PhilPapers ZAHSAS.}
 \end{itemize}
-\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/self-given.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{47d0b3b8e5fcc5837fd863806a516fbfcdecc4ec35b83991e76088a13b97d970}\par}
+\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/self-given.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{50cc0e469edb09a4538ed31f7f06ee6e30d57fa9dfef08e4b94a385f862dff39}\par}
 \end{document}
