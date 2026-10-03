@@ -13,6 +13,7 @@ const LOADERS = {
   retro: () => import("./plugins/retro.mjs").then((m) => m.retro),
   "retro-2d": () => import("./plugins/retro.mjs").then((m) => m.retro2d),
   plate: () => import("./plugins/plate.mjs").then((m) => m.plate),
+  ambient: () => import("./plugins/ambient.mjs").then((m) => m.ambient),
   loom: () => import("./plugins/loom.mjs").then((m) => m.loom),
   evidence: () => import("./plugins/evidence.mjs").then((m) => m.evidence),
   "slot-card": () => import("./plugins/slots.mjs").then((m) => m.slotCard),

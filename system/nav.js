@@ -39,14 +39,39 @@ export function shouldMountAmbientField(doc = document, win = typeof window !== 
 // of the paragraph beside it. Withholding it leaves an empty framed box where
 // an illustration should be, which is worse on every one of those devices than
 // simply drawing it. So plates mount wherever they appear, on their own path.
+//
+// Each plate is the media engine's "plate" plugin, reading its recipe from the canvas's data
+// attributes, so plates share the page's one scheduler and theme policy. If the engine cannot load,
+// the plates still draw through generative-field.js directly, and the failure is logged.
 function mountPlates(doc = document) {
   if (!doc || typeof doc.querySelector !== "function") return;
   if (!doc.querySelector("canvas[data-specimen]")) return;
-  import("./generative-field.js?v=20260925-void-plates")
-    .then((mod) => {
-      if (typeof mod.mountSpecimens === "function") mod.mountSpecimens(doc);
+  import("./media-engine/page.mjs")
+    .then((page) => page.usePlugin("plate"))
+    .then((engine) => {
+      doc.querySelectorAll("canvas[data-specimen]").forEach((canvas) => {
+        if (canvas.dataset.plateMounted === "true") return;
+        canvas.dataset.plateMounted = "true";
+        engine.mount(canvas, "plate", { params: { fromDataset: true }, seed: canvas.dataset.specimen || "specimen" });
+      });
     })
-    .catch(() => {});
+    .catch((e) => {
+      console.error("[nav] plate plugin unavailable, drawing plates directly:", e);
+      import("./generative-field.js?v=20260925-void-plates")
+        .then((mod) => { if (typeof mod.mountSpecimens === "function") mod.mountSpecimens(doc); })
+        .catch((err) => console.error("[nav] plates could not draw:", err));
+    });
+}
+
+// The ambient field is the media engine's "ambient" plugin on the page's one scheduler. It draws
+// into the same full-page canvas (#gl) the field always used.
+function mountAmbient(doc = document) {
+  let scene = doc.getElementById("gl");
+  if (!scene) { scene = doc.createElement("canvas"); scene.id = "gl"; scene.setAttribute("aria-hidden", "true"); doc.body.prepend(scene); }
+  import("./media-engine/page.mjs")
+    .then((page) => page.usePlugin("ambient"))
+    .then((engine) => engine.mount(scene, "ambient", {}))
+    .catch((e) => console.error("[nav] ambient field unavailable:", e));
 }
 
 function localRoute(value, includeHash = false) {
@@ -524,9 +549,7 @@ if (typeof document !== "undefined") {
     // The React home owns its own restrained desktop field and its static
     // Zentropy mobile treatment. Static pages retain the shared enhancement.
     if (document.documentElement.dataset.homeShell !== "react" && shouldMountAmbientField(document)) {
-      import("./generative-field.js?v=20260925-void-plates")
-        .then((mod) => { if (typeof mod.mountGenerativeField === "function") mod.mountGenerativeField(document); })
-        .catch(() => {});
+      mountAmbient(document);
       import("./cursor-field.js").then((m) => m.mountCursorField()).catch(() => {});
     }
     mountPlates(document);
