@@ -24,6 +24,15 @@ RECORD = {
     "10.5281/zenodo.20778927": "archived corpus",
     "10.5281/zenodo.20773724": "archived corpus",
 }
+# The October 2026 editions of four philosophy papers, deposited 3 October 2026. They are
+# listed with the papers on the Writing hub and cited on their own pages; the eight-record
+# section above counts the July and June record and does not include them.
+OCTOBER_EDITIONS = {
+    "10.5281/zenodo.23126117": "research-arity-gap.html",
+    "10.5281/zenodo.23126357": "research-forcing-argument.html",
+    "10.5281/zenodo.23126458": "research-self-given.html",
+    "10.5281/zenodo.23126484": "research-conservation-of-faithfulness.html",
+}
 STATUS_PHRASE = {
     "systems paper": "systems paper",
     "published preprint": "published preprint",
@@ -43,7 +52,9 @@ def dois(source: str) -> set[str]:
 
 def test_publications_lists_the_whole_record() -> None:
     src = read("publications.html")
-    assert dois(src) == set(RECORD), "publications.html and the deposited record disagree"
+    assert dois(src) == set(RECORD) | set(OCTOBER_EDITIONS), "publications.html and the deposited record disagree"
+    for doi, page in OCTOBER_EDITIONS.items():
+        assert f'<meta name="citation_doi" content="{doi}">' in read(page), page
 
 
 def test_each_doi_keeps_its_exact_record_status() -> None:

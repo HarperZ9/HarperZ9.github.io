@@ -97,6 +97,10 @@ def test_doi_landing_pages_carry_highwire_citation_tags() -> None:
     for relative, doi in [
         ("conferred-existence.html", "10.5281/zenodo.20773724"),
         ("witnessing-spine.html", "10.5281/zenodo.20778927"),
+        ("research-arity-gap.html", "10.5281/zenodo.23126117"),
+        ("research-forcing-argument.html", "10.5281/zenodo.23126357"),
+        ("research-self-given.html", "10.5281/zenodo.23126458"),
+        ("research-conservation-of-faithfulness.html", "10.5281/zenodo.23126484"),
     ]:
         html = read(relative)
         assert f'<meta name="citation_doi" content="{doi}">' in html

@@ -1,0 +1,79 @@
+{
+  "schema": "explainer-receipt/v1",
+  "slug": "cost-to-verify",
+  "title": "The cost to verify",
+  "page": "no-receipt-no-accept.html#3-review-debt",
+  "spec": {
+    "path": "media/explainers/cost-to-verify/spec.json",
+    "sha256": "57e47a03ccebed7d8a5227f909ca8075ccb66c452701a1cb6cd6fb5dabaf93d0"
+  },
+  "render_code": {
+    "tools/explainer/draw.py": "74c21401f1c995a1ac8531579abf6e9ed9ee8a0435db8dcf9197e869b507df8c",
+    "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
+    "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
+    "tools/explainer/render.py": "ee158c839cdbc3e839def1493dd5caaa26e044cc84da4bcca0fcee80d24876d3"
+  },
+  "fonts": {
+    "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
+    "system/fonts/conso-regular.woff2": "0e4a48ca69d9f6b6a1916eb1c6459fe6947bd4a9f999c684f1237beda1c24f78"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "pillow": "12.2.0",
+    "numpy": "2.4.5",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "voice": "Microsoft Zira Desktop",
+    "os": "Windows-11-10.0.26220-SP0"
+  },
+  "outputs": {
+    "cost-to-verify.mp4": "a9905eee38b2a5d92a7741712205f0cbeaf1bfcfeac2fbc48084ce092f96f133",
+    "cost-to-verify.srt": "31bf996e0683fc3a74c03700b29e5d1660ca581aadbfdd6606a2480cf7219d42",
+    "cost-to-verify.vtt": "e4b208836c87a0ad3404445b7bf368274c8a04be94fefc6eac447d3b64f0c97d",
+    "poster.png": "4f6b3518065ceff2e6abb807a0e74063d4b7326d0c5a6876c6dd0f1866f19aa4"
+  },
+  "narration_wav_sha256": "b1e4804b38155d571820e414c76d854f5dd35e5450bc4d21e5aad79e9ce199f1",
+  "frames": 1250,
+  "fps": 30,
+  "seconds": 41.667,
+  "frame_chain_sha256": "7e7db7be006571b662125e6483cbae2be21de9a3ee11ff6acacd3892dde16dd6",
+  "timeline": [
+    {
+      "scene": "title",
+      "start": 0.0,
+      "end": 3.5,
+      "text": "The cost to verify."
+    },
+    {
+      "scene": "claim",
+      "start": 3.5,
+      "end": 8.267,
+      "text": "A model can draft a literature review in forty seconds."
+    },
+    {
+      "scene": "check",
+      "start": 8.267,
+      "end": 15.733,
+      "text": "Checking that the papers exist, and say what the review claims, still takes a skilled person hours."
+    },
+    {
+      "scene": "debt",
+      "start": 15.733,
+      "end": 24.767,
+      "text": "Better models make claiming cheaper. Checking costs what it always cost. The gap between the two is review debt."
+    },
+    {
+      "scene": "who",
+      "start": 24.767,
+      "end": 33.033,
+      "text": "Somebody always pays that debt. Left unchecked, it lands on whoever has the least power to refuse it."
+    },
+    {
+      "scene": "close",
+      "start": 33.033,
+      "end": 41.667,
+      "text": "The gap closes only from the checking side: make the check cheap to rerun. This video ships with its own receipt."
+    }
+  ],
+  "rerun": "python -m tools.explainer.render media/explainers/cost-to-verify --verify",
+  "does_not_prove": "Matching hashes show the same bytes came out of the same spec, code and tools. They do not show that the explanation is correct or that it teaches. The narration voice ships with Windows, so the audio rebuilds only on a machine with the same voice."
+}

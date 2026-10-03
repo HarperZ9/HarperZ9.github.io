@@ -1,0 +1,27 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/arity-gap.pdf",
+  "source": {
+    "kind": "site Markdown, converted by tools/paper_latex.py",
+    "path": "writing/papers/arity-gap.md",
+    "sha256": "930d01ed452ea7dc51a8a9aa3c3bacdd1f1fc08a8fb63c73f9efb14897db4e8a",
+    "tex": "papers/tex/arity-gap.tex",
+    "page": "research-arity-gap.html"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "28895bf8012fcc46b896e6dedc8e26c5b31fbd07e93d7fce274e6de70afad4d1",
+  "pdf_bytes": 114016,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/arity-gap.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

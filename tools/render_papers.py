@@ -6,9 +6,10 @@
 Each source in writing/papers/ is the text the author approved for publication on
 3 October 2026, with a front block that carries the title, byline, description and the
 dated revision note. The page and the PDF in papers/ are both made from that one source
-(tools/print_documents.py prints the PDF from the page), so neither can say something the
-other does not. Where an earlier edition is deposited at Zenodo, the revision note links it
-as the prior version: the deposit stays the citable record of that edition.
+(tools/build_latex_papers.py typesets the PDF with LaTeX and writes its build receipt), so
+neither can say something the other does not. Where the edition is deposited at Zenodo, the
+revision note cites its DOI, and an earlier edition's deposit stays the citable record of
+that edition.
 """
 
 from __future__ import annotations
@@ -32,17 +33,17 @@ PAPERS: dict[str, dict] = {
     "research-arity-gap.html": {
         "source": "writing/papers/arity-gap.md", "kind": "Philosophy paper",
         "nav": "The Arity Gap", "pdf": "papers/arity-gap.pdf",
-        "prior": ("10.5281/zenodo.22768629", "the edition of 15 September 2026"),
+        "prior": ("10.5281/zenodo.22768629", "the edition of 15 September 2026"), "doi": "10.5281/zenodo.23126117",
     },
     "research-forcing-argument.html": {
         "source": "writing/papers/forcing-argument.md", "kind": "Philosophy paper",
         "nav": "The Conferral Seam", "pdf": "papers/forcing-argument.pdf",
-        "prior": ("10.5281/zenodo.22768809", "the edition of 15 September 2026"),
+        "prior": ("10.5281/zenodo.22768809", "the edition of 15 September 2026"), "doi": "10.5281/zenodo.23126357",
     },
     "research-self-given.html": {
         "source": "writing/papers/self-given.md", "kind": "Philosophy paper",
         "nav": "Self-Given, Not Self-Grounding", "pdf": "papers/self-given.pdf",
-        "prior": ("10.5281/zenodo.22768919", "the edition of 15 September 2026"),
+        "prior": ("10.5281/zenodo.22768919", "the edition of 15 September 2026"), "doi": "10.5281/zenodo.23126458",
     },
     "research-conferred-existence.html": {
         "source": "writing/papers/conferred-existence.md", "kind": "Philosophy paper",
@@ -53,7 +54,8 @@ PAPERS: dict[str, dict] = {
     "research-conservation-of-faithfulness.html": {
         "source": "writing/papers/conservation-of-faithfulness.md", "kind": "Working paper",
         "nav": "Conservation of Faithfulness", "pdf": "papers/conservation-of-faithfulness.pdf",
-        "prior": ("10.5281/zenodo.22768398", "the formal note of 15 September 2026"),
+        "doi": "10.5281/zenodo.23126484",
+        "supplement": ("10.5281/zenodo.22768398", "the formal note of 15 September 2026"),
         "note_pdf": ("papers/faithfulness-conserved-quantity.pdf", "the four-page formal note"),
     },
     "research-witness-and-verification.html": {

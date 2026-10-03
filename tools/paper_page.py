@@ -107,6 +107,11 @@ def doi_link(doi: str) -> str:
 
 def revision(spec: dict, note: str) -> str:
     parts = [f"<b>Revised 3 October 2026.</b> {html.escape(note, quote=False)}"]
+    if "doi" in spec:
+        parts.append(f"This edition is deposited at Zenodo, {doi_link(spec['doi'])}.")
+    if "supplement" in spec:
+        doi, label = spec["supplement"]
+        parts.append(f"It builds on {label}, which stays citable at its own Zenodo record, {doi_link(doi)}.")
     if "prior" in spec:
         doi, label = spec["prior"]
         parts.append(f"The prior version, {label}, stays citable at its Zenodo record, {doi_link(doi)}.")
@@ -140,8 +145,12 @@ def page(name: str, spec: dict, fields: dict[str, str], body: str, notes: list[s
         subtitle=sub_html, byline=html.escape(fields["byline"], quote=False), pdf=spec["pdf"],
     )
     source = spec["source"]
+    stem = spec["pdf"].removeprefix("papers/").removesuffix(".pdf")
     footer = (f'  <p class="note">Rendered from the approved source <span translate="no">{source}</span> by '
-              '<span translate="no">tools/render_papers.py</span>. The PDF is printed from this page, so the two '
-              'carry the same text. <a class="inline" href="research.html">Back to the research program</a>.</p>\n')
+              '<span translate="no">tools/render_papers.py</span>. The PDF is typeset with LaTeX from the same '
+              f'source, so the two carry the same text. Its <a class="inline" href="papers/tex/{stem}.tex">LaTeX '
+              f'file</a> and <a class="inline" href="papers/receipts/{stem}.json">build receipt</a> let anyone '
+              'rebuild it and compare the hash. '
+              '<a class="inline" href="research.html">Back to the research program</a>.</p>\n')
     return (head + "\n" + revision(spec, fields["revision_note"]) + "\n" + body + "\n\n"
             + corrections(notes) + "\n" + footer + "\n</article>\n</main>\n</body>\n</html>\n")

@@ -6,8 +6,10 @@ which one was current. These are printed from the live pages through the print
 stylesheet in system/doc.css, which means the PDF cannot say something the page
 does not.
 
-    python tools/print_documents.py            # career documents, corpora and papers
-    python tools/print_documents.py --papers   # the six philosophy papers only
+    python tools/print_documents.py            # career documents and the two corpora
+
+The six philosophy papers are no longer printed here: tools/build_latex_papers.py
+typesets them with LaTeX from their approved sources and writes a build receipt.
 
 Needs playwright (`pip install playwright && playwright install chromium`).
 It serves the checkout on a loopback port first, because a page loaded from
@@ -33,22 +35,11 @@ DOCUMENTS = {
     "cover-letter.html": "Zain-Dana-Harper-Cover-Letter.pdf",
 }
 
-# The two archived corpora print into papers/ beside the six papers, so
+# The two archived corpora print into papers/ beside the LaTeX papers, so
 # publications.html can offer a local copy of every record it lists.
 CORPORA = {
     "conferred-existence.html": "conferred-existence.pdf",
     "witnessing-spine.html": "witnessing-spine.pdf",
-}
-
-# The six philosophy papers print from their pages too (tools/render_papers.py), so each
-# download carries the edition on the page. `--papers` prints only these.
-PAPERS = {
-    "research-arity-gap.html": "arity-gap.pdf",
-    "research-forcing-argument.html": "forcing-argument.pdf",
-    "research-self-given.html": "self-given.pdf",
-    "research-conferred-existence.html": "conferred-existence-paper.pdf",
-    "research-conservation-of-faithfulness.html": "conservation-of-faithfulness.pdf",
-    "research-witness-and-verification.html": "witness-and-verification.pdf",
 }
 
 MIME = {
@@ -89,11 +80,8 @@ def main() -> int:
     with serving(ROOT, PORT) as base, sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        if "--papers" in sys.argv:
-            jobs = [(s, ROOT / "papers" / t) for s, t in PAPERS.items()]
-        else:
-            jobs = [(s, OUT / t) for s, t in DOCUMENTS.items()]
-            jobs += [(s, ROOT / "papers" / t) for s, t in {**CORPORA, **PAPERS}.items()]
+        jobs = [(s, OUT / t) for s, t in DOCUMENTS.items()]
+        jobs += [(s, ROOT / "papers" / t) for s, t in CORPORA.items()]
         for source, path in jobs:
             path.parent.mkdir(parents=True, exist_ok=True)
             page.goto(base + source, wait_until="networkidle")

@@ -1,0 +1,518 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf,Ligatures=TeX]
+\setmonofont{lmmono10-regular.otf}
+\usepackage{microtype}
+\usepackage{longtable,array,booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parskip}{6pt plus 1pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\hypersetup{pdftitle={The Conservation of Faithfulness},pdfauthor={Zain Dana Harper},pdfsubject={Typeset from writing/papers/conservation-of-faithfulness.md},pdfkeywords={source sha256 4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc}}
+\newcommand{\register}[1]{{\ttfamily\small #1}}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries The Conservation of Faithfulness\par}
+\medskip
+{\large\emph{What crosses between two minds, and where the check runs out}\par}
+\medskip
+Zain Dana Harper\par
+{\small Working paper · edition of 3 October 2026\par}
+{\small Idea, simulations and first working paper 23 June 2026; argument drafted 30 June 2026; revised for plain language September 2026; this edition 3 October 2026.\par}
+\end{center}
+
+\begin{quote}\small
+\textbf{Revised 3 October 2026.} This edition replaces the edition of September 2026. Each claim now meets its strongest contrary, and every passage is marked as plain statement, steelman contest or open question. Four claims are withdrawn or narrowed. The law now admits a floor on output size set by the criterion. A narrower law replaces the rule that one broken stage collapses a pipeline. The inference that whatever stands outside the system must be a human is withdrawn as stated, and the falsifier F0 is reported as specified and not yet run. Eight questions go to the reader, among them whether any check can certify an intended criterion and whether the party who answers for it must be a person. A dated October 2026 update engages Julian Jaynes. This edition is deposited at Zenodo, \url{https://doi.org/10.5281/zenodo.23126484}. It builds on the formal note of 15 September 2026, which stays citable at its own Zenodo record, \url{https://doi.org/10.5281/zenodo.22768398}.
+\end{quote}
+\section*{How to read this paper}
+
+\register{[PLAIN]} Every passage carries one of three registers.
+
+\begin{itemize}
+\item \register{[PLAIN]} marks what can be stated flatly: a record someone can re-run, a derivation that holds, a defeat the paper takes, a null it reports. These passages carry no hedges.
+\item \register{[STEELMAN]} marks a position set against its strongest contrary, both argued at a strength their holders would recognise. Each contest ends with one of four outcomes. \emph{Defeat}: the contrary wins against the claim as written. \emph{Survival by concession}: the claim stands after giving up ground, and the ground given up is named. \emph{Standoff}: neither side can move the other on shared premises. \emph{Ally mistaken for an enemy}: the contrary turns out to support the claim.
+\item \register{[OPEN]} marks a question handed to you, the reader. It is framed as a question, with the considerations on each side and what evidence or argument would settle it. The paper has a view on some of these and says so. It does not ask you to share it.
+\end{itemize}
+The status labels inside the argument mean what they meant in the previous edition. [established] means runnable evidence supports the claim. [designed] means the thing is built or specified and has not been shown at the claimed strength. [reach] marks a reasonable extension the experiments do not demonstrate. UNVERIFIABLE marks a claim that cannot be checked against anything a reader can run, with the reason. In the software audit, MATCH means a claim agrees with the code and DRIFT means it no longer does.
+
+Domain tags follow the guardrail for theology, ethics and consciousness: \textbf{\{Th\}} theological, \textbf{\{E\}} ethical, \textbf{\{C\}} consciousness, and \textbf{\{T\}} technical and epistemic.
+
+\section*{Abstract}
+
+\register{[PLAIN]} When information crosses a lossy boundary between two minds, two senses or two machines, what can survive is faithfulness to a criterion named outside the transform. The paper states this as a law with a scope condition and a falsifier, F0, and demonstrates it on seven sensory substrates run as ten criterion-readout instances. The 23 June paper reported F0 untriggered. Each of those runs uses one transform at one setting, and F0 asks for a family swept across bit-rates, so F0 as defined has not yet been run (section 2.7). The law then meets its strongest contraries. Information theory defeats one sentence of it: faithfulness does set a floor on how many bits the output must keep, sized by the criterion. Above that floor the bit count does not decide faithfulness, and the law survives in that form. The same literature that defeats the sentence supplies the repairs, so the paper counts it an ally. A second defeat lands on the composition law, whose ``one broken stage collapses the pipeline'' half fails as stated; a narrower version holds. Section 1.3 counts the other defeats. The proxy-witness test shows that an external witness is necessary and not sufficient. Whether any check can certify that a stated criterion is the one intended, and whether the party who answers for that choice must be a person, are handed to the reader as open questions, with the considerations on each side. A dated update engages Julian Jaynes on whether some findings exist only where two streams of thought meet.
+
+\emph{Keywords:} faithfulness, lossy transform, criterion, rate-distortion, coding for computing, external witness, proxy criterion, Goodhart's law, rule-following, answerability, Jaynes
+
+\section*{1. The question}
+
+\subsection*{1.1 What crosses}
+
+\register{[PLAIN]} \{T\} ``Mind'' in this paper means a component given one partial view of a subject, whether a person, a sense or a machine; the word implies nothing about perception or experience. In that sense, two minds cannot share their internal states. Each can only collapse a state into a stream that the other reconstructs. Whether human minds can share states in some richer way is a question about consciousness \{C\} that this paper does not take up. The naive picture is a narrow tube that lets too little through. The question of this paper is whether the tube is the limit. On the alternative reading, the thing that has to cross is something other than the state. It is far smaller and independent of the medium, and the tube can carry it easily. If that reading is right, shared understanding becomes a question of what to conserve and how to check that it crossed.
+
+A recipe card shows the difference. Translate the card into another language and almost every character changes. By a count of letters, very little survived, and you can still make the dish, because the steps that lead to the meal came through. Now let a grease stain fall on the oven temperature. That costs a few characters and ruins the dish, since the temperature was the part you needed.
+
+The paper's answer, as it stands after the contests below: what a lossy crossing can conserve is faithfulness to a criterion named outside the transform. The crossing must keep at least what the criterion itself requires; past that minimum, how many bits survive does not decide whether the criterion came through. No statistic of the output alone can certify faithfulness, though some can certify its failure. The paper argues that no check can certify that the named criterion is the one intended, and leaves that conclusion open to the reader in section 5.3. Who must answer for choosing the criterion is an ethical question, taken up in section 5.4. \{T for the first four sentences; E for the last\}
+
+\subsection*{1.2 Where the idea came from}
+
+\register{[PLAIN]} The record gives the dates and leaves some authorship open. In engineering sessions on 10, 17 and 18 June 2026, the author asked that context, intent and authorization be carried as a lossy, neutral state, so that testing could run on that state without his inference or a model's touching the raw capture. By 23 June the question had become what survives a lossy crossing at all. The first working paper, the principle document and the substrate simulations were committed publicly that day (repository faithful-transpile, commit e82148e). The 23 June paper names one thought as the author's own: that energy put into the world, positive or negative, lands somewhere, and that words carry it. Section 7 starts from that thought. The 23 June commit carries a model co-author line, and the session in which the simulations were built is not on disk, so how much of the formal construction is the author's is unknown. On 30 June a model workflow rewrote the paper into the version this edition revises. The reader's note at the end says what that means for the text.
+
+\subsection*{1.3 The contraries, and how each contest came out}
+
+\register{[PLAIN]} The 23 June paper stated its claims and labeled them. This edition sets each one against the strongest objection a holder of the opposing view would make. The table is the scoreboard. A reader who wants only the outcomes can stop here. The section numbers lead to the argument behind each one.
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.037\linewidth}>{\raggedright\arraybackslash}p{0.231\linewidth}>{\raggedright\arraybackslash}p{0.257\linewidth}>{\raggedright\arraybackslash}p{0.161\linewidth}>{\raggedright\arraybackslash}p{0.114\linewidth}}
+\toprule
+\textbf{\#} & \textbf{Claim under test} & \textbf{Strongest contrary} & \textbf{Outcome} & \textbf{Section} \\ \midrule\endhead
+1 & Faithfulness places no constraint on the size of the output & The information theorist's floor & Defeat of that sentence; the law survives by concession & 2.5 \\
+2 & The law is a new contribution & It is sufficiency, rate-distortion and coding for computing & Ally mistaken for an enemy; novelty survives by concession & 2.6 \\
+3 & F0 is a real falsifier, and it stayed untriggered & F0 cannot fire, has no real opponent and was never run & Defeat of ``untriggered'' as a test result; F0 survives as a specified falsifier not yet run & 2.7 \\
+4 & ``Conservation'' names the result & Nothing is conserved in the physicist's sense & Survival by concession & 2.8 \\
+5 & Seven rows are independent replication & One investigator, one harness & Survival by concession & 3.4 \\
+6 & One broken stage collapses a pipeline & A stage can drop a feature the end does not need & Defeat as stated; a narrower law holds & 4.2 \\
+7 & The square-root rate is unverified & The shipped script already measured it & Plain answer: the run tests the simulator; the substrate question stays open & 4.3 \\
+8 & Every real witness holds a proxy & Hash checks hold their criterion exactly & Survival with the gap relocated to the choice of criterion & 5.2 \\
+9 & No check certifies the intended criterion & Rule-following and the dispositional reply & Standoff, partly an ally; open question & 5.3 \\
+10 & The criterion is a human question & The boundary needs no human & Defeat of the 23 June inference as stated; open question on persons & 5.4 \\
+10a & Whoever chooses a criterion must answer for it (Step 6a) & Some criteria have no chooser; some outcomes have no one who can fairly answer & Survival by concession: a norm on adopting a criterion & 5.4 \\
+11 & One center serves every domain & The inference runs backward & Survival by concession on one word & 5.5 \\
+12 & Naming and owning blocks relativism & Relativism with an owner is still relativism & Open question & 5.5 \\
+13 & Nothing reaches its best unperceived & A bridge meets its load unchecked & Survival by concession; open question on the stronger reading & 5.6 \\
+14 & Words carry energy in any commons & The model is a model & Grounded in model; open question beyond it & 7 \\
+15 & Some findings exist only at a crossing (update) & Two inputs are needed, two minds are not & Plain in its formal version; open in its human version & 9.4 \\
+\bottomrule\end{longtable}}
+Four contraries win outright against the claim as written (rows 1, 3, 6 and 10). Three more claims fall inside contests that end otherwise: the universal form of Step 3 (row 8), the claim that no one had assembled the principle (row 2) and the Page gloss (section 3.5). Section 11 lists all of them. The repairs for rows 1 and 6 come from the literature the paper first treated as a threat. Most survivals are survivals by concession. Eight questions are left open, because the material here cannot settle them.
+
+\section*{2. The law and its first contraries}
+
+Domain: \{T\} throughout this section.
+
+\subsection*{2.1 The objects}
+
+\register{[PLAIN]} \textbf{Definition 1 (transform).} A substrate transform is a function that maps a subject to a representation. It may be lossy, with far fewer dimensions in the output than in the input. It may be bijective, with an output of the same cardinality as the input. A substrate is the medium the information lives in: an image, a sound, a shape, a sentence. Cardinality here is the number of possible values.
+
+\textbf{Definition 2 (criterion).} A criterion is a readout: the property of the subject one cares to preserve, such as a label, an identity, a measurement or an answer. The transform does not author its criteria. The argument depends on that externality, and section 5 shows where it bites. The word ``criterion'' has a technical use in philosophy of mind after Wittgenstein (UNVERIFIED; no edition opened); this paper means only a readout fixed in advance.
+
+\textbf{Definition 3 (faithfulness, graded).} A transform is faithful to a criterion at level one minus epsilon if there exists a recovery map whose readout error is at most epsilon over the relevant distribution of subjects, for a stated error metric and a stated distribution. Binary faithfulness is the special case where epsilon is zero. The recovery may be required to use an external secret key; that is the concealment case.
+
+A recovery map is any procedure that reads the criterion back from the output. A faithfulness number means something only when five things are named: the criterion, the distribution over subjects, the error metric, the tolerance and, if there is one, the secret key.
+
+\subsection*{2.2 The law, as the 23 June paper stated it}
+
+\register{[PLAIN]} \textbf{Conservation of Faithfulness.} Fix a subject distribution, a criterion, an error metric and a tolerance. If there exists a recovery map whose expected readout error is at most that tolerance, then the transform is faithful to the criterion at the corresponding level, and this fact is independent of the bit-rate of the transform. A transform may discard arbitrarily many bits of the subject and remain faithful. Faithfulness constrains whether the criterion can be recovered. It places no constraint on the cardinality of the output.
+
+Bit-rate is how many bits the output keeps. Three corollaries hold under the same fixed setup.
+
+\begin{itemize}
+\item \textbf{C1, bit-independence.} Faithfulness does not track bit-loss. A transform can drop almost every bit and stay faithful. Another can be bijective, dropping no bits, and still be unfaithful to the criterion without the external secret. That is the concealment case.
+\item \textbf{C2, internal blindness.} No statistic computed from the representation alone determines faithfulness to the criterion, because the criterion sits outside the representation. Certification requires evaluating against the criterion itself, off the substrate.
+\item \textbf{C3, criterion-relativity.} Faithfulness belongs to the pair (transform, criterion). The same transform can be faithful to one criterion and lossy to another with nothing about the transform changed.
+\end{itemize}
+The law's last sentence does not survive section 2.5. It is printed here as the 23 June paper and the previous edition printed it, so that the reader can see what was defeated.
+
+\subsection*{2.3 The scope condition}
+
+\register{[PLAIN]} The law holds relative to a fixed, externally named distribution, criterion, metric and tolerance. It makes no claim about an unnamed criterion, an unstated distribution or a transform evaluated against a criterion it was allowed to choose. If the transform, or the party operating it, authors any of those four, the law does not apply, and the result is UNVERIFIABLE by construction.
+
+\subsection*{2.4 The falsifiers}
+
+\register{[PLAIN]} \textbf{Falsifier F0 (bit-rate predicts faithfulness).} Construct a family of transforms indexed by output bit-rate, all evaluated against one fixed external criterion on one fixed distribution. The law is false if faithfulness is a monotone function of bit-rate across the family: a lower bit-rate always gives lower faithfulness, and no transform is low-rate with high faithfulness or high-rate with low faithfulness. The 23 June paper treated the seven sensory substrates of section 3 as attempts to trigger F0 with instruments that share no mechanism, and reported F0 untriggered in every one. Identity survived a perceptual hash that shrank the data 24,576-fold, so that transform was lossy and faithful. Encryption kept every bit, since it is bijective, and its output was unreadable without the key, which made it unfaithful. Its status, as the 23 June paper gave it: robust by independent replication, falsifier untriggered, short of a theorem. Each substrate script applies one transform at one setting, and none builds the family indexed by bit-rate that F0 asks for. Section 2.7 takes up what that does to the status.
+
+\textbf{Falsifier F1 (an internal statistic certifies faithfulness).} C2 is false if some statistic of the representation alone reliably predicts faithfulness across transforms, with no false positives over an adversarial set. F1 did not fire. The test that attempts F1 is the quantity substrate's script transpile\_conservation.py. It compares an internal energy statistic across faithful and unfaithful projections that keep the same number of bits. Re-run on 2 October 2026, it reported an energy gap of 0.001 against a gap of 0.54 in how well the invariant survived. The inputs in that script are isotropic Gaussian points, and for such inputs the energy kept by any projection to the same number of dimensions is the same in expectation. So the statistic tested is blind by construction: the run illustrates C2 and does not stress it. The adversarial test of section 5.1 asks a different question, whether an external witness is sufficient.
+
+\subsection*{2.5 Contrary 1: the information theorist's floor}
+
+\register{[STEELMAN]} \emph{The contrary, at full strength.} Take Definition 3 at epsilon zero. A recovery map g with g(T(x)) = c(x) on the support exists only if T never sends two subjects with different criterion values to the same output. So the output must take at least as many distinct values as the criterion takes on the support. If the criterion has a thousand possible answers, an output of one bit cannot be faithful to it. In the graded case, Shannon's rate-distortion theory (Shannon 1959, UNVERIFIED in this pass) sets a minimum rate for each level of distortion on the criterion. That minimum is an asymptotic bound for coding long blocks of subjects. A transform applied to one subject at a time has its own one-shot floor, which this paper does not derive and which can sit above the asymptotic figure. Faithfulness therefore does constrain the size of the output, from below. The law's last sentence says it places no constraint at all, and that sentence is false.
+
+\emph{The law's side, at full strength.} Read charitably, the 23 June sentence ``faithfulness constrains recoverability of \ensuremath{\varphi}, not the cardinality of Y'' says that recoverability is the only constraint, and that any limit on size is a consequence of it. On that reading the floor belongs to the one constraint, as what recoverability demands of the output. The 23 June paper's point was also about tracking. Its first proposition said the bit-rate of a transform is irrelevant once the criterion factors through it, and gave examples where almost all the bits went: a 24,576-fold hash, a 98\% spectral cut, 59\% of a graph's edges. None of those examples comes near the floor. The 23 June paper set out to deny that faithfulness goes up and down with the bit count, and that denial stands.
+
+\emph{Outcome: defeat of one sentence; the law survives by concession.} \register{[PLAIN]} The sentence ``It places no constraint on the cardinality of the output'' is false under Definition 3 as written, whatever reading the shorter 23 June wording allows, and the derivation above is valid. The law survives in this form: \emph{faithfulness sets a floor on the output, sized by the criterion; above that floor, the number of bits the output keeps does not determine whether it is faithful.} Below the floor, the bit count settles the matter: the transform is unfaithful. The paper's own quantity row shows the floor, since a binary invariant survives ``to 1 bit'' and no further. C1 and F0 hold as stated once they are read above the floor, and every label stays.
+
+The concession sharpens the original intuition. The floor is set by the criterion, and the subject's size has no part in it. On the recipe card, the minimum the crossing must carry is the steps and the temperature, however long the card is. The scope condition of section 2.3 is where the law stops applying; the floor sits inside that scope and limits how far bits can fall.
+
+\subsection*{2.6 Contrary 2: ``this is sufficiency, rate-distortion and coding for computing''}
+
+\register{[STEELMAN]} \emph{The contrary, at full strength.} Recovering a named function of a source from a compressed output is an old problem with its own literature. In the noiseless case, saying the criterion can be recovered from the output says the criterion is a function of the output, a measurability condition. With noise, it is the indirect or remote-source rate-distortion problem, where the encoder sees a noisy version of what must be reproduced (Dobrushin and Tsybakov 1962; Witsenhausen 1980; records opened, texts not read, so this description is UNVERIFIED). Coding for computing asks how few bits suffice for a receiver to compute a given function of the source (Orlitsky and Roche 2001; record opened, text not read, UNVERIFIED). The information bottleneck compresses one variable while keeping what it says about a second, relevant one (Tishby, Pereira and Bialek 1999). Each of these already states the general claim with no reference to any one domain. The 23 June claim that no one has assembled the cross-domain principle does not survive this list.
+
+\emph{The law's side, at full strength.} The formal note on this work, dated July 2026, already says the unified form is closely related to sufficient statistics and rate-distortion and claims no improvement on them. It claims something narrower: the same behavior shown on seven substrates with no shared mathematics, the explicit split between concealment and destruction, and a necessary-but-insufficient boundary on external witnessing.
+
+\emph{Outcome: ally mistaken for an enemy; novelty survives by concession.} \register{[PLAIN]} The literature the paper feared would swallow it supplies its repairs. Rate-distortion gives the floor of section 2.5. The data-processing inequality (Cover and Thomas 2006) gives the narrower composition law of section 4.2. The Goodhart literature (Manheim and Garrabrant 2018) classifies the proxy-witness result of section 5.1 as an adversarial case. The paper claims no improvement on any of these theories. Its contribution is the three items the formal note names. Readers in those fields can judge better than the author whether those three count as a contribution. Section 2.7 presses that question further.
+
+One correction belongs here. The formal note says a sufficient statistic is ``exactly a function through which a target is recoverable''. Fisher's sufficiency (Fisher 1922) is a property relative to a parametric family: the data are conditionally independent of the parameter given the statistic. The noiseless case of this paper is measurability (the Doob-Dynkin lemma; stated from memory and UNVERIFIED in this pass). The noisy case is indirect rate-distortion.
+
+\subsection*{2.7 Contrary 3: F0 cannot fire}
+
+\register{[STEELMAN]} \emph{The contrary, at full strength.} The objection has four parts. First, any family of transforms that includes a bijection with a hidden key breaks monotonicity by construction, so F0 can never return ``the law is false'' against such a family. A falsifier that cannot fire tests nothing. The original edition of this program met the same failure in another paper: its cross-examination found a filter that fired ``seam found'' on every case and so had no discriminating force (cross-examination, contrary 10). Second, take out the keyed members and look for someone who holds that a generic compression family degrades every criterion together as the rate falls. No published holder of that view is known to this paper, and anyone who has used a lowpass filter knows that pitch and timbre fare differently. Third, the rows could not test that view anyway. F0 asks for a family of transforms indexed by bit-rate. Each substrate script applies one transform at one setting: one lowpass width, one vertex budget, one spanning forest. The rows show that criteria fare differently at a fixed rate. They say nothing about how faithfulness moves as the rate moves, and no script builds the family F0 names. Fourth, what the paper calls its empirical content is close to definitional or textbook. Definition 3 builds in grading (``faithfulness, graded'') and the concealment case (``the recovery may be required to use an external secret key''). That a bijective cipher hides a readout from anyone without the key is the subject of Shannon's 1949 secrecy theory (UNVERIFIED in this pass). Grading is the distortion axis of rate-distortion. The 23 June paper itself stated the proxy result as Proposition 5, a formal existence claim: ``for any \ensuremath{\varphi}' there is a transform with zero \ensuremath{\varphi}'-error yet adversarial to \ensuremath{\varphi}''. On this view the paper illustrates known results across substrates and discovers none.
+
+\emph{The law's side, at full strength.} The 23 June paper conceded in print that its first three propositions are near-immediate from the definitions, and said so on purpose: the framework was chosen so that what to conserve, and why internal certification fails, come out as consequences. A definition can make a result possible without showing that real transforms produce it. That a perceptual hash keeps scene identity at 24,576-fold reduction, that pitch survives a 98\% spectral cut while timbre does not, and that connectivity survives the loss of 59\% of a graph's edges are measured facts about particular transforms and criteria. No definition supplies those numbers. The pattern across seven substrates with no shared mathematics is a demonstration, and a demonstration has value of its own even when the theorem behind it is known. F0 also stays a well-formed test. Its family and its criterion can be fixed in advance, and a run that sweeps rate for two criteria at once would put it to work.
+
+\emph{Outcome: defeat of ``untriggered'' as a test result; the rest survives by concession.} \register{[PLAIN]} C1 to C3 are near-definitional. F0 is a specified falsifier that no run has yet attempted, so ``falsifier untriggered'' records that the test has not yet run. The rows are measured demonstrations of criterion-relativity at a fixed rate. The concealment split, graded faithfulness and the proxy-witness boundary are known results, and the paper shows them across substrates that share no mathematics.
+
+\subsection*{2.8 Contrary 4: nothing is conserved}
+
+\register{[STEELMAN]} \emph{The contrary.} Some transforms destroy faithfulness, so faithfulness is not conserved across transforms the way energy is conserved across a closed system. The title borrows a word from physics that the result does not earn. \emph{The law's side.} The word names what a crossing can preserve. Given a fixed criterion and setup, whether faithfulness survives is settled by recoverability and does not follow the bit count. \emph{Outcome: survival by concession.} \register{[PLAIN]} The objection is right about the physicist's sense of the word. In this paper ``conservation'' means what a crossing can keep. A title with ``invariance'' or ``survival'' would avoid the misreading.
+
+\subsection*{2.9 What C2 can and cannot say}
+
+\register{[PLAIN]} C2 holds in one direction. No statistic of the output alone certifies faithfulness, because the criterion is not in the output. Some statistics of the output alone certify its failure: an output with fewer distinct values than the criterion cannot be faithful at epsilon zero (section 2.5). So C2 reads: \emph{no statistic of the output alone certifies faithfulness; some certify its failure.}
+
+\section*{3. The evidence [established]}
+
+Domain: \{T\}.
+
+\subsection*{3.1 Method}
+
+\register{[PLAIN]} All simulations use the Python standard library, plus PIL for images. They are deterministic and seeded. Each substrate registers its falsifier in advance. The language and vision substrates use blind, fresh-context model subjects, which start each test with no memory of earlier ones, and judges who cannot see which test arm they are scoring. Code and per-substrate verdicts live in the substrate files and the principle document.
+
+The pass-fail instruments misfired four times. A block-shuffle was sized to the hash cell (perceptual hash). An internal-blindness test compared two transforms when it should have compared one transform across two criteria (quantize). A cipher reused its keystream and leaked plaintext, a real two-time-pad bug (encryption). An absolute-area threshold was too strict for a spiky shape (geometry). In each case, the build log reports, fixing the measurement restored the pre-registered result and the claim stayed as registered. No one has independently certified that account. The condition that would check it, pulling the four commits and confirming that only measurement code changed, cannot be run on the public history: the public repository begins with one commit (e82148e, 23 June 2026) that adds every simulation at once. The note stands as reported, UNVERIFIABLE against a commit.
+
+\subsection*{3.2 The seven sensory substrates}
+
+\register{[PLAIN]} Each row names a sense, the transform applied, how much was thrown away, and which readouts survived. A score of 1 means the readout came through intact. For a yes-or-no readout, 0.5 is what guessing scores. The sight row reports a distance, where smaller means a closer match; this lowercase drift is unrelated to the DRIFT label.
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.101\linewidth}>{\raggedright\arraybackslash}p{0.160\linewidth}>{\raggedright\arraybackslash}p{0.108\linewidth}>{\raggedright\arraybackslash}p{0.471\linewidth}}
+\toprule
+\textbf{Sense} & \textbf{Transform} & \textbf{Loss} & \textbf{What survived and what did not} \\ \midrule\endhead
+Sight & perceptual hash & image to 64 bits, about 24,576-fold & scene identity survives (drift 0.004); a different scene does not (0.484) \\
+Sound & bandlimited audio & about 98\% of spectral energy cut & pitch and melody survive, 4 of 4 notes; timbre, with about 2\% kept, does not \\
+Shape & polygon decimation & cut to 10\% of vertices & gross area survives (4 to 6\% error); 83\% of fine corners destroyed \\
+Language & lossy summary, read by a model & about half of facts dropped & a question is answerable if and only if its supporting fact survived; the model invented no facts \\
+Structure & graph to spanning forest & 59\% of edges dropped & connectivity survives (1.000); distance (0.726) and triangle counts (0.492) do not \\
+Quantity & projection and quantization & 48 numbers to 6, or to one bit & the invariant survives to 1 bit when the transform keeps the criterion direction (faithful 1.00 against unfaithful 0.46 at equal bits) \\
+Identity & encryption & bijective, zero bit-loss & the criterion is at chance from ciphertext (0.510); the external key recovers it (1.000) \\
+\bottomrule\end{longtable}}
+The sound row is the phone-call effect: the line cuts the high frequencies, so the tune survives while voices lose their character. In every row, the amount thrown away did not decide which readout survived.
+
+\subsection*{3.3 Counts, and one DRIFT candidate}
+
+\register{[PLAIN]} Seven sensory substrates are the seven rows. Ten criterion-readout instances arise because sight, sound and quantity each run two instruments (2 + 2 + 2 + 1 + 1 + 1 + 1 = 10). Two structural tests probe the law's shape: one on composition (section 4) and one on the boundary (section 5.1). The previous edition says nine substrate files sit on disk, seven sensory and two structural. The public sims directory does hold nine substrate\_*.py files: phash, sound, analog, geometry, graph, quantize, encrypt, compose and adversarial. Sound has two of them and language has none. The language result rests on blind model runs with no script in the repository, and the vision arm on a separate report. The 23 June principle document reports a language result while its own open-program list calls a semantic transform untested. By the paper's own rule, the file count is a DRIFT candidate.
+
+\subsection*{3.4 Contrary 5: ``independent replication'' overstates}
+
+\register{[STEELMAN]} \emph{The contrary.} One investigator, one harness, one framework and model assistance throughout make the rows independent in mathematics only. Replication, in the sense a scientist means, is a different group re-running the work. \emph{The paper's side.} No shared mathematics runs between any two rows, so agreement across them is not an artifact of one formula. \emph{Outcome: survival by concession.} \register{[PLAIN]} The rows replicate across mechanisms. No outside group has rerun the simulations. The protected status phrase ``robust by independent replication'' should be read in that sense.
+
+\subsection*{3.5 Two refinements the substrates forced}
+
+\register{[PLAIN]} Loss comes in two kinds. In destruction, the bits that determine the criterion are gone, and no key helps. In concealment, encryption discards nothing, since it is bijective, and the criterion is unreadable without an external secret. The model result is [established]. The analogy to the black-hole information question is [reach]: the information is put beyond reach and is not erased. An earlier edition's references glossed Page (1993) as showing that information is ``conserved and scrambled''. That gloss is wrong on two counts. Page argues, under unitary evolution, about how much information comes out in the radiation; the term ``scrambling'' comes from later work (Sekino and Susskind 2008). Hayden and Preskill (2007) describe information that ``remains concealed'' in a black hole until the half-way point, which is closer to this paper's own word.
+
+Faithfulness is also graded. In noiseless discrete substrates, the criterion either passed through the transform intact or it did not. In analog and noisy substrates it survives smoothly down to a noise floor bounded by the signal-to-noise ratio. Definition 3 carries this as the epsilon knob, and the substrates showed that the knob is needed.
+
+\section*{4. Composition}
+
+Domain: \{T\}.
+
+\subsection*{4.1 The law as stated}
+
+\register{[PLAIN]} A pipeline is a chain of transforms in which each stage feeds the next. The 23 June draft asserted ``a pipeline is faithful if and only if every stage is''. The previous edition restated it as the Layer Composition Law [established under its scope condition]: given a stagewise criterion chain, in which each stage is faithful to the criterion handed to it and recovers into the criterion handed to the next, then (binary case) if every stage is faithful the pipeline is faithful, and if any one stage fails to preserve its carried criterion the whole pipeline is unfaithful; and (graded case) the end-to-end error is bounded by the accumulated stage errors, linearly in the worst case. The 23 June paper stated the graded form differently, as Proposition 4: ``graded faithfulness composes multiplicatively, error accumulating \textasciitilde{}√k for independent noisy stages''. Section 4.3 takes up the square-root part.
+
+\subsection*{4.2 Contrary 6: a stage can drop what the end does not need}
+
+\register{[STEELMAN]} \emph{The contrary.} Let stage 1 carry the criterion together with an extra feature. Let stage 2 drop the extra feature. Stage 2 fails its carried criterion, and the pipeline is still faithful to the final criterion. The ``collapse'' half is false as stated. The proof in the previous edition composes recovery maps, which proves only the forward direction.
+
+\emph{The law's side.} The collapse half was meant for chains where every carried criterion is needed, and the composition run (0.955 to 0.501) is such a case: its unfaithful step replaces the score with noise, which destroys the final criterion itself.
+
+\emph{Outcome: defeat as stated; a narrower law holds.} \register{[PLAIN]} The narrower law is valid: \emph{if the output of any stage no longer determines the final criterion, no later stage can restore it, and the pipeline is unfaithful.} Every later output is a function of that stage's output, so this is the data-processing inequality in its deterministic form. The forward direction stands as proved. The 0.955 to 0.501 run is an instance of the narrower law.
+
+The linear bound in the graded case needs a condition the proof left implicit. Either the readout loss is 0-1, so stage errors add as a union bound, or no recovery map makes an incoming error larger (its Lipschitz constant under the metric is at most 1). Under a general metric a later recovery map can magnify an earlier error.
+
+\subsection*{4.3 Is the square-root rate verified?}
+
+\register{[PLAIN]} \emph{The first question has a plain answer.} Does the shipped composition run establish that error grows as the square root of chain length under independent noise? No. It confirms that the simulator does its own arithmetic. The previous edition marks the square-root rate [designed, UNVERIFIABLE] and names its falsification experiment: chains of length 1, 2, 4, 8 and so on with independent stage noise. The shipped script substrate\_compose.py already runs chains of length 1, 2, 4, 8, 16 and 32 with Gaussian noise of standard deviation 0.35 per step. Re-run on 2 October 2026, it reported label survival of 0.893, 0.853, 0.800, 0.751, 0.697 and 0.653. The square-root model predicts 0.893, 0.854, 0.806, 0.752, 0.697 and 0.649. The largest gap is 0.006. The case for moving the label to [established] is that the experiment the paper called missing exists, and its numbers match the model to within 0.006.
+
+The case fails on the script's own construction. The script draws each step's noise as an independent Gaussian. The sum of L such draws has variance L times 0.35 squared by arithmetic, and the survival curve then follows one minus arctan(0.35 times the square root of L) over pi exactly. At 8,000 trials per point the sampling error is about 0.005, so a gap of 0.006 is what the arithmetic predicts. The run confirms that the simulator implements its own assumption. The empirical question, whether the stages of real substrates have independent errors, is one the run never asks. The falsifier as written also tests the wrong quantity: what grows as the square root of L is the accumulated noise, and the readout error grows more slowly and levels off at 0.5.
+
+\register{[OPEN]} \emph{The question for the reader:} do the stages of real substrate pipelines have independent errors, so that the square-root rate applies to them?
+
+\begin{itemize}
+\item \emph{For:} many lossy stages draw on unrelated sources of error, such as a sensor's noise, a codec's rounding and a channel's interference, and independent errors are the textbook default.
+\item \emph{Against:} a chain that repeats one kind of transform, such as re-encoding one image again and again, tends to make the same kind of error at each stage, and correlated errors add faster than the square root.
+\item \emph{What would settle it:} chains built from real substrate transforms, such as repeated lossy encodes of one image or repeated summaries of one text, with the noise variance measured at each stage. If the variance adds, the rate holds for those substrates. If the stages' errors are correlated, the linear bound is the one that applies.
+\end{itemize}
+The previous edition's label is [designed, UNVERIFIABLE], with the reason ``no curve was run''. That reason no longer fits the record: the run that exists tests the simulator, and the open question is about the substrates. By the label key of ``How to read this paper'', UNVERIFIABLE means a claim no reader can check, and this one names a runnable experiment, so ``untested'' describes it better.
+
+\subsection*{4.4 The whole-from-parts conjecture [conjecture; counterexample on record]}
+
+\register{[PLAIN]} The stronger statement is a conjecture: ``if every sub-part of a subject is rendered faithfully under a criterion, the whole is faithful under that criterion.'' In the one domain where it was tested adversarially, it failed. A visualization program drew an ordinary cube under orthographic projection with identity rotation, viewed straight on. Every edge stays a locally faithful straight segment. Four pairs of vertices still collapse onto one point, because the back face sits exactly behind the front face, and the graph of vertices and edges cannot be recovered. For cubes in four and six dimensions, 9.1\% of views collide at dimension 4 and 69.1\% at dimension 6. A genericity check that the renderer now runs enforces injection-preserving projection; after enforcement, the worst case went from 65.6\% degenerate views to 0\%. The visualization work found a different strengthening for each failure mode, and no experiment shows they reduce to one condition. Whether one strengthening serves every domain is UNVERIFIABLE from the experiments run so far. The 23 June ``faithfulness composes'' is true in the sense of section 4.2 and false in the stronger reading.
+
+\section*{5. The boundary, and what lies past it}
+
+\subsection*{5.1 The proxy witness [established]}
+
+\register{[PLAIN]} \{T\} Pushed as far as it goes, the law crosses every sense and every pipeline and stops at exactly one place. The adversarial structural test locates that edge. A witness judges with a proxy criterion that lines up only partway with the true one; in the test the match is a cosine of 0.61. A transform then moves each point along the part of the true criterion that is orthogonal to the witness. Re-run on 2 October 2026, substrate\_adversarial.py reported witness-faithfulness 1.000 and true-faithfulness 0.520: the witness certified the transform as fully faithful while 48\% of the true labels flipped. The external witness is necessary and is not sufficient. It can be gamed when its criterion is a proxy for the intended one. The transform in the test is built to exploit the gap, so the result shows that the gap can be exploited. It does not measure how often ordinary transforms fall into it.
+
+\subsection*{5.2 The steps to the boundary, and Contrary 8}
+
+\register{[PLAIN]} The argument is numbered so that a reader can reject one step and see what falls with it. Steps 1, 2 and 4 are \{T\} and hold as stated.
+
+\textbf{Step 1.} No statistic of the output alone determines faithfulness (C2, in the form of section 2.9).
+
+\textbf{Step 2.} Certifying faithfulness therefore requires an external witness that holds the criterion. This follows from Step 1 and the scope condition, which voids any result whose criterion the transform or its operator authored.
+
+\textbf{Step 4.} A transform can satisfy a proxy and break the intended criterion (section 5.1).
+
+\register{[STEELMAN]} \textbf{Step 3}, as the previous edition states it: \emph{any witness in practice holds a proxy, a criterion aligned only partway with the intended one.} The defense: a witness's criterion is itself a representation of what someone intends, and by C3 the witness is faithful only to the criterion it holds.
+
+\emph{The contrary, at full strength.} The paper's own rows refute the universal claim. The identity row checks a key exactly. The SHA-256 checks of the audited software in section 6 hold their criterion exactly, because there the criterion is a digest and nothing stands behind it. A criterion that is formally specified is the intended criterion by stipulation, and no proxy gap exists.
+
+\emph{Step 3's side, at full strength.} The hash check does hold its digest exactly. But nobody intends a digest for its own sake. The digest stands for ``the file I meant to ship'', and a check against the wrong reference digest passes a file nobody meant to ship. The proxy gap has moved out of the check and into the choice of reference, and that choice is a criterion standing for an intention. So the exact check closes the gap inside the check and leaves it open one step back.
+
+\emph{Outcome: survival, with the gap relocated to the choice of criterion.} \register{[PLAIN]} Within the check, a formally specified criterion is held exactly and has no proxy gap. The gap reappears in the choice of which formal criterion to check against, wherever that criterion stands for an intention. Step 3 holds in full for criteria that stand for an intention, such as meaning, quality, helpfulness or correctness as a person understands it. The clause ``as any real witness does'' in the previous edition's section 6 overreaches as a claim about checks and is withdrawn. Where the gap goes after an exact check is the question of Step 5.
+
+\subsection*{5.3 Can any check certify the intended criterion?}
+
+\register{[STEELMAN]} \textbf{Step 5}, as the previous edition states it: \emph{no check can certify that the stated criterion equals the intended one, because any check that tried would need its own external criterion, and Steps 1 to 4 apply to that check in turn.} The previous edition labels the conclusion [established].
+
+\emph{The contrary, at full strength.} The regress is real only if the intended criterion floats free of everything a check could consult. A dispositionalist about meaning holds that what a person intends is fixed by how that person is disposed to respond. Then a check exists: put cases to the person and compare the stated criterion with the person's answers. Hash checks show the gap can close for formal criteria (section 5.2); asking the person closes it for the rest.
+
+\emph{Step 5's side, at full strength.} A sharper version of Step 5's worry has a literature. Kripke (1982), reading Wittgenstein, argued that no fact about a speaker's behavior or mental life determines what the speaker means by a word. In Khani's account of that argument, the dispositional reply meets three objections: dispositions are finite, while a criterion covers indefinitely many cases; a person can be disposed to make systematic mistakes, and the disposition then fixes the mistake as the criterion; and dispositions describe how a person will respond, while a criterion says how one ought to respond. Each objection gives Step 5 a reason why asking the person cannot certify the match.
+
+Two regresses are in play here, and they differ. Step 5 runs an epistemic regress: each check needs a further check. Kripke's skeptic makes a constitutive claim: no fact fixes what a person means. If the skeptic is right, there may be no fact of ``the intended criterion'' for any check to match, and Step 5's conclusion holds for a reason other than the one the paper gives. Both sides have an older source in Wittgenstein's \emph{Philosophical Investigations}, sections 201 and 202 (UNVERIFIED; no edition opened), where, on the usual reading, the regress of interpretations ends in practice, in a way of following a rule that is no further interpretation. That reading supports the paper's practical conclusion that the last word comes as practice or decision. It gives Step 5 no epistemic proof.
+
+\emph{Outcome: standoff, and partly an ally.} \register{[PLAIN]} Neither side can move the other on shared premises; the rule-following debate is unsettled in philosophy, and this paper does not settle it. The contrary also helps the paper's practical conclusion. On the dispositionalist's own account, the certifying check consults the person who intends the criterion, a party outside the transform and outside the system. So both sides agree that the system cannot validate its criterion from inside, and both locate the last word outside it. They disagree about whether that last word is a certification or a decision. The previous edition's [established] label claims more than either side can show: no run supports a regress argument, and the label key reserves [established] for runnable evidence.
+
+\register{[OPEN]} \emph{The question for the reader:} can any check certify that a stated criterion is the one a person intends, or does the last word always come as a decision someone makes?
+
+\begin{itemize}
+\item \emph{For a check:} dispositions are facts about the person, and enough questions may pin them down for practical purposes. Formal criteria already close the gap.
+\item \emph{For a decision:} finitely many answers never fix a criterion over unboundedly many cases; a person's answers can carry systematic errors; and a description of how someone will answer is not yet a standard for how one ought to.
+\item \emph{What would settle it:} an account of what fixes a person's intended criterion that answers the finitude, error and normativity objections. Short of that, a demonstration on one intention-standing criterion, such as the clarity of a paragraph to its intended reader, where a finite check was shown to predict the person's verdicts on fresh cases with no proxy gap, would move the question toward the check side for that criterion.
+\end{itemize}
+\subsection*{5.4 From the boundary to accountability}
+
+\register{[PLAIN]} The previous edition moves from ``validated outside the system'' to ``an irreducibly external, human question'' with no premise between them. Steps 1 to 5 are about checking. They contain no premise about who answers for anything. So the most they yield is the claim that \emph{no check settles which criterion is right}. ``Someone must answer for the choice'' and ``that someone is a person'' are ethical claims \{E\}, and they need ethical premises. The program's original cross-examination named this the membrane: authentication is a matter of what is, authorization of what ought to be, and the second does not follow from the first alone (cross-examination, section 3). The same membrane runs through this paper at Step 6.
+
+\register{[STEELMAN]} \emph{Step 6a, the ethical premise the paper proposes.} Where no check can settle which criterion is right, whoever chooses the criterion must be answerable for the choice. \{E\} The case for it: the choice decides what counts as faithful for everyone who relies on the output, and a decision others rely on carries a demand to give reasons for it when asked. The original edition's cross-examination drew a distinction that helps here: answerability, the standing to be called to account, is separate from basic desert, warranted backward-looking blame (cross-examination, contrary 7; the distinction is after Scanlon and Pereboom, Pereboom 2014, content UNVERIFIED this session). Step 6a needs only answerability.
+
+\emph{The contrary to 6a, at full strength.} \{E\} Many criteria in use were chosen by no one. Conventions settle over generations, standards evolve by drift and accident, and a learning system can arrive at an objective nobody wrote down. In those cases 6a has no chooser to attach to. The responsibility-gap literature presses further: some outcomes of learning systems may have no party who can fairly answer for them, because no one could foresee or control them (Matthias 2004, UNVERIFIED in this pass). If so, ``whoever chooses must be answerable'' is either empty or unmeetable.
+
+\emph{6a's side, at full strength.} \{E\} A criterion does its work in a check only when someone adopts it for that check. A convention nobody chose still has to be picked up by whoever runs the test, and a learned objective still has to be accepted by whoever deploys the system that learned it. 6a can attach to that act of adoption. On this reading, a responsibility gap leaves 6a standing, because it describes a deployment that 6a would count as a failure: a criterion relied on with no one standing ready to answer for relying on it.
+
+\emph{Outcome on 6a: survival by concession.} \register{[PLAIN]} 6a gives up ``whoever chooses'' and holds as a norm on adoption: \emph{whoever adopts a criterion for a check others rely on must be answerable for that adoption.} The concession is that some criteria have no author. 6a stays an ethical premise, and a reader can reject it and keep the technical result, which says only that no check settles the choice.
+
+\emph{The contrary to the person step, at full strength (objection O7).} The boundary does not need a human. Holding a criterion and checking against it can be impersonal; section 5.6 admits impersonal criterion-holders. Answering can be institutional: a standards body answers for a standard, a contract allocates who answers for what, and the law holds corporations answerable. Nothing in Steps 1 to 5 picks out persons.
+
+\emph{Outcome on the person step: defeat of the 23 June inference as stated; O7 is an ally to 6a.} \register{[PLAIN]} The 23 June move from ``outside the system'' to ``the human'' has no premise between them, so it fails as stated. O7's own examples support 6a: a standards body, a contracting party and a corporation are all parties held to answer for adopting a criterion. O7 contests only the step from ``answerable party'' to ``person'', and that step is the open question below.
+
+\register{[OPEN]} \emph{The question for the reader:} must the party who answers for a criterion be a person, or can an institution or a system answer?
+
+\begin{itemize}
+\item \emph{For persons only:} answerability means being called to account and giving reasons, and an institution gives reasons only through the people who speak for it. When a contract or a regulator allocates answerability, the allocation ends at people.
+\item \emph{For other answerable parties:} existing law holds corporations answerable in their own right. If 6a needs only answerability, separate from desert, the bar is lower than the 23 June paper assumed, and a party that can give reasons and bear consequences may meet it.
+\item \emph{What would settle it:} an account of answerability that says which capacities it requires, and a check of whether any party other than a person has them. If one of those capacities is something only an experiencing being has, the question crosses into \{C\}, and that crossing would need its own stated premise. This paper does not make it.
+\end{itemize}
+The 23 June paper answered ``the human'', and its conclusion said ``that choice, and the standing-behind-it, is the human's''. This edition leaves the question open. The author's own answer belongs in his words.
+
+\subsection*{5.5 The boundary is the universality}
+
+\register{[PLAIN]} \{T\} The fact that bounds the law, that it cannot pick the criterion from inside, is the same fact that lets one center serve many domains: it has no need to pick, because it hosts whichever criterion is named. The author's software packages are one center bound to different criteria: security to an origin criterion, novelty to a corpus criterion, correctness to a spec criterion, aesthetics to a fitness criterion [designed].
+
+\register{[STEELMAN]} \emph{Contrary 11.} The previous edition argues: ``If quality were criterion-absolute, each domain would need its own machine.'' Read with ``absolute'' meaning one universal criterion, the inference runs backward, since a single criterion would let one machine serve everyone more easily. \emph{The original's side.} The 23 June paper lists the machines it has in mind: ``one for the novelist, one for the rigorous researcher, one for the auditor, one for the artist''. On that list, ``absolute'' means a criterion built into the evaluator. If each evaluator carried its criterion inside it, each domain would need its own evaluator. That inference is valid. \emph{Outcome: survival by concession on one word.} \register{[PLAIN]} The sentence survives with ``absolute'' replaced: \emph{if each evaluator carried its criterion inside it, each domain would need its own machine.}
+
+\register{[PLAIN]} \{T\} Within a named criterion, faithfulness is objective and checkable, and a proxy can still game it.
+
+\register{[PLAIN]} \{E\} The center is neutral, and each act within it takes a position. The center welcomes every criterion on one condition, that someone names it and owns it. The step from ``one center can host any named criterion'' (\{T\}, above) to ``it should, on that condition'' (\{E\}) rests on Step 6a (section 5.4), and a reader who rejects 6a can reject it.
+
+\register{[OPEN]} \{E\} \emph{Contrary 12, handed to the reader:} does naming and owning a criterion keep criterion-relative quality from being relativism?
+
+\begin{itemize}
+\item \emph{For:} inside a named criterion, verdicts are objective. They can be checked and they can be wrong. Disagreement moves to the choice of criterion, and someone answers for that choice in public.
+\item \emph{Against:} truth relative to a chosen standard is the textbook form of relativism. Ownership adds accountability for the choice and adds no objectivity to it. A holder of the neutrality critique goes further: a criterion can be named and owned and still be one a center should refuse to host, such as a fitness criterion for targeted harassment. Ownership then makes the harm traceable without making it acceptable.
+\item \emph{What would settle it:} separating two claims. Relativism about verdicts, the view that any verdict is as good as any other under a fixed criterion, the paper denies, and its evidence supports the denial. Relativism about which standard to adopt the paper admits. Whether the second kind is acceptable is a metaethical question the simulations cannot reach. A reader who holds that some criteria are better than others for a given purpose has a premise the paper leaves room for and does not argue. The harassment case asks a third thing: whether some criteria should be refused outright, which would put a limit on the condition ``names it and owns it''.
+\end{itemize}
+\subsection*{5.6 The neutral center [designed, grounded in section 3]}
+
+\register{[PLAIN]} \{T\} ``Mind'' keeps the sense of section 1.1: a component given one partial view of the subject, with nothing implied about perception or experience. The criterion-relevant invariant does not depend on the substrate: the same criterion survives translation into sight, sound, shape or language. So two components with different views can hold the same subject. The plan leaves the tube as it is and builds a neutral center: a shared form of the subject that both parties can render into their own terms, change and witness. The channel then carries only changes against a common reference. In that center a subject is driven toward its telos, the one form that is faithful to the criterion and best meets it. Quality here means faithfulness made checkable. The reconcile of section 6 is the operation that moves the center.
+
+\register{[STEELMAN]} \emph{Contrary 13.} The previous edition's corollary, labeled [established core, scoped]: \emph{a subject cannot author its own criterion, cannot certify from inside that it has reached it, and a reconciliation across independent perspectives can reach a fixed point no single perspective holds; so a subject arrives at its best through being perceived and reconciled by another, with the experience shared.} The 23 June heading put it plainly: ``nothing reaches its best unperceived''.
+
+\emph{The contrary, at full strength.} The premises concern certifying a subject's best, and the conclusion claims the subject arrives there. A bridge meets its load specification whether or not anyone checks it. ``Can reach a fixed point'' has become ``arrives'', and the 23 June verdict file shows the fixed point reached depends on where the minds start (verdict file, section III.A). The corollary's own first bound already admits that for an impersonal criterion the subject needs only a check.
+
+\emph{The corollary's side, at full strength.} For qualities judged by minds, such as clarity, correctness as understood, meaning or beauty, being taken up by another may be part of what the quality is. A paragraph is clear to someone. On that reading, the meeting does more than certify a best that was already there.
+
+\emph{Outcome: survival by concession.} \register{[PLAIN]} What the law supports is the certifying version: \emph{a subject's reaching its best can be certified only against a criterion held outside it.} The 23 June paper's own first bound says the same: ``'Another' is exactly `an external criterion-holder''', which may be impersonal. The arriving version does not follow from the law. The meeting makes the best reachable and knowable without guaranteeing it, since two parties can agree on a form faithful to a shared proxy (section 5.1). The phrase ``with the experience shared'' is a claim about experience \{C, reach\}, and nothing in the simulations perceives or experiences.
+
+\register{[OPEN]} \emph{The question for the reader:} for qualities judged by minds, is being perceived part of what the quality is, or only how we come to know it is there?
+
+\begin{itemize}
+\item \emph{For ``part of it'':} clarity and meaning are relational by their ordinary sense; there is no clarity to no one.
+\item \emph{For ``only how we know'':} a proof can be correct before anyone reads it, and a melody can be well made before anyone hears it.
+\item \emph{What would settle it:} an analysis of each quality in turn. The answer may differ by quality, and the paper expects it does. Where the analysis turns on experience, and uptake by a reader no longer settles it, the question becomes one about consciousness \{C\}, and the crossing needs its own stated premise.
+\end{itemize}
+\register{[PLAIN]} \{T\} \emph{Live demonstration [designed, shown, with the boundary].} Both minds were models, each set up to see only part of the subject, and the center was run once. The subject was to propose the best new lead product from two or more projects. A visual mind saw only the relational shape of the projects; a symbolic mind saw only their descriptions. Working alone, they diverged, and each was half-right. At the meeting each corrected the other's blind spot, and they converged on one result. Two external models judged the three artifacts blind, under two criteria. The meeting came last under one and first under the other.
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.171\linewidth}>{\raggedright\arraybackslash}p{0.218\linewidth}>{\raggedright\arraybackslash}p{0.249\linewidth}>{\raggedright\arraybackslash}p{0.202\linewidth}}
+\toprule
+\textbf{Criterion} & \textbf{Visual alone} & \textbf{Symbolic alone} & \textbf{The meeting} \\ \midrule\endhead
+Novelty-weighted & 4.75 & 4.75 & 4.0 \\
+Correctness and buildability & 2.0 & 2.5 & 5.0 \\
+\bottomrule\end{longtable}}
+The ranking flips when the criterion changes, so ``best'' depends on the criterion, and choosing it is the question of section 5.4. The limits: two model minds stood in for a human and a model; this was one run on one subject, too small to count as a study; the meeting added one claim its inputs did not support, and both judges still scored it 5.0 for correctness, so neither caught it, which weakens the correctness scores as evidence. At the strength of ``the center works for human-and-model in deployment'', the claim is UNVERIFIABLE.
+
+\section*{6. The reconcile, and an audit of the shipped claims [established, with one DRIFT]}
+
+Domain: \{T\}.
+
+\register{[PLAIN]} The system reduces to one operation, the reconcile: perceive any artifact into a witnessed form, judge that form against a criterion it did not author, carry a re-checkable certificate of the judgment, and return UNVERIFIABLE when it cannot. A paper that argues for proof before trust has to hold its own claims to that standard. An audit of the reconcile spine in the public coherence-membrane repository, run on 30 June 2026, reported the following.
+
+\begin{itemize}
+\item \textbf{Source.} The reconcile module has 57 executable statements. Its reconcile function fails closed: any exception while perceiving or judging yields an UNVERIFIABLE observation, and it never raises an error to its caller. It records independence in three states: witnessed-independent, self-authored and unwitnessed. An opt-in strict mode downgrades a self-graded decision to UNVERIFIABLE, and a require-independent mode refuses any decision whose independence was not positively witnessed. Doctrine and code agree.
+\item \textbf{Test.} The reconcile test file has 11 tests, and all 11 passed on 30 June 2026. They cover the verifier-organ equivalence, refute and witness with a real SHA-256 digest, perceiving and judging supplied as separate steps, and the fail-closed path.
+\item \textbf{Coverage.} 88\% line coverage of the reconcile module, with 7 of 57 statements uncovered. The strongest guards in the file are the under-covered lines: the tests do not fully exercise the opt-in downgrades that stop a self-graded result from passing as independently checked.
+\end{itemize}
+Verdict: MATCH, with a named coverage gap. The re-count of headline numbers found three things. ``Fifteen shipped organs'' is DRIFT: the organs directory held 17 modules on 30 June 2026. ``emet emits MATCH /\allowbreak{} DRIFT /\allowbreak{} UNVERIFIABLE'' is MATCH on the vocabulary; the stronger item, a round-trip witness that measures criterion survival through a non-identity transform, has not shipped and stays UNVERIFIABLE. ``157 tests'' for the visualization substrate is UNVERIFIABLE: the audit did not re-run those suites. The audit shows that the reconcile exists as small, tested code. It does not show that the whole set of organs, the emet round-trip witness or the visualization substrate has reached the same maturity.
+
+\section*{7. What you put in lands somewhere [reach, with a grounded core]}
+
+\register{[PLAIN]} The author holds a thought, recorded as his in the 23 June paper: positive and negative energy put into the world lands and has an effect, and people might weigh what their words and actions mean because they carry energy, ``which is to say data''. \{The first half is a causal or metaphysical claim held by the author, outside the three guarded domains; the second half is \{E\}.\} The author's identification of energy with data is the bridge to what follows. It is his stated premise, and a reader can reject it. On that premise, the ``energy'' of the thought is the ``contribution'' of the model below, and part of the thought has support in simulation. A reader who rejects the premise can still read the model as an analogue of the thought.
+
+\register{[PLAIN]} \{T\} The aperture and commons simulations model simulated contributors settling on a shared answer, called an attractor. In those simulations a contribution to a shared center is never neutral: it shifts the fixed point everyone settles to. The size of the shift follows how loud and how coordinated the contribution is, and how right it is does not set the size. In the wrong-attractor run, a tight, confident consensus formed around the wrong answer, and its confidence rose with coordination whether or not the consensus was true. The verdict file reports that coordination is the strongest lever (a coordinated threshold of 0.18 against 0.72 for random contributors). It also reports that the true answer wins only when the starting cloud is centered on it, and that a cap on loudness holds only when the readout is gated as well as the pull (verdict file, sections II and III). The same file reports a second regime. Under sincere disagreement, the tipping point follows a depth law, f* \ensuremath{\approx} 1/\allowbreak{}(1+\ensuremath{\rho})+0.07, which it rates ``HOLDS as a fit'' in one model family, with the constant measured and not derived. So loudness and coordination dominate against a loud or coordinated adversary, the case the verdict file calls ``the loud liar'', and the depth of the criterion sets the tipping point when the disagreement is sincere. [established in model; falsification condition: if re-running those simulations shows the settled point follows how correct each contribution is, and no longer follows its loudness and alignment, this claim is DRIFT.]
+
+\register{[PLAIN]} \{E\} The design norm drawn from it: a center needs a check at the seam, where contributions enter, that caps how loud any one voice can be and governs how the answer is read out. The bridge is stated: the simulation result, together with the aim of a center that settles on what is correct.
+
+\register{[OPEN]} \emph{The question for the reader:} does the simulated commons tell us anything about human discourse, where words land in people?
+
+\begin{itemize}
+\item \emph{For:} the mechanism is simple, and loud, coordinated voices move shared opinion in many human settings; the conformity studies associated with Asch and the illusory-truth effect are commonly cited for this (both UNVERIFIED in this pass).
+\item \emph{Against:} the model's dynamics were designed, and its contributors weigh nothing but force and alignment. People weigh credibility, track records and evidence, and a model that leaves those out cannot show they do not matter. The verdict file says as much of its own simulations: a hand-built dynamical system that behaves as predicted ``is a consistency demonstration, not evidence'' about how human and model reconciliation works (verdict file, section 0).
+\item \emph{What would settle it:} empirical studies of real deliberation that measure whether correctness or loudness and coordination better predicts where opinion settles. The paper cites none; that literature was not surveyed for this edition.
+\end{itemize}
+The 23 June paper called the extension ``a reasonable ethic; it is not something these experiments demonstrate''. That stands. \{E; crossing from T, bridged by labeled analogy\}
+
+\section*{8. Literature}
+
+Domain: \{T\}.
+
+\register{[PLAIN]} Shannon (1948) founds channel capacity, and Shannon (1959) states rate-distortion with a fidelity criterion, the closest prior statement of ``faithful to a criterion at a rate''. Cover and Thomas (2006) give rate-distortion, sufficient statistics and the data-processing inequality in textbook form; Fisher (1922) introduces sufficiency. Dobrushin and Tsybakov (1962) and Witsenhausen (1980) treat indirect rate-distortion, and Orlitsky and Roche (2001) treat coding for computing. Tishby, Pereira and Bialek (1999) compress one variable while keeping what it says about a second, relevant one, which plays the part of this paper's criterion. Ashby (1956) states the law of requisite variety. Landauer (1961) shows that erasing a bit costs at least kT ln 2, which makes destruction dissipative. Bennett (1973) shows that reversible computation can approach zero dissipation, so transforming need not mean erasing. Bekenstein (1981) bounds the information a bounded system can hold, and Lloyd (2000) bounds computation by energy. Page (1993), Hayden and Preskill (2007) and Sekino and Susskind (2008) bear on how information leaves a black hole; the paper uses them for an analogy labeled [reach]. Manheim and Garrabrant (2018) classify the ways optimizing a metric fails. Bateson (1972) defines the unit of information as ``a difference which makes a difference''; an earlier edition misquoted it, with ``the'' for ``a'' and ``that'' for ``which''. Dretske (1981) gives a philosophical account of the information a signal carries. Quine (1960) argues that translation is underdetermined by the evidence, which bears on section 1.1: which criterion a translation preserves may not be fixed by the data. Kripke (1982) states the rule-following argument of section 5.3.
+
+\register{[PLAIN]} \emph{Convergence in the field [moderate confidence].} The 30 June draft reported that the field appeared to converge toward the same spine from four directions: proof-carrying verification motivated by incompleteness results; demonstrations that ungrounded self-critique fails; creative render-and-critique loops that collapse without a grounded external critic; and provenance work that splinters for lack of a criterion that holds when steps are combined. The four items are summarized from an internal survey of the first half of 2026 that the paper does not reproduce. As primary sources they are UNVERIFIABLE here, and any item a citation pass cannot source must be struck. The claim that no one had assembled the cross-domain principle does not survive section 2.6.
+
+\section*{9. Update, October 2026}
+
+\register{[PLAIN]} This section was added on 2 October 2026 at the author's direction. It is separate from the argument of sections 2 to 8, which it leaves unchanged. It and the law lend each other no support.
+
+\subsection*{9.1 What Jaynes claimed}
+
+\register{[PLAIN]} \{C\} Julian Jaynes (1976) argued that consciousness, in a narrow sense he defined, is learned. By consciousness he meant the introspective capacity to narrate one's own experience through an ``I'' placed in a mental space built from metaphor. He held that this capacity rests on language and spread through culture. Before it, on his account, people had a ``bicameral'' mentality: one hemisphere of the brain produced guidance that the person heard as a voice, taken to be the voice of a god or a ruler, and obeyed. He dated the breakdown of that mentality to roughly 3,000 years ago and drew part of his evidence from the \emph{Iliad}. This summary comes from bibliographic and secondary records; no copy of the book was opened, and no claim carries a page number.
+
+\subsection*{9.2 Jaynes against his critics}
+
+\register{[STEELMAN]} \{C\} \emph{Jaynes's side, at full strength.} If consciousness in the narrow sense is a learned way of narrating oneself, it has a history, and texts can carry traces of that history. Jaynes offered two kinds of trace (book not opened; both UNVERIFIED in this pass). One is the mental vocabulary of the \emph{Iliad}, where, on his reading, actions are prompted by gods and the words later used for an inner mind name body parts and breath. The other is modern auditory hallucination, which on his account shows that a brain can still produce guidance heard as another's voice. Dennett (1986) read the book in this spirit, as ``software archeology'': an attempt to recover the history of learned habits of mind from the texts they left, since such habits leave little fossil record (the article's record was opened; the fossil-record line was read by an earlier pass on 2 October and not re-read in this one).
+
+\emph{The critics, at full strength.} Ned Block, reviewing the book, argued that chimpanzees and the ancients plan and deceive, and so are conscious in Jaynes's own sense, and that the ancient texts are full of plans and deceit; on his reading Jaynes at most explains the invention of the theory that people are conscious, running together thought processes and theories of them (Block 1981, pp. 81 to 83) [both clauses checked against the review by an earlier pass on 2 October 2026; UNVERIFIED in this pass]. The Julian Jaynes Society, paraphrasing the review as treating consciousness as an innate biological feature, answers that the critique replaces Jaynes's narrow sense, introspection, with sense perception, and then criticizes the replacement (page read in this pass). Cavanna, Trimble, Cinti and Monaco (2007) reappraised the hypothesis on two fronts: its neurological basis, and the philological accuracy of Jaynes's reading of the ancient texts. They presented a non-unitary self as one of the hypothesis's most relevant legacies (abstract read in this pass through the NCBI record).
+
+\emph{Outcome: standoff, outside this paper's competence.} \register{[PLAIN]} The neurology and the dating are where the critics press hardest. This paper's simulations cannot bear on whether introspective consciousness is learned, and the paper takes no side. What it borrows below is conditional on Jaynes's narrow thesis and says so.
+
+\subsection*{9.3 The author's points, October 2026}
+
+\register{[PLAIN]} The author's points, paraphrased from his notes of 2 October 2026:
+
+\begin{enumerate}
+\item Whatever source of life or consciousness a person believes in (God, a mother, another being), the author holds that no one came from nothing. \{Th\} The point is offered as a structure that holds across belief systems. It is no evidence for any claim about consciousness.
+\item Even in prophecy, where a prophet receives the word of God, a new understanding formed only when a second stream of thought, divine or human, joined the discourse. \{Th\} Offered as structure, in the same way.
+\item Many things can be found alone; some can be found only in cooperation, at a meeting of ideas or principles. \{T\} [the author's view; no run tests it]
+\end{enumerate}
+\subsection*{9.4 Is there a finding that exists only at a crossing?}
+
+\register{[PLAIN]} \{T\} The author's third point has a formal version that follows from Definition 3. Suppose a criterion depends on two partial views of a subject, A and B, so that two subjects that agree on A can differ on the criterion, as can two that agree on B. Then no recovery map from either view alone recovers the criterion; only a map that reads both can. This is near-tautological. The demonstration of section 5.6 illustrates the pattern. In that run, the best-scoring result under the correctness criterion came from the crossing and from neither mind alone. The run measured judge scores, both judges missed an over-reach, and no one tested whether the criterion could be recovered from either view alone, so ``illustrates'' is the strongest verb the record supports.
+
+\register{[OPEN]} \emph{The question for the reader:} in human inquiry, are there discoveries that can only be made where two streams of thought meet?
+
+\begin{itemize}
+\item \emph{For:} the formal version shows that some criteria need two inputs, and in practice two inputs often live in two people, two disciplines or two traditions that do not share a vocabulary. The demonstration showed two partial views correcting each other, in one run.
+\item \emph{Against:} the formal version needs two inputs, and it does not need two minds. One mind that gathers both views over time can, in principle, recover the criterion. The demonstration was one run with two models.
+\item \emph{What would settle it:} a case where the two inputs cannot be held by one party, because each is available only from a perspective the other party cannot occupy. If such a case exists, the author's third point holds in its strong form for that case. Whether perspective in that sense is a fact about minds would cross into \{C\}, and the crossing below states its premise.
+\end{itemize}
+\textbf{Bridging premise.} If Jaynes is right that introspective consciousness is learned through language, and if, on this paper's interpretation, that learning happens between speakers, then consciousness is one more thing that formed at a crossing. The premise is conditional. Its antecedent is Jaynes's contested thesis, and a reader who accepts Block's objection rejects it. It gives the law no support, and the law gives Jaynes none. The theological points of 9.3 are used as evidence for no claim here and ground no \{E\} conclusion in sections 5 and 7.
+
+\subsection*{9.5 What this update does not show}
+
+\register{[PLAIN]} It does not show that consciousness is learned, that a bicameral mind existed, or that the neutral center describes a human mind. It records a pattern the author sees across his October notes, Jaynes's thesis and one result of this paper, labels the borrowing as interpretation, and states the premise a reader would need to accept to connect them.
+
+\section*{10. What remains, and a fenced coda}
+
+\register{[PLAIN]} \emph{What remains.} A run that sweeps bit-rate across a fixed family of transforms and reports faithfulness for two criteria at once, so that F0 meets its test. A run where a person is one of the two minds. A full rate-distortion and Landauer derivation of the hinge that links reversible transforms to conservation and irreversible ones to energy dissipation; the definitions give the structure, and the thermodynamic bound is still missing. Composition chains built from real substrate transforms (section 4.3). A cited commit diff confirming that the four instrument fixes landed on the tests and left the claims alone. Primary citations for the four convergence items. Tests that close the coverage gap on the strict and require-independent guards. A single answer to whether the section 4.4 strengthenings reduce to one condition.
+
+\register{[OPEN]} \emph{Coda, strictly [reach], offered as a question and making no claim.} \{C; crossing from T, bridged by analogy and disclaimed.\} We ask where thoughts come from, whether from some lossy, imperceptible place that has always been around us, that is us and that we are of.
+
+\begin{itemize}
+\item \emph{What the law offers the question:} a vocabulary. Concealment shows that a substrate can hold everything and still present almost nothing to a given criterion, so the imperceptible-but-conserved is a real category, with nothing mystical about it. A mind, on this view, would be a neutral center: a place where signals from a vast substrate we do not perceive are reconciled into the small, checkable forms we call thoughts.
+\item \emph{What it does not offer:} evidence. The experiments establish how information crosses and is checked. They do not establish where it originates, and they could not. A vocabulary that fits an intuition does not confirm it.
+\item \emph{What would settle it:} nothing in this paper. A theory of where thoughts come from that made predictions a reader could check would be the start. The fit between the law and the intuition is itself an instance of the boundary: the work cannot certify this criterion from inside, so it names the question and leaves the answering to its readers.
+\end{itemize}
+\section*{11. Where the paper stands}
+
+\register{[PLAIN]} \emph{Shown.} Inside a fixed, externally named distribution, criterion, metric and tolerance, faithfulness to the criterion requires a floor sized by the criterion, and above that floor the bit count does not decide it. The 23 June paper reported that F0 stayed untriggered across seven sensory substrates, run as ten criterion-readout instances [established; robust by independent replication, short of a theorem]. Those substrates show criterion-relativity at a fixed rate. No run has yet swept bit-rate, so F0 itself has not met its test (section 2.7). Loss splits into destruction and concealment, and faithfulness is graded down to a noise floor [established]. If any stage's output no longer determines the final criterion, the pipeline is unfaithful, and under a carried chain the error has a linear worst-case bound under the condition of section 4.2. The whole-from-parts claim has a counterexample on record. No statistic of the output certifies faithfulness, and some certify its failure. An external witness is necessary and not sufficient [established]. The reconcile exists as tested code with a named coverage gap [established, MATCH].
+
+\emph{Defeated, and repaired.} The sentence that faithfulness places no constraint on output size. The composition law's collapse half as stated. The universal form of Step 3. The 23 June inference from ``outside the system'' to ``the human''. The claim that no one had assembled the principle. The Page gloss. The status ``falsifier untriggered'' as a test result. Each defeat is printed where it happened, beside the repair.
+
+\emph{Answered plainly.} The shipped composition run does not verify the square-root rate; it confirms the simulator's arithmetic (4.3).
+
+\emph{Open, and handed to the reader.} Whether the stages of real substrate pipelines have independent errors (4.3). Whether any check can certify an intended criterion (5.3). Whether the party who answers for a criterion must be a person (5.4). Whether naming and owning a criterion blocks relativism (5.5). Whether being perceived is part of a mind-judged quality (5.6). Whether the commons result reaches human discourse (7). Whether some discoveries exist only at a meeting of two minds (9.4). Where thoughts come from (10).
+
+\emph{UNVERIFIABLE.} The four method-note fixes, the square-root rate (label unresolved in this edition, section 4.3), the convergence items, the emet round-trip witness and the 157-test count; the substrate-file count is a DRIFT candidate.
+
+Between two minds, then, what crosses is faithfulness to a criterion, and minds with different senses can meet over it. A neutral center lets each check the subject against a criterion it did not author. The center cannot choose the criterion. Who chooses it, and on what standing, the paper hands to the reader.
+
+\section*{Reader's note on AI assistance}
+
+The ideas here started in my own questions in June 2026: what survives when information crosses a lossy boundary, and why a state that is lossy can still be neutral and checkable. The thought behind section 7 is mine. The definitions, the law's formal statement, the falsifiers, the composition split, the audit in section 6 and the literature engagement were drafted with AI assistance from that framing, first in the 23 June working paper and then in a model rewrite on 30 June 2026. The simulations were built in a session with a model, and that session's record is lost, so how much of the formal construction is mine is not settled. The September 2026 plain-language revision was AI-assisted too, and so is this October revision, which was checked with Articulate, a writing checker that measures form only. I have not yet re-derived the argument without assistance, and until I do, the paper is AI-assisted work built on my framing.
+
+Provenance. The principle document, the aperture and commons simulation records, the vision-arm report, the substrate files and the demonstration record sit in the public faithful-transpile repository. The public fingerprint (MANIFEST.sha256) covers the 23 June version of the work. The 30 June text revised here is in no public commit.
+
+\section*{References}
+
+Verification, 2 October 2026. ``Record opened'' means the bibliographic record was opened in this pass (Crossref, arXiv, PubMed or Open Library). ``Text read'' means the work itself was opened. Entries marked UNVERIFIED were not opened in this pass.
+
+\begin{itemize}
+\item Ashby, W. R. 1956. \emph{An Introduction to Cybernetics}. London: Chapman and Hall. (Record opened, Open Library.)
+\item Bateson, G. 1972. \emph{Steps to an Ecology of Mind}. San Francisco: Chandler. (Record opened, Open Library. The quotation was checked by an earlier pass on 2 October against the 1987 Jason Aronson reprint, p. 460; not re-read in this pass.)
+\item Bekenstein, J. D. 1981. ``Universal Upper Bound on the Entropy-to-Energy Ratio for Bounded Systems.'' \emph{Physical Review D} 23(2): 287-298. doi:10.1103/\allowbreak{}PhysRevD.23.287. (Record opened, Crossref.)
+\item Bennett, C. H. 1973. ``Logical Reversibility of Computation.'' \emph{IBM Journal of Research and Development} 17(6): 525-532. doi:10.1147/\allowbreak{}rd.176.0525. (Record opened, Crossref.)
+\item Block, N. 1981. Review of Julian Jaynes, \emph{The Origin of Consciousness in the Breakdown of the Bicameral Mind}. \emph{Cognition and Brain Theory} 4(1): 81-83. UNVERIFIED in this pass. (The review scan was checked by an earlier pass on 2 October 2026.)
+\item Cavanna, A. E., M. Trimble, F. Cinti and F. Monaco. 2007. ``The `Bicameral Mind' 30 Years On: A Critical Reappraisal of Julian Jaynes' Hypothesis.'' \emph{Functional Neurology} 22(1): 11-15. (Abstract read in this pass, NCBI E-utilities record for PubMed 17509238.)
+\item Cover, T. M., and J. A. Thomas. 2006. \emph{Elements of Information Theory}, 2nd ed. Hoboken, NJ: Wiley. (Record opened, Open Library.)
+\item Dennett, D. C. 1986. ``Julian Jaynes's Software Archeology.'' \emph{Canadian Psychology} 27(2): 149-154. doi:10.1037/\allowbreak{}h0080051. (Record opened, Crossref.)
+\item Dobrushin, R. L., and B. S. Tsybakov. 1962. ``Information Transmission with Additional Noise.'' \emph{IRE Transactions on Information Theory} 8(5): 293-304. doi:10.1109/\allowbreak{}TIT.1962.1057738. (Record opened, Crossref; text not read.)
+\item Dretske, F. 1981. \emph{Knowledge and the Flow of Information}. Cambridge, MA: MIT Press. (Record opened, Open Library.)
+\item Fisher, R. A. 1922. ``On the Mathematical Foundations of Theoretical Statistics.'' \emph{Philosophical Transactions of the Royal Society A} 222: 309-368. doi:10.1098/\allowbreak{}rsta.1922.0009. (Record opened, Crossref.)
+\item Hayden, P., and J. Preskill. 2007. ``Black Holes as Mirrors: Quantum Information in Random Subsystems.'' \emph{Journal of High Energy Physics} 2007(09): 120. doi:10.1088/\allowbreak{}1126-6708/\allowbreak{}2007/\allowbreak{}09/\allowbreak{}120. (Record opened, Crossref; the quoted phrase is from the abstract as reported by an earlier pass.)
+\item Jaynes, J. 1976. \emph{The Origin of Consciousness in the Breakdown of the Bicameral Mind}. Boston: Houghton Mifflin. (Record opened, Open Library; no copy opened; no page numbers.)
+\item Julian Jaynes Society. ``Critiques Regarding the Nature of Consciousness.'' julianjaynes.org. (Page read in this pass: the Block paraphrase and the reply.)
+\item Khani, A. H. ``Kripke's Wittgenstein.'' \emph{Internet Encyclopedia of Philosophy}. (Text read, sections on the dispositional view and the normative feature of meaning.)
+\item Kripke, S. A. 1982. \emph{Wittgenstein on Rules and Private Language}. Cambridge, MA: Harvard University Press. (Record opened, Open Library; book not opened.)
+\item Landauer, R. 1961. ``Irreversibility and Heat Generation in the Computing Process.'' \emph{IBM Journal of Research and Development} 5(3): 183-191. doi:10.1147/\allowbreak{}rd.53.0183. (Record opened, Crossref.)
+\item Lloyd, S. 2000. ``Ultimate Physical Limits to Computation.'' \emph{Nature} 406: 1047-1054. doi:10.1038/\allowbreak{}35023282. (Record opened, Crossref.)
+\item Manheim, D., and S. Garrabrant. 2018. ``Categorizing Variants of Goodhart's Law.'' arXiv:1803.04585. (Record opened, arXiv.)
+\item Matthias, A. 2004. ``The Responsibility Gap: Ascribing Responsibility for the Actions of Learning Automata.'' \emph{Ethics and Information Technology} 6(3): 175-183. UNVERIFIED in this pass.
+\item Orlitsky, A., and J. R. Roche. 2001. ``Coding for Computing.'' \emph{IEEE Transactions on Information Theory} 47(3): 903-917. doi:10.1109/\allowbreak{}18.915643. (Record opened, Crossref; text not read.)
+\item Page, D. N. 1993. ``Information in Black Hole Radiation.'' \emph{Physical Review Letters} 71(23): 3743-3746. doi:10.1103/\allowbreak{}PhysRevLett.71.3743. (Record opened, Crossref; description from an earlier pass's reading of the arXiv abstract.)
+\item Pereboom, D. 2014. \emph{Free Will, Agency, and Meaning in Life}. Oxford: Oxford University Press. (Content UNVERIFIED in this pass; the attribution follows the Stanford Encyclopedia entries on moral responsibility, checked in an earlier pass on 2 October 2026.)
+\item Quine, W. V. O. 1960. \emph{Word and Object}. Cambridge, MA: MIT Press. (Record opened, Open Library.)
+\item Scanlon, T. M. 1998. Named in section 5.4 for answerability as a separate face of responsibility, after the same Stanford Encyclopedia entries. No record or text opened; UNVERIFIED.
+\item Sekino, Y., and L. Susskind. 2008. ``Fast Scramblers.'' \emph{Journal of High Energy Physics} 2008(10): 065. doi:10.1088/\allowbreak{}1126-6708/\allowbreak{}2008/\allowbreak{}10/\allowbreak{}065. (Record opened, Crossref.)
+\item Shannon, C. E. 1948. ``A Mathematical Theory of Communication.'' \emph{Bell System Technical Journal} 27: 379-423, 623-656. doi:10.1002/\allowbreak{}j.1538-7305.1948.tb01338.x. (Record opened, Crossref, part one.)
+\item Shannon, C. E. 1949. ``Communication Theory of Secrecy Systems.'' \emph{Bell System Technical Journal} 28(4): 656-715. UNVERIFIED in this pass.
+\item Shannon, C. E. 1959. ``Coding Theorems for a Discrete Source with a Fidelity Criterion.'' \emph{IRE National Convention Record} 7(4): 142-163. UNVERIFIED in this pass.
+\item Tishby, N., F. C. Pereira and W. Bialek. 1999. ``The Information Bottleneck Method.'' \emph{Proceedings of the 37th Annual Allerton Conference on Communication, Control and Computing}, 368-377. arXiv:physics/\allowbreak{}0004057. (arXiv record opened; proceedings pages UNVERIFIED in this pass.)
+\item Witsenhausen, H. S. 1980. ``Indirect Rate Distortion Problems.'' \emph{IEEE Transactions on Information Theory} 26(5): 518-521. doi:10.1109/\allowbreak{}TIT.1980.1056251. (Record opened, Crossref; text not read.)
+\item Records of the original edition: its cross-examination (contraries 7 and 10, section 3), the 23 June working paper and verdict file, and the formal note on the conservation of faithfulness.
+\item Frontier-convergence items (four): UNVERIFIABLE, pending a citation pass (section 8).
+\item UNVERIFIED and not cited: Wittgenstein's use of ``criteria'' (section 2.1).
+\item Wittgenstein, L. \emph{Philosophical Investigations}, sections 201 and 202. No edition opened; UNVERIFIED (section 5.3).
+\item Asch's conformity studies and the illusory-truth effect, named in section 7 as commonly cited. No source opened; UNVERIFIED.
+\item Jaynes's \emph{Iliad} vocabulary and auditory-hallucination evidence (section 9.2): from secondary knowledge, book not opened; UNVERIFIED.
+\end{itemize}
+\section*{Corrections}
+These corrections were made to the earlier edition on 3 October 2026. This edition carries the corrected wording.
+
+3 October 2026, correction, References: an earlier version quoted Bateson as ``the difference that makes a difference''. His words are ``a difference which makes a difference'', from ``Form, Substance, and Difference'' in \emph{Steps to an Ecology of Mind}.
+
+3 October 2026, correction, References: an earlier version glossed Page (1993) as ``the Page curve: information conserved and scrambled''. Page assumes black-hole evaporation is unitary and estimates how slowly information leaves in the radiation. ``Scrambling'' comes from Sekino and Susskind (2008). Hayden and Preskill (2007) describe information that stays concealed until the half-way point.
+
+\vfill{\footnotesize Typeset with LaTeX from the approved source \texttt{writing/papers/conservation-of-faithfulness.md}. The web page is rendered from the same source.\newline SHA-256 of the source: \texttt{4db7a81f8b7b0048b53e0c8a6675189596d637d011809b80c2120bd0663becdc}\par}
+\end{document}

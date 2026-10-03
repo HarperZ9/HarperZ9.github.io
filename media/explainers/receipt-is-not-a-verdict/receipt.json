@@ -1,0 +1,79 @@
+{
+  "schema": "explainer-receipt/v1",
+  "slug": "receipt-is-not-a-verdict",
+  "title": "A receipt is not a verdict",
+  "page": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+  "spec": {
+    "path": "media/explainers/receipt-is-not-a-verdict/spec.json",
+    "sha256": "2ba8341eee6ddcef7e92e08cd28d20a93c304dfd1ed2466542ed0a14e0a7892e"
+  },
+  "render_code": {
+    "tools/explainer/draw.py": "74c21401f1c995a1ac8531579abf6e9ed9ee8a0435db8dcf9197e869b507df8c",
+    "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
+    "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
+    "tools/explainer/render.py": "ee158c839cdbc3e839def1493dd5caaa26e044cc84da4bcca0fcee80d24876d3"
+  },
+  "fonts": {
+    "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
+    "system/fonts/conso-regular.woff2": "0e4a48ca69d9f6b6a1916eb1c6459fe6947bd4a9f999c684f1237beda1c24f78"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "pillow": "12.2.0",
+    "numpy": "2.4.5",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "voice": "Microsoft Zira Desktop",
+    "os": "Windows-11-10.0.26220-SP0"
+  },
+  "outputs": {
+    "receipt-is-not-a-verdict.mp4": "d2a729988792dc5b40a302a78a8e8d0aca8bbae23d6d0d46ce76c63b2d8be2f8",
+    "receipt-is-not-a-verdict.srt": "5e3ef70322e2dd9a84397289c8f04c7c8cbb34694f9cf6768267789d2ee0beca",
+    "receipt-is-not-a-verdict.vtt": "141497c06b386c95076815ed230c4c0a85e04e2ac69b3b673073d9fe87a2c17a",
+    "poster.png": "5293f3fafbf622b0f4227f660283fb7d16530c2eb6a9c577a2c125c92714226f"
+  },
+  "narration_wav_sha256": "c21e81bc3ea1e65bbc9bd09650aaffa5b821ed20800008eaf91c1eb8f748a61b",
+  "frames": 1296,
+  "fps": 30,
+  "seconds": 43.2,
+  "frame_chain_sha256": "83b82216672420daf25dcadd0a843b4cf774a33ef1770f13d253acd85fe58f90",
+  "timeline": [
+    {
+      "scene": "title",
+      "start": 0.0,
+      "end": 3.5,
+      "text": "A receipt is not a verdict."
+    },
+    {
+      "scene": "receipt",
+      "start": 3.5,
+      "end": 9.9,
+      "text": "A receipt records what ran: the command, the inputs and the hash of the output."
+    },
+    {
+      "scene": "rerun",
+      "start": 9.9,
+      "end": 19.0,
+      "text": "Rerun the command and the hash matches. That shows the same bytes came out. It says nothing about whether they are right."
+    },
+    {
+      "scene": "criterion",
+      "start": 19.0,
+      "end": 27.3,
+      "text": "A verdict needs a criterion the author did not write, such as a test suite, a proof checker or a measured threshold."
+    },
+    {
+      "scene": "split",
+      "start": 27.3,
+      "end": 35.967,
+      "text": "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails."
+    },
+    {
+      "scene": "close",
+      "start": 35.967,
+      "end": 43.2,
+      "text": "Keep both. The receipt says what happened. The verdict says whether it holds up."
+    }
+  ],
+  "rerun": "python -m tools.explainer.render media/explainers/receipt-is-not-a-verdict --verify",
+  "does_not_prove": "Matching hashes show the same bytes came out of the same spec, code and tools. They do not show that the explanation is correct or that it teaches. The narration voice ships with Windows, so the audio rebuilds only on a machine with the same voice."
+}

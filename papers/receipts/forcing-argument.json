@@ -1,0 +1,27 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "papers/forcing-argument.pdf",
+  "source": {
+    "kind": "site Markdown, converted by tools/paper_latex.py",
+    "path": "writing/papers/forcing-argument.md",
+    "sha256": "f747f17a19ac388c5029a8eb95e8ab4f08a26424cf2d5973413e18f0edf487af",
+    "tex": "papers/tex/forcing-argument.tex",
+    "page": "research-forcing-argument.html"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "50ac02341cee95c92107ab91941de96bccb30031e42c620778a2e3c61010145e",
+  "pdf_bytes": 133031,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/forcing-argument.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

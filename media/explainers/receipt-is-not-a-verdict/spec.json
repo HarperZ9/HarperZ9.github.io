@@ -1,0 +1,126 @@
+{
+  "slug": "receipt-is-not-a-verdict",
+  "title": "A receipt is not a verdict",
+  "seed": 20261004,
+  "page": "no-receipt-no-accept.html#4-the-loop-walked-end-to-end",
+  "poster": {
+    "scene": "split",
+    "at": 0.8
+  },
+  "scenes": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "A receipt is not a verdict",
+      "say": "A receipt is not a verdict.",
+      "min": 3.5
+    },
+    {
+      "key": "receipt",
+      "heading": "A receipt records what ran",
+      "say": "A receipt records what ran: the command, the inputs and the hash of the output.",
+      "min": 4.5,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "command",
+          "value": "$ python bench.py --render"
+        },
+        {
+          "type": "card",
+          "at": 0.25,
+          "label": "inputs",
+          "value": "repo@3f9c2e1  scene.json"
+        },
+        {
+          "type": "card",
+          "at": 0.45,
+          "label": "output sha256",
+          "value": "4f691ecc59380d8856219c9f382b9ee9"
+        },
+        {
+          "type": "note",
+          "at": 0.6,
+          "text": "Example values."
+        }
+      ]
+    },
+    {
+      "key": "rerun",
+      "heading": "A rerun matches",
+      "say": "Rerun the command and the hash matches. That shows the same bytes came out. It says nothing about whether they are right.",
+      "min": 5.5,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.0,
+          "label": "output sha256 (author)",
+          "value": "4f691ecc59380d8856219c9f382b9ee9"
+        },
+        {
+          "type": "card",
+          "at": 0.1,
+          "label": "output sha256 (rerun)",
+          "value": "4f691ecc59380d8856219c9f382b9ee9",
+          "verdict": "MATCH"
+        },
+        {
+          "type": "note",
+          "at": 0.55,
+          "text": "Same bytes. Not yet right bytes."
+        }
+      ]
+    },
+    {
+      "key": "criterion",
+      "heading": "A verdict needs a criterion",
+      "say": "A verdict needs a criterion the author did not write, such as a test suite, a proof checker or a measured threshold.",
+      "min": 5.0,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.05,
+          "label": "criterion",
+          "value": "render under 1.50 s, set by someone else"
+        },
+        {
+          "type": "card",
+          "at": 0.3,
+          "label": "measured",
+          "value": "render: 1.84 s"
+        }
+      ]
+    },
+    {
+      "key": "split",
+      "heading": "Receipt holds, claim fails",
+      "say": "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.",
+      "min": 5.0,
+      "marks": [
+        {
+          "type": "card",
+          "at": 0.0,
+          "label": "receipt: rerun hash",
+          "value": "4f691ecc59380d8856219c9f382b9ee9",
+          "verdict": "MATCH"
+        },
+        {
+          "type": "card",
+          "at": 0.25,
+          "label": "verdict: render under 1.50 s",
+          "value": "measured 1.84 s",
+          "verdict": "DRIFT"
+        }
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Keep both",
+      "say": "Keep both. The receipt says what happened. The verdict says whether it holds up.",
+      "min": 4.5,
+      "command": "python -m tools.explainer.render media/explainers/receipt-is-not-a-verdict --verify"
+    }
+  ]
+}
