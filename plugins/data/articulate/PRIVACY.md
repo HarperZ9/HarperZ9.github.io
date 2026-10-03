@@ -1,12 +1,27 @@
 # Privacy Policy
 
-Last updated: 2026-09-30. This policy covers the Articulate Writing plugin for
+Last updated: 2026-10-01. This policy covers the Articulate Writing plugin for
 local Claude Code and Codex hosts. It is also published at
 https://github.com/HarperZ9/articulate/blob/release/0.5.x/claude-plugin/PRIVACY.md.
 
+### What this plugin runs and handles
+
+**Hooks.** The plugin has one hook. After Claude writes or edits a file (the PostToolUse event for Write, Edit, MultiEdit and apply_patch), Claude Code runs `python3 -I -S -B -X utf8 "${CLAUDE_PLUGIN_ROOT}/server/edit_hook.py"` for up to 15 seconds. The hook reads the edit event Claude Code sends on standard input, which holds the file name and the text before and after the edit. For prose files (.md, .txt, .rst, .tex and similar) it returns advice about changed meaning and style to Claude. It opens no file, writes no file, starts no program and makes no network call. It never blocks the edit. Claude Code's event also carries the session ID, the path of the conversation transcript and the working folder. The hook ignores them and never opens the transcript.
+
+**MCP server.** The plugin starts one local MCP server named `articulate` with `python3 -I -S -B -X utf8 ${CLAUDE_PLUGIN_ROOT}/server/serve.py`. `${CLAUDE_PLUGIN_ROOT}` is the folder where Claude Code installed the plugin. The launch sets two environment values: `ARTICULATE_MCP_TOOLS=local` and `ARTICULATE_LOCAL_ONLY=1`. The server talks to Claude Code over standard input and output only.
+
+**Network.** With those two values, every tool runs on your computer. The server opens no network connection and sends nothing to the author or to any other service. Claude still reads the text as part of your conversation, and your Claude provider handles that conversation.
+
+**Code left out.** The Articulate command line tool also has optional model backends that read provider API keys and call a model provider, a local Ollama server or the `claude` program. This plugin does not include them: the folder carries only the modules its local tools and hook import. If someone changes the plugin's launch values to ask for a model backend, the tool answers that this build does not include one.
+
+**Files it writes.** None. The `-B` flag keeps Python from writing bytecode into the plugin folder.
+
+**Environment variables and credentials.** The server reads `ARTICULATE_MCP_TOOLS` and `ARTICULATE_LOCAL_ONLY`, which the plugin sets itself. The hook reads `ARTICULATE_EDIT_HOOK` from your environment; set it to `off` to turn the hook off. Neither reads a credential. The `-I` flag also makes Python ignore its own `PYTHON*` variables.
+
 **Data collected.** The plugin reads only the text the calling host passes to
-one of its tools. It does not read your files, conversation history or saved
-memory. It collects no account details, usage statistics or telemetry.
+one of its tools, and the edit event the host passes to its hook after the
+model writes or edits a file. It does not open your files or read conversation
+history or saved memory. It collects no account details, usage statistics or telemetry.
 
 **Use and storage.** The plugin checks text and prepares or validates host edits
 in memory on your computer, then returns the result to the host. It writes no

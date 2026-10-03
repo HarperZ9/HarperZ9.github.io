@@ -558,7 +558,9 @@ RELEASE_PATHS = (
 # October 1, 2026, before publication: the alder paragraph in why-i-do-this.html now uses the
 # author's words of 16 September 2026 on the red alder and on truth, and the next paragraph gains
 # his sentence on stewards. Its reading time stays at 10 minutes, so no derived file changes.
-REVIEWED_RELEASE_SHA256 = "f6bc2627baa3d37ae601c3ff9474a4698d3cb9af2e526e33738a00f216b73cc5"
+# October 2, 2026: merged with main after the independence policy v2, the Zentropy logotype
+# retirement and the plugin page refreshes; the release is rehashed on that base.
+REVIEWED_RELEASE_SHA256 = "fbd6517ff7533f072a47022e1a4a51d9d82646730f43f897c4f1d11e4bd3c14e"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

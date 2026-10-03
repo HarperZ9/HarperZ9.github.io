@@ -59,6 +59,22 @@ STUBS = {
         "note": "The papers in this folder are listed, with their research notes, on the Writing page.",
         "fragments": {},
     },
+    # The retired Zentropy Labs logotype and avatar canvases (retired 1 October 2026).
+    # The addresses stay so old links land on a live page; the art itself is gone.
+    "brand/zentropy-logo.html": {
+        "target": "/typeface.html",
+        "note": "This page is retired. The typography the site uses now is on the Typography page.",
+        "title": "Moved to the Typography page",
+        "link": "Open the Typography page",
+        "fragments": {},
+    },
+    "brand/zentropy-avatar.html": {
+        "target": "/",
+        "note": "This page is retired. The site's current mark appears in the header of every page.",
+        "title": "Moved to the home page",
+        "link": "Open the home page",
+        "fragments": {},
+    },
 }
 
 LABELS = {
@@ -104,7 +120,7 @@ def render_stub(path: str, spec: dict) -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Moved to the Writing page · Zain Dana Harper</title>
+<title>{html.escape(spec.get("title", "Moved to the Writing page"))} · Zain Dana Harper</title>
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="{canonical}">
 {script}<meta http-equiv="refresh" content="0; url={html.escape(target)}">
@@ -117,7 +133,7 @@ main{{max-width:42rem}}a{{color:#a6e7e5}}li{{margin:.35rem 0}}
 <body>
 <main>
 <p>{html.escape(spec["note"])}</p>
-<p><a href="{html.escape(target)}">Open the Writing page</a></p>
+<p><a href="{html.escape(target)}">{html.escape(spec.get("link", "Open the Writing page"))}</a></p>
 {links}</main>
 </body>
 </html>

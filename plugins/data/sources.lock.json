@@ -5,19 +5,19 @@
       "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
     },
     "manifest": {
-      "path": ".claude-plugin/plugin.json",
-      "sha256": "1b315a2ccaf7517f9e644b0d894dd21f1659cab412b5d51e8cdca1bb81f385a2"
+      "path": "claude-plugin/.claude-plugin/plugin.json",
+      "sha256": "d06543f516b920666e81a382a04ef42aa7f4e595e8ec8458f344048831965a02"
     },
     "privacy": {
-      "path": "PRIVACY.md",
-      "sha256": "8b99b1c2615a4b85a7175d754419ae8d21797b0ca93a829435469283cb01f434"
+      "path": "claude-plugin/PRIVACY.md",
+      "sha256": "c318e5d841c474f6400ce038e05d0dfe77f94f5e99bb779a4cf37d496db4b74c"
     },
     "readme": {
-      "path": "README.md",
-      "sha256": "5c4d1a91ad79ebedc2b06c1f5f0977269ebea6025a62d6a42b3e3d5dd8e0f7f8"
+      "path": "claude-plugin/README.md",
+      "sha256": "2895edeaf196d424d893b99cd9ec4bcb72855ee7de251ee43a0924c139a55e72"
     },
     "security": {
-      "path": "SECURITY.md",
+      "path": "claude-plugin/SECURITY.md",
       "sha256": "a8bc6fd8225e82ff7277653d0903657ce19394d9c8a6458f8ced0b1d68ababc4"
     }
   },
@@ -28,15 +28,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "c0cf7b244f871226d262f58dc2ec9e850b8a754c562c18a7f37495da3e7f421c"
+      "sha256": "a8c72e0ce408813d1252e79ed5294b18e05b27dfd7d3e8c0a3472d1f843b8724"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "e29a2f08b08da4c11e74ace48119f496f5581aa334c499d7af61ee21ce055390"
+      "sha256": "c05c2cc681dcb8b1f6492428d58197c63350a0ff97d455c63758f45a361919fb"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "34bb4351e96fbdf26496a148962a23f168ba574d694b659a2412df0ee71dad24"
+      "sha256": "ea92ccb6e5227c8c2ba312f11704268aa213452188a6e776af6e9011724902ca"
     }
   },
   "crucible": {
@@ -46,19 +46,37 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "8ed289f713cf9f172df8461c238f04203ca08d3ec8a6a5d0e7d66bceeb8bd6e9"
+      "sha256": "6a1ca9eca674ae8331876df2f902c45fc67e866ae839ffda78247c8ac01e51ca"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "8d1ceeeec663421e610abd93f049a8e80eba3e9e58c283d467d78adc485a9679"
+      "sha256": "f7028e22e75e76912c77137a55cf6cccd6caba93226def62543b0cc58c5c722a"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "3dc1a21143ba4d39260a7dc2be0d416ec0b6ca1821df475edc244d58755439a7"
+      "sha256": "bf6049d4167591e10be5af4ad8b1e6d65ef0b4809623f3b44409cc102aafae06"
     },
     "security": {
       "path": "SECURITY.md",
       "sha256": "6663d4f24d2c37e8b5c919d6a2713d0fc3e7b5d57f72fdf2722b340d23ce8e0a"
+    }
+  },
+  "flywheel": {
+    "license": {
+      "path": "LICENSE",
+      "sha256": "5d4abfef8a42cb0b1762662ae9745b01cd729991e60c2fee83d6ea8ee752cb6d"
+    },
+    "manifest": {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "2bbb21ff7892432085513b2716aa14b2d9c8e5e5f1236d9af13d3bf99509145d"
+    },
+    "privacy": {
+      "path": "PRIVACY.md",
+      "sha256": "b3120031056e3ecf3a6ed61087787d2ee833cefbe7606a9f00817cef4487c64f"
+    },
+    "readme": {
+      "path": "README.md",
+      "sha256": "7757bd28739cfc7b654abb3fe8c170752edd2479497bd3ef0ee49bf21e447ea4"
     }
   },
   "forum": {
@@ -90,15 +108,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "7791dd066ad5db741cd4c118f1f8d6c4b13634a2f84886a28b50cd8c812760ea"
+      "sha256": "d9b0b9e154ac4204fa5789e98d2aed29915ee11a74a7df920a3c009311db9632"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "85a044fba34877c6925c8d1eea87dc673e05ed5f34b28419a5c4c9fd385bdfc7"
+      "sha256": "7106db49536705c87f69ef9f00124ced8f8e9222f833351135092a523a25284f"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "a8697e003cfefde9debdb2c74a597e52b78b8f2f1e9e930c2d3a4407297943c4"
+      "sha256": "04239400e5bad0ebb97ddc8d2b05e426f9d5cc0e0680718f8b527322ed17cf88"
     }
   },
   "index": {
@@ -108,15 +126,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "a0761a136ad8406d05d500dc540811b9652f4a6978753ebfe253a9f8d8635a41"
+      "sha256": "dee755bfd1165d4e89ee4ca86265564a9ecda941fd179d3daab5749399595a96"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "b320661ce2c193d1c12895f0826f7c80594b96902bb97f74baa98304b07fef10"
+      "sha256": "d2aa2af71081427a9ac9f914d5fa9845a0e90c836ee036759a73aed82c95e957"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "0f184a6ea30122776055e4aaf80d3d9605b037519a731da52a7858a96bf2bb6a"
+      "sha256": "1a7cac90380b632cadabcd3ba6de9f3d884659907b63ec5ee063b79c91003a6e"
     }
   },
   "learn": {
@@ -144,15 +162,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "62fc6b025b02d86da0253e735b35f1fdcbc2c013f336b788e3b05ce2d52c8ff3"
+      "sha256": "c4543cc3f79fe7603edd3a7aeb2ae9c9301a4636701a45655a34c7488e19c7e5"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "db08c14c34ebc5c82e5b12904984f6087f5d4ea057317165f20f41113eb6923f"
+      "sha256": "a7c4bf4e53f5a17878ae9164affb3a79f710c1187e94a996e52cf98576c989bf"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "cc955ab0d8c9650289d098953a6a0360d1e1b7978f275b7f5ad6733f6e34778b"
+      "sha256": "594f50de3f800e60f8d13b6596bc2a76bc26d47b4e8a515b7e07462a9d58f935"
     }
   },
   "plexus": {
@@ -162,15 +180,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "03ca588f3774d8fc56aeb62cf2a5e9cd3bd33a5def07877b4f90d19a314bc258"
+      "sha256": "faf3e00f211996908476d836fa60fd6c51b5155d772b6b5ea075cc7ed40d8e03"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "a0334f49f03c2ee7ee39801f6ed54ffce697bf41a289f7a58e1677b8fc4e3e9c"
+      "sha256": "2d36f277111bf2f3d09d6f762829fc5ffee543f5694e1b061801af9f90256532"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "65f9df7a0f969195b0df325d050e4b8a33308567976fd290cd5d451502d93f77"
+      "sha256": "da253b186b4f953987cca4b3f844f8e19245cb0d3964dcf1a7c4e51240f333f0"
     }
   },
   "relay": {
@@ -180,15 +198,15 @@
     },
     "manifest": {
       "path": "client-plugin/.claude-plugin/plugin.json",
-      "sha256": "bade9892dc61bdc5529629073e88e444c2e0559e5b981a7c7d868336c65a8373"
+      "sha256": "7debac25e6231deb74bbfdc38050ec4abbd9704b665a1b48da0bbaca77a8dac4"
     },
     "privacy": {
       "path": "client-plugin/PRIVACY.md",
-      "sha256": "282d5e352068e16f6d2aa786cb8b639b0dc66801ae9886a6ed9cf788138b2650"
+      "sha256": "07e477029d1f1ede02a3369d0ae280a18e4f4b6d20b555dad2b49cd43cc45553"
     },
     "readme": {
       "path": "client-plugin/README.md",
-      "sha256": "f97b7118ecda1552c2fd0d92b15481c55a4c7ea0a5259891ca4a31bd69465783"
+      "sha256": "387db826d45c6c5df881586305d8790978672abf6f0ced301681a497f4d6e5e7"
     }
   },
   "telos": {

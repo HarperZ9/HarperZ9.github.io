@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-10-02 - Plugin support pages refreshed for the Claude plugin directory
+
+- Every plugin support, privacy and terms page is rebuilt from its repository's
+  current files: canon, crucible, gather, index, mneme, plexus and relay from
+  `main`, articulate from `release/0.5.x`. Each privacy page now carries the
+  plugin's "What this plugin runs and handles" disclosure.
+- New Flywheel Evidence Task pages at `plugins/flywheel/`, built from
+  `HarperZ9/flywheel-evidence-task`, with a flywheel icon (swept spokes around
+  the shared aperture core) in every icon size.
+- The policy renderer shows fenced code blocks and indented list
+  continuations. A support page for a skill-only plugin states that it needs
+  no runtime.
+- The privacy-page test now turns block tags into spaces as intended (its
+  pattern held a backspace byte where `\b` belonged) and compares list and
+  code blocks by their text.
+
+## 2026-10-01 - Zentropy Labs logotype and avatar retired
+
+- `brand/zentropy-logo.html` and `brand/zentropy-avatar.html` are now redirect
+  pages written by `tools/redirect_stubs.py`. They carry `noindex`, show no
+  retired name or art, and send a reader to `typeface.html` and the home page.
+- Removed the retired art: `brand/zentropy-logo.png`, its four WebP sizes,
+  `brand/zentropy-face.json`, `brand/zentropy-specimen.svg` and
+  `brand/zentropy-avatar.png` (a byte-identical copy of
+  `brand/aperture-mark.png`, which the header still uses).
+- Removed three superseded home bundles that no page, test or bundle
+  references: `assets/index-BOzfAcuL.js`, `assets/index-EaeROAAw.js` and
+  `assets/index-NqGo0RlY.js`.
+- Kept on purpose: `--zentropy-*` CSS variable names, `zentropy.*/v1` record
+  format names, the old font URLs, the dated 24 and 25 August archives, and the
+  superseded bundles that the release tests pin. None renders as page text.
+
 ## 2026-10-01 - Typefaces renamed Zain
 
 - The site typefaces now carry the Zain name: Zain Editorial Preview, Zain Mono
