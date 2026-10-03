@@ -1,25 +1,25 @@
 {
   "artifacts": [
     {
-      "byte_length": 45487,
-      "extraction_sha256": "453648cdd7e6f9fde8b1e29318e626a5dff162a61e27384a7e8094817354a2ed",
+      "byte_length": 45711,
+      "extraction_sha256": "a082da65dbc7dba11087c99ed1a1d08058c34ee7b47769c2bcdf2678594d6160",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "b5f92a9728244559ddafc1e73afe3ee161d4b232acf36e7f0e02fffd3e887a07",
+      "sha256": "e9b4a74b48e781c4c135ce68a5e9a10ff916d8f102d72695995f8fb82a66dbed",
       "source": "cv.html"
     },
     {
-      "byte_length": 16931,
-      "extraction_sha256": "611ee5a3d856e7c8c6c5ce59f876cbc16335da66fe9c509209b1bfbbf3af83a7",
+      "byte_length": 17939,
+      "extraction_sha256": "42b8ba485d5dd117774e6f9d5d23dd2309839d0a738652150904dd2dc806a9c9",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
-      "page_count": 5,
+      "page_count": 6,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "8f4dbad0e2bf7d763e9b71321054045b9fb90a71f0d120e19740e867f10f7a0f",
+      "sha256": "32bf124f5150f35a0413f155481098beda24328114bef5922f12347ddc014d47",
       "source": "cv.html"
     },
     {
@@ -118,11 +118,11 @@
     },
     {
       "path": "tools/render_career_pages.py",
-      "sha256": "21379b23b75c7003fdf65301ab756b2efb5fda613d2d1f1c250143fae50ea4e1"
+      "sha256": "ce36e1355903e802d9004769ec75686551b41561571a6a45a602a9538c07152b"
     },
     {
       "path": "career/resume-source.json",
-      "sha256": "32c344d7b95478e94f07778df14fd2b11052042a7d7e11117d547d92061be6fa"
+      "sha256": "5e277501128dedf76b99230aa18f683f268a9f4b2a6146864cc7c2fce42551e3"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -147,7 +147,7 @@
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "4a3d93a8e842ca8415666680f2412de5741cc30fa7c20a385d42317b3be28c1a"
+      "sha256": "47d8137472adefea24c5a81ce8806807b2809756d5ec69dbb78850b6aafd9b90"
     },
     {
       "path": "resume-evaluation-tooling.html",

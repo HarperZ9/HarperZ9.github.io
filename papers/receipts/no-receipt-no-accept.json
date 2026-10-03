@@ -1,0 +1,28 @@
+{
+  "schema": "paper-build-receipt/v1",
+  "paper": "writing/no-receipt-no-accept/no-receipt-no-accept.pdf",
+  "source": {
+    "kind": "essay Markdown, converted by tools/essay_latex.py",
+    "path": "writing/no-receipt-no-accept/no-receipt-no-accept.md",
+    "sha256": "81661a95cb61fdfdc84ec58b53f0e6330b841c3cafd46dbf0d7a9511bc2f411b",
+    "tex": "papers/tex/no-receipt-no-accept.tex",
+    "page": "no-receipt-no-accept.html",
+    "pdf": "writing/no-receipt-no-accept/no-receipt-no-accept.pdf"
+  },
+  "engine": {
+    "name": "Tectonic 0.17.0",
+    "binary_sha256": "99ffcfdbf1ebf8bdda9e791942e3d06aedb12463fddc33f07de6f5211c8bf08d",
+    "flags": "-X compile --only-cached"
+  },
+  "bundle": {
+    "name": "default_bundle_v33.tar",
+    "digest": "6ffe055852f8faf66c0acbe1a7fb27f87b869a90bad1204f3bf4d9683f597c7c"
+  },
+  "source_date_epoch": "1790985600",
+  "runs": 2,
+  "rebuild_identical": true,
+  "pdf_sha256": "de5007f38953ba5c4f26650925925b0918f3c1223320d7c344b1fcdde6b47759",
+  "pdf_bytes": 155119,
+  "rerun": "SOURCE_DATE_EPOCH=1790985600 tectonic -X compile --only-cached papers/tex/no-receipt-no-accept.tex",
+  "does_not_prove": "Two identical builds show that this PDF follows from this source, engine and bundle. They do not show that the paper's claims are true, and a different engine or bundle may give different bytes."
+}

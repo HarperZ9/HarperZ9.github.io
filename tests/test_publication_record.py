@@ -8,6 +8,7 @@ taxonomy is stated now, and these tests keep the number tied to the list
 rather than to whatever the prose last happened to say.
 """
 
+import json
 import re
 from pathlib import Path
 
@@ -21,12 +22,21 @@ RECORD = {
     "10.5281/zenodo.21231406": "published preprint",
     "10.5281/zenodo.21234475": "research note",
     "10.5281/zenodo.21231311": "research note",
+    # The formal note on faithfulness, deposited 15 September 2026 as its own Zenodo record.
+    # Added 3 October 2026, when a Zenodo search by ORCID returned it as the thirteenth record.
+    "10.5281/zenodo.22768398": "research note",
     "10.5281/zenodo.20778927": "archived corpus",
     "10.5281/zenodo.20773724": "archived corpus",
+    # The October 2026 editions, deposited 3 October 2026 (three are second versions of
+    # records first deposited 15 September 2026). Since that day the record holds thirteen
+    # DOI records, one per Zenodo concept, read from the Zenodo API and from
+    # system/scholarly-records.json.
+    "10.5281/zenodo.23126117": "philosophy paper",
+    "10.5281/zenodo.23126357": "philosophy paper",
+    "10.5281/zenodo.23126458": "philosophy paper",
+    "10.5281/zenodo.23126484": "working paper",
 }
-# The October 2026 editions of four philosophy papers, deposited 3 October 2026. They are
-# listed with the papers on the Writing hub and cited on their own pages; the eight-record
-# section above counts the July and June record and does not include them.
+# Each October edition is also cited by its own landing page.
 OCTOBER_EDITIONS = {
     "10.5281/zenodo.23126117": "research-arity-gap.html",
     "10.5281/zenodo.23126357": "research-forcing-argument.html",
@@ -38,8 +48,10 @@ STATUS_PHRASE = {
     "published preprint": "published preprint",
     "research note": "note",
     "archived corpus": "archived research corpus",
+    "philosophy paper": "philosophy paper",
+    "working paper": "working paper",
 }
-WORDS = {2: "Two", 6: "Six", 8: "Eight"}
+WORDS = {1: "One", 2: "Two", 3: "Three", 6: "Six", 8: "Eight", 12: "Twelve", 13: "Thirteen"}
 
 
 def read(rel: str) -> str:
@@ -52,7 +64,9 @@ def dois(source: str) -> set[str]:
 
 def test_publications_lists_the_whole_record() -> None:
     src = read("publications.html")
-    assert dois(src) == set(RECORD) | set(OCTOBER_EDITIONS), "publications.html and the deposited record disagree"
+    assert dois(src) == set(RECORD), "publications.html and the deposited record disagree"
+    scholarly = json.loads(read("system/scholarly-records.json"))["records"]
+    assert {r["doi"] for r in scholarly} == set(RECORD), "scholarly-records.json and the record disagree"
     for doi, page in OCTOBER_EDITIONS.items():
         assert f'<meta name="citation_doi" content="{doi}">' in read(page), page
 
@@ -83,12 +97,12 @@ def test_the_stated_count_matches_the_list() -> None:
 
 
 def test_the_taxonomy_adds_up() -> None:
-    """Two of each kind. If a future entry breaks that, the prose claiming it
-    has to change with the list."""
+    """The page states how many of each kind it lists. If an entry changes kind,
+    the prose claiming the count has to change with the list."""
     src = read("publications.html")
     from collections import Counter
     kinds = Counter(RECORD.values())
-    assert set(kinds.values()) == {2}, kinds
+    assert sum(kinds.values()) == len(RECORD)
     for kind, n in kinds.items():
         phrase = f"{WORDS[n].lower()} {kind}"
         assert phrase in src.lower().replace("corpora", "corpus"), f"page never says {phrase!r}"
@@ -112,14 +126,14 @@ def test_nothing_claims_peer_review() -> None:
 
 
 def test_every_record_is_readable_without_leaving_the_site() -> None:
-    """All eight are hosted here now: six as PDFs, and the two corpora as
-    full-text pages rendered from the deposited sources. A link to a file that
+    """All thirteen are hosted here: eleven as PDFs, and the two corpora as full-text
+    pages rendered from the deposited sources, each with a typeset PDF as well. A link to a file that
     is not there is the exact failure this site exists to argue against."""
     src = read("publications.html")
     for href in re.findall(r'href="(papers/[^"]+)"', src):
         assert (ROOT / href).is_file(), f"publications.html offers a missing PDF: {href}"
-    record = src[src.index('id="research-records"'):src.index('id="more-papers"')]
-    assert len(re.findall(r'href="papers/', record)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
+    record = src.split('id="research-records"', 1)[1].split("</section>", 1)[0]
+    assert len(re.findall(r'href="papers/[^"]+\.pdf"', record)) == len(RECORD),         f"expected a local file for all {len(RECORD)} records"
     # 1 October 2026: the Writing hub's research section also lists every PDF in papers/.
     for pdf in (ROOT / "papers").glob("*.pdf"):
         assert f'href="papers/{pdf.name}"' in src, f"publications.html does not list {pdf.name}"

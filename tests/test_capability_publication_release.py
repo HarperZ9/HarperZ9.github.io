@@ -13,6 +13,8 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-BniK76UM.js",
+    "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
     "assets/index-DtNiguMs.js",
@@ -170,6 +172,16 @@ RELEASE_PATHS = (
     "type/preview/zentropy-editorial-regular.woff2",
     "type/preview/zentropy-mono-regular.woff2",
     "img/og/typeface.png",
+    # 3 October 2026: the type forge, the in-browser Zain Mint engine (in progress, no download).
+    "type-forge.html",
+    "system/type-forge/forge.mjs",
+    "system/type-forge/geometry.mjs",
+    "system/type-forge/skeletons.mjs",
+    "system/type-forge/skeletons-caps.mjs",
+    "system/type-forge/pyround.mjs",
+    "system/type-forge/ttf.mjs",
+    "system/type-forge/forge-page.js",
+    "system/type-forge/forge-page.css",
     "accountable-surface.html",
     "availability-is-not-reach.html",
     "analytics/benchmark-evidence-status.html",
@@ -586,7 +598,20 @@ RELEASE_PATHS = (
 # October 3, 2026: RAW now describes the public C++23 reference renderer (raw.html, the system
 # registry, the record pages and capability maps, and the home bundle index-DDpFxCuj.js); the
 # release is rehashed (merged over the media fixes).
-REVIEWED_RELEASE_SHA256 = "c0d914afc3aa48da14ce19c4e0a7424f1dff1b84570515141400e18f4b718ed3"
+# October 3, 2026: the type forge (type-forge.html and system/type-forge/) joins the release, and
+# fonts.html and typeface.html link to it; the release is rehashed.
+# October 3, 2026: the type forge joins the route registry and the site index, and the
+# publication receipt records the sitemap that lists it; the release is rehashed.
+# October 3, 2026: the research record counts twelve DOI records (the four October editions
+# join it on the Writing hub, the CV, the resumes and the dossier), the two archived corpora are
+# typeset with LaTeX with build receipts, and the home bundle is index-G7cmpE16.js; the release
+# is rehashed. Later the same day a Zenodo search by ORCID returned thirteen records: the formal
+# note on faithfulness (15 September 2026) joins the record, the bundle is index-BniK76UM.js, and
+# the release is rehashed again.
+# October 3, 2026: No Receipt, No Accept is re-rendered from its approved Markdown (the
+# 25 September rewrite) and its PDF is typeset with LaTeX with a build receipt; the release
+# is rehashed.
+REVIEWED_RELEASE_SHA256 = "8fb8e8c12e9a570cf0bfaa8172719463ea4e6fa8652fdb62208a0422f60915e4"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
@@ -780,7 +805,21 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 3, 2026: RAW's registry record now describes the C++23 reference renderer, so
     # the bundle rebuilt from the registry is index-DDpFxCuj.js with the same sheet.
     # index-DI6YWfTZ.js stays as retained history.
-    current_js = "index-DDpFxCuj.js"
+    # October 3, 2026: the Writing hub's research record counts twelve DOI records and lists
+    # the four October editions in it, so the bundle rebuilt from the registry is
+    # index-G7cmpE16.js with the same sheet. index-DDpFxCuj.js stays as retained history.
+    # October 3, 2026: a Zenodo search by ORCID returned thirteen records, so the research
+    # record adds the formal note on faithfulness and counts thirteen; the bundle rebuilt from
+    # the registry is index-BniK76UM.js with the same sheet. index-G7cmpE16.js stays as history.
+    current_js = "index-BniK76UM.js"
+    previous_count_js = "index-G7cmpE16.js"
+    assert previous_count_js not in source
+    assert (ROOT / "assets" / previous_count_js).is_file()
+    assert f"assets/{previous_count_js}" in RELEASE_PATHS
+    previous_record_js = "index-DDpFxCuj.js"
+    assert previous_record_js not in source
+    assert (ROOT / "assets" / previous_record_js).is_file()
+    assert f"assets/{previous_record_js}" in RELEASE_PATHS
     previous_raw_js = "index-DI6YWfTZ.js"
     assert previous_raw_js not in source
     assert (ROOT / "assets" / previous_raw_js).is_file()

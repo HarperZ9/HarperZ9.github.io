@@ -28,7 +28,8 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
         docx = Document(stem.with_suffix('.docx'))
         assert words(text) == words(' '.join(p.get_text() for p in pdf)), item['id']
         assert words(text) == words(' '.join(p.text for p in docx.paragraphs)), item['id']
-        assert len(pdf) == (5 if item['id'] == 'page:cv' else 1)
+        # 3 October 2026: the CV lists all twelve DOI records and runs to six pages.
+        assert len(pdf) == (6 if item['id'] == 'page:cv' else 1)
         assert not docx.tables
         assert len(text.split()) >= 250
         assert 'Self-Directed Projects' in text

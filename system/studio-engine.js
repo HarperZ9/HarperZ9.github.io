@@ -21,6 +21,8 @@ export const ENGINE_SURFACES = Object.freeze({
     intro: "One plate from the Gallery's print desk, drawn once from its seed. The same seed always draws the same plate." },
   loom: { label: "Loom", page: "loom.html", plugin: "loom", acceptsInput: true,
     intro: "A seeded plate woven into cloth with the Loom's own draft maths. Change the structure to see the same picture as plain weave, twill, satin, overshot or jacquard." },
+  type: { label: "Type forge", page: "type-forge.html", plugin: "type",
+    intro: "Your text set in Zain Mint, minted in your browser from the pen and proportions below. The face is unfinished; the site's own text stays in its two canon faces." },
   splats: { label: "Splat Lab", page: "gaussian-splats.html", door: "spatial", plugin: "slot-card",
     card: { title: "Splat scenes draw in the Spatial source", note: "receipt-checked packages; the Splat Lab page publishes none yet" },
     intro: "The Splat Lab's acceptance rule waits for a loadable scene with parallax and a disclosure. The working splat renderer is the Spatial source: it checks every package against its SHA-256 receipt before it draws." },
@@ -85,6 +87,20 @@ async function buildControls(id, surface, handle, mount) {
     const scan = control(mount, "Scanlines", el("input", { type: "range", min: "0", max: "100", value: "35" }));
     const apply = () => setP({ palette: pal.value, mask: mask.value, scanStrength: +scan.value / 100 });
     for (const n of [pal, mask, scan]) n.addEventListener("input", apply);
+  }
+  if (id === "type") {
+    const text = control(mount, "Text", el("input", { type: "text", class: "poster-seed", value: "Adhesion", maxlength: "60", spellcheck: "false" }));
+    const weight = control(mount, "Weight", el("input", { type: "range", min: "0.04", max: "0.2", step: "0.001", value: "0.085" }));
+    const style = control(mount, "Capitals", select(["drawn", "runic"], "drawn"));
+    const apply = () => {
+      setP({ text: text.value, weight: +weight.value, style: style.value === "runic" ? "runic" : "" });
+      const f = handle.instance.face;
+      const note = mount.querySelector(".me-refusal");
+      if (note) note.textContent = f && f.refused ? "Refused: " + f.refusals.join(" ") : "";
+      measureSoon();
+    };
+    mount.append(el("p", { class: "transform-note me-refusal", role: "status", "aria-live": "polite" }));
+    for (const n of [text, weight, style]) n.addEventListener("input", apply);
   }
   if (id === "gallery" || id === "loom") {
     const { specimenLayerNames } = await import("./media-engine/plugins/plate.mjs");

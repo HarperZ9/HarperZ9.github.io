@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontspec}
+\setmainfont{lmroman10-regular.otf}[BoldFont=lmroman10-bold.otf,ItalicFont=lmroman10-italic.otf,BoldItalicFont=lmroman10-bolditalic.otf,Ligatures=TeX]
+\setmonofont{lmmono10-regular.otf}
+\newfontfamily\arabicfont{DejaVuSans.ttf}[Script=Arabic,Scale=0.9]
+\newfontfamily\hebrewfont{DejaVuSans.ttf}[Script=Hebrew,Scale=0.9]
+\TeXXeTstate=1
+\newcommand{\AR}[1]{{\arabicfont\beginR #1\endR}}
+\newcommand{\HE}[1]{{\hebrewfont\beginR #1\endR}}
+\usepackage{microtype}
+\usepackage{longtable,array,booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks,bookmarksdepth=3]{hyperref}
+\usepackage{url}
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parskip}{6pt plus 1pt}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}{2ex plus 1ex}{0.4ex}{\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}{1.6ex plus 1ex}{0.3ex}{\normalfont\normalsize\itshape}}
+\makeatother
+\hypersetup{pdftitle={The Witnessing Spine},pdfauthor={Zain Dana Harper},pdfsubject={One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.},pdfkeywords={source sha256 ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191}}
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries The Witnessing Spine\par}
+\medskip
+{\large\emph{One gap, witnessed at four altitudes: research, philosophy, algebra, and tool. The capstone of a five-part adversarial-steelman corpus.}\par}
+\medskip
+Zain Dana Harper\par
+{\small ORCID \href{https://orcid.org/0009-0001-7175-5393}{0009-0001-7175-5393} \textperiodcentered{} DOI \href{https://doi.org/10.5281/zenodo.20778927}{10.5281/zenodo.20778927} \textperiodcentered{} CC BY 4.0\par}
+\end{center}
+
+\begin{quote}\small
+Archived research corpus, deposited whole. Stated by its author as a pre-proof synthesis: a bid, not a proof. Nothing here is peer reviewed. The deposited version at the DOI above is the citable one; this copy carries the same text, typeset with LaTeX. Dated corrections sit beside the passages they correct and are listed at the end. They are site notes, and the deposited text stays as deposited.
+\end{quote}
+
+\pdfbookmark[1]{Foreword}{foreword}
+\section*{Foreword, 2 October 2026}
+
+The text below is The Witnessing Spine as I deposited it on 20 June 2026 (DOI 10.5281/\allowbreak{}zenodo.20778927). It stays as deposited, and the deposit is the version to cite. This foreword is new. The record behind it shows a short path. A verification tool and the philosophy appeared in the same week of June, and they joined into one program between 17 and 19 June, when the claim that proving identity does not grant permission became code. What follows traces that path from dated commits, file times and my own session turns. It adds no claim to the deposit and changes none of its status labels.
+
+The philosophy started as working notes for an ontology thesis. In the first week of June 2026 I opened a Claude Code session, pointed the model at those notes and asked it to steelman them. I framed the project as an ontological nihilism thesis built around the Golem story. The word emet, Hebrew for truth, is written on the clay, and rubbing out one letter leaves met, dead. I said from the start that the work was part thesis in philosophy and part thesis in AI research, and that each part should show its value on its own. The session's working files carry dates from 6 to 8 June. A model wrote most of the argument in that session, and the Conferred Existence pages say which parts are mine. That corpus was deposited on 20 June 2026 (DOI 10.5281/\allowbreak{}zenodo.20773724).
+
+The first re-derivation tool is about a day older than those files. EMET, named for the same Hebrew word, has its first public commit on 6 June 2026. That commit describes a verifier in which trust is earned by reproduction and never by authority. EMET checks whether bytes still match their source and answers with a closed verdict: MATCH, DRIFT or UNVERIFIABLE. The deposit below uses that vocabulary throughout. During the thesis session I called emet the earlier exception layer of my tooling. So the record puts the tool and the thesis in the same week. It cannot say which idea came first in my own thinking, because my notes carry no date of first writing.
+
+The program took shape at the membrane. In the thesis session I asked that the work tie back to meaning, to the 1 and the 0, and to the seam between them that acts as a membrane. The finished corpus turned that image into a claim: proving who sent a signal does not prove that the sender permitted the action. On 17 June the claim became code. The proof-surface package gained an authorization receipt, a record of an explicit grant from a named human that expires and can be revoked, with default deny for anything the grant leaves out. The same day, the coherence-membrane package added a read gate for witnessed perception. On 19 June I packaged both into Accountable Surface. Its first commit states that the model cannot supply its own authorization and that a missing operator grant means deny.
+
+The authorization receipt had a predecessor. Before June my security work studied how a model's working context can be shaped from outside the model. The commit that added the receipt calls it the honest inversion of that earlier technique. Authority in the receipt is given in the open, by a person, for a limited time.
+
+The Witnessing Spine came next. On 20 June 2026 its five adversarial steelmans and this synthesis were published and deposited on the same day. It is the first place where the philosophy and the tools were written up as one claim: nothing self-warrants. Its own section 8 labels the strongest step, that the four altitudes are one gap, an abductive bid.
+
+Re-derivation moved to the center of the program over the next weeks. Reconcile followed on 21 June and The Conservation of Faithfulness on 23 June. Flywheel began on 6 July 2026 as a verified-inference harness. An internal analysis of 4 August proposed re-derivable correctness, where a stranger re-runs a result and confirms it, as the main direction for the work. Re-derivation is older than my use of it. Debian's Reproducible Builds effort, in which a third party rebuilds software and compares the result, began with a discussion at DebConf13 in July 2013.
+
+This foreword changes nothing about the status of the deposit. It remains a pre-proof synthesis, nobody has peer reviewed it, and its claims still wait on my own re-derivation from primary sources. A model drafted this foreword on 2 October 2026 from dated records and my session turns, and I approved it paragraph by paragraph.
+
+\medskip\noindent\rule{\linewidth}{0.6pt}\medskip
+
+
+{\large\emph{A Grand Bridge}\par}
+
+{\large\emph{One gap, witnessed at four altitudes: research · philosophy · algebra · tool}\par}
+
+\textbf{Author:} Zain Dana Harper (independent researcher, Seattle · ORCID \href{https://orcid.org/0009-0001-7175-5393}{0009-0001-7175-5393}) \textbf{Date:} 2026-06-20 · \textbf{License:} CC-BY-4.0 \textbf{Status:} pre-proof research synthesis — a \emph{bid}, not a proof (see §8). Capstone of a five-part adversarial-steelman corpus; companion to the \emph{Conferred Existence} philosophy corpus (\href{https://doi.org/10.5281/zenodo.20773724}{Zenodo 10.5281/\allowbreak{}zenodo.20773724}). \textbf{AI-assisted disclosure:} web-grounded research agents performed source discovery; the author performed synthesis, adjudication, and independent verification; every citation was retrieval-checked; UNVERIFIED items are excluded from load-bearing claims; the convergence-identity claim is labeled an abductive bid, not a deductive identity.
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§0 — The thesis, in one line}\addcontentsline{toc}{section}{§0 — The thesis, in one line}
+
+\textbf{Nothing self-warrants.}
+
+Every property worth trusting — \emph{existence, identity, authority, equivalence, alpha, safety, assurance} — is conferred by something outside the thing itself, and must be \textbf{witnessed} (re-derived from outside, coverage-accounted, stamped MATCH/\allowbreak{}DRIFT/\allowbreak{}UNVERIFIABLE) rather than \textbf{asserted} by the thing. Aseity — owning one's own ground — is false everywhere it is checked. Witnessing is the discipline that the absence of aseity demands.
+
+This single claim is reached \emph{four independent ways} in this body of work — empirically, a priori, formally, and executably — and they are \textbf{the same claim}. That fourfold convergence is the finding.
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§1 — The gap, stated once}\addcontentsline{toc}{section}{§1 — The gap, stated once}
+
+\begin{quote}
+An \textbf{artifact} that is \emph{verified /\allowbreak{} asserted /\allowbreak{} conferred} is not the \textbf{property it warrants}. The artifact is what the thing (or a proxy) says about itself; the warrant is that property re-derived from \emph{outside} the thing. \textbf{Self-certification is the error; witnessing is the fix.}
+\end{quote}
+
+Witnessing has a fixed shape wherever it appears: (1) \textbf{re-derive} the property from primary evidence outside the asserting party; (2) \textbf{account for coverage} — what was and was not checked; (3) \textbf{stamp} the result MATCH (re-derivation agrees), DRIFT (it disagrees), or UNVERIFIABLE (it cannot be re-derived) — and \textbf{never silently fill} an UNVERIFIABLE with a guess.
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§2 — Altitude 1 · the research corpus (empirical) — five sectors, one gap}\addcontentsline{toc}{section}{§2 — Altitude 1 · the research corpus (empirical) — five sectors, one gap}
+
+Five adversarial steelmans, five financially-loaded sectors, each independently steelmanned and then broken at the \emph{same joint} (RUN-001…005 in this corpus).
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.070\linewidth}>{\raggedright\arraybackslash}p{0.114\linewidth}>{\raggedright\arraybackslash}p{0.273\linewidth}>{\raggedright\arraybackslash}p{0.215\linewidth}>{\raggedright\arraybackslash}p{0.128\linewidth}}
+\toprule
+\textbf{Run} & \textbf{Sector} & \textbf{Asserted artifact} & \textbf{\ensuremath{\neq} the warrant} & \textbf{Verdict} \\ \midrule\endhead
+001 & AI provenance & signed build lineage & witnessed provenance — \textbf{authentication \ensuremath{\neq} authorization} & partial; fails at verification \\
+002 & COBOL modernization & a translated program & behavioral equivalence — \textbf{translation \ensuremath{\neq} equivalence} & FALSE as stated \\
+003 & Quant/\allowbreak{}ML & a backtest Sharpe /\allowbreak{} APR & deflated realized alpha — \textbf{backtest \ensuremath{\neq} alpha} & FALSE as stated \\
+004 & DeFi ``trustless'' & a valid state transition & economic safety — \textbf{verification \ensuremath{\neq} safety} & FALSE as stated \\
+005 & Enterprise software & a certificate /\allowbreak{} SLA /\allowbreak{} SBOM & assurance — \textbf{attestation \ensuremath{\neq} assurance} & FALSE as stated \\
+\bottomrule\end{longtable}}
+
+\textbf{The ring.} Run 005's supply-chain finding — \emph{documented \ensuremath{\neq} witnessed provenance}, closed by in-toto /\allowbreak{} SLSA /\allowbreak{} reproducible builds — is the \textbf{same mechanism} Run 001 identified for financial-AI provenance. The last sector loops back to the first. The corpus is not five points; it is a closed loop, and the loop's invariant is the witnessing shape of §1. \textbf{[MATCH — five dated, sourced artifacts; \textasciitilde{}330 retrieval-verified citations; corrections logged honestly.]}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§3 — Altitude 2 · the philosophy (a priori) — the membrane and no-aseity}\addcontentsline{toc}{section}{§3 — Altitude 2 · the philosophy (a priori) — the membrane and no-aseity}
+
+The \emph{Conferred Existence} corpus (\href{https://doi.org/10.5281/zenodo.20773724}{Zenodo 10.5281/\allowbreak{}zenodo.20773724}) reaches the same gap from pure philosophy, with \textbf{no knowledge of the security or finance literatures} — and names the convergence itself.
+
+\textbf{The membrane.} Authentication verifies ``is P a real instance?''; authorization needs ``is this real P the operator's uncoerced will toward \emph{this} referent, \emph{now}?'' Will-toward-a-referent is intentionality, not a property a signal carries. No conjunction of authentication facts entails the permission — an instance of the \textbf{autonomy of the deontic} (Pigden 1989, formalizing Hume), reached independently \emph{from security}. The thesis flags this as a central result: an independent philosophy×security convergence, from which it derives an unmeasurability result and a failure taxonomy. Run 001 found that exact gap empirically in regulated-AI provenance; the thesis proved it a priori. Same gap, two directions. \textbf{[MATCH — the thesis states the convergence in its own words; its subtitle is ``…the Limits of Authentication.'']}
+
+\textbf{The deeper layer: no-aseity.} The membrane is one face of a larger claim:
+
+\begin{quote}
+``Nothing possesses its own existence. To exist is to be conferred … The strong reading of ontological nihilism is not `nothing exists' (self-refuting) but \textbf{no aseity}: nothing exists intrinsically, independently, or on its own footing.'' — \emph{Conferred Existence}
+\end{quote}
+
+\emph{Nothing self-warrants} \textbf{is} \emph{no aseity}. A signal cannot authorize itself (membrane); a being cannot ground its own existence (no-aseity); the same structural fact at two levels. The cross-tradition spine confirms it is not a local intuition: \textbf{Ash'arite kasb} (God creates the act; the human \emph{acquires} it — total causal dependence \emph{with} genuine ownership), \textbf{Madhyamaka} emptiness of own-being, \textbf{Yoruba orí} (received destiny — ``kasb seen from inside the agent''). Three traditions that never met, one refusal of self-grounding. \textbf{[MATCH — published thesis.]}
+
+\begin{quote}\small\emph{A dated correction to this passage is listed under \hyperref[corrections]{Corrections}.}\end{quote}
+
+\textbf{The arity gap → accountability is two-place.} ``A one-place, target-fixing vocabulary cannot fix the target of a two-place relation.'' Holding-responsible does not reduce to behaviour-shaping, because the second-personal address \emph{is the second argument-place of the relation}. Consequence: accountability requires a \emph{witness and a witnessed} — a conferrer and a conferred. It is not a property a system has alone; it is a relation a system stands in. \textbf{[MATCH — published thesis.]}
+
+\begin{quote}\small\emph{A dated correction to this passage is listed under \hyperref[corrections]{Corrections}.}\end{quote}
+
+\textbf{Honest status (the deepest evidence).} The thesis applies the discipline \emph{to itself}: it is declared AI-assisted research substrate whose every claim the human author ``must re-derive, own, and defend,'' and its keystone is stamped \emph{forces-conventionally-only} — it claims only a conventional, witnessed seam, conceding the ultimate. A philosophy of proof-before-trust \emph{about its own authorship} is the thesis enacting itself. \textbf{[MATCH — it is the spine, self-applied.]}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§4 — Altitude 3 · the algebra (formal) — MATCH /\allowbreak{} DRIFT /\allowbreak{} UNVERIFIABLE}\addcontentsline{toc}{section}{§4 — Altitude 3 · the algebra (formal) — MATCH /\allowbreak{} DRIFT /\allowbreak{} UNVERIFIABLE}
+
+The gap's fix can be formalized as a computable substrate: a \textbf{witnessed, uncertainty-carrying transform algebra} — a shared intermediate representation for perception, cognition, and actuation. (This layer is in-development design; described here at the conceptual level.) Three features map exactly onto §1's witnessing shape:
+
+\begin{enumerate}
+\item \textbf{The verdict is the stamp.} A three-valued lattice — \textbf{MATCH /\allowbreak{} DRIFT /\allowbreak{} UNVERIFIABLE} — with the algebraic property that combining verdicts can only \emph{attenuate} trust, never inflate it (meet = fail-closed). This \emph{is} the §1 stamp, with a formal guarantee.
+\item \textbf{UNVERIFIABLE is first-class; fail-closed.} Uncertainty is represented and propagated, never silently filled — any operation reading an UNVERIFIABLE input yields UNVERIFIABLE, never a guessed value. This is the research corpus's ``UNVERIFIED is excluded from load-bearing use,'' and the epistemics' ``unknown beats fabrication,'' \emph{as a type rule}.
+\item \textbf{\texttt{reconcile} is witnessing, mechanized.} The same algebra, clock pointed three ways: \textbf{report} → \emph{what is} (perception); \textbf{predict} → \emph{what would be}; \textbf{reconcile} — compare predicted against re-perceived → a \textbf{drift verdict} (verification). The corpus's closing move — re-derive and compare, stamp MATCH/\allowbreak{}DRIFT — is literally the \texttt{reconcile} mode. The discipline applied by hand across five sectors is one of three native operations of the substrate. \textbf{[MATCH — the mapping is one-to-one, not analogical; the same behavior is implemented in the public tool, §5.]}
+\end{enumerate}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§5 — Altitude 4 · the tool (executable) — the gate and the grounding cortex}\addcontentsline{toc}{section}{§5 — Altitude 4 · the tool (executable) — the gate and the grounding cortex}
+
+\texttt{accountable-surface} (\href{https://github.com/HarperZ9/accountable-surface}{github.com/\allowbreak{}HarperZ9/\allowbreak{}accountable-surface}; zero-dependency core; MIT) is the spine \emph{running}: perception · \textbf{gate} · memory · 3-channel actuation (fs/\allowbreak{}web/\allowbreak{}os) · bounded autonomy · \textbf{grounding cortex}.
+
+\textbf{The gate = the membrane, in code.} Doctrine: ``Awareness is not authority … will-toward-a-referent is not a property a signal carries … absent an explicit, revocable human grant, the default is deny.'' Enforced: with no operator grant loaded, the server returns \emph{deny} — ``the model cannot self-authorize.'' Authentication \ensuremath{\neq} authorization is not a slogan here; it is a default-deny branch. \textbf{[MATCH — public source: \texttt{src/accountable\_surface/server.py}, \texttt{THEORY.md}.]}
+
+\textbf{The grounding cortex = proof-before-trust, in code.} ``A claim is worth what its receipt is worth … the self-view is content-addressed and cannot silently drift.'' The \texttt{ReferenceCortex} returns \texttt{grounded / weak / ungrounded}; an ungrounded premise escalates to \emph{needs-human} rather than acting on an unwitnessed claim. \textbf{[MATCH — public source: \texttt{src/accountable\_surface/reference.py}.]}
+
+\textbf{\texttt{reconcile}, executable.} Every action runs perceive → gate → act → \textbf{re-perceive → verify → drift → rollback-if-reversible}. The algebra's reconcile mode is the tool's actuation loop. And \textbf{interoception} gives a content-addressed (SHA-256) self-view that ``cannot silently drift'' — no-aseity in code: the organism's account of itself is \emph{witnessed}, not \emph{self-asserted}. \textbf{[MATCH — public source: \texttt{src/accountable\_surface/surface.py}.]}
+
+\textbf{Mission.} ``Senses and sensibility are what lead to the new frontier. Machines learning to hold themselves accountable.'' — \emph{senses} = perception; \emph{sensibility} = the gate + grounding (judgment). Honest gap: the \textbf{sensibility half (the accountability spine) is built; the senses half is thin} (no live DOM yet); the live model-facing daemon is future work. \textbf{[DRIFT acknowledged — the organism's perceptual reach is the open frontier; the accountability spine is done, the senses are not.]}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§6 — The bridge: why these are the SAME gap (schools · surfaces · layers)}\addcontentsline{toc}{section}{§6 — The bridge: why these are the SAME gap (schools · surfaces · layers)}
+
+\textbf{Across schools of thought} — each arrives, by its own route, at \emph{nothing self-grounds /\allowbreak{} self-certifies}:
+
+{\small\begin{longtable}{>{\raggedright\arraybackslash}p{0.214\linewidth}>{\raggedright\arraybackslash}p{0.706\linewidth}}
+\toprule
+\textbf{School} & \textbf{Its statement of the gap} \\ \midrule\endhead
+Ash'arite kalām & \emph{khalq} vs \emph{kasb} — the act is created (not self-originated) yet genuinely acquired \\
+Madhyamaka & emptiness of own-being — no \emph{svabhāva} anywhere \\
+Yoruba thought & \emph{orí /\allowbreak{} àyànmọ́} — destiny received, not self-made \\
+Hume → Pigden & autonomy of the deontic — no ``ought'' from ``is'' alone \\
+Security engineering & ABLP /\allowbreak{} Saltzer–Schroeder — identity \ensuremath{\neq} permission; open design; secrecy \ensuremath{\neq} security \\
+Financial economics & loss-versus-rebalancing, deflated Sharpe — displayed yield \ensuremath{\neq} witnessed risk-adjusted P\&L \\
+Supply-chain security & in-toto /\allowbreak{} SLSA /\allowbreak{} reproducible builds — documented \ensuremath{\neq} witnessed provenance \\
+\bottomrule\end{longtable}}
+
+These are not seven analogies. They are seven instantiations of one structural fact: \textbf{a property cannot be its own ground; the warrant must come from outside and be witnessed.} \textbf{[Confidence: high that each school states the gap; moderate-to-high that it is the \emph{same} gap — the load-bearing abductive bid, §8.]}
+
+\textbf{Across surfaces} — perception /\allowbreak{} cognition /\allowbreak{} actuation — the gap recurs at each: perceiving \ensuremath{\neq} authorizing (the gate); asserting \ensuremath{\neq} grounding (the cortex); acting \ensuremath{\neq} verified-acting (reconcile). The algebra's three modes and the tool's three effectors track them.
+
+\textbf{Across layers} — ontology → epistemology → security → finance → enterprise → algebra → organism → tool — the gap is present at \emph{every} layer, because it is not a fact about any one domain but about the structure of conferral itself. No-aseity is the ontological floor; the membrane is its security face; witnessing is the discipline; MATCH/\allowbreak{}DRIFT/\allowbreak{}UNVERIFIABLE is its formal stamp; the gate + cortex are its executable form.
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§7 — What this licenses (the contribution)}\addcontentsline{toc}{section}{§7 — What this licenses (the contribution)}
+
+\begin{enumerate}
+\item \textbf{One result at four altitudes.} The membrane (a priori), the five-sector convergence (empirical), the verdict algebra (formal), and the gate+cortex (executable) are the \emph{same} result. Mutual corroboration across \emph{independent methods} — a philosophy that disclaims knowledge of security; security/\allowbreak{}finance research that disclaims knowledge of the philosophy; a formal algebra; a running tool — is the strongest evidence short of proof.
+\item \textbf{A sector-agnostic discipline: coverage-accounted witnessed evidence.} Re-derive the warrant, account for coverage, stamp MATCH/\allowbreak{}DRIFT/\allowbreak{}UNVERIFIABLE, fail closed. Demonstrated across regulation, legacy migration, quant diligence, on-chain economics, and enterprise procurement. The most demand-backed instantiation is a verifiable-provenance protocol for regulated AI (the Run-001 \ensuremath{\leftrightarrow} Run-005 ring); the most novel is the abstraction itself.
+\item \textbf{Accountability is two-place.} From the arity gap: a system cannot be accountable alone; the relation needs a witness. A tool that holds a model accountable must, to be consistent, also hold its operator accountable. \emph{Conferral binds the conferrer.}
+\end{enumerate}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\section*{§8 — Honest status (proof-before-trust, applied to this synthesis)}\addcontentsline{toc}{section}{§8 — Honest status (proof-before-trust, applied to this synthesis)}
+
+This document is a \textbf{synthesis and a bid, not a proof} — and it must say so, or it violates its own thesis.
+
+\begin{itemize}
+\item \textbf{MATCH (verified):} the membrane and its self-named philosophy×security convergence; no-aseity and the cross-tradition spine; the arity gap; the verdict algebra (MATCH/\allowbreak{}DRIFT/\allowbreak{}UNVERIFIABLE + report/\allowbreak{}predict/\allowbreak{}reconcile + fail-closed); the tool's default-deny gate, grounding cortex, reconcile loop, and content-addressed interoception (public source); the five research verdicts (sourced).
+\item \textbf{DRIFT (acknowledged tension):} the tool's \emph{senses half is thin} and the live daemon is future work — the organism is more ``sensibility'' than ``senses'' today; the philosophy is \emph{pre-proof /\allowbreak{} bid-grade} by its own verdict.
+\item \textbf{UNVERIFIABLE /\allowbreak{} the load-bearing bid:} that the four altitudes are \textbf{the same gap} rather than four \emph{structurally-similar} gaps is an \textbf{abductive convergence, not a deductive identity.} Confidence: moderate-to-high — grounded by the philosophy's \emph{own} convergence claim and by one-to-one operator-level mappings (reconcile \ensuremath{\leftrightarrow} the corpus's closing move; the gate \ensuremath{\leftrightarrow} the membrane) — but a skeptic may still hold that ``same shape'' \ensuremath{\neq} ``same thing.'' I do not collapse that gap by assertion. The bid is exactly as strong as its witnesses, and no stronger — which is the spine, one more time, turned on itself.
+\end{itemize}
+
+\medskip\noindent\rule{\linewidth}{0.3pt}\medskip
+
+\emph{Capstone of the frontier research corpus. The gap is one; the witnesses are four; the discipline is the same at every altitude. Nothing self-warrants — including this.}
+
+\section*{Corrections}\label{corrections}\addcontentsline{toc}{section}{Corrections}
+
+3 October 2026, correction, section 3: earlier text said three traditions ``never met'' and reached the same view independently. That claim had no source, and it is withdrawn. Islam has a long history in Yorubaland, so contact between two of the three traditions is likely. The narrower claim stands: serious traditions have held people responsible without requiring them to be their own cause.
+
+3 October 2026, correction, section 3: earlier text said a one-place vocabulary cannot fix the target of a two-place relation. Behavior control also relates two parties, so that wording was wrong. The current claim is narrower: the address relation needs a second party who can answer and refuse, and a description built only from the role of a system to be adjusted has not been shown to fix it.
+
+\vfill{\footnotesize Typeset with LaTeX from the deposited source, github.com/HarperZ9/witnessing-spine, file SYNTHESIS-the-witnessing-spine.md at commit f9873c441daf. The web page is rendered from the same source. The deposited text is reproduced as deposited, including its own punctuation.\newline SHA-256 of the source: \texttt{ce30dbf3d777cd98ce1cc1f77a89d83cfc413e45069b261b00a650247fc01191}\par}
+\end{document}
