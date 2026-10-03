@@ -11,12 +11,13 @@
 import { usePlugin } from "../media-engine/page.mjs";
 import { explainer, registerExplainer } from "../media-engine/plugins/explainer.mjs";
 import { digest } from "../media-engine/receipt.mjs";
-import { locate, stillTime, resolvedScenes, timeline } from "./state.mjs";
+import { locate, stillTime, resolvedScenes, timeline, frameState } from "./state.mjs";
 import { mountRecall } from "./recall.mjs";
 import { secs, pole, stageParts, paramPanel, howWeKnow, tuckVideo, dueBanner, download } from "./dom.mjs";
 
 const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
 const reduced = () => reducedQuery.matches;
+const narrowQuery = matchMedia("(max-width: 600px)"); // the breakpoint in explainer.css
 const FILES = ["spec.json", "receipt.json", "recall.json"];
 
 // Only the explainer's own folder, as a relative path on this site.
@@ -50,6 +51,7 @@ class Player {
     this.stepOf = Object.fromEntries(this.rows.map((r, i) => [r[0], i + 1]));
     this.defaults = Object.fromEntries((data.spec.params || []).map((p) => [p.id, p.default]));
     this.overrides = {};
+    this.scenes = resolvedScenes(data.spec);
     this.playing = false;
     this.shownStep = -1;
     this.stillStep = 0; // a step shows its settled still; Play from a still starts that step
@@ -77,12 +79,24 @@ class Player {
     const fit = () => { const w = Math.max(320, Math.round(stage.clientWidth * Math.min(2, devicePixelRatio || 1))); canvas.width = w; canvas.height = Math.round(w * 9 / 16); };
     fit();
     this.handle = engine.mount(canvas, "explainer", {
-      params: { slug: this.slug, spec_sha256: this.specSha, overrides: {}, t: stillTime(this.rows, 0), playing: false },
+      params: { slug: this.slug, spec_sha256: this.specSha, overrides: {}, t: stillTime(this.rows, 0), playing: false, ...(this.type = this.typeFor(stage)) },
       minFrameMs: 33, seed: this.slug,
     });
     this.inst = this.handle.instance;
     this.inst.onTick = (now, before) => this.tick(now, before);
-    new ResizeObserver(() => { fit(); this.handle.resize(); }).observe(stage);
+    new ResizeObserver(() => {
+      fit();
+      const type = this.typeFor(stage);
+      if (type.type_scale !== this.type?.type_scale || type.caption !== this.type?.caption) { this.type = type; this.handle.setParams(type); }
+      this.handle.resize();
+    }).observe(stage);
+  }
+
+  // Where explainer.css sets the caption as text under the stage (max-width 600px), the stage
+  // leaves it out and grows its type with the narrowing stage, up to 1.5 times the video's size.
+  typeFor(stage) {
+    if (!narrowQuery.matches) return { type_scale: 1, caption: true };
+    return { type_scale: +Math.min(1.5, Math.max(1, 640 / Math.max(1, stage.clientWidth))).toFixed(3), caption: false };
   }
 
   mountRecall() {
@@ -107,7 +121,7 @@ class Player {
 
   relabel() {
     const name = (s, i) => `${i + 1}. ${s.layout === "title" ? "Title" : s.layout === "close" ? "Close" : s.heading}`;
-    resolvedScenes(this.spec, this.overrides).forEach((s, i) => { this.ui.stepButtons[i].textContent = name(s, i); });
+    this.scenes.forEach((s, i) => { this.ui.stepButtons[i].textContent = name(s, i); });
   }
 
   sync() {
@@ -115,9 +129,12 @@ class Player {
     scrub.value = t.toFixed(1);
     scrub.setAttribute("aria-valuetext", `Step ${i + 1} of ${this.rows.length}, ${secs(t)}`);
     clock.textContent = `${secs(t)} / ${secs(this.end)}`;
+    // The caption comes from frameState, the function the plugin draws the stage with, over the
+    // same resolved scenes, so after a reader changes a value it follows the verdict on screen.
+    const { say } = frameState(this.scenes, this.rows, t);
+    if (say !== this.shownSay) { this.shownSay = say; caption.textContent = say; }
     if (i !== this.shownStep) {
       this.shownStep = i;
-      caption.textContent = this.spec.scenes[i].say;
       stepButtons.forEach((b, j) => b.setAttribute("aria-current", j === i ? "step" : "false"));
     }
     play.hidden = reduced(); // with reduced motion there is nothing to play: one still per step
@@ -147,6 +164,7 @@ class Player {
   setOverrides(next) {
     this.overrides = Object.fromEntries(Object.entries(next).filter(([k, v]) => v !== this.defaults[k]));
     if (this.params) this.params.changed(Object.keys(this.overrides).length > 0);
+    this.scenes = resolvedScenes(this.spec, this.overrides);
     this.handle.setParams({ overrides: this.overrides });
     this.relabel();
   }

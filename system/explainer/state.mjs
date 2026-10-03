@@ -64,9 +64,18 @@ export function resolve(value, env, digits = env.__digits__ || {}) {
   return out;
 }
 
+// A scene whose narration depends on the figure gives "outcome" (a binding that computes an
+// outcome word, such as MATCH or DRIFT) and makes "say" one caption per outcome word. Resolving
+// picks the caption for the computed outcome, so the caption and the figure share their values.
+export function pickCaption(scene) {
+  if (!scene.say || typeof scene.say !== "object") return scene;
+  if (!(scene.outcome in scene.say)) throw new Error(`explainer: scene ${scene.key} has no caption for outcome ${scene.outcome}`);
+  return { ...scene, say: scene.say[scene.outcome] };
+}
+
 export function resolvedScenes(spec, overrides = {}) {
   const env = values(spec, overrides);
-  return spec.scenes.map((s) => resolve(s, env));
+  return spec.scenes.map((s) => pickCaption(resolve(s, env)));
 }
 
 // [key, start, end] per scene: the narrated timing from a receipt, else each scene's minimum.
@@ -138,7 +147,7 @@ export function frameState(scenes, rows, t) {
   const titled = scene.layout === "title" || scene.layout === "close";
   return {
     scene: scene.key, index: i, u: r6(u), layout: scene.layout || "marks",
-    heading: scene.heading || "", say: scene.say, command: scene.command ?? null,
+    heading: scene.heading || "", say: scene.say, outcome: scene.outcome ?? null, command: scene.command ?? null,
     heading_alpha: r6(scene.carry_heading ? 1 : ease(u / (titled ? 0.15 : FADE))),
     marks: marks.map((m, j) => markState(m, u, alphas[j], j === hot)),
   };

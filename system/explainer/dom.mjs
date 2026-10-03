@@ -63,14 +63,14 @@ export function stageParts(spec, end) {
   return parts;
 }
 
-// "Change the figure": one control per spec parameter, a note when any differs from the video,
+// "Change the figure": one control per spec parameter, a note that the video keeps its values,
 // and a reset. Returns null for a spec with no parameters.
 export function paramPanel(spec, onChange, onReset) {
   if (!spec.params || !spec.params.length) return null;
   const fs = el("fieldset", { class: "xl-params" }, el("legend", { text: "Change the figure" }));
   const controls = spec.params.map((p) => paramControl(p, onChange));
   for (const c of controls) fs.append(c.row);
-  const note = el("p", { class: "xl-changed", hidden: "" }, "You changed a value. The narration and the video describe the original values. ");
+  const note = el("p", { class: "xl-changed", hidden: "" }, "You changed a value. The stage and its caption follow it. The narrated video keeps the original values. ");
   const reset = el("button", { type: "button", class: "xl-btn xl-quiet", text: "Use the video's values" });
   reset.addEventListener("click", () => { for (const c of controls) c.set(c.p.default); onReset(); });
   note.append(reset);

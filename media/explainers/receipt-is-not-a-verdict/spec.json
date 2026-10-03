@@ -106,7 +106,13 @@
         "then": "Receipt holds, claim holds",
         "else": "Receipt holds, claim fails"
       },
-      "say": "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.",
+      "outcome": {
+        "param": "verdict"
+      },
+      "say": {
+        "DRIFT": "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.",
+        "MATCH": "Here the rerun matches, and the independent test says yes. The receipt holds, and the claim holds."
+      },
       "min": 5.0,
       "marks": [
         {
@@ -122,16 +128,7 @@
           "label": "verdict: render under {limit} s",
           "value": "measured {measured} s",
           "verdict": {
-            "if": {
-              "eq": [
-                {
-                  "param": "holds"
-                },
-                1
-              ]
-            },
-            "then": "MATCH",
-            "else": "DRIFT"
+            "param": "verdict"
           }
         }
       ]
@@ -183,6 +180,18 @@
       },
       "then": 1,
       "else": 0
+    },
+    "verdict": {
+      "if": {
+        "eq": [
+          {
+            "param": "holds"
+          },
+          1
+        ]
+      },
+      "then": "MATCH",
+      "else": "DRIFT"
     }
   }
 }

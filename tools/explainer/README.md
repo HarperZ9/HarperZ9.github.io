@@ -13,7 +13,7 @@ The video stays the version to share and cite. It is also what a reader gets wit
 4. Place the figure.
    - On a generated essay, add the slug to `EXPLAINERS` in `tools/render_legacy_essays.py`, keyed by the section anchor it closes.
    - On a hand-written page, put `<!-- BEGIN EXPLAINER <slug> -->` and `<!-- END EXPLAINER <slug> -->` where it belongs, add the slug to `HAND_PLACED` in `tools/explainer/embed.py`, and run `python -m tools.explainer.embed`.
-5. Run `python -m pytest tests/test_explainers.py tests/test_explainer_parity.py tests/test_explainer_live.py` and `node tests/explainer-live.cjs` against a local server (`python tools/serve.py`).
+5. Run `python -m pytest tests/test_explainers.py tests/test_explainer_parity.py tests/test_explainer_captions.py tests/test_explainer_live.py` and `node tests/explainer-live.cjs` against a local server (`python tools/serve.py`).
 
 The figure markup loads `system/explainer/live.mjs` and `system/explainer/explainer.css`. Nothing else on the page changes.
 
@@ -62,7 +62,22 @@ Any value in a scene can be a binding:
 
 `derived` names values computed from the parameters, in order, for later bindings to use.
 
-When the reader changes a value, the page says that the narration and the video describe the original values, and offers a reset.
+### Captions that follow the figure
+
+When a scene's verdict or heading changes with the values, its caption must change with them. The scene gives `outcome`, a binding that computes an outcome word, and makes `say` one caption per word:
+
+```json
+{ "key": "split", "outcome": { "param": "verdict" },
+  "say": { "DRIFT": "... The receipt holds, and the claim fails.", "MATCH": "... The receipt holds, and the claim holds." } }
+```
+
+Resolving the scene picks the caption for the computed outcome, in `scene.py` and `state.mjs` alike. The live stage draws that caption and sets it as the screen-reader text, so the words follow the verdict on screen. The video renders at the defaults, so it narrates the default outcome's caption. Take each variant's wording from the page's own text.
+
+`tests/test_explainer_captions.py` walks a grid of values and fails when a branching scene has a fixed caption, when the caption shown is not the computed outcome's variant, when a computed verdict differs from the outcome, or when the caption asserts the other outcome. Controls with swapped and fixed captions must fail it.
+
+When the reader changes a value, the page says that the stage and its caption follow it and the narrated video keeps the original values, and offers a reset.
+
+On a phone (max-width 600px) the caption is set as text under the stage, and the stage leaves it out and grows its type with the stage width, up to 1.5 times the video's size. Text that would overrun its slot is fitted to the slot's width.
 
 ## Recall items
 

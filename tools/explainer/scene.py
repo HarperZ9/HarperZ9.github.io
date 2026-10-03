@@ -14,7 +14,11 @@ then be a binding:
     {"if": COND, "then": A, "else": B}    COND is {"le"|"lt"|"ge"|"gt"|"eq": [A, B]} or {"all": [COND...]}
     "text {id} text"                      a template; numbers print with the parameter's "digits"
 
-The offline video renders with every parameter at its default.
+A scene whose narration depends on the figure gives "outcome" (a binding that computes an outcome
+word, such as MATCH or DRIFT) and makes "say" an object of one caption per outcome word. Resolving
+the scene picks the caption for the computed outcome, so the caption and the figure come from the
+same values. The offline video renders with every parameter at its default, so it narrates the
+default outcome's caption.
 """
 
 from __future__ import annotations
@@ -84,9 +88,16 @@ def resolve(value, env: dict, digits: dict | None = None):
     return {k: resolve(v, env, digits) for k, v in value.items()}
 
 
+def pick_caption(scene: dict) -> dict:
+    """A resolved scene with "say" as one string: the caption keyed by the scene's outcome."""
+    if not isinstance(scene["say"], dict):
+        return scene
+    return {**scene, "say": scene["say"][scene["outcome"]]}
+
+
 def resolved_scenes(spec: dict, overrides: dict | None = None) -> list[dict]:
     env = values(spec, overrides)
-    return [resolve(scene, env) for scene in spec["scenes"]]
+    return [pick_caption(resolve(scene, env)) for scene in spec["scenes"]]
 
 
 def timeline(spec: dict, receipt: dict | None = None) -> list[tuple[str, float, float]]:
@@ -165,7 +176,8 @@ def frame_state(scenes: list[dict], rows, t: float) -> dict:
     hot = hot_of(marks, alphas)
     return {
         "scene": scene["key"], "index": i, "u": round(u, 6), "layout": scene.get("layout", "marks"),
-        "heading": scene.get("heading", ""), "say": scene["say"], "command": scene.get("command"),
+        "heading": scene.get("heading", ""), "say": scene["say"], "outcome": scene.get("outcome"),
+        "command": scene.get("command"),
         "heading_alpha": round(1.0 if scene.get("carry_heading") else ease(u / (0.15 if scene.get("layout") in ("title", "close") else FADE)), 6),
         "marks": [mark_state(m, u, a, j == hot) for j, (m, a) in enumerate(zip(marks, alphas))],
     }
