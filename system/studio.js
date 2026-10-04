@@ -57,10 +57,30 @@ function lazyLoader(importer, onLoad) {
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
 let _fractal = null, _fractalGL = null;
+// The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
+// camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
+// node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
+let _fractalEngine = null, _fractalHandle = null, _fractalHandleCanvas = null;
+function dropFractalHandle() {
+  if (_fractalHandle) { try { _fractalHandle.dispose(); } catch (e) { console.error("[studio] fractal plugin dispose failed:", e); } }
+  _fractalHandle = null; _fractalHandleCanvas = null;
+}
+// Draw one fractal view on a canvas through the plugin, now. Returns what the GPU path threw.
+function drawFractalView(canvas, view, path) {
+  if (!_fractalHandle || _fractalHandleCanvas !== canvas) {
+    dropFractalHandle();
+    _fractalHandle = _fractalEngine.mount(canvas, "fractal", { params: { view, path } });
+    _fractalHandleCanvas = canvas;
+  }
+  _fractalHandle.instance.setParams({ view, path });
+  _fractalHandle.drawNow();
+  return _fractalHandle.instance.lastError;
+}
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a")]),
-  ([f, g]) => {
-    _fractal = f; _fractalGL = g;
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a"),
+    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal"))]),
+  ([f, g, e]) => {
+    _fractal = f; _fractalGL = g; _fractalEngine = e;
     GL_AVAILABLE = !!g.isFractalGLAvailable();
     buildFractalPalettes();            // idempotent (builds once)
     buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
@@ -642,6 +662,7 @@ function setSource(next) {
     dropSketchHandle();
     dropPlotHandle();
     dropVoxelHandle();
+    dropFractalHandle();
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -2782,13 +2803,10 @@ function paintFractal(opts, aaOverride) {
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
     try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
-    try {
-      _fractalGL.renderFractalGL(c, { ...opts, maxIter, aa });
-      return c;
-    } catch (e) {
-      // GPU failed at runtime: fall back to CPU on the original 2D canvas.
-      leave3D();
-    }
+    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) return c;
+    // GPU failed at runtime: fall back to CPU on the original 2D canvas.
+    dropFractalHandle();
+    leave3D();
   }
   // CPU path (fallback / no WebGL): progressive render so the UI never blocks (Task 8n perf).
   const c = $("studio-canvas");
@@ -2832,12 +2850,12 @@ function cpuFractalProgressive(canvas, opts) {
   // Coarse pass: quarter-res backing (1/4 the pixels) for an instant preview.
   const cw = Math.max(1, Math.round(fullW / 4)), ch = Math.max(1, Math.round(fullH / 4));
   canvas.width = cw; canvas.height = ch;
-  _fractal.renderFractal(canvas, opts);
+  drawFractalView(canvas, opts, "cpu");
   // Refine to full res on the next frame (or immediately in a no-rAF env).
   const refine = () => {
     _cpuRefineRaf = 0;
     canvas.width = fullW; canvas.height = fullH;
-    _fractal.renderFractal(canvas, opts);
+    drawFractalView(canvas, opts, "cpu");
   };
   if (typeof requestAnimationFrame === "function") _cpuRefineRaf = requestAnimationFrame(refine);
   else refine();
