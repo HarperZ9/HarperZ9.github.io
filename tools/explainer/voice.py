@@ -10,6 +10,8 @@ import subprocess
 import wave
 from pathlib import Path
 
+from tools.explainer import loudness
+
 VOICE, RATE, PAD = "Microsoft Zira Desktop", 22050, 0.7
 
 
@@ -30,10 +32,12 @@ def speak(text: str, wav: Path) -> float:
         return w.getnframes() / w.getframerate()
 
 
-def narrate(scenes: list[dict], work: Path, fps: int) -> tuple[list[tuple[dict, float, float]], Path]:
-    """Speak every scene, pad each to whole frames and its minimum length, and join them.
+def narrate(scenes: list[dict], work: Path, fps: int) -> tuple[list[tuple[dict, float, float]], Path, dict]:
+    """Speak every scene, pad each to whole frames and its minimum length, join them, and bring
+    the join to the speech loudness target (loudness.py).
 
-    Returns (scene, start, end) per scene and the path of the joined narration WAV.
+    Returns (scene, start, end) per scene, the path of the joined narration WAV, and the
+    loudness step's record.
     """
     timeline, pcm, t = [], bytearray(), 0.0
     for scene in scenes:
@@ -46,10 +50,11 @@ def narrate(scenes: list[dict], work: Path, fps: int) -> tuple[list[tuple[dict, 
         pcm += data[:need] + bytes(max(0, need - len(data)))
         timeline.append((scene, t, t + duration))
         t += duration
+    pcm, processing = loudness.normalise(bytes(pcm), RATE)
     out = work / "narration.wav"
     with wave.open(str(out), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
         w.setframerate(RATE)
-        w.writeframes(bytes(pcm))
-    return timeline, out
+        w.writeframes(pcm)
+    return timeline, out, processing

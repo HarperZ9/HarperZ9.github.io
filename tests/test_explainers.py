@@ -87,7 +87,17 @@ def test_every_explainer_has_a_sealed_narration_receipt() -> None:
         assert nar["reference"] is False and nar["hosted"] is False
         assert rec["media"]["access"] == {"autoplay": False, "captions": "vtt", "transcript": True, "reduced_sound": "silent"}
         assert rec["media"]["loudness_class"] == "speech"
-        assert rec["media"]["loudness_verdict"] in ("verified", "refuted")
+        # Re-pinned 3 October 2026. The lead decided to rebuild the narrations to the -16 LUFS speech
+        # target (they measured -20.12 to -20.31 LUFS and read "refuted"). loudness.py now runs
+        # before the hash, so every receipt must read "verified", sit within 0.05 LU of the target,
+        # keep the sample peak at the -2.0 dBFS ceiling (0.5 dB under the -1.5 dBTP limit), and
+        # carry the same loudness record as the explainer receipt.
+        assert rec["media"]["loudness_verdict"] == "verified", folder.name
+        assert abs(rec["media"]["integrated_lufs"] - -16.0) <= 0.05, folder.name
+        assert rec["media"]["peak_dbfs"] <= -2.0, folder.name
+        step = json.loads((folder / "receipt.json").read_text(encoding="utf-8"))["narration_loudness"]
+        assert rec["media"]["processing"] == step, folder.name
+        assert step["rule"] == "explainer-speech-normalise/1" and step["sample_peak_headroom_db"] >= 0.5
 
 
 def test_a_narration_receipt_check_can_fail() -> None:
@@ -98,3 +108,21 @@ def test_a_narration_receipt_check_can_fail() -> None:
     forged = {**rec, "content_sha256": "0" * 64}
     assert ss.verify_receipt(forged) == ["seal"]
     assert narration.text_sha256(["a", "b"]) != narration.text_sha256(["a b"])
+
+
+def test_the_loudness_step_is_deterministic_and_holds_its_ceiling() -> None:
+    # A loud synthetic voice stand-in: a 180 Hz tone with a 6 Hz syllable envelope and spikes. Two runs
+    # give the same bytes, the result meets the target, and neither the samples nor the 4x
+    # interpolated points exceed the ceiling.
+    import numpy as np
+    from tools.explainer import loudness
+    rate = 22050
+    t = np.arange(rate * 6) / rate
+    x = 0.9 * np.sin(2 * np.pi * 180 * t) * (0.55 + 0.45 * np.sin(2 * np.pi * 6 * t)) ** 2
+    x[::997] = 0.99
+    pcm = loudness.to_s16(x * 0.2)
+    out, info = loudness.normalise(pcm, rate)
+    assert loudness.normalise(pcm, rate)[0] == out
+    assert abs(info["after_lufs"] - loudness.TARGET_LUFS) <= 0.05
+    y = np.frombuffer(out, dtype="<i2") / loudness.FULL_SCALE
+    assert loudness.peak_level(y).max() <= 10 ** (loudness.CEILING_DBFS / 20) + 1 / loudness.FULL_SCALE
