@@ -1,7 +1,7 @@
 # Licence of this directory
 
 These files are raw-native's web GPU host and its Threads and Worlds modules, from commit
-05a6cdd of https://github.com/HarperZ9/raw-native (`web/` and
+6f5d142 of https://github.com/HarperZ9/raw-native (`web/` and
 `src/renderer/gpu/shaders/threads.wgsl`, `worlds.wgsl`), an engine by the site's author. They
 are licensed under FSL-1.1-MIT (Functional Source License 1.1, MIT future
 licence), the licence in that repository at that commit. `SHA256SUMS` pins the

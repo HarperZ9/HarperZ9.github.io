@@ -75,7 +75,7 @@ STUDIO_RETRO_HUB_REVISION = "20261004-retro-hub"
 # 4 October 2026, later: Bring your own and Watch with me join the shell with an empty sheet on
 # entry; studio.js and studio-shell.css take a new stamp over the retro-hub stamp.
 STUDIO_BRING_REVISION = "20261004-studio-bring"
-STUDIO_THREADS_REVISION = "20261004-studio-worlds"
+STUDIO_THREADS_REVISION = "20261004-studio-worlds15"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from

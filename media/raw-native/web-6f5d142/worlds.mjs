@@ -10,10 +10,23 @@ import { OrbitCamera } from "./camera.mjs";
 
 // Each world: shader section, title, and where the camera starts.
 export const WORLDS = Object.freeze([
+  { id: "komorebi", title: "I. Komorebi", home: { target: [0, 0.8, 0], distance: 4.4, yaw: 0.5, pitch: 0.12 } },
+  { id: "droste", title: "II. Droste", home: { target: [0, 1.2, -0.3], distance: 3.8, yaw: 0.35, pitch: 0.12 } },
+  { id: "voices", title: "III. Two voices", home: { target: [0, 1.1, 0], distance: 3.4, yaw: 0.25, pitch: 0.15 } },
+  { id: "morphogen", title: "IV. Morphogen", home: { target: [0, 0.8, 0], distance: 3.4, yaw: 0.6, pitch: 0.3 } },
+  { id: "making", title: "V. The making", home: { target: [0, 0.8, 0], distance: 4.4, yaw: 0.4, pitch: 0.3 } },
   { id: "eye", title: "VI. The eye", home: { target: [0, 1.15, 0], distance: 4.6, yaw: 0.35, pitch: 0.12 } },
+  { id: "strings", title: "VII. The strings", home: { target: [0, 1.0, 0], distance: 3.6, yaw: 0.3, pitch: 0.15 } },
+  { id: "stream", title: "VIII. The stream", home: { target: [0, 1.0, 0], distance: 4.4, yaw: 0.5, pitch: 0.2 } },
+  { id: "belly", title: "IX. The belly", home: { target: [0, 0.6, 0.3], distance: 3.0, yaw: 0.2, pitch: 0.15 } },
+  { id: "draw", title: "X. The draw", home: { target: [0, 1.0, 0], distance: 4.0, yaw: 0.5, pitch: 0.25 } },
+  { id: "elements", title: "XI. The elements", home: { target: [0, 0.7, 0], distance: 4.6, yaw: 0.3, pitch: 0.35 } },
+  { id: "burden", title: "XII. The burden", home: { target: [0, 0.6, 0], distance: 4.6, yaw: 0.0, pitch: 0.18 } },
   { id: "swing", title: "XIII. The swing", home: { target: [0.3, 1.1, 0], distance: 5.4, yaw: 0.75, pitch: 0.22 } },
   { id: "forest", title: "XIV. The forest", home: { target: [0, 0.5, 0], distance: 3.3, yaw: 0.45, pitch: 0.28 } },
+  { id: "many", title: "XV. The many", home: { target: [0, 1.2, 0], distance: 4.6, yaw: 0.6, pitch: 0.25 } },
 ]);
+
 // Quality 0..1 sets the render scale, march steps, shadow steps and AO.
 export function qualitySettings(q) {
   q = Math.min(1, Math.max(0, q));
