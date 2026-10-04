@@ -14,18 +14,12 @@
 // prefers-reduced-motion. isLogoFieldAvailable() is the capability probe the callers gate on before
 // replacing the static SVG fallback.
 
+import { mulberry32 } from "./media-engine/seed.mjs";
+
 const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
 // mulberry32 + the EXACT rnd() draw order from scripts/gen-mark.mjs, so the shader's aperture is the
 // same composition as favicon.svg for a given seed. Keep these two in lockstep.
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 function seedParams(seed) {
   const rnd = mulberry32(seed >>> 0);

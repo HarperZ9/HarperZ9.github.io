@@ -18,14 +18,10 @@
 
 // FNV-1a string hash, matching the engine's route hash so a string seed drives
 // the same network wherever it is used.
+import { fnv1a32 } from "./media-engine/seed.mjs";
+
 export function neuralSeed(value) {
-  let h = 2166136261;
-  const s = String(value == null ? "neural" : value);
-  for (let i = 0; i < s.length; i += 1) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
+  return fnv1a32(value == null ? "neural" : value);
 }
 
 // Deterministic scalar in [-scale, scale] from (seed, index). A splitmix-ish

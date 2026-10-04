@@ -5,6 +5,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { edgeDensity, dominantColors, richFeatures } from "./lib/sense-core/features.mjs";
+import { mulberry32 } from "./media-engine/seed.mjs";
 
 function toHex(r, g, b) {
   return "#" + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("");
@@ -45,7 +46,7 @@ function edgeDensityRef(px, w, h, ch, threshold = 48) {
   return total ? strong / total : 0;
 }
 
-function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const rng = mulberry32;
 function frame(w, h, ch, fn) {
   const px = new Uint8ClampedArray(w * h * ch);
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {

@@ -6,7 +6,7 @@
 // This is the GUARANTEED fallback: when no WebGPU and no WebGL2 (or no worker / no OffscreenCanvas)
 // is available, the music "particles" mode runs here and behaves exactly as today's
 // reactive-visuals.js drawParticles loop. The spring/flocking/cohesion/bass-kick/treble-jitter math
-// and the OKLab fill are transcribed from reactive-visuals.js verbatim so the low-tier output is
+// and the OKLab fill match reactive-visuals.js (both take OKLab from the contract) so the low-tier output is
 // indistinguishable from the shipped behavior.
 //
 // THE COMMON BACKEND INTERFACE (shared by particles-webgpu.js / particles-webgl2.js / particles-cpu.js):
@@ -29,18 +29,14 @@
 // Math.random in the cook path when a seed is supplied. When no rng is passed, we fall back to
 // Math.random to preserve the exact "feel" of today's drawParticles (which used Math.random).
 import { mulberry32 } from "../../media-engine/seed.mjs";
+import { oklabToLinearSrgb, linearToSrgb } from "../../media-engine/contracts.mjs";
 
 // ---------------------------------------------------------------------------
-// OKLab helpers (transcribed verbatim from reactive-visuals.js so colors match today exactly)
+// OKLab -> linear sRGB and the sRGB transfer from the vendored superstack contract, the same
+// functions reactive-visuals.js uses, so colours match it exactly.
 // ---------------------------------------------------------------------------
-const IM2 = [[1.0,0.3963377774,0.2158037573],[1.0,-0.1055613458,-0.0638541728],[1.0,-0.0894841775,-1.291485548]];
-const IM1 = [[4.0767416621,-3.3077115913,0.2309699292],[-1.2684380046,2.6097574011,-0.3413193965],[-0.0041960863,-0.7034186147,1.707614701]];
-function _oklabToLinRgb(L, a, b) {
-  const l_=IM2[0][0]*L+IM2[0][1]*a+IM2[0][2]*b, m_=IM2[1][0]*L+IM2[1][1]*a+IM2[1][2]*b, s_=IM2[2][0]*L+IM2[2][1]*a+IM2[2][2]*b;
-  const l=l_*l_*l_, m=m_*m_*m_, s=s_*s_*s_;
-  return [IM1[0][0]*l+IM1[0][1]*m+IM1[0][2]*s, IM1[1][0]*l+IM1[1][1]*m+IM1[1][2]*s, IM1[2][0]*l+IM1[2][1]*m+IM1[2][2]*s];
-}
-function _linearToSrgb(c) { return c<=0.0031308?12.92*c:1.055*Math.pow(c,1/2.4)-0.055; }
+const _oklabToLinRgb = oklabToLinearSrgb;
+const _linearToSrgb = linearToSrgb;
 function _byteClamp(v) { return Math.max(0, Math.min(255, Math.round(v*255))); }
 function oklchToRgba(L, C, H, alpha) {
   const hRad = H * Math.PI / 180;

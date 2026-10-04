@@ -620,7 +620,9 @@ RELEASE_PATHS = (
 # carry live, interactive explainers driven by the media engine from the same specs as their
 # videos, with Learn recall checks; the two essay explainers are re-rendered and the Flywheel loop
 # explainer is new. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "e1bb4200097e99c79491f3756e4788f42d16897264644fab01a73abb35293c5e"
+# October 3, 2026: studio.html loads atelier.js as a module at a new stamp (the Atelier takes its
+# seed rule from the vendored superstack contract); the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "f1472c68a66729142ce942a393fc2b68e413d2d1ec08f538db8898a7429621dd"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -56,11 +56,10 @@ def test_one_hot_mark_per_view() -> None:
 
 
 def test_risk_colours_match_the_media_engine_tokens_when_present() -> None:
-    colour = ROOT / "system/media-engine/colour.mjs"
-    if not colour.is_file():
-        return  # the engine's token file lands in its own change; marks.py carries the same values
+    # The tokens live in the vendored superstack contract; colour.mjs re-exports them.
+    colour = ROOT / "system/media-engine/contracts.mjs"
     dark = re.search(r"dark:\s*Object\.freeze\(\{([^}]*)\}", colour.read_text(encoding="utf-8")).group(1)
-    tokens = dict(re.findall(r'(\w+):\s*"(#[0-9a-fA-F]{6})"', dark))
+    tokens = dict(re.findall(r"""(\w+):\s*["'](#[0-9a-fA-F]{6})["']""", dark))
     assert {k: tokens[k] for k in marks.RISK} == marks.RISK
     assert (tokens["ink"], tokens["quiet"]) == (marks.INK, marks.QUIET)
 

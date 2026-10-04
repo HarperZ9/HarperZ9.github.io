@@ -11,7 +11,12 @@
    Coordinate space is normalised [0,1]×[0,1]; the renderer maps it to canvas
    pixels and the exporter maps it to a 1000-unit SVG viewBox, so a drawing and
    its exported vector are the same geometry. Stroke widths are stated in
-   1000-unit space.                                                              */
+   1000-unit space.
+
+   Loaded as a module (it imports the seed rule) and still self-boots; window.Atelier is its
+   interface to the rest of the Studio.                                          */
+import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
+
 (function () {
   "use strict";
 
@@ -25,29 +30,9 @@
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
   function mixAngle(a, b, t) { var d = Math.atan2(Math.sin(b - a), Math.cos(b - a)); return a + d * t; }
 
-  // ── seeded RNG: xmur3 (string→seed) + mulberry32 ────────────────────────────
-  function xmur3(str) {
-    var h = 1779033703 ^ str.length;
-    for (var i = 0; i < str.length; i++) {
-      h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
-      h = (h << 13) | (h >>> 19);
-    }
-    return function () {
-      h = Math.imul(h ^ (h >>> 16), 2246822507);
-      h = Math.imul(h ^ (h >>> 13), 3266489909);
-      h ^= h >>> 16;
-      return h >>> 0;
-    };
-  }
-  function mulberry32(a) {
-    return function () {
-      a |= 0; a = (a + 0x6D2B79F5) | 0;
-      var t = Math.imul(a ^ (a >>> 15), 1 | a);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-  function makeRng(seedStr) { var s = xmur3(String(seedStr)); return mulberry32(s()); }
+  // ── seeded RNG: the superstack seed rule (xmur3 string→seed, then mulberry32), imported above
+  // from the one seed module. The copy that stood here drew the same streams.
+  var makeRng = seedMakeRng;
   function randomSeed() {
     var hex = "0123456789abcdef", s = "";
     for (var i = 0; i < 6; i++) s += hex[(Math.random() * 16) | 0];

@@ -8,6 +8,7 @@ import {
   flowlinesFromLuma, hatchFromLuma, contourFromLuma,
   orderPaths, separatePens, toGcode, toPlotterSVG, plotCanvas,
 } from "./plotter.js";
+import { mulberry32 } from "./media-engine/seed.mjs";
 
 function frame(w, h, paint) {
   const px = new Uint8ClampedArray(w * h * 4);
@@ -29,16 +30,8 @@ function rgbFrame(w, h, paint) {
   return px;
 }
 
-// Tiny deterministic PRNG for synthetic scatters (mirror of the module's).
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return function next() {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+// Tiny deterministic PRNG for synthetic scatters: the module's own.
+const mulberry = mulberry32;
 
 const W = 80, H = 60;
 // Left half dark (ink), right half near-white (paper).

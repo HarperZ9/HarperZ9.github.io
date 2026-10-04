@@ -29,7 +29,7 @@
 //   dispose()
 
 import { makeGovernor } from "../engine/governor.js";
-import { frameReceipt, reconcile } from "./receipt.mjs";
+import { frameReceipt } from "./receipt.mjs";
 
 // Backends. A plugin lists the ones it can draw with; the first available wins. "wasm-raw" is the
 // raw-native core compiled to WebAssembly: the suite's exact reference rasterizer for 3D work.
@@ -176,21 +176,24 @@ export function createEngine(opts = {}) {
           instance.frame(t, 0);
           const rgba = instance.readPixels ? instance.readPixels() : null;
           const request = { plugin: plugin.id, version: plugin.version, params: m.params, seed: String(m.seed), t, backend: m.backend };
-          let ref = null, rec = null;
-          const kind = sceneKindOf(plugin);
-          if (reference && kind) {
-            const none = (reason) => ({ verdict: "UNVERIFIABLE", rmse: null, maxError: null, pixels: 0, kind, reason });
-            ref = referenceForKind(kind);
-            const renderer = ref && references.get(ref);
-            if (!ref) rec = none("no reference renderer for scene kind " + kind);
-            else if (!renderer) rec = none(ref + " is not registered on this page");
-            else if (renderer.exact !== true) rec = none(ref + " is not an exact path, so it cannot be a reference");
+          const size = instance.result && instance.result.frame && rgba && rgba.length === instance.result.frame.width * instance.result.frame.height * 4
+            ? instance.result.frame : canvas;
+          let ref = null;
+          if (reference) {
+            const kind = sceneKindOf(plugin);
+            const id = kind ? referenceForKind(kind) : null;
+            const renderer = id && references.get(id);
+            if (!kind) ref = { backend: "none", kind: null, reason: "no reference backend: the plugin declares no scene kind" };
+            else if (!id) ref = { backend: "none", kind, reason: "no reference renderer for scene kind " + kind };
+            else if (!renderer) ref = { backend: id, kind, reason: id + " is not registered on this page" };
+            else if (renderer.exact !== true) ref = { backend: id, kind, reason: id + " is not an exact path, so it cannot be a reference" };
             else {
-              try { rec = { ...reconcile(rgba, await renderer.render({ ...request, backend: ref }), tolerance ? { tolerance } : {}), kind }; }
-              catch (e) { console.error("[media-engine] reference render failed:", e); rec = none("reference render failed"); }
+              try { ref = { backend: id, kind, rgba: await renderer.render({ ...request, backend: id }) }; }
+              catch (e) { console.error("[media-engine] reference render failed:", e); ref = { backend: id, kind, reason: "reference render failed" }; }
             }
           }
-          const r = await frameReceipt(request, rgba, { referenceBackend: ref, reconcile: rec });
+          const r = await frameReceipt(request, rgba, { width: size.width ?? null, height: size.height ?? null, reference: ref, tolerance,
+            seedRule: plugin.seedRule || null, doesNotProve: plugin.doesNotProve || [] });
           if (keepPixels) Object.defineProperty(r, "pixels", { value: rgba, enumerable: false });
           return r;
         },

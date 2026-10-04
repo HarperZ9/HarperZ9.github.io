@@ -1,14 +1,14 @@
 <!-- writing-profile: readme -->
 # Media engine
 
-One scheduler, one seed and receipt layer, one colour module, and a plugin per visual surface. No build step and no dependencies.
+One scheduler, one seed and receipt layer, one colour module, and a plugin per visual surface. No build step. The one outside file is the superstack contract (`contracts.mjs`), copied byte for byte from superstack v0.1.0 and pinned by SHA-256.
 
 ## What it does for a page
 
 - One `requestAnimationFrame` per page, however many canvases are live.
 - A canvas draws only while it is on screen and the tab is visible.
 - With reduced motion requested, each canvas draws one still frame per mount, resize or change.
-- Every frame can carry a receipt: the request, its SHA-256, and the SHA-256 of the pixels.
+- Every frame can carry a superstack receipt: the request as the scene, its time in flicks, the SHA-256 of the pixels, two verdicts against a reference when one drew the same request, what the receipt does not prove, and a seal.
 
 Measured on the Retro Engine page at 1440 x 900 (Chromium, five interleaved rounds): script time fell from 1,044 to 301 ms per second on screen, from 1,018 to 2.3 off screen, and from 1,053 to 2.2 with reduced motion. Frame time fell from 83 to 16.7 ms. These are one machine's numbers; no low-end or mobile device has been measured.
 
@@ -20,10 +20,11 @@ A second step moved the Retro front half (downscale, OKLab, palette, dither) int
 |---|---|
 | `core.mjs` | `createEngine()`: plugin registry, scheduler, `mount()`, frame receipts |
 | `page.mjs` | `pageEngine()` and `usePlugin(id)`: one engine per page, plugins loaded on first use |
-| `seed.mjs` | `mulberry32`, `fnv1a32`, `rngFrom`, `xmur3`, `makeRng`: the site's one seeded randomness |
-| `receipt.mjs` | `frameReceipt`, `reconcile`, `verifyBytes`, `digestOrNull`, `digest` |
+| `contracts.mjs` | The vendored superstack v0.1.0 contract (MIT): canonical JSON, SHA-256, the seed rule, the flick clock, OKLab, risk tokens, PCM and loudness, reconcile and receipts. Never edited; `SUPERSTACK.sha256` holds its pin and CI checks it and runs the release's vectors (`tests/superstack/`) |
+| `seed.mjs` | `mulberry32`, `makeRng`, `xmur3` (the contract's seed rule), `fnv1a32` and `rngFrom` (the legacy `fnv1a32-mulberry32` rule): the site's one seeded randomness |
+| `receipt.mjs` | `frameReceipt` (a `superstack.receipt/1`), `reconcileFrame`, `verifyReceipt`, `verifyBytes`, `digestOrNull`, `digest` |
 | `scene.mjs` | `media.scene` camera requests in raw-native's params shape |
-| `colour.mjs` | OKLab maths (re-exported from sense-core) and the risk tokens |
+| `colour.mjs` | OKLab and the risk tokens from the contract, OKLCh and CIEDE2000 from sense-core, `markRisk` and `riskCss` |
 | `risk.css` | The risk tokens as CSS custom properties, generated from `colour.mjs` |
 | `gl2.mjs` | WebGL2 helpers: context, program, full-screen triangle, render targets |
 | `plugins/retro.mjs` | The Retro pipeline, tube stage on the GPU; `createRetroRenderer()` for `retro-studio.js` |
@@ -61,7 +62,7 @@ An instance may set `static: true`: the loop never draws it, and it draws on mou
 
 ## The reference backend
 
-`wasm-raw` is a backend like any other in the list: the raw-native core compiled to WebAssembly, the suite's exact rasterizer for 3D work. A 3D-capable plugin lists it in `backends`; `handle.receipt(t, { reference: true })` then draws the same request through the backend registered with `registerReferenceBackend("wasm-raw", { render })` and adds `referenceBackend` and `reconcile` (RMSE and maximum error on a 0..1 scale, a MATCH or DRIFT verdict against a tolerance) to the receipt. With no backend registered, `reconcile` reads UNVERIFIABLE and says why. The 2D surfaces (weave, plotter, Canvas2D plates, audio) do not list it.
+`wasm-raw` is a backend like any other in the list: the raw-native core compiled to WebAssembly, the suite's exact rasterizer for 3D work. A 3D-capable plugin lists it in `backends`; `handle.receipt(t, { reference: true })` then draws the same request through the backend registered with `registerReferenceBackend("wasm-raw", { render })` and puts the result in the receipt's `reconcile` block: `identity` is MATCH or DRIFT for the RGBA bytes, and `tolerance` is verified, refuted or unverifiable against the contract's bound (mean absolute error at most one level) and the site's (RMSE at most 2/255 on a 0..1 scale). One level off on one channel reads DRIFT and verified, which is why the two verdicts are separate. With no backend registered, the tolerance verdict is unverifiable and says why. A receipt nobody asked to check has `reconcile: null` and says so in `does_not_prove`. The 2D surfaces (weave, plotter, Canvas2D plates, audio) do not list it.
 
 `scene.mjs` builds `media.scene` requests whose camera fields carry raw-native's own names (`width`, `height`, `eye`, `target`, `up`, `fovy`, `prev_eye`, `prev_target`, `prev_up`), so `toRawParams()` gives the file `raw_native_cli --params` reads and `fromRawChannels()` reads its `channels.json` camera back.
 
@@ -85,7 +86,7 @@ Status colour reads as liability. Four levels, from the author's ruling of 3 Oct
 | low liability | MATCH, VERIFIED, PASS | `#186844` | `#8fdc8a` |
 | moderate liability | UNVERIFIABLE, UNKNOWN, PENDING | `#5c5a66` | `#a9a6b4` |
 | elevated liability | DRIFT, WARN, STALE | `#8f5200` | `#f0a848` |
-| high liability | FAIL, REFUSED, ERROR | `#b3261e` | `#ff7a6b` |
+| high liability | FAIL, REFUSED, REFUTED, ERROR | `#b3261e` | `#ff7a6b` |
 
 Quiet marks use `#5d584e` on light and `#9d978a` on dark. An unknown verdict word reads as moderate.
 
@@ -93,7 +94,7 @@ The rule: one hot mark per view. `markRisk(nodes)` sets `data-risk` on every sta
 
 ## Not yet moved
 
-- Five modules keep their own float OKLab. Moving them would shift palette output by a level or two, so each moves with a pixel-hash check of the frames it draws.
-- `atelier.js` is a classic script and keeps its inline PRNG; `seed.test.mjs` pins the engine's `makeRng` to its stream.
+- `lib/sense-core` keeps its own float OKLab, because it is a vendored library with its own source; `colour.test.mjs` holds it equal to the contract's. `retro-palettes.js`, `fractal-color.js`, `reactive-visuals.js` and `engine/sim/particles-cpu.js` now import OKLab from the contract, with identical floats and pixel hashes.
+- `system/vendor/learn/` keeps its own mulberry32 and FNV-1a copies: it is another repository's vendored file. `atelier.js` keeps two FNV-1a loops over numbers (a stroke and a field fingerprint), which hash numbers, not strings.
 - The home page's React bundle inlines its own copies of `field-ground.js`, `logo-field.js` and `emphasis-field.js`. Those three move when the bundle is next rebuilt.
 - GPU time is unmeasured: the test browser exposes no timer query. WebGPU is unmeasured for the same reason.

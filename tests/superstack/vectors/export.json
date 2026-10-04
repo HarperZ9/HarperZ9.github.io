@@ -1,0 +1,36 @@
+{
+ "rule": "export writers",
+ "spec": "SPEC.md section 9",
+ "cases": [
+  {
+   "format": "wav",
+   "pcm_hex": "0000004001c0ff7f01800020",
+   "rate": 48000,
+   "channels": 1,
+   "header_hex": "524946463000000057415645666d7420100000000100010080bb00000077010002001000646174610c000000",
+   "sha256": "81b261a74f5174cd73931a62d5dad1f791add40299dc781e24a7b8c33685e86e"
+  },
+  {
+   "format": "wav",
+   "pcm_hex": "0000004001c0ff7f01800020",
+   "rate": 44100,
+   "channels": 2,
+   "header_hex": "524946463000000057415645666d7420100000000100020044ac000010b1020004001000646174610c000000",
+   "sha256": "fe892bc7a76f5866c9d29267f74124dffd9407ca622efb47d7bc2a95230351e0"
+  },
+  {
+   "format": "ppm",
+   "body_hex": "ff000000ff000000ff0a141e000000ffffff",
+   "width": 3,
+   "height": 2,
+   "sha256": "8734f4ca4fea969853d98c12823ee8ad8cd9d210dcf53148516de17f747d56ae"
+  },
+  {
+   "format": "pgm",
+   "body_hex": "004080ff0102",
+   "width": 3,
+   "height": 2,
+   "sha256": "3fad47e99c856665c6e2ab1bbdb6aa9f9d9850c64626564e03c8a24efa17856b"
+  }
+ ]
+}

@@ -7,12 +7,9 @@
 // rounded paths sound smooth, cornered paths sound buzzy. Units: points are
 // interleaved [x0,y0,x1,y1,...] in -1..1.
 
-function hash(s) {
-  let h = 2166136261;
-  const str = String(s);
-  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return (h >>> 0) / 4294967295;
-}
+import { fnv1a32 } from "./media-engine/seed.mjs";
+
+function hash(s) { return fnv1a32(s) / 4294967295; }
 
 // A closed Lissajous-family figure the knobs play: a and b pick the X and Y
 // frequencies (integer ratio = stable figure), c sets the phase; a slightly

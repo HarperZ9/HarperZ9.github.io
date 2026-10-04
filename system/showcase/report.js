@@ -14,6 +14,7 @@ import { simulate } from "../discovery/integrator.js";
 import { leastVarianceCombo } from "../discovery/reference.js";
 import { conservationOracle } from "../discovery/verify.js";
 import { makeFn } from "../discovery/expr.js";
+import { fnv1a32 } from "../media-engine/seed.mjs";
 import { create } from "../lib/reconcile/index.js";
 
 export const SCHEMA = "telos.showcase.first-integral/1";
@@ -42,9 +43,7 @@ const r6 = (x) => Math.round(x * 1e6) / 1e6;
 export function seedToUint32(seed) {
   const s = String(seed).trim();
   if (/^[0-9]{1,9}$/.test(s)) return parseInt(s, 10) >>> 0;
-  let h = 0x811c9dc5;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); }
-  return h >>> 0;
+  return fnv1a32(s);
 }
 
 function subtleOf(opts) {

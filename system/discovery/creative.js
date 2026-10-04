@@ -5,6 +5,8 @@
 // for replacing ad-hoc plotter/generative tools with reproducible, verifiable, owned output. Zero deps.
 
 // A classic harmonograph: damped sinusoids on x and y (pen-plotter staple). Deterministic from params.
+import { fnv1a32Hex } from "../media-engine/seed.mjs";
+
 export function harmonograph({ a = [1, 0.7], f = [2, 3], p = [0, 1.5], d = [0.004, 0.006], steps = 4000, dt = 0.05 } = {}) {
   const pts = [];
   for (let i = 0; i < steps; i++) {
@@ -45,10 +47,7 @@ export function toSVG(points, { width = 200, height = 200, margin = 10, stroke =
 
 // A small deterministic content hash (FNV-1a over rounded coordinates): content-addresses a design.
 export function pathHash(points) {
-  let h = 0x811c9dc5;
-  for (const [x, y] of points) {
-    const s = `${Math.round(x * 1000)},${Math.round(y * 1000)};`;
-    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
-  }
-  return ("00000000" + h.toString(16)).slice(-8);
+  let s = "";
+  for (const [x, y] of points) s += `${Math.round(x * 1000)},${Math.round(y * 1000)};`;
+  return fnv1a32Hex(s);
 }

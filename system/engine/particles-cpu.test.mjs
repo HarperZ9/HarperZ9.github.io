@@ -10,17 +10,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createCpuParticles, _FLOATS_PER_PARTICLE, _F } from "./sim/particles-cpu.js";
+import { mulberry32 } from "../media-engine/seed.mjs";
 
 // A deterministic rng so two backends seeded identically produce identical state.
-function seededRng(seed) {
-  let s = seed >>> 0;
-  return function () {
-    s |= 0; s = (s + 0x6D2B79F5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+const seededRng = mulberry32;
 
 const loud = { bass: 0.85, intensity: 0.7, highMod: 0.6, pulse: 0.8, hue: 200 };
 const silent = { bass: 0, intensity: 0, highMod: 0, pulse: 0, hue: 0 };

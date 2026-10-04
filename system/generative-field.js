@@ -7,6 +7,7 @@
 // neural signed-distance surface). No copied inspiration images, no remote
 // textures, and no pretrained weights: the seed derives every network.
 import { buildCppn, buildNeuralSdf } from "./neural.js";
+import { fnv1a32 } from "./media-engine/seed.mjs";
 import { voxelizeSdf, isoOrder } from "./voxel.js";
 import { drawTypeface } from "./typeface.js";
 // Wave 8: eight registers from the operator's own corpus, one module each.
@@ -56,14 +57,8 @@ function ensureCanvas(doc, id, className, after) {
   return canvas;
 }
 
-function hashRoute(value) {
-  let hash = 2166136261;
-  for (let i = 0; i < value.length; i += 1) {
-    hash ^= value.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
-}
+// FNV-1a of the route string, from the one seed module.
+const hashRoute = fnv1a32;
 
 function rand(seed, salt) {
   let x = Math.imul(seed ^ Math.imul(salt + 1013904223, 1664525), 2246822519);

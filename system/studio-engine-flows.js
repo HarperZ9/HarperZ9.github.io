@@ -44,8 +44,8 @@ export async function exportWithReceipt(canvas, { plugin, version, params, seed,
   const px = new Uint8Array(ctx.getImageData(0, 0, canvas.width, canvas.height).data.buffer);
   const request = { plugin, version, params: plainParams(params), seed: String(seed), backend, size: [canvas.width, canvas.height] };
   if (input) request.input = { from: input.from, sha256: input.hash };
-  const receipt = await frameReceipt(request, px);
-  const stem = "studio-" + plugin + "-" + receipt.pixelHash.slice(0, 12);
+  const receipt = await frameReceipt(request, px, { width: canvas.width, height: canvas.height });
+  const stem = "studio-" + plugin + "-" + receipt.content_sha256.slice(0, 12);
   const png = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
   if (png) save(png, stem + ".png");
   save(new Blob([JSON.stringify(receipt, null, 2) + "\n"], { type: "application/json" }), stem + ".receipt.json");
@@ -68,7 +68,7 @@ function plainParams(params = {}) {
 export async function exportReferenceReceipt(handle) {
   const receipt = await handle.receipt(1.3, { reference: true, keepPixels: true });
   const px = receipt.pixels;
-  const stem = "studio-" + receipt.request.plugin + "-" + (receipt.pixelHash || "no-frame").slice(0, 12);
+  const stem = "studio-" + receipt.scene.plugin + "-" + (receipt.content_sha256 || "no-frame").slice(0, 12);
   if (px && handle.instance.result && handle.instance.result.frame) {
     const { width, height } = handle.instance.result.frame;
     const c = document.createElement("canvas");

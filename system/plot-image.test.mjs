@@ -7,16 +7,9 @@ import {
   toneField, resampleField, fitField, levels, blurField, edgeTangentFlow, xdogField,
   traceFlowLines, evenStreamlines, stipplePoints, tspPath, sheetPlacement, sampleField,
 } from "./plot-image.js";
+import { mulberry32 } from "./media-engine/seed.mjs";
 
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+const mulberry = mulberry32;
 
 // A synthetic test image: a hard vertical edge, dark left half, bright right half.
 function edgeField(w = 64, h = 64) {

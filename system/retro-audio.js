@@ -5,11 +5,9 @@
    are quantised to a seed-rooted scale so stacking stays musical. Off by
    default, user-initiated (Web Audio needs a gesture), zero deps. */
 
-function hash(str) {
-  let h = 2166136261; const s = String(str == null ? "seed" : str);
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return h >>> 0;
-}
+import { fnv1a32 } from "./media-engine/seed.mjs";
+
+function hash(str) { return fnv1a32(str == null ? "seed" : str); }
 
 // minor pentatonic — consonant under stacking
 const SCALE = [0, 3, 5, 7, 10, 12];
