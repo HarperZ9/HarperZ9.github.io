@@ -1,10 +1,12 @@
 // audio-player.js: the browser side of the seed-authored sound instrument.
 // Mounts a small "sound desk" - name a seed, hear the piece it synthesizes,
-// read its key and tempo, and save it as a real .wav. All in the browser; the
-// PCM comes from audio.js, deterministic per seed. Honors reduced motion only in
-// that nothing autoplays; playback is always user-initiated.
+// read its key and tempo, and save it as a real .wav. All in the browser. What plays and what
+// saves is the sound layer's reference (media-engine/sound.mjs): rendered offline in float64,
+// normalised to -14 LUFS and quantized once to 16-bit PCM at 48 kHz, the same bytes either way.
+// Nothing autoplays; playback is always user-initiated.
 
-import { renderAudioBuffer, seedComposition, audioToWav } from "./audio.js";
+import { seedComposition } from "./audio.js";
+import { seedScene, renderReference, liveContext, playReference, wavOf, soundPreferenceOff, setSoundPreference } from "./media-engine/sound.mjs";
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -15,7 +17,6 @@ function el(tag, cls, text) {
 
 export function mountAudioPlayer(mount, opts = {}) {
   if (!mount) return null;
-  const AC = window.AudioContext || window.webkitAudioContext;
   const seedDefault = opts.seed || "aurora";
   mount.innerHTML = "";
 
@@ -30,7 +31,17 @@ export function mountAudioPlayer(mount, opts = {}) {
   stop.type = "button"; stop.disabled = true; stop.setAttribute("aria-label", "Stop playback");
   const save = el("button", "plate-redraw", "save wav");
   save.type = "button"; save.setAttribute("aria-label", "Save this sound as a WAV file");
-  row.append(seedIn, play, stop, save);
+  // The site's reduced-sound preference: when pressed, ambient and reactive sound (the Retro
+  // drone, the Loom's weaving rows, the Music pad) stays off on every page. Play buttons still play.
+  const quiet = el("button", "plate-redraw", "reduced sound");
+  quiet.type = "button"; quiet.setAttribute("aria-pressed", String(soundPreferenceOff()));
+  quiet.setAttribute("aria-label", "Reduced sound: keep ambient and reactive sound off across the site");
+  quiet.addEventListener("click", () => {
+    const off = quiet.getAttribute("aria-pressed") !== "true";
+    setSoundPreference(!off); quiet.setAttribute("aria-pressed", String(off));
+    status.textContent = off ? "reduced sound on: ambient and reactive sound stays off; play buttons still play" : "reduced sound off";
+  });
+  row.append(seedIn, play, stop, save, quiet);
 
   const readout = el("p", "plate-hint");
   const status = el("p", "desk-status");
@@ -49,7 +60,7 @@ export function mountAudioPlayer(mount, opts = {}) {
   let ctx = null, source = null;
 
   const stopPlayback = () => {
-    if (source) { try { source.stop(); } catch (_) {} source.disconnect(); source = null; }
+    if (source) { source.stop(); source = null; }
     play.disabled = false; stop.disabled = true;
   };
 
@@ -57,20 +68,16 @@ export function mountAudioPlayer(mount, opts = {}) {
     const seed = seedIn.value.trim() || "aurora";
     describe(seed);
     try {
-      if (!ctx) ctx = new AC();
+      if (!ctx) ctx = liveContext();
+      if (!ctx) throw new Error("this browser has no Web Audio");
       if (ctx.state === "suspended") await ctx.resume();
       stopPlayback();
-      const sr = ctx.sampleRate;
-      const pcm = renderAudioBuffer(seed, { sampleRate: sr });
-      const ab = ctx.createBuffer(1, pcm.length, sr);
-      ab.getChannelData(0).set(pcm);
-      source = ctx.createBufferSource();
-      source.buffer = ab;
-      source.connect(ctx.destination);
-      source.onended = () => { if (source) { source.disconnect(); source = null; } play.disabled = false; stop.disabled = true; };
-      source.start();
+      const ref = renderReference(seedScene(seed));
+      const run = playReference(ctx, ref);
+      source = run;
+      run.source.onended = () => { if (source === run) { run.stop(); source = null; } play.disabled = false; stop.disabled = true; };
       play.disabled = true; stop.disabled = false;
-      status.textContent = `playing ${(pcm.length / sr).toFixed(1)}s, synthesized from the seed`;
+      status.textContent = `playing ${(ref.pcm.byteLength / 2 / ref.scene.rate).toFixed(1)} s, synthesized from the seed`;
     } catch (err) {
       status.textContent = "Audio could not start: " + (err && err.message ? err.message : String(err));
     }
@@ -81,15 +88,15 @@ export function mountAudioPlayer(mount, opts = {}) {
   save.addEventListener("click", () => {
     const seed = seedIn.value.trim() || "aurora";
     const c = describe(seed);
-    const pcm = renderAudioBuffer(seed, { sampleRate: 44100 });
-    const wav = audioToWav(pcm, 44100);
+    const ref = renderReference(seedScene(seed));
+    const wav = wavOf(ref);
     const blob = new Blob([wav], { type: "audio/wav" });
     const url = URL.createObjectURL(blob);
     const a = el("a");
     a.href = url; a.download = `telos-sound-${c.tag}.wav`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 4000);
-    status.textContent = `saved telos-sound-${c.tag}.wav (44.1 kHz, 16-bit)`;
+    status.textContent = `saved telos-sound-${c.tag}.wav (48 kHz, 16-bit, ${ref.loudness.integrated_lufs} LUFS)`;
   });
 
   seedIn.addEventListener("input", () => describe(seedIn.value.trim() || "aurora"));

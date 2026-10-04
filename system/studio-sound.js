@@ -10,14 +10,27 @@
 // context is ours and resumed in-gesture, so what you hear is what the panel
 // measures - and both are deterministic, the same seed is the same PCM.
 //
-// Playback is always user-initiated (a play button); nothing autoplays.
+// Playback is always user-initiated (a play button); nothing autoplays. What plays is the sound
+// layer's reference (media-engine/sound.mjs): the piece rendered offline in float64, normalised to
+// the music loudness target (-14 LUFS) and quantized once to 16-bit PCM at 48 kHz. The live context
+// runs at that rate and plays those samples; the receipt hashes them.
 
-import { renderAudioBuffer, seedComposition, audioToWav } from "./audio.js";
+import { seedComposition } from "./audio.js";
+import { seedScene, renderReference, liveContext, playReference, soundReceipt } from "./media-engine/sound.mjs";
 
-const SR = 44100;
+const SR = 48000;
 let raf = null, ctx = null, srcNode = null, analyser = null, freqBuf = null, timeBuf = null;
 let running = false, playing = false, startedAt = 0;
-let comp = null, pcm = null, dur = 0, canvasRef = null;
+let comp = null, ref = null, dur = 0, canvasRef = null;
+
+function load(seed) {
+  comp = seedComposition(seed);
+  ref = renderReference(seedScene(seed));
+  dur = ref.pcm.byteLength / 2 / SR;
+}
+
+// The receipt for the seed's reference PCM (superstack.receipt/1).
+export function soundReceiptFor(seed) { return soundReceipt(renderReference(seedScene(seed || "aurora"))); }
 
 // RMS of a getByteTimeDomainData buffer (0..255 centered on 128) → [0, ~1].
 export function rmsFromTime(buf) {
@@ -120,9 +133,7 @@ function tick() {
    the audio measurement) is user-initiated via playSound(). Returns { animating }. */
 export function startSound(canvas, opts = {}) {
   const seed = opts.seed || "aurora";
-  comp = seedComposition(seed);
-  pcm = renderAudioBuffer(seed, { sampleRate: SR });
-  dur = pcm.length / SR;
+  load(seed);
   canvasRef = canvas;
   const ctx2d = canvas && typeof canvas.getContext === "function" ? canvas.getContext("2d") : null;
   if (!ctx2d) return { animating: false, composition: comp };
@@ -136,29 +147,21 @@ export function startSound(canvas, opts = {}) {
 /* Begin playback in our own resumed AudioContext and measure it. Must be called
    from a user gesture. Returns Promise<boolean>. */
 export function playSound(opts = {}) {
-  if (opts.seed) { comp = seedComposition(opts.seed); pcm = renderAudioBuffer(opts.seed, { sampleRate: SR }); dur = pcm.length / SR; }
-  if (!pcm) return Promise.resolve(false);
-  const AC = window.AudioContext || window.webkitAudioContext;
-  if (!AC) return Promise.resolve(false);
+  if (opts.seed) load(opts.seed);
+  if (!ref) return Promise.resolve(false);
   try {
-    if (!ctx) ctx = new AC();
+    if (!ctx) ctx = liveContext();
+    if (!ctx) return Promise.resolve(false);
     const resume = ctx.state === "suspended" ? ctx.resume() : Promise.resolve();
     return resume.then(() => {
       stopNodes();
-      const ab = ctx.createBuffer(1, pcm.length, SR);
-      ab.getChannelData(0).set(pcm);
-      srcNode = ctx.createBufferSource();
-      srcNode.buffer = ab;
-      srcNode.loop = true;
       analyser = ctx.createAnalyser();
       analyser.fftSize = 2048;
       analyser.smoothingTimeConstant = 0.8;
       freqBuf = new Uint8Array(analyser.frequencyBinCount);
       timeBuf = new Uint8Array(analyser.fftSize);
-      srcNode.connect(analyser);
-      srcNode.connect(ctx.destination);
       startedAt = ctx.currentTime;
-      srcNode.start();
+      srcNode = playReference(ctx, ref, { loop: true, connectTo: analyser }).source;
       playing = true;
       if (!raf && running && canvasRef && typeof requestAnimationFrame === "function") tick();
       return true;

@@ -84,6 +84,7 @@
 
 import { applyMapping, MAPPING_PRESETS, dominantChromaClass, clamp } from "./reactive-mapping.js";
 import ReactiveVisuals from "./reactive-visuals.js";
+import { musicScene, renderReference, liveContext, playReference, reducedSound } from "./media-engine/sound.mjs";
 
 // ---------------------------------------------------------------------------
 // State
@@ -215,7 +216,8 @@ const CHROMA_MIDI = [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71];
 function midiToHz(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
 function ensurePad(ctx, chroma, onsetStrength) {
-  if (!_soundEnabled || !ctx) return;
+  // The pad follows the music, so it is reactive sound: silent in reduced-sound mode.
+  if (!_soundEnabled || !ctx || reducedSound()) return;
   const pc = dominantChromaClass(chroma);
   const baseHz = pc >= 0 ? midiToHz(CHROMA_MIDI[pc]) : 220;
   const gain = _soundLevel * (0.5 + onsetStrength * 0.5);
@@ -260,20 +262,12 @@ function releasePad() {
 // Built-in synth (offline-capable oscillator chord)
 // ---------------------------------------------------------------------------
 
+// The built-in chord is a scene on the sound layer (media-engine/sound.mjs): a band-limited
+// sawtooth with vibrato, a sine and a band-limited triangle, rendered offline in float64,
+// normalised to -14 LUFS and quantized once. The context loops those reference samples.
 function buildBuiltinSynth(ctx) {
-  const osc = ctx.createOscillator(), osc5 = ctx.createOscillator(), osc8 = ctx.createOscillator();
-  osc.type = "sawtooth"; osc5.type = "sine"; osc8.type = "triangle";
-  osc.frequency.value = 110; osc5.frequency.value = 165; osc8.frequency.value = 220;
-  const lfo = ctx.createOscillator(), lfoGain = ctx.createGain();
-  lfo.frequency.value = 0.17; lfoGain.gain.value = 6;
-  lfo.connect(lfoGain); lfoGain.connect(osc.frequency); lfo.start();
-  const mix = ctx.createGain(); mix.gain.value = 0.22;
-  osc.connect(mix); osc5.connect(mix); osc8.connect(mix);
-  osc.start(); osc5.start(); osc8.start();
-  return {
-    node: mix,
-    stop() { try { osc.stop(); osc5.stop(); osc8.stop(); lfo.stop(); } catch (_) {} },
-  };
+  const run = playReference(ctx, renderReference(musicScene()), { loop: true, destination: false });
+  return { node: run.source, stop() { run.stop(); } };
 }
 
 // ---------------------------------------------------------------------------
@@ -284,7 +278,7 @@ function ensureAudioCtx() {
   if (_audioCtx) return _audioCtx;
   const AC = window.AudioContext || window.webkitAudioContext;
   if (!AC) throw new Error("WebAudio not available in this browser.");
-  _audioCtx = new AC();
+  _audioCtx = liveContext() || new AC();
   return _audioCtx;
 }
 

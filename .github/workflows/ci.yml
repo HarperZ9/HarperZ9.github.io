@@ -47,6 +47,13 @@ jobs:
           system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs
           system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs
           system/type-forge/forge.test.mjs
+      # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
+      # audio modules' own tests, which did not run in CI before.
+      - name: Sound layer and audio regressions
+        if: ${{ !cancelled() }}
+        run: >-
+          node --test system/media-engine/sound.test.mjs system/audio.test.mjs system/midi-writer.test.mjs
+          system/studio-sound.test.mjs system/scope-voice.test.mjs system/ans-voice.test.mjs
       # The Python twins and the recorded-gate checks need numpy and scipy. Four tests need data
       # the repository does not carry (audit frames, the decoded image set, a Telos MCP checkout);
       # they skip with the reason printed. tests/telos-track-a/README.md has the full local run.

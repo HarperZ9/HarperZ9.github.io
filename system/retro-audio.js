@@ -3,9 +3,17 @@
    shader sings its own math — a six-harmonic additive voice whose partials are
    driven by the brightness bands of a scanline of the live render (feed). Both
    are quantised to a seed-rooted scale so stacking stays musical. Off by
-   default, user-initiated (Web Audio needs a gesture), zero deps. */
+   default, user-initiated (Web Audio needs a gesture).
+
+   The drone and the pings react to the picture, so they are reactive sound: with
+   reduced sound on (reduced motion asked for, or the site's sound preference off)
+   start() refuses, and while the tab is hidden the drone fades out and comes back
+   on return. A picture or cloth scan and a drawn figure are scenes on the sound
+   layer (media-engine/sound.mjs): rendered offline in float64, normalised and
+   quantized once, and the live context plays exactly those samples. */
 
 import { fnv1a32 } from "./media-engine/seed.mjs";
+import { scanScene, figureScene, renderReference, liveContext, playReference, reducedSound } from "./media-engine/sound.mjs";
 
 function hash(str) { return fnv1a32(str == null ? "seed" : str); }
 
@@ -128,64 +136,27 @@ export function createRetroAudio() {
   }
 
   async function ensureCtx() {
-    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!ctx) ctx = liveContext();
     if (ctx.state === "suspended") await ctx.resume();
     ensureAnalyser();
   }
 
-  // The ANS scan bank: one sine per image row, frequencies fixed, only the
-  // gains automated as the playhead crosses columns (lookahead window, so the
-  // AudioParam event lists stay short). Routed to the speakers and the
-  // analysis tap directly: the picture sounds whether or not the drone runs,
-  // and the scope can draw what the picture sings.
-  let scanRun = null;
-  async function playScan(scan, freqs, seconds) {
+  // The ANS scan: one sine per image row, the gains following the picture column
+  // by column. The sound layer renders it offline as a scene and the context
+  // plays the reference samples, routed to the speakers and the analysis tap,
+  // so the scope can draw what the picture sings. lastScan holds the scene and
+  // its reference for receipts and checks.
+  let scanRun = null, lastScan = null;
+  async function playScan(scan, freqs, seconds, label = "scan") {
     await ensureCtx();
     if (scanRun) scanRun.stop();
-    const { grid, rows, cols } = scan;
-    const dur = Math.max(2, seconds || 8);
-    const bus = ctx.createGain();
-    bus.gain.value = 2.2 / rows;
-    // A compressor between the bank and the speakers: bright material sums
-    // hot (rows of near-unity gains on harmonically related sines), and the
-    // ceiling should be musical, not a hard clip.
-    const comp2 = ctx.createDynamicsCompressor();
-    comp2.threshold.value = -12; comp2.ratio.value = 8;
-    bus.connect(comp2); comp2.connect(ctx.destination);
-    bus.connect(analyBus);
-    const oscs2 = [], gains = [];
-    for (let r = 0; r < rows; r++) {
-      const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freqs[r];
-      const g = ctx.createGain(); g.gain.value = 0;
-      o.connect(g); g.connect(bus); o.start();
-      oscs2.push(o); gains.push(g);
-    }
-    const t0 = ctx.currentTime + 0.08, colDur = dur / cols;
-    let nextCol = 0, timer = 0;
-    // The lookahead must outlive background-tab timer throttling (1s floor),
-    // or late-scheduled gains snap instead of enveloping.
-    const schedule = () => {
-      const horizon = ctx.currentTime + 1.2;
-      while (nextCol < cols && t0 + nextCol * colDur < horizon) {
-        const t = t0 + nextCol * colDur;
-        for (let r = 0; r < rows; r++) {
-          const v = grid[r * cols + nextCol];
-          gains[r].gain.setTargetAtTime(Math.pow(v, 1.5), t, colDur * 0.45);
-        }
-        nextCol++;
-      }
-      if (nextCol >= cols) { clearInterval(timer); setTimeout(done, (t0 + dur + 0.5 - ctx.currentTime) * 1000); }
-    };
+    const ref = renderReference(scanScene(scan, freqs, seconds || 8, { label }));
+    lastScan = ref;
+    const run = playReference(ctx, ref, { connectTo: analyBus });
     let stopped = false;
-    const done = () => {
-      if (stopped) return; stopped = true;
-      for (const g of gains) { try { g.gain.cancelScheduledValues(ctx.currentTime); g.gain.setTargetAtTime(0, ctx.currentTime, 0.05); } catch (_) {} }
-      setTimeout(() => { for (const o of oscs2) { try { o.stop(); } catch (_) {} } try { bus.disconnect(); comp2.disconnect(); } catch (_) {} }, 300);
-      if (scanRun && scanRun._done === done) scanRun = null;
-    };
-    timer = setInterval(schedule, 200);
-    schedule();
-    scanRun = { stop: () => { clearInterval(timer); done(); }, _done: done };
+    const done = () => { if (stopped) return; stopped = true; run.stop(); if (scanRun && scanRun._done === done) scanRun = null; };
+    run.source.onended = done;
+    scanRun = { stop: done, _done: done, reference: ref };
     return scanRun;
   }
 
@@ -204,11 +175,38 @@ export function createRetroAudio() {
     loopSrc.start();
     return { stop: stopLoop };
   }
+  // A drawn figure (interleaved x, y in -1..1) retraced hz times a second, as a
+  // scene on the sound layer; the loop plays the reference samples.
+  let lastFigure = null;
+  async function playFigure(points, hz) {
+    await ensureCtx();
+    stopLoop();
+    const ref = renderReference(figureScene(points, hz));
+    lastFigure = ref;
+    const run = playReference(ctx, ref, { loop: true, connectTo: analyBus });
+    loopSrc = run.source; loopGain = null;
+    return { stop: stopLoop, reference: ref };
+  }
   function stopLoop() {
     if (!loopSrc) return;
     try { loopSrc.stop(); } catch (_) {}
-    try { loopSrc.disconnect(); loopGain.disconnect(); } catch (_) {}
+    try { loopSrc.disconnect(); if (loopGain) loopGain.disconnect(); } catch (_) {}
     loopSrc = null; loopGain = null;
+  }
+
+  // The drone is ambient: it fades out while the tab is hidden and back in on
+  // return. A scan or figure the reader started keeps playing.
+  let watching = false;
+  function watchVisibility() {
+    if (watching || typeof document === "undefined") return;
+    watching = true;
+    document.addEventListener("visibilitychange", () => {
+      if (!on || !master || !ctx) return;
+      const t = now();
+      master.gain.cancelScheduledValues(t);
+      master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), t);
+      master.gain.exponentialRampToValueAtTime(document.hidden ? 0.0001 : 0.5, t + 0.3);
+    });
   }
 
   let waveBuf = null;
@@ -220,7 +218,10 @@ export function createRetroAudio() {
     playScan,
     scanPlaying: () => !!scanRun,
     playLoop,
+    playFigure,
     stopLoop,
+    lastScan: () => lastScan,
+    lastFigure: () => lastFigure,
     loopPlaying: () => !!loopSrc,
     // The context's true rate, for callers building sample-exact buffers.
     async rate() { await ensureCtx(); return ctx.sampleRate; },
@@ -265,10 +266,13 @@ export function createRetroAudio() {
     },
     async start(s) {
       if (s) { seed = s; setRoot(seed); }
-      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+      // Reactive sound: refused in reduced-sound mode. Callers catch and say so.
+      if (reducedSound()) throw new Error("reduced sound is on");
+      if (!ctx) ctx = liveContext();
       if (ctx.state === "suspended") await ctx.resume();
       if (on) return;
       build(); on = true;
+      watchVisibility();
       master.gain.setValueAtTime(0.0001, now());
       master.gain.exponentialRampToValueAtTime(0.5, now() + 0.6);
     },

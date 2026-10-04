@@ -113,15 +113,9 @@ function fadeEnds(buf, sr, inSec, outSec) {
   for (let i = 0; i < b && i < buf.length; i += 1) buf[buf.length - 1 - i] *= i / b;
 }
 
-/* Render the seed's piece to mono Float32 PCM in [-1, 1]. Deterministic for a
-   given (seed, sampleRate). opts.sampleRate default 44100. */
-export function renderAudioBuffer(seed, opts = {}) {
-  const sr = opts.sampleRate || 44100;
-  const comp = opts.composition || seedComposition(seed);
+// Lay the seed's melody and its root drone into a buffer of any float type.
+function compose(buf, sr, comp) {
   const stepDur = 60 / comp.bpm / 2;                  // eighth note
-  const total = comp.steps * stepDur + 0.7;           // + tail
-  const buf = new Float32Array(Math.max(1, Math.ceil(total * sr)));
-
   // Melody line.
   for (let i = 0; i < comp.seq.length; i += 1) {
     const m = comp.seq[i];
@@ -132,9 +126,31 @@ export function renderAudioBuffer(seed, opts = {}) {
   for (let i = 0; i < comp.steps; i += 4) {
     addVoice(buf, sr, i * stepDur, stepDur * 3.6, midiToHz(comp.root - 12), [0.7, 0.22, 0.08], 0.14, true);
   }
+}
 
+const lengthOf = (comp, sr) => Math.max(1, Math.ceil((comp.steps * (60 / comp.bpm / 2) + 0.7) * sr));
+
+/* Render the seed's piece to mono Float32 PCM in [-1, 1], peak-normalised. Deterministic for a
+   given (seed, sampleRate). opts.sampleRate default 44100. The sound layer's reference is
+   seedSoundSamples() below; this float32 path stays for callers that want a quick buffer. */
+export function renderAudioBuffer(seed, opts = {}) {
+  const sr = opts.sampleRate || 44100;
+  const comp = opts.composition || seedComposition(seed);
+  const buf = new Float32Array(lengthOf(comp, sr));
+  compose(buf, sr, comp);
   normalize(buf, 0.9);
   fadeEnds(buf, sr, 0.02, 0.45);
+  return buf;
+}
+
+/* The Seed sound's reference samples: the same piece accumulated in float64, faded, not
+   normalised. system/media-engine/sound.mjs normalises them to the music loudness target and
+   quantizes once to s16 PCM, which is what plays and what the receipt hashes. */
+export function seedSoundSamples(seed, sampleRate = 48000) {
+  const comp = seedComposition(seed);
+  const buf = new Float64Array(lengthOf(comp, sampleRate));
+  compose(buf, sampleRate, comp);
+  fadeEnds(buf, sampleRate, 0.02, 0.45);
   return buf;
 }
 
