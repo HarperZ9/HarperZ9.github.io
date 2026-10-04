@@ -644,7 +644,7 @@ RELEASE_PATHS = (
 # retro-studio.js at that stamp. The release is rehashed.
 # October 4, 2026, later: Bring your own and Watch with me start on an empty sheet; studio.html
 # loads the Studio at the bring stamp over the retro-hub release. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "42d2b4bf541095b6496cba983f8776f86dfaaf194f4b1c7705d101e2f624e95f"
+REVIEWED_RELEASE_SHA256 = "8eedbfcd22a49592979f465990b0aff2c5280e95d6203bf3a669bf3c0d9761a0"
 
 
 BRIEFING_FIGURES = (
