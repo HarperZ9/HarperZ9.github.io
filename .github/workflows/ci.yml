@@ -196,3 +196,9 @@ jobs:
             fi
           done
           echo "every sealed file matches its committed blob"
+  art-receipts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify art receipt digests
+        run: python3 scripts/check_art_receipts.py
