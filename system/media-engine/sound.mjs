@@ -169,6 +169,9 @@ function renderFigure(scene) {
 
 const RENDERERS = { seed: renderSeed, music: renderMusic, scan: renderScan, figure: renderFigure };
 
+// Another module adds a producer here (sound-retro.mjs: the Retro instrument's pings and drone).
+export function registerRenderer(producer, render) { RENDERERS[producer] = render; }
+
 // A loop is measured over 2 s of itself, so the meter sees at least five of its 400 ms blocks.
 function measured(x, scene) {
   if (scene.producer !== "figure" && scene.producer !== "music") return x;
@@ -181,6 +184,9 @@ function measured(x, scene) {
 // sound only comes down to -18 LUFS. A sample-peak ceiling of the class's peak limit always wins,
 // so a loud-peaked sound can fall short of its target, and the receipt then says refuted.
 function normalise(x, scene) {
+  // A scene rendered as it plays (the drone, chunk by chunk) cannot be scaled after the fact: its
+  // level is fixed by its own gains, and the receipt states the loudness that came out.
+  if (scene.fixed_gain) return { gain: 1 };
   const cls = scene.loudness_class, t = LOUDNESS_TARGETS[cls];
   const lufs = integratedLufs(measured(x, scene), scene.rate, scene.channels);
   let peak = 0;

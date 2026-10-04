@@ -8,24 +8,22 @@
    The drone and the pings react to the picture, so they are reactive sound: with
    reduced sound on (reduced motion asked for, or the site's sound preference off)
    start() refuses, and while the tab is hidden the drone fades out and comes back
-   on return. A picture or cloth scan and a drawn figure are scenes on the sound
-   layer (media-engine/sound.mjs): rendered offline in float64, normalised and
-   quantized once, and the live context plays exactly those samples. */
+   on return. Every sound here is a scene on the sound layer (media-engine/sound.mjs):
+   a picture or cloth scan, a drawn figure, each ping, and the drone, which is
+   rendered chunk by chunk as it plays (media-engine/sound-retro.mjs). The live
+   context plays exactly the samples the offline renderer computed. */
 
 import { fnv1a32 } from "./media-engine/seed.mjs";
-import { scanScene, figureScene, renderReference, liveContext, playReference, reducedSound } from "./media-engine/sound.mjs";
+import { scanScene, figureScene, renderReference, liveContext, playReference, reducedSound, reconcileLive } from "./media-engine/sound.mjs";
+import { pingScene, createDroneStream, reconcileDroneLive } from "./media-engine/sound-retro.mjs";
 
 function hash(str) { return fnv1a32(str == null ? "seed" : str); }
 
-// minor pentatonic — consonant under stacking
-const SCALE = [0, 3, 5, 7, 10, 12];
 const semi = (n) => Math.pow(2, n / 12);
-const HARMONICS = 6;
 
 export function createRetroAudio() {
-  let ctx = null, master = null, voiceFilter = null, on = false, seed = "seed";
-  let rootHz = 65, pingRootHz = 220;
-  const oscs = [], oscGains = [];
+  let ctx = null, drone = null, on = false, seed = "seed";
+  let rootHz = 65, pingRootHz = 220, lastPing = null, lastDrone = null;
   // Analysis tap: everything audible (the instrument, a mic, your own file) is
   // summed here and read back as bass/mid/treble/level so the SOUND can drive
   // the VISUALS, closing the loop in both directions.
@@ -51,72 +49,28 @@ export function createRetroAudio() {
     return analyser;
   }
 
-  function build() {
-    master = ctx.createGain(); master.gain.value = 0;
-    const comp = ctx.createDynamicsCompressor();
-    comp.threshold.value = -18; comp.ratio.value = 6;
-    master.connect(comp); comp.connect(ctx.destination);
-    ensureAnalyser(); comp.connect(analyBus);
-
-    // additive shader voice: 6 harmonic oscillators, gains driven by feed()
-    voiceFilter = ctx.createBiquadFilter(); voiceFilter.type = "lowpass"; voiceFilter.frequency.value = 700; voiceFilter.Q.value = 3;
-    const voiceGain = ctx.createGain(); voiceGain.gain.value = 0.9;
-    voiceFilter.connect(voiceGain); voiceGain.connect(master);
-    for (let i = 0; i < HARMONICS; i++) {
-      const o = ctx.createOscillator(); o.type = i === 0 ? "sine" : "sine";
-      o.frequency.value = rootHz * (i + 1); o.detune.value = (i - 2.5) * 2.5; // a little beating
-      const g = ctx.createGain(); g.gain.value = 0;
-      o.connect(g); g.connect(voiceFilter); o.start();
-      oscs.push(o); oscGains.push(g);
-    }
+  // The drone: six harmonics of the root, each band of the picture driving one,
+  // through a lowpass that opens with the overall brightness (sound-retro.mjs).
+  function startDrone() {
+    drone = createDroneStream(ctx, { rootHz, connect: (src) => { src.connect(ctx.destination); src.connect(analyBus); } });
+    lastDrone = drone;
   }
 
-  const now = () => ctx.currentTime;
-
-  // one enveloped note through the master bus
-  function blip(freq, type, dur, peak, whenOff) {
-    const t0 = whenOff || now();
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = type; o.frequency.value = freq;
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t0 + 0.006);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-    o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + dur + 0.03);
-    o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (_) {} };
-  }
-
-  function thump() {
-    const t0 = now(), o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = "sine"; o.frequency.setValueAtTime(190, t0); o.frequency.exponentialRampToValueAtTime(60, t0 + 0.13);
-    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.22, t0 + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
-    o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + 0.2);
-    o.onended = () => { try { o.disconnect(); g.disconnect(); } catch (_) {} };
-    blip(1750, "square", 0.03, 0.04);
-  }
-
-  const deg = (v) => SCALE[Math.max(0, Math.min(SCALE.length - 1, Math.floor((v || 0) * SCALE.length)))];
-
+  // A ping: one of the instrument's interaction notes (minor pentatonic over the
+  // seed's root), rendered offline as a scene and played from its reference samples.
   function ping(kind, value) {
     if (!on || !ctx) return;
     try {
-      if (kind === "chip") blip(pingRootHz * semi(deg(value)), "triangle", 0.16, 0.12);
-      else if (kind === "slider") blip(pingRootHz * 2 * semi(deg(value)), "sine", 0.07, 0.06);
-      else if (kind === "button") { for (let i = 0; i < 3; i++) blip(pingRootHz * semi(SCALE[i]), "triangle", 0.13, 0.10, now() + i * 0.055); }
-      else if (kind === "bell") { blip(pingRootHz * 2, "sine", 0.5, 0.08); blip(pingRootHz * 2 * 1.004, "sine", 0.5, 0.05); }
-      else if (kind === "click") thump();
-      else blip(pingRootHz, "triangle", 0.14, 0.09);
-    } catch (_) {}
+      const ref = renderReference(pingScene(kind, value, pingRootHz));
+      lastPing = ref;
+      playReference(ctx, ref, { connectTo: analyBus });
+    } catch (e) { console.error("[retro-audio] ping failed:", e); }
   }
 
   // drive the six harmonics from per-band brightness energy of the render
   function feed(bands) {
-    if (!on || !ctx || !oscGains.length || !bands) return;
-    const t = now(); let sum = 0;
-    for (let i = 0; i < HARMONICS; i++) {
-      const b = Math.max(0, Math.min(1, bands[i] || 0)); sum += b;
-      oscGains[i].gain.setTargetAtTime(b * (0.32 / (i + 1)), t, 0.09);
-    }
-    if (voiceFilter) voiceFilter.frequency.setTargetAtTime(260 + (sum / HARMONICS) * 3200, t, 0.12);
+    if (!on || !drone || !bands) return;
+    drone.setBands(bands);
   }
 
   // Read the tap: average magnitude per band, 0..1. Returns the last values if
@@ -201,11 +155,8 @@ export function createRetroAudio() {
     if (watching || typeof document === "undefined") return;
     watching = true;
     document.addEventListener("visibilitychange", () => {
-      if (!on || !master || !ctx) return;
-      const t = now();
-      master.gain.cancelScheduledValues(t);
-      master.gain.setValueAtTime(Math.max(0.0001, master.gain.value), t);
-      master.gain.exponentialRampToValueAtTime(document.hidden ? 0.0001 : 0.5, t + 0.3);
+      if (!on || !drone) return;
+      drone.setAudible(!document.hidden);
     });
   }
 
@@ -222,6 +173,17 @@ export function createRetroAudio() {
     stopLoop,
     lastScan: () => lastScan,
     lastFigure: () => lastFigure,
+    lastPing: () => lastPing,
+    // The drone session's scene (its first 30 s), the bytes the live path was given, and the
+    // check: those bytes against the offline reference, and the scheduled chunks rendered in an
+    // OfflineAudioContext against it.
+    droneSession: () => (lastDrone ? { scene: lastDrone.scene(), pcm: lastDrone.pcm(), late: lastDrone.late } : null),
+    async checkDrone() {
+      if (!lastDrone) return null;
+      const ref = renderReference(lastDrone.scene());
+      return { reference: ref, late: lastDrone.late, ...(await reconcileDroneLive(ref, lastDrone.pcm())) };
+    },
+    async checkPing() { return lastPing ? reconcileLive(lastPing) : null; },
     loopPlaying: () => !!loopSrc,
     // The context's true rate, for callers building sample-exact buffers.
     async rate() { await ensureCtx(); return ctx.sampleRate; },
@@ -271,27 +233,23 @@ export function createRetroAudio() {
       if (!ctx) ctx = liveContext();
       if (ctx.state === "suspended") await ctx.resume();
       if (on) return;
-      build(); on = true;
+      ensureAnalyser();
+      startDrone(); on = true;
       watchVisibility();
-      master.gain.setValueAtTime(0.0001, now());
-      master.gain.exponentialRampToValueAtTime(0.5, now() + 0.6);
     },
     stop() {
       if (!on || !ctx) return;
       on = false;
       // The stop button is the mute the user reaches for: everything the
       // engine is sounding dies with it, including the figure loop and a
-      // running picture scan, which route around the master bus.
+      // running picture scan; the drone fades out over half a second.
       stopLoop();
       if (scanRun) { try { scanRun.stop(); } catch (_) {} }
-      const t = now();
-      if (master) { master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t); master.gain.linearRampToValueAtTime(0, t + 0.4); }
-      const killO = oscs.splice(0), killG = oscGains.splice(0);
-      setTimeout(() => { killO.forEach((o) => { try { o.stop(); o.disconnect(); } catch (_) {} }); killG.forEach((g) => { try { g.disconnect(); } catch (_) {} }); }, 500);
+      if (drone) { drone.stop(); drone = null; }
     },
     setSeed(s) {
       seed = s || "seed"; setRoot(seed);
-      if (on && oscs.length) { const t = now(); oscs.forEach((o, i) => o.frequency.setTargetAtTime(rootHz * (i + 1), t, 0.1)); }
+      if (on && drone) drone.setRoot(rootHz);
     },
   };
 }
