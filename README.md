@@ -1,6 +1,19 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/HarperZ9/HarperZ9.github.io/main/docs/art/hero-dark.svg">
+  <img src="https://raw.githubusercontent.com/HarperZ9/HarperZ9.github.io/main/docs/art/hero-light.svg" alt="HarperZ9.github.io: Public site for Flywheel, its supporting systems, research, and papers. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core." width="100%">
+</picture>
+
 # HarperZ9.github.io
 
-![HarperZ9.github.io hero](docs/brand/portfolio-site-hero.png)
+Public site for Flywheel, its supporting systems, research, and papers.
+
+```
+git clone https://github.com/HarperZ9/HarperZ9.github.io.git
+```
+
+[![CI](https://github.com/HarperZ9/HarperZ9.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/HarperZ9/HarperZ9.github.io/actions/workflows/ci.yml)
+[![license](https://img.shields.io/badge/license-all_rights_reserved-e6e1d6?style=flat-square&labelColor=1a1712)](https://github.com/HarperZ9/HarperZ9.github.io/blob/main/LICENSE)
+![node (npx serve)](https://img.shields.io/badge/node-%28npx_serve%29-e6e1d6?style=flat-square&labelColor=1a1712)
 
 > Static public site for Zain Dana Harper: Flywheel, its
 > supporting systems, the Retro Systems Lab, research publications, and
