@@ -140,6 +140,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-retro.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-bring.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-threads.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-worlds.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       - name: Live explainers in the browser
@@ -192,7 +193,7 @@ jobs:
         run: sha256sum -c --strict SHA256SUMS
       - name: raw-native web GPU host matches its SHA256SUMS
         if: ${{ !cancelled() }}
-        working-directory: media/raw-native/web-807ce7c
+        working-directory: media/raw-native/web-05a6cdd
         run: sha256sum -c --strict SHA256SUMS
       - name: Sealed files are checked out byte for byte
         if: ${{ !cancelled() }}

@@ -97,7 +97,7 @@ test("the guide names every source in the Studio's menu, in plain public words",
   const html = readFileSync(join(ROOT, "studio.html"), "utf8");
   const menu = html.slice(html.indexOf('id="studio-source"'), html.indexOf("rail-scroll"));
   const sources = [...menu.matchAll(/data-source="([a-z0-9]+)"/g)].map((m) => m[1]);
-  assert.equal(sources.length, 25);
+  assert.equal(sources.length, 26);
   assert.deepEqual(Object.keys(SOURCE_GUIDE).sort(), [...sources].sort());
   for (const [id, g] of Object.entries(SOURCE_GUIDE)) {
     assert.ok(g.name && g.purpose, id);

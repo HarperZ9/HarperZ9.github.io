@@ -49,7 +49,7 @@ function loadTweakpane() {
 // CSS panzoom stays ONLY for genuinely flat content: atelier drawing, BYO still image, music, watch.
 // sketch is native too: its pointer IS the instrument, so the CSS panzoom layer must never
 // intercept or transform the canvas it draws on.
-const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim", "voxels", "plotmaps", "sketch"]);
+const NATIVE_CAMERA_SOURCES = new Set(["fractal", "fractal3d", "ndim", "voxels", "plotmaps", "sketch", "worlds"]);
 
 // The panzoom instance currently attached to the canvas stage element.
 let _pzInstance = null;

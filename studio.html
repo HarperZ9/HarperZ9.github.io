@@ -79,6 +79,7 @@
         <button type="button" role="tab" data-source="voxels"    aria-selected="false" aria-controls="src-voxels"    tabindex="-1">Voxels</button>
         <button type="button" role="tab" data-source="sketch"    aria-selected="false" aria-controls="src-sketch"    tabindex="-1">Sketch</button>
         <button type="button" role="tab" data-source="threads"   aria-selected="false" aria-controls="src-threads"   tabindex="-1">Threads</button>
+        <button type="button" role="tab" data-source="worlds"    aria-selected="false" aria-controls="src-worlds"    tabindex="-1">Worlds</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -166,6 +167,39 @@
         <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
       </section>
 
+      <section class="src-block" id="src-worlds" role="tabpanel" aria-label="Worlds controls" hidden>
+        <p class="transform-note">The One Step worlds as small rendered places you can walk around. Hold the wheel button and drag to turn the world, scroll to come closer, shift-drag or right-drag to slide, W A S D and Q E to fly, double-click to look at a spot, R to start over. On a touch screen, drag with one finger and pinch with two. Left alone, the camera tours. Rendered on your GPU by raw-native through WebGPU.</p>
+        <div class="at-actions">
+          <button type="button" class="btn" id="worlds-play" aria-pressed="true" aria-label="Pause or play the motion in the world">pause</button>
+          <button type="button" class="btn ghost" id="worlds-reset" aria-label="Put the camera back where it started (R)">reset view</button>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">World</span>
+          <select id="worlds-world" class="at-seed" style="width:100%" aria-label="World">
+            <option value="eye">VI. The eye</option>
+            <option value="swing">XIII. The swing</option>
+            <option value="forest">XIV. The forest</option>
+          </select>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Quality <span class="hint">(<span id="worlds-quality-val">0.50</span>)</span></span>
+          <input type="range" class="at-slider" id="worlds-quality" min="0" max="1" step="0.05" value="0.5" aria-label="Render quality: resolution, steps, shadows">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Light <span class="hint">(<span id="worlds-light-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="worlds-light" min="0.2" max="2.5" step="0.05" value="1" aria-label="Light strength">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Fog <span class="hint">(<span id="worlds-fog-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="worlds-fog" min="0" max="3" step="0.05" value="1" aria-label="Fog density">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Motion <span class="hint">(<span id="worlds-motion-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="worlds-motion" min="0" max="3" step="0.05" value="1" aria-label="Speed of the motion in the world">
+        </div>
+        <label class="at-check"><input type="checkbox" id="worlds-tour" checked> Tour when idle</label>
+        <p class="src-hint" id="worlds-readout" aria-live="off">starting the GPU</p>
+      </section>
       <section class="src-block" id="src-threads" role="tabpanel" aria-label="Threads controls" hidden>
         <p class="transform-note">Particles flow along the lines of a drawn field and leave light behind them. Fifteen worlds, from dappled leaves to a puppet on strings. Rendered on your GPU by raw-native through WebGPU; with reduced motion it holds one frame.</p>
         <div class="at-actions">
@@ -1474,7 +1508,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261004-studio-threads"></script>
+<script type="module" src="system/studio.js?v=20261004-studio-worlds"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

@@ -34,6 +34,9 @@ export function sourceIsAnimated(activeSource, state) {
       // The living neural instrument repaints every rAF frame, EXCEPT under
       // reduced motion, where it holds a single still frame and the loop may idle.
       return !s.neuralStatic;
+    case "worlds":
+      // The camera can move at any time, so Worlds redraws every frame once it has started.
+      return !s.worldsStatic;
     case "threads":
       // The Threads loop draws every frame, EXCEPT under reduced motion or while paused.
       return !s.threadsStatic;
