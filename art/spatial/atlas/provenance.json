@@ -1,0 +1,489 @@
+{
+  "schema": "harperz9.splat-atlas-provenance/1",
+  "checked": "2026-10-03",
+  "extraction_source_of_record": {
+    "filename": "Native_Gaussian_Splat_Atlas_v0.5.0_Standalone.html",
+    "bytes": 33911716,
+    "sha256": "a4240c641d7018afb5204db41dca37dfea62aeafaf5a0a7d91003fdab46d24da",
+    "manifest_version": "0.5.0",
+    "manifest_updated": "2026-07-24",
+    "hosted_on_site": false
+  },
+  "re_extraction": {
+    "tool": "art/spatial/extract_atlas.py",
+    "result": "81 of 81 scene files (27 models, 27 previews, 27 receipts) byte-identical to the committed files",
+    "note": "atlas.world.json differs: it was edited after extraction (claim boundary and PSNR denominators surfaced in PR #101)"
+  },
+  "extraction_commit": "925eed29",
+  "searched": [
+    "git history of HarperZ9.github.io (all refs) for art/spatial/atlas: one commit, 925eed29, the extraction",
+    "the Atlas v0.5.0 standalone's embedded manifest and 27 receipts: version, training seed, iterations, cameras and PSNR; no commit, repository or code hash",
+    "Crystal_City_Hybrid_Proof_v1.3_Standalone.html (sha256 94238f00...7854): the source of record for the Crystal City package; it does not contain the atlas",
+    "the seven other Native Gaussian Field Lab and Splat Lab standalones in Downloads: no commit identifiers"
+  ],
+  "scenes": [
+    {
+      "id": "scene-01",
+      "title": "Current Story 01",
+      "model": "scene-01.ngsf",
+      "model_sha256": "1e390109af6ff648dec0f2f51a1039d6eb97b97a1b6f48579df5479d4c5e26c4",
+      "receipt": "scene-01.receipt.json",
+      "receipt_sha256": "1210a3cfece6e9db99bc1ccf21c542d666a86d8d79c0e090580462fa61aa8b75",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 12,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-02",
+      "title": "Current Story 02",
+      "model": "scene-02.ngsf",
+      "model_sha256": "871dccb4ff042a856ecde70b3ed25ad990072d139a77261382f2d81688906666",
+      "receipt": "scene-02.receipt.json",
+      "receipt_sha256": "5eaa0a72abf9d0e5fd13b3016c2c5fe6f4823a06b3b018eb0a6769c4b76aa353",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 13,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-03",
+      "title": "Current Story 03",
+      "model": "scene-03.ngsf",
+      "model_sha256": "3aed3e7d12e575e567933f368a279fa12e3205d419f985605625711586fc30ed",
+      "receipt": "scene-03.receipt.json",
+      "receipt_sha256": "33901f5bb9d1e46e60a41a7c93e6e956f561b3b9ea0378f87726a21f2cdfb420",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 14,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-04",
+      "title": "Current Story 04",
+      "model": "scene-04.ngsf",
+      "model_sha256": "27d7ffb7396e9b8826be3a30ca63247e4664e884842dd4307f302a4784761a4d",
+      "receipt": "scene-04.receipt.json",
+      "receipt_sha256": "89a4b145e90f7a35643e55727ea48c3b62366b6c718556b8b97345fa25f0ca2f",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 15,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-05",
+      "title": "Current Story 05",
+      "model": "scene-05.ngsf",
+      "model_sha256": "7cf627d958e6a26f92c13c67bfb40b31c6f29ba9f749bb455066fa30706f3bf8",
+      "receipt": "scene-05.receipt.json",
+      "receipt_sha256": "8f73080dee3cab3f640ab743b2ebe712f4a03b6977317fcdff4a03bbbc3801db",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 16,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-06",
+      "title": "Current Story 06",
+      "model": "scene-06.ngsf",
+      "model_sha256": "a383f29706e0be4fa5844a5592138449ec96fe7ca9abfc89859474bd759799d5",
+      "receipt": "scene-06.receipt.json",
+      "receipt_sha256": "fedd9c469e3714f97acd96f97af2b86e6ac68ad456646500e04ca781acc7d234",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 17,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-07",
+      "title": "Current Story 07",
+      "model": "scene-07.ngsf",
+      "model_sha256": "2fc6c2a687251c661f4ffdd9b0c7981ff7d4bf872ef6d5272c44baf132d3d5a8",
+      "receipt": "scene-07.receipt.json",
+      "receipt_sha256": "a4b322983d8a5ef00073817d7aafcf1055d89226fcbac0a076e2d006af000a2e",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 18,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-08",
+      "title": "Current Story 08",
+      "model": "scene-08.ngsf",
+      "model_sha256": "52ad4555b5285861a34a2d7ad40c6bf0a0b6169d39be98eca87b1842583b016b",
+      "receipt": "scene-08.receipt.json",
+      "receipt_sha256": "fe19f81489ba2e64c980f63dcf394c6c492665c61ae59af48f0d24aea12038c8",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 19,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-09",
+      "title": "Current Story 09",
+      "model": "scene-09.ngsf",
+      "model_sha256": "9cc9386c7896657ebae89360c5eff323ea43d9d058040466d60ad3987ce42ec2",
+      "receipt": "scene-09.receipt.json",
+      "receipt_sha256": "a7f14b86f9e1e18fe19204a6bce8fa2d6136dfebd3e721458e3b7cf38d1f5512",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 20,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-10",
+      "title": "Current Story 10",
+      "model": "scene-10.ngsf",
+      "model_sha256": "dbb0713b6d6422dbed8125e71c17132fb339e0aa9e3cbd7fe2237573202e9828",
+      "receipt": "scene-10.receipt.json",
+      "receipt_sha256": "2c683083fbb5d131368ca22cbf680fe2fa8715b16a8e8f977fe51de03372a388",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 21,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-11",
+      "title": "Current Story 11",
+      "model": "scene-11.ngsf",
+      "model_sha256": "9f4814e6414eff48102f2751dc263cf822cc3f47984386b438214d5334578896",
+      "receipt": "scene-11.receipt.json",
+      "receipt_sha256": "b00f1ed961b5c4c94ae2448d9e63519b4f01e72f4d0422ee0e2ac1e4a21d289b",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 22,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-12",
+      "title": "Current Story 12",
+      "model": "scene-12.ngsf",
+      "model_sha256": "bf63840e8391e016694e9e9d793dbc052236b1a0b346980c66c179563503f653",
+      "receipt": "scene-12.receipt.json",
+      "receipt_sha256": "3ff95ee0e57bfbcb26a41123976ee33c9fe02fed1cc1d9b2b8c360424de5960d",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 23,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-13",
+      "title": "Current Story 13",
+      "model": "scene-13.ngsf",
+      "model_sha256": "2c55047e6d8fa679e8be81ac15baca470195ae1c1ebbfe74fd5984f65769a553",
+      "receipt": "scene-13.receipt.json",
+      "receipt_sha256": "964d2813ba5ff77ad8755651f5e72129df1626db48a51d6da42e416688d9ee4f",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 24,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-14",
+      "title": "Current Story 14",
+      "model": "scene-14.ngsf",
+      "model_sha256": "0b749897a833e0916029ab6826bc1c9e74bd426dba247408ce901c835205fb4c",
+      "receipt": "scene-14.receipt.json",
+      "receipt_sha256": "f59a0d2c49ed2acfb21b4026e3e84092116611823432e6e6ab8970b1ed6d06ca",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 25,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-15",
+      "title": "Current Story 15",
+      "model": "scene-15.ngsf",
+      "model_sha256": "75134facbc66824936d8c52a31449d10633d815152b6ea124917a39abc25e939",
+      "receipt": "scene-15.receipt.json",
+      "receipt_sha256": "6c785f5d602c359c8b17142b9b0c39dd004dea95af401df084db41de9e03a0dd",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 26,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-16",
+      "title": "Current Story 16",
+      "model": "scene-16.ngsf",
+      "model_sha256": "550d7ae9117c6cc92860937990b50078848bba946500948ccdf255079275f0bf",
+      "receipt": "scene-16.receipt.json",
+      "receipt_sha256": "3e70ea45d837871f6c04e09068c2e59a7c026bddba2bc5ea6635ccd61a7967e3",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 27,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-17",
+      "title": "Current Story 17",
+      "model": "scene-17.ngsf",
+      "model_sha256": "6dd5ed813920cee979a8b83729c699f6943ab052bc6259fa98334b0dceee84e9",
+      "receipt": "scene-17.receipt.json",
+      "receipt_sha256": "520a03e555aaf570bf902383c4a3815b87c9d9b754b175f0ca45421a19a0859c",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 28,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-18",
+      "title": "City and witnesses",
+      "model": "scene-18.ngsf",
+      "model_sha256": "125d5acf41092ec37b4c8e858eb4246973795798baed9953cc1707d87e3050a2",
+      "receipt": "scene-18.receipt.json",
+      "receipt_sha256": "bdd65f7bd3800b7ee0100a2a02ee03ce52be26fc392862aaaee4fbadb203c0b0",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 29,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-19",
+      "title": "Membrane, figure, and portal",
+      "model": "scene-19.ngsf",
+      "model_sha256": "c80a1721293b7b276b716348d9dba172a626e0dbe2933b7e6a9ad8cf395a086b",
+      "receipt": "scene-19.receipt.json",
+      "receipt_sha256": "d93d2e7499497b82b5f280867b8d71ffa92db33a6da8a786dd54a48a7ca28372",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 30,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-20",
+      "title": "Colossal arch and witness",
+      "model": "scene-20.ngsf",
+      "model_sha256": "152220c9812eff75b2a359b04e57cf6a069c59d60ffc59d92acdcaf963c2920f",
+      "receipt": "scene-20.receipt.json",
+      "receipt_sha256": "d87332992e6a04a37851ef33669ff623135b462bf14a2cf98f12ed306ce225a3",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 31,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-21",
+      "title": "Gate and figure",
+      "model": "scene-21.ngsf",
+      "model_sha256": "2d7e6d445e8d320fb2eccd0542c71486f98727da5b23a43d7d53a49f7f2cfcc6",
+      "receipt": "scene-21.receipt.json",
+      "receipt_sha256": "e80aafabce0ac258361382e57b99d437b9de0bc9664dbe47ad5648900b638c5d",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 32,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-22",
+      "title": "Orbital crystal engine",
+      "model": "scene-22.ngsf",
+      "model_sha256": "63b1a45ce1e81b5c27f7aa7da33f935cb85db7b1dc4e73566e6275b253023f78",
+      "receipt": "scene-22.receipt.json",
+      "receipt_sha256": "4068d0cf3c70ca12c1a088410a278b52bef5884bcaf4cac89714611a0995a1cd",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 33,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-23",
+      "title": "Monochrome geometry",
+      "model": "scene-23.ngsf",
+      "model_sha256": "9db4f101198dae89b441f6df41c6cf6992e6329d42f7b1a94ced7b99a223cba1",
+      "receipt": "scene-23.receipt.json",
+      "receipt_sha256": "778036981f9db5e45e1df3a58e8af05c38898ed2e800a00b1b365decc3428de3",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 34,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-24",
+      "title": "Nested luminous arches",
+      "model": "scene-24.ngsf",
+      "model_sha256": "0db35cd69aab58620eaefdfd043711b8a28dcf396b84a2cb6f09e7195edc6e5a",
+      "receipt": "scene-24.receipt.json",
+      "receipt_sha256": "a43f36ac23f73896595284231378e69596199cff7d3094a2e171bb4ffc0e43d2",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 35,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-25",
+      "title": "Path through rings",
+      "model": "scene-25.ngsf",
+      "model_sha256": "aab39768e7a480379fbe5b8cd5ec43e47e74af2dba8de53d08a80971b86e0de0",
+      "receipt": "scene-25.receipt.json",
+      "receipt_sha256": "d35673e556c9650a9b8ff0bf7b0f7a1e922ca75a03977cc9c1a69dc1b28cbff0",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 36,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-26",
+      "title": "Crystal embrace",
+      "model": "scene-26.ngsf",
+      "model_sha256": "42f8a0e566067d21b7ad8c5f1c3497441bf3b0b03205a7a19dbd7eca567c0759",
+      "receipt": "scene-26.receipt.json",
+      "receipt_sha256": "475fa31b3bd6508f68a802299a1d90be8cc0e5e7590ad0602d4ae945baf0d4eb",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 37,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    },
+    {
+      "id": "scene-27",
+      "title": "Painterly embrace",
+      "model": "scene-27.ngsf",
+      "model_sha256": "0157ec11a8f77c7a6cf9fe6c2768c98c863f7d6d1174978a1105706787b301bf",
+      "receipt": "scene-27.receipt.json",
+      "receipt_sha256": "8ea9e650134c875cadbb4c2da7a49740513138047a81ed69607126e1410d86c3",
+      "generator": {
+        "name": "Native Gaussian Splat Atlas",
+        "version": "0.5.0",
+        "commit": null,
+        "training_seed": 38,
+        "iterations": 32
+      },
+      "shown": false,
+      "reason": "generator commit unknown: the atlas records its generator only as version 0.5.0, with no commit and no code hash"
+    }
+  ],
+  "does_not_prove": [
+    "A byte-identical re-extraction shows the committed files came from that standalone; it does not identify the code that trained them.",
+    "Without the generator commit no one can re-run the training and compare, so the acceptance rule's disclosure line is unmet for every scene."
+  ]
+}

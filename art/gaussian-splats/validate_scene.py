@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Validate the file-level receipt for a Gaussian Splat Lab output.
 
-This helper proves only that a non-empty .spz file exists and reports its
-byte length and SHA-256 digest. It does not prove that the scene has useful
+This helper proves only that a non-empty .ngsf file with the NGSF v5 magic
+(NGS5) exists and reports its byte length and SHA-256 digest. It does not prove that the scene has useful
 parallax, correct occlusion, or faithful geometry; those remain separate
 visual review requirements recorded in the run observations.
 """
@@ -25,7 +25,7 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("scene", type=Path, help="Path to the generated .spz file")
+    parser.add_argument("scene", type=Path, help="Path to the generated .ngsf file")
     parser.add_argument("--pilot", required=True, help="Pilot id from manifest.json")
     parser.add_argument(
         "--manifest",
@@ -40,12 +40,15 @@ def main() -> int:
     if args.pilot not in pilots:
         parser.error(f"unknown pilot id: {args.pilot}")
 
-    if args.scene.suffix.lower() != ".spz":
-        parser.error("scene must use the .spz extension")
+    if args.scene.suffix.lower() != ".ngsf":
+        parser.error("scene must use the .ngsf extension")
     if not args.scene.is_file():
         parser.error(f"scene does not exist: {args.scene}")
     if args.scene.stat().st_size <= 0:
         parser.error("scene is empty")
+    with args.scene.open("rb") as handle:
+        if handle.read(4) != b"NGS5":
+            parser.error("scene is not an NGSF v5 model (no NGS5 magic)")
 
     receipt = {
         "status": "FILE_RECEIPT_ONLY",

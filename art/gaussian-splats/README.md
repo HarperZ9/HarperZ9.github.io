@@ -6,7 +6,15 @@ This directory defines the publication boundary for a real Gaussian-splat experi
 
 `SOURCE_PREPARED`
 
-Three source PNGs have been selected, hashed, and packaged. No `.spz` scene has been generated or published. The public page must continue to report zero scenes until a scene file exists and passes the checks below.
+Three source PNGs have been selected, hashed, and packaged. No `.ngsf` scene has been generated or published for them, and no `.spz` scene exists either. The public page must continue to report zero scenes until a scene file exists and passes the checks below.
+
+## Scene format
+
+On 3 October 2026 (decision D7) the format line of the acceptance rule changed from `.spz`, which was only ever planned, to `.ngsf` with a SHA-256 receipt: the NGSF v5 model the site already renders, checked against its hash before it draws. Every other line of the rule stands, including the generator commit.
+
+## The 27 atlas scenes
+
+`art/spatial/atlas/` holds 27 `.ngsf` scenes extracted from Native Gaussian Splat Atlas v0.5.0. `art/spatial/atlas/provenance.json` records what could be established on 3 October 2026: the standalone they came from (SHA-256 `a4240c64...6d24da`), and a re-extraction that gave all 81 scene files byte for byte. It also records what could not: the commit of the code that trained them. The atlas names its generator only as version 0.5.0. Without that commit the disclosure line is unmet, so the page publishes none of them and lists all 27 as held back.
 
 ## Generator
 
