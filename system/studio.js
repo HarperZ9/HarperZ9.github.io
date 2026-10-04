@@ -107,6 +107,14 @@ const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js")
 // Showcase source: the First Integral scene.
 let _showcase = null;
 const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260925-studio-plate"), m => { _showcase = m; });
+// The Showcase draws through the media engine's "showcase" plugin (media-engine/plugins/showcase.mjs);
+// first-integral.js keeps the state machine and drives the plugin's scene. stopShowcase() disposes it.
+let _showcaseEngine = null;
+const loadShowcasePlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("showcase")), e => { _showcaseEngine = e; });
+function mountShowcaseScene(canvas) {
+  const h = _showcaseEngine.mount(canvas, "showcase", {});
+  return { scene: h.instance.scene, draw(view) { h.instance.setParams({ view }); h.drawNow(); }, dispose() { h.dispose(); } };
+}
 
 // Living neural source: the seed's neural instruments, animated on the shared
 // canvas and measured by the perception loop. Static under reduced motion.
@@ -721,9 +729,9 @@ function setSource(next) {
   // Showcase (First Integral): load the scene graph on first entry, draw into the shared canvas,
   // then arm the meter loop. The loop idles once the scene settles (studio-loop gates on showcaseSettled).
   if (next === "showcase") {
-    loadShowcase().then(mod => {
+    Promise.all([loadShowcase(), loadShowcasePlugin()]).then(([mod]) => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
-      try { mod.startShowcase($("studio-canvas")); } catch (_) {}
+      try { mod.startShowcase($("studio-canvas"), { mountScene: mountShowcaseScene }); } catch (e) { console.error("[studio] showcase failed to start:", e); }
       startMeterLoop();
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
