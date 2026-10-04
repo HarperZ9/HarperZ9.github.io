@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261004-studio-shell">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -49,12 +50,19 @@
 <main class="studio-app studio-media-first" aria-label="The Studio">
 
   <!-- ── LEFT RAIL: source menu + the active source's controls ───────────────────────── -->
-  <aside class="studio-rail" id="studio-rail" aria-label="Media sources and controls">
+  <aside class="studio-rail" id="studio-rail" aria-label="Media sources and controls" data-sources="closed">
     <div class="rail-head">
       <h1 translate="no">The Studio</h1>
       <p class="rail-lede">A live media instrument for rendering, measuring, transforming, and reading the frame.</p>
     </div>
 
+    <!-- The source switch (studio-shell.js): names the source on stage and folds the 24-source menu
+         away once one is chosen, so the active source's controls sit at the top of the rail. -->
+    <button type="button" class="source-switch" id="source-switch" aria-expanded="false" aria-controls="studio-source">
+      <span class="source-switch-num" data-switch-num>01</span>
+      <span class="source-switch-name" data-switch-name>Atelier</span>
+      <span class="source-switch-cue">Change source</span>
+    </button>
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
     <div class="source-menu studio-mode-strip" id="studio-source" role="tablist" aria-label="Choose a media source">
       <div class="source-group" role="presentation">
@@ -94,9 +102,16 @@
         <button type="button" role="tab" data-source="raw"       aria-selected="false" aria-controls="src-engine" tabindex="-1">RAW</button>
       </div>
     </div>
-    <p class="rail-own">Start with a source, then open only the controls you need.</p>
 
     <div class="rail-scroll">
+      <!-- The inspector header: the source on stage and what it does (studio-shell.js). -->
+      <header class="inspector-head" id="inspector-head" data-source="atelier">
+        <h2 id="inspector-title" tabindex="-1">Atelier</h2>
+        <p id="inspector-purpose">Draw a generative study from a seed. The same seed always draws the same picture.</p>
+      </header>
+      <!-- One action bar for every source that has joined the shell: the main action, Undo, Redo,
+           Export and Pin, always in that order. Each button runs the control the source already had. -->
+      <div class="inspector-actions" id="inspector-actions" role="toolbar" aria-label="Source actions" hidden></div>
       <!-- SOURCE: media engine surfaces (studio-engine.js). One block for all seven; the module
            fills #engine-mount with the active surface's controls, its page link, and "How we know". -->
       <section class="src-block" id="src-engine" role="tabpanel" aria-label="Media engine surface controls" hidden>
@@ -327,7 +342,6 @@
           </div>
         </div>
         <div class="at-actions">
-          <button type="button" class="btn ghost" id="sketch-undo" aria-label="Remove the last stroke">Undo</button>
           <button type="button" class="btn ghost" id="sketch-clear" aria-label="Clear the sketch">Clear</button>
         </div>
         <div class="at-actions">
@@ -1017,39 +1031,6 @@
         <p>Render media, watch the measurements move, and export the frame or perception record. Animated sources - the living neural and seed-sound instruments, physics, the orbit, and screen capture - add a WebM button that records the motion itself; the file is named for the source and seed, so a seed's animation is reproducible. Receipts remain available when a source produces checkable evidence.</p>
       </details>
       <div class="studio-export-slot" data-export-slot></div>
-      <!-- The renderer console is secondary telemetry: it sits at the end of the one
-           control scroll, below the active source's controls. -->
-      <section class="studio-render-console" data-studio-render-console aria-label="Renderer console">
-        <div class="studio-console-head">
-          <span class="studio-console-title">Renderer console</span>
-          <span class="studio-console-status" data-studio-console-status>atelier renderer</span>
-        </div>
-        <div class="studio-console-stage" data-studio-console-stage tabindex="0" role="img" aria-label="Pointer-reactive renderer field preview">
-          <span class="studio-console-orbit" aria-hidden="true"></span>
-          <span class="studio-console-crosshair" aria-hidden="true"></span>
-          <span class="studio-console-pointer">pointer <b data-studio-console-pointer>50:50</b></span>
-        </div>
-        <div class="studio-console-meters" aria-label="Renderer channels">
-          <div class="studio-console-meter">
-            <div><span>field</span><output data-studio-console-meter="field">0.58</output></div>
-            <i data-studio-console-bar="field"></i>
-          </div>
-          <div class="studio-console-meter">
-            <div><span>dither</span><output data-studio-console-meter="dither">0.50</output></div>
-            <i data-studio-console-bar="dither"></i>
-          </div>
-          <div class="studio-console-meter">
-            <div><span>motion</span><output data-studio-console-meter="motion">0.46</output></div>
-            <i data-studio-console-bar="motion"></i>
-          </div>
-        </div>
-        <div class="studio-console-actions" role="group" aria-label="Renderer routes">
-          <button type="button" data-studio-console-source="showcase">Showcase</button>
-          <button type="button" data-studio-console-source="atelier">Atelier</button>
-          <button type="button" data-studio-console-source="fractal">Fractal</button>
-          <button type="button" data-studio-console-source="byo">Media</button>
-        </div>
-      </section>
     </div>
   </aside>
 
@@ -1443,7 +1424,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261003-stamps"></script>
+<script type="module" src="system/studio.js?v=20261004-studio-shell"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

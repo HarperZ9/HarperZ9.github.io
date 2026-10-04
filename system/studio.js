@@ -26,6 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
+import { mountShell } from "./studio-shell.js?v=20261004-studio-shell";
 import {
   onSourceChange as surfaceOnSourceChange,
   resetViewTransform,
@@ -106,7 +107,7 @@ const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js")
 
 // Showcase source: the First Integral scene.
 let _showcase = null;
-const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260925-studio-plate"), m => { _showcase = m; });
+const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20261004-studio-shell"), m => { _showcase = m; });
 // The Showcase draws through the media engine's "showcase" plugin (media-engine/plugins/showcase.mjs);
 // first-integral.js keeps the state machine and drives the plugin's scene. stopShowcase() disposes it.
 let _showcaseEngine = null;
@@ -331,106 +332,6 @@ if (typeof document !== "undefined") {
   }
 }
 
-let studioRendererConsoleSync = null;
-function syncStudioRendererConsole(source) {
-  if (typeof studioRendererConsoleSync === "function") studioRendererConsoleSync(source);
-}
-
-function bootStudioRendererConsole(root = document) {
-  const consoleEl = root.querySelector("[data-studio-render-console]");
-  if (!consoleEl || consoleEl.dataset.enhanced === "true") return;
-  consoleEl.dataset.enhanced = "true";
-
-  const status = consoleEl.querySelector("[data-studio-console-status]");
-  const pointer = consoleEl.querySelector("[data-studio-console-pointer]");
-  const stage = consoleEl.querySelector("[data-studio-console-stage]");
-  const actionButtons = [...consoleEl.querySelectorAll("[data-studio-console-source]")];
-  const sourceLabels = {
-    atelier: "atelier renderer",
-    fractal: "2D fractal",
-    fractal3d: "3D fractal",
-    ndim: "dimension renderer",
-    music: "reactive renderer",
-    byo: "media renderer",
-    watch: "watch renderer",
-    discovery: "physics engine",
-    showcase: "showcase renderer",
-  };
-
-  // Cache the meter nodes and skip no-op writes: this ran per streaming tick
-  // and re-queried the DOM plus wrote unchanged text every time.
-  const consoleMeterNodes = new Map();
-  const setConsoleMeter = (key, value) => {
-    const pct = Math.max(0, Math.min(1, value));
-    let nodes = consoleMeterNodes.get(key);
-    if (!nodes) {
-      nodes = {
-        meter: consoleEl.querySelector(`[data-studio-console-meter="${key}"]`),
-        bar: consoleEl.querySelector(`[data-studio-console-bar="${key}"]`),
-        last: null,
-      };
-      consoleMeterNodes.set(key, nodes);
-    }
-    const text = pct.toFixed(2);
-    if (nodes.last === text) return;
-    nodes.last = text;
-    if (nodes.meter) nodes.meter.textContent = text;
-    if (nodes.bar) nodes.bar.style.setProperty("--meter", pct.toFixed(3));
-  };
-
-  const sync = (source = window.__studioActiveSource || "atelier") => {
-    if (status) status.textContent = sourceLabels[source] || `${source} renderer`;
-    actionButtons.forEach((button) => {
-      const active = button.dataset.studioConsoleSource === source;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-  };
-  studioRendererConsoleSync = sync;
-
-  actionButtons.forEach((button) => {
-    button.setAttribute("aria-pressed", "false");
-    button.addEventListener("click", () => {
-      const source = button.dataset.studioConsoleSource || "atelier";
-      const sourceTab = document.querySelector(`#studio-source button[data-source="${source}"]`);
-      if (!sourceTab) return;
-      sourceTab.click();
-      try { sourceTab.focus({ preventScroll: true }); } catch (_) { sourceTab.focus(); }
-    });
-  });
-
-  if (stage) {
-    const updatePointer = (event) => {
-      const rect = stage.getBoundingClientRect();
-      const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / Math.max(1, rect.width)));
-      const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / Math.max(1, rect.height)));
-      stage.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
-      stage.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
-      consoleEl.style.setProperty("--px", `${(x * 100).toFixed(1)}%`);
-      consoleEl.style.setProperty("--py", `${(y * 100).toFixed(1)}%`);
-      if (pointer) pointer.textContent = `${Math.round(x * 100)}:${Math.round(y * 100)}`;
-    };
-    stage.addEventListener("pointermove", updatePointer);
-    stage.addEventListener("pointerdown", updatePointer);
-  }
-
-  let last = 0;
-  const reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const tick = (now = performance.now()) => {
-    if (!document.body.contains(consoleEl)) return;
-    if (now - last > 160) {
-      last = now;
-      const t = now * 0.001;
-      setConsoleMeter("field", 0.58 + Math.sin(t * 0.86) * 0.22);
-      setConsoleMeter("dither", 0.50 + Math.cos(t * 0.63 + 1.4) * 0.24);
-      setConsoleMeter("motion", 0.46 + Math.sin(t * 1.18 + 2.1) * 0.28);
-    }
-    if (!reduceMotion) window.requestAnimationFrame(tick);
-  };
-  tick();
-  sync();
-}
-
 async function bootEngineStatus() {
   const set = (id, text) => { const el = $(id); if (el) el.textContent = text; };
   // Everything derivable from the static graph paints immediately; the two registry-backed counts
@@ -481,6 +382,9 @@ const lastHashByCanvas = new WeakMap();
 // "the Atelier / 2D"). The five-way source menu (Task 8f) drives it via setSource().
 let mode = "generate";
 let activeSource = "atelier";
+// The shell (studio-shell.js): source switch, inspector header, action bar, shared undo. Mounted
+// once below, before the boot source is chosen; setSource tells it about every switch.
+let _shell = null;
 // Monotonic switch counter: each setSource() call bumps it, and every lazy start continuation
 // captures the value at kick-off. A continuation that resolves after another switch sees a newer
 // epoch and does nothing, so a slow module load can never start a renderer for a source the user
@@ -688,7 +592,8 @@ function setSource(next) {
     b.setAttribute("aria-selected", String(b.dataset.source === next)));
   // Roving tabindex: active tab is 0, all others -1 (ARIA tablist pattern).
   syncTabindex(next);
-  syncStudioRendererConsole(next);
+  // The shell names the source, and swaps the action bar to this source's actions (studio-shell.js).
+  if (_shell) _shell.sourceChanged(next);
   if (next === "poster") enterPosterWorkshop(epoch);
   if (SOURCES[next].engine) {
     loadEngineSurface().then((m) => {
@@ -733,6 +638,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
       try { mod.startShowcase($("studio-canvas"), { mountScene: mountShowcaseScene }); } catch (e) { console.error("[studio] showcase failed to start:", e); }
       startMeterLoop();
+      if (_shell) _shell.record("showcase");
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Living neural: load the module on first entry, draw the instrument's still frame on
@@ -823,7 +729,16 @@ function setSource(next) {
   }
   // Prefetch the graphs the entered source is about to need. Idempotent (cached promise); a
   // prefetch failure is logged here and the first real use re-attempts and surfaces it to the user.
-  if (next === "fractal") loadFractal2D().catch(err => console.warn("studio: fractal graph prefetch failed", err));
+  // 2D fractal: draw its own frame on entry, so the stage never shows the previous source's picture
+  // under the fractal's name. A view made earlier (a zoom, a palette) comes back as it was left;
+  // the first visit draws the chosen preset, as the Render button does.
+  if (next === "fractal") loadFractal2D().then(() => {
+    if (epoch !== _sourceEpoch) return;   // switched away while the graph loaded
+    if (!fractalView) { renderPreset(); return; }
+    const c = paintFractal(fractalView);
+    try { perceive(c); } catch (_) {}
+    startMeterLoop();
+  }).catch(err => { say("model", "The fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); });
   if (next === "fractal3d") loadFractal3D().catch(err => console.warn("studio: fractal3d graph prefetch failed", err));
   if (next === "ndim") loadNDimEngine().catch(err => console.warn("studio: ndim graph prefetch failed", err));
   if (next === "byo") {
@@ -860,7 +775,6 @@ $("studio-source").addEventListener("keydown", e => {
   if (j < 0) return;
   tabs[j].focus(); setSource(tabs[j].dataset.source);
 });
-bootStudioRendererConsole();
 
 // Living neural controls: play, instrument (field/solid), seed, reseed. The instrument
 // rests on one frame until play; changing the instrument or seed restarts it at time 0
@@ -1711,6 +1625,7 @@ function drawSketch(announce) {
           + `Fingerprint ${obs.phash}.`);
   }
   startMeterLoop();
+  if (_shell) _shell.record("sketch");
 }
 function initSketchControls() {
   // Same event root as the voxel editor: the canvas's parent, so a swapped canvas node (the
@@ -1825,8 +1740,6 @@ function initSketchControls() {
       drawSketch(false);
     });
   });
-  const undo = $("sketch-undo");
-  if (undo) undo.addEventListener("click", () => { if (_sketch) { _sketch.undo(); drawSketch(false); } });
   const clear = $("sketch-clear");
   if (clear) clear.addEventListener("click", () => { if (_sketch) { _sketch.clear(); drawSketch(true); } });
   const svgBtn = $("sketch-svg");
@@ -2803,7 +2716,7 @@ function paintFractal(opts, aaOverride) {
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
     try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
-    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) return c;
+    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) { noteFractalPainted(); return c; }
     // GPU failed at runtime: fall back to CPU on the original 2D canvas.
     dropFractalHandle();
     leave3D();
@@ -2812,8 +2725,12 @@ function paintFractal(opts, aaOverride) {
   const c = $("studio-canvas");
   sizeCanvas(c);
   cpuFractalProgressive(c, { ...opts, maxIter });
+  noteFractalPainted();
   return c;
 }
+// The shell records a fractal view once it has held still for 400 ms, so a wheel zoom is one undo
+// step, not forty. paintFractal is the one door every fractal frame goes through.
+function noteFractalPainted() { if (_shell && activeSource === "fractal") _shell.recordSoon("fractal"); }
 
 // An honest word about the arithmetic under a deep view. float32 coordinates stop separating
 // neighbouring pixels once a view spans less than about width * 5e-7 of the plane; below that
@@ -5546,6 +5463,12 @@ function resizeActiveSurface() {
       sizeCanvas(canvas);
       if (_neural) { try { _neural.redrawNeural(); } catch (e) { console.error("[studio] living neural redraw failed:", e); } }
       break;
+    case "sketch":
+      // A resize clears the backing, and the sketch is a still sheet with no loop to repaint it, so
+      // a layout shift during boot (a late font) left ?source=sketch on an empty canvas. drawSketch
+      // re-fits the backing and draws the sheet again.
+      drawSketch(false);
+      break;
     case "showcase":
       // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),
       // so re-fit + redraw through the scene's own resize path instead.
@@ -6666,6 +6589,88 @@ function bootRetroHandoff() {
     img.src = dataURL;
   }).catch(() => {});
 }
+
+// ── The shell's contracts: the sources that have joined the one inspector ──────────────────────
+// Each names its main action, its exports and its pin by the ids of the controls it already had,
+// and hands the shared undo a snapshot of its state and a way to put one back. The rest of the
+// sources keep their own rows until they join (PROPOSAL.md, migration order).
+const syncChipGroup = (attr, value) => document.querySelectorAll(`[${attr}]`).forEach(b =>
+  b.classList.toggle("active", b.getAttribute(attr) === value));
+const PNG_FRAME = { label: "PNG frame", target: "rt-export-png" };
+const SHELL_CONTRACTS = {
+  sketch: {
+    primary: { label: "To pen surface", target: "sketch-plot", title: "Send this sketch to the pen surface" },
+    exports: [{ label: "SVG sheet", target: "sketch-svg" }, PNG_FRAME],
+    pin: "sketch-pin",
+    snapshot: () => (_sketch ? { sketch: _sketch.serialize(), register: _sketchRegister } : null),
+    restore(state) {
+      if (!_sketch || !_sketch.restore(state.sketch)) return;
+      _sketchRegister = state.register || "drawn";
+      _sketchGuide = _sketch.getGuide();
+      const sym = _sketch.getSymmetry();
+      syncChipGroup("data-sketch-sym", sym.mode);
+      syncChipGroup("data-sketch-guide", _sketchGuide);
+      syncChipGroup("data-sketch-register", _sketchRegister);
+      const k = $("sketch-k");
+      if (k) { k.value = String(sym.k); const out = $("sketch-k-val"); if (out) out.textContent = k.value; }
+      syncFoldEnabled();
+      drawSketch(false);
+    },
+  },
+  fractal: {
+    primary: { label: "Render", target: "fractal-render", title: "Draw the chosen preset from its starting view" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot: () => (fractalView ? {
+      view: fractalView, start: fractalDefault, type: activeFType, preset: fractalPresetEl.value,
+      palette: activeFractalPalette, detail: ($("fractal-detail") || {}).value || "1",
+      base: [fractalBaseMaxIter, fractalBasePalette],
+    } : null),
+    restore(state) {
+      if (!_fractal) return;
+      activeFType = state.type;
+      syncChipGroup("data-ftype", state.type);
+      buildPresetMenuNow(state.type);
+      fractalPresetEl.value = state.preset;
+      activeFractalPalette = state.palette || null;
+      syncChipGroup("data-fractal-palette", state.palette || "");
+      const d = $("fractal-detail");
+      if (d) { d.value = state.detail; const out = $("fractal-detail-val"); if (out) out.textContent = readFractalDetail().toFixed(1); }
+      [fractalBaseMaxIter, fractalBasePalette] = state.base;
+      fractalDefault = state.start ? { ...state.start } : null;
+      fractalView = { ...state.view };
+      const c = paintFractal(fractalView);
+      try { perceive(c); } catch (_) {}
+      startMeterLoop();
+    },
+  },
+  showcase: {
+    primary: { label: "Re-check", target: "show-verify", title: "Re-integrate from the recorded literals, re-fit, re-hash, compare" },
+    exports: [{ label: "Report JSON", target: "show-export" }, PNG_FRAME],
+    snapshot() {
+      const v = (id) => ($(id) || {}).value;
+      const chip = document.querySelector("#show-system .chip.active");
+      return { system: chip ? chip.dataset.showSystem : "kepler", seed: v("show-seed"), ecc: v("show-ecc"),
+        dt: v("show-dt"), n: v("show-n"), terms: v("show-terms") };
+    },
+    restore(state) {
+      syncChipGroup("data-show-system", state.system);
+      for (const [id, key] of [["show-seed", "seed"], ["show-ecc", "ecc"], ["show-dt", "dt"], ["show-n", "n"], ["show-terms", "terms"]]) {
+        const el = $(id); if (el && state[key] != null) el.value = state[key];
+      }
+      // One change event rebuilds the scene from the rail (showcase/controls.js).
+      const seed = $("show-seed");
+      if (seed) seed.dispatchEvent(new Event("change", { bubbles: true }));
+    },
+  },
+};
+// Every rebuild of the showcase scene (a system, a seed, the S key) is one undo step.
+document.addEventListener("showcase:params", () => { if (_shell) _shell.record("showcase"); });
+_shell = mountShell({
+  rail: $("studio-rail"),
+  setSource,
+  getSource: () => activeSource,
+  contracts: SHELL_CONTRACTS,
+});
 
 (function bootSource() {
   // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that
