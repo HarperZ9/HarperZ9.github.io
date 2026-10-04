@@ -9,11 +9,13 @@
 // model reads produces advice, the person accepts or overrules.
 
 import {
-  defaultPosterState, renderPoster, critiquePoster,
+  defaultPosterState, critiquePoster,
   POSTER_FORMATS, POSTER_FACES, POSTER_CELLS,
 } from "./poster.js";
 import { renderRetro } from "./retro-engine.js";
 import { applyOpsWet, OP_META } from "./glitch-ops.js";
+import { pageEngine } from "./media-engine/page.mjs";
+import { poster as posterPlugin } from "./media-engine/plugins/poster.mjs";
 
 const PALETTE = ["#f2ecf7", "#c9c2d4", "#8f86a0", "#7de3ea", "#99f147", "#f8cc43", "#ff8334", "#ff35aa", "#111016"];
 
@@ -109,8 +111,21 @@ export function mountPosterWorkshop(deps) {
   }
 
   // ── render loop (debounced) ────────────────────────────────────────────────
+  // Each frame is drawn by the media engine's "poster" plugin (media-engine/plugins/poster.mjs),
+  // in this task, so the perceive() below reads the frame just drawn.
+  let posterHandle = null;
+  function drawPoster() {
+    if (!posterHandle) {
+      const engine = pageEngine();
+      if (!engine.plugins().includes("poster")) engine.register(posterPlugin);
+      posterHandle = engine.mount(canvas, "poster", {});
+    }
+    posterHandle.instance.setParams({ state, deps: { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps: applyOpsWet } });
+    posterHandle.drawNow();
+    return posterHandle.instance.lastResult || { ok: false, boxes: [] };
+  }
   function renderNow() {
-    const out = renderPoster(canvas, state, { renderSpecimen, drawImage: coverDrawImage, renderRetro, applyOps: applyOpsWet });
+    const out = drawPoster();
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
     return out;
