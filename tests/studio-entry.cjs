@@ -22,6 +22,19 @@ async function frame(page) {
     return { hash: [...new Uint8Array(h)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join(''), inked };
   });
 }
+// Wait until the canvas stops changing (three equal reads 500 ms apart, at most 20 s), so a slow
+// machine is not mistaken for a wrong drawing.
+async function settled(page, min = 1500) {
+  await wait(page, min);
+  let last = null, same = 0;
+  for (let i = 0; i < 40 && same < 2; i++) {
+    const f = await frame(page);
+    same = last && f.hash === last.hash ? same + 1 : 0;
+    last = f;
+    if (same < 2) await wait(page, 500);
+  }
+  return last;
+}
 async function pick(page, source) {
   const sw = page.locator('#source-switch'); await sw.scrollIntoViewIfNeeded(); await sw.click();
   await page.locator(`#studio-source button[data-source="${source}"]`).click();
@@ -41,12 +54,12 @@ const active = (page, attr) => page.getAttribute(`[${attr}].active`, attr);
       const errors = [];
       page.on('pageerror', (e) => errors.push(String(e.message || e)));
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
-      await page.goto(`${base}/studio.html`); await wait(page, 7000);
+      await page.goto(`${base}/studio.html`); await settled(page, 3000);
       const seed = await page.inputValue('#at-seed');
       // The boot drawing can be framed by a stage that is still settling (noted in PROPOSAL.md), so
       // the reference is the Atelier's own drawing after one return; the second return must match it.
       await pick(page, 'sketch'); await wait(page, 1500);
-      await pick(page, 'atelier'); await wait(page, 7000);
+      await pick(page, 'atelier'); await settled(page);
       const atelier = await frame(page);
       assert.ok(atelier.inked > 1000, `${tag} the Atelier drew`);
 
@@ -54,7 +67,7 @@ const active = (page, attr) => page.getAttribute(`[${attr}].active`, attr);
       await pick(page, 'sketch'); await wait(page, 1500);
       const sketch = await frame(page);
       assert.notEqual(sketch.hash, atelier.hash);
-      await pick(page, 'atelier'); await wait(page, 7000);
+      await pick(page, 'atelier'); await settled(page);
       assert.equal((await frame(page)).hash, atelier.hash, `${tag} the Atelier redraws the same drawing on return`);
       assert.equal(await page.inputValue('#at-seed'), seed, `${tag} with the same seed`);
 
@@ -67,12 +80,12 @@ const active = (page, attr) => page.getAttribute(`[${attr}].active`, attr);
       await clickIn(page, '#rt-reset'); await wait(page, 5000);
 
       // Undo walks the Atelier's recipe.
-      await clickIn(page, '#at-gallery button'); await wait(page, 6000);
+      await clickIn(page, '#at-gallery button'); await settled(page);
       const preset = await page.inputValue('#at-seed');
       assert.notEqual(preset, seed);
-      await clickIn(page, '[data-action="undo"]'); await wait(page, 6000);
+      await clickIn(page, '[data-action="undo"]'); await settled(page);
       assert.equal(await page.inputValue('#at-seed'), seed, `${tag} Undo returns the Atelier's previous recipe`);
-      await clickIn(page, '[data-action="redo"]'); await wait(page, 6000);
+      await clickIn(page, '[data-action="redo"]'); await settled(page);
       assert.equal(await page.inputValue('#at-seed'), preset, `${tag} Redo brings the preset back`);
 
       // 3D Fractal and Dimensions draw on entry, not the previous source's picture.
