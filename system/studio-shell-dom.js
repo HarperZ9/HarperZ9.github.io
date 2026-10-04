@@ -145,9 +145,10 @@ function apply(ctx, source, state) {
 }
 // On a source's first ready moment in this page, put back what this browser kept; that session is
 // the start of the page's history. Returns true when a kept session was applied.
-function resume(ctx, source) {
+function resume(ctx, source, { apply: applyKept = true } = {}) {
   if (!ctx.contracts[source] || ctx.resumed.has(source)) return false;
   ctx.resumed.add(source);
+  if (!applyKept) { record(ctx, source); return false; }
   const got = ctx.store.load(source);
   if (got.reason) { ctx.kept.set(source, { ok: false, reason: got.reason }); sayKept(ctx, source); }
   if (got.state == null) { record(ctx, source); return false; }
@@ -212,7 +213,7 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
       clearTimeout(timers.get(source));
       timers.set(source, setTimeout(() => record(ctx, source, label), ms));
     },
-    resume: (source) => resume(ctx, source),
+    resume: (source, opts) => resume(ctx, source, opts),
     startFresh: () => startFresh(ctx),
     undo: () => undo(ctx),
     redo: () => redo(ctx),
