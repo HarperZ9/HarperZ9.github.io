@@ -49,6 +49,9 @@ SUPERSTACK_REVISION = "20261003-superstack"
 # 3 October 2026, later: the Atelier draws every frame through the media engine's "atelier" plugin,
 # so the Studio's tag for atelier.js takes a new stamp.
 ATELIER_PLUGIN_REVISION = "20261003-atelier-plugin"
+# 3 October 2026, later: the Studio's living neural source rests until play and draws in a worker;
+# studio.js, its import of studio-neural.js and the worker's imports take a new stamp.
+NEURAL_REST_REVISION = "20261003-neural-rest"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -97,7 +100,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": RETRO_WORKER_REVISION,
+    "system/studio.js": NEURAL_REST_REVISION,
     "system/atelier.js": ATELIER_PLUGIN_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,

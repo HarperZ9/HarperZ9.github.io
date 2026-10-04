@@ -109,6 +109,7 @@ export function buildCppn(seed, opts = {}) {
   const inBuf = new Array(6);
   return {
     fx, fy,
+    mlp,   // exposed for the allocation-free kernels in neural-kernels.mjs
     eval(nx, ny) {
       const r = Math.sqrt(nx * nx + ny * ny);
       inBuf[0] = nx;
@@ -152,6 +153,7 @@ export function buildNeuralSdf(seed, opts = {}) {
   };
   return {
     bound: R + amp + 0.05,
+    mlp, freq, amp, R,   // exposed for the allocation-free kernels in neural-kernels.mjs
     displace,
     dist(x, y, z) {
       const rr = Math.sqrt(x * x + y * y + z * z);
