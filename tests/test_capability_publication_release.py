@@ -625,7 +625,9 @@ RELEASE_PATHS = (
 # October 4, 2026: the author retires Kilon and Telos Display because viewers found them hard
 # to read. system/system.css drops the unused Telos Display specimen block, and the font files
 # and their build tool leave the site; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "e70424f3594d665b08547188c08137d4c7485857853e7d86f62c1c2fc25a8ddf"
+# October 3, 2026: system/system.css stops hiding the specimen plates on instrument surfaces;
+# a reading-page rule had hidden all 43 Gallery plates, Plate 14 included. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "862e16618837429498ab19a8eb0418e8e9ed3b506bbad8e04550cf4fea8fb4cd"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
