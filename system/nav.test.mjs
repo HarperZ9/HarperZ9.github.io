@@ -288,10 +288,10 @@ class FakeElement {
   }
 }
 
-function routeHeaderFixture(pathname = "/catalog.html") {
+function routeHeaderFixture(pathname = "/catalog.html", search = "") {
   const doc = {
     documentElement: { dataset: {} },
-    location: { pathname, search: "", hash: "" },
+    location: { pathname, search, hash: "" },
     body: new FakeElement("body"),
     createElement(tagName) {
       return new FakeElement(tagName);
@@ -348,6 +348,16 @@ test("catalog route header keeps category context and marks the exact page", () 
   assert.equal(path.children[2].textContent, "Catalog");
   assert.equal(path.children[2].getAttribute("aria-current"), "page");
   assert.doesNotMatch(path.textContent, /route artifact|eyebrow|overline|kicker|\//i);
+});
+
+test("a query on a primary page adds no second crumb (the Studio's ?source=)", () => {
+  const plain = routeHeaderFixture("/studio.html");
+  buildRouteHeader(plain.doc);
+  const withQuery = routeHeaderFixture("/studio.html", "?source=sketch");
+  buildRouteHeader(withQuery.doc);
+  const crumbs = (f) => f.frame.querySelector(".route-header__path").children.map((c) => c.textContent);
+  assert.deepEqual(crumbs(withQuery), crumbs(plain));
+  assert.equal(crumbs(withQuery).length, 2);
 });
 
 test("system detail route header marks the system name rather than the family", () => {
