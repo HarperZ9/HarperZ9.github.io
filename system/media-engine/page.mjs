@@ -20,6 +20,7 @@ const LOADERS = {
   type: () => import("./plugins/type.mjs").then((m) => m.type),
   sketch: () => import("./plugins/sketch.mjs").then((m) => m.sketch),
   plotmap: () => import("./plugins/plotmap.mjs").then((m) => m.plotmap),
+  voxels: () => import("./plugins/voxels.mjs").then((m) => m.voxels),
   // The sound family: each renders an offline reference and plays its samples (plugins/sound.mjs).
   "sound-seed": () => import("./plugins/sound.mjs").then((m) => m.soundSeed),
   "sound-music": () => import("./plugins/sound.mjs").then((m) => m.soundMusic),
