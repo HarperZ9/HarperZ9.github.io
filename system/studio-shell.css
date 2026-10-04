@@ -65,6 +65,26 @@ html body.studio-page #studio-rail .ia-export-list .btn:hover{background:var(--s
 html body.studio-page #studio-rail[data-inspector="unified"] [data-in-bar]{display:none!important}
 html body.studio-page #studio-rail[data-inspector="unified"] .at-actions:not(:has(> :not([data-in-bar]))){display:none}
 
+/* 3b. The keep line under the bar: whether this source's work is kept in this browser, and
+   "Start fresh". A source that is not kept says so in ink, in words. */
+html body.studio-page #studio-rail .inspector-keep{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .6rem;margin:-.35rem 0 .8rem;
+  font-family:var(--st-sans);font-size:.8125rem;line-height:1.4;color:var(--st-soft);
+}
+html body.studio-page #studio-rail .inspector-keep [data-kept="no"]{color:var(--st-ink);font-weight:600}
+html body.studio-page #studio-rail .inspector-keep .ia-fresh{min-height:2rem;padding:.15rem .5rem;font-size:.8125rem}
+
+/* 3c. The readings fold while the visitor makes a piece (studio-readings.js). The column keeps
+   its width, so the stage never changes size under the pen; only the readings step aside. */
+html body.studio-page #studio-panel[data-readings="folded"] > .panel-scroll{display:none}
+html body.studio-page #studio-panel .readings-folded{
+  display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;
+  padding:1.1rem 1.25rem;border-bottom:1px solid var(--st-line);
+}
+html body.studio-page #studio-panel .readings-folded[hidden]{display:none}
+html body.studio-page #studio-panel .readings-folded p{margin:0;font-family:var(--st-sans);font-size:.9375rem;line-height:1.45;color:var(--st-soft)}
+html body.studio-page #studio-panel .readings-folded .btn{min-height:2.5rem}
+
 /* 4. Phone. The switch sits where the channel strip was, above the plate; the action bar is
    pinned to the bottom of the screen, in reach of a thumb. */
 @media (max-width:899.98px){

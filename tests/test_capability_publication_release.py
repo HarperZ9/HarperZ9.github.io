@@ -633,7 +633,9 @@ RELEASE_PATHS = (
 # changes studio.html; the release is rehashed. Merging that change is the review.
 # October 4, 2026: every page shares as its own link card from img/og/p, so the og and twitter
 # image tags of the release pages changed; the release is rehashed. Merging that change is the review.
-REVIEWED_RELEASE_SHA256 = "24460060a258c0d72a6607c3c684aa56cef7548789c9cbb180de71bfbdaef1a7"
+# October 4, 2026, later: studio.html loads the Studio at the keep slice's stamps; the release
+# is rehashed.
+REVIEWED_RELEASE_SHA256 = "38498bacb76a8331dd5a0a7236faa158ecab457fb5c0f2cb72124c3a5acd6a03"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
