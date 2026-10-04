@@ -1764,6 +1764,10 @@ function initSketchControls() {
       drawSketch(false);
     });
   });
+  // The stroke Undo (remove the last stroke). drawSketch records the step, so the bar's Undo can
+  // take this back too.
+  const undo = $("sketch-undo");
+  if (undo) undo.addEventListener("click", () => { if (_sketch) { _sketch.undo(); drawSketch(false); } });
   const clear = $("sketch-clear");
   if (clear) clear.addEventListener("click", () => { if (_sketch) { _sketch.clear(); drawSketch(true); } });
   const svgBtn = $("sketch-svg");
@@ -6636,7 +6640,7 @@ const SHELL_CONTRACTS = {
   atelier: {
     making: true,
     // Draw has always meant "a new drawing" (a new seed); a typed seed draws on Enter.
-    primary: { label: "New drawing", target: "at-draw", title: "Draw a new picture with a new seed. A seed typed in the field draws on Enter." },
+    primary: { label: "Draw", target: "at-draw", title: "Draw a new picture with a new seed. A seed typed in the field draws on Enter." },
     exports: [{ label: "SVG", target: "at-export" }, PNG_FRAME, { label: "Copy link", target: "at-share" }],
     snapshot: () => (window.AtelierStudio ? { recipe: window.AtelierStudio.recipe() } : null),
     restore(state) { if (window.AtelierStudio) window.AtelierStudio.applyRecipe(state.recipe); },

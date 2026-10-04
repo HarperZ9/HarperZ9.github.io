@@ -62,8 +62,9 @@ html body.studio-page #studio-rail .ia-export-list .btn:hover{background:var(--s
 
 /* A control the bar now carries stays wired but out of sight, so each action shows once. A row
    left with nothing to show closes up. */
-html body.studio-page #studio-rail[data-inspector="unified"] [data-in-bar]{display:none!important}
-html body.studio-page #studio-rail[data-inspector="unified"] .at-actions:not(:has(> :not([data-in-bar]))){display:none}
+/* Every control stays where the source put it. The bar repeats a few of them (#342 hid the rail
+   copies; the author, 4 October 2026: "The studio modules have lost user granularity"), so nothing
+   is hidden here any more. */
 
 /* 3b. The keep line under the bar: whether this source's work is kept in this browser, and
    "Start fresh". A source that is not kept says so in ink, in words. */
