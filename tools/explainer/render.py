@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-RENDER_CODE = ("draw.py", "marks.py", "scene.py", "voice.py", "render.py")
+RENDER_CODE = ("draw.py", "marks.py", "scene.py", "voice.py", "loudness.py", "render.py")
 DOES_NOT_PROVE = ("Matching hashes show the same bytes came out of the same spec, code and tools. They do "
                   "not show that the explanation is correct or that it teaches. The narration voice ships "
                   "with Windows, so the audio rebuilds only on a machine with the same voice.")
@@ -71,7 +71,7 @@ def build(spec_path: Path, out: Path) -> dict:
     ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
     with tempfile.TemporaryDirectory() as tmp:
         scenes = frames.resolved_scenes(spec)  # every parameter at its default
-        timeline, wav = voice.narrate(scenes, Path(tmp), draw.FPS)
+        timeline, wav, loudness = voice.narrate(scenes, Path(tmp), draw.FPS)
         rows = [(s["key"], a, b) for s, a, b in timeline]
         narration_sha = sha(wav)
         total = round(timeline[-1][2] * draw.FPS)
@@ -114,7 +114,7 @@ def build(spec_path: Path, out: Path) -> dict:
         "toolchain": {"python": platform.python_version(), "pillow": PIL.__version__, "numpy": np.__version__,
                       "ffmpeg": version, "voice": voice.VOICE, "os": platform.platform()},
         "outputs": {name: sha(out / name) for name in files},
-        "narration_wav_sha256": narration_sha, "frames": total, "fps": draw.FPS,
+        "narration_wav_sha256": narration_sha, "narration_loudness": loudness, "frames": total, "fps": draw.FPS,
         "seconds": round(total / draw.FPS, 3), "frame_chain_sha256": chain.hexdigest(),
         "timeline": [{"scene": s["key"], "start": round(a, 3), "end": round(b, 3), "text": s["say"]}
                      for s, a, b in timeline],

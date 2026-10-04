@@ -2,7 +2,7 @@
   "schema": "superstack.receipt/1",
   "producer": {
     "name": "harperz9-explainer-narration",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "backend": "windows-sapi",
   "scene_sha256": "bb5d63922361a9dd49110d10d38e51df827c8d040c8a955f3dd6e47f4a4429f4",
@@ -23,14 +23,30 @@
     "frames": 952560,
     "duration_flicks": 30481920000,
     "meter": "superstack-bs1770/1",
-    "integrated_lufs": -20.25,
-    "peak_dbfs": -1.89,
+    "integrated_lufs": -16.01,
+    "peak_dbfs": -2.0,
     "loudness_class": "speech",
-    "loudness_verdict": "refuted",
+    "loudness_verdict": "verified",
     "loudness_target": {
       "integrated_lufs": -16.0,
       "tolerance_lu": 1.0,
       "true_peak_dbtp_max": -1.5
+    },
+    "processing": {
+      "rule": "explainer-speech-normalise/1",
+      "meter": "superstack-bs1770/1",
+      "target_lufs": -16.0,
+      "before_lufs": -20.25,
+      "before_peak_dbfs": -1.89,
+      "gain_db": 5.41,
+      "limiter": {
+        "ceiling_dbfs": -2.0,
+        "lookahead_s": 0.02,
+        "oversample": 4
+      },
+      "after_lufs": -16.01,
+      "after_peak_dbfs": -2.0,
+      "sample_peak_headroom_db": 0.5
     },
     "access": {
       "autoplay": false,
@@ -49,17 +65,17 @@
       "reproducible": true
     }
   },
-  "content_sha256": "4b56083250e0a39ff45d355d7cc914aa49bb35c8a86b34e651124d069fa40363",
+  "content_sha256": "e09295b2c4c140116dfbb447362bbf6cfdfd4be555b26ecfd48019e9e9c805e4",
   "outputs": {
-    "narration.wav": "c21e81bc3ea1e65bbc9bd09650aaffa5b821ed20800008eaf91c1eb8f748a61b",
-    "receipt-is-not-a-verdict.mp4": "2df5d1e338a63124e373ca1149dc1a75dab72abcd229d52349d5b63888b32f7c"
+    "narration.wav": "4550c9ed5b1cf36c5a564e5b21dbbcc51c25f975c8f49c4167e2418fff5f84f8",
+    "receipt-is-not-a-verdict.mp4": "ce9de1c9f6cc676f86c8fadf1e5e00de8c56874f0b49aa2de3861bc94d162c42"
   },
   "reconcile": null,
   "does_not_prove": [
     "A PCM hash covers samples, not speakers: it says nothing about how a device plays them.",
     "The published video carries this narration as 96 kb/s AAC; decoding it does not return these samples.",
     "reproducible means a rebuild on Windows with the same voice and OS build gave the same PCM (checked on the date of this receipt); another machine or voice update need not.",
-    "The loudness is one meter's reading (superstack-bs1770/1) of the narration alone, and the peak is the sample peak, not true peak. The narration was measured, not corrected to the target.",
+    "The loudness is one meter's reading (superstack-bs1770/1) of the narration alone, and the peak is the sample peak, not true peak. The narration was normalised to the target with a limiter whose sample-peak ceiling sits 0.5 dB under the true-peak limit; no true-peak meter has read it.",
     "Neither hash shows that the narration is correct, clear, or well paced."
   ],
   "scene": {
@@ -79,5 +95,5 @@
       "Keep both. The receipt says what happened. The verdict says whether it holds up."
     ]
   },
-  "receipt_sha256": "7c8c254200cbe9519f9994dcc49c9199d1c437abc5febbeeb31c01df3b857237"
+  "receipt_sha256": "7f0e0f4f526b5050d4c78a565cc378bceb89b7a36196b7ff773d17fe133ac828"
 }

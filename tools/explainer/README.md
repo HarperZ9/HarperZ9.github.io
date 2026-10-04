@@ -114,7 +114,17 @@ The live figure hashes the spec it loaded and compares it with the receipt's: MA
 
 `narration.receipt.json` is the narration's own `superstack.receipt/1` (contract SPEC section 8.7). `python -m tools.explainer.narration <folder>` rebuilds the narration with the local voice, refuses to write unless the WAV matches `narration_wav_sha256`, and records the s16le PCM hash, the backend, model, OS build as the snapshot, voice, script hash, `reference: false`, `reproducible: true`, and the loudness from the contract's BS.1770 meter against the speech target. `--check` verifies the seal and ties the receipt to the spec and the video's receipt without the voice; CI runs it through `tests/test_explainers.py`.
 
-Measured on 3 October 2026 (ffmpeg 7.1 `ebur128` agrees within 0.1 LU): all three narrations sit near -20.2 LUFS, about 4 LU under the -16 LUFS speech target, so each receipt reads `refuted`. Raising them changes every published video's hash, so it waits for a stated rebuild.
+### Loudness
+
+`voice.py` joins the spoken lines and `loudness.py` brings the join to the speech target before anything hashes it: a make-up gain to -16 LUFS integrated on the contract's meter, refined from the meter's own reading eight times, and a lookahead limiter (20 ms) that holds every sample, and the 4x interpolated points beside it, at or under -2.0 dBFS. That ceiling is 0.5 dB of stated headroom under the -1.5 dBTP limit. The contract meter reads sample peak only, and the interpolated points are this module's estimate, so neither is a true-peak meter. The explainer receipt records the step as `narration_loudness`, and the narration receipt carries the same record as `media.processing`.
+
+| Explainer | Before (3 October, measured only) | After the rebuild | ffmpeg 7.1 `ebur128` on the published MP4's audio |
+|---|---|---|---|
+| cost-to-verify | -20.12 LUFS, -2.95 dBFS, refuted | -16.01 LUFS, -2.0 dBFS, verified | -16.0 LUFS, -2.0 dBTP |
+| receipt-is-not-a-verdict | -20.25 LUFS, -1.89 dBFS, refuted | -16.01 LUFS, -2.0 dBFS, verified | -16.0 LUFS, -2.0 dBTP |
+| receipt-loop | -20.31 LUFS, -2.35 dBFS, refuted | -16.01 LUFS, -2.0 dBFS, verified | -16.0 LUFS, -1.9 dBTP |
+
+The rebuild was decided on 3 October 2026: it changed each MP4's audio and hash. The frames, captions, posters and aperture art came out byte-identical, and the spec hashes did not move. With the sample peak alone held at -2.0 dBFS, ffmpeg read up to -0.8 dBTP, so the limiter also holds the interpolated points.
 
 ## What the parity check covers
 

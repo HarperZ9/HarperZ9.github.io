@@ -10,8 +10,8 @@ with the narration block (backend, model, snapshot, voice, script hash, referenc
 reproducible), the loudness measured with the contract's BS.1770 meter against the speech target
 (-16 LUFS within 1 LU, peak at or below -1.5 dBTP), and the access rules (no autoplay, VTT
 captions, a transcript). --check needs no voice: it verifies the seal, ties the receipt to the
-explainer's receipt and spec, and recomputes the script hash. Nothing here changes the
-published video; the loudness is measured, not corrected.
+explainer's receipt and spec, and recomputes the script hash. The narration it hashes is the one
+voice.py writes after loudness.py brings it to the target; this module measures and records it.
 """
 
 from __future__ import annotations
@@ -54,7 +54,7 @@ def build(folder: Path) -> dict:
     spec = json.loads(spec_path.read_text(encoding="utf-8"))
     receipt = json.loads((folder / "receipt.json").read_text(encoding="utf-8"))
     with tempfile.TemporaryDirectory() as tmp:
-        _, wav = voice.narrate(frames.resolved_scenes(spec), Path(tmp), draw.FPS)
+        _, wav, processing = voice.narrate(frames.resolved_scenes(spec), Path(tmp), draw.FPS)
         wav_sha = hashlib.sha256(wav.read_bytes()).hexdigest()
         if wav_sha != receipt["narration_wav_sha256"]:
             raise SystemExit(f"{folder.name}: the rebuilt narration DRIFTs from the published one; no receipt written")
@@ -72,13 +72,14 @@ def build(folder: Path) -> dict:
              "meter": ss.METER, "integrated_lufs": r2(lufs), "peak_dbfs": r2(peak),
              "loudness_class": "speech", "loudness_verdict": ss.loudness_check("speech", lufs, peak),
              "loudness_target": ss.LOUDNESS_TARGETS["speech"],
+             "processing": processing,
              "access": {"autoplay": False, "captions": "vtt", "transcript": True, "reduced_sound": "silent"},
              "narration": {"backend": "windows-sapi", "hosted": False, "model": "System.Speech (SAPI 5)",
                            "snapshot": receipt["toolchain"]["os"], "voice": receipt["toolchain"]["voice"],
                            "text_sha256": text_sha256(lines), "reference": False, "reproducible": True}}
     slug = spec["slug"]
     rec = ss.make_receipt(
-        producer="harperz9-explainer-narration", version="1.0.0", backend="windows-sapi", scene=scene, media=media,
+        producer="harperz9-explainer-narration", version="1.1.0", backend="windows-sapi", scene=scene, media=media,
         content=pcm, outputs={"narration.wav": receipt["narration_wav_sha256"], f"{slug}.mp4": receipt["outputs"][f"{slug}.mp4"]},
         does_not_prove=[
             "A PCM hash covers samples, not speakers: it says nothing about how a device plays them.",
@@ -86,7 +87,8 @@ def build(folder: Path) -> dict:
             "reproducible means a rebuild on Windows with the same voice and OS build gave the same PCM (checked "
             "on the date of this receipt); another machine or voice update need not.",
             "The loudness is one meter's reading (superstack-bs1770/1) of the narration alone, and the peak is the "
-            "sample peak, not true peak. The narration was measured, not corrected to the target.",
+            "sample peak, not true peak. The narration was normalised to the target with a limiter whose "
+            "sample-peak ceiling sits 0.5 dB under the true-peak limit; no true-peak meter has read it.",
             "Neither hash shows that the narration is correct, clear, or well paced.",
         ])
     # The scene travels inside the sealed receipt, so --check can rehash it without the voice.
@@ -110,6 +112,8 @@ def check(folder: Path) -> list[str]:
         problems.append("the narration receipt names a different spec")
     if rec["media"]["narration"]["text_sha256"] != text_sha256(script_of(spec)):
         problems.append("the script changed since the narration receipt")
+    if rec["media"].get("processing") != receipt.get("narration_loudness"):
+        problems.append("the narration receipt records a different loudness step than the explainer receipt")
     return problems
 
 

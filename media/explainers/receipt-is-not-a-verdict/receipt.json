@@ -20,8 +20,9 @@
     "tools/explainer/draw.py": "552d54ecc5ee16310033e27f23e4b44506e06945220a2a581b9a69d7bab59da6",
     "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
     "tools/explainer/scene.py": "0fa330710cb272fecafe241b9c2b7af966f299fccc46ca0beb27ae548fd259ed",
-    "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
-    "tools/explainer/render.py": "6ac2ab73782e287fd009de15ab4cc346455cabbe7ca112ee8f6491880caa124a"
+    "tools/explainer/voice.py": "8a640e64509eef556093fb57a28b3fdbf60134f766e104b4b581cad7682eb0af",
+    "tools/explainer/loudness.py": "2cc2232f758f52f272d2a77a2744e614f8943ff2dd8436b5c54c4043da467c0e",
+    "tools/explainer/render.py": "117860ab1ea74e9cd4fc9cf8e8a8167b9592b06b71a99d2abadab71685661067"
   },
   "fonts": {
     "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
@@ -36,13 +37,29 @@
     "os": "Windows-11-10.0.26220-SP0"
   },
   "outputs": {
-    "receipt-is-not-a-verdict.mp4": "2df5d1e338a63124e373ca1149dc1a75dab72abcd229d52349d5b63888b32f7c",
+    "receipt-is-not-a-verdict.mp4": "ce9de1c9f6cc676f86c8fadf1e5e00de8c56874f0b49aa2de3861bc94d162c42",
     "receipt-is-not-a-verdict.srt": "5e3ef70322e2dd9a84397289c8f04c7c8cbb34694f9cf6768267789d2ee0beca",
     "receipt-is-not-a-verdict.vtt": "141497c06b386c95076815ed230c4c0a85e04e2ac69b3b673073d9fe87a2c17a",
     "poster.png": "5293f3fafbf622b0f4227f660283fb7d16530c2eb6a9c577a2c125c92714226f",
     "aperture.png": "7f4101c9cbd5784ff1b2808f9cb1f240c508b7725e70a60a7a3f1bfee5cb452a"
   },
-  "narration_wav_sha256": "c21e81bc3ea1e65bbc9bd09650aaffa5b821ed20800008eaf91c1eb8f748a61b",
+  "narration_wav_sha256": "4550c9ed5b1cf36c5a564e5b21dbbcc51c25f975c8f49c4167e2418fff5f84f8",
+  "narration_loudness": {
+    "rule": "explainer-speech-normalise/1",
+    "meter": "superstack-bs1770/1",
+    "target_lufs": -16.0,
+    "before_lufs": -20.25,
+    "before_peak_dbfs": -1.89,
+    "gain_db": 5.41,
+    "limiter": {
+      "ceiling_dbfs": -2.0,
+      "lookahead_s": 0.02,
+      "oversample": 4
+    },
+    "after_lufs": -16.01,
+    "after_peak_dbfs": -2.0,
+    "sample_peak_headroom_db": 0.5
+  },
   "frames": 1296,
   "fps": 30,
   "seconds": 43.2,
