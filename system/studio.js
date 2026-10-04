@@ -155,6 +155,14 @@ let _lastSketchSheet = null;   // last built sheet — the pen surface's "Sketch
 // The sketch's render half is the media engine's "sketch" plugin (media-engine/plugins/sketch.mjs);
 // the pen stays here. One handle per canvas node, disposed when the Studio leaves the source.
 let _sketchEngine = null, _sketchHandle = null, _sketchHandleCanvas = null;
+// The Plot maps render half is the "plotmap" plugin (media-engine/plugins/plotmap.mjs); building
+// the sheet stays here. One handle per canvas node, disposed when the Studio leaves the source.
+let _plotEngine = null, _plotHandle = null, _plotHandleCanvas = null;
+const loadPlotPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("plotmap")), e => { _plotEngine = e; });
+function dropPlotHandle() {
+  if (_plotHandle) { try { _plotHandle.dispose(); } catch (e) { console.error("[studio] plotmap plugin dispose failed:", e); } }
+  _plotHandle = null; _plotHandleCanvas = null;
+}
 const loadSketchPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("sketch")), e => { _sketchEngine = e; });
 function dropSketchHandle() {
   if (_sketchHandle) { try { _sketchHandle.dispose(); } catch (e) { console.error("[studio] sketch plugin dispose failed:", e); } }
@@ -616,6 +624,7 @@ function setSource(next) {
     if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
     dropSketchHandle();
+    dropPlotHandle();
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -727,7 +736,7 @@ function setSource(next) {
         _plotSnapshotOk = true;
       }
     } catch (_) { _plotSnapshotOk = false; }
-    Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge()]).then(() => {
+    Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge(), loadPlotPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
@@ -991,7 +1000,7 @@ function acquirePlotField(then) {
 }
 
 function drawPlotMap() {
-  if (!_plotMaps || activeSource !== "plotmaps") return;
+  if (!_plotMaps || !_plotEngine || activeSource !== "plotmaps") return;
   stopReplay();   // a rebuilt sheet invalidates any running replay
   leave3D();
   const c = $("studio-canvas");
@@ -1060,9 +1069,16 @@ function drawPlotMap() {
   if (penNote) penNote.textContent = "press Watch; pen changes are called out as they happen";
   const scrubEl = $("plot-scrub");
   if (scrubEl) scrubEl.value = "0";
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
-  const rect = _plotMaps.renderPlotMap(ctx, plot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (!c.getContext("2d", { willReadFrequently: true })) return;
+  if (!_plotHandle || _plotHandleCanvas !== c) {
+    dropPlotHandle();
+    _plotHandle = _plotEngine.mount(c, "plotmap", { params: { sheet: plot, view: _stillView.plotmaps } });
+    _plotHandleCanvas = c;
+  }
+  // Drawn now, in this task, so the perceive() below reads this frame.
+  _plotHandle.instance.setParams({ sheet: plot, view: _stillView.plotmaps });
+  _plotHandle.drawNow();
+  const rect = _plotHandle.instance.lastRect;
   if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
   const m = plot.meta.measure;
   const readout = $("plot-readout");
@@ -1387,9 +1403,16 @@ function repaintPlotMap() {
   if (!_plotMaps || !_lastPlot || activeSource !== "plotmaps") return;
   stopReplay();   // zooming mid-replay would draw two truths on one canvas
   const c = $("studio-canvas");
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
-  const rect = _plotMaps.renderPlotMap(ctx, _lastPlot, c.width, c.height, {}, { view: _stillView.plotmaps });
+  if (!c.getContext("2d", { willReadFrequently: true })) return;
+  if (!_plotEngine) return;
+  if (!_plotHandle || _plotHandleCanvas !== c) {
+    dropPlotHandle();
+    _plotHandle = _plotEngine.mount(c, "plotmap", { params: { sheet: _lastPlot, view: _stillView.plotmaps } });
+    _plotHandleCanvas = c;
+  }
+  _plotHandle.instance.setParams({ sheet: _lastPlot, view: _stillView.plotmaps });
+  _plotHandle.drawNow();
+  const rect = _plotHandle.instance.lastRect;
   if (rect) window.__studioContentRect = { ...rect, source: "plotmaps" };
 }
 
