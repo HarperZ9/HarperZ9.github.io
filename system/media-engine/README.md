@@ -34,6 +34,9 @@ A second step moved the Retro front half (downscale, OKLab, palette, dither) int
 | `plugins/plate.mjs` | A Gallery plate, drawn once from its seed |
 | `plugins/loom.mjs` | Any frame woven into cloth with the Loom's draft maths; `wif()` gives the weaver's file |
 | `plugins/evidence.mjs` | BRender Archival and Engine Revival: release media re-hashed against the published manifest |
+| `plugins/sketch.mjs` | The Studio's Sketch source, render half: the sheet in its mark register, guides under it |
+| `plugins/plotmap.mjs` | The Studio's Plot maps source, drawn with `plot-maps.js` |
+| `plugins/atelier.mjs` | The Studio's Atelier source, render half: `drawStrokes` (reveal and live frames) and `paintRich` (the settled drawing); `atelier.js` keeps the studies, the timing and the pointer play |
 | `plugins/slots.mjs` | Reserved slots (`raw`, `revival`) and the still card shown until a slot is filled |
 | `proof.html` | A bench page that mounts both plugins and compares the GPU tube against the CPU tube |
 

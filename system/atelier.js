@@ -16,6 +16,8 @@
    Loaded as a module (it imports the seed rule) and still self-boots; window.Atelier is its
    interface to the rest of the Studio.                                          */
 import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
+import { pageEngine } from "./media-engine/page.mjs";
+import { atelier as atelierPlugin, drawStrokes, paintRich as paintRichPens, MARGIN } from "./media-engine/plugins/atelier.mjs";
 
 (function () {
   "use strict";
@@ -1623,91 +1625,11 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
   ];
 
   // ── renderer ────────────────────────────────────────────────────────────────
-  var MARGIN = 0.055; // shared by canvas and SVG so they match
-  function drawStrokes(ctx, W, H, strokes, frac) {
-    ctx.clearRect(0, 0, W, H);
-    var inner = Math.min(W, H) * (1 - 2 * MARGIN), offx = (W - inner) / 2, offy = (H - inner) / 2;
-    var wScale = inner / 1000;
-    ctx.lineCap = "round"; ctx.lineJoin = "round";
-    var total = 0, ti; for (ti = 0; ti < strokes.length; ti++) total += strokes[ti].pts.length;
-    var budget = frac >= 1 ? total : Math.floor(total * frac), spent = 0;
-    for (var i = 0; i < strokes.length; i++) {
-      var s = strokes[i], pts = s.pts, np = pts.length;
-      if (spent >= budget) break;
-      var take = np;
-      if (spent + np > budget) take = budget - spent;
-      spent += np;
-      if (take < 2) continue;
-      ctx.globalAlpha = s.op == null ? 1 : s.op;
-      ctx.strokeStyle = s.col;
-      ctx.lineWidth = Math.max(0.4, (s.w || 1) * wScale);
-      ctx.beginPath();
-      ctx.moveTo(offx + pts[0][0] * inner, offy + pts[0][1] * inner);
-      for (var j = 1; j < take; j++) ctx.lineTo(offx + pts[j][0] * inner, offy + pts[j][1] * inner);
-      if (s.close && take === np) ctx.closePath();
-      ctx.stroke();
-    }
-    ctx.globalAlpha = 1;
-  }
-
-  // ── advanced studio render: the same witnessed lines, rendered with depth ─────
-  // paintRich draws ONLY to the screen canvas. It never touches finalStrokes,
-  // optimizeForPlot, hashOpt or plotSVG, so the exported plot and its SHA-256
-  // witness are byte-identical to before. Screen = an inked, luminous reading of
-  // the plot; the plot itself stays the clean single-stroke pen file.
-  var GHOST_CACHE = {}, GHOST_GID = 0;
-  function fieldGhost(field, palId) {
-    if (!field || !field.lum) return null;
-    if (field._gid == null) field._gid = ++GHOST_GID;
-    var key = field._gid + "|" + palId;
-    if (GHOST_CACHE[key]) return GHOST_CACHE[key];
-    var G = 168, off = document.createElement("canvas"); off.width = G; off.height = G;
-    var g = off.getContext("2d"), img = g.createImageData(G, G), d = img.data;
-    var pal = PALETTES[palId] || PALETTES.spectrum;
-    var lo = hexToRgb(pal[0]), hi = hexToRgb(pal[pal.length - 1]);
-    for (var y = 0; y < G; y++) for (var x = 0; x < G; x++) {
-      var l = clamp(field.lum((x + 0.5) / G, (y + 0.5) / G), 0, 1);
-      var sh = l * l * (3 - 2 * l); // smoothstep, let highlights carry the form
-      var i = (y * G + x) * 4;
-      d[i] = lerp(lo[0], hi[0], sh); d[i + 1] = lerp(lo[1], hi[1], sh);
-      d[i + 2] = lerp(lo[2], hi[2], sh); d[i + 3] = Math.round(255 * (0.15 + 0.85 * sh));
-    }
-    g.putImageData(img, 0, 0);
-    GHOST_CACHE[key] = off; return off;
-  }
+  // drawStrokes and paintRich live in the media engine's "atelier" plugin
+  // (media-engine/plugins/atelier.mjs), which draws every frame the Atelier shows. paintRich keeps
+  // its palette-id signature here for window.Atelier's callers (endless.js).
   function paintRich(ctx, W, H, strokes, field, palId) {
-    ctx.clearRect(0, 0, W, H);
-    var inner = Math.min(W, H) * (1 - 2 * MARGIN), offx = (W - inner) / 2, offy = (H - inner) / 2;
-    var wScale = inner / 1000;
-    // 1. perceived-field ghost: the specimen the algorithm actually read, faint behind the art
-    var ghost = fieldGhost(field, palId);
-    if (ghost) {
-      ctx.save();
-      ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.27;
-      try { ctx.filter = "blur(2px)"; } catch (e) {}
-      ctx.imageSmoothingEnabled = true;
-      ctx.drawImage(ghost, offx, offy, inner, inner);
-      ctx.restore();
-    }
-    // 2. the lines, twice: a wide additive bloom for luminous depth, then crisp ink on top
-    ctx.lineCap = "round"; ctx.lineJoin = "round";
-    function pass(widthMul, alphaMul, comp) {
-      ctx.globalCompositeOperation = comp;
-      for (var i = 0; i < strokes.length; i++) {
-        var s = strokes[i], pts = s.pts, np = pts.length; if (np < 2) continue;
-        ctx.globalAlpha = clamp((s.op == null ? 1 : s.op) * alphaMul, 0, 1);
-        ctx.strokeStyle = s.col;
-        ctx.lineWidth = Math.max(0.35, (s.w || 1) * wScale * widthMul);
-        ctx.beginPath();
-        ctx.moveTo(offx + pts[0][0] * inner, offy + pts[0][1] * inner);
-        for (var j = 1; j < np; j++) ctx.lineTo(offx + pts[j][0] * inner, offy + pts[j][1] * inner);
-        if (s.close) ctx.closePath();
-        ctx.stroke();
-      }
-    }
-    pass(3.6, 0.16, "lighter");    // halo: overlaps build warmth, the organic glow
-    pass(1.0, 1.0, "source-over"); // crisp pen line
-    ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+    paintRichPens(ctx, W, H, strokes, field, PALETTES[palId] || PALETTES.spectrum);
   }
 
   // ── SVG export (plotter-ready: single-stroke paths, grouped by pen colour) ───
@@ -1869,6 +1791,18 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
       var nj = document.getElementById("at-nojs"); if (nj) nj.hidden = false; return;
     }
     var ctx = canvas.getContext("2d", { willReadFrequently: true });
+    // Every frame the Atelier shows is drawn by the engine's "atelier" plugin, in this task, so a
+    // listener reading the canvas right after (the Studio's perception) reads the frame just drawn.
+    var engineHandle = null;
+    function paintFrame(params) {
+      if (!engineHandle) {
+        var engine = pageEngine();
+        if (engine.plugins().indexOf("atelier") < 0) engine.register(atelierPlugin);
+        engineHandle = engine.mount(canvas, "atelier", {});
+      }
+      engineHandle.instance.setParams(params);
+      engineHandle.drawNow();
+    }
     var reduced = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     // ── pointer-reactive play: a live cursor-perturbed particle flow over the art ─
@@ -1890,7 +1824,7 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
       playDpr = canvas.width / Math.max(1, rect.width); playW = rect.width; playH = rect.height; playReady = true;
     }
     function finalPaint(W, H, strokes, fld) {
-      paintRich(ctx, W, H, strokes, fld, state.palette); capturePlay();
+      paintFrame({ mode: "rich", W: W, H: H, strokes: strokes, field: fld, pens: PALETTES[state.palette] || PALETTES.spectrum }); capturePlay();
       // reconcile: judge the settled drawing against criteria it did not author (+ novelty)
       if (window.Reconcile) {
         try {
@@ -2070,7 +2004,7 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
             var done = false;
             if (nowt - liveStart > 9000) { var g = 0; while (!piece.step() && g++ < 2000) { } done = true; } // throttle safety: never animate forever
             else { for (var s = 0; s < 5; s++) { if (piece.step()) { done = true; break; } } }
-            var cur = piece.strokes(); drawStrokes(ctx, W, H, cur, 1);
+            var cur = piece.strokes(); paintFrame({ mode: "lines", W: W, H: H, strokes: cur, frac: 1 });
             var verb = state.study === "reaction" ? "reacting" : state.study === "physarum" ? "foraging" : "growing";
             var unit = state.study === "reaction" || state.study === "physarum" ? " steps" : " nodes";
             status(done ? (cur.length + " strokes · settled") : (verb + "… " + (piece.count ? piece.count() + unit : "")));
@@ -2086,7 +2020,7 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
             if (myToken !== drawToken) return;
             var nowMs = now || ((window.performance && performance.now) ? performance.now() : Date.now());
             var p = clamp((nowMs - t0) / dur, 0, 1), e = easeOutCubic(p);
-            if (p < 1) { drawStrokes(ctx, W, H, finalStrokes, e); status("drawing… " + Math.round(p * 100) + "%"); rafId = requestAnimationFrame(revealTick); }
+            if (p < 1) { paintFrame({ mode: "lines", W: W, H: H, strokes: finalStrokes, frac: e }); status("drawing… " + Math.round(p * 100) + "%"); rafId = requestAnimationFrame(revealTick); }
             else { finalPaint(W, H, finalStrokes, ghostF); status(finalStrokes.length + " strokes · drawn"); }
           };
           rafId = requestAnimationFrame(revealTick);
@@ -2525,7 +2459,11 @@ import { makeRng as seedMakeRng } from "./media-engine/seed.mjs";
       if (resizeTimer) clearTimeout(resizeTimer);
       // Only re-fit when the Atelier owns the canvas; otherwise a resize (e.g. entering the
       // showcase hero layout) would repaint the Atelier's strokes over the active source.
-      resizeTimer = setTimeout(function () { if (atelierIsActiveSource()) drawStrokes(ctx, sizeCanvas()[0], sizeCanvas()[1], finalStrokes, 1); }, 200);
+      resizeTimer = setTimeout(function () {
+        if (!atelierIsActiveSource()) return;
+        var dims = sizeCanvas();
+        paintFrame({ mode: "lines", W: dims[0], H: dims[1], strokes: finalStrokes, frac: 1 });
+      }, 200);
     });
 
     renderParams();

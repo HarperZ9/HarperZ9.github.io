@@ -627,7 +627,9 @@ RELEASE_PATHS = (
 # and their build tool leave the site; the release is rehashed.
 # October 3, 2026: system/system.css stops hiding the specimen plates on instrument surfaces;
 # a reading-page rule had hidden all 43 Gallery plates, Plate 14 included. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "862e16618837429498ab19a8eb0418e8e9ed3b506bbad8e04550cf4fea8fb4cd"
+# October 3, 2026: the Atelier draws through the media engine's "atelier" plugin, and studio.html
+# loads atelier.js at a new stamp; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "4154e85d0dc662e87935159e591cfa627b5e5ee948f4e33a6f2d8da505759e4c"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
