@@ -57,10 +57,30 @@ function lazyLoader(importer, onLoad) {
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
 let _fractal = null, _fractalGL = null;
+// The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
+// camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
+// node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
+let _fractalEngine = null, _fractalHandle = null, _fractalHandleCanvas = null;
+function dropFractalHandle() {
+  if (_fractalHandle) { try { _fractalHandle.dispose(); } catch (e) { console.error("[studio] fractal plugin dispose failed:", e); } }
+  _fractalHandle = null; _fractalHandleCanvas = null;
+}
+// Draw one fractal view on a canvas through the plugin, now. Returns what the GPU path threw.
+function drawFractalView(canvas, view, path) {
+  if (!_fractalHandle || _fractalHandleCanvas !== canvas) {
+    dropFractalHandle();
+    _fractalHandle = _fractalEngine.mount(canvas, "fractal", { params: { view, path } });
+    _fractalHandleCanvas = canvas;
+  }
+  _fractalHandle.instance.setParams({ view, path });
+  _fractalHandle.drawNow();
+  return _fractalHandle.instance.lastError;
+}
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a")]),
-  ([f, g]) => {
-    _fractal = f; _fractalGL = g;
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a"),
+    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal"))]),
+  ([f, g, e]) => {
+    _fractal = f; _fractalGL = g; _fractalEngine = e;
     GL_AVAILABLE = !!g.isFractalGLAvailable();
     buildFractalPalettes();            // idempotent (builds once)
     buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
@@ -87,6 +107,14 @@ const loadDiscovery = lazyLoader(() => import("./discovery/studio-discovery.js")
 // Showcase source: the First Integral scene.
 let _showcase = null;
 const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=20260925-studio-plate"), m => { _showcase = m; });
+// The Showcase draws through the media engine's "showcase" plugin (media-engine/plugins/showcase.mjs);
+// first-integral.js keeps the state machine and drives the plugin's scene. stopShowcase() disposes it.
+let _showcaseEngine = null;
+const loadShowcasePlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("showcase")), e => { _showcaseEngine = e; });
+function mountShowcaseScene(canvas) {
+  const h = _showcaseEngine.mount(canvas, "showcase", {});
+  return { scene: h.instance.scene, draw(view) { h.instance.setParams({ view }); h.drawNow(); }, dispose() { h.dispose(); } };
+}
 
 // Living neural source: the seed's neural instruments, animated on the shared
 // canvas and measured by the perception loop. Static under reduced motion.
@@ -162,6 +190,14 @@ const loadPlotPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m
 function dropPlotHandle() {
   if (_plotHandle) { try { _plotHandle.dispose(); } catch (e) { console.error("[studio] plotmap plugin dispose failed:", e); } }
   _plotHandle = null; _plotHandleCanvas = null;
+}
+// The Voxels render half is the "voxels" plugin (media-engine/plugins/voxels.mjs); building, turning
+// and editing the scene stay here. One handle per canvas node, disposed when the Studio leaves.
+let _voxelEngine = null, _voxelHandle = null, _voxelHandleCanvas = null;
+const loadVoxelPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("voxels")), e => { _voxelEngine = e; });
+function dropVoxelHandle() {
+  if (_voxelHandle) { try { _voxelHandle.dispose(); } catch (e) { console.error("[studio] voxels plugin dispose failed:", e); } }
+  _voxelHandle = null; _voxelHandleCanvas = null;
 }
 const loadSketchPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("sketch")), e => { _sketchEngine = e; });
 function dropSketchHandle() {
@@ -577,7 +613,7 @@ async function enterPosterWorkshop(epoch) {
   if (_posterWorkshop) { _posterWorkshop.render(); return; }
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js"),
+      import("./poster-panel.js?v=20261003-poster-plugin"),
       import("./generative-field.js?v=20260925-void-plates"),
       loadExporters(),
     ]);
@@ -625,6 +661,8 @@ function setSource(next) {
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
     dropSketchHandle();
     dropPlotHandle();
+    dropVoxelHandle();
+    dropFractalHandle();
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -691,9 +729,9 @@ function setSource(next) {
   // Showcase (First Integral): load the scene graph on first entry, draw into the shared canvas,
   // then arm the meter loop. The loop idles once the scene settles (studio-loop gates on showcaseSettled).
   if (next === "showcase") {
-    loadShowcase().then(mod => {
+    Promise.all([loadShowcase(), loadShowcasePlugin()]).then(([mod]) => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
-      try { mod.startShowcase($("studio-canvas")); } catch (_) {}
+      try { mod.startShowcase($("studio-canvas"), { mountScene: mountShowcaseScene }); } catch (e) { console.error("[studio] showcase failed to start:", e); }
       startMeterLoop();
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -741,7 +779,7 @@ function setSource(next) {
   }
   // Voxels: load the forge and build the current scene. Still frames only.
   if (next === "voxels") {
-    loadVoxelForge().then(() => {
+    Promise.all([loadVoxelForge(), loadVoxelPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawVoxelScene();
     }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
@@ -1391,13 +1429,20 @@ function initPlotMapControls() {
 // rotation takes. Rebuilds go through drawVoxelScene, which resets edits by construction.
 function repaintVoxelScene(announce) {
   const scene = _lastVoxelScene;
-  if (!scene || !_voxelForge || activeSource !== "voxels") return;
+  if (!scene || !_voxelForge || !_voxelEngine || activeSource !== "voxels") return;
   const c = $("studio-canvas");
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
+  if (!c.getContext("2d", { willReadFrequently: true })) return;
   _voxelPick.width = c.width; _voxelPick.height = c.height;
   const pickCtx = _voxelPick.getContext("2d", { willReadFrequently: true });
-  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx, view: _stillView.voxels });
+  const params = { scene, view: _stillView.voxels, pickCtx };
+  if (!_voxelHandle || _voxelHandleCanvas !== c) {
+    dropVoxelHandle();
+    _voxelHandle = _voxelEngine.mount(c, "voxels", { params });
+    _voxelHandleCanvas = c;
+  }
+  // Drawn now, in this task, so the perceive() below reads this frame.
+  _voxelHandle.instance.setParams(params);
+  _voxelHandle.drawNow();
   const readout = $("voxel-readout");
   if (readout) readout.textContent =
     `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
@@ -2758,13 +2803,10 @@ function paintFractal(opts, aaOverride) {
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
     try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
-    try {
-      _fractalGL.renderFractalGL(c, { ...opts, maxIter, aa });
-      return c;
-    } catch (e) {
-      // GPU failed at runtime: fall back to CPU on the original 2D canvas.
-      leave3D();
-    }
+    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) return c;
+    // GPU failed at runtime: fall back to CPU on the original 2D canvas.
+    dropFractalHandle();
+    leave3D();
   }
   // CPU path (fallback / no WebGL): progressive render so the UI never blocks (Task 8n perf).
   const c = $("studio-canvas");
@@ -2808,12 +2850,12 @@ function cpuFractalProgressive(canvas, opts) {
   // Coarse pass: quarter-res backing (1/4 the pixels) for an instant preview.
   const cw = Math.max(1, Math.round(fullW / 4)), ch = Math.max(1, Math.round(fullH / 4));
   canvas.width = cw; canvas.height = ch;
-  _fractal.renderFractal(canvas, opts);
+  drawFractalView(canvas, opts, "cpu");
   // Refine to full res on the next frame (or immediately in a no-rAF env).
   const refine = () => {
     _cpuRefineRaf = 0;
     canvas.width = fullW; canvas.height = fullH;
-    _fractal.renderFractal(canvas, opts);
+    drawFractalView(canvas, opts, "cpu");
   };
   if (typeof requestAnimationFrame === "function") _cpuRefineRaf = requestAnimationFrame(refine);
   else refine();
@@ -6491,7 +6533,7 @@ if (tierBtn) {
 (function bootStudioInstrument() {
   let audio = null, frameRun = null, frameTimer = 0, frameBusy = false, clipRec = null;
   async function ensureAudio() {
-    const m = await import("./retro-audio.js?v=20260812-cohesion");
+    const m = await import("./retro-audio.js?v=20261003-retro-sound");
     if (!audio) audio = m.createRetroAudio();
     return audio;
   }

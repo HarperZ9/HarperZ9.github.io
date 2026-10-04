@@ -631,7 +631,7 @@ RELEASE_PATHS = (
 # loads atelier.js at a new stamp; the release is rehashed.
 # October 4, 2026: every page shares as its own link card from img/og/p, so the og and twitter
 # image tags of the release pages changed; the release is rehashed. Merging that change is the review.
-REVIEWED_RELEASE_SHA256 = "22f5d381222838e7f83c3ba2d8ef75d60068ade4131bec1fabd131db34ef20ba"
+REVIEWED_RELEASE_SHA256 = "484412a075dfc8e5e03b02bccdcaeb0d52379ac0990782d2673cbc13ad071bc8"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

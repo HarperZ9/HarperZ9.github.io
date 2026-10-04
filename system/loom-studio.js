@@ -477,7 +477,7 @@ function boot() {
   $("wv-sound").addEventListener("change", async () => {
     if ($("wv-sound").checked) {
       try {
-        const m = await import("./retro-audio.js?v=20260812-cohesion");
+        const m = await import("./retro-audio.js?v=20261003-retro-sound");
         if (!audio) audio = m.createRetroAudio();
         await audio.start("loom-" + structureId);
         status("the rows will sound as they weave", "ok");
@@ -503,7 +503,7 @@ function boot() {
     }
     clothBusy = true;
     try {
-      const am = await import("./retro-audio.js?v=20260812-cohesion");
+      const am = await import("./retro-audio.js?v=20261003-retro-sound");
       if (!audio) audio = am.createRetroAudio();
       const m = await import("./ans-voice.js?v=20260812-cohesion");
       const scan = m.scanImage(out, 36, 88);

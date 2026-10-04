@@ -1467,7 +1467,7 @@ if (deskLoom && deskCanvas) deskLoom.addEventListener("click", () => sendDesk("l
 // scans the desk canvas ANS-style (rows are pitches, the scan is time).
 let deskAudio = null, plateRun = null, plateTimer = 0, plateBusy = false;
 async function ensureDeskAudio() {
-  const m = await import("./system/retro-audio.js?v=20260812-cohesion");
+  const m = await import("./system/retro-audio.js?v=20261003-retro-sound");
   if (!deskAudio) deskAudio = m.createRetroAudio();
   return deskAudio;
 }

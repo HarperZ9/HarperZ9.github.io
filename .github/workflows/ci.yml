@@ -48,7 +48,7 @@ jobs:
           system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs
           system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs
           system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs
-          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/poster.test.mjs
+          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/media-engine/voxels.test.mjs system/media-engine/fractal.test.mjs system/media-engine/showcase.test.mjs system/poster.test.mjs
           system/type-forge/forge.test.mjs system/typeface.test.mjs
           system/neural.test.mjs system/neural-kernels.test.mjs system/studio-neural.test.mjs
       # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
@@ -106,6 +106,19 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8805 BROWSER_CHANNEL=chrome node tests/gallery-plates-visible.cjs
+      # The 64 seeded plates and 95 instruments against tests/fixtures/plate-baselines.json (3 October
+      # 2026): every plate on screen, drawn, backed at its layout size; each instrument repeats exactly.
+      # The pixel hashes belong to the fixture's reference machine and are compared only there.
+      - name: Plate baselines
+        if: ${{ !cancelled() }}
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python -m http.server 8806 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8806 BROWSER_CHANNEL=chrome node tests/plate-baselines.cjs 1 2
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       - name: Live explainers in the browser
