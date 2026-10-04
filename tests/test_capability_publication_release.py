@@ -637,7 +637,9 @@ RELEASE_PATHS = (
 # is rehashed.
 # October 4, 2026, later: studio.html loads the Studio and the Atelier at the entry slice's
 # stamps; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "efa8af26684bb6f733eeda97ea974ec62d79ec55b557fe7801cb1e4a782d601f"
+# October 4, 2026, later: studio.html loads the Studio at the bring slice's stamps; the
+# release is rehashed.
+REVIEWED_RELEASE_SHA256 = "f40274551554c703f2e90e6e8aee44d6e65e64e7fd97cc9b16094997f04ca292"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
