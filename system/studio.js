@@ -26,7 +26,8 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell.js?v=20261004-studio-shell";
+import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-keep";
+import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
   onSourceChange as surfaceOnSourceChange,
   resetViewTransform,
@@ -385,6 +386,7 @@ let activeSource = "atelier";
 // The shell (studio-shell.js): source switch, inspector header, action bar, shared undo. Mounted
 // once below, before the boot source is chosen; setSource tells it about every switch.
 let _shell = null;
+let _readings = null;   // the readings panel's fold while making (studio-readings.js)
 // Monotonic switch counter: each setSource() call bumps it, and every lazy start continuation
 // captures the value at kick-off. A continuation that resolves after another switch sees a newer
 // epoch and does nothing, so a slow module load can never start a renderer for a source the user
@@ -594,6 +596,7 @@ function setSource(next) {
   syncTabindex(next);
   // The shell names the source, and swaps the action bar to this source's actions (studio-shell.js).
   if (_shell) _shell.sourceChanged(next);
+  if (_readings) _readings.sourceChanged();
   if (next === "poster") enterPosterWorkshop(epoch);
   if (SOURCES[next].engine) {
     loadEngineSurface().then((m) => {
@@ -638,7 +641,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
       try { mod.startShowcase($("studio-canvas"), { mountScene: mountShowcaseScene }); } catch (e) { console.error("[studio] showcase failed to start:", e); }
       startMeterLoop();
-      if (_shell) _shell.record("showcase");
+      if (_shell) _shell.resume("showcase");
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Living neural: load the module on first entry, draw the instrument's still frame on
@@ -698,6 +701,7 @@ function setSource(next) {
       if (!_sketch) _sketch = _sketchMod.createSketch();
       window.__studioSketch = _sketch;   // inspection hook, same register as __studioMediaAdapters
       drawSketch(true);
+      if (_shell) _shell.resume("sketch");   // the sketch this browser kept, on the first entry
     }).catch(err => { say("model", "The sketch engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
@@ -734,6 +738,7 @@ function setSource(next) {
   // the first visit draws the chosen preset, as the Render button does.
   if (next === "fractal") loadFractal2D().then(() => {
     if (epoch !== _sourceEpoch) return;   // switched away while the graph loaded
+    if (_shell && _shell.resume("fractal")) return;   // the view this browser kept, on the first entry
     if (!fractalView) { renderPreset(); return; }
     const c = paintFractal(fractalView);
     try { perceive(c); } catch (_) {}
@@ -6599,6 +6604,8 @@ const syncChipGroup = (attr, value) => document.querySelectorAll(`[${attr}]`).fo
 const PNG_FRAME = { label: "PNG frame", target: "rt-export-png" };
 const SHELL_CONTRACTS = {
   sketch: {
+    making: true,
+    reset() { this.restore({ sketch: { v: 1, strokes: [], symmetry: { mode: "none", k: 6 }, guide: "none" }, register: "drawn" }); },
     primary: { label: "To pen surface", target: "sketch-plot", title: "Send this sketch to the pen surface" },
     exports: [{ label: "SVG sheet", target: "sketch-svg" }, PNG_FRAME],
     pin: "sketch-pin",
@@ -6618,6 +6625,17 @@ const SHELL_CONTRACTS = {
     },
   },
   fractal: {
+    making: true,
+    reset() {
+      activeFType = "mandelbrot"; activeFractalPalette = null; fractalView = null;
+      syncChipGroup("data-ftype", "mandelbrot");
+      syncChipGroup("data-fractal-palette", "");
+      buildPresetMenuNow("mandelbrot");
+      fractalPresetEl.value = "0";
+      const d = $("fractal-detail");
+      if (d) { d.value = d.defaultValue || "1"; const out = $("fractal-detail-val"); if (out) out.textContent = readFractalDetail().toFixed(1); }
+      renderPreset();
+    },
     primary: { label: "Render", target: "fractal-render", title: "Draw the chosen preset from its starting view" },
     exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
     snapshot: () => (fractalView ? {
@@ -6644,6 +6662,11 @@ const SHELL_CONTRACTS = {
     },
   },
   showcase: {
+    // Checking a claim is not making, so the readings stay open here.
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      this.restore({ system: "kepler", seed: d("show-seed"), ecc: d("show-ecc"), dt: d("show-dt"), n: d("show-n"), terms: d("show-terms") });
+    },
     primary: { label: "Re-check", target: "show-verify", title: "Re-integrate from the recorded literals, re-fit, re-hash, compare" },
     exports: [{ label: "Report JSON", target: "show-export" }, PNG_FRAME],
     snapshot() {
@@ -6665,11 +6688,31 @@ const SHELL_CONTRACTS = {
 };
 // Every rebuild of the showcase scene (a system, a seed, the S key) is one undo step.
 document.addEventListener("showcase:params", () => { if (_shell) _shell.record("showcase"); });
+// The readings fold while the visitor makes a piece; the shell reports its making actions, and a
+// change to any control in the active source's inspector is one as well.
+_readings = mountReadings({
+  panel: $("studio-panel"),
+  stage: $("viewport-stage"),
+  getSource: () => activeSource,
+  isMakingSource: (s) => !!(SHELL_CONTRACTS[s] && SHELL_CONTRACTS[s].making),
+});
+for (const type of ["input", "change", "click"]) {
+  $("studio-rail").addEventListener(type, (e) => {
+    const block = e.target.closest && e.target.closest(".src-block");
+    // A click the action bar passed on to a hidden control was counted by the bar already (or was
+    // an export, which is not making).
+    if (e.target.closest("[data-in-bar]")) return;
+    if (block && !block.hidden && (type !== "click" || e.target.closest("button"))) _readings.action();
+  });
+}
+// Work kept in this browser: a page that cannot reach storage still runs, and says so.
+const keepStorage = () => { try { return window.localStorage; } catch (_) { return null; } };
 _shell = mountShell({
   rail: $("studio-rail"),
-  setSource,
   getSource: () => activeSource,
   contracts: SHELL_CONTRACTS,
+  storage: keepStorage,
+  onMaking: () => _readings.action(),
 });
 
 (function bootSource() {
