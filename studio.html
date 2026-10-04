@@ -78,6 +78,7 @@
         <button type="button" role="tab" data-source="plotmaps"  aria-selected="false" aria-controls="src-plotmaps"  tabindex="-1">Plot maps</button>
         <button type="button" role="tab" data-source="voxels"    aria-selected="false" aria-controls="src-voxels"    tabindex="-1">Voxels</button>
         <button type="button" role="tab" data-source="sketch"    aria-selected="false" aria-controls="src-sketch"    tabindex="-1">Sketch</button>
+        <button type="button" role="tab" data-source="threads"   aria-selected="false" aria-controls="src-threads"   tabindex="-1">Threads</button>
       </div>
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Bring</span>
@@ -163,6 +164,49 @@
           <button type="button" class="btn ghost" id="sound-stop" aria-label="Stop playback">stop</button>
         </div>
         <p class="src-hint" id="sound-readout">press play; the audio channels below read what the seed plays</p>
+      </section>
+
+      <section class="src-block" id="src-threads" role="tabpanel" aria-label="Threads controls" hidden>
+        <p class="transform-note">Particles flow along the lines of a drawn field and leave light behind them. Fifteen worlds, from dappled leaves to a puppet on strings. Rendered on your GPU by raw-native through WebGPU; with reduced motion it holds one frame.</p>
+        <div class="at-actions">
+          <button type="button" class="btn" id="threads-play" aria-pressed="true" aria-label="Pause or play the threads">pause</button>
+          <button type="button" class="btn ghost" id="threads-restart" aria-label="Clear the trails and start the world again">restart</button>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">World</span>
+          <select id="threads-world" class="at-seed" style="width:100%" aria-label="Threads world">
+            <option value="0">I. Komorebi</option><option value="1">II. Droste</option><option value="2">III. Two voices</option>
+            <option value="3">IV. Morphogen</option><option value="4">V. The making</option><option value="5">VI. The eye</option>
+            <option value="6">VII. The strings</option><option value="7">VIII. The stream</option><option value="8">IX. The belly</option>
+            <option value="9">X. The draw</option><option value="10">XI. The elements</option><option value="11">XII. The burden</option>
+            <option value="12">XIII. The swing</option><option value="13">XIV. The forest</option><option value="14">XV. The many</option>
+            <option value="tour">Tour all fifteen</option>
+          </select>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Particles</span>
+          <select id="threads-particles" class="at-seed" style="width:100%" aria-label="Particle count">
+            <option value="65536">65,536</option><option value="262144" selected>262,144</option>
+            <option value="1048576">1,048,576</option><option value="2097152">2,097,152</option><option value="4194304">4,194,304</option>
+          </select>
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Persistence <span class="hint">(<span id="threads-persistence-val">0.82</span>)</span></span>
+          <input type="range" class="at-slider" id="threads-persistence" min="0.5" max="0.97" step="0.01" value="0.82" aria-label="Trail persistence">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Exposure <span class="hint">(<span id="threads-exposure-val">1.00</span>)</span></span>
+          <input type="range" class="at-slider" id="threads-exposure" min="0.25" max="4" step="0.05" value="1" aria-label="Exposure">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Spacing <span class="hint">(<span id="threads-spacing-val">0.011</span>)</span></span>
+          <input type="range" class="at-slider" id="threads-spacing" min="0.004" max="0.03" step="0.001" value="0.011" aria-label="Spacing between level lines">
+        </div>
+        <div class="at-group">
+          <span class="at-glab">Levels <span class="hint">(<span id="threads-levels-val">5</span>)</span></span>
+          <input type="range" class="at-slider" id="threads-levels" min="0" max="12" step="1" value="5" aria-label="Level lines on each side of the form">
+        </div>
+        <p class="src-hint" id="threads-readout" aria-live="off">starting the GPU</p>
       </section>
 
       <!-- Plot maps: the pen surface. Generative studies, published plates, uploaded pictures,
@@ -1430,7 +1474,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261004-studio-bring"></script>
+<script type="module" src="system/studio.js?v=20261004-threads-bring"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

@@ -26,6 +26,8 @@ plugins/data/** text eol=lf
 
 # raw-native WebAssembly release files are pinned by SHA-256 in plugins/raw.mjs: no EOL conversion.
 media/raw-native/wasm-*/** -text
+# raw-native's web GPU host, pinned by SHA256SUMS in its directory: no EOL conversion.
+media/raw-native/web-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text
