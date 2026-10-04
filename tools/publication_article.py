@@ -8,6 +8,10 @@ line from publications/data/sections.json under it, so a rebuild keeps both.
 from __future__ import annotations
 
 import html
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 import json
 from pathlib import Path
 
@@ -201,11 +205,7 @@ def render_article(
 <meta name="description" content="{html.escape(record["summary"], quote=True)}"><link rel="canonical" href="{canonical}">
 <meta property="og:type" content="article"><meta property="og:title" content="{html.escape(record["title"], quote=True)}">
 <meta property="og:description" content="{html.escape(record["summary"], quote=True)}"><meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
-<meta property="og:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{SITE_URL}img/og/{html.escape(record["id"], quote=True)}.png">
-<meta name="twitter:image:alt" content="{html.escape(record["title"], quote=True)}: {html.escape(record["summary"], quote=True)}">
+{card_tags(canonical, record["title"])}
 <link rel="stylesheet" href="system/publication-article.css?v={ASSET_REVISION}"><script type="module" src="system/theme-entry.js?v=20260907-theme-preferences"></script></head>
 <body class="publication-page"><a class="skip-link" href="#main">Skip to content</a>
 <div id="site-nav" class="site-nav"></div>

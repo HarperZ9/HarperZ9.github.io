@@ -30,6 +30,10 @@ rule governs prose written for these surfaces, not text quoted onto them.
 from __future__ import annotations
 
 import html
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 import os
 import pathlib
 import re
@@ -221,11 +225,9 @@ PAGE = """<!DOCTYPE html>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="https://harperz9.github.io/{slug}.html">
-<meta property="og:image" content="https://harperz9.github.io/img/og/profile.png">
-<meta name="twitter:card" content="summary_large_image">
+{card}
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/profile.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <style>
@@ -316,6 +318,7 @@ def main() -> int:
             doi=c["doi"], licence=c["licence"],
             blurb=html.escape(blurb, quote=False),
             slug=slug, body=body, headings=headings, generated=f"{words:,}",
+            card=card_tags(f"{slug}.html", c["title"]),
         )
         page = structured_data.apply(page, structured_data.load_context(ROOT))
         c["out"].write_bytes(page.encode("utf-8"))

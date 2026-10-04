@@ -149,7 +149,7 @@ def test_generated_page_has_full_nojs_body_sources_and_share_metadata(slug: str)
     assert f'<link rel="canonical" href="{BASE_URL}{slug}.html">' in source
     assert f'property="og:url" content="{BASE_URL}{slug}.html"' in source
     assert f'property="og:title" content="{html.escape(payload["title"], quote=True)}"' in source
-    assert f'property="og:image" content="{BASE_URL}img/og/{slug}.png"' in source
+    assert f'property="og:image" content="{BASE_URL}img/og/p/{slug}.jpg?v=' in source
 
 
 @pytest.mark.parametrize("slug", SLUGS)

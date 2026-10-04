@@ -349,10 +349,11 @@ def test_article_has_a_route_specific_social_card_and_one_typography_system() ->
 
     article = render_article(record)
 
-    assert (
-        f'<meta property="og:image" content="https://harperz9.github.io/'
-        f'img/og/{record["id"]}.png">'
-    ) in article
+    # A record without a rendered card borrows the home card until
+    # tools/repo_art/site_cards.py renders its own; tests/test_link_cards.py
+    # holds every published page to its own card.
+    assert '<meta property="og:image" content="https://harperz9.github.io/img/og/p/' in article
+    assert '<meta name="twitter:card" content="summary_large_image">' in article
     assert 'href="styles.css?v=20260828-site-design"' not in article
     assert ASSET_REVISION == PUBLICATION_ARTICLE_REVISION
     assert (

@@ -69,8 +69,8 @@ def test_record_cards_carry_the_content_hash_of_their_image() -> None:
             checked += 1
     assert checked >= 10
     page = read(ROOT / "accountable-surface.html")
-    assert "img/og/accountable-surface.png?v=" in page
-    assert 'content="https://harperz9.github.io/img/og/accountable-surface.png"' not in page
+    assert "img/og/p/accountable-surface.jpg?v=" in page
+    assert 'content="https://harperz9.github.io/img/og/p/accountable-surface.jpg"' not in page
 
 
 def test_article_cards_are_the_right_shape() -> None:

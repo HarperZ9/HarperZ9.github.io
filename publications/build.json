@@ -35,8 +35,8 @@
     "publications/data/listings/witnessing-spine.json": "3da59f62df21dacaaea6891db70b3e5cd2a4d7a7096cdbc13cd212e277a33c45"
   },
   "outputs": {
-    "availability-is-not-reach.html": "30c42b057fdaa5558d0606d5785e29022835fa538605b3e975781e248c9e65f2",
-    "borrowed-ground.html": "37f9cff711b17cf30dcbfaeef483c46718ea2e5676471a0d8d319c51f00c75a3",
+    "availability-is-not-reach.html": "9dc6dda0230381c2c38072f99a702e8409e8ab09db792659ae710863bd3b39fc",
+    "borrowed-ground.html": "093f1a966f034f4afec94a110d7631d399bab0b0bcdc483e92f99ee2ef55f501",
     "feed.json": "7181dd1b6d76bc60e80a6f13e559806e1aaf7d7dfeac13f7608dd2e859bf6bc3",
     "feed.xml": "4e4fc3d2a65cb5988d27e250742f6702f90da704f9090f4b1761336c5d47709e",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
@@ -60,19 +60,19 @@
     "figures/vintage-like-for-like-check.html": "9ead31a6e9fa15e1ba6524946d8e0bc696388d802e488e2b425d633c5f321c50",
     "figures/vintage-like-for-like-check.json": "7738520b7c095da03c6386c184f198e216f694344c1d8b5d44cfe21cf1c5f8c3",
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
-    "growth-needs-a-before.html": "37c00b76f0d5fe3b5ad7d742462bc53a2cbe69c1e658191c1bfc6a38e043a645",
-    "ltj-bukem-the-man-behind-the-atmosphere.html": "b67283f255fb04f2a84acf1e8549ba3ee8ab20473767bf116e0b5c7802a10b5c",
-    "publications.html": "1e605da096f131d2b69c77ccff0d3cc81dac8437871920022328f36ccb5be54d",
+    "growth-needs-a-before.html": "b636c08568cec1c65386216cdeae2e487164e7bebfe7cdbb5d4dd64773554bcd",
+    "ltj-bukem-the-man-behind-the-atmosphere.html": "08c62122326ffd5035b07f1c89d1148dcd4ff582d9f1c151f03dde2972b832c7",
+    "publications.html": "d68e46b66eda714a615360274cd48027af5c098b0dbe8d8991f24cb984389d1c",
     "publications/data/index.json": "71bdaa3af4337892f6c6c891eeda8c389ffdf8f8b32299bd630003ef7835dc27",
     "sitemap.xml": "2ddceb3ff302b419ddc7bbbaab203cb42ba8201f46e6d03bc8d8d906919e70bd",
-    "support-has-more-than-one-record.html": "923b4fda1e79f41ae7d5dc725466a35d5e2ceeb53f5a184cdd62420499c34c07",
-    "the-number-has-a-vintage.html": "8a580317e4ac02b97e3769ae86ce13f92bd53884152c28cc0ce7e10609e4a037",
-    "the-sandbox-was-never-just-a-box.html": "e80f0547fe5407ef7d2be31283838465642f2c9e4704d7f856ed716c32868a2e",
-    "the-scene-the-song-did-not-tell-you.html": "995af8aaffc3bf03a723dafd1fd064061ba8fc7d6833cd46fcabc801ba3a5312",
-    "the-second-hearing.html": "4a213b04ddd18ec6a07dd96fee3ee9217cab0432444c746f8652d0942601028f",
-    "the-timestamp-is-not-the-order.html": "62aeb492c8970d451a7b62008606c17bcc5bf570101e163b492e2170b19321ef",
-    "what-the-formula-counts.html": "3c62c57e9dc8152c1b60f1e1762d332aa75744ccc6f747c034d7c42fb762d4ef",
-    "what-the-label-changes.html": "1724b45da4dffadc91734a8a250bbba9ecae72709239216286f6b5c929b7970d",
-    "who-knew-first-series.html": "91d9479fe4ebcc0d7f91858abe77198356a4ab23b2cb269ecf6b600eda61b329"
+    "support-has-more-than-one-record.html": "566d0dc1a576a102b2c597941825ce24e4ccd2d0de5b0d1f9601326b735cade2",
+    "the-number-has-a-vintage.html": "2f5639c9ec3e3e5be4ad76a9f1a6e9d284aff884ea24bfadcff13ee648f3a1aa",
+    "the-sandbox-was-never-just-a-box.html": "dc15ce4696295725a6b39b357cca4f2e44bdcffdb39f5198221bb909814563e8",
+    "the-scene-the-song-did-not-tell-you.html": "71152af0970752892aca3a4b627db7c8f1f093890810d3962a802ef87c8d0466",
+    "the-second-hearing.html": "0d850e58474f0546dbc01c00ece4e1fafc1e1f5dd61aadaf11a45bbb0de9e489",
+    "the-timestamp-is-not-the-order.html": "514e01251e4470f977eb61094a020845b4547c9b6edd5d4d3200e9924111dc09",
+    "what-the-formula-counts.html": "eda965c5431335feb899289d2404e164baaeab1cf6a91bfdaf397a1ba4a62bee",
+    "what-the-label-changes.html": "b98369abf34f58c7489748ea698c6cd878b812037b9ff28d3adfedf0c8e5d8f4",
+    "who-knew-first-series.html": "9d7483d5ede23442addac19efaa70c326e35d283aa00c1325f219f84d375487d"
   }
 }

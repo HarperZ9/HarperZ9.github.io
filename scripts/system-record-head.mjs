@@ -13,6 +13,9 @@
 // item, so the key moves with the markup, as system.css's does for the .ident rule.
 import { artPlate, escapeCopy, escapeHtml, linkRow, maturityState, MIDDOT } from "./system-page-parts.mjs";
 import { breadcrumbNode, isPublicSource, ldScript, ORIGIN, softwareNode } from "./structured-data-parts.mjs";
+import { cardTags } from "./analytics-cards.mjs";
+
+export { cardTags };
 
 const CATALOG_REVISION = "20260927-copy-pass";
 export const CATALOG_SHEET = `system/catalog.css?v=${CATALOG_REVISION}`;
@@ -49,16 +52,15 @@ function bodyOpen(navScript, noscript) {
 // caller names the stylesheets and the navigation module.
 export function renderIndexHead({ href, title, description, social, cardAlt, noscript, sheets, navScript }) {
   const full = `${title} ${MIDDOT} Zain Dana Harper`;
-  const image = "https://harperz9.github.io/img/og/portfolio-home.png";
   const meta = [
     `<title>${full}</title><meta name="description" content="${description}">`,
     `<link rel="canonical" href="https://harperz9.github.io/${href}">`,
     '<meta property="og:type" content="website"><meta property="og:site_name" content="Zain Dana Harper">',
     `<meta property="og:title" content="${full}"><meta property="og:description" content="${social}">`,
-    `<meta property="og:url" content="https://harperz9.github.io/${href}"><meta property="og:image" content="${image}">`,
-    `<meta property="og:image:alt" content="${cardAlt}"><meta name="twitter:card" content="summary_large_image">`,
+    `<meta property="og:url" content="https://harperz9.github.io/${href}">`,
+    ...cardTags(href),
     `<meta name="twitter:title" content="${full}"><meta name="twitter:description" content="${social}">`,
-    `<meta name="twitter:image" content="${image}"><meta name="color-scheme" content="light dark">${THEME_COLOR}`,
+    `<meta name="color-scheme" content="light dark">${THEME_COLOR}`,
   ].join("");
   return [
     '<!doctype html>\n<html lang="en" data-sys="index">\n<head>\n<meta charset="utf-8">\n',
@@ -70,14 +72,12 @@ export function renderIndexHead({ href, title, description, social, cardAlt, nos
   ].join("");
 }
 
-// A constellation card is the one social image a record page is allowed to
-// claim. Records without one fall back to a text summary card.
-//
+// Every record page carries its own link card from img/og/p (cardTags above).
 // A social platform caches a card image by its URL, so the URL carries the
-// image's own content hash (ctx.cardVersionById, from render-system-pages.mjs).
-// A re-rendered card gets a new URL and its new alt text never sits beside the
-// old picture; an unchanged card keeps its URL.
-function social(system, ctx) {
+// image's own content hash. A re-rendered card gets a new URL and its new alt
+// text never sits beside the old picture; an unchanged card keeps its URL.
+// Protected-name records (Elder, ENB, Skyrim) keep the cards they have.
+function legacySocial(system, ctx) {
   const name = escapeHtml(system.name);
   const purpose = escapeCopy(system.purpose);
   const shared = [
@@ -109,6 +109,26 @@ function social(system, ctx) {
       `<meta name="twitter:image:alt" content="${alt}">`,
       '<meta name="twitter:card" content="summary_large_image">',
       `<meta name="twitter:title" content="${escapeHtml(card.routeTitle)}">`,
+      `<meta name="twitter:description" content="${purpose}">`,
+    ])
+    .join("");
+}
+
+function social(system, ctx) {
+  const name = escapeHtml(system.name);
+  const purpose = escapeCopy(system.purpose);
+  const shared = [
+    '<meta property="og:type" content="website">',
+    '<meta property="og:site_name" content="Zain Dana Harper">',
+    `<meta property="og:title" content="${name} ${MIDDOT} Zain Dana Harper">`,
+    `<meta property="og:description" content="${purpose}">`,
+    `<meta property="og:url" content="https://harperz9.github.io/${escapeHtml(system.href)}">`,
+  ];
+  const tags = cardTags(system.href);
+  if (!tags) return legacySocial(system, ctx);
+  return shared
+    .concat(tags, [
+      `<meta name="twitter:title" content="${name} ${MIDDOT} Zain Dana Harper">`,
       `<meta name="twitter:description" content="${purpose}">`,
     ])
     .join("");

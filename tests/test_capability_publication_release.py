@@ -631,7 +631,9 @@ RELEASE_PATHS = (
 # loads atelier.js at a new stamp; the release is rehashed.
 # October 4, 2026: the Studio shell (source switch, inspector header, action bar, shared undo)
 # changes studio.html; the release is rehashed. Merging that change is the review.
-REVIEWED_RELEASE_SHA256 = "527bac3b6df4eab0378475ecca40d018fd5d23e355b46ed97465ea314c6959c6"
+# October 4, 2026: every page shares as its own link card from img/og/p, so the og and twitter
+# image tags of the release pages changed; the release is rehashed. Merging that change is the review.
+REVIEWED_RELEASE_SHA256 = "24460060a258c0d72a6607c3c684aa56cef7548789c9cbb180de71bfbdaef1a7"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

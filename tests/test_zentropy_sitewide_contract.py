@@ -895,7 +895,7 @@ def test_representative_pages_keep_route_art_metadata() -> None:
     for page in pages:
         html = read(page)
         match = re.search(
-            r'<meta property="og:image" content="https://harperz9.github.io/([^"]+)"',
+            r'<meta property="og:image" content="https://harperz9.github.io/([^"?]+)',
             html,
         )
         assert match, f"{page} must expose og:image metadata"

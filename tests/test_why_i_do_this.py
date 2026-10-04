@@ -49,7 +49,7 @@ def test_the_title_is_the_authors_choice_everywhere_it_is_shown() -> None:
     assert f"<title>{TITLE} · Zain Dana Harper</title>" in page
     for prop in ('property="og:title"', 'name="twitter:title"'):
         assert f'{prop} content="{TITLE}"' in page, prop
-    assert f'content="{TITLE}: ' in page  # og:image:alt
+    assert f'og:image:alt" content="{TITLE}, by Zain Dana Harper. ' in page
     assert f'aria-current="page">{TITLE}</a>' in page  # docnav
     listing, _stored = load_listing(ROOT / "publications/data/listings/why-i-do-this.json", ROOT)
     assert listing["title"] == TITLE

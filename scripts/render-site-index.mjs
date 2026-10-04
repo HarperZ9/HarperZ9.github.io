@@ -2,6 +2,26 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { ROUTE_REGISTRY } from '../system/routes.js';
+import { existsSync, readFileSync } from 'node:fs';
+
+// This script is copied alone into test sandboxes, so it reads the link-card
+// manifest itself (see scripts/analytics-cards.mjs for the shared version).
+// Without a manifest, as in a sandbox, the page renders without card tags.
+const CARD_MANIFEST = new URL('../img/og/p/cards.json', import.meta.url);
+const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+function cardTags(href) {
+  if (!existsSync(CARD_MANIFEST)) return [];
+  const card = JSON.parse(readFileSync(CARD_MANIFEST, 'utf8'))[href];
+  if (!card) throw new Error(`${href}: no card in img/og/p/cards.json`);
+  const alt = attr(card.alt);
+  return [
+    `<meta property="og:image" content="${card.image}">`,
+    '<meta property="og:image:width" content="1200">', '<meta property="og:image:height" content="630">',
+    `<meta property="og:image:alt" content="${alt}">`, '<meta name="twitter:card" content="summary_large_image">',
+    `<meta name="twitter:image" content="${card.image}">`, `<meta name="twitter:image:alt" content="${alt}">`,
+  ];
+}
 import { identPattern, markIdents, packageNames } from './ident-tokens.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -39,7 +59,7 @@ const page = `<!doctype html>
 <meta name="description" content="Find Flywheel workflows, standalone tools, safety and verification work, publications, graphics, fonts and collaboration routes.">
 <link rel="canonical" href="https://harperz9.github.io/site-index.html">
 <meta property="og:title" content="Site index · Zain Dana Harper"><meta property="og:type" content="website">
-<meta property="og:image" content="https://harperz9.github.io/img/og/portfolio-home.png">
+${cardTags("site-index.html").join(String.fromCharCode(10))}
 <meta property="og:description" content="A clear map of the workshop, with Flywheel as the main engine.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
