@@ -37,6 +37,7 @@ A second step moved the Retro front half (downscale, OKLab, palette, dither) int
 | `plugins/sketch.mjs` | The Studio's Sketch source, render half: the sheet in its mark register, guides under it |
 | `plugins/plotmap.mjs` | The Studio's Plot maps source, drawn with `plot-maps.js` |
 | `plugins/atelier.mjs` | The Studio's Atelier source, render half: `drawStrokes` (reveal and live frames) and `paintRich` (the settled drawing); `atelier.js` keeps the studies, the timing and the pointer play |
+| `plugins/poster.mjs` | The Studio's Poster source, render half: `poster.js`'s `renderPoster`; `poster-panel.js` keeps the controls, the critique and the perception call |
 | `plugins/slots.mjs` | Reserved slots (`raw`, `revival`) and the still card shown until a slot is filled |
 | `proof.html` | A bench page that mounts both plugins and compares the GPU tube against the CPU tube |
 
