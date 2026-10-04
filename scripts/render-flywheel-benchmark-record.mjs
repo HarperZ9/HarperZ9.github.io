@@ -605,7 +605,7 @@ function build(record, matrix, evidence, font) {
     + `<p>To regenerate the record, run <code>python scripts/run_offline_benchmarks.py</code> then <code>python scripts/build_benchmark_page.py</code> in the engine repository. A test there re-runs the first and compares the seal.</p></dd>`
     + `</dl></details>`;
 
-  return { html: page("Flywheel offline benchmark record", body), svg, companion };
+  return { html: page("Flywheel offline benchmark record", body, "analytics/flywheel-benchmark-record.html"), svg, companion };
 }
 
 async function source(name, repositoryPath, label) {

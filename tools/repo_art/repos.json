@@ -1,0 +1,137 @@
+{
+  "schema": "repo-art.config/1",
+  "note": "One entry per repository. Taglines and figures come from each README; maturity follows the rule in BRAND.md (no release: experimental; below 1.0: beta; 1.0 or later with a published release: stable). family is true only where Flywheel's README lists the tool as a lane.",
+  "repos": {
+    "crucible": {
+      "wordmark": "crucible",
+      "tagline": "Register a thesis, measure each claim, name the weakest axis.",
+      "command": "pip install crucible-bench",
+      "release": "1.5.0",
+      "maturity": "stable",
+      "family": true,
+      "art": {
+        "x": 0.74,
+        "y": 0.5,
+        "r": 0.34
+      },
+      "figure_alt": "Seven measured axes fan out from a bright core inside fine rings. One axis falls short of the dashed tolerance ring and is marked DRIFT; one has no measurement and is marked UNVERIFIABLE.",
+      "badges": {
+        "registry": "pypi",
+        "package": "crucible-bench",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "legend": "EACH AXIS A CLAIM  /  DASHED RING: TOLERANCE"
+    },
+    "forum": {
+      "wordmark": "forum",
+      "tagline": "Route a request, run it in waves, keep a record you can re-check.",
+      "command": "pip install forum-engine",
+      "release": "1.17.0",
+      "maturity": "stable",
+      "family": true,
+      "art": {
+        "x": 0.1,
+        "y": 0.46,
+        "r": 0.36
+      },
+      "figure_alt": "Routes leave a bright core and branch through three arcs of agents, with a gate drawn across the second arc. A chain of small linked squares, the ledger, runs along the outer edge.",
+      "layout": "art-left",
+      "badges": {
+        "registry": "pypi",
+        "package": "forum-engine",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "legend": "REQUEST  /  WAVES OF AGENTS  /  LEDGER"
+    },
+    "gather": {
+      "wordmark": "gather",
+      "tagline": "Research intake for gated APIs, JS pages and scanned PDFs.",
+      "command": "pip install gather-engine",
+      "release": "2.3.0",
+      "maturity": "stable",
+      "family": true,
+      "art": {
+        "x": 0.66,
+        "y": 0.46,
+        "r": 0.42
+      },
+      "figure_alt": "Five bundles of lines, solid, dashed, dotted, wavy and stepped, sweep in from the right and pass through a ring into one bright core. One line stops at the ring with a short cross mark.",
+      "text": "bottom",
+      "badges": {
+        "registry": "pypi",
+        "package": "gather-engine",
+        "license": "Gather Fair-Source",
+        "runtime": "python 3.11+"
+      },
+      "legend": "FIVE KINDS OF SOURCE  /  ONE GROUNDED CORE",
+      "legend_at": "top-left"
+    },
+    "index": {
+      "wordmark": "index",
+      "tagline": "Map a workspace offline. Refute a claim the code does not support.",
+      "command": "pip install index-graph",
+      "release": "2.16.0",
+      "maturity": "stable",
+      "family": true,
+      "art": {
+        "x": 0.25,
+        "y": 0.5,
+        "r": 0.36
+      },
+      "layout": "art-left",
+      "figure_alt": "Rings of small nodes, repositories, modules and symbols, linked by fine lines around a bright core. One dashed edge between two modules is crossed out and marked REFUTED.",
+      "badges": {
+        "registry": "pypi",
+        "package": "index-graph",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "legend": "EACH RING ONE SCALE  /  INNER TO OUTER"
+    },
+    "telos": {
+      "wordmark": "telos",
+      "tagline": "One workbench, and packets that recompute their own claims.",
+      "command": "npx -y project-telos-mcp",
+      "release": "0.9.0",
+      "maturity": "beta",
+      "family": true,
+      "art": {
+        "x": 0.72,
+        "y": 0.52,
+        "r": 0.5
+      },
+      "figure_alt": "An eye drawn in nested fine contours, its iris a ring of short radial lines around a dark pupil with a glowing rim. Five small rings sit on the eye's edge; one is dashed and marked UNVERIFIABLE.",
+      "text": "top",
+      "badges": {
+        "registry": "npm",
+        "package": "project-telos-mcp",
+        "license": "FSL-1.1-ALv2",
+        "runtime": "node 20+"
+      },
+      "legend": "FIVE SERVERS ON ONE SURFACE"
+    },
+    "raw-native": {
+      "wordmark": "raw-native",
+      "tagline": "Render on the CPU, then check the fast AO shortcut against ray tracing.",
+      "command": "raw_native_cli --out ./out",
+      "release": "0.5.1",
+      "maturity": "beta",
+      "family": false,
+      "art": {
+        "x": 0.72,
+        "y": 0.38,
+        "r": 0.36
+      },
+      "figure_alt": "A bright point on a surface. On the left, rays fan out and some stop on a hatched box; on the right, sample dots sit over a stepped depth profile. Below, a strip of dots of varying size, the error, and the readout RMSE 0.1349 / TOL 0.1200, REFUTED.",
+      "badges": {
+        "registry": "github",
+        "package": "raw-native",
+        "license": "FSL-1.1-MIT",
+        "runtime": "C++23"
+      },
+      "legend": "REFERENCE LEFT  /  SHORTCUT RIGHT"
+    }
+  }
+}

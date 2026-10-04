@@ -116,8 +116,8 @@ def test_generated_page_has_full_nojs_body_sources_figures_and_share_metadata() 
         assert (ROOT / "figures" / f"{item['id']}.svg").is_file()
         assert (ROOT / "figures" / f"{item['id']}.html").is_file()
     assert f'<link rel="canonical" href="{BASE_URL}{SLUG}.html">' in source
-    assert f'property="og:image" content="{BASE_URL}img/og/{SLUG}.png"' in source
-    assert (ROOT / "img/og" / f"{SLUG}.png").is_file()
+    assert f'property="og:image" content="{BASE_URL}img/og/p/{SLUG}.jpg?v=' in source
+    assert (ROOT / "img/og/p" / f"{SLUG}.jpg").is_file()
 
 
 def test_released_route_is_discoverable_in_feeds_listings_and_site_index() -> None:

@@ -12,6 +12,10 @@ reachable after the next edition replaces the live page.
 from __future__ import annotations
 
 import argparse
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 import hashlib
 import html
 import json
@@ -40,6 +44,9 @@ def record_path(date: str) -> str:
 def _head(date: str, assets: plate.ShellAssets) -> str:
     paths = {"root": ROOT_PREFIX, "css_dir": "../", "canonical": f"{SITE}{record_path(date)}"}
     head = plate._render_head(date, paths, assets)
+    # The card tags carry the page title in their alt text, so they are rebuilt for this title.
+    head = head.replace(card_tags(paths["canonical"], f"Frontier Safety Briefing · {date}"),
+                        card_tags(paths["canonical"], f"Conclusions on the Frontier Safety Briefing of {date}"))
     return head.replace(f"Frontier Safety Briefing · {_e(date)}",
                         f"Conclusions on the Frontier Safety Briefing of {_e(date)}")
 

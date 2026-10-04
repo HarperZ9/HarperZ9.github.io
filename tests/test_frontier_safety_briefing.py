@@ -230,7 +230,9 @@ def test_page_metadata_social_copy_and_site_links() -> None:
 
     for html in (page, archive):
         assert html.count("<h1") == 1
-        assert '<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">' in html
+        # 4 October 2026: each edition shares as its own card, never the generic telos.png.
+        assert '<meta property="og:image" content="https://harperz9.github.io/img/og/p/frontier-safety' in html
+        assert "img/og/telos.png" not in html
         assert "does not prove" in html.lower()
         assert "frontier-safety/data/current.json" in html or "../data/archive/" in html
     assert 'href="frontier-safety.html"' in research

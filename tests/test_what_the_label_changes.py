@@ -132,10 +132,7 @@ def test_generated_html_keeps_article_metadata_svg_alt_and_table_fallback() -> N
     html = read_text("what-the-label-changes.html")
     alt = re.escape(figure()["alt"])
     assert "<article>" in html and "</article>" in html
-    assert (
-        '<meta property="og:image" content="https://harperz9.github.io/img/og/what-the-label-changes.png">'
-        in html
-    )
+    assert '<meta property="og:image" content="https://harperz9.github.io/img/og/p/what-the-label-changes.jpg?v=' in html
     assert re.search(rf'<img src="figures/label-is-a-lens\.svg" alt="{alt}">', html)
     # 2026-09-25 void-and-bone pass: the table stacks into labelled records on a
     # phone, its short study keys set as numerals, and "What changed" is the result.

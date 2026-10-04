@@ -61,6 +61,10 @@ from datetime import date as calendar_date
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 
 # The plate shell lives beside this file. Test loaders import the builder by path, so
 # the directory goes on sys.path before the sibling import.
@@ -469,12 +473,9 @@ def _render_legacy_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
-<meta name="twitter:card" content="summary_large_image">
+{card_tags(canonical, 'Frontier Safety Briefing · ' + date)}
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="{root_prefix}system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root_prefix}system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{css_href}">
@@ -650,12 +651,9 @@ def _render_site_shell_html(edition: dict, *, archive: bool) -> str:
 <meta property="og:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta property="og:description" content="{description}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
-<meta name="twitter:card" content="summary_large_image">
+{card_tags(canonical, 'Frontier Safety Briefing · ' + date)}
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{description}">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="{root_prefix}system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root_prefix}system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{css_href}">

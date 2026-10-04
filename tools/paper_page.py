@@ -8,6 +8,10 @@ pages as their history, beside the edition that now carries the corrected wordin
 from __future__ import annotations
 
 import html
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 
 EARLIER_CORRECTIONS: dict[str, list[str]] = {
     "research-conferred-existence.html": [
@@ -65,12 +69,10 @@ HEAD = """<!DOCTYPE html>
 <meta property="og:title" content="{title} &middot; Zain Dana Harper">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="https://harperz9.github.io/{name}">
-<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
+{card}
 <meta property="article:modified_time" content="2026-10-03">
-<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title} &middot; Zain Dana Harper">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 {style}
 </head>
@@ -143,6 +145,7 @@ def page(name: str, spec: dict, fields: dict[str, str], body: str, notes: list[s
         title=esc(fields["title"]), desc=esc(fields["description"]), name=name, style=STYLE,
         kind=spec["kind"], kind_lower=spec["kind"].lower(), nav=esc(spec["nav"]),
         subtitle=sub_html, byline=html.escape(fields["byline"], quote=False), pdf=spec["pdf"],
+        card=card_tags(name, fields["title"]),
     )
     source = spec["source"]
     stem = spec["pdf"].removeprefix("papers/").removesuffix(".pdf")

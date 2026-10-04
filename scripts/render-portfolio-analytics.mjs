@@ -166,7 +166,7 @@ function modelComparisonFigure(dataset, comparison) {
     stamp: `Measured result, captured ${plainDate(dataset.capturedAt)}`,
   });
   const html = page("164-task model pass@1 comparison", `<p class="eyebrow">MEASURED MODEL COMPARISON · ${escapeMarkup(dataset.capturedAt)}</p><h1>164-task model pass@1 comparison</h1>`
-    + `<p class="lede">Two 14B coding models took the same ${n} code-completion tasks through the same harness, with one greedy try at each task.</p>${SHEET_DEFS}${figure}`);
+    + `<p class="lede">Two 14B coding models took the same ${n} code-completion tasks through the same harness, with one greedy try at each task.</p>${SHEET_DEFS}${figure}`, "analytics/model-pass-at-1-comparison.html");
   return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "model-pass-at-1-comparison", kind: "paired-model-comparison", sourceSha256: comparison.sourceSha256, units: ["pass@1", "passed tasks", "percentage points", "McNemar p-value"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
 }
 
@@ -216,7 +216,7 @@ function exploratoryStackFigure(dataset, comparison) {
       + `<p class="limit-line">This is stack-level evidence, not a same-model harness attribution test. ${escapeMarkup(notDrawn)}</p>${hwk}`,
     stamp: `Exploratory result, captured ${plainDate(dataset.capturedAt)}`,
   });
-  const html = page("Seven-case exploratory stack matrix", `<p class="eyebrow">EXPLORATORY ACTUAL RESULT · ${escapeMarkup(dataset.capturedAt)}</p><h1>Seven-case exploratory stack matrix</h1><p class="lede">The operational rows used the same seven cases and scoring fields, but different models and stack configurations. This is stack-level evidence, not a same-model harness attribution test.</p>${SHEET_DEFS}${figure}`);
+  const html = page("Seven-case exploratory stack matrix", `<p class="eyebrow">EXPLORATORY ACTUAL RESULT · ${escapeMarkup(dataset.capturedAt)}</p><h1>Seven-case exploratory stack matrix</h1><p class="lede">The operational rows used the same seven cases and scoring fields, but different models and stack configurations. This is stack-level evidence, not a same-model harness attribution test.</p>${SHEET_DEFS}${figure}`, "analytics/exploratory-stack-comparison.html");
   return { svg, html, companion: { renderer: "zentropy-portfolio-analytics/v2", figure: { id: "exploratory-stack-comparison", kind: "exploratory-actual-result", sourceSha256: comparison.sourceSha256, units: ["pass rate", "quality score", "milliseconds", "error rate", "failure counts"], denominator: comparison.denominator, retrievedAt: dataset.capturedAt, uncertainty: comparison.limitations, doesNotProve: comparison.doesNotProve, data: comparison } } };
 }
 
@@ -318,7 +318,7 @@ function sourceInventory(dataset) {
     body: `${chart}${limit}${hwk}`,
     stamp: `Inventory captured ${plainDate(dataset.capturedAt)}`,
   });
-  const html = page("Portfolio source inventory", `<p class="eyebrow">SUPPORTING INVENTORY · ${escapeMarkup(dataset.capturedAt)}</p><h1>Public source and test inventory</h1><p class="lede">This supporting inventory records commit-backed source structure. It is not the portfolio's benchmark result and is not used as a proxy for quality.</p>${SHEET_DEFS}${figure}`);
+  const html = page("Portfolio source inventory", `<p class="eyebrow">SUPPORTING INVENTORY · ${escapeMarkup(dataset.capturedAt)}</p><h1>Public source and test inventory</h1><p class="lede">This supporting inventory records commit-backed source structure. It is not the portfolio's benchmark result and is not used as a proxy for quality.</p>${SHEET_DEFS}${figure}`, "analytics/portfolio-source-inventory.html");
   const companion = {
     schema: "zentropy-portfolio-source-inventory/v1",
     capturedAt: dataset.capturedAt,
@@ -376,7 +376,7 @@ function benchmarkStatus(dataset) {
       + `<p class="limit-line">A tool that has not been measured has no score here, which is not a score of zero.</p>${hwk}`,
     stamp: `Status captured ${plainDate(dataset.capturedAt)}`,
   });
-  const html = page("Benchmark evidence status", `<p class="eyebrow">BENCHMARK EVIDENCE · ${escapeMarkup(dataset.capturedAt)}</p><h1>Benchmark evidence status</h1>${SHEET_DEFS}${figure}`);
+  const html = page("Benchmark evidence status", `<p class="eyebrow">BENCHMARK EVIDENCE · ${escapeMarkup(dataset.capturedAt)}</p><h1>Benchmark evidence status</h1>${SHEET_DEFS}${figure}`, "analytics/benchmark-evidence-status.html");
   const companion = {
     schema: "zentropy-benchmark-evidence-status/v1",
     capturedAt: dataset.capturedAt,
@@ -652,7 +652,7 @@ function currentCrossHarnessPilot(sourceRecord, sourceDocumentSha256) {
       + `<p class="limit-line">This is one repetition per task on one machine. Times are wall-clock medians and not a speed ranking. It is not market performance and not a quality ranking.</p>${hwk}`,
     stamp: `Run captured ${plainDate(companion.capturedAt)}`,
   });
-  const html = page(`Cross-harness run across ${counts.roles} harness roles`, `<p class="record-label">Current cross-harness run · ${escapeMarkup(companion.capturedAt)}</p><h1>Cross-harness run across ${counts.roles} harness roles</h1><p class="lede">${counts.roles} harness roles ran the same ${counts.tasks} tasks from the same task set. On every one of those tasks the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}, so what differs between the rows is the harness and the model behind it. ${counts.readable} of ${counts.attempts} attempts produced something a checker could read, and why the rest did not is reported beside each row rather than left inside the rate.</p>${SHEET_DEFS}${figure}`);
+  const html = page(`Cross-harness run across ${counts.roles} harness roles`, `<p class="record-label">Current cross-harness run · ${escapeMarkup(companion.capturedAt)}</p><h1>Cross-harness run across ${counts.roles} harness roles</h1><p class="lede">${counts.roles} harness roles ran the same ${counts.tasks} tasks from the same task set. On every one of those tasks the prompt bytes and the runtime-context bytes each role received were ${escapeMarkup(companion.parity.prompt)}, so what differs between the rows is the harness and the model behind it. ${counts.readable} of ${counts.attempts} attempts produced something a checker could read, and why the rest did not is reported beside each row rather than left inside the rate.</p>${SHEET_DEFS}${figure}`, "analytics/current-cross-harness-pilot.html");
   return { html, svg, companion };
 }
 

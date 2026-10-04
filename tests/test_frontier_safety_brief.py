@@ -67,7 +67,9 @@ def test_frontier_safety_brief_has_accessible_visual_evidence() -> None:
     diagram = ROOT / "img" / "diagrams" / "frontier-safety-incident-control-plane.svg"
 
     assert diagram.is_file(), "incident control-plane diagram is missing"
-    assert "frontier-safety-incident-control-plane.svg" in shell
+    # 4 October 2026: the page shares as its own 1200 x 630 card; the SVG diagram was its
+    # share image, which link previews do not render. The diagram stays published.
+    assert "img/og/p/frontier-safety-openai-hugging-face-incident.jpg?v=" in shell
     assert "alt=" in shell
 
     svg = diagram.read_text(encoding="utf-8")

@@ -1,3 +1,4 @@
+import { cardTags } from "./analytics-cards.mjs";
 /** The one page chassis every analytics figure is rendered into.
  *
  * Both renderers import this, so a figure cannot drift away from the live
@@ -91,14 +92,14 @@ function masthead(markup) {
 
 const footer = `<footer class="page-footer"><div class="page-footer-line" data-export-slot><a href="../research.html">Research</a><a href="../site-index.html">Site index</a></div></footer>`;
 
-export function page(title, body) {
+export function page(title, body, href = null) {
   const semanticBody = masthead(stackTables(body)
     .replaceAll("SUPPORTING INVENTORY", "Supporting inventory")
     .replaceAll("BENCHMARK EVIDENCE", "Benchmark evidence")
     .replaceAll("EXPLORATORY ACTUAL RESULT", "Exploratory actual result")
     .replaceAll("MEASURED MODEL COMPARISON", "Measured model comparison")
     .replaceAll("REPRODUCIBLE BENCHMARK EVIDENCE", "Reproducible benchmark evidence"));
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeMarkup(title)}</title><link rel="stylesheet" href="../system/system.css?v=20260927-copy-pass"><link rel="stylesheet" href="../system/report-editorial.css?v=20260925-void-plates" data-report-editorial><link rel="stylesheet" href="../system/notebook-sheet.css?v=${NOTEBOOK_REVISION}">${criticalStyle}<link rel="stylesheet" href="../system/print.css?v=20260925-void-plates" media="print" data-print-style></head><body class="analytics-page"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="../index.html">Zain Dana Harper</a> <a href="../research.html">Research</a> <a href="../who-knew-first.html">Who Knew First</a> <a href="../hire.html">Work</a></nav></noscript><script type="module" src="../system/nav.js?v=20260909-pillar-navigation"></script><main id="main">${semanticBody}${footer}</main></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeMarkup(title)}</title><link rel="stylesheet" href="../system/system.css?v=20260927-copy-pass"><link rel="stylesheet" href="../system/report-editorial.css?v=20260925-void-plates" data-report-editorial><link rel="stylesheet" href="../system/notebook-sheet.css?v=${NOTEBOOK_REVISION}">${criticalStyle}<link rel="stylesheet" href="../system/print.css?v=20260925-void-plates" media="print" data-print-style>${href ? `<meta property="og:title" content="${escapeMarkup(title)}">${(cardTags(href) || []).join("")}` : ""}</head><body class="analytics-page"><a class="skip-link" href="#main">Skip to content</a><div id="site-nav" class="site-nav"></div><noscript><nav class="site-nav"><a href="../index.html">Zain Dana Harper</a> <a href="../research.html">Research</a> <a href="../who-knew-first.html">Who Knew First</a> <a href="../hire.html">Work</a></nav></noscript><script type="module" src="../system/nav.js?v=20260909-pillar-navigation"></script><main id="main">${semanticBody}${footer}</main></body></html>`;
 }
 
 // ------------------------------------------------------------------ notebook sheet parts

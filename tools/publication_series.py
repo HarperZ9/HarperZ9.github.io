@@ -8,6 +8,10 @@ Publishing a part means adding its id, so the hub and the parts cannot drift apa
 from __future__ import annotations
 
 import html
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 
 from tools.publication_sections import human_date
 
@@ -82,12 +86,9 @@ def render_series_page(series: dict, items_by_id: dict[str, dict], table: str = 
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{summary}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{SITE_URL}img/og/who-knew-first-series.png">
-<meta property="og:image:alt" content="{title}">
-<meta name="twitter:card" content="summary_large_image">
+{card_tags(canonical, title, 'website')}
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{summary}">
-<meta name="twitter:image" content="{SITE_URL}img/og/who-knew-first-series.png">
 <link rel="preload" href="system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <link rel="stylesheet" href="system/series.css?v=20261001-series-opener">

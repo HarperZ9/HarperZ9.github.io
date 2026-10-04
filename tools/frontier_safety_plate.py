@@ -9,6 +9,10 @@ earlier archives stay in the builder. Layout lives in frontier-safety-edition.cs
 from __future__ import annotations
 
 import html
+try:
+    from tools.og_card import card_tags
+except ImportError:  # run as a script from tools/
+    from og_card import card_tags
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from urllib.parse import urlparse
@@ -316,12 +320,9 @@ def _render_head(date: str, paths: dict[str, str], assets: ShellAssets) -> str:
 <meta property="og:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta property="og:description" content="{DESCRIPTION}">
 <meta property="og:url" content="{paths['canonical']}">
-<meta property="og:image" content="https://harperz9.github.io/img/og/telos.png">
-<meta property="og:image:alt" content="A procedural Zain Dana Harper artwork card used for the Frontier Safety Briefing.">
-<meta name="twitter:card" content="summary_large_image">
+{card_tags(paths['canonical'], 'Frontier Safety Briefing · ' + date)}
 <meta name="twitter:title" content="Frontier Safety Briefing · {_e(date)}">
 <meta name="twitter:description" content="{DESCRIPTION}">
-<meta name="twitter:image" content="https://harperz9.github.io/img/og/telos.png">
 <link rel="preload" href="{root}system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{root}system/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{paths['css_dir']}frontier-safety-site.css?v={assets.site_css}">
