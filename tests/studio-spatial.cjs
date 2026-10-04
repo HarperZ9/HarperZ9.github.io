@@ -19,7 +19,19 @@ async function frame(page) {
     return [...new Uint8Array(h)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
   });
 }
-async function clickIn(page, sel) { const l = page.locator(sel).first(); await l.scrollIntoViewIfNeeded(); await l.click(); }
+// noWaitAfter: a world restart can hold a slow runner's main thread for many seconds after the
+// click; the test waits for the world itself below instead of for the click's aftermath.
+async function clickIn(page, sel) { const l = page.locator(sel).first(); await l.scrollIntoViewIfNeeded(); await l.click({ noWaitAfter: true }); }
+// Wait until the world says it has drawn: the status line names its receipt (or its failure), and no
+// longer says it is loading. A world loads in seconds here and much longer on a runner that draws
+// on the CPU, so the limit is 90 s. The world animates, so the frame itself is no signal.
+async function settled(page, min = 1500) {
+  await wait(page, min);
+  await page.waitForFunction(() => {
+    const t = (document.getElementById('sp-status') || {}).textContent || '';
+    return !/loading/i.test(t) && /receipt|failed|Refusing/.test(t);
+  }, null, { timeout: 90000, polling: 500 });
+}
 const order = (page) => page.evaluate(() => [...document.querySelectorAll('#inspector-actions > [data-action]')].map((b) => b.dataset.action));
 const active = (page, attr) => page.getAttribute(`#src-spatial [${attr}].active`, attr);
 const POSTER_SEED = '#poster-mount input[maxlength="40"]';
@@ -41,16 +53,16 @@ async function posterSeed(page, v) {
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 
       // Spatial: a world and a slider are steps; both survive a reload.
-      await page.goto(`${base}/studio.html?source=spatial`); await wait(page, 6000);
+      await page.goto(`${base}/studio.html?source=spatial`); await settled(page, 4000);
       assert.deepEqual(await order(page), ['primary', 'undo', 'redo', 'export'], `${tag} Spatial bar order`);
       assert.equal(await page.textContent('#inspector-actions [data-action="primary"]'), 'Export run receipt');
-      await clickIn(page, '[data-world="crystal-city"]'); await wait(page, 5000);
+      await clickIn(page, '[data-world="crystal-city"]'); await settled(page);
       assert.equal(await active(page, 'data-world'), 'crystal-city');
-      await clickIn(page, '[data-action="undo"]'); await wait(page, 5000);
+      await clickIn(page, '[data-action="undo"]'); await settled(page);
       assert.equal(await active(page, 'data-world'), 'atlas', `${tag} Undo returns the Atlas`);
-      await clickIn(page, '[data-action="redo"]'); await wait(page, 5000);
+      await clickIn(page, '[data-action="redo"]'); await settled(page);
       assert.equal(await active(page, 'data-world'), 'crystal-city', `${tag} Redo brings Crystal City back`);
-      await page.reload(); await wait(page, 8000);
+      await page.reload(); await settled(page, 4000);
       assert.equal(await active(page, 'data-world'), 'crystal-city', `${tag} a reload keeps the world`);
 
       // Poster: a seed is a step; Undo puts the first poster back exactly; a reload keeps it.
