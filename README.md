@@ -128,10 +128,10 @@ Written works: CC BY 4.0. The site's code, design and art: all rights reserved.
 The reusable engines behind the site are source-available under FSL-1.1-MIT
 in their own repositories.
 [raw-native](https://github.com/HarperZ9/raw-native) already ships under it.
-[superstack](https://github.com/HarperZ9/superstack),
-[reconcile](https://github.com/HarperZ9/reconcile) and the other engines move
-to it from their next version, so a copy vendored here can carry its older
-licence until it is refreshed. [Learn](https://github.com/HarperZ9/learn) has
+The copies vendored here carry it too:
+[superstack](https://github.com/HarperZ9/superstack) v0.2.0,
+[reconcile](https://github.com/HarperZ9/reconcile) v0.2.0, and sense-core and
+render-nd from studio-libs v0.2.0. [Learn](https://github.com/HarperZ9/learn) has
 its own licence. Use those repositories if you want to build on an engine.
 
 ## For developers

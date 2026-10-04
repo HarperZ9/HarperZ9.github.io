@@ -1,13 +1,14 @@
 <!-- writing-profile: readme -->
-# superstack v0.1.0, vendored
+# superstack v0.2.0, vendored
 
-These files come byte for byte from the `v0.1.0` tag of [HarperZ9/superstack](https://github.com/HarperZ9/superstack) (MIT), as its VENDORING.md describes:
+These files come byte for byte from the `v0.2.0` tag of [HarperZ9/superstack](https://github.com/HarperZ9/superstack), as its VENDORING.md describes. From v0.2.0 superstack is licensed under FSL-1.1-MIT (Functional Source License 1.1, MIT future licence); `LICENSE` here is the release's own copy. The public-domain notices for mulberry32 and xmur3 stay in the header of each file. The site around these files stays all rights reserved, and the same author holds both.
 
 | Here | Upstream |
 |---|---|
 | `system/media-engine/contracts.mjs` | `superstack.mjs` |
 | `tools/superstack.py` | `superstack.py` (pin in `tools/SUPERSTACK.sha256`) |
 | `tests/superstack/SHA256SUMS` | `SHA256SUMS` |
+| `tests/superstack/LICENSE` | `LICENSE` (FSL-1.1-MIT) |
 | `tests/superstack/vectors/` | `vectors/` |
 | `tests/superstack/tests/run_vectors.mjs` | `tests/run_vectors.mjs` |
 | `tests/superstack/tests/run_vectors.py` | `tests/run_vectors.py` |

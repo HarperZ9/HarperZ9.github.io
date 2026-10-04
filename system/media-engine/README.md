@@ -1,7 +1,7 @@
 <!-- writing-profile: readme -->
 # Media engine
 
-One scheduler, one seed and receipt layer, one colour module, and a plugin per visual surface. No build step. The one outside file is the superstack contract (`contracts.mjs`), copied byte for byte from superstack v0.1.0 and pinned by SHA-256.
+One scheduler, one seed and receipt layer, one colour module, and a plugin per visual surface. No build step. The one outside file is the superstack contract (`contracts.mjs`), copied byte for byte from superstack v0.2.0 (FSL-1.1-MIT) and pinned by SHA-256.
 
 ## What it does for a page
 
@@ -20,7 +20,7 @@ A second step moved the Retro front half (downscale, OKLab, palette, dither) int
 |---|---|
 | `core.mjs` | `createEngine()`: plugin registry, scheduler, `mount()`, frame receipts |
 | `page.mjs` | `pageEngine()` and `usePlugin(id)`: one engine per page, plugins loaded on first use |
-| `contracts.mjs` | The vendored superstack v0.1.0 contract (MIT): canonical JSON, SHA-256, the seed rule, the flick clock, OKLab, risk tokens, PCM and loudness, reconcile and receipts. Never edited; `SUPERSTACK.sha256` holds its pin and CI checks it and runs the release's vectors (`tests/superstack/`) |
+| `contracts.mjs` | The vendored superstack v0.2.0 contract (FSL-1.1-MIT): canonical JSON, SHA-256, the seed rule, the flick clock, OKLab, risk tokens, PCM and loudness, reconcile and receipts. Never edited; `SUPERSTACK.sha256` holds its pin and CI checks it and runs the release's vectors (`tests/superstack/`) |
 | `seed.mjs` | `mulberry32`, `makeRng`, `xmur3` (the contract's seed rule), `fnv1a32` and `rngFrom` (the legacy `fnv1a32-mulberry32` rule): the site's one seeded randomness |
 | `sound.mjs` | The sound layer: scenes, offline float64 references, loudness, PCM receipts, live playback and its reconcile, reduced sound |
 | `receipt.mjs` | `frameReceipt` (a `superstack.receipt/1`), `reconcileFrame`, `verifyReceipt`, `verifyBytes`, `digestOrNull`, `digest` |

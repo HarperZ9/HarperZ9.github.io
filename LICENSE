@@ -35,9 +35,10 @@ those repositories carries its own licence, and that licence governs it.
 | `system/lib/vendor/d3-7.9.0.*` | D3 7.9.0, Mike Bostock | ISC, see the `.LICENSE.txt` beside it |
 | `system/lib/vendor/panzoom-anvaka-9.4.3.*` | panzoom 9.4.3, Andrei Kashcha | MIT, see the `.LICENSE.txt` beside it |
 | `system/lib/vendor/tweakpane-4.0.5.*` | Tweakpane 4.0.5, cocopon | MIT, see the `.LICENSE.txt` beside it |
-| `system/lib/reconcile/` | reconcile, by the author, synced from its repository | the `LICENSE` in that directory; see `LICENSE-NOTE.md` there |
+| `system/lib/reconcile/` | reconcile v0.2.0, by the author | FSL-1.1-MIT, see `LICENSE` and `LICENSE-NOTE.md` there |
+| `system/lib/sense-core/`, `system/lib/render-nd/` | sense-core and render-nd from studio-libs v0.2.0, by the author | FSL-1.1-MIT, see `LICENSE` and `LICENSE-NOTE.md` in each |
 | `system/vendor/learn/` | Learn, by the author, pinned by `VENDOR.json` | the `LICENSE` in that directory |
-| `system/media-engine/contracts.mjs`, `tests/superstack/` | superstack v0.1.0, by the author | MIT, see the header of `contracts.mjs` and `tests/superstack/README.md` |
+| `system/media-engine/contracts.mjs`, `tools/superstack.py`, `tests/superstack/` | superstack v0.2.0, by the author | FSL-1.1-MIT, see `tests/superstack/LICENSE` and the header of each file |
 | `media/raw-native/wasm-0.4.0/` | raw-native v0.4.0 build, by the author | FSL-1.1-MIT, see `LICENSE-NOTE.md` there |
 | `plugins/data/*/LICENSE` | copies of each plugin's licence, shown on its terms page | each plugin's own licence |
 | `assets/*.js` | compiled home page, which bundles React, react-dom and scheduler | MIT, see `THIRD-PARTY-NOTICES.md` |
