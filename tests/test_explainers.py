@@ -74,3 +74,27 @@ def test_each_explainer_is_on_its_page_with_captions_and_transcript() -> None:
         assert f'src="media/explainers/{slug}/{slug}.vtt"' in html, slug
         assert f'id="explainer-{slug}-transcript"' in html, slug
         assert "autoplay" not in html.split(f'id="explainer-{slug}"', 1)[1].split("</figure>", 1)[0]
+
+
+def test_every_explainer_has_a_sealed_narration_receipt() -> None:
+    # superstack.receipt/1 over the narration's s16le PCM (SPEC 8.7): the seal holds, it names the
+    # same WAV and spec as the explainer's receipt, and the script hash still matches the spec.
+    from tools.explainer import narration
+    for folder in FOLDERS:
+        assert narration.check(folder) == [], folder.name
+        rec = json.loads((folder / narration.NAME).read_text(encoding="utf-8"))
+        nar = rec["media"]["narration"]
+        assert nar["reference"] is False and nar["hosted"] is False
+        assert rec["media"]["access"] == {"autoplay": False, "captions": "vtt", "transcript": True, "reduced_sound": "silent"}
+        assert rec["media"]["loudness_class"] == "speech"
+        assert rec["media"]["loudness_verdict"] in ("verified", "refuted")
+
+
+def test_a_narration_receipt_check_can_fail() -> None:
+    from tools import superstack as ss
+    from tools.explainer import narration
+    folder = FOLDERS[0]
+    rec = json.loads((folder / narration.NAME).read_text(encoding="utf-8"))
+    forged = {**rec, "content_sha256": "0" * 64}
+    assert ss.verify_receipt(forged) == ["seal"]
+    assert narration.text_sha256(["a", "b"]) != narration.text_sha256(["a b"])

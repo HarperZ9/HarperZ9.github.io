@@ -33,6 +33,9 @@ jobs:
           python tests/superstack/tools/check_vendored.py system/media-engine/contracts.mjs --expect "$(cut -d' ' -f1 system/media-engine/SUPERSTACK.sha256)"
           python tests/superstack/tools/check_vendored.py system/media-engine/contracts.mjs --sums tests/superstack/SHA256SUMS --as superstack.mjs
           node tests/superstack/tests/run_vectors.mjs --impl system/media-engine/contracts.mjs
+          python tests/superstack/tools/check_vendored.py tools/superstack.py --expect "$(cut -d' ' -f1 tools/SUPERSTACK.sha256)"
+          python tests/superstack/tools/check_vendored.py tools/superstack.py --sums tests/superstack/SHA256SUMS
+          python tests/superstack/tests/run_vectors.py --impl tools/superstack.py
       # The media engine, its plugins, and every module that now takes its seed from it.
       - name: Media engine and renderer regressions
         if: ${{ !cancelled() }}
