@@ -637,7 +637,9 @@ RELEASE_PATHS = (
 # is rehashed.
 # October 4, 2026, later: studio.html loads the Studio and the Atelier at the entry slice's
 # stamps; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "efa8af26684bb6f733eeda97ea974ec62d79ec55b557fe7801cb1e4a782d601f"
+# October 4, 2026, later: studio.html restores Sketch's stroke Undo and loads the Studio at
+# the restore stamp; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "efd017e303e12ed4da2bfe70fb57c6611b569df2e91b8a7bf447e1c80d7cb58a"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

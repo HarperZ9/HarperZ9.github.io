@@ -66,6 +66,9 @@ STUDIO_KEEP_REVISION = "20261004-studio-keep"
 # 4 October 2026, later: the Atelier, 3D Fractal and Dimensions join the shell and draw their own
 # frame on entry; studio.js and atelier.js take a new stamp.
 STUDIO_ENTRY_REVISION = "20261004-studio-entry"
+# 4 October 2026, later: every rail control back in its place, Sketch's stroke Undo restored;
+# studio.js and studio-shell.css take a new stamp.
+STUDIO_RESTORE_REVISION = "20261004-studio-restore"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -114,8 +117,8 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": STUDIO_ENTRY_REVISION,
-    "system/studio-shell.css": STUDIO_KEEP_REVISION,
+    "system/studio.js": STUDIO_RESTORE_REVISION,
+    "system/studio-shell.css": STUDIO_RESTORE_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
