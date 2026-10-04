@@ -33,3 +33,18 @@ system/vendor/learn/** -text
 system/media-engine/contracts.mjs text eol=lf
 tools/superstack.py text eol=lf
 tests/superstack/** text eol=lf
+
+# tests/superstack/SHA256SUMS pins the vendored superstack implementations by the
+# SHA-256 of their exact bytes (tools/superstack.py, and system/media-engine/
+# contracts.mjs checked as superstack.mjs); SUPERSTACK.sha256 beside each copy pins
+# the same bytes, and tests/superstack/vectors/MANIFEST.json pins every vector.
+# The `text eol=lf` rules above write LF, but Git still converts these files on
+# commit and checkout. `-text` turns conversion off for exactly these paths, so the
+# bytes on disk are the committed blob under any core.autocrlf setting. Later lines
+# win. media/raw-native/wasm-*/** is already -text above.
+tests/superstack/SHA256SUMS -text
+tests/superstack/vectors/*.json -text
+tools/superstack.py -text
+tools/SUPERSTACK.sha256 -text
+system/media-engine/contracts.mjs -text
+system/media-engine/SUPERSTACK.sha256 -text
