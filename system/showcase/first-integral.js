@@ -5,7 +5,7 @@
 import { makeScene, buildGround, seedUint32, deriveIC } from "./orbit-render.js?v=20260925-studio-plate";
 import { buildReport, recheck } from "./report.js?v=20260701a";
 import { buildReadout, readoutSentence, readoutJSON } from "./readout.js?v=20260925-studio-plate";
-import { wireShowcaseControls, downloadReportJSON } from "./controls.js?v=20260701a";
+import { wireShowcaseControls, downloadReportJSON } from "./controls.js?v=20261004-studio-shell";
 import { buildView, REFUSAL_DRAG } from "./view.js?v=20260701a";
 import { SYSTEMS } from "../discovery/systems.js";
 import { simulate } from "../discovery/integrator.js";
