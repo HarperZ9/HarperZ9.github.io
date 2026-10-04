@@ -118,7 +118,10 @@ def rewrite_readme(text: str, name: str, cfg: dict) -> str:
                 continue
         keep.append(line)
     body = "\n".join(keep).lstrip("\n")
-    body = re.sub(r"\n{3,}", "\n\n", body)
+    # Collapse runs of blank lines in prose only; a code block keeps its own spacing
+    # (PEP 8 blank lines in a Python example are checked by ruff 0.16 and later).
+    parts = re.split(r"(^```[^\n]*\n.*?^```[ \t]*$)", body, flags=re.M | re.S)
+    body = "".join(x if x.startswith("```") else re.sub(r"\n{3,}", "\n\n", x) for x in parts)
     for pat, repl in STALE:
         body = pat.sub(repl, body)
     return header(name, cfg) + "\n" + body
