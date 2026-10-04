@@ -4,7 +4,7 @@
 // without throwing and registers as an instrument.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { seedTypeface, drawTypefaceSpecimen, drawTypeface } from "./typeface.js";
+import { seedTypeface, drawTypefaceSpecimen, drawTypeface, DISPLAY_STACK } from "./typeface.js";
 import { neuralSeed } from "./neural.js";
 import { specimenLayerNames } from "./generative-field.js";
 
@@ -94,4 +94,34 @@ test("drawTypeface is registered as a specimen instrument", () => {
   // The layer adapter honours the (ctx, w, h, tick, seed, palette) contract.
   const log = [];
   assert.doesNotThrow(() => drawTypeface(makeCtx(log), 400, 200, 0, 7, null));
+});
+
+// Re-pinned 4 October 2026: the author retired Kilon and Telos Display, the face
+// built from it, because viewers found them hard to read. The design canon allows
+// two faces, Hanken Grotesk and Conso, so the specimen now sets its word in Hanken
+// Grotesk at the seed's weight. Before this date the stack read
+// "'Telos Display', 'Kilon', Georgia, serif", and since no stylesheet loaded either
+// face, browsers drew the plate in Georgia. The pixel hashes of every typeface
+// output changed with this swap, and only those; the PR lists them.
+test("the specimen draws only with the canon faces", () => {
+  const fonts = [];
+  const log = [];
+  const ctx = makeCtx(log);
+  const recorder = new Proxy(ctx, {
+    get(t, prop) { return t[prop]; },
+    set(t, prop, value) { if (prop === "font") fonts.push(String(value)); t[prop] = value; return true; },
+  });
+  for (const seed of ["aurora", "cinder", "gallery-typeface", 7]) {
+    drawTypefaceSpecimen(recorder, 640, 360, seed);
+  }
+  assert.equal(DISPLAY_STACK, "'Hanken Grotesk', system-ui, sans-serif");
+  assert.ok(fonts.length > 0, "the specimen sets a font");
+  for (const font of fonts) {
+    assert.match(font, /'Hanken Grotesk'/, font);
+    assert.doesNotMatch(font, /Kilon|Telos Display|Georgia|(?<!sans-)serif/i, font);
+  }
+  // The seeded weight is the face's identity: it reaches the canvas unchanged.
+  const ax = seedTypeface("aurora");
+  const weight = Math.max(300, Math.min(900, Math.round(ax.weightClass / 100) * 100));
+  assert.ok(fonts.some((f) => f.startsWith(`${weight} `)), `expected weight ${weight}`);
 });

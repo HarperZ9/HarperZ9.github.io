@@ -75,7 +75,11 @@ function cssWeight(weightClass) {
   return Math.max(300, Math.min(900, Math.round(weightClass / 100) * 100));
 }
 
-const DISPLAY_STACK = "'Telos Display', 'Kilon', Georgia, serif";
+// The display face is the site's one grotesk, Hanken Grotesk, a variable face
+// (100 to 900) so every seeded weight renders as itself. On 4 October 2026 the
+// author retired Kilon and Telos Display, the face built from it, because viewers
+// found them hard to read; the design canon allows Hanken Grotesk and Conso only.
+export const DISPLAY_STACK = "'Hanken Grotesk', system-ui, sans-serif";
 
 /* Render a seeded type specimen onto a 2D context. Draws a word with the seed's
    slant, width, and weight applied to the loaded display face, plus a small axis

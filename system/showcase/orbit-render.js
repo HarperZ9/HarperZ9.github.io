@@ -4,7 +4,7 @@
 //   L3 accumulating ink polyline, per-segment low-alpha darkening, never additive glow .
 //   L4 the single iris accent (moving body dot + fitted-invariant hairline; the verdict chip is
 //   the UI layer's third use, drawn on-canvas only in the capture layout) .
-//   L5 mono type, plus the hero=1 capture layout with the edge-pinned Kilon display word.
+//   L5 mono type, plus the hero=1 capture layout with the edge-pinned display word.
 // Module top level is DOM-free so report.js (wave 2B) and node tests can import the pure
 // helpers (seedUint32, deriveIC, groundWorld, CERAMIC_RAMP). ASCII only; no em or en dashes.
 import { create, getOrgan, makeLayer, makeArtifact, expr } from "../lib/reconcile/index.js";
