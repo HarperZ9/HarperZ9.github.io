@@ -95,8 +95,21 @@ async function setSeed(page, id, v) {
       assert.equal(await page.inputValue('#disc-terms'), terms0, `${tag} and its terms`);
 
       assert.deepEqual(errors, [], `${tag} no console errors`);
-      console.log(`${tag} studio instruments: pass`);
       await ctx.close();
+
+      // Less motion: a stopped Music field holds one frame and asks for no animation frames.
+      const rctx = await browser.newContext({ viewport: view.viewport, isMobile: view.mobile, hasTouch: view.mobile, reducedMotion: 'reduce' });
+      await rctx.addInitScript(() => {
+        window.__rafCount = 0; const raf = window.requestAnimationFrame.bind(window);
+        window.requestAnimationFrame = (cb) => { window.__rafCount++; return raf(cb); };
+      });
+      const rp = await rctx.newPage();
+      await rp.goto(`${base}/studio.html?source=music`); await wait(rp, 5000);
+      const r0 = await rp.evaluate(() => window.__rafCount); await wait(rp, 2000);
+      const perSecond = ((await rp.evaluate(() => window.__rafCount)) - r0) / 2;
+      assert.ok(perSecond < 5, `${tag} a stopped Music field under reduced motion asks for ${perSecond} frames a second`);
+      await rctx.close();
+      console.log(`${tag} studio instruments: pass`);
     }
   } catch (err) {
     failures++;

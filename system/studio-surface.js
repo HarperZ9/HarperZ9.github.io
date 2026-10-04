@@ -261,6 +261,8 @@ export async function buildPane() {
 
   _pane = new TweakpanePaneCtor({ container: _paneContainer, title: "Controls" });
   _pane.expanded = false;   // collapsed by default
+  try { _pane.on("fold", (ev) => { if (ev && ev.expanded && _monWanted) startMonitorLoop(); }); }
+  catch (e) { console.warn("[studio-surface] pane fold event unavailable:", e); }
 
   buildMusicFolder(_pane);
   buildFractalFolder(_pane);
@@ -428,15 +430,19 @@ let _fractalPaneParams = null;
 // ============================================================================
 // Section 5: Monitor update loop
 // ============================================================================
-// One rAF loop that updates Tweakpane monitor bindings at ~12 Hz.
-// Only runs when the pane is expanded and the music folder is showing features.
+// One rAF loop that updates Tweakpane monitor bindings at ~12 Hz. It runs only while a source
+// asked for it (_monWanted) and the Controls pane is open: before 4 October 2026 it asked for a
+// frame 60 times a second from the moment Music, Dimensions or 3D Fractal was entered, pane or no
+// pane, and kept a still Music field busy under reduced motion.
 
 let _monRaf = null;
+let _monWanted = false;
 const MON_HZ = 12;
 const MON_MS = 1000 / MON_HZ;
 let _monLastTs = 0;
 
 function monTick(ts) {
+  if (!_pane || !_pane.expanded) { _monRaf = null; return; }   // opening the pane starts it again
   _monRaf = requestAnimationFrame(monTick);
   if (ts - _monLastTs < MON_MS) return;
   _monLastTs = ts;
@@ -456,12 +462,14 @@ function monTick(ts) {
 }
 
 export function startMonitorLoop() {
-  if (_monRaf) return;
+  _monWanted = true;
+  if (_monRaf || !_pane || !_pane.expanded) return;
   if (typeof requestAnimationFrame !== "function") return;
   _monRaf = requestAnimationFrame(monTick);
 }
 
 export function stopMonitorLoop() {
+  _monWanted = false;
   if (_monRaf != null) { cancelAnimationFrame(_monRaf); _monRaf = null; }
 }
 

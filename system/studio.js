@@ -14,7 +14,7 @@ import { representation, richFeatures, describeFrame, describeFrameLong, percept
 // module graph at load time the way a missing named import would.
 import * as senseCore from "./sense.js";
 import { respond } from "./respond.js";
-import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
+import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js?v=20261004-music-still";
 import { buildModelHeaders } from "./studio-model.js";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { createPerceptionWorker } from "./studio-perception-client.js";
@@ -37,7 +37,7 @@ import {
   registerFractalCallbacks,
   startMonitorLoop,
   stopMonitorLoop,
-} from "./studio-surface.js";
+} from "./studio-surface.js?v=20261004-music-still";
 
 // ── Lazy per-source module graphs (setSource() is the lazy boundary) ─────────────────────────
 // Each loader caches its in-flight promise (a graph is fetched once, never twice) and mirrors the
@@ -272,7 +272,7 @@ const loadMediaEngine = lazyLoader(async () => {
 // Music source: the reactive engine + its tab UI (both publish window globals, imported for effect).
 const loadReactive = lazyLoader(async () => {
   await import("./reactive.js?v=20260625b");          // sets window.MusicExperience + window.ReactiveVisuals
-  await import("./reactive-music-ui.js?v=20260625b"); // wires the Music tab controls to it
+  await import("./reactive-music-ui.js?v=20261004-music-still"); // wires the Music tab controls to it
   feedEngineCapability();                             // the engine exists now; hand it the probed capability
 });
 
@@ -4731,6 +4731,13 @@ function currentSourceLabel() {
   return "the Atelier / 2D";
 }
 
+// Music is still when nothing plays and the visitor asked for less motion: the idle field holds one
+// frame then (reactive-music-ui.js), so the perception loop may rest on it.
+function musicHeldStill() {
+  const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return reduced && !(window.MusicExperience && window.MusicExperience.running);
+}
+
 // ── the live loop: ONE throttled rAF, cancellable, never stacked. Re-perceives the active canvas
 // while a source animates (3D orbit / playing video / capture). Pauses (stops) when the frame goes
 // static so we don't spin the CPU on a still frame; restarts on the next source change. The model's
@@ -4815,7 +4822,7 @@ function liveAfterMeasure(ts, phash) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic, engineStatic: _engineSurface ? _engineSurface.engineSurfaceStatic() : true });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic, musicStatic: musicHeldStill(), engineStatic: _engineSurface ? _engineSurface.engineSurfaceStatic() : true });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }

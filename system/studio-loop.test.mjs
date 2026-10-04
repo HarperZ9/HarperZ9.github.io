@@ -72,3 +72,12 @@ test("fullscreen backing tolerates missing / zero inputs", () => {
   assert.equal(fullscreenMaxBacking(0, 0, 0), 1600);          // all zero → floor
   assert.equal(fullscreenMaxBacking(undefined, undefined, undefined), 1600);
 });
+
+// 4 October 2026: Music held still under reduced motion (nothing playing) lets the loop idle; while
+// it plays, or with no state given, it stays animated as before.
+test("music: animated unless held still under reduced motion", () => {
+  assert.equal(sourceIsAnimated("music"), true);
+  assert.equal(sourceIsAnimated("music", { musicStatic: false }), true);
+  assert.equal(sourceIsAnimated("music", { musicStatic: true }), false);
+  assert.equal(shouldHaltOnStatic(true, sourceIsAnimated("music", { musicStatic: true })), true);
+});

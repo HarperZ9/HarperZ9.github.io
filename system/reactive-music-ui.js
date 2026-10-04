@@ -233,6 +233,9 @@
         const t = (ts - _idleTs) / 1000;
         window.ReactiveVisuals.drawIdle(canvas, t);
       }
+      // Less motion: the idle field holds its first frame. It used to keep drifting at the full
+      // frame rate whatever the visitor's setting; Play still plays.
+      if (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches) { _idleRaf = null; return; }
       _idleRaf = requestAnimationFrame(idleTick);
     }
 
