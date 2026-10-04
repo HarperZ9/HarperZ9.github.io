@@ -1471,7 +1471,7 @@ function boot() {
   const audioSeed = () => ($("re-fxseed").value || "drone") + "-" + $("re-palette").value;
   async function ensureAudio() {
     if (audio) return audio;
-    const m = await import("./retro-audio.js?v=20260812-cohesion");
+    const m = await import("./retro-audio.js?v=20261003-retro-sound");
     audio = m.createRetroAudio();
     return audio;
   }
