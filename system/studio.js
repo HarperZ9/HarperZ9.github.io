@@ -686,6 +686,7 @@ function setSource(next) {
     Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge(), loadPlotPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
+      if (_shell) _shell.resume("plotmaps");
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
   } else if (window.__studioContentRect && window.__studioContentRect.source === "plotmaps") {
     window.__studioContentRect = null;   // leaving: stop cropping measurements to the old sheet
@@ -695,6 +696,7 @@ function setSource(next) {
     Promise.all([loadVoxelForge(), loadVoxelPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawVoxelScene();
+      if (_shell) _shell.resume("voxels");
     }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Sketch: freehand drawing. The sketch object persists across switches, so returning shows the
@@ -1094,6 +1096,7 @@ function drawPlotMap() {
   const obs = perceive(c);
   sayPlotReceipt(plot, seed, obs);
   startMeterLoop();
+  if (_shell) _shell.record("plotmaps");
 }
 
 // The sheet's own account of how it came to be — one voice per kind, every claim carried by a
@@ -1407,6 +1410,7 @@ function repaintVoxelScene(announce) {
       + `and the .vox export hashes exactly what you see, with seed, turns, and hand edits included.`);
   }
   startMeterLoop();
+  if (_shell) _shell.record("voxels");   // a build, a turn or an edit is one step; a zoom is none
 }
 
 // Repaint the plot sheet without rebuilding — the pure-zoom path.
@@ -5508,6 +5512,14 @@ function resizeActiveSurface() {
       sizeCanvas(canvas);
       if (_neural) { try { _neural.redrawNeural(); } catch (e) { console.error("[studio] living neural redraw failed:", e); } }
       break;
+    case "plotmaps":
+    case "voxels":
+      // Still sheets with no loop to repaint them: a resize during boot (a late font) cleared the
+      // backing, so ?source=plotmaps and ?source=voxels landed on an empty canvas. Re-fit, then
+      // paint the same sheet or build again without rebuilding it.
+      sizeCanvas(canvas);
+      if (activeSource === "plotmaps") repaintPlotMap(); else repaintVoxelScene(false);
+      break;
     case "sketch":
       // A resize clears the backing, and the sketch is a still sheet with no loop to repaint it, so
       // a layout shift during boot (a late font) left ?source=sketch on an empty canvas. drawSketch
@@ -6697,7 +6709,43 @@ const setRange = (id, value, outId, fmt) => {
   el.value = String(value);
   const out = outId && $(outId); if (out) out.textContent = fmt ? fmt(el.value) : el.value;
 };
+// A voxel build put back exactly, in this task: controls, scene, then every turn and edit in order.
+function restoreVoxelBuild(v) {
+  if (!_voxelForge) return;
+  applyVoxelRecipe(v);
+  _lastVoxelScene = _voxelForge.buildVoxelScene(v.seed, { study: v.study, res: v.res, tune: v.tune });
+  _voxelOps = [];
+  applyVoxelOps(v.ops);
+  repaintVoxelScene(false);
+}
 const SHELL_CONTRACTS = {
+  plotmaps: {
+    making: true,
+    primary: { label: "Draw", target: "plot-draw", title: "Draw the map sheet with these settings" },
+    exports: [{ label: "SVG sheet", target: "plot-svg" }, { label: "G-code", target: "plot-gcode" }, PNG_FRAME],
+    pin: "plot-pin",
+    // The recipe a pin carries. A picture or a captured frame is not in it (only its controls), so
+    // a reload says the pixels are gone rather than keeping them.
+    snapshot: () => (_lastPlot ? currentPlotRecipe() : null),
+    restore(state) { restorePin({ kind: state.kind, recipe: state.rec }); },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      restorePin({ kind: "field", recipe: { material: "field", study: "auto", method: "auto", register: "auto", blend: "alone",
+        seed: d("plot-seed") || "aurora", density: d("plot-density"), levels: d("plot-levels") } });
+    },
+  },
+  voxels: {
+    making: true,
+    primary: { label: "Build", target: "voxel-draw", title: "Build and draw the voxel scene" },
+    exports: [{ label: ".vox", target: "voxel-vox" }, { label: "OBJ", target: "voxel-obj" }, PNG_FRAME],
+    pin: "voxel-pin",
+    snapshot: () => (_lastVoxelScene ? voxelRecipe() : null),
+    restore(state) { restoreVoxelBuild(state); },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      restoreVoxelBuild({ study: "relic", seed: d("voxel-seed") || "aurora", res: Number(d("voxel-res")) || 48, tune: null, ops: [] });
+    },
+  },
   byo: {
     primary: { label: "Choose a file", target: "studio-file", title: "Choose an image, video, 3D model or sound from this device" },
     exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],

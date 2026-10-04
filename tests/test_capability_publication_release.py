@@ -639,7 +639,9 @@ RELEASE_PATHS = (
 # stamps; the release is rehashed.
 # October 4, 2026, later: studio.html loads the Studio at the bring slice's stamps; the
 # release is rehashed.
-REVIEWED_RELEASE_SHA256 = "f40274551554c703f2e90e6e8aee44d6e65e64e7fd97cc9b16094997f04ca292"
+# October 4, 2026, later: studio.html loads the Studio at the Plot maps and Voxels slice's
+# stamp; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "655af9e810555a7e8aa5212e428104207c1c13bd651a94051aabf80e568f1b29"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",
