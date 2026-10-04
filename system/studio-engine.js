@@ -38,6 +38,34 @@ export const ENGINE_SURFACES = Object.freeze({
 
 let current = null;   // { id, handle, mount, observer, plugin, params, input }
 
+// What the visitor set on each surface in this page, so leaving and coming back (or Undo, or a
+// reload through the Studio shell's kept session) puts the same settings back. Values only; an
+// input frame handed over from another surface is not a setting and is never kept.
+const remembered = {};
+let onSettings = null;     // the Studio's hook: called after the visitor changes a setting
+export function engineSettings(id) { return { ...(remembered[id] || {}) }; }
+export function onEngineSettings(fn) { onSettings = fn; }
+// The surface on show: its controls by setting name, with their first values, and its apply().
+let live = null;           // { id, fields: { key: { el, first } }, apply }
+function liveControls(id, fields, apply) { live = { id, fields, apply }; }
+// Put a surface's settings back. On the surface being shown, the controls take the values (a
+// setting not named goes back to its first value) and the surface draws them, in this task.
+export function setEngineSettings(id, values) {
+  remembered[id] = { ...(values || {}) };
+  if (!live || live.id !== id || !current || current.id !== id) return false;
+  for (const [key, f] of Object.entries(live.fields)) f.el.value = remembered[id][key] != null ? String(remembered[id][key]) : f.first;
+  live.apply();
+  return true;
+}
+const want = (id, key, fallback) => {
+  const v = remembered[id] && remembered[id][key];
+  return v == null ? fallback : String(v);
+};
+function settle(id, values) {
+  remembered[id] = { ...values };
+  if (onSettings) { try { onSettings(id); } catch (e) { console.error("[studio-engine] settings hook failed:", e); } }
+}
+
 // Every control goes through here, so the receipt always names the parameters on screen.
 function setP(next) {
   if (!current || !current.handle) return;
@@ -67,7 +95,8 @@ function measureSoon() {
   }));
 }
 
-function control(mount, labelText, input) {
+function control(mount, labelText, input, id) {
+  if (id) input.id = id;
   const wrap = el("label", { class: "at-group me-control" });
   wrap.append(el("span", { class: "at-glab" }, labelText), input);
   mount.append(wrap);
@@ -83,16 +112,19 @@ function select(options, value) {
 async function buildControls(id, surface, handle, mount) {
   if (id === "retro") {
     const { paletteNames } = await import("./retro-palettes.js");
-    const pal = control(mount, "Palette", select(paletteNames(), "outrun"));
-    const mask = control(mount, "Phosphor mask", select(["grille", "slot", "dot", "none"], "grille"));
-    const scan = control(mount, "Scanlines", el("input", { type: "range", min: "0", max: "100", value: "35" }));
+    const pal = control(mount, "Palette", select(paletteNames(), want(id, "palette", "outrun")), "me-retro-palette");
+    const mask = control(mount, "Phosphor mask", select(["grille", "slot", "dot", "none"], want(id, "mask", "grille")), "me-retro-mask");
+    const scan = control(mount, "Scanlines", el("input", { type: "range", min: "0", max: "100", value: want(id, "scan", "35") }), "me-retro-scan");
     const apply = () => setP({ palette: pal.value, mask: mask.value, scanStrength: +scan.value / 100 });
-    for (const n of [pal, mask, scan]) n.addEventListener("input", apply);
+    const changed = () => { apply(); settle(id, { palette: pal.value, mask: mask.value, scan: scan.value }); };
+    for (const n of [pal, mask, scan]) n.addEventListener("input", changed);
+    liveControls(id, { palette: { el: pal, first: "outrun" }, mask: { el: mask, first: "grille" }, scan: { el: scan, first: "35" } }, apply);
+    if (remembered[id]) apply();
   }
   if (id === "type") {
-    const text = control(mount, "Text", el("input", { type: "text", class: "poster-seed", value: "Adhesion", maxlength: "60", spellcheck: "false" }));
-    const weight = control(mount, "Weight", el("input", { type: "range", min: "0.04", max: "0.2", step: "0.001", value: "0.085" }));
-    const style = control(mount, "Capitals", select(["drawn", "runic"], "drawn"));
+    const text = control(mount, "Text", el("input", { type: "text", class: "poster-seed", value: want(id, "text", "Adhesion"), maxlength: "60", spellcheck: "false" }), "me-type-text");
+    const weight = control(mount, "Weight", el("input", { type: "range", min: "0.04", max: "0.2", step: "0.001", value: want(id, "weight", "0.085") }), "me-type-weight");
+    const style = control(mount, "Capitals", select(["drawn", "runic"], want(id, "style", "drawn")), "me-type-style");
     const apply = () => {
       setP({ text: text.value, weight: +weight.value, style: style.value === "runic" ? "runic" : "" });
       const f = handle.instance.face;
@@ -101,29 +133,39 @@ async function buildControls(id, surface, handle, mount) {
       measureSoon();
     };
     mount.append(el("p", { class: "transform-note me-refusal", role: "status", "aria-live": "polite" }));
-    for (const n of [text, weight, style]) n.addEventListener("input", apply);
+    const changed = () => { apply(); settle(id, { text: text.value, weight: weight.value, style: style.value }); };
+    for (const n of [text, weight, style]) n.addEventListener("input", changed);
+    liveControls(id, { text: { el: text, first: "Adhesion" }, weight: { el: weight, first: "0.085" }, style: { el: style, first: "drawn" } }, apply);
+    if (remembered[id]) apply();
   }
   if (id === "gallery" || id === "loom") {
     const { specimenLayerNames } = await import("./media-engine/plugins/plate.mjs");
-    const seed = control(mount, "Seed", el("input", { type: "text", class: "poster-seed", value: "folded-light", maxlength: "40", spellcheck: "false" }));
-    const layer = control(mount, "Instrument", select(specimenLayerNames(), "caustic-veils"));
+    const seed = control(mount, "Seed", el("input", { type: "text", class: "poster-seed", value: want(id, "seed", "folded-light"), maxlength: "40", spellcheck: "false" }), "me-" + id + "-seed");
+    const layer = control(mount, "Instrument", select(specimenLayerNames(), want(id, "layer", "caustic-veils")), "me-" + id + "-layer");
     const inputs = [seed, layer];
     let structure = null;
     if (id === "loom") {
       const { STRUCTURE_IDS } = await import("./media-engine/plugins/loom.mjs");
-      structure = control(mount, "Structure", select(STRUCTURE_IDS, "jacquard"));
+      structure = control(mount, "Structure", select(STRUCTURE_IDS, want(id, "structure", "jacquard")), "me-loom-structure");
       inputs.push(structure);
     }
     const apply = () => { setP({ seed: seed.value || "folded-light", layers: [layer.value], ...(structure ? { structure: structure.value } : {}) }); measureSoon(); };
-    for (const n of inputs) n.addEventListener("change", apply);
+    const changed = () => { apply(); settle(id, { seed: seed.value, layer: layer.value, ...(structure ? { structure: structure.value } : {}) }); };
+    for (const n of inputs) n.addEventListener("change", changed);
+    liveControls(id, { seed: { el: seed, first: "folded-light" }, layer: { el: layer, first: "caustic-veils" },
+      ...(structure ? { structure: { el: structure, first: "jacquard" } } : {}) }, apply);
+    if (remembered[id]) apply();
   }
   if (id === "raw" && handle && handle.plugin.id === "raw") {
     const { RAW_VIEWS, RAW_SIZES, RAW_CHANNELS } = await import("./media-engine/plugins/raw.mjs");
-    const view = control(mount, "View", select(Object.keys(RAW_VIEWS), "default"));
-    const size = control(mount, "Size", select(RAW_SIZES.map(String), "384"));
-    const channel = control(mount, "Show", select(RAW_CHANNELS, "frame"));
+    const view = control(mount, "View", select(Object.keys(RAW_VIEWS), want(id, "view", "default")), "me-raw-view");
+    const size = control(mount, "Size", select(RAW_SIZES.map(String), want(id, "size", "384")), "me-raw-size");
+    const channel = control(mount, "Show", select(RAW_CHANNELS, want(id, "channel", "frame")), "me-raw-channel");
     const apply = () => setP({ view: view.value, size: +size.value, channel: channel.value });
-    for (const n of [view, size, channel]) n.addEventListener("change", apply);
+    const changed = () => { apply(); settle(id, { view: view.value, size: size.value, channel: channel.value }); };
+    for (const n of [view, size, channel]) n.addEventListener("change", changed);
+    liveControls(id, { view: { el: view, first: "default" }, size: { el: size, first: "384" }, channel: { el: channel, first: "frame" } }, apply);
+    if (remembered[id]) apply();
   }
 }
 
@@ -176,6 +218,7 @@ async function buildStatus(id, surface, handle, mount) {
 // isCurrent() lets a slow import bail out if the visitor has already switched away.
 export async function enterEngineSurface(id, { canvas, mount, isCurrent = () => true, setSource }) {
   leaveEngineSurface();
+  live = null;
   const surface = ENGINE_SURFACES[id];
   if (!surface || !mount) return false;
   mount.replaceChildren(el("p", { class: "transform-note" }, surface.intro));
@@ -216,7 +259,8 @@ export async function enterEngineSurface(id, { canvas, mount, isCurrent = () => 
       b.addEventListener("click", async () => { await stageHandoff(canvas, surface.label); setSource(target); });
       actions.append(b);
     }
-    const ex = el("button", { type: "button", class: "btn" }, "Export frame and receipt");
+    // The Studio shell's action bar carries this one (#engine-export); the original stays wired.
+    const ex = el("button", { type: "button", class: "btn", id: "engine-export", "data-in-bar": "" }, "Export frame and receipt");
     ex.addEventListener("click", () => (handle.backend === REFERENCE_BACKEND
       ? exportReferenceReceipt(handle)
       : exportWithReceipt(canvas, { plugin: pluginId, version: handle.plugin.version, params: current.params,
@@ -224,7 +268,7 @@ export async function enterEngineSurface(id, { canvas, mount, isCurrent = () => 
     actions.append(ex);
   }
   if (surface.door && typeof setSource === "function") {
-    const b = el("button", { type: "button", class: "btn" }, "Open the receipted scenes in Spatial");
+    const b = el("button", { type: "button", class: "btn", id: "engine-door", "data-in-bar": "" }, "Open the receipted scenes in Spatial");
     b.addEventListener("click", () => setSource(surface.door));
     actions.append(b);
   }

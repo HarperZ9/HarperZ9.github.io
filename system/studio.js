@@ -511,7 +511,12 @@ const SOURCES = {
 let _engineSurface = null;
 function loadEngineSurface() {
   return _engineSurface ? Promise.resolve(_engineSurface)
-    : import("./studio-engine.js").then((m) => (_engineSurface = m));
+    : import("./studio-engine.js?v=20261004-studio-engines").then((m) => {
+      _engineSurface = m;
+      // A setting changed on a surface is one undo step, and what this browser keeps.
+      m.onEngineSettings((id) => { if (_shell) _shell.record(id); });
+      return m;
+    });
 }
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
@@ -603,10 +608,16 @@ function setSource(next) {
   if (_readings) _readings.sourceChanged();
   if (next === "poster") enterPosterWorkshop(epoch);
   if (SOURCES[next].engine) {
+    // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
+    // is given, so on a phone it inherited whatever size the previous source left (a square from
+    // the boot, a wide sheet after Sketch) and the same settings drew two different plates.
+    if (entering) { leave3D(); sizeCanvas($("studio-canvas")); }
     loadEngineSurface().then((m) => {
       if (epoch !== _sourceEpoch) return;
       return m.enterEngineSurface(next, { canvas: $("studio-canvas"), mount: $("engine-mount"),
-        isCurrent: () => epoch === _sourceEpoch, setSource });
+        isCurrent: () => epoch === _sourceEpoch, setSource }).then(() => {
+        if (epoch === _sourceEpoch && _shell) _shell.resume(next);   // the settings this browser kept
+      });
     }).catch((e) => { console.error("[studio] engine surface " + next + " failed:", e); });
   }
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
@@ -6718,7 +6729,32 @@ function restoreVoxelBuild(v) {
   applyVoxelOps(v.ops);
   repaintVoxelScene(false);
 }
+// The media engine surfaces (studio-engine.js). Their main action is the export with a receipt;
+// Send to Retro, Weave in Loom and each surface's own page stay in the inspector. A surface with
+// settings (palette, seed, text, view) keeps them through a switch, Undo and a reload.
+function engineContract(id, { settings = true, door = false } = {}) {
+  const c = {
+    primary: door
+      ? { label: "Open in Spatial", target: "engine-door", title: "The receipted splat scenes draw in the Spatial source" }
+      : { label: "Export frame and receipt", target: "engine-export", title: "Save this frame with a receipt that names the plugin, its settings and the backend" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+  };
+  if (settings) {
+    c.snapshot = () => (_engineSurface ? _engineSurface.engineSettings(id) : {});
+    c.restore = (state) => { if (_engineSurface) _engineSurface.setEngineSettings(id, state); };
+    c.reset = () => { if (_engineSurface) _engineSurface.setEngineSettings(id, {}); };
+  }
+  return c;
+}
 const SHELL_CONTRACTS = {
+  retro: engineContract("retro"),
+  gallery: engineContract("gallery"),
+  loom: engineContract("loom"),
+  type: engineContract("type"),
+  raw: engineContract("raw"),
+  brender: engineContract("brender", { settings: false }),
+  revival: engineContract("revival", { settings: false }),
+  splats: engineContract("splats", { settings: false, door: true }),
   plotmaps: {
     making: true,
     primary: { label: "Draw", target: "plot-draw", title: "Draw the map sheet with these settings" },
