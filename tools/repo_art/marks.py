@@ -15,6 +15,7 @@ import re
 from tools import superstack as ss
 
 from .ctx import MATURITY, Rand
+from .family_marks import element
 from .svg import PAL, TAU, arc_points, circle, core, core_defs, flare, line, num, polar, polyline, svg_doc
 from .type import measure, text_path
 
@@ -126,7 +127,7 @@ def _ray_to_polygon(dx: float, dy: float, poly) -> float:
     return best
 
 
-def mark_svg(name: str, maturity: str, tier: str, theme: str, tile: bool) -> str:
+def mark_svg(name: str, maturity: str, tier: str, theme: str, tile: bool, family: str | None = None) -> str:
     """tier: micro or full. tile: draw the dark square ground (favicons, app icons)."""
     p = PAL["dark" if tile else theme]
     uid = f"mk-{name}-{tier[0]}{theme[0]}{int(tile)}"
@@ -134,8 +135,13 @@ def mark_svg(name: str, maturity: str, tier: str, theme: str, tile: bool) -> str
     full = tier == "full" and maturity != "experimental"
     w = 40 if tier == "micro" else 18
     body = [f'<rect width="512" height="512" rx="56" fill="{p["ground"]}"/>'] if tile else []
-    detail = _detail(name, p, Rand(ss.substream(name, "mark")), m["density"]) if full else []
-    silhouette = _micro(name, p["ink"], p["ground"] if tile else "none", w)
+    if family:  # a roll-out repository: the aperture ring plus its family's element
+        detail = []
+        silhouette = [circle(C, C, RING, p["ink"], w)] + element(family, name, p["ink"],
+                                                                  p["ground"] if tile else "none", w)
+    else:
+        detail = _detail(name, p, Rand(ss.substream(name, "mark")), m["density"]) if full else []
+        silhouette = _micro(name, p["ink"], p["ground"] if tile else "none", w)
     # Detail sits under the silhouette, except where the silhouette is a filled area.
     body += silhouette + detail if name == "raw-native" else detail + silhouette
     cr = {"telos": 46, "raw-native": 30}.get(name, 34) * (1.25 if tier == "micro" else 1.0)
@@ -153,13 +159,15 @@ def mark_svg(name: str, maturity: str, tier: str, theme: str, tile: bool) -> str
         if lo <= (a0 % TAU) <= hi or lo <= (a0 % TAU) + 0.5 <= hi:
             a0 += math.pi  # never over the function element
         body.append(flare(C, C, RING + 20, a0, 0.5, p, 1.7))
-    return svg_doc(512, 512, "".join(body), core_defs(uid, p), f"{name} mark")
+    what = f"the {family} element" if family else "its own element"
+    desc = f"A ring drawn around a bright core, with {what} inside the ring."
+    return svg_doc(512, 512, "".join(body), core_defs(uid, p), f"{name} mark", desc=desc)
 
 
-def lockup_svg(name: str, maturity: str, theme: str, stacked: bool) -> str:
+def lockup_svg(name: str, maturity: str, theme: str, stacked: bool, family: str | None = None) -> str:
     """Mark plus wordmark. Wordmark: Hanken Grotesk SemiBold, tracking -2.5 percent."""
     p = PAL[theme]
-    inner = mark_svg(name, maturity, "full", theme, False)
+    inner = mark_svg(name, maturity, "full", theme, False, family)
     inner = inner.split(">", 1)[1].rsplit("</svg>", 1)[0]
     inner = re.sub(r"<title>.*?</title>", "", inner, count=1)  # the lockup carries its own title
     H = 160.0

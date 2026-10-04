@@ -132,6 +132,1372 @@
         "runtime": "C++23"
       },
       "legend": "REFERENCE LEFT  /  SHORTCUT RIGHT"
+    },
+    "agent-routing-kit": {
+      "wordmark": "agent-routing-kit",
+      "tagline": "Route agent tasks by capability, risk, and context budget.",
+      "command": "python -m pip install -e .",
+      "hero_command": "python -m pip install -e .",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "gate",
+      "words": [
+        "SCORE",
+        "ROUTE",
+        "BUDGET",
+        "HANDOFF"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "agent-routing-kit",
+        "license": "MIT",
+        "runtime": "python 3.9+"
+      },
+      "source_notes": "README references .github/assets/banner.png and docs/brand/agent-routing-kit-hero.png, but no test pins them (tests/ has only test_routing.py). Not on PyPI per README (editable install only). Also ships as a Codex plugin skill. Archetype alternative: graph (routing). Advisory routing, not a policy engine."
+    },
+    "bootloops-second-checker": {
+      "wordmark": "bootloops-second-checker",
+      "tagline": "Independent second checker for BootLoops RECEIPT v1.0 witnesses.",
+      "command": "sh scripts/run_all.sh OUT_DIR",
+      "hero_command": "sh scripts/run_all.sh OUT_DIR",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "WITNESS",
+        "CHECK",
+        "COMPARE",
+        "PROVE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "bootloops-second-checker",
+        "license": "MIT",
+        "runtime": "python, node, lean 4"
+      },
+      "source_notes": "Evidence and replication repo for someone else's project (BootLoops); it clones BootLoops at a pinned commit and does not copy its code. No release, no workflows. Run-all script can download Mathlib (several GB) unless SKIP_LEAN=1. Certifies one row at one point and one prime only; says nothing about the physics. No version number in README. Runtime versions not stated; python, node and lean are inferred from the files listed."
+    },
+    "build-engine": {
+      "wordmark": "build-engine",
+      "tagline": "Prediction engine that paper-trades forecasts and adjusts model weights.",
+      "command": "pip install -e ../build-oracle",
+      "hero_command": "pip install -e ../build-oracle",
+      "release": "1.0.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "TRAIN",
+        "PREDICT",
+        "PAPER TRADE",
+        "REWEIGH"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "build-engine",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README badge says version 1.0.1 but latest GitHub release is v1.0.0; release tag used. Paper trading is default; live broker is gated opt-in; README says not financial advice. Needs sibling repos build-oracle and build-finance. README calls the license fair-source; LICENSE is FSL 1.1 with MIT future licence. No test pins brand files; README references .github/assets/banner.png and docs/brand/build-engine-mark.svg."
+    },
+    "build-universe": {
+      "wordmark": "build-universe",
+      "tagline": "BuildLang compiler, standard library, and OS kernel in one repo.",
+      "command": "",
+      "hero_command": "",
+      "release": "1.0.2",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "lattice",
+      "words": [
+        "LEX",
+        "TYPE-CHECK",
+        "TRANSPILE",
+        "BUILD"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "build-universe",
+        "license": "FSL-1.1-MIT",
+        "runtime": "rust, C"
+      },
+      "source_notes": "README gives no install or run command; CONTRIBUTING.md has 'cargo build --release' (not used since the brief asks for README). README says alpha and its heading says v1.0.0, but latest release tag is v1.0.2, so maturity follows the release rule (stable) even though the README calls it alpha; consider treating as beta. README states the ecosystem does not compile as a whole and self-hosting is a goal, not achieved. Not on any registry. Workflow organism.yml exists. No test pins brand files. Runtime: compiler is Rust and emits C built with MSVC."
+    },
+    "bulletin": {
+      "wordmark": "bulletin",
+      "tagline": "A message board where the accounts belong to AI agents.",
+      "command": "node examples/client.mjs --base https://bulletin.zaindharper.workers.dev --handle your-name",
+      "hero_command": "",
+      "release": "0.5.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "graph",
+      "words": [
+        "SIGN",
+        "POST",
+        "ROOMS",
+        "INBOX"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "bulletin",
+        "license": "",
+        "runtime": "node 22+"
+      },
+      "source_notes": "License unknown: no LICENSE file in the repo and the README does not state one. Node 22+ comes from package.json engines, not the README. package.json is private, so no registry package. Live board and read-only face URLs are in README. Exposes HTTP JSON and MCP (31 tools). README text covers 0.4.0 features; latest release is v0.5.0. No test pins brand files found."
+    },
+    "coherence-membrane": {
+      "wordmark": "coherence-membrane",
+      "tagline": "Give AI agents verifiable perception of local files, images, and screens.",
+      "command": "git clone https://github.com/HarperZ9/coherence-membrane",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "lens",
+      "words": [
+        "PERCEIVE",
+        "PIN",
+        "COMPARE",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "coherence-membrane",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README says release 0.1.0 is on PyPI (MIT) and this source tree is the 0.2.0 alpha; GitHub release is v0.2.0. Registry set to pypi because of the 0.1.0 package. Verdicts MATCH/DRIFT/UNVERIFIABLE are a closed set the tool emits, not a single result, so verdict is null. Archetype alternatives: ledger (hash-chained provenance), signal. Live screen capture feature. No test pins brand files."
+    },
+    "emet": {
+      "wordmark": "emet",
+      "tagline": "Byte-level integrity witness: MATCH, DRIFT, or UNVERIFIABLE verdicts.",
+      "command": "pip install emet",
+      "hero_command": "pip install emet",
+      "release": "1.3.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "ANCHOR",
+        "VERIFY",
+        "STRIP",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "emet",
+        "license": "MPL-2.0",
+        "runtime": "python 3.8+"
+      },
+      "source_notes": "Four implementations (Python, Rust, Node.js, Go) share one verdict lattice. MATCH, DRIFT and UNVERIFIABLE are the tool's closed verdict set, not one reported result, so verdict is null. Already has generated art: docs/art/emet-header.svg, witness-lane.svg, receipt-lane.svg, verdict-lattice.svg from docs/art/emet.art.json, gated by test_repo_art.py; test_forward_delivery_contract.py also pins assets/emet-hero.png, .github/assets/banner.png and the header SVG. Python 3.8+ comes from pyproject.toml; README badge says 3.x. LICENSE-TEXT covers docs as CC BY 4.0. Archetype alternative: gate."
+    },
+    "flywheel-evidence-task": {
+      "wordmark": "flywheel-evidence-task",
+      "tagline": "Turn a claim into a source-linked evidence packet.",
+      "command": "/plugin marketplace add HarperZ9/flywheel-evidence-task",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "CLAIM",
+        "SOURCES",
+        "CHECK",
+        "PACKET"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "flywheel-evidence-task",
+        "license": "FSL-1.1-MIT",
+        "runtime": ""
+      },
+      "source_notes": "README says version 0.2.0 but there is no GitHub release, so maturity is experimental by the brief's rule. It is a Claude Code skill and plugin: no program, no hooks, no MCP server, no network. Published copy of source in the flywheel repo at plugins/flywheel-evidence-task. Not in the family list given in the brief, so family is false. No workflows. No test pins brand files."
+    },
+    "HarperZ9.github.io": {
+      "wordmark": "HarperZ9.github.io",
+      "tagline": "Public site for Flywheel, its supporting systems, research, and papers.",
+      "command": "git clone https://github.com/HarperZ9/HarperZ9.github.io.git",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "SITE",
+        "PAPERS",
+        "CATALOG",
+        "DEMOS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "HarperZ9.github.io",
+        "license": "all rights reserved",
+        "runtime": "node (npx serve)"
+      },
+      "source_notes": "Canonical source of the live website (GitHub Pages deploys main from /); not a package. No release. LICENSE is all rights reserved with CC BY 4.0 for written works and per-path terms for third-party material (see LICENSE and LICENSE-TEXT). README references docs/brand/portfolio-site-hero.png; tools/flagship_repo_kit.py references brand paths but is a tool, not a test, so pins list is empty. Workflows: ci.yml, frontier-safety-daily.yml. Runtime is only implied by npx serve. Archetype alternative: graph."
+    },
+    "model-provenance-validator": {
+      "wordmark": "model-provenance-validator",
+      "tagline": "Validate model and release claims against small provenance envelopes.",
+      "command": "python -m pip install -e \".[test]\"",
+      "hero_command": "python -m pip install -e \".[test]\"",
+      "release": "0.1.1",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "ENVELOPE",
+        "VALIDATE",
+        "REDACT",
+        "PACKET"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "model-provenance-validator",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README Install section gives 'python -m pip install model-provenance-validator'; the first command in Try it is the editable install used here. Has generated art under docs/art (header, envelope-lane, packet-lane, redaction-rules) built from docs/art/model-provenance-validator.art.json and gated by tests/test_repo_art.py. Depends on proof-surface. Validates envelope shape; does not certify the claim."
+    },
+    "proof-surface-report": {
+      "wordmark": "proof-surface-report",
+      "tagline": "Render proof packets and receipts into reviewer-facing Markdown.",
+      "command": "python -m pip install -e .",
+      "hero_command": "python -m pip install -e .",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "VALIDATE",
+        "RENDER",
+        "REJECT",
+        "HANDOFF"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "proof-surface-report",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README badge says version 0.1.0 but there is no GitHub release, so maturity is experimental by the brief's rule. Part of the EMET suite (README). Depends on the proof-surface package. Rejects authority-shaped words such as certified or approved. Archetype alternative: ledger or pipeline. README references .github/assets/banner.png and docs/brand/proof-surface-report-hero.png; no test pins them."
+    },
+    "relay": {
+      "wordmark": "relay",
+      "tagline": "Accountable coding agent that runs on any model endpoint.",
+      "command": "python -m pip install flywheel-relay",
+      "hero_command": "python -m pip install flywheel-relay",
+      "release": "0.7.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "pipeline",
+      "words": [
+        "ROUTE",
+        "AGENT",
+        "FAILOVER",
+        "CERTIFY"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "flywheel-relay",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "PyPI distribution is flywheel-relay; README says the bare name relay-agent belongs to an unrelated project. Python 3.11+ comes from pyproject.toml. Already has generated art in docs/art (relay-header.svg, endpoint-ladder.svg, others) from docs/art/relay.art.json, gated by tests/test_repo_art.py. Run certificates re-verify offline as ALLOW, UNVERIFIABLE or REFUTED, but that is a per-run output, so verdict is null. Archetype alternatives: ledger (certificates), graph (endpoint ladder)."
+    },
+    "signal-kernels": {
+      "wordmark": "signal-kernels",
+      "tagline": "C++23 header-only entropy, causality, and forecasting kernels.",
+      "command": "cmake -S . -B build -DSIGNAL_KERNELS_BUILD_TESTS=ON",
+      "hero_command": "",
+      "release": "1.1.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "signal",
+      "words": [
+        "ENTROPY",
+        "CAUSALITY",
+        "CHANGE-POINT",
+        "FORECAST"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "signal-kernels",
+        "license": "FSL-1.1-MIT",
+        "runtime": "C++23"
+      },
+      "source_notes": "Header-only library, not on a package registry per README. Bundled CMake setup targets Windows x64 and MSVC. README references .github/assets/banner.png and docs/brand/signal-kernels-hero.png; no test pins them. Also covers FFT and graph curvature."
+    },
+    "workflow-harness-lite": {
+      "wordmark": "workflow-harness-lite",
+      "tagline": "Run bounded local command workflows in parallel with compact reports.",
+      "command": "npm test",
+      "hero_command": "npm test",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "CONFIG",
+        "RUN",
+        "REDACT",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "workflow-harness-lite",
+        "license": "MIT",
+        "runtime": "node 18+"
+      },
+      "source_notes": "README badge says version 0.2.0 but latest GitHub release is v0.1.0; release tag used. Not on npm per README (use from a clone). Dependency-free. Can emit a Project Telos bounded-run receipt. README says built with agentic assistance. README references .github/assets/banner.png and docs/brand/workflow-harness-lite-hero.png; no test pins them."
+    },
+    "accountable-engine": {
+      "wordmark": "accountable-engine",
+      "tagline": "Tie human and agent work to claims, receipts, and decision logs.",
+      "command": "git clone https://github.com/HarperZ9/accountable-engine.git",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "CLAIM",
+        "EVIDENCE",
+        "CRITIQUE",
+        "DECIDE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "accountable-engine",
+        "license": "MIT",
+        "runtime": "PowerShell"
+      },
+      "source_notes": "No release, so experimental. README says portable CLI packaging is future work; the tool is critic.ps1 run from a clone. README references .github/assets/banner.png and docs/brand/accountable-engine-hero.png; no tests pin them."
+    },
+    "anomaly-kernels": {
+      "wordmark": "anomaly-kernels",
+      "tagline": "Score telemetry outliers with C++23 baselines and correlation windows.",
+      "command": "cmake -S . -B build",
+      "hero_command": "cmake -S . -B build",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "signal",
+      "words": [
+        "BASELINE",
+        "SCORE",
+        "CORRELATE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "anomaly-kernels",
+        "license": "MIT",
+        "runtime": "C++23"
+      },
+      "source_notes": "No release, so experimental. Windows x64 static library only (anomaly-kernels.lib), no CLI. README says it is telemetry analytics, not exploit or intrusion tooling. README references banner.png and docs/brand hero; no tests pin them."
+    },
+    "brender-archival": {
+      "wordmark": "brender-archival",
+      "tagline": "Rebuild BRender from pinned source with a build ladder anyone can rerun.",
+      "command": "",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "PIN",
+        "MATERIALIZE",
+        "BUILD",
+        "LADDER",
+        "PACKAGE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "brender-archival",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Release tag v0.2.0. Python 3.11+ comes from pyproject.toml, not the README. LICENSE is the Functional Source License 1.1 with MIT future licence. Vendors no upstream source or assets. Does not claim textured rendering, x64 or production readiness. Already has docs/art (header svg, ladder-lane.svg); tests/test_repo_art.py asserts drawing counts against docs/art/brender-archival.art.json but does not match the brand-file patterns. 21/21 CTest targets at Visual Studio Win32 Debug. Related: engine-revival."
+    },
+    "build-finance": {
+      "wordmark": "build-finance",
+      "tagline": "Backtest strategies, paper trade, and measure portfolio risk in Python.",
+      "command": "",
+      "hero_command": "",
+      "release": "1.0.1",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "signal",
+      "words": [
+        "INDICATE",
+        "BACKTEST",
+        "OPTIMIZE",
+        "PAPER TRADE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "build-finance",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Release tag v1.0.1; README says PyPI publication is not documented for it. The first README code block is a multi-line PowerShell download-and-checksum script; command shows its install line only. README badge says fair-source while LICENSE is FSL-1.1-MIT. Money-adjacent: paper trading is default, live broker is opt-in, no funds custodied. No tests pin brand files; README references banner.png and docs/brand/build-finance-mark.svg."
+    },
+    "buildlang": {
+      "wordmark": "buildlang",
+      "tagline": "Systems language with typed capability effects and native C output.",
+      "command": "cargo install buildlang",
+      "hero_command": "cargo install buildlang",
+      "release": "1.4.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "lattice",
+      "words": [
+        "EFFECTS",
+        "COMPILE",
+        "LINK",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "buildlang",
+        "license": "BuildLang Fair-Source",
+        "runtime": "rust edition 2021"
+      },
+      "source_notes": "Release tag v1.4.0. Registry is crates.io (badge and cargo install), which is not in the registry enum, so registry is none; the art step may map it. Binary is buildc. Linear types and non-C backends are labelled experimental. Already has docs/art/buildlang-header.svg; no tests match the brand patterns. README mentions a previous published name (cut off in the excerpt read); check before using."
+    },
+    "calibrate-pro": {
+      "wordmark": "calibrate-pro",
+      "tagline": "Calibrate Windows displays: profiles, LUTs, and verification reports.",
+      "command": "calibrate-pro doctor",
+      "hero_command": "calibrate-pro doctor",
+      "release": "2.0.0",
+      "maturity": "stable",
+      "family": true,
+      "archetype": "lens",
+      "words": [
+        "DETECT",
+        "METHOD",
+        "PREVIEW",
+        "APPLY",
+        "VERIFY"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "calibrate-pro",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Release tag v2.0.0, distributed as Windows installer or portable ZIP from GitHub Releases; README does not name a PyPI package. README badge says fair-source; LICENSE is FSL-1.1-MIT. Sensorless values are labelled estimates and 'Not measured' unless an instrument was used. README hero is a raw.githubusercontent URL pinned to the v2.0.0 tag docs/brand/calibrate-pro-hero.png; no test pins brand files."
+    },
+    "consulting-template-kit": {
+      "wordmark": "consulting-template-kit",
+      "tagline": "Reusable consulting templates with a validator for private data.",
+      "command": "python -m pip install -e .",
+      "hero_command": "python -m pip install -e .",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "COPY",
+        "FILL",
+        "VALIDATE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "consulting-template-kit",
+        "license": "MIT",
+        "runtime": "python 3.9+"
+      },
+      "source_notes": "No release, so experimental (README badge shows version 0.1.0). Not legal, tax, or accounting advice. Console script is ctk-validate. No tests pin brand files; README references banner.png and docs/brand hero."
+    },
+    "engine-revival": {
+      "wordmark": "engine-revival",
+      "tagline": "Triage lost game engines into evidence-backed revival records.",
+      "command": "python -m pip install -e \".[test]\"",
+      "hero_command": "python -m pip install -e \".[test]\"",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "LEAD",
+        "SOURCES",
+        "RIGHTS",
+        "RECORD",
+        "POSTURE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "engine-revival",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Release tag v0.2.0. Python 3.11+ is from pyproject.toml. Metadata and evidence repo: publishes no proprietary source, assets, or upstream snapshots. Imports BRender receipts from brender-archival. Already has docs/art; tests/test_repo_art.py asserts drawing facts against the docs/art spec but does not match the brand-file patterns."
+    },
+    "flywheel-receipt-demo": {
+      "wordmark": "flywheel-receipt-demo",
+      "tagline": "Run a re-derivable receipt in one command and catch a forged one.",
+      "command": "pip install flywheel-verify pytest",
+      "hero_command": "pip install flywheel-verify pytest",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "TASK",
+        "RECEIPT",
+        "RE-DERIVE",
+        "FORGE"
+      ],
+      "verdict": "MATCH",
+      "badges": {
+        "registry": "none",
+        "package": "flywheel-receipt-demo",
+        "license": "FSL-1.1-MIT",
+        "runtime": ""
+      },
+      "source_notes": "Demo and evidence repo for Flywheel, not a package itself; it installs flywheel-verify from PyPI. No release. README uses MATCH for the honest re-derivation and DRIFT for the forged receipt; MATCH chosen as the headline result. README states no accuracy gain over single-shot and the hardware-attested binding is a proposal. Runtime not stated in README. No workflows directory. Not in the family list."
+    },
+    "learn": {
+      "wordmark": "learn",
+      "tagline": "Turn your own material into a runnable course with spaced repetition.",
+      "command": "npm install -g @harperz9/learn@2.3.0",
+      "hero_command": "npm install -g @harperz9/learn@2.3.0",
+      "release": "2.3.0",
+      "maturity": "stable",
+      "family": true,
+      "archetype": "signal",
+      "words": [
+        "PLAN",
+        "RECORD",
+        "SCHEDULE",
+        "MASTERY",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "npm",
+        "package": "@harperz9/learn",
+        "license": "Fair Source",
+        "runtime": "node 20+"
+      },
+      "source_notes": "Release tag v2.3.0. Zero dependencies. Halts at every graded step so the learner does the graded work. Tests require docs/brand/learn-hero.svg, learn-mark.svg, learn-hero.png and docs/brand/README.md, so those paths must stay. README uses DRIFT only for a stale schedule cache, not as a headline result, so verdict is null. Archetype signal chosen for the scheduling and retention curves; gate is a plausible alternative."
+    },
+    "phantom": {
+      "wordmark": "phantom",
+      "tagline": "Audit and rotate hardware identifiers with exact backup and revert.",
+      "command": "",
+      "hero_command": "",
+      "release": "1.1.1",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "AUDIT",
+        "GENERATE",
+        "APPLY",
+        "VALIDATE",
+        "REVERT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "phantom",
+        "license": "Phantom Proprietary License",
+        "runtime": ""
+      },
+      "source_notes": "Release tag v1.1.1. First README command is the checksum verify of the MSI download; Linux install is sudo apt-get install ./phantom_1.1.1-1_amd64.deb. Runtime not stated in the README (GitHub language is Rust). For machines the operator owns or is authorized to test; Layer 1 kernel driver and Layer 0 firmware are modeled, not shipped; installer not code-signed. Test pins docs/art/phantom-header.svg and three other docs/art drawings. Gate is an alternative archetype (privacy)."
+    },
+    "public-surface-sweeper": {
+      "wordmark": "public-surface-sweeper",
+      "tagline": "Check a repo public surface for missing files and secret-shaped values.",
+      "command": "python -m pip install -e \".[test]\"",
+      "hero_command": "python -m pip install -e \".[test]\"",
+      "release": "0.1.3",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "gate",
+      "words": [
+        "FILES",
+        "HYGIENE",
+        "SECRETS",
+        "PROOF"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "public-surface-sweeper",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Release tag v0.1.3. README installs from a GitHub Release wheel; a publish-pypi workflow exists but README names no PyPI package. Release-hygiene gate, not a full security scanner. Tests create docs/brand/*-hero.png fixtures and assert docs/art header svg; examples/demo.py also references docs/brand."
+    },
+    "repo-proof-index": {
+      "wordmark": "repo-proof-index",
+      "tagline": "Index proof packets, receipts, and contracts into reviewer summaries.",
+      "command": "python -m pip install -e \".[test]\"",
+      "hero_command": "python -m pip install -e \".[test]\"",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "READ",
+        "INDEX",
+        "SUMMARIZE",
+        "VALIDATE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "repo-proof-index",
+        "license": "MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Release tag v0.2.0. First Try it command is the editable install; the Install section gives python -m pip install repo-proof-index. Indexes evidence and does not decide whether it is enough. Tests require docs/brand/repo-proof-index-hero.png and docs/art/repo-proof-index-header.svg."
+    },
+    "studio-engine": {
+      "wordmark": "studio-engine",
+      "tagline": "Generate replayable shaders, sound, and motion, each with a receipt.",
+      "command": "python -m studio_engine 7 gyroid",
+      "hero_command": "python -m studio_engine 7 gyroid",
+      "release": "0.3.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "orbit",
+      "words": [
+        "SEED",
+        "GENERATE",
+        "CRITIQUE",
+        "REFINE",
+        "WITNESS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "studio-engine",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Release tag v0.3.0. Zero third-party dependencies; runs from a clone with no install. The forward-delivery test sits at the repo root, not in tests/. Test pins studio-engine-header.svg and the other docs/art drawings."
+    },
+    "accountable-surface": {
+      "wordmark": "accountable-surface",
+      "tagline": "Lets an AI agent take only the actions a person has approved.",
+      "command": "pip install accountable-surface",
+      "hero_command": "pip install accountable-surface",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "gate",
+      "words": [
+        "REQUEST",
+        "AUTHORIZE",
+        "ACT",
+        "VERIFY",
+        "JOURNAL"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "accountable-surface",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Latest GitHub release is v0.2.0, but the README says PyPI carries 0.3.1 (alpha); release field follows the GitHub release, so maturity may be understated. Journal is hash-chained, which also fits ledger. README has a header SVG at docs/art/accountable-surface-header.svg and shields version/license badges."
+    },
+    "articulate": {
+      "wordmark": "articulate",
+      "tagline": "Local writing-quality and AI-tell detection and editing, no network.",
+      "command": "python -m articulate.cli check path/to/doc.md --gate",
+      "hero_command": "",
+      "release": "0.9.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "document",
+      "words": [
+        "DETECT",
+        "SCORE",
+        "EDIT",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "articulate-writing",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.9+"
+      },
+      "source_notes": "README has no pip install line; the first command it gives is the check command (docs/getting-started.md gives pip install articulate-writing==0.9.0). README says 0.9.0 is prepared for release as articulate-writing; PyPI publication is not confirmed from the README. Python floor 3.9 comes from pyproject.toml, not the README. Hero is assets/articulate-hero.svg showing a Match/Drift/Unverifiable lattice. Package name differs from repo name."
+    },
+    "build-color": {
+      "wordmark": "build-color",
+      "tagline": "Python color-science workbench: convert, adapt, appear, map, measure.",
+      "command": "pip install \".[all]\"",
+      "hero_command": "pip install \".[all]\"",
+      "release": "1.0.1",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "lens",
+      "words": [
+        "CONVERT",
+        "ADAPT",
+        "APPEAR",
+        "TONE MAP",
+        "MEASURE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "build-color",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README badge says version 1.0.2 but the latest GitHub release is v1.0.1. README install is from source, not a registry; registry set to github. README badge calls the licence fair-source; the LICENSE file is FSL-1.1-MIT. Header SVG at docs/art/build-color-header.svg, mark at docs/brand/build-color-mark.svg."
+    },
+    "build-oracle": {
+      "wordmark": "build-oracle",
+      "tagline": "Python time-series forecasting with ARIMA and changepoint detection.",
+      "command": "pip install .",
+      "hero_command": "pip install .",
+      "release": "1.0.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "signal",
+      "words": [
+        "FORECAST",
+        "DECOMPOSE",
+        "CHANGEPOINTS",
+        "FEATURES"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "build-oracle",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README badge says version 1.0.1 but the latest GitHub release is v1.0.0. README install is from source; registry set to github. Banner is .github/assets/banner.png; mark at docs/brand/build-oracle-mark.svg. No tests pin brand files (clone checked tests/)."
+    },
+    "buildlang-tmLanguage": {
+      "wordmark": "buildlang-tmLanguage",
+      "tagline": "TextMate grammar that highlights BuildLang .bld files in editors.",
+      "command": "",
+      "hero_command": "",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "lattice",
+      "words": [
+        "TOKENS",
+        "KEYWORDS",
+        "SCOPES",
+        "HIGHLIGHT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "buildlang-tmLanguage",
+        "license": "MIT",
+        "runtime": ""
+      },
+      "source_notes": "README gives no install or run command: it is a grammar package with nothing to run (editor install is via the BuildLang VS Code extension, or github-linguist consumes it). GitHub language field is null. Banner is .github/assets/banner.png. Version badge 0.1.0 matches release."
+    },
+    "canon": {
+      "wordmark": "canon",
+      "tagline": "One memory record, rendered into every model and tool's own file.",
+      "command": "python -m pip install flywheel-canon",
+      "hero_command": "python -m pip install flywheel-canon",
+      "release": "0.6.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "strata",
+      "words": [
+        "RECORD",
+        "SCOPE",
+        "RENDER",
+        "SWITCH"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "flywheel-canon",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Package name flywheel-canon differs from repo name; console script is canon. Header art is docs/art/canon-header.svg, linked by raw.githubusercontent URL. Python floor 3.11 comes from pyproject.toml.",
+      "no_badges": true
+    },
+    "context-curator-lite": {
+      "wordmark": "context-curator-lite",
+      "tagline": "Builds token-efficient context bundles with redaction and source refs.",
+      "command": "context-curator-lite --root . --out-dir ./artifacts --telos-envelope",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "EXTRACT",
+        "REDACT",
+        "BUNDLE",
+        "HASH"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "context-curator-lite",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README says it is not published on PyPI; install is a GitHub release wheel with a sha256 check. The command field is the run command; the first block in Try it is the wheel download script, which is too long to store. Hero is docs/brand/context-curator-lite-hero.png and banner is .github/assets/banner.png. Redaction is heuristic per the README."
+    },
+    "faithful-transpile": {
+      "wordmark": "faithful-transpile",
+      "tagline": "Working paper and experiments on faithfulness across minds.",
+      "command": "python sims/<file>.py",
+      "hero_command": "python sims/<file>.py",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "PRINCIPLE",
+        "SIMULATE",
+        "RECONCILE",
+        "WITNESS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "faithful-transpile",
+        "license": "CC BY 4.0, MIT",
+        "runtime": "python"
+      },
+      "source_notes": "A research repo, not a tool: README is the thesis The Conservation of Faithfulness. No GitHub release and no workflows (404). The README command is a template with a placeholder file name; a concrete one is python -m center reconcile --subject <path> --criterion creator.json. Banner is .github/assets/banner.png. Tagline is a paraphrase of the README thesis, not a README line (the README supports no tool-style tagline). Sims use Python stdlib plus PIL."
+    },
+    "gpu-trace-validator": {
+      "wordmark": "gpu-trace-validator",
+      "tagline": "Validates GPU trace JSON against a schema, with redacted receipts.",
+      "command": "git clone https://github.com/HarperZ9/gpu-trace-validator",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "lens",
+      "words": [
+        "TRACE",
+        "SCHEMA",
+        "ASSERT",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "gpu-trace-validator",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README says it is not on PyPI. It validates trace fixtures produced elsewhere and does not capture GPU work or certify renderer correctness. README pinned-install example names tag v0.1.0 while the latest release is v0.2.0. Command is the first line of the Try it block."
+    },
+    "plexus": {
+      "wordmark": "plexus",
+      "tagline": "Discovers what tools emit and consume, then wires them together.",
+      "command": "python -m pip install plexus-mesh",
+      "hero_command": "python -m pip install plexus-mesh",
+      "release": "0.4.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "graph",
+      "words": [
+        "DISCOVER",
+        "MATCH",
+        "WIRE",
+        "RUN"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "plexus-mesh",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Package name plexus-mesh differs from repo name. The README opens with a GitHub-release wheel install script, and later states plexus-mesh 0.4.0 is on PyPI with python -m pip install plexus-mesh; that line is used as the command. Python floor 3.11 comes from pyproject.toml. Header at docs/art/plexus-header.svg."
+    },
+    "raw": {
+      "wordmark": "raw",
+      "tagline": "D3D11 rendering platform for Skyrim SE with mid-frame effect dispatch.",
+      "command": "cmake -B build -S . -DVCPKG_TARGET_TRIPLET=x64-windows-static",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "lens",
+      "words": [
+        "PROXY",
+        "PHASES",
+        "EFFECTS",
+        "RENDER"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "raw",
+        "license": "AGPL-3.0",
+        "runtime": "C++23"
+      },
+      "source_notes": "README opens with a Paused notice: work is paused, author plans to return; the successor renderer is HarperZ9/raw-native. No GitHub release (404). README version badge says 1.0.0 and status Active development, which contradicts the Paused banner. Only workflow is art.yml. README states it is not affiliated with Bethesda or ENBSeries. Command is the first build command, not an install. Banner is .github/assets/banner.png; docs/art/raw-facts.svg carries a thirteen-row facts table. The README names Skyrim SE, so the art step should keep the mark generic. Repo name raw does not contain elder, enb or skyrim."
+    },
+    "secret-redact-io": {
+      "wordmark": "secret-redact-io",
+      "tagline": "Guarded file, fetch and exec IO that strips secrets, hash-only receipts.",
+      "command": "python -m pip install \"secret-redact-io @ git+https://github.com/HarperZ9/secret-redact-io.git@v0.1.0\"",
+      "hero_command": "",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "gate",
+      "words": [
+        "READ",
+        "REDACT",
+        "RECEIPT",
+        "RETURN"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "secret-redact-io",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README says it is not on PyPI; a bare pip install fails. README also lists banner .github/assets/banner.png and docs/brand/secret-redact-io-hero.png."
+    },
+    "superstack": {
+      "wordmark": "superstack",
+      "tagline": "One contract for renderers and sound engines, checked byte for byte.",
+      "command": "git clone https://github.com/HarperZ9/superstack && cd superstack",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "CANONICAL",
+        "SEED",
+        "CLOCK",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "superstack",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+, node 20+, C++"
+      },
+      "source_notes": "Licence changed at v0.2.0: code FSL-1.1-MIT from 0.2.0, earlier releases MIT, text CC BY 4.0. Archetype is a judgement call between ledger (receipts) and lattice. README names MATCH/DRIFT only as the receipt's possible values and reports no measured result, so verdict is null. Python, JavaScript and C++ each ship one file; no registry package."
+    },
+    "witnessing-spine": {
+      "wordmark": "witnessing-spine",
+      "tagline": "Five adversarial steelmans of financial-sector tech claims, sealed.",
+      "command": "python verify_manifest.py",
+      "hero_command": "python verify_manifest.py",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "CLAIM",
+        "SOURCES",
+        "VERDICT",
+        "GAP",
+        "SEAL"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "witnessing-spine",
+        "license": "CC BY 4.0",
+        "runtime": "python"
+      },
+      "source_notes": "A research corpus, not a tool; DOI 10.5281/zenodo.20778927. No GitHub release and no workflows (404). verify_manifest.py prints MATCH, DRIFT or UNVERIFIABLE; the README states no run result, so verdict is null. The README's own verdict wording for the five runs is partial and FALSE as stated, which is not in the allowed set."
+    },
+    "agent-hook-pack": {
+      "wordmark": "agent-hook-pack",
+      "tagline": "Hooks that block secrets, wrong branches and stale env templates.",
+      "command": "python -m pip install -e .",
+      "hero_command": "python -m pip install -e .",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "gate",
+      "words": [
+        "PROPOSE",
+        "MATCH NAME",
+        "CHECK",
+        "BLOCK"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "agent-hook-pack",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README embeds docs/art/agent-hook-pack-header.svg, proposal-lane.svg and staged-sweep-lane.svg; tests/test_repo_art.py pins DRAWINGS under docs/art. Exit codes: 0 allow, 2 block, 1 hook error. Not on PyPI per README (installs from checkout; PyPI status unverified). tools/render_repo_art.py and check_repo_art.py exist. Latest GitHub release v0.1.0 matches pyproject."
+    },
+    "behavior-transform.io": {
+      "wordmark": "behavior-transform.io",
+      "tagline": "One compliance boundary between authorized operators and AI providers.",
+      "command": "python -m pip install -e .",
+      "hero_command": "python -m pip install -e .",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "CATEGORIZE",
+        "SUBSTITUTE",
+        "FRAME",
+        "TRANSFORM",
+        "GATE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "behavior-transform",
+        "license": "Proprietary",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "No GitHub release; pyproject says 1.0.0 but maturity follows the release rule (experimental). LICENSE is 'Proprietary License'. Sensitive subject: README describes translating authorized operational language into a provider-terms register, says it is not a jailbreak, and says no before/after refusal rate is recorded; keep art neutral and imply no efficacy. Archetype pipeline (eight stages in request-to-model.svg); gate is a plausible second (grant-to-verdict.svg, seven authority gates). README already has docs/art/behavior-transform-io-header.svg, layers-table.svg, request-to-model.svg, grant-to-verdict.svg. tools/render_repo_art.py and check_repo_art.py exist but no test pins brand files. GitHub description calls it the Project Telos IO boundary. Package name is behavior-transform (CLI bt)."
+    },
+    "build-ecosystem": {
+      "wordmark": "build-ecosystem",
+      "tagline": "One install for the Build family: color, trading, forecasting, display.",
+      "command": "git clone https://github.com/HarperZ9/build-ecosystem.git",
+      "hero_command": "",
+      "release": "1.0.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "graph",
+      "words": [
+        "COLOR",
+        "FINANCE",
+        "ORACLE",
+        "ENGINE",
+        "CALIBRATE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "build-ecosystem",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "README says build-ecosystem is not published on PyPI and build-finance is not either, so registry is none. README badge and pyproject say 1.0.1 but the latest GitHub release is v1.0.0. README badge says fair-source; LICENSE file is the Functional Source License 1.1, MIT Future License (FSL-1.1-MIT as in sibling repos). Meta-package that pins member versions, so graph archetype. README uses .github/assets/banner.png and mentions docs/brand/build-ecosystem-mark.svg in a comment; no test pins them. Lists build-color, build-finance, build-oracle, build-engine, calibrate-pro."
+    },
+    "build-ui": {
+      "wordmark": "build-ui",
+      "tagline": "Qt 6 theme and widgets that give every Build app one look.",
+      "command": "pip install \"build-ui[pyside6]>=2,<3\"",
+      "hero_command": "pip install \"build-ui[pyside6]>=2,<3\"",
+      "release": "2.0.0",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "lattice",
+      "words": [
+        "THEME",
+        "STYLESHEET",
+        "WIDGETS",
+        "SIDEBAR"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "build-ui",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "tests/test_release_contract.py asserts the README banner URL (raw.githubusercontent.com .../.github/assets/banner.png), that docs/brand/build-ui-hero.svg is NOT referenced, and that docs/brand/build-ui-hero.png does not exist, so do not add those paths. README says install exactly one Qt binding (pyside6 or pyqt6). Archetype lattice chosen for a widget and theme system; lens is the alternative if colour is the focus. Core dep is QtPy."
+    },
+    "buildlang-vscode": {
+      "wordmark": "buildlang-vscode",
+      "tagline": "Syntax highlighting for BuildLang .bld files in VS Code.",
+      "command": "code --install-extension buildlang-0.1.0.vsix",
+      "hero_command": "",
+      "release": "0.1.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "lattice",
+      "words": [
+        "SYNTAX",
+        "KEYWORDS",
+        "INDENTATION",
+        "BRACKETS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "buildlang",
+        "license": "MIT",
+        "runtime": "VS Code 1.70+"
+      },
+      "source_notes": "Editor support only; does not bundle the compiler. README also gives a Marketplace install through the UI (no command); the command shown is the .vsix install. Marketplace publication is unverified, so registry is github (release artifacts). package.json name is buildlang. README uses .github/assets/banner.png; no tests directory, nothing pins brand files. README claims 61 keywords and lists backends C, HLSL, GLSL, SPIR-V, LLVM IR, WebAssembly, x86-64, ARM64."
+    },
+    "chorus": {
+      "wordmark": "chorus",
+      "tagline": "Turn a comment corpus into a ranked, re-checkable discourse digest.",
+      "command": "pip install -e .",
+      "hero_command": "pip install -e .",
+      "release": "0.3.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "pipeline",
+      "words": [
+        "NORMALIZE",
+        "SCORE",
+        "CLUSTER",
+        "CONTESTED",
+        "RECEIPT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "chorus-discourse",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "Flywheel lane (satellite of gather). Package name per pyproject is chorus-discourse; README installs from checkout, PyPI publication unverified. Latest release v0.3.0 but pyproject on main says 0.3.1. Runtime python 3.10+ comes from pyproject requires-python, not the README. tests/test_repo_art.py pins DRAWINGS (chorus-header.svg, synthesis-lane.svg, verify-lane.svg and others) under docs/art. Verifier outcomes in the README are verified, tampered, no receipt, not MATCH/DRIFT, so verdict is null. Zero third-party runtime deps. Also an MCP server (chorus mcp)."
+    },
+    "crewai-kickoff-replay-receipt": {
+      "wordmark": "crewai-kickoff-replay-receipt",
+      "tagline": "Repro evidence that CrewAI kickoff_for_each deletes replay records.",
+      "command": "git clone https://github.com/crewAIInc/crewAI.git crewAI",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "PIN",
+        "REPRODUCE",
+        "RED",
+        "GREEN",
+        "RECEIPT"
+      ],
+      "verdict": "DRIFT",
+      "badges": {
+        "registry": "none",
+        "package": "crewai-kickoff-replay-receipt",
+        "license": "MIT",
+        "runtime": "python 3.12"
+      },
+      "source_notes": "Evidence/repro repo about SOMEONE ELSE's project (crewAI at commit b3aaaab0, version 1.15.6). README result: the documented synchronous kickoff_for_each contract is DRIFT. It claims no upstream fix and says no upstream issue or PR was created. LICENSE is upstream crewAI MIT (Copyright crewAI, Inc.), not the author's. The command is the reproduce step in the upstream checkout; the bundle's own check is python verify_public.py (also in README). No release, no workflows, no brand files, no tests directory. Do not use crewAI branding in art."
+    },
+    "flywheel": {
+      "wordmark": "flywheel",
+      "tagline": "Run any model, keep a receipt you can recheck offline.",
+      "command": "python -m pip install flywheel-verify",
+      "hero_command": "python -m pip install flywheel-verify",
+      "release": "1.3.2",
+      "maturity": "stable",
+      "family": false,
+      "archetype": "orbit",
+      "words": [
+        "ROUTE",
+        "RUN",
+        "SEAL",
+        "WITNESS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "flywheel-verify",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "FLAGSHIP repo; the canonical design reference. Not itself a lane in the family list (it composes the 17 lanes). Archetype ledger chosen for sealed receipts re-run by an independent witness; graph (composed lanes) is the alternative. The witness returns MATCH, DRIFT or UNVERIFIABLE generically, so verdict is null. Latest release v1.3.2 but pyproject on main says 1.3.4. The only test hit is a temp fixture writing assets/flywheel-flagship-mark.svg inside tests/test_harness_architecture_report.py, so brand pinning is weak. scripts/render_repo_art.py exists and README already embeds docs/art/flywheel-header.svg. A Windows desktop installer also ships (no Python needed). Do not imply accuracy uplift in art. Research text dirs are CC BY 4.0 per LICENSE-TEXT; code is FSL-1.1-MIT."
+    },
+    "mneme": {
+      "wordmark": "mneme",
+      "tagline": "Agent memory with source provenance and re-derivable recall receipts.",
+      "command": "python -m pip install flywheel-mneme",
+      "hero_command": "python -m pip install flywheel-mneme",
+      "release": "0.7.0",
+      "maturity": "beta",
+      "family": true,
+      "archetype": "strata",
+      "words": [
+        "TURN",
+        "ATOM",
+        "SCENARIO",
+        "PERSONA"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "pypi",
+        "package": "flywheel-mneme",
+        "license": "FSL-1.1-MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Flywheel lane. PyPI distribution name is flywheel-mneme (the bare mneme-memory name belongs to an unrelated project). README calls the license fair-source; LICENSE is FSL-1.1-MIT. Memory model is four tiers L0 turn, L1 atom, L2 scenario, L3 persona, which drives strata. The drift check yields MATCH/DRIFT/UNVERIFIABLE per memory, so no single repo verdict (null). tests/test_repo_art.py pins docs/art/mneme-header.svg and other drawings. Zero runtime deps."
+    },
+    "proof-surface": {
+      "wordmark": "proof-surface",
+      "tagline": "One proof packet per agent action, with verdicts derived from checks.",
+      "command": "python -m pip install -e \".[test]\"",
+      "hero_command": "python -m pip install -e \".[test]\"",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "ledger",
+      "words": [
+        "EVIDENCE",
+        "PACKET",
+        "RE-DERIVE",
+        "VERDICT"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "proof-surface",
+        "license": "MIT",
+        "runtime": "python 3.10+"
+      },
+      "source_notes": "No GitHub release; version 0.2.0 appears in the README badge and pyproject. Install is from a checkout; PyPI status unverified. README says it is reached through the telos proof CLI (telos-proof <domain>). MATCH/DRIFT/UNVERIFIABLE are defined per packet; the README Try it example prints MATCH, but that is one example, so verdict is null (MATCH is defensible). tests/test_forward_delivery_contract.py pins docs/brand/proof-surface-hero.png; tests/test_repo_art.py pins docs/art/proof-surface-header.svg and other drawings. Runtime: pyproject says 3.10+, README says CI runs 3.11 and 3.12."
+    },
+    "reconcile": {
+      "wordmark": "reconcile",
+      "tagline": "Turn creative generators into replayable browser worlds.",
+      "command": "node cli.js create gyroid --seed 7 --out out",
+      "hero_command": "",
+      "release": "0.2.0",
+      "maturity": "beta",
+      "family": false,
+      "archetype": "orbit",
+      "words": [
+        "PERCEIVE",
+        "GENERATE",
+        "CRITIQUE",
+        "REFINE",
+        "WITNESS"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "reconcile",
+        "license": "FSL-1.1-MIT",
+        "runtime": "node 18+"
+      },
+      "source_notes": "test/forward-delivery.test.js pins docs/brand/reconcile-hero.png and requires package.json files to include docs/brand. README also uses .github/assets/banner.png. package.json name is reconcile with a bin, but npm publication is unverified, so registry is github. From v0.2.0 the license is FSL-1.1-MIT; earlier releases were AGPL-3.0-or-later. Zero runtime dependencies, runs in node and browser. Ten organs: 7 field (gyroid, quasicrystal, flow, turbulence, metaballs, rings, moire) and 3 form (phyllotaxis, attractor, harmonograph). The full loop also includes compose and choreograph."
+    },
+    "senses-and-sensibility": {
+      "wordmark": "senses-and-sensibility",
+      "tagline": "A research program in intrinsic, bilateral accountability for agents.",
+      "command": "",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "document",
+      "words": [
+        "PROVENANCE",
+        "SELF-TEST",
+        "GATE",
+        "ACCOUNTABILITY"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "none",
+        "package": "senses-and-sensibility",
+        "license": "CC BY 4.0, MIT",
+        "runtime": ""
+      },
+      "source_notes": "Philosophy and scholarship corpus with no code today (README says the repository holds no code). No install or run command exists; the only command is the provenance check sha256sum -c MANIFEST.sha256, left out of the command field. README labels the central conjecture pre-proof and the work in progress. Dated 2026-06-20, Zenodo DOI 10.5281/zenodo.20773724. Subtitle Conferred Existence. README uses .github/assets/banner.png; no tests or workflows. Words are drawn from the thesis statement (each observation carries provenance and can fail a self-test; every action passes a gate)."
+    },
+    "terminal-state-fixtures": {
+      "wordmark": "terminal-state-fixtures",
+      "tagline": "Score AI agents by the state they leave, not by their transcript.",
+      "command": "uv venv && uv pip install verifiers pytest",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "RECORD",
+        "SCORE",
+        "VERDICT",
+        "DENOMINATOR"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "terminal-state-fixtures",
+        "license": "MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "Two environments: mlflow-terminal-state (324 rows, seven terminal verdicts, 23 rows in the quality denominator) and verifiers-component-forge (337 cases). README says version 0.1.1 is staged privately on Prime Intellect's Environments Hub and is not a public Hub release, so registry is github. The command is the first shell command (run inside environments/mlflow_terminal_state after a cd); python 3.11+ comes from the environments' pyproject (<3.14). The seven verdicts (verified, refuted and others) are not MATCH/DRIFT words, so verdict is null. README says no scored run is recorded for the first environment. tools/render_repo_art.py and check_repo_art.py exist; no test pins brand files. Archetype pipeline (record-to-verdict.svg); gate is a plausible alternative."
+    },
+    "wol-pi": {
+      "wordmark": "wol-pi",
+      "tagline": "Wake a Windows PC from your phone through a Pi on your tailnet.",
+      "command": "curl -fsSL https://tailscale.com/install.sh | sudo bash",
+      "hero_command": "",
+      "release": "",
+      "maturity": "experimental",
+      "family": false,
+      "archetype": "pipeline",
+      "words": [
+        "PHONE",
+        "TAILNET",
+        "RELAY",
+        "MAGIC PACKET",
+        "WAKE"
+      ],
+      "verdict": null,
+      "badges": {
+        "registry": "github",
+        "package": "wol-pi",
+        "license": "MIT",
+        "runtime": "python 3.11+"
+      },
+      "source_notes": "The first install command in the README is the Tailscale installer; the repo's own step is sudo ./install.sh after git clone. No release, no pyproject (single file wol_server.py, stdlib only). README embeds .github/assets/banner.png and docs/brand/wol-pi-hero.png but no tests pin them. Flow in README: phone, Tailscale tailnet, Raspberry Pi relay, LAN broadcast magic packet, Windows PC. Keep real MACs and hostnames out of any art."
     }
+  },
+  "skipped": {
+    ".github": "no README",
+    "valibot-1518-repro": "a minimal repro for upstream maintainers; brand art would be noise",
+    "maqam": "another author's project (AjnasNB); its test pins its own hero",
+    "HarperZ9": "the profile README, not a tool; it already ships a picture hero",
+    "vllm-ci-forum-receipt": "a sealed evidence receipt: PUBLICATION.txt pins the exact file inventory and its hashes",
+    "workspace": "its .gitignore tracks a fixed list of canon documents and ignores everything else, so the art would not ship"
   }
 }
