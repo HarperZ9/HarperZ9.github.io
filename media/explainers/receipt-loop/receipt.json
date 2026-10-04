@@ -20,8 +20,9 @@
     "tools/explainer/draw.py": "552d54ecc5ee16310033e27f23e4b44506e06945220a2a581b9a69d7bab59da6",
     "tools/explainer/marks.py": "6b3b85f351f6854ee48d369f48af6dc852ee1abb8e68f9b1a3b5405c021f703c",
     "tools/explainer/scene.py": "0fa330710cb272fecafe241b9c2b7af966f299fccc46ca0beb27ae548fd259ed",
-    "tools/explainer/voice.py": "60d8c81aa7b4d1cc0921cbfaf967de1c9fbb59208f6479ed35f93fcb8c950122",
-    "tools/explainer/render.py": "6ac2ab73782e287fd009de15ab4cc346455cabbe7ca112ee8f6491880caa124a"
+    "tools/explainer/voice.py": "8a640e64509eef556093fb57a28b3fdbf60134f766e104b4b581cad7682eb0af",
+    "tools/explainer/loudness.py": "2cc2232f758f52f272d2a77a2744e614f8943ff2dd8436b5c54c4043da467c0e",
+    "tools/explainer/render.py": "117860ab1ea74e9cd4fc9cf8e8a8167b9592b06b71a99d2abadab71685661067"
   },
   "fonts": {
     "system/fonts/hanken-grotesk.woff2": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5",
@@ -36,13 +37,29 @@
     "os": "Windows-11-10.0.26220-SP0"
   },
   "outputs": {
-    "receipt-loop.mp4": "2886f8c0515a8eb8f974d7df483e2b48e8026ee9dfdc103892fcff3772dd799c",
+    "receipt-loop.mp4": "aef5ddf26b933740dc348852fd30d6a370918936a091ba04c99a3b2274dddd93",
     "receipt-loop.srt": "47ac9b6e1193bb34a01f30b1b6a3dd3747b29e91ea0e3bb7879c68f004ce92ef",
     "receipt-loop.vtt": "b14a426178d519c4dfe9f5ac4fa9c077d2608f2f28c84eed915ab2af7a5542ce",
     "poster.png": "633708966c7fbcc6c3a7f0e586cc13439fab542db844734fa5feaf77e7cb4832",
     "aperture.png": "53db474d7c8edc5d1cf781a99d2cef1fa233ade8a528567a954a6c8f86c1b6bc"
   },
-  "narration_wav_sha256": "1d2f3b734282442c4b110303947fd9302c2e19b1c86923ed1f77d8ed3688ce62",
+  "narration_wav_sha256": "e7426f154173a147196835961039ec92119eb2edf25a98e8edb407ec922154d3",
+  "narration_loudness": {
+    "rule": "explainer-speech-normalise/1",
+    "meter": "superstack-bs1770/1",
+    "target_lufs": -16.0,
+    "before_lufs": -20.31,
+    "before_peak_dbfs": -2.35,
+    "gain_db": 5.5,
+    "limiter": {
+      "ceiling_dbfs": -2.0,
+      "lookahead_s": 0.02,
+      "oversample": 4
+    },
+    "after_lufs": -16.01,
+    "after_peak_dbfs": -2.0,
+    "sample_peak_headroom_db": 0.5
+  },
   "frames": 1941,
   "fps": 30,
   "seconds": 64.7,
