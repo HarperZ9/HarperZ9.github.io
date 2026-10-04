@@ -2138,8 +2138,9 @@ import { atelier as atelierPlugin, drawStrokes, paintRich as paintRichPens, MARG
     function writeURL() {
       try { window.history.replaceState(null, "", window.location.pathname + "?" + stateToParams()); } catch (e) { }
     }
-    function hydrateFromURL() {
-      var qs = window.location.search; if (!qs || qs.length < 2 || typeof URLSearchParams === "undefined") return;
+    function hydrateFromURL() { hydrateFrom(window.location.search); }
+    function hydrateFrom(qs) {
+      if (!qs || qs.length < 2 || typeof URLSearchParams === "undefined") return;
       var p; try { p = new URLSearchParams(qs); } catch (e) { return; }
       var st = p.get("study"); if (st && studyById(st).id === st) state.study = st;
       var sp = p.get("specimen"); if (sp && specimenById(sp).id === sp) state.specimen = sp;   // upload/captured don't validate → ignored
@@ -2465,6 +2466,24 @@ import { atelier as atelierPlugin, drawStrokes, paintRich as paintRichPens, MARG
         paintFrame({ mode: "lines", W: dims[0], H: dims[1], strokes: finalStrokes, frac: 1 });
       }, 200);
     });
+
+    // The Studio shell's hooks (studio.js): the recipe as the shared undo's snapshot and the kept
+    // session, a way to put one back, a fresh start, and a redraw when the Atelier is entered
+    // again, so the stage never keeps another source's picture under the Atelier's name. The
+    // recipe is the same string a shared link carries.
+    window.AtelierStudio = {
+      recipe: function () { return stateToParams(); },
+      applyRecipe: function (qs) {
+        hydrateFrom(String(qs || ""));
+        syncControls(); renderParams(); render();
+      },
+      fresh: function () {
+        state.study = "flow"; state.specimen = "none"; state.palette = "spectrum";
+        state.complexity = 0.58; state.seed = randomSeed(); state.params = defParams("flow");
+        syncControls(); renderParams(); render();
+      },
+      redraw: function () { if (atelierIsActiveSource()) render(); },
+    };
 
     renderParams();
     // Skip the boot draw when the Studio is opening on a different source (e.g.

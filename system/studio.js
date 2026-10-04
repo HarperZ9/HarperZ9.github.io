@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-keep";
+import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-entry";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
   onSourceChange as surfaceOnSourceChange,
@@ -413,7 +413,9 @@ function currentQuality() { return QUALITY_LEVELS[qualityKey]; }
 // grid) sharpens up to its own data resolution and no further; that ceiling is the data's, not
 // the renderer's.
 const FLAT_ZOOM_REDRAW = () => ({
-  atelier: () => { const b = $("at-draw"); if (b) b.click(); },
+  // Redraw the same recipe at the new backing. This used to click Draw, which picks a new seed, so
+  // zooming into an Atelier drawing replaced it with another one.
+  atelier: () => { if (window.AtelierStudio) window.AtelierStudio.redraw(); },
   poster: () => { if (_posterWorkshop) _posterWorkshop.render(); },
   sound: () => restartSound(),
   neural: () => restartNeural(),
@@ -548,6 +550,7 @@ function setSource(next) {
   if (!SOURCES[next]) return;
   _sourceEpoch++;                 // invalidate any in-flight lazy start from a previous switch
   const epoch = _sourceEpoch;
+  const entering = next !== activeSource;   // a switch, not a repeat click on the same source
   // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
@@ -744,8 +747,24 @@ function setSource(next) {
     try { perceive(c); } catch (_) {}
     startMeterLoop();
   }).catch(err => { say("model", "The fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); });
-  if (next === "fractal3d") loadFractal3D().catch(err => console.warn("studio: fractal3d graph prefetch failed", err));
-  if (next === "ndim") loadNDimEngine().catch(err => console.warn("studio: ndim graph prefetch failed", err));
+  // 3D Fractal and Dimensions draw their own frame on entry, as the 2D fractal does: the view this
+  // browser kept on the first entry, else the settings on the rail. Before 4 October 2026 both
+  // waited for Render and showed the previous source's picture under their name.
+  if (next === "fractal3d") loadFractal3D().then(() => {
+    if (epoch !== _sourceEpoch) return;
+    if (_shell && _shell.resume("fractal3d")) return;
+    render3DInto(read3DOpts());
+  }).catch(err => { say("model", "The 3D fractal renderer failed to load: " + (err && err.message ? err.message : String(err))); });
+  if (next === "ndim") loadNDimEngine().then(() => {
+    if (epoch !== _sourceEpoch) return;
+    if (_shell && _shell.resume("ndim")) return;
+    startNDimAnimationNow();
+  }).catch(err => { say("model", "The dimensions renderer failed to load: " + (err && err.message ? err.message : String(err))); });
+  // The Atelier redraws its own recipe when it is entered again, so the stage never keeps the
+  // previous source's picture (it used to, until Draw, which also replaced the seed).
+  if (next === "atelier" && entering && window.AtelierStudio) {
+    if (!(_shell && _shell.resume("atelier"))) window.AtelierStudio.redraw();
+  }
   if (next === "byo") {
     loadEffects().then(() => buildTransformMenu())
       .catch(err => { say("model", "The transform menu failed to load: " + (err && err.message ? err.message : String(err))); });
@@ -3068,6 +3087,7 @@ async function render3DInto(opts) {
     stop3d = fractal3dHandle.stop;
     canvasIsGL = true;
     startMeterLoop();   // the orbit animates, stream the meters so the hash changes as it turns
+    if (_shell) _shell.record("fractal3d");
     // A context lost mid-orbit would leave the rAF loop drawing into a dead
     // context; recover to the 2D canvas with a plain explanation instead.
     c.addEventListener("webglcontextlost", (e) => {
@@ -3365,6 +3385,7 @@ function startNDimAnimationNow() {
   leave3D();   // restore 2D canvas if a WebGL orbit was mounted
   const canvas = $("studio-canvas");
   const { n, speed, kind, projection, rotation } = readNDimOpts();
+  if (_shell) _shell.record("ndim");
   _ndimStartTime = null;
   let firstFrameDone = false;
 
@@ -3398,6 +3419,9 @@ function startNDimAnimationNow() {
       startMeterLoop();
     }
 
+    // Less motion: hold the first frame. The loop used to turn the polytope whatever the
+    // visitor's setting; camera drags and paint still repaint through ndimRepaintNow.
+    if (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches) { _ndimRaf = null; _ndimStartTime = null; return; }
     _ndimRaf = requestAnimationFrame(tick);
   }
   _ndimRaf = requestAnimationFrame(tick);
@@ -5456,7 +5480,7 @@ function resizeActiveSurface() {
       break;
     case "ndim":
       if (_ndimRaf != null) startNDimAnimation();   // a running animation: restart at the new size
-      else sizeCanvas(canvas);                      // paused: just re-fit the backing
+      else { sizeCanvas(canvas); ndimRepaintNow(); }   // held still: re-fit and draw the pose again
       break;
     case "fractal3d":
     case "music":
@@ -6602,7 +6626,61 @@ function bootRetroHandoff() {
 const syncChipGroup = (attr, value) => document.querySelectorAll(`[${attr}]`).forEach(b =>
   b.classList.toggle("active", b.getAttribute(attr) === value));
 const PNG_FRAME = { label: "PNG frame", target: "rt-export-png" };
+const radioChips = (attr, value) => syncChipGroup(attr, value);
+const setRange = (id, value, outId, fmt) => {
+  const el = $(id); if (!el || value == null) return;
+  el.value = String(value);
+  const out = outId && $(outId); if (out) out.textContent = fmt ? fmt(el.value) : el.value;
+};
 const SHELL_CONTRACTS = {
+  atelier: {
+    making: true,
+    // Draw has always meant "a new drawing" (a new seed); a typed seed draws on Enter.
+    primary: { label: "New drawing", target: "at-draw", title: "Draw a new picture with a new seed. A seed typed in the field draws on Enter." },
+    exports: [{ label: "SVG", target: "at-export" }, PNG_FRAME, { label: "Copy link", target: "at-share" }],
+    snapshot: () => (window.AtelierStudio ? { recipe: window.AtelierStudio.recipe() } : null),
+    restore(state) { if (window.AtelierStudio) window.AtelierStudio.applyRecipe(state.recipe); },
+    reset() { if (window.AtelierStudio) window.AtelierStudio.fresh(); },
+  },
+  fractal3d: {
+    making: true,
+    primary: { label: "Render", target: "f3-render", title: "Render the fractal with these settings" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot() { const o = read3DOpts(); return { type: o.type, scale: o.scale, power: o.power, iterations: o.iterations }; },
+    restore(state) {
+      active3DType = state.type;
+      radioChips("data-f3type", state.type);
+      $("f3-scale-row").hidden = state.type === "mandelbulb";
+      $("f3-power-row").hidden = state.type !== "mandelbulb";
+      setRange("f3-scale", state.scale, "f3-scale-val", (v) => (+v).toFixed(2));
+      setRange("f3-power", state.power, "f3-power-val", (v) => (+v).toFixed(1));
+      setRange("f3-iterations", state.iterations, "f3-iterations-val");
+      render3DInto(read3DOpts());
+    },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      this.restore({ type: "mandelbox", scale: d("f3-scale"), power: d("f3-power"), iterations: d("f3-iterations") });
+    },
+  },
+  ndim: {
+    making: true,
+    primary: { label: "Render", target: "ndim-render", title: "Restart the animation with these settings" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot() { const o = readNDimOpts(); return { n: o.n, speed: o.speed, kind: _activeNDimKind, projection: _activeNDimProjection, rotation: _activeNDimRotation }; },
+    restore(state) {
+      _activeNDimKind = state.kind; _activeNDimProjection = state.projection; _activeNDimRotation = state.rotation;
+      radioChips("data-ndim-kind", state.kind);
+      radioChips("data-ndim-proj", state.projection);
+      radioChips("data-ndim-rot", state.rotation);
+      setRange("ndim-n", state.n, "ndim-n-val");
+      setRange("ndim-speed", state.speed, "ndim-speed-val", (v) => (+v).toFixed(1));
+      startNDimAnimation();
+    },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      this.restore({ n: d("ndim-n"), speed: d("ndim-speed"), kind: "cube", projection: "perspective", rotation: "all" });
+    },
+  },
   sketch: {
     making: true,
     reset() { this.restore({ sketch: { v: 1, strokes: [], symmetry: { mode: "none", k: 6 }, guide: "none" }, register: "drawn" }); },
@@ -6686,6 +6764,8 @@ const SHELL_CONTRACTS = {
     },
   },
 };
+// Every settled Atelier drawing is one undo step.
+document.addEventListener("atelier:drawn", () => { if (_shell) _shell.record("atelier"); });
 // Every rebuild of the showcase scene (a system, a seed, the S key) is one undo step.
 document.addEventListener("showcase:params", () => { if (_shell) _shell.record("showcase"); });
 // The readings fold while the visitor makes a piece; the shell reports its making actions, and a
@@ -6731,6 +6811,12 @@ _shell = mountShell({
   }
   if (wantImport) { try { setSource("plotmaps"); bootRetroHandoff(); return; } catch (_) {} }
   setSource("atelier");
+  // A link that names a recipe (study, seed) is the drawing the visitor came for, so it wins over
+  // the work this browser kept; saving still starts from it.
+  // The head snapshot is read as it was ("" is a real answer): by now the Atelier has written its
+  // own recipe into the address bar, so the live URL always names one.
+  const asked = typeof window.__studioBootSearch === "string" ? window.__studioBootSearch : search;
+  if (_shell) _shell.resume("atelier", { apply: !/[?&](study|seed)=/.test(asked) });
 })();
 
 // Boot race repair. atelier.js is a deferred classic script and this file is a
