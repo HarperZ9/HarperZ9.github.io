@@ -121,9 +121,12 @@ function mountShowcaseScene(canvas) {
 // Living neural source: the seed's neural instruments, animated on the shared
 // canvas and measured by the perception loop. Static under reduced motion.
 let _neural = null;
+// Worlds: raw-native raymarches the One Step worlds; studio-worlds.js copies each frame onto the stage.
+let _worlds = null;
+const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds"), m => { _worlds = m; });
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
-const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads"), m => { _threads = m; });
+const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-05a6cdd"), m => { _threads = m; });
 const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
@@ -500,6 +503,7 @@ const SOURCES = {
   voxels:    { block: "src-voxels",    mode: "generate" },
   sketch:    { block: "src-sketch",    mode: "generate" },
   threads:   { block: "src-threads",   mode: "generate" },
+  worlds:    { block: "src-worlds",    mode: "generate" },
   // Media engine surfaces (studio-engine.js): every media page on the site, entered from here.
   // The full Retro Engine, retro.html's own controls and controller (studio-retro.js).
   retro:     { block: "src-retro",     mode: "generate" },
@@ -597,6 +601,7 @@ function setSource(next) {
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
     if (_neural)    { try { _neural.stopNeural(); } catch (_) {} syncNeuralPlay(); }
     if (_threads)   { try { _threads.leaveThreads(); } catch (_) {} }
+    if (_worlds)    { try { _worlds.leaveWorlds(); } catch (_) {} }
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
@@ -689,6 +694,18 @@ function setSource(next) {
       try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to start:", e); }
       startMeterLoop();
     }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
+  }
+  // Worlds: boot the GPU host on first entry and hand the stage the camera's mouse, touch and keys.
+  if (next === "worlds") {
+    loadWorlds().then(async mod => {
+      if (epoch !== _sourceEpoch) return;
+      const c = $("studio-canvas");
+      sizeCanvas(c);
+      await mod.enterWorlds(c, $("viewport-stage"), { say });
+      if (epoch !== _sourceEpoch) { mod.leaveWorlds(); return; }
+      markStagePainted();
+      startMeterLoop();
+    }).catch(err => { say("model", "Worlds failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Threads: boot the GPU host on first entry, fit it to the stage, then run its frame loop.
   if (next === "threads") {
@@ -876,6 +893,29 @@ function startNeuralSource() {
 function restartNeural() {
   if (activeSource !== "neural" || !_neural) return;
   try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to restart:", e); }
+}
+// The Worlds rail: every control maps to one option of the module (studio-worlds.js).
+function initWorldsControls() {
+  const on = (id, ev, fn) => { const el = document.getElementById(id); if (el) el.addEventListener(ev, () => fn(el)); };
+  const apply = (v) => { if (activeSource === "worlds" && _worlds) { _worlds.setWorlds(v); startMeterLoop(); } };
+  on("worlds-play", "click", (b) => {
+    if (!_worlds) return;
+    const o = _worlds.worldsOptions(); if (!o) return;
+    const playing = !o.playing;
+    apply({ playing });
+    b.setAttribute("aria-pressed", String(playing));
+    b.textContent = playing ? "pause" : "play";
+  });
+  on("worlds-reset", "click", () => { if (_worlds) _worlds.resetWorldsView(); });
+  on("worlds-world", "change", (el) => apply({ world: el.value }));
+  on("worlds-tour", "change", (el) => apply({ tour: el.checked }));
+  for (const [id, key] of [["worlds-quality", "quality"], ["worlds-light", "light"], ["worlds-fog", "fog"], ["worlds-motion", "motion"]]) {
+    on(id, "input", (el) => {
+      const out = document.getElementById(id + "-val");
+      if (out) out.textContent = Number(el.value).toFixed(2);
+      apply({ [key]: +el.value });
+    });
+  }
 }
 // The Threads rail: every control maps to one option of the module (studio-threads.js).
 function initThreadsControls() {
@@ -2430,6 +2470,7 @@ function initShelf() {
 
 initNeuralControls();
 initThreadsControls();
+initWorldsControls();
 initSoundControls();
 initPlotMapControls();
 initVoxelControls();
@@ -4848,7 +4889,7 @@ function liveAfterMeasure(ts, phash) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, threadsStatic: _threads ? _threads.threadsStatic() : true, spatialStatic: _spatialStatic, musicStatic: musicHeldStill(), engineStatic: activeSource === "retro" ? !!(window.__mediaEngine && window.__mediaEngine.reduced) : (_engineSurface ? _engineSurface.engineSurfaceStatic() : true) });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, threadsStatic: _threads ? _threads.threadsStatic() : true, worldsStatic: _worlds ? _worlds.worldsStatic() : true, spatialStatic: _spatialStatic, musicStatic: musicHeldStill(), engineStatic: activeSource === "retro" ? !!(window.__mediaEngine && window.__mediaEngine.reduced) : (_engineSurface ? _engineSurface.engineSurfaceStatic() : true) });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -5581,6 +5622,7 @@ function resizeActiveSurface() {
     case "fractal3d":
     case "music":
     case "byo":
+    case "worlds":      // the Worlds loop re-fits its render to the new size on its next tick
     case "threads":     // the Threads loop re-fits its GPU frame to the new size on its next tick
       sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
       break;
