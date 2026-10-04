@@ -188,8 +188,11 @@ function buildRoutePath(doc, family, route) {
   const category = doc.createElement(hubHref ? "a" : "span");
   if (hubHref) category.href = localHrefForPage(hubHref, locationPath(doc));
   category.textContent = categoryLabel;
+  // A query names a state of the page (?source=sketch on the Studio), not another page, so it is
+  // left out of the comparison; before 4 October 2026 it added a second crumb, "Studio / The Studio".
+  const page = (href) => localRoute(href, true).replace(/\?[^#]*/, "");
   const exactNavigation = [...PRIMARY_ROUTES, { href: "site-index.html" }].some(
-    route => localRoute(route.href, true) === localRoute(locationPath(doc), true));
+    route => page(route.href) === page(locationPath(doc)));
   path.appendChild(category);
   const routeLabel = route && route.label && route.label !== categoryLabel ? route.label : "";
   if (!exactNavigation && route) {
