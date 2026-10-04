@@ -605,7 +605,7 @@ async function enterPosterWorkshop(epoch) {
   if (_posterWorkshop) { _posterWorkshop.render(); return; }
   try {
     const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js"),
+      import("./poster-panel.js?v=20261003-poster-plugin"),
       import("./generative-field.js?v=20260925-void-plates"),
       loadExporters(),
     ]);
@@ -6525,7 +6525,7 @@ if (tierBtn) {
 (function bootStudioInstrument() {
   let audio = null, frameRun = null, frameTimer = 0, frameBusy = false, clipRec = null;
   async function ensureAudio() {
-    const m = await import("./retro-audio.js?v=20260812-cohesion");
+    const m = await import("./retro-audio.js?v=20261003-retro-sound");
     if (!audio) audio = m.createRetroAudio();
     return audio;
   }
