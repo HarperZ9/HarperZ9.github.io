@@ -665,6 +665,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;
       const tab = document.querySelector('#studio-source button[data-source="music"]');
       if (tab) { try { tab.dispatchEvent(new MouseEvent("click", { bubbles: false })); } catch (_) {} }
+      resumeForm("music");
     }).catch(err => { say("model", "The music engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Physics (discovery engine): load the graph on first entry, render the evolving system into the
@@ -673,6 +674,7 @@ function setSource(next) {
     loadDiscovery().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
       try { mod.startDiscovery($("studio-canvas")); } catch (_) {}
+      resumeForm("discovery");
       startMeterLoop();
     }).catch(err => { say("model", "The physics engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -693,6 +695,7 @@ function setSource(next) {
     loadNeural().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to start:", e); }
+      resumeForm("neural");
       startMeterLoop();
     }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -703,6 +706,7 @@ function setSource(next) {
     loadSound().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       try { mod.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+      resumeForm("sound");
       startMeterLoop();
     }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -6780,9 +6784,30 @@ function engineContract(id, { settings = true, door = false } = {}) {
   return c;
 }
 // Sources whose settings are read from their inspector (studio-form.js): a change there is a step.
-const FORM_SOURCES = { spatial: "src-spatial" };
+const FORM_SOURCES = { spatial: "src-spatial", neural: "src-neural", sound: "src-sound", music: "src-music", discovery: "src-discovery" };
 const formOf = (source) => $(FORM_SOURCES[source]);
+// The first settings a form source showed in this page: what Start fresh goes back to.
+const formFirst = {};
+function resumeForm(source) {
+  if (!(source in formFirst)) formFirst[source] = formSnapshot(formOf(source));
+  if (_shell) _shell.resume(source);
+}
+// An instrument played and measured, not a piece made: the readings stay open.
+function formContract(source, primary, exports) {
+  return {
+    primary, exports,
+    snapshot: () => formSnapshot(formOf(source)),
+    restore(state) { formRestore(formOf(source), state); },
+    reset() { if (formFirst[source]) formRestore(formOf(source), formFirst[source]); },
+  };
+}
+const WEBM = { label: "WebM, 5 seconds", target: "rt-export-webm" };
 const SHELL_CONTRACTS = {
+  neural: formContract("neural", { label: "Play", target: "neural-play", title: "Play or pause the living neural instrument" }, [PNG_FRAME, WEBM]),
+  sound: formContract("sound", { label: "Play", target: "sound-play", title: "Play the seed's sound and measure it live" }, [PNG_FRAME]),
+  music: formContract("music", { label: "Play", target: "music-play", title: "Play the chosen audio source" }, [PNG_FRAME, WEBM]),
+  discovery: formContract("discovery", { label: "Discover and verify", target: "disc-fit", title: "Fit a conserved quantity and verify it against a refusal run" },
+    [{ label: "Witnessed artifact (JSON)", target: "disc-export" }, PNG_FRAME]),
   spatial: {
     making: true,
     primary: { label: "Export run receipt", target: "sp-receipt", title: "Export the run receipt: package, boundary, budget, controls" },
