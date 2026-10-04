@@ -30,9 +30,19 @@ async function frame(page) {
     return [...new Uint8Array(h)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
   });
 }
+// Open the source menu (only if it is folded), wait for the source to show, pick it. One more try
+// if the first click on the switch did not open the menu (seen once on a phone under load).
 async function pick(page, source) {
-  const sw = page.locator('#source-switch'); await sw.scrollIntoViewIfNeeded(); await sw.click();
-  await page.locator(`#studio-source button[data-source="${source}"]`).click();
+  const sw = page.locator('#source-switch');
+  const tab = page.locator(`#studio-source button[data-source="${source}"]`);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if ((await sw.getAttribute('aria-expanded')) !== 'true') { await sw.scrollIntoViewIfNeeded(); await sw.click(); }
+    try { await tab.waitFor({ state: 'visible', timeout: 4000 }); break; } catch (e) {
+      if (attempt) throw e;
+      console.log(`note: the source switch did not open the menu for ${source}; trying once more`);
+    }
+  }
+  await tab.click();
 }
 async function setValue(page, id, value, event) {
   await page.evaluate(([i, v, ev]) => { const e = document.getElementById(i); e.value = v; e.dispatchEvent(new Event(ev, { bubbles: true })); }, [id, value, event]);

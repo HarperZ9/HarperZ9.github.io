@@ -35,9 +35,19 @@ async function settled(page, min = 1500) {
   }
   return last;
 }
+// Open the source menu (only if it is folded), wait for the source to show, pick it. One more try
+// if the first click on the switch did not open the menu (seen once on a phone under load).
 async function pick(page, source) {
-  const sw = page.locator('#source-switch'); await sw.scrollIntoViewIfNeeded(); await sw.click();
-  await page.locator(`#studio-source button[data-source="${source}"]`).click();
+  const sw = page.locator('#source-switch');
+  const tab = page.locator(`#studio-source button[data-source="${source}"]`);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if ((await sw.getAttribute('aria-expanded')) !== 'true') { await sw.scrollIntoViewIfNeeded(); await sw.click(); }
+    try { await tab.waitFor({ state: 'visible', timeout: 4000 }); break; } catch (e) {
+      if (attempt) throw e;
+      console.log(`note: the source switch did not open the menu for ${source}; trying once more`);
+    }
+  }
+  await tab.click();
 }
 async function clickIn(page, sel) { const l = page.locator(sel).first(); await l.scrollIntoViewIfNeeded(); await l.click(); }
 const active = (page, attr) => page.getAttribute(`[${attr}].active`, attr);
