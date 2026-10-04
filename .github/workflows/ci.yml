@@ -45,7 +45,7 @@ jobs:
           system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs
           system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs
           system/studio-loop.test.mjs system/media-engine/scene.test.mjs system/media-engine/core.test.mjs
-          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs
+          system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs
           system/type-forge/forge.test.mjs
       # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
       # audio modules' own tests, which did not run in CI before.
