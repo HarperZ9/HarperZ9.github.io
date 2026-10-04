@@ -1,0 +1,2256 @@
+{
+ "schema": "site.plate-baselines/1",
+ "taken": "2026-10-03",
+ "note": "Retaken on 3 October 2026 on visible canvases. The baselines taken for #318 and #322 were read while a reading rule hid every Gallery plate (fixed in #331), so those canvases sat at a fallback size. Two runs on main 84c837e agree on 63 of 64 plates and 95 of 95 instruments at DPR 1 and on 64 of 64 plates and 95 of 95 instruments at DPR 2; a third session at DPR 2 drew zebra-beat differently. The two exceptions are listed under unstable and skipped unless PLATE_BASELINE_STRICT=1. The Gallery seeds its desk plate and Plate 01 from the UTC date (gallery-YYYY-MM-DD), so the checker fixes the page clock at \"clock\".",
+ "platform": "Playwright 1.58.0 Chromium 145.0.7632.6 headless, Windows 11, ANGLE D3D11, RTX 4090, viewport 1440 x 900",
+ "launch_args": [
+  "--enable-gpu",
+  "--use-angle=d3d11",
+  "--ignore-gpu-blocklist"
+ ],
+ "clock": "2026-10-04T04:00:00Z",
+ "method": "tests/plate-baselines.cjs: each plate page scrolled through, 2.5 s settle, SHA-256 of getImageData on every canvas[data-specimen]; instruments drawn alone by renderSpecimen at 320 x 200 CSS px, seed instrument-hash, tick 0.6",
+ "unstable": {
+  "dpr1|gallery|typeface|gallery-typeface": "Large glyph rasterisation: 3 to 35 pixels differ by at most 2 levels between browser sessions; within a session the plate redraws identically. Compared by hash only when PLATE_BASELINE_STRICT=1.",
+  "dpr2|instrument|zebra-beat": "At least three different hashes on the same commit across browser sessions (two runs of the baseline, one checker run); within a session it repeats exactly. Compared by hash only when PLATE_BASELINE_STRICT=1."
+ },
+ "accepted_alternates": {},
+ "dpr1": {
+  "plates": {
+   "crucible|x|crucible-plate-01": {
+    "size": [
+     1248,
+     273
+    ],
+    "sha256": "39f4a71b1459bf57f84749298402f22493ff1a8f007510ce88b32bc722756dac"
+   },
+   "emet|x|emet-plate-01": {
+    "size": [
+     1248,
+     273
+    ],
+    "sha256": "61f48685502f364c256b619b5598f0e6abc8b2965f8acc99d37022748567a6f1"
+   },
+   "field-guide|x|field-guide-plate-01": {
+    "size": [
+     928,
+     398
+    ],
+    "sha256": "260ed23002f5dd94025634a91e26606b15bfeb5184858a00d2f2d161aa10ca36"
+   },
+   "forum|x|forum-plate-01": {
+    "size": [
+     1248,
+     273
+    ],
+    "sha256": "938789f7ff7f1694e787343fa5a42d21a34a6bedf40556f8a31db536208b74c5"
+   },
+   "gallery|desk|gallery-2026-10-04": {
+    "size": [
+     568,
+     355
+    ],
+    "sha256": "69ac7e96f12fffc3a52fbf7275969a355493f6c19c77f9da200b190f838697b7"
+   },
+   "gallery|01|gallery-2026-10-04": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "14a5f5397ee4e1c99782a35ce188b1ce3eaaaff76c18c85fd67b7d16044f5298"
+   },
+   "gallery|02|gallery-plate-02": {
+    "size": [
+     1098,
+     1098
+    ],
+    "sha256": "e8d03b41c95c71e0362b8611894a2591a9a53779fc0e3033763a4bb6cd8bc8cc"
+   },
+   "gallery|03|gallery-plate-03": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "145f2ca212f6d503565e8d32b3533f264245f7dabea23c1f9307c087f8735961"
+   },
+   "gallery|04|gallery-plate-04": {
+    "size": [
+     1098,
+     470
+    ],
+    "sha256": "edd319027bf78495820c1a79c4db04be169cb1a0db3816c8e0cbe0671794d008"
+   },
+   "gallery|05|gallery-plate-05": {
+    "size": [
+     1098,
+     1098
+    ],
+    "sha256": "7efb7dd23d34dadc93f7ae7fe39bab7f7e68716e1fd0eb398a8dc619b88f7c9a"
+   },
+   "gallery|06|gallery-plate-06": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "5afb4a23ffd650f71a5c1b430ad5085486ed6b9cb068ef912805dd047779f66b"
+   },
+   "gallery|07|gallery-plate-07b": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "4b1c885b27bff2f1e462f65450cb8849824d73a3bf032fdd9a08953fb8e0f3d2"
+   },
+   "gallery|08|gallery-plate-08": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "ab5270a4f2ffdf1fcc3e997f2ef378528efd748e07baa6ca9239ea84bfa86c73"
+   },
+   "gallery|09|gallery-plate-09": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "4f3ce848d2a3bb855946275c831b3f633986f34a6bf3794a729188fcd918136a"
+   },
+   "gallery|10|gallery-plate-10": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "6f1f461ce09165c08a69a6e265ff421d22e26f78dfe37a618a5647dce74aa3a4"
+   },
+   "gallery|neural-field|gallery-neural-field": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "84e9cb80d41c86d66d5345d4ed5d9918a8d38b33ac614f1dbaa08dad130ec92c"
+   },
+   "gallery|neural-sdf|gallery-neural-sdf": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "cbf0dcffd368523acb1eb2942b56e064be340124c3757b8ce6e44bb0b972b9b3"
+   },
+   "gallery|neural-voxel|gallery-neural-voxel": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "818f27395ebc1c3ac3647b49d84a20c913e78ea9d5e7fe8aac77c7609f6b70d5"
+   },
+   "gallery|typeface|gallery-typeface": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "ccf2f6c6cc802522b2c5cecfb2488340372b5675601f4c0812a1747247dadf04"
+   },
+   "gallery|truchet|gallery-truchet": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "5fa10e215231156b69154b0077db76cf03742325ea05a3f5ae1bd531fb169e58"
+   },
+   "gallery|voronoi-stain|gallery-voronoi": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "c2b54781480e7b080fac99a4ca3579ccfc6098fd57356e6007ac00a612606294"
+   },
+   "gallery|clifford|gallery-clifford": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "51b8e62a467a6728136207e5e3458210d8b400979f8ba5ccfa75ed3da5f4be77"
+   },
+   "gallery|phyllotaxis|gallery-phyllotaxis": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "37eb180e6f8be68f4b9e976a80314320d4301658a70f5eadf7aad45f250fb578"
+   },
+   "gallery|night-drive|gallery-night-drive": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "801b2ae82d57db7b876d1c3c7bfb0e2c44b23fde79175f23208b28fb609bda08"
+   },
+   "gallery|control-room|gallery-nightshift": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "1ad391ab127ec66177c88d1313c2779ac0b8e272582b8202fe37840d3d57e913"
+   },
+   "gallery|ikat|gallery-ikat": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "a3ed877070160601c1946545499cc02eec2cad4e2306194773c1fea96f68e2a2"
+   },
+   "gallery|vega|gallery-op-art": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "f647070370680d7632d3f314779bfed8256cc035ddacc1b3ceafa3db0694c97e"
+   },
+   "gallery|spinal|gallery-spinal": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "4b36290700cdc6faec206d6a629ff5622ebec84b426c3b53ad1a7c1688113a8c"
+   },
+   "gallery|tower|gallery-tower": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "e48e397119521c02327d6232beff8b3996049101bcc60809fc49c65553026339"
+   },
+   "gallery|penrose|gallery-penrose": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "a5c60f58007fd47a09a8fd7b2178574a99ffe6b3a00b1e8348bbcb584318d9ef"
+   },
+   "gallery|terrace|gallery-terrace": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "32e0dd75f1152a6417b6af58e52d07d2aa9ad449eda1b5520a08bb2e2efbfdf5"
+   },
+   "gallery|flowcomb|gallery-flow-comb": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "8e6726c0cf6f0e2870698990be9a988206d489cd19ef285abfab09e5929b0d7f"
+   },
+   "gallery|sky|gallery-engraved-sky": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "5352ced5c7edb489397c8ee30752b6686dd2246793131f5b7a581caaf33bc8d5"
+   },
+   "gallery|occultation|gallery-occultation": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "16002f3f265677763d2a29d1cbc0580c6e6e145a6f735932e51e5fe7ba57258f"
+   },
+   "gallery|ash-tower-collodion|ash-tower-collodion": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "c85dd3e5b22bf474f03f7f33191e52e09849c9c74ccaffca57aa9a8bfd414f66"
+   },
+   "gallery|orrery-uncorrected|orrery-uncorrected": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "975abdf99b48afd63ccafd7ae9ebf8164738dcaf989517e8a874c88dbf97a8db"
+   },
+   "gallery|mackie-nave|mackie-nave": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "e4700bf930fe6299e5881ce0c57f059bc26ed35ae33b3a5f5d7f2bf440e1d3af"
+   },
+   "gallery|aperture-ashline-77|aperture-ashline-77": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "350c7e9f63e764a5ea25c30ad6123814a0cd3b3ddd0a17c7b4c5f29311003f9f"
+   },
+   "gallery|vault-of-cold-light|vault-of-cold-light": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "80bb085c3cd51d470aad179e40f9caf2be2d51a92cc6aea1ee92c3c3c5c3c0ca"
+   },
+   "gallery|nova-defocus-12|nova-defocus-12": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "8d19458027d8d5eaaae4548b3e0271ece13a9906d51982e476e16ae42c2a1e8d"
+   },
+   "gallery|plate-tear-shutter|plate-tear-shutter": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "b570b0410483b1f260620783c1e24640cb6e99b9c58cf9209f69e6f1f6d0f709"
+   },
+   "gallery|plate-tape-sun|plate-tape-sun": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "3f87e50b83fed23dd337e7937295cf3bb725f693900a763f6f2ee7b1a47d6ef7"
+   },
+   "gallery|plate-terminal-tape|plate-terminal-tape": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "e047ece77e0dec22f0a0c3d7721b368ca11fae1d9b57a384b710538918611e6a"
+   },
+   "gallery|plate-transport-riso|plate-transport-riso": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "1ca1a72856ffd39151b8fd8561783d4ec8ad8d87c69a1fb5b9386eee970d1a0d"
+   },
+   "gallery|plate-ridge-ink|plate-ridge-ink": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "735244a6b32a82765312e1610715193e39cc97f01c60d649226f56ba68ec9259"
+   },
+   "gallery|plate-terrace-screen|plate-terrace-screen": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "e1a6bfd1d47ec27a837e5f7ffe19d2ef6afd53622d23402578e6f06edf464739"
+   },
+   "gallery|11|gallery-plate-07": {
+    "size": [
+     1098,
+     686
+    ],
+    "sha256": "bc924cec1dc1a35f8343e1b2aed5e5d1a6f144ae2fc2dced6e4f7a95f8cd01a5"
+   },
+   "gallery|x|gallery-01": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "01d5fe588f669212748c4a8a07fec70aa202e5de291f6cbe880956e113d2e985"
+   },
+   "gallery|x|gallery-02": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "81c8a7bbee7a8a5f76b1b3cc51a0b55cf90f6e369887e346ab3dc14c06cc1c4c"
+   },
+   "gallery|x|gallery-03": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "d0c2c69f37ec6d9d606952de4dd735db701cff9c80b695cd07a8d2fd1c7c07cd"
+   },
+   "gallery|x|gallery-04": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "7692ad14de6a81761a483633dbef44a603138cfd66a07f00fc34659534b2f806"
+   },
+   "gallery|x|gallery-05": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "7b4a4c036d6acb18ae5a5623b548798e63a74b35ad19bfc3638ec554c63e4686"
+   },
+   "gallery|x|gallery-06": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "79d75599fad2e99f535cb5f33bfdd2d24c23bd403f83db12d9bffa782464cf2f"
+   },
+   "gallery|x|gallery-07": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "c954880d32a05b215b792a9425e022fbae3b5c584452f3d830acd06d0d504890"
+   },
+   "gallery|x|gallery-08": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "fb091b4bb16f941061a8c01bc1f2a86167717a7662a020962b6af2213cc94500"
+   },
+   "gallery|x|gallery-09": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "2b0bc8e8de6997d89d3d18c510d02a4114527dc5c847e8d005f92eea448667cb"
+   },
+   "gallery|x|gallery-10": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "3476ec975fd7eb096de2605931833e0ebaeb4390539cf9bf5bcba7e7ffd54510"
+   },
+   "gallery|x|gallery-11": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "76efd3fcab9ba4d1d49747b74afe5cd055a6bd2f60f9acbe25b8bb850ac5edd8"
+   },
+   "gallery|x|gallery-12": {
+    "size": [
+     258,
+     258
+    ],
+    "sha256": "fafe2ef7beb0b230d63b304f0e87dbb123d1c9e7d42c545b752629172eeecbcd"
+   },
+   "gather|x|gather-plate-01": {
+    "size": [
+     1248,
+     273
+    ],
+    "sha256": "1c3fe0d49438b06337d979dc7194e989c95d569abde16511eae5094e06b65896"
+   },
+   "guide|x|guide-plate-01": {
+    "size": [
+     1248,
+     535
+    ],
+    "sha256": "3b7316b6710dc21451350fc6d1b97a7e254c6ddab916c74560f01d85b30d4aab"
+   },
+   "index-graph|x|index-plate-01": {
+    "size": [
+     1248,
+     273
+    ],
+    "sha256": "2af539597ffc7a5047425c3b03f96779167500c0bc0b857955681c298b913e67"
+   },
+   "person|x|person-plate-01": {
+    "size": [
+     999,
+     429
+    ],
+    "sha256": "a86451b7b2339f8a45405f2a50325e6c1fdcd018f8413c61adb175bce179f413"
+   },
+   "why|x|why-plate-01": {
+    "size": [
+     1248,
+     535
+    ],
+    "sha256": "26b2a264f7e7db4f8f7cf1369a1d188ee2b610ea14a735da7ec2a6357f204e66"
+   }
+  },
+  "instruments": {
+   "orbit": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "8bb7332e01647bbc29d3dbb13a1a9619adbd02814fac66de45d90f2b81e46ba4"
+   },
+   "contour": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "0d8c2165e01813ee854cbd6154fc083da57a5851d99cdd44f50e7f7e3377bec8"
+   },
+   "crystal": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "e59146d7b3808003f3de0a806a401445cccd72591ecf595bfdc986c8d0395ea2"
+   },
+   "metaball": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "94164d398d93ebbb42dc650051394d8de86b57dcfe3eb4f6fe2e2eaa2a7296ed"
+   },
+   "bands": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "d713e41f19bf233bb946b1a39b575e84ff0d1b0ccb15276f063d33c0ebf1d38f"
+   },
+   "fluid": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "4740509fc1ceadbd06dd0446bf9d385390691fc6f9becab882641c81d5bc3fd4"
+   },
+   "hydra": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "34ff9fc6089b827e519f67d6c84510e265bdc763cfe632a01f76537c2e9960e1"
+   },
+   "lamp": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "9f22b65fe7415ef83d5b83cb65ed1ac9433074eab302e1c44dee27075193e6af"
+   },
+   "dither": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "e247e1bc37a683514233f7b761e49f439f6763f409073782b8b5500d1f66162d"
+   },
+   "flow": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "d539d946c61dc31ef50a8c439bf09635439af20ba70cb3af24fcb09342de7681"
+   },
+   "crystal-lens": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "747fe90475752c63aed690603d817ff571e324ec804d8661b7883720ddf3337e"
+   },
+   "scanline": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "39fae1e3134c75c09760a5354080d951f2a29dc5055b599d9213c040657a2b2c"
+   },
+   "facets": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "223714a93c40a0bfd827bcb258ca5b4652dca2e78fc102d2b98d1d1b276738be"
+   },
+   "groove": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "fc7729a1c9dc6c73854264843cc1cbd380dce64552ff8c2db96ef0f3c256051f"
+   },
+   "ca-quadrant": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "89f96c3f91fb1ed274956aa45cb2fc0488f61acb7ceb702f5d031d238ee6e6e9"
+   },
+   "caustic-veils": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "e01bfd3d91d52ae222fc92bef44bd1c203860a4313d670526cd9b7d66c36c5e8"
+   },
+   "caustic-paper": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "44c4999357b80ef19233e4993616e700763053d433413e35d047ff4ed26a8f28"
+   },
+   "planet-limb": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "2a9fe491e33d6ed70dbb9671b0fc4a3e878256df51c9eeed9581603696d7a36c"
+   },
+   "aurora-leak": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "8f8e294fe14a578aa2d48d7f0e1e7c32098832dbd3b960e9689692668a7bb6ae"
+   },
+   "obsidian-burst": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6da76303e1e44decd975e47cab25520749cf448981e4cbb58f7c1fa7cd96e950"
+   },
+   "dendrite": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "990d66a7f54c08ab526973dffda225af2348348d7c81ec2ea75f4b431004c36b"
+   },
+   "riso-moire": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "c6935a1009a02c7a1458d94a5200a947f09ad3d5d86e09f9261c8ab25e10742e"
+   },
+   "moire-swirl": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "5191537a180224d6bf5df996889a98bd8631feec8266b90a114593851205076a"
+   },
+   "plotter-plate": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "4f9dfa131605e3eb97bb8af218387e0e2b53db213fea3cfa03a94825ec174089"
+   },
+   "acid-duotone": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "42917c26f5ae8772c11bd8c41deaa3a3171218af776bce22a5204f5e9924333e"
+   },
+   "databend": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "092ff0605a3fef6c82a9e408f3f24421061b52d841bebd090d57474685cffc22"
+   },
+   "stellated-lantern": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "12c82ddb027245f5fca7a1f468c1409215989b41fdabff98fb3d1edb27ec7606"
+   },
+   "fiber-strands": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "bc7e9b47f1afc65cf64efd11795388e9237585796e1fc99add06e9754d295e0d"
+   },
+   "pixel-sort-ruin": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "58b53f9df426016db7e043ad4e73f4c8d08a0ffb37544f041c11fea9ab953bb5"
+   },
+   "ifs-veil": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "5c863e115bdf00c4d6e1b4036cf7162513e25c765d06eab7ba1095b92408d38f"
+   },
+   "dla-coral": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "8557b20dd85254af6fc6525a8ecffb4a7d79a2effb27ce71c2caf7d283175ea8"
+   },
+   "weave-lattice": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "f09e3f2dd1344370627b8dc68abfc2cdc94d7abaa6c465ea58c0607ac29cbb99"
+   },
+   "fiber-terrain": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "b5bfa619afa35f18baafe09714d00c68464f0cf461a6ca8e158e99987f3285ce"
+   },
+   "showpiece-aperture": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "3a948b7170113319242c7cd97bb57b2f71073f5665fb58b99c2dd8b1a034c499"
+   },
+   "showpiece-lantern": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "c4c3ce81fa35e35d351e241c662113376a8a10fb4ccf8b710b7f6a87d25abbaf"
+   },
+   "showpiece-ruin": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "c8bafb716deb66b21c37a0eb53b94396805a082459d5879f78d67bc37518cafd"
+   },
+   "showpiece-veil": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "cf1bfc9daef8ef5c9cbd47e36d75ec616d47f24d5c51cebe4bee959fc3e428bb"
+   },
+   "showpiece-burst": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "74484222b48ea5de863c957f14f4e12f929b30ac71c355494b92bca212aabea8"
+   },
+   "showpiece-weave": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "cb868f88ff862656ec6a7e93f4e1f341179e714979007e6e8903e568ddad5780"
+   },
+   "neural-field": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "704d22207a91b297af20dbea8237e838c0b6ab830e306140cf70c2b0186dd0f7"
+   },
+   "neural-sdf": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "faafee31a1f1ddfc077bff56334558f67a90c0202780d88890514a3620413420"
+   },
+   "neural-voxel": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "8179098050d35198b1eceb3c132983afe3485a81656b137af2a163468f7bc82f"
+   },
+   "typeface": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "3d540583bb4145e4f88867b992b31df270f5c9f2cdb5f317b6619f2954c778e2"
+   },
+   "truchet": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "4092528c2f50f544c185b4b22e1d8d37290a01539694d3c2044b840ad56657d8"
+   },
+   "voronoi-stain": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "715239be780c13c02f4eaf48bc73730aa5f86c3e53a22e7a25ee78c7b98b762d"
+   },
+   "clifford": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "2b64f90235cad316e8adead3efe1722e160bee762d709f7a0599994763cd2cbf"
+   },
+   "phyllotaxis": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "140892d0a952a174d4a73341d139b63eac3aa97033903a417f7f6669a4a1ad6d"
+   },
+   "horizon-tear": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6ffb7ed2aee2ce48721736065c285d5546c2b3d20e5b2e55127888c7e55b65fc"
+   },
+   "venetian-sun": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "32ac8b4631fb6ec8d50927344888906d7a64a73fd6896f5dbea22cc8d35f62b2"
+   },
+   "chrome-ribbon": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "81436a7aee1c6cd6150f6d74b3d0dec6cea2469a192a917224edd472fc79ffe9"
+   },
+   "star-streak": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6afe56d8048cc76c1f187f5cd1e73c5bd4f6a74991876eca88c8cf4e84e51ba8"
+   },
+   "night-gauges": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "c380bbb5e2bedce7f3382fc0c690af881433f1c373d9dc7799c2f761002c497c"
+   },
+   "laser-ridge": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "3d887e99e32abc98e4e353c2ed3e7962c8aba009daa8efd2dc50cc2269142411"
+   },
+   "vu-bank": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "9d208f81d97d716f74f61d69ec6db0e9a4f0f22510ac7a6661a94171d490cbf0"
+   },
+   "patch-catenary": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "bc36320f18f249eff5f8621835ae9f83d701f99de9a3924ae8b3c461ff1c45b2"
+   },
+   "tape-transport": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "7f7d3e250c59d8d483c8e0add174a89963680369b2e0e996eb57dfa96f2c31c7"
+   },
+   "phosphor-readout": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "a8435125bf59b65d758d4f923a15d089ebf6eba6751be405941f8606d67b451d"
+   },
+   "toggle-rail": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "1cf5c4a74c240f2f34d7231cc6566546cf688e99455f62fed9e7e0d12262b69d"
+   },
+   "chart-recorder": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "2c7a809e709de41e09c0215afdd550c636b254a5e25ef415645d4d5faa059479"
+   },
+   "riley-swell": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "e11da11edbd53b1cfa9b65e34a53e780b7d9fc9f9577033cdbb55118155fa84d"
+   },
+   "vega-bulge": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "7a54baea76428384144f47511dce3fe7c3b5b1988e20d23945321592ca6435d6"
+   },
+   "pick-and-float": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "a7a65f051c4e00f9a1fdf00e7553c9300e1f8d7b519905c7f17d39eaadf61349"
+   },
+   "zebra-beat": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "1a37d1577fd24ac72d639a6e2d76f1bea85d893e0dc12825119cba1a8b470b31"
+   },
+   "drape-tone": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "e1aea7843dbca369b3f8871b40865ce549b640c474405d437d9976fd0cafb9d2"
+   },
+   "ikat-drift": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "b0b1d193449cd34700a1422c2ca52f9ef8b1366b75d054ce8e1b6baa590737dc"
+   },
+   "vertebra-drive": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "17ce1fd237dfcc66fbec5d0ae636383fc5f0b91f2d527f9cfda5392bac827041"
+   },
+   "ribbed-conduit": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "016ffe776162fb9e50d6e50dfe7ea68f72eb836928a222502c38ecd7c2b60d4a"
+   },
+   "ossuary-arch": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "5f1460fc0d8031790ab38f8338ab0014e6b76ce0f11719ae6563110eb967f177"
+   },
+   "sinew-loom": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "d57130c0c1c8a31c1070b8288cf72fce065cd5da4c80234b09731f80d1bcfea8"
+   },
+   "chitin-shingles": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "72d4601a86672580b4aaecbb089210d8e3526fd8da6cd462978cc872911a1762"
+   },
+   "spiracle-bank": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "533ec7627faa581c86a510537471b458053d1988931dee6a7271e160e9986636"
+   },
+   "strata-monolith": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6afd8c3fa9b15aaf17e262d205af422c71953f9d1fb1b0696d9670f1c5643e5a"
+   },
+   "ashfall-horizon": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "40023dd32eede97cb025609dee23d4aad9c99f406a9937b5e3a17c183bc3b2df"
+   },
+   "ossuary-colonnade": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "fc01ddb508676ea988bc13462f89cc1c51197c7afbc9ddf95931e51865504ca6"
+   },
+   "buried-colossus": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "4f8c3bbcb4184fb36307d1376b25cbaecfc761c9c5fbe17ff67ad8ad45763d78"
+   },
+   "mourning-veils": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6ac85a69b09ff12eecdd6afc836bb1b98d45aa4c6fdf9e89cbe228104b75efd1"
+   },
+   "pale-aperture": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "72c6d89c391f8a18331c189b18bb02cfb6436c53295aaf58de0a87a089021bc2"
+   },
+   "kite-and-dart": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "076b439f2daaf8cb213e01bb7e19ad79403b16370f9981f9e237ab9362fc4afa"
+   },
+   "ammann-ghost": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "37ce76743b3e4c3e0e6e5a8647da86ffe2d2f63d24e65dc7feea2ed72a98272c"
+   },
+   "starburst-grating": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "fb6bd70c32a7353e0717d47d2b30a76fd849df66d981d568f526f57caabe3031"
+   },
+   "girih-strapwork": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "13f0febbb582db2aef5e36de1bedc19e5bf00457ab6287651264357d7d2edd19"
+   },
+   "pinwheel-drift": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "230463913655f113427e993a10bb17d5814751c3fa17075dedd57d8b23312873"
+   },
+   "fibonacci-comb": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "fb63e3a22f6752bd9e887098bd2c3f29315731392a20daf52330d285cff0bf90"
+   },
+   "spiral-tone": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6d1e646af2697dc50373f4593dd84df3057b651318a0de567d390e79e4298ff0"
+   },
+   "cluster-tour": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "730758d8b05d5c132e816a3de0c3a3287b1b348d1b892eeb21eea20e5cd4588e"
+   },
+   "terrace-hatch": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "d557545fd75e82fbf3903befd560f79b13673c78bdcc806dfeba1e3b753a2463"
+   },
+   "flow-comb": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "41f6226d4a6ee95c9490dafc6a57c47e9b51ebf6f588f7e1ddb362ab76178d62"
+   },
+   "stipple-ladder": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "ffe6ca50884067198b99a4576e32fcf8685729bb762e1483aac0f4f07bad190b"
+   },
+   "ridge-scan": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "49f7ed805029926e3ee24d8e6212380a4c94cd35369a5d7d5b028686a4bf9363"
+   },
+   "engraved-sky": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "3d5fd17a21c2a58c874b3490e8cf9954e9169d5f1646991ec3cd506211aeb43e"
+   },
+   "apsis-ledger": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "6c1b0425dd25f9d4769ea679679572a1355001cd4552e29b1de509b5db890dde"
+   },
+   "spectral-ladder": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "eb6ececf4573d0271d5f0c7f3f0823586b543d5472884ba68121df243487420d"
+   },
+   "occultation-strip": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "943260dff69f85bc9a0168bf4132f92a5bbb0b38119e7babcb371e738a3d0793"
+   },
+   "pulsar-stack": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "3eaafce8049d12eab3b1a676c93f3ab1b0cb3fc1fa16b20531b37ac448a3e31a"
+   },
+   "analemma-trace": {
+    "size": [
+     320,
+     200
+    ],
+    "sha256": "de81833e9ec0c9faf947ffd73282c140f0abbd8ddf8542f6dfd3bc451f1193c2"
+   }
+  }
+ },
+ "dpr2": {
+  "plates": {
+   "crucible|x|crucible-plate-01": {
+    "size": [
+     2496,
+     546
+    ],
+    "sha256": "aa431c35f92fe396c5a3b0e36b4a38b9021b82df612c56cfc8a81dbdceea4c66"
+   },
+   "emet|x|emet-plate-01": {
+    "size": [
+     2496,
+     546
+    ],
+    "sha256": "d4faa2921c142b1b9331a060a84023f8d157af97a0a9795696c8cca1c82ecb39"
+   },
+   "field-guide|x|field-guide-plate-01": {
+    "size": [
+     1856,
+     796
+    ],
+    "sha256": "b8f12936a7fa98f01c08f6503dc4d8e52969d6cae05483215f6e00ef035ecc0a"
+   },
+   "forum|x|forum-plate-01": {
+    "size": [
+     2496,
+     546
+    ],
+    "sha256": "701ff60d79f63f457491b4cbaaaef816b70136c4ece012ba76a21157315f39c0"
+   },
+   "gallery|desk|gallery-2026-10-04": {
+    "size": [
+     1136,
+     710
+    ],
+    "sha256": "a1b46fa234e945bd457eb9011d7cecdcad5abc2933e9543ac5ed78e0c6b84429"
+   },
+   "gallery|01|gallery-2026-10-04": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "0fffcf86505d69d7da110326a8b7708e86a79c107594e75d1c91b785aed57d2e"
+   },
+   "gallery|02|gallery-plate-02": {
+    "size": [
+     2196,
+     2196
+    ],
+    "sha256": "75fd85035ff80697f4029bfe97007d1a6ba6c73f5ca8bd119f1a9795f1a6640b"
+   },
+   "gallery|03|gallery-plate-03": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "f4631d5f1abfa9303de59044ee108d2208192793cffddff6d986626eec44b16c"
+   },
+   "gallery|04|gallery-plate-04": {
+    "size": [
+     2196,
+     940
+    ],
+    "sha256": "223b9fc1e41d7858f626400fb0d3e3698b71a3eb88d9b1c9ba7745991303a80d"
+   },
+   "gallery|05|gallery-plate-05": {
+    "size": [
+     2196,
+     2196
+    ],
+    "sha256": "ebd38b824ab67a3a7c7689d395bbd8ddf7e215b703cfad9759b7c8d745d9810e"
+   },
+   "gallery|06|gallery-plate-06": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "8c88025bf1a86103e5bd043e199c67a7107975c34e02d36d440974d2673ae950"
+   },
+   "gallery|07|gallery-plate-07b": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "02994fda028f6bab2b58ae33d023de3294ca4d78191e5291bf85bd63fc43b1ee"
+   },
+   "gallery|08|gallery-plate-08": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "29ea32e4ba44403c4724854e73ac8ca533b177334440d6fc47c1a387212e4906"
+   },
+   "gallery|09|gallery-plate-09": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "dbe11248a041dd90bc02d437b9ab3d88e02170c62376d06ad3266c47ba322964"
+   },
+   "gallery|10|gallery-plate-10": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "530a62ad92b2c2d84a53b9616de95976eea8176a4e16207b2497b4d232244483"
+   },
+   "gallery|neural-field|gallery-neural-field": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "f29426aa372d945fb7a20975e8b87bfc145e4b54ba6fa243d42c2b2001708050"
+   },
+   "gallery|neural-sdf|gallery-neural-sdf": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "08a798e7651c620f367be60f9797bed3a745890ecc63392c3ed7513821292fca"
+   },
+   "gallery|neural-voxel|gallery-neural-voxel": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "53480082cf1b014417f6941b50482b43021fafd30922fe8f0a751f4514a06bb9"
+   },
+   "gallery|typeface|gallery-typeface": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "1cffa89e27b9f233a4e0a5007ba7d323eade42499effc0444f29b386dd0af1e9"
+   },
+   "gallery|truchet|gallery-truchet": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "b6a29c68d4a47ef3db12abbea956d47a5a7d51da68605d902cf967737168c7a2"
+   },
+   "gallery|voronoi-stain|gallery-voronoi": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "3c9ed9ef67f8f10eba385de9d34e7c5fb06d3bc6aa82bcdb7f2d2789ce55d18c"
+   },
+   "gallery|clifford|gallery-clifford": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "6a6009b0ab5440a85db89ca8140d291a805e55f3411af8bbc0b2b6fa252efe0f"
+   },
+   "gallery|phyllotaxis|gallery-phyllotaxis": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "8b918867ebda60ccdcb6be08387c78e6f78a53c17ce6848f28362b2365c105ab"
+   },
+   "gallery|night-drive|gallery-night-drive": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "f84d5911d17231f66fbbcf8003c73f13e79cc068cea77b5b437c2b84bba3367a"
+   },
+   "gallery|control-room|gallery-nightshift": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "611e7984e4556305ca8462b0f8c2a1e613b6700955e46768b3199e97c7c8b3e7"
+   },
+   "gallery|ikat|gallery-ikat": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "283cbf08725f34984ac4709e3bc25358ba0f92955a02d3d7ed174215cee775b7"
+   },
+   "gallery|vega|gallery-op-art": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "0a8199ba8ca280df58cebfa89872f02abf58002c33fdf898ffaba52fcced717a"
+   },
+   "gallery|spinal|gallery-spinal": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "cd7789ab6b36723c8772eb12352cd2a3b661493fde01520a3288cd04d373ef41"
+   },
+   "gallery|tower|gallery-tower": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "8e1894518cd72120b7539c72899349cb1da5cba03fe1471c001847ee8d51ac56"
+   },
+   "gallery|penrose|gallery-penrose": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "0a8e3b2cba6256c8c38b88f6639ab695bf0f45912d2ae9b3cd39d3a66e2b3a8a"
+   },
+   "gallery|terrace|gallery-terrace": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "304128b62224d4d057c80e8927fa9d3133bf048de07388f4cd6144fe360c0795"
+   },
+   "gallery|flowcomb|gallery-flow-comb": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "b723f5c3f837b09fa91dff8319f89411921eaa22c460ae9020f9f8d81104a17c"
+   },
+   "gallery|sky|gallery-engraved-sky": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "2c71a8586163698dd69e3b437e561ccd27242ceb299fe83531cbe8099c859753"
+   },
+   "gallery|occultation|gallery-occultation": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "25a20cb317a3c2276cc8a1345a6d56610a8281b1828d4de30f4008714a6be3e7"
+   },
+   "gallery|ash-tower-collodion|ash-tower-collodion": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "0a7f7b9ca574bc740bc32e86e838ba4294e0cd9e409dfdc96d8ce538071aeecc"
+   },
+   "gallery|orrery-uncorrected|orrery-uncorrected": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "256bd4de0f67c1a20887870b11fc27837a3573cb0a0cb3d92cbf9a05ca990bdf"
+   },
+   "gallery|mackie-nave|mackie-nave": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "38016c4918731474d65dc0e3f14985c52d429e66d08e3b65687592a11ba7caba"
+   },
+   "gallery|aperture-ashline-77|aperture-ashline-77": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "447a21f209ca6597f6e763d72bdc039f4c81997d18ef4bf39e8ef8a045e7c76b"
+   },
+   "gallery|vault-of-cold-light|vault-of-cold-light": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "37d74fc58ec9a5e1527fbadb99c1494b3972c7d22c2774d041c260caca00df66"
+   },
+   "gallery|nova-defocus-12|nova-defocus-12": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "fa5e53854d148c5d8a5095e96345168ee85ae64d1836d1056d8f1c449a9fe233"
+   },
+   "gallery|plate-tear-shutter|plate-tear-shutter": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "cee50dad4870f6454149ca5b85eb1c7b34f218cea2a51b2c037268f43483c1a5"
+   },
+   "gallery|plate-tape-sun|plate-tape-sun": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "a78d85836e1181ac0a86d6ec4500ffb334b67585fed4e046eaf23e23b8d5a5cb"
+   },
+   "gallery|plate-terminal-tape|plate-terminal-tape": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "0d1020279fe28fecdf9332fbe3345854db94256a28e801e09981c7677dad8700"
+   },
+   "gallery|plate-transport-riso|plate-transport-riso": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "ce4bd787c26a30a81cef62aec6da82ecea0b7e7e521c121d0246d24a29b8f357"
+   },
+   "gallery|plate-ridge-ink|plate-ridge-ink": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "af3002cebf55cf6fd984e9e9757f15bacacbf72887e6cda2e3e3c919e103ab8f"
+   },
+   "gallery|plate-terrace-screen|plate-terrace-screen": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "92c6f424fa21b5056741c1f09b7d4ffe52ff24f54e5123015515a3bad6933d8d"
+   },
+   "gallery|11|gallery-plate-07": {
+    "size": [
+     2196,
+     1372
+    ],
+    "sha256": "8014d22d70eba58fd23bbb701a7cebaebfc8e6106eb2fea0cdf561e8f755e06a"
+   },
+   "gallery|x|gallery-01": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "4e145b0479b48b370797646c94c017fbc4e3276c1b82c6364821b51cf2d8e557"
+   },
+   "gallery|x|gallery-02": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "bb576d9718464fce06333f80ffdc4e0ba5ec393570fe39fca2d2c86d2fe336f4"
+   },
+   "gallery|x|gallery-03": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "6e85dc477aae10dc2515c89e4fe38454ddf5717ba7ca6c1b026d1f3d8ac6cdeb"
+   },
+   "gallery|x|gallery-04": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "f8bfced5307c9720b83b86d683ebd6057595c86b2bca2899d03fce75caa00a4a"
+   },
+   "gallery|x|gallery-05": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "68f9da0fffee75aa094a4b034b5d47ef964d87bf5b8ccb3a76f5764a573e93c2"
+   },
+   "gallery|x|gallery-06": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "50c7a270c1dc06ac9b47f818b38d18651cdd9e63e191fcc52c7f8db3761bef27"
+   },
+   "gallery|x|gallery-07": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "47fd0ac17381d0188890e1085f3bef000ac3364aa751bb15740cb51b5502766e"
+   },
+   "gallery|x|gallery-08": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "ba01259d2dad241f4a5546b667c428d776ea438b8f25d64449a7b4bc46ebfe92"
+   },
+   "gallery|x|gallery-09": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "9b2b6fc519e28e722eb3ae9c3a6a2e9a902d102587ad6a819885c0f824200170"
+   },
+   "gallery|x|gallery-10": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "221ac976b1e97738f3dacd348ec4c939dd443ca1f93ab7a4d9bb88000ac290ce"
+   },
+   "gallery|x|gallery-11": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "46b6f6c57ece713a606fc629f82e0eaf9dc5065cc2318c1e9b9defef351a8b31"
+   },
+   "gallery|x|gallery-12": {
+    "size": [
+     516,
+     516
+    ],
+    "sha256": "c15611b15aac6e74065715d1d0d7f9883f4577bfaf12f5854ac46cb588791188"
+   },
+   "gather|x|gather-plate-01": {
+    "size": [
+     2496,
+     546
+    ],
+    "sha256": "1a9170610c830110b900cad630c88db175664c1bbe5f3e04fdc68184dba2c684"
+   },
+   "guide|x|guide-plate-01": {
+    "size": [
+     2496,
+     1070
+    ],
+    "sha256": "5a55849a05f0fc0cd11125e0a20c8f2b3cacce78c607627994343ce4a5eb392e"
+   },
+   "index-graph|x|index-plate-01": {
+    "size": [
+     2496,
+     546
+    ],
+    "sha256": "2426eeaebd733f11ef4e83ce92b1b0487b3207883c46d6bd66c4cb74f9f066fa"
+   },
+   "person|x|person-plate-01": {
+    "size": [
+     1998,
+     858
+    ],
+    "sha256": "81239c520ecb7845c33b3cfcfb224efb26ef63aea4127b1303fba8a93b48eb41"
+   },
+   "why|x|why-plate-01": {
+    "size": [
+     2496,
+     1070
+    ],
+    "sha256": "59f633e53d0107743bf461c9dba25fca0ad586a50a2aaaf67f533065db226882"
+   }
+  },
+  "instruments": {
+   "orbit": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "461e0a0af710f4cae9253adbde598332c17b6a5578a1f8d1f6c64c20a917e3de"
+   },
+   "contour": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "11e3860658fa453a62bfe905536b1ff0b84a9caf423d96df2cb6c52cbf975fef"
+   },
+   "crystal": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "2eea544598fcc296389d8b17bcbf6374542b6caade4bd12c866af0683950dd06"
+   },
+   "metaball": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "cc3d69225eae98c18693cb3bb9b5e768176668f329f6a3975e2bfe72f8cf7b67"
+   },
+   "bands": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "1f331f289eece5eeec593f22b4b3eb5fdff00335300cb9b015127e4a14c61a0e"
+   },
+   "fluid": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "0f32e22c647083b32c75ea02398350f54e40089dd3cd5de1c24475fba42de461"
+   },
+   "hydra": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "07a31f0755a9ac10ffd2561a38578d9264fab9e593816939d9ba1943eb247ec8"
+   },
+   "lamp": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "0a65fb22c2e3b39eb07ce9a96d47e5361836ac4b87a23591ec961bd5ca500d71"
+   },
+   "dither": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "fa97b8a9dcd967755fa93dc15719f999262b85d526a7e939925038bdc8818d8a"
+   },
+   "flow": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5183b9041bc99608c1ee3051329bcea692ebe805a235a525b2ed3fc5562c4e90"
+   },
+   "crystal-lens": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a921630f716eb943feda5a9c2e97f66bb0590f3a2be8b8361e4eb4989eca8bb7"
+   },
+   "scanline": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "fdce0f3836ce82582dfaf171961f6d39823a1b29b912a75e6e8a5481f037736e"
+   },
+   "facets": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "6cf46bd21f7e5d026c6350b4297353789651ed3e5630d2f86460e2a83f79b534"
+   },
+   "groove": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "3936bfc7151d027220bacae9488b3b26a46ad4d49bd634b4a1d68b7a5bbe596b"
+   },
+   "ca-quadrant": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "18a1defcd8ebded3d0ea9d0a200a4c88d3796f8117950cd1d86e6d8b4d796e98"
+   },
+   "caustic-veils": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "33202bdcde0bdb27f0a7c58f7c4a6ccff8c94c63ce124248d1ed5b5e611c8c04"
+   },
+   "caustic-paper": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "df7f487790b6c7c7cbcb375ce7aae8617368b9b1e0c238271414dec156c7c6a7"
+   },
+   "planet-limb": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "ec6249644a2ba552a8988a0c0c9978fb9e88e315d59501a4e7d9d499a03c3618"
+   },
+   "aurora-leak": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5cdaa5409121dd229eb0c6a0802748c817bf4e8bb07a9e636c6bc3adfbb7c7a1"
+   },
+   "obsidian-burst": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "ac32612bab7fd34cca9c1862df30bc4ce94a4319fe13a56f8d96fe872ce78fa6"
+   },
+   "dendrite": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "065beb807205cac26a3ac3c30b59711efa178d60fa185d99d07a670453e00918"
+   },
+   "riso-moire": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "48dc4f8f220e46ef70f185502adb2f5cbfc6a14f9a4afff6d9c0cf697fb7c23e"
+   },
+   "moire-swirl": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8d4b6df580e8a897570519f7a1729620ce0792192895bec0d0da94597cce2025"
+   },
+   "plotter-plate": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "92ab1e3a0cf9dcbda2a8f8a8dd197a8d3bbd2565e64d875427d48b05671235a6"
+   },
+   "acid-duotone": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "54fe27bf82e5a079c8ade745fdb347081e0c069fc0e7e61de42ba851b4cd4b5a"
+   },
+   "databend": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "f224e87801dee579d465c4440e5e7ada1ee1b17a21683702581db9a264b4e024"
+   },
+   "stellated-lantern": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "b499ec152303fc1005e34ec2d86f79ee5a9e876ffa19f86a08c28afdc33d5a85"
+   },
+   "fiber-strands": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5a70771be4b6beb28172a04ee5f8574a0725f597f92a9041e97b93ad8f17217a"
+   },
+   "pixel-sort-ruin": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "aa8d02fabc797ddd34a4f06129f50357ba4373a3a10db8c41b0cba8715addb51"
+   },
+   "ifs-veil": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "baa5cad6491c9b29a73b9505f9238c1abf983019364f9962135fcc470e3f0bb6"
+   },
+   "dla-coral": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5a006fab7f140c017d1771eff7174b8be82a9731e62901e2bdb19c80ec266ea6"
+   },
+   "weave-lattice": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "979ddc8a1b3ca0489bdd1bb61125fdaf1e05a477142ebd9b50ae429dc3bfde24"
+   },
+   "fiber-terrain": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "639febf567b93e2525f1de09dc7db404d5b6c765331a84df266b8ef4b2cb7e89"
+   },
+   "showpiece-aperture": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "ec8448eed28c9377e6184f412d38a6529ccbd67ae9affca88442182342675497"
+   },
+   "showpiece-lantern": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "f1e2fd1162b6f923e220ec6a4a599aa22c7a8c31a81e481324ca64896f231192"
+   },
+   "showpiece-ruin": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "800289cc5d816d16c27ff35257f4d03568c1b785fcdfc74e3bb59865d82e05f3"
+   },
+   "showpiece-veil": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5f40620b60d01229aebc2ef9f9c2ca000b100935597af93e437ad773c6322200"
+   },
+   "showpiece-burst": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "f998d592be7fea64d615e872a8ff08a753feda7be9b4d0dda4167089a0dab22a"
+   },
+   "showpiece-weave": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "163cf1a31407d522f12340d3c38cc46b0a248770e6ccb2fb9f1e3f48cb3256e0"
+   },
+   "neural-field": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "7a252284ba07fd44bb20735fadfcfa88ce2267bca4f4bc058ba13120b6398316"
+   },
+   "neural-sdf": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "cf57b9064363ea165f6f15520b33ba92a1aa899437f246ba336ed135cff91db5"
+   },
+   "neural-voxel": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "5a98b4375b658b2ee31b9a96af23724bc756cb335583c3d6b3615cfd771821f3"
+   },
+   "typeface": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "f0e48e47da52b4702a8e0285171065aa8c464000806686d29543394532664a20"
+   },
+   "truchet": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "37121fa1377d641362cdaab4da5bed82f3cdd1aa9421577b717b817405ee5f55"
+   },
+   "voronoi-stain": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "09dcd48451dec6ce2bcd532dde04c00272d1eddb0fb3054a9bd1a6a525fd4b59"
+   },
+   "clifford": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "31098a216efae106dd06da673f747ecbfce050bae4e47cd4badddcbbdcd5363b"
+   },
+   "phyllotaxis": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "c162d76854a73a6d5fa5743b921ab3fe63ea2e38711161faebcabefccf073d2e"
+   },
+   "horizon-tear": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "bdcd73a972862dfc1d5486fba0dbb8dea3b90fae55d9914dbd825c8dda4005a2"
+   },
+   "venetian-sun": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "c4288a510493baf21114cf96ca7a4758fcc5c96627a60b2816a85e23e3009e6b"
+   },
+   "chrome-ribbon": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a40f2d229a941a4bcf2937a53a2321cfeff9817e89303289d4dda0bb026d6777"
+   },
+   "star-streak": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a7d1c1087261d3b8057a7e3b580c0be57fc442aeaf31143ab52f0798b6169237"
+   },
+   "night-gauges": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "efda1e046fdc181c5408e34b73a875269b7dacc0d28418eb7f1f12626a76a986"
+   },
+   "laser-ridge": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "02774bc5693d0d277c4ee938a409fa1014a1ad9228700e4af438714db829c41c"
+   },
+   "vu-bank": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a0b4f040cbc9ef141b123221f7b635e601bb25ff653c37b1c2bb5ad368375253"
+   },
+   "patch-catenary": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "55365e82d7565d738fb03aa46c445ab3bed4b6d982836e95bfde936cb915c819"
+   },
+   "tape-transport": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "0b218a45ba88bba39da3b54ce7db716cbb2ea913a118a57e03f2bb917d273314"
+   },
+   "phosphor-readout": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "3e33bcfd576635283519453d4757d854147b9b39b733d321a0bc9fa37835143e"
+   },
+   "toggle-rail": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8123fcfefbc98defb8238e905199ecbd27c172e38892c9ae50af22e7c52c8fc9"
+   },
+   "chart-recorder": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "f448441630b7ccc39dc48186b70e1c18c8c949692ffe8b01c8a1a1e48683b86f"
+   },
+   "riley-swell": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8b5714328a449b4879866622206a268c9834eab834cbf6a5f04bd7e1a2604c82"
+   },
+   "vega-bulge": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "b7cb0dbb1be1fa0b7d52b2dea82c05d48a08f592d23fc1b6840111c978addaff"
+   },
+   "pick-and-float": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "46c278186f9caecd1c3e463c0b71fa86446a700b3594489d3772ebb9a2d67eee"
+   },
+   "zebra-beat": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a4fec13f0afb3e703a278f2899f504bf32a2a5613119c73ad9693702ad87a758"
+   },
+   "drape-tone": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "46718e1f5c628061e657544ee799e533ac98a0b2b6709ab0e68511ac0991cfe0"
+   },
+   "ikat-drift": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "b213944f0a8f9da8aab7dd7fdc223db04f1d65093c22c6b8d95ce4ccc2e49b72"
+   },
+   "vertebra-drive": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "26e14a8a53688e2cf238cfe0563d8687a6e87283e95f78beaa5028be167db05b"
+   },
+   "ribbed-conduit": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8b8fb1621d00d66cabccf3b196d1afecb3a4a5141b43c14e4665b9bcfc5edeee"
+   },
+   "ossuary-arch": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "6a8881b81252a9e604e270790133398a36cee80d3f6ca66ec6e95d16ab7e215e"
+   },
+   "sinew-loom": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "c5a0548802dbf28327d623c85351a5aac097144e1902a811426510f6821aa85c"
+   },
+   "chitin-shingles": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "20194f67e637e91aebf4d38a5853c8403f74084421be435f4d2fd060bff87f05"
+   },
+   "spiracle-bank": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "0c2549e26c382b35077922a61548e477b3c4ca62ad0ffe94cc56d6d733b94420"
+   },
+   "strata-monolith": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "dab2c607b29dbd546b909c329e862033eda837ef2248e323fb7a4d865db81bb6"
+   },
+   "ashfall-horizon": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "d2f61d1a104beb2a386b5cc9d8e25ae5bce22de9e59b2e1ebfbb32fe41e08bd9"
+   },
+   "ossuary-colonnade": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "dc460a5a3b2d3f91033789f4da5bf96ae2dd514e068625b8dbd49174ef90a882"
+   },
+   "buried-colossus": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "e333ad552920221eefe0290cbdf7792dfc6747012750793b8c68b0c20d52916c"
+   },
+   "mourning-veils": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "d2dd03c7ed900956d9f4ce336988a0479d7ce5a76e42ddb5d6a425df9a69caf1"
+   },
+   "pale-aperture": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8b7aeda7785668087d2750292f1fb4cf55bc2e24a73be69f0598a4cc9223bd3d"
+   },
+   "kite-and-dart": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a544362dc54500e18ddb717898ed647c4e10646120b6d6da5b992c82230aa250"
+   },
+   "ammann-ghost": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "af6dc53f70a54a5b25bc13be4c861e006fe37049a6e2ac156eacfdfd53dab539"
+   },
+   "starburst-grating": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "67149f31d38e5b63624d1df6d8b8a941d8d69843faac00aaf7135f843bdb8687"
+   },
+   "girih-strapwork": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "9c23681d98b6ea85fdeaae7f48b7933b7715eab844ec10020f693c89a3cafd99"
+   },
+   "pinwheel-drift": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "d0a2d3dc2f68318903b74c88d7441a346f6e99fc9bccc794085cb366a278d8ad"
+   },
+   "fibonacci-comb": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "2823f9af75722f6bf34cd5cf809f57a9abfe84e631dc1d0c5e6f636f539971c2"
+   },
+   "spiral-tone": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "8667ee04d7da78a508aa5f03a8b3bbd65c19b3d2e30f8b1943fee9b8a860b521"
+   },
+   "cluster-tour": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "58299c4fae8cde5af893ede80e89a019bb37302d8b5e6b675a5b28efa2ed4054"
+   },
+   "terrace-hatch": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "84e3e7f145045708380995d0e902e2911dbda21b5b728aee55d66dbe983ce893"
+   },
+   "flow-comb": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "13924b0552ed8749954f214a1e0fbfd38323474c936779ab37a1e588d4da772d"
+   },
+   "stipple-ladder": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "03ae16bcd9f6131d3a248defab086181b29e8236b952cf6b6a5307592b6cb827"
+   },
+   "ridge-scan": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "93a29d0f16ec2bfc9aea0be55999c06c9dfa187149b3d7262b02c8a1cb8e1dc2"
+   },
+   "engraved-sky": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "739a2c2ebdb289bee6792df4d7984a1f2ad3318d040243683c43999873e5b3c3"
+   },
+   "apsis-ledger": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "098f37bb95d383a8c8ea5f43a9c8ebf6cf06cb47d9b31f94784f183c1173efce"
+   },
+   "spectral-ladder": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "1c492a00eb5c89737663f63f6c085771a9bfb4a5ccaa243115b41fd5366445c7"
+   },
+   "occultation-strip": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "91d6ae2e749b5f79ca34ad990f71522e63ccfe94fb9f5dfebe1e51e563298978"
+   },
+   "pulsar-stack": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "a75c5823493c0e4cd433947e4728e719392fb35a8d1b845f43f8301cbdeec938"
+   },
+   "analemma-trace": {
+    "size": [
+     640,
+     400
+    ],
+    "sha256": "4b3917feec5bbf34e551f39c55d8d8bf35ac5f360a3f46f2c26616df102211a2"
+   }
+  }
+ }
+}
