@@ -162,3 +162,14 @@ was checked. `reported` means the claim comes from a source that was read
 without being independently reproduced. `unknown` means nobody has checked yet,
 and it stays on the page instead of being quietly dropped. A record that ends
 in a negative result keeps it.
+
+## Reuse
+
+The papers, essays, briefings and research pages are licensed CC BY 4.0. You
+may quote, share and adapt them with credit to Zain Dana Harper.
+[LICENSE-TEXT](https://harperz9.github.io/LICENSE-TEXT) lists them. The site's
+own code, design and art are all rights reserved under
+[LICENSE](https://harperz9.github.io/LICENSE), and third-party material keeps
+its own licence. The engines behind the site live in their own repositories
+at https://github.com/HarperZ9, each under its own licence. They are moving to FSL-1.1-MIT, a
+source-available licence, as each engine publishes its next version.

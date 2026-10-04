@@ -1,17 +1,49 @@
 # License
 
-Copyright (c) 2026 Zain Dana Harper.
+Copyright (c) 2026 Zain Dana Harper. All rights reserved.
 
-Written works: CC BY 4.0. Code and everything else: the terms below.
+This repository is the source of harperz9.github.io. Three sets of terms apply
+to it.
 
-The papers, essays, briefings and research pages listed in LICENSE-TEXT are
-licensed under CC BY 4.0 and are not covered by the reservation below.
+1. Written works are licensed under CC BY 4.0. LICENSE-TEXT lists the papers,
+   essays, briefings and reading pages it covers, and it governs them.
 
-This repository is a public portfolio and GitHub Pages surface. Personal
-biography, branding, graphics, names, likeness, project positioning, and
-portfolio copy are not licensed for reuse except where GitHub's terms require
-normal viewing and forking of public repository content.
+2. Third-party and vendored code, fonts and other material keep the licence
+   of their source. The table below lists each one, and a licence file or
+   note sits beside it in the repository.
 
-Static-site structure and small code patterns may be referenced for learning,
-review, or interoperability. Reuse of substantial personal content requires
-written permission.
+3. Everything else is all rights reserved. That covers the site's own code
+   (HTML, CSS, JavaScript, TypeScript, Python, build scripts, tools and
+   tests), its design and layout, the art, figures, generated imagery and
+   media made for the site, the brand and the author's own typefaces, and
+   the biography, career and portfolio pages.
+
+Under the third set of terms you may view the site and this repository, and
+fork the repository on GitHub as GitHub's Terms of Service allow. You may read
+the code to learn from it, to review it, or to build software that works with
+the site. You may quote short excerpts with credit. Copying, modifying,
+redistributing or building derivative works from this material needs written
+permission from the author (github.com/HarperZ9).
+
+The reusable engines behind the site live in their own repositories. Each of
+those repositories carries its own licence, and that licence governs it.
+
+## Third-party and vendored material
+
+| Path | What it is | Licence |
+|---|---|---|
+| `system/lib/vendor/d3-7.9.0.*` | D3 7.9.0, Mike Bostock | ISC, see the `.LICENSE.txt` beside it |
+| `system/lib/vendor/panzoom-anvaka-9.4.3.*` | panzoom 9.4.3, Andrei Kashcha | MIT, see the `.LICENSE.txt` beside it |
+| `system/lib/vendor/tweakpane-4.0.5.*` | Tweakpane 4.0.5, cocopon | MIT, see the `.LICENSE.txt` beside it |
+| `system/lib/reconcile/` | reconcile, by the author, synced from its repository | the `LICENSE` in that directory; see `LICENSE-NOTE.md` there |
+| `system/vendor/learn/` | Learn, by the author, pinned by `VENDOR.json` | the `LICENSE` in that directory |
+| `system/media-engine/contracts.mjs`, `tests/superstack/` | superstack v0.1.0, by the author | MIT, see the header of `contracts.mjs` and `tests/superstack/README.md` |
+| `media/raw-native/wasm-0.4.0/` | raw-native v0.4.0 build, by the author | FSL-1.1-MIT, see `LICENSE-NOTE.md` there |
+| `plugins/data/*/LICENSE` | copies of each plugin's licence, shown on its terms page | each plugin's own licence |
+| `assets/*.js` | compiled home page, which bundles React, react-dom and scheduler | MIT, see `THIRD-PARTY-NOTICES.md` |
+| `system/fonts/hanken-grotesk*` | Hanken Grotesk, The Hanken Grotesk Project Authors | SIL Open Font License 1.1, see `system/fonts/OFL-hanken-grotesk.txt` |
+| `system/fonts/conso-*` | Conso, Pavel Larin | the designer's terms, see `system/fonts/FONTS.md` |
+| `system/fonts/kilon*`, `system/fonts/telos-display*` | Kilon, Ahmad Suhadi (suhadidesign), and Telos Display, built from it | the designer's terms, see `system/fonts/FONTS.md` |
+
+Quoted material from other authors, and images or figures credited to others,
+stay under their owners' terms.
