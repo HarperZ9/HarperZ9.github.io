@@ -643,7 +643,9 @@ RELEASE_PATHS = (
 # stamp; the release is rehashed.
 # October 4, 2026, later: studio.html loads the Studio at the engine surfaces slice's stamp;
 # the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "4e1ccb23b1a1b851046e079017afcb9c8066c891031f64eec930764cbeb918d3"
+# October 4, 2026, later: studio.html loads the Studio at the Spatial and Poster slice's stamp;
+# the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "59ab65504a26cbbb34c6c6987290b60667fccb10c47f2e7ef1cef4288bfc415f"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

@@ -26,7 +26,8 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-bring";
+import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-spatial";
+import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
   onSourceChange as surfaceOnSourceChange,
@@ -522,30 +523,56 @@ function loadEngineSurface() {
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
 // its DOM inside #poster-mount and renders onto the shared studio canvas.
 let _posterWorkshop = null;
+let _posterMods = null;   // [panel, field, exporters], loaded once
+// The workshop's dependencies. A state handed back by the shell (Undo, a kept session) remounts
+// the workshop quietly with that state and the image already in memory.
+function posterDeps(extra = {}) {
+  const [panelMod, fieldMod, ex] = _posterMods;
+  return {
+    mount: $("poster-mount"),
+    canvas: $("studio-canvas"),
+    renderSpecimen: fieldMod.renderSpecimen,
+    layerNames: fieldMod.specimenLayerNames,
+    say,
+    perceiveNow: perceive,
+    getDetail: () => _lastDetail,
+    getRich: () => lastRich,
+    download: ex.download,
+    onRendered: () => { if (_shell && activeSource === "poster") _shell.recordSoon("poster", "", 250); },
+    ...extra,
+  };
+}
+// A plain copy of the workshop's state: the brought image stays in memory, never in a snapshot.
+function posterState() {
+  if (!_posterWorkshop) return null;
+  const st = _posterWorkshop.state;
+  const copy = JSON.parse(JSON.stringify({ ...st, art: { ...st.art, image: undefined } }));
+  copy.art.hadImage = !!st.art.image;
+  return copy;
+}
+function remountPoster(state) {
+  if (!_posterMods) return;
+  const image = _posterWorkshop && _posterWorkshop.state.art.image && state.art.hadImage ? _posterWorkshop.state.art.image : null;
+  if (_posterWorkshop) _posterWorkshop.destroy();
+  _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps({ initialState: state, image, quiet: true }));
+  if (_shell) _shell.markTargets();
+}
 async function enterPosterWorkshop(epoch) {
   if (_posterWorkshop) { _posterWorkshop.render(); return; }
   try {
-    const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js?v=20261003-poster-plugin"),
+    _posterMods = await Promise.all([
+      import("./poster-panel.js?v=20261004-studio-spatial"),
       import("./generative-field.js?v=20260925-void-plates"),
       loadExporters(),
     ]);
     if (epoch !== _sourceEpoch) return;   // switched away while loading
-    _posterWorkshop = panelMod.mountPosterWorkshop({
-      mount: $("poster-mount"),
-      canvas: $("studio-canvas"),
-      renderSpecimen: fieldMod.renderSpecimen,
-      layerNames: fieldMod.specimenLayerNames,
-      say,
-      perceiveNow: perceive,
-      getDetail: () => _lastDetail,
-      getRich: () => lastRich,
-      download: ex.download,
-    });
+    _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps());
+    if (_shell) _shell.markTargets();   // its Critique, PNG and Plot SVG now live in the bar
     // Cross-surface flow: a plate arriving from the gallery seeds the art.
     const params = new URLSearchParams(location.search);
     const seed = (params.get("seed") || "").slice(0, 48);
     if (seed && _posterWorkshop) _posterWorkshop.setArtSeed(seed);
+    else if (_shell) _shell.resume("poster");   // a plate from the Gallery wins over the kept poster
   } catch (err) {
     say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
   }
@@ -738,6 +765,7 @@ function setSource(next) {
         const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
         if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
         _spatialStatic = !(res && res.animating);
+        if (_shell) _shell.resume("spatial");
         startMeterLoop();
         // Context-lost recovery lives in studio-spatial.js: it owns the canvas
         // nodes (a fresh one per world start) and can tell an intentional
@@ -5523,6 +5551,11 @@ function resizeActiveSurface() {
       sizeCanvas(canvas);
       if (_neural) { try { _neural.redrawNeural(); } catch (e) { console.error("[studio] living neural redraw failed:", e); } }
       break;
+    case "poster":
+      // The workshop sizes the canvas to its paper format and draws on request; a resize during boot
+      // left ?source=poster on a cleared canvas, so draw the poster again.
+      if (_posterWorkshop) _posterWorkshop.render(); else sizeCanvas(canvas);
+      break;
     case "plotmaps":
     case "voxels":
       // Still sheets with no loop to repaint them: a resize during boot (a late font) cleared the
@@ -6746,7 +6779,31 @@ function engineContract(id, { settings = true, door = false } = {}) {
   }
   return c;
 }
+// Sources whose settings are read from their inspector (studio-form.js): a change there is a step.
+const FORM_SOURCES = { spatial: "src-spatial" };
+const formOf = (source) => $(FORM_SOURCES[source]);
 const SHELL_CONTRACTS = {
+  spatial: {
+    making: true,
+    primary: { label: "Export run receipt", target: "sp-receipt", title: "Export the run receipt: package, boundary, budget, controls" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot: () => formSnapshot(formOf("spatial"), { skip: ["sp-scene-search"] }),
+    restore(state) { formRestore(formOf("spatial"), state); },
+    reset() {
+      const b = formOf("spatial"); const snap = formSnapshot(b);
+      for (const k of Object.keys(snap.inputs)) { const el = $(k); if (el) snap.inputs[k] = el.defaultValue; }
+      snap.chips = { "data-world": "atlas", "data-atlas-mode": "0", "data-compare": "off" };
+      formRestore(b, snap);
+    },
+  },
+  poster: {
+    making: true,
+    primary: { label: "Critique", target: "poster-critique", title: "Ask for a measured critique of the poster" },
+    exports: [{ label: "PNG", target: "poster-png" }, { label: "Plot SVG", target: "poster-plot-svg" }, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot: () => posterState(),
+    restore(state) { remountPoster(state); },
+    reset() { if (_posterMods) { if (_posterWorkshop) _posterWorkshop.destroy(); _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps({ quiet: true })); if (_shell) _shell.markTargets(); } },
+  },
   retro: engineContract("retro"),
   gallery: engineContract("gallery"),
   loom: engineContract("loom"),
@@ -6938,6 +6995,14 @@ _readings = mountReadings({
   getSource: () => activeSource,
   isMakingSource: (s) => !!(SHELL_CONTRACTS[s] && SHELL_CONTRACTS[s].making),
 });
+for (const type of ["change", "click"]) {
+  $("studio-rail").addEventListener(type, (e) => {
+    const id = FORM_SOURCES[activeSource];
+    if (!id || !e.target.closest || !e.target.closest("#" + id)) return;
+    if (type === "click" && !e.target.closest("button")) return;
+    setTimeout(() => { if (_shell) _shell.record(activeSource); }, 0);
+  });
+}
 for (const type of ["input", "change", "click"]) {
   $("studio-rail").addEventListener(type, (e) => {
     const block = e.target.closest && e.target.closest(".src-block");

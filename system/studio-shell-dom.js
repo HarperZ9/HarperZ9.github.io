@@ -222,6 +222,8 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
     undo: () => undo(ctx),
     redo: () => redo(ctx),
     setOpen: (open) => setOpen(ctx, open),
+    // A source that builds its controls after the shell mounted (the Poster workshop) marks them again.
+    markTargets: () => markBarTargets(ctx),
     history: ctx.history,
     store: ctx.store,
   };

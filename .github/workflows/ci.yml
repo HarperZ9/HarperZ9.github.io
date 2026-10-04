@@ -139,6 +139,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-bring.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-plot.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-engines.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-spatial.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       - name: Live explainers in the browser
