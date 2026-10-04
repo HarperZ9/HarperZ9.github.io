@@ -642,7 +642,10 @@ RELEASE_PATHS = (
 # October 4, 2026, later: the full Retro Engine joins the Studio; studio.html gains the Retro
 # source's panel and loads the Studio at the retro-hub stamp, and retro.html loads
 # retro-studio.js at that stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "2908e939cdb0eab7597339372e113d1d577088f08ebe1d7c8b6846861d91f568"
+# October 4, 2026, later: Bring your own and Watch with me start on an empty sheet; studio.html
+# loads the Studio at the bring stamp over the retro-hub release. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "42d2b4bf541095b6496cba983f8776f86dfaaf194f4b1c7705d101e2f624e95f"
+
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

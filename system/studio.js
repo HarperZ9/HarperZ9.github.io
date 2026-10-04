@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-entry";
+import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-bring";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
   onSourceChange as surfaceOnSourceChange,
@@ -580,6 +580,7 @@ function setSource(next) {
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
     if (activeSource === "retro" && _retroHub) _retroHub.leaveRetroHub();   // park the engine, give the canvas back
+    if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
@@ -789,6 +790,16 @@ function setSource(next) {
   }).catch(err => { say("model", "The dimensions renderer failed to load: " + (err && err.message ? err.message : String(err))); });
   // The Atelier redraws its own recipe when it is entered again, so the stage never keeps the
   // previous source's picture (it used to, until Draw, which also replaced the seed).
+  // Bring your own and Watch with me: their own frame (the last thing brought, kept in this page's
+  // memory) or an empty sheet that says what to do, never the previous source's picture.
+  if (next === "byo" && entering) {
+    if (_shell) _shell.resume("byo");
+    if (_byoStill) restoreByo(); else stageEmpty("byo");
+  } else if (next === "watch" && entering) {
+    stageEmpty("watch");
+  } else if (entering) {
+    stageFilled();
+  }
   if (next === "atelier" && entering && window.AtelierStudio) {
     if (!(_shell && _shell.resume("atelier"))) window.AtelierStudio.redraw();
   }
@@ -4184,6 +4195,10 @@ async function loadFile(file) {
     }
   }
 
+  _byoHasContent = true;
+  _byoLastName = String(file && file.name || "").slice(0, 120);
+  stageFilled();
+  if (_shell) _shell.record("byo");
   const obs = perceive(byoCanvas());
   say("model", "Loaded " + result.kind + " • " + (result.meta && result.meta.name ? result.meta.name : file.name)
     + ". Fingerprint " + obs.phash + ".");
@@ -4409,6 +4424,7 @@ async function startCapture(mode) {
       ? await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true })
       : await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     watchStream = stream;
+    stageFilled();
     watchVideo.srcObject = stream;
     watchVideo.hidden = false;
     const live = $("studio-watch-live");
@@ -6667,6 +6683,55 @@ function bootRetroHandoff() {
 const syncChipGroup = (attr, value) => document.querySelectorAll(`[${attr}]`).forEach(b =>
   b.classList.toggle("active", b.getAttribute(attr) === value));
 const PNG_FRAME = { label: "PNG frame", target: "rt-export-png" };
+// ── Bring your own and Watch with me: an empty sheet until there is something to show ──────────
+const EMPTY_NOTES = {
+  byo: "Nothing here yet. Drop an image, a video, a 3D model or a sound on the drop zone, or choose a file.",
+  watch: "Nothing shared yet. Share a screen or a camera to read it here, frame by frame. Nothing is shared until you choose.",
+};
+let _byoStill = null;      // the last frame Bring your own showed, held in this page's memory only
+let _byoHasContent = false;
+let _byoLastName = "";     // the last file's name: kept in this browser; the file itself never is
+function stageNote() {
+  let n = $("stage-empty");
+  if (!n) {
+    n = document.createElement("p");
+    n.id = "stage-empty"; n.className = "stage-empty"; n.setAttribute("role", "status"); n.hidden = true;
+    $("viewport-stage").append(n);
+  }
+  return n;
+}
+function stageEmpty(source) {
+  const c = $("studio-canvas");
+  leave3D();
+  sizeCanvas(c);   // a fresh backing: the previous source's picture goes with it
+  const ctx = c.getContext("2d"); if (ctx) ctx.clearRect(0, 0, c.width, c.height);
+  const n = stageNote();
+  n.textContent = EMPTY_NOTES[source] + (source === "byo" && _byoLastName
+    ? ` Last time you brought ${_byoLastName}; drop it again to carry on. The file itself is never kept.` : "");
+  n.hidden = false;
+  try { perceive(c); } catch (_) {}   // the readings describe this empty sheet, not the last picture
+  startMeterLoop();
+}
+function stageFilled() { const n = $("stage-empty"); if (n) n.hidden = true; }
+function stashByo() {
+  if (!_byoHasContent) return;
+  const c = $("studio-canvas");
+  if (!c || !c.width || canvasIsGL) return;
+  const copy = document.createElement("canvas");
+  copy.width = c.width; copy.height = c.height;
+  copy.getContext("2d").drawImage(c, 0, 0);
+  _byoStill = copy;
+}
+function restoreByo() {
+  const c = $("studio-canvas");
+  leave3D();
+  c.width = _byoStill.width; c.height = _byoStill.height;
+  c.getContext("2d").drawImage(_byoStill, 0, 0);
+  stageFilled();
+  try { perceive(c); } catch (_) {}
+  startMeterLoop();
+}
+
 const radioChips = (attr, value) => syncChipGroup(attr, value);
 const setRange = (id, value, outId, fmt) => {
   const el = $(id); if (!el || value == null) return;
@@ -6674,6 +6739,19 @@ const setRange = (id, value, outId, fmt) => {
   const out = outId && $(outId); if (out) out.textContent = fmt ? fmt(el.value) : el.value;
 };
 const SHELL_CONTRACTS = {
+  byo: {
+    primary: { label: "Choose a file", target: "studio-file", title: "Choose an image, video, 3D model or sound from this device" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    // Only the last file's name is kept, so a return can say what was here. It cannot be undone.
+    history: false,
+    snapshot: () => ({ lastFile: _byoLastName || null }),
+    restore(state) { _byoLastName = state && state.lastFile ? String(state.lastFile).slice(0, 120) : ""; },
+    reset() { _byoLastName = ""; _byoStill = null; _byoHasContent = false; stopByoVideo(); stageEmpty("byo"); },
+  },
+  watch: {
+    primary: { label: "Share screen", target: "watch-screen", title: "Share a screen or a window; the browser asks first" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+  },
   atelier: {
     making: true,
     // Draw has always meant "a new drawing" (a new seed); a typed seed draws on Enter.
