@@ -1351,7 +1351,7 @@ function boot() {
   const recPlay = $("re-rec-play");
   if (recPlay) recPlay.addEventListener("click", async () => {
     if (!REC.events.length) { status("nothing recorded yet: press Record and play the panel", ""); return; }
-    try { await ensureAudio(); if (!audio.isOn()) await audio.start(audioSeed()); } catch (_) { status("sound needs a click to start", "err"); return; }
+    try { await ensureAudio(); if (!audio.isOn()) await audio.start(audioSeed()); } catch (e) { status(soundRefusal(e), "err"); return; }
     REC.timers.forEach(clearTimeout); REC.timers = [];
     for (const [t, k, v] of REC.events) REC.timers.push(setTimeout(() => { try { audio.ping(k, v); } catch (_) {} }, t));
     status("playing the performance back: " + REC.events.length + " gestures", "ok");
@@ -1397,7 +1397,7 @@ function boot() {
       const m = await import("./ans-voice.js?v=20260812-cohesion");
       const scan = m.scanImage(out, 40, 96);
       const freqs = m.rowFrequencies(scan.rows, { mode: "penta" });
-      picRun = await audio.playScan(scan, freqs, 9);
+      picRun = await audio.playScan(scan, freqs, 9, "retro-picture");
     } catch (_) { status("could not play the picture", "err"); picBusy = false; return; }
     picBusy = false;
     playPic.setAttribute("aria-pressed", "true");
@@ -1475,6 +1475,9 @@ function boot() {
     audio = m.createRetroAudio();
     return audio;
   }
+  // Reduced sound (reduced motion, or the site's sound preference off) keeps the reactive
+  // instrument silent; say so instead of blaming the click.
+  const soundRefusal = (e) => (e && /reduced sound/.test(e.message) ? "reduced sound is on, so the instrument stays silent" : "audio needs a click to start");
   function audioState(msg) { const el = $("re-audio-state"); if (el) el.textContent = msg; }
   const press = (id, on) => { const b = $(id); if (b) b.setAttribute("aria-pressed", String(!!on)); };
 
@@ -1485,7 +1488,7 @@ function boot() {
       // stop() also kills a playing picture scan by design; settle its button
       if (picRun) { clearTimeout(picTimer); picRun = null; if (playPic) playPic.setAttribute("aria-pressed", "false"); }
     }
-    else { try { await audio.start(audioSeed()); press("re-src-instr", true); ping("bell"); } catch (_) { status("audio needs a click to start", "err"); return; } }
+    else { try { await audio.start(audioSeed()); press("re-src-instr", true); ping("bell"); } catch (e) { status(soundRefusal(e), "err"); return; } }
     audioState(audio.isOn() ? "instrument" : (audio.hasInput() ? "listening" : "off"));
     sync();
   });
@@ -1603,13 +1606,9 @@ function boot() {
     const gen = beamGen;
     try {
       await ensureAudio();
-      const m = await import("./scope-voice.js?v=20260812-cohesion");
       if (gen !== beamGen) return;
       const hz = 55 * Math.pow(2, knobVals()[0] * 3);
-      const sr = await audio.rate();
-      if (gen !== beamGen) return;
-      const { left, right } = m.pathToStereo(beamFigure, sr, 1 / hz);
-      await audio.playLoop(left, right);
+      await audio.playFigure(beamFigure, hz);
       if (gen !== beamGen) { audio.stopLoop(); return; }
       status("the figure is sounding at " + Math.round(hz) + " Hz: your hand, retraced", "ok");
     } catch (_) { if (gen === beamGen) status("could not sound the figure", "err"); }

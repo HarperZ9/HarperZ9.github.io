@@ -481,7 +481,10 @@ function boot() {
         if (!audio) audio = m.createRetroAudio();
         await audio.start("loom-" + structureId);
         status("the rows will sound as they weave", "ok");
-      } catch (e) { status("sound needs a click to start", "err"); $("wv-sound").checked = false; }
+      } catch (e) {
+        status(e && /reduced sound/.test(e.message) ? "reduced sound is on, so the rows stay silent" : "sound needs a click to start", "err");
+        $("wv-sound").checked = false;
+      }
     } else if (audio && audio.isOn()) { try { audio.stop(); } catch (_) {} }
   });
 
@@ -505,7 +508,7 @@ function boot() {
       const m = await import("./ans-voice.js?v=20260812-cohesion");
       const scan = m.scanImage(out, 36, 88);
       const freqs = m.rowFrequencies(scan.rows, { mode: "penta" });
-      clothRun = await audio.playScan(scan, freqs, 10);
+      clothRun = await audio.playScan(scan, freqs, 10, "loom-cloth");
     } catch (e) { status("could not play the cloth", "err"); clothBusy = false; return; }
     clothBusy = false;
     playCloth.setAttribute("aria-pressed", "true");

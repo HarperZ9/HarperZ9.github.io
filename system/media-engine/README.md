@@ -22,6 +22,7 @@ A second step moved the Retro front half (downscale, OKLab, palette, dither) int
 | `page.mjs` | `pageEngine()` and `usePlugin(id)`: one engine per page, plugins loaded on first use |
 | `contracts.mjs` | The vendored superstack v0.1.0 contract (MIT): canonical JSON, SHA-256, the seed rule, the flick clock, OKLab, risk tokens, PCM and loudness, reconcile and receipts. Never edited; `SUPERSTACK.sha256` holds its pin and CI checks it and runs the release's vectors (`tests/superstack/`) |
 | `seed.mjs` | `mulberry32`, `makeRng`, `xmur3` (the contract's seed rule), `fnv1a32` and `rngFrom` (the legacy `fnv1a32-mulberry32` rule): the site's one seeded randomness |
+| `sound.mjs` | The sound layer: scenes, offline float64 references, loudness, PCM receipts, live playback and its reconcile, reduced sound |
 | `receipt.mjs` | `frameReceipt` (a `superstack.receipt/1`), `reconcileFrame`, `verifyReceipt`, `verifyBytes`, `digestOrNull`, `digest` |
 | `scene.mjs` | `media.scene` camera requests in raw-native's params shape |
 | `colour.mjs` | OKLab and the risk tokens from the contract, OKLCh and CIEDE2000 from sense-core, `markRisk` and `riskCss` |
@@ -65,6 +66,16 @@ An instance may set `static: true`: the loop never draws it, and it draws on mou
 `wasm-raw` is a backend like any other in the list: the raw-native core compiled to WebAssembly, the suite's exact rasterizer for 3D work. A 3D-capable plugin lists it in `backends`; `handle.receipt(t, { reference: true })` then draws the same request through the backend registered with `registerReferenceBackend("wasm-raw", { render })` and puts the result in the receipt's `reconcile` block: `identity` is MATCH or DRIFT for the RGBA bytes, and `tolerance` is verified, refuted or unverifiable against the contract's bound (mean absolute error at most one level) and the site's (RMSE at most 2/255 on a 0..1 scale). One level off on one channel reads DRIFT and verified, which is why the two verdicts are separate. With no backend registered, the tolerance verdict is unverifiable and says why. A receipt nobody asked to check has `reconcile: null` and says so in `does_not_prove`. The 2D surfaces (weave, plotter, Canvas2D plates, audio) do not list it.
 
 `scene.mjs` builds `media.scene` requests whose camera fields carry raw-native's own names (`width`, `height`, `eye`, `target`, `up`, `fovy`, `prev_eye`, `prev_target`, `prev_up`), so `toRawParams()` gives the file `raw_native_cli --params` reads and `fromRawChannels()` reads its `channels.json` camera back.
+
+## Sound
+
+`sound.mjs` puts the site's own sounds on the superstack contract. Each one is a `superstack.sound/1` scene at 48 kHz: the Seed sound, the Music source's built-in chord, a picture or woven cloth played as notes (the Loom's cloth, the Retro picture, the Gallery plate) and the Retro scope's drawn figure. An offline renderer computes every sample in float64, normalises it with the contract's BS.1770 meter (music to -14 LUFS, interactive sound to at most -18 LUFS, never past a -1 dBFS sample peak) and quantizes once to 16-bit PCM. That PCM is the reference: the receipt hashes it, the WAV export is its bytes, and the live context runs at 48 kHz and plays exactly those samples. `reconcileLive()` renders the playback graph in an `OfflineAudioContext` and holds it against the reference with the contract's two verdicts. WebAudio is never the reference.
+
+The four producers are also engine plugins (`sound-seed`, `sound-music`, `sound-scan`, `sound-figure` in `plugins/sound.mjs`): mounted, each draws a still of its waveform and exposes `reference()`, `receipt()`, `reconcileLive()`, `play()` and `wav()`.
+
+Nothing autoplays. `reducedSound()` is true when the reader asks for reduced motion or turns the site's sound preference off (the Gallery sound desk has the switch). Then the Retro drone, the Loom's weaving rows and the Music pad, which react to the picture or the music, do not start, and each says why. A sound the reader starts with a play button still plays. The drone fades out while the tab is hidden.
+
+The drone and the pings stay live WebAudio graphs with a compressor: they follow the picture frame by frame, so they have no fixed scene and no reference.
 
 ## Filling a slot
 
