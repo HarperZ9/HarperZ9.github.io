@@ -6,9 +6,11 @@ These files come byte for byte from the `v0.1.0` tag of [HarperZ9/superstack](ht
 | Here | Upstream |
 |---|---|
 | `system/media-engine/contracts.mjs` | `superstack.mjs` |
+| `tools/superstack.py` | `superstack.py` (pin in `tools/SUPERSTACK.sha256`) |
 | `tests/superstack/SHA256SUMS` | `SHA256SUMS` |
 | `tests/superstack/vectors/` | `vectors/` |
 | `tests/superstack/tests/run_vectors.mjs` | `tests/run_vectors.mjs` |
+| `tests/superstack/tests/run_vectors.py` | `tests/run_vectors.py` |
 | `tests/superstack/tools/check_vendored.py` | `tools/check_vendored.py` |
 
 `system/media-engine/SUPERSTACK.sha256` holds the pin. CI checks that the copy still has that hash, that it matches the release's `SHA256SUMS`, and that it passes every vector on the runner's Node:
