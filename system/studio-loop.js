@@ -20,9 +20,12 @@
 export function sourceIsAnimated(activeSource, state) {
   const s = state || {};
   switch (activeSource) {
+    case "music":
+      // The reactive engine paints every frame while it plays. Stopped, with reduced motion, the
+      // idle field holds one still frame (reactive-music-ui.js) and the loop may idle on it.
+      return !s.musicStatic;
     case "fractal3d":
     case "ndim":
-    case "music":
     case "watch":
     case "discovery":   // the physics renderer evolves the system every frame
     case "sound":       // the piano-roll animates and the audio tap must keep being polled
