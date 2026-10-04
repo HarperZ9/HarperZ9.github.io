@@ -44,7 +44,6 @@ those repositories carries its own licence, and that licence governs it.
 | `assets/*.js` | compiled home page, which bundles React, react-dom and scheduler | MIT, see `THIRD-PARTY-NOTICES.md` |
 | `system/fonts/hanken-grotesk*` | Hanken Grotesk, The Hanken Grotesk Project Authors | SIL Open Font License 1.1, see `system/fonts/OFL-hanken-grotesk.txt` |
 | `system/fonts/conso-*` | Conso, Pavel Larin | the designer's terms, see `system/fonts/FONTS.md` |
-| `system/fonts/kilon*`, `system/fonts/telos-display*` | Kilon, Ahmad Suhadi (suhadidesign), and Telos Display, built from it | the designer's terms, see `system/fonts/FONTS.md` |
 
 Quoted material from other authors, and images or figures credited to others,
 stay under their owners' terms.

@@ -1,6 +1,6 @@
 /* Home typography patch.
    The Vite bundle is currently checked in without source. Keep public reading
-   in Kilon/Hanken and reserve Telos Display for small signature marks. */
+   in Hanken Grotesk, the one text voice. */
 
 body.home-generative-field{
   position:relative;

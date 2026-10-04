@@ -5,11 +5,10 @@
    supergraphic rainbow accent system, architectural display type.
    ============================================================ */
 
-/* ---- self-hosted faces, shared with the static pages at /system/fonts/.
-   Kilon ships as a single static 400 cut: declaring the true weight lets the
-   browser synthesize bold for 600+ requests (a 100-900 range would suppress
-   synthesis and render every heading regular). ---- */
-/* Telos Display + Kilon retired 2026-07-11 - Hanken Grotesk is the one text voice. */
+/* ---- self-hosted faces, shared with the static pages at /system/fonts/. ---- */
+/* Hanken Grotesk is the one text voice and Conso the one mono. Kilon and Telos
+   Display left the stylesheets on 2026-07-11, and their files left the site on
+   2026-10-04. */
 @font-face { font-family: "Hanken Grotesk"; src: url("/system/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-regular.woff2") format("woff2"), url("/system/fonts/conso-regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Conso"; src: url("/system/fonts/conso-semibold.woff2") format("woff2"), url("/system/fonts/conso-semibold.woff") format("woff"); font-weight: 600 700; font-style: normal; font-display: swap; }

@@ -622,7 +622,10 @@ RELEASE_PATHS = (
 # explainer is new. The release is rehashed.
 # October 3, 2026: studio.html loads atelier.js as a module at a new stamp (the Atelier takes its
 # seed rule from the vendored superstack contract); the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "f1472c68a66729142ce942a393fc2b68e413d2d1ec08f538db8898a7429621dd"
+# October 4, 2026: the author retires Kilon and Telos Display because viewers found them hard
+# to read. system/system.css drops the unused Telos Display specimen block, and the font files
+# and their build tool leave the site; the release is rehashed.
+REVIEWED_RELEASE_SHA256 = "e70424f3594d665b08547188c08137d4c7485857853e7d86f62c1c2fc25a8ddf"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

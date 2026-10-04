@@ -121,9 +121,9 @@ Written works: CC BY 4.0. The site's code, design and art: all rights reserved.
   it needs written permission. [`LICENSE`](LICENSE) gives the terms.
 - **Third-party and vendored material** keeps its own licence: D3 (ISC),
   panzoom and Tweakpane (MIT), React in the home page bundle (MIT), Hanken
-  Grotesk (SIL OFL 1.1), and the Conso and Kilon fonts under their designers'
-  terms. The table in [`LICENSE`](LICENSE) names each path, and a licence file
-  or note sits beside each one.
+  Grotesk (SIL OFL 1.1), and the Conso font under its designer's terms. The
+  table in [`LICENSE`](LICENSE) names each path, and a licence file or note
+  sits beside each one.
 
 The reusable engines behind the site are source-available under FSL-1.1-MIT
 in their own repositories.
