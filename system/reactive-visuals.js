@@ -1,6 +1,6 @@
 // reactive-visuals.js
 // The visual rendering engine for the music-reactive experience.
-// Zero external dependencies. Pure Canvas2D + a small OKLab helper inline.
+// Pure Canvas2D. OKLab comes from the vendored superstack contract (media-engine/contracts.mjs).
 //
 // MODES (window.ReactiveVisuals.setMode(name)):
 //   "particles"    Spring/flocking particle system (beat kicks, bass drives force)
@@ -25,35 +25,17 @@
 //   OKLab color space: Ottosson, B. (2020) https://bottosson.github.io/posts/oklab/
 //   Superformula: Gielis, J. Am. J. Bot. 90(3), 333-338 (2003)
 
+import { oklabToLinearSrgb, linearToSrgb } from "./media-engine/contracts.mjs";
+
 // ---------------------------------------------------------------------------
-// Tiny OKLab / OKLCH helpers (self-contained; no import of colour-perceptual.mjs
-// needed since reactive-visuals.js runs in the browser context).
+// Tiny OKLCH helpers over the contract's OKLab.
 // ---------------------------------------------------------------------------
 
-// sRGB byte [0..255] -> linear [0..1]
-function _srgbToLinear(c) {
-  const n = c / 255;
-  return n <= 0.04045 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4);
-}
-
-// Linear sRGB -> OKLab [L, a, b]
-const M1 = [[0.4122214708,0.5363325363,0.0514459929],[0.2119034982,0.6806995451,0.1073969566],[0.0883024619,0.2817188376,0.6299787005]];
-const M2 = [[0.2104542553,0.793617785,-0.0040720468],[1.9779984951,-2.428592205,0.4505937099],[0.0259040371,0.7827717662,-0.808675766]];
-function _linRgbToOklab(r, g, b) {
-  const l = M1[0][0]*r+M1[0][1]*g+M1[0][2]*b, m = M1[1][0]*r+M1[1][1]*g+M1[1][2]*b, s = M1[2][0]*r+M1[2][1]*g+M1[2][2]*b;
-  const l_=Math.cbrt(l), m_=Math.cbrt(m), s_=Math.cbrt(s);
-  return [M2[0][0]*l_+M2[0][1]*m_+M2[0][2]*s_, M2[1][0]*l_+M2[1][1]*m_+M2[1][2]*s_, M2[2][0]*l_+M2[2][1]*m_+M2[2][2]*s_];
-}
-
-// OKLab [L, a, b] -> sRGB hex string (clamped)
-const IM2 = [[1.0,0.3963377774,0.2158037573],[1.0,-0.1055613458,-0.0638541728],[1.0,-0.0894841775,-1.291485548]];
-const IM1 = [[4.0767416621,-3.3077115913,0.2309699292],[-1.2684380046,2.6097574011,-0.3413193965],[-0.0041960863,-0.7034186147,1.707614701]];
-function _oklabToLinRgb(L, a, b) {
-  const l_=IM2[0][0]*L+IM2[0][1]*a+IM2[0][2]*b, m_=IM2[1][0]*L+IM2[1][1]*a+IM2[1][2]*b, s_=IM2[2][0]*L+IM2[2][1]*a+IM2[2][2]*b;
-  const l=l_*l_*l_, m=m_*m_*m_, s=s_*s_*s_;
-  return [IM1[0][0]*l+IM1[0][1]*m+IM1[0][2]*s, IM1[1][0]*l+IM1[1][1]*m+IM1[1][2]*s, IM1[2][0]*l+IM1[2][1]*m+IM1[2][2]*s];
-}
-function _linearToSrgb(c) { return c<=0.0031308?12.92*c:1.055*Math.pow(c,1/2.4)-0.055; }
+// OKLab -> linear sRGB and the sRGB transfer come from the vendored superstack contract
+// (media-engine/contracts.mjs); the copies that stood here computed the same floats bit for bit.
+// The forward helpers (_srgbToLinear, _linRgbToOklab) had no caller and are gone.
+const _oklabToLinRgb = oklabToLinearSrgb;
+const _linearToSrgb = linearToSrgb;
 function _byteClamp(v) { return Math.max(0, Math.min(255, Math.round(v*255))); }
 
 // Convert OKLCH (L in [0,1], C in [0,0.4], H in degrees) -> CSS rgba string.

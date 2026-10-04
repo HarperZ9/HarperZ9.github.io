@@ -7,6 +7,8 @@
 // re-checkable proof) made into the inter-flagship contract. The envelope is shared; each flagship
 // registers verifiers for the kinds it understands. Zero dependencies; pure data + a dispatch.
 
+import { fnv1a32Hex } from "../media-engine/seed.mjs";
+
 export const PROTOCOL = "telos.witnessed-artifact/v1";
 
 // Build a witnessed artifact. `certificate` is reduced to its portable core; `recheck` is the
@@ -32,11 +34,7 @@ export function isArtifact(a) {
 }
 
 // A small deterministic content hash (FNV-1a over a string): content-addresses any external output.
-export function contentHash(s) {
-  let h = 0x811c9dc5; const str = String(s);
-  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0; }
-  return ("00000000" + h.toString(16)).slice(-8);
-}
+export function contentHash(s) { return fnv1a32Hex(s); }
 
 // INGEST: wrap an external tool's output (an SVG, an OBJ, a video frame, any string/bytes) as a witnessed,
 // tamper-evident Telos artifact. The layer over the stack: a Blender / Maya / TouchDesigner / NLE export

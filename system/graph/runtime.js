@@ -3,6 +3,8 @@
 // It is intentionally small: typed node ids/ports, dependency ordering,
 // deterministic receipts, and honest failure records.
 
+import { fnv1a32Hex } from "../media-engine/seed.mjs";
+
 const RECEIPT_SCHEMA = "project-telos.graph-evaluation-receipt/v1";
 
 export function makeNode(id, type, params = {}) {
@@ -211,13 +213,6 @@ function stableStringify(value) {
   return "{" + Object.keys(value).sort().map(k => JSON.stringify(k) + ":" + stableStringify(value[k])).join(",") + "}";
 }
 
-function fnv1a(str) {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i);
-    h = (h + ((h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24))) >>> 0;
-  }
-  return ("00000000" + h.toString(16)).slice(-8);
-}
+const fnv1a = fnv1a32Hex;
 
 export default { evaluateGraph, makeNode, stableGraphHash };

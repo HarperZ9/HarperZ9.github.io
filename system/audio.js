@@ -12,17 +12,13 @@
 // Same FNV-1a + splitmix mix as neural.js / typeface.js, so a seed is one DNA
 // across the field, the solid, the face, and now the sound.
 
+import { fnv1a32 } from "./media-engine/seed.mjs";
+
 const MASK = 0xffffffff;
 
 // FNV-1a, matching neuralSeed().
 export function audioSeed(value) {
-  let h = 2166136261;
-  const s = String(value == null ? "audio" : value);
-  for (let i = 0; i < s.length; i += 1) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
+  return fnv1a32(value == null ? "audio" : value);
 }
 
 // splitmix draw in [0, 1) from (seed, index) - same as _draw01 elsewhere.

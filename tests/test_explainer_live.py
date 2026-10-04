@@ -117,10 +117,11 @@ def test_local_storage_is_only_touched_inside_try() -> None:
 
 def test_stage_risk_colours_are_the_engine_tokens() -> None:
     css = (ROOT / "system/explainer/explainer.css").read_text(encoding="utf-8")
-    colour = (ROOT / "system/media-engine/colour.mjs").read_text(encoding="utf-8")
+    # The tokens live in the vendored superstack contract; colour.mjs re-exports them.
+    colour = (ROOT / "system/media-engine/contracts.mjs").read_text(encoding="utf-8")
     for pole in ("light", "dark"):
         block = re.search(pole + r": Object\.freeze\(\{([^}]*)\}", colour).group(1)
-        tokens = dict(re.findall(r'(\w+): "(#[0-9a-f]{6})"', block))
+        tokens = dict(re.findall(r"""(\w+): ["'](#[0-9a-f]{6})["']""", block))
         for level in ("low", "moderate", "elevated", "high"):
             assert f'.xl[data-pole="{pole}"] [data-risk="{level}"][data-risk-hot]{{color:{tokens[level]}}}' in css
 

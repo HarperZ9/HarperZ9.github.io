@@ -21,6 +21,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { morePieces } from "./site-art-pillars-more.mjs";
 import { domainPieces } from "./site-art-domains.mjs";
+import { mulberry32 } from "../system/media-engine/seed.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(ROOT, "art", "aperture");
@@ -41,16 +42,8 @@ const PAL = {
 };
 
 // ---------- randomness ----------
-function mulberry(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+// mulberry32 from the one seed module (the vendored superstack contract underneath).
+const mulberry = mulberry32;
 function perlin(rng) {
   const perm = [...Array(256).keys()];
   for (let i = 255; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [perm[i], perm[j]] = [perm[j], perm[i]]; }

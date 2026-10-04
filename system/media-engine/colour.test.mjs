@@ -51,3 +51,24 @@ test("risk.css carries exactly the tokens colour.mjs generates", () => {
   assert.ok(css.includes(riskCss().replace(/\s+/g, "")), "regenerate risk.css from riskCss()");
   for (const level of RISK_LEVELS) assert.ok(css.includes(`[data-risk="${level}"][data-risk-hot]`), level);
 });
+
+// sense-core is a vendored library that keeps its own float OKLab; it must stay the contract's.
+test("sense-core's OKLab gives the contract's floats bit for bit", async () => {
+  const sc = await import("../lib/sense-core/colour-perceptual.mjs");
+  const ss = await import("./contracts.mjs");
+  for (let r = 0; r < 256; r += 15) for (let g = 0; g < 256; g += 15) for (let b = 0; b < 256; b += 15) {
+    const lin = [r, g, b].map((c) => ss.srgbToLinear(c / 255));
+    assert.deepEqual(lin, [r, g, b].map((c) => sc.srgbToLinear(c / 255)));
+    const lab = ss.linearSrgbToOklab(...lin);
+    assert.deepEqual(sc.linearRgbToOklab(...lin), lab);
+    assert.deepEqual(sc.oklabToLinearRgb(...lab), ss.oklabToLinearSrgb(...lab));
+  }
+});
+
+test("the risk tokens and verdict words are the contract's, and REFUTED reads high", async () => {
+  const c = await import("./colour.mjs");
+  assert.equal(c.riskOf("refuted"), "high");
+  assert.equal(c.riskOf("verified"), "low");
+  assert.equal(c.riskOf("unverifiable"), "moderate");
+  assert.equal(c.hotMark(["low", "DRIFT", "moderate"]), 1);
+});

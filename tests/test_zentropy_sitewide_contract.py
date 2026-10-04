@@ -43,6 +43,9 @@ MEDIA_ENGINE_REVISION = "20261003-engine"
 TYPE_FORGE_REVISION = "20261003-type-forge"
 # 3 October 2026, later: the Retro front half moves to a worker; retro-studio.js takes a new stamp.
 RETRO_WORKER_REVISION = "20261003-worker"
+# 3 October 2026, later: atelier.js loads as a module and takes its seed rule from the vendored
+# superstack contract, so the Studio's tag for it takes a new stamp.
+SUPERSTACK_REVISION = "20261003-superstack"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -92,6 +95,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
     "system/studio.js": RETRO_WORKER_REVISION,
+    "system/atelier.js": SUPERSTACK_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
     "system/studio-plate.css": STUDIO_PLATE_REVISION,

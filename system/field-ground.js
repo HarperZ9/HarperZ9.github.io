@@ -19,6 +19,8 @@
 // mountFieldGround(canvas, { seed, mode, hero, reduced }) -> { destroy() }.
 // seedFromPath / modeFromPath derive per-page variation. isFieldGroundAvailable() gates callers.
 
+import { mulberry32, fnv1a32 } from "./media-engine/seed.mjs";
+
 const VERT = "attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}";
 
 const FRAG = `precision highp float;
@@ -263,21 +265,8 @@ void main(){
   gl_FragColor = vec4(col, 1.0);
 }`;
 
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-// A stable 32-bit hash of a string, so a page's path becomes its own seed.
-function hashString(s) {
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-  return h >>> 0;
-}
+// A stable 32-bit hash of a string (FNV-1a), so a page's path becomes its own seed.
+const hashString = fnv1a32;
 
 // Shortest-path hue interpolation (wraps at 1.0) so a page can bend between its two poles
 // without swinging the long way round the wheel.

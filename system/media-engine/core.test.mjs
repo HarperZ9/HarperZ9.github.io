@@ -8,6 +8,7 @@ globalThis.requestAnimationFrame = globalThis.requestAnimationFrame || ((f) => s
 globalThis.cancelAnimationFrame = globalThis.cancelAnimationFrame || ((id) => clearTimeout(id));
 
 const { createEngine, registerReferenceBackend, REFERENCE_BACKEND, sceneKindOf } = await import("./core.mjs");
+const { verifyReceipt } = await import("./receipt.mjs");
 
 const pixels = new Uint8Array([10, 20, 30, 255, 40, 50, 60, 255]);
 const flat = (backends) => ({
@@ -20,19 +21,21 @@ test("a 3D-capable plugin gets a reconcile result against the registered referen
   const plugin = flat(["webgl2", REFERENCE_BACKEND]);
   const h = engine.register(plugin).mount({}, plugin.id, { seed: "s" });
   const before = await h.receipt(1, { reference: true });
-  assert.equal(before.referenceBackend, "wasm-raw");
-  assert.equal(before.reconcile.verdict, "UNVERIFIABLE");
-  assert.match(before.reconcile.reason, /not registered/);
+  assert.equal(before.reconcile.reference.backend, "wasm-raw");
+  assert.equal(before.reconcile.tolerance.verdict, "unverifiable");
+  assert.match(before.reconcile.tolerance.reason, /not registered/);
   // A fast path registered without exact: true is refused as a reference.
   registerReferenceBackend("wasm-raw", { render: async () => pixels });
   const fast = await h.receipt(1, { reference: true });
-  assert.equal(fast.reconcile.verdict, "UNVERIFIABLE");
-  assert.match(fast.reconcile.reason, /not an exact path/);
+  assert.equal(fast.reconcile.tolerance.verdict, "unverifiable");
+  assert.match(fast.reconcile.tolerance.reason, /not an exact path/);
   registerReferenceBackend("wasm-raw", { exact: true, render: async () => pixels });
   const after = await h.receipt(1, { reference: true });
-  assert.equal(after.reconcile.verdict, "MATCH");
-  assert.equal(after.reconcile.kind, "raster3d");
-  assert.equal(after.reconcile.rmse, 0);
+  assert.equal(after.reconcile.identity, "MATCH");
+  assert.equal(after.reconcile.tolerance.verdict, "verified");
+  assert.equal(after.reconcile.reference.scene_kind, "raster3d");
+  assert.equal(after.reconcile.tolerance.metrics.rmse, 0);
+  assert.deepEqual(verifyReceipt(after), []);
   h.dispose(); engine.dispose();
 });
 
@@ -41,8 +44,11 @@ test("a 2D plugin never asks for the rasterizer reference", async () => {
   const plugin = flat(["canvas2d"]);
   const h = engine.register(plugin).mount({}, plugin.id, {});
   const r = await h.receipt(1, { reference: true });
-  assert.equal(r.referenceBackend, null);
-  assert.equal(r.reconcile.reason, "no reference backend");
+  assert.equal(r.reconcile.reference.backend, "none");
+  assert.match(r.reconcile.tolerance.reason, /no reference backend/);
+  assert.deepEqual(verifyReceipt(r), []);
+  const unasked = await h.receipt(1);
+  assert.equal(unasked.reconcile, null);
   h.dispose(); engine.dispose();
 });
 
@@ -53,15 +59,15 @@ test("the scene kind picks the reference, not the plugin's backend list", async 
   const gl = { ...flat(["webgl2"]), id: "gl-scene", sceneKind: "raster3d" };
   const h = engine.register(gl).mount({}, gl.id, {});
   const r = await h.receipt(1, { reference: true });
-  assert.equal(r.referenceBackend, "wasm-raw");
-  assert.equal(r.reconcile.verdict, "MATCH");
+  assert.equal(r.reconcile.reference.backend, "wasm-raw");
+  assert.equal(r.reconcile.identity, "MATCH");
   // A kind with no registered reference says so.
   const snd = { ...flat(["webaudio"]), id: "tone", sceneKind: "sound" };
   const h2 = engine.register(snd).mount({}, snd.id, {});
   const r2 = await h2.receipt(1, { reference: true });
-  assert.equal(r2.referenceBackend, null);
-  assert.equal(r2.reconcile.verdict, "UNVERIFIABLE");
-  assert.match(r2.reconcile.reason, /no reference renderer for scene kind sound/);
+  assert.equal(r2.reconcile.reference.backend, "none");
+  assert.equal(r2.reconcile.tolerance.verdict, "unverifiable");
+  assert.match(r2.reconcile.tolerance.reason, /no reference renderer for scene kind sound/);
   assert.equal(sceneKindOf(flat(["wasm-raw"])), "raster3d");
   assert.equal(sceneKindOf(flat(["canvas2d"])), null);
   h.dispose(); h2.dispose(); engine.dispose();

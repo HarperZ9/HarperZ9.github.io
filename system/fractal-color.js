@@ -14,10 +14,11 @@
 // spends the most time reading.
 
 // sRGB transfer functions, IEC 61966-2-1. srgbToLinear is display code value -> radiance;
-// srgbEncode is the inverse, and is the last thing that happens to a pixel.
-export function srgbToLinear(c) {
-  return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-}
+// srgbEncode is the inverse, and is the last thing that happens to a pixel. srgbToLinear and both
+// OKLab directions come from the vendored superstack contract (media-engine/contracts.mjs); the
+// copies that stood here computed the same floats bit for bit.
+import { srgbToLinear, linearSrgbToOklab, oklabToLinearSrgb } from "./media-engine/contracts.mjs";
+export { srgbToLinear };
 
 export function srgbEncode(c) {
   if (c <= 0) return 0;
@@ -36,27 +37,12 @@ export function srgbEncode(c) {
 // radiance spends most of the distance near the bright end, so the segment that wraps from the
 // lightest stop back to the darkest one, a full sixth of every cycle, came out as a pale neutral
 // band: ember's read #bcbdb3 against the #867e78 the authored palette implies.
-export function linearToOklab(r, g, b) {
-  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
-  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
-  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
-  return [
-    0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
-    1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
-    0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s,
-  ];
-}
+export const linearToOklab = linearSrgbToOklab;
 
 // Writes linear sRGB into `out`. Negative components are clipped: a spline through OKLab can leave
 // the sRGB gamut, and negative radiance has no meaning downstream.
 export function oklabToLinear(L, a, b, out) {
-  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
-  const l = l_ * l_ * l_, m = m_ * m_ * m_, s = s_ * s_ * s_;
-  const r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
-  const g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
-  const bb = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s;
+  const [r, g, bb] = oklabToLinearSrgb(L, a, b);
   out[0] = r > 0 ? r : 0;
   out[1] = g > 0 ? g : 0;
   out[2] = bb > 0 ? bb : 0;

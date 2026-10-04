@@ -87,8 +87,8 @@ async function compare(t = 1.3, params = {}) {
   }
   const out = { size: [a.width, a.height, b.width, b.height], meanAbs: +(sum / n).toFixed(3), maxAbs: max,
     within2: +(within2 / n).toFixed(4), within8: +(within8 / n).toFixed(4),
-    cpuRequestHash: ra.requestHash.slice(0, 16), gpuRequestHash: rb.requestHash.slice(0, 16),
-    gpuRepeatSamePixels: rb.pixelHash === rb2.pixelHash, cpuPixelHash: (ra.pixelHash || "").slice(0, 16), gpuPixelHash: (rb.pixelHash || "").slice(0, 16) };
+    cpuSceneHash: ra.scene_sha256.slice(0, 16), gpuSceneHash: rb.scene_sha256.slice(0, 16),
+    gpuRepeatSamePixels: rb.content_sha256 === rb2.content_sha256, cpuPixelHash: (ra.content_sha256 || "").slice(0, 16), gpuPixelHash: (rb.content_sha256 || "").slice(0, 16) };
   cpu.dispose(); gpu.dispose(); e2.dispose();
   return out;
 }

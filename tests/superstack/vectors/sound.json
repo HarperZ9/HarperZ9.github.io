@@ -1,0 +1,345 @@
+{
+ "rule": "sound: s16le, loudness meter superstack-bs1770/1, targets",
+ "spec": "SPEC.md section 8",
+ "quantize": [
+  {
+   "in": 0.0,
+   "out": 0
+  },
+  {
+   "in": 1.0,
+   "out": 32767
+  },
+  {
+   "in": -1.0,
+   "out": -32767
+  },
+  {
+   "in": 0.5,
+   "out": 16384
+  },
+  {
+   "in": -0.5,
+   "out": -16383
+  },
+  {
+   "in": 1.5,
+   "out": 32767
+  },
+  {
+   "in": -2.0,
+   "out": -32767
+  },
+  {
+   "in": 1.52590218966964e-05,
+   "out": 0
+  },
+  {
+   "in": -1.52590218966964e-05,
+   "out": 0
+  },
+  {
+   "in": 0.25,
+   "out": 8192
+  },
+  {
+   "in": -0.25,
+   "out": -8192
+  },
+  {
+   "in": 0.999999,
+   "out": 32767
+  },
+  {
+   "in": -0.999999,
+   "out": -32767
+  },
+  {
+   "in": 3.0517578125e-05,
+   "out": 1
+  },
+  {
+   "in": -0.0,
+   "out": 0
+  }
+ ],
+ "loudness": [
+  {
+   "name": "sine-997-0dbfs-48k-mono",
+   "kind": "sine",
+   "freq": 997.0,
+   "amp": [
+    1.0
+   ],
+   "rate": 48000,
+   "channels": 1,
+   "frames": 144000,
+   "anchor": "BS.1770-4 states a 0 dBFS 1 kHz sine reads -3.01 LKFS",
+   "integrated_lufs": -3.010264522011268,
+   "peak_dbfs": 0.0,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "sine-997-half-44k1-mono",
+   "kind": "sine",
+   "freq": 997.0,
+   "amp": [
+    0.5
+   ],
+   "rate": 44100,
+   "channels": 1,
+   "frames": 88200,
+   "integrated_lufs": -9.028089166152963,
+   "peak_dbfs": -6.020599913279624,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "sine-440-stereo-48k",
+   "kind": "sine",
+   "freq": 440.0,
+   "amp": [
+    0.25,
+    0.125
+   ],
+   "rate": 48000,
+   "channels": 2,
+   "frames": 96000,
+   "integrated_lufs": -14.765328387617265,
+   "peak_dbfs": -12.041199826559248,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "gated-48k",
+   "kind": "gated",
+   "freq": 1000.0,
+   "amp": [
+    0.5
+   ],
+   "quiet_gain": 0.001,
+   "rate": 48000,
+   "channels": 1,
+   "frames": 192000,
+   "integrated_lufs": -9.362756115322885,
+   "peak_dbfs": -6.020599913279624,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "two-level-relative-gate-48k",
+   "kind": "gated",
+   "freq": 1000.0,
+   "amp": [
+    0.5
+   ],
+   "quiet_gain": 0.2,
+   "rate": 48000,
+   "channels": 1,
+   "frames": 192000,
+   "note": "the quiet half sits 14 dB down: inside a 20 LU gate, outside the 10 LU gate",
+   "integrated_lufs": -9.348693911708077,
+   "peak_dbfs": -6.020599913279624,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "sine-100-96k",
+   "kind": "sine",
+   "freq": 100.0,
+   "amp": [
+    0.3
+   ],
+   "rate": 96000,
+   "channels": 1,
+   "frames": 96000,
+   "integrated_lufs": -15.318019086962762,
+   "peak_dbfs": -10.457574905606752,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "silence-48k",
+   "kind": "silence",
+   "amp": [
+    0.0
+   ],
+   "rate": 48000,
+   "channels": 1,
+   "frames": 48000,
+   "integrated_lufs": null,
+   "peak_dbfs": null,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "too-short-48k",
+   "kind": "sine",
+   "freq": 1000.0,
+   "amp": [
+    0.5
+   ],
+   "rate": 48000,
+   "channels": 1,
+   "frames": 19199,
+   "integrated_lufs": null,
+   "peak_dbfs": -6.020599913279624,
+   "tolerance_lu": 1e-06
+  },
+  {
+   "name": "rate-11025-unsupported",
+   "kind": "sine",
+   "freq": 500.0,
+   "amp": [
+    0.5
+   ],
+   "rate": 11025,
+   "channels": 1,
+   "frames": 11025,
+   "integrated_lufs": null,
+   "peak_dbfs": -6.020655012798243,
+   "tolerance_lu": 1e-06
+  }
+ ],
+ "loudness_check": [
+  {
+   "class": "speech",
+   "lufs": -16.0,
+   "peak": -3.0,
+   "verdict": "verified"
+  },
+  {
+   "class": "speech",
+   "lufs": -16.9,
+   "peak": -1.6,
+   "verdict": "verified"
+  },
+  {
+   "class": "speech",
+   "lufs": -17.2,
+   "peak": -3.0,
+   "verdict": "refuted"
+  },
+  {
+   "class": "speech",
+   "lufs": -16.0,
+   "peak": -1.4,
+   "verdict": "refuted"
+  },
+  {
+   "class": "music",
+   "lufs": -14.0,
+   "peak": -1.0,
+   "verdict": "verified"
+  },
+  {
+   "class": "music",
+   "lufs": -13.0,
+   "peak": -2.0,
+   "verdict": "verified"
+  },
+  {
+   "class": "music",
+   "lufs": -12.9,
+   "peak": -2.0,
+   "verdict": "refuted"
+  },
+  {
+   "class": "interactive",
+   "lufs": -18.0,
+   "peak": -1.0,
+   "verdict": "verified"
+  },
+  {
+   "class": "interactive",
+   "lufs": -17.9,
+   "peak": -6.0,
+   "verdict": "refuted"
+  },
+  {
+   "class": "interactive",
+   "lufs": -30.0,
+   "peak": -0.5,
+   "verdict": "refuted"
+  },
+  {
+   "class": "speech",
+   "lufs": null,
+   "peak": -3.0,
+   "verdict": "unverifiable"
+  },
+  {
+   "class": "music",
+   "lufs": -14.0,
+   "peak": null,
+   "verdict": "unverifiable"
+  },
+  {
+   "class": "ambient",
+   "lufs": -14.0,
+   "peak": -3.0,
+   "verdict": "unverifiable"
+  }
+ ],
+ "targets": {
+  "speech": {
+   "integrated_lufs": -16.0,
+   "tolerance_lu": 1.0,
+   "true_peak_dbtp_max": -1.5
+  },
+  "music": {
+   "integrated_lufs": -14.0,
+   "tolerance_lu": 1.0,
+   "true_peak_dbtp_max": -1.0
+  },
+  "interactive": {
+   "integrated_lufs_max": -18.0,
+   "sample_peak_dbfs_max": -1.0
+  }
+ },
+ "k_weighting": {
+  "44100": [
+   [
+    1.5308412300503478,
+    -2.6509799951547297,
+    1.169079079921587,
+    -1.6636551132560204,
+    0.7125954280732254
+   ],
+   [
+    1.0,
+    -2.0,
+    1.0,
+    -1.989169673629796,
+    0.9891990357870393
+   ]
+  ],
+  "48000": [
+   [
+    1.53512485958697,
+    -2.69169618940638,
+    1.19839281085285,
+    -1.69065929318241,
+    0.73248077421585
+   ],
+   [
+    1.0,
+    -2.0,
+    1.0,
+    -1.99004745483398,
+    0.99007225036621
+   ]
+  ],
+  "96000": [
+   [
+    1.5597142289757966,
+    -2.9267415782510824,
+    1.3782612023158187,
+    -1.8446094698901085,
+    0.8558433229306412
+   ],
+   [
+    1.0,
+    -2.0,
+    1.0,
+    -1.9950175447247156,
+    0.9950237590409233
+   ]
+  ]
+ },
+ "k_tolerance": 1e-12
+}

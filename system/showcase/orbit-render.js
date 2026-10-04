@@ -9,6 +9,7 @@
 // helpers (seedUint32, deriveIC, groundWorld, CERAMIC_RAMP). ASCII only; no em or en dashes.
 import { create, getOrgan, makeLayer, makeArtifact, expr } from "../lib/reconcile/index.js";
 import { rng } from "../discovery/systems.js";
+import { fnv1a32 } from "../media-engine/seed.mjs";
 
 export const PAPER = "#f4f3ef";
 export const INK = "#0b0c0e";
@@ -28,9 +29,7 @@ const clamp01 = (x) => Math.max(0, Math.min(1, x));
 export function seedUint32(s) {
   const str = String(s == null ? "" : s).trim() || "1";
   if (/^\d{1,9}$/.test(str)) return Number(str) >>> 0;
-  let h = 0x811c9dc5;
-  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
-  return h >>> 0;
+  return fnv1a32(str);
 }
 
 // IC derivation (spec 2.2 + D2): seeded like systems.js sampleState, then recorded as r6

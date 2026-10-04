@@ -1425,12 +1425,13 @@
 </main>
 
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
-<!-- Atelier engine (Task 7): classic IIFE, self-boots on DOM ready, binds the controls above and
-     draws into #studio-canvas. Loaded before the Studio module so window.Atelier + the shared
-     spine/reconcile readouts are present. -->
+<!-- Atelier engine (Task 7): a module that self-boots on DOM ready, binds the controls above and
+     draws into #studio-canvas. A module runs in document order with the deferred scripts, so it
+     still runs before the Studio module and window.Atelier + the shared spine/reconcile readouts
+     are present. -->
 <script src="system/spine.js?v=20260902-creative-chassis" defer></script>
 <script src="system/reconcile.js?v=20260902-creative-chassis" defer></script>
-<script src="system/atelier.js?v=20260902-creative-chassis" defer></script>
+<script type="module" src="system/atelier.js?v=20261003-superstack"></script>
 <!-- Vendored interactive libraries (P1). Single prebuilt files, no runtime CDN fetch.
      panzoom (anvaka) v9.4.3: UMD, sets window.createPanzoom; needed at boot (the default
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.

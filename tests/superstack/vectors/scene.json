@@ -1,0 +1,1183 @@
+{
+ "rule": "scene IR",
+ "spec": "SPEC.md section 2",
+ "hashes": [
+  {
+   "name": "proof pixel scene",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": 0,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "sha256": "84aa884f71fc47bf3fcc0a35eb795ac59cbf679f5f398263a27fc7dcca835b36",
+   "proof_recorded_prefix": "84aa884f"
+  },
+  {
+   "name": "proof sound scene",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000,
+    "channels": 1,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "sha256": "12ce2643173d581bbbec7cf345758d3f345f7fed93ec1667b475225b5b0f8f02",
+   "proof_recorded_prefix": "12ce2643"
+  }
+ ],
+ "validate": [
+  {
+   "name": "valid pixels",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": 0,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": []
+  },
+  {
+   "name": "valid sound",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000,
+    "channels": 1,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": []
+  },
+  {
+   "name": "kind",
+   "scene": {
+    "kind": "superstack.scene/9",
+    "seed": "raw-default",
+    "t_flicks": 0,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "kind"
+   ]
+  },
+  {
+   "name": "seed not string",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": 7,
+    "t_flicks": 0,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "seed"
+   ]
+  },
+  {
+   "name": "float t",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": 1.5,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "t_flicks"
+   ]
+  },
+  {
+   "name": "negative t",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": -1,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "t_flicks"
+   ]
+  },
+  {
+   "name": "frame",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": 0,
+    "frame": {
+     "width": 0,
+     "height": 256
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "frame"
+   ]
+  },
+  {
+   "name": "rate",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 44000,
+    "channels": 1,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": [
+    "rate"
+   ]
+  },
+  {
+   "name": "channels",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000,
+    "channels": 6,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": [
+    "channels"
+   ]
+  },
+  {
+   "name": "duration",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000,
+    "channels": 1,
+    "duration_samples": 0,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": [
+    "duration_samples"
+   ]
+  },
+  {
+   "name": "bool channels",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000,
+    "channels": true,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": [
+    "channels"
+   ]
+  },
+  {
+   "name": "integral float rate",
+   "scene": {
+    "kind": "superstack.sound/1",
+    "seed": "folded-light",
+    "rate": 48000.0,
+    "channels": 1,
+    "duration_samples": 96000,
+    "master_gain": 0.5,
+    "scale_hz": [
+     220,
+     247.5,
+     275,
+     330,
+     366.6666666666667,
+     440,
+     495,
+     550
+    ],
+    "voices": 6,
+    "voice_gain": 0.2,
+    "attack_samples": 960,
+    "release_samples": 9600,
+    "note_samples": 36000,
+    "step_samples": 12000
+   },
+   "errors": []
+  },
+  {
+   "name": "t beyond safe range",
+   "scene": {
+    "kind": "superstack.scene/1",
+    "seed": "raw-default",
+    "t_flicks": 9007199254740992,
+    "frame": {
+     "width": 256,
+     "height": 256,
+     "pixel_center": 0.5,
+     "origin": "top-left"
+    },
+    "camera": {
+     "eye": [
+      4,
+      4,
+      6
+     ],
+     "target": [
+      0,
+      1,
+      0
+     ],
+     "up": [
+      0,
+      1,
+      0
+     ],
+     "fovy": 0.9
+    },
+    "meshes": [
+     {
+      "id": "ground",
+      "shape": "quad",
+      "corners": [
+       [
+        -5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        -5
+       ],
+       [
+        5,
+        0,
+        5
+       ],
+       [
+        -5,
+        0,
+        5
+       ]
+      ],
+      "normal": [
+       0,
+       1,
+       0
+      ],
+      "albedo": [
+       0.7,
+       0.7,
+       0.7
+      ]
+     },
+     {
+      "id": "box",
+      "shape": "box",
+      "center": [
+       0,
+       1,
+       0
+      ],
+      "half": 1,
+      "albedo": [
+       0.8,
+       0.3,
+       0.2
+      ]
+     }
+    ],
+    "lights": [
+     {
+      "kind": "directional",
+      "dir": [
+       -0.4,
+       -1,
+       -0.3
+      ],
+      "intensity": 1
+     }
+    ],
+    "shade": {
+     "model": "raw-lambert-ao/1",
+     "ambient": 0.2,
+     "clamp": [
+      0,
+      1
+     ],
+     "encode": "u8-round-half-up"
+    },
+    "ao": {
+     "estimator": "rt-cosine-hemisphere",
+     "samples": 64,
+     "radius": 2,
+     "hash": "raw-pixel-hash/1",
+     "origin_offset": 0.001,
+     "t_min": 0.0001
+    },
+    "outputs": [
+     "frame.rgb8",
+     "ao.f32",
+     "mask.u8"
+    ]
+   },
+   "errors": [
+    "t_flicks"
+   ]
+  },
+  {
+   "name": "not an object",
+   "scene": "scene",
+   "errors": [
+    "type"
+   ]
+  }
+ ]
+}

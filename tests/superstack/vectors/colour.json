@@ -1,0 +1,505 @@
+{
+ "rule": "colour: OKLab and risk tokens",
+ "spec": "SPEC.md section 7",
+ "tolerance": 1e-09,
+ "oklab": [
+  {
+   "hex": "#000000",
+   "oklab": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "hex": "#ffffff",
+   "oklab": [
+    0.9999999934735462,
+    8.095285553011422e-11,
+    3.727390762708893e-08
+   ]
+  },
+  {
+   "hex": "#ff0000",
+   "oklab": [
+    0.6279553606145516,
+    0.22486306106597395,
+    0.1258462985307351
+   ]
+  },
+  {
+   "hex": "#00ff00",
+   "oklab": [
+    0.8664396115356694,
+    -0.23388757418790812,
+    0.17949847989672985
+   ]
+  },
+  {
+   "hex": "#0000ff",
+   "oklab": [
+    0.4520137183853428,
+    -0.0324569841687638,
+    -0.31152814767837506
+   ]
+  },
+  {
+   "hex": "#808080",
+   "oklab": [
+    0.5998708017071177,
+    4.8561543675162966e-11,
+    2.2359528895066205e-08
+   ]
+  },
+  {
+   "hex": "#186844",
+   "oklab": [
+    0.4605829091448129,
+    -0.08927886506001195,
+    0.03451717656668729
+   ]
+  },
+  {
+   "hex": "#b3261e",
+   "oklab": [
+    0.5012820823677053,
+    0.15640380184868244,
+    0.08564535211444169
+   ]
+  },
+  {
+   "hex": "#8fdc8a",
+   "oklab": [
+    0.8242384270257543,
+    -0.10820026523070903,
+    0.08193617761625638
+   ]
+  },
+  {
+   "hex": "#f4f3ef",
+   "oklab": [
+    0.9638092296707144,
+    -0.00048150985890144105,
+    0.005395169010739664
+   ]
+  },
+  {
+   "hex": "#060608",
+   "oklab": [
+    0.12337530913427353,
+    0.001485014158720717,
+    -0.0053329891840531995
+   ]
+  }
+ ],
+ "oklab_inverse": [
+  {
+   "oklab": [
+    0.5,
+    0.1,
+    -0.1
+   ],
+   "linear_srgb": [
+    0.21870561621596232,
+    0.06034233561177457,
+    0.32103792621988003
+   ]
+  },
+  {
+   "oklab": [
+    0.9,
+    -0.05,
+    0.02
+   ],
+   "linear_srgb": [
+    0.5340652318212475,
+    0.818741527918127,
+    0.635757302772376
+   ]
+  },
+  {
+   "oklab": [
+    0.2,
+    0.0,
+    0.0
+   ],
+   "linear_srgb": [
+    0.008,
+    0.008000000000000004,
+    0.008000000000000002
+   ]
+  }
+ ],
+ "risk_levels": [
+  "low",
+  "moderate",
+  "elevated",
+  "high"
+ ],
+ "risk_tokens": {
+  "light": {
+   "low": "#186844",
+   "moderate": "#5c5a66",
+   "elevated": "#8f5200",
+   "high": "#b3261e",
+   "ink": "#15130f",
+   "quiet": "#5d584e"
+  },
+  "dark": {
+   "low": "#8fdc8a",
+   "moderate": "#a9a6b4",
+   "elevated": "#f0a848",
+   "high": "#ff7a6b",
+   "ink": "#ebe5d8",
+   "quiet": "#9d978a"
+  }
+ },
+ "risk_grounds": {
+  "light": [
+   "#f4f3ef",
+   "#ebe5d8",
+   "#f2efe6"
+  ],
+  "dark": [
+   "#060608",
+   "#070406",
+   "#1d1622"
+  ]
+ },
+ "contrast": [
+  {
+   "pole": "light",
+   "token": "low",
+   "fg": "#186844",
+   "bg": "#f4f3ef",
+   "ratio": 6.096261771996138,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "low",
+   "fg": "#186844",
+   "bg": "#ebe5d8",
+   "ratio": 5.393096816909234,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "low",
+   "fg": "#186844",
+   "bg": "#f2efe6",
+   "ratio": 5.887209501401474,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "moderate",
+   "fg": "#5c5a66",
+   "bg": "#f4f3ef",
+   "ratio": 6.082625895086945,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "moderate",
+   "fg": "#5c5a66",
+   "bg": "#ebe5d8",
+   "ratio": 5.3810337515250435,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "moderate",
+   "fg": "#5c5a66",
+   "bg": "#f2efe6",
+   "ratio": 5.874041224332319,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "elevated",
+   "fg": "#8f5200",
+   "bg": "#f4f3ef",
+   "ratio": 5.604184399220354,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "elevated",
+   "fg": "#8f5200",
+   "bg": "#ebe5d8",
+   "ratio": 4.957777433975128,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "elevated",
+   "fg": "#8f5200",
+   "bg": "#f2efe6",
+   "ratio": 5.4120063863158006,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "high",
+   "fg": "#b3261e",
+   "bg": "#f4f3ef",
+   "ratio": 5.886965905891581,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "high",
+   "fg": "#b3261e",
+   "bg": "#ebe5d8",
+   "ratio": 5.207941895500545,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "high",
+   "fg": "#b3261e",
+   "bg": "#f2efe6",
+   "ratio": 5.685090783797368,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "ink",
+   "fg": "#15130f",
+   "bg": "#f4f3ef",
+   "ratio": 16.70881519313749,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "ink",
+   "fg": "#15130f",
+   "bg": "#ebe5d8",
+   "ratio": 14.781559815291267,
+   "aa_text": true
+  },
+  {
+   "pole": "light",
+   "token": "ink",
+   "fg": "#15130f",
+   "bg": "#f2efe6",
+   "ratio": 16.135838525515116,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "low",
+   "fg": "#8fdc8a",
+   "bg": "#060608",
+   "ratio": 12.312933147573018,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "low",
+   "fg": "#8fdc8a",
+   "bg": "#070406",
+   "ratio": 12.411879875499526,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "low",
+   "fg": "#8fdc8a",
+   "bg": "#1d1622",
+   "ratio": 10.732001152014575,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "moderate",
+   "fg": "#a9a6b4",
+   "bg": "#060608",
+   "ratio": 8.484092856103755,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "moderate",
+   "fg": "#a9a6b4",
+   "bg": "#070406",
+   "ratio": 8.552271024333443,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "moderate",
+   "fg": "#a9a6b4",
+   "bg": "#1d1622",
+   "ratio": 7.394768834869464,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "elevated",
+   "fg": "#f0a848",
+   "bg": "#060608",
+   "ratio": 10.025723893430026,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "elevated",
+   "fg": "#f0a848",
+   "bg": "#070406",
+   "ratio": 10.106290608319163,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "elevated",
+   "fg": "#f0a848",
+   "bg": "#1d1622",
+   "ratio": 8.738460534505476,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "high",
+   "fg": "#ff7a6b",
+   "bg": "#060608",
+   "ratio": 7.951530144886844,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "high",
+   "fg": "#ff7a6b",
+   "bg": "#070406",
+   "ratio": 8.015428639292349,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "high",
+   "fg": "#ff7a6b",
+   "bg": "#1d1622",
+   "ratio": 6.9305850728203335,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "ink",
+   "fg": "#ebe5d8",
+   "bg": "#060608",
+   "ratio": 16.130082441746797,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "ink",
+   "fg": "#ebe5d8",
+   "bg": "#070406",
+   "ratio": 16.259703780518564,
+   "aa_text": true
+  },
+  {
+   "pole": "dark",
+   "token": "ink",
+   "fg": "#ebe5d8",
+   "bg": "#1d1622",
+   "ratio": 14.059043549752218,
+   "aa_text": true
+  }
+ ],
+ "risk_of": [
+  {
+   "in": "MATCH",
+   "out": "low"
+  },
+  {
+   "in": "verified",
+   "out": "low"
+  },
+  {
+   "in": "VERIFIED",
+   "out": "low"
+  },
+  {
+   "in": "UNVERIFIABLE",
+   "out": "moderate"
+  },
+  {
+   "in": "drift",
+   "out": "elevated"
+  },
+  {
+   "in": "DRIFT",
+   "out": "elevated"
+  },
+  {
+   "in": "refuted",
+   "out": "high"
+  },
+  {
+   "in": "FAIL",
+   "out": "high"
+  },
+  {
+   "in": " pass ",
+   "out": "low"
+  },
+  {
+   "in": "low",
+   "out": "low"
+  },
+  {
+   "in": "high",
+   "out": "high"
+  },
+  {
+   "in": "",
+   "out": "moderate"
+  },
+  {
+   "in": null,
+   "out": "moderate"
+  },
+  {
+   "in": "nonsense",
+   "out": "moderate"
+  }
+ ],
+ "hot_mark": [
+  {
+   "in": [],
+   "out": -1
+  },
+  {
+   "in": [
+    "low"
+   ],
+   "out": 0
+  },
+  {
+   "in": [
+    "low",
+    "DRIFT",
+    "moderate"
+   ],
+   "out": 1
+  },
+  {
+   "in": [
+    "high",
+    "FAIL"
+   ],
+   "out": 0
+  },
+  {
+   "in": [
+    "MATCH",
+    "UNVERIFIABLE",
+    "refuted",
+    "low"
+   ],
+   "out": 2
+  }
+ ]
+}

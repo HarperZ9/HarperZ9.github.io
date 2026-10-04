@@ -25,6 +25,14 @@ jobs:
         run: python -m pytest
       - name: Navigation and font catalog contracts
         run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs
+      # The vendored superstack contract: the copy must hold its pinned SHA-256, and it must pass
+      # the release's own vectors on this runner's Node.
+      - name: Superstack contract pin and vectors
+        if: ${{ !cancelled() }}
+        run: |
+          python tests/superstack/tools/check_vendored.py system/media-engine/contracts.mjs --expect "$(cut -d' ' -f1 system/media-engine/SUPERSTACK.sha256)"
+          python tests/superstack/tools/check_vendored.py system/media-engine/contracts.mjs --sums tests/superstack/SHA256SUMS --as superstack.mjs
+          node tests/superstack/tests/run_vectors.mjs --impl system/media-engine/contracts.mjs
       # The media engine, its plugins, and every module that now takes its seed from it.
       - name: Media engine and renderer regressions
         if: ${{ !cancelled() }}

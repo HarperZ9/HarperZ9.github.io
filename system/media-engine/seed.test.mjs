@@ -1,7 +1,7 @@
 // node --test system/media-engine/seed.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
-import { makeRng, mulberry32, fnv1a32, rngFrom } from "./seed.mjs";
+import { makeRng, mulberry32, fnv1a32, rngFrom, xmur3 } from "./seed.mjs";
 import { frameReceipt, stableStringify, verifyBytes } from "./receipt.mjs";
 
 // The Atelier's makeRng (system/atelier.js) is an IIFE-scoped classic script, so its first
@@ -29,22 +29,34 @@ test("mulberry32, fnv1a32 and rngFrom keep the streams the replaced copies drew"
   assert.deepEqual(Array.from({ length: 2 }, mulberry32(-1)), Array.from({ length: 2 }, mulberry32(0xffffffff)));
 });
 
-test("frameReceipt is canonical: key order does not change the request hash", async () => {
+test("frameReceipt is canonical: key order does not change the scene hash", async () => {
   const px = new Uint8Array([1, 2, 3, 255]);
   const r1 = await frameReceipt({ plugin: "retro", t: 1.3, params: { a: 1, b: 2 } }, px);
   const r2 = await frameReceipt({ params: { b: 2, a: 1 }, t: 1.3, plugin: "retro" }, px);
-  assert.equal(r1.requestHash, r2.requestHash);
-  assert.equal(r1.pixelHash, r2.pixelHash);
-  assert.equal(r1.hashAlgo, "sha-256");
+  assert.equal(r1.scene_sha256, r2.scene_sha256);
+  assert.equal(r1.content_sha256, r2.content_sha256);
+  assert.equal(r1.receipt_sha256, r2.receipt_sha256);
 });
 
 test("frameReceipt can fail: one changed pixel or parameter moves the hash", async () => {
   const base = await frameReceipt({ plugin: "retro", t: 1.3 }, new Uint8Array([1, 2, 3, 255]));
   const px = await frameReceipt({ plugin: "retro", t: 1.3 }, new Uint8Array([1, 2, 4, 255]));
   const rq = await frameReceipt({ plugin: "retro", t: 1.31 }, new Uint8Array([1, 2, 3, 255]));
-  assert.notEqual(base.pixelHash, px.pixelHash);
-  assert.notEqual(base.requestHash, rq.requestHash);
+  assert.notEqual(base.content_sha256, px.content_sha256);
+  assert.notEqual(base.scene_sha256, rq.scene_sha256);
   assert.equal(stableStringify({ b: 1, a: [2, { d: 3, c: 4 }] }), '{"a":[2,{"c":4,"d":3}],"b":1}');
+});
+
+test("the seed rule is the contract's: every vector seed draws its stream through this module", async () => {
+  const { readFileSync } = await import("node:fs");
+  const vec = JSON.parse(readFileSync(new URL("../../tests/superstack/vectors/seed.json", import.meta.url), "utf8"));
+  assert.ok(vec.seeds.length >= 5);
+  for (const c of vec.seeds) {
+    assert.equal(xmur3(c.seed), c.u32, c.seed);
+    const r = makeRng(c.seed);
+    assert.deepEqual(Array.from({ length: c.floats.length }, r), c.floats, c.seed);
+  }
+  assert.deepEqual(Array.from({ length: 5 }, makeRng(vec.site_make_rng.seed)), vec.site_make_rng.first_five);
 });
 
 test("verifyBytes names MATCH, DRIFT and UNVERIFIABLE", async () => {

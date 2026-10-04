@@ -29,3 +29,6 @@ media/raw-native/wasm-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text
+# The vendored superstack contract is pinned by SHA-256; CRLF would break the pin.
+system/media-engine/contracts.mjs text eol=lf
+tests/superstack/** text eol=lf

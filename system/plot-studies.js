@@ -25,6 +25,7 @@ import { jitter, multiPass, stipple, hatchFollows, dashed, spiralFill, clipLines
 import { elevationField, fieldToLuma } from "./plot-maps.js";
 import { contourFromLuma } from "./plotter.js";
 import { toneField, edgeTangentFlow, evenStreamlines } from "./plot-image.js";
+import { fnv1a32 } from "./media-engine/seed.mjs";
 
 const TAU = 6.283185307;
 const M = 0.04;   // sheet margin, shared with plot-maps' frame
@@ -439,10 +440,7 @@ export function stitch(seedStr, rng, opts = {}) {
   const n = Math.round(opts.cells || (44 + Math.floor(rng() * 40)));
   const step = (1 - 2 * M) / n;
   const bit = (kind, i) => {
-    let h = 0x811c9dc5;
-    const s = `${seedStr}|${kind}|${i}`;
-    for (let k = 0; k < s.length; k++) { h ^= s.charCodeAt(k); h = Math.imul(h, 0x01000193); }
-    return (h >>> 0) & 1;
+    return fnv1a32(`${seedStr}|${kind}|${i}`) & 1;
   };
   const lines = [];
   // Vertical family: chain consecutive dashes in a column into one stroke.
