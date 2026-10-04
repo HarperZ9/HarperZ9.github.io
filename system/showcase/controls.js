@@ -12,6 +12,8 @@
 //   V           re-verify (re-check the receipt)
 //   E           export the world + report JSON
 //   M           reserved for sound; NOT shipped in v1 (documented, no-op here)
+import { SHOWCASE_CONF } from "./report.js?v=20260701a";
+
 const $ = (id) => (typeof document !== "undefined" ? document.getElementById(id) : null);
 const SYSTEMS_ORDER = ["sho", "pendulum", "kepler", "oscillator2d"];
 
@@ -44,6 +46,20 @@ function inShowcaseScope(target) {
   return (block.contains(target)) || (stage && stage.contains(target)) || target === document.body;
 }
 
+// The candidate terms are written in one system's variables (Kepler's "x*vy, y*vx" names vx and
+// vy), so a system change resets them to the new system's own default basis. Before 4 October
+// 2026 the Kepler terms stayed in the field, and SHO and the pendulum read "UNVERIFIABLE: unknown
+// identifier" for a verifier that was never given a fair question.
+export function defaultTermsFor(system) {
+  const conf = SHOWCASE_CONF[system];
+  return conf ? conf.basis.join(", ") : "";
+}
+function syncTermsTo(system) {
+  const el = $("show-terms");
+  const terms = defaultTermsFor(system);
+  if (el && terms) el.value = terms;
+}
+
 // Cycle the active system chip forward. Returns the new system name (callback re-reads params).
 function cycleSystem() {
   const host = $("show-system"); if (!host) return null;
@@ -55,6 +71,7 @@ function cycleSystem() {
   const idx = order.indexOf(active);
   const next = order[(idx + 1) % order.length] || order[0];
   for (const c of chips) c.classList.toggle("active", c.dataset.showSystem === next);
+  syncTermsTo(next);
   return next;
 }
 
@@ -64,13 +81,19 @@ function cycleSystem() {
 export function wireShowcaseControls(cb = {}) {
   if (typeof document === "undefined") return () => {};
   setEnabled(true);
-  const rebuild = () => { try { cb.rebuild && cb.rebuild(); } catch (_) {} };
+  // Every rebuild announces itself, so a host (the Studio's shared undo) can record the scene's
+  // parameters as one step.
+  const rebuild = () => {
+    try { cb.rebuild && cb.rebuild(); } catch (_) {}
+    try { document.dispatchEvent(new CustomEvent("showcase:params")); } catch (_) {}
+  };
 
   const onSystemClick = (e) => {
     const chip = e.target.closest && e.target.closest(".chip[data-show-system]");
     if (!chip) return;
     const host = $("show-system");
     for (const c of host.querySelectorAll(".chip")) c.classList.toggle("active", c === chip);
+    syncTermsTo(chip.dataset.showSystem);
     rebuild();
   };
   const onParamChange = () => rebuild();

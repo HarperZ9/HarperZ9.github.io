@@ -629,7 +629,9 @@ RELEASE_PATHS = (
 # a reading-page rule had hidden all 43 Gallery plates, Plate 14 included. The release is rehashed.
 # October 3, 2026: the Atelier draws through the media engine's "atelier" plugin, and studio.html
 # loads atelier.js at a new stamp; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "25ebd286d60390b3476dfda28af529b38a8f5441a9ac0e9b3c257b49d74486b2"
+# October 4, 2026: the Studio shell (source switch, inspector header, action bar, shared undo)
+# changes studio.html; the release is rehashed. Merging that change is the review.
+REVIEWED_RELEASE_SHA256 = "527bac3b6df4eab0378475ecca40d018fd5d23e355b46ed97465ea314c6959c6"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

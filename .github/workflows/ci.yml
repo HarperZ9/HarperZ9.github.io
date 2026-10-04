@@ -51,6 +51,7 @@ jobs:
           system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/media-engine/voxels.test.mjs system/media-engine/fractal.test.mjs system/media-engine/showcase.test.mjs system/poster.test.mjs
           system/type-forge/forge.test.mjs system/typeface.test.mjs
           system/neural.test.mjs system/neural-kernels.test.mjs system/studio-neural.test.mjs
+          system/studio-shell.test.mjs
       # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
       # audio modules' own tests, which did not run in CI before.
       - name: Sound layer and audio regressions
@@ -119,6 +120,19 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8806 BROWSER_CHANNEL=chrome node tests/plate-baselines.cjs 1 2
+      # The Studio shell (4 October 2026): one source switch, the action bar on screen at desktop and
+      # phone widths, each source's own frame on entry, work kept across a switch, exact pixels after
+      # Undo and Redo, and every Showcase system re-checking to MATCH with its own terms.
+      - name: Studio shell contract
+        if: ${{ !cancelled() }}
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python -m http.server 8807 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-shell.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       - name: Live explainers in the browser
