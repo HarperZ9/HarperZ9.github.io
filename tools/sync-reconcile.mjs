@@ -7,7 +7,12 @@ import { join, relative, extname } from "node:path";
 
 const RECONCILE_ROOT = "c:/dev/public/reconcile";
 const RECONCILE_SRC = join(RECONCILE_ROOT, "src");
-const SITE_DST = "c:/dev/public/portfolio-site/system/lib/reconcile";
+// The site checkout to write into is the first argument; there is no default, so the script never
+// writes into a checkout nobody named.
+//   node tools/sync-reconcile.mjs <site-checkout>
+const SITE_ROOT = process.argv[2];
+if (!SITE_ROOT) { console.error("usage: node tools/sync-reconcile.mjs <site-checkout>"); process.exit(2); }
+const SITE_DST = join(SITE_ROOT, "system/lib/reconcile");
 
 function syncDir(srcDir, dstDir) {
   let entries;
@@ -38,8 +43,8 @@ function syncDir(srcDir, dstDir) {
 console.log("[sync] reconcile engine");
 const n = syncDir(RECONCILE_SRC, SITE_DST);
 
-// The vendored copy ships with its license (reconcile is AGPL-3.0-or-later; the site
-// repo is public on GitHub Pages, so source availability holds).
+// The vendored copy ships with its licence (FSL-1.1-MIT from reconcile v0.2.0). Sync from a
+// tagged checkout, and update LICENSE-NOTE.md with the version.
 mkdirSync(SITE_DST, { recursive: true });
 copyFileSync(join(RECONCILE_ROOT, "LICENSE"), join(SITE_DST, "LICENSE"));
 console.log("  copied LICENSE -> system/lib/reconcile/LICENSE");

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: FSL-1.1-MIT
 // Run every vector in vectors/ against superstack.mjs.
 // Usage: node tests/run_vectors.mjs [--impl PATH] [--summary OUT.json]
 import { readFileSync, writeFileSync } from 'node:fs';

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: FSL-1.1-MIT
 """Check a vendored superstack file against its pinned SHA-256.
 
   python check_vendored.py path/to/contracts.mjs --expect <sha256>

@@ -1,6 +1,6 @@
 // system/media-engine/seed.mjs
 // The one seeded-randomness layer for every visual surface. Its only import is contracts.mjs, the
-// vendored superstack v0.1.0 file (pinned by SHA-256 in SUPERSTACK.sha256), so a plotter, a glitch
+// vendored superstack v0.2.0 file (pinned by SHA-256 in SUPERSTACK.sha256), so a plotter, a glitch
 // op or a worker can load it without pulling the receipt or WebGL code along.
 //
 // The seed rule is the contract's, `xmur3-mulberry32/1`: xmur3 over UTF-16 code units, then
