@@ -24,9 +24,10 @@ SITE = "https://harperz9.github.io/"
 OUT = ROOT / "img" / "og" / "p"
 SKIP = re.compile(r"elder|enb|skyrim", re.I)
 # Held pages: the incident briefing is pinned by its own build receipt (a history file), and the
-# career pages by the career release manifest (career/career-artifacts.json). Their cards are
+# career pages by the career release manifest (career/career-artifacts.json), and the open letter
+# by its build record (writing/checking-the-machines/build.json). Their cards are
 # rendered; their heads change with the next build of that briefing or the next career release.
-HELD = re.compile(r"^(briefings/2026-08-26-openai-hugging-face-incident/|(hire|resume|portfolio|cover-letter|cv|dossier)\.html$)")
+HELD = re.compile(r"^(briefings/2026-08-26-openai-hugging-face-incident/|(hire|resume|portfolio|cover-letter|cv|dossier|checking-the-machines)\.html$)")
 SUFFIX = re.compile(r"\s*(?:·|&middot;|\||-|–)\s*(?:Zain Dana Harper|Spoken Edition)\s*$")
 TOOLS = ("crucible", "forum", "gather", "index", "telos", "raw-native")
 

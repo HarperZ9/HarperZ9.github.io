@@ -19,8 +19,9 @@ PROTECTED = re.compile(r"elder|enb|skyrim", re.I)
 # the section card until the next local render (tools/repo_art/site_cards.py FALLBACK).
 BORROWS = re.compile(r"^frontier-safety/archive/")
 # Held: the incident briefing is pinned by its own build receipt (a history file) and the
-# career pages by the career release manifest. Their cards already exist in img/og/p.
-HELD = re.compile(r"^(briefings/2026-08-26-openai-hugging-face-incident/|(hire|resume|portfolio|cover-letter|cv|dossier)\.html$)")
+# career pages by the career release manifest, and the open letter by its build record
+# (writing/checking-the-machines/build.json). Their cards already exist in img/og/p.
+HELD = re.compile(r"^(briefings/2026-08-26-openai-hugging-face-incident/|(hire|resume|portfolio|cover-letter|cv|dossier|checking-the-machines)\.html$)")
 
 
 def sitemap_pages() -> list[str]:
