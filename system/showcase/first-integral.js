@@ -18,6 +18,9 @@ const reducedMotion = () =>
   typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let canvasEl = null, scene = null, raf = 0, unwireControls = null;
+// A host may hand in its own drawing of the scene (the Studio's media engine "showcase" plugin):
+// { scene, draw(view), dispose() }. Without one, the scene is made and drawn here.
+let plate = null;
 let active = false, settled = false, capture = false, paused = false;
 let state = STATES[0];
 let built = null;                 // { report, states, fit, invSeries, refusalSeries, sha } after buildReport
@@ -96,7 +99,7 @@ function drawFrame(revealed) {
     delete view.seedLine;
     if (view.witness) view.witness = { ...view.witness, rows: null };
   }
-  scene.draw(view);
+  if (plate) plate.draw(view); else scene.draw(view);
 }
 function redrawForReceipt() {
   if (!active || !scene || !built) return;
@@ -212,12 +215,14 @@ export function resizeShowcase() {
   if (built) drawFrame(built.states.length - 1);
 }
 
-// Lifecycle (called by studio.js setSource).
-export function startShowcase(canvas) {
+// Lifecycle (called by studio.js setSource). opts.mountScene(canvas), when given, returns the
+// host's { scene, draw(view), dispose() } for the canvas.
+export function startShowcase(canvas, opts = {}) {
   canvasEl = canvas || $("studio-canvas");
   if (!canvasEl) return;
   active = true; settled = false; state = STATES[0]; built = null;
-  scene = makeScene(canvasEl);
+  plate = typeof opts.mountScene === "function" ? opts.mountScene(canvasEl) : null;
+  scene = plate ? plate.scene : makeScene(canvasEl);
   if (typeof window !== "undefined") window.__studioShowcaseResize = resizeShowcase;
   // Hero capture mode from the head-snapshot (the Atelier boot has since rewritten the URL).
   const hero = (typeof window !== "undefined" && window.__studioBootHero) || bootParams().get("hero") === "1";
@@ -277,6 +282,7 @@ export function stopShowcase() {
   if (raf) { cancelAnimationFrame(raf); raf = 0; }
   if (unwireControls) { try { unwireControls(); } catch (_) {} unwireControls = null; }
   if (capture && typeof document !== "undefined") document.body.classList.remove("showcase-hero");
+  if (plate) { try { plate.dispose(); } catch (e) { console.error("[showcase] scene dispose failed:", e); } plate = null; }
   capture = false; scene = null; built = null; canvasEl = null;
 }
 
