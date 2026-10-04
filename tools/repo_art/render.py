@@ -57,16 +57,16 @@ def jobs(repos: dict, names: list[str], cards: bool):
             scene["fonts"] = fonts
             yield f"{n}/{surface}-{theme}", svg, scene, [None], False
         for tier, sizes in (("micro", [16, 32]), ("full", [64, 512])):
-            svg = mark_svg(n, cfg["maturity"], tier, "dark", True)
+            svg = mark_svg(n, cfg["maturity"], tier, "dark", True, cfg.get("archetype"))
             scene = {"kind": "harperz9.mark/1", "repo": n, "tier": tier, "tile": True, "seed": n,
                      "maturity": cfg["maturity"], "fonts": fonts}
             yield f"{n}/mark-{tier}-tile", svg, scene, sizes, False
         for theme in ("light", "dark"):
-            svg = mark_svg(n, cfg["maturity"], "full", theme, False)
+            svg = mark_svg(n, cfg["maturity"], "full", theme, False, cfg.get("archetype"))
             yield f"{n}/mark-full-{theme}", svg, {"kind": "harperz9.mark/1", "repo": n, "theme": theme,
                                                  "seed": n, "fonts": fonts}, [512], True
             for stacked in (False, True):
-                svg = lockup_svg(n, cfg["maturity"], theme, stacked)
+                svg = lockup_svg(n, cfg["maturity"], theme, stacked, cfg.get("archetype"))
                 kind = "stacked" if stacked else "horizontal"
                 yield f"{n}/lockup-{kind}-{theme}", svg, {"kind": "harperz9.lockup/1", "repo": n, "theme": theme,
                                                          "layout": kind, "seed": n, "fonts": fonts}, [None], True
@@ -138,7 +138,8 @@ def render(out: Path, names: list[str], cards: bool) -> dict:
                 book["receipts"][Path(png_name).name] = receipt(scene, png, outs, backend)
         browser.close()
     for group, book in books.items():
-        (out / group / "receipts.json").write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8")
+        (out / group / "receipts.json").write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8",
+                                                   newline="\n")
     return books
 
 
@@ -163,7 +164,7 @@ def render_cards(cards: list, out: Path) -> None:
             outs = {svg_path.name: sha(svg.encode("utf-8")), name: sha(jpg)}
             book["receipts"][name] = receipt(scene, jpg, outs, backend)
         browser.close()
-    (out / "receipts.json").write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8")
+    (out / "receipts.json").write_text(json.dumps(book, indent=1, sort_keys=True) + "\n", "utf-8", newline="\n")
 
 
 def tree_hashes(root: Path) -> dict:

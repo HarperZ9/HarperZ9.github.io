@@ -11,7 +11,7 @@ import base64
 import hashlib
 from pathlib import Path
 
-from .compose import FIG, wrap
+from .compose import figure_for, wrap
 from .ctx import Ctx
 from .svg import PAL, core_defs, num, svg_doc, texture, texture_defs
 from .type import text_path
@@ -50,7 +50,7 @@ def card_svg(card: dict, repos: dict) -> tuple[str, dict]:
     else:
         cfg = repos[card["tool"]]
         c = Ctx(uid, card["tool"], "figure", W * 0.74, H * 0.5, H * 0.36, "dark", cfg["maturity"], min_label=22.0)
-        body.append(FIG[card["tool"]](c))
+        body.append(figure_for(card["tool"], cfg)(c))
         scene["hot_mark"] = c.hot
     defs += ('<linearGradient id="%s-veil" x1="0" y1="0" x2="1" y2="0">'
              '<stop offset="0.42" stop-color="%s" stop-opacity="0.96"/>'

@@ -15,8 +15,11 @@ import argparse
 import json
 import re
 import shutil
+import subprocess
 from pathlib import Path
 from urllib.parse import quote
+
+from tools.repo_art.compose import resolve
 
 HERE = Path(__file__).resolve().parent
 INK, INK_DARK = "e6e1d6", "1a1712"
@@ -33,42 +36,78 @@ def shield(label: str, value: str) -> str:
 
 def badges(name: str, b: dict, release: str) -> str:
     """The fixed set, in order: package version, CI, licence, runtime floor."""
+    out = []
     target = {"pypi": f"https://pypi.org/project/{b['package']}/",
               "npm": f"https://www.npmjs.com/package/{b['package']}"}.get(
         b["registry"], f"https://github.com/HarperZ9/{name}/releases/latest")
-    ver = f"[![version: {release}]({shield('version', release)})]({target})"
-    ci = (f"[![CI](https://github.com/HarperZ9/{name}/actions/workflows/ci.yml/badge.svg)]"
-          f"(https://github.com/HarperZ9/{name}/actions/workflows/ci.yml)")
-    lic = f"[![license]({shield('license', b['license'])})](LICENSE)"
-    run_label, _, run_value = b["runtime"].partition(" ")
-    rt = f"![{b['runtime']}]({shield(run_label, run_value or run_label)})" if run_value else \
-        f"![{b['runtime']}]({shield('language', b['runtime'])})"
-    return "\n".join([ver, ci, lic, rt])
+    if release:
+        out.append(f"[![version: {release}]({shield('version', release)})]({target})")
+    if b.get("ci", True):
+        out.append(f"[![CI](https://github.com/HarperZ9/{name}/actions/workflows/ci.yml/badge.svg)]"
+                   f"(https://github.com/HarperZ9/{name}/actions/workflows/ci.yml)")
+    if b.get("license"):
+        lic_url = f"https://github.com/HarperZ9/{name}/blob/{b.get('branch', 'main')}/{b.get('license_file', 'LICENSE')}"
+        out.append(f"[![license]({shield('license', b['license'])})]({lic_url})")
+    rt = b.get("runtime", "")
+    first, _, rest = rt.partition(" ")
+    if rt and first.lower() in ("python", "node", "rust") and rest and "," not in rt:
+        out.append(f"![{rt}]({shield(first.lower(), rest)})")
+    elif rt and "," not in rt and " " not in rt:
+        out.append(f"![{rt}]({shield('language', rt)})")
+    return "\n".join(out)
 
 
 def header(name: str, cfg: dict) -> str:
+    # Absolute raw URLs on main, so the hero also loads where the README is mirrored (PyPI, npm).
+    base = (f"https://raw.githubusercontent.com/HarperZ9/{name}/{cfg['badges'].get('branch', 'main')}/"
+            if cfg.get("absolute_art") else "")
     alt = f'{cfg["wordmark"]}: {cfg["tagline"]} {cfg["figure_alt"]}'.replace('"', "&quot;")
     return "\n".join([
         "<picture>",
-        '  <source media="(prefers-color-scheme: dark)" srcset="docs/art/hero-dark.svg">',
-        f'  <img src="docs/art/hero-light.svg" alt="{alt}" width="100%">',
+        f'  <source media="(prefers-color-scheme: dark)" srcset="{base}docs/art/hero-dark.svg">',
+        f'  <img src="{base}docs/art/hero-light.svg" alt="{alt}" width="100%">',
         "</picture>",
         "",
         f"# {cfg['wordmark']}",
         "",
         cfg["tagline"],
         "",
-        "```bash",
-        cfg["command"],
-        "```",
-        "",
-        badges(name, cfg["badges"], cfg["release"]),
+    ] + (["```", cfg["command"], "```", ""] if cfg["command"] else []) + [
+        "" if cfg.get("no_badges") else badges(name, cfg["badges"], cfg["release"]),
         "",
     ])
 
 
+# Previous heroes in the README head: a centred paragraph holding an image (one or several lines),
+# a markdown image, or a project-mark comment. Badges are matched separately.
+OLD_HERO_BLOCK = re.compile(r'<p align="center">\s*<img [^>]*(?:banner|hero|header)[^>]*>\s*</p>\s*\n', re.I)
+OLD_HERO_MD = re.compile(r"^!\[[^\]]*\]\([^)]*(?:banner|hero|header)[^)]*\)\s*$", re.I | re.M)
+OLD_MARK_NOTE = re.compile(r"^<!-- Project mark: [^>]*-->\s*$", re.M)
+
+
+def strip_old_hero(text: str) -> str:
+    head, sep, rest = text.partition("\n## ")
+    head = OLD_HERO_BLOCK.sub("", head)
+    head = OLD_HERO_MD.sub("", head)
+    head = OLD_MARK_NOTE.sub("", head)
+    lines = head.split("\n")
+    for i, line in enumerate(lines[:15]):  # the previous one-line tagline, now in the template
+        alone = (i == 0 or not lines[i - 1].startswith(">")) and (i + 1 >= len(lines) or not lines[i + 1].startswith(">"))
+        if line.startswith("> ") and not line.startswith("> [!") and alone:
+            del lines[i]
+            break
+    fence = False
+    for i, line in enumerate(lines):  # the previous H1: the template writes the one H1
+        if line.lstrip().startswith("```"):
+            fence = not fence
+        elif line.startswith("# ") and not fence:
+            del lines[i]
+            break
+    return "\n".join(lines) + sep + rest
+
+
 def rewrite_readme(text: str, name: str, cfg: dict) -> str:
-    lines = text.split("\n")
+    lines = strip_old_hero(text).lstrip("\n").split("\n")
     head_end = next((i for i, l in enumerate(lines) if l.startswith("## ")), min(len(lines), 40))
     keep = []
     for i, line in enumerate(lines):
@@ -103,6 +142,9 @@ def copy_assets(render: Path, repo: Path, name: str) -> list[str]:
     for a, b in moves.items():
         (repo / b).parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(src / a, repo / b)
+    banner = repo / ".github" / "assets" / "banner.png"
+    if banner.exists():  # the social-preview source keeps its path and takes the new image
+        shutil.copyfile(src / "social-dark.png", banner)
     retired = []
     for old in (f"docs/brand/{name}-hero.png", f"docs/brand/{name}-hero.svg", f"docs/brand/{name}-mark.svg"):
         if (repo / old).exists():
@@ -137,7 +179,16 @@ def main(argv=None) -> int:
     ap.add_argument("--repo", required=True, type=Path)
     ap.add_argument("--name", required=True)
     a = ap.parse_args(argv)
-    cfg = json.loads((HERE / "repos.json").read_text("utf-8"))["repos"][a.name]
+    cfg = resolve(a.name, json.loads((HERE / "repos.json").read_text("utf-8"))["repos"][a.name])
+    lic = next((f for f in ("LICENSE", "LICENSE.md", "LICENSE.txt") if (a.repo / f).exists()), "")
+    cfg["badges"] = {**cfg["badges"], "ci": (a.repo / ".github" / "workflows" / "ci.yml").exists(),
+                     "license_file": lic or "LICENSE"}
+    if not lic:
+        cfg["badges"]["license"] = ""
+    branch = subprocess.run(["git", "symbolic-ref", "--short", "refs/remotes/origin/HEAD"], cwd=a.repo,
+                            capture_output=True, text=True).stdout.strip().removeprefix("origin/") or "main"
+    cfg["badges"]["branch"] = branch
+    cfg["absolute_art"] = "archetype" in cfg  # every roll-out repo; the six pilots keep their merged form
     retired = copy_assets(a.render, a.repo, a.name)
     readme = a.repo / "README.md"
     readme.write_text(rewrite_readme(readme.read_text("utf-8"), a.name, cfg), "utf-8", newline="\n")

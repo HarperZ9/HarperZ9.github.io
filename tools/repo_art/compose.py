@@ -10,11 +10,34 @@ from __future__ import annotations
 
 from .ctx import Ctx
 from .figures_a import crucible, gather, index
+from .families import FAMILIES, alt_for
 from .figures_b import FIGURES
 from .svg import PAL, core_defs, num, svg_doc, texture, texture_defs
 from .type import measure, text_path  # noqa: F401
 
 FIG = {"crucible": crucible, "gather": gather, "index": index, **FIGURES}
+
+
+def resolve(name: str, cfg: dict) -> dict:
+    """Fill a family repository's defaults: legend from its words, alt text, and a seeded layout."""
+    if name in FIG or "archetype" not in cfg:
+        return cfg
+    out = dict(cfg)
+    out.setdefault("legend", "  /  ".join(cfg["words"]))
+    out.setdefault("figure_alt", alt_for(cfg))
+    pick = ss.xmur3(name + "/layout")
+    left = pick % 2 == 1
+    out.setdefault("layout", "art-left" if left else "art-right")
+    out.setdefault("text", ("top", "center", "bottom")[(pick >> 3) % 3])
+    out.setdefault("art", {"x": 0.25 if left else 0.73, "y": 0.46, "r": 0.33})
+    return out
+
+
+def figure_for(name: str, cfg: dict):
+    if name in FIG:
+        return FIG[name]
+    family = FAMILIES[cfg["archetype"]]
+    return lambda c: family(c, cfg)
 from tools import superstack as ss  # noqa: E402
 
 # A README shows the 1280 hero at about 830 px, so 23 px in the file reads as 15 px on screen.
@@ -51,24 +74,40 @@ def text_block(cfg: dict, s: dict, p: dict, x0: float, width: float, anchor: str
     """Title, tagline, command and metadata on the calm side; anchor is top, center or bottom."""
     tag_lines = wrap(cfg["tagline"], "grotesk-regular", s["tag"], width)
     gap_t, lead = s["title"] * 0.42, s["tag"] * 1.34
-    block = s["title"] * 0.74 + gap_t + lead * len(tag_lines) + s["cmd"] * 2.7
+    command = cfg.get("hero_command", cfg["command"])
+    block = s["title"] * 0.74 + gap_t + lead * len(tag_lines) + (s["cmd"] * 2.7 if command else 0)
     top = {"top": s["m"] * 0.9, "center": (s["h"] - block) / 2 - s["meta"],
            "bottom": s["h"] - s["m"] * 1.25 - s["meta"] * 2 - block}[anchor]
     y = top + s["title"] * 0.74
-    out = [text_path(cfg["wordmark"], "grotesk-semibold", s["title"], x0, y, tracking=-0.025, fill=p["ink"])]
+    title, lines = s["title"], [cfg["wordmark"]]
+    while title > s["title"] * 0.62 and measure(cfg["wordmark"], "grotesk-semibold", title, -0.025) > width:
+        title -= 2
+    if measure(cfg["wordmark"], "grotesk-semibold", title, -0.025) > width and "-" in cfg["wordmark"]:
+        parts = cfg["wordmark"].split("-")
+        cut = min(range(1, len(parts)), key=lambda i: abs(len("-".join(parts[:i])) - len("-".join(parts[i:]))))
+        lines = ["-".join(parts[:cut]) + "-", "-".join(parts[cut:])]
+        title = s["title"] * 0.7
+        while title > s["title"] * 0.5 and max(measure(t, "grotesk-semibold", title, -0.025) for t in lines) > width:
+            title -= 2
+        y -= title * 0.5
+    out = []
+    for i, t in enumerate(lines):
+        out.append(text_path(t, "grotesk-semibold", title, x0, y + i * title * 1.0, tracking=-0.025, fill=p["ink"]))
+    y += (len(lines) - 1) * title * 1.0
     y += gap_t
     for ln in tag_lines:
         y += lead
         out.append(text_path(ln, "grotesk-regular", s["tag"], x0, y, fill=p["soft"]))
-    y += s["cmd"] * 2.7
-    prompt_w = measure("$ ", "mono-regular", s["cmd"])
-    out.append(text_path("$", "mono-regular", s["cmd"], x0, y, fill=p["quiet"]))
-    out.append(text_path(cfg["command"], "mono-medium", s["cmd"], x0 + prompt_w, y, fill=p["ink"]))
+    if command:
+        y += s["cmd"] * 2.7
+        prompt_w = measure("$ ", "mono-regular", s["cmd"])
+        out.append(text_path("$", "mono-regular", s["cmd"], x0, y, fill=p["quiet"]))
+        out.append(text_path(command, "mono-medium", s["cmd"], x0 + prompt_w, y, fill=p["ink"]))
     meta, msize = meta_row(cfg), s["meta"]
     while msize > 11 and x0 + measure(meta, "mono-regular", msize, 0.14) > s["w"] - s["m"] * 0.6:
         msize -= 0.5  # the metadata row shrinks before it ever leaves the canvas
     out.append(text_path(meta, "mono-regular", msize, x0, s["h"] - s["m"] * 0.62, tracking=0.14, fill=p["quiet"]))
-    return "".join(out), max(measure(cfg["wordmark"], "grotesk-semibold", s["title"], -0.025),
+    return "".join(out), max(max(measure(t, "grotesk-semibold", title, -0.025) for t in lines),
                               max(measure(t, "grotesk-regular", s["tag"]) for t in tag_lines))
 
 
@@ -85,6 +124,7 @@ def veil(uid: str, p: dict, w: float, h: float, x_solid: float, x_clear: float) 
 
 def compose(name: str, cfg: dict, surface: str, theme: str) -> tuple[str, dict]:
     """Return (svg, scene). The scene holds every input that decides the bytes."""
+    cfg = resolve(name, cfg)
     s, p = SURFACES[surface], PAL[theme]
     uid = f"ra-{name}-{surface[0]}{theme[0]}"
     w, h = s["w"], s["h"]
@@ -92,7 +132,7 @@ def compose(name: str, cfg: dict, surface: str, theme: str) -> tuple[str, dict]:
     left = cfg.get("layout", "art-right") == "art-left"
     c = Ctx(uid, name, "figure", w * art["x"], h * art["y"], h * art["r"], theme, cfg["maturity"],
             min_label=MIN_LABEL[surface])
-    figure = FIG[name](c)
+    figure = figure_for(name, cfg)(c)
     x0 = w * 0.53 if left else s["m"]
     width = w * 0.42 if left else w * 0.44
     text, used = text_block(cfg, s, p, x0, width, cfg.get("text", "center"))
