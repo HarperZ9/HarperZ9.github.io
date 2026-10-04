@@ -17,7 +17,7 @@ import "./media-engine/raw-register.mjs";
 
 export const ENGINE_SURFACES = Object.freeze({
   retro: { label: "Retro Engine", page: "retro.html", plugin: "retro-2d", animated: true, acceptsInput: true,
-    intro: "The Retro Engine's default shader through pixelate, palette, dither and a CRT tube. The tube runs on your GPU; the full engine, with uploads, drawing, audio and 254 presets, is on its own page." },
+    intro: "The Retro Engine's default shader through pixelate, palette, dither and a CRT tube. The tube runs on your GPU." },
   gallery: { label: "Gallery", page: "gallery.html", plugin: "plate",
     intro: "One plate from the Gallery's print desk, drawn once from its seed. The same seed always draws the same plate." },
   loom: { label: "Loom", page: "loom.html", plugin: "loom", acceptsInput: true,
