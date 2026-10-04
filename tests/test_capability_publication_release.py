@@ -639,7 +639,10 @@ RELEASE_PATHS = (
 # stamps; the release is rehashed.
 # October 4, 2026, later: studio.html restores Sketch's stroke Undo and loads the Studio at
 # the restore stamp; the release is rehashed.
-REVIEWED_RELEASE_SHA256 = "efd017e303e12ed4da2bfe70fb57c6611b569df2e91b8a7bf447e1c80d7cb58a"
+# October 4, 2026, later: the full Retro Engine joins the Studio; studio.html gains the Retro
+# source's panel and loads the Studio at the retro-hub stamp, and retro.html loads
+# retro-studio.js at that stamp. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "2908e939cdb0eab7597339372e113d1d577088f08ebe1d7c8b6846861d91f568"
 
 BRIEFING_FIGURES = (
     "claim-provenance-panel",

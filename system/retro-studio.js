@@ -1681,6 +1681,8 @@ function boot() {
 
   // Keyboard: quick moves for people working the surface, never while typing.
   document.addEventListener("keydown", (e) => {
+    // Inside the Studio the keys belong to the engine only while Retro is the source on stage.
+    if (window.__studioActiveSource && window.__studioActiveSource !== "retro") return;
     const t = e.target, tag = t && t.tagName;
     const typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable);
     // Undo works even with a panel button focused; only real text entry
@@ -1957,6 +1959,16 @@ function boot() {
   }
   try { sessionSnapshot("the start"); } catch (_) {}
   if (new URLSearchParams(location.search).get("import") === "plate") bootImportedImage();
+
+  // The Studio's hooks (studio-retro.js): the Studio is the hub for this engine, and parks it while
+  // another source owns the stage. pause() stops the loop; resume() draws again; importHandoff()
+  // takes a frame handed over in this page, as retro.html takes one on arrival.
+  window.__retroStudio = {
+    pause() { stopLoop(); },
+    resume() { sync(); },
+    redraw() { if (!animRaf) retroPass(0); },
+    importHandoff: bootImportedImage,
+  };
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

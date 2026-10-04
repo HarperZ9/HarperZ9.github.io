@@ -497,7 +497,8 @@ const SOURCES = {
   voxels:    { block: "src-voxels",    mode: "generate" },
   sketch:    { block: "src-sketch",    mode: "generate" },
   // Media engine surfaces (studio-engine.js): every media page on the site, entered from here.
-  retro:     { block: "src-engine",    mode: "generate", engine: true },
+  // The full Retro Engine, retro.html's own controls and controller (studio-retro.js).
+  retro:     { block: "src-retro",     mode: "generate" },
   gallery:   { block: "src-engine",    mode: "generate", engine: true },
   loom:      { block: "src-engine",    mode: "generate", engine: true },
   splats:    { block: "src-engine",    mode: "generate", engine: true },
@@ -506,6 +507,30 @@ const SOURCES = {
   raw:       { block: "src-engine",    mode: "generate", engine: true },
   type:      { block: "src-engine",    mode: "generate", engine: true },
 };
+
+// The full Retro Engine, on first entry (studio-retro.js reads retro.html's own markup).
+const loadRetroHub = lazyLoader(() => import("./studio-retro.js?v=20261004-retro-hub"));
+let _retroHub = null;
+async function enterRetro(epoch) {
+  try {
+    _retroHub = await loadRetroHub();
+    if (epoch !== _sourceEpoch) return;
+    await _retroHub.enterRetroHub({ mount: $("retro-mount"), stage: $("viewport-stage") });
+    if (epoch !== _sourceEpoch) { _retroHub.leaveRetroHub(); return; }
+    // A frame another surface handed over (Send to Retro) becomes the engine's upload source.
+    const flows = await import("./studio-engine-flows.js");
+    const h = flows.takeHandoff();
+    if (h && window.__retroStudio) {
+      try { sessionStorage.setItem("re.retro.handoff", h.canvas.toDataURL("image/png")); } catch (_) {}
+      window.__retroStudio.importHandoff();
+    }
+    markStagePainted();
+    startMeterLoop();
+  } catch (err) {
+    console.error("[studio] the Retro Engine failed to load:", err);
+    say("model", "The Retro Engine failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
 // The engine surfaces load on first entry, like the other heavy sources.
 let _engineSurface = null;
@@ -554,6 +579,7 @@ function setSource(next) {
   // Leaving the current source: stop anything it had running. Guard the calls, since some are defined
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
+    if (activeSource === "retro" && _retroHub) _retroHub.leaveRetroHub();   // park the engine, give the canvas back
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
     stopWatch();        // release any screen/camera capture
@@ -601,6 +627,7 @@ function setSource(next) {
   if (_shell) _shell.sourceChanged(next);
   if (_readings) _readings.sourceChanged();
   if (next === "poster") enterPosterWorkshop(epoch);
+  if (next === "retro") enterRetro(epoch);
   if (SOURCES[next].engine) {
     loadEngineSurface().then((m) => {
       if (epoch !== _sourceEpoch) return;
@@ -4756,7 +4783,7 @@ function liveAfterMeasure(ts, phash) {
     if (++staticTicks >= STATIC_STOP) {
       // Showcase graph is lazy: before it loads (start still in flight) treat the scene as NOT
       // settled, i.e. animated, matching studio-loop's no-state behavior for the showcase source.
-      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic, engineStatic: _engineSurface ? _engineSurface.engineSurfaceStatic() : true });
+      const animated = sourceIsAnimated(activeSource, { canvasIsGL, byoPlaying: !!(byoVideo && !byoVideo.paused), showcaseSettled: _showcase ? _showcase.showcaseSettled() : false, neuralStatic: _neuralStatic, spatialStatic: _spatialStatic, engineStatic: activeSource === "retro" ? !!(window.__mediaEngine && window.__mediaEngine.reduced) : (_engineSurface ? _engineSurface.engineSurfaceStatic() : true) });
       if (shouldHaltOnStatic(true, animated)) { stopMeterLoop(); return; }
       staticTicks = 0;   // animated: do not halt, but reset so we re-arm the window cleanly
     }
@@ -5501,6 +5528,10 @@ function resizeActiveSurface() {
       // a layout shift during boot (a late font) left ?source=sketch on an empty canvas. drawSketch
       // re-fits the backing and draws the sheet again.
       drawSketch(false);
+      break;
+    case "retro":
+      // The engine sizes its own output canvas; a resize only asks it for a fresh frame.
+      if (window.__retroStudio) window.__retroStudio.redraw();
       break;
     case "showcase":
       // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),
@@ -6469,8 +6500,14 @@ if (tierBtn) {
     if (!cv) return;
     try {
       const wb = await import("./workbench.js?v=20260812-cohesion");
-      if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" })) {
+      // The Retro Engine lives in the Studio now: hand the frame over in this page and switch.
+      const here = target === "retro";
+      if (!wb.sendPiece(target, cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" }, here ? false : undefined)) {
         say("model", "That frame is too large to hand over.");
+      } else if (here) {
+        setSource("retro");
+        const take = () => { if (window.__retroStudio && activeSource === "retro") window.__retroStudio.importHandoff(); else setTimeout(take, 200); };
+        take();
       }
     } catch (_) { say("model", "That frame is too large to hand over."); }
   };

@@ -69,6 +69,9 @@ STUDIO_ENTRY_REVISION = "20261004-studio-entry"
 # 4 October 2026, later: every rail control back in its place, Sketch's stroke Undo restored;
 # studio.js and studio-shell.css take a new stamp.
 STUDIO_RESTORE_REVISION = "20261004-studio-restore"
+# 4 October 2026, later: the full Retro Engine joins the Studio as its Retro source; studio.js,
+# studio-shell.css and retro-studio.js (on retro.html) take a new stamp.
+STUDIO_RETRO_HUB_REVISION = "20261004-retro-hub"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -117,8 +120,8 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": STUDIO_RESTORE_REVISION,
-    "system/studio-shell.css": STUDIO_RESTORE_REVISION,
+    "system/studio.js": STUDIO_RETRO_HUB_REVISION,
+    "system/studio-shell.css": STUDIO_RETRO_HUB_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
@@ -128,7 +131,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/studio-modes.css": MEDIA_ENGINE_REVISION,
     "system/media-engine/risk.css": MEDIA_ENGINE_REVISION,
     "system/loom-studio.js": IMPORT_STAMPS_REVISION,
-    "system/retro-studio.js": IMPORT_STAMPS_REVISION,
+    "system/retro-studio.js": STUDIO_RETRO_HUB_REVISION,
     "img/og/cards-data.js": VOID_PLATES_REVISION,
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,
     "system/theme.js": THEME_PREFERENCES_REVISION,
