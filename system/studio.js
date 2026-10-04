@@ -163,6 +163,14 @@ function dropPlotHandle() {
   if (_plotHandle) { try { _plotHandle.dispose(); } catch (e) { console.error("[studio] plotmap plugin dispose failed:", e); } }
   _plotHandle = null; _plotHandleCanvas = null;
 }
+// The Voxels render half is the "voxels" plugin (media-engine/plugins/voxels.mjs); building, turning
+// and editing the scene stay here. One handle per canvas node, disposed when the Studio leaves.
+let _voxelEngine = null, _voxelHandle = null, _voxelHandleCanvas = null;
+const loadVoxelPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("voxels")), e => { _voxelEngine = e; });
+function dropVoxelHandle() {
+  if (_voxelHandle) { try { _voxelHandle.dispose(); } catch (e) { console.error("[studio] voxels plugin dispose failed:", e); } }
+  _voxelHandle = null; _voxelHandleCanvas = null;
+}
 const loadSketchPlugin = lazyLoader(() => import("./media-engine/page.mjs").then(m => m.usePlugin("sketch")), e => { _sketchEngine = e; });
 function dropSketchHandle() {
   if (_sketchHandle) { try { _sketchHandle.dispose(); } catch (e) { console.error("[studio] sketch plugin dispose failed:", e); } }
@@ -625,6 +633,7 @@ function setSource(next) {
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
     dropSketchHandle();
     dropPlotHandle();
+    dropVoxelHandle();
     stopMeterLoop();    // idle the live meter loop until the new source restarts it
   }
   activeSource = next;
@@ -741,7 +750,7 @@ function setSource(next) {
   }
   // Voxels: load the forge and build the current scene. Still frames only.
   if (next === "voxels") {
-    loadVoxelForge().then(() => {
+    Promise.all([loadVoxelForge(), loadVoxelPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawVoxelScene();
     }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
@@ -1391,13 +1400,20 @@ function initPlotMapControls() {
 // rotation takes. Rebuilds go through drawVoxelScene, which resets edits by construction.
 function repaintVoxelScene(announce) {
   const scene = _lastVoxelScene;
-  if (!scene || !_voxelForge || activeSource !== "voxels") return;
+  if (!scene || !_voxelForge || !_voxelEngine || activeSource !== "voxels") return;
   const c = $("studio-canvas");
-  const ctx = c.getContext("2d", { willReadFrequently: true });
-  if (!ctx) return;
+  if (!c.getContext("2d", { willReadFrequently: true })) return;
   _voxelPick.width = c.width; _voxelPick.height = c.height;
   const pickCtx = _voxelPick.getContext("2d", { willReadFrequently: true });
-  _voxelForge.renderVoxelScene(ctx, scene, c.width, c.height, { pickCtx, view: _stillView.voxels });
+  const params = { scene, view: _stillView.voxels, pickCtx };
+  if (!_voxelHandle || _voxelHandleCanvas !== c) {
+    dropVoxelHandle();
+    _voxelHandle = _voxelEngine.mount(c, "voxels", { params });
+    _voxelHandleCanvas = c;
+  }
+  // Drawn now, in this task, so the perceive() below reads this frame.
+  _voxelHandle.instance.setParams(params);
+  _voxelHandle.drawNow();
   const readout = $("voxel-readout");
   if (readout) readout.textContent =
     `${scene.meta.voxels.toLocaleString()} voxels · ${scene.meta.res.join("×")}`
