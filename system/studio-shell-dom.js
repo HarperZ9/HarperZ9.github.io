@@ -7,7 +7,9 @@
 // making? }. primary and each export are { label, target, title? }; pin is a target; a target is
 // the id of an existing control. keep(state) filters what is saved (default: the whole snapshot);
 // reset() puts the source back to its first state for "Start fresh"; making marks a source whose
-// readings fold while the visitor works (studio-readings.js).
+// readings fold while the visitor works (studio-readings.js). A source with no snapshot has no
+// Undo, Redo or keep line; history: false keeps a snapshot without Undo and Redo (a file's name,
+// say, which can be remembered but not undone).
 
 import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261004-studio-keep";
 import { createStore, keepMessage } from "./studio-store.js?v=20261004-studio-keep";
@@ -92,14 +94,16 @@ function paintBar(ctx, source) {
   const making = (fn) => () => { ctx.onMaking(); fn(); };
   if (c.primary) bar.append(button(ctx, c.primary.label, "btn ia-primary", making(proxy(ctx, c.primary.target)),
     { "data-action": "primary", ...(c.primary.title ? { title: c.primary.title } : {}) }));
-  bar.append(button(ctx, "Undo", "btn ghost", making(() => undo(ctx)), { "data-action": "undo", "aria-keyshortcuts": "Control+Z Meta+Z" }));
-  bar.append(button(ctx, "Redo", "btn ghost", making(() => redo(ctx)), { "data-action": "redo", "aria-keyshortcuts": "Control+Shift+Z Meta+Shift+Z Control+Y" }));
+  if (hasHistory(c)) {
+    bar.append(button(ctx, "Undo", "btn ghost", making(() => undo(ctx)), { "data-action": "undo", "aria-keyshortcuts": "Control+Z Meta+Z" }));
+    bar.append(button(ctx, "Redo", "btn ghost", making(() => redo(ctx)), { "data-action": "redo", "aria-keyshortcuts": "Control+Shift+Z Meta+Shift+Z Control+Y" }));
+  }
   if (c.exports && c.exports.length) bar.append(exportMenu(ctx, c));
   if (c.pin) bar.append(button(ctx, "Pin", "btn ghost", proxy(ctx, c.pin), { "data-action": "pin" }));
-  bar.after(keepLine(ctx));   // under the bar, not in it: the bar stays one row on a phone
-  sayKept(ctx, source);
+  if (c.snapshot) { bar.after(keepLine(ctx)); sayKept(ctx, source); }   // under the bar: one row on a phone
   syncHistoryButtons(ctx, source);
 }
+const hasHistory = (c) => !!(c && c.snapshot && c.history !== false);
 function syncHistoryButtons(ctx, source) {
   if (!ctx.bar) return;
   const u = ctx.bar.querySelector('[data-action="undo"]'), r = ctx.bar.querySelector('[data-action="redo"]');
@@ -116,7 +120,7 @@ function sayKept(ctx, source) {
 // History and keeping.
 function record(ctx, source, label) {
   const c = ctx.contracts[source];
-  if (!c || ctx.restoring || source !== ctx.getSource()) return false;
+  if (!c || !c.snapshot || ctx.restoring || source !== ctx.getSource()) return false;
   let state = null;
   try { state = c.snapshot(); } catch (err) { console.error("[studio-shell] snapshot failed for " + source + ":", err); return false; }
   const changed = ctx.history.record(source, state, label);
@@ -170,13 +174,13 @@ function startFresh(ctx) {
   sayKept(ctx, s);
   return true;
 }
-function undo(ctx) { const s = ctx.getSource(); return ctx.contracts[s] ? apply(ctx, s, ctx.history.undo(s)) : false; }
-function redo(ctx) { const s = ctx.getSource(); return ctx.contracts[s] ? apply(ctx, s, ctx.history.redo(s)) : false; }
+function undo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.undo(s)) : false; }
+function redo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.redo(s)) : false; }
 
 function wireKeys(ctx) {
   ctx.doc.addEventListener("keydown", (e) => {
     const step = chordOf(e);
-    if (!step || isTextEntry(e.target) || !ctx.contracts[ctx.getSource()]) return;
+    if (!step || isTextEntry(e.target) || !hasHistory(ctx.contracts[ctx.getSource()])) return;
     e.preventDefault();
     ctx.onMaking();
     if (step === "undo") undo(ctx); else redo(ctx);
