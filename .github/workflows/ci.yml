@@ -93,6 +93,18 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8803 BROWSER_CHANNEL=chrome node tests/ident-narrow-reading.cjs
+      # Every Gallery plate on screen at desktop and phone widths, and Plate 14 drawn. A reading
+      # rule hid all 43 until 3 October 2026; tests/test_gallery_plates_visible.py is its static twin.
+      - name: Gallery plates on screen
+        if: ${{ !cancelled() }}
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python -m http.server 8805 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          SITE_BASE_URL=http://127.0.0.1:8805 BROWSER_CHANNEL=chrome node tests/gallery-plates-visible.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       - name: Live explainers in the browser
