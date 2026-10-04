@@ -3635,8 +3635,12 @@ body.inner-clean:not(.studio-page):not(.studio-app)::before,
 body.inner-clean:not(.studio-page):not(.studio-app)::after,
 body.inner-clean:not(.studio-page):not(.studio-app) .frame::before,
 body.inner-clean:not(.studio-page):not(.studio-app) .frame::after,
-body.inner-clean:not(.studio-page):not(.studio-app) .plate:has(canvas[data-specimen]),
+body.inner-clean:not(.studio-page):not(.studio-app):not(.instrument-surface) .plate:has(canvas[data-specimen]),
 body.inner-clean:not(.studio-page):not(.studio-app) .publication-spectrum {display:none}
+/* An instrument surface (Gallery, Loom, Retro Engine) is where the plates are the content, so the
+   rule above leaves them alone. Until 3 October 2026 it hid every plate there, Plate 14 included:
+   reading.css shows plates again only on pages without .instrument-surface.
+   tests/test_gallery_plates_visible.py holds this. */
 /* The generative renderer sets display inline after initialization. */
 body.inner-clean:not(.studio-page):not(.studio-app) > #gl,
 body.inner-clean:not(.studio-page):not(.studio-app) > #motes {display:none!important}
