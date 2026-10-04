@@ -62,6 +62,10 @@
   .boundary strong{color:#f1ebe6}
   .splat-links{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem;margin-top:1.3rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase}
   .splat-links a{color:var(--orange)}
+  .held-scenes{margin-top:1.4rem;color:var(--muted);line-height:1.6}
+  .held-scenes summary{cursor:pointer;font-weight:600;color:inherit}
+  .held-list{columns:2 16rem;margin:.8rem 0 0;padding-left:1.1rem;font-size:.9rem}
+  .held-list code{font-size:.78rem}
   @media(max-width:820px){.splat-hero,.section-head{grid-template-columns:1fr}.pilot-grid{grid-template-columns:1fr}.pilot{min-height:330px}.pilot h3{margin-top:9rem}.criteria{grid-template-columns:1fr}}
 </style>
 </head>
@@ -82,7 +86,7 @@
       <dl class="status-grid">
         <dt>Pilot sources</dt><dd data-source-count>3</dd>
         <dt>Published scenes</dt><dd data-scene-count>0</dd>
-        <dt>Planned format</dt><dd>.spz</dd>
+        <dt>Scene format</dt><dd>.ngsf, SHA-256</dd>
         <dt>Canonical art</dt><dd>unchanged</dd>
       </dl>
     </aside>
@@ -112,7 +116,7 @@
   <section class="section" aria-labelledby="counts-title">
     <div class="section-head"><h2 id="counts-title">What counts as a splat.</h2><p class="section-copy">The acceptance boundary is intentionally stricter than visual resemblance.</p></div>
     <div class="criteria">
-      <article class="criterion"><strong>A scene artifact exists.</strong><p>The result must include a loadable spatial file, planned as <code>.spz</code>. A PNG, video, or still render alone is not the scene.</p></article>
+      <article class="criterion"><strong>A scene artifact exists.</strong><p>The result must include a loadable spatial file: an <code>.ngsf</code> model with a SHA-256 receipt, checked before the scene draws. A PNG, video, or still render alone is not the scene.</p></article>
       <article class="criterion"><strong>The camera changes the evidence.</strong><p>Translation must produce meaningful parallax, changing occlusion, and a different spatial relationship among visible elements.</p></article>
       <article class="criterion"><strong>The source remains visible.</strong><p>The original artwork stays canonical and is shown beside the generated scene. The experiment does not overwrite or silently “upgrade” it.</p></article>
       <article class="criterion"><strong>The invention is disclosed.</strong><p>The record must identify the generator commit, provider and model versions, parameters, output hash, and inferred backsides, holes, floating fragments, or duplicated forms.</p></article>
@@ -122,12 +126,46 @@
   <section class="section" aria-labelledby="boundary-title">
     <div class="section-head"><h2 id="boundary-title">Current boundary.</h2><p class="section-copy">Source selection and receipts are complete. Scene generation is not.</p></div>
     <div class="boundary"><strong>No Gaussian-splat scene is being represented as finished on this page.</strong> The three source PNGs and their hashes are prepared. The generation route is now this repository's own native pipeline: the hybrid renderer and the certified world-package contract in <code>system/spatial-scene.js</code> and <code>system/engine/world-package.js</code>, with no hosted model, no credentials, and no metered endpoint. A single-image result will be described as a generated spatial interpretation, not a scan or measured reconstruction. Both lanes already run in <a href="studio.html?source=spatial">the Studio's Spatial source</a>: the reconstruction lane serves the session's Crystal City hybrid scene (a generated spatial interpretation of one canonical artwork, its invented support fill labeled), and the authored lane serves a world whose every primitive is generated from a named seed. These three pilot sources remain unreconstructed until each has its own composition profile, and each lane is labeled as what it is.</div>
+    <details class="held-scenes">
+      <summary>27 atlas scenes held back</summary>
+      <p>The Spatial Atlas holds 27 <code>.ngsf</code> scenes, one per canonical artwork, each with a SHA-256 receipt, parallax that reorders up to 65% of splat pairs at the camera limits, and its source beside it. Their files are byte-identical to a fresh extraction from the Native Gaussian Splat Atlas v0.5.0 build they came from. The code that trained them is known only as version 0.5.0: no commit and no code hash survives. The disclosure line asks for the generator commit, so none of the 27 is published here. They stay viewable as spatial studies in the Studio's Spatial source.</p>
+      <ul class="held-list">
+        <li data-held="scene-01"><span>Current Story 01</span> <code>1e390109af6f…</code></li>
+        <li data-held="scene-02"><span>Current Story 02</span> <code>871dccb4ff04…</code></li>
+        <li data-held="scene-03"><span>Current Story 03</span> <code>3aed3e7d12e5…</code></li>
+        <li data-held="scene-04"><span>Current Story 04</span> <code>27d7ffb7396e…</code></li>
+        <li data-held="scene-05"><span>Current Story 05</span> <code>7cf627d958e6…</code></li>
+        <li data-held="scene-06"><span>Current Story 06</span> <code>a383f29706e0…</code></li>
+        <li data-held="scene-07"><span>Current Story 07</span> <code>2fc6c2a68725…</code></li>
+        <li data-held="scene-08"><span>Current Story 08</span> <code>52ad4555b528…</code></li>
+        <li data-held="scene-09"><span>Current Story 09</span> <code>9cc9386c7896…</code></li>
+        <li data-held="scene-10"><span>Current Story 10</span> <code>dbb0713b6d64…</code></li>
+        <li data-held="scene-11"><span>Current Story 11</span> <code>9f4814e6414e…</code></li>
+        <li data-held="scene-12"><span>Current Story 12</span> <code>bf63840e8391…</code></li>
+        <li data-held="scene-13"><span>Current Story 13</span> <code>2c55047e6d8f…</code></li>
+        <li data-held="scene-14"><span>Current Story 14</span> <code>0b749897a833…</code></li>
+        <li data-held="scene-15"><span>Current Story 15</span> <code>75134facbc66…</code></li>
+        <li data-held="scene-16"><span>Current Story 16</span> <code>550d7ae9117c…</code></li>
+        <li data-held="scene-17"><span>Current Story 17</span> <code>6dd5ed813920…</code></li>
+        <li data-held="scene-18"><span>City and witnesses</span> <code>125d5acf4109…</code></li>
+        <li data-held="scene-19"><span>Membrane, figure, and portal</span> <code>c80a1721293b…</code></li>
+        <li data-held="scene-20"><span>Colossal arch and witness</span> <code>152220c9812e…</code></li>
+        <li data-held="scene-21"><span>Gate and figure</span> <code>2d7e6d445e8d…</code></li>
+        <li data-held="scene-22"><span>Orbital crystal engine</span> <code>63b1a45ce1e8…</code></li>
+        <li data-held="scene-23"><span>Monochrome geometry</span> <code>9db4f101198d…</code></li>
+        <li data-held="scene-24"><span>Nested luminous arches</span> <code>0db35cd69aab…</code></li>
+        <li data-held="scene-25"><span>Path through rings</span> <code>aab39768e7a4…</code></li>
+        <li data-held="scene-26"><span>Crystal embrace</span> <code>42f8a0e56606…</code></li>
+        <li data-held="scene-27"><span>Painterly embrace</span> <code>0157ec11a8f7…</code></li>
+      </ul>
+    </details>
     <nav class="splat-links" aria-label="Gaussian Splat Lab resources">
       <a href="art/gaussian-splats/manifest.json">Pilot manifest</a>
       <a href="art/gaussian-splats/README.md">Runbook</a>
       <a href="https://github.com/HarperZ9/HarperZ9.github.io/issues/81">Generation tracker</a>
       <a href="studio.html?source=spatial">Native engine, live</a>
       <a href="art/spatial/folded-light.world.json">Authored world package</a>
+      <a href="art/spatial/atlas/provenance.json">Atlas provenance</a>
       <a href="current-story.html">Canonical visual sequence</a>
     </nav>
   </section>
