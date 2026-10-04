@@ -31,4 +31,5 @@ media/raw-native/wasm-*/** -text
 system/vendor/learn/** -text
 # The vendored superstack contract is pinned by SHA-256; CRLF would break the pin.
 system/media-engine/contracts.mjs text eol=lf
+tools/superstack.py text eol=lf
 tests/superstack/** text eol=lf

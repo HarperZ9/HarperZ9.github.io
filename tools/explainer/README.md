@@ -110,7 +110,11 @@ Learn runs from a pinned copy in `system/vendor/learn/`, copied byte for byte fr
 
 The video's `receipt.json` records the spec's SHA-256, the render code, fonts and toolchain, the hash of every output, the frame chain, the narrated timeline and the default parameter values. `--verify` rebuilds and compares; `--check` compares hashes only, which is what CI runs.
 
-The live figure hashes the spec it loaded and compares it with the receipt's: MATCH, DRIFT, or UNVERIFIABLE when there is no receipt. "Save this frame's receipt" downloads a `media-engine.frame-receipt.v2` for the frame on screen. Its request carries the slug, the spec hash, the changed values and the time.
+The live figure hashes the spec it loaded and compares it with the receipt's: MATCH, DRIFT, or UNVERIFIABLE when there is no receipt. "Save this frame's receipt" downloads a `superstack.receipt/1` for the frame on screen. Its scene carries the slug, the spec hash, the changed values and the time in flicks.
+
+`narration.receipt.json` is the narration's own `superstack.receipt/1` (contract SPEC section 8.7). `python -m tools.explainer.narration <folder>` rebuilds the narration with the local voice, refuses to write unless the WAV matches `narration_wav_sha256`, and records the s16le PCM hash, the backend, model, OS build as the snapshot, voice, script hash, `reference: false`, `reproducible: true`, and the loudness from the contract's BS.1770 meter against the speech target. `--check` verifies the seal and ties the receipt to the spec and the video's receipt without the voice; CI runs it through `tests/test_explainers.py`.
+
+Measured on 3 October 2026 (ffmpeg 7.1 `ebur128` agrees within 0.1 LU): all three narrations sit near -20.2 LUFS, about 4 LU under the -16 LUFS speech target, so each receipt reads `refuted`. Raising them changes every published video's hash, so it waits for a stated rebuild.
 
 ## What the parity check covers
 

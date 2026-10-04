@@ -1,0 +1,83 @@
+{
+  "schema": "superstack.receipt/1",
+  "producer": {
+    "name": "harperz9-explainer-narration",
+    "version": "1.0.0"
+  },
+  "backend": "windows-sapi",
+  "scene_sha256": "bb5d63922361a9dd49110d10d38e51df827c8d040c8a955f3dd6e47f4a4429f4",
+  "seed": null,
+  "seed_rule": "xmur3-mulberry32/1",
+  "seed_u32": null,
+  "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+  },
+  "media": {
+    "kind": "audio",
+    "content": "speech",
+    "rate": 22050,
+    "channels": 1,
+    "format": "s16le",
+    "frames": 952560,
+    "duration_flicks": 30481920000,
+    "meter": "superstack-bs1770/1",
+    "integrated_lufs": -20.25,
+    "peak_dbfs": -1.89,
+    "loudness_class": "speech",
+    "loudness_verdict": "refuted",
+    "loudness_target": {
+      "integrated_lufs": -16.0,
+      "tolerance_lu": 1.0,
+      "true_peak_dbtp_max": -1.5
+    },
+    "access": {
+      "autoplay": false,
+      "captions": "vtt",
+      "transcript": true,
+      "reduced_sound": "silent"
+    },
+    "narration": {
+      "backend": "windows-sapi",
+      "hosted": false,
+      "model": "System.Speech (SAPI 5)",
+      "snapshot": "Windows-11-10.0.26220-SP0",
+      "voice": "Microsoft Zira Desktop",
+      "text_sha256": "2ca1cc7fe853792a6b12bc3fc44ac44c2c52f03cc33661ab1fa3129aa727ff0e",
+      "reference": false,
+      "reproducible": true
+    }
+  },
+  "content_sha256": "4b56083250e0a39ff45d355d7cc914aa49bb35c8a86b34e651124d069fa40363",
+  "outputs": {
+    "narration.wav": "c21e81bc3ea1e65bbc9bd09650aaffa5b821ed20800008eaf91c1eb8f748a61b",
+    "receipt-is-not-a-verdict.mp4": "2df5d1e338a63124e373ca1149dc1a75dab72abcd229d52349d5b63888b32f7c"
+  },
+  "reconcile": null,
+  "does_not_prove": [
+    "A PCM hash covers samples, not speakers: it says nothing about how a device plays them.",
+    "The published video carries this narration as 96 kb/s AAC; decoding it does not return these samples.",
+    "reproducible means a rebuild on Windows with the same voice and OS build gave the same PCM (checked on the date of this receipt); another machine or voice update need not.",
+    "The loudness is one meter's reading (superstack-bs1770/1) of the narration alone, and the peak is the sample peak, not true peak. The narration was measured, not corrected to the target.",
+    "Neither hash shows that the narration is correct, clear, or well paced."
+  ],
+  "scene": {
+    "kind": "superstack.sound/1",
+    "producer": "explainer-narration",
+    "slug": "receipt-is-not-a-verdict",
+    "spec_sha256": "a0ef55b53b8b134bbaa123d098a04d17be3c3136c04aff585a9c654022b29890",
+    "rate": 22050,
+    "channels": 1,
+    "duration_samples": 952560,
+    "lines": [
+      "A receipt is not a verdict.",
+      "A receipt records what ran: the command, the inputs and the hash of the output.",
+      "Rerun the command and the hash matches. That shows the same bytes came out. It says nothing about whether they are right.",
+      "A verdict needs a criterion the author did not write, such as a test suite, a proof checker or a measured threshold.",
+      "Here the rerun matches, and the independent test reports drift. The receipt holds, and the claim fails.",
+      "Keep both. The receipt says what happened. The verdict says whether it holds up."
+    ]
+  },
+  "receipt_sha256": "7c8c254200cbe9519f9994dcc49c9199d1c437abc5febbeeb31c01df3b857237"
+}

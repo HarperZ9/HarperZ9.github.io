@@ -1,0 +1,83 @@
+{
+  "schema": "superstack.receipt/1",
+  "producer": {
+    "name": "harperz9-explainer-narration",
+    "version": "1.0.0"
+  },
+  "backend": "windows-sapi",
+  "scene_sha256": "371d2187ef207b78548cd20cd3b3ec2f70f7fa8f212933068aad6e66a7f15772",
+  "seed": null,
+  "seed_rule": "xmur3-mulberry32/1",
+  "seed_u32": null,
+  "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+  },
+  "media": {
+    "kind": "audio",
+    "content": "speech",
+    "rate": 22050,
+    "channels": 1,
+    "format": "s16le",
+    "frames": 918750,
+    "duration_flicks": 29400000000,
+    "meter": "superstack-bs1770/1",
+    "integrated_lufs": -20.12,
+    "peak_dbfs": -2.95,
+    "loudness_class": "speech",
+    "loudness_verdict": "refuted",
+    "loudness_target": {
+      "integrated_lufs": -16.0,
+      "tolerance_lu": 1.0,
+      "true_peak_dbtp_max": -1.5
+    },
+    "access": {
+      "autoplay": false,
+      "captions": "vtt",
+      "transcript": true,
+      "reduced_sound": "silent"
+    },
+    "narration": {
+      "backend": "windows-sapi",
+      "hosted": false,
+      "model": "System.Speech (SAPI 5)",
+      "snapshot": "Windows-11-10.0.26220-SP0",
+      "voice": "Microsoft Zira Desktop",
+      "text_sha256": "dc6d063706e8de90cf18ae7d79d93de54dd96fd455481e164919641af83d831b",
+      "reference": false,
+      "reproducible": true
+    }
+  },
+  "content_sha256": "a2d1252bf86b8bd27475e2a073022c16571deedf57011af7b7867c778149f776",
+  "outputs": {
+    "narration.wav": "b1e4804b38155d571820e414c76d854f5dd35e5450bc4d21e5aad79e9ce199f1",
+    "cost-to-verify.mp4": "94bfd830783c4c42e9f7466a5f12bd9eb89951854481c3fe7f4126a3437a7d0c"
+  },
+  "reconcile": null,
+  "does_not_prove": [
+    "A PCM hash covers samples, not speakers: it says nothing about how a device plays them.",
+    "The published video carries this narration as 96 kb/s AAC; decoding it does not return these samples.",
+    "reproducible means a rebuild on Windows with the same voice and OS build gave the same PCM (checked on the date of this receipt); another machine or voice update need not.",
+    "The loudness is one meter's reading (superstack-bs1770/1) of the narration alone, and the peak is the sample peak, not true peak. The narration was measured, not corrected to the target.",
+    "Neither hash shows that the narration is correct, clear, or well paced."
+  ],
+  "scene": {
+    "kind": "superstack.sound/1",
+    "producer": "explainer-narration",
+    "slug": "cost-to-verify",
+    "spec_sha256": "13ba5f563719851ebf944ec07ba8a984d1a17fb78bf9b3f19470a8d821a68ea8",
+    "rate": 22050,
+    "channels": 1,
+    "duration_samples": 918750,
+    "lines": [
+      "The cost to verify.",
+      "A model can draft a literature review in forty seconds.",
+      "Checking that the papers exist, and say what the review claims, still takes a skilled person hours.",
+      "Better models make claiming cheaper. Checking costs what it always cost. The gap between the two is review debt.",
+      "Somebody always pays that debt. Left unchecked, it lands on whoever has the least power to refuse it.",
+      "The gap closes only from the checking side: make the check cheap to rerun. This video ships with its own receipt."
+    ]
+  },
+  "receipt_sha256": "10b0669be2df382b1c18b3c67222cb62763c31863b4adedd6956e6b2257409da"
+}
