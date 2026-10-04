@@ -91,7 +91,7 @@ const loadShowcase = lazyLoader(() => import("./showcase/first-integral.js?v=202
 // Living neural source: the seed's neural instruments, animated on the shared
 // canvas and measured by the perception loop. Static under reduced motion.
 let _neural = null;
-const loadNeural = lazyLoader(() => import("./studio-neural.js"), m => { _neural = m; });
+const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
 let _neuralStatic = false;   // true when reduced motion holds a single frame
@@ -619,7 +619,7 @@ function setSource(next) {
                         // whatever source came next, over that source's own frame
     if (_discovery) { try { _discovery.stopDiscovery(); } catch (_) {} }
     if (_showcase)  { try { _showcase.stopShowcase(); } catch (_) {} }
-    if (_neural)    { try { _neural.stopNeural(); } catch (_) {} }
+    if (_neural)    { try { _neural.stopNeural(); } catch (_) {} syncNeuralPlay(); }
     if (_sound)     { try { _sound.stopSound(); } catch (_) {} }
     if (_spatial)   { try { _spatial.stopSpatial(); } catch (_) {} }
     if (_engineSurface) { try { _engineSurface.leaveEngineSurface(); } catch (_) {} }
@@ -697,17 +697,13 @@ function setSource(next) {
       startMeterLoop();
     }).catch(err => { say("model", "The showcase failed to load: " + (err && err.message ? err.message : String(err))); });
   }
-  // Living neural: load the module on first entry, start the animated instrument on
+  // Living neural: load the module on first entry, draw the instrument's still frame on
   // the shared canvas, then arm the meter loop so the perception panel reads it. The
-  // module reports whether it is animating (false under reduced motion) so the loop
-  // can idle on a held still frame.
+  // instrument rests on that frame until play, so the loop idles on it.
   if (next === "neural") {
     loadNeural().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
-      try {
-        const res = mod.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
-        _neuralStatic = !(res && res.animating);
-      } catch (_) {}
+      try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to start:", e); }
       startMeterLoop();
     }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -828,16 +824,37 @@ $("studio-source").addEventListener("keydown", e => {
 });
 bootStudioRendererConsole();
 
-// Living neural controls: instrument (field/solid), seed, reseed. Changing any of
-// them restarts the instrument in place while the neural source is active.
+// Living neural controls: play, instrument (field/solid), seed, reseed. The instrument
+// rests on one frame until play; changing the instrument or seed restarts it at time 0
+// and keeps it playing if it was. Each frame that lands re-arms the meter loop, which
+// idles again once the frame holds still.
+function neuralFrameLanded() { if (activeSource === "neural") startMeterLoop(); }
+function syncNeuralPlay() {
+  const playing = !!(_neural && _neural.neuralIsRunning());
+  _neuralStatic = !playing;
+  const b = $("neural-play"); if (!b) return;
+  b.textContent = playing ? "pause" : "play";
+  b.setAttribute("aria-pressed", String(playing));
+}
+function startNeuralSource() {
+  const wasPlaying = _neural.neuralIsRunning();
+  _neural.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument, onFrame: neuralFrameLanded });
+  if (wasPlaying) _neural.playNeural();
+  syncNeuralPlay();
+}
 function restartNeural() {
   if (activeSource !== "neural" || !_neural) return;
-  try {
-    const res = _neural.startNeural($("studio-canvas"), { seed: _neuralSeed, instrument: _neuralInstrument });
-    _neuralStatic = !(res && res.animating);
-  } catch (_) {}
+  try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to restart:", e); }
 }
 function initNeuralControls() {
+  const play = document.getElementById("neural-play");
+  if (play) play.addEventListener("click", () => {
+    if (activeSource !== "neural" || !_neural) return;
+    if (_neural.neuralIsRunning()) _neural.pauseNeural();
+    else if (!_neural.playNeural()) say("model", "Reduced motion is on, so the instrument holds its still frame.");
+    syncNeuralPlay();
+    startMeterLoop();
+  });
   const chips = document.getElementById("neural-instruments");
   const seedIn = document.getElementById("neural-seed");
   const reseed = document.getElementById("neural-reseed");
@@ -5481,6 +5498,11 @@ function resizeActiveSurface() {
     case "music":
     case "byo":
       sizeCanvas(canvas);   // these sources read canvas.width/height on their own loop tick
+      break;
+    case "neural":
+      // The instrument may be resting on one frame, so redraw that frame at the new size.
+      sizeCanvas(canvas);
+      if (_neural) { try { _neural.redrawNeural(); } catch (e) { console.error("[studio] living neural redraw failed:", e); } }
       break;
     case "showcase":
       // The showcase scene owns its backing (studio's sizeCanvas would reset the hero frame),

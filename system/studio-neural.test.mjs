@@ -10,6 +10,11 @@ import {
   startNeural,
   stopNeural,
   neuralIsRunning,
+  playNeural,
+  pauseNeural,
+  redrawNeural,
+  neuralTime,
+  drawNeuralAt,
 } from "./studio-neural.js";
 
 // Fake 2d context that records fill colours and rect calls. In node there is no
@@ -81,4 +86,35 @@ test("without an animation clock, the driver draws one still frame and does not 
   assert.ok(log.some(([m]) => m === "fillRect"), "should have painted a still frame");
   stopNeural(); // idempotent, must not throw
   assert.equal(neuralIsRunning(), false);
+});
+
+test("the instrument rests on its time-0 frame until play, and play needs an animation clock", () => {
+  // Since 3 October 2026 the instrument no longer runs from entry. In node there is no
+  // requestAnimationFrame, so play is refused and the frame stays at time 0.
+  const { ctx, log } = makeCtx();
+  const canvas = { width: 240, height: 160, getContext: () => ctx };
+  const frames = [];
+  const res = startNeural(canvas, { seed: "aurora", instrument: "field", onFrame: (f) => frames.push(f) });
+  assert.equal(res.animating, false);
+  assert.deepEqual(frames, [{ time: 0, playing: false }]);
+  assert.equal(playNeural(), false);
+  assert.equal(neuralIsRunning(), false);
+  assert.equal(neuralTime(), 0);
+  // The resting frame is the reference frame at time 0.
+  assert.deepEqual(log, frame({ seed: "aurora", instrument: "field", time: 0 }));
+  // A resize clears a canvas; redrawNeural paints the resting frame again.
+  redrawNeural();
+  assert.equal(frames.length, 2);
+  pauseNeural();
+  stopNeural();
+  assert.equal(playNeural(), false, "nothing to play after stop");
+  redrawNeural();
+  assert.equal(frames.length, 2, "no redraw after stop");
+});
+
+test("drawNeuralAt without a worker draws the reference frame", async () => {
+  const { ctx, log } = makeCtx();
+  const canvas = { width: 240, height: 160, getContext: () => ctx };
+  assert.equal(await drawNeuralAt(canvas, { seed: "cinder", instrument: "solid", time: 1.5 }), true);
+  assert.deepEqual(log, frame({ seed: "cinder", instrument: "solid", time: 1.5 }));
 });

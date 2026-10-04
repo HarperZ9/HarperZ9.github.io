@@ -107,7 +107,10 @@
         <div id="poster-mount"></div>
       </section>
       <section class="src-block" id="src-neural" role="tabpanel" aria-label="Living neural controls" hidden>
-        <p class="transform-note">The seed's neural instruments, alive. The same network the gallery freezes into a plate runs here under a live clock, and the perception panel reads the motion it makes. Reduced-motion holds a single still frame.</p>
+        <p class="transform-note">The seed's neural instruments, alive. The same network the gallery freezes into a plate runs here under a clock. Press play to set it moving, and the perception panel reads the motion it makes. Until you do, and always with reduced motion, it holds one still frame.</p>
+        <div class="at-actions">
+          <button type="button" class="btn" id="neural-play" aria-pressed="false" aria-label="Play or pause the living neural instrument">play</button>
+        </div>
         <div class="at-group">
           <span class="at-glab">Instrument</span>
           <div class="at-chips" id="neural-instruments" role="group" aria-label="Living neural instrument">
@@ -1437,7 +1440,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261003-worker"></script>
+<script type="module" src="system/studio.js?v=20261003-neural-rest"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

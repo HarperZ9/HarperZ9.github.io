@@ -173,17 +173,139 @@ export function neuralInstruments() {
 }
 
 // ── live driver ─────────────────────────────────────────────────────────────
+// The instrument rests on one frame until the visitor presses play, and stops
+// again on pause or when the Studio leaves the source. Until 3 October 2026 the
+// loop ran from entry at the display's frame rate and drew on the main thread,
+// about 1.1 s of script per second with nothing happening. Frames now come from
+// a worker (studio-neural-worker.mjs), one request in flight at a time, and the
+// page only copies each finished frame onto the canvas. Without a worker the
+// frames are drawn here, by renderNeuralFrame, as before.
 let _raf = 0;
-let _running = false;
+let _playing = false;
 let _start = 0;
+let _gen = 0;          // bumps on every start and stop; stale worker frames are dropped
+let _live = null;      // { canvas, ctx, seed, instrument, palette, net, sdf, time, onFrame }
+let _worker = null;
+let _workerBroken = false;
+let _inFlight = 0;     // id of the live request in flight, 0 when none
+let _nextId = 1;
+const _waiters = new Map();   // id -> { resolve, gen, time, canvas }
+let _verified = null;
+let _scratch = null;   // the solid's low-resolution canvas, reused
 
 function prefersReducedMotion() {
   return typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/* Start the living instrument on a canvas. Returns { animating } so the Studio
-   knows whether to treat the source as animated (and keep the perception loop
-   awake) or as a single still frame (reduced motion). */
+function getWorker() {
+  if (_worker || _workerBroken) return _worker;
+  if (typeof Worker !== "function" || typeof ImageData !== "function") return null;
+  try {
+    _worker = new Worker(new URL("./studio-neural-worker.mjs?v=20261003-neural-rest", import.meta.url), { type: "module" });
+    _worker.onmessage = onWorkerFrame;
+    _worker.onerror = (e) => {
+      console.error("[studio-neural] frame worker failed; drawing on the main thread:", (e && (e.message || e.type)) || "unknown error");
+      _workerBroken = true; _worker = null;
+      for (const w of _waiters.values()) w.resolve(false);
+      _waiters.clear(); _inFlight = 0;
+      // Redraw the resting frame without the worker, so the canvas is never left behind.
+      if (_live) drawLive(_live.time);
+    };
+  } catch (err) {
+    console.error("[studio-neural] frame worker unavailable; drawing on the main thread:", err);
+    _workerBroken = true; _worker = null;
+  }
+  return _worker;
+}
+
+// Copy a finished frame onto a canvas, as renderField / renderSolid would have drawn it.
+function blit(ctx, m) {
+  if (m.instrument === "solid") {
+    ctx.save();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = "rgba(4,5,12,1)";
+    ctx.fillRect(0, 0, m.W, m.H);
+    if (!_scratch) _scratch = document.createElement("canvas");
+    if (_scratch.width !== m.RW || _scratch.height !== m.RH) { _scratch.width = m.RW; _scratch.height = m.RH; }
+    _scratch.getContext("2d").putImageData(new ImageData(m.buf, m.RW, m.RH), 0, 0);
+    const prevSmooth = ctx.imageSmoothingEnabled;
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(_scratch, 0, 0, m.W, m.H);
+    ctx.imageSmoothingEnabled = prevSmooth;
+    ctx.restore();
+  } else {
+    ctx.putImageData(new ImageData(m.buf, m.W, m.H), 0, 0);
+  }
+}
+
+function onWorkerFrame(e) {
+  const m = e.data || {};
+  const w = _waiters.get(m.id);
+  if (!w) return;
+  _waiters.delete(m.id);
+  if (_inFlight === m.id) _inFlight = 0;
+  if (m.error) {
+    // Retire the worker and draw here instead, so a failing worker never leaves the canvas behind.
+    console.error("[studio-neural] frame worker failed; drawing on the main thread:", m.error);
+    _workerBroken = true;
+    try { if (_worker) _worker.terminate(); } catch (_) { /* already gone */ }
+    _worker = null;
+    for (const other of _waiters.values()) other.resolve(false);
+    _waiters.clear(); _inFlight = 0;
+    w.resolve(false);
+    if (w.canvas) renderNeuralFrame(w.canvas.getContext("2d"), w.canvas.width, w.canvas.height, { ...w.opts, time: w.time });
+    else if (w.gen === _gen && _live) drawLive(w.time);
+    return;
+  }
+  _verified = !!m.verified;
+  if (w.canvas) {
+    // A check or test draw onto a given canvas.
+    const fits = w.canvas.width === m.W && w.canvas.height === m.H;
+    if (fits) blit(w.canvas.getContext("2d"), m);
+    w.resolve(fits);
+    return;
+  }
+  const L = _live;
+  if (w.gen !== _gen || !L) { w.resolve(false); return; }
+  if (L.canvas.width !== m.W || L.canvas.height !== m.H) {
+    // The canvas was resized while the frame was drawn: draw the same time again at the new size.
+    w.resolve(false);
+    if (!_inFlight) drawLive(w.time);
+    return;
+  }
+  blit(L.ctx, m);
+  L.time = w.time;
+  w.resolve(true);
+  if (L.onFrame) { try { L.onFrame({ time: w.time, playing: _playing }); } catch (_) { /* a listener never stops the instrument */ } }
+}
+
+// Post a frame request to the worker. Returns null when there is no worker.
+function request(time, canvas, o) {
+  const wk = getWorker();
+  if (!wk) return null;
+  const target = canvas || _live.canvas;
+  const opts = o || _live;
+  const id = _nextId++;
+  return new Promise((resolve) => {
+    _waiters.set(id, { resolve, gen: _gen, time, canvas: canvas || null, opts: canvas ? opts : null });
+    if (!canvas) _inFlight = id;
+    wk.postMessage({ id, seed: opts.seed, instrument: opts.instrument, W: target.width, H: target.height, time, palette: opts.palette });
+  });
+}
+
+// Draw the frame at `time` onto the live canvas: through the worker when there is one,
+// else synchronously here.
+function drawLive(time) {
+  const L = _live; if (!L) return;
+  if (request(time)) return;
+  renderNeuralFrame(L.ctx, L.canvas.width, L.canvas.height, { seed: L.seed, instrument: L.instrument, time, palette: L.palette, net: L.net, sdf: L.sdf });
+  L.time = time;
+  if (L.onFrame) { try { L.onFrame({ time, playing: _playing }); } catch (_) { /* never fatal */ } }
+}
+
+/* Start the instrument on a canvas: draw its frame at time 0 and rest there.
+   opts.onFrame({ time, playing }) runs after each frame lands on the canvas.
+   Returns { animating: false }: the source holds a still frame until playNeural(). */
 export function startNeural(canvas, opts = {}) {
   stopNeural();
   if (!canvas || typeof canvas.getContext !== "function") return { animating: false };
@@ -193,36 +315,79 @@ export function startNeural(canvas, opts = {}) {
   const instrument = opts.instrument === "solid" ? "solid" : "field";
   const palette = opts.palette || DEFAULT_TINT;
   const seedNum = neuralSeed(seed);
-  // Build the network once; the loop reuses it every frame.
+  // The main-thread fallback builds the network once and reuses it every frame.
   const net = instrument === "field" ? buildCppn(seedNum) : null;
   const sdf = instrument === "solid" ? buildNeuralSdf(seedNum) : null;
-  const drawAt = (time) => renderNeuralFrame(ctx, canvas.width, canvas.height, { seed, instrument, time, palette, net, sdf });
+  _live = { canvas, ctx, seed, instrument, palette, net, sdf, time: 0, onFrame: opts.onFrame || null };
+  drawLive(0);
+  return { animating: false };
+}
 
-  if (prefersReducedMotion() || typeof requestAnimationFrame !== "function") {
-    drawAt(0);   // one honest still frame; no motion for reduced-motion users
-    return { animating: false };
-  }
-  _running = true;
+/* Set the instrument moving from the time it rests at. Refused (returns false) under
+   reduced motion, without an animation clock, or before startNeural. */
+export function playNeural() {
+  if (!_live) return false;
+  if (_playing) return true;
+  if (prefersReducedMotion() || typeof requestAnimationFrame !== "function") return false;
+  _playing = true;
   _start = 0;
-  drawAt(0);   // paint one frame synchronously so the canvas is never blank, even
-               // before the first rAF fires (or if rAF is throttled while hidden)
+  const gen = _gen;
   const loop = (ts) => {
-    if (!_running) return;
-    if (!_start) _start = ts;
-    drawAt((ts - _start) / 1000);
+    if (!_playing || gen !== _gen || !_live) return;
+    if (!_start) _start = ts - _live.time * 1000;
+    if (!_inFlight) drawLive((ts - _start) / 1000);
     _raf = requestAnimationFrame(loop);
   };
   _raf = requestAnimationFrame(loop);
-  return { animating: true };
+  return true;
 }
 
-export function stopNeural() {
-  _running = false;
+/* Draw the resting frame again, at the canvas's current size (after a resize cleared it). */
+export function redrawNeural() {
+  if (_live && !_playing && !_inFlight) drawLive(_live.time);
+}
+
+/* Hold the frame on the canvas; playNeural() resumes from it. */
+export function pauseNeural() {
+  _playing = false;
   if (_raf && typeof cancelAnimationFrame === "function") cancelAnimationFrame(_raf);
   _raf = 0;
   _start = 0;
 }
 
+export function stopNeural() {
+  pauseNeural();
+  _gen += 1;
+  _inFlight = 0;
+  _live = null;
+}
+
 export function neuralIsRunning() {
-  return _running;
+  return _playing;
+}
+
+/* The clock time of the frame on the canvas, in seconds. */
+export function neuralTime() {
+  return _live ? _live.time : 0;
+}
+
+/* Whether the worker's fast kernels matched the networks' own eval on its check
+   (null before the first worker frame). */
+export function neuralWorkerVerified() {
+  return _verified;
+}
+
+/* Draw the frame at opts.time onto any canvas through the worker (through renderNeuralFrame
+   when there is no worker). Resolves true once the frame is on the canvas. For checks. */
+export function drawNeuralAt(canvas, opts = {}) {
+  const o = {
+    seed: String(opts.seed == null ? "living" : opts.seed),
+    instrument: opts.instrument === "solid" ? "solid" : "field",
+    palette: opts.palette || DEFAULT_TINT,
+  };
+  const time = opts.time || 0;
+  const p = request(time, canvas, o);
+  if (p) return p;
+  renderNeuralFrame(canvas.getContext("2d"), canvas.width, canvas.height, { ...o, time });
+  return Promise.resolve(true);
 }
