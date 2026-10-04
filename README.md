@@ -110,13 +110,29 @@ node tests/linkcheck.mjs
 
 ## Licence
 
-Written works: CC BY 4.0. Code and everything else: the terms in LICENSE.
+Written works: CC BY 4.0. The site's code, design and art: all rights reserved.
 
-The papers, essays, briefings and research pages are licensed CC BY 4.0.
-Papers with a Zenodo deposit carry the same licence there. Share and adapt them
-with credit to Zain Dana Harper. [`LICENSE-TEXT`](LICENSE-TEXT) lists the covered files. The
-site's code, design, art, brand and portfolio copy stay under
-[`LICENSE`](LICENSE).
+- **Papers, essays, briefings and research pages** are licensed CC BY 4.0.
+  Share and adapt them with credit to Zain Dana Harper. Papers with a Zenodo
+  deposit carry the same licence there. [`LICENSE-TEXT`](LICENSE-TEXT) lists
+  the covered files.
+- **The site's own code, design, art, brand and portfolio pages** are all
+  rights reserved. You can read the code, review it and learn from it. Reusing
+  it needs written permission. [`LICENSE`](LICENSE) gives the terms.
+- **Third-party and vendored material** keeps its own licence: D3 (ISC),
+  panzoom and Tweakpane (MIT), React in the home page bundle (MIT), Hanken
+  Grotesk (SIL OFL 1.1), and the Conso and Kilon fonts under their designers'
+  terms. The table in [`LICENSE`](LICENSE) names each path, and a licence file
+  or note sits beside each one.
+
+The reusable engines behind the site are source-available under FSL-1.1-MIT
+in their own repositories.
+[raw-native](https://github.com/HarperZ9/raw-native) already ships under it.
+[superstack](https://github.com/HarperZ9/superstack),
+[reconcile](https://github.com/HarperZ9/reconcile) and the other engines move
+to it from their next version, so a copy vendored here can carry its older
+licence until it is refreshed. [Learn](https://github.com/HarperZ9/learn) has
+its own licence. Use those repositories if you want to build on an engine.
 
 ## For developers
 
