@@ -1,0 +1,17 @@
+/* system/explainer/film.css: the long explainer films on explainers.html. Ink and rules inherit
+   from the page; the video keeps its own dark ground. No colour beyond the page's ink. */
+figure.film{margin:1.2rem 0 1.6rem;max-width:64rem}
+figure.film video{display:block;width:100%;height:auto;background:#060608;border:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+figure.film figcaption{font-size:.92rem;margin:.6rem 0;color:color-mix(in srgb,currentColor 75%,transparent)}
+.fl-chapters{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0;padding:0}
+.fl-chapters button{font:inherit;font-family:"Conso",ui-monospace,monospace;font-size:.82rem;color:inherit;background:none;
+  border:1px solid color-mix(in srgb,currentColor 22%,transparent);padding:.4rem .6rem;min-height:40px;cursor:pointer;white-space:pre}
+.fl-chapters button[aria-current="step"]{border-color:currentColor}
+.fl-chapters button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.fl-lead{font-size:.92rem}
+.fl-sources{padding-left:1.2rem}
+.fl-sources li{margin:0 0 1rem}
+.fl-sources p{margin:.2rem 0}
+.fl-design,.fl-shorts{padding-left:1.2rem}
+details[id$="-transcript"] h4{margin:1rem 0 .3rem}
+@media (max-width:600px){figure.film{margin-inline:0}.fl-chapters button{font-size:.78rem}}
