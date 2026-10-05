@@ -62,15 +62,28 @@ function loop(now) {
   raf = requestAnimationFrame(loop);
 }
 
-function noGpu(why) {
-  const c = stage.getContext("2d");
-  c.fillStyle = "#0b0b0c"; c.fillRect(0, 0, stage.width, stage.height);
-  c.fillStyle = "#cfc8bb";
-  c.font = `${Math.max(12, Math.round(stage.width / 48))}px "Hanken Grotesk", system-ui, sans-serif`;
-  c.textAlign = "center";
-  c.fillText("Worlds needs WebGPU, which this browser does not offer.", stage.width / 2, stage.height / 2);
+// Without WebGPU, the stage shows the film that holds this world instead (studio-films.js).
+let fallback = null;
+async function noGpu(why) {
   const el = document.getElementById("worlds-readout");
-  if (el) el.textContent = why;
+  if (el) el.textContent = "This browser has no WebGPU, so here is the world on film. " + why;
+  const films = await import("./studio-films.js?v=20261004-films");
+  const host = inputEl;
+  if (!host || !stage) return;
+  if (getComputedStyle(host).position === "static") host.style.position = "relative";
+  const show = () => {
+    const pick = document.getElementById("worlds-world");
+    const f = films.filmForWorld(pick ? pick.value : "eye");
+    if (fallback && fallback.dataset.film === f.id) return;
+    if (fallback) fallback.remove();
+    fallback = document.createElement("div");
+    fallback.className = "sf-fallback"; fallback.dataset.film = f.id;
+    fallback.append(films.filmPlayer(f));
+    host.append(fallback);
+  };
+  show();
+  const pick = document.getElementById("worlds-world");
+  if (pick && !pick.dataset.filmWired) { pick.dataset.filmWired = "1"; pick.addEventListener("change", () => { if (fallback) show(); }); }
 }
 
 /** Enter the source. input: the element that takes the camera's mouse, touch and keys. */
@@ -82,7 +95,7 @@ export async function enterWorlds(canvas, input, o = {}) {
     await loading;
   } catch (e) {
     loading = null;
-    noGpu(e && e.message ? e.message : String(e));
+    await noGpu(e && e.message ? e.message : String(e));
     if (o.say) o.say("model", "Worlds needs WebGPU: " + (e && e.message ? e.message : String(e)));
     return false;
   }
@@ -99,6 +112,7 @@ export function leaveWorlds() {
   if (raf) cancelAnimationFrame(raf);
   raf = 0;
   if (ctl) { ctl.detach(); ctl = null; }
+  if (fallback) { fallback.remove(); fallback = null; }
   stage = null; ctx2d = null;
 }
 

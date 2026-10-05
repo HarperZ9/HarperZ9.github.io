@@ -1323,6 +1323,11 @@
       </details>
     </div>
     <script>(function(){var d=document.getElementById("deck-more");if(!d||!window.matchMedia)return;var m=window.matchMedia("(min-width: 1280px) and (min-height: 760px)");var s=function(){d.open=m.matches;};s();if(m.addEventListener)m.addEventListener("change",s);else if(m.addListener)m.addListener(s);})();</script>
+    <!-- Films: the One Step shorts, for optional viewing. Players are built on first open
+         (system/studio-films.js); nothing loads until play, and nothing plays on its own. -->
+    <details class="engine-status studio-films" id="studio-films">
+      <summary>Films</summary>
+    </details>
     <details class="engine-status">
       <summary>Engine status</summary>
     <div class="engine-statusbar" id="engine-statusbar" aria-label="Engine runtime status">
@@ -1520,7 +1525,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261004-studio-worlds15"></script>
+<script type="module" src="system/studio.js?v=20261004-studio-films"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

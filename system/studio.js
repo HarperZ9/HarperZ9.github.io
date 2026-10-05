@@ -123,7 +123,7 @@ function mountShowcaseScene(canvas) {
 let _neural = null;
 // Worlds: raw-native raymarches the One Step worlds; studio-worlds.js copies each frame onto the stage.
 let _worlds = null;
-const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds15"), m => { _worlds = m; });
+const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds-films"), m => { _worlds = m; });
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
 const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-6f5d142"), m => { _threads = m; });
@@ -2471,6 +2471,9 @@ function initShelf() {
 initNeuralControls();
 initThreadsControls();
 initWorldsControls();
+// The Films panel fills itself the first time it is opened.
+import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
+  .catch((e) => console.error("[studio] the films panel failed to load:", e));
 initSoundControls();
 initPlotMapControls();
 initVoxelControls();
