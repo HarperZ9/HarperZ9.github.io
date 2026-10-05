@@ -107,7 +107,7 @@ def page() -> str:
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
-<link rel="stylesheet" href="system/explainer/explainer.css?v=20261004-films">
+<link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
 <link rel="stylesheet" href="system/explainer/film.css?v=20261004-films">
 </head>
 <body class="inner-clean hub-plate">

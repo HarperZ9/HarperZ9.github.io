@@ -91,6 +91,7 @@ SYSTEM_CSS_REVISION = COPY_PASS_REVISION
 REVIEWED_ASSET_REVISIONS = {
     # 3 October 2026: the live explainers (system/explainer/) join the essay and Flywheel pages.
     "system/explainer/explainer.css": "20261003-explainers",
+    "system/explainer/film.css": "20261004-films",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
