@@ -181,33 +181,27 @@ def snapshot(model_dir: Path) -> str:
     return h.hexdigest()
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("folder", type=Path)
-    ap.add_argument("out", type=Path)
-    ap.add_argument("--model", type=Path, required=True)
-    ap.add_argument("--asr", default="medium.en")
-    ap.add_argument("--device", default="cuda:0", help="cuda:0 (bfloat16) or cpu (float32)")
-    a = ap.parse_args()
+def load_models(model_dir: Path, asr_name: str, device: str):
     import torch
     from faster_whisper import WhisperModel
     from qwen_tts import Qwen3TTSModel
-
-    from tools.explainer import loudness
-    film = json.loads((a.folder / "film.json").read_text(encoding="utf-8"))
-    a.out.mkdir(parents=True, exist_ok=True)
-    cpu = a.device == "cpu"
+    cpu = device == "cpu"
     SETTINGS["dtype"] = "float32" if cpu else "bfloat16"
     SETTINGS["device"] = "cpu" if cpu else "cuda"
-    model = Qwen3TTSModel.from_pretrained(str(a.model), device_map=a.device, dtype=torch.float32 if cpu else torch.bfloat16,
+    model = Qwen3TTSModel.from_pretrained(str(model_dir), device_map=device, dtype=torch.float32 if cpu else torch.bfloat16,
                                           attn_implementation=SETTINGS["attn_implementation"])
-    asr = WhisperModel(a.asr, device="cpu", compute_type="int8")
+    return model, WhisperModel(asr_name, device="cpu", compute_type="int8")
+
+
+def speak(film: dict, model, asr, out: Path):
+    """Every sentence in order, with the pauses between them; returns the parts, timing rows and rate."""
     parts, rows, t, sr = [], [], HEAD, None
     for i, seg in enumerate(film["segments"]):
         for j, line in enumerate(seg["lines"]):
-            for k, text in enumerate(sentences(line)):
+            said = sentences(line)
+            for k, text in enumerate(said):
                 print(f"[{i}.{j}.{k}] {text}", flush=True)
-                x, row, sr = cached_take(a.out / "takes", f"{i}.{j}.{k}", text,
+                x, row, sr = cached_take(out / "takes", f"{i}.{j}.{k}", text,
                                          lambda: take(model, asr, text, f"{film['slug']}/{i}/{j}/{k}"))
                 x = level(x, sr)
                 if not parts:
@@ -217,31 +211,54 @@ def main() -> int:
                              "end": round(t + len(x) / sr, 3), "text": text, **row,
                              "accepted": row["ratio"] >= ACCEPT and row["pace_ok"]})
                 t += len(x) / sr
-                last_s = k == len(sentences(line)) - 1
                 last_l = j == len(seg["lines"]) - 1
-                gap = GAP_SEGMENT if (last_s and last_l) else GAP_LINE if last_s else GAP_SENTENCE
+                gap = GAP_SENTENCE if k < len(said) - 1 else GAP_SEGMENT if last_l else GAP_LINE
                 parts.append(np.zeros(int(gap * sr)))
                 t += int(gap * sr) / sr
+    return parts, rows, sr
+
+
+def write_wav(path: Path, parts: list, sr: int) -> dict:
+    from tools.explainer import loudness
     joined = to_rate(np.concatenate(parts), sr, RATE_OUT)  # the loudness meter takes 48 kHz, not 24
-    sr = RATE_OUT
     pcm = (joined * 32767.0).round().clip(-32768, 32767).astype("<i2").tobytes()
-    pcm, processing = loudness.normalise(pcm, sr)
-    with wave.open(str(a.out / "narration.wav"), "wb") as w:
+    pcm, processing = loudness.normalise(pcm, RATE_OUT)
+    with wave.open(str(path), "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
-        w.setframerate(sr)
+        w.setframerate(RATE_OUT)
         w.writeframes(pcm)
-    (a.out / "timing.json").write_text(json.dumps(rows, indent=1) + "\n", encoding="utf-8", newline="\n")
-    flagged = [r for r in rows if not r["accepted"]]
-    info = {"backend": "qwen3-tts-local", "hosted": False, "model": "Qwen3-TTS-12Hz-1.7B-Base + the author's fine-tune",
-            "fine_tune_sha256": snapshot(a.model), "package": "qwen-tts 0.1.1", "settings": SETTINGS,
+    return processing
+
+
+def describe(rows: list[dict], processing: dict, model_dir: Path, asr_name: str) -> dict:
+    sampling = ("CPU float32 sampling" if SETTINGS["device"] == "cpu" else "GPU sampling")
+    return {"backend": "qwen3-tts-local", "hosted": False, "model": "Qwen3-TTS-12Hz-1.7B-Base + the author's fine-tune",
+            "fine_tune_sha256": snapshot(model_dir), "package": "qwen-tts 0.1.1", "settings": SETTINGS,
             "label": "A synthesized version of the author's voice, from a model fine-tuned on his recordings with his approval.",
-            "asr_check": {"engine": "faster-whisper", "model": a.asr, "device": "cpu int8", "accept_ratio": ACCEPT,
-                          "tries": TRIES, "sentences": len(rows), "flagged": len(flagged),
+            "asr_check": {"engine": "faster-whisper", "model": asr_name, "device": "cpu int8", "accept_ratio": ACCEPT,
+                          "tries": TRIES, "sentences": len(rows), "flagged": sum(not r["accepted"] for r in rows),
                           "mean_ratio": round(float(np.mean([r["ratio"] for r in rows])), 4)},
-            "loudness": processing, "rate": sr, "reproducible": False,
+            "loudness": processing, "rate": RATE_OUT, "reproducible": False,
             "does_not_prove": ["An ASR match shows the words were spoken as written; it does not show they sound natural.",
-                               "GPU sampling is not bit-exact, so the same seeds can give different audio on a rerun."]}
+                               f"Seeds are recorded, but {sampling} was not checked for bit-exact reruns, so a rerun may differ."]}
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
+    ap.add_argument("folder", type=Path)
+    ap.add_argument("out", type=Path)
+    ap.add_argument("--model", type=Path, required=True)
+    ap.add_argument("--asr", default="medium.en")
+    ap.add_argument("--device", default="cuda:0", help="cuda:0 (bfloat16) or cpu (float32)")
+    a = ap.parse_args()
+    film = json.loads((a.folder / "film.json").read_text(encoding="utf-8"))
+    a.out.mkdir(parents=True, exist_ok=True)
+    model, asr = load_models(a.model, a.asr, a.device)
+    parts, rows, sr = speak(film, model, asr, a.out)
+    processing = write_wav(a.out / "narration.wav", parts, sr)
+    (a.out / "timing.json").write_text(json.dumps(rows, indent=1) + "\n", encoding="utf-8", newline="\n")
+    info = describe(rows, processing, a.model, a.asr)
     (a.out / "narration.json").write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(info["asr_check"]), processing.get("after_lufs"))
     return 0

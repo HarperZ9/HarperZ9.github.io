@@ -1,0 +1,102 @@
+{
+  "schema": "explainer-film-receipt/1",
+  "slug": "checking-cost",
+  "title": "Claiming got cheap. Checking did not.",
+  "page": "explainers.html#checking-cost",
+  "script": {
+    "path": "media/explainers/checking-cost/film.json",
+    "sha256": "50961672e0343998be7693a0b9ab377c7aa86ea07a8c8161c3e145f76d0857f5"
+  },
+  "evidence": {
+    "path": "media/explainers/checking-cost/evidence.json",
+    "sha256": "bf36f2204c9f04389e3b138fad7b2f26e96dfb2b7c2950f75f65361dc6389870"
+  },
+  "render_code": {
+    "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
+    "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
+    "tools/explainer/film/figures.py": "087051643df9d66bdb572cd398ba89bf26fc4a19139d9fa209caf5c14202ff93",
+    "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
+    "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
+    "tools/explainer/film/narrate.py": "91cfe03f606ef2289aa695e90c4e96d3a89c2852a4383ffee60d18c4eaa4aa55"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "os": "Windows-11-10.0.26220-SP0",
+    "plate": "GLSL 330 on moderngl, headless, GPU"
+  },
+  "narration": {
+    "wav_sha256": "bb8fc56f56c0c4e9dc1f43b5dac9f5cb8eb3cedf28bd4e27086bcecaeb7fbc77",
+    "seconds": 175.96,
+    "backend": "qwen3-tts-local",
+    "hosted": false,
+    "model": "Qwen3-TTS-12Hz-1.7B-Base + the author's fine-tune",
+    "fine_tune_sha256": "629342643caee8b5b2df4117f482ee758a447709d5ec6fb79eb6b09140686838",
+    "package": "qwen-tts 0.1.1",
+    "settings": {
+      "dtype": "float32",
+      "attn_implementation": "sdpa",
+      "do_sample": true,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 1.0,
+      "repetition_penalty": 1.05,
+      "subtalker_temperature": 0.9,
+      "subtalker_top_k": 50,
+      "language": "Auto",
+      "speaker": "author",
+      "mode": "custom_voice",
+      "device": "cpu"
+    },
+    "label": "A synthesized version of the author's voice, from a model fine-tuned on his recordings with his approval.",
+    "asr_check": {
+      "engine": "faster-whisper",
+      "model": "medium.en",
+      "device": "cpu int8",
+      "accept_ratio": 0.92,
+      "tries": 5,
+      "sentences": 37,
+      "flagged": 0,
+      "mean_ratio": 0.9918
+    },
+    "loudness": {
+      "rule": "explainer-speech-normalise/1",
+      "meter": "superstack-bs1770/1",
+      "target_lufs": -16.0,
+      "before_lufs": -22.06,
+      "before_peak_dbfs": -5.5,
+      "gain_db": 6.12,
+      "limiter": {
+        "ceiling_dbfs": -2.0,
+        "lookahead_s": 0.02,
+        "oversample": 4
+      },
+      "after_lufs": -16.0,
+      "after_peak_dbfs": -2.0,
+      "sample_peak_headroom_db": 0.5
+    },
+    "rate": 48000,
+    "reproducible": false,
+    "does_not_prove": [
+      "An ASR match shows the words were spoken as written; it does not show they sound natural.",
+      "Seeds are recorded, but CPU float32 sampling was not checked for bit-exact reruns, so a rerun may differ."
+    ],
+    "narrated_with": {
+      "code": "tools/explainer/film/narrate.py at commit 9ed4ea7 (later split into helpers with no change in behaviour)",
+      "sha256": "1d302c11a7ccf4e2effbbc297792853aa0135af8bda0e1044619d1d323ea998d"
+    },
+    "correction_2026_10_04": "The first write of this file said GPU sampling; the narration ran on the CPU in float32."
+  },
+  "frames": 5324,
+  "fps": 30,
+  "seconds": 177.46666666666667,
+  "frame_chain_sha256": "5cd9370988a8d09ee6b9d403f1af5afadafd26f7b0b8fcf1ab1e4bc1aaa27ff5",
+  "outputs": {
+    "checking-cost.mp4": "02793ba3c5ecc3f237ad730a7510641a3f9cffeb5cbe1d498365d8ecaf51ccf5",
+    "checking-cost.vtt": "b100a8d9a2f67113067c75bebfb69ca99ec0c5c216b05f0c1ca25a2613547f0a",
+    "checking-cost.srt": "5d220119850a63dc7818a974ff7bff44f478ef8d78a4ed148feb1bf4bb491408",
+    "poster.jpg": "91d6fec8c8e48774a82b3ac190a0d0f44b0fc755a302a7aea9a02c3518e61b2b",
+    "timing.json": "698e3ff04b82a95f75de7eb6d71e047ed910f554a60da8ba256a2381a733d6f7"
+  },
+  "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+}

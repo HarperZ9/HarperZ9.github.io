@@ -1,0 +1,166 @@
+1
+00:00:00,600 --> 00:00:01,920
+Claiming got cheap.
+
+2
+00:00:02,240 --> 00:00:03,340
+Checking did not.
+
+3
+00:00:04,540 --> 00:00:09,460
+Here is a reference: two authors, a year, a title, a journal and some page numbers.
+
+4
+00:00:10,060 --> 00:00:12,260
+It looks like every other reference you have read.
+
+5
+00:00:12,580 --> 00:00:14,140
+I made it up for this video.
+
+6
+00:00:14,740 --> 00:00:20,180
+A chatbot can write one like it in under a second, and nothing on the page tells you
+whether the work exists.
+
+7
+00:00:20,780 --> 00:00:23,260
+To find out, someone has to go and look for it.
+
+8
+00:00:24,460 --> 00:00:29,940
+In 2023, William Walters and Esther Wilder had ChatGPT write eighty-four short
+literature reviews, and then they searched for every one of the six hundred and
+
+9
+00:00:29,940 --> 00:00:35,420
+thirty-six references.
+
+10
+00:00:36,020 --> 00:00:40,920
+Fifty-five percent of the references from GPT-3.5 did not exist.
+
+11
+00:00:41,240 --> 00:00:44,080
+For GPT-4, the share was eighteen percent.
+
+12
+00:00:44,680 --> 00:00:52,400
+Many of the real ones were wrong in their details too: forty-three percent for
+GPT-3.5 and twenty-four percent for GPT-4.
+
+13
+00:00:53,000 --> 00:00:55,680
+On the page, the invented and the real look the same.
+
+14
+00:00:56,000 --> 00:00:57,740
+Only the search told them apart.
+
+15
+00:00:58,940 --> 00:01:01,020
+Science already pays people to check.
+
+16
+00:01:01,340 --> 00:01:06,540
+By reviewers' own reports, one peer review takes about six hours of a skilled
+person's time.
+
+17
+00:01:07,140 --> 00:01:11,940
+Balazs Aczel and colleagues estimated about twenty-two million reviews in 2020.
+
+18
+00:01:12,260 --> 00:01:17,760
+Six hours each comes to over a hundred million hours: about fifteen thousand years
+of work, spent in one year.
+
+19
+00:01:18,360 --> 00:01:23,760
+It is an estimate built from approximate rates, and the authors expect the true
+figure to be higher.
+
+20
+00:01:24,960 --> 00:01:27,220
+Meanwhile, the unchecked claim does not wait.
+
+21
+00:01:27,540 --> 00:01:37,700
+Soroush Vosoughi, Deb Roy and Sinan Aral followed about a hundred and twenty-six
+thousand rumor cascades on Twitter, from 2006 to 2017.
+
+22
+00:01:38,300 --> 00:01:44,860
+False stories were seventy percent more likely to be retweeted, and the truth took
+about six times as long to reach fifteen hundred people.
+
+23
+00:01:45,460 --> 00:01:50,040
+Bots sped up true and false news at the same rate, which points to people as the
+difference.
+
+24
+00:01:50,640 --> 00:01:52,960
+That study measures spread, not cost.
+
+25
+00:01:53,280 --> 00:01:57,820
+The old line that refuting a claim takes ten times the effort of making it is an
+adage.
+
+26
+00:01:58,140 --> 00:02:00,160
+Nobody has measured that ratio.
+
+27
+00:02:01,360 --> 00:02:07,060
+Claims got cheap, and a check still costs hours, so the gap can only close from the
+checking side.
+
+28
+00:02:07,660 --> 00:02:11,340
+When the data travel with the claim, a check becomes a rerun.
+
+29
+00:02:11,660 --> 00:02:17,020
+Tom Hardwicke and colleagues tried to reproduce the numbers in thirty-five
+psychology papers that shared their data.
+
+30
+00:02:17,620 --> 00:02:22,380
+Where the numbers came out straight away, a check took about two to four person
+hours, by their estimate.
+
+31
+00:02:22,700 --> 00:02:27,960
+Where they had to ask the authors for help, it took five to twenty-five, and weeks
+of waiting.
+
+32
+00:02:28,560 --> 00:02:33,020
+Thirteen of the thirty-five still had at least one number nobody could reproduce.
+
+33
+00:02:33,340 --> 00:02:38,260
+None of those misses clearly changed a paper's conclusion, and the rerun is how
+anyone knows that.
+
+34
+00:02:39,460 --> 00:02:40,600
+Two things to keep.
+
+35
+00:02:40,920 --> 00:02:43,800
+How a claim looks tells you nothing about whether it holds.
+
+36
+00:02:44,400 --> 00:02:48,280
+And the cheapest check is the one that ships with the claim, so anyone can rerun it.
+
+37
+00:02:48,880 --> 00:02:51,520
+The voice you heard is a synthesized version of mine.
+
+38
+00:02:51,840 --> 00:02:54,760
+Every number on screen links to its source under the video.

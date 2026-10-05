@@ -4,7 +4,7 @@
     python -m tools.explainer.film.render media/explainers/checking-cost --preview          # CPU sheet
     python -m tools.explainer.film.render media/explainers/checking-cost --check            # hashes
 
-DIR holds narration.wav and timing.json from narrate.py. The narration is sampled on a GPU, so
+DIR holds narration.wav and timing.json from narrate.py. The narration is sampled from a speech model, so
 it does not rebuild bit for bit; the receipt records its hash and says so.
 """
 
@@ -28,8 +28,8 @@ FPS = 30
 TAIL = 1.5  # seconds of the last frame held after the narration ends
 DOES_NOT_PROVE = ("Matching hashes show these files are the ones this render made from this script, code and "
                   "narration. They do not show that the explanation is correct or that it teaches. The narration "
-                  "is a synthesized version of the author's voice, sampled on a GPU, so a rerun does not give the "
-                  "same audio bytes.")
+                  "is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not "
+                  "give the same audio bytes.")
 
 
 def sha(p: Path) -> str:
@@ -132,30 +132,19 @@ def preview(folder: Path) -> Path:
     return out
 
 
-def build(folder: Path, narration: Path, use_plate: bool = True) -> dict:
-    import imageio_ffmpeg
+def encode(ffmpeg: str, film, evidence, timing, total: float, wav: Path, mp4: Path, plate):
+    """Pipe every frame to ffmpeg with the narration; return the frame-chain hash and the poster."""
     from PIL import Image
     from tools.explainer.film import figures
-    from tools.explainer.film.plate import Plate
-    film, evidence = load(folder)
-    slug = film["slug"]
-    timing = json.loads((narration / "timing.json").read_text(encoding="utf-8"))
-    wav = narration / "narration.wav"
-    with wave.open(str(wav)) as w:
-        speech = w.getnframes() / w.getframerate()
-    total = round((speech + TAIL) * FPS) / FPS
-    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
-    mp4 = folder / f"{slug}.mp4"
     cmd = [ffmpeg, "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{figures.W}x{figures.H}",
            "-r", str(FPS), "-i", "-", "-i", str(wav), "-af", "apad", "-c:v", "libx264", "-preset", "slow", "-crf", "20",
            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-map_metadata", "-1", "-movflags", "+faststart",
            "-shortest", str(mp4)]
     enc = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    plate = Plate(figures.W, figures.H, film["seed"]) if use_plate else None
     chain, poster = hashlib.sha256(), None
     poster_at = film.get("poster", {"segment": 2, "u": 0.9})
     try:
-        for t, st, frame in frames(film, evidence, timing, total, plate):
+        for _, st, frame in frames(film, evidence, timing, total, plate):
             raw = frame.tobytes()
             chain.update(hashlib.sha256(raw).digest())
             enc.stdin.write(raw)
@@ -166,7 +155,24 @@ def build(folder: Path, narration: Path, use_plate: bool = True) -> dict:
         if plate:
             plate.release()
     if enc.wait() != 0:
-        raise RuntimeError(f"{slug}: ffmpeg failed")
+        raise RuntimeError(f"{film['slug']}: ffmpeg failed")
+    return chain, poster
+
+
+def build(folder: Path, narration: Path, use_plate: bool = True) -> dict:
+    import imageio_ffmpeg
+    from tools.explainer.film import figures
+    from tools.explainer.film.plate import Plate
+    film, evidence = load(folder)
+    slug = film["slug"]
+    timing = json.loads((narration / "timing.json").read_text(encoding="utf-8"))
+    wav = narration / "narration.wav"
+    with wave.open(str(wav)) as w:
+        speech = w.getnframes() / w.getframerate()
+    total = round((speech + TAIL) * FPS) / FPS
+    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    plate = Plate(figures.W, figures.H, film["seed"]) if use_plate else None
+    chain, poster = encode(ffmpeg, film, evidence, timing, total, wav, folder / f"{slug}.mp4", plate)
     poster.save(folder / "poster.jpg", quality=88)
     write_captions(folder, slug, timing)
     (folder / "timing.json").write_text(json.dumps(timing, indent=1) + "\n", encoding="utf-8", newline="\n")
