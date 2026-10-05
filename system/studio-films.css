@@ -1,0 +1,10 @@
+/* The Films panel under the Studio stage, and the Worlds fallback clip. */
+html body.studio-page .sf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1rem;margin:.75rem 0 0}
+html body.studio-page .sf-film{margin:0}
+html body.studio-page .sf-film video{display:block;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--st-line, rgba(0,0,0,.2))}
+html body.studio-page .sf-film figcaption{font-family:var(--st-sans, system-ui);font-size:.8rem;line-height:1.45;color:var(--st-soft, #555);margin-top:.4rem}
+html body.studio-page .sf-film figcaption b{font-weight:600;color:var(--st-ink, #111)}
+html body.studio-page .sf-film figcaption a{margin-left:.25rem}
+html body.studio-page .sf-fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;background:#0b0b0c;z-index:3;padding:.5rem}
+html body.studio-page .sf-fallback .sf-film figcaption{color:#cfc8bb}
+html body.studio-page .sf-fallback .sf-film figcaption b{color:#f2ede4}
