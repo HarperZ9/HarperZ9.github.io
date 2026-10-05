@@ -8,3 +8,4 @@ html body.studio-page .sf-film figcaption a{margin-left:.25rem}
 html body.studio-page .sf-fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;background:#0b0b0c;z-index:3;padding:.5rem}
 html body.studio-page .sf-fallback .sf-film figcaption{color:#cfc8bb}
 html body.studio-page .sf-fallback .sf-film figcaption b{color:#f2ede4}
+html body.studio-page .sf-fallback .sf-film figcaption a{color:#f2ede4}

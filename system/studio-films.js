@@ -29,7 +29,7 @@ export const posterUrl = (f) => POSTERS + f.id + ".jpg";
 function css() {
   if (document.getElementById("studio-films-css")) return;
   const l = document.createElement("link");
-  l.id = "studio-films-css"; l.rel = "stylesheet"; l.href = new URL("studio-films.css?v=20261004-films", import.meta.url).href;
+  l.id = "studio-films-css"; l.rel = "stylesheet"; l.href = new URL("studio-films.css?v=20261004-films2", import.meta.url).href;
   document.head.append(l);
 }
 

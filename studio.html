@@ -210,6 +210,11 @@
           <input type="range" class="at-slider" id="worlds-motion" min="0" max="3" step="0.05" value="1" aria-label="Speed of the motion in the world">
         </div>
         <label class="at-check"><input type="checkbox" id="worlds-tour" checked> Tour when idle</label>
+        <label class="at-check"><input type="checkbox" id="worlds-threads"> Light threads along the surfaces</label>
+        <div class="at-group">
+          <span class="at-glab">Thread trails <span class="hint">(<span id="worlds-trails-val">0.90</span>)</span></span>
+          <input type="range" class="at-slider" id="worlds-trails" min="0.5" max="0.98" step="0.01" value="0.9" aria-label="How long the light threads leave trails">
+        </div>
         <p class="src-hint" id="worlds-readout" aria-live="off">starting the GPU</p>
       </section>
       <section class="src-block" id="src-threads" role="tabpanel" aria-label="Threads controls" hidden>
@@ -1525,7 +1530,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261004-studio-films"></script>
+<script type="module" src="system/studio.js?v=20261004-studio-threads3d"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

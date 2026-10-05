@@ -21,7 +21,8 @@ struct Uni {
     res: vec4f,       // width, height, 1 / width, 1 / height
     time: f32, steps: f32, shadowSteps: f32, aoOn: f32,
     pick: vec4f,      // x, y in pixels, z 1 when a pick is asked for
-    params: vec4f,    // world controls: x light, y fog, z motion, w unused
+    params: vec4f,    // world controls: x light, y fog, z motion, w growth (forest)
+    extra: vec4f,     // light threads: x persistence, y brightness
 }
 @group(0) @binding(0) var<uniform> U: Uni;
 @group(0) @binding(1) var<storage, read_write> pickOut: array<f32>;
@@ -869,7 +870,74 @@ fn overlay(ro: vec3f, rd: vec3f, tmax: f32, c: vec3f) -> vec3f {
     return c + vec3f(0.9, 0.95, 1.0) * glints * 0.6;
 }
 
+//@threads
+// The light-thread layer: particles that run along the world's surfaces at a
+// small standoff, then splat into a fixed-point buffer behind a depth test
+// against the raymarched frame. Compiled with the prelude and one world.
+struct Part { pos: vec4f, vel: vec4f, }   // pos.w age, vel.w seed
+@group(0) @binding(2) var<storage, read_write> parts: array<Part>;
+@group(0) @binding(3) var<storage, read_write> glow: array<atomic<u32>>;
+@group(0) @binding(4) var<storage, read> depthIn: array<f32>;
+const STANDOFF: f32 = 0.035;
+fn gradN(p: vec3f) -> vec3f {
+    let e = vec2f(0.004, 0.0);
+    return normalize(vec3f(map(p + e.xyy).x - map(p - e.xyy).x, map(p + e.yxy).x - map(p - e.yxy).x, map(p + e.yyx).x - map(p - e.yyx).x));
+}
+fn settle(p0: vec3f) -> vec3f {
+    var p = p0;
+    for (var i = 0; i < 6; i++) { let d = map(p).x; p -= gradN(p) * (d - STANDOFF); }
+    return p;
+}
+@compute @workgroup_size(256)
+fn advance(@builtin(global_invocation_id) gid: vec3u) {
+    let i = gid.x;
+    if (i >= arrayLength(&parts)) { return; }
+    var q = parts[i];
+    let seed = q.vel.w;
+    var p = q.pos.xyz;
+    var age = q.pos.w;
+    let dt = 1.0 / 60.0;
+    if (age <= 0.0 || abs(map(p).x - STANDOFF) > 0.2) {
+        let h = hash33(vec3f(seed * 91.7, U.time * 1.3, f32(i) * 0.013));
+        p = settle(vec3f(h.x * 6.0 - 3.0, h.y * 2.8, h.z * 6.0 - 3.0));
+        age = 1.5 + 4.0 * hash11(seed + U.time);
+    } else {
+        let n = gradN(p);
+        let swirl = vec3f(sin(seed * 40.0 + U.time * 0.3), cos(seed * 23.0), sin(seed * 17.0 - U.time * 0.2));
+        let tang = normalize(cross(n, normalize(swirl + vec3f(0.0, 0.001, 0.0))));
+        let d = map(p).x;
+        p += (tang * (0.35 + 0.3 * fract(seed * 7.1)) - n * (d - STANDOFF) * 8.0) * dt;
+        age -= dt;
+    }
+    q.pos = vec4f(p, age); parts[i] = q;
+    // project and splat behind the depth test
+    let v = p - U.eye.xyz;
+    let z = dot(v, U.fwd.xyz);
+    if (z < 0.05) { return; }
+    let aspect = U.res.x * U.res.w;
+    let sx = dot(v, U.right.xyz) / (z * U.eye.w * aspect);
+    let sy = dot(v, U.up.xyz) / (z * U.eye.w);
+    if (abs(sx) >= 1.0 || abs(sy) >= 1.0) { return; }
+    let px = u32((sx * 0.5 + 0.5) * U.res.x);
+    let py = u32((0.5 - sy * 0.5) * U.res.y);
+    let k = py * u32(U.res.x) + px;
+    let dist = length(v);
+    if (dist > depthIn[k] + 0.02) { return; }
+    let fade = smoothstep(0.0, 0.6, age) * (0.6 + 0.4 * fract(seed * 13.0));
+    let col = mix(vec3f(1.0, 0.75, 0.45), vec3f(0.55, 0.8, 1.0), step(0.7, fract(seed * 5.3))) * fade * 256.0;
+    atomicAdd(&glow[k * 3u], u32(col.x));
+    atomicAdd(&glow[k * 3u + 1u], u32(col.y));
+    atomicAdd(&glow[k * 3u + 2u], u32(col.z));
+}
+@compute @workgroup_size(256)
+fn decay(@builtin(global_invocation_id) gid: vec3u) {
+    let i = gid.x * 3u;
+    if (i + 2u >= arrayLength(&glow)) { return; }
+    for (var c = 0u; c < 3u; c++) { atomicStore(&glow[i + c], u32(f32(atomicLoad(&glow[i + c])) * U.extra.x)); }
+}
+
 //@main
+@group(0) @binding(2) var<storage, read_write> depthOut: array<f32>;
 fn calcNormal(p: vec3f, t: f32) -> vec3f {
     let e = max(0.0005, 0.0006 * t);
     let k = vec2f(1.0, -1.0);
@@ -980,6 +1048,7 @@ fn aces(x: vec3f) -> vec3f { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 *
     let scatter = pow(max(dot(rd, e.sunDir), 0.0), 8.0);
     c = mix(c, e.fogCol + e.sunCol * scatter * 0.25, fogAmt);
     c = overlay(ro, rd, t, c);
+    depthOut[u32(frag.y) * u32(U.res.x) + u32(frag.x)] = t;
     if (U.pick.z > 0.5 && abs(frag.x - U.pick.x) < 0.5 && abs(frag.y - U.pick.y) < 0.5) {
         pickOut[0] = select(-1.0, t, hit.y >= 0.0);
     }
