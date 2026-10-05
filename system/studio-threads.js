@@ -3,7 +3,7 @@
 // pinned). The host draws on its own WebGPU canvas; each frame is copied onto the Studio's
 // 2D canvas in the same task, so perception, PNG and video export read it like any source.
 // Without WebGPU the source says so on the stage and draws nothing else.
-const RAW = "../media/raw-native/web-6f5d142/";
+const RAW = "../media/raw-native/web-f2cd6e9/";
 const MOTION_STILL_FRAMES = 150;
 
 let host = null, threads = null, gpuCanvas = null, loading = null;

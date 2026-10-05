@@ -194,7 +194,7 @@ jobs:
         run: sha256sum -c --strict SHA256SUMS
       - name: raw-native web GPU host matches its SHA256SUMS
         if: ${{ !cancelled() }}
-        working-directory: media/raw-native/web-6f5d142
+        working-directory: media/raw-native/web-f2cd6e9
         run: sha256sum -c --strict SHA256SUMS
       - name: Sealed files are checked out byte for byte
         if: ${{ !cancelled() }}

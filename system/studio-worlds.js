@@ -3,7 +3,7 @@
 // onto the Studio's 2D stage in the same task, so perception and export read it like any source.
 // Camera: wheel-click drag to orbit, wheel to zoom, shift or right drag to pan, WASD and Q E to fly,
 // double-click to focus, R to reset; touch orbit, pinch and pan. Idle for a while and it tours.
-const RAW = "../media/raw-native/web-6f5d142/";
+const RAW = "../media/raw-native/web-f2cd6e9/";
 const TOUR_AFTER_MS = 6000;
 
 let host = null, worlds = null, ctl = null, gpuCanvas = null, loading = null, mod = null;

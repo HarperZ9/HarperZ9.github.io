@@ -123,10 +123,10 @@ function mountShowcaseScene(canvas) {
 let _neural = null;
 // Worlds: raw-native raymarches the One Step worlds; studio-worlds.js copies each frame onto the stage.
 let _worlds = null;
-const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds-films"), m => { _worlds = m; });
+const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds-threads3d"), m => { _worlds = m; });
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
-const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-6f5d142"), m => { _threads = m; });
+const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-f2cd6e9"), m => { _threads = m; });
 const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
@@ -909,7 +909,8 @@ function initWorldsControls() {
   on("worlds-reset", "click", () => { if (_worlds) _worlds.resetWorldsView(); });
   on("worlds-world", "change", (el) => apply({ world: el.value }));
   on("worlds-tour", "change", (el) => apply({ tour: el.checked }));
-  for (const [id, key] of [["worlds-quality", "quality"], ["worlds-light", "light"], ["worlds-fog", "fog"], ["worlds-motion", "motion"]]) {
+  on("worlds-threads", "change", (el) => apply({ threads: el.checked }));
+  for (const [id, key] of [["worlds-quality", "quality"], ["worlds-light", "light"], ["worlds-fog", "fog"], ["worlds-motion", "motion"], ["worlds-trails", "threadPersistence"]]) {
     on(id, "input", (el) => {
       const out = document.getElementById(id + "-val");
       if (out) out.textContent = Number(el.value).toFixed(2);

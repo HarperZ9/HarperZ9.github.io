@@ -43,9 +43,11 @@ async function pick(page, source) {
       const readout = (await page.textContent('#worlds-readout')).trim();
       if (gpu) {
         assert.match(readout, /rendered at/, `${tag} the readout names the render size: ${readout}`);
-        await page.locator('#worlds-motion').fill('0'); await page.locator('#worlds-motion').dispatchEvent('input');
-        await wait(page, 300);
+        // Pause: the world's clock and its film grain stop, so two frames match until something moves.
+        await page.locator('#worlds-play').click(); await wait(page, 500);
         const a = await hash(page);
+        await wait(page, 300);
+        assert.equal((await hash(page)).s, a.s, `${tag} a paused world holds still (control)`);
         assert.ok(a.lit > 500, `${tag} the stage shows a lit world (${a.lit})`);
         if (!view.mobile) {
           const box = await page.locator('#viewport-stage').boundingBox();
@@ -58,6 +60,11 @@ async function pick(page, source) {
           await page.mouse.wheel(0, -300); await wait(page, 300);
           assert.notEqual((await hash(page)).s, b.s, `${tag} the wheel zooms`);
         }
+        // The world is paused, so any change is the threads.
+        const still = await hash(page);
+        await page.locator('#worlds-threads').check(); await wait(page, 2500);
+        assert.notEqual((await hash(page)).s, still.s, `${tag} the light threads draw over the world`);
+        await page.locator('#worlds-threads').uncheck(); await wait(page, 300);
         const before = await hash(page);
         await page.selectOption('#worlds-world', 'many'); await wait(page, 2500);
         assert.notEqual((await hash(page)).s, before.s, `${tag} the picker changes the world`);
