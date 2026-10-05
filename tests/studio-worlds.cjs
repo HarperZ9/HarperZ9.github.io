@@ -59,8 +59,9 @@ async function pick(page, source) {
           assert.notEqual((await hash(page)).s, b.s, `${tag} the wheel zooms`);
         }
         const before = await hash(page);
-        await page.selectOption('#worlds-world', 'swing'); await wait(page, 2500);
+        await page.selectOption('#worlds-world', 'many'); await wait(page, 2500);
         assert.notEqual((await hash(page)).s, before.s, `${tag} the picker changes the world`);
+        assert.equal(await page.locator('#worlds-world option').count(), 15, `${tag} all fifteen worlds are in the picker`);
       } else {
         assert.match(readout, /WebGPU|adapter/i, `${tag} without WebGPU the readout says why: ${readout}`);
       }

@@ -123,10 +123,10 @@ function mountShowcaseScene(canvas) {
 let _neural = null;
 // Worlds: raw-native raymarches the One Step worlds; studio-worlds.js copies each frame onto the stage.
 let _worlds = null;
-const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds"), m => { _worlds = m; });
+const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds15"), m => { _worlds = m; });
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
-const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-05a6cdd"), m => { _threads = m; });
+const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-6f5d142"), m => { _threads = m; });
 const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
@@ -5702,6 +5702,9 @@ $("rt-reset").addEventListener("click", () => {
   } else if (activeSource === "fractal3d" && fractal3dHandle && fractal3dHandle.reset) {
     fractal3dHandle.reset();
     say("model", "Camera reset, back to the default orbit.");
+  } else if (activeSource === "worlds" && _worlds) {
+    _worlds.resetWorldsView();
+    say("model", "Camera back where this world starts.");
   } else if (activeSource === "ndim") {
     // Reset the nD orbit camera to its default framing (paint overrides are kept; clear them
     // separately via the palette's Clear button).
