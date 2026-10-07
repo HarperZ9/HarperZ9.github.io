@@ -6,6 +6,7 @@ const { chromium } = require('playwright');
 (async () => {
   const root = (process.env.SITE_BASE_URL || 'http://127.0.0.1:8802').replace(/\/$/, '');
   const output = process.env.QA_OUTPUT || 'qa/career-browser';
+  const reviewed = JSON.parse(fs.readFileSync(path.join(__dirname, '../career/resume-source.json'), 'utf8')).reviewed;
   fs.mkdirSync(output, {recursive:true});
   const browser = await chromium.launch({channel:process.env.BROWSER_CHANNEL || 'chrome', headless:true});
   const routes = ['hire.html', 'resume.html', 'resume-support-operations.html', 'resume-evaluation-tooling.html', 'resume-grounds.html', 'resume-public-operations.html', 'cv.html'];
@@ -21,7 +22,7 @@ const { chromium } = require('playwright');
       assert.equal(await page.locator('#site-nav a').count() > 0, true, route + ': navigation');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, route + ': horizontal overflow');
       const body = await page.locator('main').innerText();
-      assert.ok(body.includes('2026-09-20'), route + ': stale release');
+      assert.ok(body.includes(`Updated ${reviewed}`), route + ': stale release');
       for (const link of await page.locator('a[download]').evaluateAll(a => a.map(x => x.href))) downloads.add(link);
       await page.screenshot({path:path.join(output,`${route.replace('.html','')}-${width}.png`),fullPage:true});
       results.push({route,width,status:response.status(),horizontalOverflow:false});

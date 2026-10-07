@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-09-30",
+  "reviewed": "2026-10-07",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -906,10 +906,10 @@
         },
         {
           "kind": "p",
-          "text": "Primary owned platform. The September 29, 2026 v1.1.2 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
+          "text": "Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
           "evidence": [
             "flywheel",
-            "flywheel-v1.1.2-release"
+            "flywheel-150"
           ]
         },
         {
@@ -941,6 +941,13 @@
           ]
         },
         {
+          "kind": "li",
+          "text": "Released a monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the admission check and no installed signer; Windows anchoring was parse-checked only.",
+          "evidence": [
+            "flywheel-150"
+          ]
+        },
+        {
           "kind": "h3",
           "text": "Accountable Surface | Governed actions and computer-use adapters"
         },
@@ -964,10 +971,10 @@
         },
         {
           "kind": "p",
-          "text": "Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.5.2, released September 29, 2026, adds guarded host editing through local MCP and a released plugin.",
+          "text": "Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.9.0, released October 3, 2026, adds project-specific writing rules, domain profiles, writing-process records, and reports of guarded edits. Detector rules retain the published v0.5.2 fingerprint.",
           "evidence": [
             "articulate",
-            "articulate-v0.5.2-release"
+            "articulate-090"
           ]
         },
         {
@@ -976,7 +983,7 @@
         },
         {
           "kind": "p",
-          "text": "Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform rather than representing separate claims of deployment at customer scale.",
+          "text": "Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform. Customer-scale deployment is not established.",
           "evidence": [
             "relay",
             "plexus",
@@ -1196,7 +1203,7 @@
         },
         {
           "kind": "p",
-          "text": "AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings rather than treating every completed run as success.",
+          "text": "AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings. A completed run alone does not establish success.",
           "evidence": [
             "history",
             "flywheel",
@@ -1378,7 +1385,7 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge is grounded in field work, not a separately claimed professional license.",
+          "text": "Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work; no separate professional license is claimed.",
           "evidence": [
             "history"
           ]

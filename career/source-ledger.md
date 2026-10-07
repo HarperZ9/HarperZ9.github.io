@@ -1,6 +1,6 @@
 # Career source ledger
 
-Reviewed September 30, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
+Reviewed October 7, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
 
 ## Recovery and authority
 
@@ -651,3 +651,19 @@ Google Skills / Google Cloud awarded Google Security Operations - Deep Dive as a
 Official course description: https://www.skills.google/course_templates/972
 
 Assessed topics cover YARA-L detection concepts, SIEM ingestion/normalization/entity enrichment, and SOAR integrations and administrative settings. This records knowledge-assessment completion; no practical lab, optional lesson completion, study hours, professional certification, employment experience, or production implementation is claimed.
+
+## October 7, 2026 release review
+
+The four targeted resumes retain their existing role focus and one-page layout. The full CV now records Flywheel v1.5.0 and Articulate v0.9.0 against their GitHub releases. The credential inventory retains issuer titles and distinguishes vendor certifications, Applied Skills, assessed badges, and course completion.
+
+### flywheel-150
+
+https://github.com/HarperZ9/flywheel/releases/tag/v1.5.0
+
+Published October 4, 2026. The Windows installer is attached to the release. The monitor-admission check contains 2,676 frozen items and six planted controls. Release evidence reports no real monitor tested through the check and no installed signer; Windows anchoring was parse-checked only. The second math kernel leaves specification fidelity unverified.
+
+### articulate-090
+
+https://github.com/HarperZ9/articulate/releases/tag/v0.9.0
+
+Published October 3, 2026. Includes project writing rules, domain profiles, writing-process records, and guarded edit reports. Detector rules retain the published v0.5.2 fingerprint. Articulate MCP reported version 0.9.0 during this review.

@@ -1,36 +1,36 @@
 {
   "artifacts": [
     {
-      "byte_length": 45711,
-      "extraction_sha256": "a082da65dbc7dba11087c99ed1a1d08058c34ee7b47769c2bcdf2678594d6160",
+      "byte_length": 45850,
+      "extraction_sha256": "c317f28543a091ef3d5d9d42d5792062619f154325ae8cbba08bb9baaae3e21b",
       "format": "docx",
       "lane_id": "page:cv",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-CV.docx",
-      "sha256": "e9b4a74b48e781c4c135ce68a5e9a10ff916d8f102d72695995f8fb82a66dbed",
+      "sha256": "bd528589d043e65e46f8f00ea373cb65a93f798bf467002306e4282a00098bbf",
       "source": "cv.html"
     },
     {
-      "byte_length": 17939,
-      "extraction_sha256": "42b8ba485d5dd117774e6f9d5d23dd2309839d0a738652150904dd2dc806a9c9",
+      "byte_length": 18300,
+      "extraction_sha256": "d5840f324b7505602143ee599cc8e1c9edbcc83be6cd51a43999219cbb8f269c",
       "format": "pdf",
       "lane_id": "page:cv",
       "mime_type": "application/pdf",
       "page_count": 6,
       "path": "career/Zain-Dana-Harper-CV.pdf",
-      "sha256": "32bf124f5150f35a0413f155481098beda24328114bef5922f12347ddc014d47",
+      "sha256": "015b713bf2ca794da8a335d66b69ce34f4bbabcfcbf920fbf907b5b80f458951",
       "source": "cv.html"
     },
     {
-      "byte_length": 38688,
+      "byte_length": 38687,
       "extraction_sha256": "2a6ad9dc5a4bc17bcb4604a87d10f6ece156b87c20e22ba5571f315b3a62793a",
       "format": "docx",
       "lane_id": "evaluation-python-tools",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx",
-      "sha256": "6baa3e7adec5221bf69733c14e4e61f286e93270e6da8eb664a7dde38cb0fbd9",
+      "sha256": "742fc107ef0fc228c3db5e3fadec0810a33e5931e62493c093c7e24ce7ff1882",
       "source": "resume-evaluation-tooling.html"
     },
     {
@@ -45,14 +45,14 @@
       "source": "resume-evaluation-tooling.html"
     },
     {
-      "byte_length": 38137,
+      "byte_length": 38136,
       "extraction_sha256": "b930068705f552a597070234e67e1982399ce139b749014d8a763848981d6252",
       "format": "docx",
       "lane_id": "grounds",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Grounds.docx",
-      "sha256": "320110bffbe59bcf9f6ebfbfb51482224485a785cea97be7b05edc8b1cb753b2",
+      "sha256": "18ac7e34efa3bf958e5a448566caf1b5a3271f5ac3348caf5b317153675b5a30",
       "source": "resume-grounds.html"
     },
     {
@@ -67,14 +67,14 @@
       "source": "resume-grounds.html"
     },
     {
-      "byte_length": 38185,
+      "byte_length": 38184,
       "extraction_sha256": "1a01e6badfe580ba742ba91f1aff4278324e0a39f758165d3e3ad74e2debf1ee",
       "format": "docx",
       "lane_id": "public-operations",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Public-Operations.docx",
-      "sha256": "19320f6eff707f4fbb4fec45db4653ddb5332a13ca341455ab798d6e2df9d910",
+      "sha256": "cef93bb6a14177a6d5b0dc971cd21bb4e27f1efae131c76598adb93efe63ef40",
       "source": "resume-public-operations.html"
     },
     {
@@ -89,14 +89,14 @@
       "source": "resume-public-operations.html"
     },
     {
-      "byte_length": 38691,
+      "byte_length": 38690,
       "extraction_sha256": "99874968eea66abcd139e3199b43bd9c6b4a12bbfab3a1ce3daf1b4bcc96c449",
       "format": "docx",
       "lane_id": "support-operations-qa",
       "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "page_count": null,
       "path": "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx",
-      "sha256": "9a0a011f367ebc141613d8b2c1415f7a7bc38a1bb2c0bdc550eccba78952c16f",
+      "sha256": "2c6199a6661b957c6746ae4d6b38dc36736c34e9a5047214be9afe1213464aed",
       "source": "resume-support-operations.html"
     },
     {
@@ -114,7 +114,7 @@
   "build_inputs": [
     {
       "path": "tools/build_career_artifacts.py",
-      "sha256": "08a04f86bf52dfd4c4869146a66bb76d51b055f911db3a06b35423d1bda229e5"
+      "sha256": "825fb74601a06c06004aad31ceae2ea0681a9aaacae5e755ce1c7cdb6110875d"
     },
     {
       "path": "tools/render_career_pages.py",
@@ -122,7 +122,7 @@
     },
     {
       "path": "career/resume-source.json",
-      "sha256": "5e277501128dedf76b99230aa18f683f268a9f4b2a6146864cc7c2fce42551e3"
+      "sha256": "bf5d1890f8d5a366ccb9c3ab68a7f83a9cf2fd6ba2e3aeb56cb933719e5604d7"
     },
     {
       "path": "requirements-career-docs.txt",
@@ -143,27 +143,27 @@
     "python": "3.12.10"
   },
   "schema": "harperz9-career-build/v1",
-  "source_epoch": 1790755200,
+  "source_epoch": 1791331200,
   "sources": [
     {
       "path": "cv.html",
-      "sha256": "47d8137472adefea24c5a81ce8806807b2809756d5ec69dbb78850b6aafd9b90"
+      "sha256": "cd7b3d35703eb9140094f1e44e186b47ab34bbe0f4f67fd88d7acb5d758084f3"
     },
     {
       "path": "resume-evaluation-tooling.html",
-      "sha256": "8555880ec2131da0f1943e2630f8c6cf0110fe54fbf6c69535b2a628642a6942"
+      "sha256": "9a82dab7067929b0fbb6b13f373586847d863d1838ae85f79451fe802187719c"
     },
     {
       "path": "resume-grounds.html",
-      "sha256": "cdd9fa6fe69c21f338064dac932ab3f403684cc09bb0b9ebdf9d3f772791f231"
+      "sha256": "e07cd961c1a3fcfcec4dbb96928343812647111aabdd01c89b7b5aa196d8c987"
     },
     {
       "path": "resume-public-operations.html",
-      "sha256": "b97d7301477e9373596725ce49ed16b0af1a1ece29323d56044f232c4ce6988f"
+      "sha256": "fa3a31eb3a23fbff47734ed9e567b9f40ced113e682868a1b67c357d2f922078"
     },
     {
       "path": "resume-support-operations.html",
-      "sha256": "47a815d4d2114593c5d46ad67a41e0010013e570b43c5d7528346f9d89fa4c2a"
+      "sha256": "8ed9d1f6086c6f8128a6b4165bf3a20fd9b817f623dcc9eed5123c36f2ec4882"
     }
   ]
 }

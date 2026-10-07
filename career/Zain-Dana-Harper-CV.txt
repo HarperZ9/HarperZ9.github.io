@@ -54,7 +54,7 @@ AI Platform and Agent Systems
 
 Flywheel | Model-agnostic AI workstation and coding harness
 
-Primary owned platform. The September 29, 2026 v1.1.2 release includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
+Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
 
 - Routes tasks to hosted or local models through an OpenAI-compatible gateway; keeps model selection separate from the task record and exposes command-line, desktop, and API entry points.
 
@@ -64,6 +64,8 @@ Primary owned platform. The September 29, 2026 v1.1.2 release includes a Windows
 
 - Produces sealed, re-derivable receipts and offline MATCH, DRIFT, or UNVERIFIABLE outcomes. A reproducible receipt establishes the bounded check it records, not universal model accuracy or safety.
 
+- Released a monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the admission check and no installed signer; Windows anchoring was parse-checked only.
+
 Accountable Surface | Governed actions and computer-use adapters
 
 Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions; persisted journals preserve decisions and observed effects. Reversible adapters include restoration paths. Fake drivers make browser and desktop scenarios testable without uncontrolled live actions.
@@ -72,11 +74,11 @@ The v0.2.0 release provides source and wheel artifacts on GitHub. The project re
 
 Articulate | Writing analysis and accountable editing
 
-Built deterministic prose analysis with register, mode, and genre profiles, alongside optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.5.2, released September 29, 2026, adds guarded host editing through local MCP and a released plugin.
+Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.9.0, released October 3, 2026, adds project-specific writing rules, domain profiles, writing-process records, and reports of guarded edits. Detector rules retain the published v0.5.2 fingerprint.
 
 Agent tools, memory, and coordination
 
-Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform rather than representing separate claims of deployment at customer scale.
+Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform. Customer-scale deployment is not established.
 
 Evaluation, Systems, and Security Engineering
 
@@ -140,7 +142,7 @@ Graphics and domain knowledge: D3D11/HLSL, shader and runtime debugging, color-s
 
 Working Practice
 
-AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings rather than treating every completed run as success.
+AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings. A completed run alone does not establish success.
 
 Research Agenda
 
@@ -200,7 +202,7 @@ Education
 
 High School Diploma | Wilsonville High School, Wilsonville, Oregon | 2013
 
-Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge is grounded in field work, not a separately claimed professional license.
+Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work; no separate professional license is claimed.
 
 ORCID: 0009-0001-7175-5393 | orcid.org/0009-0001-7175-5393
 
