@@ -255,7 +255,7 @@ def test_fresh_build_matches_each_committed_release_artifact(tmp_path: Path) -> 
     committed_receipt = json.loads(
         (ROOT / "career" / "career-build-receipt.json").read_text(encoding="utf-8")
     )
-    assert committed_receipt["source_epoch"] == 1790755200
+    assert committed_receipt["source_epoch"] == 1791331200
     committed_inputs = {
         row["path"]: row for row in committed_receipt["build_inputs"]
     }
@@ -290,7 +290,7 @@ def test_receipt_binds_artifact_and_extraction_hashes_without_local_paths(
 
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
     assert receipt["schema"] == "harperz9-career-build/v1"
-    assert receipt["source_epoch"] == 1790755200
+    assert receipt["source_epoch"] == 1791331200
     build_inputs = {row["path"]: row for row in receipt["build_inputs"]}
     for relative in (
         "tools/build_career_artifacts.py",

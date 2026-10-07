@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-evidence/v1",
-  "reviewed": "2026-09-30",
+  "reviewed": "2026-10-07",
   "sources": [
     {
       "id": "accountable-surface",
@@ -909,6 +909,18 @@
       ],
       "completion_evidence": "Issuer course-completion page confirmed the badge following the required knowledge assessment. No practical lab, optional lesson, study-hour, professional-certification, or production-implementation claim.",
       "status": "Advanced course-completion badge confirmed after a required knowledge assessment; local completion September 30, 2026. No independent issuer date is inferred."
+    },
+    {
+      "id": "flywheel-150",
+      "url": "https://github.com/HarperZ9/flywheel/releases/tag/v1.5.0",
+      "published": "2026-10-04T16:28:03Z",
+      "status": "GitHub release and assets checked October 7, 2026; release scope and limitations preserved; no external adoption claim"
+    },
+    {
+      "id": "articulate-090",
+      "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.9.0",
+      "published": "2026-10-03T22:14:35Z",
+      "status": "GitHub release and assets checked October 7, 2026; release scope and limitations preserved; no external adoption claim"
     }
   ],
   "limits": [

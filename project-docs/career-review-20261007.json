@@ -1,0 +1,393 @@
+{
+  "reviewed": "2026-10-07",
+  "articulate_version": "0.9.0",
+  "host_edit": {
+    "schema": "articulate/editor-receipt/v1",
+    "backend": "host",
+    "model": null,
+    "attempts": [],
+    "original_sha256": "sha256:be7e6557cd187f4620c8abab2c701062239c775ac92ebe31a3e2dfb40eca758c",
+    "text_sha256": "sha256:a9c89d1efdfeeaa048a56b332967258fe960b64fc1b3731c4204eeef03247408",
+    "ruleset_version": "sha256:9f78a7484bb20f84",
+    "settings": {
+      "author_text_sha256": null,
+      "goal": "fix",
+      "is_html": false,
+      "is_tex": false,
+      "mode": null,
+      "profile": {
+        "keep": [
+          "pass",
+          "fail",
+          "undecided",
+          "unverifiable",
+          "candidate",
+          "harness",
+          "environment",
+          "criterion",
+          "receipt",
+          "oracle",
+          "certificate",
+          "match",
+          "drift",
+          "substrate",
+          "load-bearing"
+        ],
+        "max_sentence_words": null,
+        "no_em_dash": true,
+        "register": {
+          "field": "general",
+          "mode": "written",
+          "tenor": "peer"
+        },
+        "slop": "flavored"
+      },
+      "ruleset": "sha256:9f78a7484bb20f84",
+      "schema": "articulate/edit-plan/v2",
+      "voice_name": null,
+      "voice_profile_sha256": null
+    },
+    "gate_before": "ok",
+    "gate_after": "ok",
+    "rule_deltas": [
+      {
+        "rule_id": "rule-of-three/possible-triad-x-y-and-z",
+        "before": 2,
+        "after": 1,
+        "delta": -1
+      }
+    ],
+    "quality_status": "unassessed",
+    "scores": null,
+    "author_text_sha256": null,
+    "voice_profile_sha256": null,
+    "author_text_origin": null,
+    "does_not_prove": "A lexical guard and detector gate do not prove semantic equivalence, quality or factual correctness. Host scores are supplied assessments, not independent measurements."
+  },
+  "host_edit_refused": [],
+  "house_transforms": [
+    {
+      "id": "support-operations-qa",
+      "receipt": {
+        "schema": "articulate/house-receipt/v1",
+        "house_version": "house/2",
+        "house_fingerprint": "sha256:229abdf2970d4d326f95a042c3c72b3c675c27b6a99b8ea532e6dadd31590264",
+        "ruleset_version": "sha256:9f78a7484bb20f84",
+        "mode": "default",
+        "settings": {
+          "mode": "default",
+          "tuning": {
+            "length": "default",
+            "end_line": "on",
+            "headings": "auto",
+            "lists": "allowed",
+            "limits": "end",
+            "first_person": "actions"
+          }
+        },
+        "input_sha256": "sha256:44162d2bfd939480bed64293e80eb9ee24a25763e95c76f006668024f739b4b9",
+        "output_sha256": "sha256:44162d2bfd939480bed64293e80eb9ee24a25763e95c76f006668024f739b4b9",
+        "edits": [],
+        "refused": [],
+        "notes_by_category": {},
+        "human_claim_notes": 0,
+        "timing_ms": 15.562,
+        "ai_detector_consulted": false,
+        "does_not_prove": "The edits are exact and on a closed list, and the paragraphs left in place passed a lexical meaning guard. That does not prove the reply is correct, useful or better to read."
+      },
+      "notes": [],
+      "refused": []
+    },
+    {
+      "id": "evaluation-python-tools",
+      "receipt": {
+        "schema": "articulate/house-receipt/v1",
+        "house_version": "house/2",
+        "house_fingerprint": "sha256:229abdf2970d4d326f95a042c3c72b3c675c27b6a99b8ea532e6dadd31590264",
+        "ruleset_version": "sha256:9f78a7484bb20f84",
+        "mode": "default",
+        "settings": {
+          "mode": "default",
+          "tuning": {
+            "length": "default",
+            "end_line": "on",
+            "headings": "auto",
+            "lists": "allowed",
+            "limits": "end",
+            "first_person": "actions"
+          }
+        },
+        "input_sha256": "sha256:498a80f14ca93f161f564d11981b0c167f237674eea54a5265a98e3d847ee22c",
+        "output_sha256": "sha256:498a80f14ca93f161f564d11981b0c167f237674eea54a5265a98e3d847ee22c",
+        "edits": [],
+        "refused": [],
+        "notes_by_category": {},
+        "human_claim_notes": 0,
+        "timing_ms": 14.711,
+        "ai_detector_consulted": false,
+        "does_not_prove": "The edits are exact and on a closed list, and the paragraphs left in place passed a lexical meaning guard. That does not prove the reply is correct, useful or better to read."
+      },
+      "notes": [],
+      "refused": []
+    },
+    {
+      "id": "grounds",
+      "receipt": {
+        "schema": "articulate/house-receipt/v1",
+        "house_version": "house/2",
+        "house_fingerprint": "sha256:229abdf2970d4d326f95a042c3c72b3c675c27b6a99b8ea532e6dadd31590264",
+        "ruleset_version": "sha256:9f78a7484bb20f84",
+        "mode": "default",
+        "settings": {
+          "mode": "default",
+          "tuning": {
+            "length": "default",
+            "end_line": "on",
+            "headings": "auto",
+            "lists": "allowed",
+            "limits": "end",
+            "first_person": "actions"
+          }
+        },
+        "input_sha256": "sha256:5a1001352675a19b923f08f0702b01906be0f1360bdf851da3bdc90b88bd0609",
+        "output_sha256": "sha256:5a1001352675a19b923f08f0702b01906be0f1360bdf851da3bdc90b88bd0609",
+        "edits": [],
+        "refused": [],
+        "notes_by_category": {},
+        "human_claim_notes": 0,
+        "timing_ms": 11.019,
+        "ai_detector_consulted": false,
+        "does_not_prove": "The edits are exact and on a closed list, and the paragraphs left in place passed a lexical meaning guard. That does not prove the reply is correct, useful or better to read."
+      },
+      "notes": [],
+      "refused": []
+    },
+    {
+      "id": "public-operations",
+      "receipt": {
+        "schema": "articulate/house-receipt/v1",
+        "house_version": "house/2",
+        "house_fingerprint": "sha256:229abdf2970d4d326f95a042c3c72b3c675c27b6a99b8ea532e6dadd31590264",
+        "ruleset_version": "sha256:9f78a7484bb20f84",
+        "mode": "default",
+        "settings": {
+          "mode": "default",
+          "tuning": {
+            "length": "default",
+            "end_line": "on",
+            "headings": "auto",
+            "lists": "allowed",
+            "limits": "end",
+            "first_person": "actions"
+          }
+        },
+        "input_sha256": "sha256:7375d4a67b85df62323107833c2e0d2b347c5c078541043c3a4b01071cae4a29",
+        "output_sha256": "sha256:7375d4a67b85df62323107833c2e0d2b347c5c078541043c3a4b01071cae4a29",
+        "edits": [],
+        "refused": [],
+        "notes_by_category": {},
+        "human_claim_notes": 0,
+        "timing_ms": 13.007,
+        "ai_detector_consulted": false,
+        "does_not_prove": "The edits are exact and on a closed list, and the paragraphs left in place passed a lexical meaning guard. That does not prove the reply is correct, useful or better to read."
+      },
+      "notes": [],
+      "refused": []
+    },
+    {
+      "id": "page:cv",
+      "receipt": {
+        "schema": "articulate/house-receipt/v1",
+        "house_version": "house/2",
+        "house_fingerprint": "sha256:229abdf2970d4d326f95a042c3c72b3c675c27b6a99b8ea532e6dadd31590264",
+        "ruleset_version": "sha256:9f78a7484bb20f84",
+        "mode": "default",
+        "settings": {
+          "mode": "default",
+          "tuning": {
+            "length": "default",
+            "end_line": "on",
+            "headings": "auto",
+            "lists": "allowed",
+            "limits": "end",
+            "first_person": "actions"
+          }
+        },
+        "input_sha256": "sha256:f81836453c35329061b71c6120a9dc1fc98bb3c90ccc899fed3a22702087f375",
+        "output_sha256": "sha256:f81836453c35329061b71c6120a9dc1fc98bb3c90ccc899fed3a22702087f375",
+        "edits": [],
+        "refused": [],
+        "notes_by_category": {
+          "style/register-jargon": 1,
+          "style/idiom-cliche": 1,
+          "style/register-word": 1
+        },
+        "human_claim_notes": 0,
+        "timing_ms": 111.93,
+        "ai_detector_consulted": false,
+        "does_not_prove": "The edits are exact and on a closed list, and the paragraphs left in place passed a lexical meaning guard. That does not prove the reply is correct, useful or better to read."
+      },
+      "notes": [
+        {
+          "category": "style/register-jargon",
+          "line": 187,
+          "match": "Substrates",
+          "reason": "abstract-metaphor jargon",
+          "tier": "medium"
+        },
+        {
+          "category": "style/idiom-cliche",
+          "line": 255,
+          "match": "Deep Dive",
+          "reason": "idiom / set-phrase cliche",
+          "tier": "medium"
+        },
+        {
+          "category": "style/register-word",
+          "line": 257,
+          "match": "Bedrock",
+          "reason": "AI-register vocabulary (extended)",
+          "tier": "medium"
+        }
+      ],
+      "refused": []
+    }
+  ],
+  "checks": [
+    {
+      "id": "support-operations-qa",
+      "clean": true,
+      "verdict": "clean",
+      "texture_score": 0,
+      "elevated": false,
+      "hits": [],
+      "advisory_count": 3,
+      "cadence": {
+        "words": 401,
+        "mean_sentence_len": 19.1,
+        "cv": 0.595,
+        "uniform": false,
+        "repetitive_openers": false,
+        "passive_rate": 0,
+        "adverb_rate": 0
+      }
+    },
+    {
+      "id": "evaluation-python-tools",
+      "clean": true,
+      "verdict": "clean",
+      "texture_score": 3,
+      "elevated": false,
+      "hits": [],
+      "advisory_count": 7,
+      "cadence": {
+        "words": 392,
+        "mean_sentence_len": 18.7,
+        "cv": 0.674,
+        "uniform": false,
+        "repetitive_openers": false,
+        "passive_rate": 0,
+        "adverb_rate": 0
+      }
+    },
+    {
+      "id": "grounds",
+      "clean": true,
+      "verdict": "clean",
+      "texture_score": 12,
+      "elevated": false,
+      "hits": [],
+      "advisory_count": 6,
+      "cadence": {
+        "words": 290,
+        "mean_sentence_len": 26.4,
+        "cv": 0.378,
+        "uniform": true,
+        "repetitive_openers": false,
+        "passive_rate": 0,
+        "adverb_rate": 0
+      }
+    },
+    {
+      "id": "public-operations",
+      "clean": true,
+      "verdict": "clean",
+      "texture_score": 12,
+      "elevated": false,
+      "hits": [],
+      "advisory_count": 5,
+      "cadence": {
+        "words": 296,
+        "mean_sentence_len": 24.7,
+        "cv": 0.365,
+        "uniform": true,
+        "repetitive_openers": false,
+        "passive_rate": 0,
+        "adverb_rate": 0.3
+      }
+    },
+    {
+      "id": "page:cv",
+      "clean": false,
+      "verdict": "flagged",
+      "texture_score": 4,
+      "elevated": false,
+      "hits": [
+        {
+          "line": 187,
+          "col": 74,
+          "start": 14653,
+          "end": 14663,
+          "category": "register-jargon",
+          "label": "abstract-metaphor jargon",
+          "match": "Substrates",
+          "snippet": "Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Research note, ",
+          "rule_id": "register-jargon/abstract-metaphor-jargon",
+          "tier": "MEDIUM"
+        },
+        {
+          "line": 255,
+          "col": 175,
+          "start": 19071,
+          "end": 19080,
+          "category": "idiom-cliche",
+          "label": "idiom / set-phrase cliche",
+          "match": "Deep Dive",
+          "snippet": "Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agen",
+          "rule_id": "idiom-cliche/idiom-set-phrase-cliche",
+          "tier": "MEDIUM"
+        },
+        {
+          "line": 257,
+          "col": 158,
+          "start": 19357,
+          "end": 19364,
+          "category": "register-word",
+          "label": "AI-register vocabulary (extended)",
+          "match": "Bedrock",
+          "snippet": "Anthropic Claude Academy completion badges: Model Context Protocol: Advanced topics; Claude Code in ",
+          "rule_id": "register-word/ai-register-vocabulary-extended",
+          "tier": "MEDIUM"
+        }
+      ],
+      "advisory_count": 37,
+      "cadence": {
+        "words": 2696,
+        "mean_sentence_len": 17.7,
+        "cv": 0.836,
+        "uniform": false,
+        "repetitive_openers": false,
+        "passive_rate": 0.1,
+        "adverb_rate": 0.2
+      }
+    }
+  ],
+  "retained_title_flags": [
+    "Substrates is part of an exact publication title.",
+    "Deep Dive and Bedrock are parts of official credential titles."
+  ],
+  "limitations": [
+    "Style checks do not establish factual correctness or credential authenticity.",
+    "DOCX reading order and styles were checked; no Word or LibreOffice renderer was available."
+  ]
+}
