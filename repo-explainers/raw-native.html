@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How raw-native works</title>
+<meta name="description" content="An animated walk through raw-native: a CPU renderer that computes ambient occlusion twice, once with a fast screen-space shortcut and once by ray tracing, measures the gap and writes the verdict into a certificate anyone can recheck. Built from raw-native at commit f2cd6e9.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/raw-native.html">
+<style>
+@font-face{font-family:"Hanken Grotesk";src:url("https://harperz9.github.io/system/fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("https://harperz9.github.io/system/fonts/conso-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("https://harperz9.github.io/system/fonts/conso-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+:root{
+  color-scheme:light;
+  --ground:#f2efe6;--sheet:#f8f6f0;--sunk:#e8e3d7;
+  --ink:#111014;--ink-soft:#35322d;--muted:#5a544b;
+  --line:#d2c9b7;--line-strong:#8a8072;
+  --verified:#0f5f6a;--drift:#a2421c;--unverifiable:#5c636c;
+  --font-sans:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --ground:#0b070a;--sheet:#120d10;--sunk:#070406;
+  --ink:#eaf5f6;--ink-soft:#c8dcdf;--muted:#94afb4;
+  --line:rgba(142,227,242,.18);--line-strong:rgba(142,227,242,.38);
+  --verified:#8ee3f2;--drift:#e08a62;--unverifiable:#9aa6aa;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0b070a;--sheet:#120d10;--sunk:#070406;
+  --ink:#eaf5f6;--ink-soft:#c8dcdf;--muted:#94afb4;
+  --line:rgba(142,227,242,.18);--line-strong:rgba(142,227,242,.38);
+  --verified:#8ee3f2;--drift:#e08a62;--unverifiable:#9aa6aa;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-sans);font-size:17px;line-height:1.6;overflow-x:clip}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+code,kbd,pre,.mono{font-family:var(--font-mono);font-size:.88em}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--ground);padding:.5rem .8rem;z-index:9}
+.skip:focus{left:1rem;top:1rem}
+:root{--gutter:16px}
+@media (min-width:700px){:root{--gutter:2rem}}
+.wrap{max-width:74rem;margin:0 auto;padding:0 var(--gutter)}
+header.top{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--line)}
+.crumbs{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.3rem 1.1rem}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.02;letter-spacing:-.02em;margin:.9rem 0 .5rem;font-weight:750}
+.lede{font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.4;max-width:40ch;margin:0;color:var(--ink-soft)}
+h2{font-size:clamp(1.5rem,3.2vw,2rem);letter-spacing:-.01em;line-height:1.15;margin:0 0 .8rem;font-weight:700}
+h3{font-size:1.15rem;line-height:1.3;margin:0 0 .5rem;font-weight:700}
+section.block{padding:3rem 0;border-bottom:1px solid var(--line)}
+.measure{max-width:62ch}
+.measure p{margin:0 0 1rem}
+.uses{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.uses li{border-top:2px solid var(--ink);padding-top:.6rem}
+.uses b{display:block;margin-bottom:.2rem}
+.src{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);margin-top:.6rem;overflow-wrap:anywhere}
+.src a{color:var(--muted)}
+/* verdict marks: the only colour on the page */
+.v{font-family:var(--font-mono);font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.v-ok{color:var(--verified)}.v-drift{color:var(--drift)}.v-unv{color:var(--unverifiable)}
+.vbox{display:inline-block;padding:.05rem .45rem;border:1.5px solid currentColor;border-radius:2px}
+.vbox.v-unv{border-style:dashed}
+/* the walk: a sticky stage and the steps that drive it */
+.walk{display:grid;gap:2rem;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start;margin-top:1.5rem}
+.stage-wrap{position:sticky;top:1rem;height:calc(100vh - 2rem);height:calc(100svh - 2rem);display:flex;flex-direction:column;gap:.6rem;z-index:2}
+.stage{position:relative;flex:1;min-height:0;background:var(--sheet);border:1px solid var(--line-strong);overflow:hidden}
+.scene{position:absolute;inset:0;padding:1.1rem;overflow:auto;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+.scene.is-on{opacity:1;visibility:visible;transition:opacity .45s var(--ease),visibility 0s}
+.scene svg{display:block;width:100%;height:100%}
+.stage-bar{display:flex;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.8rem}
+.stage-bar .cap{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-soft)}
+.btn{font:inherit;font-family:var(--font-mono);font-size:.8rem;color:var(--ink);background:transparent;border:1px solid var(--line-strong);border-radius:2px;padding:.45rem .7rem;cursor:pointer;min-height:2.4rem}
+.btn:hover:not([disabled]){border-color:var(--ink)}
+.btn[disabled]{opacity:.35;cursor:default}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.steps{list-style:none;margin:0;padding:0}
+.step{min-height:82vh;padding:18vh 0 2rem;outline:none}
+.step:first-child{padding-top:2vh}
+.step:last-child{min-height:60vh}
+.step .num{font-family:var(--font-mono);font-size:.8rem;color:var(--muted)}
+.step .card{border-left:2px solid var(--line);padding-left:1rem;transition:border-color .3s}
+.step.is-active .card{border-left-color:var(--ink)}
+.step p{margin:0 0 .8rem}
+.no-js .stage-wrap{display:none}
+.no-js .walk{grid-template-columns:1fr}
+.no-js .step{min-height:0;padding:1rem 0}
+@media (max-width:859px){
+  .walk{grid-template-columns:1fr;gap:0}
+  .stage-wrap{top:0;height:52vh;height:52svh;padding:.6rem 0;background:var(--ground);margin:0 calc(-1 * var(--gutter));padding-left:var(--gutter);padding-right:var(--gutter);border-bottom:1px solid var(--line)}
+  .scene{padding:.7rem}
+  .step{min-height:68vh;padding:4vh 0 2rem}
+  .step .card{background:var(--ground)}
+}
+/* shared stage parts */
+.tag{font-family:var(--font-mono);font-size:.72rem;color:var(--muted)}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.15rem .9rem;font-family:var(--font-mono);font-size:.8rem;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;overflow-wrap:anywhere}
+.reveal>*{opacity:0;transform:translateY(6px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.reveal.in>*{opacity:1;transform:none}
+.pick{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.pick .btn{font-size:.74rem;padding:.35rem .55rem;min-height:2.2rem}
+/* try, limits, recall */
+pre.cmd{background:var(--sunk);border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;line-height:1.5;margin:.4rem 0 1rem;position:relative}
+pre.cmd code{font-size:.85rem;white-space:pre}
+.copy{position:absolute;top:.4rem;right:.4rem;font-size:.7rem;min-height:2rem;padding:.25rem .5rem;background:var(--sheet)}
+.out{color:var(--ink-soft)}
+.limits{padding-left:1.1rem;max-width:66ch}
+.limits li{margin:0 0 .7rem}
+.recall details{border-top:1px solid var(--line);padding:.8rem 0;max-width:66ch}
+.recall details:last-child{border-bottom:1px solid var(--line)}
+.recall summary{cursor:pointer;font-weight:650;list-style-position:outside;margin-left:1.1rem}
+.recall details p{margin:.6rem 0 0 1.1rem;color:var(--ink-soft)}
+footer.foot{padding:2.5rem 0 3rem;font-size:.85rem;color:var(--muted)}
+footer.foot p{max-width:70ch;margin:0 0 .6rem}
+.theme{margin-left:auto}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+}
+
+/* raw-native scenes */
+.quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+.quad figure{margin:0}
+.quad img{display:block;width:100%;height:auto;aspect-ratio:1;background:var(--sunk);border:1px solid var(--line);image-rendering:auto}
+.quad figcaption{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);margin-top:.15rem}
+.verdict-line{margin-top:.7rem;font-family:var(--font-mono);font-size:.82rem;display:flex;flex-wrap:wrap;gap:.4rem .8rem;align-items:center}
+svg .ink{stroke:var(--ink);fill:none}
+svg .ink-fill{fill:var(--ink)}
+svg .faint{stroke:var(--line-strong);fill:none}
+svg .hatch{fill:url(#hatch);stroke:var(--ink);stroke-width:1.2}
+svg .lbl{fill:var(--ink-soft);font-family:var(--font-mono);font-size:13px}
+svg .lbl-s{fill:var(--muted);font-family:var(--font-mono);font-size:12px}
+svg .ray{stroke:var(--line-strong);stroke-width:.8;transition:opacity .2s}
+svg .ray.hit{stroke:var(--ink);stroke-width:1.1}
+svg .dot-hit{fill:var(--ink)}
+svg .dot-open{fill:var(--sheet);stroke:var(--ink);stroke-width:1}
+svg .gbuf rect{fill:var(--sheet);stroke:var(--line-strong)}
+svg .gbuf text{fill:var(--ink);font-family:var(--font-mono);font-size:11px}
+svg .tol{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:4 3}
+svg .bar-ok{fill:var(--verified)}
+svg .bar-drift{fill:var(--drift)}
+svg .grow{transition:width .8s var(--ease)}
+.read{font-family:var(--font-mono);font-size:.8rem;margin-top:.4rem;min-height:2.6em}
+.scene .withread{height:calc(100% - 3.4em)}
+.files{list-style:none;margin:.5rem 0 0;padding:0;font-family:var(--font-mono);font-size:.74rem}
+.files li{display:grid;grid-template-columns:7.5rem minmax(0,1fr) 4.5rem;gap:.5rem;padding:.28rem 0;border-bottom:1px solid var(--line);align-items:center}
+.files li .h{overflow-wrap:anywhere;color:var(--muted)}
+.files li.bad .h{color:var(--drift)}
+.files li.gone .h{color:var(--unverifiable)}
+.pass{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem}
+.pass>div{border:1px solid var(--line-strong);padding:.6rem}
+.meter{height:10px;background:var(--sunk);border:1px solid var(--line);margin:.4rem 0;position:relative}
+.meter i{position:absolute;left:0;top:0;bottom:0;background:var(--ink);width:0;transition:width 1s var(--ease)}
+.gputab{border-collapse:collapse;font-family:var(--font-mono);font-size:.78rem;width:100%;margin-top:.5rem}
+.gputab th,.gputab td{text-align:left;border-bottom:1px solid var(--line);padding:.35rem .4rem}
+.gputab th{color:var(--muted);font-weight:400}
+.live{border:1px solid var(--line-strong);padding:1rem;margin-top:1rem;background:var(--sheet)}
+.live .row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.live select{font:inherit;font-family:var(--font-mono);font-size:.8rem;padding:.4rem;min-height:2.4rem;background:var(--ground);color:var(--ink);border:1px solid var(--line-strong);border-radius:2px}
+.live .canv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-top:.8rem}
+.live canvas{width:100%;height:auto;aspect-ratio:1;background:var(--sunk);border:1px solid var(--line);image-rendering:pixelated}
+.live .cl{font-family:var(--font-mono);font-size:.7rem;color:var(--muted)}
+@media (max-width:640px){.live .canv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/raw-native">HarperZ9/raw-native</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/raw-native/tree/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a">f2cd6e9</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>raw-native</h1>
+  <p class="lede">Render on the CPU, then check the fast lighting shortcut against ray tracing.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Real-time engines darken creases and corners with a cheap screen-space trick called ambient occlusion. raw-native renders a scene with that trick and with a slow ray-traced reference, measures how far apart the two are, and tells you whether the shortcut can be trusted for that view. You get the picture and the evidence in the same run.</p>
+  </div>
+  <ul class="uses">
+    <li><b>A verdict per view</b>A JSON certificate says <span class="v v-ok">verified</span> when the shortcut's error stays inside the tolerance and <span class="v v-drift">refuted</span> when it does not.</li>
+    <li><b>Recheck without trusting it</b><code>raw_native_cli verify</code> renders nothing. It re-hashes the files and recomputes the error from them.</li>
+    <li><b>The same bytes everywhere</b>MSVC, GCC and the WebAssembly build write byte-identical files for the default render.</li>
+    <li><b>No dependencies</b>C++23 and the standard library. The optional GPU builds are checked frame by frame against this CPU path.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/README.md">README.md</a> at f2cd6e9 (release 0.5.1)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The renders, certificate values and timings come from the repository at f2cd6e9. The two cross-section drawings are a 2D slice that runs the same rules as the C++ code; their counts belong to the drawing.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="look" aria-hidden="true">
+          <div class="quad">
+            <figure><img src="https://raw.githubusercontent.com/HarperZ9/raw-native/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/images/default-frame.png" alt="The shaded frame: a red box on a grey ground plane." width="512" height="512" loading="lazy"><figcaption>frame.ppm, the shaded frame</figcaption></figure>
+            <figure><img src="https://raw.githubusercontent.com/HarperZ9/raw-native/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/images/default-ao_rt.png" alt="Ray-traced ambient occlusion: grainy, with dark contact shadows along the base of the box." width="512" height="512" loading="lazy"><figcaption>ao_rt, ray traced (reference)</figcaption></figure>
+            <figure><img src="https://raw.githubusercontent.com/HarperZ9/raw-native/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/images/default-ao_ss.png" alt="Screen-space ambient occlusion: mostly white, with only thin darkening near edges." width="512" height="512" loading="lazy"><figcaption>ao_ss, screen space (shortcut)</figcaption></figure>
+            <figure><img src="https://raw.githubusercontent.com/HarperZ9/raw-native/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/images/default-ao_error.png" alt="Error map: bright where the two estimates disagree, strongest around the base of the box." width="512" height="512" loading="lazy"><figcaption>ao_error, per-pixel difference</figcaption></figure>
+          </div>
+          <div class="verdict-line"><span class="v vbox v-drift">refuted</span><span>RMSE 0.1349 over 151,984 pixels, tolerance 0.12</span></div>
+        </div>
+        <div class="scene" data-scene="raster" aria-hidden="true"><svg id="raster-svg" viewBox="0 0 600 400" role="img" aria-label="Side view: a camera at the upper right sends one ray per pixel into a box on a ground plane. Each pixel stores depth, normal, position, motion and a coverage mask."></svg></div>
+        <div class="scene" data-scene="rt" aria-hidden="true"><svg class="withread" id="rt-svg" viewBox="0 0 600 400" role="img" aria-label="Side view of a point on the ground near the box. Rays fan out over the hemisphere; rays that reach the box within the radius stop there and count as blocked."></svg><div class="read" id="rt-read" aria-live="polite"></div></div>
+        <div class="scene" data-scene="ss" aria-hidden="true"><svg class="withread" id="ss-svg" viewBox="0 0 600 400" role="img" aria-label="The same point seen through the screen. Samples land on the surfaces the camera can see within six pixels; the box face hidden from the camera is never sampled."></svg><div class="read" id="ss-read" aria-live="polite"></div></div>
+        <div class="scene" data-scene="rec" aria-hidden="true">
+          <div class="quad" style="grid-template-columns:minmax(0,1fr)">
+            <figure style="max-width:15rem"><img src="https://raw.githubusercontent.com/HarperZ9/raw-native/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/images/default-ao_error.png" alt="Error map of the default view." width="512" height="512" loading="lazy"><figcaption>ao_error, the default view</figcaption></figure>
+          </div>
+          <svg id="rec-svg" viewBox="0 0 600 150" role="img" aria-label="A bar for the measured RMSE, 0.1349, passes the dashed tolerance line at 0.12." style="height:auto;margin-top:.6rem"></svg>
+          <dl class="kv"><dt>pixels</dt><dd>151984 covered by a surface</dd><dt>rmse</dt><dd>0.134912357</dd><dt>maxError</dt><dd>0.640625</dd><dt>tolerance</dt><dd>0.119999997</dd></dl>
+        </div>
+        <div class="scene" data-scene="views" aria-hidden="true"><div class="tag">same scene, 512 x 512, tolerance 0.12</div><svg id="views-svg" viewBox="0 0 600 330" role="img" aria-label="RMSE for five camera views against the 0.12 tolerance: high 0.0827 and wide 0.0882 are verified; default 0.1349, low 0.1659 and close 0.2167 are refuted."></svg></div>
+        <div class="scene" data-scene="cert" aria-hidden="true">
+          <div class="tag">out/certificate.json, default view (raw-cert/2)</div>
+          <dl class="kv reveal" id="cert-kv" style="margin-top:.5rem">
+            <dt>claim</dt><dd>screen-space AO matches ray-traced ground truth within tolerance</dd>
+            <dt>verdict</dt><dd><span class="v v-drift">refuted</span></dd>
+            <dt>oracle</dt><dd>raw-rt-ao-v1</dd>
+            <dt>params</dt><dd>eye [4,4,6], target [0,1,0], fovy 0.9, 512 x 512, rt true</dd>
+            <dt>samples</dt><dd>rt 64, ss 24</dd>
+            <dt>exact</dt><dd>pixels 151984, rmse 0.134912357, maxError 0.640625</dd>
+          </dl>
+          <div class="tag" style="margin-top:.8rem">outputs, SHA-256 of every file the verdict was judged from</div>
+          <ul class="files" id="cert-files"></ul>
+        </div>
+        <div class="scene" data-scene="verify" aria-hidden="true">
+          <div class="tag">raw_native_cli verify ./out</div>
+          <div class="pick" id="verify-pick" role="group" aria-label="Choose what to do to the output folder"></div>
+          <div class="result reveal" id="verify-res" style="margin:.7rem 0 .3rem"></div>
+          <ul class="files" id="verify-files"></ul>
+        </div>
+        <div class="scene" data-scene="arena" aria-hidden="true">
+          <div class="pass">
+            <div><div class="tag">pass 1, a generous slab</div><div class="meter"><i id="arena-a"></i></div><div class="mono" id="arena-a-t" style="font-size:.8rem"></div></div>
+            <div><div class="tag">pass 2, a budget of exactly that</div><div class="meter"><i id="arena-b"></i></div><div class="mono" id="arena-b-t" style="font-size:.8rem"></div></div>
+          </div>
+          <dl class="kv reveal" id="arena-kv" style="margin-top:.8rem"></dl>
+        </div>
+        <div class="scene" data-scene="gpu" aria-hidden="true">
+          <div class="tag">16 renders per backend, each checked against a CPU render of the same camera</div>
+          <table class="gputab"><thead><tr><th>backend</th><th>tolerance verdict</th><th>8-bit frame identity</th></tr></thead>
+            <tbody><tr><td>D3D12, RTX 4090</td><td><span class="v v-ok">verified</span> 16 of 16</td><td><span class="v v-ok">MATCH</span> 13, <span class="v v-drift">DRIFT</span> 3</td></tr>
+            <tr><td>WebGPU, Chrome 154</td><td><span class="v v-ok">verified</span> 16 of 16</td><td><span class="v v-ok">MATCH</span> 13, <span class="v v-drift">DRIFT</span> 3</td></tr>
+            <tr><td>D3D12 on WARP</td><td><span class="v v-ok">verified</span> 16 of 16</td><td><span class="v v-ok">MATCH</span> 16, RMSE exactly 0</td></tr></tbody></table>
+          <p class="tag" style="margin-top:.7rem">largest RMSE on any channel 4.2e-5 against a bound of 0.01; the 3 DRIFT frames differ by one hemisphere ray (1/64) on a few pixels</p>
+        </div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="look" data-state="all"><div class="card">
+        <span class="num">01</span><h3>One run, four pictures, one verdict</h3>
+        <p>Run <code>raw_native_cli --out ./out --width 512 --height 512</code> and you get the shaded frame, two occlusion maps and the difference between them. The ray-traced map shows dark contact shadows where the box meets the ground. The screen-space map misses most of them.</p>
+        <p>For this default view the error is 0.1349 RMSE against a tolerance of 0.12, so the certificate says refuted. The shortcut is too weak for this camera, and the run says so.</p>
+        <p class="src">Source: README.md, the default render and its certificate; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/examples/default-certificate.json">docs/examples/default-certificate.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="raster" data-state="g"><div class="card">
+        <span class="num">02</span><h3>Rasterize into a G-buffer</h3>
+        <p>The scene is built in: a 10 by 10 ground plane and a box two units tall at the origin, under one directional light. The rasterizer finds the nearest surface for each pixel and stores five channels: depth, normal, world position, motion and a coverage mask.</p>
+        <p>Both occlusion estimators read this buffer. The mask matters later: only covered pixels are compared.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/raw/renderer/gbuffer.hpp">raw/renderer/gbuffer.hpp</a>, <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/scene">src/scene</a>, <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/renderer/render.cpp">src/renderer/render.cpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="rt" data-state="fan"><div class="card">
+        <span class="num">03</span><h3>The reference: shoot real rays</h3>
+        <p>For each covered pixel the reference sends 64 rays over the hemisphere above the surface, weighted toward the normal. A ray that hits geometry within 2.0 world units is blocked. The pixel's occlusion value is the share of rays that got out.</p>
+        <p>The ray directions come from a hash of the pixel and the sample index, with no global random state. Run it twice and you get the same grain.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/renderer/ray_ao.cpp">src/renderer/ray_ao.cpp</a>, constants in <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/raw/renderer/render.hpp">raw/renderer/render.hpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="ss" data-state="samples"><div class="card">
+        <span class="num">04</span><h3>The shortcut: look only at the screen</h3>
+        <p>The screen-space method takes 24 samples within 6 pixels of the pixel and reads their stored positions. A neighbour within 2.0 units that rises into the hemisphere (its direction scores above 0.15 against the normal) counts as blocking.</p>
+        <p>It can only see what the camera sees. A face turned away from the camera is not in the buffer, and anything more than 6 pixels away is never sampled. That is why the drawing's two numbers differ.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/renderer/ssao.cpp">src/renderer/ssao.cpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="rec" data-state="rmse"><div class="card">
+        <span class="num">05</span><h3>Reconcile: one number, one bound</h3>
+        <p>The reconcile takes the absolute difference at every covered pixel, keeps the largest, and computes the root mean square. If the RMSE is at or below the tolerance the claim is verified; above it, refuted.</p>
+        <p>Default view: 151,984 covered pixels, RMSE 0.1349, tolerance 0.12. Refuted. The worst single pixel is off by 0.6406.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/cert/reconcile.cpp">src/cert/reconcile.cpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="views" data-state="bars"><div class="card">
+        <span class="num">06</span><h3>The verdict depends on the view</h3>
+        <p>Same scene, same tolerance, five cameras. Two views stay inside the bound: high, looking down from above, and wide. The default, low and close views fall outside it.</p>
+        <p>A pass on RMSE says nothing about the worst pixel: the high view passes at 0.0827 with a maximum error of 0.625.</p>
+        <p class="src">Source: README.md, "The verdict depends on the view"; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/evidence/wasm-vs-native-512.json">evidence/wasm-vs-native-512.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cert" data-state="cert"><div class="card">
+        <span class="num">07</span><h3>Write it down with its evidence</h3>
+        <p>The certificate records the claim, the verdict, every parameter that changes the pixels, the sample counts, the exact float values and the SHA-256 of every file the verdict was judged from. Since 0.5.0 a <code>receipt.json</code> restates the same check in the shared superstack receipt format.</p>
+        <p class="src">Source: README.md, "What one run writes" and "The superstack receipt"; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/docs/examples/default-certificate.json">docs/examples/default-certificate.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="verify" data-state="clean"><div class="card">
+        <span class="num">08</span><h3>Check it without trusting the renderer</h3>
+        <p><code>raw_native_cli verify ./out</code> renders nothing. It re-hashes every listed file, recomputes the reconcile from the two float maps and the mask, and compares the pixel count, RMSE, maximum error and verdict with the recorded ones.</p>
+        <p>Exit 0 means every check matches, 3 means a mismatch, 2 means a file is missing. <code>scripts/recheck.py</code> does the same in Python and shares no code with the C++ verifier, so a bug in one shows up as a disagreement. Try each case in the panel.</p>
+        <p class="src">Source: README.md, "Check a certificate without trusting the renderer"; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/src/tools/verify.cpp">src/tools/verify.cpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="arena" data-state="arena"><div class="card">
+        <span class="num">09</span><h3>Render twice to prove the memory bound</h3>
+        <p>The first pass renders inside a generous slab and records exactly how many bytes the frame needed. The second pass renders again inside a budget of exactly that many bytes, with an allocator that never grows. If anything asks for more the second time, the render stops and the memory certificate says refuted.</p>
+        <p class="src">Source: README.md, "How the memory budget works"; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/app/main.cpp">app/main.cpp</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="gpu" data-state="gpu"><div class="card">
+        <span class="num">10</span><h3>The GPU is checked against the CPU</h3>
+        <p>Two optional builds render the same frame on the GPU, through D3D12 on Windows or WebGPU in a browser, and compare every GPU frame with a CPU render of the same camera. The bounds were committed before the first line of GPU code.</p>
+        <p>All 16 renders pass on both backends. 13 of 16 are byte-identical to the CPU frame. The other 3 differ by one ray on a few pixels and still pass.</p>
+        <p class="src">Source: README.md, "Render on the GPU, checked against the CPU"; <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/raw/cert/gpu_tolerance.hpp">raw/cert/gpu_tolerance.hpp</a>; evidence/d3d12-rtx4090-checks.json, evidence/webgpu-rtx4090-chromium.json</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="try">
+  <h2 id="try">Try it</h2>
+  <div class="measure"><p>Download a binary from the <a href="https://github.com/HarperZ9/raw-native/releases/latest">latest release</a> (Windows x64, Linux x64 or WebAssembly), check it against <code>SHA256SUMS</code>, then render and verify:</p></div>
+<pre class="cmd"><code>$ raw_native_cli --out ./out
+<span class="out">reconcile: pixels=37996 rmse=0.1294 maxError=0.6094 verdict=DIVERGENT</span>
+$ raw_native_cli verify ./out
+<span class="out">verify: all checks match</span>
+$ raw_native_cli --out ./high --width 512 --height 512 --eye 0,9,3 --target 0,0.5,0</code></pre>
+  <p class="src">Without size flags the CLI renders 256 x 256, so its numbers differ from the 512 x 512 values above. Output lines are excerpts from raw_native_cli built from f2cd6e9 with MSVC on Windows.</p>
+  <div class="measure"><p>Or build from source with CMake 3.24 or newer and a C++23 compiler:</p></div>
+<pre class="cmd"><code>$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+$ cmake --build build --config Release
+$ ctest --test-dir build -C Release --output-on-failure</code></pre>
+  <div class="live" id="live">
+    <h3>Run it in this page</h3>
+    <p class="measure" style="margin:0 0 .6rem">This loads raw-native 0.4.0's WebAssembly build from harperz9.github.io, checks both files against their SHA-256 before running them, and renders on your CPU. The CPU render code is unchanged from 0.3.0 through 0.5.1. Smaller frames give different numbers from the 512 x 512 table above. At 256 x 256 the default view matches the native CLI run shown above: rmse 0.1294 over 37,996 pixels.</p>
+    <div class="row">
+      <label class="tag" for="live-view">view</label>
+      <select id="live-view"><option value="default">default</option><option value="high">high</option><option value="low">low</option><option value="close">close</option><option value="wide">wide</option></select>
+      <label class="tag" for="live-size">size</label>
+      <select id="live-size"><option value="128">128 x 128</option><option value="256" selected>256 x 256</option></select>
+      <button type="button" class="btn" id="live-go">Render</button>
+    </div>
+    <div class="read" id="live-status" aria-live="polite">Not run yet. A 256 x 256 render took 622 ms in a desktop browser when this page was tested.</div>
+    <div class="canv" id="live-canv" hidden>
+      <div><canvas id="c-frame"></canvas><div class="cl">frame</div></div>
+      <div><canvas id="c-rt"></canvas><div class="cl">ao_rt</div></div>
+      <div><canvas id="c-ss"></canvas><div class="cl">ao_ss</div></div>
+      <div><canvas id="c-err"></canvas><div class="cl">ao_error</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>There is one built-in test scene: a box on a ground plane under one light. There is no model loader yet.</li>
+    <li>The reference is an estimate. 64 hemisphere samples per pixel give a repeatable answer with visible grain, and it is the bar the shortcut is held to.</li>
+    <li>The screen-space method is a simple one. Most views come back refuted, which is the check reporting a weak shortcut.</li>
+    <li>RMSE summarises the whole frame. A verified view can still have single pixels far off.</li>
+    <li>Byte-identical output was checked on x86-64 with two compilers and on WebAssembly. Other CPU architectures are untested.</li>
+    <li>The GPU timings and checks come from one machine, one GPU and one driver. Another adapter may differ.</li>
+  </ul>
+  <p class="src">Source: README.md, "Limits, stated plainly" and "Measured results", at f2cd6e9</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Which of the two occlusion maps is the reference, and why?</summary><p>The ray-traced one. It tests real rays against the geometry within 2.0 units, so it sees occluders the camera cannot. The screen-space map only reads what is in the G-buffer.</p></details>
+  <details><summary>The default view reads refuted. What two numbers decide that?</summary><p>The RMSE over covered pixels, 0.1349, and the tolerance, 0.12. The RMSE is above the bound.</p></details>
+  <details><summary>Why can the high view be verified while one of its pixels is off by 0.625?</summary><p>The verdict is on RMSE across 239,854 pixels. A few large errors barely move a root mean square, so a pass says nothing about the worst pixel.</p></details>
+  <details><summary>What does <code>verify</code> do that a second render would not?</summary><p>It renders nothing. It re-hashes the recorded files and recomputes the reconcile from them, so it checks the evidence without trusting the renderer that made it.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/raw-native/tree/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a">HarperZ9/raw-native at f2cd6e9</a> (release 0.5.1). The source of this page is <code>docs/explainer/index.html</code> in that repository. raw-native is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
+  var rm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var EX = window.EX = window.EX || {};
+  EX.scenes = EX.scenes || {};
+  EX.reduced = function () { return rm.matches; };
+  // A timer set that one call can cancel, so a scene that loses the stage stops moving.
+  var timers = [];
+  EX.later = function (fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; };
+  EX.clear = function () { timers.forEach(clearTimeout); timers = []; };
+  EX.el = function (tag, attrs, text) {
+    var svg = /^(svg|g|rect|circle|line|path|text|polyline|polygon|tspan|defs|pattern)$/.test(tag);
+    var n = svg ? document.createElementNS("http://www.w3.org/2000/svg", tag) : document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  // Theme: follows the system unless the reader picks one.
+  var tbtn = document.querySelector("[data-theme-toggle]");
+  if (tbtn) {
+    var saved = null;
+    try { saved = localStorage.getItem("ex-theme"); } catch (e) { saved = null; }
+    if (saved) root.setAttribute("data-theme", saved);
+    var label = function () {
+      var dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      tbtn.textContent = dark ? "Light page" : "Dark page";
+      return dark;
+    };
+    label();
+    tbtn.addEventListener("click", function () {
+      var next = label() ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("ex-theme", next); } catch (e) { /* storage blocked: the choice lasts this visit */ }
+      label();
+    });
+  }
+
+  // Copy buttons on command blocks.
+  Array.prototype.forEach.call(document.querySelectorAll("pre.cmd"), function (pre) {
+    var b = EX.el("button", { type: "button", class: "btn copy" }, "Copy");
+    b.addEventListener("click", function () {
+      // Only the lines a reader types (they start with "$ ") go to the clipboard.
+      var all = pre.querySelector("code").innerText;
+      var lines = all.split("\n").filter(function (l) { return l.indexOf("$ ") === 0; })
+        .map(function (l) { return l.slice(2); });
+      var payload = lines.length ? lines.join("\n") : all;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(payload).then(function () { b.textContent = "Copied"; },
+          function () { b.textContent = "Select and copy"; });
+      } else { b.textContent = "Select and copy"; }
+      setTimeout(function () { b.textContent = "Copy"; }, 1800);
+    });
+    pre.appendChild(b);
+  });
+
+  // The walk: a scroll position picks the active step, the step picks the scene.
+  function init() {
+    var walk = document.querySelector(".walk");
+    if (!walk) return;
+    var steps = Array.prototype.slice.call(walk.querySelectorAll(".step"));
+    var scenes = Array.prototype.slice.call(walk.querySelectorAll(".scene"));
+    var wrap = walk.querySelector(".stage-wrap");
+    var prev = walk.querySelector("[data-prev]");
+    var next = walk.querySelector("[data-next]");
+    var count = walk.querySelector("[data-count]");
+    var cap = walk.querySelector("[data-cap]");
+    var cur = -1;
+
+    function activate(i) {
+      if (i === cur) return;
+      cur = i;
+      EX.clear();
+      steps.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
+      var s = steps[i];
+      var name = s.getAttribute("data-scene");
+      scenes.forEach(function (sc) {
+        var on = sc.getAttribute("data-scene") === name;
+        sc.classList.toggle("is-on", on);
+        sc.setAttribute("aria-hidden", on ? "false" : "true");
+        if (on) sc.removeAttribute("inert"); else sc.setAttribute("inert", "");
+      });
+      count.textContent = "Step " + (i + 1) + " of " + steps.length;
+      cap.textContent = s.querySelector("h3").textContent;
+      prev.disabled = i === 0;
+      next.disabled = i === steps.length - 1;
+      var fn = EX.scenes[name];
+      if (fn) {
+        try { fn(s.getAttribute("data-state"), rm.matches); }
+        catch (err) { console.error("explainer scene failed", name, s.getAttribute("data-state"), err); }
+      }
+    }
+    function line() {
+      if (window.innerWidth < 860) {
+        // The stage sticks to the top on narrow screens, so measure it as stuck.
+        var h = wrap.offsetHeight;
+        return h + (window.innerHeight - h) * 0.35;
+      }
+      return window.innerHeight * 0.5;
+    }
+    var lockUntil = 0;
+    function pick() {
+      if (Date.now() < lockUntil) return;
+      var t = line(), idx = 0;
+      steps.forEach(function (s, k) { if (s.getBoundingClientRect().top < t) idx = k; });
+      activate(idx);
+    }
+    var queued = false;
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; pick(); });
+    }, { passive: true });
+    window.addEventListener("resize", function () { var c = cur; cur = -1; activate(c < 0 ? 0 : c); });
+    function go(k) {
+      if (k < 0 || k >= steps.length) return;
+      var s = steps[k];
+      var y = window.scrollY + s.getBoundingClientRect().top - line() + 12;
+      // Hold the chosen step while the smooth scroll passes the steps between.
+      lockUntil = Date.now() + (rm.matches ? 0 : 2500);
+      window.scrollTo({ top: y, behavior: rm.matches ? "auto" : "smooth" });
+      activate(k);
+      s.focus({ preventScroll: true });
+    }
+    window.addEventListener("scrollend", function () { if (lockUntil) { lockUntil = 0; pick(); } });
+    prev.addEventListener("click", function () { go(cur - 1); });
+    next.addEventListener("click", function () { go(cur + 1); });
+    EX.replay = function () { var c = cur; cur = -1; activate(c); };
+    pick();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+<script>
+(function () {
+  "use strict";
+  var EX = window.EX;
+  var el = function () { return EX.el.apply(null, arguments); };
+  var clear = function (n) { while (n.firstChild) n.removeChild(n.firstChild); };
+
+  /* ---- a 2D slice of the test scene, in world units ---- */
+  // Ground y = 0, box x in [-1, 1], y in [0, 2] (the built-in box: centre (0,1,0), half size 1).
+  var BOX = { x0: -1, x1: 1, y0: 0, y1: 2 };
+  var P = { x: 1.45, y: 0 };            // a ground point near the box's lit face
+  var RADIUS = 2.0;                     // kAoRadius
+  // world -> drawing: x in [-3.2, 5.6], y in [-0.4, 4.6]
+  var K = 80;
+  var X = function (x) { return 20 + (x + 1.8) * K; };
+  var Y = function (y) { return 380 - y * K; };
+  // The hash in ray_ao.cpp and ssao.cpp, ported to 32-bit integer math.
+  function hash01(x, y, s) {
+    var h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + Math.imul(s, 2246822519 | 0)) >>> 0;
+    h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0;
+    h = (h ^ (h >>> 16)) >>> 0;
+    return (h & 0xFFFFFF) / 0x1000000;
+  }
+  // Distance along a ray to the box, or Infinity.
+  function hitBox(ox, oy, dx, dy) {
+    var t0 = -Infinity, t1 = Infinity;
+    var ax = [[ox, dx, BOX.x0, BOX.x1], [oy, dy, BOX.y0, BOX.y1]];
+    for (var i = 0; i < 2; i++) {
+      var o = ax[i][0], d = ax[i][1], lo = ax[i][2], hi = ax[i][3];
+      if (Math.abs(d) < 1e-9) { if (o < lo || o > hi) return Infinity; continue; }
+      var a = (lo - o) / d, b = (hi - o) / d;
+      if (a > b) { var t = a; a = b; b = t; }
+      t0 = Math.max(t0, a); t1 = Math.min(t1, b);
+    }
+    return (t1 >= Math.max(t0, 0) && t0 > 1e-6) ? t0 : Infinity;
+  }
+  function sceneBase(svg, withCam) {
+    clear(svg);
+    var defs = el("defs");
+    var pat = el("pattern", { id: "hatch", width: 6, height: 6, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    pat.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 6, class: "faint", "stroke-width": 1 }));
+    defs.appendChild(pat);
+    svg.appendChild(defs);
+    svg.appendChild(el("line", { class: "ink", x1: X(-1.75), y1: Y(0), x2: X(5.2), y2: Y(0), "stroke-width": 1.4 }));
+    svg.appendChild(el("rect", { class: "hatch", x: X(BOX.x0), y: Y(BOX.y1), width: X(BOX.x1) - X(BOX.x0), height: Y(0) - Y(BOX.y1) }));
+    svg.appendChild(el("text", { class: "lbl-s", x: X(-0.85), y: Y(2) - 8 }, "box"));
+    svg.appendChild(el("text", { class: "lbl-s", x: X(-1.7), y: Y(0) + 14 }, "ground"));
+    if (withCam) {
+      svg.appendChild(el("circle", { class: "ink-fill", cx: X(CAM.x), cy: Y(CAM.y), r: 5 }));
+      svg.appendChild(el("text", { class: "lbl", x: X(CAM.x) - 50, y: Y(CAM.y) - 12 }, "camera"));
+    }
+  }
+  var CAM = { x: 5.0, y: 4.2 };
+  // The visible surface along a camera ray: box first, else the ground.
+  function visibleAt(angle) {
+    var dx = Math.cos(angle), dy = Math.sin(angle);
+    var tb = hitBox(CAM.x, CAM.y, dx, dy);
+    var tg = dy < 0 ? -CAM.y / dy : Infinity;
+    if (tb < tg) {
+      var hx = CAM.x + dx * tb, hy = CAM.y + dy * tb;
+      var n = Math.abs(hy - BOX.y1) < 1e-4 ? [0, 1] : (Math.abs(hx - BOX.x1) < 1e-4 ? [1, 0] : [-1, 0]);
+      return { x: hx, y: hy, n: n, box: true };
+    }
+    if (tg === Infinity) return null;
+    return { x: CAM.x + dx * tg, y: 0, n: [0, 1], box: false };
+  }
+
+  /* ---- step 2: rasterize ---- */
+  EX.scenes.raster = function (state, reduce) {
+    var svg = document.getElementById("raster-svg");
+    sceneBase(svg, true);
+    var a0 = Math.atan2(-CAM.y, -1.6 - CAM.x), a1 = Math.atan2(-CAM.y, 4.2 - CAM.x);
+    var N = 22, lines = [];
+    for (var i = 0; i < N; i++) {
+      var a = a0 + (a1 - a0) * i / (N - 1), v = visibleAt(a);
+      if (!v) continue;
+      var ln = el("line", { class: "ray", x1: X(CAM.x), y1: Y(CAM.y), x2: X(v.x), y2: Y(v.y), opacity: reduce ? 1 : 0 });
+      svg.appendChild(ln);
+      svg.appendChild(el("circle", { class: v.box ? "dot-hit" : "dot-open", cx: X(v.x), cy: Y(v.y), r: 2.6 }));
+      lines.push(ln);
+    }
+    var g = el("g", { class: "gbuf", transform: "translate(20 18)" });
+    ["depth", "normal", "position", "motion", "mask"].forEach(function (c, i) {
+      g.appendChild(el("rect", { x: i * 74, y: 0, width: 68, height: 26, rx: 1 }));
+      g.appendChild(el("text", { x: i * 74 + 8, y: 17 }, c));
+    });
+    svg.appendChild(g);
+    svg.appendChild(el("text", { class: "lbl-s", x: 20, y: 62 }, "one ray per pixel; each stores the nearest surface it meets"));
+    if (!reduce) lines.forEach(function (l, i) { EX.later(function () { l.setAttribute("opacity", 1); }, 60 * i); });
+  };
+
+  /* ---- step 3: ray-traced AO at P ---- */
+  EX.scenes.rt = function (state, reduce) {
+    var svg = document.getElementById("rt-svg"), read = document.getElementById("rt-read");
+    sceneBase(svg, false);
+    svg.appendChild(el("path", { class: "faint", d: "M" + X(P.x - RADIUS) + " " + Y(0) + " A " + RADIUS * K + " " + RADIUS * K + " 0 0 1 " + X(P.x + RADIUS) + " " + Y(0), "stroke-dasharray": "3 4" }));
+    svg.appendChild(el("text", { class: "lbl-s", x: X(P.x) + 6, y: Y(RADIUS) - 6 }, "radius 2.0"));
+    var S = 64, open = 0, rays = [];
+    for (var s = 0; s < S; s++) {
+      // 2D analogue of the cosine-weighted draw in ray_ao.cpp: lx = sqrt(u1) cos(phi)
+      var u1 = hash01(7, 3, 2 * s), u2 = hash01(7, 3, 2 * s + 1);
+      var lx = Math.sqrt(u1) * Math.cos(6.2831853 * u2), lz = Math.sqrt(Math.max(0, 1 - u1));
+      var len = Math.hypot(lx, lz), dx = lx / len, dy = lz / len;
+      var t = hitBox(P.x, P.y + 1e-3, dx, dy), blocked = t <= RADIUS;
+      if (!blocked) open++;
+      var L = blocked ? t : RADIUS;
+      var ln = el("line", { class: "ray" + (blocked ? " hit" : ""), x1: X(P.x), y1: Y(P.y), x2: X(P.x + dx * L), y2: Y(P.y + dy * L), opacity: reduce ? 1 : 0 });
+      svg.appendChild(ln);
+      rays.push([ln, blocked]);
+    }
+    svg.appendChild(el("circle", { class: "ink-fill", cx: X(P.x), cy: Y(P.y), r: 4 }));
+    svg.appendChild(el("text", { class: "lbl", x: X(P.x) + 8, y: Y(P.y) + 18 }, "P"));
+    var done = function (k, o) { read.textContent = "in this drawing: " + o + " of " + k + " rays get out, ray-traced AO " + (o / k).toFixed(2); };
+    if (reduce) { done(S, open); return; }
+    var o2 = 0;
+    rays.forEach(function (r, i) {
+      EX.later(function () { r[0].setAttribute("opacity", 1); if (!r[1]) o2++; done(i + 1, o2); }, 40 * i);
+    });
+  };
+
+  /* ---- step 4: screen-space AO at P ---- */
+  EX.scenes.ss = function (state, reduce) {
+    var svg = document.getElementById("ss-svg"), read = document.getElementById("ss-read");
+    sceneBase(svg, true);
+    var aP = Math.atan2(P.y - CAM.y, P.x - CAM.x), step = 0.03;   // one pixel of camera angle in the drawing
+    var R = 6, occ = 0, used = 0, marks = [];
+    svg.appendChild(el("line", { class: "ray", x1: X(CAM.x), y1: Y(CAM.y), x2: X(P.x), y2: Y(P.y) }));
+    for (var px = -R; px <= R; px++) {
+      var v = visibleAt(aP + px * step);
+      if (v) svg.appendChild(el("circle", { class: "faint", cx: X(v.x), cy: Y(v.y), r: 1.6 }));
+    }
+    for (var s = 0; s < 24; s++) {
+      // ssao.cpp: angle a and radius (0.3 + 0.7 u) * R; in a 1D slice only cos(a) survives
+      var a = hash01(7, 3, s) * 6.2831853, rad = (0.3 + 0.7 * hash01(7, 3, s + 97)) * R;
+      var off = Math.round(Math.cos(a) * rad);
+      var q = visibleAt(aP + off * step);
+      if (!q) continue;
+      used++;
+      var dx = q.x - P.x, dy = q.y - P.y, dist = Math.hypot(dx, dy), blocks = false;
+      if (dist >= 1e-4 && dist <= RADIUS) blocks = (dy / dist) > 0.15;   // n = (0, 1) at P
+      if (blocks) occ++;
+      var m = el("circle", { class: blocks ? "dot-hit" : "dot-open", cx: X(q.x), cy: Y(q.y), r: 4, opacity: reduce ? 1 : 0 });
+      svg.appendChild(m);
+      marks.push([m, blocks]);
+    }
+    svg.appendChild(el("circle", { class: "ink-fill", cx: X(P.x), cy: Y(P.y), r: 4 }));
+    svg.appendChild(el("text", { class: "lbl", x: X(P.x) + 8, y: Y(P.y) + 18 }, "P"));
+    svg.appendChild(el("text", { class: "lbl-s", x: X(-1.7), y: Y(3.3) }, "the far face of the box is hidden from the camera"));
+    svg.appendChild(el("text", { class: "lbl-s", x: X(-1.7), y: Y(3.3) + 14 }, "and is never sampled"));
+    var ao = used ? Math.max(0, 1 - occ / used) : 1;
+    var done = function () { read.textContent = "in this drawing: " + occ + " of " + used + " samples block, screen-space AO " + ao.toFixed(2) + ". Filled dots block; open dots do not."; };
+    if (reduce) { done(); return; }
+    read.textContent = "";
+    marks.forEach(function (mk, i) { EX.later(function () { mk[0].setAttribute("opacity", 1); }, 70 * i); });
+    EX.later(done, 70 * marks.length + 100);
+  };
+
+  /* ---- step 5: RMSE against the bound ---- */
+  function bar(svg, y, label, value, max, cls, reduce, delay) {
+    var W = 460, x0 = 120;
+    svg.appendChild(el("text", { class: "lbl", x: 0, y: y + 15 }, label));
+    var r = el("rect", { class: cls + " grow", x: x0, y: y, height: 20, width: reduce ? W * value / max : 0 });
+    svg.appendChild(r);
+    var t = el("text", { class: "lbl", x: x0 + W * value / max + 6, y: y + 15 }, value.toFixed(4));
+    svg.appendChild(t);
+    if (!reduce) EX.later(function () { r.setAttribute("width", W * value / max); }, delay || 60);
+  }
+  function tolLine(svg, y0, y1, max) {
+    var x = 120 + 460 * 0.12 / max;
+    svg.appendChild(el("line", { class: "tol", x1: x, y1: y0, x2: x, y2: y1 }));
+    svg.appendChild(el("text", { class: "lbl-s", x: x + 4, y: y0 + 10 }, "tolerance 0.12"));
+  }
+  EX.scenes.rec = function (state, reduce) {
+    var svg = document.getElementById("rec-svg");
+    clear(svg);
+    bar(svg, 40, "rmse", 0.1349, 0.24, "bar-drift", reduce);
+    tolLine(svg, 20, 80, 0.24);
+    svg.appendChild(el("text", { class: "lbl-s", x: 120, y: 112 }, "rmse = sqrt( mean over covered pixels of |ss - rt|^2 )"));
+    svg.appendChild(el("text", { class: "lbl-s", x: 120, y: 130 }, "verified when rmse <= tolerance, refuted otherwise"));
+  };
+  /* ---- step 6: five views ---- */
+  var VIEWS = [["high", 0.0827], ["wide", 0.0882], ["default", 0.1349], ["low", 0.1659], ["close", 0.2167]];
+  EX.scenes.views = function (state, reduce) {
+    var svg = document.getElementById("views-svg");
+    clear(svg);
+    VIEWS.forEach(function (v, i) {
+      bar(svg, 30 + i * 52, v[0], v[1], 0.26, v[1] <= 0.12 ? "bar-ok" : "bar-drift", reduce, 80 + i * 160);
+      svg.appendChild(el("text", { class: "lbl-s", x: 0, y: 30 + i * 52 + 32 }, v[1] <= 0.12 ? "verified" : "refuted"));
+    });
+    tolLine(svg, 10, 300, 0.26);
+  };
+
+  /* ---- step 7: certificate outputs ---- */
+  var OUTS = [["ao_error.pgm", "3cf1fd83151a016a"], ["ao_rt.pfm", "eb60b22d41512628"], ["ao_rt.pgm", "fbddc1c59736f63a"],
+    ["ao_ss.pfm", "fddc169c7fca39e8"], ["ao_ss.pgm", "ec08b52325d6e9f5"], ["frame.ppm", "ff58d8c63e7ded4f"],
+    ["frame_hdr.pfm", "f155648b49668088"], ["mask.pgm", "892aacd21cae36df"]];
+  EX.scenes.cert = function (state, reduce) {
+    var ul = document.getElementById("cert-files"), kv = document.getElementById("cert-kv");
+    clear(ul); kv.classList.remove("in");
+    OUTS.forEach(function (o, i) {
+      var li = el("li", { style: reduce ? "" : "opacity:0;transition:opacity .3s" });
+      li.appendChild(el("span", null, o[0])); li.appendChild(el("span", { class: "h" }, o[1] + "...")); li.appendChild(el("span"));
+      ul.appendChild(li);
+      if (!reduce) EX.later(function () { li.style.opacity = 1; }, 300 + i * 120);
+    });
+    if (reduce) kv.classList.add("in"); else EX.later(function () { kv.classList.add("in"); }, 60);
+  };
+
+  /* ---- step 8: verify, three cases ---- */
+  var CASES = {
+    clean: { label: "leave it as written", bad: -1, gone: -1, exit: "exit 0", v: "every check matches", cls: "v-ok" },
+    edit: { label: "change one byte of ao_ss.pfm", bad: 3, gone: -1, exit: "exit 3", v: "3 mismatches: the file's hash and the receipt's two hashes of it", cls: "v-drift" },
+    del: { label: "delete mask.pgm", bad: -1, gone: 7, exit: "exit 2", v: "MISSING mask.pgm", cls: "v-unv" }
+  };
+  function showCase(id, reduce) {
+    var c = CASES[id], ul = document.getElementById("verify-files"), res = document.getElementById("verify-res");
+    clear(ul); clear(res); res.classList.remove("in");
+    OUTS.forEach(function (o, i) {
+      var li = el("li", { class: i === c.bad ? "bad" : (i === c.gone ? "gone" : "") });
+      li.appendChild(el("span", null, o[0]));
+      li.appendChild(el("span", { class: "h" }, i === c.gone ? "not found" : (i === c.bad ? "re-hash differs" : o[1] + "...")));
+      li.appendChild(el("span", { class: "v " + (i === c.bad ? "v-drift" : i === c.gone ? "v-unv" : "") }, i === c.bad ? "differs" : i === c.gone ? "missing" : "same"));
+      ul.appendChild(li);
+    });
+    res.appendChild(el("span", { class: "v vbox " + c.cls }, c.exit));
+    res.appendChild(el("span", { class: "tag" }, "  " + c.v + (id === "clean" ? "; pixels, rmse, maxError and verdict recomputed from ao_rt.pfm, ao_ss.pfm and mask.pgm" : "")));
+    Array.prototype.forEach.call(document.querySelectorAll("#verify-pick .btn"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-id") === id ? "true" : "false"); });
+    if (reduce) res.classList.add("in"); else EX.later(function () { res.classList.add("in"); }, 250);
+  }
+  var vp = document.getElementById("verify-pick");
+  Object.keys(CASES).forEach(function (id) {
+    var b = el("button", { type: "button", class: "btn", "data-id": id, "aria-pressed": "false" }, CASES[id].label);
+    b.addEventListener("click", function () { showCase(id, EX.reduced()); });
+    vp.appendChild(b);
+  });
+  EX.scenes.verify = function (state, reduce) { showCase(state, reduce); };
+
+  /* ---- step 9: the arena ---- */
+  // Default view at 512 x 512, measured with raw_native_cli built from f2cd6e9.
+  // The slab size is computed from PER_PIXEL_UPPER in app/main.cpp: 512 * 512 * 85 * 2 + 1 MiB.
+  var ARENA = { measured: "22,285,836 bytes", budget: "22,285,836", used: "22,285,836", slabShare: 48.9,
+    rows: [["slab, pass 1", "45,613,056 bytes"], ["allocations", "55"], ["refusals", "0"], ["verdict", "verified (raw-arena-v1)"]] };
+  EX.scenes.arena = function (state, reduce) {
+    var a = document.getElementById("arena-a"), b = document.getElementById("arena-b");
+    var at = document.getElementById("arena-a-t"), bt = document.getElementById("arena-b-t"), kv = document.getElementById("arena-kv");
+    a.style.width = "0"; b.style.width = "0"; kv.classList.remove("in"); clear(kv);
+    var A = ARENA;
+    at.textContent = A ? "high water " + A.measured : "measures the high-water mark";
+    bt.textContent = A ? "budget " + A.budget + ", used " + A.used : "budget = measured bytes";
+    if (A) A.rows.forEach(function (r) { kv.appendChild(el("dt", null, r[0])); kv.appendChild(el("dd", null, r[1])); });
+    var go1 = function () { a.style.width = (A ? A.slabShare : 55) + "%"; };
+    var go2 = function () { b.style.width = "100%"; kv.classList.add("in"); };
+    if (reduce) { go1(); go2(); return; }
+    EX.later(go1, 100); EX.later(go2, 1300);
+  };
+
+  /* ---- live render with the hosted WebAssembly build ---- */
+  var LIVE = { default: { eye: [4, 4, 6], target: [0, 1, 0] }, high: { eye: [0, 9, 3], target: [0, 0.5, 0] },
+    low: { eye: [6, 1.5, 2], target: [0, 1, 0] }, close: { eye: [2, 2.5, 3], target: [0, 0.8, 0], fovy: 0.7 },
+    wide: { eye: [5, 5, 8], target: [0, 0.5, 0], fovy: 1.2 } };
+  var BASE = "https://harperz9.github.io/media/raw-native/wasm-0.4.0/";
+  var rawP = null;
+  function pnm(bytes) {
+    // P5 (gray) or P6 (rgb), 8-bit
+    var i = 0, fields = [];
+    while (fields.length < 4) {
+      while (bytes[i] === 32 || bytes[i] === 10 || bytes[i] === 13 || bytes[i] === 9) i++;
+      if (bytes[i] === 35) { while (bytes[i] !== 10) i++; continue; }
+      var s = "";
+      while (bytes[i] > 32) s += String.fromCharCode(bytes[i++]);
+      fields.push(s);
+    }
+    i++;
+    return { kind: fields[0], w: +fields[1], h: +fields[2], data: bytes.subarray(i) };
+  }
+  function paint(id, img) {
+    var c = document.getElementById(id), ctx = c.getContext("2d");
+    c.width = img.w; c.height = img.h;
+    var out = ctx.createImageData(img.w, img.h), n = img.w * img.h, rgb = img.kind === "P6";
+    for (var k = 0; k < n; k++) {
+      var r = rgb ? img.data[3 * k] : img.data[k], g = rgb ? img.data[3 * k + 1] : r, b = rgb ? img.data[3 * k + 2] : r;
+      out.data[4 * k] = r; out.data[4 * k + 1] = g; out.data[4 * k + 2] = b; out.data[4 * k + 3] = 255;
+    }
+    ctx.putImageData(out, 0, 0);
+  }
+  var go = document.getElementById("live-go"), status = document.getElementById("live-status");
+  go.addEventListener("click", function () {
+    go.disabled = true;
+    status.textContent = "Fetching and checking the WebAssembly build...";
+    if (!rawP) {
+      rawP = import(BASE + "raw-loader.mjs").then(function (m) {
+        return m.loadRawNative({
+          moduleUrl: BASE + "raw-native.mjs", moduleSha256: "c02ede3e72d1e6691d6ac190319053b8a982cd9de44c64f95a00edb6f95d33c5",
+          wasmUrl: BASE + "raw-native.wasm", wasmSha256: "45e25940368d664e21088708ba1c515b0e5d9ef60a2bea4b8b93f8f31113a470"
+        });
+      });
+    }
+    rawP.then(function (raw) {
+      status.textContent = "Rendering on your CPU...";
+      return new Promise(function (res) { setTimeout(function () { res(raw); }, 30); });
+    }).then(function (raw) {
+      var size = +document.getElementById("live-size").value, view = LIVE[document.getElementById("live-view").value];
+      var p = { width: size, height: size, eye: view.eye, target: view.target };
+      if (view.fovy) p.fovy = view.fovy;
+      var run = raw.render(p), cert = run.certificate, ex = cert.exact;
+      paint("c-frame", pnm(run.files["frame.ppm"]));
+      paint("c-rt", pnm(run.files["ao_rt.pgm"]));
+      paint("c-ss", pnm(run.files["ao_ss.pgm"]));
+      paint("c-err", pnm(run.files["ao_error.pgm"]));
+      document.getElementById("live-canv").hidden = false;
+      clear(status);
+      status.appendChild(el("span", { class: "v vbox " + (cert.verdict === "verified" ? "v-ok" : "v-drift") }, cert.verdict));
+      status.appendChild(document.createTextNode("  rmse " + ex.rmse.toFixed(4) + " over " + ex.pixels + " pixels, tolerance " + ex.tolerance.toFixed(2) +
+        ", maxError " + ex.maxError.toFixed(4) + ", " + cert.renderer + ", " + Math.round(run.ms) + " ms"));
+    }).catch(function (err) {
+      console.error("raw-native live render failed", err);
+      rawP = null;
+      status.textContent = "Could not load or run the build here (" + (err && err.message ? err.message : "unknown error") + "). The release binaries do the same thing locally.";
+    }).then(function () { go.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

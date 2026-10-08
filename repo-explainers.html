@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repository explainers | Zain Dana Harper</title>
+<meta name="description" content="Animated, step-by-step explainers for Flywheel, raw-native and Articulate, built from real output at a pinned commit.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Repository explainers | Zain Dana Harper">
+<meta property="og:description" content="Animated walk-throughs of how Flywheel, raw-native and Articulate work, built from real output at a pinned commit.">
+<meta property="og:url" content="https://harperz9.github.io/repo-explainers.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/repo-explainers.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Repository explainers, by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/repo-explainers.png">
+<meta name="twitter:title" content="Repository explainers | Zain Dana Harper">
+<meta name="twitter:description" content="Animated walk-throughs of how Flywheel, raw-native and Articulate work, built from real output at a pinned commit.">
+<style>
+@font-face{font-family:"Hanken Grotesk";src:url("https://harperz9.github.io/system/fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("https://harperz9.github.io/system/fonts/conso-regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Conso";src:url("https://harperz9.github.io/system/fonts/conso-semibold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+:root{
+  color-scheme:light;
+  --ground:#f2efe6;--sheet:#f8f6f0;--sunk:#e8e3d7;
+  --ink:#111014;--ink-soft:#35322d;--muted:#5a544b;
+  --line:#d2c9b7;--line-strong:#8a8072;
+  --verified:#0f5f6a;--drift:#a2421c;--unverifiable:#5c636c;
+  --font-sans:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"Conso","JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --ground:#0b070a;--sheet:#120d10;--sunk:#070406;
+  --ink:#eaf5f6;--ink-soft:#c8dcdf;--muted:#94afb4;
+  --line:rgba(142,227,242,.18);--line-strong:rgba(142,227,242,.38);
+  --verified:#8ee3f2;--drift:#e08a62;--unverifiable:#9aa6aa;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0b070a;--sheet:#120d10;--sunk:#070406;
+  --ink:#eaf5f6;--ink-soft:#c8dcdf;--muted:#94afb4;
+  --line:rgba(142,227,242,.18);--line-strong:rgba(142,227,242,.38);
+  --verified:#8ee3f2;--drift:#e08a62;--unverifiable:#9aa6aa;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--font-sans);font-size:17px;line-height:1.6;overflow-x:clip}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.18em}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+code,kbd,pre,.mono{font-family:var(--font-mono);font-size:.88em}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--ground);padding:.5rem .8rem;z-index:9}
+.skip:focus{left:1rem;top:1rem}
+:root{--gutter:16px}
+@media (min-width:700px){:root{--gutter:2rem}}
+.wrap{max-width:74rem;margin:0 auto;padding:0 var(--gutter)}
+header.top{padding:2.2rem 0 1.4rem;border-bottom:1px solid var(--line)}
+.crumbs{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.3rem 1.1rem}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.02;letter-spacing:-.02em;margin:.9rem 0 .5rem;font-weight:750}
+.lede{font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.4;max-width:40ch;margin:0;color:var(--ink-soft)}
+h2{font-size:clamp(1.5rem,3.2vw,2rem);letter-spacing:-.01em;line-height:1.15;margin:0 0 .8rem;font-weight:700}
+h3{font-size:1.15rem;line-height:1.3;margin:0 0 .5rem;font-weight:700}
+section.block{padding:3rem 0;border-bottom:1px solid var(--line)}
+.measure{max-width:62ch}
+.measure p{margin:0 0 1rem}
+.uses{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
+.uses li{border-top:2px solid var(--ink);padding-top:.6rem}
+.uses b{display:block;margin-bottom:.2rem}
+.src{font-family:var(--font-mono);font-size:.74rem;color:var(--muted);margin-top:.6rem;overflow-wrap:anywhere}
+.src a{color:var(--muted)}
+/* verdict marks: the only colour on the page */
+.v{font-family:var(--font-mono);font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.v-ok{color:var(--verified)}.v-drift{color:var(--drift)}.v-unv{color:var(--unverifiable)}
+.vbox{display:inline-block;padding:.05rem .45rem;border:1.5px solid currentColor;border-radius:2px}
+.vbox.v-unv{border-style:dashed}
+/* the walk: a sticky stage and the steps that drive it */
+.walk{display:grid;gap:2rem;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start;margin-top:1.5rem}
+.stage-wrap{position:sticky;top:1rem;height:calc(100vh - 2rem);height:calc(100svh - 2rem);display:flex;flex-direction:column;gap:.6rem;z-index:2}
+.stage{position:relative;flex:1;min-height:0;background:var(--sheet);border:1px solid var(--line-strong);overflow:hidden}
+.scene{position:absolute;inset:0;padding:1.1rem;overflow:auto;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s linear .45s}
+.scene.is-on{opacity:1;visibility:visible;transition:opacity .45s var(--ease),visibility 0s}
+.scene svg{display:block;width:100%;height:100%}
+.stage-bar{display:flex;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.8rem}
+.stage-bar .cap{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink-soft)}
+.btn{font:inherit;font-family:var(--font-mono);font-size:.8rem;color:var(--ink);background:transparent;border:1px solid var(--line-strong);border-radius:2px;padding:.45rem .7rem;cursor:pointer;min-height:2.4rem}
+.btn:hover:not([disabled]){border-color:var(--ink)}
+.btn[disabled]{opacity:.35;cursor:default}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.steps{list-style:none;margin:0;padding:0}
+.step{min-height:82vh;padding:18vh 0 2rem;outline:none}
+.step:first-child{padding-top:2vh}
+.step:last-child{min-height:60vh}
+.step .num{font-family:var(--font-mono);font-size:.8rem;color:var(--muted)}
+.step .card{border-left:2px solid var(--line);padding-left:1rem;transition:border-color .3s}
+.step.is-active .card{border-left-color:var(--ink)}
+.step p{margin:0 0 .8rem}
+.no-js .stage-wrap{display:none}
+.no-js .walk{grid-template-columns:1fr}
+.no-js .step{min-height:0;padding:1rem 0}
+@media (max-width:859px){
+  .walk{grid-template-columns:1fr;gap:0}
+  .stage-wrap{top:0;height:52vh;height:52svh;padding:.6rem 0;background:var(--ground);margin:0 calc(-1 * var(--gutter));padding-left:var(--gutter);padding-right:var(--gutter);border-bottom:1px solid var(--line)}
+  .scene{padding:.7rem}
+  .step{min-height:68vh;padding:4vh 0 2rem}
+  .step .card{background:var(--ground)}
+}
+/* shared stage parts */
+.tag{font-family:var(--font-mono);font-size:.72rem;color:var(--muted)}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.15rem .9rem;font-family:var(--font-mono);font-size:.8rem;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;overflow-wrap:anywhere}
+.reveal>*{opacity:0;transform:translateY(6px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.reveal.in>*{opacity:1;transform:none}
+.pick{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.pick .btn{font-size:.74rem;padding:.35rem .55rem;min-height:2.2rem}
+/* try, limits, recall */
+pre.cmd{background:var(--sunk);border:1px solid var(--line);padding:.9rem 1rem;overflow-x:auto;line-height:1.5;margin:.4rem 0 1rem;position:relative}
+pre.cmd code{font-size:.85rem;white-space:pre}
+.copy{position:absolute;top:.4rem;right:.4rem;font-size:.7rem;min-height:2rem;padding:.25rem .5rem;background:var(--sheet)}
+.out{color:var(--ink-soft)}
+.limits{padding-left:1.1rem;max-width:66ch}
+.limits li{margin:0 0 .7rem}
+.recall details{border-top:1px solid var(--line);padding:.8rem 0;max-width:66ch}
+.recall details:last-child{border-bottom:1px solid var(--line)}
+.recall summary{cursor:pointer;font-weight:650;list-style-position:outside;margin-left:1.1rem}
+.recall details p{margin:.6rem 0 0 1.1rem;color:var(--ink-soft)}
+footer.foot{padding:2.5rem 0 3rem;font-size:.85rem;color:var(--muted)}
+footer.foot p{max-width:70ch;margin:0 0 .6rem}
+.theme{margin-left:auto}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
+}
+
+.cards{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))}
+.xcard{border:1px solid var(--line-strong);background:var(--sheet);display:flex;flex-direction:column}
+.xcard svg{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+.xcard .body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+.xcard h3{font-size:1.3rem;margin:0}
+.xcard h3 a{text-decoration:none}
+.xcard h3 a:hover{text-decoration:underline}
+.xcard p{margin:0}
+.xcard .shows{color:var(--ink-soft);font-size:.95rem}
+.xcard .meta{margin-top:auto;font-family:var(--font-mono);font-size:.74rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.3rem 1rem}
+.xcard .meta a{color:var(--muted)}
+.motif line,.motif path,.motif rect,.motif circle{stroke:var(--line-strong);fill:none;stroke-width:1}
+.motif rect{fill:var(--sheet)}
+.motif .k{stroke:var(--ink);stroke-width:1.4}
+.motif .dot{fill:var(--ink);stroke:none}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="index.html">Zain Dana Harper</a><a href="site-index.html">Site index</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Repository explainers</h1>
+  <p class="lede">See how each tool works, one step at a time, with real inputs and outputs.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="list">
+  <h2 id="list">Explainers</h2>
+  <div class="measure">
+    <p>Each explainer starts with what the tool does for you, then walks through its mechanism as an animation you scroll or step through. Every command, number and verdict on a page came from running the repository at the commit it names, and every step cites the file it describes. Each page ends with the commands to try it, what the tool does not do, and a few questions to check what stuck.</p>
+    <p>The source of each page lives in its repository under <code>docs/explainer/</code>, so it changes in the same pull request as the code it describes.</p>
+  </div>
+  <ul class="cards">
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="20" y="44" width="52" height="32"/><rect x="100" y="44" width="52" height="32"/><rect class="k" x="180" y="44" width="52" height="32"/><rect x="260" y="44" width="52" height="32"/><path d="M206 44 C206 14, 126 14, 126 44" stroke-dasharray="4 3"/><circle class="dot" cx="206" cy="94" r="5"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/flywheel.html">Flywheel</a></h3>
+        <p>Run any model, frontier or local, and keep a receipt you can recheck offline.</p>
+        <p class="shows">Shows the capability check on seven real shell commands, then seals a result from <code>flywheel gate</code>, rechecks it to MATCH, and shows what a one-coefficient edit does to the verdict.</p>
+        <div class="meta"><span>13 steps</span><span>flywheel 1.5.0, commit 1ec701d</span><a href="https://github.com/HarperZ9/flywheel">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="100" x2="340" y2="100"/><rect x="120" y="40" width="60" height="60"/><path d="M196 100 A 70 70 0 0 1 336 100" stroke-dasharray="3 4"/><line class="k" x1="216" y1="100" x2="186" y2="70"/><line class="k" x1="216" y1="100" x2="182" y2="88"/><line x1="216" y1="100" x2="246" y2="38"/><line x1="216" y1="100" x2="280" y2="60"/><line x1="216" y1="100" x2="214" y2="32"/><circle class="dot" cx="216" cy="100" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/raw-native.html">raw-native</a></h3>
+        <p>Render on the CPU, then check the fast lighting shortcut against ray tracing.</p>
+        <p class="shows">Shows both occlusion estimators on a 2D slice of the test scene, the RMSE reconcile against the tolerance across five views, and <code>verify</code> catching an edited file. It can also run the WebAssembly build in the page.</p>
+        <div class="meta"><span>10 steps</span><span>raw-native 0.5.1, commit f2cd6e9</span><a href="https://github.com/HarperZ9/raw-native">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="36" x2="330" y2="36"/><line x1="20" y1="60" x2="300" y2="60"/><line x1="20" y1="84" x2="320" y2="84"/><line class="k" x1="64" y1="40" x2="128" y2="40"/><line class="k" x1="180" y1="64" x2="262" y2="64"/><line class="k" x1="96" y1="88" x2="140" y2="88" stroke-dasharray="2 3"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/articulate.html">Articulate</a></h3>
+        <p>A writing checker that runs on your own computer and names each pattern it finds.</p>
+        <p class="shows">Follows one draft through six findings, three profiles that gate them differently, the texture score arithmetic, and a receipt that replays to Match, Drift or Unverifiable.</p>
+        <div class="meta"><span>7 steps</span><span>articulate 0.9.0, commit c94bf17</span><a href="https://github.com/HarperZ9/articulate">repository</a></div>
+      </div>
+    </li>
+  </ul>
+</section>
+<section class="block wrap" aria-labelledby="how-built">
+  <h2 id="how-built">How these pages are checked</h2>
+  <ul class="limits">
+    <li>Values come from running the code: for example <code>flywheel gate</code> from the PyPI package, <code>raw_native_cli</code> built from source, and <code>articulate check</code> and <code>verify</code>.</li>
+    <li>Where a page draws an illustration, such as raw-native's 2D slice of the scene, it says so beside the drawing, and the counts belong to the drawing.</li>
+    <li>Each page supports reduced motion, works with the keyboard through its step buttons, and fits a phone screen.</li>
+    <li>A page describes its repository at one commit. When the code moves on, the page is updated in the pull request that changes the behaviour it shows.</li>
+  </ul>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Zain Dana Harper. <a href="index.html">Home</a>.</p>
+</footer>
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
+  var rm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var EX = window.EX = window.EX || {};
+  EX.scenes = EX.scenes || {};
+  EX.reduced = function () { return rm.matches; };
+  // A timer set that one call can cancel, so a scene that loses the stage stops moving.
+  var timers = [];
+  EX.later = function (fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; };
+  EX.clear = function () { timers.forEach(clearTimeout); timers = []; };
+  EX.el = function (tag, attrs, text) {
+    var svg = /^(svg|g|rect|circle|line|path|text|polyline|polygon|tspan|defs|pattern)$/.test(tag);
+    var n = svg ? document.createElementNS("http://www.w3.org/2000/svg", tag) : document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  // Theme: follows the system unless the reader picks one.
+  var tbtn = document.querySelector("[data-theme-toggle]");
+  if (tbtn) {
+    var saved = null;
+    try { saved = localStorage.getItem("ex-theme"); } catch (e) { saved = null; }
+    if (saved) root.setAttribute("data-theme", saved);
+    var label = function () {
+      var dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+      tbtn.textContent = dark ? "Light page" : "Dark page";
+      return dark;
+    };
+    label();
+    tbtn.addEventListener("click", function () {
+      var next = label() ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("ex-theme", next); } catch (e) { /* storage blocked: the choice lasts this visit */ }
+      label();
+    });
+  }
+
+  // Copy buttons on command blocks.
+  Array.prototype.forEach.call(document.querySelectorAll("pre.cmd"), function (pre) {
+    var b = EX.el("button", { type: "button", class: "btn copy" }, "Copy");
+    b.addEventListener("click", function () {
+      // Only the lines a reader types (they start with "$ ") go to the clipboard.
+      var all = pre.querySelector("code").innerText;
+      var lines = all.split("\n").filter(function (l) { return l.indexOf("$ ") === 0; })
+        .map(function (l) { return l.slice(2); });
+      var payload = lines.length ? lines.join("\n") : all;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(payload).then(function () { b.textContent = "Copied"; },
+          function () { b.textContent = "Select and copy"; });
+      } else { b.textContent = "Select and copy"; }
+      setTimeout(function () { b.textContent = "Copy"; }, 1800);
+    });
+    pre.appendChild(b);
+  });
+
+  // The walk: a scroll position picks the active step, the step picks the scene.
+  function init() {
+    var walk = document.querySelector(".walk");
+    if (!walk) return;
+    var steps = Array.prototype.slice.call(walk.querySelectorAll(".step"));
+    var scenes = Array.prototype.slice.call(walk.querySelectorAll(".scene"));
+    var wrap = walk.querySelector(".stage-wrap");
+    var prev = walk.querySelector("[data-prev]");
+    var next = walk.querySelector("[data-next]");
+    var count = walk.querySelector("[data-count]");
+    var cap = walk.querySelector("[data-cap]");
+    var cur = -1;
+
+    function activate(i) {
+      if (i === cur) return;
+      cur = i;
+      EX.clear();
+      steps.forEach(function (s, k) { s.classList.toggle("is-active", k === i); });
+      var s = steps[i];
+      var name = s.getAttribute("data-scene");
+      scenes.forEach(function (sc) {
+        var on = sc.getAttribute("data-scene") === name;
+        sc.classList.toggle("is-on", on);
+        sc.setAttribute("aria-hidden", on ? "false" : "true");
+        if (on) sc.removeAttribute("inert"); else sc.setAttribute("inert", "");
+      });
+      count.textContent = "Step " + (i + 1) + " of " + steps.length;
+      cap.textContent = s.querySelector("h3").textContent;
+      prev.disabled = i === 0;
+      next.disabled = i === steps.length - 1;
+      var fn = EX.scenes[name];
+      if (fn) {
+        try { fn(s.getAttribute("data-state"), rm.matches); }
+        catch (err) { console.error("explainer scene failed", name, s.getAttribute("data-state"), err); }
+      }
+    }
+    function line() {
+      if (window.innerWidth < 860) {
+        // The stage sticks to the top on narrow screens, so measure it as stuck.
+        var h = wrap.offsetHeight;
+        return h + (window.innerHeight - h) * 0.35;
+      }
+      return window.innerHeight * 0.5;
+    }
+    var lockUntil = 0;
+    function pick() {
+      if (Date.now() < lockUntil) return;
+      var t = line(), idx = 0;
+      steps.forEach(function (s, k) { if (s.getBoundingClientRect().top < t) idx = k; });
+      activate(idx);
+    }
+    var queued = false;
+    window.addEventListener("scroll", function () {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () { queued = false; pick(); });
+    }, { passive: true });
+    window.addEventListener("resize", function () { var c = cur; cur = -1; activate(c < 0 ? 0 : c); });
+    function go(k) {
+      if (k < 0 || k >= steps.length) return;
+      var s = steps[k];
+      var y = window.scrollY + s.getBoundingClientRect().top - line() + 12;
+      // Hold the chosen step while the smooth scroll passes the steps between.
+      lockUntil = Date.now() + (rm.matches ? 0 : 2500);
+      window.scrollTo({ top: y, behavior: rm.matches ? "auto" : "smooth" });
+      activate(k);
+      s.focus({ preventScroll: true });
+    }
+    window.addEventListener("scrollend", function () { if (lockUntil) { lockUntil = 0; pick(); } });
+    prev.addEventListener("click", function () { go(cur - 1); });
+    next.addEventListener("click", function () { go(cur + 1); });
+    EX.replay = function () { var c = cur; cur = -1; activate(c); };
+    pick();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+
+</script>
+</body>
+</html>
