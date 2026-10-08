@@ -5,6 +5,14 @@
   "feed_url": "https://harperz9.github.io/feed.json",
   "items": [
     {
+      "id": "https://harperz9.github.io/who-kept-the-books.html",
+      "url": "https://harperz9.github.io/who-kept-the-books.html",
+      "title": "Who Kept the Books",
+      "content_text": "From Hispaniola in 1514 to the Iran-Contra inquiry, the party that controlled the money wrote the first account of it. The record moved when an inquiry, a court, an archive or a reporter outside that party obtained it.",
+      "date_published": "2026-10-08T00:00:00Z",
+      "date_modified": "2026-10-08T00:00:00Z"
+    },
+    {
       "id": "https://harperz9.github.io/witnessing-spine.html",
       "url": "https://harperz9.github.io/witnessing-spine.html",
       "title": "The Witnessing Spine",

@@ -28,6 +28,7 @@
     "publications/data/listings/the-summary-is-not-the-record.json": "9481f76634b17570e7fdef3b66d42f6466a3f2c445a24c073bf4d0ee346907c5",
     "publications/data/listings/the-terms-for-telling.json": "b82c4e35885943a9cf44c4678003abea182ba7e05ae8aa1f25ba0d12e7a5ffc8",
     "publications/data/listings/verified-is-not-trustworthy.json": "df7a1711de5453bf50f1eb72ffc01276d62785b59a53b25358caea7698f2825e",
+    "publications/data/listings/who-kept-the-books.json": "da376fd87138f9e9e8fdbaf40305f0482fd364fbc6e1a063980bfaccc3082dcf",
     "publications/data/listings/who-knew-first.json": "1eb34d304c8e4208b1351532415439534e93e7517f8abf7c3bc214c716b76ac7",
     "publications/data/listings/who-pays-the-referees.json": "054275a570375b8932ae8e94a75831e52a95b68cd71326ce9a2c929be15aa7ee",
     "publications/data/listings/why-i-do-this.json": "bccf9176530a91d8321a2108d4eab514fc3b486cd01973bb30bc7a113dce6da8",
@@ -37,8 +38,8 @@
   "outputs": {
     "availability-is-not-reach.html": "9dc6dda0230381c2c38072f99a702e8409e8ab09db792659ae710863bd3b39fc",
     "borrowed-ground.html": "093f1a966f034f4afec94a110d7631d399bab0b0bcdc483e92f99ee2ef55f501",
-    "feed.json": "7181dd1b6d76bc60e80a6f13e559806e1aaf7d7dfeac13f7608dd2e859bf6bc3",
-    "feed.xml": "4e4fc3d2a65cb5988d27e250742f6702f90da704f9090f4b1761336c5d47709e",
+    "feed.json": "6ca1e9ab273a448eaa256480fd3b56d9d068e42251eb47277fd8213dd5ecb84d",
+    "feed.xml": "313fc36c18dc127a5125c33ff0a517654ea884735917a48648b11e5ba990f425",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -62,9 +63,9 @@
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
     "growth-needs-a-before.html": "b636c08568cec1c65386216cdeae2e487164e7bebfe7cdbb5d4dd64773554bcd",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "08c62122326ffd5035b07f1c89d1148dcd4ff582d9f1c151f03dde2972b832c7",
-    "publications.html": "d68e46b66eda714a615360274cd48027af5c098b0dbe8d8991f24cb984389d1c",
-    "publications/data/index.json": "71bdaa3af4337892f6c6c891eeda8c389ffdf8f8b32299bd630003ef7835dc27",
-    "sitemap.xml": "2ddceb3ff302b419ddc7bbbaab203cb42ba8201f46e6d03bc8d8d906919e70bd",
+    "publications.html": "c87dd4a8ea165c518f1ec144fd3160253ec6aa90308ee72179bf9862af0b6575",
+    "publications/data/index.json": "f6fed5e940550fc9149110e5f1eb7a5481f161d5b7de2424d22b3ad2436f9c16",
+    "sitemap.xml": "2e4c6c50a041635358eaa50072db21ffb8cd915388835aa3a6ff40ca47a24b4f",
     "support-has-more-than-one-record.html": "566d0dc1a576a102b2c597941825ce24e4ccd2d0de5b0d1f9601326b735cade2",
     "the-number-has-a-vintage.html": "2f5639c9ec3e3e5be4ad76a9f1a6e9d284aff884ea24bfadcff13ee648f3a1aa",
     "the-sandbox-was-never-just-a-box.html": "dc15ce4696295725a6b39b357cca4f2e44bdcffdb39f5198221bb909814563e8",
@@ -73,6 +74,6 @@
     "the-timestamp-is-not-the-order.html": "514e01251e4470f977eb61094a020845b4547c9b6edd5d4d3200e9924111dc09",
     "what-the-formula-counts.html": "eda965c5431335feb899289d2404e164baaeab1cf6a91bfdaf397a1ba4a62bee",
     "what-the-label-changes.html": "b98369abf34f58c7489748ea698c6cd878b812037b9ff28d3adfedf0c8e5d8f4",
-    "who-knew-first-series.html": "9d7483d5ede23442addac19efaa70c326e35d283aa00c1325f219f84d375487d"
+    "who-knew-first-series.html": "aa0d96b10e26e6bd1bbd00f8d67103d9bbe3176e05c39e970cc7cd8c3f1ee4f4"
   }
 }

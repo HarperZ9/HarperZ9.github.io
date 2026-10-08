@@ -12,8 +12,12 @@ from tools.publication_listings import load_listing
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "who-pays-the-referees.html"
-PLANNED = ("Who Kept the Books", "The Maker Is Part of the Story", "A Check It Cannot Predict")
-PLANNED_SLUGS = ("who-kept-the-books", "the-maker", "a-check-it-cannot-predict")
+SERIES = json.loads((ROOT / "publications/data/series/who-knew-first.json").read_text(encoding="utf-8"))
+SLUGS = {"Who Kept the Books": "who-kept-the-books", "The Maker Is Part of the Story": "the-maker-is-part-of-the-story",
+         "A Check It Cannot Predict": "a-check-it-cannot-predict"}
+PUBLISHED_IDS = [part["id"] for part in SERIES["parts"] if part["id"]]
+PLANNED = tuple(part["title"] for part in SERIES["parts"] if not part["id"])
+PLANNED_SLUGS = tuple(SLUGS[title] for title in PLANNED)
 
 
 def source() -> str:
@@ -42,12 +46,13 @@ def test_series_panel_links_published_pieces_and_names_planned_ones_without_link
     panel = re.search(r'<aside class="wpr-series".*?</aside>', page, re.S).group(0)
     for title in PLANNED:
         assert title in panel
-    assert panel.count("Planned.") == 3
+    assert panel.count("Planned.") == len(PLANNED)
     assert "Published 1 October 2026." in panel
-    assert re.findall(r'href="([^"]+)"', panel) == [
-        "who-knew-first.html", "the-terms-for-telling.html", "who-knew-first-series.html"]
+    assert re.findall(r'href="([^"]+)"', panel) == (
+        ["who-knew-first.html"] + [f"{pid}.html" for pid in PUBLISHED_IDS if pid != "who-pays-the-referees"]
+        + ["who-knew-first-series.html"])
     for slug in PLANNED_SLUGS:
-        assert slug not in page
+        assert f'href="{slug}.html"' not in page
 
 
 def test_every_section_keeps_its_does_not_prove_line_and_labels() -> None:

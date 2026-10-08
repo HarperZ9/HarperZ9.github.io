@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
     "assets/index-BniK76UM.js",
+    "assets/index-DXjCZzHu.js",
     "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
@@ -60,6 +61,9 @@ RELEASE_PATHS = (
     "the-terms-for-telling.html",
     "publications/data/listings/the-terms-for-telling.json",
     "img/og/the-terms-for-telling.png",
+    "who-kept-the-books.html",
+    "publications/data/listings/who-kept-the-books.json",
+    "img/og/who-kept-the-books.png",
     "assets/index-Dmke1bnx.js",
     "assets/index-BIA-0d5A.js",
     "the-number-has-a-vintage.html",
@@ -644,7 +648,10 @@ RELEASE_PATHS = (
 # retro-studio.js at that stamp. The release is rehashed.
 # October 4, 2026, later: Bring your own and Watch with me start on an empty sheet; studio.html
 # loads the Studio at the bring stamp over the retro-hub release. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "8dc289cf7b8c6f179b9a500387eb3bd2b65ee6d5d2a8c7e2ab7c9b8cd5cde0d0"
+# October 8, 2026: Who Kept the Books, series piece 3, ships with its listing and card; the
+# series panels, series tables, hub, feeds, index, routes, site index and home bundle change
+# with it (the release paths, listed and reviewed; the Writing hub now keeps the series opener first). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "51d4bbd33d1f50b65c7aaebf23da6a89ec14ad990cfd8018e3fd23da3fca2f55"
 
 
 BRIEFING_FIGURES = (
@@ -845,7 +852,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 3, 2026: a Zenodo search by ORCID returned thirteen records, so the research
     # record adds the formal note on faithfulness and counts thirteen; the bundle rebuilt from
     # the registry is index-BniK76UM.js with the same sheet. index-G7cmpE16.js stays as history.
-    current_js = "index-BniK76UM.js"
+    # October 8, 2026: Who Kept the Books, series piece 3, joins the newest-writing strip, so
+    # the bundle rebuilt from the registry is index-DXjCZzHu.js with the same sheet.
+    # index-BniK76UM.js stays as retained history.
+    current_js = "index-DXjCZzHu.js"
+    previous_wkb_js = "index-BniK76UM.js"
+    assert previous_wkb_js not in source
+    assert (ROOT / "assets" / previous_wkb_js).is_file()
+    assert f"assets/{previous_wkb_js}" in RELEASE_PATHS
     previous_count_js = "index-G7cmpE16.js"
     assert previous_count_js not in source
     assert (ROOT / "assets" / previous_count_js).is_file()
