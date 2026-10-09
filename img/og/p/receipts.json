@@ -3528,6 +3528,42 @@
     "t": 0
    }
   },
+  "repo-explainers.jpg": {
+   "backend": "chrome-154.0.8037.98-skia",
+   "content_sha256": "2a87dc4d98b013ad4daa0119212d09bc5f03bf95b6d0b9f0a05efd0d83d3fa1f",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "repo-explainers.jpg": "63d811757f6f0e291205b0b84d883add3e69540903119e4d008d1ca1ff957d0b",
+    "repo-explainers.svg": "24097dd0800b844adc4b5a6c7395f9b5539a3bf98fbb64ea22774e3bd7d52eaa"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "bb10e3672776435fb0ce80ef08cb17bb7ebd7a33297a0f185c5b2890b298d3d4",
+   "reconcile": null,
+   "scene_sha256": "3e8d609e8afeb4ae2a875b48e7b1516fb8d6f66c39923e395b7e17ea2d4623cb",
+   "schema": "superstack.receipt/1",
+   "seed": "repo-explainers",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1339303936,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "research-arity-gap.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "469d5e23dcfbb5b086f3ffafa4db449d59560b6da895ad046e8ceb53647b6ca7",
