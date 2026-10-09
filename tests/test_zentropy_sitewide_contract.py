@@ -476,7 +476,7 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert "Zain Dana Harper" in nav
     assert "zentropyLabs" not in nav
     assert "<span>TELOS</span>" not in nav
-    assert "brand/aperture-mark.png" in nav
+    assert "brand/aperture-mark-96.webp" in nav
     assert "function shouldUseDesktopGpuArt" in nav
     assert '"(prefers-reduced-motion: reduce)"' in nav
     assert '"(pointer: fine)"' in nav
@@ -911,6 +911,8 @@ def test_narrow_mobile_nav_does_not_overlap_the_wordmark() -> None:
 def test_current_zentropy_assets_are_shipped() -> None:
     expected_assets = {
         "brand/aperture-mark.png": 450_000,
+        # The header's own copy (nav.js): 96 px WebP, a few kilobytes.
+        "brand/aperture-mark-96.webp": 1_000,
         "brand/ZainDisplay.ttf": 50_000,
         # Pre-rename URL kept for external embeds; same bytes as ZainDisplay.ttf.
         "brand/ZentropyDisplay.ttf": 50_000,
