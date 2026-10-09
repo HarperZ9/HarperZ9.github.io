@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-gallery-desk";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-type-desk";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -509,7 +509,7 @@ const SOURCES = {
   // The full Retro Engine, retro.html's own controls and controller (studio-retro.js).
   retro:     { block: "src-retro",     mode: "generate" },
   gallery:   { block: "src-gallery",   mode: "generate" },
-  loom:      { block: "src-engine",    mode: "generate", engine: true },
+  loom:      { block: "src-loom",      mode: "generate" },
   splats:    { block: "src-engine",    mode: "generate", engine: true },
   brender:   { block: "src-engine",    mode: "generate", engine: true },
   revival:   { block: "src-engine",    mode: "generate", engine: true },
@@ -542,7 +542,7 @@ async function enterRetro(epoch) {
 }
 
 // The Gallery: gallery.html's whole print desk, adopted in place (studio-gallery.js).
-const loadGalleryHub = lazyLoader(() => import("./studio-gallery.js?v=20261009-gallery-desk"));
+const loadGalleryHub = lazyLoader(() => import("./studio-gallery.js?v=20261009-loom-hub"));
 let _galleryHub = null;
 async function enterGallerySource(epoch) {
   try {
@@ -575,11 +575,37 @@ async function enterGallerySource(epoch) {
   }
 }
 
+// The Loom: loom.html's whole loom, adopted in place (studio-loom.js).
+const loadLoomHub = lazyLoader(() => import("./studio-loom.js?v=20261009-loom-hub"));
+let _loomHub = null;
+async function enterLoomSource(epoch) {
+  try {
+    _loomHub = await loadLoomHub();
+    if (epoch !== _sourceEpoch) return;
+    await _loomHub.enterLoom({
+      mount: $("loom-mount"), stage: $("viewport-stage"), setSource,
+      // Every cloth the Loom rebuilds is read by the readings and is one undo step.
+      onBuilt: () => {
+        if (activeSource !== "loom") return;
+        startMeterLoop();
+        if (_shell) _shell.record("loom");
+      },
+    });
+    if (epoch !== _sourceEpoch) { _loomHub.leaveLoom(); return; }
+    markStagePainted();
+    if (_shell) _shell.resume("loom");
+    startMeterLoop();
+  } catch (err) {
+    console.error("[studio] the Loom failed to load:", err);
+    say("model", "The Loom failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+
 // The engine surfaces load on first entry, like the other heavy sources.
 let _engineSurface = null;
 function loadEngineSurface() {
   return _engineSurface ? Promise.resolve(_engineSurface)
-    : import("./studio-engine.js?v=20261004-studio-engines").then((m) => {
+    : import("./studio-engine.js?v=20261009-type-desk").then((m) => {
       _engineSurface = m;
       // A setting changed on a surface is one undo step, and what this browser keeps.
       m.onEngineSettings((id) => { if (_shell) _shell.record(id); });
@@ -655,6 +681,7 @@ function setSource(next) {
   if (next !== activeSource) {
     if (activeSource === "retro" && _retroHub) _retroHub.leaveRetroHub();   // park the engine, give the canvas back
     if (activeSource === "gallery" && _galleryHub) _galleryHub.leaveGallery();   // park the desk
+    if (activeSource === "loom" && _loomHub) _loomHub.leaveLoom();               // park the loom, stop the shuttle
     if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
@@ -707,6 +734,7 @@ function setSource(next) {
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
   if (next === "gallery") enterGallerySource(epoch);
+  if (next === "loom") enterLoomSource(epoch);
   if (SOURCES[next].engine) {
     // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
     // is given, so on a phone it inherited whatever size the previous source left (a square from
@@ -5743,6 +5771,9 @@ function resizeActiveSurface() {
       // The desk sizes its canvas from its own box; draw the same plate again at the new size.
       if (_galleryHub) _galleryHub.redrawGallery();
       break;
+    case "loom":
+      if (_loomHub) _loomHub.redrawLoom();
+      break;
     case "retro":
       // The engine sizes its own output canvas; a resize only asks it for a fresh frame.
       if (window.__retroStudio) window.__retroStudio.redraw();
@@ -7034,7 +7065,17 @@ const SHELL_CONTRACTS = {
     restore(state) { if (_galleryHub) _galleryHub.applyGalleryState(state); },
     reset() { if (_galleryHub) _galleryHub.applyGalleryState({ seed: "gallery-" + new Date().toISOString().slice(0, 10), layers: ["showpiece-aperture"], locked: [], fx: [], fxa: "0.6" }); },
   },
-  loom: engineContract("loom"),
+  // The whole Loom (studio-loom.js): its structure and setup fields are the snapshot; every
+  // rebuilt cloth is one step. The source picture is not kept, as with the Loom's own setups.
+  loom: {
+    making: true,
+    primary: { label: "Save cloth", target: "wv-save", title: "Save the woven cloth as a PNG (S)" },
+    exports: [{ label: "Save cloth", target: "wv-save" }, { label: "WIF draft", target: "wv-wif" }, { label: "Draft chart", target: "wv-draft" },
+      { label: "Frame and receipt", target: "loom-receipt" }, PNG_FRAME],
+    snapshot: () => (_loomHub ? _loomHub.loomState() : null),
+    restore(state) { if (_loomHub) _loomHub.applyLoomState(state); },
+    reset() { if (_loomHub) _loomHub.applyLoomState({ structureId: "jacquard", sett: "120", epi: "24", tone: "60", warp: "bone", weft: "image", speed: "24", weaveit: true }); },
+  },
   type: engineContract("type"),
   raw: engineContract("raw"),
   brender: engineContract("brender", { settings: false }),
@@ -7225,7 +7266,9 @@ _readings = mountReadings({
 });
 for (const type of ["change", "click"]) {
   $("studio-rail").addEventListener(type, (e) => {
-    const id = FORM_SOURCES[activeSource];
+    // Form sources, and the tool pages adopted in full, whose settings can change without a redraw
+    // (the Loom's weave toggle, say): a change in their inspector is a step.
+    const id = FORM_SOURCES[activeSource] || ({ gallery: "src-gallery", loom: "src-loom" })[activeSource];
     if (!id || !e.target.closest || !e.target.closest("#" + id)) return;
     if (type === "click" && !e.target.closest("button")) return;
     setTimeout(() => { if (_shell) _shell.record(activeSource); }, 0);

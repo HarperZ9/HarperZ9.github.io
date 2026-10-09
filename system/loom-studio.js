@@ -73,6 +73,8 @@ function boot() {
     if (fresh) woven = $("wv-weaveit").checked ? 0 : draft.picks;
     draw();
     sync();
+    const host = window.__loomHost;
+    if (host && host.onBuilt) { try { host.onBuilt(); } catch (e) { console.error("loom: host hook failed", e); } }
   }
 
   function draw() {
@@ -536,6 +538,9 @@ function boot() {
   $("wv-save").addEventListener("click", () => { if (draft) { download("loom-cloth.png", out.toDataURL("image/png")); ping("preset"); } });
   $("wv-send-retro").addEventListener("click", () => {
     if (!draft) return;
+    // Inside the Studio the cloth goes to the Retro source on the same page.
+    const host = window.__loomHost;
+    if (host && host.send) { Promise.resolve(host.send("retro", out)).catch((e) => { console.error("loom: send failed", e); status("could not hand the cloth over", "err"); }); return; }
     const label = STRUCTURES[structureId].name.toLowerCase() + ", " + draft.ends + " ends";
     if (!sendPiece("retro", out.toDataURL("image/png"), { surface: "loom", label })) {
       status("cloth too large to hand off", "err"); return;
@@ -611,6 +616,8 @@ function boot() {
     $("wv-fullscreen").setAttribute("aria-pressed", String(!!document.fullscreenElement));
   });
   document.addEventListener("keydown", (e) => {
+    // Inside the Studio the keys belong to the Loom only while it is the source on stage.
+    if (window.__studioActiveSource && window.__studioActiveSource !== "loom") return;
     const t = e.target, tag = t && t.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || tag === "BUTTON" || (t && t.isContentEditable)) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -618,6 +625,29 @@ function boot() {
     else if (e.key === "s" || e.key === "S") $("wv-save").click();
     else if (e.key === "f" || e.key === "F") fullscreen();
   });
+
+  // --- a host page's handle (the Studio's Loom source, 9 October 2026) ------
+  // pause and resume the shuttle, take a frame handed over in the page, redraw, and read or put
+  // back the loom's settings as data (the setup fields, without the source picture).
+  const setChecks = (s) => {
+    structureId = s.structureId in STRUCTURES ? s.structureId : "jacquard";
+    host.querySelectorAll(".re-chip").forEach((c) => c.setAttribute("aria-checked", String(c.dataset.id === structureId)));
+    const set = (id, v, out, fmt) => { const el = $(id); if (el && v != null) { el.value = String(v); const o = out && $(out); if (o) o.textContent = fmt ? fmt(el.value) : el.value; } };
+    set("wv-sett", s.sett, "wv-sett-v", (v) => v + " ends"); set("wv-epi", s.epi, "wv-epi-v", (v) => v + " epi");
+    set("wv-tone", s.tone, "wv-tone-v"); set("wv-warp", s.warp); set("wv-weft", s.weft); set("wv-speed", s.speed, "wv-speed-v");
+    const wc = $("wv-warp-color"); if (wc) { if (s.warpColor) wc.value = s.warpColor; wc.hidden = s.warp !== "custom"; }
+    if (s.weaveit != null) $("wv-weaveit").checked = !!s.weaveit;
+  };
+  window.__loomStudio = {
+    pause() { if (raf) cancelAnimationFrame(raf); raf = 0; lastPick = 0; },
+    resume() { draw(); sync(); },
+    redraw() { draw(); },
+    importHandoff() { return bootHandoff(); },
+    state: () => ({ structureId, sett: $("wv-sett").value, epi: $("wv-epi") ? $("wv-epi").value : null, tone: $("wv-tone").value,
+      warp: $("wv-warp").value, warpColor: $("wv-warp-color") ? $("wv-warp-color").value : null, weft: $("wv-weft").value,
+      speed: $("wv-speed").value, weaveit: $("wv-weaveit").checked }),
+    apply(s) { if (!s) return; setChecks(s); rebuild(true); },
+  };
 
   // --- boot -----------------------------------------------------------------
   mountFlow($("wv-flow"), "loom");

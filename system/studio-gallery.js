@@ -8,7 +8,7 @@
 // Kept from the earlier Studio Gallery: Send to Retro and to the Loom hand the plate over inside
 // the Studio, and "Export frame and receipt" stays at the end of the rail.
 
-import { createHub } from "./studio-hub.js?v=20261009-gallery-desk";
+import { createHub } from "./studio-hub.js?v=20261009-loom-hub";
 import { stageHandoff, exportWithReceipt } from "./studio-engine-flows.js";
 
 let desk = null;   // the gallery-desk.js module, once booted
