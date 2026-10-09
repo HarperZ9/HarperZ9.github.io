@@ -1,0 +1,235 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "passing-check",
+  "title": "A passing check can still be wrong",
+  "page": "explainers.html#passing-check",
+  "seed": 20261005,
+  "voice": "author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "A passing check can still be wrong",
+      "lines": [
+        "A passing check can still be wrong."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "green",
+      "heading": "Every test passes",
+      "plate": {
+        "from": 0,
+        "to": 0.5
+      },
+      "lines": [
+        "Here is a change to a program, and here are its tests. Every test passes.",
+        "The change is still wrong. None of the tests ever runs the line that broke.",
+        "A pass tells you the check found nothing. It does not tell you the check could have found it."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 0,
+            "label": "test_parse",
+            "value": "pass"
+          },
+          {
+            "on": 0,
+            "label": "test_format",
+            "value": "pass"
+          },
+          {
+            "on": 0,
+            "label": "test_round_trip",
+            "value": "pass"
+          },
+          {
+            "on": 1,
+            "label": "the changed line",
+            "value": "never run by any test",
+            "verdict": "UNVERIFIED"
+          }
+        ]
+      }
+    },
+    {
+      "key": "coverage",
+      "heading": "Lines run are not faults found",
+      "plate": {
+        "from": 0.5,
+        "to": 1.5
+      },
+      "sources": [
+        "inozemtseva2014"
+      ],
+      "lines": [
+        "A common stand-in for a good test suite is coverage: how much of the code the tests run.",
+        "Laura Inozemtseva and Reid Holmes built thirty-one thousand test suites for five large Java programs and measured how many planted faults each one caught.",
+        "Once they allowed for the size of a suite, coverage was only weakly to moderately related to catching faults. In one program the link was essentially zero.",
+        "Their advice: coverage should not be used as a quality target."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 1,
+            "label": "test suites built",
+            "value": "31,000"
+          },
+          {
+            "on": 1,
+            "label": "Java programs",
+            "value": "5"
+          },
+          {
+            "on": 2,
+            "label": "coverage vs faults caught",
+            "value": "low to moderate, size controlled",
+            "strong": true
+          },
+          {
+            "on": 2,
+            "label": "one program (Joda Time)",
+            "value": "essentially zero"
+          }
+        ]
+      }
+    },
+    {
+      "key": "mutants",
+      "heading": "Check the check",
+      "plate": {
+        "from": 1.5,
+        "to": 2.2
+      },
+      "sources": [
+        "just2014"
+      ],
+      "lines": [
+        "One way to test a test is to break the code on purpose and see whether the tests notice. The deliberate breaks are called mutants.",
+        "Rene Just and colleagues took three hundred and fifty-seven real bugs that developers had fixed, and asked whether mutants behave like them.",
+        "Seventy-three percent of the real bugs were coupled to mutants. Seventeen percent were coupled to none, so a check on the check has blind spots of its own."
+      ],
+      "figure": {
+        "type": "dotgrid",
+        "groups": [
+          {
+            "label": "real bugs",
+            "n": 357,
+            "share": 0.17,
+            "on": 1,
+            "hot_at": 2,
+            "detail": "coupled to mutants: 73%",
+            "detail_at": 2,
+            "unit": "bugs"
+          }
+        ],
+        "legend_hot": "coupled to no mutant",
+        "legend_ink": "coupled",
+        "note": "Shares from the paper; dots rounded to whole bugs."
+      }
+    },
+    {
+      "key": "agents",
+      "heading": "When AI writes the patch",
+      "plate": {
+        "from": 2.2,
+        "to": 3.4
+      },
+      "sources": [
+        "wang2025",
+        "aleithan2024"
+      ],
+      "lines": [
+        "Coding benchmarks for AI count a task as solved when the patch passes the task's tests.",
+        "A 2025 study re-examined patches from three tools on five hundred tasks. Seven point eight percent of the patches counted as solved failed the developers' own tests, and twenty-nine point six percent behaved differently from the real fix.",
+        "An earlier study hand-checked two hundred and fifty-one passing patches from one agent. In about a third, the fix was already written in the task description, and about another third passed weak tests.",
+        "Both studies are preprints. They show how far a pass can sit from a fix, on these benchmarks."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 1,
+            "label": "counted solved, fail developer tests",
+            "value": "7.8%"
+          },
+          {
+            "on": 1,
+            "label": "behave unlike the real fix",
+            "value": "29.6%"
+          },
+          {
+            "on": 2,
+            "label": "fix already in the task text",
+            "value": "32.67% of 251"
+          },
+          {
+            "on": 2,
+            "label": "passed weak tests",
+            "value": "31.08% of 251"
+          },
+          {
+            "on": 3,
+            "label": "status",
+            "value": "two preprints",
+            "verdict": "UNVERIFIED"
+          }
+        ]
+      }
+    },
+    {
+      "key": "control",
+      "heading": "A check that can show it can fail",
+      "plate": {
+        "from": 3.4,
+        "to": 4.2
+      },
+      "lines": [
+        "So before trusting a check, feed it something you know is wrong.",
+        "If a broken input passes, the check is broken. That planted failure is a false-success control, and it costs one extra run.",
+        "A pass with a control that failed as it should is evidence. A pass on its own is only the absence of a complaint."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Feed the check a known failure."
+          },
+          {
+            "on": 1,
+            "text": "If the failure passes, the check is broken."
+          }
+        ]
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "plate": {
+        "from": 4.2,
+        "to": 5.0
+      },
+      "lines": [
+        "A check earns trust by failing on something it should fail on, and doing it on the record.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "A check earns trust by failing when it should."
+          }
+        ]
+      }
+    }
+  ]
+}

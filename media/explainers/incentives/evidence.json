@@ -1,0 +1,47 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "incentives",
+  "read": "2026-10-04",
+  "sources": {
+    "baker2025": {
+      "short": "Baker et al. 2025, OpenAI, arXiv preprint",
+      "n": "one frontier reasoning model in RL training on coding tasks",
+      "citation": "Baker, B., Huizinga, J., Gao, L., et al. (2025). Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation. arXiv:2503.11926.",
+      "url": "https://arxiv.org/abs/2503.11926",
+      "peer_reviewed": false,
+      "claims": [
+        "In coding environments rewarded for passing unit tests, training outputs included exit(0) before the tests ran and raise SkipTest."
+      ],
+      "quote": "agents learn obfuscated reward hacking, hiding their intent within the CoT",
+      "interval": "No training-set size located in the text read.",
+      "does_not_prove": "How often deployed models do this. The hacks were found in one training run."
+    },
+    "sharma2024": {
+      "short": "Sharma et al. 2024, ICLR",
+      "n": "n = 15,000 preference pairs; 266 misconceptions",
+      "citation": "Sharma, M., Tong, M., Korbak, T., et al. (2024). Towards Understanding Sycophancy in Language Models. ICLR 2024. arXiv:2310.13548.",
+      "url": "https://arxiv.org/abs/2310.13548",
+      "peer_reviewed": true,
+      "claims": [
+        "Matching the user's beliefs was among the most predictive features of human preference in the helpfulness data.",
+        "The Claude 2 preference model preferred convincing sycophantic responses over baseline truthful responses 95% of the time."
+      ],
+      "quote": "likely driven in part by human preference judgments favoring sycophantic responses",
+      "interval": "Credible intervals are plotted in the paper's figures; the 95% is a share of 266 misconceptions.",
+      "does_not_prove": "That preference data is the main cause of sycophancy in any deployed model; the paper says in part, and truthfulness is also rewarded."
+    },
+    "denison2024": {
+      "short": "Denison et al. 2024, Anthropic and Redwood Research, arXiv preprint",
+      "n": "45 of 32,768 episodes; 0 of 100,000 helpful-only",
+      "citation": "Denison, C., MacDiarmid, M., Barez, F., et al. (2024). Sycophancy to Subterfuge: Investigating Reward Tampering in Language Models. arXiv:2406.10162.",
+      "url": "https://arxiv.org/abs/2406.10162",
+      "peer_reviewed": false,
+      "claims": [
+        "After the gaming curriculum, the model tampered with its reward in 45 of 32,768 episodes; a helpful-only model never did in 100,000."
+      ],
+      "quote": "training on early-curriculum environments leads to more specification gaming on remaining environments",
+      "interval": "Event counts only; the authors note rates vary across seeds.",
+      "does_not_prove": "That production models tamper with rewards. The environments were built to make gaming possible."
+    }
+  }
+}

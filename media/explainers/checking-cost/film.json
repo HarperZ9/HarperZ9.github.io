@@ -1,0 +1,275 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "checking-cost",
+  "title": "Claiming got cheap. Checking did not.",
+  "page": "explainers.html#checking-cost",
+  "seed": 20261004,
+  "voice": "author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Claiming got cheap. Checking did not.",
+      "lines": [
+        "Claiming got cheap. Checking did not."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "one",
+      "heading": "One reference",
+      "plate": {
+        "from": 0,
+        "to": 0.4
+      },
+      "lines": [
+        "Here is a reference: two authors, a year, a title, a journal and some page numbers.",
+        "It looks like every other reference you have read. I made it up for this video.",
+        "A chatbot can write one like it in under a second, and nothing on the page tells you whether the work exists.",
+        "To find out, someone has to go and look for it."
+      ],
+      "figure": {
+        "type": "reference",
+        "text": [
+          "Hale, R., & Morrow, J. (2019).",
+          "Signal decay in peer networks.",
+          "Journal of Applied Inference, 12(3), 44-61."
+        ],
+        "invented_at": 1,
+        "verdict_at": 3,
+        "verdict": "UNVERIFIED"
+      }
+    },
+    {
+      "key": "list",
+      "heading": "One study's worth of references",
+      "plate": {
+        "from": 0.4,
+        "to": 1.4
+      },
+      "sources": [
+        "walters2023"
+      ],
+      "lines": [
+        "In 2023, William Walters and Esther Wilder had ChatGPT write eighty-four short literature reviews, and then they searched for every one of the six hundred and thirty-six references.",
+        "Fifty-five percent of the references from GPT-3.5 did not exist. For GPT-4, the share was eighteen percent.",
+        "Many of the real ones were wrong in their details too: forty-three percent for GPT-3.5 and twenty-four percent for GPT-4.",
+        "On the page, the invented and the real look the same. Only the search told them apart."
+      ],
+      "figure": {
+        "type": "dotgrid",
+        "groups": [
+          {
+            "label": "GPT-3.5",
+            "n": 222,
+            "share": 0.55,
+            "on": 0,
+            "hot_at": 1,
+            "detail": "real ones with wrong details: 43%",
+            "detail_at": 2
+          },
+          {
+            "label": "GPT-4",
+            "n": 414,
+            "share": 0.18,
+            "on": 0,
+            "hot_at": 1,
+            "detail": "real ones with wrong details: 24%",
+            "detail_at": 2
+          }
+        ],
+        "legend_hot": "fabricated",
+        "legend_ink": "exists",
+        "note": "Shares from the paper; dots rounded to whole references."
+      }
+    },
+    {
+      "key": "year",
+      "heading": "A year of checking",
+      "plate": {
+        "from": 1.4,
+        "to": 3.2
+      },
+      "sources": [
+        "aczel2021"
+      ],
+      "lines": [
+        "Science already pays people to check. By reviewers' own reports, one peer review takes about six hours of a skilled person's time.",
+        "Balazs Aczel and colleagues estimated about twenty-two million reviews in 2020. Six hours each comes to over a hundred million hours: about fifteen thousand years of work, spent in one year.",
+        "It is an estimate built from approximate rates, and the authors expect the true figure to be higher."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 0,
+            "label": "one review",
+            "value": "about 6 hours"
+          },
+          {
+            "on": 1,
+            "label": "reviews in 2020",
+            "value": "21,800,126"
+          },
+          {
+            "on": 1,
+            "label": "x 6 hours",
+            "value": "130,800,757 hours"
+          },
+          {
+            "on": 1,
+            "label": "as years",
+            "value": "about 15,000 years",
+            "strong": true
+          },
+          {
+            "on": 2,
+            "label": "status",
+            "value": "estimate, likely low",
+            "verdict": "UNVERIFIED"
+          }
+        ]
+      }
+    },
+    {
+      "key": "spread",
+      "heading": "Faster than the check",
+      "plate": {
+        "from": 3.2,
+        "to": 4.6
+      },
+      "sources": [
+        "vosoughi2018",
+        "brandolini"
+      ],
+      "lines": [
+        "Meanwhile, the unchecked claim does not wait. Soroush Vosoughi, Deb Roy and Sinan Aral followed about a hundred and twenty-six thousand rumor cascades on Twitter, from 2006 to 2017.",
+        "False stories were seventy percent more likely to be retweeted, and the truth took about six times as long to reach fifteen hundred people.",
+        "Bots sped up true and false news at the same rate, which points to people as the difference.",
+        "That study measures spread, not cost. The old line that refuting a claim takes ten times the effort of making it is an adage. Nobody has measured that ratio."
+      ],
+      "figure": {
+        "type": "race",
+        "on": 1,
+        "rows": [
+          {
+            "label": "falsehood",
+            "value": 1,
+            "display": "1x",
+            "hot": true
+          },
+          {
+            "label": "truth",
+            "value": 6,
+            "display": "about 6x as long"
+          }
+        ],
+        "caption": "time to reach 1,500 people",
+        "adage_at": 3,
+        "extras": [
+          {
+            "on": 1,
+            "text": "retweeted: false 70% more likely"
+          },
+          {
+            "on": 2,
+            "text": "bots: same speed for true and false"
+          }
+        ],
+        "intro": {
+          "on": 0,
+          "text": "about 126,000 rumor cascades on Twitter, 2006 to 2017"
+        },
+        "hot_note": "hot bar: the falsehood (high liability)"
+      }
+    },
+    {
+      "key": "rerun",
+      "heading": "Where the gap can close",
+      "plate": {
+        "from": 4.6,
+        "to": 5.2
+      },
+      "sources": [
+        "hardwicke2018"
+      ],
+      "lines": [
+        "Claims got cheap, and a check still costs hours, so the gap can only close from the checking side.",
+        "When the data travel with the claim, a check becomes a rerun. Tom Hardwicke and colleagues tried to reproduce the numbers in thirty-five psychology papers that shared their data.",
+        "Where the numbers came out straight away, a check took about two to four person hours, by their estimate. Where they had to ask the authors for help, it took five to twenty-five, and weeks of waiting.",
+        "Thirteen of the thirty-five still had at least one number nobody could reproduce. None of those misses clearly changed a paper's conclusion, and the rerun is how anyone knows that."
+      ],
+      "figure": {
+        "type": "squares",
+        "groups": [
+          {
+            "label": "reproduced",
+            "n": 11,
+            "on": 2
+          },
+          {
+            "label": "reproduced with the authors' help",
+            "n": 11,
+            "on": 2,
+            "quiet": true
+          },
+          {
+            "label": "a number not reproduced",
+            "n": 13,
+            "on": 3,
+            "hot": true
+          }
+        ],
+        "hours": [
+          {
+            "on": 2,
+            "label": "reproduced",
+            "value": "2 to 4 person hours"
+          },
+          {
+            "on": 2,
+            "label": "with help",
+            "value": "5 to 25 person hours"
+          }
+        ],
+        "frame_on": 1,
+        "frame_label": "35 psychology papers that shared their data",
+        "lead": {
+          "on": 0,
+          "until": 1,
+          "text": "claiming: seconds.   checking: hours."
+        }
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Two things to keep",
+      "plate": {
+        "from": 5.2,
+        "to": 6.0
+      },
+      "lines": [
+        "Two things to keep. How a claim looks tells you nothing about whether it holds.",
+        "And the cheapest check is the one that ships with the claim, so anyone can rerun it.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "How a claim looks says nothing about whether it holds."
+          },
+          {
+            "on": 1,
+            "text": "The cheapest check ships with the claim."
+          }
+        ]
+      }
+    }
+  ]
+}

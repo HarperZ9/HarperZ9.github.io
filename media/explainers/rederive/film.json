@@ -1,0 +1,189 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "rederive",
+  "title": "Re-derive it. Don't take it on trust.",
+  "page": "explainers.html#rederive",
+  "seed": 20261006,
+  "voice": "author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Re-derive it. Don't take it on trust.",
+      "lines": [
+        "Rederive it. Don't take it on trust."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "paper",
+      "heading": "A result on the page",
+      "plate": {
+        "from": 0,
+        "to": 0.6
+      },
+      "lines": [
+        "A paper reports an effect. The statistics say it is unlikely to be chance, and the journal published it.",
+        "You can trust the paper, or you can run the study again and see whether the effect comes back.",
+        "Trust is cheap and fast. Running it again is slow, and it is the only one of the two that can say no."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Published: an effect, unlikely to be chance."
+          },
+          {
+            "on": 1,
+            "text": "Trust it, or run it again."
+          }
+        ]
+      }
+    },
+    {
+      "key": "hundred",
+      "heading": "A hundred studies, run again",
+      "plate": {
+        "from": 0.6,
+        "to": 2.0
+      },
+      "sources": [
+        "osc2015"
+      ],
+      "lines": [
+        "In 2015, the Open Science Collaboration repeated one hundred psychology studies from three journals.",
+        "Ninety-seven of the hundred originals had reported a positive result. Of those ninety-seven, thirty-five came back significant in the repeat.",
+        "On average, the repeated effects were about half the size of the originals.",
+        "That does not show the other studies were wrong. A single repeat can miss a real effect. It shows how much a published result can rest on one run."
+      ],
+      "figure": {
+        "type": "dotgrid",
+        "groups": [
+          {
+            "label": "original positive results",
+            "n": 97,
+            "share": 0.639,
+            "on": 1,
+            "hot_at": 1,
+            "detail": "mean effect size 0.403 to 0.197",
+            "detail_at": 2,
+            "unit": "studies"
+          }
+        ],
+        "legend_hot": "not significant when repeated",
+        "legend_ink": "significant again",
+        "note": "35 of 97 significant again; dots are whole studies."
+      }
+    },
+    {
+      "key": "ask",
+      "heading": "Asking for the data",
+      "plate": {
+        "from": 2.0,
+        "to": 3.0
+      },
+      "sources": [
+        "stodden2018"
+      ],
+      "lines": [
+        "Re-running an analysis is cheaper than re-running a study, if the data and code exist.",
+        "Victoria Stodden and colleagues took two hundred and four papers from Science, published after the journal required authors to share data and code on request, and asked for them.",
+        "They got the materials for forty-four percent of the papers, and estimated that about twenty-six percent would reproduce.",
+        "A rule that relies on the author answering an email checks only the authors who answer."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 1,
+            "label": "papers sampled",
+            "value": "204"
+          },
+          {
+            "on": 2,
+            "label": "data and code obtained",
+            "value": "44%"
+          },
+          {
+            "on": 2,
+            "label": "estimated to reproduce",
+            "value": "about 26%",
+            "strong": true
+          },
+          {
+            "on": 3,
+            "label": "status",
+            "value": "an estimate from a subset",
+            "verdict": "UNVERIFIED"
+          }
+        ]
+      }
+    },
+    {
+      "key": "lint",
+      "heading": "A check that anyone can run",
+      "plate": {
+        "from": 3.0,
+        "to": 4.4
+      },
+      "sources": [
+        "kumar2018"
+      ],
+      "lines": [
+        "Web certificates are public records, so anyone can check them without asking the issuer.",
+        "Deepak Kumar and colleagues wrote two hundred and twenty checks and ran them over two hundred and forty million certificates.",
+        "In 2012, more than twelve percent of certificates had errors. By 2017 the share was two hundredths of one percent.",
+        "The paper does not show the checks caused that fall. It shows a public record can be re-checked by a stranger, at the scale of the whole web."
+      ],
+      "figure": {
+        "type": "race",
+        "on": 2,
+        "rows": [
+          {
+            "label": "2012",
+            "value": 12,
+            "display": "more than 12% with errors",
+            "hot": true
+          },
+          {
+            "label": "2017",
+            "value": 0.02,
+            "display": "0.02%"
+          }
+        ],
+        "caption": "share of certificates with errors",
+        "intro": {
+          "on": 1,
+          "text": "220 checks over 240 million certificates"
+        },
+        "hot_note": "hot bar: 2012 (high liability)"
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "plate": {
+        "from": 4.4,
+        "to": 5.0
+      },
+      "lines": [
+        "A result you can re-derive does not need your trust. Ask for the data, the code and a check you can run yourself.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Ask for what lets you re-derive it."
+          }
+        ]
+      }
+    }
+  ]
+}

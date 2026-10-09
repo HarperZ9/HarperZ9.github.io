@@ -1,0 +1,87 @@
+{
+  "schema": "learn-items/1",
+  "topic": "Claiming got cheap. Checking did not.",
+  "explainer": "checking-cost",
+  "checks": [
+    {"after": "list", "items": ["cc-how-told-apart", "cc-share-fabricated"]},
+    {"after": "spread", "items": ["cc-review-hours", "cc-spread-not-cost"]},
+    {"after": "close", "items": ["cc-cheap-check"]}
+  ],
+  "items": [
+    {
+      "id": "cc-how-told-apart", "objective": "looks-say-nothing",
+      "prompt": "In the 2023 study of chatbot-written literature reviews, what told the real references from the invented ones?",
+      "choices": [
+        {"id": "format", "text": "The invented ones were formatted badly"},
+        {"id": "search", "text": "Searching for each reference"},
+        {"id": "flag", "text": "The chatbot marked the ones it was unsure of"}
+      ],
+      "answer": "search",
+      "misconceptions": {
+        "format": {"leaf": "misrecruited.looks_reveal_fakes", "note": "This assumes a made-up reference looks wrong. In the study the two looked the same on the page."},
+        "flag": {"leaf": "misrecruited.self_report", "note": "This trusts the source to report on itself. Nothing in the output marked the invented works."}
+      },
+      "source": {"ref": "explainers.html#checking-cost", "quote": "On the page, the invented and the real look the same. Only the search told them apart."}
+    },
+    {
+      "id": "cc-share-fabricated", "objective": "fabrication-rate",
+      "prompt": "Roughly what share of the GPT-3.5 references in that study did not exist?",
+      "choices": [
+        {"id": "fifth", "text": "About one in five"},
+        {"id": "few", "text": "Almost none"},
+        {"id": "half", "text": "More than half"}
+      ],
+      "answer": "half",
+      "misconceptions": {
+        "fifth": {"leaf": "slip.swapped_models", "note": "About one in five is the figure for the newer model, GPT-4, in the same study."},
+        "few": {"leaf": "misrecruited.fluent_means_real", "note": "Fluent, well-formed references are what the study checked, and many of them pointed at nothing."}
+      },
+      "source": {"ref": "explainers.html#checking-cost", "quote": "Fifty-five percent of the references from GPT-3.5 did not exist."}
+    },
+    {
+      "id": "cc-review-hours", "objective": "checking-cost",
+      "prompt": "By reviewers' own reports, about how long does one peer review take?",
+      "choices": [
+        {"id": "minutes", "text": "About six minutes"},
+        {"id": "hours", "text": "About six hours"},
+        {"id": "weeks", "text": "About six weeks of work"}
+      ],
+      "answer": "hours",
+      "misconceptions": {
+        "minutes": {"leaf": "misrecruited.checking_is_quick", "note": "This treats checking as a glance. The estimate rests on surveys of reviewers, who report much longer."},
+        "weeks": {"leaf": "slip.waiting_for_working", "note": "Weeks is how long a review can take to come back. The working time reviewers report is far shorter."}
+      },
+      "source": {"ref": "explainers.html#checking-cost", "quote": "one peer review takes about six hours of a skilled person's time."}
+    },
+    {
+      "id": "cc-spread-not-cost", "objective": "spread-not-cost",
+      "prompt": "What did the Twitter study of rumor cascades measure?",
+      "choices": [
+        {"id": "ratio", "text": "That refuting a claim takes ten times the effort of making it"},
+        {"id": "spread", "text": "How far and how fast true and false stories spread"},
+        {"id": "cost", "text": "How much fact-checking costs"}
+      ],
+      "answer": "spread",
+      "misconceptions": {
+        "ratio": {"leaf": "misrecruited.adage_as_measurement", "note": "The ten-to-one line is an adage. No study in this film measures that ratio."},
+        "cost": {"leaf": "misrecruited.spread_is_cost", "note": "The study timed how stories travelled between people. It put no price on checking them."}
+      },
+      "source": {"ref": "explainers.html#checking-cost", "quote": "That study measures spread, not cost."}
+    },
+    {
+      "id": "cc-cheap-check", "objective": "cheap-check",
+      "prompt": "When does checking a claim become cheap?",
+      "choices": [
+        {"id": "model", "text": "When a better model made the claim"},
+        {"id": "careful", "text": "When the claim looks careful and well sourced"},
+        {"id": "rerun", "text": "When the data travel with the claim, so anyone can rerun it"}
+      ],
+      "answer": "rerun",
+      "misconceptions": {
+        "model": {"leaf": "misrecruited.better_models_close_gap", "note": "A better model makes claiming cheaper. The check still costs what it cost."},
+        "careful": {"leaf": "misrecruited.looks_right_is_right", "note": "How a claim looks says nothing about whether it holds, as the first chapter showed."}
+      },
+      "source": {"ref": "explainers.html#checking-cost", "quote": "When the data travel with the claim, a check becomes a rerun."}
+    }
+  ]
+}

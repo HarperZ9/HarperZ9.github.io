@@ -665,7 +665,10 @@ RELEASE_PATHS = (
 # October 8, 2026, later: A Check It Cannot Predict, series piece 5, ships with its listing and
 # cards; panels, series tables, hub, feeds, index, routes, site index and home bundle change with
 # it (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "7f99da260e984d3ae3c3257a6ab9e4570f6723d668dcd3d1f0b6ca0d12a8f047"
+# October 4, 2026, later: explainers.html (narrated films with sources and recall questions)
+# joins the sitemap, the route registry and the site index, and the publication receipt records
+# that sitemap. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "a15fa4c4a573e2aa5d41e31d1dcb2fe088e889fe1d1a31699f3c08f75c04db56"
 
 
 BRIEFING_FIGURES = (
