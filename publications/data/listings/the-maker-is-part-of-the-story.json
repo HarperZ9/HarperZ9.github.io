@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "the-maker-is-part-of-the-story",
+  "route": "the-maker-is-part-of-the-story.html",
+  "form": "long-form essay",
+  "category": "art-perception",
+  "title": "The Maker Is Part of the Story",
+  "summary": "Frankenstein, Pinocchio and The Fifth Element, read past their famous morals, put the danger in the maker's arrangements: who funds the work, who sets the measure of success, and who keeps and edits the record.",
+  "published_at": "2026-10-08",
+  "updated_at": "2026-10-08",
+  "date_source": null,
+  "topics": [
+    "film",
+    "literature",
+    "accountability"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, source-bounded"
+}

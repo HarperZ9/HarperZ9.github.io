@@ -259,6 +259,15 @@
       "updated_at": "2026-10-03"
     },
     {
+      "id": "the-maker-is-part-of-the-story",
+      "route": "the-maker-is-part-of-the-story.html",
+      "title": "The Maker Is Part of the Story",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "updated_at": "2026-10-08"
+    },
+    {
       "id": "the-summary-is-not-the-record",
       "route": "the-summary-is-not-the-record.html",
       "title": "The Summary Is Not the Record",
@@ -350,20 +359,20 @@
       "summary": "From Hispaniola in 1514 to the Iran-Contra inquiry, the party that controlled the money wrote the first account of it. The record moved when an inquiry, a court, an archive or a reporter outside that party obtained it."
     },
     {
+      "id": "the-maker-is-part-of-the-story",
+      "route": "the-maker-is-part-of-the-story.html",
+      "title": "The Maker Is Part of the Story",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "summary": "Frankenstein, Pinocchio and The Fifth Element, read past their famous morals, put the danger in the maker's arrangements: who funds the work, who sets the measure of success, and who keeps and edits the record."
+    },
+    {
       "id": "why-i-do-this",
       "route": "why-i-do-this.html",
       "title": "A Bullshitter Knows a Bullshitter",
       "kind": "Series opener",
       "published_at": "2026-10-02",
       "summary": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series."
-    },
-    {
-      "id": "who-pays-the-referees",
-      "route": "who-pays-the-referees.html",
-      "title": "Who Pays the Referees",
-      "kind": "Series piece",
-      "published_at": "2026-10-01",
-      "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first."
     }
   ]
 }

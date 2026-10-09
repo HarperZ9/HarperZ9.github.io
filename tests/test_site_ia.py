@@ -120,7 +120,7 @@ def test_series_hub_carries_the_plan_text_and_links_only_published_parts() -> No
 def test_series_parts_match_the_aside_on_each_published_piece() -> None:
     """The hub and the aside on every published part name the same five questions and statuses."""
     published = [part for part in SERIES["parts"] if part["id"]]
-    assert [part["id"] for part in published] == ["who-pays-the-referees", "the-terms-for-telling", "who-kept-the-books"]
+    assert [part["id"] for part in published] == ["who-pays-the-referees", "the-terms-for-telling", "who-kept-the-books", "the-maker-is-part-of-the-story"]
     for page_part in published:
         aside = re.search(r'<aside class="wpr-series".*?</aside>', read(f'{page_part["id"]}.html'), re.S).group(0)
         items = re.findall(r"<li[^>]*><strong>(.*?)\.</strong> <span class=\"wpr-label\">([^<]*)</span> (.*?)</li>", aside)
