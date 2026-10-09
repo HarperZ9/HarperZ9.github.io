@@ -86,6 +86,9 @@ STUDIO_BAR_REVISION = "20261009-studio-bar"
 # system/gallery-desk.js, which the Studio's Gallery source also runs in full; studio.js and
 # studio-shell.css take the same stamp.
 GALLERY_DESK_REVISION = "20261009-gallery-desk"
+# 9 October 2026, later: the whole Loom joins the Studio's Loom source; loom-studio.js (host hooks),
+# studio.js and studio-shell.css take a new stamp.
+LOOM_HUB_REVISION = "20261009-loom-hub"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -136,9 +139,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": GALLERY_DESK_REVISION,
+    "system/studio.js": LOOM_HUB_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
-    "system/studio-shell.css": GALLERY_DESK_REVISION,
+    "system/studio-shell.css": LOOM_HUB_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,
@@ -147,7 +150,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/studio-sheet.css": STUDIO_PLATE_REVISION,
     "system/studio-modes.css": MEDIA_ENGINE_REVISION,
     "system/media-engine/risk.css": MEDIA_ENGINE_REVISION,
-    "system/loom-studio.js": IMPORT_STAMPS_REVISION,
+    "system/loom-studio.js": LOOM_HUB_REVISION,
     "system/retro-studio.js": STUDIO_BAR_REVISION,
     "img/og/cards-data.js": VOID_PLATES_REVISION,
     "system/theme-entry.js": THEME_PREFERENCES_REVISION,

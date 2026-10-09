@@ -36,7 +36,7 @@ export const SOURCE_GUIDE = Object.freeze({
   showcase:  { name: "Showcase", purpose: "Integrate a system, fit its conserved quantity, and re-check the receipt in this browser." },
   retro:     { name: "Retro Engine", purpose: "A shader through pixelate, palette, dither and a CRT tube." },
   gallery:   { name: "Gallery", purpose: "The print desk: a seed and up to three of 95 instruments draw a plate. The same seed draws the same plate." },
-  loom:      { name: "Loom", purpose: "A seeded plate woven into cloth with the Loom's draft maths." },
+  loom:      { name: "Loom", purpose: "Weave a picture into cloth: structure, sett, colours and the shuttle, then export a WIF draft." },
   type:      { name: "Type forge", purpose: "Set your text in Zain Mint, minted in this browser." },
   splats:    { name: "Splat Lab", purpose: "Where the Splat Lab's scenes live. They draw in the Spatial source." },
   brender:   { name: "BRender", purpose: "Re-hash the BRender restoration's release media in this browser." },
