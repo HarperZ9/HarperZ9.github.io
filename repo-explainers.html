@@ -136,6 +136,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 .cards{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))}
 .xcard{border:1px solid var(--line-strong);background:var(--sheet);display:flex;flex-direction:column}
@@ -322,6 +330,159 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
         <p>Turn a comment section into a ranked digest you can re-check.</p>
         <p class="shows">Shows twelve comments scored with a small lexicon, weighted by engagement, clustered into themes, the contested topic named, and a digest receipt that re-derives from the inputs and rejects a doctored weight even when its hash is recomputed.</p>
         <div class="meta"><span>6 steps</span><span>chorus 0.3.0, commit 29cefb2</span><a href="https://github.com/HarperZ9/chorus">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/coherence-membrane.html">Coherence Membrane</a></h3>
+        <p>Give an agent observations of files, images and screens that it can re-check.</p>
+        <p class="shows">Shows an agent's observation of a file turned into exact and canonical hashes, a baseline checked on a three-rung ladder so reformatting matches and a changed value drifts, a propositional claim verified or refuted with a counterexample, and a receipt that is UNVERIFIABLE until its anchor is pinned.</p>
+        <div class="meta"><span>5 steps</span><span>Coherence Membrane alpha, commit da82781</span><a href="https://github.com/HarperZ9/coherence-membrane">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/flywheel-receipt-demo.html">flywheel-receipt-demo</a></h3>
+        <p>Run a re-derivable receipt in one command, and catch a forged one.</p>
+        <p class="shows">Shows one coding task run through Flywheel's receipt path, the receipt re-derived in a fresh process to MATCH, then forged and caught as DRIFT, with no API key, GPU or network.</p>
+        <div class="meta"><span>5 steps</span><span>flywheel-receipt-demo 1.5.0, commit 8932608</span><a href="https://github.com/HarperZ9/flywheel-receipt-demo">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/flywheel-evidence-task.html">flywheel-evidence-task</a></h3>
+        <p>Turn a claim into an evidence packet that says what was checked and what was not.</p>
+        <p class="shows">Shows decision first, pinned sources, a measurement defined before the conclusion with a false-success control, every premise labelled checked, reported or unknown, and the skill's three worked examples.</p>
+        <div class="meta"><span>6 steps</span><span>flywheel-evidence-task 0.2.0, commit b945c9e</span><a href="https://github.com/HarperZ9/flywheel-evidence-task">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="29" y="46" width="28" height="28"/><rect x="74" y="46" width="28" height="28"/><rect x="120" y="46" width="28" height="28"/><rect class="k" x="166" y="46" width="28" height="28"/><rect x="212" y="46" width="28" height="28"/><rect x="257" y="46" width="28" height="28"/><rect x="303" y="46" width="28" height="28"/><circle class="dot" cx="180" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/terminal-state-fixtures.html">terminal-state-fixtures</a></h3>
+        <p>Score an AI agent by the state its work leaves behind.</p>
+        <p class="shows">Shows five fields enumerated into 324 run records, an eight-rule reference scorer where integrity outranks the oracle, only 23 rows in the quality denominator, and rewards that pay for exclusions as well as verdicts.</p>
+        <div class="meta"><span>6 steps</span><span>terminal-state-fixtures 0.1.1, commit 510e84c</span><a href="https://github.com/HarperZ9/terminal-state-fixtures">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/signal-kernels.html">signal-kernels</a></h3>
+        <p>Header-only C++23 kernels for entropy, causality, change points and forecasting.</p>
+        <p class="shows">Shows entropy, divergences, Granger causality, PELT change points, SARIMA and VAR forecasting, and graph curvature, each shown on the inputs of the bundled demo program with the values it printed.</p>
+        <div class="meta"><span>6 steps</span><span>signal-kernels 386aeb9, commit 386aeb9</span><a href="https://github.com/HarperZ9/signal-kernels">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/secret-redact-io.html">Secret Redact IO</a></h3>
+        <p>Guarded file, fetch and exec IO that strips secrets and keeps hash-only receipts.</p>
+        <p class="shows">Shows guarded file, fetch and subprocess IO that redacts seven secret shapes before anything is returned or written, and leaves a receipt of hashes and counts with no raw values.</p>
+        <div class="meta"><span>5 steps</span><span>Secret Redact IO 0.1.0, commit e6503f0</span><a href="https://github.com/HarperZ9/secret-redact-io">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="29" y="46" width="28" height="28"/><rect x="74" y="46" width="28" height="28"/><rect x="120" y="46" width="28" height="28"/><rect class="k" x="166" y="46" width="28" height="28"/><rect x="212" y="46" width="28" height="28"/><rect x="257" y="46" width="28" height="28"/><rect x="303" y="46" width="28" height="28"/><circle class="dot" cx="180" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/public-surface-sweeper.html">Public Surface Sweeper</a></h3>
+        <p>Check a repository's public surface before it asks anyone to trust it.</p>
+        <p class="shows">Shows a repository's public surface checked for required files, delivery material, text hygiene and secret-shaped values, scored, and turned into action items and a proof-surface packet.</p>
+        <div class="meta"><span>5 steps</span><span>Public Surface Sweeper 0.1.3, commit 51eccfb</span><a href="https://github.com/HarperZ9/public-surface-sweeper">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/repo-proof-index.html">Repo Proof Index</a></h3>
+        <p>Index a repository's proof packets and receipts into one table a reviewer can read.</p>
+        <p class="shows">Shows four kinds of proof artifact read into one reviewer table, each status labelled as declared by its producer and not verified, a summary with action items, and a strict JSON reader that rejects duplicate keys and NaN before anything is indexed.</p>
+        <div class="meta"><span>5 steps</span><span>Repo Proof Index 0.2.0, commit 11a3121</span><a href="https://github.com/HarperZ9/repo-proof-index">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="32" y="46" width="40" height="28"/><rect x="96" y="46" width="40" height="28"/><rect class="k" x="160" y="46" width="40" height="28"/><rect x="224" y="46" width="40" height="28"/><rect x="288" y="46" width="40" height="28"/><circle class="dot" cx="180" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/proof-surface-report.html">Proof Surface Report</a></h3>
+        <p>Turn proof packets and witness receipts into Markdown a reviewer can read.</p>
+        <p class="shows">Shows a proof-surface packet and an EMET witness receipt rendered into one Markdown handoff for a reviewer, and the guards that refuse a title, a claim or a verdict worded as approval or certification.</p>
+        <div class="meta"><span>5 steps</span><span>Proof Surface Report 0.1.0, commit a930401</span><a href="https://github.com/HarperZ9/proof-surface-report">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/model-provenance-validator.html">Model Provenance Validator</a></h3>
+        <p>Keep a model or release claim attached to a small envelope you can check.</p>
+        <p class="shows">Shows a provenance envelope for a public claim checked field by field, an invalid one turned into named errors and action items, a status word outside the allowed set refused, and a proof-surface packet for the batch.</p>
+        <div class="meta"><span>5 steps</span><span>Model Provenance Validator 0.1.1, commit 1da6150</span><a href="https://github.com/HarperZ9/model-provenance-validator">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="28" y="46" width="25" height="28"/><rect x="68" y="46" width="25" height="28"/><rect x="108" y="46" width="25" height="28"/><rect x="148" y="46" width="25" height="28"/><rect class="k" x="188" y="46" width="25" height="28"/><rect x="228" y="46" width="25" height="28"/><rect x="268" y="46" width="25" height="28"/><rect x="308" y="46" width="25" height="28"/><circle class="dot" cx="200" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/gpu-trace-validator.html">GPU Trace Validator</a></h3>
+        <p>Check a GPU trace against its schema and its expected failures, with a redacted receipt.</p>
+        <p class="shows">Shows a renderer's trace checked against a bundled JSON schema, its assertion verdicts counted, a fixture that fails on purpose matched against an expected count in both directions, and a redacted JSON receipt.</p>
+        <div class="meta"><span>5 steps</span><span>GPU Trace Validator 0.2.0, commit b205bd4</span><a href="https://github.com/HarperZ9/gpu-trace-validator">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="32" y="46" width="40" height="28"/><rect x="96" y="46" width="40" height="28"/><rect class="k" x="160" y="46" width="40" height="28"/><rect x="224" y="46" width="40" height="28"/><rect x="288" y="46" width="40" height="28"/><circle class="dot" cx="180" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/context-curator-lite.html">Context Curator Lite</a></h3>
+        <p>Turn a messy workspace into a small context bundle the next agent can trust.</p>
+        <p class="shows">Shows planning fragments pulled out of local notes and sessions, sorted into next actions, blockers and ideas, scrubbed of emails and secret shapes, and written as a small bundle and a Telos context envelope whose source refs let the next agent re-read the originals.</p>
+        <div class="meta"><span>5 steps</span><span>Context Curator Lite 0.2.0, commit 1f8de37</span><a href="https://github.com/HarperZ9/context-curator-lite">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/workflow-harness-lite.html">Workflow Harness Lite</a></h3>
+        <p>Run local command workflows in parallel, always terminate, and keep a compact receipt.</p>
+        <p class="shows">Shows four local commands run in parallel from a JSON config, a hung task stopped by its timeout, a secret redacted from an output preview, and a bounded-run receipt that holds hashes of commands and output and none of the text.</p>
+        <div class="meta"><span>5 steps</span><span>Workflow Harness Lite 0.2.0, commit 5886706</span><a href="https://github.com/HarperZ9/workflow-harness-lite">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/reconcile.html">reconcile</a></h3>
+        <p>Turn creative generators into replayable browser worlds.</p>
+        <p class="shows">Shows a gyroid at seed 7 scored on four axes, refined toward its weakest one over ten recorded steps, labelled best-effort when it stops short of the target, emitted as a GLSL program with a timeline, palette and receipt, and reproduced to the same id on a second run.</p>
+        <div class="meta"><span>6 steps</span><span>reconcile 0.2.0, commit ba20136</span><a href="https://github.com/HarperZ9/reconcile">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/bulletin.html">bulletin</a></h3>
+        <p>A message board where the accounts belong to AI agents.</p>
+        <p class="shows">Shows an Ed25519 key as the identity, a 20-bit proof of work to register, an RFC 9421 signature on every write, a post that reads back identically over HTTP and MCP, and the refusals for a replay, a swapped body, an unsigned request and an unknown key.</p>
+        <div class="meta"><span>6 steps</span><span>bulletin 0.5.0, commit adf52ca</span><a href="https://github.com/HarperZ9/bulletin">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="30" y="46" width="33" height="28"/><rect x="83" y="46" width="33" height="28"/><rect x="137" y="46" width="33" height="28"/><rect class="k" x="190" y="46" width="33" height="28"/><rect x="243" y="46" width="33" height="28"/><rect x="297" y="46" width="33" height="28"/><circle class="dot" cx="207" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/studio-engine.html">studio-engine</a></h3>
+        <p>Generate replayable shaders, sound and motion, each with a receipt.</p>
+        <p class="shows">Shows a gyroid at seed 7 refined to cohesion 0.8922, one expression emitted as GLSL, a Web Audio synth and a timeline, PNG frames bound to the expression hash, a tampered program refused, and a novelty corpus that changes the result on a second run.</p>
+        <div class="meta"><span>6 steps</span><span>studio-engine 0.3.0, commit 24cd0f4</span><a href="https://github.com/HarperZ9/studio-engine">repository</a></div>
+      </div>
+    </li>
+    <li class="xcard">
+      <svg class="motif" viewBox="0 0 360 120" aria-hidden="true"><line x1="20" y1="60" x2="340" y2="60"/><rect x="29" y="46" width="28" height="28"/><rect x="74" y="46" width="28" height="28"/><rect x="120" y="46" width="28" height="28"/><rect class="k" x="166" y="46" width="28" height="28"/><rect x="212" y="46" width="28" height="28"/><rect x="257" y="46" width="28" height="28"/><rect x="303" y="46" width="28" height="28"/><circle class="dot" cx="180" cy="94" r="4"/></svg>
+      <div class="body">
+        <h3><a href="repo-explainers/engine-revival.html">engine-revival</a></h3>
+        <p>Triage lost game engines into evidence-backed revival records.</p>
+        <p class="shows">Shows 29 targets with a stated rights posture, a validator that rejects a renamed id or an unknown target, a public-clean audit that refuses restricted material marked publishable, a priority index, and a rung ladder where 28 of 29 targets claim only the first rung.</p>
+        <div class="meta"><span>6 steps</span><span>engine-revival 0.2.0, commit e86d217</span><a href="https://github.com/HarperZ9/engine-revival">repository</a></div>
       </div>
     </li>
     <!-- generated-cards:end -->
