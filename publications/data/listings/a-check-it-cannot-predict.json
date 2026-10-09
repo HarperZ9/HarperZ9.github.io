@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "a-check-it-cannot-predict",
+  "route": "a-check-it-cannot-predict.html",
+  "form": "editorial essay",
+  "category": "agent-evaluation",
+  "title": "A Check It Cannot Predict",
+  "summary": "For people and institutions, a check that is certain and outside the actor's control does more than an announced watcher. Whether that holds for trained AI models is a test, designed here, that has not run.",
+  "published_at": "2026-10-08",
+  "updated_at": "2026-10-08",
+  "date_source": null,
+  "topics": [
+    "AI evaluation",
+    "oversight",
+    "deterrence"
+  ],
+  "ai_assistance": "AI-assisted, author-directed, source-bounded"
+}

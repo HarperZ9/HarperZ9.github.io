@@ -1,5 +1,41 @@
 {
  "receipts": {
+  "a-check-it-cannot-predict.jpg": {
+   "backend": "chrome-154.0.8037.98-skia",
+   "content_sha256": "57f28e821a7b9f6e91a36da0ea7113760985847746d8566ed860b7e426efe28e",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "a-check-it-cannot-predict.jpg": "ce77f87a123b22a405b53f8f6ec144f20e23a0a2f820115713c9529aabf9061a",
+    "a-check-it-cannot-predict.svg": "06360e2d095a74dadd51866f7cf6e02792e0e0e440b2da7b12ae9d4315a2b0ed"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "ca14c4920b09903d0e5d9f3fa616c17768dc2e4f2a0f8cd21448962beadb3a71",
+   "reconcile": null,
+   "scene_sha256": "e465e981bc1f39c1a8bf75654533d53ad7a1bf32f00c2b856578742d0b6f4966",
+   "schema": "superstack.receipt/1",
+   "seed": "a-check-it-cannot-predict",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 812697058,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "a-witness-should-not-become-a-ruler.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "35cd266b0f9281ecf84d6c67ab64be6ce83966ed6c2048b6a845d8152dfa2f03",

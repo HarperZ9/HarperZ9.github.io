@@ -117,6 +117,7 @@ test("pillars light only for the page family they head", () => {
   assert.deepEqual(lit("/the-terms-for-telling.html"), ["who-knew-first.html"]);
   assert.deepEqual(lit("/who-kept-the-books.html"), ["who-knew-first.html"]);
   assert.deepEqual(lit("/the-maker-is-part-of-the-story.html"), ["who-knew-first.html"]);
+  assert.deepEqual(lit("/a-check-it-cannot-predict.html"), ["who-knew-first.html"]);
   assert.deepEqual(lit("/why-i-do-this.html"), ["who-knew-first.html"]);
   assert.deepEqual(lit("/the-number-has-a-vintage.html"), ["publications.html"]);
   assert.deepEqual(lit("/publications.html"), ["publications.html"]);

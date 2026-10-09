@@ -169,6 +169,15 @@
       "updated_at": "2026-08-27"
     },
     {
+      "id": "a-check-it-cannot-predict",
+      "route": "a-check-it-cannot-predict.html",
+      "title": "A Check It Cannot Predict",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "updated_at": "2026-10-08"
+    },
+    {
       "id": "a-witness-should-not-become-a-ruler",
       "route": "a-witness-should-not-become-a-ruler.html",
       "title": "A witness should not become a ruler",
@@ -367,12 +376,12 @@
       "summary": "Frankenstein, Pinocchio and The Fifth Element, read past their famous morals, put the danger in the maker's arrangements: who funds the work, who sets the measure of success, and who keeps and edits the record."
     },
     {
-      "id": "why-i-do-this",
-      "route": "why-i-do-this.html",
-      "title": "A Bullshitter Knows a Bullshitter",
-      "kind": "Series opener",
-      "published_at": "2026-10-02",
-      "summary": "In my own words: who I am, why I build tools that check AI, and what I want the work to do. Start here for the Who Knew First series."
+      "id": "a-check-it-cannot-predict",
+      "route": "a-check-it-cannot-predict.html",
+      "title": "A Check It Cannot Predict",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "summary": "For people and institutions, a check that is certain and outside the actor's control does more than an announced watcher. Whether that holds for trained AI models is a test, designed here, that has not run."
     }
   ]
 }

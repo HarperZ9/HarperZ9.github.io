@@ -702,6 +702,13 @@ window.CARD_DATA = {
     "word": "Maker",
     "headline": "The Maker Is Part of the Story"
   },
+  "a-check-it-cannot-predict": {
+    "publication": true,
+    "editorial": true,
+    "role": "EDITORIAL ANALYSIS",
+    "word": "Check",
+    "headline": "A Check It Cannot Predict"
+  },
   "the-number-has-a-vintage": {
     "publication": true,
     "editorial": true,
