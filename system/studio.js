@@ -5641,6 +5641,18 @@ function resizeActiveSurface() {
       // re-fits the backing and draws the sheet again.
       drawSketch(false);
       break;
+    case "plotmaps":
+    case "voxels":
+      // Still sheets with no loop: a resize clears the backing, so a layout shift during boot (a
+      // late font at desktop width) left ?source=plotmaps and ?source=voxels black (audit, 9
+      // October 2026). Re-fit, then repaint the sheet or scene already built, without rebuilding.
+      sizeCanvas(canvas);
+      if (activeSource === "plotmaps") repaintPlotMap(); else repaintVoxelScene(false);
+      break;
+    case "poster":
+      // The workshop sizes the canvas to its format itself; ask it for the same poster again.
+      if (_posterWorkshop) { try { _posterWorkshop.render(); } catch (e) { console.error("[studio] poster redraw failed:", e); } }
+      break;
     case "retro":
       // The engine sizes its own output canvas; a resize only asks it for a fresh frame.
       if (window.__retroStudio) window.__retroStudio.redraw();
