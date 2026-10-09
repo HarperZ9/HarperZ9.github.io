@@ -1,4 +1,4 @@
-// studio-shell.js: the Studio's one shell. A source switch that folds the 26 sources away once one
+// studio-shell.js: the Studio's one shell. A source switch that folds the 27 sources away once one
 // is chosen, an inspector header that names the source and what it does, and one action bar with
 // the same order everywhere: the source's main action, Undo, Redo, Export, Pin. Undo and Redo
 // share one history model: every source that joins the shell hands over snapshot() and
@@ -27,6 +27,7 @@ export const SOURCE_GUIDE = Object.freeze({
   plotmaps:  { name: "Plot maps", purpose: "Turn a field, a plate or your own picture into a pen-plotter sheet." },
   voxels:    { name: "Voxels", purpose: "Build, carve and paint a seeded voxel scene, then export it." },
   worlds:    { name: "Worlds", purpose: "Walk around the One Step worlds as small rendered places. Hold the wheel button and drag to turn." },
+  films:     { name: "Films", purpose: "Every film on the site: the narrated explainers with chapters, recall and sources, and the One Step films." },
   threads:   { name: "Threads", purpose: "Particles trace one of fifteen drawn fields and leave light, rendered on your GPU." },
   sketch:    { name: "Sketch", purpose: "Draw by hand. Your strokes stay in this browser and export as a plotter sheet." },
   byo:       { name: "Bring your own", purpose: "Drop in an image, a video, a 3D model or a sound, then transform and measure it." },

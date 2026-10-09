@@ -26,8 +26,8 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-splats-in-place";
-import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-splats-in-place";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-films-source";
+import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -535,6 +535,7 @@ const SOURCES = {
   // The full Retro Engine, retro.html's own controls and controller (studio-retro.js).
   retro:     { block: "src-retro",     mode: "generate" },
   gallery:   { block: "src-gallery",   mode: "generate" },
+  films:     { block: "src-films",     mode: "generate" },
   loom:      { block: "src-loom",      mode: "generate" },
   splats:    { block: "src-spatial",   mode: "generate" },
   brender:   { block: "src-engine",    mode: "generate", engine: true },
@@ -598,6 +599,25 @@ async function enterGallerySource(epoch) {
   } catch (err) {
     console.error("[studio] the Gallery desk failed to load:", err);
     say("model", "The Gallery desk failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+
+// Films: every film on the site on the stage, the explainers with their chapters, recall,
+// transcript, sources and interactive version (studio-films-source.js).
+const loadFilmsSource = lazyLoader(() => import("./studio-films-source.js?v=20261009-films-source"));
+let _filmsSource = null;
+async function enterFilmsSource(epoch) {
+  try {
+    _filmsSource = await loadFilmsSource();
+    if (epoch !== _sourceEpoch) return;
+    const asked = new URLSearchParams(window.__studioBootSearch || "").get("film") || "";
+    await _filmsSource.enterFilms({ mount: $("films-mount"), stage: $("viewport-stage"), film: asked });
+    if (epoch !== _sourceEpoch) { _filmsSource.leaveFilms(); return; }
+    markStagePainted();
+    if (_shell) _shell.resume("films");
+  } catch (err) {
+    console.error("[studio] the films failed to load:", err);
+    say("model", "The films failed to load: " + (err && err.message ? err.message : String(err)));
   }
 }
 
@@ -708,6 +728,7 @@ function setSource(next) {
     if (activeSource === "retro" && _retroHub) _retroHub.leaveRetroHub();   // park the engine, give the canvas back
     if (activeSource === "gallery" && _galleryHub) _galleryHub.leaveGallery();   // park the desk
     if (activeSource === "loom" && _loomHub) _loomHub.leaveLoom();               // park the loom, stop the shuttle
+    if (activeSource === "films" && _filmsSource) _filmsSource.leaveFilms();     // pause, give the stage back
     if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
@@ -761,6 +782,7 @@ function setSource(next) {
   if (next === "retro") enterRetro(epoch);
   if (next === "gallery") enterGallerySource(epoch);
   if (next === "loom") enterLoomSource(epoch);
+  if (next === "films") enterFilmsSource(epoch);
   if (SOURCES[next].engine) {
     // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
     // is given, so on a phone it inherited whatever size the previous source left (a square from
@@ -7095,6 +7117,15 @@ const SHELL_CONTRACTS = {
     restore(state) { if (_galleryHub) _galleryHub.applyGalleryState(state); },
     reset() { if (_galleryHub) _galleryHub.applyGalleryState({ seed: "gallery-" + new Date().toISOString().slice(0, 10), layers: ["showpiece-aperture"], locked: [], fx: [], fxa: "0.6" }); },
   },
+  // Films: the chosen film is kept, so a return or a reload opens the same one. Nothing is made, so
+  // there is no Undo; the readings stay open.
+  films: {
+    primary: { label: "Play or pause", target: "films-play", title: "Play or pause the film on the stage" },
+    exports: [PNG_FRAME],
+    history: false,
+    snapshot: () => (_filmsSource ? _filmsSource.filmsState() : null),
+    restore(state) { if (_filmsSource && state && state.film) _filmsSource.chooseFilm(state.film); },
+  },
   // The whole Loom (studio-loom.js): its structure and setup fields are the snapshot; every
   // rebuilt cloth is one step. The source picture is not kept, as with the Loom's own setups.
   loom: {
@@ -7284,6 +7315,8 @@ const SHELL_CONTRACTS = {
   },
 };
 SHELL_CONTRACTS.splats = SHELL_CONTRACTS.spatial;
+// The film chosen in the Films source is kept for a return and a reload.
+document.addEventListener("films:chosen", () => { if (_shell && activeSource === "films") _shell.record("films"); });
 // Every settled Atelier drawing is one undo step.
 document.addEventListener("atelier:drawn", () => { if (_shell) _shell.record("atelier"); });
 // Every rebuild of the showcase scene (a system, a seed, the S key) is one undo step.
