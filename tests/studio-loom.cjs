@@ -47,7 +47,8 @@ const pick = (page, s) => page.evaluate((s) => document.querySelector(`#studio-s
       page.on('pageerror', (e) => errors.push(String(e.message)));
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
       try {
-        await page.goto(`${base}/studio.html?source=loom`); await wait(page, 5000);
+        await page.goto(`${base}/studio.html?source=loom`);
+        await page.waitForSelector('#src-loom #wv-panel', { timeout: 20000 }); await wait(page, 2500);
         const got = await page.evaluate(controls, '#src-loom');
         const ids = new Set(got.map((c) => c.id).filter(Boolean)), labels = new Set(got.map((c) => c.label));
         const missing = page0.filter((c) => !(c.id && ids.has(c.id)) && !labels.has(c.label));
@@ -59,7 +60,9 @@ const pick = (page, s) => page.evaluate((s) => document.querySelector(`#studio-s
         await page.evaluate(() => [...document.querySelectorAll('#wv-structures .re-chip')].find((c) => c.getAttribute('aria-checked') !== 'true').click()); await wait(page, 1200);
         const changed = await frame(page);
         assert.notEqual(changed, first, `${tag} a structure change rebuilds the cloth`);
-        await page.evaluate(() => document.querySelector('#inspector-actions [data-action="undo"]').click()); await wait(page, 1200);
+        await page.evaluate(() => document.querySelector('#inspector-actions [data-action="undo"]').click());
+        // The rebuild lands within a frame or two; allow up to 3 s on a slow machine.
+        for (let i = 0; i < 15 && (await frame(page)) !== first; i++) await wait(page, 200);
         assert.equal(await frame(page), first, `${tag} Undo brings the first cloth back exactly`);
         await page.evaluate(() => document.querySelector('#inspector-actions [data-action="redo"]').click()); await wait(page, 1200);
         assert.equal(await frame(page), changed, `${tag} Redo brings the changed cloth back exactly`);

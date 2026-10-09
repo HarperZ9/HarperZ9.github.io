@@ -28,6 +28,7 @@ import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
 import { mountShell } from "./studio-shell-dom.js?v=20261009-films-source";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
+import { mountPalette } from "./studio-palette.js?v=20261009-palette";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -7363,6 +7364,20 @@ _shell = mountShell({
   storage: keepStorage,
   onMaking: () => _readings.action(),
 });
+
+// Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.
+const _palette = mountPalette({
+  guide: SOURCE_GUIDE, setSource, getSource: () => activeSource, bar: $("inspector-actions"),
+  // A block several sources share (the engine surfaces, Spatial and the Splat Lab) belongs to the
+  // source on stage when it is one of them, else to the first source that names it.
+  sourceOfBlock: (blockId, active) => {
+    if (SOURCES[active] && SOURCES[active].block === blockId) return active;
+    const hit = Object.entries(SOURCES).find(([, cfg]) => cfg.block === blockId);
+    return hit ? hit[0] : null;
+  },
+});
+{ const b = $("studio-search"); if (b) b.addEventListener("click", () => _palette.open()); }
+{ const b = $("studio-keys"); if (b) b.addEventListener("click", () => _palette.keys()); }
 
 (function bootSource() {
   // The Atelier engine rewrites location.search on boot, so read the head-snapshot global that

@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
-<link rel="stylesheet" href="system/studio-shell.css?v=20261009-films-source">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261009-palette">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -63,6 +63,11 @@
       <span class="source-switch-name" data-switch-name>Atelier</span>
       <span class="source-switch-cue">Change source</span>
     </button>
+    <!-- Search every source and control, and the list of keys (studio-palette.js). -->
+    <div class="studio-find" role="group" aria-label="Find">
+      <button type="button" class="btn ghost" id="studio-search" aria-keyshortcuts="Control+K Meta+K /">Search <kbd>Ctrl K</kbd></button>
+      <button type="button" class="btn ghost" id="studio-keys" aria-keyshortcuts="?">Keys <kbd>?</kbd></button>
+    </div>
     <!-- The source menu: pick what the model looks at. setSource(name) shows ONLY that block. -->
     <div class="source-menu studio-mode-strip" id="studio-source" role="tablist" aria-label="Choose a media source">
       <div class="source-group" role="presentation">
@@ -1549,7 +1554,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261009-choosing-shows"></script>
+<script type="module" src="system/studio.js?v=20261009-palette"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>
