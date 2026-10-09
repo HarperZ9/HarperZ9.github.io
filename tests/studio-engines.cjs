@@ -1,5 +1,5 @@
-// The media engine surfaces on the shell (4 October 2026; re-landed 9 October without Retro,
-// which became the full engine in #356 and has its own test, tests/studio-retro.cjs), in Chrome at desktop and phone
+// The media engine surfaces on the shell (4 October 2026; re-landed 9 October without Retro
+// and the Gallery, which are now their pages' full tools with their own tests), in Chrome at desktop and phone
 // widths: one bar each, settings kept through a switch, Undo and a reload, and the export with a
 // receipt from the bar.
 const assert = require('node:assert/strict');
@@ -11,7 +11,6 @@ const VIEWS = [
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 const SURFACES = {
-  gallery: { order: ['primary', 'undo', 'redo', 'export'], primary: 'Export frame and receipt' },
   loom: { order: ['primary', 'undo', 'redo', 'export'], primary: 'Export frame and receipt' },
   type: { order: ['primary', 'undo', 'redo', 'export'], primary: 'Export frame and receipt' },
   raw: { order: ['primary', 'undo', 'redo', 'export'], primary: 'Export frame and receipt' },
@@ -67,33 +66,33 @@ async function clickIn(page, sel) { const l = page.locator(sel).first(); await l
         assert.ok(got.shown.includes(want.primary === 'Open in Spatial' ? 'Open the receipted scenes in Spatial' : 'Export frame and receipt'), `${tag} ${id}: the rail keeps the bar's action`);
       }
 
-      // Gallery: a seed survives a switch, Undo returns the first plate exactly, a reload keeps it.
-      // A fresh page, so the stage is sized by the Gallery alone (a surface visited before, such as
+      // Loom: a seed survives a switch, Undo returns the first plate exactly, a reload keeps it.
+      // A fresh page, so the stage is sized by the Loom alone (a surface visited before, such as
       // RAW, can leave the backing at another size until the next redraw).
-      await page.goto(`${base}/studio.html?source=gallery`); await wait(page, 3500);
+      await page.goto(`${base}/studio.html?source=loom`); await wait(page, 3500);
       const plate = await frame(page);
-      await setValue(page, 'me-gallery-seed', 'kept-seed', 'change'); await wait(page, 2500);
+      await setValue(page, 'me-loom-seed', 'kept-seed', 'change'); await wait(page, 2500);
       const seeded = await frame(page);
       assert.notEqual(seeded, plate);
       await pick(page, 'sketch'); await wait(page, 1500);
-      await pick(page, 'gallery'); await wait(page, 3000);
-      assert.equal(await page.inputValue('#me-gallery-seed'), 'kept-seed', `${tag} the Gallery seed survives a switch`);
+      await pick(page, 'loom'); await wait(page, 3000);
+      assert.equal(await page.inputValue('#me-loom-seed'), 'kept-seed', `${tag} the Loom seed survives a switch`);
       // Not pixel-equal yet: the plate's backing comes back 1 px wider (704 against 705) after a
-      // switch, so the hash differs. Known on 9 October; the full Gallery (next slice) re-checks it.
+      // switch, so the hash differs. Known on 9 October; the full Loom slice re-checks it.
       assert.ok(await frame(page), `${tag} with a plate drawn`);
       await clickIn(page, '[data-action="undo"]'); await wait(page, 3000);
-      assert.equal(await page.inputValue('#me-gallery-seed'), 'folded-light', `${tag} Undo returns the Gallery's first seed`);
+      assert.equal(await page.inputValue('#me-loom-seed'), 'folded-light', `${tag} Undo returns the Loom's first seed`);
       assert.ok(await frame(page), `${tag} and a plate drawn (same 1 px backing drift as above)`);
       await clickIn(page, '[data-action="redo"]'); await wait(page, 3000);
-      assert.equal(await page.inputValue('#me-gallery-seed'), 'kept-seed', `${tag} Redo brings the seed back`);
+      assert.equal(await page.inputValue('#me-loom-seed'), 'kept-seed', `${tag} Redo brings the seed back`);
 
       // Type forge keeps its settings across a reload.
       await pick(page, 'type'); await wait(page, 3000);
       await setValue(page, 'me-type-text', 'Kept', 'input'); await wait(page, 1500);
       await page.goto(`${base}/studio.html?source=type`); await wait(page, 4000);
       assert.equal(await page.inputValue('#me-type-text'), 'Kept', `${tag} a reload keeps the Type forge text`);
-      await page.goto(`${base}/studio.html?source=gallery`); await wait(page, 4000);
-      assert.equal(await page.inputValue('#me-gallery-seed'), 'kept-seed', `${tag} a reload keeps the Gallery seed`);
+      await page.goto(`${base}/studio.html?source=loom`); await wait(page, 4000);
+      assert.equal(await page.inputValue('#me-loom-seed'), 'kept-seed', `${tag} a reload keeps the Loom seed`);
 
       // The bar's main action is the export with a receipt.
       const download = page.waitForEvent('download', { timeout: 15000 });

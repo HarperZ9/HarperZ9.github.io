@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
-<link rel="stylesheet" href="system/studio-shell.css?v=20261004-studio-bring">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261009-gallery-desk">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -95,7 +95,7 @@
       <div class="source-group" role="presentation">
         <span class="source-group-label" aria-hidden="true">Engine</span>
         <button type="button" role="tab" data-source="retro"     aria-selected="false" aria-controls="src-retro" tabindex="-1">Retro Engine</button>
-        <button type="button" role="tab" data-source="gallery"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Gallery</button>
+        <button type="button" role="tab" data-source="gallery"   aria-selected="false" aria-controls="src-gallery" tabindex="-1">Gallery</button>
         <button type="button" role="tab" data-source="loom"      aria-selected="false" aria-controls="src-engine" tabindex="-1">Loom</button>
         <button type="button" role="tab" data-source="type"      aria-selected="false" aria-controls="src-engine" tabindex="-1">Type forge</button>
         <button type="button" role="tab" data-source="splats"    aria-selected="false" aria-controls="src-engine" tabindex="-1">Splat Lab</button>
@@ -120,6 +120,9 @@
            here on first entry, and its preview onto the stage; retro-studio.js drives both. -->
       <section class="src-block" id="src-retro" role="tabpanel" aria-label="Retro Engine controls" hidden>
         <div id="retro-mount"><p class="transform-note">Loading the Retro Engine.</p></div>
+      </section>
+      <section class="src-block" id="src-gallery" role="tabpanel" aria-label="Gallery print desk controls" hidden>
+        <div id="gallery-mount"><p class="transform-note">Loading the Gallery's print desk.</p></div>
       </section>
       <section class="src-block" id="src-engine" role="tabpanel" aria-label="Media engine surface controls" hidden>
         <div id="engine-mount"></div>
@@ -1533,7 +1536,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261009-studio-bar"></script>
+<script type="module" src="system/studio.js?v=20261009-gallery-desk"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

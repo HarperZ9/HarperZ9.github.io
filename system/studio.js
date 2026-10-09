@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-studio-bar";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-gallery-desk";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -508,7 +508,7 @@ const SOURCES = {
   // Media engine surfaces (studio-engine.js): every media page on the site, entered from here.
   // The full Retro Engine, retro.html's own controls and controller (studio-retro.js).
   retro:     { block: "src-retro",     mode: "generate" },
-  gallery:   { block: "src-engine",    mode: "generate", engine: true },
+  gallery:   { block: "src-gallery",   mode: "generate" },
   loom:      { block: "src-engine",    mode: "generate", engine: true },
   splats:    { block: "src-engine",    mode: "generate", engine: true },
   brender:   { block: "src-engine",    mode: "generate", engine: true },
@@ -538,6 +538,40 @@ async function enterRetro(epoch) {
   } catch (err) {
     console.error("[studio] the Retro Engine failed to load:", err);
     say("model", "The Retro Engine failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+
+// The Gallery: gallery.html's whole print desk, adopted in place (studio-gallery.js).
+const loadGalleryHub = lazyLoader(() => import("./studio-gallery.js?v=20261009-gallery-desk"));
+let _galleryHub = null;
+async function enterGallerySource(epoch) {
+  try {
+    _galleryHub = await loadGalleryHub();
+    if (epoch !== _sourceEpoch) return;
+    await _galleryHub.enterGallery({
+      mount: $("gallery-mount"), stage: $("viewport-stage"), setSource,
+      // Every plate the desk draws is read by the readings and is one undo step.
+      onDrawn: () => {
+        if (activeSource !== "gallery") return;
+        try { perceive($("studio-canvas")); } catch (_) {}
+        startMeterLoop();
+        if (_shell) _shell.record("gallery");
+      },
+      // The desk's "to the workshop" opens the Poster source with the plate's seed as its art.
+      workshop: (seed) => {
+        setSource("poster");
+        const apply = () => { if (_posterWorkshop) _posterWorkshop.setArtSeed(seed); else setTimeout(apply, 150); };
+        apply();
+      },
+    });
+    if (epoch !== _sourceEpoch) { _galleryHub.leaveGallery(); return; }
+    // A frame handed over from another source draws on the desk as your own image.
+    markStagePainted();
+    if (_shell) _shell.resume("gallery");
+    startMeterLoop();
+  } catch (err) {
+    console.error("[studio] the Gallery desk failed to load:", err);
+    say("model", "The Gallery desk failed to load: " + (err && err.message ? err.message : String(err)));
   }
 }
 
@@ -620,6 +654,7 @@ function setSource(next) {
   // later in the module (hoisted function declarations), so they're safe to call from here.
   if (next !== activeSource) {
     if (activeSource === "retro" && _retroHub) _retroHub.leaveRetroHub();   // park the engine, give the canvas back
+    if (activeSource === "gallery" && _galleryHub) _galleryHub.leaveGallery();   // park the desk
     if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
@@ -671,6 +706,7 @@ function setSource(next) {
   if (_readings) _readings.sourceChanged();
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
+  if (next === "gallery") enterGallerySource(epoch);
   if (SOURCES[next].engine) {
     // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
     // is given, so on a phone it inherited whatever size the previous source left (a square from
@@ -5703,6 +5739,10 @@ function resizeActiveSurface() {
       sizeCanvas(canvas);
       if (activeSource === "plotmaps") repaintPlotMap(); else repaintVoxelScene(false);
       break;
+    case "gallery":
+      // The desk sizes its canvas from its own box; draw the same plate again at the new size.
+      if (_galleryHub) _galleryHub.redrawGallery();
+      break;
     case "retro":
       // The engine sizes its own output canvas; a resize only asks it for a fresh frame.
       if (window.__retroStudio) window.__retroStudio.redraw();
@@ -6983,7 +7023,17 @@ const SHELL_CONTRACTS = {
   },
   threads: formContract("threads", { label: "Pause or play", target: "threads-play", title: "Pause or play the threads" }, [PNG_FRAME, WEBM]),
   worlds: formContract("worlds", { label: "Pause or play", target: "worlds-play", title: "Pause or play the motion in the world" }, [PNG_FRAME, WEBM]),
-  gallery: engineContract("gallery"),
+  // The full print desk (studio-gallery.js): its seed, instruments, locks and effects are the
+  // snapshot; every drawn plate is one step.
+  gallery: {
+    making: true,
+    primary: { label: "Draw", target: "desk-draw", title: "Draw a plate from this seed and the selected instruments (Enter in the seed field)" },
+    exports: [{ label: "Save PNG", target: "desk-save" }, { label: "Copy link", target: "desk-share" },
+      { label: "Frame and receipt", target: "gallery-receipt" }, PNG_FRAME],
+    snapshot: () => (_galleryHub ? _galleryHub.galleryState() : null),
+    restore(state) { if (_galleryHub) _galleryHub.applyGalleryState(state); },
+    reset() { if (_galleryHub) _galleryHub.applyGalleryState({ seed: "gallery-" + new Date().toISOString().slice(0, 10), layers: ["showpiece-aperture"], locked: [], fx: [], fxa: "0.6" }); },
+  },
   loom: engineContract("loom"),
   type: engineContract("type"),
   raw: engineContract("raw"),
