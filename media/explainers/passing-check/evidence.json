@@ -1,0 +1,51 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "passing-check",
+  "read": "2026-10-04",
+  "sources": {
+    "inozemtseva2014": {
+      "short": "Inozemtseva and Holmes 2014, ICSE",
+      "n": "n = 31,000 test suites, 5 Java programs",
+      "citation": "Inozemtseva, L., and Holmes, R. (2014). Coverage is not strongly correlated with test suite effectiveness. Proceedings of ICSE 2014, 435-445.",
+      "url": "https://doi.org/10.1145/2568225.2568271",
+      "peer_reviewed": true,
+      "claims": ["With suite size controlled, the correlation between coverage and effectiveness was low to moderate; for Joda Time it was essentially zero."],
+      "quote": "should not be used as a quality target",
+      "interval": "Reported as Kendall tau correlations per program, not intervals.",
+      "does_not_prove": "That coverage is useless; the authors say it finds under-tested code. Effectiveness was measured with planted faults, in Java only."
+    },
+    "just2014": {
+      "short": "Just et al. 2014, FSE",
+      "n": "n = 357 real faults, 5 Java programs",
+      "citation": "Just, R., Jalali, D., Inozemtseva, L., Ernst, M. D., Holmes, R., and Fraser, G. (2014). Are mutants a valid substitute for real faults in software testing? Proceedings of FSE 2014, 654-665.",
+      "url": "https://doi.org/10.1145/2635868.2635929",
+      "peer_reviewed": true,
+      "claims": ["73% of real faults were coupled to generated mutants; 17% were coupled to no mutant."],
+      "quote": "statistically significant correlation between mutant detection and real fault detection",
+      "interval": "None reported in the passages read.",
+      "does_not_prove": "That a mutation score is a complete stand-in for real faults. Java programs only."
+    },
+    "wang2025": {
+      "short": "Wang et al. 2025, arXiv preprint",
+      "n": "n = 500 SWE-bench Verified tasks, 3 tools",
+      "citation": "Wang, Y., et al. (2025). Are \"Solved Issues\" in SWE-bench Really Solved Correctly? An Empirical Study. arXiv:2503.15223.",
+      "url": "https://arxiv.org/abs/2503.15223",
+      "peer_reviewed": false,
+      "claims": ["7.8% of patches that passed the benchmark tests failed the developer-written tests; 29.6% behaved differently from the ground-truth patch."],
+      "quote": "call to arms for more robust and reliable evaluation of issue-solving tools",
+      "interval": "None reported.",
+      "does_not_prove": "Anything about other benchmarks or tools. Part of its estimate rests on a 77-patch manual sample."
+    },
+    "aleithan2024": {
+      "short": "Aleithan et al. 2024, arXiv preprint",
+      "n": "n = 251 passing patches from one agent",
+      "citation": "Aleithan, R., et al. (2024). SWE-Bench+: Enhanced Coding Benchmark for LLMs. arXiv:2410.06992.",
+      "url": "https://arxiv.org/abs/2410.06992",
+      "peer_reviewed": false,
+      "claims": ["Of 251 patches that passed all tests, 32.67% had the solution leaked in the task and 31.08% passed weak tests; the resolution rate fell from 12.47% to 3.97% after filtering."],
+      "quote": "32.67% of the successful patches involve",
+      "interval": "None reported.",
+      "does_not_prove": "That newer agents or other benchmark versions show the same rates. Labels are the authors' manual judgments."
+    }
+  }
+}

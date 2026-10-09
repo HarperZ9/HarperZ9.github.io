@@ -1,0 +1,108 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:02.600
+A passing check can still be wrong.
+
+00:00:03.800 --> 00:00:06.520
+Here is a change to a program, and here are its tests.
+
+00:00:06.840 --> 00:00:08.440
+Every test passes.
+
+00:00:09.040 --> 00:00:10.520
+The change is still wrong.
+
+00:00:10.840 --> 00:00:13.120
+None of the tests ever runs the line that broke.
+
+00:00:13.720 --> 00:00:15.960
+A pass tells you the check found nothing.
+
+00:00:16.280 --> 00:00:18.880
+It does not tell you the check could have found it.
+
+00:00:20.080 --> 00:00:24.720
+A common stand-in for a good test suite is coverage: how much of the code the tests
+run.
+
+00:00:25.320 --> 00:00:34.220
+Laura Inozemtseva and Reid Holmes built thirty-one thousand test suites for five
+large Java programs and measured how many planted faults each one caught.
+
+00:00:34.820 --> 00:00:40.020
+Once they allowed for the size of a suite, coverage was only weakly to moderately
+related to catching faults.
+
+00:00:40.340 --> 00:00:43.400
+In one program the link was essentially zero.
+
+00:00:44.000 --> 00:00:47.020
+Their advice: coverage should not be used as a quality target.
+
+00:00:48.220 --> 00:00:52.860
+One way to test a test is to break the code on purpose and see whether the tests
+notice.
+
+00:00:53.180 --> 00:00:55.180
+The deliberate breaks are called mutants.
+
+00:00:55.780 --> 00:01:02.400
+Rene Just and colleagues took three hundred and fifty-seven real bugs that
+developers had fixed, and asked whether mutants behave like them.
+
+00:01:03.000 --> 00:01:06.200
+Seventy-three percent of the real bugs were coupled to mutants.
+
+00:01:06.520 --> 00:01:11.640
+Seventeen percent were coupled to none, so a check on the check has blind spots of
+its own.
+
+00:01:12.840 --> 00:01:17.420
+Coding benchmarks for AI count a task as solved when the patch passes the task's
+tests.
+
+00:01:18.020 --> 00:01:22.580
+A 2025 study re-examined patches from three tools on five hundred tasks.
+
+00:01:22.900 --> 00:01:31.700
+Seven point eight percent of the patches counted as solved failed the developers'
+own tests, and twenty-nine point six percent behaved differently from the real fix.
+
+00:01:32.300 --> 00:01:36.540
+An earlier study hand-checked two hundred and fifty-one passing patches from one
+agent.
+
+00:01:36.860 --> 00:01:42.780
+In about a third, the fix was already written in the task description, and about
+another third passed weak tests.
+
+00:01:43.380 --> 00:01:44.840
+Both studies are preprints.
+
+00:01:45.160 --> 00:01:48.680
+They show how far a pass can sit from a fix, on these benchmarks.
+
+00:01:49.880 --> 00:01:53.780
+So before trusting a check, feed it something you know is wrong.
+
+00:01:54.380 --> 00:01:56.700
+If a broken input passes, the check is broken.
+
+00:01:57.020 --> 00:02:01.660
+That planted failure is a false-success control, and it costs one extra run.
+
+00:02:02.260 --> 00:02:05.440
+A pass with a control that failed as it should is evidence.
+
+00:02:05.760 --> 00:02:08.380
+A pass on its own is only the absence of a complaint.
+
+00:02:09.580 --> 00:02:14.160
+A check earns trust by failing on something it should fail on, and doing it on the
+record.
+
+00:02:14.760 --> 00:02:17.700
+The voice you heard is a synthesized version of mine.
+
+00:02:18.020 --> 00:02:21.200
+Every number on screen links to its source under the video.

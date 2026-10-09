@@ -1,0 +1,124 @@
+1
+00:00:00,600 --> 00:00:01,480
+Rederive it.
+
+2
+00:00:01,800 --> 00:00:03,880
+Don't take it on trust.
+
+3
+00:00:05,080 --> 00:00:06,620
+A paper reports an effect.
+
+4
+00:00:06,940 --> 00:00:11,100
+The statistics say it is unlikely to be chance, and the journal published it.
+
+5
+00:00:11,700 --> 00:00:16,580
+You can trust the paper, or you can run the study again and see whether the effect
+comes back.
+
+6
+00:00:17,180 --> 00:00:18,840
+Trust is cheap and fast.
+
+7
+00:00:19,160 --> 00:00:23,340
+Running it again is slow, and it is the only one of the two that can say no.
+
+8
+00:00:24,540 --> 00:00:30,760
+In 2015, the Open Science Collaboration repeated one hundred psychology studies from
+three journals.
+
+9
+00:00:31,360 --> 00:00:34,720
+Ninety-seven of the hundred originals had reported a positive result.
+
+10
+00:00:35,040 --> 00:00:39,020
+Of those ninety-seven, thirty-five came back significant in the repeat.
+
+11
+00:00:39,620 --> 00:00:43,600
+On average, the repeated effects were about half the size of the originals.
+
+12
+00:00:44,200 --> 00:00:46,420
+That does not show the other studies were wrong.
+
+13
+00:00:46,740 --> 00:00:49,040
+A single repeat can miss a real effect.
+
+14
+00:00:49,360 --> 00:00:52,300
+It shows how much a published result can rest on one run.
+
+15
+00:00:53,500 --> 00:00:58,160
+Re-running an analysis is cheaper than re-running a study, if the data and code
+exist.
+
+16
+00:00:58,760 --> 00:01:03,040
+Victoria Stodden and colleagues took two hundred and four papers from Science,
+published after the journal required authors to share data and code on request, and
+
+17
+00:01:03,040 --> 00:01:07,320
+asked for them.
+
+18
+00:01:07,920 --> 00:01:13,760
+They got the materials for forty-four percent of the papers, and estimated that
+about twenty-six percent would reproduce.
+
+19
+00:01:14,360 --> 00:01:18,760
+A rule that relies on the author answering an email checks only the authors who
+answer.
+
+20
+00:01:19,960 --> 00:01:25,160
+Web certificates are public records, so anyone can check them without asking the
+issuer.
+
+21
+00:01:25,760 --> 00:01:31,760
+Deepak Kumar and colleagues wrote two hundred and twenty checks and ran them over
+two hundred and forty million certificates.
+
+22
+00:01:32,360 --> 00:01:36,180
+In 2012, more than twelve percent of certificates had errors.
+
+23
+00:01:36,500 --> 00:01:39,960
+By 2017 the share was two hundredths of one percent.
+
+24
+00:01:40,560 --> 00:01:43,380
+The paper does not show the checks caused that fall.
+
+25
+00:01:43,700 --> 00:01:47,980
+It shows a public record can be re-checked by a stranger, at the scale of the whole
+web.
+
+26
+00:01:49,180 --> 00:01:52,100
+A result you can re-derive does not need your trust.
+
+27
+00:01:52,420 --> 00:01:55,740
+Ask for the data, the code and a check you can run yourself.
+
+28
+00:01:56,340 --> 00:01:58,660
+The voice you heard is a synthesized version of mine.
+
+29
+00:01:58,980 --> 00:02:01,840
+Every number on screen links to its source under the video.

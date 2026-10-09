@@ -12,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from tools.explainer.marks import HAIR, INK, QUIET, RISK
+from tools.explainer.marks import HAIR, INK, QUIET, RISK, VERDICT_RISK
 from tools.explainer.film.timeline import revealed
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -90,7 +90,7 @@ def dotgrid(d, f: Fonts, st: dict, fig: dict) -> None:
         a = revealed(st, g["on"])
         hot_a = revealed(st, g["hot_at"])
         fake = round(g["n"] * g["share"])
-        d.text((x, 300), f"{g['label']}  ({g['n']} references)", font=f.body, fill=rgba(INK, a))
+        d.text((x, 300), f"{g['label']}  ({g['n']} {g.get('unit', 'references')})", font=f.body, fill=rgba(INK, a))
         for k in range(g["n"]):
             cx, cy = x + (k % cols) * gap + r, 380 + (k // cols) * gap + r
             hot = k < fake
@@ -111,15 +111,16 @@ def dotgrid(d, f: Fonts, st: dict, fig: dict) -> None:
 
 def arith(d, f: Fonts, st: dict, fig: dict) -> None:
     y = 330
+    vx = X0 + max(520, max(d.textlength(r["label"], font=f.body) for r in fig["rows"]) + 70)  # value column
     for row in fig["rows"]:
         a = revealed(st, row["on"])
         d.text((X0, y), row["label"], font=f.body, fill=rgba(QUIET, a))
         if row.get("verdict"):
-            tag(d, f, W - X0, y, row["verdict"], "moderate", a)
-            d.text((X0 + 520, y), row["value"], font=f.mono, fill=rgba(INK, a))
+            tag(d, f, W - X0, y, row["verdict"], VERDICT_RISK.get(row["verdict"], "moderate"), a)
+            d.text((vx, y), row["value"], font=f.mono, fill=rgba(INK, a))
         else:
             font = f.big if row.get("strong") else f.mono
-            d.text((X0 + 520, y - (8 if row.get("strong") else 0)), row["value"], font=font, fill=rgba(INK, a))
+            d.text((vx, y - (8 if row.get("strong") else 0)), row["value"], font=font, fill=rgba(INK, a))
         if row.get("strong"):
             d.line([X0, y - 20, W - X0, y - 20], fill=rgba(HAIR, a * 2), width=2)
         y += 104
@@ -128,24 +129,27 @@ def arith(d, f: Fonts, st: dict, fig: dict) -> None:
 def race(d, f: Fonts, st: dict, fig: dict) -> None:
     a = revealed(st, fig["on"])
     top = max(r["value"] for r in fig["rows"])
-    y, span = 400, W - X0 * 2 - 640
+    lw = fig.get("label_w", 300)  # width of the label column
+    y, span = 400, W - X0 * 2 - lw - 560  # room on the right for the value label
     if fig.get("intro"):
         d.text((X0, 260), fig["intro"]["text"], font=f.body, fill=rgba(INK, revealed(st, fig["intro"]["on"])))
     d.text((X0, 340), fig["caption"], font=f.small, fill=rgba(QUIET, a))
     for row in fig["rows"]:
-        length = max(6, span * row["value"] / top * a)  # the bars grow as they fade in
+        ra = revealed(st, row["on"]) if "on" in row else a
+        length = max(6, span * row["value"] / top * ra)  # the bars grow as they fade in
         col = RISK["high"] if row.get("hot") else INK
-        d.text((X0, y + 4), row["label"], font=f.body, fill=rgba(INK, a))
-        d.rectangle([X0 + 300, y + 10, X0 + 300 + length, y + 54], fill=rgba(col, a * 0.9))
-        d.text((X0 + 320 + length, y + 12), row["display"], font=f.mono, fill=rgba(QUIET, a))
+        d.text((X0, y + 4), row["label"], font=f.body, fill=rgba(INK, ra))
+        d.rectangle([X0 + lw, y + 10, X0 + lw + length, y + 54], fill=rgba(col, ra * 0.9))
+        d.text((X0 + lw + 20 + length, y + 12), row["display"], font=f.mono, fill=rgba(QUIET, ra))
         y += 100
-    if fig["rows"][0].get("hot"):
-        d.text((X0, y + 10), "hot bar: the falsehood (high liability)", font=f.small, fill=rgba(QUIET, a))
+    if fig.get("hot_note"):
+        d.text((X0, y + 10), fig["hot_note"], font=f.small, fill=rgba(QUIET, a))
     for k, extra in enumerate(fig.get("extras", [])):
         d.text((X0, y + 70 + 50 * k), extra["text"], font=f.mono, fill=rgba(QUIET, revealed(st, extra["on"])))
-    ad = revealed(st, fig["adage_at"])
-    d.text((X0, y + 270), "refuting costs ten times making:", font=f.body, fill=rgba(INK, ad))
-    d.text((X0, y + 330), "an adage. No study has measured the ratio.", font=f.body, fill=rgba(QUIET, ad))
+    if "adage_at" in fig:
+        ad = revealed(st, fig["adage_at"])
+        d.text((X0, y + 270), "refuting costs ten times making:", font=f.body, fill=rgba(INK, ad))
+        d.text((X0, y + 330), "an adage. No study has measured the ratio.", font=f.body, fill=rgba(QUIET, ad))
 
 
 def squares(d, f: Fonts, st: dict, fig: dict) -> None:

@@ -1,0 +1,41 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "rederive",
+  "read": "2026-10-04",
+  "sources": {
+    "osc2015": {
+      "short": "Open Science Collaboration 2015, Science",
+      "n": "n = 100 replications from 3 psychology journals",
+      "citation": "Open Science Collaboration (2015). Estimating the reproducibility of psychological science. Science 349(6251), aac4716.",
+      "url": "https://doi.org/10.1126/science.aac4716",
+      "peer_reviewed": true,
+      "claims": ["97 of 100 original studies reported positive results; 35 of those 97 were significant in the original direction when replicated.",
+                 "Mean effect size fell from 0.403 (SD 0.188) in the originals to 0.197 (SD 0.257) in the replications."],
+      "quote": "Replication effects were half the magnitude of original effects",
+      "interval": "Reported as means with SDs and a Wilcoxon test (P < 0.001).",
+      "does_not_prove": "That the studies that did not replicate were false. One replication can miss a real effect, and the sample is not a random draw of all psychology."
+    },
+    "stodden2018": {
+      "short": "Stodden, Seiler and Ma 2018, PNAS",
+      "n": "n = 204 articles in Science, 2011 to 2012",
+      "citation": "Stodden, V., Seiler, J., and Ma, Z. (2018). An empirical analysis of journal policy effectiveness for computational reproducibility. PNAS 115(11), 2584-2589.",
+      "url": "https://doi.org/10.1073/pnas.1708290115",
+      "peer_reviewed": true,
+      "claims": ["Artifacts were obtained for 44% of the 204 articles, and about 26% were estimated to reproduce."],
+      "quote": "we were able to obtain artifacts from 44% of our sample",
+      "interval": "The 26% is an estimate extrapolated from the subset the authors attempted.",
+      "does_not_prove": "Anything about other journals or years."
+    },
+    "kumar2018": {
+      "short": "Kumar et al. 2018, IEEE Symposium on Security and Privacy",
+      "n": "n = 240 million browser-trusted certificates, 220 checks",
+      "citation": "Kumar, D., Wang, Z., Hyder, M., et al. (2018). Tracking Certificate Misissuance in the Wild. IEEE Symposium on Security and Privacy 2018.",
+      "url": "https://doi.org/10.1109/SP.2018.00015",
+      "peer_reviewed": true,
+      "claims": ["In 2017 only 0.02% of certificates had errors, against more than 12% in 2012."],
+      "quote": "only 0.02% of certificates have errors",
+      "interval": "Counts over the full Censys set; no interval needed for a census.",
+      "does_not_prove": "That the public checks caused the fall in errors, or anything about Certificate Transparency itself."
+    }
+  }
+}

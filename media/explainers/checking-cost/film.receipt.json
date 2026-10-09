@@ -5,7 +5,7 @@
   "page": "explainers.html#checking-cost",
   "script": {
     "path": "media/explainers/checking-cost/film.json",
-    "sha256": "50961672e0343998be7693a0b9ab377c7aa86ea07a8c8161c3e145f76d0857f5"
+    "sha256": "422776d1a11598a3992ff5a8d6df8fd67b5d17442a9e093dc58cb72f8af7b5ff"
   },
   "evidence": {
     "path": "media/explainers/checking-cost/evidence.json",
@@ -14,10 +14,10 @@
   "render_code": {
     "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
     "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
-    "tools/explainer/film/figures.py": "087051643df9d66bdb572cd398ba89bf26fc4a19139d9fa209caf5c14202ff93",
+    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
     "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
     "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
-    "tools/explainer/film/narrate.py": "91cfe03f606ef2289aa695e90c4e96d3a89c2852a4383ffee60d18c4eaa4aa55"
+    "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
   },
   "toolchain": {
     "python": "3.12.10",
@@ -90,9 +90,9 @@
   "frames": 5324,
   "fps": 30,
   "seconds": 177.46666666666667,
-  "frame_chain_sha256": "5cd9370988a8d09ee6b9d403f1af5afadafd26f7b0b8fcf1ab1e4bc1aaa27ff5",
+  "frame_chain_sha256": "4a7510d7b325843ace12c55365bfc391ebc8b6efc18020a86af54f015374f449",
   "outputs": {
-    "checking-cost.mp4": "02793ba3c5ecc3f237ad730a7510641a3f9cffeb5cbe1d498365d8ecaf51ccf5",
+    "checking-cost.mp4": "de64f13174ba15ccdfb0bafe4773971f204ff14a08e23b870c229f8de8b660dc",
     "checking-cost.vtt": "b100a8d9a2f67113067c75bebfb69ca99ec0c5c216b05f0c1ca25a2613547f0a",
     "checking-cost.srt": "5d220119850a63dc7818a974ff7bff44f478ef8d78a4ed148feb1bf4bb491408",
     "poster.jpg": "91d6fec8c8e48774a82b3ac190a0d0f44b0fc755a302a7aea9a02c3518e61b2b",

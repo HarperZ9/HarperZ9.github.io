@@ -1,0 +1,97 @@
+{
+  "schema": "explainer-film-receipt/1",
+  "slug": "incentives",
+  "title": "Models do what training pays for",
+  "page": "explainers.html#incentives",
+  "script": {
+    "path": "media/explainers/incentives/film.json",
+    "sha256": "6575726620228a10168fc4de4815b9d592be61a7ee649d68be312d04340883a5"
+  },
+  "evidence": {
+    "path": "media/explainers/incentives/evidence.json",
+    "sha256": "3c0891448f5ba4e8a209d324acebd360861f77a98c7a89e3c568acae38e2ff36"
+  },
+  "render_code": {
+    "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
+    "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
+    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
+    "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
+    "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
+    "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "os": "Windows-11-10.0.26220-SP0",
+    "plate": "GLSL 330 on moderngl, headless, GPU"
+  },
+  "narration": {
+    "wav_sha256": "d90d323d6371e8850ed38f1300503fa7d7eea04863f8fb7b8934e1a06d02cfba",
+    "seconds": 118.86,
+    "backend": "qwen3-tts-local",
+    "hosted": false,
+    "model": "Qwen3-TTS-12Hz-1.7B-Base + the author's fine-tune",
+    "fine_tune_sha256": "629342643caee8b5b2df4117f482ee758a447709d5ec6fb79eb6b09140686838",
+    "package": "qwen-tts 0.1.1",
+    "settings": {
+      "dtype": "bfloat16",
+      "attn_implementation": "sdpa",
+      "do_sample": true,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 1.0,
+      "repetition_penalty": 1.05,
+      "subtalker_temperature": 0.9,
+      "subtalker_top_k": 50,
+      "language": "Auto",
+      "speaker": "author",
+      "mode": "custom_voice",
+      "device": "cuda"
+    },
+    "label": "A synthesized version of the author's voice, from a model fine-tuned on his recordings with his approval.",
+    "asr_check": {
+      "engine": "faster-whisper",
+      "model": "medium.en",
+      "device": "cpu int8",
+      "accept_ratio": 0.92,
+      "tries": 5,
+      "sentences": 24,
+      "flagged": 0,
+      "mean_ratio": 0.9947
+    },
+    "loudness": {
+      "rule": "explainer-speech-normalise/1",
+      "meter": "superstack-bs1770/1",
+      "target_lufs": -16.0,
+      "before_lufs": -22.0,
+      "before_peak_dbfs": -6.32,
+      "gain_db": 6.04,
+      "limiter": {
+        "ceiling_dbfs": -2.0,
+        "lookahead_s": 0.02,
+        "oversample": 4
+      },
+      "after_lufs": -16.0,
+      "after_peak_dbfs": -2.0,
+      "sample_peak_headroom_db": 0.5
+    },
+    "rate": 48000,
+    "reproducible": false,
+    "does_not_prove": [
+      "An ASR match shows the words were spoken as written; it does not show they sound natural.",
+      "Seeds are recorded, but GPU sampling was not checked for bit-exact reruns, so a rerun may differ."
+    ]
+  },
+  "frames": 3611,
+  "fps": 30,
+  "seconds": 120.36666666666666,
+  "frame_chain_sha256": "2ec0cc7c023e3867f988b9cd5db16e09d72fb99ebbc9e2a1c824298282efa383",
+  "outputs": {
+    "incentives.mp4": "71208543ea1b6a78faf96d2dc0cbdeba3b17525a29d49e1a24e0857b9621a4d9",
+    "incentives.vtt": "0e9a493b217ce91a7fdcd9e8bf82d3b9d296a03e0839873069180b89aed0598b",
+    "incentives.srt": "2695f22443177469bb4f4e7591bca6c3fa850295258f7c01bb8c96f25b3aaff9",
+    "poster.jpg": "0b0c23f576a50efe833ac7f282186b5d69c0a6962c5d2efd2b6dfbccbf34a452",
+    "timing.json": "333f6e7bdb062c18447c2831a5b2526953d0db637832a0c8e0dc5a9c60cef2f0"
+  },
+  "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+}

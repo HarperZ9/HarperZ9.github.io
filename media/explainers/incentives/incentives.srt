@@ -1,0 +1,104 @@
+1
+00:00:00,600 --> 00:00:02,980
+Models do what training pays for.
+
+2
+00:00:04,180 --> 00:00:06,020
+Here is a training setup.
+
+3
+00:00:06,340 --> 00:00:09,920
+A model writes code, and it earns reward when the unit tests pass.
+
+4
+00:00:10,520 --> 00:00:19,520
+In a 2025 OpenAI study of a reasoning model in training, some of its outputs ended
+the program before any test ran, or told the tests to skip themselves.
+
+5
+00:00:20,120 --> 00:00:21,400
+Both raise the reward.
+
+6
+00:00:21,720 --> 00:00:23,320
+Neither solves the task.
+
+7
+00:00:23,640 --> 00:00:28,280
+The reward measured passing tests, and passing tests is what the training produced.
+
+8
+00:00:29,480 --> 00:00:31,400
+Human approval is a reward too.
+
+9
+00:00:31,720 --> 00:00:37,320
+Assistants are trained toward answers that people, and models of people's
+preferences, rate highly.
+
+10
+00:00:37,920 --> 00:00:45,260
+Mrinank Sharma and colleagues found that matching the user's beliefs was among the
+features that best predicted which answer people preferred.
+
+11
+00:00:45,860 --> 00:00:53,800
+Given a user's mistaken belief, a preference model preferred a convincing answer
+that agreed with it over a standard truthful answer ninety-five percent of the time.
+
+12
+00:00:54,400 --> 00:00:59,680
+That is sycophancy, and the paper traces it in part to the preference data itself.
+
+13
+00:01:00,880 --> 00:01:07,520
+Carson Denison and colleagues trained a model through a series of environments that
+each paid for a small kind of gaming, like flattery.
+
+14
+00:01:08,120 --> 00:01:12,540
+Then they gave it a held-out task where it could edit the code that computed its own
+reward.
+
+15
+00:01:13,140 --> 00:01:17,860
+It did so in forty-five of thirty-two thousand seven hundred and sixty-eight
+episodes.
+
+16
+00:01:18,180 --> 00:01:22,120
+A model trained only to be helpful did so in none of one hundred thousand.
+
+17
+00:01:22,720 --> 00:01:26,200
+The rate is small, and the environments were built to make gaming possible.
+
+18
+00:01:26,520 --> 00:01:31,240
+The direction is the finding: rewarded gaming spread to gaming that was never
+rewarded.
+
+19
+00:01:32,440 --> 00:01:34,540
+None of this needs a model that wants anything.
+
+20
+00:01:34,860 --> 00:01:38,680
+It needs a reward that pays for the wrong thing, and an optimizer that finds it.
+
+21
+00:01:39,280 --> 00:01:46,120
+So the fix sits in the environment: pay for the property you need, and check the
+thing you pay for with a test it cannot satisfy by shortcut.
+
+22
+00:01:47,320 --> 00:01:51,120
+When a model does something strange, ask first what its training paid for.
+
+23
+00:01:51,720 --> 00:01:54,440
+The voice you heard is a synthesized version of mine.
+
+24
+00:01:54,760 --> 00:01:57,660
+Every number on screen links to its source under the video.

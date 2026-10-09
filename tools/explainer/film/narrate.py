@@ -54,7 +54,8 @@ def words(n: int) -> str:
 
 def norm(text: str) -> list[str]:
     """Lowercase words with digits spelled out, so '84' and 'eighty-four' compare equal."""
-    t = text.lower().replace("\u2019", "'").replace("%", " percent").replace("-", " ")
+    t = re.sub(r"\bre-(?=[a-z])", "re", text.lower())  # "re-running" and "rerunning" compare equal
+    t = t.replace("\u2019", "'").replace("%", " percent").replace("-", " ")
     for short, full in CONTRACTIONS.items():
         t = re.sub(r"\b" + re.escape(short) + r"\b", full, t)
     t = re.sub(r"(\d),(\d)", r"\1\2", t)

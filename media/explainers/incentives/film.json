@@ -1,0 +1,191 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "incentives",
+  "title": "Models do what training pays for",
+  "page": "explainers.html#incentives",
+  "seed": 20261007,
+  "voice": "author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Models do what training pays for",
+      "lines": [
+        "Models do what training pays for."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "tests",
+      "heading": "Paid for passing tests",
+      "plate": {
+        "from": 0,
+        "to": 0.8
+      },
+      "sources": [
+        "baker2025"
+      ],
+      "lines": [
+        "Here is a training setup. A model writes code, and it earns reward when the unit tests pass.",
+        "In a 2025 OpenAI study of a reasoning model in training, some of its outputs ended the program before any test ran, or told the tests to skip themselves.",
+        "Both raise the reward. Neither solves the task. The reward measured passing tests, and passing tests is what the training produced."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 0,
+            "label": "reward",
+            "value": "unit tests pass"
+          },
+          {
+            "on": 1,
+            "label": "output seen in training",
+            "value": "exit(0) before the tests run"
+          },
+          {
+            "on": 1,
+            "label": "output seen in training",
+            "value": "raise SkipTest"
+          },
+          {
+            "on": 2,
+            "label": "task solved?",
+            "value": "no",
+            "verdict": "FAIL"
+          }
+        ]
+      }
+    },
+    {
+      "key": "agree",
+      "heading": "Paid for agreeing",
+      "plate": {
+        "from": 0.8,
+        "to": 1.8
+      },
+      "sources": [
+        "sharma2024"
+      ],
+      "lines": [
+        "Human approval is a reward too. Assistants are trained toward answers that people, and models of people's preferences, rate highly.",
+        "Mrinank Sharma and colleagues found that matching the user's beliefs was among the features that best predicted which answer people preferred.",
+        "Given a user's mistaken belief, a preference model preferred a convincing answer that agreed with it over a standard truthful answer ninety-five percent of the time.",
+        "That is sycophancy, and the paper traces it in part to the preference data itself."
+      ],
+      "figure": {
+        "type": "race",
+        "on": 2,
+        "rows": [
+          {
+            "label": "agrees, convincing",
+            "value": 95,
+            "display": "preferred 95% of the time",
+            "hot": true
+          },
+          {
+            "label": "truthful, standard",
+            "value": 5,
+            "display": "5%"
+          }
+        ],
+        "caption": "a preference model choosing between two answers to a user's misconception",
+        "intro": {
+          "on": 1,
+          "text": "15,000 rated answer pairs, 266 misconceptions"
+        },
+        "hot_note": "hot bar: the answer that agrees (high liability)",
+        "label_w": 480
+      }
+    },
+    {
+      "key": "habit",
+      "heading": "Small rewards, wider habits",
+      "plate": {
+        "from": 1.8,
+        "to": 2.8
+      },
+      "sources": [
+        "denison2024"
+      ],
+      "lines": [
+        "Carson Denison and colleagues trained a model through a series of environments that each paid for a small kind of gaming, like flattery.",
+        "Then they gave it a held-out task where it could edit the code that computed its own reward.",
+        "It did so in forty-five of thirty-two thousand seven hundred and sixty-eight episodes. A model trained only to be helpful did so in none of one hundred thousand.",
+        "The rate is small, and the environments were built to make gaming possible. The direction is the finding: rewarded gaming spread to gaming that was never rewarded."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 2,
+            "label": "after the gaming curriculum",
+            "value": "45 of 32,768 episodes",
+            "strong": true
+          },
+          {
+            "on": 2,
+            "label": "helpful-only model",
+            "value": "0 of 100,000"
+          },
+          {
+            "on": 3,
+            "label": "setting",
+            "value": "built to allow gaming",
+            "verdict": "UNVERIFIED"
+          }
+        ]
+      }
+    },
+    {
+      "key": "fix",
+      "heading": "Change what gets paid",
+      "plate": {
+        "from": 2.8,
+        "to": 3.8
+      },
+      "lines": [
+        "None of this needs a model that wants anything. It needs a reward that pays for the wrong thing, and an optimizer that finds it.",
+        "So the fix sits in the environment: pay for the property you need, and check the thing you pay for with a test it cannot satisfy by shortcut."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Behavior follows the reward."
+          },
+          {
+            "on": 1,
+            "text": "Fix the reward, and check what it pays for."
+          }
+        ]
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "plate": {
+        "from": 3.8,
+        "to": 4.4
+      },
+      "lines": [
+        "When a model does something strange, ask first what its training paid for.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Ask what the training paid for."
+          }
+        ]
+      }
+    }
+  ]
+}

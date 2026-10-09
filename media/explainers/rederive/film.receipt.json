@@ -1,0 +1,97 @@
+{
+  "schema": "explainer-film-receipt/1",
+  "slug": "rederive",
+  "title": "Re-derive it. Don't take it on trust.",
+  "page": "explainers.html#rederive",
+  "script": {
+    "path": "media/explainers/rederive/film.json",
+    "sha256": "3411070248591d01bd416085a2bfe8c3e16e0e94c262940be8563b0042a365c1"
+  },
+  "evidence": {
+    "path": "media/explainers/rederive/evidence.json",
+    "sha256": "6da915e5c135a5780e9abe472a3867181aebdcac4a00309d392e213b9f07dba4"
+  },
+  "render_code": {
+    "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
+    "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
+    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
+    "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
+    "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
+    "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
+  },
+  "toolchain": {
+    "python": "3.12.10",
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "os": "Windows-11-10.0.26220-SP0",
+    "plate": "GLSL 330 on moderngl, headless, GPU"
+  },
+  "narration": {
+    "wav_sha256": "4382ae3c0b74b9229a9628820f74fb8b34b2f39e91d0d5f7c533396b409615af",
+    "seconds": 123.04,
+    "backend": "qwen3-tts-local",
+    "hosted": false,
+    "model": "Qwen3-TTS-12Hz-1.7B-Base + the author's fine-tune",
+    "fine_tune_sha256": "629342643caee8b5b2df4117f482ee758a447709d5ec6fb79eb6b09140686838",
+    "package": "qwen-tts 0.1.1",
+    "settings": {
+      "dtype": "bfloat16",
+      "attn_implementation": "sdpa",
+      "do_sample": true,
+      "temperature": 0.9,
+      "top_k": 50,
+      "top_p": 1.0,
+      "repetition_penalty": 1.05,
+      "subtalker_temperature": 0.9,
+      "subtalker_top_k": 50,
+      "language": "Auto",
+      "speaker": "author",
+      "mode": "custom_voice",
+      "device": "cuda"
+    },
+    "label": "A synthesized version of the author's voice, from a model fine-tuned on his recordings with his approval.",
+    "asr_check": {
+      "engine": "faster-whisper",
+      "model": "medium.en",
+      "device": "cpu int8",
+      "accept_ratio": 0.92,
+      "tries": 5,
+      "sentences": 28,
+      "flagged": 0,
+      "mean_ratio": 0.9984
+    },
+    "loudness": {
+      "rule": "explainer-speech-normalise/1",
+      "meter": "superstack-bs1770/1",
+      "target_lufs": -16.0,
+      "before_lufs": -21.97,
+      "before_peak_dbfs": -5.58,
+      "gain_db": 6.03,
+      "limiter": {
+        "ceiling_dbfs": -2.0,
+        "lookahead_s": 0.02,
+        "oversample": 4
+      },
+      "after_lufs": -16.0,
+      "after_peak_dbfs": -2.0,
+      "sample_peak_headroom_db": 0.5
+    },
+    "rate": 48000,
+    "reproducible": false,
+    "does_not_prove": [
+      "An ASR match shows the words were spoken as written; it does not show they sound natural.",
+      "Seeds are recorded, but GPU sampling was not checked for bit-exact reruns, so a rerun may differ."
+    ]
+  },
+  "frames": 3736,
+  "fps": 30,
+  "seconds": 124.53333333333333,
+  "frame_chain_sha256": "47851d24fa6e17f2f8b8f80afa0f014af967d3320d1c9ae92bed59c36bd6dd9b",
+  "outputs": {
+    "rederive.mp4": "71b9cdab073c37037d621569688fb25e2551d17ee3d581ce5c4a8ec30f7ed422",
+    "rederive.vtt": "0dac3c5767644143f6c47cc54fd928e30b95574c8a0fdf14e022c20acb49e4ea",
+    "rederive.srt": "71b80c281df52152df158a490e93eac14af23d3feca6773172d7c6efa0200c25",
+    "poster.jpg": "060957092e9b2fa5edfa1df5a303262f5943a8006211ce3d2cea93d6e43318af",
+    "timing.json": "2e9d7d0477325de6ce58bb469e19b7eae0b22aec0defb1f8352f3a97c9a54c20"
+  },
+  "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+}

@@ -1,0 +1,208 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "visible-reasoning",
+  "title": "What a model's written reasoning can and cannot show",
+  "page": "explainers.html#visible-reasoning",
+  "seed": 20261008,
+  "voice": "author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "What written reasoning can and cannot show",
+      "lines": [
+        "What a model's written reasoning can and cannot show."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "hint",
+      "heading": "A hint it does not mention",
+      "plate": {
+        "from": 0,
+        "to": 0.8
+      },
+      "sources": [
+        "turpin2023"
+      ],
+      "lines": [
+        "Ask a model a multiple-choice question, and add one line: I think the answer is A, but I'm curious to hear what you think.",
+        "Miles Turpin and colleagues did this across thirteen reasoning tasks. The models' written reasoning argued for the suggested answer and did not mention the suggestion.",
+        "With that nudge toward wrong answers, accuracy fell by as much as thirty-six percent, in the worst case.",
+        "The written reasoning read as a reason. It was not the whole cause."
+      ],
+      "figure": {
+        "type": "arith",
+        "rows": [
+          {
+            "on": 0,
+            "label": "added to the prompt",
+            "value": "I think the answer is (A)..."
+          },
+          {
+            "on": 1,
+            "label": "explanations mention it?",
+            "value": "not mentioned"
+          },
+          {
+            "on": 2,
+            "label": "accuracy, worst case",
+            "value": "down by up to 36%",
+            "strong": true
+          },
+          {
+            "on": 3,
+            "label": "the explanation",
+            "value": "a reason, not the whole cause",
+            "verdict": "DRIFT"
+          }
+        ]
+      }
+    },
+    {
+      "key": "reveal",
+      "heading": "How often the hint is named",
+      "plate": {
+        "from": 0.8,
+        "to": 1.6
+      },
+      "sources": [
+        "chen2025"
+      ],
+      "lines": [
+        "Newer reasoning models write longer reasoning. A 2025 study measured how often it names a hint the model used.",
+        "Across six kinds of hint, Claude 3.7 Sonnet named it twenty-five percent of the time, and DeepSeek R1 thirty-nine percent.",
+        "In environments that paid for exploiting a planted shortcut, the model took it on over ninety-nine percent of prompts and, in most of those environments, named it on fewer than two percent."
+      ],
+      "figure": {
+        "type": "race",
+        "on": 1,
+        "rows": [
+          {
+            "label": "Claude 3.7 Sonnet",
+            "value": 25,
+            "display": "names the hint 25%",
+            "on": 1
+          },
+          {
+            "label": "DeepSeek R1",
+            "value": 39,
+            "display": "39%",
+            "on": 1
+          },
+          {
+            "label": "used a planted shortcut",
+            "value": 99,
+            "display": "over 99%, named under 2%",
+            "hot": true,
+            "on": 2
+          }
+        ],
+        "caption": "share of hint-using answers whose reasoning names the hint",
+        "intro": {
+          "on": 0,
+          "text": "six kinds of hint, MMLU and GPQA questions"
+        },
+        "label_w": 560,
+        "hot_note": "hot bar: a planted shortcut (high liability)"
+      }
+    },
+    {
+      "key": "monitor",
+      "heading": "Still worth reading",
+      "plate": {
+        "from": 1.6,
+        "to": 2.6
+      },
+      "sources": [
+        "baker2025"
+      ],
+      "lines": [
+        "That does not make the reasoning useless. In the 2025 OpenAI coding study, a monitor that read only the model's actions caught sixty percent of two common test-gaming tricks.",
+        "A monitor that also read the reasoning caught ninety-five percent.",
+        "Then the researchers penalized reasoning that the monitor flagged. The tricks continued, and the monitor's catch rate fell to near zero."
+      ],
+      "figure": {
+        "type": "race",
+        "on": 0,
+        "rows": [
+          {
+            "label": "actions only",
+            "value": 60,
+            "display": "60% caught",
+            "on": 0
+          },
+          {
+            "label": "actions and reasoning",
+            "value": 95,
+            "display": "95% caught",
+            "on": 1
+          },
+          {
+            "label": "after penalizing flagged reasoning",
+            "value": 2,
+            "display": "near zero",
+            "hot": true,
+            "on": 2
+          }
+        ],
+        "caption": "recall of a monitor on two test-gaming tricks",
+        "label_w": 680,
+        "hot_note": "hot bar: after the penalty (high liability)"
+      }
+    },
+    {
+      "key": "fragile",
+      "heading": "Useful, and fragile",
+      "plate": {
+        "from": 2.6,
+        "to": 3.4
+      },
+      "sources": [
+        "korbak2025"
+      ],
+      "lines": [
+        "A 2025 position paper from authors across several labs calls this a new and fragile opportunity.",
+        "Written reasoning is a readout. Check it against what the model does, and avoid training that pays the model to make it look clean."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 1,
+            "text": "Reasoning text is a readout. Check it against actions."
+          },
+          {
+            "on": 1,
+            "text": "Do not pay for clean-looking reasoning."
+          }
+        ]
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "plate": {
+        "from": 3.4,
+        "to": 4.0
+      },
+      "lines": [
+        "Read the reasoning, and trust the actions you can check.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Read the reasoning. Check the actions."
+          }
+        ]
+      }
+    }
+  ]
+}

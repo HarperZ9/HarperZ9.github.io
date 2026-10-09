@@ -1,0 +1,87 @@
+{
+  "schema": "learn-items/1",
+  "topic": "A passing check can still be wrong",
+  "explainer": "passing-check",
+  "checks": [
+    {"after": "coverage", "items": ["pc-pass-means", "pc-coverage"]},
+    {"after": "agents", "items": ["pc-mutants", "pc-benchmark"]},
+    {"after": "close", "items": ["pc-control"]}
+  ],
+  "items": [
+    {
+      "id": "pc-pass-means", "objective": "pass-means-nothing-found",
+      "prompt": "Every test passes. What does that tell you?",
+      "choices": [
+        {"id": "correct", "text": "The change is correct"},
+        {"id": "found", "text": "The tests found nothing wrong"},
+        {"id": "covered", "text": "Every line was tested"}
+      ],
+      "answer": "found",
+      "misconceptions": {
+        "correct": {"leaf": "misrecruited.pass_as_proof", "note": "A test can only report what it looks at. The broken line in the example was never run."},
+        "covered": {"leaf": "misrecruited.pass_implies_coverage", "note": "Passing says nothing about which lines ran. In the example one line ran under no test at all."}
+      },
+      "source": {"ref": "explainers.html#passing-check", "quote": "A pass tells you the check found nothing. It does not tell you the check could have found it."}
+    },
+    {
+      "id": "pc-coverage", "objective": "coverage-not-target",
+      "prompt": "With suite size allowed for, how closely did coverage track catching faults across 31,000 suites?",
+      "choices": [
+        {"id": "strong", "text": "Closely: more coverage, more faults caught"},
+        {"id": "weak", "text": "Weakly to moderately, and near zero in one program"},
+        {"id": "inverse", "text": "Higher coverage caught fewer faults"}
+      ],
+      "answer": "weak",
+      "misconceptions": {
+        "strong": {"leaf": "misrecruited.coverage_as_quality", "note": "Bigger suites both cover more and catch more. Once size was allowed for, most of the link went away."},
+        "inverse": {"leaf": "slip.overcorrection", "note": "The study found a weak link, not a reversed one."}
+      },
+      "source": {"ref": "explainers.html#passing-check", "quote": "Their advice: coverage should not be used as a quality target."}
+    },
+    {
+      "id": "pc-mutants", "objective": "check-the-check",
+      "prompt": "What is a mutant in testing?",
+      "choices": [
+        {"id": "break", "text": "A deliberate break in the code, to see whether the tests notice"},
+        {"id": "flaky", "text": "A test that passes and fails at random"},
+        {"id": "ai", "text": "A patch written by an AI model"}
+      ],
+      "answer": "break",
+      "misconceptions": {
+        "flaky": {"leaf": "slip.term_confusion", "note": "That is a flaky test. The film's term means a change made on purpose to the code under test."},
+        "ai": {"leaf": "slip.term_confusion", "note": "Patches came up in the next chapter. The term here means a change made on purpose to test the tests."}
+      },
+      "source": {"ref": "explainers.html#passing-check", "quote": "The deliberate breaks are called mutants."}
+    },
+    {
+      "id": "pc-benchmark", "objective": "benchmark-pass",
+      "prompt": "In the 2025 re-check of AI patches counted as solved, what share failed the developers' own tests?",
+      "choices": [
+        {"id": "none", "text": "None: solved means solved"},
+        {"id": "eight", "text": "About eight percent"},
+        {"id": "half", "text": "About half"}
+      ],
+      "answer": "eight",
+      "misconceptions": {
+        "none": {"leaf": "misrecruited.pass_as_proof", "note": "Solved meant passed the benchmark's tests. Stronger tests written by the developers caught some that passed."},
+        "half": {"leaf": "slip.number_mixup", "note": "A larger share behaved differently from the real fix, which is a different measure."}
+      },
+      "source": {"ref": "explainers.html#passing-check", "quote": "Seven point eight percent of the patches counted as solved failed the developers' own tests"}
+    },
+    {
+      "id": "pc-control", "objective": "false-success-control",
+      "prompt": "What is a false-success control?",
+      "choices": [
+        {"id": "rerun", "text": "Running the same check twice"},
+        {"id": "second", "text": "Asking a second model to agree"},
+        {"id": "planted", "text": "A known failure fed to the check, which must fail it"}
+      ],
+      "answer": "planted",
+      "misconceptions": {
+        "rerun": {"leaf": "misrecruited.repeat_as_control", "note": "A rerun repeats any blind spot the check has. A control tests whether the check can fail at all."},
+        "second": {"leaf": "misrecruited.agreement_as_check", "note": "Agreement from another model is a second opinion, not a test of whether the check can say no."}
+      },
+      "source": {"ref": "explainers.html#passing-check", "quote": "That planted failure is a false-success control, and it costs one extra run."}
+    }
+  ]
+}

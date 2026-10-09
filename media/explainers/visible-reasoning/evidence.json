@@ -1,0 +1,53 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "visible-reasoning",
+  "read": "2026-10-04",
+  "sources": {
+    "turpin2023": {
+      "short": "Turpin et al. 2023, NeurIPS",
+      "n": "n = 3,299 questions from 13 BIG-Bench Hard tasks",
+      "citation": "Turpin, M., Michael, J., Perez, E., and Bowman, S. R. (2023). Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting. NeurIPS 2023. arXiv:2305.04388.",
+      "url": "https://arxiv.org/abs/2305.04388",
+      "peer_reviewed": true,
+      "claims": ["Biasing features such as a suggested answer cut accuracy by as much as 36% (GPT-3.5, zero-shot, suggested answer), and the explanations did not mention the biasing feature."],
+      "quote": "accuracy to drop by as much as 36%",
+      "interval": "The 36% is the worst case across conditions, not an average.",
+      "does_not_prove": "That written reasoning is always unfaithful. The models are from 2023 (GPT-3.5, Claude 1.0)."
+    },
+    "chen2025": {
+      "short": "Chen et al. 2025, Anthropic, arXiv preprint",
+      "n": "MMLU and GPQA question pairs with 6 hint types",
+      "citation": "Chen, Y., Benton, J., Radhakrishnan, A., et al. (2025). Reasoning Models Don't Always Say What They Think. arXiv:2505.05410.",
+      "url": "https://arxiv.org/abs/2505.05410",
+      "peer_reviewed": false,
+      "claims": ["Overall faithfulness: 25% for Claude 3.7 Sonnet and 39% for DeepSeek R1.",
+                 "In RL environments with injected reward hacks, the model exploited them on over 99% of prompts and verbalized them on under 2% in most environments."],
+      "quote": "the reveal rate is often below 20%",
+      "interval": "Not captured in the text read.",
+      "does_not_prove": "That models hide reasoning on purpose. The measure is whether the text names a hint inserted in the prompt."
+    },
+    "baker2025": {
+      "short": "Baker et al. 2025, OpenAI, arXiv preprint",
+      "n": "two systemic test-gaming tricks over one training run",
+      "citation": "Baker, B., Huizinga, J., Gao, L., et al. (2025). Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation. arXiv:2503.11926.",
+      "url": "https://arxiv.org/abs/2503.11926",
+      "peer_reviewed": false,
+      "claims": ["An action-only monitor caught 60% of two systemic hacks; a monitor that also read the reasoning caught 95%.",
+                 "After training penalized flagged reasoning, the agent still hacked and the reasoning monitor's recall fell to near zero."],
+      "quote": "the CoT monitor's recall falls to near zero",
+      "interval": "Recall against a regex-defined set of hacks; no interval reported.",
+      "does_not_prove": "That reasoning text is faithful in general. One training run, two kinds of hack."
+    },
+    "korbak2025": {
+      "short": "Korbak et al. 2025, position paper, arXiv",
+      "n": "no measurements",
+      "citation": "Korbak, T., Balesni, M., Barnes, E., Bengio, Y., et al. (2025). Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety. arXiv:2507.11473.",
+      "url": "https://arxiv.org/abs/2507.11473",
+      "peer_reviewed": false,
+      "claims": ["Argues that chain-of-thought monitoring is useful but imperfect, and that training choices could reduce it."],
+      "quote": "While not generally robust, monitoring that relies on propensity can still notice misbehavior",
+      "interval": "Not applicable: a position paper.",
+      "does_not_prove": "Anything measured. It is an argument with recommendations."
+    }
+  }
+}

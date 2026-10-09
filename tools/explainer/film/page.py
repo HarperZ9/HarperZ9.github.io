@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-FILMS = ["checking-cost"]
+FILMS = ["checking-cost", "passing-check", "rederive", "incentives", "visible-reasoning"]
 SHORTS = [("cost-to-verify", "The cost to verify", "no-receipt-no-accept.html#explainer-cost-to-verify", "42 s"),
           ("receipt-is-not-a-verdict", "A receipt is not a verdict", "no-receipt-no-accept.html#explainer-receipt-is-not-a-verdict", "43 s"),
           ("receipt-loop", "From a proposed answer to a kept receipt", "flywheel.html#explainer-receipt-loop", "65 s")]
