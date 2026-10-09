@@ -668,7 +668,10 @@ RELEASE_PATHS = (
 # October 4, 2026, later: explainers.html (narrated films with sources and recall questions)
 # joins the sitemap, the route registry and the site index, and the publication receipt records
 # that sitemap. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "a15fa4c4a573e2aa5d41e31d1dcb2fe088e889fe1d1a31699f3c08f75c04db56"
+# October 9, 2026: repo-explainers.html joins the sitemap with its own page card, and flywheel.html
+# links to the Flywheel repository explainer; the publication receipt records that sitemap.
+# The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "b418d89c310641d602bd0d5e581008f7b79b285e269ac6a1abd0c16a9d2a030e"
 
 
 BRIEFING_FIGURES = (
