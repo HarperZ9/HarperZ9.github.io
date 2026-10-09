@@ -49,7 +49,13 @@ function readout() {
   const t = host.timings();
   const s = threads.state();
   const gpu = t && t.total ? `${t.total.toFixed(2)} ms of GPU time per frame` : "GPU time unavailable in this browser";
-  el.textContent = `${gpu}, ${s.width} x ${s.height}, ${s.particles.toLocaleString("en-US")} particles`;
+  // A world change takes a moment: its pass compiles, then a 3 s crossfade. Say so, or the picker
+  // looks as if it did nothing (audit, 9 October 2026).
+  const sel = document.getElementById("threads-world");
+  const name = (i) => { const o = sel && [...sel.options].find((x) => x.value === String(i)); return o ? o.textContent : "the next world"; };
+  const moving = threads.pending != null ? `Loading ${name(threads.pending)}. `
+    : s.u > 0 && s.u < 1 ? `Crossfading to ${name(s.worldB)}. ` : "";
+  el.textContent = `${moving}${gpu}, ${s.width} x ${s.height}, ${s.particles.toLocaleString("en-US")} particles`;
 }
 
 function loop(now) {
@@ -60,7 +66,7 @@ function loop(now) {
   last = now;
   threads.frame(dt);
   blit();
-  if (now - readoutAt > 1000) { readoutAt = now; readout(); }
+  if (now - readoutAt > (threads.pending != null || threads.u > 0 ? 250 : 1000)) { readoutAt = now; readout(); }
   if (opts && opts.onFrame) opts.onFrame();
   if (!still && threads.opts.playing) raf = requestAnimationFrame(loop);
 }
@@ -117,6 +123,7 @@ export function threadsStatic() { return still || !threads || !threads.opts.play
 export function setThreads(values) {
   if (!threads) return null;
   const o = threads.set(values);
+  readout();
   if (stage && !still && o.playing && !raf) { last = 0; raf = requestAnimationFrame(loop); }
   if (stage && still) holdStill();
   return o;

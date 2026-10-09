@@ -128,7 +128,7 @@ let _worlds = null;
 const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds-threads3d"), m => { _worlds = m; });
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
-const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261004-threads-f2cd6e9"), m => { _threads = m; });
+const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261009-choosing-shows"), m => { _threads = m; });
 const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
@@ -3133,7 +3133,13 @@ document.querySelectorAll("[data-ftype]").forEach(btn => {
   btn.addEventListener("click", () => {
     activeFType = btn.dataset.ftype;
     document.querySelectorAll("[data-ftype]").forEach(b => b.classList.toggle("active", b === btn));
-    buildPresetMenu(activeFType).catch(err => console.warn("studio: fractal graph load failed", err));
+    // Choosing a set draws it: the chip used to only filter the preset menu, so the stage kept the
+    // Mandelbrot under a lit "Julia" chip until Render (audit, 9 October 2026).
+    buildPresetMenu(activeFType).then(() => {
+      if (activeSource !== "fractal") return;
+      fractalPresetEl.value = "0";
+      return renderPreset();
+    }).catch(err => console.warn("studio: fractal graph load failed", err));
   });
 });
 
