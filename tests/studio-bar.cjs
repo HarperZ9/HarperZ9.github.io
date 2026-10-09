@@ -1,5 +1,5 @@
 // Every Studio source has the shell's action bar (9 October 2026). The audit found it on 9 of 26
-// sources; the rest had no Undo, no Ctrl+Z and no single Export menu. This opens all 26 by link at
+// sources; the rest had no Undo, no Ctrl+Z and no single Export menu. This opens all 27 by link at
 // desktop and phone widths and checks: the bar is there with its main action on screen; every
 // control the bar runs exists; and the rail still shows its own copy of each one (the author's
 // rule: never remove a control, so the bar repeats controls and hides none).
@@ -12,7 +12,7 @@ const VIEWS = [
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 const SOURCES = ['atelier', 'fractal', 'fractal3d', 'ndim', 'spatial', 'poster', 'neural', 'sound', 'plotmaps', 'voxels', 'sketch',
-  'threads', 'worlds', 'byo', 'watch', 'music', 'discovery', 'showcase', 'retro', 'gallery', 'loom', 'type', 'splats', 'brender', 'revival', 'raw'];
+  'threads', 'worlds', 'films', 'byo', 'watch', 'music', 'discovery', 'showcase', 'retro', 'gallery', 'loom', 'type', 'splats', 'brender', 'revival', 'raw'];
 const SLOW = new Set(['spatial', 'raw', 'worlds', 'threads', 'retro', 'poster']);
 
 (async () => {

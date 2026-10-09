@@ -159,3 +159,13 @@ html body.studio-page #splats-record-body :is(.criterion,.pilot){border-top:1px 
 html body.studio-page #splats-record-body :is(.criterion,.pilot) :is(strong,h3){display:block;font-size:.95rem;margin:0 0 .25rem}
 html body.studio-page #splats-record-body .pilot-receipt{display:grid;grid-template-columns:auto 1fr;gap:.15rem .6rem;font-family:var(--font-mono, monospace);font-size:.75rem;margin:.4rem 0 0}
 html body.studio-page #splats-record-body .held-list{padding-left:1.1rem;font-size:.85rem}
+/* Films (studio-films-source.js): the chosen film fills the stage; the picker and the film's
+   chapters, recall, transcript and sources sit in the inspector. */
+html body.studio-page #viewport-stage #films-stage{flex-direction:column}
+html body.studio-page #viewport-stage #films-stage video{max-width:100%;max-height:100%;width:100%;height:auto;background:#000}
+html body.studio-page #viewport-stage #films-stage video[hidden]{display:none}
+html body.studio-page #viewport-stage #films-stage .mf-stage{width:100%;max-height:100%}
+html body.studio-page #films-mount .films-picker{display:flex;flex-wrap:wrap;gap:.35rem;margin:.6rem 0}
+html body.studio-page #films-mount .films-group{flex-basis:100%;margin:.6rem 0 .1rem;font-weight:600}
+html body.studio-page #films-mount .films-sections section.mv{padding:0;margin:0;border:0}
+html body.studio-page #films-mount .films-sections figure.film{margin:0}
