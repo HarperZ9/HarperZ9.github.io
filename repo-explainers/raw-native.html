@@ -121,6 +121,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 /* raw-native scenes */
 .quad{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
@@ -187,6 +195,12 @@ svg .grow{transition:width .8s var(--ease)}
     <li><b>No dependencies</b>C++23 and the standard library. The optional GPU builds are checked frame by frame against this CPU path.</li>
   </ul>
   <p class="src">Source: <a href="https://github.com/HarperZ9/raw-native/blob/f2cd6e9076bc0f86f5741e249365d4f5d9e3669a/README.md">README.md</a> at f2cd6e9 (release 0.5.1)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
 </section>
 
 <section class="block wrap" aria-labelledby="how">
@@ -320,19 +334,25 @@ svg .grow{transition:width .8s var(--ease)}
   </div>
 </section>
 
-<section class="block wrap" aria-labelledby="try">
-  <h2 id="try">Try it</h2>
-  <div class="measure"><p>Download a binary from the <a href="https://github.com/HarperZ9/raw-native/releases/latest">latest release</a> (Windows x64, Linux x64 or WebAssembly), check it against <code>SHA256SUMS</code>, then render and verify:</p></div>
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Download a binary from the <a href="https://github.com/HarperZ9/raw-native/releases/latest">latest release</a> (Windows x64, Linux x64 or WebAssembly) and check it against <code>SHA256SUMS</code>.</p></li>
+    <li><h3>First run: render and reconcile</h3><p>Render the default scene. Both occlusion estimators run, and the reconcile compares them against the tolerance.</p>
 <pre class="cmd"><code>$ raw_native_cli --out ./out
-<span class="out">reconcile: pixels=37996 rmse=0.1294 maxError=0.6094 verdict=DIVERGENT</span>
-$ raw_native_cli verify ./out
-<span class="out">verify: all checks match</span>
-$ raw_native_cli --out ./high --width 512 --height 512 --eye 0,9,3 --target 0,0.5,0</code></pre>
-  <p class="src">Without size flags the CLI renders 256 x 256, so its numbers differ from the 512 x 512 values above. Output lines are excerpts from raw_native_cli built from f2cd6e9 with MSVC on Windows.</p>
-  <div class="measure"><p>Or build from source with CMake 3.24 or newer and a C++23 compiler:</p></div>
+<span class="out">reconcile: pixels=37996 rmse=0.1294 maxError=0.6094 verdict=DIVERGENT</span></code></pre></li>
+    <li><h3>Verify the output</h3><p>Re-check every file the render wrote.</p>
+<pre class="cmd"><code>$ raw_native_cli verify ./out
+<span class="out">verify: all checks match</span></code></pre></li>
+    <li><h3>Try another view</h3><p>Change the size and camera.</p>
+<pre class="cmd"><code>$ raw_native_cli --out ./high --width 512 --height 512 --eye 0,9,3 --target 0,0.5,0</code></pre></li>
+    <li><h3>Or build from source</h3><p>CMake 3.24 or newer and a C++23 compiler.</p>
 <pre class="cmd"><code>$ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 $ cmake --build build --config Release
-$ ctest --test-dir build -C Release --output-on-failure</code></pre>
+$ ctest --test-dir build -C Release --output-on-failure</code></pre></li>
+  </ol>
+  <p class="src">Without size flags the CLI renders 256 x 256, so its numbers differ from the 512 x 512 values above. Output lines are excerpts from raw_native_cli built from f2cd6e9 with MSVC on Windows.</p>
   <div class="live" id="live">
     <h3>Run it in this page</h3>
     <p class="measure" style="margin:0 0 .6rem">This loads raw-native 0.4.0's WebAssembly build from harperz9.github.io, checks both files against their SHA-256 before running them, and renders on your CPU. The CPU render code is unchanged from 0.3.0 through 0.5.1. Smaller frames give different numbers from the 512 x 512 table above. At 256 x 256 the default view matches the native CLI run shown above: rmse 0.1294 over 37,996 pixels.</p>

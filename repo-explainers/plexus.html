@@ -121,6 +121,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 /* generic scene kit: a pipeline strip, an input/output panel, a case picker, a table */
 .kscene{display:flex;flex-direction:column;gap:.8rem}
@@ -172,6 +180,12 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
     <li><b>Plans you can re-check</b><code>plexus verify</code> re-derives a plan's receipt from the current manifests and exits 1 on drift.</li>
   </ul>
   <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/README.md">README.md</a> at d889be9 (release 0.4.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
 </section>
 
 <section class="block wrap" aria-labelledby="how">
@@ -233,15 +247,34 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
   </div>
 </section>
 
-<section class="block wrap" aria-labelledby="try">
-  <h2 id="try">Try it</h2>
-  <div class="measure"><p>Install from PyPI (Python 3.11 or newer). Discovery reads manifests and runs no tool.</p></div>
-<pre class="cmd"><code>$ python -m pip install plexus-mesh
-$ plexus route --from gather --to crucible --builtin
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.11 or newer; discovery runs no tool.</p>
+<pre class="cmd"><code>$ python -m pip install plexus-mesh</code></pre></li>
+    <li><h3>First run: is there a route?</h3><p>Ask whether one tool's output can reach another's input through the built-in manifests.</p>
+<pre class="cmd"><code>$ plexus route --from gather --to crucible --builtin
 <span class="out">  "connected": true,
-  "hops": 1,</span>
-$ plexus plan --goal crucible --builtin &gt; plan.json
-$ plexus verify --plan plan.json --builtin</code></pre>
+  "hops": 1,</span></code></pre></li>
+    <li><h3>Discover your own tools</h3><p>Point plexus at a folder of manifests to see each tool's ports.</p>
+<pre class="cmd"><code>$ plexus discover --dir m
+<span class="out">producer    notes
+consumer    review
+capability  notes.summary/1
+self_loop   false
+via         src/notes/summary.py:build
+evidence    declared</span></code></pre></li>
+    <li><h3>Plan and verify a pipeline</h3><p>Plan a pipeline toward a goal, then verify the plan against the manifests you have now.</p>
+<pre class="cmd"><code>$ plexus plan --dir m --goal review
+<span class="out">order    notes -&gt; review
+sources  notes
+cyclic   []
+receipt  plexus.plan-receipt/1, method plexus-plan/1
+  notes   53ab6c24d374afa4...
+  review  0d50accb0759561e...
+  plan_sha256  aeb01289ea823d89...</span></code></pre></li>
+  </ol>
   <p class="src">Output from plexus at d889be9 run from source; plexus-mesh 0.4.0 is the current PyPI release.</p>
 </section>
 

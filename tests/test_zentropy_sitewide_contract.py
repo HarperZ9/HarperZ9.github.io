@@ -478,7 +478,10 @@ def test_shared_nav_renders_zentropy_brand_and_desktop_gpu_gate() -> None:
     assert 'doc.querySelector(".frame")' in nav
     assert "route-header__path" in nav
     assert 'PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")' in nav
-    assert 'menuGroup("Explore", [{ label: "Site index", href: "site-index.html"' in nav
+    # 9 October 2026: Explainers and Repository explainers lead the Explore group.
+    assert 'menuGroup("Explore", [{ label: "Explainers", href: "explainers.html"' in nav
+    assert '{ label: "Repository explainers", href: "repo-explainers.html"' in nav
+    assert '{ label: "Site index", href: "site-index.html"' in nav
     assert 'classList.contains("studio-page")' in nav
     # Every importer names the same versioned URL, so one page never holds two
     # copies of the engine (nav.js, studio.js, loom-studio.js, retro-studio.js

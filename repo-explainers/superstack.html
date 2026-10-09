@@ -121,6 +121,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 /* generic scene kit: a pipeline strip, an input/output panel, a case picker, a table */
 .kscene{display:flex;flex-direction:column;gap:.8rem}
@@ -172,6 +180,18 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
     <li><b>Conformance you can run</b>383 vector checks per language, and 59 paired mutations that each break one rule.</li>
   </ul>
   <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/README.md">README.md</a> at 7587e22 (release 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). superstack checks every language against the same vectors, byte for byte. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
 </section>
 
 <section class="block wrap" aria-labelledby="how">
@@ -231,15 +251,35 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
   </div>
 </section>
 
-<section class="block wrap" aria-labelledby="try">
-  <h2 id="try">Try it</h2>
-  <div class="measure"><p>Clone and run the vectors (Python 3.11 or newer, Node 20 or newer). No install step.</p></div>
-<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/superstack && cd superstack
-$ python tests/run_vectors.py
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Clone the repository. Python 3.11 or newer and Node 20 or newer; no install step.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/superstack && cd superstack</code></pre></li>
+    <li><h3>First run: the shared vectors</h3><p>Run the same 383 checks in each language.</p>
+<pre class="cmd"><code>$ python tests/run_vectors.py
 <span class="out">python: 383/383 checks passed</span>
 $ node tests/run_vectors.mjs
-<span class="out">javascript: 383/383 checks passed</span>
-$ python examples/run_all.py --ci</code></pre>
+<span class="out">javascript: 383/383 checks passed</span></code></pre></li>
+    <li><h3>Seal a receipt</h3><p>In Python, seal a receipt over quantized audio samples.</p>
+<pre class="cmd"><code>>>> ss.make_receipt(producer=&#x27;my-synth&#x27;, ..., content=ss.quantize_s16([0.0, 0.25, -0.25, 0.5]))
+<span class="out">schema          superstack.receipt/1
+scene_sha256    42fbae6d8011ad33...
+seed_rule       xmur3-mulberry32/1
+duration_flicks 58800
+content_sha256  33b047ac8f974190...
+does_not_prove  A PCM hash says nothing about how a device plays the sound.
+receipt_sha256  9b10693f6e0f65eb...</span></code></pre></li>
+    <li><h3>The proof scene</h3><p>Run every example with its controls.</p>
+<pre class="cmd"><code>$ python examples/run_all.py --ci
+<span class="out">pixels python               MATCH verified
+sound  sound-js-exact       MATCH verified
+control wrong_ao_radius          DRIFT refuted   as expected
+control one_byte_flipped         DRIFT verified  as expected
+control sound_one_sample_late    DRIFT refuted   as expected
+examples: all expectations held</span></code></pre></li>
+  </ol>
   <p class="src">Output from superstack at 7587e22 on Windows with Python 3.12 and Node 25. The C++ runner was not built for this page; the README reports 383 checks for it too.</p>
 </section>
 

@@ -121,6 +121,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 /* articulate scenes */
 .para{font-size:clamp(1rem,2.2vw,1.18rem);line-height:1.75;padding:.8rem .9rem;background:var(--sunk);border:1px solid var(--line)}
@@ -175,6 +183,12 @@ mark.on{text-decoration-color:var(--ink)}
     <li><b>Where you write</b>A CLI, a library call, SARIF for CI, an LSP server for editors and an MCP server for agent hosts.</li>
   </ul>
   <p class="src">Source: <a href="https://github.com/HarperZ9/articulate/blob/c94bf176411d56972f34a38c53c71d3373716c8e/README.md">README.md</a> at c94bf17 (version 0.9.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
 </section>
 
 <section class="block wrap" aria-labelledby="how">
@@ -288,15 +302,20 @@ mark.on{text-decoration-color:var(--ink)}
   </div>
 </section>
 
-<section class="block wrap" aria-labelledby="try">
-  <h2 id="try">Try it</h2>
-  <div class="measure"><p>Install from PyPI (Python 3.9 or newer). The checker uses the standard library only and makes no network call.</p></div>
-<pre class="cmd"><code>$ python -m pip install articulate-writing
-$ articulate check post.md --profile readme --gate
-<span class="out">[articulate] post.md [readme]: 3 high, 2 medium (blocked)  texture 70/100</span>
-$ articulate receipt post.md --profile readme &gt; post.receipt.json
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.9 or newer; the checker uses the standard library only and makes no network call.</p>
+<pre class="cmd"><code>$ python -m pip install articulate-writing</code></pre></li>
+    <li><h3>First run: check a draft</h3><p>Check a draft against a profile. With <code>--gate</code> the command exits 1 when high findings block it.</p>
+<pre class="cmd"><code>$ articulate check post.md --profile readme --gate
+<span class="out">[articulate] post.md [readme]: 3 high, 2 medium (blocked)  texture 70/100</span></code></pre></li>
+    <li><h3>Seal a receipt and re-derive it</h3><p>Write a receipt for the check, then verify it against the same file.</p>
+<pre class="cmd"><code>$ articulate receipt post.md --profile readme &gt; post.receipt.json
 $ articulate verify post.receipt.json post.md
-<span class="out">[articulate] Match: re-derived 6 findings, gate blocked, texture 70</span></code></pre>
+<span class="out">[articulate] Match: re-derived 6 findings, gate blocked, texture 70</span></code></pre></li>
+  </ol>
   <p class="src">Output from articulate-writing 0.9.0 installed from PyPI, on the post.md shown above, with the summary line of each command. The first command exits 1 because the gate is blocked.</p>
 </section>
 

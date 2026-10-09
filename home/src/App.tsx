@@ -286,6 +286,8 @@ function IdentityHero() {
           <a href="/catalog.html">Public tool catalog</a>
           <a href="/publications.html">Writing</a>
           <a href="/checking-the-machines.html">Open letter: checking the machines</a>
+          <a href="/explainers.html">Explainer films</a>
+          <a href="/repo-explainers.html">Repository explainers and walkthroughs</a>
         </nav>
       </div>
       <figure className="identity-art art art-hero reveal in">

@@ -585,7 +585,12 @@
       "lastVerified": "2026-09-28",
       "primaryDomain": "agent-systems",
       "productType": "verified-inference platform and desktop client",
-      "releaseState": "Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded"
+      "releaseState": "Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded",
+      "explainer": {
+        "href": "/repo-explainers/flywheel.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "service-desk-incident-env",
@@ -735,7 +740,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "local workbench for creating and replaying AI work",
-      "releaseState": "GitHub release v0.4.1; no npm package"
+      "releaseState": "GitHub release v0.4.1; no npm package",
+      "explainer": {
+        "href": "/repo-explainers/telos.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "index",
@@ -872,7 +882,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "workspace map and context system",
-      "releaseState": "GitHub and PyPI release 2.13.0; wheel and source digests match across both channels"
+      "releaseState": "GitHub and PyPI release 2.13.0; wheel and source digests match across both channels",
+      "explainer": {
+        "href": "/repo-explainers/index-graph.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "gather",
@@ -1072,7 +1087,12 @@
       "lastVerified": "2026-09-27",
       "primaryDomain": "research-education",
       "productType": "research intake and corpus system",
-      "releaseState": "stable v1.9.1 on GitHub and PyPI"
+      "releaseState": "stable v1.9.1 on GitHub and PyPI",
+      "explainer": {
+        "href": "/repo-explainers/gather.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "forum",
@@ -1232,6 +1252,11 @@
         "label": "Download the standalone route-preflight skill",
         "href": "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip",
         "summary": "The v0.1.0 ZIP is loaded by the agent host, not installed from PyPI. It requires a Forum CLI or source checkout and a host skill loader that supports local standalone skills."
+      },
+      "explainer": {
+        "href": "/repo-explainers/forum.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
       }
     },
     {
@@ -1331,7 +1356,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "evaluation-verification",
       "productType": "engine that tests claims against evidence",
-      "releaseState": "stable v1.3.0 on GitHub and PyPI"
+      "releaseState": "stable v1.3.0 on GitHub and PyPI",
+      "explainer": {
+        "href": "/repo-explainers/crucible.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "emet",
@@ -1420,7 +1450,12 @@
       "lastVerified": "2026-09-14",
       "primaryDomain": "evaluation-verification",
       "productType": "checker that content still matches its source",
-      "releaseState": "stable v1.3.0 on GitHub and PyPI"
+      "releaseState": "stable v1.3.0 on GitHub and PyPI",
+      "explainer": {
+        "href": "/repo-explainers/emet.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "buildlang",
@@ -1576,7 +1611,12 @@
       "lastVerified": "2026-08-27",
       "primaryDomain": "research-education",
       "productType": "learning and coursework system",
-      "releaseState": "published npm 1.6.0; no GitHub release"
+      "releaseState": "published npm 1.6.0; no GitHub release",
+      "explainer": {
+        "href": "/repo-explainers/learn.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "relay",
@@ -1722,7 +1762,12 @@
       "lastVerified": "2026-09-27",
       "primaryDomain": "agent-systems",
       "productType": "coding agent that acts within granted permissions",
-      "releaseState": "v0.5.0 on GitHub and PyPI as flywheel-relay"
+      "releaseState": "v0.5.0 on GitHub and PyPI as flywheel-relay",
+      "explainer": {
+        "href": "/repo-explainers/relay.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "plexus",
@@ -1808,7 +1853,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "developer-infrastructure",
       "productType": "tool discovery and wiring for AI agents",
-      "releaseState": "0.2.2 on PyPI as plexus-mesh; latest GitHub release v0.2.1"
+      "releaseState": "0.2.2 on PyPI as plexus-mesh; latest GitHub release v0.2.1",
+      "explainer": {
+        "href": "/repo-explainers/plexus.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "mneme",
@@ -1927,7 +1977,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "agent-systems",
       "productType": "agent memory store with repeatable recall",
-      "releaseState": "v0.5.1 on GitHub and PyPI as flywheel-mneme"
+      "releaseState": "v0.5.1 on GitHub and PyPI as flywheel-mneme",
+      "explainer": {
+        "href": "/repo-explainers/mneme.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "maturity": "active",
@@ -2050,6 +2105,11 @@
         "label": "README example inputs",
         "href": "https://github.com/HarperZ9/canon/blob/c9ee6b33d89bd9cf8b2b214523f2b4ada77f75a0/README.md#L133-L145",
         "summary": "Use the README example beside the first command to create records.jsonl and atoms.jsonl before running preview or export."
+      },
+      "explainer": {
+        "href": "/repo-explainers/canon.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
       }
     },
     {
@@ -2618,7 +2678,12 @@
       "lastVerified": "2026-09-26",
       "primaryDomain": "security-privacy",
       "productType": "library that checks AI permission and evidence records",
-      "releaseState": "0.1.0 on PyPI; active source 0.2.0 with no release"
+      "releaseState": "0.1.0 on PyPI; active source 0.2.0 with no release",
+      "explainer": {
+        "href": "/repo-explainers/proof-surface.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "elder-enb",
@@ -4220,7 +4285,12 @@
       "related": [
         "gather",
         "flywheel"
-      ]
+      ],
+      "explainer": {
+        "href": "/repo-explainers/chorus.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "maturity": "active",
@@ -4295,7 +4365,12 @@
         "studio-engine",
         "retro-engine",
         "brender-archival"
-      ]
+      ],
+      "explainer": {
+        "href": "/repo-explainers/raw-native.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     },
     {
       "id": "kun",
@@ -4468,7 +4543,12 @@
       "lastVerified": "2026-09-28",
       "primaryDomain": "evaluation-verification",
       "productType": "local prose checker",
-      "releaseState": "v0.5.0 on GitHub and PyPI; v0.6.0 is not published and its confirmatory release gate failed"
+      "releaseState": "v0.5.0 on GitHub and PyPI; v0.6.0 is not published and its confirmatory release gate failed",
+      "explainer": {
+        "href": "/repo-explainers/articulate.html",
+        "label": "See it work, step by step",
+        "summary": "An animated walkthrough with the real commands and output from the repository."
+      }
     }
   ]
 }

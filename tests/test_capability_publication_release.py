@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-Dv8VLt1g.js",
     "assets/index-BniK76UM.js",
     "assets/index-DXjCZzHu.js",
     "assets/index-BexgIZUT.js",
@@ -671,7 +672,10 @@ RELEASE_PATHS = (
 # October 9, 2026: repo-explainers.html joins the sitemap, the route registry and the site index with
 # its own page card, and flywheel.html links to the Flywheel repository explainer; the publication
 # receipt records that sitemap. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "726232294bcf31e1818045441808ee316db7a8ee64f258e165cec283cfab975f"
+# October 9, 2026, later: the site menu, the home page, Systems and the Studio link the explainer
+# films and the repository explainers, sixteen product records link their explainer, and the home
+# bundle is rebuilt from that registry (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "1f83358504118e98d0d6136b37af1c7f7ad5b7eca192a74f4888428d86ff8af3"
 
 
 BRIEFING_FIGURES = (
@@ -881,7 +885,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 8, 2026, later: A Check It Cannot Predict, series piece 5, joins the strip, so the
     # bundle rebuilt from the registry is index-mtbFWZrz.js with the same sheet.
     # index-BexgIZUT.js stays as retained history.
-    current_js = "index-mtbFWZrz.js"
+    # October 9, 2026: the home links the explainer films and the repository explainers, and
+    # sixteen registry records carry an explainer link, so the bundle rebuilt from the registry
+    # is index-Dv8VLt1g.js with the same sheet. index-mtbFWZrz.js stays as retained history.
+    current_js = "index-Dv8VLt1g.js"
+    previous_five_js = "index-mtbFWZrz.js"
+    assert previous_five_js not in source
+    assert (ROOT / "assets" / previous_five_js).is_file()
+    assert f"assets/{previous_five_js}" in RELEASE_PATHS
     previous_check_js = "index-BexgIZUT.js"
     assert previous_check_js not in source
     assert (ROOT / "assets" / previous_check_js).is_file()
