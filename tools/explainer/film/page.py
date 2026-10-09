@@ -46,22 +46,63 @@ def clock(s: float) -> str:
     return f"{int(s // 60)}:{int(s % 60):02d}"
 
 
+def starts(f: dict, timing: list) -> list:
+    """Each segment's start in seconds: its first spoken sentence, the title at zero."""
+    out = [None] * len(f["segments"])
+    for row in timing:
+        if out[row["segment"]] is None:
+            out[row["segment"]] = row["start"]
+    out[0] = 0.0
+    return [x if x is not None else 0.0 for x in out]
+
+
+def spoken_line(slug: str, line: str, rows: list) -> str:
+    """One script line as its timed sentences, so the transcript can follow the film and seek it.
+    Falls back to the plain line if the timing rows do not join back to it exactly."""
+    if not rows or " ".join(r["text"] for r in rows) != line:
+        return f'<p class="fl-line">{E(line)}</p>'
+    spans = " ".join(f'<span class="fl-s" data-t="{r["start"]:.2f}">{E(r["text"])}</span>' for r in rows)
+    return f'<p class="fl-line">{spans}</p>'
+
+
+def source_card(slug: str, k: str, s: dict, heard: tuple) -> str:
+    """One source as an evidence card: what it found, on what sample, with what interval, in its own
+    words, and what it does not prove. Every field is the checked text of evidence.json."""
+    at, seg = heard
+    kind = "Peer reviewed" if s.get("peer_reviewed") else "Not peer reviewed"
+    quote = (f'<dt>From the source</dt><dd>"{E(s["quote"])}"</dd>' if s["quote"] else "")
+    return (f'<li id="{slug}-src-{E(k)}">'
+            f'<p class="fl-src-name"><b>{E(s["short"])}</b><span class="fl-src-kind">{kind}</span></p>'
+            f'<p class="fl-src-heard"><a class="fl-seek" href="#{slug}" data-seek="{at:.2f}">Heard at {clock(at)}</a>, in {E(seg)}</p>'
+            f'<dl class="fl-src-facts"><dt>Found</dt><dd>{E(" ".join(s["claims"]))}</dd>'
+            f'<dt>Sample</dt><dd>{E(s["n"])}</dd><dt>Interval</dt><dd>{E(s["interval"])}</dd>{quote}'
+            f'<dt class="fl-null">Does not prove</dt><dd class="fl-null">{E(s["does_not_prove"])}</dd></dl>'
+            f'<p class="fl-src-cite">{E(s["citation"])} <a class="inline" href="{E(s["url"])}" rel="external noopener">{E(s["url"])}</a></p></li>')
+
+
 def film_section(slug: str) -> str:
     x = load(slug)
-    f, ev, rec = x["film"], x["evidence"], x["receipt"]
+    f, ev, rec, timing = x["film"], x["evidence"], x["receipt"], x["timing"]
     folder = f"media/explainers/{slug}"
     secs = rec["seconds"]
+    at = starts(f, timing)
     heads = "".join(f'<span hidden data-chapter="{E(s["key"])}">{E(s["heading"])}</span>' for s in f["segments"])
-    transcript = "".join(f'<h4>{E(s["heading"])}</h4>' + "".join(f"<p>{E(line)}</p>" for line in s["lines"])
-                         for s in f["segments"])
-    used = []
-    for s in f["segments"]:
-        used += [k for k in s.get("sources", []) if k not in used]
-    sources = "".join(
-        f'<li><p><b>{E(ev[k]["short"])}</b>. {E(ev[k]["citation"])} <a class="inline" href="{E(ev[k]["url"])}" rel="external noopener">{E(ev[k]["url"])}</a></p>'
-        f'<p>{E(" ".join(ev[k]["claims"]))} Sample: {E(ev[k]["n"])}. Interval: {E(ev[k]["interval"])}</p>'
-        + (f'<p>From the source: "{E(ev[k]["quote"])}"</p>' if ev[k]["quote"] else "")
-        + f'<p>What it does not prove: {E(ev[k]["does_not_prove"])}</p></li>' for k in used)
+    by_line: dict = {}
+    for r in timing:
+        by_line.setdefault((r["segment"], r["line"]), []).append(r)
+    used, heard = [], {}
+    for i, s in enumerate(f["segments"]):
+        for k in s.get("sources", []):
+            if k not in used:
+                used.append(k)
+                heard[k] = (at[i], s["heading"])
+    transcript = ""
+    for i, s in enumerate(f["segments"]):
+        refs = ", ".join(f'<a class="inline" href="#{slug}-src-{E(k)}">{E(ev[k]["short"])}</a>' for k in s.get("sources", []))
+        transcript += (f'<h4><a class="fl-seek fl-t-at" href="#{slug}" data-seek="{at[i]:.2f}">{clock(at[i])}</a> {E(s["heading"])}</h4>'
+                       + (f'<p class="fl-t-src">Source: {refs}</p>' if refs else "")
+                       + "".join(spoken_line(slug, line, by_line.get((i, j))) for j, line in enumerate(s["lines"])))
+    sources = "".join(source_card(slug, k, ev[k], heard[k]) for k in used)
     static_q = "".join(f'<li data-static>{E(i["prompt"])} ' + " / ".join(E(c["text"]) for c in i["choices"]) + "</li>"
                        for i in x["recall"]["items"])
     nar = rec["narration"]["asr_check"]
@@ -75,11 +116,26 @@ def film_section(slug: str) -> str:
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
   </figure>{live}
-  <details id="{slug}-transcript"><summary>Transcript</summary>{transcript}</details>
-  <h3 id="{slug}-sources">Sources, with what each one does not prove</h3>
-  <ol class="fl-sources">{sources}</ol>
+  <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
+  <h3 id="{slug}-sources" class="fl-src-h">Sources, with what each one does not prove</h3>
+  <div class="fl-src-wrap"><ol class="fl-sources">{sources}</ol></div>
   <p class="fl-receipt">Build record: <a class="inline" href="{folder}/film.receipt.json">film.receipt.json</a> lists the hash of the script, the sources file, the render code and every output.</p>
 </section>"""
+
+
+def film_index() -> str:
+    """The shelf under the title: every film with its length, chapters and sources, so a reader
+    can choose one before scrolling past five."""
+    items = []
+    for n, slug in enumerate(FILMS, 1):
+        x = load(slug)
+        f = x["film"]
+        used = {k for s in f["segments"] for k in s.get("sources", [])}
+        chapters = len(f["segments"]) - 1
+        items.append(f'<li><a href="#{slug}"><img src="media/explainers/{slug}/poster.jpg" alt="" width="320" height="180" loading="lazy" decoding="async">'
+                     f'<span class="fl-ix-n">{n:02d}</span><span class="fl-ix-t">{E(f["title"])}</span>'
+                     f'<span class="fl-ix-m">{clock(x["receipt"]["seconds"])}, {chapters} chapters, {len(used)} sources</span></a></li>')
+    return f'<nav class="fl-index" aria-label="The films"><ol>{"".join(items)}</ol></nav>'
 
 
 def interactive(slug: str, folder: str, title: str) -> str:
@@ -168,6 +224,7 @@ def page() -> str:
     <h1>Explainers. <span class="g">Every number has a source.</span></h1>
     <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
   </div>
+  {film_index()}
 </div>
 
 <main id="main">
