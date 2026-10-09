@@ -675,7 +675,7 @@ RELEASE_PATHS = (
 # October 9, 2026, later: the site menu, the home page, Systems and the Studio link the explainer
 # films and the repository explainers, sixteen product records link their explainer, and the home
 # bundle is rebuilt from that registry (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "8524254c293d5fbc37ab49278a78a3ea8d4ac434bd690d5ea405dad69107a66a"
+REVIEWED_RELEASE_SHA256 = "f1d517c5ff388304a9b2b50338f8f915708f515e5862bf52503d43d13968d346"
 
 
 BRIEFING_FIGURES = (

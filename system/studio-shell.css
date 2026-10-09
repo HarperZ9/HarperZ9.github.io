@@ -136,6 +136,7 @@ html body.studio-page #retro-mount .re-tab{flex:1 0 auto}
    source is on show, and its canvas fits inside without cropping. */
 html body.studio-page #viewport-stage .studio-hub-preview{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;padding:0;border:0;background:transparent;
+  aspect-ratio:auto;width:auto;height:auto;max-height:none;border-radius:0;
 }
 html body.studio-page #viewport-stage .studio-hub-preview[hidden]{display:none!important}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate{width:100%;height:100%;margin:0;border:0;display:flex;flex-direction:column}
@@ -147,3 +148,6 @@ html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .p
 /* The plate's head repeats its caption (seed and instruments); on the stage the caption alone
    names the plate, so the head steps aside instead of crowding a small stage. */
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate-head{display:none}
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="loom"] canvas{max-width:100%;max-height:100%;width:auto;height:auto}
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="loom"].wv-zoomed{overflow:auto;justify-content:flex-start;align-items:flex-start}
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="loom"].wv-zoomed canvas{max-width:none;max-height:none}

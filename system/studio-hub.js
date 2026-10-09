@@ -49,6 +49,7 @@ function scopedSheet(text, scope) {
  *   extras    selectors appended to the mount after the panel (status lines, flow notes)
  *   canvas    selector, inside the preview, of the canvas the tool draws into
  *   styleTest a function(text) choosing which of the page's <style> blocks to bring
+ *   sheets    stylesheet URLs the page links that the Studio does not, brought in scoped
  *   boot      async function that imports the page's controller once the markup is in place
  *   pause / resume  optional, called on leave and on every entry after the first
  */
@@ -64,6 +65,12 @@ export function createHub(opts) {
     for (const st of doc.querySelectorAll("head style")) {
       if (opts.styleTest && !opts.styleTest(st.textContent)) continue;
       const s = scopedSheet(st.textContent, scope);
+      if (s) sheets.push(s);
+    }
+    for (const href of opts.sheets || []) {
+      const r = await fetch(href, { credentials: "same-origin" });
+      if (!r.ok) { console.error("[studio-hub] " + href + " answered " + r.status); continue; }
+      const s = scopedSheet(await r.text(), scope);
       if (s) sheets.push(s);
     }
     if (sheets.length) document.adoptedStyleSheets = [...document.adoptedStyleSheets, ...sheets];
