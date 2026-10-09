@@ -93,7 +93,10 @@ function paintBar(ctx, source) {
   bar.setAttribute("aria-label", (SOURCE_GUIDE[source] || { name: source }).name + " actions");
   const making = (fn) => () => { ctx.onMaking(); fn(); };
   if (c.primary) bar.append(button(ctx, c.primary.label, "btn ia-primary", making(proxy(ctx, c.primary.target)),
-    { "data-action": "primary", ...(c.primary.title ? { title: c.primary.title } : {}) }));
+    { "data-action": "primary", "data-target": c.primary.target, ...(c.primary.title ? { title: c.primary.title } : {}) }));
+  // A source with its own undo stack (the Retro Engine) keeps it: the bar's Undo runs that
+  // source's button, and the keys stay with the source's own handler.
+  if (c.ownUndo) bar.append(button(ctx, "Undo", "btn ghost", making(proxy(ctx, c.ownUndo)), { "data-action": "undo", "aria-keyshortcuts": "Control+Z Meta+Z" }));
   if (hasHistory(c)) {
     bar.append(button(ctx, "Undo", "btn ghost", making(() => undo(ctx)), { "data-action": "undo", "aria-keyshortcuts": "Control+Z Meta+Z" }));
     bar.append(button(ctx, "Redo", "btn ghost", making(() => redo(ctx)), { "data-action": "redo", "aria-keyshortcuts": "Control+Shift+Z Meta+Shift+Z Control+Y" }));
@@ -105,7 +108,7 @@ function paintBar(ctx, source) {
 }
 const hasHistory = (c) => !!(c && c.snapshot && c.history !== false);
 function syncHistoryButtons(ctx, source) {
-  if (!ctx.bar) return;
+  if (!ctx.bar || (ctx.contracts[source] && ctx.contracts[source].ownUndo)) return;
   const u = ctx.bar.querySelector('[data-action="undo"]'), r = ctx.bar.querySelector('[data-action="redo"]');
   if (u) u.disabled = !ctx.history.canUndo(source);
   if (r) r.disabled = !ctx.history.canRedo(source);
@@ -222,6 +225,8 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
     undo: () => undo(ctx),
     redo: () => redo(ctx),
     setOpen: (open) => setOpen(ctx, open),
+    // A source that builds its controls after the shell mounted (the Poster workshop) marks them again.
+    markTargets: () => markBarTargets(ctx),
     history: ctx.history,
     store: ctx.store,
   };

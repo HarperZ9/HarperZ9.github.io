@@ -87,7 +87,11 @@ export function mountPosterWorkshop(deps) {
   const { mount, canvas, renderSpecimen, layerNames, say, perceiveNow, getDetail, getRich, download } = deps;
   if (!mount || !canvas) return null;
 
-  const state = defaultPosterState("workshop-" + new Date().toISOString().slice(0, 10));
+  // The Studio shell hands back a kept or undone state (deps.initialState, a plain copy with no
+  // image) and the image already in memory, if the visitor brought one (deps.image).
+  const state = deps.initialState ? JSON.parse(JSON.stringify(deps.initialState))
+    : defaultPosterState("workshop-" + new Date().toISOString().slice(0, 10));
+  if (deps.image) state.art.image = deps.image;
   let lastBoxes = [];
   let renderT = 0;
 
@@ -128,6 +132,7 @@ export function mountPosterWorkshop(deps) {
     const out = drawPoster();
     lastBoxes = out.boxes || [];
     if (typeof perceiveNow === "function") { try { perceiveNow(canvas); } catch (_) {} }
+    if (typeof deps.onRendered === "function") { try { deps.onRendered(); } catch (e) { console.error("[poster] render hook failed:", e); } }
     return out;
   }
   function queueRender() {
@@ -397,6 +402,7 @@ export function mountPosterWorkshop(deps) {
   const mkBtn = (label, aria, fn) => {
     const b = el("button", "btn ghost", label);
     b.type = "button";
+    b.id = "poster-" + label.toLowerCase().replace(/\s+/g, "-");   // the Studio shell's bar targets
     b.setAttribute("aria-label", aria);
     b.addEventListener("click", fn);
     actions.appendChild(b);
@@ -426,7 +432,7 @@ export function mountPosterWorkshop(deps) {
   // first render
   renderNow();
   critiqueNow(false);
-  if (typeof say === "function") {
+  if (typeof say === "function" && !deps.quiet) {
     say("model", "The workshop is live. Set the type, pick an instrument for the art, and ask for a critique - I read the poster through the same measured packet I receive, so every note carries its numbers.");
   }
 

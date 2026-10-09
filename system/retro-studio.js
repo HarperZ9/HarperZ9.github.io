@@ -1687,8 +1687,10 @@ function boot() {
     const typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable);
     // Undo works even with a panel button focused; only real text entry
     // keeps its own Ctrl+Z.
-    if (!typing && (e.ctrlKey || e.metaKey) && !e.altKey && (e.key === "z" || e.key === "Z") && state === "draw") {
-      e.preventDefault(); undoDraw(); return;
+    // Ctrl+Z undoes a stroke while drawing and a change otherwise (the second case used to sit
+    // below a modifier return and never ran; found by the Studio audit, 9 October 2026).
+    if (!typing && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && (e.key === "z" || e.key === "Z")) {
+      e.preventDefault(); if (state === "draw") undoDraw(); else undoStep(); return;
     }
     if (typing || tag === "BUTTON") return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -1696,7 +1698,6 @@ function boot() {
     if (k === "f") { e.preventDefault(); toggleFullscreen(); }
     else if (k === "r") { e.preventDefault(); randomize(); }
     else if (k === "s") { e.preventDefault(); $("re-save").click(); }
-    else if (k === "z" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); undoStep(); }
     else if (k === " ") { e.preventDefault(); const a = $("re-animate"); a.checked = !a.checked; a.dispatchEvent(new Event("change")); }
     else if (k === "[" || k === "]") {
       e.preventDefault();

@@ -39,7 +39,7 @@ async function build(mount, stage) {
   stage.append(preview);
   const out = preview.querySelector("#re-out");
   out.dataset.retro = "";
-  await import("./retro-studio.js?v=20261004-retro-hub");   // boots against the markup above
+  await import("./retro-studio.js?v=20261009-studio-bar");   // boots against the markup above
   return { preview, out, studioCanvas: null };
 }
 
