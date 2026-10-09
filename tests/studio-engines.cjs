@@ -1,5 +1,5 @@
 // The media engine surfaces on the shell (4 October 2026; re-landed 9 October without Retro,
-// the Gallery and the Loom, which are now their pages' full tools with their own tests), in Chrome at desktop and phone
+// the Gallery, the Loom and the Splat Lab, which are now their pages' full tools with their own tests), in Chrome at desktop and phone
 // widths: one bar each, settings kept through a switch, Undo and a reload, and the export with a
 // receipt from the bar.
 const assert = require('node:assert/strict');
@@ -15,7 +15,6 @@ const SURFACES = {
   raw: { order: ['primary', 'undo', 'redo', 'export'], primary: 'Export frame and receipt' },
   brender: { order: ['primary', 'export'], primary: 'Export frame and receipt' },
   revival: { order: ['primary', 'export'], primary: 'Export frame and receipt' },
-  splats: { order: ['primary', 'export'], primary: 'Open in Spatial' },
 };
 const wait = (page, ms) => page.waitForTimeout(ms);
 async function frame(page) {

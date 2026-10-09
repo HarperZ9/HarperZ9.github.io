@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
-<link rel="stylesheet" href="system/studio-shell.css?v=20261009-loom-hub">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261009-splats-in-place">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -98,7 +98,7 @@
         <button type="button" role="tab" data-source="gallery"   aria-selected="false" aria-controls="src-gallery" tabindex="-1">Gallery</button>
         <button type="button" role="tab" data-source="loom"      aria-selected="false" aria-controls="src-loom" tabindex="-1">Loom</button>
         <button type="button" role="tab" data-source="type"      aria-selected="false" aria-controls="src-engine" tabindex="-1">Type forge</button>
-        <button type="button" role="tab" data-source="splats"    aria-selected="false" aria-controls="src-engine" tabindex="-1">Splat Lab</button>
+        <button type="button" role="tab" data-source="splats"    aria-selected="false" aria-controls="src-spatial" tabindex="-1">Splat Lab</button>
         <button type="button" role="tab" data-source="brender"   aria-selected="false" aria-controls="src-engine" tabindex="-1">BRender</button>
         <button type="button" role="tab" data-source="revival"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Engine Revival</button>
         <button type="button" role="tab" data-source="raw"       aria-selected="false" aria-controls="src-engine" tabindex="-1">RAW</button>
@@ -746,6 +746,12 @@
            veils on depth planes plus selective Gaussian material, receipt-checked byte for byte
            before it draws. Wired by studio-spatial.js; the splat budget follows the device tier. -->
       <section class="src-block" id="src-spatial" role="tabpanel" aria-label="Spatial world controls" hidden>
+        <!-- The Splat Lab's record (gaussian-splats.html, read in on first entry): what counts as a
+             splat, the pilots, the boundary and the held scenes. Shown only on the Splat Lab source. -->
+        <details class="rail-group splats-record" id="splats-record" hidden open>
+          <summary>The Splat Lab record</summary>
+          <div id="splats-record-body"><p class="transform-note">Reading the Splat Lab's record.</p></div>
+        </details>
         <div class="fractal-source" id="spatial-source">
           <div class="at-panel">
             <p class="transform-note">Certified world packages on the hybrid renderer. Every sidecar is re-hashed against its manifest receipt before anything renders. Crystal City is the spatial session's generated artwork: semantic depth meshes carry the composition, Gaussian primitives carry only the atmosphere, and the invented support fill stays labeled. Drag the frame to move inside the disclosed camera boundary; splats follow your device tier's budget.</p>
@@ -1539,7 +1545,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261009-type-desk"></script>
+<script type="module" src="system/studio.js?v=20261009-splats-in-place"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

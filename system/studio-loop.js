@@ -41,6 +41,7 @@ export function sourceIsAnimated(activeSource, state) {
       // The Threads loop draws every frame, EXCEPT under reduced motion or while paused.
       return !s.threadsStatic;
     case "spatial":
+    case "splats":      // the Splat Lab draws its worlds with the Spatial renderer
       // The spatial world's atmosphere and camera easing repaint every frame,
       // EXCEPT under reduced motion, where the world holds one still frame.
       return !s.spatialStatic;
