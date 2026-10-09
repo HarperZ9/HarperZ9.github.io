@@ -26,7 +26,8 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261004-studio-bring";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-studio-bar";
+import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
   onSourceChange as surfaceOnSourceChange,
@@ -517,7 +518,7 @@ const SOURCES = {
 };
 
 // The full Retro Engine, on first entry (studio-retro.js reads retro.html's own markup).
-const loadRetroHub = lazyLoader(() => import("./studio-retro.js?v=20261004-retro-hub"));
+const loadRetroHub = lazyLoader(() => import("./studio-retro.js?v=20261009-studio-bar"));
 let _retroHub = null;
 async function enterRetro(epoch) {
   try {
@@ -544,36 +545,67 @@ async function enterRetro(epoch) {
 let _engineSurface = null;
 function loadEngineSurface() {
   return _engineSurface ? Promise.resolve(_engineSurface)
-    : import("./studio-engine.js").then((m) => (_engineSurface = m));
+    : import("./studio-engine.js?v=20261004-studio-engines").then((m) => {
+      _engineSurface = m;
+      // A setting changed on a surface is one undo step, and what this browser keeps.
+      m.onEngineSettings((id) => { if (_shell) _shell.record(id); });
+      return m;
+    });
 }
 
 // ── The poster workshop (lazy). Mounted once on first entry; the panel owns
 // its DOM inside #poster-mount and renders onto the shared studio canvas.
 let _posterWorkshop = null;
+let _posterMods = null;   // [panel, field, exporters], loaded once
+// The workshop's dependencies. A state handed back by the shell (Undo, a kept session) remounts
+// the workshop quietly with that state and the image already in memory.
+function posterDeps(extra = {}) {
+  const [panelMod, fieldMod, ex] = _posterMods;
+  return {
+    mount: $("poster-mount"),
+    canvas: $("studio-canvas"),
+    renderSpecimen: fieldMod.renderSpecimen,
+    layerNames: fieldMod.specimenLayerNames,
+    say,
+    perceiveNow: perceive,
+    getDetail: () => _lastDetail,
+    getRich: () => lastRich,
+    download: ex.download,
+    onRendered: () => { if (_shell && activeSource === "poster") _shell.recordSoon("poster", "", 250); },
+    ...extra,
+  };
+}
+// A plain copy of the workshop's state: the brought image stays in memory, never in a snapshot.
+function posterState() {
+  if (!_posterWorkshop) return null;
+  const st = _posterWorkshop.state;
+  const copy = JSON.parse(JSON.stringify({ ...st, art: { ...st.art, image: undefined } }));
+  copy.art.hadImage = !!st.art.image;
+  return copy;
+}
+function remountPoster(state) {
+  if (!_posterMods) return;
+  const image = _posterWorkshop && _posterWorkshop.state.art.image && state.art.hadImage ? _posterWorkshop.state.art.image : null;
+  if (_posterWorkshop) _posterWorkshop.destroy();
+  _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps({ initialState: state, image, quiet: true }));
+  if (_shell) _shell.markTargets();
+}
 async function enterPosterWorkshop(epoch) {
   if (_posterWorkshop) { _posterWorkshop.render(); return; }
   try {
-    const [panelMod, fieldMod, ex] = await Promise.all([
-      import("./poster-panel.js?v=20261003-poster-plugin"),
+    _posterMods = await Promise.all([
+      import("./poster-panel.js?v=20261004-studio-spatial"),
       import("./generative-field.js?v=20260925-void-plates"),
       loadExporters(),
     ]);
     if (epoch !== _sourceEpoch) return;   // switched away while loading
-    _posterWorkshop = panelMod.mountPosterWorkshop({
-      mount: $("poster-mount"),
-      canvas: $("studio-canvas"),
-      renderSpecimen: fieldMod.renderSpecimen,
-      layerNames: fieldMod.specimenLayerNames,
-      say,
-      perceiveNow: perceive,
-      getDetail: () => _lastDetail,
-      getRich: () => lastRich,
-      download: ex.download,
-    });
+    _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps());
+    if (_shell) _shell.markTargets();   // its Critique, PNG and Plot SVG now live in the bar
     // Cross-surface flow: a plate arriving from the gallery seeds the art.
     const params = new URLSearchParams(location.search);
     const seed = (params.get("seed") || "").slice(0, 48);
     if (seed && _posterWorkshop) _posterWorkshop.setArtSeed(seed);
+    else if (_shell) _shell.resume("poster");   // a plate from the Gallery wins over the kept poster
   } catch (err) {
     say("model", "The workshop failed to load: " + (err && err.message ? err.message : String(err)));
   }
@@ -640,10 +672,16 @@ function setSource(next) {
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
   if (SOURCES[next].engine) {
+    // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
+    // is given, so on a phone it inherited whatever size the previous source left (a square from
+    // the boot, a wide sheet after Sketch) and the same settings drew two different plates.
+    if (entering) { leave3D(); sizeCanvas($("studio-canvas")); }
     loadEngineSurface().then((m) => {
       if (epoch !== _sourceEpoch) return;
       return m.enterEngineSurface(next, { canvas: $("studio-canvas"), mount: $("engine-mount"),
-        isCurrent: () => epoch === _sourceEpoch, setSource });
+        isCurrent: () => epoch === _sourceEpoch, setSource }).then(() => {
+        if (epoch === _sourceEpoch && _shell) _shell.resume(next);   // the settings this browser kept
+      });
     }).catch((e) => { console.error("[studio] engine surface " + next + " failed:", e); });
   }
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
@@ -664,6 +702,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) return;
       const tab = document.querySelector('#studio-source button[data-source="music"]');
       if (tab) { try { tab.dispatchEvent(new MouseEvent("click", { bubbles: false })); } catch (_) {} }
+      resumeForm("music");
     }).catch(err => { say("model", "The music engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Physics (discovery engine): load the graph on first entry, render the evolving system into the
@@ -672,6 +711,7 @@ function setSource(next) {
     loadDiscovery().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the graph loaded
       try { mod.startDiscovery($("studio-canvas")); } catch (_) {}
+      resumeForm("discovery");
       startMeterLoop();
     }).catch(err => { say("model", "The physics engine failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -692,6 +732,7 @@ function setSource(next) {
     loadNeural().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       try { startNeuralSource(); } catch (e) { console.error("[studio] living neural failed to start:", e); }
+      resumeForm("neural");
       startMeterLoop();
     }).catch(err => { say("model", "The living neural instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -705,6 +746,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) { mod.leaveWorlds(); return; }
       markStagePainted();
       startMeterLoop();
+      resumeForm("worlds");   // the settings this browser kept, on the first entry
     }).catch(err => { say("model", "Worlds failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Threads: boot the GPU host on first entry, fit it to the stage, then run its frame loop.
@@ -717,6 +759,7 @@ function setSource(next) {
       if (epoch !== _sourceEpoch) { mod.leaveThreads(); return; }
       markStagePainted();
       startMeterLoop();
+      resumeForm("threads");   // the settings this browser kept, on the first entry
     }).catch(err => { say("model", "Threads failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Seed sound: load the module on first entry, draw the seed's melody as a live
@@ -726,6 +769,7 @@ function setSource(next) {
     loadSound().then(mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       try { mod.startSound($("studio-canvas"), { seed: _soundSeed }); } catch (_) {}
+      resumeForm("sound");
       startMeterLoop();
     }).catch(err => { say("model", "The sound instrument failed to load: " + (err && err.message ? err.message : String(err))); });
   }
@@ -747,6 +791,7 @@ function setSource(next) {
     Promise.all([loadPlotMaps(), loadPlotCompose(), loadPlotImage(), loadPlotBridge(), loadPlotPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawPlotMap();
+      if (_shell) _shell.resume("plotmaps");
     }).catch(err => { say("model", "The plot-map engine failed to load: " + (err && err.message ? err.message : String(err))); });
   } else if (window.__studioContentRect && window.__studioContentRect.source === "plotmaps") {
     window.__studioContentRect = null;   // leaving: stop cropping measurements to the old sheet
@@ -756,6 +801,7 @@ function setSource(next) {
     Promise.all([loadVoxelForge(), loadVoxelPlugin()]).then(() => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       drawVoxelScene();
+      if (_shell) _shell.resume("voxels");
     }).catch(err => { say("model", "The voxel forge failed to load: " + (err && err.message ? err.message : String(err))); });
   }
   // Sketch: freehand drawing. The sketch object persists across switches, so returning shows the
@@ -786,6 +832,7 @@ function setSource(next) {
         const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
         if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
         _spatialStatic = !(res && res.animating);
+        if (_shell) _shell.resume("spatial");
         startMeterLoop();
         // Context-lost recovery lives in studio-spatial.js: it owns the canvas
         // nodes (a fresh one per world start) and can tell an intentional
@@ -1203,6 +1250,7 @@ function drawPlotMap() {
   const obs = perceive(c);
   sayPlotReceipt(plot, seed, obs);
   startMeterLoop();
+  if (_shell) _shell.record("plotmaps");
 }
 
 // The sheet's own account of how it came to be — one voice per kind, every claim carried by a
@@ -1516,6 +1564,7 @@ function repaintVoxelScene(announce) {
       + `and the .vox export hashes exactly what you see, with seed, turns, and hand edits included.`);
   }
   startMeterLoop();
+  if (_shell) _shell.record("voxels");   // a build, a turn or an edit is one step; a zoom is none
 }
 
 // Repaint the plot sheet without rebuilding — the pure-zoom path.
@@ -5635,6 +5684,11 @@ function resizeActiveSurface() {
       sizeCanvas(canvas);
       if (_neural) { try { _neural.redrawNeural(); } catch (e) { console.error("[studio] living neural redraw failed:", e); } }
       break;
+    case "poster":
+      // The workshop sizes the canvas to its paper format and draws on request; a resize during boot
+      // left ?source=poster on a cleared canvas, so draw the poster again.
+      if (_posterWorkshop) _posterWorkshop.render(); else sizeCanvas(canvas);
+      break;
     case "sketch":
       // A resize clears the backing, and the sketch is a still sheet with no loop to repaint it, so
       // a layout shift during boot (a late font) left ?source=sketch on an empty canvas. drawSketch
@@ -5648,10 +5702,6 @@ function resizeActiveSurface() {
       // October 2026). Re-fit, then repaint the sheet or scene already built, without rebuilding.
       sizeCanvas(canvas);
       if (activeSource === "plotmaps") repaintPlotMap(); else repaintVoxelScene(false);
-      break;
-    case "poster":
-      // The workshop sizes the canvas to its format itself; ask it for the same poster again.
-      if (_posterWorkshop) { try { _posterWorkshop.render(); } catch (e) { console.error("[studio] poster redraw failed:", e); } }
       break;
     case "retro":
       // The engine sizes its own output canvas; a resize only asks it for a fresh frame.
@@ -6849,7 +6899,124 @@ const setRange = (id, value, outId, fmt) => {
   el.value = String(value);
   const out = outId && $(outId); if (out) out.textContent = fmt ? fmt(el.value) : el.value;
 };
+// A voxel build put back exactly, in this task: controls, scene, then every turn and edit in order.
+function restoreVoxelBuild(v) {
+  if (!_voxelForge) return;
+  applyVoxelRecipe(v);
+  _lastVoxelScene = _voxelForge.buildVoxelScene(v.seed, { study: v.study, res: v.res, tune: v.tune });
+  _voxelOps = [];
+  applyVoxelOps(v.ops);
+  repaintVoxelScene(false);
+}
+// The media engine surfaces (studio-engine.js). Their main action is the export with a receipt;
+// Send to Retro, Weave in Loom and each surface's own page stay in the inspector. A surface with
+// settings (palette, seed, text, view) keeps them through a switch, Undo and a reload.
+function engineContract(id, { settings = true, door = false } = {}) {
+  const c = {
+    primary: door
+      ? { label: "Open in Spatial", target: "engine-door", title: "The receipted splat scenes draw in the Spatial source" }
+      : { label: "Export frame and receipt", target: "engine-export", title: "Save this frame with a receipt that names the plugin, its settings and the backend" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+  };
+  if (settings) {
+    c.snapshot = () => (_engineSurface ? _engineSurface.engineSettings(id) : {});
+    c.restore = (state) => { if (_engineSurface) _engineSurface.setEngineSettings(id, state); };
+    c.reset = () => { if (_engineSurface) _engineSurface.setEngineSettings(id, {}); };
+  }
+  return c;
+}
+// Sources whose settings are read from their inspector (studio-form.js): a change there is a step.
+const FORM_SOURCES = { spatial: "src-spatial", neural: "src-neural", sound: "src-sound", music: "src-music", discovery: "src-discovery", threads: "src-threads", worlds: "src-worlds" };
+const formOf = (source) => $(FORM_SOURCES[source]);
+// The first settings a form source showed in this page: what Start fresh goes back to.
+const formFirst = {};
+function resumeForm(source) {
+  if (!(source in formFirst)) formFirst[source] = formSnapshot(formOf(source));
+  if (_shell) _shell.resume(source);
+}
+// An instrument played and measured, not a piece made: the readings stay open.
+function formContract(source, primary, exports) {
+  return {
+    primary, exports,
+    snapshot: () => formSnapshot(formOf(source)),
+    restore(state) { formRestore(formOf(source), state); },
+    reset() { if (formFirst[source]) formRestore(formOf(source), formFirst[source]); },
+  };
+}
+const WEBM = { label: "WebM, 5 seconds", target: "rt-export-webm" };
 const SHELL_CONTRACTS = {
+  neural: formContract("neural", { label: "Play", target: "neural-play", title: "Play or pause the living neural instrument" }, [PNG_FRAME, WEBM]),
+  sound: formContract("sound", { label: "Play", target: "sound-play", title: "Play the seed's sound and measure it live" }, [PNG_FRAME]),
+  music: formContract("music", { label: "Play", target: "music-play", title: "Play the chosen audio source" }, [PNG_FRAME, WEBM]),
+  discovery: formContract("discovery", { label: "Discover and verify", target: "disc-fit", title: "Fit a conserved quantity and verify it against a refusal run" },
+    [{ label: "Witnessed artifact (JSON)", target: "disc-export" }, PNG_FRAME]),
+  spatial: {
+    making: true,
+    primary: { label: "Export run receipt", target: "sp-receipt", title: "Export the run receipt: package, boundary, budget, controls" },
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot: () => formSnapshot(formOf("spatial"), { skip: ["sp-scene-search"] }),
+    restore(state) { formRestore(formOf("spatial"), state); },
+    reset() {
+      const b = formOf("spatial"); const snap = formSnapshot(b);
+      for (const k of Object.keys(snap.inputs)) { const el = $(k); if (el) snap.inputs[k] = el.defaultValue; }
+      snap.chips = { "data-world": "atlas", "data-atlas-mode": "0", "data-compare": "off" };
+      formRestore(b, snap);
+    },
+  },
+  poster: {
+    making: true,
+    primary: { label: "Critique", target: "poster-critique", title: "Ask for a measured critique of the poster" },
+    exports: [{ label: "PNG", target: "poster-png" }, { label: "Plot SVG", target: "poster-plot-svg" }, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    snapshot: () => posterState(),
+    restore(state) { remountPoster(state); },
+    reset() { if (_posterMods) { if (_posterWorkshop) _posterWorkshop.destroy(); _posterWorkshop = _posterMods[0].mountPosterWorkshop(posterDeps({ quiet: true })); if (_shell) _shell.markTargets(); } },
+  },
+  // The full Retro Engine (studio-retro.js) keeps its own twenty-step undo, its own Start fresh
+  // and its own session; the bar runs those buttons. Every export it offers is in the menu.
+  retro: {
+    making: true,
+    primary: { label: "Save PNG", target: "re-save", title: "Save the picture as a PNG (S)" },
+    ownUndo: "re-undo",
+    exports: [{ label: "Save PNG", target: "re-save" }, { label: "Save 1x", target: "re-save-1x" }, { label: "Record clip (WebM)", target: "re-clip" },
+      { label: "Relief STL", target: "re-relief" }, { label: "Spin disc", target: "re-spin" }, { label: "Spin strip", target: "re-strip" },
+      { label: "Save patch", target: "re-save-patch" }, PNG_FRAME],
+  },
+  threads: formContract("threads", { label: "Pause or play", target: "threads-play", title: "Pause or play the threads" }, [PNG_FRAME, WEBM]),
+  worlds: formContract("worlds", { label: "Pause or play", target: "worlds-play", title: "Pause or play the motion in the world" }, [PNG_FRAME, WEBM]),
+  gallery: engineContract("gallery"),
+  loom: engineContract("loom"),
+  type: engineContract("type"),
+  raw: engineContract("raw"),
+  brender: engineContract("brender", { settings: false }),
+  revival: engineContract("revival", { settings: false }),
+  splats: engineContract("splats", { settings: false, door: true }),
+  plotmaps: {
+    making: true,
+    primary: { label: "Draw", target: "plot-draw", title: "Draw the map sheet with these settings" },
+    exports: [{ label: "SVG sheet", target: "plot-svg" }, { label: "G-code", target: "plot-gcode" }, PNG_FRAME],
+    pin: "plot-pin",
+    // The recipe a pin carries. A picture or a captured frame is not in it (only its controls), so
+    // a reload says the pixels are gone rather than keeping them.
+    snapshot: () => (_lastPlot ? currentPlotRecipe() : null),
+    restore(state) { restorePin({ kind: state.kind, recipe: state.rec }); },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      restorePin({ kind: "field", recipe: { material: "field", study: "auto", method: "auto", register: "auto", blend: "alone",
+        seed: d("plot-seed") || "aurora", density: d("plot-density"), levels: d("plot-levels") } });
+    },
+  },
+  voxels: {
+    making: true,
+    primary: { label: "Build", target: "voxel-draw", title: "Build and draw the voxel scene" },
+    exports: [{ label: ".vox", target: "voxel-vox" }, { label: "OBJ", target: "voxel-obj" }, PNG_FRAME],
+    pin: "voxel-pin",
+    snapshot: () => (_lastVoxelScene ? voxelRecipe() : null),
+    restore(state) { restoreVoxelBuild(state); },
+    reset() {
+      const d = (id) => ($(id) || {}).defaultValue;
+      restoreVoxelBuild({ study: "relic", seed: d("voxel-seed") || "aurora", res: Number(d("voxel-res")) || 48, tune: null, ops: [] });
+    },
+  },
   byo: {
     primary: { label: "Choose a file", target: "studio-file", title: "Choose an image, video, 3D model or sound from this device" },
     exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
@@ -7006,6 +7173,14 @@ _readings = mountReadings({
   getSource: () => activeSource,
   isMakingSource: (s) => !!(SHELL_CONTRACTS[s] && SHELL_CONTRACTS[s].making),
 });
+for (const type of ["change", "click"]) {
+  $("studio-rail").addEventListener(type, (e) => {
+    const id = FORM_SOURCES[activeSource];
+    if (!id || !e.target.closest || !e.target.closest("#" + id)) return;
+    if (type === "click" && !e.target.closest("button")) return;
+    setTimeout(() => { if (_shell) _shell.record(activeSource); }, 0);
+  });
+}
 for (const type of ["input", "change", "click"]) {
   $("studio-rail").addEventListener(type, (e) => {
     const block = e.target.closest && e.target.closest(".src-block");
