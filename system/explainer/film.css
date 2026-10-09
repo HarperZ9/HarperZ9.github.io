@@ -23,3 +23,5 @@ details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 .mf-note{font-size:.92rem;color:color-mix(in srgb,currentColor 75%,transparent)}
 .mf-stage{margin-top:.8rem}
 .mf .mo-bar button{border-color:color-mix(in srgb,currentColor 40%,transparent)}
+.mf .mo-chapters button,.mf .mo-params,.mf .mo-note,.mf .mo-cap{color:inherit}
+.mf .mo-chapters button{opacity:.85}
