@@ -127,6 +127,13 @@ def _paper_links(root: Path, paper: dict) -> str:
     return "".join(f" · {link}" for link in links)
 
 
+def _opener_first(items: list[dict], members: dict[str, dict]) -> list[dict]:
+    """A series opener is the "Start here" row, so it leads its section whatever its date."""
+    def is_opener(item: dict) -> bool:
+        return (members[item["id"]].get("series") or {}).get("part") == "opener"
+    return [item for item in items if is_opener(item)] + [item for item in items if not is_opener(item)]
+
+
 def render_sections(root: Path, sections: dict, items: list[dict]) -> str:
     items_by_id = {item["id"]: item for item in items}
     blocks = []
@@ -134,7 +141,7 @@ def render_sections(root: Path, sections: dict, items: list[dict]) -> str:
         members = {member["id"]: member for member in section["members"]}
         rows = "\n".join(
             render_row(item, section, members[item["id"]])
-            for item in newest_first([items_by_id[member_id] for member_id in members])
+            for item in _opener_first(newest_first([items_by_id[member_id] for member_id in members]), members)
         )
         extra = ""
         if section["id"] == "series":

@@ -22,7 +22,7 @@ def test_every_listing_validates_and_points_at_a_real_page() -> None:
     assert {path.stem for path in LISTINGS} == {
         "who-knew-first", "checking-the-machines", "frontier-safety",
         "openai-hugging-face-incident", "a-witness-should-not-become-a-ruler",
-        "who-pays-the-referees", "the-terms-for-telling", "why-i-do-this",
+        "who-pays-the-referees", "the-terms-for-telling", "who-kept-the-books", "why-i-do-this",
         # 1 October 2026: the hand-written rows on publications.html and writing.html
         # became listings, so the Writing hub is generated from one source.
         "models-propose-oracles-dispose", "no-receipt-no-accept", "pick-the-lock-for-everyone",
@@ -58,7 +58,11 @@ def test_each_writing_section_leads_with_its_newest_work() -> None:
     sections = re.findall(r'<section class="mv publication-section" id="([a-z]+)".*?</section>', publications, re.S)
     assert sections == ["series", "essays", "atlas", "briefings", "research"]
     for block in re.findall(r'<div class="publication-ledger" data-publication-ledger>(.*?)</div>', publications, re.S):
-        # The first date on a row is its first publication; a revision date follows it.
+        # The first date on a row is its first publication; a revision date follows it. A series
+        # opener is the "Start here" row and leads its section whatever its date.
+        rows = re.findall(r"<article\b.*?</article>", block, re.S)
+        if rows and "Series opener" in rows[0]:
+            block = "".join(rows[1:])
         dates = re.findall(r'class="publication-meta">[^<]*· <time datetime="(\d{4}-\d{2}-\d{2})">', block)
         assert dates and dates == sorted(dates, reverse=True)
     assert publications.index('href="who-knew-first.html"') < publications.index('href="checking-the-machines.html"')

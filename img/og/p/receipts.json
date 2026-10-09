@@ -5292,6 +5292,42 @@
     "t": 0
    }
   },
+  "who-kept-the-books.jpg": {
+   "backend": "chrome-154.0.8037.98-skia",
+   "content_sha256": "9446697a0c6be0c019b627792c883f1e03cb9f8541e020fb4cb1f3ca15a3feba",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "who-kept-the-books.jpg": "a8b81ab27b26a07fd2a7b0934ea8097bec3660120c752f5e62a28b5eb9b7eb9a",
+    "who-kept-the-books.svg": "0fbf8857b6c5d6dcf9d529a009333f73970afacaff0eb94c780d277b0af27941"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "a335c238bfc73b474bf23aec4a87e6d0b4728d572af935e8391c2821f3057bb9",
+   "reconcile": null,
+   "scene_sha256": "4361abf65f8a95010bac9ef2214728ce604ed38be5778bc3d441f0ec6b803e13",
+   "schema": "superstack.receipt/1",
+   "seed": "who-kept-the-books",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 138036808,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "who-knew-first-series.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "52f7571a147787cb3a90d63d8b12408609f988e4306d562194a477ded0e9caf9",

@@ -12,8 +12,12 @@ from tools.publication_listings import load_listing
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "the-terms-for-telling.html"
-PLANNED = ("Who Kept the Books", "The Maker Is Part of the Story", "A Check It Cannot Predict")
-PLANNED_SLUGS = ("who-kept-the-books.html", "the-maker", "a-check-it-cannot-predict")
+SERIES = json.loads((ROOT / "publications/data/series/who-knew-first.json").read_text(encoding="utf-8"))
+SLUGS = {"Who Kept the Books": "who-kept-the-books", "The Maker Is Part of the Story": "the-maker-is-part-of-the-story",
+         "A Check It Cannot Predict": "a-check-it-cannot-predict"}
+PUBLISHED_IDS = [part["id"] for part in SERIES["parts"] if part["id"]]
+PLANNED = tuple(part["title"] for part in SERIES["parts"] if not part["id"])
+PLANNED_SLUGS = tuple(SLUGS[title] for title in PLANNED)
 NUMBERED = ("routes", "contract", "naming", "category", "cost", "self-review", "recipients",
             "where-it-worked", "ai-record", "supports")
 
@@ -45,11 +49,12 @@ def test_series_panel_links_the_published_piece_and_names_planned_ones_without_l
     panel = re.search(r'<aside class="wpr-series".*?</aside>', page, re.S).group(0)
     for title in PLANNED:
         assert title in panel
-    assert panel.count("Planned.") == 3
-    assert re.findall(r'href="([^"]+)"', panel) == [
-        "who-knew-first.html", "who-pays-the-referees.html", "who-knew-first-series.html"]
+    assert panel.count("Planned.") == len(PLANNED)
+    assert re.findall(r'href="([^"]+)"', panel) == (
+        ["who-knew-first.html"] + [f"{pid}.html" for pid in PUBLISHED_IDS if pid != "the-terms-for-telling"]
+        + ["who-knew-first-series.html"])
     for slug in PLANNED_SLUGS:
-        assert slug not in page
+        assert f'href="{slug}.html"' not in page
 
 
 def test_every_numbered_section_keeps_labels_and_does_not_prove_lines() -> None:
@@ -84,7 +89,7 @@ def test_public_surface_rules_hold() -> None:
     for internal in ("OPTIONAL AUTHOR PARAGRAPH", "writing-profile", "Draft manuscript", "CARRY-FORWARD", "check2"):
         assert internal not in page
     assert "Claude Opus 5.5" in text and "same-maker check" in text
-    assert "a later piece in this series that is not yet published" in text
+    assert "the third piece in this series" in text
     assert "600 Black men from Macon County, Alabama" in text
 
 

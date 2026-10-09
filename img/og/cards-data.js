@@ -688,6 +688,13 @@ window.CARD_DATA = {
     "word": "Telling",
     "headline": "The Terms for Telling"
   },
+  "who-kept-the-books": {
+    "publication": true,
+    "editorial": true,
+    "role": "EVIDENCE ESSAY",
+    "word": "Books",
+    "headline": "Who Kept the Books"
+  },
   "the-number-has-a-vintage": {
     "publication": true,
     "editorial": true,

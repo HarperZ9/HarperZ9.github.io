@@ -286,6 +286,15 @@
       "updated_at": "2026-06-20"
     },
     {
+      "id": "who-kept-the-books",
+      "route": "who-kept-the-books.html",
+      "title": "Who Kept the Books",
+      "collection": "series",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "updated_at": "2026-10-08"
+    },
+    {
       "id": "who-knew-first",
       "route": "who-knew-first.html",
       "title": "Who Knew First",
@@ -333,6 +342,14 @@
   ],
   "newest": [
     {
+      "id": "who-kept-the-books",
+      "route": "who-kept-the-books.html",
+      "title": "Who Kept the Books",
+      "kind": "Series piece",
+      "published_at": "2026-10-08",
+      "summary": "From Hispaniola in 1514 to the Iran-Contra inquiry, the party that controlled the money wrote the first account of it. The record moved when an inquiry, a court, an archive or a reporter outside that party obtained it."
+    },
+    {
       "id": "why-i-do-this",
       "route": "why-i-do-this.html",
       "title": "A Bullshitter Knows a Bullshitter",
@@ -347,14 +364,6 @@
       "kind": "Series piece",
       "published_at": "2026-10-01",
       "summary": "Every party that checks frontier AI depends on the labs it checks for access, compute, money or the right to publish. A ledger of which of those terms are public, party by party, with Anthropic first."
-    },
-    {
-      "id": "the-terms-for-telling",
-      "route": "the-terms-for-telling.html",
-      "title": "The Terms for Telling",
-      "kind": "Series piece",
-      "published_at": "2026-10-01",
-      "summary": "The party that holds a record also writes the terms for the people inside who could tell. In the cases checked, telling was protected where a forum outside the employer reached the merits, or public pressure forced a reversal."
     }
   ]
 }
