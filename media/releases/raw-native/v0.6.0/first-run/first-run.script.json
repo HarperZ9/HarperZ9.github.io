@@ -1,0 +1,49 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "first-run",
+ "title": "raw-native: build, render, check",
+ "segments": [
+  {
+   "key": "title",
+   "lines": [
+    "raw-native. build, render, check."
+   ]
+  },
+  {
+   "key": "c0",
+   "lines": [
+    "Configure the build with CMake. raw-native needs a C++23 compiler and nothing else."
+   ]
+  },
+  {
+   "key": "c1",
+   "lines": [
+    "Build it: the renderer, its tests and the command-line tool."
+   ]
+  },
+  {
+   "key": "c2",
+   "lines": [
+    "Run the tests."
+   ]
+  },
+  {
+   "key": "c3",
+   "lines": [
+    "Render the default scene. It writes the frame, the ambient occlusion maps and a certificate with a verdict."
+   ]
+  },
+  {
+   "key": "c4",
+   "lines": [
+    "Check the certificate from the files the render wrote."
+   ]
+  },
+  {
+   "key": "c5",
+   "lines": [
+    "And check it again with a second checker in Python that shares no code with the first."
+   ]
+  }
+ ]
+}

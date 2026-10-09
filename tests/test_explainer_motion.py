@@ -79,3 +79,19 @@ def test_score_cues_fall_inside_the_film() -> None:
         cues = json.loads((folder / "score.json").read_text(encoding="utf-8"))
         assert all(0 <= t < rec["seconds"] for t in cues["bells"])
         assert all(0 <= a < b <= rec["seconds"] for a, b in cues["swells"])
+
+
+def test_release_media_on_the_page_exists_and_matches_its_manifest() -> None:
+    """Release media (media/releases/<repo>/<tag>/<scene>/) is linked from the page, and every
+    file its manifest lists is present with that hash, except the 4K master kept on the release."""
+    import hashlib
+    folders = sorted(p.parent for p in (ROOT / "media" / "releases").glob("*/*/*/media.json"))
+    assert folders, "no release media"
+    for folder in folders:
+        rel = str(folder.relative_to(ROOT)).replace("\\", "/")
+        assert f'href="{rel}/index.html"' in PAGE, rel
+        m = json.loads((folder / "media.json").read_text(encoding="utf-8"))
+        for name, digest in m["files"].items():
+            if name.endswith("-2160p.mp4"):
+                continue
+            assert hashlib.sha256((folder / name).read_bytes()).hexdigest() == digest, f"{rel}/{name}"

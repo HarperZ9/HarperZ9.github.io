@@ -50,3 +50,5 @@ tools/superstack.py -text
 tools/SUPERSTACK.sha256 -text
 system/media-engine/contracts.mjs -text
 system/media-engine/SUPERSTACK.sha256 -text
+# Release media bundles (raw-native media render) are hashed in their media.json: no EOL conversion.
+media/releases/** -text

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.600 --> 00:00:06.280
+raw-native 0.6.0 renders a scene, and then it checks its own lighting.
+
+00:00:07.480 --> 00:00:14.440
+Ambient occlusion darkens the places light has trouble reaching: creases, corners and the ground under an object.
+
+00:00:15.640 --> 00:00:21.840
+The reference traces 64 rays from every pixel. It is slow, and it is the standard to meet.
+
+00:00:23.040 --> 00:00:27.980
+The fast method estimates the same thing from the depth buffer, with 24 samples a pixel.
+
+00:00:29.180 --> 00:00:39.200
+raw-native compares the two over 37,996 pixels. The error is 0.129, against a tolerance of 0.12.
+
+00:00:40.400 --> 00:00:45.020
+So the certificate says refuted: on this scene, the fast method is not close enough.
+
+00:00:46.220 --> 00:00:51.400
+The certificate is a file. Anyone can run the render again and check the same numbers.

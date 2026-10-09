@@ -1,0 +1,116 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Motion capture</title>
+<link rel="icon" href="data:,">
+<!-- Scenes may import the engine as @raw-native/motion/... -->
+<script type="importmap">{ "imports": { "@raw-native/motion/": "./" } }</script>
+<!-- Offline renderer page for scripts/motion_render.py. It draws frames
+     from..to of a scene at w x h, frame i at exactly i / fps, and sends them
+     to the local server that launched it, one of two ways:
+       transport=webcodecs (default)  the browser's hardware encoder (WebCodecs)
+                                      encodes each frame; the server stores the
+                                      Annex B stream and muxes it
+       transport=raw                  RGBA rows per frame, for ffmpeg to encode -->
+<canvas id="c" width="16" height="16"></canvas>
+<script type="module">
+import { createEngine } from "./engine.mjs";
+const q = new URLSearchParams(location.search);
+const W = +q.get("w") || 1920, H = +q.get("h") || 1080, fps = +q.get("fps") || 30;
+const transport = q.get("transport") || "webcodecs";
+const status = (s) => { window.__motion = { ...(window.__motion || {}), ...s }; };
+const post = async (path, body) => { const r = await fetch(path, { method: "POST", body }); if (!r.ok) throw new Error(path + ": " + r.status); };
+
+async function makeEncoder() {
+  const codec = q.get("codec") || "avc1.640034", qp = +(q.get("qp") || 16);
+  // Prefer a fixed quantizer on the hardware encoder; a machine without one (a CI runner)
+  // falls back to the software encoder at a high variable bitrate.
+  const base = { codec, width: W, height: H, framerate: fps, latencyMode: "quality" };
+  const vbr = +(q.get("bitrate") || Math.round(W * H * fps * 0.35));
+  const tries = codec.startsWith("avc1")
+    ? [{ ...base, hardwareAcceleration: "prefer-hardware", avc: { format: "annexb" }, bitrateMode: "quantizer" },
+       { ...base, hardwareAcceleration: "no-preference", avc: { format: "annexb" }, bitrateMode: "variable", bitrate: vbr }]
+    : codec.startsWith("hvc1") || codec.startsWith("hev1")
+      ? [{ ...base, hardwareAcceleration: "prefer-hardware", hevc: { format: "annexb" }, bitrate: +(q.get("bitrate") || 80e6) }]
+      : [{ ...base, bitrate: +(q.get("bitrate") || 60e6) }];
+  let cfg = null;
+  for (const c of tries) if ((await VideoEncoder.isConfigSupported(c)).supported) { cfg = c; break; }
+  if (!cfg) throw new Error("no supported encoder config among: " + JSON.stringify(tries));
+  let pending = [], bytes = 0, seq = 0, failed = null, chain = Promise.resolve();
+  const flush = () => {
+    if (!pending.length) return chain;
+    const all = new Uint8Array(bytes); let o = 0;
+    for (const p of pending) { all.set(p, o); o += p.length; }
+    pending = []; bytes = 0;
+    const s = seq++;
+    chain = chain.then(() => post("/chunk?seq=" + s, all));
+    return chain;
+  };
+  const enc = new VideoEncoder({
+    output: (chunk) => { const b = new Uint8Array(chunk.byteLength); chunk.copyTo(b); pending.push(b); bytes += b.length; if (bytes > 4e6) flush(); },
+    error: (e) => { failed = e; },
+  });
+  enc.configure(cfg);
+  return {
+    // src: the canvas, or { data, width, height } RGBA rows read back from the GPU.
+    async frame(src, i) {
+      if (failed) throw failed;
+      const time = { timestamp: Math.round((i * 1e6) / fps), duration: Math.round(1e6 / fps) };
+      const vf = src instanceof HTMLCanvasElement ? new VideoFrame(src, time)
+        : new VideoFrame(src.data, { format: "RGBA", codedWidth: src.width, codedHeight: src.height, ...time });
+      const opt = { keyFrame: i % (fps * 2) === 0 };
+      if (cfg.avc && cfg.bitrateMode === "quantizer") opt.avc = { quantizer: qp };
+      enc.encode(vf, opt);
+      vf.close();
+      while (enc.encodeQueueSize > 4) await new Promise((r) => setTimeout(r, 1));
+    },
+    async end() { await enc.flush(); flush(); await chain; enc.close(); if (failed) throw failed; return { codec, mode: cfg.bitrateMode || "bitrate", acceleration: cfg.hardwareAcceleration || "", qp: cfg.bitrateMode === "quantizer" ? qp : null, bitrate: cfg.bitrate || null }; },
+  };
+}
+
+try {
+  const eng = await createEngine({ canvas: document.getElementById("c"), sceneUrl: new URL(q.get("scene"), location.href).href,
+    shaders: q.get("shaders") ? new URL(q.get("shaders"), location.href).href : undefined });
+  eng.resize(W, H);
+  const from = +(q.get("from") || 0), to = q.has("to") ? +q.get("to") : Math.ceil(eng.scene.duration * fps);
+  status({ ready: true, from, to, width: eng.size[0], height: eng.size[1], transport });
+  // History layers (Threads) need the frames before `from` to look the same as a full run.
+  for (let i = Math.max(0, from - (+q.get("warm") || 0)); i < from; i++) { eng.ctx.dt = 1 / fps; eng.motion.draw(eng.list(i / fps), { frame: i, time: i / fps }); }
+  const enc = transport === "webcodecs" ? await makeEncoder() : null;
+  const cpu = [];
+  let readback = q.get("readback") === "1";
+  for (let i = from; i < to; i++) {
+    const t0 = performance.now();
+    if (enc) {
+      // A canvas frame is cheapest; where the browser cannot wrap a WebGPU canvas (Chrome on
+      // SwiftShader on Linux), read the frame back and encode the pixels instead.
+      let done = false;
+      if (!readback) {
+        try {
+          eng.ctx.dt = 1 / fps;
+          eng.motion.draw(eng.list(i / fps), { frame: i, time: i / fps });
+          await enc.frame(eng.host.canvas, i);
+          done = true;
+        } catch (e) { readback = true; status({ readback: String(e) }); }
+      }
+      if (!done) await enc.frame(await eng.capture(i, fps), i);
+      if (i % 8 === 0) await eng.host.done();
+    } else {
+      const img = await eng.capture(i, fps);
+      await post("/frame?i=" + i, img.data);
+    }
+    cpu.push(performance.now() - t0);
+    if (i % 30 === 0) status({ at: i, gpu: eng.motion.timings(), stats: eng.motion.stats });
+  }
+  const encoded = enc ? { ...(await enc.end()), source: readback ? "readback" : "canvas" } : { codec: "raw" };
+  cpu.sort((a, b) => a - b);
+  const stats = { frames: cpu.length, frame_ms_median: cpu[cpu.length >> 1], frame_ms_p95: cpu[Math.floor(cpu.length * 0.95)],
+    gpu_ms: eng.motion.timings(), adapter: eng.host.info, last: eng.motion.stats, encoded,
+    duration: eng.scene.duration, title: eng.scene.title, chapters: eng.scene.chapters || [],
+    vtt: typeof eng.scene.captions === "function" ? eng.scene.captions(eng.ctx) : null };
+  await post("/done", JSON.stringify(stats));
+  status({ done: true, stats });
+} catch (e) {
+  status({ error: String(e && e.stack || e) });
+  fetch("/done", { method: "POST", body: JSON.stringify({ error: String(e && e.stack || e) }) });
+}
+</script>

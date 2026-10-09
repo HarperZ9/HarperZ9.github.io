@@ -1,0 +1,717 @@
+{
+ "schema": "raw-native.media-cast/1",
+ "commit": "158afa8eb6800291340a018625fd1af18fc4e3c3",
+ "platform": "win32",
+ "steps": [
+  {
+   "cmd": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release",
+   "lines": [
+    {
+     "t": 1.125,
+     "text": "-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26220."
+    },
+    {
+     "t": 5.266,
+     "text": "-- Configuring done (4.6s)"
+    },
+    {
+     "t": 6.641,
+     "text": "-- Generating done (1.4s)"
+    },
+    {
+     "t": 6.641,
+     "text": "-- Build files have been written to: build"
+    }
+   ],
+   "exit": 0,
+   "seconds": 6.656
+  },
+  {
+   "cmd": "cmake --build build --config Release -j 4",
+   "lines": [
+    {
+     "t": 0.219,
+     "text": "MSBuild version 18.0.5+e22287bf1 for .NET Framework"
+    },
+    {
+     "t": 0.25,
+     "text": ""
+    },
+    {
+     "t": 0.438,
+     "text": "  Checking File Globs"
+    },
+    {
+     "t": 0.813,
+     "text": "  raw_native.vcxproj -> build\\Release\\raw_native.lib"
+    },
+    {
+     "t": 0.891,
+     "text": "  test_accel_arena.vcxproj -> build\\Release\\test_accel_arena.exe"
+    },
+    {
+     "t": 0.938,
+     "text": "  test_arena.vcxproj -> build\\Release\\test_arena.exe"
+    },
+    {
+     "t": 0.969,
+     "text": "  test_arena_allocator.vcxproj -> build\\Release\\test_arena_allocator.exe"
+    },
+    {
+     "t": 0.969,
+     "text": "  raw_native_cli.vcxproj -> build\\Release\\raw_native_cli.exe"
+    },
+    {
+     "t": 0.969,
+     "text": "  superstack_vectors.vcxproj -> build\\Release\\superstack_vectors.exe"
+    },
+    {
+     "t": 0.985,
+     "text": "  test_accel.vcxproj -> build\\Release\\test_accel.exe"
+    },
+    {
+     "t": 1.031,
+     "text": "  test_arena_typed.vcxproj -> build\\Release\\test_arena_typed.exe"
+    },
+    {
+     "t": 1.078,
+     "text": "  test_certificate.vcxproj -> build\\Release\\test_certificate.exe"
+    },
+    {
+     "t": 1.078,
+     "text": "  test_buffer_arena.vcxproj -> build\\Release\\test_buffer_arena.exe"
+    },
+    {
+     "t": 1.094,
+     "text": "  test_certificate_emit.vcxproj -> build\\Release\\test_certificate_emit.exe"
+    },
+    {
+     "t": 1.094,
+     "text": "  test_certificate_channels.vcxproj -> build\\Release\\test_certificate_channels.exe"
+    },
+    {
+     "t": 1.125,
+     "text": "  test_certificate_from.vcxproj -> build\\Release\\test_certificate_from.exe"
+    },
+    {
+     "t": 1.141,
+     "text": "  test_cli_params.vcxproj -> build\\Release\\test_cli_params.exe"
+    },
+    {
+     "t": 1.156,
+     "text": "  test_cli.vcxproj -> build\\Release\\test_cli.exe"
+    },
+    {
+     "t": 1.156,
+     "text": "  test_composite.vcxproj -> build\\Release\\test_composite.exe"
+    },
+    {
+     "t": 1.203,
+     "text": "  test_frame_arena.vcxproj -> build\\Release\\test_frame_arena.exe"
+    },
+    {
+     "t": 1.203,
+     "text": "  test_frame_graph.vcxproj -> build\\Release\\test_frame_graph.exe"
+    },
+    {
+     "t": 1.235,
+     "text": "  test_gbuffer_arena.vcxproj -> build\\Release\\test_gbuffer_arena.exe"
+    },
+    {
+     "t": 1.235,
+     "text": "  test_gpu_reconcile.vcxproj -> build\\Release\\test_gpu_reconcile.exe"
+    },
+    {
+     "t": 1.25,
+     "text": "  test_hdr.vcxproj -> build\\Release\\test_hdr.exe"
+    },
+    {
+     "t": 1.266,
+     "text": "  test_image.vcxproj -> build\\Release\\test_image.exe"
+    },
+    {
+     "t": 1.297,
+     "text": "  test_mat.vcxproj -> build\\Release\\test_mat.exe"
+    },
+    {
+     "t": 1.297,
+     "text": "  test_motion.vcxproj -> build\\Release\\test_motion.exe"
+    },
+    {
+     "t": 1.313,
+     "text": "  test_primitives.vcxproj -> build\\Release\\test_primitives.exe"
+    },
+    {
+     "t": 1.344,
+     "text": "  test_raster.vcxproj -> build\\Release\\test_raster.exe"
+    },
+    {
+     "t": 1.36,
+     "text": "  test_ray_ao.vcxproj -> build\\Release\\test_ray_ao.exe"
+    },
+    {
+     "t": 1.36,
+     "text": "  test_reconcile.vcxproj -> build\\Release\\test_reconcile.exe"
+    },
+    {
+     "t": 1.36,
+     "text": "  test_receipt.vcxproj -> build\\Release\\test_receipt.exe"
+    },
+    {
+     "t": 1.406,
+     "text": "  test_render_arena.vcxproj -> build\\Release\\test_render_arena.exe"
+    },
+    {
+     "t": 1.422,
+     "text": "  test_scene.vcxproj -> build\\Release\\test_scene.exe"
+    },
+    {
+     "t": 1.422,
+     "text": "  test_sanity.vcxproj -> build\\Release\\test_sanity.exe"
+    },
+    {
+     "t": 1.422,
+     "text": "  test_scene_arena.vcxproj -> build\\Release\\test_scene_arena.exe"
+    },
+    {
+     "t": 1.469,
+     "text": "  test_sha256.vcxproj -> build\\Release\\test_sha256.exe"
+    },
+    {
+     "t": 1.485,
+     "text": "  test_slot_pool.vcxproj -> build\\Release\\test_slot_pool.exe"
+    },
+    {
+     "t": 1.5,
+     "text": "  test_ssao.vcxproj -> build\\Release\\test_ssao.exe"
+    },
+    {
+     "t": 1.5,
+     "text": "  test_vec.vcxproj -> build\\Release\\test_vec.exe"
+    },
+    {
+     "t": 1.516,
+     "text": "  test_verify.vcxproj -> build\\Release\\test_verify.exe"
+    }
+   ],
+   "exit": 0,
+   "seconds": 1.578
+  },
+  {
+   "cmd": "ctest --test-dir build -C Release",
+   "lines": [
+    {
+     "t": 0.282,
+     "text": "Test project build"
+    },
+    {
+     "t": 0.297,
+     "text": "      Start  1: test_accel"
+    },
+    {
+     "t": 0.36,
+     "text": " 1/36 Test  #1: test_accel .......................   Passed    0.04 sec"
+    },
+    {
+     "t": 0.36,
+     "text": "      Start  2: test_accel_arena"
+    },
+    {
+     "t": 0.407,
+     "text": " 2/36 Test  #2: test_accel_arena .................   Passed    0.04 sec"
+    },
+    {
+     "t": 0.407,
+     "text": "      Start  3: test_arena"
+    },
+    {
+     "t": 0.453,
+     "text": " 3/36 Test  #3: test_arena .......................   Passed    0.03 sec"
+    },
+    {
+     "t": 0.453,
+     "text": "      Start  4: test_arena_allocator"
+    },
+    {
+     "t": 0.485,
+     "text": " 4/36 Test  #4: test_arena_allocator .............   Passed    0.03 sec"
+    },
+    {
+     "t": 0.485,
+     "text": "      Start  5: test_arena_typed"
+    },
+    {
+     "t": 0.532,
+     "text": " 5/36 Test  #5: test_arena_typed .................   Passed    0.04 sec"
+    },
+    {
+     "t": 0.532,
+     "text": "      Start  6: test_buffer_arena"
+    },
+    {
+     "t": 0.672,
+     "text": " 6/36 Test  #6: test_buffer_arena ................   Passed    0.06 sec"
+    },
+    {
+     "t": 0.672,
+     "text": "      Start  7: test_certificate"
+    },
+    {
+     "t": 0.75,
+     "text": " 7/36 Test  #7: test_certificate .................   Passed    0.05 sec"
+    },
+    {
+     "t": 0.75,
+     "text": "      Start  8: test_certificate_channels"
+    },
+    {
+     "t": 0.891,
+     "text": " 8/36 Test  #8: test_certificate_channels ........   Passed    0.09 sec"
+    },
+    {
+     "t": 0.891,
+     "text": "      Start  9: test_certificate_emit"
+    },
+    {
+     "t": 1.297,
+     "text": " 9/36 Test  #9: test_certificate_emit ............   Passed    0.37 sec"
+    },
+    {
+     "t": 1.297,
+     "text": "      Start 10: test_certificate_from"
+    },
+    {
+     "t": 1.36,
+     "text": "10/36 Test #10: test_certificate_from ............   Passed    0.04 sec"
+    },
+    {
+     "t": 1.36,
+     "text": "      Start 11: test_cli"
+    },
+    {
+     "t": 2.125,
+     "text": "11/36 Test #11: test_cli .........................   Passed    0.73 sec"
+    },
+    {
+     "t": 2.125,
+     "text": "      Start 12: test_cli_params"
+    },
+    {
+     "t": 2.235,
+     "text": "12/36 Test #12: test_cli_params ..................   Passed    0.09 sec"
+    },
+    {
+     "t": 2.235,
+     "text": "      Start 13: test_composite"
+    },
+    {
+     "t": 2.297,
+     "text": "13/36 Test #13: test_composite ...................   Passed    0.03 sec"
+    },
+    {
+     "t": 2.297,
+     "text": "      Start 14: test_frame_arena"
+    },
+    {
+     "t": 2.875,
+     "text": "14/36 Test #14: test_frame_arena .................   Passed    0.32 sec"
+    },
+    {
+     "t": 2.875,
+     "text": "      Start 15: test_frame_graph"
+    },
+    {
+     "t": 2.953,
+     "text": "15/36 Test #15: test_frame_graph .................   Passed    0.04 sec"
+    },
+    {
+     "t": 2.953,
+     "text": "      Start 16: test_gbuffer_arena"
+    },
+    {
+     "t": 3.0,
+     "text": "16/36 Test #16: test_gbuffer_arena ...............   Passed    0.03 sec"
+    },
+    {
+     "t": 3.0,
+     "text": "      Start 17: test_gpu_reconcile"
+    },
+    {
+     "t": 3.11,
+     "text": "17/36 Test #17: test_gpu_reconcile ...............   Passed    0.11 sec"
+    },
+    {
+     "t": 3.11,
+     "text": "      Start 18: test_hdr"
+    },
+    {
+     "t": 3.157,
+     "text": "18/36 Test #18: test_hdr .........................   Passed    0.03 sec"
+    },
+    {
+     "t": 3.157,
+     "text": "      Start 19: test_image"
+    },
+    {
+     "t": 3.203,
+     "text": "19/36 Test #19: test_image .......................   Passed    0.03 sec"
+    },
+    {
+     "t": 3.203,
+     "text": "      Start 20: test_mat"
+    },
+    {
+     "t": 3.25,
+     "text": "20/36 Test #20: test_mat .........................   Passed    0.04 sec"
+    },
+    {
+     "t": 3.25,
+     "text": "      Start 21: test_motion"
+    },
+    {
+     "t": 3.344,
+     "text": "21/36 Test #21: test_motion ......................   Passed    0.06 sec"
+    },
+    {
+     "t": 3.344,
+     "text": "      Start 22: test_primitives"
+    },
+    {
+     "t": 3.422,
+     "text": "22/36 Test #22: test_primitives ..................   Passed    0.05 sec"
+    },
+    {
+     "t": 3.422,
+     "text": "      Start 23: test_raster"
+    },
+    {
+     "t": 3.547,
+     "text": "23/36 Test #23: test_raster ......................   Passed    0.11 sec"
+    },
+    {
+     "t": 3.547,
+     "text": "      Start 24: test_ray_ao"
+    },
+    {
+     "t": 3.61,
+     "text": "24/36 Test #24: test_ray_ao ......................   Passed    0.04 sec"
+    },
+    {
+     "t": 3.61,
+     "text": "      Start 25: test_receipt"
+    },
+    {
+     "t": 3.953,
+     "text": "25/36 Test #25: test_receipt .....................   Passed    0.33 sec"
+    },
+    {
+     "t": 3.953,
+     "text": "      Start 26: test_reconcile"
+    },
+    {
+     "t": 4.016,
+     "text": "26/36 Test #26: test_reconcile ...................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.016,
+     "text": "      Start 27: test_render_arena"
+    },
+    {
+     "t": 4.063,
+     "text": "27/36 Test #27: test_render_arena ................   Passed    0.04 sec"
+    },
+    {
+     "t": 4.063,
+     "text": "      Start 28: test_sanity"
+    },
+    {
+     "t": 4.11,
+     "text": "28/36 Test #28: test_sanity ......................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.11,
+     "text": "      Start 29: test_scene"
+    },
+    {
+     "t": 4.157,
+     "text": "29/36 Test #29: test_scene .......................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.157,
+     "text": "      Start 30: test_scene_arena"
+    },
+    {
+     "t": 4.203,
+     "text": "30/36 Test #30: test_scene_arena .................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.203,
+     "text": "      Start 31: test_sha256"
+    },
+    {
+     "t": 4.235,
+     "text": "31/36 Test #31: test_sha256 ......................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.235,
+     "text": "      Start 32: test_slot_pool"
+    },
+    {
+     "t": 4.282,
+     "text": "32/36 Test #32: test_slot_pool ...................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.282,
+     "text": "      Start 33: test_ssao"
+    },
+    {
+     "t": 4.328,
+     "text": "33/36 Test #33: test_ssao ........................   Passed    0.03 sec"
+    },
+    {
+     "t": 4.328,
+     "text": "      Start 34: test_vec"
+    },
+    {
+     "t": 4.36,
+     "text": "34/36 Test #34: test_vec .........................   Passed    0.02 sec"
+    },
+    {
+     "t": 4.36,
+     "text": "      Start 35: test_verify"
+    },
+    {
+     "t": 4.469,
+     "text": "35/36 Test #35: test_verify ......................   Passed    0.09 sec"
+    },
+    {
+     "t": 4.469,
+     "text": "      Start 36: superstack_vectors"
+    },
+    {
+     "t": 4.61,
+     "text": "36/36 Test #36: superstack_vectors ...............   Passed    0.13 sec"
+    },
+    {
+     "t": 4.625,
+     "text": ""
+    },
+    {
+     "t": 4.625,
+     "text": "100% tests passed, 0 tests failed out of 36"
+    },
+    {
+     "t": 4.625,
+     "text": ""
+    },
+    {
+     "t": 4.625,
+     "text": "Total Test time (real) =   4.33 sec"
+    }
+   ],
+   "exit": 0,
+   "seconds": 4.766
+  },
+  {
+   "cmd": "build/Release/raw_native_cli.exe --out out",
+   "lines": [
+    {
+     "t": 0.609,
+     "text": "reconcile: pixels=37996 rmse=0.1294 maxError=0.6094 verdict=DIVERGENT"
+    },
+    {
+     "t": 0.609,
+     "text": "certificate: {\"claim\":\"screen-space AO matches ray-traced ground truth within tolerance\",\"verdict\":\"refuted\",\"oracle\":\"raw-rt-ao-v1\",\"evidence\":[[\"pixels\",\"37996\"],[\"rmse\",\"0.1294\"],[\"maxError\",\"0.6094\"],[\"tolerance\",\"0.1200\"]],\"channels\":{\"ao_fidelity\":0.885398,\"motion_coherence\":1,\"hdr_headroom\":0.875542},\"schema\":\"raw-cert/2\",\"renderer\":\"raw-native 0.6.0\",\"params\":{\"eye\":[4,4,6],\"fovy\":0.899999976,\"height\":256,\"prev_eye\":null,\"prev_target\":null,\"prev_up\":null,\"rt\":true,\"target\":[0,1,0],\"tolerance\":0.119999997,\"up\":[0,1,0],\"width\":256},\"samples\":{\"rt\":64,\"ss\":24},\"exact\":{\"pixels\":37996,\"rmse\":0.129436031,\"maxError\":0.609375,\"tolerance\":0.119999997},\"outputs\":{\"ao_error.pgm\":\"1f2b8dacd738ce231dfbe60d9ecef16c1972a5bcc59890c145edc139c9a04197\",\"ao_rt.pfm\":\"3bd5cce0f7424363c04d17b7bf644b82a9f51338297b4666329d398e9fb886ee\",\"ao_rt.pgm\":\"0a83697599343d297929b12227240f811d1e90f53a4bc76ca11eb568c2892f48\",\"ao_ss.pfm\":\"66c99812f843fe487eabb77e397fbe05e08864f981fd0b1179eba6fb78f86fb3\",\"ao_ss.pgm\":\"305edb16225ab27a29223ef2d70e0ad3ac4799e3b4492904ce07616f5ad14acc\",\"frame.ppm\":\"e276f24f4a2a23e7b43b61d2e45147446468bf8d99a75809675f2cea91edb06d\",\"frame_hdr.pfm\":\"5e598db0424414e7e37904592dbb295cbdb8623070ffb7350bd8e3ed867557db\",\"mask.pgm\":\"413410cd6f8755f3b234272f0c100125a38ddd89c6a8bc302fe7463170f96108\"}}"
+    },
+    {
+     "t": 0.609,
+     "text": "arena: arena budget=5574156 used=5574156 high_water=5574156 allocations=55 refusals=0 verdict=BOUNDED"
+    },
+    {
+     "t": 0.609,
+     "text": "arena-certificate: {\"claim\":\"arena stayed within its memory budget\",\"verdict\":\"verified\",\"oracle\":\"raw-arena-v1\",\"evidence\":[[\"budget\",\"5574156\"],[\"used\",\"5574156\"],[\"high_water\",\"5574156\"],[\"allocations\",\"55\"],[\"refusals\",\"0\"]]}"
+    }
+   ],
+   "exit": 0,
+   "seconds": 0.609
+  },
+  {
+   "cmd": "build/Release/raw_native_cli.exe verify out",
+   "lines": [
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 ao_error.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 ao_rt.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 ao_rt.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 ao_ss.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 ao_ss.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 frame.ppm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 frame_hdr.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    sha256 mask.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    pixels  37996 vs 37996"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    rmse  0.129436031 vs 0.129436031"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    maxError  0.609375 vs 0.609375"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    verdict  refuted vs refuted"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt well formed and sealed"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 ao_error.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 ao_rt.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 ao_rt.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 ao_ss.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 ao_ss.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 certificate.json"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 channels.json"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 frame.ppm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 frame.rgb8"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 frame_hdr.pfm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt sha256 mask.pgm"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt content_sha256 (ao_ss.f32)"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt reference (ao_rt.f32)"
+    },
+    {
+     "t": 0.032,
+     "text": "MATCH    receipt tolerance verdict  refuted vs refuted"
+    },
+    {
+     "t": 0.032,
+     "text": "verify: all checks match"
+    }
+   ],
+   "exit": 0,
+   "seconds": 0.047
+  },
+  {
+   "cmd": "python scripts/recheck.py out",
+   "lines": [
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 ao_error.pgm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 ao_rt.pfm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 ao_rt.pgm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 ao_ss.pfm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 ao_ss.pgm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 frame.ppm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 frame_hdr.pfm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    sha256 mask.pgm"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    pixels"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    rmse"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    maxError"
+    },
+    {
+     "t": 0.219,
+     "text": "MATCH    verdict"
+    },
+    {
+     "t": 0.219,
+     "text": "recheck: all checks match"
+    }
+   ],
+   "exit": 0,
+   "seconds": 0.219
+  }
+ ]
+}

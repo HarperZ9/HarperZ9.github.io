@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:04.200 --> 00:00:10.820
+Configure the build with CMake. raw-native needs a C++23 compiler and nothing else.
+
+00:00:11.120 --> 00:00:15.350
+Build it: the renderer, its tests and the command-line tool.
+
+00:00:15.520 --> 00:00:19.360
+Run the tests.
+
+00:00:19.360 --> 00:00:24.660
+Render the default scene. It writes the frame, the ambient occlusion maps and a certificate with a verdict.
+
+00:00:24.960 --> 00:00:28.500
+Check the certificate from the files the render wrote.
+
+00:00:28.800 --> 00:00:34.500
+And check it again with a second checker in Python that shares no code with the first.
