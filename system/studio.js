@@ -29,6 +29,7 @@ import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
 import { mountShell } from "./studio-shell-dom.js?v=20261009-presets";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-palette";
+import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -6805,6 +6806,8 @@ if (tierBtn) {
   const sendFrame = async (target) => {
     const cv = document.getElementById("studio-canvas");
     if (!cv) return;
+    // The Loom lives in the Studio now too (9 October 2026): hand over in this page, never navigate.
+    if (target !== "retro") { handFrameTo(target); return; }
     try {
       const wb = await import("./workbench.js?v=20260812-cohesion");
       // The Retro Engine lives in the Studio now: hand the frame over in this page and switch.
@@ -6827,6 +6830,35 @@ if (tierBtn) {
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
   else wire();
 })();
+
+// Hand the stage's frame to another tool in this page: the Retro Engine as its upload, the Loom as
+// the picture it weaves, Bring your own as a still image (9 October 2026).
+async function handFrameTo(target) {
+  const cv = $("studio-canvas");
+  if (!cv || target === activeSource) return;
+  try {
+    if (target === "retro") {
+      const wb = await import("./workbench.js?v=20260812-cohesion");
+      if (!wb.sendPiece("retro", cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" }, false)) { say("model", "That frame is too large to hand over."); return; }
+      setSource("retro");
+      const take = () => { if (window.__retroStudio && activeSource === "retro") window.__retroStudio.importHandoff(); else setTimeout(take, 200); };
+      take();
+    } else if (target === "loom") {
+      const flows = await import("./studio-engine-flows.js");
+      await flows.stageHandoff(cv, SOURCE_GUIDE[activeSource] ? SOURCE_GUIDE[activeSource].name : "Studio");
+      setSource("loom");
+    } else if (target === "byo") {
+      const from = activeSource;
+      const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
+      if (!blob) { say("model", "That frame could not be copied."); return; }
+      setSource("byo");
+      loadFile(new File([blob], `studio-frame-${from}.png`, { type: "image/png" }));
+    }
+  } catch (err) {
+    console.error("[studio] hand-over to " + target + " failed:", err);
+    say("model", "That frame could not be handed over: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
 // The studio joins the instrument family: sound on the toolbar, the frame
 // as a score, a clip of the moving canvas, the house feel, the workshop line.
@@ -7378,17 +7410,26 @@ _shell = mountShell({
     } },
   ],
 });
-// A project file dropped anywhere on the page opens it (the shell checks it before anything is kept).
-document.addEventListener("dragover", (e) => {
-  const items = e.dataTransfer && [...(e.dataTransfer.items || [])];
-  if (items && items.some((i) => i.kind === "file")) e.preventDefault();
-});
-document.addEventListener("drop", (e) => {
-  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-  if (e.defaultPrevented || !f || !/\.json$/i.test(f.name) || !_shell) return;
-  if (e.target.closest && e.target.closest("[data-drop-own], .at-drop, #studio-file, .plate-art, #wv-out")) return;
-  e.preventDefault();
-  _shell.openProjectFile(f);
+// Drag and drop between tools and from the desktop (studio-dnd.js); a dropped project file goes to
+// the shell, which checks it before anything is kept.
+mountDnd({
+  stage: $("viewport-stage"), menu: $("studio-source"), getSource: () => activeSource,
+  openMenu: (open) => { if (_shell) _shell.setOpen(open); },
+  sendFrame: (target) => handFrameTo(target),
+  openProject: (f) => { if (_shell) _shell.openProjectFile(f); },
+  loadIntoByo: (f) => { setSource("byo"); loadFile(f); },
+  openWif: (f) => {
+    setSource("loom");
+    const put = (n = 0) => {
+      const input = $("wv-wif-in");
+      if (!input) { if (n < 100) setTimeout(() => put(n + 1), 150); return; }
+      const dt = new DataTransfer(); dt.items.add(f);
+      input.files = dt.files;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    put();
+  },
+  say: (t) => say("model", t),
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.
