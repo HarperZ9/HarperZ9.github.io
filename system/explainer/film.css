@@ -15,3 +15,11 @@ figure.film figcaption{font-size:.92rem;margin:.6rem 0;color:color-mix(in srgb,c
 .fl-design,.fl-shorts{padding-left:1.2rem}
 details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 @media (max-width:600px){figure.film{margin-inline:0}.fl-chapters button{font-size:.78rem}}
+/* The interactive version of a film drawn by raw-native's Motion layer (motion-film.mjs). */
+.mf{max-width:64rem;margin:0 0 1.6rem}
+.mf-open{font:inherit;color:inherit;background:none;border:1px solid currentColor;padding:.55rem .9rem;min-height:44px;cursor:pointer}
+.mf-open:disabled{opacity:.6;cursor:default}
+.mf-open:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.mf-note{font-size:.92rem;color:color-mix(in srgb,currentColor 75%,transparent)}
+.mf-stage{margin-top:.8rem}
+.mf .mo-bar button{border-color:color-mix(in srgb,currentColor 40%,transparent)}

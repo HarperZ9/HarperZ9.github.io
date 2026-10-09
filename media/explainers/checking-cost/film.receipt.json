@@ -12,18 +12,62 @@
     "sha256": "bf36f2204c9f04389e3b138fad7b2f26e96dfb2b7c2950f75f65361dc6389870"
   },
   "render_code": {
-    "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
-    "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
-    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
-    "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
-    "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
-    "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
+    "media/explainers/checking-cost/film.scene.mjs": "42334bba8f79432e94290ef9c9fb59ed88ff590bd49ce301168a040263c0009c",
+    "media/explainers/checking-cost/scene/lib.mjs": "eac691919a1d7d82bf80ee14897fa3b9b26d642b04fdec535f38bb08161be9a6",
+    "media/explainers/checking-cost/scene/s1-reference.mjs": "15c839ff1a73dd12428da7a88f166902de3b5e9acc27b0069c1b6dc16e982206",
+    "media/explainers/checking-cost/scene/s2-list.mjs": "d7c67d73127f6122f0f6a3895e918d759ff764b6fb495f2deaf7d1051252229c",
+    "media/explainers/checking-cost/scene/s3-year.mjs": "c290dd28ce2cca7d540a3b3644857e3fff15e3837903fdad7e46f52a5ea25635",
+    "media/explainers/checking-cost/scene/s4-spread.mjs": "a3f9b49ae734242836c7081e01251b0dfc88dc507d495d3c585e1dceb7c12738",
+    "media/explainers/checking-cost/scene/s5-rerun.mjs": "390a74720ff7228ae9ebdd11a4ed694f88ef231d34e614dc341c9e68c67157ae",
+    "media/explainers/checking-cost/scene/s6-close.mjs": "349a340174bfc55e477acccf3697da3b7e40da1bf2d8c37dfb630f348db90bb1",
+    "media/explainers/checking-cost/score.json": "8c3ecddcf7159a6fcc3b50890000cb65229ce6454ea214358e03c46c3db914e4",
+    "media/raw-native/web-23ec93f/motion/capture.html": "fc2595317f6db46d3fdc39832123e2e8a67e2ee7825c11f393e9da7973852f8c",
+    "media/raw-native/web-23ec93f/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
+    "media/raw-native/web-23ec93f/motion/morph.mjs": "ed8776e6400cbf0e63c597d384669f40ccbc47b6790ec15a03dedbc1bf68c2cd",
+    "media/raw-native/web-23ec93f/motion/particles.mjs": "bc1e664f68c2e3fa35e9219e09a4b782467bdcb64ab76939e019abbdd2d94650",
+    "media/raw-native/web-23ec93f/motion/path.mjs": "7b802dbf34ed4f930aa0223d61d64b2e98b0cb8de24d93d2d47a7ccc085a4a44",
+    "media/raw-native/web-23ec93f/motion/player.mjs": "c545f53c5667c6ba3f1ff14fa7788772c3fcb52a99fb23cb1e2727aa8b5b78cc",
+    "media/raw-native/web-23ec93f/motion/renderer.mjs": "165f1256576f1a64e6ddfb7d28450fee44d2f79fb6c66abd1d888dc6f2047553",
+    "media/raw-native/web-23ec93f/motion/scene.mjs": "e8a97ea8a0811f773818ad5a5df7eefb563cee11416dac3029bc46c7d87a4839",
+    "media/raw-native/web-23ec93f/motion/shaders.mjs": "987b6255e6b6bad7eb5a7273641d7b337cba6278c78bf39ad4e48520d9a7631d",
+    "media/raw-native/web-23ec93f/motion/text.mjs": "f895f535ad21bf88e18c8daa55fdab36939c0219d2e25d275bb6e561494eea73",
+    "media/raw-native/web-23ec93f/motion/timeline.mjs": "ad6fcef445ddecc1aee634d2124759cb4a357d04e14428b9f3e4a6df67f4eb1e",
+    "media/raw-native/web-23ec93f/motion/vector.mjs": "5fc6f381071459f3648dd64ba674f0983a0adf856fbadb5afadd2bb09c58b5db",
+    "media/raw-native/web-23ec93f/raw-gpu.mjs": "e6fad74db2d11ba107b8c04d9dfdfcf7ee8a7745d09b79e107df2be35625e7ec",
+    "media/raw-native/web-23ec93f/frame-graph.mjs": "71244a0e499ce3d61758fa9237e686fbfdc827979ac4718415934607e9f93bef",
+    "media/raw-native/web-23ec93f/threads.mjs": "8fe4f8d5119563faec3ed1aaf796a57833a5a77a34e41a33e00040d5ca5e34ea",
+    "media/raw-native/web-23ec93f/threads.wgsl": "8fa08424ec68ee1de040b090e671897ce9897be2cb75cca59c2f4637b1c30632",
+    "media/explainers/motion/hanken-500.json": "dac04490546485d2ddd94baffe1396c0e5435dabaa5a069bf5d5ac8f5b234814",
+    "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
+    "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
+    "tools/explainer/film/motion.py": "75ae90043407587fe049884c852d37b7249aecb460bdb3b3f131ec81269c4b40",
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
   },
   "toolchain": {
+    "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
+    "adapter": {
+      "vendor": "nvidia",
+      "architecture": "lovelace",
+      "device": "",
+      "description": ""
+    },
     "python": "3.12.10",
-    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
     "os": "Windows-11-10.0.26220-SP0",
-    "plate": "GLSL 330 on moderngl, headless, GPU"
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "master": {
+      "width": 3840,
+      "height": 2160,
+      "frames": 5324,
+      "frame_ms_median": 26.5,
+      "frame_ms_p95": 36.1,
+      "wall_seconds": 181.8,
+      "sha256": "304f1dd54ea2edcd3dbec89bac7ec5565d80eef7191117e536e35ad877f80b7e"
+    },
+    "score": {
+      "generator": "tools/explainer/film/score.py",
+      "mix_db": -13,
+      "sha256": "e28ebd77c23b2ceb7bb917ac885f22a90d1ca28ee808ea1d1dc3503764935070"
+    }
   },
   "narration": {
     "wav_sha256": "bb8fc56f56c0c4e9dc1f43b5dac9f5cb8eb3cedf28bd4e27086bcecaeb7fbc77",
@@ -90,13 +134,13 @@
   "frames": 5324,
   "fps": 30,
   "seconds": 177.46666666666667,
-  "frame_chain_sha256": "4a7510d7b325843ace12c55365bfc391ebc8b6efc18020a86af54f015374f449",
   "outputs": {
-    "checking-cost.mp4": "de64f13174ba15ccdfb0bafe4773971f204ff14a08e23b870c229f8de8b660dc",
+    "checking-cost.mp4": "98a76f019596c735df2e9112a21dffc65b6207d3faa73a4a9d4fca7210457b5b",
     "checking-cost.vtt": "b100a8d9a2f67113067c75bebfb69ca99ec0c5c216b05f0c1ca25a2613547f0a",
     "checking-cost.srt": "5d220119850a63dc7818a974ff7bff44f478ef8d78a4ed148feb1bf4bb491408",
-    "poster.jpg": "91d6fec8c8e48774a82b3ac190a0d0f44b0fc755a302a7aea9a02c3518e61b2b",
-    "timing.json": "698e3ff04b82a95f75de7eb6d71e047ed910f554a60da8ba256a2381a733d6f7"
+    "poster.jpg": "a2f8b23dce382b182c5ae1712d48a8327d11d333c50c25401f39806540c67b5f",
+    "timing.json": "698e3ff04b82a95f75de7eb6d71e047ed910f554a60da8ba256a2381a733d6f7",
+    "checking-cost.m4a": "9b16b42cbdbf24d894843a3c3fdb7c0778e0366f7964644676e46e4b37c08262"
   },
-  "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
 }

@@ -65,6 +65,7 @@ def film_section(slug: str) -> str:
     static_q = "".join(f'<li data-static>{E(i["prompt"])} ' + " / ".join(E(c["text"]) for c in i["choices"]) + "</li>"
                        for i in x["recall"]["items"])
     nar = rec["narration"]["asr_check"]
+    live = interactive(slug, folder, f["title"])
     return f"""
 <section class="mv" id="{slug}" aria-labelledby="{slug}-h">
   <h2 id="{slug}-h">{E(f["title"])}</h2>
@@ -73,12 +74,27 @@ def film_section(slug: str) -> str:
     {heads}
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
-  </figure>
+  </figure>{live}
   <details id="{slug}-transcript"><summary>Transcript</summary>{transcript}</details>
   <h3 id="{slug}-sources">Sources, with what each one does not prove</h3>
   <ol class="fl-sources">{sources}</ol>
   <p class="fl-receipt">Build record: <a class="inline" href="{folder}/film.receipt.json">film.receipt.json</a> lists the hash of the script, the sources file, the render code and every output.</p>
 </section>"""
+
+
+def interactive(slug: str, folder: str, title: str) -> str:
+    """The live version, for a film drawn by raw-native's Motion layer (film.scene.mjs)."""
+    import re
+    scene = ROOT / folder / "film.scene.mjs"
+    if not scene.is_file():
+        return ""
+    m = re.search(r'"\.\./\.\./raw-native/(web-[\w-]+)/motion/', scene.read_text(encoding="utf-8"))
+    engine = f"media/raw-native/{m.group(1)}"
+    return f"""
+  <div class="mf" data-motion-film data-film="{slug}" data-folder="{folder}" data-engine="{engine}" data-label="Interactive film: {E(title)}">
+    <h3>Interactive version</h3>
+    <p class="body-text">The same film, drawn live in your browser by the <a class="inline" href="https://github.com/HarperZ9/raw-native">raw-native</a> engine from the scene file the video was rendered from. Pause on any frame, scrub, and step one frame at a time. It needs a browser with WebGPU.</p>
+  </div>"""
 
 
 def page() -> str:
@@ -108,7 +124,7 @@ def page() -> str:
 <link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
 <link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
-<link rel="stylesheet" href="system/explainer/film.css?v=20261004-films">
+<link rel="stylesheet" href="system/explainer/film.css?v=20261009-motion">
 </head>
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -143,6 +159,7 @@ def page() -> str:
   <p class="seal">Explainers: narrated films with their sources and recall questions.</p>
 </footer>
 <script type="module" src="system/explainer/film.mjs?v=20261004-films"></script>
+<script type="module" src="system/explainer/motion-film.mjs?v=20261009-motion"></script>
 </body>
 </html>
 """
