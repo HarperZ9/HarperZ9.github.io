@@ -98,7 +98,11 @@ test('everyday menu offers pillars rather than the whole directory', () => {
   const menu = mount.innerHTML.split('<div class="sn-more-list"')[1];
   const hrefs = [...menu.matchAll(/href="([^"]+)"/g)].map(m => m[1]);
   // Pillars, the five Writing sections (added 1 October 2026), Site index and GitHub.
-  assert.ok(hrefs.length <= 14, `menu exposes ${hrefs.length} destinations`);
+  // Explainers and Repository explainers joined Explore on 9 October 2026, at the
+  // author's request that the films and walkthroughs be reachable from the menu.
+  assert.ok(hrefs.length <= 16, `menu exposes ${hrefs.length} destinations`);
+  assert.ok(hrefs.includes('explainers.html'));
+  assert.ok(hrefs.includes('repo-explainers.html'));
   assert.deepEqual(hrefs.filter(href => href.startsWith('publications.html#')), [
     'publications.html#series', 'publications.html#essays', 'publications.html#atlas',
     'publications.html#briefings', 'publications.html#research',

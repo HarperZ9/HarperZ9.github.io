@@ -394,7 +394,7 @@ export function renderNav(doc = document) {
     + `<div class="sn-more-list" aria-label="Site menu">`
     + menuGroup("Primary", PRIMARY_ROUTES, active, routePath, "sn-menu-primary")
     + menuGroup("Writing", WRITING_SECTIONS || [], active, routePath, "sn-menu-secondary sn-menu-writing")
-    + menuGroup("Explore", [{ label: "Site index", href: "site-index.html", family: "Systems" }], active, routePath, "sn-menu-secondary")
+    + menuGroup("Explore", [{ label: "Explainers", href: "explainers.html", family: "Systems" }, { label: "Repository explainers", href: "repo-explainers.html", family: "Systems" }, { label: "Site index", href: "site-index.html", family: "Systems" }], active, routePath, "sn-menu-secondary")
     + menuGroup("Actions", EXTERNAL_ACTIONS, active, routePath, "sn-menu-secondary")
     + `</div></details>`
     ;

@@ -57,9 +57,16 @@ function runGuide(system) {
   return `<p class="body-text"><a href="${escapeHtml(guide.href)}" rel="noopener">${escapeHtml(guide.label)}</a>${summary}</p>`;
 }
 
+function explainerLink(system) {
+  const explainer = system.explainer;
+  if (!explainer?.href || !explainer?.label) return "";
+  const summary = explainer.summary ? ` ${escapeCopy(explainer.summary)}` : "";
+  return `<p class="body-text"><a href="${escapeHtml(explainer.href)}">${escapeHtml(explainer.label)}</a>${summary}</p>`;
+}
+
 function runBlock(system) {
   const source = system.sourceHref ? `<p class="body-text">${sourceLink(system)}</p>` : "";
-  return `${command("Entry", system.entryCommand)}${runGuide(system)}${command("Verification", system.verificationCommand)}${source}`;
+  return `${explainerLink(system)}${command("Entry", system.entryCommand)}${runGuide(system)}${command("Verification", system.verificationCommand)}${source}`;
 }
 
 function recordLinks(ctx, ids) {

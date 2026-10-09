@@ -121,6 +121,14 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important;scroll-behavior:auto!important}
 }
+.film{margin:1rem 0 0;max-width:56rem}
+.film video{width:100%;height:auto;display:block;background:#000;border:1px solid var(--line)}
+.film figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.55rem;max-width:44rem;line-height:1.5}
+.soon{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);margin-top:.8rem}
+ol.walkthrough{padding-left:1.4rem;max-width:56rem;margin:1rem 0 0}
+ol.walkthrough li{margin:0 0 1.4rem}
+ol.walkthrough h3{margin:0 0 .3rem;font-size:1.05rem}
+ol.walkthrough p{margin:0 0 .3rem;max-width:44rem}
 
 /* generic scene kit: a pipeline strip, an input/output panel, a case picker, a table */
 .kscene{display:flex;flex-direction:column;gap:.8rem}
@@ -172,6 +180,12 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
     <li><b>Honest nulls</b>A missing engagement signal is recorded as absent, and a thin corpus says so.</li>
   </ul>
   <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/README.md">README.md</a> at 29cefb2 (version 0.3.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
 </section>
 
 <section class="block wrap" aria-labelledby="how">
@@ -233,13 +247,20 @@ footer.foot p{max-width:70ch;margin:0 0 .6rem}
   </div>
 </section>
 
-<section class="block wrap" aria-labelledby="try">
-  <h2 id="try">Try it</h2>
-  <div class="measure"><p>Install from a checkout (Python 3.10 or newer). The deterministic path needs no service key and no model.</p></div>
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.10 or newer; no service key and no model.</p>
 <pre class="cmd"><code>$ git clone https://github.com/HarperZ9/chorus && cd chorus
-$ pip install -e .
-$ chorus run examples/discourse-sample.json --verify
-<span class="out">  "contested": [ ... "term": "battery", "contested": 0.5386 ... ]</span></code></pre>
+$ pip install -e .</code></pre></li>
+    <li><h3>First run: digest a thread</h3><p>Score, weight and cluster the sample comments, then verify the digest.</p>
+<pre class="cmd"><code>$ chorus run examples/discourse-sample.json --verify
+<span class="out">  "contested": [ ... "term": "battery", "contested": 0.5386 ... ]</span></code></pre></li>
+    <li><h3>Re-derive the digest</h3><p>In Python, verify a digest against the scored comments. An edited digest is rejected.</p>
+<pre class="cmd"><code>>>> verify(edited, scored)
+<span class="out">False</span></code></pre></li>
+  </ol>
   <p class="src">Output from chorus at 29cefb2 on Windows with Python 3.12. The tamper cases were run through the Python API, <code>chorus.receipt.verify</code>.</p>
 </section>
 
