@@ -96,6 +96,8 @@ TYPE_DESK_REVISION = "20261009-type-desk"
 SPLATS_REVISION = "20261009-splats-in-place"
 # 9 October 2026, later: the Films source; studio.js and studio-shell.css take a new stamp.
 FILMS_SOURCE_REVISION = "20261009-films-source"
+# 9 October 2026, later: choosing shows (fractal set chips draw; Threads says a world is coming).
+CHOOSING_REVISION = "20261009-choosing-shows"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -146,7 +148,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": FILMS_SOURCE_REVISION,
+    "system/studio.js": CHOOSING_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
     "system/studio-shell.css": FILMS_SOURCE_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
