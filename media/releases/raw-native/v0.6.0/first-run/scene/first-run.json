@@ -1,0 +1,42 @@
+{
+ "title": "raw-native: build, render, check",
+ "subtitle": "a walkthrough of the first run",
+ "steps": [
+  {
+   "say": "Configure the build with CMake. raw-native needs a C++23 compiler and nothing else.",
+   "keep": 6,
+   "chapter": "Configure"
+  },
+  {
+   "say": "Build it: the renderer, its tests and the command-line tool.",
+   "keep": 6,
+   "chapter": "Build"
+  },
+  {
+   "say": "Run the tests.",
+   "keep": 5,
+   "highlight": "tests passed",
+   "chapter": "Test"
+  },
+  {
+   "say": "Render the default scene. It writes the frame, the ambient occlusion maps and a certificate with a verdict.",
+   "display": "raw_native_cli --out out",
+   "keep": 8,
+   "highlight": "^reconcile:",
+   "chapter": "Render"
+  },
+  {
+   "say": "Check the certificate from the files the render wrote.",
+   "display": "raw_native_cli verify out",
+   "keep": 8,
+   "highlight": "^verify:",
+   "chapter": "Verify"
+  },
+  {
+   "say": "And check it again with a second checker in Python that shares no code with the first.",
+   "keep": 6,
+   "highlight": "^recheck:",
+   "chapter": "Recheck"
+  }
+ ]
+}

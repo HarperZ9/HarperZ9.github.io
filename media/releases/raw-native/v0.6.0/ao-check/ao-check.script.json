@@ -1,0 +1,49 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "ao-check",
+ "title": "Checking the light",
+ "segments": [
+  {
+   "key": "c0",
+   "lines": [
+    "raw-native 0.6.0 renders a scene, and then it checks its own lighting."
+   ]
+  },
+  {
+   "key": "c1",
+   "lines": [
+    "Ambient occlusion darkens the places light has trouble reaching: creases, corners and the ground under an object."
+   ]
+  },
+  {
+   "key": "c2",
+   "lines": [
+    "The reference traces 64 rays from every pixel. It is slow, and it is the standard to meet."
+   ]
+  },
+  {
+   "key": "c3",
+   "lines": [
+    "The fast method estimates the same thing from the depth buffer, with 24 samples a pixel."
+   ]
+  },
+  {
+   "key": "c4",
+   "lines": [
+    "raw-native compares the two over 37,996 pixels. The error is 0.129, against a tolerance of 0.12."
+   ]
+  },
+  {
+   "key": "c5",
+   "lines": [
+    "So the certificate says refuted: on this scene, the fast method is not close enough."
+   ]
+  },
+  {
+   "key": "c6",
+   "lines": [
+    "The certificate is a file. Anyone can run the render again and check the same numbers."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checking the light</title>
+<link rel="icon" href="data:,">
+<script type="importmap">{ "imports": { "@raw-native/motion/": "./engine/motion/" } }</script>
+<style>
+  :root { color-scheme: dark; --ink: #ece5d6; --ink-2: #b8b0a0; --void: #060608; --frame: #3a3640; }
+  body { margin: 0; background: var(--void); color: var(--ink); font: 17px/1.55 system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.6rem; font-weight: 600; margin: 0 0 .4rem; }
+  p { color: var(--ink-2); max-width: 70ch; }
+  video { width: 100%; height: auto; background: #000; display: block; }
+  .facts { font-size: .92rem; }
+  a { color: var(--ink); }
+</style>
+<main>
+  <h1>Checking the light</h1>
+  <p id="about">Drawn live in your browser by the raw-native engine, from the same scene file the video was rendered from. Pause on any frame, scrub, and step one frame at a time with comma and full stop.</p>
+  <div id="live"></div>
+  <details><summary>The rendered video</summary><video id="video" controls preload="none" playsinline></video></details>
+  <p class="facts" id="facts"></p>
+</main>
+<script type="module">
+  import { mountPlayer } from "./engine/motion/player.mjs";
+  const media = await (await fetch("media.json")).json().catch(() => ({ files: {} }));
+  const files = Object.keys(media.files || {});
+  const video = files.find((f) => /-1080p\.mp4$/.test(f)) || files.find((f) => /\.mp4$/.test(f));
+  const vtt = files.find((f) => f.endsWith(".vtt"));
+  const v = document.getElementById("video");
+  if (video) { v.src = video; v.poster = "poster.jpg"; }
+  if (vtt) { const tr = document.createElement("track"); Object.assign(tr, { kind: "captions", src: vtt, srclang: "en", label: "English" }); v.append(tr); }
+  document.getElementById("facts").textContent = media.commit
+    ? `Rendered at commit ${media.commit.slice(0, 7)} from values read from that commit${media.narrated ? ", with narration" : "; this render has captions and no narration yet"}.`
+    : "";
+  await mountPlayer(document.getElementById("live"), {
+    sceneUrl: new URL("scene/ao-check.scene.mjs", location.href).href,
+    shaders: new URL("engine/", location.href).href,
+    audio: media.narrated && video ? video : null,
+    captions: vtt || null,
+    label: "Checking the light",
+  });
+</script>
+</html>

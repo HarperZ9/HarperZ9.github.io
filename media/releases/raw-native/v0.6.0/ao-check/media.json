@@ -1,0 +1,74 @@
+{
+ "schema": "raw-native.media-render/1",
+ "scene": "ao-check",
+ "title": "Checking the light",
+ "kind": "explainer",
+ "commit": "158afa8eb6800291340a018625fd1af18fc4e3c3",
+ "narrated": true,
+ "width": 3840,
+ "height": 2160,
+ "fps": 30,
+ "duration": 53.4,
+ "frames": 1602,
+ "adapter": {
+  "vendor": "nvidia",
+  "architecture": "lovelace",
+  "device": "",
+  "description": ""
+ },
+ "adapter_kind": "gpu",
+ "frame_ms_median": 13.6,
+ "frame_ms_p95": 40.2,
+ "wall_seconds": 44.0,
+ "chapters": [
+  {
+   "t": 0,
+   "title": "The scene"
+  },
+  {
+   "t": 15.64,
+   "title": "Two answers"
+  },
+  {
+   "t": 29.18,
+   "title": "The comparison"
+  },
+  {
+   "t": 46.22,
+   "title": "The certificate"
+  }
+ ],
+ "files": {
+  "ao-check-1080p.mp4": "b06c598f05c0c444a75114a2183d26995cfb22d6ddeafa8cd01a60fe2e41808b",
+  "ao-check-2160p.mp4": "8d08ede2ad54e8db3df718909d086b2c8f4bbcc9e963454c3f5de06d9cdb9a0f",
+  "ao-check.script.json": "1187d0ff03d275c628ab819a9400160088c45f80b9002350eec23a0907dc81de",
+  "ao-check.vtt": "765e1a1ff17764845f96cf7aa2e9a16fe8e32f9a58769ebf90919c670e463c7b",
+  "engine/camera.mjs": "1c6a4d4aff76e8a6a777eb0ab91ec5899a545faaa52713d09254f36a6e296831",
+  "engine/frame-graph.mjs": "d78ec1400a9183c4d8bf939031622f7bc1b59f88b9b36f07432a254c040c4156",
+  "engine/motion/capture.html": "2ccaf05913f9d0616727294d950a28b0ec07ef9d9500150bf3b5f84d3342d7a6",
+  "engine/motion/engine.mjs": "4f924f2b9307f8cfdc6503edec010e918624d3e9ed29a493a1c262dc57dec7c0",
+  "engine/motion/morph.mjs": "25e090253f5113727a20cd3550a535c7a9341ad0baa1dc10f4064b6a7a08c4c0",
+  "engine/motion/narration.mjs": "0489d15614fbc0e1aa53189f31aa9c4dfb651cc4c07ad4f410dd13cd5d8e4e7f",
+  "engine/motion/particles.mjs": "37e22ded509e38e302100b5156a9d050d3d5795e8828837ffbf22de6778b2493",
+  "engine/motion/path.mjs": "761810cd3f88c51778f4ec1f8819da07c39a9ca88ac54a57c1c124fca81f1153",
+  "engine/motion/player.mjs": "595a2699d6a733130278b2366a55f2bf2dc02341359dc5591ad3c776769ac467",
+  "engine/motion/renderer.mjs": "c0f7c18ce0ebd06b301dba476966a008e386614478d5c2028b6a815a4ef9c620",
+  "engine/motion/scene.mjs": "7d3d387ca1b4e114a8568c3c2ee68d5f5d55e689d3f78824388053bc59b2c9c5",
+  "engine/motion/shaders.mjs": "2a1e014021ccedbb50914fa13b8b0cddad02aedc3572758508fe09f01b9011e6",
+  "engine/motion/text.mjs": "a69f8f0458b5abf60720fe110445023d4fa452559ca1a1e142a27ea2ef3babdb",
+  "engine/motion/timeline.mjs": "b65884d9cba703c53a8faf29f30f4296be54061758710577c24f3e5262eacef1",
+  "engine/motion/vector.mjs": "555e4eacbc633375bd324534417f39de65933c9d430422ecd6f30373ca5229ca",
+  "engine/motion/walkthrough.mjs": "1efead7ed5272f47153bab42c5f9f9bfbe529d8f51545a6fc4147ac25f543dcc",
+  "engine/raw-gpu.mjs": "7b1ba7ff17207f59fba99bb073d2165b0bbc2e5086b5255b2a27394cadb53dd4",
+  "engine/threads.mjs": "19513b840714f972999871e6ac36d11b2ee91f36f89121f24a240ff4bba4791d",
+  "engine/threads.wgsl": "de4d1ae12afce1f5768dec6c3fb203f64e65237581f68fcb9729795fbde67331",
+  "engine/worlds.mjs": "7962aca6ae7022ec6bfcbeaea6dc788852853b01e1be53b4686beede0dc364fe",
+  "engine/worlds.wgsl": "824149067f51cd19fafcd7d97258b395265cb222b24908faecd50f2fac570138",
+  "facts.json": "c189c60e5984968ccb5441700900dfbda95b829cfbcdca912093de2132c86245",
+  "index.html": "179c00faa57e1f31bfc59db3cf582915fbfb1f4aa19b9ba19b755dd90bb876dc",
+  "poster.jpg": "dc4475c1368592bd6c2dc2d7f4eb623ff9eb3e444fcda034361f9857c283b2ff",
+  "scene/ao-check.scene.mjs": "349ef1e19554fa29ab63d24c5cbcdc4daeba392c6cbf9dbd9ab763c6b778e4d5",
+  "scene/atlas.json": "e319da67ce990a6d163411db1ef81641fbe76b9047f98575e9067280f69cb6bd",
+  "timing.json": "71bca1de6fc61680f142b8921bee5c716ba379101a66fdeb7c0a10bba0ec1e7b"
+ }
+}

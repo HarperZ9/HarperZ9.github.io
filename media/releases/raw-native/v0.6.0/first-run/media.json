@@ -1,0 +1,89 @@
+{
+ "schema": "raw-native.media-render/1",
+ "scene": "first-run",
+ "title": "raw-native: build, render, check",
+ "kind": "walkthrough",
+ "commit": "158afa8eb6800291340a018625fd1af18fc4e3c3",
+ "narrated": true,
+ "width": 3840,
+ "height": 2160,
+ "fps": 30,
+ "duration": 37.5,
+ "frames": 1125,
+ "adapter": {
+  "vendor": "nvidia",
+  "architecture": "lovelace",
+  "device": "",
+  "description": ""
+ },
+ "adapter_kind": "gpu",
+ "frame_ms_median": 10.1,
+ "frame_ms_p95": 13.6,
+ "wall_seconds": 15.4,
+ "chapters": [
+  {
+   "t": 0,
+   "title": "raw-native: build, render, check"
+  },
+  {
+   "t": 4.2,
+   "title": "Configure"
+  },
+  {
+   "t": 11.12,
+   "title": "Build"
+  },
+  {
+   "t": 15.52,
+   "title": "Test"
+  },
+  {
+   "t": 19.36,
+   "title": "Render"
+  },
+  {
+   "t": 24.96,
+   "title": "Verify"
+  },
+  {
+   "t": 28.8,
+   "title": "Recheck"
+  }
+ ],
+ "files": {
+  "engine/camera.mjs": "1c6a4d4aff76e8a6a777eb0ab91ec5899a545faaa52713d09254f36a6e296831",
+  "engine/frame-graph.mjs": "d78ec1400a9183c4d8bf939031622f7bc1b59f88b9b36f07432a254c040c4156",
+  "engine/motion/capture.html": "2ccaf05913f9d0616727294d950a28b0ec07ef9d9500150bf3b5f84d3342d7a6",
+  "engine/motion/engine.mjs": "4f924f2b9307f8cfdc6503edec010e918624d3e9ed29a493a1c262dc57dec7c0",
+  "engine/motion/morph.mjs": "25e090253f5113727a20cd3550a535c7a9341ad0baa1dc10f4064b6a7a08c4c0",
+  "engine/motion/narration.mjs": "0489d15614fbc0e1aa53189f31aa9c4dfb651cc4c07ad4f410dd13cd5d8e4e7f",
+  "engine/motion/particles.mjs": "37e22ded509e38e302100b5156a9d050d3d5795e8828837ffbf22de6778b2493",
+  "engine/motion/path.mjs": "761810cd3f88c51778f4ec1f8819da07c39a9ca88ac54a57c1c124fca81f1153",
+  "engine/motion/player.mjs": "595a2699d6a733130278b2366a55f2bf2dc02341359dc5591ad3c776769ac467",
+  "engine/motion/renderer.mjs": "c0f7c18ce0ebd06b301dba476966a008e386614478d5c2028b6a815a4ef9c620",
+  "engine/motion/scene.mjs": "7d3d387ca1b4e114a8568c3c2ee68d5f5d55e689d3f78824388053bc59b2c9c5",
+  "engine/motion/shaders.mjs": "2a1e014021ccedbb50914fa13b8b0cddad02aedc3572758508fe09f01b9011e6",
+  "engine/motion/text.mjs": "a69f8f0458b5abf60720fe110445023d4fa452559ca1a1e142a27ea2ef3babdb",
+  "engine/motion/timeline.mjs": "b65884d9cba703c53a8faf29f30f4296be54061758710577c24f3e5262eacef1",
+  "engine/motion/vector.mjs": "555e4eacbc633375bd324534417f39de65933c9d430422ecd6f30373ca5229ca",
+  "engine/motion/walkthrough.mjs": "1efead7ed5272f47153bab42c5f9f9bfbe529d8f51545a6fc4147ac25f543dcc",
+  "engine/raw-gpu.mjs": "7b1ba7ff17207f59fba99bb073d2165b0bbc2e5086b5255b2a27394cadb53dd4",
+  "engine/threads.mjs": "19513b840714f972999871e6ac36d11b2ee91f36f89121f24a240ff4bba4791d",
+  "engine/threads.wgsl": "de4d1ae12afce1f5768dec6c3fb203f64e65237581f68fcb9729795fbde67331",
+  "engine/worlds.mjs": "7962aca6ae7022ec6bfcbeaea6dc788852853b01e1be53b4686beede0dc364fe",
+  "engine/worlds.wgsl": "824149067f51cd19fafcd7d97258b395265cb222b24908faecd50f2fac570138",
+  "facts.json": "c189c60e5984968ccb5441700900dfbda95b829cfbcdca912093de2132c86245",
+  "first-run-1080p.mp4": "b592b9837b234416cc9a5c43ff835762937cbf499f507148ae0e8930f5b6929c",
+  "first-run-2160p.mp4": "2ec803f687b921dd30ba932cc97c330920bb49370f6693203a93f9ca03741053",
+  "first-run.cast.json": "433d57c086189bfc204f9e66fc07e7e77382df416b2ac7cbf8c404f293a6f893",
+  "first-run.script.json": "1b995f82893b259ac6c86730f015828a92f2da44a384297da71b88fe4876705b",
+  "first-run.vtt": "c187b5d5f34e92645f90fe9674816d31bf2e1eb98e64ddb97e7b351b1823c02d",
+  "index.html": "632ebc51f13c89abc3ed8d80ae70fcae4200a98a63d7cb94cc355925746dd8f2",
+  "poster.jpg": "5a65599465955d75724c24a2501ceee37148dfbb585bbe724cbdf6211ae653ba",
+  "scene/ao-check.scene.mjs": "349ef1e19554fa29ab63d24c5cbcdc4daeba392c6cbf9dbd9ab763c6b778e4d5",
+  "scene/atlas.json": "e319da67ce990a6d163411db1ef81641fbe76b9047f98575e9067280f69cb6bd",
+  "scene/first-run.json": "3d6553bb80e85d541c3417517d9501055fa93f985398cb102984c062453d350d",
+  "scene/first-run.scene.mjs": "1e2229f0510b89187991b5cc40e89aa0c0c53b23562fe68bdec4cf2d297e1922",
+  "timing.json": "9c0a14afe25a9a7e40af9a95c6fee8533130d9cc461cf1f1c5b8bff4d4d6bf05"
+ }
+}

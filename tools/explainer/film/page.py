@@ -97,6 +97,36 @@ def interactive(slug: str, folder: str, title: str) -> str:
   </div>"""
 
 
+# Media rendered by a repository's release (raw-native ADR 0012): media/releases/<repo>/<tag>/<scene>/,
+# copied from the release's media bundle. Each folder holds the video, poster, captions, the facts it
+# was drawn from, and an interactive index.html with the engine beside it.
+RELEASES = [("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+
+
+def release_section() -> str:
+    items = []
+    for repo, tag, scenes in RELEASES:
+        for sid in scenes:
+            folder = f"media/releases/{repo}/{tag}/{sid}"
+            m = json.loads((ROOT / folder / "media.json").read_text(encoding="utf-8"))
+            video = next(f for f in m["files"] if f.endswith("-1080p.mp4"))
+            vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
+            track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
+            voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
+                     else "Captions only; no narration yet.")
+            items.append(f"""
+  <figure class="film rm">
+    <h3>{E(m["title"])}</h3>
+    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
+    <figcaption>{clock(m["duration"])}. Rendered by the <a class="inline" href="https://github.com/HarperZ9/{repo}/releases/tag/{tag}">{E(repo)} {E(tag)}</a> release from values read at its commit {E(m["commit"][:7])}: <a class="inline" href="{folder}/facts.json">facts.json</a>. {voice} <a class="inline" href="{folder}/index.html">Open it live</a> to scrub it frame by frame in your browser.</figcaption>
+  </figure>""")
+    return f"""
+<section class="mv" id="release-media" aria-labelledby="release-media-h">
+  <h2 id="release-media-h">From the latest releases</h2>
+  <p class="body-text">Each release renders its own short films and walkthroughs from its own output, so a number on screen is the number that release produced.</p>{"".join(items)}
+</section>"""
+
+
 def page() -> str:
     films = "".join(film_section(s) for s in FILMS)
     shorts = "".join(f'<li><a class="inline" href="{E(href)}">{E(title)}</a>, {E(length)}</li>' for _, title, href, length in SHORTS)
@@ -148,6 +178,8 @@ def page() -> str:
   <ul class="fl-design">{design}</ul>
   <p class="body-text">Your answers and review dates stay in this browser and are never sent anywhere.</p>
 </section>
+
+{release_section()}
 
 <section class="mv" id="shorts" aria-labelledby="shorts-h">
   <h2 id="shorts-h">Shorter explainers</h2>
