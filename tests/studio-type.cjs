@@ -46,7 +46,9 @@ const pick = (page, s) => page.evaluate((s) => document.querySelector(`#studio-s
       page.on('pageerror', (e) => errors.push(String(e.message)));
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
       try {
-        await page.goto(`${base}/studio.html?source=type`); await wait(page, 4000);
+        await page.goto(`${base}/studio.html?source=type`);
+        // The desk is read from type-forge.html on first entry; on a slow network that takes a while.
+        await page.waitForSelector('#src-engine #tf-text', { timeout: 20000 }); await wait(page, 1500);
         const got = await page.evaluate(controls, '#src-engine');
         const ids = new Set(got.map((c) => c.id).filter(Boolean)), labels = new Set(got.map((c) => c.label));
         const missing = page0.filter((c) => !(c.id && ids.has(c.id)) && !labels.has(c.label));
