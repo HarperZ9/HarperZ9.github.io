@@ -1,0 +1,92 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Motion capture</title>
+<link rel="icon" href="data:,">
+<!-- Offline renderer page for scripts/motion_render.py. It draws frames
+     from..to of a scene at w x h, frame i at exactly i / fps, and sends them
+     to the local server that launched it, one of two ways:
+       transport=webcodecs (default)  the browser's hardware encoder (WebCodecs)
+                                      encodes each frame; the server stores the
+                                      Annex B stream and muxes it
+       transport=raw                  RGBA rows per frame, for ffmpeg to encode -->
+<canvas id="c" width="16" height="16"></canvas>
+<script type="module">
+import { createEngine } from "./engine.mjs";
+const q = new URLSearchParams(location.search);
+const W = +q.get("w") || 1920, H = +q.get("h") || 1080, fps = +q.get("fps") || 30;
+const transport = q.get("transport") || "webcodecs";
+const status = (s) => { window.__motion = { ...(window.__motion || {}), ...s }; };
+const post = async (path, body) => { const r = await fetch(path, { method: "POST", body }); if (!r.ok) throw new Error(path + ": " + r.status); };
+
+async function makeEncoder() {
+  const codec = q.get("codec") || "avc1.640034", qp = +(q.get("qp") || 16);
+  const cfg = { codec, width: W, height: H, framerate: fps, hardwareAcceleration: "prefer-hardware", latencyMode: "quality" };
+  if (codec.startsWith("avc1")) { cfg.avc = { format: "annexb" }; cfg.bitrateMode = "quantizer"; }
+  else if (codec.startsWith("hvc1") || codec.startsWith("hev1")) { cfg.hevc = { format: "annexb" }; cfg.bitrate = +(q.get("bitrate") || 80e6); }
+  else cfg.bitrate = +(q.get("bitrate") || 60e6);
+  const sup = await VideoEncoder.isConfigSupported(cfg);
+  if (!sup.supported) throw new Error("encoder config not supported: " + JSON.stringify(cfg));
+  let pending = [], bytes = 0, seq = 0, failed = null, chain = Promise.resolve();
+  const flush = () => {
+    if (!pending.length) return chain;
+    const all = new Uint8Array(bytes); let o = 0;
+    for (const p of pending) { all.set(p, o); o += p.length; }
+    pending = []; bytes = 0;
+    const s = seq++;
+    chain = chain.then(() => post("/chunk?seq=" + s, all));
+    return chain;
+  };
+  const enc = new VideoEncoder({
+    output: (chunk) => { const b = new Uint8Array(chunk.byteLength); chunk.copyTo(b); pending.push(b); bytes += b.length; if (bytes > 4e6) flush(); },
+    error: (e) => { failed = e; },
+  });
+  enc.configure(cfg);
+  return {
+    async frame(canvas, i) {
+      if (failed) throw failed;
+      const vf = new VideoFrame(canvas, { timestamp: Math.round((i * 1e6) / fps), duration: Math.round(1e6 / fps) });
+      const opt = { keyFrame: i % (fps * 2) === 0 };
+      if (cfg.avc) opt.avc = { quantizer: qp };
+      enc.encode(vf, opt);
+      vf.close();
+      while (enc.encodeQueueSize > 4) await new Promise((r) => setTimeout(r, 1));
+    },
+    async end() { await enc.flush(); flush(); await chain; enc.close(); if (failed) throw failed; return { codec, qp: cfg.avc ? qp : null, bitrate: cfg.bitrate || null }; },
+  };
+}
+
+try {
+  const eng = await createEngine({ canvas: document.getElementById("c"), sceneUrl: new URL(q.get("scene"), location.href).href,
+    shaders: q.get("shaders") ? new URL(q.get("shaders"), location.href).href : undefined });
+  eng.resize(W, H);
+  const from = +(q.get("from") || 0), to = q.has("to") ? +q.get("to") : Math.ceil(eng.scene.duration * fps);
+  status({ ready: true, from, to, width: eng.size[0], height: eng.size[1], transport });
+  // History layers (Threads) need the frames before `from` to look the same as a full run.
+  for (let i = Math.max(0, from - (+q.get("warm") || 0)); i < from; i++) { eng.ctx.dt = 1 / fps; eng.motion.draw(eng.list(i / fps), { frame: i, time: i / fps }); }
+  const enc = transport === "webcodecs" ? await makeEncoder() : null;
+  const cpu = [];
+  for (let i = from; i < to; i++) {
+    const t0 = performance.now();
+    if (enc) {
+      eng.ctx.dt = 1 / fps;
+      eng.motion.draw(eng.list(i / fps), { frame: i, time: i / fps });
+      await enc.frame(eng.host.canvas, i);
+      if (i % 8 === 0) await eng.host.done();
+    } else {
+      const img = await eng.capture(i, fps);
+      await post("/frame?i=" + i, img.data);
+    }
+    cpu.push(performance.now() - t0);
+    if (i % 30 === 0) status({ at: i, gpu: eng.motion.timings(), stats: eng.motion.stats });
+  }
+  const encoded = enc ? await enc.end() : { codec: "raw" };
+  cpu.sort((a, b) => a - b);
+  const stats = { frames: cpu.length, frame_ms_median: cpu[cpu.length >> 1], frame_ms_p95: cpu[Math.floor(cpu.length * 0.95)],
+    gpu_ms: eng.motion.timings(), adapter: eng.host.info, last: eng.motion.stats, encoded };
+  await post("/done", JSON.stringify(stats));
+  status({ done: true, stats });
+} catch (e) {
+  status({ error: String(e && e.stack || e) });
+  fetch("/done", { method: "POST", body: JSON.stringify({ error: String(e && e.stack || e) }) });
+}
+</script>

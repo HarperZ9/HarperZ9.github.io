@@ -1,0 +1,6 @@
+{
+  "schema": "explainer-score/1",
+  "about": "Moments the generated score marks, in seconds; see tools/explainer/film/score.py. Creative media, no claim.",
+  "bells": [1.9, 3.34, 12.58, 36.5, 41.5, 56.0, 71.94, 77.0, 101.4, 113.6, 118.14, 148.56, 164.4],
+  "swells": [[22.9, 28.6], [66.9, 72.5], [84.3, 89.5]]
+}
