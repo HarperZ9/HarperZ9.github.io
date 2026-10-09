@@ -122,21 +122,22 @@ async function buildControls(id, surface, handle, mount) {
     if (remembered[id]) apply();
   }
   if (id === "type") {
-    const text = control(mount, "Text", el("input", { type: "text", class: "poster-seed", value: want(id, "text", "Adhesion"), maxlength: "60", spellcheck: "false" }), "me-type-text");
-    const weight = control(mount, "Weight", el("input", { type: "range", min: "0.04", max: "0.2", step: "0.001", value: want(id, "weight", "0.085") }), "me-type-weight");
-    const style = control(mount, "Capitals", select(["drawn", "runic"], want(id, "style", "drawn")), "me-type-style");
-    const apply = () => {
-      setP({ text: text.value, weight: +weight.value, style: style.value === "runic" ? "runic" : "" });
+    // The forge's whole desk (studio-type.js): every control on type-forge.html, its proof and its
+    // status list. The stage draws the same text from the minted outlines.
+    const { mountTypeDesk, forgeParams } = await import("./studio-type.js?v=20261009-type-desk");
+    const note = el("p", { class: "transform-note me-refusal", role: "status", "aria-live": "polite" });
+    let desk = null;
+    const push = (p) => {
+      setP(p);
       const f = handle.instance.face;
-      const note = mount.querySelector(".me-refusal");
-      if (note) note.textContent = f && f.refused ? "Refused: " + f.refusals.join(" ") : "";
+      note.textContent = f && f.refused ? "Refused: " + f.refusals.join(" ") : "";
       measureSoon();
     };
-    mount.append(el("p", { class: "transform-note me-refusal", role: "status", "aria-live": "polite" }));
-    const changed = () => { apply(); settle(id, { text: text.value, weight: weight.value, style: style.value }); };
-    for (const n of [text, weight, style]) n.addEventListener("input", changed);
-    liveControls(id, { text: { el: text, first: "Adhesion" }, weight: { el: weight, first: "0.085" }, style: { el: style, first: "drawn" } }, apply);
-    if (remembered[id]) apply();
+    desk = await mountTypeDesk(mount, (p) => { push(p); settle(id, p); });
+    mount.append(note);
+    liveControls(id, desk.fields, () => { desk.apply(); push(forgeParams()); });
+    if (remembered[id]) { for (const [k, f] of Object.entries(desk.fields)) if (remembered[id][k] != null) f.el.value = String(remembered[id][k]); desk.apply(); }
+    push(forgeParams());
   }
   if (id === "gallery" || id === "loom") {
     const { specimenLayerNames } = await import("./media-engine/plugins/plate.mjs");

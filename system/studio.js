@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-loom-hub";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-type-desk";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -605,7 +605,7 @@ async function enterLoomSource(epoch) {
 let _engineSurface = null;
 function loadEngineSurface() {
   return _engineSurface ? Promise.resolve(_engineSurface)
-    : import("./studio-engine.js?v=20261004-studio-engines").then((m) => {
+    : import("./studio-engine.js?v=20261009-type-desk").then((m) => {
       _engineSurface = m;
       // A setting changed on a surface is one undo step, and what this browser keeps.
       m.onEngineSettings((id) => { if (_shell) _shell.record(id); });

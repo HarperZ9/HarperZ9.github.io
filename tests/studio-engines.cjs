@@ -67,9 +67,9 @@ async function clickIn(page, sel) { const l = page.locator(sel).first(); await l
 
       // Type forge keeps its settings across a reload.
       await pick(page, 'type'); await wait(page, 3000);
-      await setValue(page, 'me-type-text', 'Kept', 'input'); await wait(page, 1500);
+      await setValue(page, 'tf-text', 'Kept', 'input'); await wait(page, 1500);
       await page.goto(`${base}/studio.html?source=type`); await wait(page, 4000);
-      assert.equal(await page.inputValue('#me-type-text'), 'Kept', `${tag} a reload keeps the Type forge text`);
+      assert.equal(await page.inputValue('#tf-text'), 'Kept', `${tag} a reload keeps the Type forge text`);
 
       // The bar's main action is the export with a receipt.
       const download = page.waitForEvent('download', { timeout: 15000 });
