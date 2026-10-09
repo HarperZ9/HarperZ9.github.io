@@ -11,7 +11,7 @@
 // Undo, Redo or keep line; history: false keeps a snapshot without Undo and Redo (a file's name,
 // say, which can be remembered but not undone).
 
-import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261004-studio-keep";
+import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261009-gallery-desk";
 import { createStore, keepMessage } from "./studio-store.js?v=20261004-studio-keep";
 
 function el(ctx, tag, cls, text, attrs = {}) {
