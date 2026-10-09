@@ -4788,6 +4788,42 @@
     "t": 0
    }
   },
+  "the-maker-is-part-of-the-story.jpg": {
+   "backend": "chrome-154.0.8037.98-skia",
+   "content_sha256": "1298c9d05fa9428f1b8202f2fcc0725bf72a397ab8fbfae55ea1b9822a95fb41",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "the-maker-is-part-of-the-story.jpg": "43a3eadf17c3173cee4668facc90d31e837bfc8f992c35a953fd86190e02802b",
+    "the-maker-is-part-of-the-story.svg": "15d300d6ac3e889a33d099710d64b6561f9e73d11628b2bdc4492ca4313f06b0"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "79d734279960f2de597e40ec8ca17b0c251fff989a7fbca2044f91a80e039597",
+   "reconcile": null,
+   "scene_sha256": "351c6ee364f2f7ce3effd9f9e958998f191608333fe6fc31b063b6b1335dfdc8",
+   "schema": "superstack.receipt/1",
+   "seed": "the-maker-is-part-of-the-story",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 4260343992,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "the-number-has-a-vintage.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "dd71a5a24d75681c919be1b17f4a4f95a722e782be928196352bd0e217d4b67f",

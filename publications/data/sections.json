@@ -10,6 +10,7 @@
       "explainer": "Long investigations from public records, and the series that follows Who Knew First.",
       "members": [
         {"id": "why-i-do-this", "kind": "Series opener", "topic": "why I do this work", "series": {"id": "who-knew-first", "part": "opener"}},
+        {"id": "the-maker-is-part-of-the-story", "kind": "Series piece", "topic": "stories and their makers", "series": {"id": "who-knew-first", "part": 4}},
         {"id": "who-kept-the-books", "kind": "Series piece", "topic": "records and money", "series": {"id": "who-knew-first", "part": 3}},
         {"id": "the-terms-for-telling", "kind": "Series piece", "topic": "whistleblowers and disclosure", "series": {"id": "who-knew-first", "part": 2}},
         {"id": "who-pays-the-referees", "kind": "Series piece", "topic": "AI evaluation", "series": {"id": "who-knew-first", "part": 1}},

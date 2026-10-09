@@ -695,6 +695,13 @@ window.CARD_DATA = {
     "word": "Books",
     "headline": "Who Kept the Books"
   },
+  "the-maker-is-part-of-the-story": {
+    "publication": true,
+    "editorial": true,
+    "role": "ESSAY",
+    "word": "Maker",
+    "headline": "The Maker Is Part of the Story"
+  },
   "the-number-has-a-vintage": {
     "publication": true,
     "editorial": true,

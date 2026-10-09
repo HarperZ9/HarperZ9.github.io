@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RELEASE_PATHS = (
     "assets/index-BniK76UM.js",
     "assets/index-DXjCZzHu.js",
+    "assets/index-BexgIZUT.js",
     "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
@@ -64,6 +65,9 @@ RELEASE_PATHS = (
     "who-kept-the-books.html",
     "publications/data/listings/who-kept-the-books.json",
     "img/og/who-kept-the-books.png",
+    "the-maker-is-part-of-the-story.html",
+    "publications/data/listings/the-maker-is-part-of-the-story.json",
+    "img/og/the-maker-is-part-of-the-story.png",
     "assets/index-Dmke1bnx.js",
     "assets/index-BIA-0d5A.js",
     "the-number-has-a-vintage.html",
@@ -651,7 +655,10 @@ RELEASE_PATHS = (
 # October 8, 2026: Who Kept the Books, series piece 3, ships with its listing and card; the
 # series panels, series tables, hub, feeds, index, routes, site index and home bundle change
 # with it (the release paths, listed and reviewed; the Writing hub now keeps the series opener first). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "51d4bbd33d1f50b65c7aaebf23da6a89ec14ad990cfd8018e3fd23da3fca2f55"
+# October 8, 2026, later: The Maker Is Part of the Story, series piece 4, ships with its listing
+# and cards; panels, series tables, hub, feeds, index, routes, site index and home bundle change
+# with it (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "ac80769db858b8d93eadbaa7f062eb487b2acd175b58fea617e611bb76bd03b1"
 
 
 BRIEFING_FIGURES = (
@@ -855,7 +862,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 8, 2026: Who Kept the Books, series piece 3, joins the newest-writing strip, so
     # the bundle rebuilt from the registry is index-DXjCZzHu.js with the same sheet.
     # index-BniK76UM.js stays as retained history.
-    current_js = "index-DXjCZzHu.js"
+    # October 8, 2026, later: The Maker Is Part of the Story, series piece 4, joins the strip, so
+    # the bundle rebuilt from the registry is index-BexgIZUT.js with the same sheet.
+    # index-DXjCZzHu.js stays as retained history.
+    current_js = "index-BexgIZUT.js"
+    previous_maker_js = "index-DXjCZzHu.js"
+    assert previous_maker_js not in source
+    assert (ROOT / "assets" / previous_maker_js).is_file()
+    assert f"assets/{previous_maker_js}" in RELEASE_PATHS
     previous_wkb_js = "index-BniK76UM.js"
     assert previous_wkb_js not in source
     assert (ROOT / "assets" / previous_wkb_js).is_file()
