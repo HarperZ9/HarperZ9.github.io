@@ -16,6 +16,7 @@ RELEASE_PATHS = (
     "assets/index-BniK76UM.js",
     "assets/index-DXjCZzHu.js",
     "assets/index-BexgIZUT.js",
+    "assets/index-mtbFWZrz.js",
     "assets/index-G7cmpE16.js",
     "assets/index-DDpFxCuj.js",
     "assets/index-DI6YWfTZ.js",
@@ -68,6 +69,9 @@ RELEASE_PATHS = (
     "the-maker-is-part-of-the-story.html",
     "publications/data/listings/the-maker-is-part-of-the-story.json",
     "img/og/the-maker-is-part-of-the-story.png",
+    "a-check-it-cannot-predict.html",
+    "publications/data/listings/a-check-it-cannot-predict.json",
+    "img/og/a-check-it-cannot-predict.png",
     "assets/index-Dmke1bnx.js",
     "assets/index-BIA-0d5A.js",
     "the-number-has-a-vintage.html",
@@ -658,7 +662,10 @@ RELEASE_PATHS = (
 # October 8, 2026, later: The Maker Is Part of the Story, series piece 4, ships with its listing
 # and cards; panels, series tables, hub, feeds, index, routes, site index and home bundle change
 # with it (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "ac80769db858b8d93eadbaa7f062eb487b2acd175b58fea617e611bb76bd03b1"
+# October 8, 2026, later: A Check It Cannot Predict, series piece 5, ships with its listing and
+# cards; panels, series tables, hub, feeds, index, routes, site index and home bundle change with
+# it (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "7f99da260e984d3ae3c3257a6ab9e4570f6723d668dcd3d1f0b6ca0d12a8f047"
 
 
 BRIEFING_FIGURES = (
@@ -865,7 +872,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 8, 2026, later: The Maker Is Part of the Story, series piece 4, joins the strip, so
     # the bundle rebuilt from the registry is index-BexgIZUT.js with the same sheet.
     # index-DXjCZzHu.js stays as retained history.
-    current_js = "index-BexgIZUT.js"
+    # October 8, 2026, later: A Check It Cannot Predict, series piece 5, joins the strip, so the
+    # bundle rebuilt from the registry is index-mtbFWZrz.js with the same sheet.
+    # index-BexgIZUT.js stays as retained history.
+    current_js = "index-mtbFWZrz.js"
+    previous_check_js = "index-BexgIZUT.js"
+    assert previous_check_js not in source
+    assert (ROOT / "assets" / previous_check_js).is_file()
+    assert f"assets/{previous_check_js}" in RELEASE_PATHS
     previous_maker_js = "index-DXjCZzHu.js"
     assert previous_maker_js not in source
     assert (ROOT / "assets" / previous_maker_js).is_file()

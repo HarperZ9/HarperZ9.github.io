@@ -14,6 +14,7 @@
     "publications/data/records/the-timestamp-is-not-the-order.json": "12529cbb04a624ac9c181cb08fa4ce3ff4d8659fa3af205ab593b0ce887db456",
     "publications/data/records/what-the-formula-counts.json": "12024430370cc7a85874281daa3a62a0e188f941f1d7c6b2a8af2b8c1c5d4441",
     "publications/data/records/what-the-label-changes.json": "5069e1af88b2ad61afd27833d7a9ae199c43d0b76d6bc93e8e7af286ffcef2ea",
+    "publications/data/listings/a-check-it-cannot-predict.json": "18a78d650aa940627915660445873c0a46d29582a01bc18d637b46e03225f4eb",
     "publications/data/listings/a-witness-should-not-become-a-ruler.json": "6bd068bef16ef3fdf3473844937b77392b60093e7ea107f2e33868fcb987703b",
     "publications/data/listings/checking-the-machines.json": "61734c3d8c9912061defbd0e561152a0f15668703e780fd912fed950bf6b81e8",
     "publications/data/listings/conferred-existence-essay.json": "abb0747f2bb01b08fd6ad1d9fefcee9fbcfc49c040cdd973e9cb49c1c5a9d389",
@@ -39,8 +40,8 @@
   "outputs": {
     "availability-is-not-reach.html": "9dc6dda0230381c2c38072f99a702e8409e8ab09db792659ae710863bd3b39fc",
     "borrowed-ground.html": "093f1a966f034f4afec94a110d7631d399bab0b0bcdc483e92f99ee2ef55f501",
-    "feed.json": "17bb50f81da8cb8f2661733960dfc35a437ed900333c67a559bff65576cec363",
-    "feed.xml": "3273171c91f55312fad41691e775cc0a70a15a764c8bd7823fd2592a8068fc3d",
+    "feed.json": "d0b49c1978f5f8ccd74241f312324b68e94b3e6ef18dd7fb4595f4f87ec5bcff",
+    "feed.xml": "931c710b9b412dd9e435694fa80a1f0b28478be8ac535a63268c30da8f076f1f",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -64,9 +65,9 @@
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
     "growth-needs-a-before.html": "b636c08568cec1c65386216cdeae2e487164e7bebfe7cdbb5d4dd64773554bcd",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "08c62122326ffd5035b07f1c89d1148dcd4ff582d9f1c151f03dde2972b832c7",
-    "publications.html": "c16fb81db0d1c3006e9426df9ea6c5b0ece298d9cc88d5caead706c2ca436c9a",
-    "publications/data/index.json": "ff2c4f7199c62a2e8b5216d8d3444370e8dfb24431340efe77b8082996e4e7c1",
-    "sitemap.xml": "7b463405c3d887b15d24b8c72a9bdd83ddd25410725224fe1c9f0764b2cfc427",
+    "publications.html": "c0163b54cd4b1b5ca358d646119b197d0f1f2bdc4e2040400e9af9657ec678f1",
+    "publications/data/index.json": "13e5bc5670a7e9b71040c943ce2ea06493f0e299b22a0f7b1ec53257bbe744db",
+    "sitemap.xml": "d1c03a18d2a42769a7265643661ffd081593c5ec4666c84b37df588309ba87ca",
     "support-has-more-than-one-record.html": "566d0dc1a576a102b2c597941825ce24e4ccd2d0de5b0d1f9601326b735cade2",
     "the-number-has-a-vintage.html": "2f5639c9ec3e3e5be4ad76a9f1a6e9d284aff884ea24bfadcff13ee648f3a1aa",
     "the-sandbox-was-never-just-a-box.html": "dc15ce4696295725a6b39b357cca4f2e44bdcffdb39f5198221bb909814563e8",
@@ -75,6 +76,6 @@
     "the-timestamp-is-not-the-order.html": "514e01251e4470f977eb61094a020845b4547c9b6edd5d4d3200e9924111dc09",
     "what-the-formula-counts.html": "eda965c5431335feb899289d2404e164baaeab1cf6a91bfdaf397a1ba4a62bee",
     "what-the-label-changes.html": "b98369abf34f58c7489748ea698c6cd878b812037b9ff28d3adfedf0c8e5d8f4",
-    "who-knew-first-series.html": "b3f8a28b2d8b7f9615276c5f41a5ae4c351a5608760b6b3ca9930353877e86bd"
+    "who-knew-first-series.html": "42b9da633314cfd0767dae67ca8b91c5dea98dcb312a6c3efae5bab6e239a1fb"
   }
 }

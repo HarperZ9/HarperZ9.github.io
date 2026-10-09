@@ -404,7 +404,7 @@ function familyForHref(href, metadata) {
   if (href.startsWith("systems/")) return "Systems";
   if (href.startsWith("demos/")) return "Systems";
   if (href.startsWith("security-") || href.includes("proof") || href.includes("receipt")) return "Security";
-  if (/^(who-knew-first|who-knew-first-series|who-pays-the-referees|the-terms-for-telling|who-kept-the-books|the-maker-is-part-of-the-story|why-i-do-this)\.html$/.test(href)) return "Who Knew First";
+  if (/^(who-knew-first|who-knew-first-series|who-pays-the-referees|the-terms-for-telling|who-kept-the-books|the-maker-is-part-of-the-story|a-check-it-cannot-predict|why-i-do-this)\.html$/.test(href)) return "Who Knew First";
   if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose|verified-is-not-trustworthy|conferred-existence-essay)\.html$/.test(href)) return "Writing";
   if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
   if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire|work-with-me|independence|income-ledger)\.html/.test(href)) return "Work";
@@ -500,7 +500,7 @@ if (findRouteByHref("who-knew-first.html")) {
   whoKnewFirst.label = whoKnewFirstLabel;
   whoKnewFirst.primary = true;
 }
-for (const href of ["why-i-do-this.html", "who-knew-first-series.html", "who-pays-the-referees.html", "the-terms-for-telling.html", "who-kept-the-books.html", "the-maker-is-part-of-the-story.html"]) {
+for (const href of ["why-i-do-this.html", "who-knew-first-series.html", "who-pays-the-referees.html", "the-terms-for-telling.html", "who-kept-the-books.html", "the-maker-is-part-of-the-story.html", "a-check-it-cannot-predict.html"]) {
   if (findRouteByHref(href)) moveRoute(href, whoKnewFirstFamily, "who-knew-first.html");
 }
 // Reading pages the hub lists only as a sub-line or a dated list still belong to Writing.
