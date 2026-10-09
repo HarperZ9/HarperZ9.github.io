@@ -38,7 +38,7 @@ export const SOURCE_GUIDE = Object.freeze({
   gallery:   { name: "Gallery", purpose: "The print desk: a seed and up to three of 95 instruments draw a plate. The same seed draws the same plate." },
   loom:      { name: "Loom", purpose: "Weave a picture into cloth: structure, sett, colours and the shuttle, then export a WIF draft." },
   type:      { name: "Type forge", purpose: "Mint Zain Mint in this browser from the pen and proportions, and read your text in it." },
-  splats:    { name: "Splat Lab", purpose: "Where the Splat Lab's scenes live. They draw in the Spatial source." },
+  splats:    { name: "Splat Lab", purpose: "Walk the receipt-checked splat worlds. A package that fails its receipt does not draw." },
   brender:   { name: "BRender", purpose: "Re-hash the BRender restoration's release media in this browser." },
   revival:   { name: "Engine Revival", purpose: "Re-hash Engine Revival's release media in this browser." },
   raw:       { name: "RAW", purpose: "Render one scene with raw-native and check the fast path against the reference." },

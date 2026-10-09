@@ -14,7 +14,7 @@ import { representation, richFeatures, describeFrame, describeFrameLong, percept
 // module graph at load time the way a missing named import would.
 import * as senseCore from "./sense.js";
 import { respond } from "./respond.js";
-import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js";
+import { sourceIsAnimated, shouldHaltOnStatic, fullscreenMaxBacking } from "./studio-loop.js?v=20261009-splats-in-place";
 import { buildModelHeaders } from "./studio-model.js";
 import { oklchToSrgbByte } from "./lib/sense-core/colour-perceptual.mjs";
 import { createPerceptionWorker } from "./studio-perception-client.js";
@@ -26,7 +26,8 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-type-desk";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-splats-in-place";
+import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-splats-in-place";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -247,6 +248,31 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
+// The Splat Lab draws its splat worlds in place with the Spatial renderer (9 October 2026): the two
+// sources share the renderer and its inspector, and the Splat Lab adds its own record.
+const isSpatial = (s) => s === "spatial" || s === "splats";
+let _splatsRecord = null;
+function loadSplatsRecord() {
+  if (_splatsRecord) return _splatsRecord;
+  _splatsRecord = fetch("gaussian-splats.html", { credentials: "same-origin" }).then((r) => {
+    if (!r.ok) throw new Error("gaussian-splats.html answered " + r.status);
+    return r.text();
+  }).then((html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const body = $("splats-record-body"); if (!body) return;
+    body.replaceChildren();
+    for (const sel of [".boundary", ".criteria", ".pilot-grid", ".held-scenes"]) {
+      const n = doc.querySelector(sel);
+      if (n) { n.classList.add("splats-record-part"); body.append(document.adoptNode(n)); }
+    }
+  }).catch((e) => {
+    console.error("[studio] the Splat Lab record could not be read:", e);
+    const body = $("splats-record-body");
+    if (body) body.textContent = "The Splat Lab's record could not be read here. It is on gaussian-splats.html.";
+    _splatsRecord = null;
+  });
+  return _splatsRecord;
+}
 const loadSpatial = lazyLoader(() => import("./studio-spatial.js"), m => { _spatial = m; });
 let _spatialStatic = false;   // true when reduced motion holds a single frame
 
@@ -433,7 +459,7 @@ let _flatZoom = 1;
 function flatZoomBoost() {
   // The boost applies only while a flat source is active; native-camera sources own their zoom.
   if (activeSource === "fractal" || activeSource === "fractal3d" || activeSource === "ndim"
-    || activeSource === "spatial" || activeSource === "voxels" || activeSource === "plotmaps") return 1;
+    || isSpatial(activeSource) || activeSource === "voxels" || activeSource === "plotmaps") return 1;
   return Math.max(1, Math.min(8, _flatZoom));
 }
 window.__studioFlatZoomChanged = (scale) => {
@@ -510,7 +536,7 @@ const SOURCES = {
   retro:     { block: "src-retro",     mode: "generate" },
   gallery:   { block: "src-gallery",   mode: "generate" },
   loom:      { block: "src-loom",      mode: "generate" },
-  splats:    { block: "src-engine",    mode: "generate", engine: true },
+  splats:    { block: "src-spatial",   mode: "generate" },
   brender:   { block: "src-engine",    mode: "generate", engine: true },
   revival:   { block: "src-engine",    mode: "generate", engine: true },
   raw:       { block: "src-engine",    mode: "generate", engine: true },
@@ -751,7 +777,7 @@ function setSource(next) {
   // Mark the stage interactive (grab cursor + drag affordance) for the camera-driven sources.
   // ndim is now a camera source too (P2 directive a): wheel dollies the camera into the volume.
   const stageEl = document.getElementById("viewport-stage");
-  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim" || next === "spatial");
+  if (stageEl) stageEl.classList.toggle("cam-interactive", next === "fractal" || next === "fractal3d" || next === "ndim" || isSpatial(next));
   // Music is an animated source: the reactive engine (or its idle loop) paints the canvas every
   // frame, so the perception loop must be reading it. Other sources arm their own loop from their
   // entry/play path; music has no settle-frame, so arm it here. The loop self-idles only for static
@@ -882,7 +908,8 @@ function setSource(next) {
   // Spatial: mount a GL canvas (same swap discipline as fractal3d), then let the
   // module fetch + receipt-check the world package and start the hybrid world
   // under the device tier's splat budget. A DRIFT receipt refuses to render.
-  if (next === "spatial") {
+  { const rec = $("splats-record"); if (rec) rec.hidden = next !== "splats"; if (next === "splats") loadSplatsRecord(); }
+  if (isSpatial(next)) {
     loadSpatial().then(async mod => {
       if (epoch !== _sourceEpoch) return;   // user already switched away while the module loaded
       const c = canvasIsGL ? $("studio-canvas") : mountGLCanvas();
@@ -896,7 +923,7 @@ function setSource(next) {
         const res = await mod.startSpatial(c, { plan, reducedMotion: reduced });
         if (epoch !== _sourceEpoch) { mod.stopSpatial(); return; }
         _spatialStatic = !(res && res.animating);
-        if (_shell) _shell.resume("spatial");
+        if (_shell) _shell.resume(next);
         startMeterLoop();
         // Context-lost recovery lives in studio-spatial.js: it owns the canvas
         // nodes (a fresh one per world start) and can tell an intentional
@@ -4906,12 +4933,15 @@ function paintMeta(w, h, rich) {
 }
 function currentSourceLabel() {
   if (watchStream) return "screen/camera";
-  if (activeSource === "spatial") return "spatial world";
+  if (isSpatial(activeSource)) return activeSource === "splats" ? "Splat Lab world" : "spatial world";
   if (canvasIsGL && !glFractal2D) return "3D fractal";
   if (activeSource === "fractal") return "2D fractal";
   if (activeSource === "ndim") return "n-dim hypercube";
   if (activeSource === "music") return "music reactive";
   if (mode === "byo") return "your media";
+  // Every other source by its own name; the Atelier is the 2D default (the label used to read
+  // "the Atelier / 2D" on the Type forge, the Gallery and every other source it did not list).
+  if (activeSource && activeSource !== "atelier" && SOURCE_GUIDE[activeSource]) return SOURCE_GUIDE[activeSource].name;
   return "the Atelier / 2D";
 }
 
@@ -6997,7 +7027,7 @@ function engineContract(id, { settings = true, door = false } = {}) {
   return c;
 }
 // Sources whose settings are read from their inspector (studio-form.js): a change there is a step.
-const FORM_SOURCES = { spatial: "src-spatial", neural: "src-neural", sound: "src-sound", music: "src-music", discovery: "src-discovery", threads: "src-threads", worlds: "src-worlds" };
+const FORM_SOURCES = { spatial: "src-spatial", splats: "src-spatial", neural: "src-neural", sound: "src-sound", music: "src-music", discovery: "src-discovery", threads: "src-threads", worlds: "src-worlds" };
 const formOf = (source) => $(FORM_SOURCES[source]);
 // The first settings a form source showed in this page: what Start fresh goes back to.
 const formFirst = {};
@@ -7080,7 +7110,8 @@ const SHELL_CONTRACTS = {
   raw: engineContract("raw"),
   brender: engineContract("brender", { settings: false }),
   revival: engineContract("revival", { settings: false }),
-  splats: engineContract("splats", { settings: false, door: true }),
+  // The Splat Lab shares the Spatial renderer and inspector (a session of its own).
+  splats: null,
   plotmaps: {
     making: true,
     primary: { label: "Draw", target: "plot-draw", title: "Draw the map sheet with these settings" },
@@ -7252,6 +7283,7 @@ const SHELL_CONTRACTS = {
     },
   },
 };
+SHELL_CONTRACTS.splats = SHELL_CONTRACTS.spatial;
 // Every settled Atelier drawing is one undo step.
 document.addEventListener("atelier:drawn", () => { if (_shell) _shell.record("atelier"); });
 // Every rebuild of the showcase scene (a system, a seed, the S key) is one undo step.
