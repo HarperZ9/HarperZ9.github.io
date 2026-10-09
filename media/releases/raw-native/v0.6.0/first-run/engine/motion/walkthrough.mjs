@@ -75,7 +75,7 @@ export function plan(spec, cast, timing = null) {
 
 export function walkthroughScene({ spec, cast, atlas, timing = null, fps = 30 }) {
   const scene = {
-    title: "Walkthrough", duration: 60, fps, design: [1920, 1080], params: [], chapters: [],
+    title: "Walkthrough", duration: 60, fps, design: [1920, 1080], params: [], chapters: [], burnsCaptions: true,
     async load(ctx) {
       const [S, R, A, T] = await Promise.all([ctx.json(spec), ctx.json(cast), ctx.json(atlas), timing ? ctx.json(timing).catch(() => null) : null]);
       const pl = plan(S, R, T);
