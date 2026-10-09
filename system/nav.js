@@ -3,7 +3,10 @@
 import { EXTERNAL_ACTIONS, PRIMARY_ROUTES, ROUTE_REGISTRY, SECONDARY_GROUPS, WRITING_SECTIONS, routeFamily } from "./routes.js?v=20260925-void-plates";
 
 const BRAND_LABEL = "Zain Dana Harper";
-const BRAND_MARK_SRC = "brand/aperture-mark.png";
+// The header mark at its shown size (about 30 CSS px, so 96 px covers a 3x screen) as WebP: 4 KB
+// in place of the 480 KB, 512 px PNG every page used to load for it (Studio audit, 9 October 2026).
+// The full-size PNG stays in brand/ for anything that links it.
+const BRAND_MARK_SRC = "brand/aperture-mark-96.webp";
 
 const DESKTOP_GPU_ART_QUERIES = [
   "(prefers-reduced-motion: reduce)",
@@ -384,7 +387,7 @@ export function renderNav(doc = document) {
   const homeHref = localHrefForPage("index.html", routePath);
   const brandMarkSrc = localHrefForPage(BRAND_MARK_SRC, routePath);
   mount.innerHTML =
-    `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
+    `<a class="sn-home" href="${homeHref}" aria-label="${BRAND_LABEL} home"><span class="sn-home-field"><canvas class="sn-logo-canvas" aria-hidden="true"></canvas><img class="sn-logo-fallback" src="${brandMarkSrc}" alt="" width="30" height="30" loading="lazy" decoding="async" style="display:none"></span><span class="sn-brand-word">${BRAND_LABEL}</span></a>`
     + `<nav class="sn-links" aria-label="Primary">`
     + PRIMARY_ROUTES.map((item) => navLink(item, active, routePath, true)).join("")
     + EXTERNAL_ACTIONS.map((item) => navLink(item, active, routePath)).join("")
