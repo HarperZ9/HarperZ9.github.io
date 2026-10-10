@@ -77,8 +77,11 @@ fn hash(n: u32) -> f32 {
   if (i >= ${ORBITS}u) { return; }
   var p = state[i].xyz;
   if (u.reset > 0.5 || state[i].w == 0.0) {
-    p = vec3f(hash(i * 3u) * 2.0 - 1.0, hash(i * 3u + 1u) * 2.0 - 1.0, hash(i * 3u + 2u) * 2.0 - 1.0);
-    if (u.kind > 1.5) { p = p * 10.0 + vec3f(0.0, 0.0, 25.0); }
+    // Every orbit starts a hair away from the Canvas2D mode's single start point, so where the map
+    // is chaotic they spread over the whole attractor and where it settles into a cycle they settle
+    // into the same cycle the Canvas2D mode shows (spread-out starts land in other cycles as stray dots).
+    let jitter = vec3f(hash(i * 3u), hash(i * 3u + 1u), hash(i * 3u + 2u)) * 2e-3 - 1e-3;
+    p = select(vec3f(0.1, 0.1, 0.1), vec3f(1.0, 1.0, 1.0), u.kind > 1.5) + jitter;
     for (var w = 0; w < 24; w++) { p = step(p); }   // settle onto the attractor before plotting
   }
   for (var s = 0; s < ${STEPS}; s++) {
