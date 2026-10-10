@@ -66,7 +66,8 @@ async function build(fig) {
   const all = el("button", { type: "button", class: "xl-btn xl-quiet" }, "Show every question now");
   all.addEventListener("click", () => { r.groups.forEach((_, gi) => show(gi)); all.hidden = true; });
   lead.append(all);
-  host.prepend(lead);
+  const head = host.querySelector("h3");
+  if (head) head.after(lead); else host.prepend(lead);
   if (r.dueCount) {
     const due = el("p", { class: "xl-due", role: "status" }, `${r.dueCount} question${r.dueCount === 1 ? " is" : "s are"} due for review from an earlier visit. `);
     const go = el("button", { type: "button", class: "xl-btn" }, "Review them now");
@@ -75,10 +76,34 @@ async function build(fig) {
     host.prepend(due);
   }
 
+  // The timed transcript and the source cards seek this film: a sentence, a chapter time or a
+  // "Heard at" link moves the video there and plays. The sentence being spoken is marked.
+  const section = fig.closest("section") || fig.parentElement;
+  const seek = (t) => {
+    video.currentTime = Math.max(0, t) + 0.01;
+    video.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    video.play().catch(() => {});
+  };
+  section.addEventListener("click", (e) => {
+    const hit = e.target.closest("[data-seek], .fl-s[data-t]");
+    if (!hit || !section.contains(hit)) return;
+    e.preventDefault();
+    seek(parseFloat(hit.dataset.seek ?? hit.dataset.t));
+  });
+  const said = [...section.querySelectorAll(".fl-s[data-t]")].map((n) => ({ n, t: parseFloat(n.dataset.t) }));
+  let now = null;
+  const follow = () => {
+    const t = video.currentTime;
+    let cur = null;
+    for (const s of said) { if (s.t <= t + 0.05) cur = s.n; else break; }
+    if (cur !== now) { now?.classList.remove("is-now"); cur?.classList.add("is-now"); now = cur; }
+  };
+
   let last = 0;
   video.addEventListener("timeupdate", () => {
     const t = video.currentTime;
     mark();
+    follow();
     if (!video.seeking && t > last) {
       at.forEach((end, gi) => {
         const stop = Math.min(end, video.duration || end) - 0.25;

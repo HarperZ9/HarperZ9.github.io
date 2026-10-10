@@ -9,9 +9,6 @@ figure.film figcaption{font-size:.92rem;margin:.6rem 0;color:color-mix(in srgb,c
 .fl-chapters button[aria-current="step"]{border-color:currentColor}
 .fl-chapters button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .fl-lead{font-size:.92rem}
-.fl-sources{padding-left:1.2rem}
-.fl-sources li{margin:0 0 1rem}
-.fl-sources p{margin:.2rem 0}
 .fl-design,.fl-shorts{padding-left:1.2rem}
 details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 @media (max-width:600px){figure.film{margin-inline:0}.fl-chapters button{font-size:.78rem}}
@@ -25,3 +22,53 @@ details[id$="-transcript"] h4{margin:1rem 0 .3rem}
 .mf .mo-bar button{border-color:color-mix(in srgb,currentColor 40%,transparent)}
 .mf .mo-chapters button,.mf .mo-params,.mf .mo-note,.mf .mo-cap{color:inherit}
 .mf .mo-chapters button{opacity:.85}
+/* The shelf under the title: every film, its length, chapters and sources (page.py film_index). */
+.fl-index{margin:clamp(1.5rem,3vw,2.4rem) 0 0}
+.fl-index ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,12.5rem),1fr));gap:1.1rem 1rem}
+.fl-index a{display:grid;grid-template-columns:auto 1fr;column-gap:.55rem;row-gap:.2rem;color:inherit;text-decoration:none;padding-top:.6rem;border-top:1px solid color-mix(in srgb,currentColor 30%,transparent)}
+.fl-index a:hover,.fl-index a:focus-visible{border-top-color:currentColor}
+.fl-index a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.fl-index img{grid-column:1/-1;display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#060608;margin-bottom:.45rem}
+.fl-ix-n{font-family:"Conso",ui-monospace,monospace;font-size:.8rem;font-variant-numeric:tabular-nums;padding-top:.15rem}
+.fl-ix-t{font-weight:650;font-size:1rem;line-height:1.25;text-wrap:balance}
+.fl-ix-m{grid-column:2;font-family:"Conso",ui-monospace,monospace;font-size:.76rem;color:color-mix(in srgb,currentColor 68%,transparent)}
+/* Sources as evidence cards: found, sample, interval, the source's words, and what it does not prove. */
+.fl-src-h{margin:2rem 0 .9rem}
+.fl-src-wrap{container-type:inline-size;max-width:64rem}
+.fl-sources{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:1.6rem 2rem}
+@container (min-width:44rem){.fl-sources{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fl-sources li{margin:0;padding-top:.75rem;border-top:1px solid currentColor;scroll-margin-top:5rem}
+.fl-sources li:target{outline:1px solid currentColor;outline-offset:.5rem}
+.fl-sources p{margin:0}
+.fl-src-name{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.2rem .8rem;font-size:1.02rem;line-height:1.3}
+.fl-src-kind,.fl-src-heard,.fl-src-facts dt,.fl-t-at,.fl-t-src{font-family:"Conso",ui-monospace,monospace;font-size:.76rem;font-variant-numeric:tabular-nums;color:color-mix(in srgb,currentColor 68%,transparent)}
+.fl-src-heard{margin:.3rem 0 .7rem!important}
+.fl-seek{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+.fl-seek:hover{color:currentColor;text-decoration-thickness:2px}
+.fl-src-facts{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:.45rem .8rem;margin:0;font-size:.94rem;line-height:1.5}
+.fl-src-facts dt{padding-top:.18rem}
+.fl-src-facts dd{margin:0}
+.fl-src-facts dt.fl-null{color:var(--drift,#b0581c);font-weight:600}
+.fl-src-facts dd.fl-null{padding-left:.6rem;border-left:2px solid var(--drift,#b0581c)}
+.fl-src-cite{margin-top:.75rem!important;font-size:.8rem;line-height:1.5;color:color-mix(in srgb,currentColor 72%,transparent);overflow-wrap:anywhere}
+@container (max-width:26rem){.fl-src-facts{grid-template-columns:minmax(0,1fr);gap:.1rem}.fl-src-facts dd{margin-bottom:.45rem}}
+/* The transcript, timed: each sentence seeks the film, and the one being spoken is marked. */
+.fl-transcript{max-width:44rem;margin:1.2rem 0 0;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent);padding-top:.6rem}
+.fl-transcript>summary{cursor:pointer;font-weight:600;padding:.35rem 0;min-height:32px}
+.fl-transcript h4{display:flex;gap:.7rem;align-items:baseline;margin:1.2rem 0 .3rem;font-size:1rem}
+.fl-t-src{margin:0 0 .4rem!important}
+.fl-t-src a{color:inherit}
+.fl-line{margin:.3rem 0!important;font-size:1rem;line-height:1.65}
+.fl-s{cursor:pointer;border-radius:1px;transition:background-color .2s}
+.fl-s:hover{text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+.fl-s.is-now{background:color-mix(in srgb,currentColor 16%,transparent);box-shadow:0 0 0 .14em color-mix(in srgb,currentColor 16%,transparent);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.22em}
+@media (prefers-reduced-motion:reduce){.fl-s{transition:none}}
+@media (forced-colors:active){.fl-s.is-now{outline:1px solid CanvasText}.fl-src-facts dd.fl-null{border-left-color:CanvasText}}
+@media (max-width:600px){
+  .fl-index ol{gap:.7rem}
+  .fl-index a{grid-template-columns:7.5rem minmax(0,1fr);column-gap:.8rem;row-gap:.1rem;align-content:start}
+  .fl-index img{grid-column:1;grid-row:1/4;margin:0}
+  .fl-ix-n{grid-column:2;grid-row:1;padding:0}
+  .fl-ix-t{grid-column:2;grid-row:2;font-size:.95rem}
+  .fl-ix-m{grid-column:2;grid-row:3}
+}

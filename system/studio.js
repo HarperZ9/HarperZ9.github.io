@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-films-source";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-export-project";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-palette";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
@@ -7363,6 +7363,32 @@ _shell = mountShell({
   contracts: SHELL_CONTRACTS,
   storage: keepStorage,
   onMaking: () => _readings.action(),
+  // The deck's formats, offered in every source's Export menu when they apply (9 October 2026).
+  stageExports: [
+    { label: "PNG frame", target: "rt-export-png" },
+    { label: "SVG plot", target: "rt-export-svg" },
+    { label: "OBJ", target: "rt-export-obj" },
+    { label: "glTF", target: "rt-export-gltf" },
+    { label: "WebM, 5 seconds", target: "rt-export-webm" },
+    { label: "Clip", target: "rt-clip" },
+    { label: "Perception record (JSON)", target: "rt-export-json" },
+    { label: "More formats: PDF, print, textile, relief", id: "rt-export-more", run: () => {
+      const more = $("deck-more"); if (more) more.open = true;
+      const ex = $("rt-export"); if (ex) { ex.open = true; ex.scrollIntoView({ block: "center" }); const f = ex.querySelector("button"); if (f) f.focus({ preventScroll: true }); }
+    } },
+  ],
+});
+// A project file dropped anywhere on the page opens it (the shell checks it before anything is kept).
+document.addEventListener("dragover", (e) => {
+  const items = e.dataTransfer && [...(e.dataTransfer.items || [])];
+  if (items && items.some((i) => i.kind === "file")) e.preventDefault();
+});
+document.addEventListener("drop", (e) => {
+  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (e.defaultPrevented || !f || !/\.json$/i.test(f.name) || !_shell) return;
+  if (e.target.closest && e.target.closest("[data-drop-own], .at-drop, #studio-file, .plate-art, #wv-out")) return;
+  e.preventDefault();
+  _shell.openProjectFile(f);
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.

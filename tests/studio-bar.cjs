@@ -34,7 +34,9 @@ const SLOW = new Set(['spatial', 'raw', 'worlds', 'threads', 'retro', 'poster'])
             if (!bar || bar.hidden) return { bar: false };
             const prim = bar.querySelector('[data-action="primary"]');
             const rect = prim && prim.getBoundingClientRect();
-            const targets = [prim && prim.dataset.target, ...[...bar.querySelectorAll('[data-export]')].map((b) => b.dataset.export)].filter(Boolean);
+            // The shell's own entries (project files, the deck's "More formats") run code, not a control.
+            const SHELL = new Set(['project-save', 'project-open', 'rt-export-more']);
+            const targets = [prim && prim.dataset.target, ...[...bar.querySelectorAll('[data-export]')].map((b) => b.dataset.export)].filter((t) => t && !SHELL.has(t));
             const shown = (el) => { const s = getComputedStyle(el); return s.display !== 'none' && s.visibility !== 'hidden'; };
             const chain = (el) => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.tagName !== 'DETAILS' && (n.hidden || getComputedStyle(n).display === 'none')) return false; } return true; };
             const missing = targets.filter((t) => !document.getElementById(t));
