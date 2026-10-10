@@ -175,10 +175,12 @@ jobs:
           server_pid=$!
           trap "kill $server_pid" EXIT
           sleep 2
+          failed=""
           for t in tests/studio-*.cjs; do
             echo "== $t"
-            SITE_BASE_URL=http://127.0.0.1:8817 BROWSER=firefox node "$t"
+            SITE_BASE_URL=http://127.0.0.1:8817 BROWSER=firefox node "$t" || failed="$failed $t"
           done
+          if [ -n "$failed" ]; then echo "Failed in Firefox:$failed"; exit 1; fi
       # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
       # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
       # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.
