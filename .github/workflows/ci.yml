@@ -180,7 +180,8 @@ jobs:
           sleep 2
           webgl_only=" studio-entry studio-fractal-deep studio-gallery studio-loom studio-retro studio-spatial studio-splats "
           failed=""; reported=""
-          for t in tests/studio-*.cjs; do
+          # Only tests that pick their engine through tests/lib/browser.cjs can run in Firefox.
+          for t in $(grep -l "lib/browser.cjs" tests/studio-*.cjs); do
             name=$(basename "$t" .cjs)
             echo "== $t"
             if ! SITE_BASE_URL=http://127.0.0.1:8817 BROWSER=firefox node "$t"; then
