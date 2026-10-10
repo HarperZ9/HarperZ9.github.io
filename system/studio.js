@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-export-project";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-presets";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-palette";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";

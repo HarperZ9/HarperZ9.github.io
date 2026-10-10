@@ -198,3 +198,12 @@ html body.studio-page #studio-rail .ia-export-group{margin:.45rem .2rem .1rem;fo
 @media (hover:none) and (pointer:coarse){
   html body.studio-page .studio-find kbd{display:none}
 }
+/* Presets (studio-shell-dom.js): a folded list under the keep line, in the rail's own faces. */
+html body.studio-page #studio-rail .ia-presets{margin:.1rem 0 .6rem}
+html body.studio-page #studio-rail .ia-presets>summary{display:inline-flex;list-style:none}
+html body.studio-page #studio-rail .ia-presets-new{display:flex;gap:.4rem;margin:.5rem 0}
+html body.studio-page #studio-rail .ia-presets-new input{flex:1 1 auto;min-width:0;font:inherit;padding:.35rem .5rem;border:1px solid var(--chrome-line-strong,#7b7262);background:transparent;color:inherit}
+html body.studio-page #studio-rail .ia-presets-list{list-style:none;margin:0;padding:0;display:grid;gap:.25rem}
+html body.studio-page #studio-rail .ia-presets-list li{display:flex;gap:.3rem;align-items:center}
+html body.studio-page #studio-rail .ia-preset-apply{flex:1 1 auto;justify-content:flex-start;text-align:left}
+html body.studio-page #studio-rail .ia-presets-empty,html body.studio-page #studio-rail .ia-presets-note{font-size:.8rem;color:var(--chrome-muted,#5f584d);margin:.3rem 0}
