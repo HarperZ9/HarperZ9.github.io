@@ -31,7 +31,7 @@ import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
 import { mountLayout } from "./studio-layout.js?v=20261009-layout";
-import { mountTimeline } from "./studio-timeline.js?v=20261009-timeline";
+import { mountTimeline } from "./studio-timeline.js?v=20261009-polish";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {

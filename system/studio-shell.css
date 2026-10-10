@@ -250,3 +250,11 @@ html body.studio-page .studio-timeline .tl-mark{position:absolute;width:2px;heig
 html body.studio-page .studio-timeline .tl-time{font-family:var(--st-mono,monospace);min-width:4.5rem}
 html body.studio-page .studio-timeline select{font:inherit}
 html body.studio-page .studio-timeline .tl-note{flex-basis:100%;min-height:1em;color:var(--st-soft,#4a443b)}
+/* On a phone the timeline sits under the stage, in the page's flow. */
+html body.studio-page .studio-timeline.tl-below{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:.4rem 1rem 0;padding:.45rem .6rem;border:1px solid var(--st-line-strong,#7b7262);background:var(--st-paper,#ebe5d8);color:var(--st-ink,#16130f);font-size:.8125rem}
+html body.studio-page .studio-timeline.tl-below[hidden]{display:none}
+html body.studio-page .studio-timeline.tl-below .tl-track{position:relative;flex:1 1 100%}
+html body.studio-page .studio-timeline.tl-below input[type=range]{width:100%;accent-color:currentColor}
+html body.studio-page .studio-timeline.tl-below .tl-marks{position:absolute;left:0;right:0;top:-.35rem;height:.3rem;pointer-events:none}
+html body.studio-page .studio-timeline.tl-below .tl-mark{position:absolute;width:2px;height:.45rem;margin-left:-1px;background:currentColor}
+html body.studio-page .studio-timeline.tl-below .tl-note{flex-basis:100%}

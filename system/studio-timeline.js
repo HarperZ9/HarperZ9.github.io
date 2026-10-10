@@ -69,7 +69,19 @@ export function mountTimeline({ stage, deck, getSource, blockOf, storage, say = 
   const close = el("button", { type: "button", class: "btn ghost tl-close", "aria-label": "Close the timeline" }, "Close");
   const track_ = el("div", { class: "tl-track" }); track_.append(scrub, marks);
   strip.append(play, track_, time, len, loopL, key, clear, render, note, close);
-  stage.append(strip);
+  // Over the foot of the stage on a desktop; under the stage on a phone, where the stage is small
+  // and a strip over it would hide most of the picture.
+  const place = () => {
+    const phone = typeof matchMedia === "function" && matchMedia("(max-width: 899.98px)").matches;
+    if (phone && strip.parentNode !== stage.parentNode) stage.after(strip);
+    else if (!phone && strip.parentNode !== stage) stage.append(strip);
+    strip.classList.toggle("tl-below", phone);
+    // The phone layout orders the stage's column by CSS order; the strip takes the stage's place
+    // and, being next in the document, lands right under it.
+    strip.style.order = phone ? getComputedStyle(stage).order : "";
+  };
+  place();
+  if (typeof matchMedia === "function") { const m = matchMedia("(max-width: 899.98px)"); if (m.addEventListener) m.addEventListener("change", place); }
 
   const toggle = el("button", { type: "button", class: "rt-btn", id: "rt-timeline", "aria-pressed": "false", "aria-controls": "studio-timeline", title: "Timeline: keyframe any slider of the source on stage (T)" }, "Timeline");
   if (deck) deck.append(toggle);
