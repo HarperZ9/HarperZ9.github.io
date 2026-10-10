@@ -2,7 +2,7 @@
 // stage shows a rendered world, a wheel-click drag turns it, the wheel zooms, W flies, and the
 // world picker changes the scene. Without WebGPU, the stage says so. No console errors either way.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8809';
 const VIEWS = [

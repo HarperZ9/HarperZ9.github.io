@@ -3,7 +3,7 @@
 // 900 and 1920 x 1080); Showcase keeps its readings open; the Readings button opens and folds the
 // column and the choice survives a reload; on a phone the readings sit below as before.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8815';
 const { until } = require('./lib/studio-wait.cjs');

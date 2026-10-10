@@ -1,7 +1,7 @@
 // Spatial and Poster on the shell (4 October 2026), in Chrome at desktop and phone widths: one bar
 // each, Undo and Redo over their settings, and the work kept across a reload.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8813';
 const VIEWS = [
