@@ -118,12 +118,27 @@ const loadFractal3D = lazyLoader(() => import("./fractal3d.js"), m => { _fractal
 
 // Dimensions source: the render-nd barrel (geometry + pick + paint-state) + the WebGL backend.
 let _ndim = null, _ndGLBackend = null;
+// Dimensions on raw-native (ndim-gpu.js, 10 October 2026): the WebGPU drawer starts in the
+// background; until it answers, and wherever WebGPU is missing, WebGL draws, then the 2D canvas.
+// ?ndim=webgl or ?ndim=2d pins a fallback, so the three paths can be compared side by side.
+let _ndGPU = null, _ndGPUTried = false;
+const _ndPin = (new URLSearchParams(window.__studioBootSearch || location.search).get("ndim") || "").toLowerCase();
+function startNDimGPU() {
+  if (_ndGPUTried || _ndPin === "webgl" || _ndPin === "2d") return;
+  _ndGPUTried = true;
+  import("./ndim-gpu.js?v=20261010-ndim-gpu").then((m) => m.createNDimGPU()).then((d) => {
+    if (!d) return;
+    _ndGPU = d;
+    if (activeSource === "ndim" && _ndimRaf == null) ndimRepaintNow();   // a held pose redraws on the new path
+  }).catch((e) => console.error("[studio] Dimensions on raw-native failed to start:", e));
+}
 const loadNDimEngine = lazyLoader(
   () => Promise.all([import("./ndim.js"), import("./lib/render-nd/backends/webgl.mjs")]),
   ([nd, glb]) => {
     _ndim = nd; _ndGLBackend = glb;
     if (!_ndPaint) _ndPaint = nd.createPaintState();
     ndimBuildPalette();                // idempotent (builds once)
+    startNDimGPU();
   });
 
 // Physics source: the discovery engine.
@@ -3672,14 +3687,26 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
 
   const lineW = Math.max(0.5, 1.4 - n * 0.05);
 
-  const gl = ndGL();
-  if (gl) {
+  const gl = _ndPin === "2d" ? null : ndGL();
+  const drawT0 = performance.now();
+  if (_ndGPU && !_ndGPU.host.lost) {
+    // raw-native: drawn on the GPU, then copied onto the stage in this same task (a WebGPU
+    // canvas reads back black once its frame has been presented).
+    _ndGPU.draw(scene, w, h, Math.max(1.2, lineW * (window.devicePixelRatio || 1)));
+    ctx.drawImage(_ndGPU.canvas, 0, 0, w, h);
+    window.__studioNdimBackend = "raw-native webgpu";
+  } else if (gl) {
     _ndGLCanvas.width = w; _ndGLCanvas.height = h;
     _ndGLBackend.drawSceneGL3D(gl, scene, { width: w, height: h });
     ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
+    window.__studioNdimBackend = "webgl";
   } else {
     draw3DSceneTo2D(ctx, scene, w, h, lineW);
+    window.__studioNdimBackend = "2d canvas";
   }
+  // The backend's own cost per frame, drawing and copying onto the stage (the scene build above is
+  // the same on every path), for the readout and the port's before-and-after numbers.
+  window.__studioNdimDrawMs = performance.now() - drawT0;
   return scene.meta;
 }
 
