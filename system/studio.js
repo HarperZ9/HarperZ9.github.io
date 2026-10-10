@@ -170,7 +170,19 @@ const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
 const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261009-choosing-shows"), m => { _threads = m; });
-const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
+// Living neural on raw-native (neural-gpu.js, 10 October 2026): once the GPU drawer starts, the
+// networks run per pixel on the GPU; until then, and wherever WebGPU is missing, the worker and
+// main-thread paths draw as before. ?neural=cpu pins the CPU paths; ?neural=grid samples on the GPU
+// exactly where the CPU samples, so the two can be compared.
+const _nnPin = (new URLSearchParams(window.__studioBootSearch || location.search).get("neural") || "").toLowerCase();
+const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261010-neural-gpu"), m => {
+  _neural = m;
+  window.__studioNeuralBackend = () => m.neuralBackend();
+  if (_nnPin === "cpu") return;
+  import("./neural-gpu.js?v=20261010-neural-gpu").then((g) => g.createNeuralGPU()).then((d) => {
+    if (d) m.setNeuralGPU(d, _nnPin === "grid" ? "grid" : "full");
+  }).catch((e) => console.error("[studio] Living neural on raw-native failed to start:", e));
+});
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
 let _neuralStatic = false;   // true when reduced motion holds a single frame
