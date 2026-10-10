@@ -32,7 +32,12 @@ async function open(ctx, q, instrument, hideGpu = false) {
   await W.ready(page, 'neural');
   await W.until(page, () => typeof window.__studioNeuralBackend === 'function');
   if (instrument === 'solid') {
+    // Wait for the solid's own frame: on a slow runner the field frame can hold still long enough
+    // to pass for settled while the solid is still being drawn.
+    await W.settled(page);
+    const field = await W.frame(page);
     await page.evaluate(() => document.querySelector('#neural-instruments [data-neural-instrument="solid"]').click());
+    await W.changed(page, field);
   }
   return { page, errors };
 }
