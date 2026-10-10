@@ -164,6 +164,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-ndim-gpu.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-neural-gpu.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-viewer.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-attractor.cjs
       # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
       # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
       # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources

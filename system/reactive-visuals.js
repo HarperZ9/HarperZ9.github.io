@@ -367,9 +367,42 @@ function lorenzStep(state, dt, sigma, rho, beta) {
   state.x += dx * dt; state.y += dy * dt; state.z += dz * dt;
 }
 
+// The attractor on raw-native (attractor-gpu.js, 10 October 2026): the same maps, parameters,
+// colours and fade, about a million points a frame instead of 800 to 2,600. It loads on the first
+// attractor frame; until it answers, and wherever WebGPU is missing, the Canvas2D mode below draws.
+// ?music=cpu pins the Canvas2D mode.
+let _attrGpu = null, _attrGpuState = "idle";
+function attractorPinnedCpu() {
+  try { return new URLSearchParams((typeof window !== "undefined" && window.__studioBootSearch) || location.search).get("music") === "cpu"; }
+  catch (_) { return false; }
+}
+function ensureAttractorGpu() {
+  if (_attrGpuState !== "idle") return;
+  if (typeof window === "undefined" || attractorPinnedCpu()) { _attrGpuState = "cpu"; return; }
+  _attrGpuState = "loading";
+  import("./attractor-gpu.js?v=20261010-attractor-gpu")
+    .then((m) => m.createAttractorGPU())
+    .then((d) => { _attrGpu = d; _attrGpuState = d ? "active" : "cpu"; })
+    .catch((e) => { console.error("[music] the attractor on raw-native failed to start:", e); _attrGpuState = "cpu"; });
+}
+export function attractorBackend() {
+  return _attrGpuState === "active" && _attrGpu && !_attrGpu.host.lost ? "raw-native webgpu" : "canvas2d";
+}
+const _VOID_RGB = [0x0d / 255, 0x1b / 255, 0x1c / 255];
+function _oklchBytes(L, C, H) {
+  const hRad = H * Math.PI / 180;
+  const [lr, lg, lb] = _oklabToLinRgb(L, C * Math.cos(hRad), C * Math.sin(hRad));
+  return [_byteClamp(_linearToSrgb(lr)), _byteClamp(_linearToSrgb(lg)), _byteClamp(_linearToSrgb(lb))];
+}
+
 function drawAttractor(ctx, w, h, features, params, opts, t) {
   const type = opts.attractorType || "clifford";
-  if (!_attrState || _attrState.type !== type) initAttractor(type);
+  if (!_attrState || _attrState.type !== type) { initAttractor(type); if (_attrGpu) _attrGpu.reset(); }
+  ensureAttractorGpu();
+  if (_attrGpuState === "active" && _attrGpu && !_attrGpu.host.lost) {
+    try { drawAttractorGpu(ctx, w, h, features, params, type, t); return; }
+    catch (e) { console.error("[music] the attractor on raw-native failed; drawing on Canvas2D:", e); _attrGpuState = "cpu"; _attrGpu = null; }
+  }
 
   // Semi-transparent overlay for trailing effect
   fillVoid(ctx, w, h, 0.02 + params.pulse * 0.06);
@@ -414,6 +447,34 @@ function drawAttractor(ctx, w, h, features, params, opts, t) {
   }
 
   // Beat flash: momentarily brighten
+  if (params.pulse > 0.55) {
+    ctx.save();
+    ctx.globalAlpha = (params.pulse - 0.55) * 0.22;
+    ctx.fillStyle = oklchToRgba(0.9, 0.08, hue, 1);
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+}
+
+// The same frame as drawAttractor, computed on the GPU: same parameters, fade, colours, flash.
+function drawAttractorGpu(ctx, w, h, features, params, type, t) {
+  const intensity = params.intensity, hue = params.hue;
+  const a = 1.7 + features.bass * 0.5 - 0.3 * Math.sin(t * 0.07);
+  const b = 1.7 + features.treble * 0.4 - 0.2 * Math.cos(t * 0.05);
+  const c = -0.5 + features.mid * 0.4 + 0.3 * Math.sin(t * 0.11);
+  const d = 0.7 + features.level * 0.3 - 0.2 * Math.cos(t * 0.09);
+  const iters = Math.floor(800 + intensity * 1200 + params.pulse * 600);
+  let scale = [w * 0.38, h * 0.38];
+  if (type === "lorenz2d") scale = [w * 0.04, h * 0.035];
+  const L0 = intensity * 0.1, C0 = 0.12 + features.centroid * 0.1 + params.highMod * 0.08;
+  _attrGpu.draw({
+    type, a, b, c, d, dt: 0.006 + intensity * 0.003, scale, off: [w * 0.5, h * 0.5],
+    fade: 0.02 + params.pulse * 0.06, alpha: 0.25 + intensity * 0.2,
+    cpuPoints: iters * 1.44,   // each Canvas2D point is a 1.2 x 1.2 px square
+    colour: (s) => _oklchBytes(clamp(0.55 + s * 0.2 + L0, 0.35, 0.9), clamp(C0, 0, 0.3), (hue + s * 180 * (1 + params.hueShift * 2)) % 360),
+    voidRgb: _VOID_RGB,
+  }, w, h);
+  ctx.drawImage(_attrGpu.canvas, 0, 0, w, h);
   if (params.pulse > 0.55) {
     ctx.save();
     ctx.globalAlpha = (params.pulse - 0.55) * 0.22;
@@ -753,6 +814,8 @@ const ReactiveVisuals = {
   // or null when the particles engine is not active (CPU fallback path).
   getGpuStatus() { return _gpuStatus; },
 
+  attractorBackend() { return attractorBackend(); },
+
   setAttractorType(type) {
     _attractorType = type;
     _attrState = null;  // force re-init of attractor state
@@ -780,6 +843,7 @@ const ReactiveVisuals = {
       _particlesInited = false;
       _flowInited = false;
       _attrState = null;
+      if (_attrGpu) _attrGpu.reset();
       // Fill void on reinit so the canvas isn't transparent black
       fillVoid(ctx, w, h, 1);
     }

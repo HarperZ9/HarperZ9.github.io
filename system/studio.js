@@ -418,7 +418,7 @@ const loadMediaEngine = lazyLoader(async () => {
 
 // Music source: the reactive engine + its tab UI (both publish window globals, imported for effect).
 const loadReactive = lazyLoader(async () => {
-  await import("./reactive.js?v=20260625b");          // sets window.MusicExperience + window.ReactiveVisuals
+  await import("./reactive.js?v=20261010-attractor-gpu");          // sets window.MusicExperience + window.ReactiveVisuals
   await import("./reactive-music-ui.js?v=20261004-music-still"); // wires the Music tab controls to it
   feedEngineCapability();                             // the engine exists now; hand it the probed capability
 });
