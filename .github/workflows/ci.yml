@@ -160,6 +160,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-drag-drop.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-layout.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-timeline.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-sound-engine.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-ndim-gpu.cjs
       # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
       # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
@@ -241,6 +242,10 @@ jobs:
       - name: raw-native web host with textures and the compositor matches its SHA256SUMS
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/web-4edf976
+        run: sha256sum -c --strict SHA256SUMS
+      - name: raw-native sound engine matches its SHA256SUMS
+        if: ${{ !cancelled() }}
+        working-directory: media/raw-native/sound-4edf976
         run: sha256sum -c --strict SHA256SUMS
       - name: Sealed files are checked out byte for byte
         if: ${{ !cancelled() }}
