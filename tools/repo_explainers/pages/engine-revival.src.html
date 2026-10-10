@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How engine-revival works</title>
+<meta name="description" content="An animated walk through engine-revival, tooling that triages lost game engines into evidence-backed revival records: 29 targets with a stated rights posture, a validator that rejects a renamed id or an unknown target, a public-clean audit that refuses restricted material marked publishable, a priority index, and a rung ladder where 28 of 29 targets claim only the first rung. Built from engine-revival at commit e86d217.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/engine-revival.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/engine-revival">HarperZ9/engine-revival</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/engine-revival/tree/e86d2171f8f525e0d10c3d8b4f0dadee48b36782">e86d217</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>engine-revival</h1>
+  <p class="lede">Triage lost game engines into evidence-backed revival records.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Old game engines, SDKs and renderers disappear behind dead links and unclear rights. engine-revival keeps one JSON record per lead with its sources, its rights posture and what has been shown so far, and checks the whole archive before anything is published. A project someone still maintains is linked, not forked. A lead with unresolved rights stays a dossier. It publishes metadata and evidence only: no proprietary SDKs, leaked source or game assets.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One record per lead</b>382 JSON records across 12 kinds, each id matching its filename.</li>
+    <li><b>Rights before revival</b>Every target states a posture: open, clean-room only, restricted, rights-holder needed and more.</li>
+    <li><b>A public-clean guard</b>audit-public refuses restricted material marked publishable.</li>
+    <li><b>Claims by rung</b>Each rung names the claim it earns and nothing above it.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/README.md">README.md</a> at e86d217 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. Every line is output from the engine-revival CLI at commit e86d217, run in a scratch checkout. The refusals came from editing one record at a time in that checkout and putting it back.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A lead becomes a record</h3>
+        <p>Each target is one JSON file whose id matches its filename. The BRender record names its platforms, a priority of 89, an open rights posture, and its revival lane: a critical edition backed by imported release evidence.</p>
+        <p>Across the archive, 85 sources are cited, 68 rated high confidence, 16 moderate and 1 low.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/targets/brender.json">targets/brender.json</a>, <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/src/engine_revival/records.py">src/engine_revival/records.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Validate the whole archive</h3>
+        <p><code>validate</code> loads every record, checks it against its schema, and resolves every reference from one record to another. A clean archive prints nothing and exits 0. Pick an edit in the panel: renaming BRender's id breaks its filename match and orphans every record that points at it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/src/engine_revival/validate.py">src/engine_revival/validate.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Rights decide the posture</h3>
+        <p>Before anything is rebuilt, each target states who holds the rights. Of 29 targets in 19 categories, 8 are open and 8 are public reference only. The rest are unresolved, need the rights holder, allow clean-room work only, or are restricted, and those stay dossiers.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/targets">targets</a>; README.md, "How a lead is triaged"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>The public-clean guard</h3>
+        <p><code>audit-public</code> runs before publishing. It refuses an artifact marked do-not-redistribute or restricted whose access level is publishable, and flags wording such as leaked source. Pick a state in the panel: the LithTech Jupiter archive item is metadata only, and marking it public fails the audit.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/src/engine_revival/audit.py">src/engine_revival/audit.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>A priority index</h3>
+        <p><code>index</code> ranks the targets by priority with their rights, revival lane, and counts of artifacts, accessions, tasks and milestones. BRender leads at 89, followed by the PS1 Programmer's Tool at 84, which is clean-room only.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/src/engine_revival/indexer.py">src/engine_revival/indexer.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Claims by rung</h3>
+        <p>The ladder has eight rungs, the first a dossier and the last a recovered title, and each names only the claim it earns. Twenty-eight of the 29 targets sit at the first rung. BRender carries evidence imported from the pinned BRender Archival v0.1.1 release: 21 of 21 CTest targets passing under Visual Studio Win32 Debug. That build was not rerun for this page.</p>
+        <p>Nothing here claims a remaster pass or a recovered title.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/docs/REMASTER-LANE.md">docs/REMASTER-LANE.md</a>, <a href="https://github.com/HarperZ9/engine-revival/blob/e86d2171f8f525e0d10c3d8b4f0dadee48b36782/docs/BRENDER-ARCHIVAL.md">docs/BRENDER-ARCHIVAL.md</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.11 or newer.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/engine-revival && cd engine-revival
+$ python -m pip install -e ".[test]"</code></pre></li>
+    <li><h3>First run: validate the archive</h3><p>Check every record and reference. A clean archive prints nothing.</p>
+<pre class="cmd"><code>$ engine-revival validate
+<span class="out">(no output)</span></code></pre></li>
+    <li><h3>The public-clean guard</h3><p>Run the audit before publishing.</p>
+<pre class="cmd"><code>$ engine-revival audit-public
+<span class="out">redistribution do-not-redistribute, access metadata-only
+(no output)</span></code></pre></li>
+    <li><h3>A record that breaks validation</h3><p>Rename one id and validation names every record it orphans.</p>
+<pre class="cmd"><code>$ engine-revival validate
+<span class="out">targets\brender.json: target id must match filename stem: brender-x != brender
+artifacts\brender-v132-source.json: unknown target_id: brender
+tasks\brender-triage.json: unknown target_id: brender
+...</span></code></pre></li>
+  </ol>
+  <p class="src">Output from the CLI at e86d217 with Python 3.12 on Windows; pytest reported 133 tests passing. Counts were read from the committed records.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The repository publishes metadata, schemas and evidence. It holds no proprietary SDKs, leaked source, game assets or upstream source snapshots.</li>
+    <li>The BRender packet does not claim textured output, x64 readiness, production readiness, adoption or endorsement.</li>
+    <li>The local portable materializer produces scaffold metadata; it is not the 21-target release, which lives in BRender Archival.</li>
+    <li>A source's confidence rating is a judgment recorded with it. The validator checks structure and references, not historical truth.</li>
+  </ul>
+  <p class="src">Source: README.md at e86d217, "Current Public Boundary" and "Non-Claims"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What happens to a lead whose rights are unresolved?</summary><p>It stays a dossier; nothing buildable is claimed.</p></details>
+  <details><summary>Someone marks a do-not-redistribute artifact as public. Which command stops it?</summary><p>engine-revival audit-public, which reports restricted material cannot be publishable.</p></details>
+  <details><summary>How many of the 29 targets claim more than the first rung?</summary><p>One, BRender, through imported evidence from a pinned external release.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/engine-revival/tree/e86d2171f8f525e0d10c3d8b4f0dadee48b36782">HarperZ9/engine-revival at e86d217</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. engine-revival is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["lead", "sources", "rights", "record", "validate", "audit", "directory"], "active": 3}}, {"io": {"cmd": "targets/brender.json", "lines": ["\"id\": \"brender\"", "\"name\": \"Argonaut BRender\"", "\"platforms\": [\"DOS\", \"Windows\", \"PlayStation\", \"OS/2\"]", "\"priority\": 89", ["\"rights_posture\": \"open\"", "hi"], "\"revival_lane\": \"critical-edition\""]}}], "k1": [{"pipe": {"stages": ["lead", "sources", "rights", "record", "validate", "audit", "directory"], "active": 4}}, {"cases": {"label": "Choose the archive", "items": [{"label": "as committed", "blocks": [{"io": {"cmd": "engine-revival validate", "lines": ["(no output)"], "verdict": ["exit 0", "ok"]}}]}, {"label": "brender id renamed", "blocks": [{"io": {"cmd": "engine-revival validate", "lines": ["targets\\brender.json: target id must match filename stem: brender-x != brender", "artifacts\\brender-v132-source.json: unknown target_id: brender", "tasks\\brender-triage.json: unknown target_id: brender", "..."], "verdict": ["exit 1", "drift"]}}]}, {"label": "artifact points nowhere", "blocks": [{"io": {"cmd": "engine-revival validate", "lines": ["artifacts\\alias-autodesk-acquisition-record.json: unknown target_id: no-such-engine"], "verdict": ["rejected", "drift"]}}]}]}}], "k2": [{"pipe": {"stages": ["lead", "sources", "rights", "record", "validate", "audit", "directory"], "active": 2}}, {"table": {"head": ["rights posture", "targets"], "rows": [["open", "8"], ["public-reference-only", "8"], ["unresolved", "6"], ["rights-holder-needed", "3"], ["clean-room-only", "2"], ["restricted", "2"]]}}], "k3": [{"pipe": {"stages": ["lead", "sources", "rights", "record", "validate", "audit", "directory"], "active": 5}}, {"cases": {"label": "Choose the artifact", "items": [{"label": "metadata-only", "blocks": [{"io": {"cmd": "engine-revival audit-public", "lines": ["redistribution do-not-redistribute, access metadata-only", "(no output)"], "verdict": ["exit 0", "ok"]}}]}, {"label": "access set to public", "blocks": [{"io": {"cmd": "engine-revival audit-public", "lines": ["artifacts\\lithtech-jupiter-build51-archive-item.json: restricted material cannot be publishable"], "verdict": ["exit 1", "drift", "a release hold"]}}]}]}}], "k4": [{"pipe": {"stages": ["lead", "sources", "rights", "record", "validate", "audit", "directory"], "active": 6}}, {"table": {"head": ["priority", "target", "rights", "lane"], "rows": [["89", "Argonaut BRender", "open", "critical-edition"], ["84", "PS1 Programmer's Tool / Net Yaroze", "clean-room-only", "clean-room-api-compatible"], ["82", "RenderWare PS2", "restricted", "compatibility-reimplementation"], ["80", "GOOL and GOAL", "clean-room-only", "tooling-only-legal-copy-assets"], ["79", "LithTech Jupiter", "rights-holder-needed", "user-supplied-reproduction"]]}}], "k5": [{"pipe": {"stages": ["dossier", "source secured", "build ladder", "render parity", "asset pipeline", "game shell", "remaster pass", "lost-game recovery"], "active": 0}}, {"table": {"head": ["targets", "standing"], "rows": [["28", "first rung: dossier"], ["1 (BRender)", "imported 21-target release evidence"]]}}, {"verdict": ["133 tests pass", "ok", "pytest at e86d217"]}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

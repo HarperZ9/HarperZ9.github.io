@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Model Provenance Validator works</title>
+<meta name="description" content="An animated walk through Model Provenance Validator: a provenance envelope for a public claim checked field by field, an invalid one turned into named errors and action items, a status word outside the allowed set refused, and a proof-surface packet for the batch. Built from model-provenance-validator at commit 1da6150.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/model-provenance-validator.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/model-provenance-validator">HarperZ9/model-provenance-validator</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/model-provenance-validator/tree/1da6150ada42fdb3751143bc502aedd785ffcd24">1da6150</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Model Provenance Validator</h1>
+  <p class="lede">Keep a model or release claim attached to a small envelope you can check.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>A model card, a README claim or a release note gets repeated, and its source goes missing. Model Provenance Validator checks a small JSON envelope that says what the claim is about, where the source came from, when it was retrieved and what validation status you are willing to publish. A batch run turns every problem into an action item, and redacts credential-shaped strings and local paths from its own messages.</p>
+  </div>
+  <ul class="uses">
+    <li><b>A source before the claim</b>Subject, source, references with retrieval dates, and a published validation status are all required.</li>
+    <li><b>Closed vocabularies</b>Source kinds and validation statuses come from fixed lists, so a status like certified is refused.</li>
+    <li><b>Batch to action list</b>Malformed files are reported as invalid results, and the run still finishes with a complete list.</li>
+    <li><b>Proof packet</b><code>--proof-packet</code> writes a proof-surface packet for the batch.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/README.md">README.md</a> at 1da6150 (version 0.1.1)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel uses the bundled example envelope and the repository's invalid test fixture. Every line is output from model-provenance-validator at commit 1da6150.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>An envelope for one claim</h3>
+        <p>The bundled example is about a README's release-readiness claim. It names the source and its kind, a reference with a locator and the date it was retrieved, and a validation status of <code>partial</code> with a note that a person still has to review it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/examples/envelopes/release.provenance.json">examples/envelopes/release.provenance.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Validate it</h3>
+        <p>The validator checks the five required fields, the allowed values and every nested field. The example is valid and the command exits 0.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/src/model_provenance_validator/validator.py">src/model_provenance_validator/validator.py</a>, <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/src/model_provenance_validator/schema.json">src/model_provenance_validator/schema.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Every problem, with its path</h3>
+        <p>The invalid fixture has an empty subject, an unknown source kind, no references and an extra field inside validation. Each becomes one error with a JSON path, and the command exits 1.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/tests/fixtures/invalid.json">tests/fixtures/invalid.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>A status you may publish</h3>
+        <p>The validation status is a closed set: verified, partial or unknown. Change the example's status to <code>certified</code> and the envelope is refused.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/src/model_provenance_validator/schema.json">src/model_provenance_validator/schema.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>A batch becomes an action list, and a packet</h3>
+        <p>Run both files with <code>--summary</code> and you get totals and one action item per invalid file. <code>--proof-packet</code> writes a proof-surface packet whose claims and checks carry the counts. Pick each in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/src/model_provenance_validator/cli.py">src/model_provenance_validator/cli.py</a>, <a href="https://github.com/HarperZ9/model-provenance-validator/blob/1da6150ada42fdb3751143bc502aedd785ffcd24/src/model_provenance_validator/packet.py">src/model_provenance_validator/packet.py</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI and clone for the examples. Python 3.10 or newer.</p>
+<pre class="cmd"><code>$ python -m pip install model-provenance-validator
+$ git clone https://github.com/HarperZ9/model-provenance-validator && cd model-provenance-validator</code></pre></li>
+    <li><h3>First run: a valid envelope</h3><p>Validate the bundled release envelope.</p>
+<pre class="cmd"><code>$ model-provenance-validator examples/envelopes/release.provenance.json
+<span class="out">examples/envelopes/release.provenance.json: valid</span></code></pre></li>
+    <li><h3>An invalid envelope</h3><p>Each problem is named.</p>
+<pre class="cmd"><code>$ model-provenance-validator tests/fixtures/invalid.json
+<span class="out">tests/fixtures/invalid.json: invalid
+  $.subject: expected non-empty string
+  $.source.kind: invalid value &#x27;unknown-kind&#x27;; expected one of: official-doc, paper, release-note, local-fixture, other
+  $.references: expected at least 1 item(s)
+  $.validation.extra: unexpected field</span></code></pre></li>
+    <li><h3>A proof packet</h3><p>Write the result as a packet.</p>
+<pre class="cmd"><code>$ model-provenance-validator examples/envelopes/release.provenance.json --proof-packet
+<span class="out">&quot;surface&quot;: &quot;model provenance validation&quot;
+&quot;status&quot;: &quot;ready&quot;
+&quot;claims&quot;: envelopes=1; valid=1, invalid=0; validation errors=0
+&quot;checks&quot;: [{&quot;tool&quot;: &quot;model-provenance-validator&quot;, &quot;status&quot;: &quot;pass&quot;, &quot;summary&quot;: &quot;valid=1, invalid=0, errors=0&quot;}]
+&quot;action_items&quot;: []</span></code></pre></li>
+  </ol>
+  <p class="src">Output from model-provenance-validator at 1da6150 run from source; version 0.1.1 is the current PyPI release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It validates the envelope's shape and the hygiene of its own report. The claim the envelope is about stays uncertified.</li>
+    <li>A valid envelope means the fields are present and well-formed. Whether the reference supports the claim needs a person.</li>
+    <li>Redaction applies to the validator's messages. The envelope file you wrote is left as written.</li>
+  </ul>
+  <p class="src">Source: README.md at 1da6150, "Current status" and "Usage"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What four problems does the invalid fixture have?</summary><p>An empty subject, an unknown source kind, no references and an unexpected field inside validation.</p></details>
+  <details><summary>Why is a status of certified refused?</summary><p>The status is a closed set of verified, partial and unknown.</p></details>
+  <details><summary>Does a valid envelope prove the claim is true?</summary><p>No. It proves the claim carries a well-formed source record.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/model-provenance-validator/tree/1da6150ada42fdb3751143bc502aedd785ffcd24">HarperZ9/model-provenance-validator at 1da6150</a> (version 0.1.1). The source of this page is <code>docs/explainer/index.html</code> in that repository. Model Provenance Validator is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["envelope", "shape", "closed values", "result", "summary", "proof packet"], "active": 0}}, {"table": {"head": ["field", "value"], "rows": [["subject", "public-surface-sweeper README release-readiness claim"], ["source", "public-surface-sweeper README, kind release-note"], ["references", "Repository README, github.com/HarperZ9/public-surface-sweeper, retrieved 2026-06-13"], ["validation", "partial: human review still required"]]}}], "k1": [{"pipe": {"stages": ["envelope", "shape", "closed values", "result", "summary", "proof packet"], "active": 3}}, {"io": {"cmd": "model-provenance-validator examples/envelopes/release.provenance.json", "lines": ["examples/envelopes/release.provenance.json: valid"], "verdict": ["valid", "ok", "exit 0"]}}], "k2": [{"pipe": {"stages": ["envelope", "shape", "closed values", "result", "summary", "proof packet"], "active": 2}}, {"io": {"cmd": "model-provenance-validator tests/fixtures/invalid.json", "lines": ["tests/fixtures/invalid.json: invalid", "  $.subject: expected non-empty string", "  $.source.kind: invalid value 'unknown-kind'; expected one of: official-doc, paper, release-note, local-fixture, other", "  $.references: expected at least 1 item(s)", "  $.validation.extra: unexpected field"], "verdict": ["invalid", "drift", "exit 1"]}}], "k3": [{"pipe": {"stages": ["envelope", "shape", "closed values", "result", "summary", "proof packet"], "active": 2}}, {"io": {"cmd": "model-provenance-validator cert.provenance.json", "lines": ["cert.provenance.json: invalid", ["  $.validation.status: invalid value 'certified'; expected one of: verified, partial, unknown", "hi"]], "verdict": ["invalid", "drift", "exit 1"]}}], "k4": [{"pipe": {"stages": ["envelope", "shape", "closed values", "result", "summary", "proof packet"], "active": 5}}, {"cases": {"label": "Choose an output", "items": [{"label": "--summary", "blocks": [{"io": {"cmd": "model-provenance-validator examples/envelopes/release.provenance.json tests/fixtures/invalid.json --summary", "lines": ["total: 2", "valid: 1", "invalid: 1", "error_count: 4", "action_items:", ["- tests/fixtures/invalid.json: resolve 4 validation error(s)", "hi"]], "verdict": ["exit 1", "drift", "one envelope needs work"]}}]}, {"label": "--proof-packet", "blocks": [{"io": {"cmd": "model-provenance-validator examples/envelopes/release.provenance.json --proof-packet", "lines": ["\"surface\": \"model provenance validation\"", "\"status\": \"ready\"", "\"claims\": envelopes=1; valid=1, invalid=0; validation errors=0", ["\"checks\": [{\"tool\": \"model-provenance-validator\", \"status\": \"pass\", \"summary\": \"valid=1, invalid=0, errors=0\"}]", "hi"], "\"action_items\": []"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

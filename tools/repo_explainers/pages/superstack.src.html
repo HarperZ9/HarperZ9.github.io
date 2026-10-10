@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How superstack works</title>
+<meta name="description" content="An animated walk through superstack, one contract for renderers and sound engines: canonical JSON that three languages write byte for byte, a seed rule and an integer clock, and a sealed receipt with an identity verdict and a tolerance verdict, checked against a proof scene. Built from superstack at commit 7587e22.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/superstack.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/superstack">HarperZ9/superstack</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/superstack/tree/7587e22f88f08a8ef589fb3a29bc0943172a9f44">7587e22</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>superstack</h1>
+  <p class="lede">One contract for renderers and sound engines, checked byte for byte.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>superstack lets a frame or a sound made by one engine be checked against another, byte for byte. You copy one file for your language: Python, JavaScript or C++. It hashes any scene the same way in all three, draws the same random numbers from the same seed string, keeps time on one integer clock, and seals a receipt that says whether your bytes equal the reference and whether they fall within tolerance. Every receipt also lists what it does not prove.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Same bytes in three languages</b>Canonical JSON v2 has one number form that Python, JavaScript and C++ all write.</li>
+    <li><b>Same randomness from a string</b>A seed string goes through xmur3 into mulberry32, so every language draws the same stream.</li>
+    <li><b>Two verdicts, kept apart</b>Identity is MATCH or DRIFT. Tolerance is verified, refuted or unverifiable.</li>
+    <li><b>Conformance you can run</b>383 vector checks per language, and 59 paired mutations that each break one rule.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/README.md">README.md</a> at 7587e22 (release 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). superstack checks every language against the same vectors, byte for byte. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. Every value below is output from the Python and JavaScript files at commit 7587e22, or from <code>examples/run_all.py --ci</code>, which CI runs on Linux and Windows.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>One number form for every language</h3>
+        <p>Hash a scene in Python and in JavaScript and you need the same bytes first. <code>canonical</code> sorts keys, writes compact UTF-8 and uses one number form: <code>1.0</code> becomes <code>1</code> and <code>1e-7</code> becomes <code>0.0000001</code>, which C++ writes the same way.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/SPEC.md">SPEC.md</a>, section 3; <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/superstack.py">superstack.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>A seed string, one stream everywhere</h3>
+        <p>The seed rule turns a string into numbers: xmur3 hashes it and mulberry32 draws from it. The seed <code>folded-light</code> gives the same stream in each language, and its 32-bit value goes into the receipt.</p>
+        <p class="src">Source: SPEC.md, section 4</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Time on one integer clock</h3>
+        <p>Time is counted in flicks, 705,600,000 per second. Common frame and sample rates land on whole numbers: one sample at 48 kHz is 14,700 flicks and at 44.1 kHz is 16,000. Four samples at 48 kHz last 58,800 flicks, with no rounding.</p>
+        <p class="src">Source: SPEC.md, section 5</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Seal a receipt</h3>
+        <p>Four float samples are quantised to 16-bit PCM and hashed. <code>make_receipt</code> records the scene hash, the seed, the clock, the media description with its access settings (no autoplay, a reduced-sound mode) and the content hash, then seals the whole receipt with SHA-256.</p>
+        <p>A <code>does_not_prove</code> line is required: here, that a PCM hash says nothing about how a device plays the sound.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/superstack.py">superstack.py</a>, <code>make_receipt</code>; SPEC.md, section 6</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Verify, and what fails it</h3>
+        <p><code>verify_receipt</code> returns a list of problems. A fresh receipt returns none. Change a field after sealing and the seal fails. Empty the <code>does_not_prove</code> list and that rule fails by name. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/superstack.py">superstack.py</a>, <code>verify_receipt</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>The proof scene, with its controls</h3>
+        <p>The examples render one scene and one sound through more than one engine and check each against its reference. A numpy port of raw-native gives the reference pixel hash, <code>0282ef9c</code>, and the JavaScript sound path gives the reference PCM hash, <code>692ead20</code>.</p>
+        <p>Three controls must fail, and they do: an AO radius of 1.5 where the scene says 2, one flipped byte, and one voice one sample late.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/examples/run_all.py">examples/run_all.py</a>; <a href="https://github.com/HarperZ9/superstack/blob/7587e22f88f08a8ef589fb3a29bc0943172a9f44/examples/README.md">examples/README.md</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Clone the repository. Python 3.11 or newer and Node 20 or newer; no install step.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/superstack && cd superstack</code></pre></li>
+    <li><h3>First run: the shared vectors</h3><p>Run the same 383 checks in each language.</p>
+<pre class="cmd"><code>$ python tests/run_vectors.py
+<span class="out">python: 383/383 checks passed</span>
+$ node tests/run_vectors.mjs
+<span class="out">javascript: 383/383 checks passed</span></code></pre></li>
+    <li><h3>Seal a receipt</h3><p>In Python, seal a receipt over quantized audio samples.</p>
+<pre class="cmd"><code>>>> ss.make_receipt(producer=&#x27;my-synth&#x27;, ..., content=ss.quantize_s16([0.0, 0.25, -0.25, 0.5]))
+<span class="out">schema          superstack.receipt/1
+scene_sha256    42fbae6d8011ad33...
+seed_rule       xmur3-mulberry32/1
+duration_flicks 58800
+content_sha256  33b047ac8f974190...
+does_not_prove  A PCM hash says nothing about how a device plays the sound.
+receipt_sha256  9b10693f6e0f65eb...</span></code></pre></li>
+    <li><h3>The proof scene</h3><p>Run every example with its controls.</p>
+<pre class="cmd"><code>$ python examples/run_all.py --ci
+<span class="out">pixels python               MATCH verified
+sound  sound-js-exact       MATCH verified
+control wrong_ao_radius          DRIFT refuted   as expected
+control one_byte_flipped         DRIFT verified  as expected
+control sound_one_sample_late    DRIFT refuted   as expected
+examples: all expectations held</span></code></pre></li>
+  </ol>
+  <p class="src">Output from superstack at 7587e22 on Windows with Python 3.12 and Node 25. The C++ runner was not built for this page; the README reports 383 checks for it too.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>A content hash proves the bytes. It says nothing about how a screen shows them or a device plays them, and each receipt says so in its own words.</li>
+    <li>The proof observed equality on one workstation and on CI runners. It does not show equality across GPU vendors or drivers.</li>
+    <li>The pixel reference's own certificate refutes its screen-space AO against its ray-traced AO on the proof view. The contract checks agreement between engines. Whether the reference is good is a separate question.</li>
+    <li>Narration backends are never references. Their output is checked for tolerance only.</li>
+  </ul>
+  <p class="src">Source: README.md at 7587e22, "Evidence"; SPEC.md, section 8</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does canonical JSON write for 1.0 and 1e-7?</summary><p>1 and 0.0000001, in every language.</p></details>
+  <details><summary>How many flicks are in one sample at 48 kHz?</summary><p>14,700. A second is 705,600,000 flicks, chosen so common rates divide it evenly.</p></details>
+  <details><summary>What are a receipt's two verdicts?</summary><p>Identity, MATCH or DRIFT, and tolerance: verified, refuted or unverifiable.</p></details>
+  <details><summary>One byte of a frame is flipped. Which verdicts does the control get?</summary><p>DRIFT for identity and verified for tolerance: the bytes differ, but by one level on one pixel.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/superstack/tree/7587e22f88f08a8ef589fb3a29bc0943172a9f44">HarperZ9/superstack at 7587e22</a> (release 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. superstack's code is released under FSL-1.1-MIT and its text under CC BY 4.0.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"], "active": 1}}, {"io": {"cmd": "ss.canonical({\"b\": 1.0, \"a\": 1e-7})", "lines": [["{\"a\":0.0000001,\"b\":1}", "hi"]]}}], "k1": [{"pipe": {"stages": ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"], "active": 2}}, {"io": {"cmd": "r = ss.rng(\"folded-light\")", "lines": ["0.9906783360056579", "0.32101074047386646", "0.3623448656871915", ["seed_u32 2941645112", "hi"]]}}], "k2": [{"pipe": {"stages": ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"], "active": 3}}, {"table": {"head": ["rate", "flicks per sample"], "rows": [["48,000 Hz", "14,700"], ["44,100 Hz", "16,000"], ["4 samples at 48 kHz", "58,800"]]}}], "k3": [{"pipe": {"stages": ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"], "active": 5}}, {"io": {"cmd": "ss.make_receipt(producer='my-synth', ..., content=ss.quantize_s16([0.0, 0.25, -0.25, 0.5]))", "lines": ["schema          superstack.receipt/1", "scene_sha256    42fbae6d8011ad33...", "seed_rule       xmur3-mulberry32/1", "duration_flicks 58800", "content_sha256  33b047ac8f974190...", "does_not_prove  A PCM hash says nothing about how a device plays the sound.", ["receipt_sha256  9b10693f6e0f65eb...", "hi"]]}}], "k4": [{"pipe": {"stages": ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"], "active": 6}}, {"cases": {"label": "Choose an edit", "items": [{"label": "untouched", "blocks": [{"io": {"cmd": "ss.verify_receipt(receipt)", "lines": ["[]"], "verdict": ["valid", "ok", "no problems"]}}]}, {"label": "a field changed after sealing", "blocks": [{"io": {"cmd": "ss.verify_receipt(edited)", "lines": ["['seal']"], "verdict": ["invalid", "drift", "the seal no longer matches"]}}]}, {"label": "does_not_prove emptied", "blocks": [{"io": {"cmd": "ss.verify_receipt(edited)", "lines": ["['does_not_prove']"], "verdict": ["invalid", "drift", "the limits line is required"]}}]}]}}], "k5": [{"io": {"cmd": "python examples/run_all.py --ci", "lines": ["pixels python               MATCH verified", "sound  sound-js-exact       MATCH verified", "control wrong_ao_radius          DRIFT refuted   as expected", "control one_byte_flipped         DRIFT verified  as expected", "control sound_one_sample_late    DRIFT refuted   as expected", ["examples: all expectations held", "hi"]], "verdict": ["all held", "ok", "exit 0"]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

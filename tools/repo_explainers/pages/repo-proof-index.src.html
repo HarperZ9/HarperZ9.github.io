@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Repo Proof Index works</title>
+<meta name="description" content="An animated walk through Repo Proof Index: four kinds of proof artifact read into one reviewer table, each status labelled as declared by its producer and not verified, a summary with action items, and a strict JSON reader that rejects duplicate keys and NaN before anything is indexed. Built from repo-proof-index at commit 11a3121.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/repo-proof-index.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/repo-proof-index">HarperZ9/repo-proof-index</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/repo-proof-index/tree/11a31215924a1a07329745001a7ad3b9b658e5dc">11a3121</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Repo Proof Index</h1>
+  <p class="lede">Index a repository's proof packets and receipts into one table a reviewer can read.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>As a repository collects receipts and proof packets, a reviewer needs to find what each one claims and where its evidence lives. Repo Proof Index reads them all, whatever their shape, and gives one row per artifact: its kind, the surface it describes, the status it reports, a short evidence line and its path. It says plainly which statuses it checked and which it only read.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One table for many shapes</b>Proof contracts, proof-surface packets, witness receipts and backend descriptors all become rows.</li>
+    <li><b>Declared is not verified</b>Each row records the producer's status and a separate verification state.</li>
+    <li><b>Action items</b><code>--summary</code> counts kinds and statuses and lists what needs work.</li>
+    <li><b>A strict reader first</b>Duplicate keys, NaN and Infinity, oversized files and deep nesting are rejected before indexing.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/README.md">README.md</a> at 11a3121 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel indexes the four artifacts in <code>examples/contracts/</code>. Every line is output from repo-proof-index at commit 11a3121.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Four artifacts, one table</h3>
+        <p>The examples hold a proof-surface packet, a backend capability descriptor, a product use-case contract and a witness receipt. Each has its own shape. The index gives every one the same columns.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/examples/contracts">examples/contracts</a>; <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/src/repo_proof_index/indexer.py">src/repo_proof_index/indexer.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>A status read is not a status checked</h3>
+        <p>The witness receipt says MATCH. The index records that as the producer's status and sets its own verification state to <code>not_assessed</code>, because it did not re-run the witness. It indexes the evidence; it does not decide whether the evidence is enough.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/src/repo_proof_index/indexer.py">src/repo_proof_index/indexer.py</a>; README.md, opening paragraph</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A summary with what to do next</h3>
+        <p><code>--summary</code> counts the kinds, the statuses and the verification states, and turns any status that needs work into an action item. Here the proof-surface packet says it needs polish.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/src/repo_proof_index/cli.py">src/repo_proof_index/cli.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Validate a packet's shape</h3>
+        <p><code>--validate</code> checks a proof-surface packet against the shared contract. The example packet is structurally valid. Valid shape and a verified status are different things, and the index keeps them apart.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/src/repo_proof_index/cli.py">src/repo_proof_index/cli.py</a>; the proof-surface packet contract</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>A strict reader before a tolerant one</h3>
+        <p>The parser tolerates unknown shapes, but only after a strict JSON read. A key written twice, such as a status of MATCH and then DRIFT, is rejected; so is a NaN value, and so is a file that holds no JSON object. Pick each file in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/repo-proof-index/blob/11a31215924a1a07329745001a7ad3b9b658e5dc/src/repo_proof_index/strict_json.py">src/repo_proof_index/strict_json.py</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI and clone for the examples. Python 3.10 or newer.</p>
+<pre class="cmd"><code>$ python -m pip install repo-proof-index
+$ git clone https://github.com/HarperZ9/repo-proof-index && cd repo-proof-index</code></pre></li>
+    <li><h3>First run: index one record</h3><p>Read one proof record and report its kind and verification state.</p>
+<pre class="cmd"><code>$ repo-proof-index examples/contracts/sample-witness-receipt.json --json
+<span class="out">&quot;kind&quot;: &quot;witness-receipt&quot;
+&quot;status&quot;: &quot;MATCH&quot;
+&quot;producer_status&quot;: &quot;MATCH&quot;
+&quot;verification_state&quot;: &quot;not_assessed&quot;</span></code></pre></li>
+    <li><h3>Summarize a folder</h3><p>Count records by verification state.</p>
+<pre class="cmd"><code>$ repo-proof-index examples/contracts/*.json --summary
+<span class="out">total: 4
+kinds: backend-capability=1, product-use-case=1, proof-surface-packet=1, witness-receipt=1
+statuses: MATCH=1, backend-matrix=1, needs-polish=1, release-candidate=1
+verification_states: not_assessed=3, not_verified=1
+evidence_gaps: 0
+action_items:
+- proof-surface-public-release-demo: resolve needs-polish</span></code></pre></li>
+    <li><h3>A malformed record is rejected</h3><p>A file with a duplicate key is refused.</p>
+<pre class="cmd"><code>$ repo-proof-index dup.json
+<span class="out">error: duplicate JSON key: status</span></code></pre></li>
+  </ol>
+  <p class="src">Output from repo-proof-index at 11a3121 run from source with proof-surface on the path.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It indexes evidence. It does not decide whether the evidence is enough, and it produces no compliance finding.</li>
+    <li>A status in the table is the producer's word unless the verification state says otherwise.</li>
+    <li>Shape-tolerant parsing gives unknown artifacts best-effort fields, which a reviewer should read as guesses.</li>
+  </ul>
+  <p class="src">Source: README.md at 11a3121, opening paragraph, "Current status" and "Existing technical notes"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>The witness receipt says MATCH. What is its verification state, and why?</summary><p>not_assessed: the index read the status and did not re-run the witness.</p></details>
+  <details><summary>A file writes the key status twice. What happens?</summary><p>The strict reader rejects it before indexing: duplicate JSON key.</p></details>
+  <details><summary>What turns a row into an action item?</summary><p>A status that needs work, such as the packet's needs-polish.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/repo-proof-index/tree/11a31215924a1a07329745001a7ad3b9b658e5dc">HarperZ9/repo-proof-index at 11a3121</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. Repo Proof Index is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["artifacts", "strict JSON", "shape-tolerant read", "index row", "summary", "validate"], "active": 3}}, {"table": {"head": ["kind", "surface", "status", "evidence"], "rows": [["proof-surface-packet", "public release read...", "needs-polish", "declared=needs-polish, verification=not_verified, claims=3, checks=3"], ["backend-capability", "rust", "backend-matrix", "pass=1, planned=1"], ["product-use-case", "sample-tool", "release-candidate", "pass: example tests passed"], ["witness-receipt", "sample-witness", "MATCH", "sample receipt available"]]}}], "k1": [{"pipe": {"stages": ["artifacts", "strict JSON", "shape-tolerant read", "index row", "summary", "validate"], "active": 3}}, {"io": {"cmd": "repo-proof-index examples/contracts/sample-witness-receipt.json --json", "lines": ["\"kind\": \"witness-receipt\"", "\"status\": \"MATCH\"", ["\"producer_status\": \"MATCH\"", "hi"], ["\"verification_state\": \"not_assessed\"", "hi"]]}}], "k2": [{"pipe": {"stages": ["artifacts", "strict JSON", "shape-tolerant read", "index row", "summary", "validate"], "active": 4}}, {"io": {"cmd": "repo-proof-index examples/contracts/*.json --summary", "lines": ["total: 4", "kinds: backend-capability=1, product-use-case=1, proof-surface-packet=1, witness-receipt=1", "statuses: MATCH=1, backend-matrix=1, needs-polish=1, release-candidate=1", "verification_states: not_assessed=3, not_verified=1", "evidence_gaps: 0", "action_items:", ["- proof-surface-public-release-demo: resolve needs-polish", "hi"]]}}], "k3": [{"pipe": {"stages": ["artifacts", "strict JSON", "shape-tolerant read", "index row", "summary", "validate"], "active": 5}}, {"io": {"cmd": "repo-proof-index --validate examples/contracts/proof-surface-packet.json", "lines": ["examples/contracts/proof-surface-packet.json: valid"], "verdict": ["valid shape", "ok", "status still not_verified"]}}], "k4": [{"pipe": {"stages": ["artifacts", "strict JSON", "shape-tolerant read", "index row", "summary", "validate"], "active": 1}}, {"cases": {"label": "Choose a file", "items": [{"label": "status written twice", "blocks": [{"io": {"cmd": "repo-proof-index dup.json", "lines": ["error: duplicate JSON key: status"], "verdict": ["rejected", "drift"]}}]}, {"label": "a NaN value", "blocks": [{"io": {"cmd": "repo-proof-index nan.json", "lines": ["error: non-finite JSON value: NaN"], "verdict": ["rejected", "drift"]}}]}, {"label": "not an object", "blocks": [{"io": {"cmd": "repo-proof-index examples/malformed/not-object.json", "lines": ["error: ...not-object.json did not contain a JSON object"], "verdict": ["rejected", "drift"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>
