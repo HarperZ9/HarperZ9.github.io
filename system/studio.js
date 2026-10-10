@@ -31,7 +31,11 @@ import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
 import { mountLayout } from "./studio-layout.js?v=20261009-layout";
-import { mountTimeline } from "./studio-timeline.js?v=20261009-polish";
+import { mountTimeline } from "./studio-timeline.js?v=20261010-sound-engine";
+// The Studio's sound through raw-native's sound engine (studio-audio.js): tapped before any source
+// makes a sound, mastered on a side branch for recording, measured with raw-native's meter.
+import { installTap, masteredTracks, startMeasure, liveMeter } from "./studio-audio.js?v=20261010-sound-engine";
+installTap();
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -850,6 +854,7 @@ function setSource(next) {
   // idle-visual starter directly on that button, so only that listener runs (the delegated
   // #studio-source handlers never see a non-bubbling event, so setSource is not re-entered).
   if (next === "music") {
+    startMusicLoudness();
     startMeterLoop();
     loadReactive().then(() => {
       if (epoch !== _sourceEpoch) return;
@@ -6912,6 +6917,29 @@ if (tierBtn) {
   else wire();
 })();
 
+// Music's loudness, measured by raw-native's BS.1770 meter on the mastered branch of the sound
+// (studio-audio.js): integrated over the last 3 s and the true peak, about twice a second while
+// the source is on stage. Nothing is shown until sound has played.
+let _musicMeterStop = null;
+function startMusicLoudness() {
+  const block = $("src-music"); if (!block) return;
+  let line = $("music-loudness");
+  if (!line) {
+    line = document.createElement("p");
+    line.id = "music-loudness"; line.className = "transform-note music-loudness";
+    line.setAttribute("aria-live", "off");
+    line.textContent = "Loudness: play something to measure it.";
+    block.prepend(line);
+  }
+  if (_musicMeterStop) return;
+  _musicMeterStop = liveMeter(({ lufs, truePeakDb }) => {
+    if (activeSource !== "music") { _musicMeterStop(); _musicMeterStop = null; return; }
+    const l = Number.isFinite(lufs) ? lufs.toFixed(1) + " LUFS" : "below the gate";
+    const p = Number.isFinite(truePeakDb) ? truePeakDb.toFixed(1) + " dBTP" : "silent";
+    line.textContent = `Loudness over the last 3 s: ${l}, true peak ${p}, measured by raw-native's BS.1770 meter.`;
+  });
+}
+
 // Hand the stage's frame to another tool in this page: the Retro Engine as its upload, the Loom as
 // the picture it weaves, Bring your own as a still image (9 October 2026).
 async function handFrameTo(target) {
@@ -7532,6 +7560,7 @@ _timeline = mountTimeline({
   stage: $("viewport-stage"), deck: $("rt-fullscreen") ? $("rt-fullscreen").parentElement : null,
   getSource: () => activeSource, blockOf: (s) => (SOURCES[s] ? $(SOURCES[s].block) : null),
   storage: keepStorage, say: (t) => say("model", t),
+  audio: { tracks: masteredTracks, measure: startMeasure },
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.
