@@ -8,7 +8,7 @@
 // motion-film.mjs) run against them unchanged. The chosen film's video moves onto the stage; its
 // section stays in the inspector. Nothing plays on its own.
 
-import { FILMS, filmUrl, posterUrl } from "./studio-films.js?v=20261004-films";
+import { FILMS, filmUrl, posterUrl, aboutNote } from "./studio-films.js?v=20261004-films";
 
 const PAGE = "explainers.html?v=20261009-films-source";
 const STYLES = ["system/explainer/explainer.css?v=20261003-explainers", "system/explainer/film.css?v=20261009-motion"];
@@ -98,6 +98,8 @@ async function build(mount, stage) {
     const p = document.createElement("p"); p.className = "transform-note";
     p.append(Object.assign(document.createElement("b"), { textContent: f.title }), ` ${f.length}. ${f.note}`);
     note.append(p);
+    const about = aboutNote(f);
+    if (about) note.append(about);
     sections.append(note);
     const item = { id: f.id, title: f.title, section: note, video: v, home: null };
     item.btn = button(`${f.title} (${f.length})`, "chip films-pick", () => choose(item), { role: "radio", "aria-checked": "false", "data-film": f.id });
