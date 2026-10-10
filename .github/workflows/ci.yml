@@ -166,8 +166,9 @@ jobs:
       # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
       # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
       # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources
-      # (3D Fractal, the Retro Engine, Spatial, Splats); on Windows the whole suite passes in Firefox.
-      # The seven tests that need those sources run and report here but do not fail the step; every
+      # (3D Fractal, the Retro Engine, Spatial, Splats, and the WebGL fallback Dimensions checks);
+      # on Windows the whole suite passes in Firefox.
+      # The tests that need those sources run and report here but do not fail the step; every
       # other Studio test must pass.
       - name: Studio suite in Firefox
         if: ${{ !cancelled() }}
@@ -178,7 +179,7 @@ jobs:
           server_pid=$!
           trap "kill $server_pid" EXIT
           sleep 2
-          webgl_only=" studio-entry studio-fractal-deep studio-gallery studio-loom studio-retro studio-spatial studio-splats "
+          webgl_only=" studio-entry studio-fractal-deep studio-gallery studio-loom studio-ndim-gpu studio-retro studio-spatial studio-splats "
           failed=""; reported=""
           # Only tests that pick their engine through tests/lib/browser.cjs can run in Firefox.
           for t in $(grep -l "lib/browser.cjs" tests/studio-*.cjs); do
