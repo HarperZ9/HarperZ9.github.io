@@ -396,7 +396,7 @@ function buildFractalFolder(pane) {
 
   const folder = pane.addFolder({ title: "2D Fractal", expanded: false });
 
-  const FRACTAL_TYPES = ["mandelbrot", "julia", "burningship"];
+  const FRACTAL_TYPES = ["mandelbrot", "julia", "burningship", "multibrot", "tricorn", "celtic", "magnet", "phoenix", "newton", "nova", "lyapunov", "formula"];
   const params = {
     type: "mandelbrot",
     iterations: 128,
