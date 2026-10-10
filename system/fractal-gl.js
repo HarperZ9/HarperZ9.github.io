@@ -26,6 +26,10 @@
 import { PALETTES } from "./fractal.js";
 import { preparePalette } from "./fractal-color.js";
 import { VERT, MAX_ITERS, DS_LIB, buildFragment } from "./fractal-glsl.js";
+import { renderDeep, DEEP_MIN_SCALE } from "./fractal-gl-deep.js";
+
+// Formulas the perturbation path draws. Every other formula stays on the float32 and df64 programs.
+const DEEP_TYPES = new Set(["mandelbrot", "julia", "burningship", "tricorn"]);
 
 // Split a JS double into the two float32 limbs the df64 shader expects. `hi` is the nearest float32;
 // `v - hi` is then exact in double arithmetic and itself representable as a float32, so hi + lo
@@ -170,10 +174,17 @@ function hasUsableHighp(gl) {
 
 // Acquire (or reuse) a WebGL context on `canvas`. Caches it so repeated interaction frames don't
 // re-getContext. preserveDrawingBuffer:true so perceive()/the meter loop can read the pixels back.
+//
+// WebGL2 first: the deep-zoom program needs it (float textures, texelFetch, integer ops, loops with
+// a runtime bound), and a WebGL2 context still compiles the GLSL ES 1.00 programs unchanged. A
+// canvas binds to its first context type for good, so the choice is made here, once.
 function getGL(canvas) {
   if (canvas.__fractalGLContext) return canvas.__fractalGLContext;
-  const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true, antialias: false })
-    || canvas.getContext("experimental-webgl", { preserveDrawingBuffer: true, antialias: false });
+  const attrs = { preserveDrawingBuffer: true, antialias: false };
+  let gl = null;
+  try { gl = canvas.getContext("webgl2", attrs); } catch (_) { gl = null; }
+  if (gl) canvas.__fractalGL2 = true;
+  gl = gl || canvas.getContext("webgl", attrs) || canvas.getContext("experimental-webgl", attrs);
   if (!gl) throw new Error("2D GPU fractals need WebGL. This browser/context has none.");
   canvas.__fractalGLContext = gl;
   return gl;
@@ -199,6 +210,24 @@ export function renderFractalGL(canvas, opts) {
 
   const gl = getGL(canvas);
   const w = canvas.width, h = canvas.height;
+
+  // Deep zoom: past df64's reach, a WebGL2 context draws by perturbation against a BigInt reference
+  // orbit (fractal-gl-deep.js), which holds every pixel apart down to 1e-300. Between float32's
+  // floor and df64's, df64 stays: on an RTX 4090 at 1280 x 720 it drew Seahorse Deep in 7 ms where
+  // perturbation took 27. A budget past the df64 program's 2000-iteration loop also goes to
+  // perturbation, which has no such ceiling. opts.precision "perturbation" forces this path;
+  // "single" and "double" force the older programs, for the precision tests.
+  const mode = fractalPrecisionMode(cx, cy, scale, w);
+  const deepType = DEEP_TYPES.has(type) ? type : null;
+  const wantDeep = precision === "perturbation"
+    || (precision === "auto" && (mode === "exhausted" || (mode === "double" && maxIter > MAX_ITERS)));
+  if (wantDeep && deepType && canvas.__fractalGL2 && hasUsableHighp(gl)) {
+    renderDeep(gl, canvas, { ...opts, type: deepType, scale: Math.max(DEEP_MIN_SCALE, scale) }, {
+      pal: palToFloats(palette), tint: tintToFloats(palette),
+    }, { aa: Math.max(1, Math.min(4, Math.round(aa))), glitchView: !!opts.glitchView, bla: opts.bla });
+    canvas.__fractalPrecisionUsed = "perturbation";
+    return true;
+  }
 
   // Pick the arithmetic from the view itself: float32 while it still separates neighbouring pixels,
   // df64 once it doesn't. Automatic, so panning and zooming cross the boundary without a control.

@@ -7,8 +7,10 @@
 // recipe both paths follow lives in fractal-color.js. Palettes from
 // project-docs/research/fractal-studio/aesthetics-digest.md; presets in fractal-presets.js.
 
-import { preparePalette, rampLinear, relief, encodeChannel, ditherOffset, trapWeight, holdGamut,
+import { preparePalette, rampLinear, relief, reliefDir, encodeChannel, ditherOffset, trapWeight, holdGamut,
          DERIV_RESCALE_AT, DERIV_RESCALE_BY } from "./fractal-color.js";
+import { chooseReference, buildBLA, perturbPixel, hasBLA } from "./fractal-perturb.js";
+import { viewCentre, decDiff } from "./fractal-hp.js";
 
 const LOG2 = Math.log(2);
 // Bailout R=256 (R^2=65536), needed for the smooth-coloring formula to be accurate.
@@ -93,31 +95,34 @@ function iterJulia(x, y, jx, jy, maxIter) {
   return { n, zr, zi, dre, dim, trap };
 }
 
-// Burning Ship folds |z| each step, so the map is not holomorphic and this is the sign-folded chain
-// rule rather than a true complex derivative. It picks a shading direction; it is never used to
-// estimate a distance.
+// Burning Ship folds |z| each step, so the map is not holomorphic and one complex derivative does
+// not describe it. The kernel carries the whole Jacobian: (dre, dim) = dz/dcx and (ere, eim) =
+// dz/dcy. The fold multiplies both by diag(sign x, sign y), the square by 2|z|, and c adds 1 and i.
+// The shading reads the gradient of log|z| from both columns, which has no seams at the folds.
 function iterBurningShip(cre, cim, maxIter) {
   let zr = 0, zi = 0, n = 0;
-  let dre = 0, dim = 0, dseed = 1;
+  let dre = 0, dim = 0, ere = 0, eim = 0, dseed = 1;
   let trap = Infinity;
   while (n < maxIter && zr * zr + zi * zi <= BAILOUT2) {
-    if (zr < 0) dre = -dre;
-    if (zi < 0) dim = -dim;
+    const sx = zr < 0 ? -1 : 1, sy = zi < 0 ? -1 : 1;
     const ar = Math.abs(zr), ai = Math.abs(zi);
-    const dre2 = 2 * (ar * dre - ai * dim) + dseed;
-    const dim2 = 2 * (ar * dim + ai * dre);
-    dre = dre2; dim = dim2;
+    const fdr = sx * dre, fdi = sy * dim, fer = sx * ere, fei = sy * eim;
+    dre = 2 * (ar * fdr - ai * fdi) + dseed;
+    dim = 2 * (ar * fdi + ai * fdr);
+    ere = 2 * (ar * fer - ai * fei);
+    eim = 2 * (ar * fei + ai * fer) + dseed;
     const t = ar * ar - ai * ai + cre;
     zi = 2 * ar * ai + cim;
     zr = t;
     const t2 = Math.min(Math.abs(zr), Math.abs(zi));
     if (t2 < trap) trap = t2;
-    if (dre * dre + dim * dim > DERIV_RESCALE_AT) {
-      dre *= DERIV_RESCALE_BY; dim *= DERIV_RESCALE_BY; dseed *= DERIV_RESCALE_BY;
+    if (Math.max(dre * dre + dim * dim, ere * ere + eim * eim) > DERIV_RESCALE_AT) {
+      dre *= DERIV_RESCALE_BY; dim *= DERIV_RESCALE_BY; ere *= DERIV_RESCALE_BY; eim *= DERIV_RESCALE_BY;
+      dseed *= DERIV_RESCALE_BY;
     }
     n++;
   }
-  return { n, zr, zi, dre, dim, trap };
+  return { n, zr, zi, dre, dim, trap, gx: zr * dre + zi * dim, gy: zr * ere + zi * eim };
 }
 
 // ── Palettes ────────────────────────────────────────────────────────────────
@@ -190,6 +195,10 @@ export function renderFractal(canvas, opts) {
   } = opts || {};
 
   const pal = PALETTES[palette] || PAL_OCEAN;
+  if (["mandelbrot", "julia", "burningship"].includes(type) && cpuNeedsPerturbation({ ...opts, scale }, canvas.width)) {
+    renderFractalDeepCPU(canvas, { ...opts, type, scale, maxIter, jx, jy }, pal);
+    return;
+  }
   const { lab, tint: glowTint } = preparePalette(pal);   // stops in OKLab, plus the lightest in linear
   const W = canvas.width, H = canvas.height;
   const g = canvas.getContext("2d", { willReadFrequently: true });
@@ -208,7 +217,8 @@ export function renderFractal(canvas, opts) {
   const flipY = type === "burningship" ? -1 : 1;
 
   for (let py = 0; py < H; py++) {
-    const y0 = cy + flipY * (py / H - 0.5) * scale * aspect;
+    // Row 0 is the top of the frame, where the GPU programs put the larger imaginary part.
+    const y0 = cy - flipY * (py / H - 0.5) * scale * aspect;
 
     for (let px = 0; px < W; px++) {
       const x0 = cx + (px / W - 0.5) * scale;
@@ -237,7 +247,7 @@ export function renderFractal(canvas, opts) {
       // shading cannot shift hue, and the glow cannot drain one. trapWeight() carries the authored
       // 0.30 across from code values, where it was drawn, into the radiance this line composites in.
       const glow = trapWeight(Math.exp(-r.trap * 4) * TRAP_OPACITY);
-      const shade = relief(r.zr, r.zi, r.dre, r.dim);
+      const shade = type === "burningship" ? reliefDir(r.gx, r.gy) : relief(r.zr, r.zi, r.dre, r.dim);
       col[0] = col[0] * shade + glowTint[0] * glow;
       col[1] = col[1] * shade + glowTint[1] * glow;
       col[2] = col[2] * shade + glowTint[2] * glow;
@@ -254,4 +264,56 @@ export function renderFractal(canvas, opts) {
 
   const imgData = new ImageData(buf, W, H);
   g.putImageData(imgData, 0, 0);
+}
+
+/**
+ * Does this view need perturbation on the CPU? A double resolves about 2^-52 of the centre's
+ * magnitude; a pixel step below 2^-48 of it (16 ulps) starts merging neighbours.
+ */
+export function cpuNeedsPerturbation(view, width) {
+  const mag = Math.max(Math.abs(view.cx || 0), Math.abs(view.cy || 0), 1);
+  return (view.scale / Math.max(1, width)) < mag * 2 ** -48;
+}
+
+/**
+ * The CPU's deep path: the same perturbation, rebasing and BLA as the GPU program
+ * (fractal-perturb.js), in doubles, then this file's colour recipe. Serves devices without WebGL2
+ * and is what the tests render the deep presets through. Down to a view 1e-300 wide.
+ */
+function renderFractalDeepCPU(canvas, opts, pal) {
+  const { type = "mandelbrot", maxIter = 1000, jx = -0.8, jy = 0.156 } = opts;
+  const scale = Math.max(1e-300, opts.scale);
+  const W = canvas.width, H = canvas.height;
+  const px = scale / W;
+  const flipY = type === "burningship" ? -1 : 1;
+  const c = viewCentre(opts);
+  const pick = chooseReference({ kind: type, re: c.re, im: c.im, jRe: jx, jIm: jy, scale, w: W, h: H, maxIter });
+  const offX = decDiff(c.re, pick.re, pick.ref.bits), offY = decDiff(c.im, pick.im, pick.ref.bits);
+  const bla = hasBLA(type) ? buildBLA(pick.ref, type === "julia" ? -Infinity : Math.log2(Math.hypot(offX, offY) + 0.5 * Math.hypot(W, H) * px) + 1, { julia: type === "julia" }) : null;
+  const { lab, tint } = preparePalette(pal);
+  const buf = new Uint8ClampedArray(W * H * 4);
+  const buf32 = new Uint32Array(buf.buffer);
+  const col = [0, 0, 0];
+  for (let py = 0; py < H; py++) {
+    // Row 0 is the top, the larger imaginary part (the Ship reflected), as in renderFractal.
+    const oy = offY - flipY * (py + 0.5 - H / 2) * px;
+    for (let x = 0; x < W; x++) {
+      const ox = offX + (x + 0.5 - W / 2) * px;
+      const r = perturbPixel(pick.ref, ox, oy, maxIter, bla, { derive: true });
+      const idx = py * W + x;
+      if (r.n >= maxIter) { buf32[idx] = 0xff000000; continue; }
+      const logr = 0.5 * Math.log(r.zx * r.zx + r.zy * r.zy);
+      const mu = r.n - Math.log(logr / Math.LN2) / Math.LN2;
+      rampLinear(lab, mu / 8, col);
+      const glow = trapWeight(Math.exp(-r.trap * 4) * 0.30);
+      const shade = type === "burningship" ? reliefDir(r.gx, r.gy) : relief(r.zx, r.zy, r.dre, r.dim);
+      col[0] = col[0] * shade + tint[0] * glow;
+      col[1] = col[1] * shade + tint[1] * glow;
+      col[2] = col[2] * shade + tint[2] * glow;
+      holdGamut(col);
+      const d = ditherOffset(x, py);
+      buf32[idx] = (0xff << 24) | (encodeChannel(col[2], d) << 16) | (encodeChannel(col[1], d) << 8) | encodeChannel(col[0], d);
+    }
+  }
+  canvas.getContext("2d", { willReadFrequently: true }).putImageData(new ImageData(buf, W, H), 0, 0);
 }
