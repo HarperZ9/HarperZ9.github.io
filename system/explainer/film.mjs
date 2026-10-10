@@ -36,7 +36,8 @@ function chapters(timing, headings) {
 async function build(fig) {
   const folder = fig.dataset.folder, slug = fig.dataset.film;
   const video = fig.querySelector("video");
-  const headings = [...fig.querySelectorAll("[data-chapter]")].map((n) => ({ key: n.dataset.chapter, heading: n.textContent.trim() }));
+  const headings = [...fig.querySelectorAll("[data-chapter]")].map((n) => ({ key: n.dataset.chapter, heading: n.textContent.trim(),
+    sources: (n.dataset.sources || "").split(" ").filter(Boolean) }));
   const [recall, timing] = await Promise.all(FILES.map((f) => own(folder, f)));
   const chaps = chapters(timing, headings);
 
@@ -49,9 +50,38 @@ async function build(fig) {
     nav.append(li);
   });
   video.after(nav);
+  // Under the player: the source of the chapter playing, with its sample, linked to its card below.
+  // The text is the card's own (name and sample), so it cannot say more than the sources file does.
+  const citing = el("p", { class: "fl-now", "aria-live": "off" });
+  citing.hidden = true;
+  nav.after(citing);
+  const cardText = (k) => {
+    const card = document.getElementById(`${slug}-src-${k}`);
+    if (!card) return null;
+    const name = card.querySelector(".fl-src-name b")?.textContent.trim();
+    const dts = [...card.querySelectorAll(".fl-src-facts dt")];
+    const sample = dts.find((d) => d.textContent.trim() === "Sample")?.nextElementSibling?.textContent.trim();
+    return name ? { name, sample } : null;
+  };
+  let citingAt = -1;
+  const cite = (i) => {
+    if (i === citingAt) return;
+    citingAt = i;
+    citing.replaceChildren();
+    const parts = (chaps[i]?.sources || []).map((k) => [k, cardText(k)]).filter(([, c]) => c);
+    citing.hidden = !parts.length;
+    if (!parts.length) return;
+    citing.append(el("span", { class: "fl-now-k" }, "Source now:"), " ");
+    parts.forEach(([k, c], j) => {
+      if (j) citing.append("; ");
+      citing.append(el("a", { href: `#${slug}-src-${k}`, class: "inline" }, c.name));
+      if (c.sample) citing.append(`, ${c.sample}`);
+    });
+  };
   const mark = () => {
     const t = video.currentTime;
     nav.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", t >= chaps[i].start && t < chaps[i].end ? "step" : "false"));
+    cite(chaps.findIndex((c) => t >= c.start && t < c.end));
   };
 
   const host = fig.querySelector(".fl-recall");
