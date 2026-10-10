@@ -636,6 +636,37 @@
                 <input type="range" class="at-slider" id="fractal-detail" min="0.5" max="2.5" step="0.1" value="1" aria-label="Fractal detail multiplier">
               </div>
             </details>
+            <!-- Flight (9 October 2026): keyframed zooms, previewed on the stage and saved as WebM video.
+                 fractal-flight.js; studio-fractal-flight.js. -->
+            <details class="rail-group" id="fractal-flight-group">
+              <summary>Flight</summary>
+              <div class="at-group">
+                <span class="at-glab">Keyframes <span class="hint">frame a view, add it, frame the next</span></span>
+                <div class="at-chips" id="fractal-flight-keys" role="group" aria-label="Flight keyframes"></div>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-flight-add" type="button">Add keyframe</button>
+                  <button class="btn" id="fractal-flight-clear" type="button">Clear</button>
+                  <button class="btn" id="fractal-flight-preview" type="button">Preview</button>
+                </div>
+                <span class="at-glab">Position along the flight <span class="hint">key it on the timeline (T) to fly with the Studio's timeline (<span id="fractal-flight-pos-val">0.000</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-flight-pos" min="0" max="1" step="0.0001" value="0" aria-label="Position along the flight">
+                <span class="at-glab">Seconds between keyframes (<span id="fractal-flight-seconds-val">6.0</span>)</span>
+                <input type="range" class="at-slider" id="fractal-flight-seconds" min="1" max="60" step="0.5" value="6" aria-label="Seconds between keyframes">
+                <div class="at-chips" role="group" aria-label="Video frame rate">
+                  <button type="button" class="chip active" data-flight-fps="30">30 fps</button>
+                  <button type="button" class="chip" data-flight-fps="60">60 fps</button>
+                </div>
+                <div class="at-chips" role="group" aria-label="Video size">
+                  <button type="button" class="chip" data-flight-size="720p">720p</button>
+                  <button type="button" class="chip active" data-flight-size="1080p">1080p</button>
+                  <button type="button" class="chip" data-flight-size="4k">4K</button>
+                </div>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-flight-export" type="button">Save video</button>
+                </div>
+                <p class="src-hint" id="fractal-flight-status" role="status" aria-live="polite"></p>
+              </div>
+            </details>
             <!-- Large stills (9 October 2026): drawn in strips and streamed into one PNG, so a still
                  can be larger than any canvas. fractal-tiles.js; studio-fractal-still.js. -->
             <details class="rail-group" id="fractal-still-group">
