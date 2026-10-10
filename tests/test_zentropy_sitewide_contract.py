@@ -111,6 +111,9 @@ DRAG_DROP_REVISION = "20261009-drag-drop"
 LAYOUT_REVISION = "20261009-layout"
 # 9 October 2026, later: the shared timeline; studio.js and studio-shell.css take a new stamp.
 TIMELINE_REVISION = "20261009-timeline"
+# 10 October 2026: the timeline sits under the stage on a phone; studio.js and studio-shell.css
+# take a new stamp.
+POLISH_REVISION = "20261009-polish"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -161,9 +164,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": TIMELINE_REVISION,
+    "system/studio.js": POLISH_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
-    "system/studio-shell.css": TIMELINE_REVISION,
+    "system/studio-shell.css": POLISH_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,

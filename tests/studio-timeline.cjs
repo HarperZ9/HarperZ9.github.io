@@ -45,6 +45,10 @@ async function settle(page, want) { for (let i = 0; i < 20 && (await frame(page)
         assert.notEqual(low, high, `${tag} tone changes the cloth`);
         await page.keyboard.press('t'); await wait(page, 200);
         assert.equal(await page.isVisible('#studio-timeline'), true, `${tag} T opens the timeline`);
+        if (view.mobile) {
+          const below = await page.evaluate(() => document.getElementById('studio-timeline').getBoundingClientRect().top >= document.getElementById('viewport-stage').getBoundingClientRect().bottom - 1);
+          assert.ok(below, `${tag} on a phone the strip sits under the stage, not over it`);
+        }
         await setTone(page, 0); await wait(page, 600);
         await scrubTo(page, 0); await page.click('#tl-key');
         // As in any keyframe editor: move the playhead first, then set the value, then key it.
