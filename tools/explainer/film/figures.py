@@ -1,7 +1,7 @@
 """The evidence marks a film draws over its plate, with Pillow at 1920x1080.
 
 Colour follows the risk rule of the short explainers (tools/explainer/marks.py): quiet ink for
-everything, and one hot mark per view in the colour of its liability level, named in words.
+everything, and one hot mark per view in the colour of its level; on screen it carries a plain claim tag.
 Every number drawn comes from film.json, which takes it from the evidence files.
 """
 
@@ -40,12 +40,9 @@ class Fonts:
         self.small = face("mono", 25)
 
 
-def tag(d, f: Fonts, right: float, y: float, verdict: str, level: str, a: float) -> None:
-    """A verdict word in mono with its liability level in words, right-aligned, in the hot colour."""
-    col = RISK[level]
-    d.text((right - d.textlength(verdict, font=f.mono), y), verdict, font=f.mono, fill=rgba(col, a))
-    sub = f"{level} liability"
-    d.text((right - d.textlength(sub, font=f.small), y + 44), sub, font=f.small, fill=rgba(col, a))
+def tag(d, f: Fonts, right: float, y: float, text: str, level: str, a: float) -> None:
+    """A plain claim tag in mono, right-aligned, in the hot colour of its level."""
+    d.text((right - d.textlength(text, font=f.mono), y), text, font=f.mono, fill=rgba(RISK[level], a))
 
 
 def header(d, f: Fonts, st: dict, count: int) -> None:
@@ -78,7 +75,7 @@ def reference(d, f: Fonts, st: dict, fig: dict) -> None:
         d.text((X0 + 40, y + k * 62), line, font=f.mono, fill=rgba(INK, a))
     inv = revealed(st, fig["invented_at"])
     d.text((X0, y + 3 * 62 + 60), "invented for this example", font=f.small, fill=rgba(QUIET, inv))
-    tag(d, f, W - X0 - 40, y + 3 * 62 + 60, fig["verdict"], "moderate", revealed(st, fig["verdict_at"]))
+    tag(d, f, W - X0 - 40, y + 3 * 62 + 60, fig.get("tag", fig["verdict"]), "moderate", revealed(st, fig["verdict_at"]))
     v = revealed(st, fig["verdict_at"])
     d.text((X0, y + 3 * 62 + 160), "exists?  not checked yet", font=f.body, fill=rgba(INK, v))
 
@@ -105,7 +102,7 @@ def dotgrid(d, f: Fonts, st: dict, fig: dict) -> None:
         if g.get("detail"):
             d.text((x, below + 50), g["detail"], font=f.mono, fill=rgba(QUIET, revealed(st, g["detail_at"])))
     hot_a = revealed(st, fig["groups"][0]["hot_at"])
-    d.text((X0, H - 150), f"{fig['note']}  Hot dots: {fig['legend_hot']} (high liability).", font=f.small,
+    d.text((X0, H - 150), f"{fig['note']}  Marked: {fig['legend_hot']}.", font=f.small,
            fill=rgba(QUIET, st["alpha"] * hot_a))
 
 
@@ -116,7 +113,7 @@ def arith(d, f: Fonts, st: dict, fig: dict) -> None:
         a = revealed(st, row["on"])
         d.text((X0, y), row["label"], font=f.body, fill=rgba(QUIET, a))
         if row.get("verdict"):
-            tag(d, f, W - X0, y, row["verdict"], VERDICT_RISK.get(row["verdict"], "moderate"), a)
+            tag(d, f, W - X0, y, row.get("tag", row["verdict"]), VERDICT_RISK.get(row["verdict"], "moderate"), a)
             d.text((vx, y), row["value"], font=f.mono, fill=rgba(INK, a))
         else:
             font = f.big if row.get("strong") else f.mono
@@ -174,8 +171,7 @@ def squares(d, f: Fonts, st: dict, fig: dict) -> None:
         a = revealed(st, g["on"])
         col = RISK["elevated"] if g.get("hot") else (QUIET if g.get("quiet") else INK)
         d.rectangle([X0, ly + 8, X0 + 26, ly + 34], fill=rgba(col, a))
-        suffix = " (elevated liability)" if g.get("hot") else ""
-        d.text((X0 + 44, ly), f"{g['n']}  {g['label']}{suffix}", font=f.body, fill=rgba(INK, a))
+        d.text((X0 + 44, ly), f"{g['n']}  {g['label']}", font=f.body, fill=rgba(INK, a))
         ly += 58
     for h in fig["hours"]:
         a = revealed(st, h["on"])
