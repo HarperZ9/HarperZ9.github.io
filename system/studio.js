@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-timeline";
+import { mountShell } from "./studio-shell-dom.js?v=20261010-flush-steps";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
@@ -64,12 +64,14 @@ function lazyLoader(importer, onLoad) {
 }
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
-let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null;
+let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null, _fform = null;
 // The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
 // camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
 // node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
 let _fractalEngine = null, _fractalHandle = null, _fractalHandleCanvas = null;
 function dropFractalHandle() {
+  // A Buddhabrot keeps accumulating on its own frames until it is stopped.
+  if (_fractalGL && _fractalGL.stopBuddhabrot && _fractalHandleCanvas) _fractalGL.stopBuddhabrot(_fractalHandleCanvas);
   if (_fractalHandle) { try { _fractalHandle.dispose(); } catch (e) { console.error("[studio] fractal plugin dispose failed:", e); } }
   _fractalHandle = null; _fractalHandleCanvas = null;
 }
@@ -85,11 +87,18 @@ function drawFractalView(canvas, view, path) {
   return _fractalHandle.instance.lastError;
 }
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f1"),
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f2"),
     import("./media-engine/page.mjs").then(m => m.usePlugin("fractal")),
-    import("./fractal-hp.js?v=20261009f1"), import("./studio-fractal-deep.js?v=20261009f1")]),
-  ([f, g, e, hp, deep]) => {
+    import("./fractal-hp.js?v=20261009f1"), import("./studio-fractal-deep.js?v=20261009f2"),
+    import("./studio-fractal-formula.js?v=20261009f2")]),
+  ([f, g, e, hp, deep, form]) => {
     _fractal = f; _fractalGL = g; _fractalEngine = e; _fhp = hp;
+    _fform = form.mountFractalFormula({
+      getView: () => fractalView,
+      setView: (v) => { fractalView = v; },
+      repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+      say: (t) => say("model", t),
+    });
     _fdeep = deep.mountFractalDeep({
       getView: () => fractalView,
       setView: (v) => { fractalView = v; },
@@ -3087,6 +3096,10 @@ function fractalPrecisionNote() {
   const want = _fractalGL.fractalPrecisionMode(
     fractalView.cx, fractalView.cy, fractalView.scale, (c && c.width) || 1600);
   if (want === "single") return "";
+  if (!["mandelbrot", "julia", "burningship", "tricorn"].includes(fractalView.type)) {
+    return "This formula draws in float32, which stops separating neighbouring pixels near this depth. "
+      + "The deep path covers the Mandelbrot, Julia, Burning Ship and Tricorn sets. ";
+  }
   if (c && c.__fractalPrecisionUsed === "perturbation") {
     return "Past float32's reach here, so every pixel is iterated as a small difference from one "
       + "reference orbit computed in exact arithmetic (perturbation, with rebasing and bilinear "
@@ -3137,9 +3150,12 @@ async function renderPreset() {
   fractalBasePalette = preset.palette || "ocean";
   fractalView = applyFractalRenderControls({ ...preset });
   fractalDefault = { ...fractalView };   // remember the default framing for Reset view
+  if (_fform) _fform.sync(fractalView);
   const canvas = paintFractal(fractalView);
   const obs = perceive(canvas);
-  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
+  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship",
+    multibrot: "Multibrot set", tricorn: "Tricorn", celtic: "Celtic set", magnet: "Magnet set", phoenix: "Phoenix set",
+    newton: "Newton fractal", nova: "Nova fractal", lyapunov: "Lyapunov fractal", formula: "formula" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
     ? "dense filament detail, the boundary is alive here"
     : obs.features.entropy < 0.45
@@ -3291,9 +3307,12 @@ fStage.addEventListener("pointercancel", endFractalDrag);
 fStage.addEventListener("click", e => {
   if (!fractalInteractive()) return;
   if (_fdrag && _fdrag.moved) return;   // was a drag, not a click
-  if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
+  // By position, not by target: pointerdown captures the pointer on the stage, so the click that
+  // follows is aimed at the stage and never at the canvas. The target test made click-to-zoom a
+  // dead gesture (found 9 October 2026; it was dead on the live site too).
+  if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
   const at = fractalPointOffset(e.clientX, e.clientY, canvas, rect);
   fractalShift(at.re, at.im);
   fractalView.scale = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * 0.5);
@@ -7358,6 +7377,7 @@ const SHELL_CONTRACTS = {
       [fractalBaseMaxIter, fractalBasePalette] = state.base;
       fractalDefault = state.start ? { ...state.start } : null;
       fractalView = { ...state.view };
+      if (_fform) _fform.sync(fractalView);
       const c = paintFractal(fractalView);
       try { perceive(c); } catch (_) {}
       startMeterLoop();

@@ -129,7 +129,7 @@ jobs:
         run: |
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
           npm install --no-save playwright@1.62.1
-          python -m http.server 8807 &
+          python tests/lib/serve.py 8807 &
           server_pid=$!
           trap "kill $server_pid" EXIT
           sleep 2
@@ -163,10 +163,10 @@ jobs:
       # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
       # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
       # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.
-      - name: Fractal renderers and deep zoom
+      - name: Fractal renderers, deep zoom and formulas
         if: ${{ !cancelled() }}
         run: |
-          node --test system/fractal.test.mjs system/fractal-gl.test.mjs system/fractal-color.test.mjs system/fractal3d.test.mjs system/fractal-perturb.test.mjs system/fractal-hp.test.mjs
+          node --test system/fractal.test.mjs system/fractal-gl.test.mjs system/fractal-color.test.mjs system/fractal3d.test.mjs system/fractal-perturb.test.mjs system/fractal-hp.test.mjs system/fractal-formula.test.mjs
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
           npm install --no-save playwright@1.62.1
           python -m http.server 8809 &
@@ -175,6 +175,7 @@ jobs:
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/fractal-deep.cjs
           SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-deep.cjs
+          SITE_BASE_URL=http://127.0.0.1:8809 BROWSER_CHANNEL=chrome node tests/studio-fractal-formulas.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
       # The long films: a byte-range server, and seeking from a source card or the transcript

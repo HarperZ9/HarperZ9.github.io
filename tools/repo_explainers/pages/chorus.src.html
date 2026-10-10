@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How chorus works</title>
+<meta name="description" content="An animated walk through chorus: twelve comments scored with a small lexicon, weighted by engagement, clustered into themes, the contested topic named, and a digest receipt that re-derives from the inputs and rejects a doctored weight even when its hash is recomputed. Built from chorus at commit 29cefb2.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/chorus.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/chorus">HarperZ9/chorus</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/chorus/tree/29cefb2b675beb0856444dff63b3cb224970ab84">29cefb2</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>chorus</h1>
+  <p class="lede">Turn a comment section into a ranked digest you can re-check.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>chorus reads a pile of comments and tells you what people are saying: the themes, ranked by how much the crowd engaged and how strongly it felt, the sharpest dissent, and the topics the crowd is split on. Every digest carries a receipt a stranger can re-run to get the same answer. It works on a corpus that gather captured, or on a plain JSON list.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Themes, ranked</b>Each theme has its size, a weight, a sentiment split, a controversy score and its strongest dissenting voice.</li>
+    <li><b>The fight, named</b>A separate lens measures every comment that mentions a term, so a split topic is not hidden by clustering.</li>
+    <li><b>A receipt you can re-run</b><code>--verify</code> re-derives the digest from the inputs and rejects one that does not follow.</li>
+    <li><b>Honest nulls</b>A missing engagement signal is recorded as absent, and a thin corpus says so.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/README.md">README.md</a> at 29cefb2 (version 0.3.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows the bundled sample, <code>examples/discourse-sample.json</code>: twelve comments under one phone review. Every number is output from chorus at commit 29cefb2, with no model.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Twelve comments under one review</h3>
+        <p>Five comments talk about the battery, four about the display and three about the camera. Each carries its like count. The battery comments disagree: two love it and three hate it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/examples/discourse-sample.json">examples/discourse-sample.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Score each comment with a small lexicon</h3>
+        <p>Sentiment comes from a lexicon of thirty words with rules for negation, intensifiers, capitals and punctuation. The same text always scores the same. c02 scores 0.79 on <code>amazing</code> and <code>best</code>; c03 scores -0.75 on <code>terrible</code> and <code>worst</code>.</p>
+        <p>c01 says the battery is <code>incredible</code>, a word the lexicon does not hold, so it scores 0. The digest states this coarseness about itself: English-only and literal.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/src/chorus/sentiment.py">src/chorus/sentiment.py</a>, <code>score_text</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Weight by engagement, then by feeling</h3>
+        <p>A comment's weight is log(1 + likes) multiplied by (1 + 0.5 times the size of its sentiment). A loud comment nobody engaged with stays small, and a neutral comment with many likes still counts.</p>
+        <p>c04 has 260 likes and a sentiment of -0.5574, so its weight is log(261) x 1.2787 = 7.115.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/src/chorus/synthesize.py">src/chorus/synthesize.py</a>, <code>item_weight</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Cluster into themes</h3>
+        <p>Comments are clustered by hashed TF-IDF cosine over 512 dimensions, seeded most-engaged first. Five themes come out, ranked by weight. The display leads; the battery splits into a praise cluster and a complaint cluster; c04 stands alone and is labelled a singleton, so it is not presented as a broad crowd theme.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/src/chorus/synthesize.py">src/chorus/synthesize.py</a>, <code>cluster</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Name the contested topic</h3>
+        <p>Clustering filed the battery praise and the battery complaints under different themes, which would hide the disagreement. The contested lens measures every comment that mentions a term. The battery appears in five comments, 60% negative and 20% positive: contested at 0.5386.</p>
+        <p>One-sided praise and neutral chatter are left out of this list. The display and the camera are not contested.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/src/chorus/synthesize.py">src/chorus/synthesize.py</a>, <code>contested_aspects</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>A receipt that re-derives</h3>
+        <p>The receipt hashes the inputs, the parameters and the digest body. Verify re-scores every comment from its text, re-clusters and re-weights, then compares. The unchanged digest verifies.</p>
+        <p>Double a theme's weight and it fails. Double it and recompute the digest's own hash to match, and it still fails, because the weight does not follow from the inputs. Change one like count in the corpus and the old digest fails against it. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/chorus/blob/29cefb2b675beb0856444dff63b3cb224970ab84/src/chorus/receipt.py">src/chorus/receipt.py</a>, <code>verify</code></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.10 or newer; no service key and no model.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/chorus && cd chorus
+$ pip install -e .</code></pre></li>
+    <li><h3>First run: digest a thread</h3><p>Score, weight and cluster the sample comments, then verify the digest.</p>
+<pre class="cmd"><code>$ chorus run examples/discourse-sample.json --verify
+<span class="out">  "contested": [ ... "term": "battery", "contested": 0.5386 ... ]</span></code></pre></li>
+    <li><h3>Re-derive the digest</h3><p>In Python, verify a digest against the scored comments. An edited digest is rejected.</p>
+<pre class="cmd"><code>>>> verify(edited, scored)
+<span class="out">False</span></code></pre></li>
+  </ol>
+  <p class="src">Output from chorus at 29cefb2 on Windows with Python 3.12. The tamper cases were run through the Python API, <code>chorus.receipt.verify</code>.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The lexicon is English-only and literal: no sarcasm, irony or context. A word outside it, like incredible, scores 0.</li>
+    <li>Clustering is lexical. Comments that say the same thing in different words can land in different themes.</li>
+    <li>Sentiment is a weight and never a verdict. A digest reports what people said; whether they are right is outside it.</li>
+    <li>A model overlay with <code>--model</code> is tagged with its provenance and never enters the re-checkable core.</li>
+    <li>The source-change gate reports whether sources changed. It does not decide whether a source claim is true.</li>
+  </ul>
+  <p class="src">Source: README.md at 29cefb2, "What you get" and "Release notes"; the digest's own method.coarseness field</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does c01 score 0 when it calls the battery incredible?</summary><p>The lexicon does not hold the word incredible, so nothing in c01 scores.</p></details>
+  <details><summary>What is c04's weight, and where do its two factors come from?</summary><p>7.115: log(1 + 260 likes) times (1 + 0.5 x 0.5574), the size of its sentiment.</p></details>
+  <details><summary>Clustering put battery praise and complaints in different themes. How does chorus still show the fight?</summary><p>The contested lens measures every comment that mentions a term, so the battery reads contested at 0.5386.</p></details>
+  <details><summary>A digest's weight is edited and its hash recomputed to match. Why does verify still reject it?</summary><p>Verify re-derives the digest from the comments themselves, and the edited weight does not follow from them.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/chorus/tree/29cefb2b675beb0856444dff63b3cb224970ab84">HarperZ9/chorus at 29cefb2</a> (version 0.3.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. chorus is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 0}}, {"table": {"head": ["id", "likes", "comment"], "rows": [["c01", "340", "The battery life on this phone is incredible, easily lasts me two full days"], ["c02", "210", "battery life is amazing, best i have ever had on any phone honestly"], ["c03", "290", "the battery is terrible, drains so fast, worst battery i have owned"], ["c04", "260", "awful battery life, dead by lunch, hugely disappointing for the price"], ["c05", "150", "battery drains overnight, really bad, i regret buying it"], ["c06 to c09", "300, 240, 190, 170", "four comments praising the display"], ["c10 to c12", "60, 40, 30", "three comments calling the camera average"]]}}], "k1": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 2}}, {"table": {"head": ["id", "compound", "words that scored"], "rows": [["c01", "0.0", "none"], ["c02", "0.7906", "amazing, best"], ["c03", "-0.7543", "terrible, worst"], ["c04", "-0.5574", "awful"], ["c05", "-0.2617", "bad"]]}}], "k2": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 3}}, {"io": {"lines": ["weight = log1p(engagement) * (1 + 0.5 * |compound|)", "", "c01  log1p(340) * (1 + 0.5 * 0.0000) = 5.832", "c02  log1p(210) * (1 + 0.5 * 0.7906) = 7.467", "c03  log1p(290) * (1 + 0.5 * 0.7543) = 7.813", ["c04  log1p(260) * (1 + 0.5 * 0.5574) = 7.115", "hi"], "c05  log1p(150) * (1 + 0.5 * 0.2617) = 5.674"]}}], "k3": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 5}}, {"table": {"head": ["theme", "size", "weight", "sentiment"], "rows": [["display / screen / bright", "4", "28.06", "all positive"], ["drains / battery", "2", "13.49", "all negative"], ["phone / life / battery", "2", "13.30", "half positive, half neutral"], ["camera / photos / average", "3", "11.26", "all neutral"], ["awful / dead / disappointing", "1, singleton", "7.12", "negative"]]}}], "k4": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 6}}, {"table": {"head": ["term", "mentions", "positive", "negative", "contested"], "rows": [["life", "3", "0.333", "0.333", "0.5531"], ["battery", "5", "0.2", "0.6", "0.5386"]]}}], "k5": [{"pipe": {"stages": ["normalize", "engagement", "score", "weight", "cluster", "themes", "contested", "receipt"], "active": 7}}, {"cases": {"label": "Choose an edit", "items": [{"label": "nothing", "blocks": [{"io": {"cmd": "verify(digest, scored)", "lines": ["True"], "verdict": ["re-derived", "ok"]}}]}, {"label": "a theme weight doubled", "blocks": [{"io": {"cmd": "verify(edited, scored)", "lines": ["False"], "verdict": ["rejected", "drift", "the body hash no longer matches"]}}]}, {"label": "doubled, hash recomputed", "blocks": [{"io": {"cmd": "verify(edited_with_new_hash, scored)", "lines": ["False"], "verdict": ["rejected", "drift", "the weight does not follow from the inputs"]}}]}, {"label": "one like count changed", "blocks": [{"io": {"cmd": "verify(digest, scored_from_changed_corpus)", "lines": ["False"], "verdict": ["rejected", "drift", "the input hash no longer matches"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

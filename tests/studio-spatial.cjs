@@ -19,9 +19,13 @@ async function frame(page) {
     return [...new Uint8Array(h)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
   });
 }
-// noWaitAfter: a world restart can hold a slow runner's main thread for many seconds after the
-// click; the test waits for the world itself below instead of for the click's aftermath.
-async function clickIn(page, sel) { const l = page.locator(sel).first(); await l.scrollIntoViewIfNeeded(); await l.click({ noWaitAfter: true }); }
+// A world drawn on a CI runner's software GPU can starve animation frames for many seconds, and
+// Playwright's click waits for two still frames before it acts ("waiting for element to be stable",
+// 15 s timeouts on main on 10 October 2026). The control is clicked as the browser dispatches a click,
+// with no frame wait; the test then waits for the world itself.
+async function clickIn(page, sel) {
+  await page.locator(sel).first().evaluate((el) => { el.scrollIntoView({ block: 'nearest' }); el.click(); });
+}
 // Wait until the world says it has drawn: the status line names its receipt (or its failure), and no
 // longer says it is loading. A world loads in seconds here and much longer on a runner that draws
 // on the CPU, so the limit is 90 s. The world animates, so the frame itself is no signal.

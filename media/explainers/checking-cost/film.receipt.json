@@ -41,7 +41,8 @@
     "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
     "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
     "tools/explainer/film/motion.py": "75ae90043407587fe049884c852d37b7249aecb460bdb3b3f131ec81269c4b40",
-    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898",
+    "media/explainers/checking-cost/sound/film.sound.mjs": "f62cf45973a83e719bc8aa0789d800a09672a3b213de08a3d420adb055956ac2"
   },
   "toolchain": {
     "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
@@ -66,7 +67,9 @@
     "score": {
       "generator": "tools/explainer/film/score.py",
       "mix_db": -13,
-      "sha256": "e28ebd77c23b2ceb7bb917ac885f22a90d1ca28ee808ea1d1dc3503764935070"
+      "sha256": "e28ebd77c23b2ceb7bb917ac885f22a90d1ca28ee808ea1d1dc3503764935070",
+      "in_current_mix": false,
+      "note": "The score of the first mix (A). The current mix (C) has no score bed; see \"sound\"."
     }
   },
   "narration": {
@@ -135,12 +138,35 @@
   "fps": 30,
   "seconds": 177.46666666666667,
   "outputs": {
-    "checking-cost.mp4": "98a76f019596c735df2e9112a21dffc65b6207d3faa73a4a9d4fca7210457b5b",
+    "checking-cost.mp4": "5ffe7126e4a706e696373f7c3e2fe0b7e10a845c9a4fc53fd2665ee844e9e108",
     "checking-cost.vtt": "b100a8d9a2f67113067c75bebfb69ca99ec0c5c216b05f0c1ca25a2613547f0a",
     "checking-cost.srt": "5d220119850a63dc7818a974ff7bff44f478ef8d78a4ed148feb1bf4bb491408",
     "poster.jpg": "a2f8b23dce382b182c5ae1712d48a8327d11d333c50c25401f39806540c67b5f",
     "timing.json": "698e3ff04b82a95f75de7eb6d71e047ed910f554a60da8ba256a2381a733d6f7",
-    "checking-cost.m4a": "9b16b42cbdbf24d894843a3c3fdb7c0778e0366f7964644676e46e4b37c08262"
+    "checking-cost.m4a": "91ed67f02f764419c3ca6767aa1375f210528f96355a58ac43f8a35286105fff"
   },
-  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes.",
+  "sound": {
+    "mix": "C",
+    "since": "2026-10-10",
+    "engine": "raw-native web/sound (main 4c7ddaa)",
+    "what": "The narration with 22 short cues, each placed from the scene timeline and panned to what it marks; no score bed under the voice.",
+    "why": "Moreno and Mayer (2000) found a music bed under narration lowered recall and transfer; cues tied one-to-one to events did not significantly hurt. Chosen by the coordinator after the author said continue without picking; reversible.",
+    "files": {
+      "sound/film.sound.mjs": "f62cf45973a83e719bc8aa0789d800a09672a3b213de08a3d420adb055956ac2",
+      "sound/sheet.json": "7ab9085dd0b179eef17af08d512cc64087b92883b7a0cd5bed9aa8c4bc9c582e",
+      "sound/sheet.resolved.json": "35bd74557f1c0f26f9ab5851446c69a58c71b9e13bf1d673d751bebd7918f6c4",
+      "sound/report.json": "268306b9fd44a89adee6f033bde34b033e4c19f39d0be02054d3e3b281d453b7",
+      "sound/receipt.json": "ee57fc44796fba3fa89a683b0121aec9b07fb3a85448442adbb7869512eccdc3"
+    },
+    "pcm_sha256": "bab594acc1c599cf900aa247c8de5ec49b141750ddc45b5ab696513e491df305",
+    "meter": "raw-native-bs1770/1",
+    "true_peak_meter": "raw-native-truepeak/1",
+    "integrated_lufs": -16.0,
+    "true_peak_dbtp": -1.8,
+    "loudness_range_lu": 3.01,
+    "loudness_verdict": "verified",
+    "second_meter": "ffmpeg 7.1 ebur128=peak=true on checking-cost.m4a: -16.0 LUFS, LRA 3.0 LU, true peak -1.8",
+    "revert": "Restore checking-cost.mp4 and checking-cost.m4a and their output hashes from the commit before this one (mix A, narration and score.py score), or render film.sound.mjs --with-score for mix B."
+  }
 }

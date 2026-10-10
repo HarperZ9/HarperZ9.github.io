@@ -604,6 +604,17 @@
                   <button type="button" class="chip active" data-ftype="mandelbrot">Mandelbrot</button>
                   <button type="button" class="chip" data-ftype="julia">Julia</button>
                   <button type="button" class="chip" data-ftype="burningship">Burning Ship</button>
+                  <button type="button" class="chip" data-ftype="multibrot">Multibrot</button>
+                  <button type="button" class="chip" data-ftype="tricorn">Tricorn</button>
+                  <button type="button" class="chip" data-ftype="celtic">Celtic</button>
+                  <button type="button" class="chip" data-ftype="magnet">Magnet</button>
+                  <button type="button" class="chip" data-ftype="phoenix">Phoenix</button>
+                  <button type="button" class="chip" data-ftype="newton">Newton</button>
+                  <button type="button" class="chip" data-ftype="nova">Nova</button>
+                  <button type="button" class="chip" data-ftype="lyapunov">Lyapunov</button>
+                  <button type="button" class="chip" data-ftype="formula">Formula</button>
+                  <button type="button" class="chip" data-ftype="buddhabrot">Buddhabrot</button>
+                  <button type="button" class="chip" data-ftype="nebulabrot">Nebulabrot</button>
                 </div>
               </div>
               <div class="at-group">
@@ -625,6 +636,77 @@
                 <input type="range" class="at-slider" id="fractal-detail" min="0.5" max="2.5" step="0.1" value="1" aria-label="Fractal detail multiplier">
               </div>
             </details>
+            <!-- Formula (9 October 2026): the parameters of the formula types, and the formula editor.
+                 Shown for the types that read them. studio-fractal-formula.js. -->
+            <details class="rail-group" open id="fractal-formula-group" hidden>
+              <summary>Formula</summary>
+              <div class="at-group" id="fractal-power-row" hidden>
+                <span class="at-glab">Power <span class="hint">z to the d (<span id="fractal-power-val">3</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-power" min="2" max="9" step="0.25" value="3" aria-label="Multibrot power">
+              </div>
+              <div class="at-group" id="fractal-newton-row" hidden>
+                <span class="at-glab">f(z) <span class="hint">Newton finds its roots</span></span>
+                <input type="text" class="at-seed" id="fractal-newton-f" value="z^3 - 1" spellcheck="false" style="width:100%" aria-label="Newton function">
+              </div>
+              <div class="at-group" id="fractal-editor-row" hidden>
+                <span class="at-glab">z becomes <span class="hint">z, c, zp (previous z), p, q, i, pi</span></span>
+                <textarea id="fractal-formula" class="at-seed" rows="2" spellcheck="false" style="width:100%;font-family:var(--mono, monospace);font-size:13px;padding:.4em .5em;resize:vertical" aria-label="Iteration formula">z^2 + c</textarea>
+                <div class="at-chips" role="group" aria-label="Formula mode">
+                  <button type="button" class="chip active" data-fmode="escape">Escapes</button>
+                  <button type="button" class="chip" data-fmode="converge">Converges</button>
+                  <button type="button" class="chip" data-fmode="newton">Newton on it</button>
+                </div>
+                <div class="at-chips" role="group" aria-label="Starting z">
+                  <button type="button" class="chip active" data-fz0="zero">Start at 0</button>
+                  <button type="button" class="chip" data-fz0="c">Start at c</button>
+                </div>
+                <p class="src-hint">Functions: sqr cube recip sqrt exp log sin cos tan sinh cosh tanh conj abs absre absim re im flip mod arg pow</p>
+              </div>
+              <div class="at-group" id="fractal-lyap-row" hidden>
+                <span class="at-glab">Sequence <span class="hint">A and B, up to 16 letters</span></span>
+                <input type="text" class="at-seed" id="fractal-lyap-seq" value="AABAB" spellcheck="false" style="width:100%" aria-label="Lyapunov sequence">
+              </div>
+              <div class="at-group" id="fractal-buddha-row" hidden>
+                <span class="at-glab">Orbits <span class="hint">millions sampled (<span id="fractal-orbits-val">20</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-orbits" min="1" max="200" step="1" value="20" aria-label="Orbits sampled, in millions">
+                <span class="at-glab">Shortest orbit drawn <span class="hint">(<span id="fractal-miniter-val">20</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-miniter" min="0" max="200" step="1" value="20" aria-label="Shortest orbit drawn">
+                <span class="at-glab">Contrast <span class="hint">gamma (<span id="fractal-gamma-val">2.0</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-gamma" min="1" max="4" step="0.1" value="2" aria-label="Contrast">
+              </div>
+              <div class="at-group" id="fractal-limits-row" hidden>
+                <span class="at-glab">Bands <span class="hint">orbit length limits: red, green, blue</span></span>
+                <div class="at-chips">
+                  <input type="number" class="at-seed" id="fractal-lim-r" min="20" step="1" value="5000" style="width:31%" aria-label="Red band limit">
+                  <input type="number" class="at-seed" id="fractal-lim-g" min="10" step="1" value="500" style="width:31%" aria-label="Green band limit">
+                  <input type="number" class="at-seed" id="fractal-lim-b" min="4" step="1" value="50" style="width:31%" aria-label="Blue band limit">
+                </div>
+              </div>
+              <div class="at-group" id="fractal-julia-row" hidden>
+                <label class="at-check" style="display:block"><input type="checkbox" id="fractal-julia-mode"> Julia mode (the pixel is the start, c is fixed)</label>
+                <span class="at-glab">c <span class="hint">real, imaginary</span></span>
+                <div class="at-chips">
+                  <input type="number" class="at-seed" id="fractal-jx" step="0.001" value="-0.8" style="width:46%" aria-label="Julia constant, real part">
+                  <input type="number" class="at-seed" id="fractal-jy" step="0.001" value="0.156" style="width:46%" aria-label="Julia constant, imaginary part">
+                </div>
+                <button class="btn" id="fractal-julia-pick" type="button">Julia of the centre</button>
+              </div>
+              <div class="at-group" id="fractal-p-row" hidden>
+                <span class="at-glab">p <span class="hint" id="fractal-p-hint">real, imaginary</span></span>
+                <div class="at-chips">
+                  <input type="number" class="at-seed" id="fractal-pre" step="0.01" value="-0.5" style="width:46%" aria-label="Constant p, real part">
+                  <input type="number" class="at-seed" id="fractal-pim" step="0.01" value="0" style="width:46%" aria-label="Constant p, imaginary part">
+                </div>
+              </div>
+              <!-- A wrapper carries [hidden]: the rail's .at-actions rule sets display:flex, which
+                   would override the attribute on the row itself. -->
+              <div id="fractal-formula-actions" hidden>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-formula-apply" type="button">Draw formula</button>
+                </div>
+              </div>
+              <p class="src-hint" id="fractal-formula-error" role="status" aria-live="polite"></p>
+            </details>
             <!-- Deep zoom (9 October 2026): perturbation against a high-precision reference orbit,
                  bilinear approximation and rebasing, down to a view 1e-300 wide. studio-fractal-deep.js. -->
             <details class="rail-group" open id="fractal-deep-group">
@@ -634,13 +716,13 @@
                 <p class="src-hint" id="fractal-deep-readout" aria-live="polite"></p>
               </div>
               <div class="at-group">
-                <label class="at-check"><input type="checkbox" id="fractal-auto-iter" checked> Iterations follow the depth</label>
-                <label class="at-check"><input type="checkbox" id="fractal-bla" checked> Skip iterations by bilinear approximation</label>
-                <label class="at-check"><input type="checkbox" id="fractal-glitch"> Show glitches (rebasing off)</label>
+                <label class="at-check" style="display:block"><input type="checkbox" id="fractal-auto-iter" checked> Iterations follow the depth</label>
+                <label class="at-check" style="display:block"><input type="checkbox" id="fractal-bla" checked> Skip iterations by bilinear approximation</label>
+                <label class="at-check" style="display:block"><input type="checkbox" id="fractal-glitch"> Show glitches (rebasing off)</label>
               </div>
               <div class="at-group">
                 <span class="at-glab">Location <span class="hint">centre and width; paste one to fly there</span></span>
-                <textarea id="fractal-location" class="at-seed" rows="4" spellcheck="false" style="width:100%;font-family:var(--mono, monospace);font-size:11px;resize:vertical" aria-label="Fractal location"></textarea>
+                <textarea id="fractal-location" class="at-seed" rows="4" spellcheck="false" style="width:100%;font-family:var(--mono, monospace);font-size:11px;padding:.4em .5em;resize:vertical" aria-label="Fractal location"></textarea>
                 <div class="at-actions">
                   <button class="btn" id="fractal-location-go" type="button">Go to location</button>
                   <button class="btn" id="fractal-location-copy" type="button">Copy location</button>
@@ -1577,7 +1659,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261009-polish"></script>
+<script type="module" src="system/studio.js?v=20261010-flush-steps"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

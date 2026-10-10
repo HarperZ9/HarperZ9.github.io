@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How studio-engine works</title>
+<meta name="description" content="An animated walk through studio-engine, a dependency-free Python engine that generates shaders, sound and motion as replayable worlds: a gyroid at seed 7 refined to cohesion 0.8922, one expression emitted as GLSL, a Web Audio synth and a timeline, PNG frames bound to the expression hash, a tampered program refused, and a novelty corpus that changes the result on a second run. Built from studio-engine at commit 24cd0f4.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/studio-engine.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/studio-engine">HarperZ9/studio-engine</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/studio-engine/tree/24cd0f4c59a1c3007f94904f74f69af689546b50">24cd0f4</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>studio-engine</h1>
+  <p class="lede">Generate replayable shaders, sound and motion, each with a receipt.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Generated art usually ends as pixels nobody can inspect. studio-engine keeps the whole recipe: the shader, a sound graph, a motion timeline, the criteria it was judged against, every refinement step and a receipt. You can re-render it, steer it over a local HTTP API, or render PNG frames with no GPU. It runs on the Python standard library alone.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One expression, every output</b>The same formula becomes the GLSL shader, the scored samples, the timeline and the synth graph.</li>
+    <li><b>Frames without a GPU</b>A software rasterizer writes deterministic PNG frames, each hashed into the receipt.</li>
+    <li><b>Tampering is refused</b>The rasterizer re-hashes the shipped expression and will not draw a mismatch.</li>
+    <li><b>Ten generators</b>Seven fields and three point sets, each one table entry.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/README.md">README.md</a> at 24cd0f4 (version 0.3.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. Every line is output from studio-engine at commit 24cd0f4, from <code>python -m studio_engine --render-frames 7 gyroid</code> and from the engine called in Python with an empty novelty corpus.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A seed and a generator</h3>
+        <p>Pick the gyroid with seed 7. The seed drives a fixed integer hash, so it sets the starting parameters and a six-colour palette in OKLCh. The gyroid starts at frequency 8.88 and z 0.66.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/engine.py">studio_engine/engine.py</a>, <code>run</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Score, then refine the weakest axis</h3>
+        <p>Each step samples the field on a 20 by 20 grid and scores four axes: clean frequency, contrast, complexity and novelty. Cohesion is their harmonic mean. Refinement moves one parameter at a time toward higher cohesion. The frequency jumps to 10, a whole number, then z rises to 0.95, and cohesion climbs from 0.7983 to 0.8922.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/criteria.py">studio_engine/criteria.py</a>, <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/engine.py">studio_engine/engine.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Short of the target, and an outside check</h3>
+        <p>Convergence needs cohesion of 0.9 with every axis at or above the floor. At 0.8922 the run stops as best effort, unconverged. A separate structural-fitness check from coherence-membrane then measures a deviation of 0.108 against a tolerance of 0.4 and verifies the world. Without that package installed, this line reads unverifiable.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/certify.py">studio_engine/certify.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>One expression, three outputs</h3>
+        <p>The field sin(10u)cos(10v) + sin(10v)cos(10t) + sin(10t)cos(10u) is held as a frozen tree. It is emitted as the GLSL <code>field()</code> body, parsed back, and required to evaluate equal to the original within 1e-6. Swept over t it gives a timeline with a period of 0.628 seconds whose loop has no jump. Sonified, it becomes a six-harmonic additive sine synth at 373.7 Hz.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/strand/glsl.py">studio_engine/strand/glsl.py</a>, <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/temporal.py">studio_engine/temporal.py</a>, <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/strand/webaudio.py">studio_engine/strand/webaudio.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Frames, and a tampered program</h3>
+        <p><code>--render-frames</code> rasterizes eight PNG frames across the loop period and writes a manifest binding each frame's SHA-256 to the expression hash. Before drawing, the rasterizer rebuilds the expression from the shipped tree and re-hashes it. Pick a program in the panel: changing one constant from 10 to 11 makes the hash disagree, and the render is refused.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/raster_renderer.py">studio_engine/raster_renderer.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Same input, same world, for a fixed corpus</h3>
+        <p>Novelty is measured against a corpus of everything made before, and the corpus grows with every run. With the corpus cleared, seed 7 gives world 1e1312cf579e9deb every time. Run it again without clearing and the new gyroid is a near copy of the last one: novelty falls to 0.08 and the result changes.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/studio-engine/blob/24cd0f4c59a1c3007f94904f74f69af689546b50/studio_engine/corpus.py">studio_engine/corpus.py</a>; README.md, "Why it matters"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Clone it. Python 3.10 or newer, no install step.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/studio-engine && cd studio-engine</code></pre></li>
+    <li><h3>First run: a world with frames</h3><p>Generate the gyroid at seed 7 and render PNG frames with no GPU.</p>
+<pre class="cmd"><code>$ python -m studio_engine --render-frames 7 gyroid
+<span class="out">world 1e1312cf579e9deb | 'Gyroid #7'
+  steps=8 converged=False final_score=0.8922
+  render=glsl-fragment expr_sha=528f4a81a82a6ea2
+  timeline period=0.628319 continuity=verified
+  rendered 8 PNG frame(s) -&gt; studio-out/frames-7/ (+ frames.json)</span></code></pre></li>
+    <li><h3>Open the chamber</h3><p>Start the API, then open <code>handoff/reference-chamber.html</code> to see the shader and hear the synth.</p>
+<pre class="cmd"><code>$ python -m studio_engine.server 8777</code></pre></li>
+  </ol>
+  <p class="src">Output from studio-engine at 24cd0f4 with Python 3.12 on Windows. The unittest suite reported 195 tests passing. Ids depend on the novelty corpus, which the CLI keeps at studio_engine/_corpus.json.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The criteria are coarse aesthetic axes. A score is a measured read of them and makes no claim about beauty.</li>
+    <li>The engine emits shader programs and synth graphs as data. Browsers, GPUs and audio hosts play them.</li>
+    <li>Version 0.3.0; the API may still change before 1.0. The native GPU renderer is a separate project, and the bridge says so when it is absent.</li>
+  </ul>
+  <p class="src">Source: README.md at 24cd0f4, "Scope and maturity" and "Why it matters"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does a second run of seed 7 give a different world?</summary><p>Novelty is scored against a corpus that grew with the first run.</p></details>
+  <details><summary>What does the rasterizer check before drawing a frame?</summary><p>It rebuilds the expression from the shipped tree, re-hashes it, and refuses on a mismatch.</p></details>
+  <details><summary>What happens to the GLSL before it ships?</summary><p>It is parsed back and must evaluate equal to the original expression within 1e-6.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/studio-engine/tree/24cd0f4c59a1c3007f94904f74f69af689546b50">HarperZ9/studio-engine at 24cd0f4</a> (version 0.3.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. studio-engine is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["seed", "critique", "refine", "witness", "shader, sound, motion", "frames"], "active": 0}}, {"io": {"cmd": "python -m studio_engine --render-frames 7 gyroid", "lines": ["world 1e1312cf579e9deb | 'Gyroid #7'", "palette=['#7375cb', '#8e7fd8', '#a88ae3', '#c295ec', '#dca1f3', '#f5adf9']"]}}], "k1": [{"pipe": {"stages": ["seed", "critique", "refine", "witness", "shader, sound, motion", "frames"], "active": 2}}, {"table": {"head": ["step", "freq", "z", "cohesion", "weakest"], "rows": [["0", "8.88", "0.66", "0.7983", "contrast"], ["1", "10.0", "0.66", "0.849", "contrast"], ["2 to 6", "10.0", "0.95", "0.8922", "contrast"], ["7 witness", "10.0", "0.95", "0.8922", ""]]}}], "k2": [{"pipe": {"stages": ["seed", "critique", "refine", "witness", "shader, sound, motion", "frames"], "active": 3}}, {"io": {"lines": ["steps=8 converged=False final_score=0.8922", "certificate  structural-fitness-v1: deviation 0.108 <= tolerance 0.4"], "verdict": ["best effort; certificate verified", "ok", "the two checks are reported separately"]}}], "k3": [{"pipe": {"stages": ["seed", "critique", "refine", "witness", "shader, sound, motion", "frames"], "active": 4}}, {"io": {"lines": ["render=glsl-fragment expr_sha=528f4a81a82a6ea2", "timeline period=0.628319 continuity=verified on_criterion=verified", "audio additive-sine, 6 oscillators, base 373.7435 Hz", "receipt artifact_shas 528f4a81a82a6ea2 318e38c3c99a9a8a 0141bd73e3ff4c26"]}}], "k4": [{"pipe": {"stages": ["seed", "critique", "refine", "witness", "shader, sound, motion", "frames"], "active": 5}}, {"cases": {"label": "Choose the program", "items": [{"label": "as shipped", "blocks": [{"io": {"lines": ["rendered 8 PNG frame(s) -> studio-out/frames-7/ (+ frames.json)", "f000  expr_sha256 528f4a81a82a6ea2  frame d0c2f3d3653850f2..."], "verdict": ["rendered", "ok"]}}]}, {"label": "one constant changed", "blocks": [{"io": {"lines": ["FrameError: expr_sha256 mismatch: shipped expr_ast hashes to '66d2baf11fc710d8'", "but program claims '528f4a81a82a6ea2' (tampered program or receipt)"], "verdict": ["refused", "drift", "nothing is drawn"]}}]}]}}], "k5": [{"cases": {"label": "Choose a run", "items": [{"label": "empty corpus", "blocks": [{"io": {"lines": ["world 1e1312cf579e9deb  final_score=0.8922"], "verdict": ["same id each time", "ok"]}}]}, {"label": "empty corpus, again", "blocks": [{"io": {"lines": ["world 1e1312cf579e9deb  final_score=0.8922"], "verdict": ["same id each time", "ok"]}}]}, {"label": "second run, corpus kept", "blocks": [{"io": {"lines": ["world 1455056cc992283b  final_score=0.2477", "weakest axis: novelty = 0.084"], "verdict": ["different world", "drift", "the corpus is part of the input"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Workflow Harness Lite works</title>
+<meta name="description" content="An animated walk through Workflow Harness Lite: four local commands run in parallel from a JSON config, a hung task stopped by its timeout, a secret redacted from an output preview, and a bounded-run receipt that holds hashes of commands and output and none of the text. Built from workflow-harness-lite at commit 5886706.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/workflow-harness-lite.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/workflow-harness-lite">HarperZ9/workflow-harness-lite</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/workflow-harness-lite/tree/5886706509af45dcbee53489ea283ec8e5b40bf1">5886706</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Workflow Harness Lite</h1>
+  <p class="lede">Run local command workflows in parallel, always terminate, and keep a compact receipt.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Release checks and agent workflows need a local runner that finishes predictably and leaves a short report. Workflow Harness Lite reads a JSON list of named commands, runs them in parallel, stops any that run past a timeout, redacts secret-shaped text from the output previews, and exits non-zero if anything failed. It can also write a receipt that records hashes of each command and its output, with no raw text in it.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Parallel by default</b>Independent tasks run at once; <code>--no-parallel</code> runs them in order.</li>
+    <li><b>Guaranteed to end</b>Every task has a timeout, so a hung command cannot hold the run open.</li>
+    <li><b>Redacted previews</b>Output previews are capped in length and secret-shaped values are replaced.</li>
+    <li><b>A receipt without the text</b>Commands and output appear as SHA-256 hashes, and the privacy fields say so.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/workflow-harness-lite/blob/5886706509af45dcbee53489ea283ec8e5b40bf1/README.md">README.md</a> at 5886706 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel runs a four-task config written for this page: two commands that pass, one that prints a token-shaped line and fails, and one that hangs. Every line is output from workflow-harness-lite at commit 5886706 under Node 25.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A config of named commands</h3>
+        <p>A workflow is a name and a list of tasks, each a name and a command. This one checks the Node version, runs a stand-in lint, runs a flaky step that prints a token to stderr and exits 2, and runs a step that waits a minute.</p>
+        <p class="src">Source: README.md, "Usage"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Run them, all at once</h3>
+        <p>The harness starts the four tasks in parallel and prints one line per task. Two pass and two fail, and the run exits 1.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/workflow-harness-lite/blob/5886706509af45dcbee53489ea283ec8e5b40bf1/src/workflow_harness_lite.js">src/workflow_harness_lite.js</a>, <code>runWorkflow</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A hung task is stopped</h3>
+        <p>The hang task would wait 60 seconds. Every task has a timeout: 15 seconds by default, and here <code>--timeout 2000</code> sets 2. The task is killed at about 2,018 ms and recorded as a failure, so the run ends.</p>
+        <p>The receipt records the bound it ran under: guaranteed termination, the per-task timeout and a maximum of four iterations for four tasks.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/workflow-harness-lite/blob/5886706509af45dcbee53489ea283ec8e5b40bf1/src/workflow_harness_lite.js">src/workflow_harness_lite.js</a>, <code>runTask</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Secrets out of the preview</h3>
+        <p>The flaky task printed a <code>token=</code> line. The JSON report keeps a short preview of each task's output, and the preview shows the token replaced. Previews are capped at 4,000 characters by default.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/workflow-harness-lite/blob/5886706509af45dcbee53489ea283ec8e5b40bf1/src/workflow_harness_lite.js">src/workflow_harness_lite.js</a>, <code>sanitizeOutput</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>A receipt with no commands and no output</h3>
+        <p><code>--telos-receipt</code> writes a bounded-run receipt. Each task appears by name, index, command hash, status, exit code, duration and output hashes. The privacy fields state that no raw command, raw output or absolute working directory is included, and the receipt carries its own hash.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/workflow-harness-lite/blob/5886706509af45dcbee53489ea283ec8e5b40bf1/src/telos_receipt.js">src/telos_receipt.js</a>, <code>buildTelosReceipt</code></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Clone it. Node 18 or newer, no dependencies.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/workflow-harness-lite && cd workflow-harness-lite
+$ npm test</code></pre></li>
+    <li><h3>First run: the demo</h3><p>Run a two-step workflow and build its receipt.</p>
+<pre class="cmd"><code>$ node examples/demo.mjs
+<span class="out">runWorkflow -&gt; status=pass total=2 passed=2 failed=0 skipped=0
+buildTelosReceipt -&gt; project-telos.bounded-run-receipt/v1 ok</span></code></pre></li>
+    <li><h3>Run your own workflow</h3><p>A step that fails makes the run fail.</p>
+<pre class="cmd"><code>$ workflow-harness-lite --config wf.json
+<span class="out">workflow=local-checks status=fail passed=2 failed=2
+PASS node-version
+PASS lint
+FAIL flaky
+FAIL hang</span></code></pre></li>
+    <li><h3>Write a receipt</h3><p>Record the bounded run as a receipt.</p>
+<pre class="cmd"><code>$ workflow-harness-lite --config wf.json --telos-receipt receipt.json
+<span class="out">schema           project-telos.bounded-run-receipt/v1
+terminal_status  error
+counts           total 4, passed 2, failed 2
+flaky            command_hash sha256:8b0faa47b894b99e...  status fail  code 2
+                 stderr_hash  sha256:5e7b8623d7048b91...  raw_output_included false
+privacy          raw_commands_included false, raw_output_included false, absolute_cwd_included false
+receipt_hash     sha256:2ca9c5963543c0cc...</span></code></pre></li>
+  </ol>
+  <p class="src">Output from workflow-harness-lite at 5886706 on Windows with Node 25. Hashes in a receipt depend on the commands and their output, so yours will differ.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It runs local commands only. It is not a CI system and does not sandbox what the commands do.</li>
+    <li>Redaction of previews is by shape. Output that holds a secret in another form is not caught.</li>
+    <li>The timeout is one value for the whole run, set with <code>--timeout</code>. A task cannot carry its own.</li>
+    <li>Every task's side-effect class is recorded as unknown. The harness does not inspect what a command changes.</li>
+  </ul>
+  <p class="src">Source: README.md at 5886706, "Current status" and "Report"; the receipt written for this page</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What stops the hang task?</summary><p>The per-task timeout. The task is killed and recorded as a failure, so the run ends.</p></details>
+  <details><summary>What does the JSON report show for the flaky task's stderr?</summary><p>token=<redacted-secret>: the preview is redacted.</p></details>
+  <details><summary>What does the receipt keep about each command?</summary><p>Its hash, status, exit code, duration and output hashes, with no raw command or output.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/workflow-harness-lite/tree/5886706509af45dcbee53489ea283ec8e5b40bf1">HarperZ9/workflow-harness-lite at 5886706</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. Workflow Harness Lite is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["config", "run in parallel", "time out", "redact", "report", "receipt"], "active": 0}}, {"io": {"cmd": "wf.json", "lines": ["{ \"name\": \"local-checks\", \"tasks\": [", "  {\"name\": \"node-version\", \"command\": \"node --version\"},", "  {\"name\": \"lint\", \"command\": \"node -e \\\"console.log('lint ok')\\\"\"},", "  {\"name\": \"flaky\", \"command\": \"...prints a token= line to stderr, exits 2\"},", "  {\"name\": \"hang\", \"command\": \"node -e \\\"setTimeout(()=>{}, 60000)\\\"\"}", "]}"]}}], "k1": [{"pipe": {"stages": ["config", "run in parallel", "time out", "redact", "report", "receipt"], "active": 1}}, {"io": {"cmd": "workflow-harness-lite --config wf.json", "lines": ["workflow=local-checks status=fail passed=2 failed=2", "PASS node-version", "PASS lint", ["FAIL flaky", "hi"], ["FAIL hang", "hi"]], "verdict": ["fail", "drift", "exit 1"]}}], "k2": [{"pipe": {"stages": ["config", "run in parallel", "time out", "redact", "report", "receipt"], "active": 2}}, {"io": {"cmd": "workflow-harness-lite --config wf.json --json --timeout 2000", "lines": ["hang  fail  code 1  durationMs 2018", "stderr: Command failed: node -e \"setTimeout(()=>{}, 60000)\""]}}, {"io": {"lines": ["\"bounds\": {\"guaranteed_termination\": true, \"max_iterations\": 4, \"parallel\": true, \"per_task_timeout_ms\": 15000, \"output_limit_chars\": 4000}"]}}], "k3": [{"pipe": {"stages": ["config", "run in parallel", "time out", "redact", "report", "receipt"], "active": 3}}, {"io": {"cmd": "workflow-harness-lite --config wf.json --json", "lines": ["flaky  fail  code 2", ["stderr: token=<redacted-secret>", "hi"]]}}], "k4": [{"pipe": {"stages": ["config", "run in parallel", "time out", "redact", "report", "receipt"], "active": 5}}, {"io": {"cmd": "workflow-harness-lite --config wf.json --telos-receipt receipt.json", "lines": ["schema           project-telos.bounded-run-receipt/v1", "terminal_status  error", "counts           total 4, passed 2, failed 2", "flaky            command_hash sha256:8b0faa47b894b99e...  status fail  code 2", "                 stderr_hash  sha256:5e7b8623d7048b91...  raw_output_included false", ["privacy          raw_commands_included false, raw_output_included false, absolute_cwd_included false", "hi"], "receipt_hash     sha256:2ca9c5963543c0cc..."]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

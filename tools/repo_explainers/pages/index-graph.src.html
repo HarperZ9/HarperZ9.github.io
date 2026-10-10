@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How index works</title>
+<meta name="description" content="An animated walk through index, offline maps of a codebase: a module graph where every edge cites its file and line, symbol references, a sealed wiki that re-checks to MATCH, DRIFT or UNVERIFIABLE, and an architecture rule that fails CI on a new cycle. Built from index at commit 50069a8.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/index-graph.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/index">HarperZ9/index</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/index/tree/50069a8b9b411fa508165c2e1cf88717c4b0a6ae">50069a8</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>index</h1>
+  <p class="lede">Map a workspace offline, and refute a claim the code does not support.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>index reads a repository or a whole workspace and draws its shape: which modules import which, who calls a function, and how repositories depend on each other, with the file and line behind every edge. It writes one self-contained HTML file per view, with no server, account, model or network. A wiki it writes is sealed to the commit, and a later check tells you whether the code still matches it.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Edges with a witness</b>Every dependency edge records the file, line and import text that shows it.</li>
+    <li><b>A wiki with no prose to invent</b><code>index wiki</code> derives its pages from the extracted graph and writes no generated prose.</li>
+    <li><b>Re-check a map later</b><code>index wiki --verify</code> answers MATCH, DRIFT or UNVERIFIABLE, with exit codes 0, 1 and 2.</li>
+    <li><b>Architecture as a test</b>Declare the shape you meant in <code>.index.toml</code>, and <code>index check</code> fails when the code breaks it.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/README.md">README.md</a> at 50069a8 (release 2.16.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). Index re-derives its sealed wiki from the code and says when the two disagree. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows a three-module Python package, <code>shop</code>, built for this page: <code>web</code> calls <code>service</code>, which calls <code>core</code>. Every line is output from index at commit 50069a8, run offline.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k6" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A small package to map</h3>
+        <p><code>shop</code> has three modules. <code>core</code> prices an order, <code>service</code> imports it to quote, and <code>web</code> imports <code>service</code> to answer a request. The intended direction runs one way: web, then service, then core.</p>
+        <p class="src">Source: the package written for this page; <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/README.md">README.md</a>, "What it does"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Every edge cites its line</h3>
+        <p><code>index internals</code> reads the real imports. It finds four modules and two internal edges, and each edge carries the file, the line and the import text. Coverage is marked complete: no parse errors and no dynamic imports it could not follow.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/internals">src/index_graph/internals</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Who calls this function?</h3>
+        <p><code>index symbols price --refs</code> resolves references from the call graph. One caller: <code>quote</code> in <code>service.py</code>, line 5. A reference it cannot resolve comes back empty; it never guesses a jump.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/symbols">src/index_graph/symbols</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Write a sealed wiki</h3>
+        <p><code>index wiki</code> writes one HTML file: an overview, a page per module with its imports and dependents, a page per function with callers and callees, and an architecture diagram drawn from the graph. It is pinned to the commit and sealed.</p>
+        <p>Verify it against the tree it was made from: 10 pages, 4 edges, MATCH.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/wiki">src/index_graph/wiki</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Someone adds a back-import</h3>
+        <p>Now <code>core.py</code> imports <code>handler</code> from <code>web</code>. The graph gains an edge that closes a loop: core, service, web, back to core.</p>
+        <p><code>index internals --cycles</code> names the cycle. Nothing else had to be told what to look for.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/internals">src/index_graph/internals</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>The rule you declared fails the build</h3>
+        <p><code>.index.toml</code> declares <code>max_cycles = 0</code>. Before the back-import, <code>index check --internals</code> reported MATCH with no findings. Now it reports DRIFT and exits 1, so it can sit in CI.</p>
+        <p>The rules file can also declare layers between repositories, forbidden imports and required ones.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/arch">src/index_graph/arch</a>; README.md, the section on <code>index check</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k6" data-state="s"><div class="card">
+        <span class="num">07</span><h3>The sealed wiki now disagrees with the code</h3>
+        <p>Verify the old wiki against the changed tree and it reads DRIFT: its diagram and overview show structure the code no longer has. Remove the back-import and it reads MATCH again. Delete the file and it reads UNVERIFIABLE, exit 2, because there is nothing to check.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/index/blob/50069a8b9b411fa508165c2e1cf88717c4b0a6ae/src/index_graph/wiki">src/index_graph/wiki</a>; README.md, "Try it in 5 minutes"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.11 or newer; everything runs offline.</p>
+<pre class="cmd"><code>$ pip install index-graph</code></pre></li>
+    <li><h3>First run: write a sealed wiki</h3><p>Map one repository into an offline wiki whose pages and edges are sealed.</p>
+<pre class="cmd"><code>$ index wiki --root . --out wiki.html
+<span class="out">wrote wiki.html</span></code></pre></li>
+    <li><h3>Verify it against the code</h3><p>Later, verify the wiki against the code as it is now.</p>
+<pre class="cmd"><code>$ index wiki --verify wiki.html --root .
+<span class="out">verdict=MATCH pages=10 edges=4</span></code></pre></li>
+    <li><h3>Ask who calls a function</h3><p>Every edge cites the file and line it came from.</p>
+<pre class="cmd"><code>$ index symbols price --root . --refs
+<span class="out">symbol query: price  (repo shop)
+references (1 resolved, 0 unresolved):
+  shop/service::quote  shop/service.py:5  [cross_module, moderate]</span></code></pre></li>
+  </ol>
+  <p class="src">The verify line shows the result for the shop package above. Output from index at 50069a8, run from source; index-graph 2.16.0 is the current PyPI release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>index maps structure from imports and manifests. It does not run the code, so behaviour that only appears at runtime is outside the map.</li>
+    <li>Dynamic imports are listed in the coverage record when found. An import built from a string at runtime may still be missed.</li>
+    <li>Symbol navigation covers Python. Other ecosystems are mapped at the module and repository level.</li>
+    <li>The LSP server's fast path trusts unchanged file metadata for two seconds, so an edit that restores size and timestamp inside that window can go unnoticed.</li>
+    <li>A MATCH says the map agrees with the tree. It does not say the architecture is a good one.</li>
+  </ul>
+  <p class="src">Source: README.md at 50069a8, "What it does" and "The surfaces"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does an edge in index's graph carry besides its two ends?</summary><p>The file, the line and the import text that shows it.</p></details>
+  <details><summary>Why does index wiki write no prose?</summary><p>Its pages are derived from the graph it extracted, so there is no generated text that could describe structure that is not there.</p></details>
+  <details><summary>After a back-import, why do both index check and the wiki verify fail?</summary><p>The check finds a cycle above the declared ceiling of 0. The wiki's diagram and overview no longer match the graph of the changed tree.</p></details>
+  <details><summary>What exit code does wiki --verify give for a missing file, and why not 1?</summary><p>2, UNVERIFIABLE. There is nothing to compare, which is different from a comparison that disagrees.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/index/tree/50069a8b9b411fa508165c2e1cf88717c4b0a6ae">HarperZ9/index at 50069a8</a> (release 2.16.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. index is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": -1, "note": "imports run left to right"}}, {"io": {"lines": ["# shop/core.py", "def price(qty, unit):", "    return qty * unit", "", "# shop/service.py", "from shop.core import price", "def quote(qty):", "    return price(qty, 3)", "", "# shop/web.py", "from shop.service import quote", "def handler(req):", "    return {'total': quote(req['qty'])}"]}}], "k1": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": 2}}, {"table": {"head": ["from", "to", "witness"], "rows": [["shop/service", "shop/core", "shop/service.py:1  from shop.core import ..."], ["shop/web", "shop/service", "shop/web.py:1  from shop.service import ..."]]}}, {"verdict": ["coverage complete", "ok", "4 modules, 2 internal edges, 0 parse errors"]}], "k2": [{"io": {"cmd": "index symbols price --root . --refs", "lines": ["symbol query: price  (repo shop)", "references (1 resolved, 0 unresolved):", ["  shop/service::quote  shop/service.py:5  [cross_module, moderate]", "hi"]]}}], "k3": [{"io": {"cmd": "index wiki --root . --out wiki.html", "lines": ["wrote wiki.html"]}}, {"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": [["verdict=MATCH pages=10 edges=4", "hi"]], "verdict": ["MATCH", "ok", "exit 0"]}}], "k4": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": 0, "note": "core now imports web: a cycle"}}, {"io": {"cmd": "index internals --root . --cycles", "lines": ["1 internal cycle(s):", ["  - shop/core -> shop/service -> shop/web", "hi"]]}}], "k5": [{"cases": {"label": "Choose the code", "items": [{"label": "before", "blocks": [{"io": {"cmd": "index check --root . --internals", "lines": ["verdict=MATCH findings=0"], "verdict": ["MATCH", "ok", "exit 0"]}}]}, {"label": "after the back-import", "blocks": [{"io": {"cmd": "index check --root . --internals", "lines": ["verdict=DRIFT findings=1", ["  [max_cycles] shop: 1 internal module cycle(s) exceed the ceiling of 0", "hi"]], "verdict": ["DRIFT", "drift", "exit 1"]}}]}]}}], "k6": [{"cases": {"label": "Choose the state", "items": [{"label": "with the back-import", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=DRIFT pages=10 edges=4", ["  [architecture-diagram-drift] the architecture diagram depicts structure the code does not have", "hi"], "  [overview-not-in-graph] the overview asserts facts the graph derived from the tree does not have"], "verdict": ["DRIFT", "drift", "exit 1"]}}]}, {"label": "back-import removed", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=MATCH pages=10 edges=4"], "verdict": ["MATCH", "ok", "exit 0"]}}]}, {"label": "wiki.html deleted", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=UNVERIFIABLE pages=0 edges=0", "  [artifact] cannot read artifact: No such file or directory: 'wiki.html'"], "verdict": ["UNVERIFIABLE", "unv", "exit 2"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

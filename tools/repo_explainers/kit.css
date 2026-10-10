@@ -1,0 +1,27 @@
+/* generic scene kit: a pipeline strip, an input/output panel, a case picker, a table */
+.kscene{display:flex;flex-direction:column;gap:.8rem}
+.pipe{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:.9rem;position:relative}
+.pipe .st{border:1px solid var(--line-strong);background:var(--sheet);padding:.5rem .55rem;font-size:.82rem;line-height:1.25;position:relative;transition:border-color .35s,opacity .35s;min-height:3.4rem}
+.pipe .st .n{display:block;font-family:var(--font-mono);font-size:.68rem;color:var(--muted)}
+.pipe .st+.st::before{content:"";position:absolute;left:-.9rem;top:50%;width:.9rem;border-top:1px solid var(--line-strong)}
+.pipe .st.done{opacity:.55}
+.pipe .st.on{border-color:var(--ink);border-width:2px;opacity:1}
+.pipe .st.on::after{content:"";position:absolute;left:-.62rem;top:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:var(--ink);animation:kdot 1.1s var(--ease) both}
+.pipe .st:first-child.on::after{display:none}
+@keyframes kdot{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:640px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}.pipe .st+.st::before{display:none}.pipe .st.on::after{display:none}}
+.pnote{font-family:var(--font-mono);font-size:.74rem;color:var(--muted)}
+.io{border:1px solid var(--line);background:var(--sunk);font-family:var(--font-mono);font-size:.78rem;line-height:1.5;padding:.6rem .7rem;overflow-x:auto}
+.io .c{color:var(--ink);font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}
+.io .l{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink-soft);opacity:0;transform:translateY(4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.io .l.on{opacity:1;transform:none}
+.io .l.hi{color:var(--ink);font-weight:600}
+.io .l.dim{color:var(--muted)}
+.kverdict{font-size:1.15rem;opacity:0;transition:opacity .4s}
+.kverdict.on{opacity:1}
+.kcap{font-size:.92rem;color:var(--ink-soft)}
+.ktable{border-collapse:collapse;font-family:var(--font-mono);font-size:.76rem;width:100%}
+.ktable th,.ktable td{text-align:left;border-bottom:1px solid var(--line);padding:.32rem .4rem;vertical-align:top;overflow-wrap:anywhere}
+.ktable th{color:var(--muted);font-weight:400}
+.ktable tr{opacity:0;transition:opacity .3s}
+.ktable tr.on,.ktable thead tr{opacity:1}

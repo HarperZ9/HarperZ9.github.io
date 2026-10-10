@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Context Curator Lite works</title>
+<meta name="description" content="An animated walk through Context Curator Lite: planning fragments pulled out of local notes and sessions, sorted into next actions, blockers and ideas, scrubbed of emails and secret shapes, and written as a small bundle and a Telos context envelope whose source refs let the next agent re-read the originals. Built from context-curator-lite at commit 1f8de37.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/context-curator-lite.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/context-curator-lite">HarperZ9/context-curator-lite</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/context-curator-lite/tree/1f8de376d3ff7d970d8d02f641c3d3306bedf570">1f8de37</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Context Curator Lite</h1>
+  <p class="lede">Turn a messy workspace into a small context bundle the next agent can trust.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>A model cannot read a large workspace every session. Context Curator Lite scans your local notes and session logs for the lines that matter, such as next actions, blockers and ideas, scrubs emails and secret-shaped values, and writes a compact bundle. Each item keeps a reference to its source file, and an optional envelope adds content hashes and a command to expand it, so the next agent can go back to the original and check it.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Only the lines that matter</b>Keyword rules keep planning fragments and drop chatter.</li>
+    <li><b>Scrubbed before it is written</b>Emails and secret-shaped values are replaced, and raw transcripts are never copied.</li>
+    <li><b>Relative paths only</b>Bundles name sources by relative path and hash the roots, with no absolute local paths.</li>
+    <li><b>Replayable by reference</b>The Telos envelope gives each source a content hash and an expansion command.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/README.md">README.md</a> at 1f8de37 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows the two sample files in <code>examples/demo.py</code>: a notes file and a short session log. Every line is output from context-curator-lite at commit 1f8de37.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Two files from a working session</h3>
+        <p>The notes file has a heading, a next action, a blocker, an architecture idea, a line with an email address and a token, and a line of chatter. The session log has a user turn asking to resume a handoff and an assistant turn with nothing in it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/examples/demo.py">examples/demo.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Classify by keyword</h3>
+        <p>Each line is matched against keyword rules, checked in order. Blocker, blocked, error or failed makes a blocker. Todo, next, resume, continue or handoff makes a next action. Architecture, design, invariant, whitepaper, research or idea makes an idea. Lines that match no keyword are dropped.</p>
+        <p>Five lines matched a keyword before scrubbing; four survive as curated records.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/src/context_curator_lite/curator.py">src/context_curator_lite/curator.py</a>, <code>classify</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Scrub what should not travel</h3>
+        <p><code>scrub</code> replaces email addresses and secret-shaped values. A line holding an email and a GitHub-shaped token comes back as placeholders. The line in the notes with an email and a token does not reach the bundle.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/src/context_curator_lite/curator.py">src/context_curator_lite/curator.py</a>, <code>scrub</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>A small bundle, with its own checks</h3>
+        <p>The run writes four files: a Markdown summary, a JSONL bundle, a manifest and the envelope. The manifest states that no absolute paths were included and no raw transcripts were copied, and gives the counts by kind.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/src/context_curator_lite/curator.py">src/context_curator_lite/curator.py</a>, <code>main</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>An envelope that points back to the source</h3>
+        <p>The Telos envelope lists each source with its SHA-256 and an expansion command, and ties every claim to the source it came from. The next agent can re-read <code>notes.md</code> and check its hash; it does not have to trust the summary.</p>
+        <p>Its quality gates say what was checked: readability, freshness and privacy read MATCH, and test evidence reads UNVERIFIABLE, because nothing in the notes was a test result.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/context-curator-lite/blob/1f8de376d3ff7d970d8d02f641c3d3306bedf570/src/context_curator_lite/telos_envelope.py">src/context_curator_lite/telos_envelope.py</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.10 or newer.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/context-curator-lite.git && cd context-curator-lite
+$ python -m pip install -e ".[test]"</code></pre></li>
+    <li><h3>Scrub before it is stored</h3><p>Personal data and secrets are removed from text before curation.</p>
+<pre class="cmd"><code>>>> scrub(&quot;reach me at jane@example.com token=ghp_AAAA...A&quot;)
+<span class="out">reach me at &lt;email&gt; &lt;redacted-secret&gt;</span></code></pre></li>
+    <li><h3>Curate a project</h3><p>Curate a project's notes and sessions into a bundle with a Telos envelope.</p>
+<pre class="cmd"><code>$ context-curator-lite --root ./proj --out-dir ./artifacts --telos-envelope
+<span class="out">&quot;source_files_scanned&quot;: 2
+&quot;raw_keyword_matches&quot;: 5
+&quot;curated_records&quot;: 4
+&quot;counts&quot;: {&quot;next-action&quot;: 2, &quot;blocker&quot;: 1, &quot;idea&quot;: 1}
+&quot;absolute_paths_included&quot;: false
+&quot;raw_transcripts_copied&quot;: false</span></code></pre></li>
+  </ol>
+  <p class="src">Output from context-curator-lite at 1f8de37 on Windows with Python 3.12.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>Classification is by keyword. A line that matters but uses none of the keywords is dropped.</li>
+    <li>Redaction is heuristic. The bundle still needs a person to review it before it is shared.</li>
+    <li>It is not a security boundary. It helps prepare bounded context and replaces no review.</li>
+    <li>The short source hash in the bundle identifies the file by its relative path; the envelope carries the content hash.</li>
+  </ul>
+  <p class="src">Source: README.md at 1f8de37, "Current status" and "Existing technical notes"; src/context_curator_lite/curator.py</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does the chatter line not reach the bundle?</summary><p>It contains no keyword, so classification drops it.</p></details>
+  <details><summary>How does the next agent check that a claim came from notes.md?</summary><p>The envelope gives the file's SHA-256 and a command to re-read it, and each claim names its source ref.</p></details>
+  <details><summary>Why does test evidence read UNVERIFIABLE?</summary><p>Nothing in the curated sources was a test result, so it could not be checked.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/context-curator-lite/tree/1f8de376d3ff7d970d8d02f641c3d3306bedf570">HarperZ9/context-curator-lite at 1f8de37</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. Context Curator Lite is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["scan", "classify", "scrub", "bundle", "envelope"], "active": 0}}, {"io": {"cmd": "notes.md", "lines": ["# Plan notes", "todo: next action is to finish the migration and push the branch", "blocker: the integration test failed on the worktree", "architecture: design invariant for the curator whitepaper", "contact me at jane.doe@example.com or token=demo-secret-value", "just a plain chatter line with nothing useful to extract here"]}}, {"io": {"cmd": "session.jsonl", "lines": ["{\"role\": \"user\", \"text\": \"resume the handoff: continue the roadmap for the repo\"}", "{\"role\": \"assistant\", \"text\": \"no keywords on this line, pure chatter\"}"]}}], "k1": [{"pipe": {"stages": ["scan", "classify", "scrub", "bundle", "envelope"], "active": 1}}, {"table": {"head": ["kind", "text", "source"], "rows": [["next-action", "resume the handoff: continue the roadmap for the repo", "session.jsonl"], ["next-action", "todo: next action is to finish the migration and push the branch", "notes.md"], ["blocker", "blocker: the integration test failed on the worktree", "notes.md"], ["idea", "architecture: design invariant for the curator whitepaper", "notes.md"]]}}, {"verdict": ["4 records", "ink", "from 5 keyword matches in 2 files"]}], "k2": [{"pipe": {"stages": ["scan", "classify", "scrub", "bundle", "envelope"], "active": 2}}, {"io": {"cmd": "scrub(\"reach me at jane@example.com token=ghp_AAAA...A\")", "lines": [["reach me at <email> <redacted-secret>", "hi"]]}}], "k3": [{"pipe": {"stages": ["scan", "classify", "scrub", "bundle", "envelope"], "active": 3}}, {"io": {"cmd": "context-curator-lite --root ./proj --out-dir ./artifacts --telos-envelope", "lines": ["\"source_files_scanned\": 2", "\"raw_keyword_matches\": 5", "\"curated_records\": 4", "\"counts\": {\"next-action\": 2, \"blocker\": 1, \"idea\": 1}", ["\"absolute_paths_included\": false", "hi"], ["\"raw_transcripts_copied\": false", "hi"]]}}], "k4": [{"pipe": {"stages": ["scan", "classify", "scrub", "bundle", "envelope"], "active": 4}}, {"io": {"lines": ["src_001  session.jsonl  sha256:82a869b7f1f44413...  gather docs session.jsonl --json", "src_002  notes.md       sha256:b09fdd889cf3d0a0...  gather docs notes.md --json", "claims   4, each with source_ref_ids", ["quality_gates  readability MATCH, freshness MATCH, privacy MATCH, test_evidence UNVERIFIABLE", "hi"], "compression    heuristic_keyword_extract_with_hash_refs, lossless_by_ref true"]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

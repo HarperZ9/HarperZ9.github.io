@@ -14,6 +14,7 @@ const VIEWS = [
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 const wait = (page, ms) => page.waitForTimeout(ms);
+const W = require('./lib/studio-wait.cjs');
 async function frame(page) {
   return page.evaluate(async () => {
     const c = document.getElementById('studio-canvas');
@@ -40,20 +41,21 @@ const openExport = (page) => page.evaluate(() => { document.querySelector('#insp
       const errors = [];
       page.on('pageerror', (e) => errors.push(String(e.message)));
       try {
-        await page.goto(`${base}/studio.html?source=fractal`); await wait(page, 3000);
+        await page.goto(`${base}/studio.html?source=fractal`); const mandel = await W.ready(page, 'fractal');
         if (view.mobile) {
           const order = await page.evaluate(() => { const f = document.querySelector('.studio-find').getBoundingClientRect(), s = document.getElementById('source-switch').getBoundingClientRect(); return f.top >= s.bottom - 1; });
           assert.ok(order, `${tag} Search and Keys sit under the source switch`);
         }
-        await page.evaluate(() => document.querySelector('[data-ftype="julia"]').click()); await wait(page, 1500);
-        const julia = await frame(page);
+        await page.evaluate(() => document.querySelector('[data-ftype="julia"]').click());
+        const julia = await W.changed(page, mandel);
         await openExport(page);
         const items = await page.evaluate(() => [...document.querySelectorAll('#inspector-actions .ia-export-list button')].map((b) => b.dataset.export));
         for (const want of ['rt-export-png', 'project-save', 'project-open', 'rt-export-more']) assert.ok(items.includes(want), `${tag} the Export menu holds ${want} (${items.join(', ')})`);
         await page.evaluate(() => { document.querySelector('#inspector-actions .ia-export').open = false; });
         await pick(page, 'gallery');
-        await page.waitForSelector('#desk-reroll', { timeout: 20000 }); await wait(page, 1500);
-        await page.evaluate(() => document.getElementById('desk-reroll').click()); await wait(page, 1000);
+        const plate = await W.ready(page, 'gallery');
+        await page.evaluate(() => document.getElementById('desk-reroll').click());
+        await W.changed(page, plate);
         const seed = await page.inputValue('#desk-seed');
         await openExport(page);
         const dl = page.waitForEvent('download');
@@ -67,23 +69,25 @@ const openExport = (page) => page.evaluate(() => { document.querySelector('#insp
         const ctx2 = await browser.newContext(opts);
         const p2 = await ctx2.newPage();
         p2.on('pageerror', (e) => errors.push(String(e.message)));
-        await p2.goto(`${base}/studio.html?source=sketch`); await wait(p2, 2500);
+        await p2.goto(`${base}/studio.html?source=sketch`); await W.ready(p2, 'sketch');
         await openExport(p2);
         const fc = p2.waitForEvent('filechooser');
         await p2.evaluate(() => document.querySelector('[data-export="project-open"]').click());
         await (await fc).setFiles(file);
         await p2.waitForURL(/source=gallery/, { timeout: 15000 });
-        await p2.waitForSelector('#desk-seed', { timeout: 20000 }); await wait(p2, 2500);
+        await W.ready(p2, 'gallery');
+        await W.until(p2, (s) => document.getElementById('desk-seed').value === s, seed);
         assert.equal(await p2.inputValue('#desk-seed'), seed, `${tag} the Gallery opens on the saved seed`);
-        await pick(p2, 'fractal'); await wait(p2, 3000);
-        assert.equal(await frame(p2), julia, `${tag} the fractal comes back to the same pixels`);
+        await pick(p2, 'fractal'); await W.ready(p2, 'fractal');
+        assert.equal(await W.becomes(p2, julia), julia, `${tag} the fractal comes back to the same pixels`);
 
         const bad = path.join(tmp, 'not-a-project.json');
         fs.writeFileSync(bad, JSON.stringify({ hello: 1 }));
         await openExport(p2);
         const fc2 = p2.waitForEvent('filechooser');
         await p2.evaluate(() => document.querySelector('[data-export="project-open"]').click());
-        await (await fc2).setFiles(bad); await wait(p2, 800);
+        await (await fc2).setFiles(bad);
+        await W.until(p2, () => /Not opened/.test(document.getElementById('inspector-keep-said').textContent));
         assert.match(await p2.textContent('#inspector-keep-said'), /Not opened: not a Studio project file/, `${tag} a file that is not a project is refused with its reason`);
         await ctx2.close();
         assert.deepEqual(errors, [], `${tag} no page errors`);
