@@ -129,7 +129,7 @@ jobs:
         run: |
           export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
           npm install --no-save playwright@1.62.1
-          python -m http.server 8807 &
+          python tests/lib/serve.py 8807 &
           server_pid=$!
           trap "kill $server_pid" EXIT
           sleep 2
