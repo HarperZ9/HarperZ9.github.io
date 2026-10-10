@@ -65,7 +65,7 @@ def run(cmd: list[str]) -> None:
     subprocess.run([str(c) for c in cmd], check=True)
 
 
-def build(folder: Path, narration: Path, raw_native: Path, master_dir: Path, w: int, h: int, poster_at: float) -> dict:
+def build(folder: Path, narration: Path, raw_native: Path, master_dir: Path, w: int, h: int, poster_at: float, bare: bool = False) -> dict:
     from tools.explainer.film import score
     rec_old = json.loads((folder / "film.receipt.json").read_text(encoding="utf-8"))
     film = json.loads((folder / "film.json").read_text(encoding="utf-8"))
@@ -75,18 +75,22 @@ def build(folder: Path, narration: Path, raw_native: Path, master_dir: Path, w: 
     wav = narration / "narration.wav"
     if sha(wav) != rec_old["narration"]["wav_sha256"]:
         sys.exit("narration.wav is not the narration the captions were made from")
-    # 1. The score, then the master render with narration and score muxed.
-    y = score.build(folder, seconds)
-    score_wav = master_dir / f"{slug}-score.wav"
-    import numpy as np
-    with wave.open(str(score_wav), "wb") as f:
-        f.setnchannels(2); f.setsampwidth(2); f.setframerate(score.SR)
-        f.writeframes((np.clip(y, -1, 1) * 32767).astype("<i2").tobytes())
+    # 1. The score (unless bare: narration only, for the sound session's mix to replace),
+    # then the master render with the audio muxed.
+    score_wav = None
+    if not bare:
+        y = score.build(folder, seconds)
+        score_wav = master_dir / f"{slug}-score.wav"
+        import numpy as np
+        with wave.open(str(score_wav), "wb") as f:
+            f.setnchannels(2); f.setsampwidth(2); f.setframerate(score.SR)
+            f.writeframes((np.clip(y, -1, 1) * 32767).astype("<i2").tobytes())
     master = master_dir / f"{slug}-{w}x{h}.mp4"
     page = f"media/raw-native/{engine_dir(folder / 'film.scene.mjs').name}/motion/capture.html"
     scene_rel = "../../../" + str((folder / "film.scene.mjs").relative_to(ROOT / "media")).replace("\\", "/")
     run([sys.executable, raw_native / "scripts" / "motion_render.py", "--root", ROOT, "--page", page, "--scene", scene_rel, "--shaders", "../",
-         "--out", master, "--width", w, "--height", h, "--fps", FPS, "--audio", wav, "--score", score_wav, "--score-db", "-13", "--qp", "14"])
+         "--out", master, "--width", w, "--height", h, "--fps", FPS, "--audio", wav, "--qp", "14",
+         *([] if bare else ["--score", score_wav, "--score-db", "-13"])])
     stats = json.loads(Path(str(master) + ".stats.json").read_text(encoding="utf-8"))
     # 2. The page copy: 1920 x 1080 H.264 and AAC, the audio alone, and the poster.
     ff = ffmpeg()
@@ -106,7 +110,7 @@ def build(folder: Path, narration: Path, raw_native: Path, master_dir: Path, w: 
         "ffmpeg": subprocess.run([ff, "-version"], capture_output=True, text=True).stdout.splitlines()[0],
         "master": {"width": w, "height": h, "frames": stats.get("frames"), "frame_ms_median": round(stats.get("frame_ms_median", 0), 2),
                    "frame_ms_p95": round(stats.get("frame_ms_p95", 0), 2), "wall_seconds": stats.get("wall_seconds"), "sha256": sha(master)},
-        "score": {"generator": "tools/explainer/film/score.py", "mix_db": -13, "sha256": sha(score_wav)},
+        "score": None if bare else {"generator": "tools/explainer/film/score.py", "mix_db": -13, "sha256": sha(score_wav)},
     }
     rec["outputs"] = outputs
     rec["does_not_prove"] = DOES_NOT_PROVE
@@ -122,9 +126,10 @@ def main() -> int:
     ap.add_argument("--width", type=int, default=3840)
     ap.add_argument("--height", type=int, default=2160)
     ap.add_argument("--poster-at", type=float, default=50.0)
+    ap.add_argument("--bare", action="store_true", help="narration only, no generated score (the sound session mixes later)")
     a = ap.parse_args()
     folder = a.folder.resolve()
-    rec = build(folder, a.narration.resolve(), a.raw_native.resolve(), a.master.resolve(), a.width, a.height, a.poster_at)
+    rec = build(folder, a.narration.resolve(), a.raw_native.resolve(), a.master.resolve(), a.width, a.height, a.poster_at, a.bare)
     (folder / "film.receipt.json").write_text(json.dumps(rec, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(rec["slug"], rec["outputs"][f"{rec['slug']}.mp4"][:16], json.dumps(rec["toolchain"]["master"]))
     return 0
