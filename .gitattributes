@@ -28,6 +28,8 @@ plugins/data/** text eol=lf
 media/raw-native/wasm-*/** -text
 # raw-native's web GPU host, pinned by SHA256SUMS in its directory: no EOL conversion.
 media/raw-native/web-*/** -text
+# raw-native's sound engine, pinned by SHA256SUMS in its directory: no EOL conversion.
+media/raw-native/sound-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text
