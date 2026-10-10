@@ -1,0 +1,85 @@
+SHA = "50069a8b9b411fa508165c2e1cf88717c4b0a6ae"
+B = f"https://github.com/HarperZ9/index/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+CODE = ["# shop/core.py", "def price(qty, unit):", "    return qty * unit", "",
+        "# shop/service.py", "from shop.core import price", "def quote(qty):", "    return price(qty, 3)", "",
+        "# shop/web.py", "from shop.service import quote", "def handler(req):", "    return {'total': quote(req['qty'])}"]
+
+SPEC = {
+    "slug": "index-graph", "repo": "index", "sha": SHA, "name": "index", "version": "release 2.16.0",
+    "description": "An animated walk through index, offline maps of a codebase: a module graph where every edge cites its file and line, symbol references, a sealed wiki that re-checks to MATCH, DRIFT or UNVERIFIABLE, and an architecture rule that fails CI on a new cycle. Built from index at commit 50069a8.",
+    "lede": "Map a workspace offline, and refute a claim the code does not support.",
+    "for_you": "index reads a repository or a whole workspace and draws its shape: which modules import which, who calls a function, and how repositories depend on each other, with the file and line behind every edge. It writes one self-contained HTML file per view, with no server, account, model or network. A wiki it writes is sealed to the commit, and a later check tells you whether the code still matches it.",
+    "uses": [
+        ("Edges with a witness", "Every dependency edge records the file, line and import text that shows it."),
+        ("A wiki with no prose to invent", "<code>index wiki</code> derives its pages from the extracted graph and writes no generated prose."),
+        ("Re-check a map later", "<code>index wiki --verify</code> answers MATCH, DRIFT or UNVERIFIABLE, with exit codes 0, 1 and 2."),
+        ("Architecture as a test", "Declare the shape you meant in <code>.index.toml</code>, and <code>index check</code> fails when the code breaks it."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. The panel follows a three-module Python package, <code>shop</code>, built for this page: <code>web</code> calls <code>service</code>, which calls <code>core</code>. Every line is output from index at commit 50069a8, run offline.",
+    "steps": [
+        {"title": "A small package to map",
+         "paras": ["<code>shop</code> has three modules. <code>core</code> prices an order, <code>service</code> imports it to quote, and <code>web</code> imports <code>service</code> to answer a request. The intended direction runs one way: web, then service, then core."],
+         "src": "the package written for this page; " + L("README.md", "README.md") + ", \"What it does\"",
+         "scene": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": -1, "note": "imports run left to right"}},
+                   {"io": {"lines": CODE}}]},
+        {"title": "Every edge cites its line",
+         "paras": ["<code>index internals</code> reads the real imports. It finds four modules and two internal edges, and each edge carries the file, the line and the import text. Coverage is marked complete: no parse errors and no dynamic imports it could not follow."],
+         "src": L("src/index_graph/internals"),
+         "scene": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": 2}},
+                   {"table": {"head": ["from", "to", "witness"], "rows": [["shop/service", "shop/core", "shop/service.py:1  from shop.core import ..."], ["shop/web", "shop/service", "shop/web.py:1  from shop.service import ..."]]}},
+                   {"verdict": ["coverage complete", "ok", "4 modules, 2 internal edges, 0 parse errors"]}]},
+        {"title": "Who calls this function?",
+         "paras": ["<code>index symbols price --refs</code> resolves references from the call graph. One caller: <code>quote</code> in <code>service.py</code>, line 5. A reference it cannot resolve comes back empty; it never guesses a jump."],
+         "src": L("src/index_graph/symbols"),
+         "scene": [{"io": {"cmd": "index symbols price --root . --refs", "lines": ["symbol query: price  (repo shop)", "references (1 resolved, 0 unresolved):", ["  shop/service::quote  shop/service.py:5  [cross_module, moderate]", "hi"]]}}]},
+        {"title": "Write a sealed wiki",
+         "paras": ["<code>index wiki</code> writes one HTML file: an overview, a page per module with its imports and dependents, a page per function with callers and callees, and an architecture diagram drawn from the graph. It is pinned to the commit and sealed.",
+                   "Verify it against the tree it was made from: 10 pages, 4 edges, MATCH."],
+         "src": L("src/index_graph/wiki"),
+         "scene": [{"io": {"cmd": "index wiki --root . --out wiki.html", "lines": ["wrote wiki.html"]}},
+                   {"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": [["verdict=MATCH pages=10 edges=4", "hi"]], "verdict": ["MATCH", "ok", "exit 0"]}}]},
+        {"title": "Someone adds a back-import",
+         "paras": ["Now <code>core.py</code> imports <code>handler</code> from <code>web</code>. The graph gains an edge that closes a loop: core, service, web, back to core.",
+                   "<code>index internals --cycles</code> names the cycle. Nothing else had to be told what to look for."],
+         "src": L("src/index_graph/internals"),
+         "scene": [{"pipe": {"stages": ["shop/web", "shop/service", "shop/core"], "active": 0, "note": "core now imports web: a cycle"}},
+                   {"io": {"cmd": "index internals --root . --cycles", "lines": ["1 internal cycle(s):", ["  - shop/core -> shop/service -> shop/web", "hi"]]}}]},
+        {"title": "The rule you declared fails the build",
+         "paras": ["<code>.index.toml</code> declares <code>max_cycles = 0</code>. Before the back-import, <code>index check --internals</code> reported MATCH with no findings. Now it reports DRIFT and exits 1, so it can sit in CI.",
+                   "The rules file can also declare layers between repositories, forbidden imports and required ones."],
+         "src": L("src/index_graph/arch") + "; README.md, the section on <code>index check</code>",
+         "scene": [{"cases": {"label": "Choose the code", "items": [
+             {"label": "before", "blocks": [{"io": {"cmd": "index check --root . --internals", "lines": ["verdict=MATCH findings=0"], "verdict": ["MATCH", "ok", "exit 0"]}}]},
+             {"label": "after the back-import", "blocks": [{"io": {"cmd": "index check --root . --internals", "lines": ["verdict=DRIFT findings=1", ["  [max_cycles] shop: 1 internal module cycle(s) exceed the ceiling of 0", "hi"]], "verdict": ["DRIFT", "drift", "exit 1"]}}]}]}}]},
+        {"title": "The sealed wiki now disagrees with the code",
+         "paras": ["Verify the old wiki against the changed tree and it reads DRIFT: its diagram and overview show structure the code no longer has. Remove the back-import and it reads MATCH again. Delete the file and it reads UNVERIFIABLE, exit 2, because there is nothing to check."],
+         "src": L("src/index_graph/wiki") + "; README.md, \"Try it in 5 minutes\"",
+         "scene": [{"cases": {"label": "Choose the state", "items": [
+             {"label": "with the back-import", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=DRIFT pages=10 edges=4", ["  [architecture-diagram-drift] the architecture diagram depicts structure the code does not have", "hi"], "  [overview-not-in-graph] the overview asserts facts the graph derived from the tree does not have"], "verdict": ["DRIFT", "drift", "exit 1"]}}]},
+             {"label": "back-import removed", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=MATCH pages=10 edges=4"], "verdict": ["MATCH", "ok", "exit 0"]}}]},
+             {"label": "wiki.html deleted", "blocks": [{"io": {"cmd": "index wiki --verify wiki.html --root .", "lines": ["verdict=UNVERIFIABLE pages=0 edges=0", "  [artifact] cannot read artifact: No such file or directory: 'wiki.html'"], "verdict": ["UNVERIFIABLE", "unv", "exit 2"]}}]}]}}]},
+    ],
+    "try": [
+        ("Install from PyPI (Python 3.11 or newer). Everything runs offline.",
+         "$ pip install index-graph\n$ index wiki --root /path/to/one/repo --out wiki.html\n$ index wiki --verify wiki.html --root /path/to/one/repo\n<span class=\"out\">verdict=MATCH pages=10 edges=4</span>\n$ index workbench --root /path/to/workspace --out workbench.html"),
+    ],
+    "try_src": "The verify line shows the result for the shop package above. Output from index at 50069a8, run from source; index-graph 2.16.0 is the current PyPI release.",
+    "limits": [
+        "index maps structure from imports and manifests. It does not run the code, so behaviour that only appears at runtime is outside the map.",
+        "Dynamic imports are listed in the coverage record when found. An import built from a string at runtime may still be missed.",
+        "Symbol navigation covers Python. Other ecosystems are mapped at the module and repository level.",
+        "The LSP server's fast path trusts unchanged file metadata for two seconds, so an edit that restores size and timestamp inside that window can go unnoticed.",
+        "A MATCH says the map agrees with the tree. It does not say the architecture is a good one.",
+    ],
+    "limits_src": "README.md at 50069a8, \"What it does\" and \"The surfaces\"",
+    "recall": [
+        ("What does an edge in index's graph carry besides its two ends?", "The file, the line and the import text that shows it."),
+        ("Why does index wiki write no prose?", "Its pages are derived from the graph it extracted, so there is no generated text that could describe structure that is not there."),
+        ("After a back-import, why do both index check and the wiki verify fail?", "The check finds a cycle above the declared ceiling of 0. The wiki's diagram and overview no longer match the graph of the changed tree."),
+        ("What exit code does wiki --verify give for a missing file, and why not 1?", "2, UNVERIFIABLE. There is nothing to compare, which is different from a comparison that disagrees."),
+    ],
+    "license_line": "index is released under FSL-1.1-MIT.",
+}

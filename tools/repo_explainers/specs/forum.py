@@ -1,0 +1,86 @@
+SHA = "abafb38b0c59415c997e5df57aa85a10d5bb8929"
+B = f"https://github.com/HarperZ9/forum/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+FLOW = ["route", "plan", "execute", "ledger", "verify"]
+
+SPEC = {
+    "slug": "forum", "repo": "forum", "sha": SHA, "name": "forum", "version": "release 1.17.0",
+    "description": "An animated walk through forum, orchestration for agent fleets: deterministic routing to a lane, a task graph planned into parallel waves, witnessed execution in a hash-chained ledger, and a deep verify that catches a tampered payload. Built from forum at commit abafb38.",
+    "lede": "Route a request, plan it into parallel waves, run it on any model, and keep a ledger you can replay.",
+    "for_you": "forum takes a plain request and sends it to the right lane, plans the work as a dependency graph that runs in parallel waves, and runs it on whichever model you point it at: a local command, any OpenAI-compatible server or the Anthropic API. Every step goes into a causal ledger. You can verify that ledger, trace any result back to the request that caused it, and catch a stored body that was changed.",
+    "uses": [
+        ("Routing without a model", "<code>forum route</code> picks a lane from a 28-route roster with a lexical scorer, or says it needs a classifier."),
+        ("Parallel waves", "Tasks with their dependencies become waves of parallel work, capped by a policy."),
+        ("Bounded runs", "A run budget caps model calls and wall clock, and a context budget trims what goes into each prompt."),
+        ("A ledger you can replay", "Each entry links to the one before and to the entry that caused it. A deep verify re-checks every stored body."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. The panel follows forum's bundled demo, <code>examples/demo.py</code>, which CI runs on every push. It uses a stub executor in place of a model, so the routing, planning and ledger are real and the task outputs are placeholders. Every value is output from forum at commit abafb38.",
+    "steps": [
+        {"title": "Route four requests",
+         "paras": ["The lexical router scores each request against the roster's lanes, with no model call. Schema and auth work goes to <code>backend</code>, a React component to <code>frontend</code>, a guide to <code>docs</code>.",
+                   "\"Summon a unicorn\" matches nothing. It scores 0.00 and the router escalates: it needs an LLM classifier, and it says so and makes no guess."],
+         "src": L("examples/demo.py") + "; " + L("src/forum/routing.py"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 0}},
+                   {"table": {"head": ["request", "lane"], "rows": [
+                       ["build the database schema and the auth endpoint", "backend"], ["build the react component and css for the page", "frontend"],
+                       ["write the readme docs and the guide", "docs"], ["summon a unicorn", ["escalate, confidence 0.00", "unv"]]]}}]},
+        {"title": "One request, scored in full",
+         "paras": ["<code>forum route</code> prints the whole decision: the chosen lane, its confidence, whether it needs escalation, the router that decided and every candidate's score. Here <code>backend</code> wins at 0.6 and <code>ci-cd</code> is next at 0.2."],
+         "src": L("src/forum/routing.py") + "; README.md, \"Install and quickstart\"",
+         "scene": [{"pipe": {"stages": FLOW, "active": 0}},
+                   {"io": {"cmd": 'forum route "build the auth endpoint and the database schema"',
+                           "lines": ['"decided": "backend",', '"confidence": 0.6,', '"needs_escalation": false,', '"router": "lexical",',
+                                     ['candidates: backend 0.6, ci-cd 0.2, cloud-infra 0.0, code-review 0.0, ...', "hi"]]}}]},
+        {"title": "Plan the work into waves",
+         "paras": ["Four tasks with dependencies: T1 designs the schema, T2 builds the auth endpoint after T1, and T3 (login page) and T4 (API docs) both wait on T2.",
+                   "The planner sorts the graph into waves of tasks whose dependencies are done. The policy caps each wave at two tasks, so T3 and T4 share the last wave."],
+         "src": L("examples/demo.py") + "; " + L("src/forum/plan.py") + ", " + L("src/forum/policy.py"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 1}},
+                   {"table": {"head": ["task", "lane", "waits on"], "rows": [["T1 design schema", "backend", "nothing"], ["T2 build auth endpoint", "backend", "T1"], ["T3 login page", "frontend", "T2"], ["T4 write API docs", "docs", "T2"]]}},
+                   {"io": {"lines": [["wave 0: ['T1']", "hi"], ["wave 1: ['T2']", "hi"], ["wave 2: ['T3', 'T4']", "hi"]]}}]},
+        {"title": "Run each wave, and record every step",
+         "paras": ["Each task runs in its lane, and every step is appended to the ledger: the request, the routes, the plan, each assignment and each result. Every entry names its causal parent, so a result points to its task, the task to the plan, and the plan to the request.",
+                   "The demo's stub executor returns <code>done:</code> plus the task. A real run puts a model here."],
+         "src": L("src/forum/ledger.py") + ", <code>append</code> and <code>causal_chain</code>",
+         "scene": [{"pipe": {"stages": FLOW, "active": 2}},
+                   {"io": {"lines": ["T1 [backend] -> done: design schema", "T2 [backend] -> done: build auth endpoint", "T3 [frontend] -> done: login page", "T4 [docs] -> done: write API docs",
+                                     ["causal chain of last  : request -> plan -> task -> result", "hi"]]}}]},
+        {"title": "Verify the ledger",
+         "paras": ["<code>verify()</code> re-derives every entry's hash from its sequence number, time, actor, kind, causal parent, payload hash and the previous entry's hash. All 14 entries link.",
+                   "<code>verify(deep=True)</code> also re-hashes every stored payload body against the hash its entry recorded. The Merkle checkpoint summarises the whole ledger in one hash."],
+         "src": L("src/forum/ledger.py") + ", <code>verify</code> and <code>verify_payloads</code>",
+         "scene": [{"pipe": {"stages": FLOW, "active": 3}},
+                   {"io": {"lines": ["ledger entries        : 14", "verify() (chain)      : True", "verify(deep=True)     : True", ["Merkle checkpoint     : a02ce35cda7bad81...", "hi"]],
+                           "verdict": ["verified", "ok", "chain and bodies both re-derive"]}}]},
+        {"title": "Change one stored body",
+         "paras": ["The demo replaces the stored body of entry 2 with <code>{\"task\": \"TAMPERED\"}</code>. The chain still links, because entries hold the body's hash and none of them changed. The deep verify re-hashes the body, finds it no longer matches, and fails.",
+                   "That is why the two checks are separate: one proves the order of events, the other proves the content."],
+         "src": L("examples/demo.py") + "; " + L("src/forum/ledger.py") + ", <code>verify_payloads</code>",
+         "scene": [{"pipe": {"stages": FLOW, "active": 4}},
+                   {"cases": {"label": "Choose a check", "items": [
+                       {"label": "verify()", "blocks": [{"io": {"cmd": "ledger.verify()", "lines": ["True   <- chain hashes still link"], "verdict": ["True", "ok", "the chain alone cannot see the body"]}}]},
+                       {"label": "verify(deep=True)", "blocks": [{"io": {"cmd": "ledger.verify(deep=True)", "lines": ["False  <- body tamper caught"], "verdict": ["False", "drift", "the body no longer hashes to its recorded key"]}}]}]}}]},
+    ],
+    "try": [
+        ("Install from PyPI (Python 3.11 or newer). Routing and the demo need no model.",
+         "$ pip install forum-engine\n$ forum route \"build the auth endpoint and the database schema\"\n<span class=\"out\">  \"decided\": \"backend\",\n  \"confidence\": 0.6,</span>\n$ forum submit \"ship a login API\" --cmd \"ollama run llama3\"\n$ forum ledger verify"),
+    ],
+    "try_src": "Output from forum at abafb38. forum-engine 1.17.0 is the current PyPI release. <code>forum submit</code> needs a model you can reach.",
+    "limits": [
+        "The lexical router decides from words. A request that matches no lane is escalated, and a request worded unusually can land in the wrong lane.",
+        "A run result is distinct from an external effect. A ledger that verifies says the record is intact. Whether the work was right needs its own check.",
+        "The chain check alone cannot see a changed payload body. Use the deep verify for content.",
+        "Approval gates and resume run through the Python API. The CLI, the daemon and the MCP server list and resolve gates but do not yet open a gated run.",
+        "<code>forum serve</code> needs a bearer token by default. Turning it off is meant for loopback only.",
+    ],
+    "limits_src": "README.md at abafb38, \"Current status\" and \"Inspect and serve\"; src/forum/ledger.py",
+    "recall": [
+        ("What does the router do with \"summon a unicorn\"?", "It scores 0.00 against every lane and escalates, saying it needs an LLM classifier."),
+        ("Why do T3 and T4 run in the same wave?", "Both wait only on T2, and the policy allows two tasks per wave."),
+        ("After a stored body is changed, why does verify() still return True?", "The chain links entries through hashes the entries hold. The body is stored separately, so only the deep verify, which re-hashes bodies, sees the change."),
+        ("How do you trace a result back to its request?", "Follow the causal parents: result to task to plan to request."),
+    ],
+    "license_line": "forum is released under FSL-1.1-MIT.",
+}

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Public Surface Sweeper works</title>
+<meta name="description" content="An animated walk through Public Surface Sweeper: a repository&#x27;s public surface checked for required files, delivery material, text hygiene and secret-shaped values, scored, and turned into action items and a proof-surface packet. Built from public-surface-sweeper at commit 51eccfb.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/public-surface-sweeper.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/public-surface-sweeper">HarperZ9/public-surface-sweeper</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/public-surface-sweeper/tree/51eccfb21bf01975d7159feeb35d98a3649d8019">51eccfb</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Public Surface Sweeper</h1>
+  <p class="lede">Check a repository's public surface before it asks anyone to trust it.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Small public repositories fail on simple things: a missing license, a README that does not say what the tool does, a credential-shaped string left in a note. Public Surface Sweeper checks those quickly and the same way every time, scores the repository, lists what to fix, and can scan every GitHub-facing repository in a workspace at once.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Required files</b>A license, a README, a changelog and the other files a visitor expects.</li>
+    <li><b>Secret shapes</b>Values shaped like cloud keys and tokens are reported with the file and line.</li>
+    <li><b>A score and a status</b>Errors block, warnings are counted, and the run exits 1 on errors by default.</li>
+    <li><b>A workspace matrix</b><code>--workspace</code> sweeps every repository with a GitHub remote, with no network calls and no writes.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/README.md">README.md</a> at 51eccfb (version 0.1.3)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel uses the bundled <code>examples/clean-repo</code> and a copy of it with two problems added. Every line is output from public-surface-sweeper at commit 51eccfb.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A clean repository</h3>
+        <p>The bundled fixture has the files a public repository should carry: a license, a README, a usage guide, a changelog, contributing notes, an authors file, agent instructions and a CI folder. The sweep finds nothing, scores 100 and reports ready.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/examples/clean-repo">examples/clean-repo</a>; README.md, "Try it"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Break it twice</h3>
+        <p>Copy the fixture, delete its LICENSE, and add a note holding a value shaped like an AWS access key: AKIA followed by sixteen capitals. Sweep again. Both are errors, each with where it is.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/src/public_surface_sweeper/sweeper.py">src/public_surface_sweeper/sweeper.py</a>, <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/src/public_surface_sweeper/text_hygiene.py">src/public_surface_sweeper/text_hygiene.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A score and a list of fixes</h3>
+        <p><code>--summary</code> turns the findings into a score, a status and one action item per finding. Two errors take the score to 50 and the status to blocked.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/src/public_surface_sweeper/summary.py">src/public_surface_sweeper/summary.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Evidence for the next tool</h3>
+        <p><code>--proof-packet</code> writes a proof-surface packet. Its claims carry the counts behind each check: one required-file finding, one secret-shaped finding, no em-dash findings, no delivery findings. The check reads fail at score 50.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/public-surface-sweeper/blob/51eccfb21bf01975d7159feeb35d98a3649d8019/src/public_surface_sweeper/cli.py">src/public_surface_sweeper/cli.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Choose what fails the run</h3>
+        <p>By default the run exits 1 on errors. <code>--fail-on warning</code> fails on warnings too, and <code>--fail-on none</code> prints findings and always exits 0. In workspace mode, a discovery that finds no repositories also fails, so an empty matrix never passes as a clean one.</p>
+        <p class="src">Source: README.md, "Usage"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.10 or newer.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/public-surface-sweeper && cd public-surface-sweeper
+$ python -m pip install -e ".[test]"</code></pre></li>
+    <li><h3>First run: a clean repository</h3><p>Sweep the bundled clean example.</p>
+<pre class="cmd"><code>$ public-surface-sweeper examples/clean-repo --summary
+<span class="out">score: 100
+status: ready
+total_findings: 0
+errors: 0
+warnings: 0
+action_items:
+- none</span></code></pre></li>
+    <li><h3>A repository with a problem</h3><p>Sweep a repository that carries a finding. The sweep blocks it.</p>
+<pre class="cmd"><code>$ public-surface-sweeper ./repo
+<span class="out">ERROR LICENSE required-file: missing required file: LICENSE
+ERROR notes.txt:1 aws-access-key: AWS access key shaped value</span></code></pre></li>
+    <li><h3>A proof packet</h3><p>Write the result as a packet another tool can check.</p>
+<pre class="cmd"><code>$ public-surface-sweeper ./repo --proof-packet
+<span class="out">&quot;surface&quot;: &quot;repo public release surface&quot;
+&quot;status&quot;: &quot;blocked&quot;
+Required public release files are visible.   required-file findings=1
+Secret-shaped values are surfaced before publication.   secret-shaped findings=1
+Public text hygiene is checkable.   em-dash findings=0
+Public and developer delivery are inspectable.   delivery findings=0
+check: public-surface-sweeper  fail  score=50, findings=2</span></code></pre></li>
+  </ol>
+  <p class="src">Output from public-surface-sweeper at 51eccfb on Windows with Python 3.12. The broken copy deletes LICENSE and adds one note.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It is a release-hygiene gate. It is not a full security scanner or a certification.</li>
+    <li>Secret detection is by shape. A credential that does not look like one is not found.</li>
+    <li>Workspace mode reads local Git metadata only and makes no network call.</li>
+  </ul>
+  <p class="src">Source: README.md at 51eccfb, "Current status" and "Usage"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What two findings did the broken copy get?</summary><p>A missing LICENSE and an AWS-access-key-shaped value in notes.txt, line 1.</p></details>
+  <details><summary>What score and status follow from two errors?</summary><p>50 and blocked.</p></details>
+  <details><summary>Why does an empty workspace discovery fail?</summary><p>So a matrix of zero repositories never passes as a clean portfolio.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/public-surface-sweeper/tree/51eccfb21bf01975d7159feeb35d98a3649d8019">HarperZ9/public-surface-sweeper at 51eccfb</a> (version 0.1.3). The source of this page is <code>docs/explainer/index.html</code> in that repository. Public Surface Sweeper is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["repo", "required files", "README delivery", "text hygiene", "secret shapes", "score", "packet"], "active": 5}}, {"io": {"cmd": "public-surface-sweeper examples/clean-repo --summary", "lines": ["score: 100", "status: ready", "total_findings: 0", "errors: 0", "warnings: 0", "action_items:", "- none"], "verdict": ["ready", "ok", "exit 0"]}}], "k1": [{"pipe": {"stages": ["repo", "required files", "README delivery", "text hygiene", "secret shapes", "score", "packet"], "active": 4}}, {"io": {"cmd": "public-surface-sweeper ./repo", "lines": [["ERROR LICENSE required-file: missing required file: LICENSE", "hi"], ["ERROR notes.txt:1 aws-access-key: AWS access key shaped value", "hi"]], "verdict": ["blocked", "drift", "exit 1"]}}], "k2": [{"pipe": {"stages": ["repo", "required files", "README delivery", "text hygiene", "secret shapes", "score", "packet"], "active": 5}}, {"io": {"cmd": "public-surface-sweeper ./repo --summary", "lines": ["score: 50", "status: blocked", "total_findings: 2", "errors: 2", "warnings: 0", "action_items:", "- LICENSE: missing required file: LICENSE", "- notes.txt:1: AWS access key shaped value"]}}], "k3": [{"pipe": {"stages": ["repo", "required files", "README delivery", "text hygiene", "secret shapes", "score", "packet"], "active": 6}}, {"io": {"cmd": "public-surface-sweeper ./repo --proof-packet", "lines": ["\"surface\": \"repo public release surface\"", "\"status\": \"blocked\"", "Required public release files are visible.   required-file findings=1", "Secret-shaped values are surfaced before publication.   secret-shaped findings=1", "Public text hygiene is checkable.   em-dash findings=0", "Public and developer delivery are inspectable.   delivery findings=0", ["check: public-surface-sweeper  fail  score=50, findings=2", "hi"]]}}], "k4": [{"table": {"head": ["flag", "exits 1 when"], "rows": [["(default)", "any error"], ["--fail-on warning", "any warning or error"], ["--fail-on none", "never"], ["--workspace", "any error, or discovery is empty or unverifiable"]]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

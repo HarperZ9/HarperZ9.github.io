@@ -1,0 +1,85 @@
+SHA = "3d5d945c758dcb78ca0c0aef196bfd4bc43a2d9a"
+B = f"https://github.com/HarperZ9/proof-surface/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+GATE = ["request", "shape", "reserved names", "authorization", "budget", "state", "human gap", "aggregate"]
+
+SPEC = {
+    "slug": "proof-surface", "repo": "proof-surface", "sha": SHA, "name": "Proof Surface", "version": "version 0.2.0",
+    "description": "An animated walk through Proof Surface, contract validators for AI workflow records: a default-deny authorization check, a pre-execution gate that escalates what it cannot confirm, a delegation chain, and a visual-measurement proof packet with its calibration gate. Built from proof-surface at commit 3d5d945.",
+    "lede": "One proof packet per agent action, with verdicts derived from checks.",
+    "for_you": "Proof Surface checks the records AI workflows leave behind: authorization receipts, pre-execution gates, claim ledgers, delegation chains and evidence packets. Each validator returns the exact location of every problem, and each decision helper is default-deny. On top, eleven domain wedges turn evidence a tool already produces into a packet with a MATCH, DRIFT or UNVERIFIABLE verdict that anyone can recompute. It never emits TRUSTED, APPROVED or AUTHORIZED.",
+    "uses": [
+        ("Default-deny checks", "A revoked grant, an expired window or an out-of-scope action all deny, with the field that decided it."),
+        ("Unknown means a person looks", "A gate check that cannot be confirmed escalates to needs-human and never passes."),
+        ("Packets you can recompute", "Each wedge writes the packet, a report and crucible inputs so a checker re-derives the verdict."),
+        ("No authority words", "Validators reject authority-shaped fields; the library records evidence and grants nothing."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. Every line is output from proof-surface at commit 3d5d945: the worked example and <code>examples/demo.py</code>, and the visual-measurement wedge on its shipped example input.",
+    "steps": [
+        {"title": "A grant to read, and nothing else",
+         "paras": ["Alice grants an agent permission to <code>read_file</code> on <code>repo:proof-surface</code>, from 17 to 19 June 2026. The receipt validates with no issues. <code>check_action</code> on 18 June allows a read: it returns nothing."],
+         "src": "README.md, \"Worked example\"; " + L("src/proof_surface/__init__.py"),
+         "scene": [{"table": {"head": ["field", "value"], "rows": [["principal", "user:alice@example.com, project-owner"], ["agent", "agent:planner"], ["allowed_actions", "read_file"], ["allowed_targets", "repo:proof-surface"], ["window", "2026-06-17 to 2026-06-19"], ["revoked", "false"]]}},
+                   {"io": {"cmd": 'check_action(receipt, "read_file", "repo:proof-surface", now=2026-06-18)', "lines": [["None   (allowed)", "hi"]]}}]},
+        {"title": "Everything else is denied, with the reason",
+         "paras": ["The check is default-deny. Pick each request in the panel: a delete, another repository, a day after the window, a revoked grant. Each denial names the field that decided it.",
+                   "A receipt that adds an unexpected field such as <code>approved</code> fails validation: the shape is closed at every level."],
+         "src": L("src/proof_surface/authorization_receipt.py"),
+         "scene": [{"cases": {"label": "Choose a request", "items": [
+             {"label": "delete_file", "blocks": [{"io": {"lines": ["Issue(path='$.scope.allowed_actions', message=\"action denied: 'delete_file' not in allowed_actions\")"], "verdict": ["denied", "drift"]}}]},
+             {"label": "repo:other", "blocks": [{"io": {"lines": ["Issue(path='$.scope.allowed_targets', message=\"action denied: target 'repo:other' not in allowed_targets\")"], "verdict": ["denied", "drift"]}}]},
+             {"label": "on 20 June", "blocks": [{"io": {"lines": ["Issue(path='$.expires_at', message='action denied: grant has expired')"], "verdict": ["denied", "drift"]}}]},
+             {"label": "grant revoked", "blocks": [{"io": {"lines": ["Issue(path='$.revoked', message='action denied: receipt is revoked')"], "verdict": ["denied", "drift"]}}]},
+             {"label": "extra field approved", "blocks": [{"io": {"cmd": "validate_authorization_receipt(receipt_with_scope_approved)", "lines": ["Issue(path='$.scope.approved', message='unexpected field')"], "verdict": ["invalid", "drift"]}}]}]}}]},
+        {"title": "A gate before the action runs",
+         "paras": ["<code>evaluate_gate</code> takes one planned action and runs four checks: authorization, budget, state and the human gap. Each returns pass, fail, unknown or not applicable.",
+                   "The aggregate is not a vote. Any fail denies. With no fail but any unknown, a person has to look. Allow needs authorization to pass outright. Drop the budget estimate and the same request escalates."],
+         "src": L("src/proof_surface/pre_execution_gate.py") + ", <code>evaluate_gate</code>",
+         "scene": [{"pipe": {"stages": GATE, "active": 7}},
+                   {"cases": {"label": "Choose a request", "items": [
+                       {"label": "with a budget", "blocks": [{"io": {"lines": ["authorization pass, budget pass, state not-applicable, human_gap not-applicable"], "verdict": ["allow", "ok"]}}]},
+                       {"label": "without a budget", "blocks": [{"io": {"lines": ["authorization pass, budget unknown, state not-applicable, human_gap not-applicable"], "verdict": ["needs-human", "unv", "unknown escalates, never passes"]}}]}]}}]},
+        {"title": "Delegation that can only narrow",
+         "paras": ["A delegation chain roots authority in a real person, and each hop can only narrow the scope. The demo's chain verifies VALID for an in-scope action and DENIED for one outside it.",
+                   "Asked for signature assurance with no verifier available, it returns UNVERIFIABLE. The chain is hash-linked but keyless, so it shows self-consistency. Tamper evidence against someone who rewrites every hash needs an external anchor."],
+         "src": L("src/proof_surface/delegation_chain.py") + "; README.md, \"The base contracts\"",
+         "scene": [{"table": {"head": ["request", "verdict"], "rows": [["in-scope action", ["VALID", "ok"]], ["out-of-scope action", ["DENIED", "drift"]], ["signature demanded, no verifier", ["UNVERIFIABLE", "unv"]]]}}]},
+        {"title": "A proof packet from a real measurement",
+         "paras": ["The visual-measurement wedge takes a capture's measurements: a mean Delta E 2000 of 1.42 against a tolerance of 2.0, and a white luminance of 118 cd/m2 against a target of 120 with a tolerance of 5. Both are within tolerance, so the packet reads MATCH.",
+                   "It writes six files: the packet, a report, a content-addressed bundle, and the crucible thesis, measurements and assessment for an independent recheck. The packet is read-only and makes no physical-calibration claim."],
+         "src": L("examples/visual_measurement/measurement.json") + "; " + L("src/proof_surface/visual_measurement/builder.py"),
+         "scene": [{"io": {"cmd": 'telos-proof visual-measurement --input examples/visual_measurement/measurement.json --claim "sRGB coverage measured on a read-only capture" --scope "software capture only, no hardware probe" --out ./demo-out',
+                           "lines": ["| delta_e_2000_mean | 1.42 dE | 0.0 | 1.42 | 2.0 | MATCH |", "| white_luminance | 118.0 cd/m2 | 120.0 | 2.0 | 5.0 | MATCH |",
+                                     "Calibration boundary: hardware_measurement_used=False, physical_calibration_claim=False", "bundle.json  crucible-assessment.json  crucible-measurements.json", "crucible-thesis.json  packet.json  report.md"],
+                           "verdict": ["MATCH", "ok", "every metric within tolerance"]}}]},
+        {"title": "The gate on an inflated claim",
+         "paras": ["A read-only capture never touched the display, so it may not claim a physical calibration. Mark the packet's calibration boundary as a physical-calibration claim, with no hardware measurement, no instrument and no mutation evidence, and validation rejects it, even though both measurements still read MATCH.",
+                   "The gate reads the structured boundary. The free-text claim line is recorded as written."],
+         "src": L("src/proof_surface/visual_measurement/_calibration.py"),
+         "scene": [{"io": {"cmd": 'build_visual_measurement_packet(..., calibration_boundary={"hardware_measurement_used": False, "physical_calibration_claim": True})',
+                           "lines": ["verdicts.overall  MATCH", ["Issue(path='$.calibration_boundary', message='a physical_calibration_claim must disclose hardware_measurement_used, an instrument, mutation_evidence, and a non-read-only packet')", "hi"]],
+                           "verdict": ["rejected", "drift", "the measurements cannot carry the claim"]}}]},
+    ],
+    "try": [
+        ("Install from a checkout (Python 3.10 or newer; the test extra adds pytest and jsonschema).",
+         "$ git clone https://github.com/HarperZ9/proof-surface && cd proof-surface\n$ python -m pip install -e \".[test]\"\n$ python examples/demo.py\n<span class=\"out\">with budget       : allow\nwithout budget    : needs-human</span>\n$ telos-proof visual-measurement --input examples/visual_measurement/measurement.json --claim \"sRGB coverage measured on a read-only capture\" --scope \"software capture only, no hardware probe\" --out ./demo-out"),
+    ],
+    "try_src": "Output from proof-surface at 3d5d945 on Windows with Python 3.12.",
+    "limits": [
+        "Proof Surface validates records. It grants no authority, executes no action and stores no private payload.",
+        "Decision helpers are advisory. The caller must enforce the decision.",
+        "The delegation chain is keyless. It gives self-consistent integrity, and real anti-forgery needs an external anchor or per-hop signatures.",
+        "Honesty gates read structured fields. A free-text claim is recorded as written and is not parsed for overclaims.",
+        "The claim ledger reports provenance and declared conflicts. It does not decide which claim is true.",
+    ],
+    "limits_src": "README.md at 3d5d945, \"Why it matters\" and \"The base contracts\"; src/proof_surface/visual_measurement/_calibration.py",
+    "recall": [
+        ("check_action returns None. What does that mean?", "The action is allowed. Every denial comes back as an Issue naming the field that decided it."),
+        ("A gate request has no budget estimate. Why is the answer needs-human and not allow?", "The budget check returns unknown, and any unknown with no fail escalates to a person."),
+        ("Why can a keyless hash chain not stop a forger?", "Someone who rewrites the document can recompute every hash. Only an outside anchor or signatures fix that."),
+        ("Both measurements read MATCH, yet the packet is rejected. Why?", "Its calibration boundary claims a physical calibration without a hardware measurement, an instrument, mutation evidence and a non-read-only packet."),
+    ],
+    "license_line": "Proof Surface is released under the MIT license.",
+}
