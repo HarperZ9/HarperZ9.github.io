@@ -163,6 +163,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-sound-engine.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-ndim-gpu.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-neural-gpu.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-attractor.cjs
       # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
       # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
       # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.

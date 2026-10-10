@@ -83,7 +83,7 @@
 //   Tempo is estimated from the onset accumulator (~4/s update rate).
 
 import { applyMapping, MAPPING_PRESETS, dominantChromaClass, clamp } from "./reactive-mapping.js";
-import ReactiveVisuals from "./reactive-visuals.js";
+import ReactiveVisuals from "./reactive-visuals.js?v=20261010-attractor-gpu";
 import { musicScene, renderReference, liveContext, playReference, reducedSound } from "./media-engine/sound.mjs";
 
 // ---------------------------------------------------------------------------
