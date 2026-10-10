@@ -2,7 +2,7 @@
 // and phone widths: one bar each, Undo and Redo over the settings in their inspectors, the settings
 // kept across a reload, and Start fresh back to the first ones.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8814';
 const VIEWS = [

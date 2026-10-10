@@ -3,7 +3,7 @@
 // widths: one bar each, settings kept through a switch, Undo and a reload, and the export with a
 // receipt from the bar.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8812';
 const VIEWS = [
