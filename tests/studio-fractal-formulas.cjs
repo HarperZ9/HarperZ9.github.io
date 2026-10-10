@@ -41,6 +41,15 @@ const click = (page, sel) => page.evaluate((s) => document.querySelector(s).clic
           assert.equal(await page.locator(`[data-ftype="${t}"]`).count(), 1, `${tag} the ${t} chip is there`);
         }
         assert.equal(await page.locator('#fractal-formula-group').isVisible(), false, `${tag} the Formula group hides for the Mandelbrot`);
+        // Click-to-zoom: a click (not a drag) on the frame zooms 2x toward the point.
+        if (!view.mobile) {
+          const before = await stage(page);
+          const box = await page.locator('#studio-canvas').boundingBox();
+          await page.mouse.click(box.x + box.width * 0.7, box.y + box.height * 0.3);
+          await wait(page, 1000);
+          assert.notEqual(await stage(page), before, `${tag} a click zooms toward the point`);
+          await click(page, '#fractal-render'); await wait(page, 1200);
+        }
         const seen = new Set([await stage(page)]);
         for (const t of TYPES) {
           await click(page, `[data-ftype="${t}"]`); await wait(page, 1200);

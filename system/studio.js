@@ -3307,9 +3307,12 @@ fStage.addEventListener("pointercancel", endFractalDrag);
 fStage.addEventListener("click", e => {
   if (!fractalInteractive()) return;
   if (_fdrag && _fdrag.moved) return;   // was a drag, not a click
-  if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
+  // By position, not by target: pointerdown captures the pointer on the stage, so the click that
+  // follows is aimed at the stage and never at the canvas. The target test made click-to-zoom a
+  // dead gesture (found 9 October 2026; it was dead on the live site too).
+  if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
   const at = fractalPointOffset(e.clientX, e.clientY, canvas, rect);
   fractalShift(at.re, at.im);
   fractalView.scale = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * 0.5);
