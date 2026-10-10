@@ -59,6 +59,10 @@ const DEEP = {
         }
         res.shallow[v.type] = { meanDiff: diff / (W * H * 3), bigFrac: big / (W * H), ms: pert.ms, path: b.__fractalPrecisionUsed };
       }
+      // The Tricorn's deep program compiles and draws (its step and derivative share a scope).
+      const tc = mk();
+      gl.renderFractalGL(tc, { type: 'tricorn', cx: 0.30718006499628, cy: -0.68824357945896, scale: 1e-12, maxIter: 3000, palette: 'ocean', precision: 'perturbation' });
+      res.tricorn = tc.__fractalPrecisionUsed;
       // 2. deep separation: distinct adjacent columns along the middle rows
       const cols = (px) => {
         let distinct = 0, total = 0;
@@ -99,6 +103,7 @@ const DEEP = {
       assert.ok(out.deep.pert > 0.5, `perturbation separates adjacent columns at 1e-35 (${out.deep.pert.toFixed(3)})`);
       assert.ok(out.deep.pert > 4 * out.deep.df64, `and df64 does not (${out.deep.df64.toFixed(3)})`);
       assert.ok(out.deep.stats.blaEntries > 0, 'BLA table in use');
+      assert.equal(out.tricorn, 'perturbation', 'the Tricorn draws by perturbation');
       assert.ok(out.glitch.marked > 0, 'glitch view marks pixels when rebasing is off');
     }
     assert.deepEqual(errors, [], 'no page errors');

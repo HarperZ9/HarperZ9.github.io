@@ -61,8 +61,8 @@ export function buildDeepFragment(kind, bla) {
       vec2 t = 2.0 * cmul(Z, w) + s * cmul(w, w);
       w = vec2(t.x, -t.y) + dcw;`;
     dstep = `
-      vec2 t = 2.0 * cmul(z0, u);
-      u = vec2(t.x, -t.y) + seedU;`;
+      vec2 tu = 2.0 * cmul(z0, u);
+      u = vec2(tu.x, -tu.y) + seedU;`;
   } else {
     step = `
       vec2 Z = R.xy;
