@@ -45,6 +45,11 @@ const watchErrors = (page, errors) => {
 async function foldChecks(ctx, tag) {
   const page = await ctx.newPage(); const errors = []; watchErrors(page, errors);
   await page.goto(`${base}/studio.html?source=sketch`); await wait(page, 3500);
+  // 9 October 2026: on a desktop the readings column starts as a strip on a making source (the
+  // layout pass); the fold while making applies once the visitor opens it, so open it first.
+  const collapsed = await page.evaluate(() => document.querySelector('.studio-app').classList.contains('readings-collapsed'));
+  if (collapsed) { await page.click('#readings-toggle'); await wait(page, 600); }
+  assert.equal(await page.evaluate(() => document.querySelector('.studio-app').classList.contains('readings-collapsed')), false, `${tag} the Readings button opens the column`);
   assert.equal(await readings(page), 'open', `${tag} readings open before any making`);
   const size = await page.evaluate(() => { const c = document.getElementById('studio-canvas'); return [c.width, c.height, Math.round(c.getBoundingClientRect().width)]; });
   await page.locator('#studio-canvas').scrollIntoViewIfNeeded();

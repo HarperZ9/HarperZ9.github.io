@@ -214,3 +214,29 @@ html body.studio-page #viewport-stage .stage-drag:hover,html body.studio-page #v
 @media (hover:none) and (pointer:coarse){html body.studio-page #viewport-stage .stage-drag{display:none}}
 html body.studio-page #studio-source button.drop-ok{outline:1px dashed var(--chrome-ink,#16130f);outline-offset:-3px}
 html body.studio-page #studio-source button.drop-over{outline:2px solid var(--chrome-ink,#16130f);outline-offset:-3px}
+/* The stage gets the room (studio-layout.js). On a desktop the readings fold to a strip with one
+   button; the strip is the whole column, so the stage takes the width the readings gave up. */
+html body.studio-page .readings-toggle{display:none}
+@media (min-width:900px){
+  html body.studio-page .readings-toggle{display:block;width:100%;font:inherit;font-size:.8125rem;font-weight:600;padding:.55rem .5rem;border:0;border-bottom:1px solid var(--st-line);background:var(--st-paper);color:var(--st-ink);cursor:pointer;text-align:left}
+  html body.studio-page .readings-toggle:focus-visible{outline:2px solid var(--st-ink);outline-offset:-2px}
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(236px,16rem) minmax(0,1fr) 2.75rem}
+  html body.studio-page .studio-app.readings-collapsed #studio-panel > :not(.readings-toggle){display:none!important}
+  html body.studio-page .studio-app.readings-collapsed .readings-toggle{writing-mode:vertical-rl;height:100%;text-align:start;padding:.9rem .6rem;border-bottom:0}
+  /* The workshop line under the plate: one line, the rest on hover or focus. */
+  html body.studio-page #studio-viewport #st-flow{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html body.studio-page #studio-viewport #st-flow:is(:hover,:focus-within){white-space:normal}
+}
+@media (min-width:1280px){
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(272px,19.5rem) minmax(0,1fr) 2.75rem}
+}
+@media (min-width:900px){
+  /* Tighter mat and notes under the plate: every pixel saved goes to the picture. */
+  html body.studio-page #studio-viewport{padding-top:.6rem;padding-bottom:.4rem;gap:.35rem}
+  html body.studio-page #studio-viewport .engine-status{margin:0}
+  html body.studio-page #studio-viewport .engine-status>summary{padding-top:.2rem;padding-bottom:.2rem;min-height:0}
+  html body.studio-page #studio-viewport #st-flow{margin:0;padding:.15rem 0}
+}
+@media (min-width:1280px) and (max-width:1599.98px){
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(272px,17.5rem) minmax(0,1fr) 2.75rem}
+}

@@ -51,7 +51,7 @@ jobs:
           system/media-engine/raw.test.mjs system/media-engine/plate.test.mjs system/media-engine/sketch.test.mjs system/media-engine/plotmap.test.mjs system/media-engine/atelier.test.mjs system/media-engine/poster.test.mjs system/media-engine/voxels.test.mjs system/media-engine/fractal.test.mjs system/media-engine/showcase.test.mjs system/poster.test.mjs
           system/type-forge/forge.test.mjs system/typeface.test.mjs
           system/neural.test.mjs system/neural-kernels.test.mjs system/studio-neural.test.mjs
-          system/studio-shell.test.mjs system/studio-keep.test.mjs system/studio-project.test.mjs system/studio-presets.test.mjs system/studio-dnd.test.mjs
+          system/studio-shell.test.mjs system/studio-keep.test.mjs system/studio-project.test.mjs system/studio-presets.test.mjs system/studio-dnd.test.mjs system/studio-layout.test.mjs
       # The sound layer (offline reference PCM pinned by hash, loudness, receipts) and the five
       # audio modules' own tests, which did not run in CI before.
       - name: Sound layer and audio regressions
@@ -158,6 +158,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-export-project.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-presets.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-drag-drop.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-layout.cjs
       # The fractal renderers: the CPU reference, the GPU programs' source, deep zoom by perturbation
       # (reference orbit, BLA, rebasing, against direct BigInt iteration), then the deep path in the
       # browser (SwiftShader here) and in the Studio. Its own step and port, so it reports alone.
