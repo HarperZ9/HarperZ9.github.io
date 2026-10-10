@@ -80,6 +80,15 @@ def source_card(slug: str, k: str, s: dict, heard: tuple) -> str:
             f'<p class="fl-src-cite">{E(s["citation"])} <a class="inline" href="{E(s["url"])}" rel="external noopener">{E(s["url"])}</a></p></li>')
 
 
+def sound_note(snd: dict | None) -> str:
+    """One sentence on the sound, from a receipt's or manifest's "sound" block."""
+    if not snd:
+        return ""
+    bed = ", with no music under the voice" if snd.get("mix") == "C" else ", with a score held well under the voice"
+    return (f" Sound: the narration and a few short cues tied to what changes on screen{bed},"
+            f" mastered to {snd['integrated_lufs']:.0f} LUFS.")
+
+
 def film_section(slug: str) -> str:
     x = load(slug)
     f, ev, rec, timing = x["film"], x["evidence"], x["receipt"], x["timing"]
@@ -114,7 +123,7 @@ def film_section(slug: str) -> str:
   <figure class="film" data-film="{slug}" data-folder="{folder}">
     <video controls preload="metadata" playsinline width="1920" height="1080" poster="{folder}/poster.jpg" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
     {heads}
-    <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.</figcaption>
+    <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
   </figure>{live}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
@@ -170,7 +179,7 @@ def release_section() -> str:
             vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
             track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
             voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
-                     else "Captions only; no narration yet.")
+                     else "Captions only; no narration yet.") + sound_note(m.get("sound"))
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>

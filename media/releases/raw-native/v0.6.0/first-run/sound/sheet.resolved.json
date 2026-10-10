@@ -1,0 +1,164 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "scene/raw-native: build, render, check",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 1800000,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Sound for \"raw-native: build, render, check\", from the scene's own timeline. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "058a3f1d389d8363c14398e062026631cde1d370c19c5b21719dfd08d125c9ef"
+ },
+ "score": {
+  "root_hz": 73.416,
+  "sections": [
+   {
+    "at": 0,
+    "chord": [
+     0,
+     7,
+     12,
+     17
+    ]
+   },
+   {
+    "at": 201600,
+    "chord": [
+     0,
+     7,
+     12,
+     15
+    ]
+   },
+   {
+    "at": 533760,
+    "chord": [
+     -4,
+     3,
+     8,
+     12
+    ]
+   },
+   {
+    "at": 744960,
+    "chord": [
+     3,
+     10,
+     15,
+     19
+    ]
+   },
+   {
+    "at": 929280,
+    "chord": [
+     -2,
+     5,
+     10,
+     14
+    ]
+   },
+   {
+    "at": 1198080,
+    "chord": [
+     0,
+     7,
+     12,
+     16
+    ]
+   },
+   {
+    "at": 1382400,
+    "chord": [
+     0,
+     7,
+     12,
+     17
+    ]
+   }
+  ],
+  "silences": []
+ },
+ "cues": [
+  {
+   "at": 201600,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 0,
+   "why": "step 1 starts: Configure"
+  },
+  {
+   "at": 533760,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 2,
+   "why": "step 2 starts: Build"
+  },
+  {
+   "at": 744960,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 4,
+   "why": "step 3 starts: Test"
+  },
+  {
+   "at": 929280,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 6,
+   "why": "step 4 starts: Render"
+  },
+  {
+   "at": 1198080,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 8,
+   "why": "step 5 starts: Verify"
+  },
+  {
+   "at": 1382400,
+   "x": 960,
+   "gain_db": -7,
+   "type": "land",
+   "pitch": 10,
+   "why": "step 6 starts: Recheck"
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "depth_db": -6
+   },
+   "gain_db": -4.7958016917255115
+  },
+  "sfx": {
+   "gain_db": -8.00051645766366
+  }
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {},
+  "target_lufs": -16,
+  "ceiling_dbtp": -1.5,
+  "gain_db": 1.6024536969892544
+ }
+}
