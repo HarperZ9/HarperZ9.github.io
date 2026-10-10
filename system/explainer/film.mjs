@@ -102,7 +102,9 @@ async function build(fig) {
   let last = 0;
   // A jump (a chapter button, a source's "Heard at", a transcript sentence, the scrubber) is not
   // reaching a chapter's end: questions for chapters jumped over stay for when the film gets there.
-  video.addEventListener("seeked", () => { last = video.currentTime; });
+  // The browser fires timeupdate before seeked, with seeking already false, so take the new
+  // position when the seek starts.
+  for (const e of ["seeking", "seeked"]) video.addEventListener(e, () => { last = video.currentTime; });
   video.addEventListener("timeupdate", () => {
     const t = video.currentTime;
     mark();
