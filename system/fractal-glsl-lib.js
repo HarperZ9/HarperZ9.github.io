@@ -203,6 +203,20 @@ float relief(vec2 z, vec2 dz) {
   return mix(1.0 - RELIEF, 1.0 + RELIEF, t);
 }
 
+// The same Lambert term from a gradient already in hand. For a map that is not holomorphic (the
+// Burning Ship's fold, the Tricorn's conjugate) z / dz is not the potential's gradient: one column
+// of the Jacobian flips sign across every fold, and the shading printed those folds as seams, which
+// read as a checkerboard in smooth regions at depth. With both columns, J = [dz/dcx, dz/dcy], the
+// gradient of log|z| is (z . dz/dcx, z . dz/dcy), and that is continuous. For a holomorphic map it
+// equals the direction relief() computes.
+float reliefDir(vec2 g) {
+  float m = max(abs(g.x), abs(g.y));
+  if (!(m > 0.0 && m < 1e30)) return 1.0;
+  vec2 u = normalize(g / m);
+  float t = clamp((dot(u, LIGHT) + LIGHT_H) / (1.0 + LIGHT_H), 0.0, 1.0);
+  return mix(1.0 - RELIEF, 1.0 + RELIEF, t);
+}
+
 // Hue-preserving highlight hold. relief() multiplies by up to 1 + RELIEF, which on the bright end of
 // a palette pushes a channel past 1.0, and letting each channel clip on its own drains the colour:
 // ocean's lightest stop under a full highlight clips green and blue first and prints white, so the

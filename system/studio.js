@@ -62,7 +62,7 @@ function lazyLoader(importer, onLoad) {
 }
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
-let _fractal = null, _fractalGL = null;
+let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null;
 // The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
 // camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
 // node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
@@ -83,10 +83,19 @@ function drawFractalView(canvas, view, path) {
   return _fractalHandle.instance.lastError;
 }
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a"),
-    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal"))]),
-  ([f, g, e]) => {
-    _fractal = f; _fractalGL = g; _fractalEngine = e;
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f1"),
+    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal")),
+    import("./fractal-hp.js?v=20261009f1"), import("./studio-fractal-deep.js?v=20261009f1")]),
+  ([f, g, e, hp, deep]) => {
+    _fractal = f; _fractalGL = g; _fractalEngine = e; _fhp = hp;
+    _fdeep = deep.mountFractalDeep({
+      getView: () => fractalView,
+      setView: (v) => { fractalView = v; },
+      repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+      say: (t) => say("model", t),
+      canvas: () => $("studio-canvas"),
+      isActive: () => activeSource === "fractal",
+    });
     GL_AVAILABLE = !!g.isFractalGLAvailable();
     buildFractalPalettes();            // idempotent (builds once)
     buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
@@ -3020,7 +3029,10 @@ function paintFractal(opts, aaOverride) {
   // Defensive: every caller is gated on fractalView, which is only set after the lazy fractal
   // graph loaded (renderPreset awaits it), so this guard should never fire in practice.
   if (!_fractal) return $("studio-canvas");
-  const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
+  const t0 = performance.now();
+  // The Deep zoom group: iterations that follow the depth, the BLA switch, the glitch view.
+  const view = _fdeep ? _fdeep.decorate(opts) : opts;
+  const maxIter = Math.round(view.maxIter * currentQuality().iterMult);
   const aa = aaOverride !== undefined ? aaOverride : currentQuality().aa;
   if (GL_AVAILABLE && _fractalGL) {
     // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
@@ -3033,7 +3045,11 @@ function paintFractal(opts, aaOverride) {
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
     try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
-    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) { noteFractalPainted(); return c; }
+    if (!drawFractalView(c, { ...view, maxIter, aa }, "gl")) {
+      noteFractalPainted();
+      if (_fdeep) _fdeep.timeFrame({ ...view, maxIter }, t0, aaOverride === undefined);
+      return c;
+    }
     // GPU failed at runtime: fall back to CPU on the original 2D canvas.
     dropFractalHandle();
     leave3D();
@@ -3041,8 +3057,9 @@ function paintFractal(opts, aaOverride) {
   // CPU path (fallback / no WebGL): progressive render so the UI never blocks (Task 8n perf).
   const c = $("studio-canvas");
   sizeCanvas(c);
-  cpuFractalProgressive(c, { ...opts, maxIter });
+  cpuFractalProgressive(c, { ...view, maxIter });
   noteFractalPainted();
+  if (_fdeep) _fdeep.timeFrame({ ...view, maxIter }, t0, false);
   return c;
 }
 // The shell records a fractal view once it has held still for 400 ms, so a wheel zoom is one undo
@@ -3064,6 +3081,11 @@ function fractalPrecisionNote() {
   const want = _fractalGL.fractalPrecisionMode(
     fractalView.cx, fractalView.cy, fractalView.scale, (c && c.width) || 1600);
   if (want === "single") return "";
+  if (c && c.__fractalPrecisionUsed === "perturbation") {
+    return "Past float32's reach here, so every pixel is iterated as a small difference from one "
+      + "reference orbit computed in exact arithmetic (perturbation, with rebasing and bilinear "
+      + "approximation). It holds detail down to a view 1e-300 wide. ";
+  }
   if (c && c.__fractalPrecisionUsed !== "double") {
     return "Heads up: this view is past float32's reach, but this device's fragment shaders do not "
       + "carry full precision, so neighbouring pixels are collapsing onto the same point. ";
@@ -3165,16 +3187,31 @@ if ($("fractal-detail")) {
 const fStage = $("studio-canvas").closest(".stage");
 let _fractalRaf = 0, _fractalDirty = false;
 
-// Convert a client-space point on the canvas to its complex-plane coordinate under the current view.
-function fractalPointToComplex(clientX, clientY, canvas, rect) {
-  const fx = (clientX - rect.left) / rect.width;   // 0..1 across the displayed canvas
-  const fy = (clientY - rect.top) / rect.height;
+// A client-space point's OFFSET from the view centre, in plane units. Offsets rather than absolute
+// coordinates, because past 1e-16 a double centre cannot hold the point under the cursor; the
+// offset is the size of the view and stays exact. The image puts larger imaginary parts higher up
+// (the GPU programs' convention, which fractal.js now shares), and the Burning Ship is drawn
+// reflected, as is customary for it.
+function fractalPointOffset(clientX, clientY, canvas, rect) {
+  const fx = (clientX - rect.left) / rect.width - 0.5;
+  const fy = (clientY - rect.top) / rect.height - 0.5;
   const aspect = canvas.height / canvas.width;
   const flipY = fractalView.type === "burningship" ? -1 : 1;
-  return {
-    re: fractalView.cx + (fx - 0.5) * fractalView.scale,
-    im: fractalView.cy + flipY * (fy - 0.5) * fractalView.scale * aspect,
-  };
+  return { re: fx * fractalView.scale, im: -flipY * fy * fractalView.scale * aspect };
+}
+// The deepest view a double can describe; the perturbation path draws down to here.
+const FRACTAL_MIN_SCALE = 1e-300;
+// Move or zoom the view through fractal-hp.js, which carries the centre at the precision the depth
+// needs. Before the graph loads (it always has by the time a view exists) the doubles move instead.
+function fractalShift(dre, dim) {
+  if (_fhp) _fhp.shiftView(fractalView, dre, dim);
+  else { fractalView.cx += dre; fractalView.cy += dim; }
+}
+function fractalZoomAbout(off, factor) {
+  const next = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * factor);
+  factor = next / fractalView.scale;
+  if (_fhp) _fhp.zoomViewAbout(fractalView, off.re, off.im, factor);
+  else { fractalView.scale = next; fractalView.cx += off.re * (1 - factor); fractalView.cy += off.im * (1 - factor); }
 }
 
 // Schedule a throttled re-render of the current fractalView (coalesces rapid wheel/drag events to
@@ -3207,13 +3244,9 @@ fStage.addEventListener("wheel", e => {
   e.preventDefault();
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  const before = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
   const factor = Math.exp((e.deltaY > 0 ? 1 : -1) * 0.18);   // smooth multiplicative zoom
-  fractalView.scale *= factor;
-  // Keep the point under the cursor fixed: shift center by how much that point moved.
-  const after = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
-  fractalView.cx += before.re - after.re;
-  fractalView.cy += before.im - after.im;
+  // Keep the point under the cursor fixed.
+  fractalZoomAbout(fractalPointOffset(e.clientX, e.clientY, canvas, rect), factor);
   startMeterLoop();
   scheduleFractalRender();
 }, { passive: false });
@@ -3235,8 +3268,7 @@ fStage.addEventListener("pointermove", e => {
   _fdrag.x = e.clientX; _fdrag.y = e.clientY;
   const aspect = canvas.height / canvas.width;
   const flipY = fractalView.type === "burningship" ? -1 : 1;
-  fractalView.cx -= (dx / _fdrag.w) * fractalView.scale;
-  fractalView.cy -= flipY * (dy / _fdrag.h) * fractalView.scale * aspect;
+  fractalShift(-(dx / _fdrag.w) * fractalView.scale, flipY * (dy / _fdrag.h) * fractalView.scale * aspect);
   startMeterLoop();
   scheduleFractalRender();
 });
@@ -3256,8 +3288,9 @@ fStage.addEventListener("click", e => {
   if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  const at = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
-  fractalView.cx = at.re; fractalView.cy = at.im; fractalView.scale *= 0.5;
+  const at = fractalPointOffset(e.clientX, e.clientY, canvas, rect);
+  fractalShift(at.re, at.im);
+  fractalView.scale = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * 0.5);
   paintFractal(fractalView, /* aaOverride */ 1);
   const obs = perceive(canvas);
   say("model",
@@ -3289,12 +3322,8 @@ fStage.addEventListener("touchmove", e => {
     const [a, b] = [..._ftouch.pts.values()];
     const mid = { clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 };
     const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
-    const before = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
     const factor = _ftouch.pinchDist / dist;   // fingers apart → zoom in
-    fractalView.scale *= factor;
-    const after = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
-    fractalView.cx += before.re - after.re;
-    fractalView.cy += before.im - after.im;
+    fractalZoomAbout(fractalPointOffset(mid.clientX, mid.clientY, canvas, rect), factor);
     _ftouch.pinchDist = dist;
   } else {
     const p = [..._ftouch.pts.values()][0];
@@ -3302,8 +3331,7 @@ fStage.addEventListener("touchmove", e => {
     _ftouch.panX = p.x; _ftouch.panY = p.y;
     const aspect = canvas.height / canvas.width;
     const flipY = fractalView.type === "burningship" ? -1 : 1;
-    fractalView.cx -= (dx / rect.width) * fractalView.scale;
-    fractalView.cy -= flipY * (dy / rect.height) * fractalView.scale * aspect;
+    fractalShift(-(dx / rect.width) * fractalView.scale, flipY * (dy / rect.height) * fractalView.scale * aspect);
   }
   startMeterLoop();
   scheduleFractalRender();
@@ -3359,7 +3387,8 @@ function leave3D() {
     glCanvas.replaceWith(originalCanvas);   // remount the intact 2D node
     // Release the WebGL context to prevent resource leaks when cycling sources (browsers cap ~16 contexts).
     try {
-      const _gl = glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
+      // The 2D fractal path asks for WebGL2 first, and a canvas answers only its own context type.
+      const _gl = glCanvas.__fractalGLContext || glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
       _gl && _gl.getExtension("WEBGL_lose_context") && _gl.getExtension("WEBGL_lose_context").loseContext();
     } catch (e) { /* non-fatal */ }
     canvasIsGL = false;

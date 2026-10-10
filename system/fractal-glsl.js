@@ -38,15 +38,18 @@ export function buildFragment(type, precision) {
     stepBody = `${dmul};
     z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;`;
   } else if (type === "burningship") {
-    zInit = "vec2 z = vec2(0.0); vec2 dz = vec2(0.0); float dseed = 1.0;";
+    zInit = "vec2 z = vec2(0.0); vec2 dz = vec2(0.0); vec2 dzy = vec2(0.0); float dseed = 1.0;";
     cExpr = "vec2 c = uv;";
     // Burning Ship: take abs of components before squaring (Wikipedia formula). The map is not
-    // holomorphic, so this derivative is the sign-folded chain rule rather than a true complex
-    // derivative. It is used only to pick a shading direction, never to estimate a distance.
-    stepBody = `dz = vec2(z.x < 0.0 ? -dz.x : dz.x, z.y < 0.0 ? -dz.y : dz.y);
+    // holomorphic, so the shading needs the whole Jacobian: dz is dz/dcx and dzy is dz/dcy. The
+    // fold multiplies both by diag(sign x, sign y); the square multiplies both by 2|z| as complex
+    // numbers; c adds 1 to the first and i to the second.
+    stepBody = `vec2 sg = vec2(z.x < 0.0 ? -1.0 : 1.0, z.y < 0.0 ? -1.0 : 1.0);
     z = abs(z);
-    ${dmul} + vec2(dseed, 0.0);
-    z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;`;
+    dz = 2.0 * vec2(z.x*(sg.x*dz.x) - z.y*(sg.y*dz.y), z.x*(sg.y*dz.y) + z.y*(sg.x*dz.x)) + vec2(dseed, 0.0);
+    dzy = 2.0 * vec2(z.x*(sg.x*dzy.x) - z.y*(sg.y*dzy.y), z.x*(sg.y*dzy.y) + z.y*(sg.x*dzy.x)) + vec2(0.0, dseed);
+    z = vec2(z.x*z.x - z.y*z.y, 2.0*z.x*z.y) + c;
+    if (max(dot(dz, dz), dot(dzy, dzy)) > 1e18) { dz *= 1e-9; dzy *= 1e-9; dseed *= 1e-9; }`;
   } else { // mandelbrot
     zInit = "vec2 z = vec2(0.0); vec2 dz = vec2(0.0); float dseed = 1.0;";
     cExpr = "vec2 c = uv;";
@@ -105,7 +108,7 @@ vec3 fractalColor(vec2 uv) {
   // lightest stop, which drains the palette wherever the trap is weak, and the trap is weak across
   // most of a frame. Adding light leaves the base hue alone where the glow is faint and still prints
   // the filament where it is strong.
-  return holdGamut(base * relief(z, dz) + u_tint * trapWeight(glow));
+  return holdGamut(base * ${type === "burningship" ? "reliefDir(vec2(dot(z, dz), dot(z, dzy)))" : "relief(z, dz)"} + u_tint * trapWeight(glow));
 }
 
 void main() {
@@ -147,12 +150,16 @@ function buildFragmentDouble(type) {
     cInit = "vec2 cx = u_juliaX;  vec2 cy = u_juliaY;";
     dStep = `${dmul};`;
   } else if (type === "burningship") {
-    zInit = "vec2 zx = vec2(0.0); vec2 zy = vec2(0.0); vec2 dz = vec2(0.0);     float dseed = 1.0;";
     cInit = "vec2 cx = ux;        vec2 cy = uy;";
     // Burning Ship folds |z| at the top of each step. |z| has the same modulus, so the bailout test
     // below is unaffected by where the fold sits: it matches the single-precision program exactly.
     absStep = "zx = dsAbs(zx); zy = dsAbs(zy);";
-    dFold = "dz = vec2(zx.x < 0.0 ? -dz.x : dz.x, zy.x < 0.0 ? -dz.y : dz.y);";
+    // The whole Jacobian, as in the single-precision program: dz = dz/dcx, dzy = dz/dcy.
+    zInit = "vec2 zx = vec2(0.0); vec2 zy = vec2(0.0); vec2 dz = vec2(0.0); vec2 dzy = vec2(0.0); float dseed = 1.0;";
+    dFold = "vec2 sg = vec2(zx.x < 0.0 ? -1.0 : 1.0, zy.x < 0.0 ? -1.0 : 1.0);";
+    dStep = `dz = 2.0 * vec2(zh.x*(sg.x*dz.x) - zh.y*(sg.y*dz.y), zh.x*(sg.y*dz.y) + zh.y*(sg.x*dz.x)) + vec2(dseed, 0.0);
+    dzy = 2.0 * vec2(zh.x*(sg.x*dzy.x) - zh.y*(sg.y*dzy.y), zh.x*(sg.y*dzy.y) + zh.y*(sg.x*dzy.x)) + vec2(0.0, dseed);
+    if (max(dot(dz, dz), dot(dzy, dzy)) > 1e18) { dzy *= 1e-9; dz *= 1e-9; dseed *= 1e-9; }`;
   } else { // mandelbrot
     zInit = "vec2 zx = vec2(0.0); vec2 zy = vec2(0.0); vec2 dz = vec2(0.0);     float dseed = 1.0;";
     cInit = "vec2 cx = ux;        vec2 cy = uy;";
@@ -213,7 +220,7 @@ vec3 fractalColor(vec2 ux, vec2 uy) {
   // lightest stop, which drains the palette wherever the trap is weak, and the trap is weak across
   // most of a frame. Adding light leaves the base hue alone where the glow is faint and still prints
   // the filament where it is strong.
-  return holdGamut(base * relief(vec2(zx.x, zy.x), dz) + u_tint * trapWeight(glow));
+  return holdGamut(base * ${type === "burningship" ? "reliefDir(vec2(dot(vec2(zx.x, zy.x), dz), dot(vec2(zx.x, zy.x), dzy)))" : "relief(vec2(zx.x, zy.x), dz)"} + u_tint * trapWeight(glow));
 }
 
 void main() {

@@ -625,6 +625,28 @@
                 <input type="range" class="at-slider" id="fractal-detail" min="0.5" max="2.5" step="0.1" value="1" aria-label="Fractal detail multiplier">
               </div>
             </details>
+            <!-- Deep zoom (9 October 2026): perturbation against a high-precision reference orbit,
+                 bilinear approximation and rebasing, down to a view 1e-300 wide. studio-fractal-deep.js. -->
+            <details class="rail-group" open id="fractal-deep-group">
+              <summary>Deep zoom</summary>
+              <div class="at-group">
+                <span class="at-glab">Depth <span class="hint" id="fractal-depth">1x</span></span>
+                <p class="src-hint" id="fractal-deep-readout" aria-live="polite"></p>
+              </div>
+              <div class="at-group">
+                <label class="at-check"><input type="checkbox" id="fractal-auto-iter" checked> Iterations follow the depth</label>
+                <label class="at-check"><input type="checkbox" id="fractal-bla" checked> Skip iterations by bilinear approximation</label>
+                <label class="at-check"><input type="checkbox" id="fractal-glitch"> Show glitches (rebasing off)</label>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Location <span class="hint">centre and width; paste one to fly there</span></span>
+                <textarea id="fractal-location" class="at-seed" rows="4" spellcheck="false" style="width:100%;font-family:var(--mono, monospace);font-size:11px;resize:vertical" aria-label="Fractal location"></textarea>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-location-go" type="button">Go to location</button>
+                  <button class="btn" id="fractal-location-copy" type="button">Copy location</button>
+                </div>
+              </div>
+            </details>
             <div class="at-actions">
               <button class="btn" id="fractal-render" type="button">Render</button>
             </div>
