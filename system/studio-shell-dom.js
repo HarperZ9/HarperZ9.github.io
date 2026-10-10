@@ -13,6 +13,7 @@
 
 import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261009-films-source";
 import { createStore, keepMessage } from "./studio-store.js?v=20261004-studio-keep";
+import { buildProject, readProject, applyProject } from "./studio-project.js?v=20261009-export-project";
 
 function el(ctx, tag, cls, text, attrs = {}) {
   const n = ctx.doc.createElement(tag);
@@ -66,13 +67,71 @@ function paintHead(ctx, source) {
   ctx.head.dataset.source = source;
 }
 
+// One Export menu for every source (9 October 2026): the source's own formats, then the stage's
+// formats from the deck under the stage (those that apply to this source right now), then the whole
+// Studio as a project file. Every item runs a control that already exists; the deck keeps its own.
+const shownNow = (n) => !!n && !n.hidden && !n.closest("[hidden]") && n.ownerDocument.defaultView.getComputedStyle(n).display !== "none";
 function exportMenu(ctx, c) {
   const d = el(ctx, "details", "ia-export"); d.dataset.action = "export";
   const s = el(ctx, "summary", "btn ghost", "Export");
   const list = el(ctx, "div", "ia-export-list", null, { role: "group", "aria-label": "Export formats" });
-  for (const x of c.exports) list.append(button(ctx, x.label, "btn ghost", () => { d.open = false; proxy(ctx, x.target)(); }, { "data-export": x.target }));
+  const fill = () => {
+    list.replaceChildren();
+    const mine = new Set();
+    for (const x of c.exports || []) { mine.add(x.target); list.append(button(ctx, x.label, "btn ghost", () => { d.open = false; proxy(ctx, x.target)(); }, { "data-export": x.target })); }
+    const stage = (ctx.stageExports || []).filter((x) => x.run || (!mine.has(x.target) && shownNow(ctx.$(x.target))));
+    if (stage.length) {
+      list.append(el(ctx, "p", "ia-export-group", "The stage"));
+      for (const x of stage) list.append(button(ctx, x.label, "btn ghost", () => { d.open = false; if (x.run) x.run(); else proxy(ctx, x.target)(); }, { "data-export": x.target || x.id, "data-export-group": "stage" }));
+    }
+    list.append(el(ctx, "p", "ia-export-group", "The whole Studio"));
+    list.append(button(ctx, "Save project file", "btn ghost", () => { d.open = false; saveProject(ctx); }, { "data-export": "project-save", title: "Every source's work in this browser, in one .studio.json file" }));
+    list.append(button(ctx, "Open project file", "btn ghost", () => { d.open = false; pickProject(ctx); }, { "data-export": "project-open", title: "Open a .studio.json file and put every source back as it was saved" }));
+  };
+  fill();
+  d.addEventListener("toggle", () => { if (d.open) fill(); });
   d.append(s, list);
   return d;
+}
+
+// Project files (studio-project.js): save what this browser keeps for every source; open one by
+// writing its sessions back and reloading onto its source, so each resumes as after a reload.
+function saveProject(ctx) {
+  const doc = buildProject(ctx.store, Object.keys(ctx.contracts), ctx.getSource());
+  const blob = new Blob([JSON.stringify(doc, null, 1), "\n"], { type: "application/json" });
+  const a = ctx.doc.createElement("a");
+  const stamp = doc.savedAt.replace(/[-:]/g, "").slice(0, 13);
+  a.href = URL.createObjectURL(blob); a.download = `studio-project-${stamp}.studio.json`;
+  ctx.doc.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  sayLine(ctx, `Saved a project file with ${Object.keys(doc.sessions).length} source${Object.keys(doc.sessions).length === 1 ? "" : "s"}.`);
+}
+function pickProject(ctx) {
+  let input = ctx.$("studio-project-file");
+  if (!input) {
+    input = el(ctx, "input", null, null, { type: "file", id: "studio-project-file", accept: ".json,application/json", hidden: "" });
+    input.addEventListener("change", () => { const f = input.files && input.files[0]; input.value = ""; if (f) openProjectFile(ctx, f); });
+    ctx.doc.body.append(input);
+  }
+  input.click();
+}
+async function openProjectFile(ctx, file) {
+  let text = "";
+  try { text = await file.text(); } catch (err) { sayLine(ctx, "That file could not be read."); return false; }
+  const read = readProject(text, Object.keys(ctx.contracts));
+  if (!read.ok) { sayLine(ctx, "Not opened: " + read.reason + "."); return false; }
+  if (!ctx.store.available()) { sayLine(ctx, "Not opened: this browser blocks site storage, so the sessions have nowhere to go."); return false; }
+  const r = applyProject(ctx.store, read);
+  if (r.refused.length) console.warn("[studio-shell] project sessions not kept:", r.refused);
+  const go = read.active || ctx.getSource();
+  const url = new URL(ctx.doc.location.href);
+  url.search = "?source=" + encodeURIComponent(go);
+  ctx.doc.location.assign(url.href);
+  return true;
+}
+function sayLine(ctx, text) {
+  const said = ctx.$("inspector-keep-said");
+  if (said) { said.textContent = text; said.dataset.kept = "note"; }
 }
 function keepLine(ctx) {
   const keep = el(ctx, "p", "inspector-keep", null, { id: "inspector-keep" });
@@ -200,12 +259,12 @@ function markBarTargets(ctx) {
 }
 
 /** mountShell({ doc, rail, getSource, contracts, storage, onMaking }) -> the shell's handle. */
-export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {} }) {
+export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {}, stageExports = [] }) {
   const $ = (id) => doc.getElementById(id);
   const maxBytes = (typeof window !== "undefined" && window.__studioKeepMaxBytes) || undefined;
   const ctx = { doc, $, rail, getSource, contracts, onMaking,
     sw: $("source-switch"), menu: $("studio-source"), head: $("inspector-head"), bar: $("inspector-actions"),
-    history: createHistory(), store: createStore({ storage, maxBytes }), kept: new Map(), resumed: new Set(), restoring: false };
+    history: createHistory(), store: createStore({ storage, maxBytes }), kept: new Map(), resumed: new Set(), restoring: false, stageExports };
   wireSwitch(ctx);
   wireKeys(ctx);
   markBarTargets(ctx);
@@ -225,6 +284,8 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
     undo: () => undo(ctx),
     redo: () => redo(ctx),
     setOpen: (open) => setOpen(ctx, open),
+    openProjectFile: (file) => openProjectFile(ctx, file),
+    saveProject: () => saveProject(ctx),
     // A source that builds its controls after the shell mounted (the Poster workshop) marks them again.
     markTargets: () => markBarTargets(ctx),
     history: ctx.history,

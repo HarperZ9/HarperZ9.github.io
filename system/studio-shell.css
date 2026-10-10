@@ -189,3 +189,12 @@ dialog.studio-keys h3{margin:1rem 0 .35rem;font-size:1rem}
 dialog.studio-keys dl{display:grid;grid-template-columns:minmax(9rem,auto) 1fr;gap:.3rem 1rem;margin:0}
 dialog.studio-keys dd{margin:0}
 dialog.studio-keys .btn{margin-top:1rem}
+/* The Export menu's groups (studio-shell-dom.js). */
+html body.studio-page #studio-rail .ia-export-group{margin:.45rem .2rem .1rem;font-size:.75rem;font-weight:600;color:var(--chrome-muted,#5f584d)}
+/* On a phone, Search and Keys sit right under the source switch; a touch screen has no Ctrl K. */
+@media (max-width:899.98px){
+  html body.studio-page #studio-rail .studio-find{order:2;margin:0 1rem .6rem}
+}
+@media (hover:none) and (pointer:coarse){
+  html body.studio-page .studio-find kbd{display:none}
+}
