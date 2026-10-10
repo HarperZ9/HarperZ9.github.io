@@ -17,7 +17,7 @@
 // One line per source: what the reader can do there. Numbers follow the source menu.
 export const SOURCE_GUIDE = Object.freeze({
   atelier:   { name: "Atelier", purpose: "Draw a generative study from a seed. The same seed always draws the same picture." },
-  fractal:   { name: "2D Fractal", purpose: "Explore the Mandelbrot, Julia and Burning Ship sets. Scroll to zoom toward the cursor, drag to pan." },
+  fractal:   { name: "2D Fractal", purpose: "Explore thirteen fractals and your own formulas, down to a view 1e-300 wide. Scroll to zoom, drag to pan." },
   fractal3d: { name: "3D Fractal", purpose: "Render a Mandelbox or a Mandelbulb and orbit it." },
   ndim:      { name: "Dimensions", purpose: "Rotate a polytope in four or more dimensions and project it onto the screen." },
   spatial:   { name: "Spatial", purpose: "Walk a splat world. A package that fails its SHA-256 receipt does not draw." },
