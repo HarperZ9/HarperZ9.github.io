@@ -159,6 +159,8 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-presets.cjs
       # The live explainers: spec hash MATCH, no network while a reader interacts, recall
       # diagnosis without the answer, and one still per step with reduced motion.
+      # The long films: a byte-range server, and seeking from a source card or the transcript
+      # opens no skipped questions while reaching a chapter end still does.
       - name: Live explainers in the browser
         if: ${{ !cancelled() }}
         run: |
@@ -169,6 +171,7 @@ jobs:
           trap "kill $server_pid" EXIT
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8804 BROWSER_CHANNEL=chrome node tests/explainer-live.cjs
+          SITE_BASE_URL=http://127.0.0.1:8804 BROWSER_CHANNEL=chrome node tests/explainer-films-seek.cjs
       - name: Internal link crawl
         run: |
           python -m http.server 8802 &
