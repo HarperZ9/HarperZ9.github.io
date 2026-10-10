@@ -60,15 +60,15 @@ async function structure(page) {
           '#fractal-auto-iter', '#fractal-bla', '#fractal-glitch', '#fractal-location', '#fractal-location-go', '#fractal-location-copy']) {
           assert.ok(await page.locator(sel).count() > 0, `${tag} ${sel} is present`);
         }
-        // SwiftShader (the CI renderer) draws a 2e-38 frame at desktop backing size in about 35 s,
-        // past any sensible wait, so there the desktop pass checks a lighter deep view by location
-        // and leaves the presets and the wheel to the phone pass, whose canvas is a seventh the size.
+        // SwiftShader (the CI renderer) draws a 2e-38 frame at desktop backing size in about 35 s
+        // here and longer on a CI runner, past any sensible wait. There both passes check a lighter
+        // deep view by location; the presets, the wheel at 2e-38 and 3e-279 run on a real GPU.
         const software = await page.evaluate(() => {
           const g = document.createElement('canvas').getContext('webgl2');
           const e = g && g.getExtension('WEBGL_debug_renderer_info');
           return !!(e && /SwiftShader/i.test(g.getParameter(e.UNMASKED_RENDERER_WEBGL)));
         });
-        if (software && !view.mobile) {
+        if (software) {
           await page.evaluate(() => { const a = document.getElementById('fractal-auto-iter'); a.checked = false; a.dispatchEvent(new Event('change', { bubbles: true })); });
           await page.fill('#fractal-location', 're -0.7436227627792091903930625607721105561797006142687856921130208924\nim 0.1318305311337870112915195543947448074486402760798047827036608098\nwidth 1e-20\niterations 2500');
           await page.evaluate(() => document.getElementById('fractal-location-go').click());

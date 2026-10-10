@@ -29,7 +29,12 @@ const DEEP = {
     await page.goto(`${base}/robots.txt`);
     const out = await page.evaluate(async (DEEP) => {
       const gl = await import('/system/fractal-gl.js');
-      const W = 480, H = 320;
+      // SwiftShader on a CI runner took 95 s for one 480 x 320 frame at 1e-35, so a software
+      // renderer gets a quarter of the pixels; the checks are per pixel and keep their meaning.
+      const probeGL = document.createElement('canvas').getContext('webgl2');
+      const dbg = probeGL && probeGL.getExtension('WEBGL_debug_renderer_info');
+      const software = !!(dbg && /SwiftShader|llvmpipe/i.test(probeGL.getParameter(dbg.UNMASKED_RENDERER_WEBGL)));
+      const W = software ? 240 : 480, H = software ? 160 : 320;
       const mk = () => { const c = document.createElement('canvas'); c.width = W; c.height = H; return c; };
       const read = (c) => {
         const ctx = c.__fractalGLContext;
