@@ -3,7 +3,7 @@
 // A source card's "Heard at" link and a transcript sentence move the film to the second they name
 // and play from there. A jump past the end of a chapter group does not open that group's recall
 // questions; playing up to the end of a chapter group still pauses the film and opens them. The
-// server must answer byte ranges (tools/serve.py does), or the browser cannot seek at all.
+// line under the player names the source of the chapter playing. The server must answer byte ranges (tools/serve.py does), or the browser cannot seek at all.
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 
@@ -43,6 +43,9 @@ async function main() {
     assert.ok(s.t > want, `the film plays on from ${want} s (now ${s.t})`);
     assert.ok(s.open.every((o) => !o), `a jump opens no recall questions (${s.open})`);
     assert.ok(s.now !== undefined && parseFloat(s.now) <= s.t + 0.1, 'the transcript marks the sentence being spoken');
+    const citing = await page.evaluate((s) => document.querySelector(`#${s} .fl-now`)?.textContent || '', SLUG);
+    const cited = await link.evaluate((a) => a.closest('li').querySelector('.fl-src-name b').textContent.trim());
+    assert.ok(citing.startsWith('Source now') && citing.includes(cited), `the line under the player names the source playing (${citing})`);
 
     // 2. A transcript sentence seeks to its own start.
     await page.evaluate((s) => { document.querySelector(`#${s}-transcript`).open = true; }, SLUG);

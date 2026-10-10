@@ -86,7 +86,8 @@ def film_section(slug: str) -> str:
     folder = f"media/explainers/{slug}"
     secs = rec["seconds"]
     at = starts(f, timing)
-    heads = "".join(f'<span hidden data-chapter="{E(s["key"])}">{E(s["heading"])}</span>' for s in f["segments"])
+    heads = "".join(f'<span hidden data-chapter="{E(s["key"])}" data-sources="{E(" ".join(s.get("sources", [])))}">{E(s["heading"])}</span>'
+                    for s in f["segments"])
     by_line: dict = {}
     for r in timing:
         by_line.setdefault((r["segment"], r["line"]), []).append(r)
