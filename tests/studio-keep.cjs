@@ -9,7 +9,7 @@
 //  4. With storage blocked, too small a cap, or an unreadable entry, the page still works and the
 //     inspector says in words what was not kept.
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8808';
 const VIEWS = [

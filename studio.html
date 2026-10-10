@@ -1829,6 +1829,12 @@
      draws into #studio-canvas. A module runs in document order with the deferred scripts, so it
      still runs before the Studio module and window.Atelier + the shared spine/reconcile readouts
      are present. -->
+<!-- Firefox puts back the values of form fields after a reload. The Studio keeps its own work
+     (studio-store.js) and reads its first settings from the markup, so a field Firefox refilled
+     made Start fresh return the refilled value instead of the source's first one (found by the
+     Firefox run, 10 October 2026). Every field in the rail goes back to its markup value before
+     any source reads it; the work this browser kept is then put back by the shell. -->
+<script>(function(){var r=document.getElementById("studio-rail");if(!r)return;r.querySelectorAll("input,select,textarea").forEach(function(e){if(e.type==="file"||e.type==="hidden")return;if(e.tagName==="SELECT"){for(var i=0;i<e.options.length;i++)e.options[i].selected=e.options[i].defaultSelected;return;}if(e.type==="checkbox"||e.type==="radio"){e.checked=e.defaultChecked;return;}e.value=e.defaultValue;});})();</script>
 <script src="system/spine.js?v=20260902-creative-chassis" defer></script>
 <script src="system/reconcile.js?v=20260902-creative-chassis" defer></script>
 <script type="module" src="system/atelier.js?v=20261004-studio-entry"></script>
