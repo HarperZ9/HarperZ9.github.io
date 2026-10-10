@@ -238,14 +238,12 @@ vec3 deepColor(vec2 pix) {
 
 void main() {
   if (gl_FragCoord.x < u_band.x || gl_FragCoord.y < u_band.y || gl_FragCoord.x >= u_band.z || gl_FragCoord.y >= u_band.w) discard;
-  if (u_colourMode == 8) {
-    vec2 pix0 = gl_FragCoord.xy - 0.5 * u_resolution;
-    pix0.y *= u_flipY;
-    deepColor(pix0);
-    fragColor = g_in ? vec4(0.0) : packMu(g_mu);
-    return;
-  }
-  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
+  // The histogram's first pass (mode 8) takes one sample at the pixel centre and writes mu, packed
+  // in 24 bits. It shares this loop: a second call site cost a software rasteriser a second
+  // iteration of every pixel in every mode.
+  bool muOut = u_colourMode == 8;
+  int aa = muOut ? 1 : (u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa));
+  g_mu = 0.0;
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);
   for (int sy = 0; sy < 4; sy++) {
@@ -258,6 +256,7 @@ void main() {
       acc += deepColor(pix);
     }
   }
+  if (muOut) { fragColor = g_in ? vec4(0.0) : packMu(g_mu); return; }
   fragColor = vec4(encodeOut(acc * (inv * inv), gl_FragCoord.xy), 1.0);
 }`;
 }

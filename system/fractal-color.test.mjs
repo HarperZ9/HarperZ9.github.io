@@ -238,6 +238,7 @@ test("the trap glow is emission, not a blend toward the tint", () => {
     assert.ok(!/mix\(\s*base[^)]*u_tint/.test(src), `${precision}: no blend toward the tint survives`);
     // The glow reaches colourize() as light, and the default mode adds it after the shading.
     assert.match(src, /colourize\(mu, shade, dePx, u_tint \* trapWeight\(glow\)\)/);
-    assert.match(src, /return ramp\(mu \/ 8\.0 \* u_density \+ u_offset\) \* shade \+ glow;/);
+    assert.match(src, /if \(m == 0\) add = glow;/);
+    assert.match(src, /return ramp\(t \* u_density \+ u_offset\) \* k \+ add;/);
   }
 });

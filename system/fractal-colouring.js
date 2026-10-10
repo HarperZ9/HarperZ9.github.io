@@ -48,19 +48,40 @@ void orbitInit() {
   o_deg = 2.0;
 }
 // z is the new iterate, zp the one before, c the parameter.
+// The trap and TIA statistics are compiled in only when ORBIT_FULL is defined (orbitSource below),
+// for modes 2 to 6. The other modes need the cross distance alone. A software rasteriser runs
+// every branch under a mask, so a uniform branch saved nothing there, and the full statistics on
+// every iteration made the default frame three times slower on SwiftShader.
 void orbitStep(vec2 z, vec2 zp, vec2 c) {
+  o_cross = min(o_cross, min(abs(z.x), abs(z.y)));   // the smooth mode's glow and mode 4
+#ifdef ORBIT_FULL
+  int m = u_colourMode;
+  if (m < 2 || m == 4 || m > 6) return;
   vec2 d = z - u_trapP;
-  o_point = min(o_point, dot(d, d));
-  o_line  = min(o_line, abs(d.x * u_trapDir.y - d.y * u_trapDir.x));
-  o_cross = min(o_cross, min(abs(z.x), abs(z.y)));
+  if (m == 2) { o_point = min(o_point, dot(d, d)); return; }
+  if (m == 3) { o_line = min(o_line, abs(d.x * u_trapDir.y - d.y * u_trapDir.x)); return; }
   // The last landing, not the first: early iterates barely differ across a zoomed view, so a
   // first-hit trap painted one texel over the whole frame.
-  if (abs(d.x) < u_trapSize && abs(d.y) < u_trapSize) { o_imgHit = 1.0; o_imgUV = d / (2.0 * u_trapSize) + 0.5; }
+  if (m == 5) { if (abs(d.x) < u_trapSize && abs(d.y) < u_trapSize) { o_imgHit = 1.0; o_imgUV = d / (2.0 * u_trapSize) + 0.5; } return; }
   float zp2 = pow(length(zp), o_deg), cl = length(c);
   float lo = abs(zp2 - cl), hi = zp2 + cl;
   if (hi - lo > 1e-12) { o_tiaPrev = o_tia; o_tiaN += 1.0; o_tia += ((length(z) - lo) / (hi - lo) - o_tia) / o_tiaN; }
+#endif
 }
 `;
+
+/** True when the view's colouring reads the trap or TIA statistics, which need the full variant. */
+export function fullOrbit(view) {
+  const m = colourSettings(view || {}).mode;
+  return m >= 2 && m <= 6;
+}
+
+/** The fragment source for the variant: ORBIT_FULL defined after any #version line. */
+export function orbitSource(src, full) {
+  if (!full) return src;
+  const v = /^#version[^\n]*\n/.exec(src);
+  return v ? v[0] + "#define ORBIT_FULL 1\n" + src.slice(v[0].length) : "#define ORBIT_FULL 1\n" + src;
+}
 
 // The final colour, from the statistics and the shared smooth count. grad is the direction relief
 // shades from; dePx the distance estimate in pixels (negative when the program has none).
@@ -81,33 +102,39 @@ float cdfAt(float mu) {
   float i = floor(t);
   return mix(cdfBin(i), cdfBin(min(i + 1.0, 1023.0)), t - i);
 }
+// Each mode only picks the ramp's argument, its weight and any added light; the ramp itself runs
+// once. With a call per mode, a software rasteriser that runs every branch under a mask paid for
+// nine ramps a pixel, and the default frame took 15 times as long on SwiftShader.
 vec3 colourize(float mu, float shade, float dePx, vec3 glow) {
   int m = u_colourMode;
-  if (m == 1) {
-    if (dePx < 0.0) return ramp(mu / 8.0 * u_density + u_offset) * shade + glow;
-    float l = log2(max(dePx, 1e-6));
-    return ramp(l * 0.6 * u_density + u_offset) * shade * smoothstep(0.0, 1.0, dePx);
+  float t = mu / 8.0;          // smooth count: modes 0, 5's miss, and 1 without a DE
+  float k = shade;
+  vec3 add = vec3(0.0);
+  if (m == 0) add = glow;
+  else if (m == 1) {
+    if (dePx < 0.0) add = glow;
+    else { t = log2(max(dePx, 1e-6)) * 0.6; k = shade * smoothstep(0.0, 1.0, dePx); }
   }
   // Trap distances span many decades between the orbits that graze the trap and those that pass
   // wide, so the palette runs on their logarithm; a linear map spent the whole palette on the
   // near misses and left the frame one dark colour.
-  if (m == 2) return ramp(-log2(sqrt(o_point) + 1e-6) * 0.75 * u_density + u_offset) * shade;
-  if (m == 3) return ramp(-log2(o_line + 1e-6) * 0.75 * u_density + u_offset) * shade;
-  if (m == 4) return ramp(-log2(o_cross + 1e-6) * 0.75 * u_density + u_offset) * shade;
-  if (m == 5) {
+  else if (m == 2) t = -log2(sqrt(o_point) + 1e-6) * 0.75;
+  else if (m == 3) t = -log2(o_line + 1e-6) * 0.75;
+  else if (m == 4) t = -log2(o_cross + 1e-6) * 0.75;
+  else if (m == 5) {
     if (o_imgHit > 0.5) return srgbDecode(texture2D(u_trapImg, vec2(o_imgUV.x, 1.0 - o_imgUV.y)).rgb);
-    return ramp(mu / 8.0 * u_density + u_offset) * shade * 0.35;
+    k = shade * 0.35;
   }
-  if (m == 6) {
+  else if (m == 6) {
     // Mitchell's interpolation: the fraction of the last step the orbit spent inside the bailout
     // radius (R = 256 here), 1 + log2(ln R / ln|z|), blends the mean without the last term
     // into the mean with it.
     float f = clamp(1.0 + log2(5.5451774 / max(log(length(g_z)), 1e-6)), 0.0, 1.0);
-    float t = mix(o_tiaPrev, o_tia, f);
-    return ramp(t * 12.0 * u_density + u_offset) * shade;
+    t = mix(o_tiaPrev, o_tia, f) * 12.0;
   }
-  if (m == 7) return ramp(cdfAt(mu) * float(u_palN) * u_density + u_offset) * shade;
-  return ramp(mu / 8.0 * u_density + u_offset) * shade + glow;
+  else if (m == 7) t = cdfAt(mu) * float(u_palN);
+  else add = glow;
+  return ramp(t * u_density + u_offset) * k + add;
 }
 `;
 

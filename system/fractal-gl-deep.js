@@ -13,7 +13,7 @@ import { buildBLA, packBLA, hasBLA, BLA_TEXELS, chooseReference } from "./fracta
 import { viewCentre, decDiff, bitsForScale } from "./fractal-hp.js";
 import { buildDeepFragment, DEEP_VERT, DEEP_TEX_W, DEEP_MAX_LEVELS } from "./fractal-glsl-deep.js";
 import { drawColoured } from "./fractal-gl-colour.js";
-import { colourSettings } from "./fractal-colouring.js";
+import { colourSettings, fullOrbit, orbitSource } from "./fractal-colouring.js";
 
 export const DEEP_MAX_ITERS = 1000000;
 export const DEEP_MIN_SCALE = 1e-300;   // a JS double holds the view width down to here
@@ -32,12 +32,12 @@ function compile(gl, type, src) {
   return sh;
 }
 
-function program(gl, st, kind, bla) {
-  const key = kind + (bla ? ":bla" : "");
+function program(gl, st, kind, bla, full = false) {
+  const key = kind + (bla ? ":bla" : "") + (full ? ":orbit" : "");
   if (st.progs[key]) return st.progs[key];
   const prog = gl.createProgram();
   gl.attachShader(prog, compile(gl, gl.VERTEX_SHADER, DEEP_VERT));
-  gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, buildDeepFragment(kind, bla)));
+  gl.attachShader(prog, compile(gl, gl.FRAGMENT_SHADER, orbitSource(buildDeepFragment(kind, bla), full)));
   gl.bindAttribLocation(prog, 0, "p");
   gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error("fractal deep link failed: " + gl.getProgramInfoLog(prog));
@@ -139,7 +139,7 @@ export function renderDeep(gl, canvas, view, colour, opts = {}) {
     blaMs = performance.now() - t1;
   }
 
-  const P = program(gl, st, kind, useBLA);
+  const P = program(gl, st, kind, useBLA, fullOrbit(view));
   gl.useProgram(P.prog);
   gl.viewport(0, 0, w, h);
   gl.bindBuffer(gl.ARRAY_BUFFER, st.buf);

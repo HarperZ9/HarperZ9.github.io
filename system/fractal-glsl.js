@@ -131,14 +131,12 @@ vec3 fractalColor(vec2 uv) {
 
 void main() {
   float aspect = u_resolution.y / u_resolution.x;
-  // The histogram's first pass: mu itself, packed in 24 bits, for the pixel centre.
-  if (u_colourMode == 8) {
-    vec2 ndc0 = gl_FragCoord.xy / u_resolution - 0.5;
-    fractalColor(vec2(u_center.x + ndc0.x * u_scale, u_center.y + u_flipY * ndc0.y * u_scale * aspect));
-    gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu);
-    return;
-  }
-  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
+  // The histogram's first pass (mode 8) takes one sample at the pixel centre and writes mu, packed
+  // in 24 bits. It shares this loop: a second call site cost a software rasteriser a second
+  // iteration of every pixel in every mode.
+  bool muOut = u_colourMode == 8;
+  int aa = muOut ? 1 : (u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa));
+  g_mu = 0.0;
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);
   // Average aa x aa evenly-spaced sub-pixel samples (ordered grid SSAA). Constant loop bounds for
@@ -156,6 +154,7 @@ void main() {
       acc += fractalColor(uv);
     }
   }
+  if (muOut) { gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu); return; }
   gl_FragColor = vec4(encodeOut(acc * (inv * inv), gl_FragCoord.xy), 1.0);
 }`;
 }
@@ -259,13 +258,12 @@ vec3 fractalColor(vec2 ux, vec2 uy) {
 
 void main() {
   float aspect = u_resolution.y / u_resolution.x;
-  if (u_colourMode == 8) {
-    vec2 ndc0 = gl_FragCoord.xy / u_resolution - 0.5;
-    fractalColor(dsAdd(u_centerX, vec2(ndc0.x * u_scale, 0.0)), dsAdd(u_centerY, vec2(u_flipY * ndc0.y * u_scale * aspect, 0.0)));
-    gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu);
-    return;
-  }
-  int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
+  // The histogram's first pass (mode 8) takes one sample at the pixel centre and writes mu, packed
+  // in 24 bits. It shares this loop: a second call site cost a software rasteriser a second
+  // iteration of every pixel in every mode.
+  bool muOut = u_colourMode == 8;
+  int aa = muOut ? 1 : (u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa));
+  g_mu = 0.0;
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);
   for (int sy = 0; sy < 4; sy++) {
@@ -279,6 +277,7 @@ void main() {
       acc += fractalColor(ux, uy);
     }
   }
+  if (muOut) { gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu); return; }
   gl_FragColor = vec4(encodeOut(acc * (inv * inv), gl_FragCoord.xy), 1.0);
 }`;
 }

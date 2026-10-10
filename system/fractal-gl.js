@@ -34,6 +34,7 @@ import { BUDDHA_TYPES, buildBuddhaDisplay } from "./fractal-buddhabrot.js";
 import { runBuddhabrot, stopBuddhabrot, buddhaSupported } from "./fractal-gl-buddhabrot.js";
 import { RAMP_LIB, ENCODE_LIB } from "./fractal-glsl-lib.js";
 import { drawColoured } from "./fractal-gl-colour.js";
+import { fullOrbit, orbitSource } from "./fractal-colouring.js";
 
 // Formulas the perturbation path draws. Every other formula stays on the float32 and df64 programs.
 const DEEP_TYPES = new Set(["mandelbrot", "julia", "burningship", "tricorn"]);
@@ -125,17 +126,17 @@ function tintToFloats(palName, gradient) {
 // the canvas is replaced, as the 3D source does on mount/unmount).
 const GLCACHE = Symbol("fractalGLCache");
 
-function getProgram(gl, canvas, type, precision) {
+function getProgram(gl, canvas, type, precision, full = false) {
   let cache = canvas[GLCACHE];
   if (!cache || cache.gl !== gl) {
     cache = canvas[GLCACHE] = { gl, byType: {} };
   }
-  const key = precision === "double" ? type + ":df" : type;
+  const key = (precision === "double" ? type + ":df" : type) + (full ? ":orbit" : "");
   if (cache.byType[key]) return cache.byType[key];
 
   const prog = gl.createProgram();
   const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-  const fs = compile(gl, gl.FRAGMENT_SHADER, buildFragment(type, precision));
+  const fs = compile(gl, gl.FRAGMENT_SHADER, orbitSource(buildFragment(type, precision), full));
   gl.attachShader(prog, vs);
   gl.attachShader(prog, fs);
   gl.linkProgram(prog);
@@ -266,7 +267,7 @@ export function renderFractalGL(canvas, opts) {
     ? precision
     : fractalPrecisionMode(cx, cy, scale, w);
   const deep = want !== "single" && hasUsableHighp(gl);
-  const P = getProgram(gl, canvas, ftype, deep ? "double" : "single");
+  const P = getProgram(gl, canvas, ftype, deep ? "double" : "single", fullOrbit(opts));
 
   // df64 costs roughly an order of magnitude more ALU per iteration, so trim supersampling when it
   // is on: full-rate SSAA over a 3200-wide backing at 2000 iterations would stall the tab.

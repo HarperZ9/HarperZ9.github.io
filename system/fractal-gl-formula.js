@@ -7,6 +7,7 @@ import { buildFormulaFragment } from "./fractal-glsl-formula.js";
 import { buildLyapunovFragment, lyapunovSequence } from "./fractal-glsl-lyapunov.js";
 import { VERT, MAX_ITERS } from "./fractal-glsl-lib.js";
 import { drawColoured } from "./fractal-gl-colour.js";
+import { fullOrbit, orbitSource } from "./fractal-colouring.js";
 
 const CACHE = Symbol("fractalFormulaPrograms");
 
@@ -57,7 +58,8 @@ function bind(gl, P, cache, w, h) {
 /** Draw a formula view. colour: { pal, tint } from fractal-gl.js. Throws FormulaError on a bad formula. */
 export function renderFormulaGL(gl, canvas, view, colour, aa) {
   const spec = formulaSpec(view);
-  const { P, cache } = program(gl, canvas, "f|" + spec.key, () => buildFormulaFragment(spec));
+  const full = fullOrbit(view);
+  const { P, cache } = program(gl, canvas, "f|" + spec.key + (full ? "|orbit" : ""), () => orbitSource(buildFormulaFragment(spec), full));
   const w = canvas.width, h = canvas.height;
   bind(gl, P, cache, w, h);
   const u = P.u;

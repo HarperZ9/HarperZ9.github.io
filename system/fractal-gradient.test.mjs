@@ -4,7 +4,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parseGradient, resample, sampleImage, rgbToHex } from "./fractal-gradient.js";
 import { histogramTable, CDF_BINS } from "./fractal-gl-colour.js";
-import { colourSettings, COLOUR_MODES, ORBIT_GLSL, COLOURIZE_GLSL } from "./fractal-colouring.js";
+import { colourSettings, COLOUR_MODES, ORBIT_GLSL, COLOURIZE_GLSL, fullOrbit, orbitSource } from "./fractal-colouring.js";
 
 test("a colour list keeps its colours, in order", () => {
   const { stops, format } = parseGradient("#000 #ff0000, rgb(0, 128, 255) #fff");
@@ -72,4 +72,21 @@ test("colouring settings default to the original look, and the GLSL names every 
   assert.equal(colourSettings({ colouring: { mode: "histogram" } }).mode, 7);
   assert.match(ORBIT_GLSL, /void orbitStep\(vec2 z, vec2 zp, vec2 c\)/);
   for (let m = 1; m <= 7; m++) assert.ok(COLOURIZE_GLSL.includes(`m == ${m}`), `mode ${m} in colourize()`);
+});
+
+test("only the trap and TIA modes compile the full orbit statistics, and the ramp runs once", () => {
+  // A software rasteriser runs every branch, so per-iteration work and ramp calls a mode does not
+  // read still cost the frame; the default frame ran 15 times slower on SwiftShader before this.
+  const body = ORBIT_GLSL.slice(ORBIT_GLSL.indexOf("void orbitStep"));
+  const full = body.indexOf("#ifdef ORBIT_FULL"), end = body.indexOf("#endif");
+  assert.ok(full > 0 && end > full, "the trap and TIA updates sit behind ORBIT_FULL");
+  assert.ok(body.slice(0, full).includes("o_cross"), "the cross distance is kept in every variant");
+  assert.ok(!body.slice(0, full).includes("pow("), "no TIA power outside the full variant");
+  assert.equal((COLOURIZE_GLSL.slice(COLOURIZE_GLSL.indexOf("vec3 colourize")).match(/ramp\(/g) || []).length, 1, "colourize calls the ramp once");
+  const want = { smooth: false, distance: false, "trap-point": true, "trap-line": true, "trap-cross": true, "trap-image": true, tia: true, histogram: false };
+  for (const [mode, f] of Object.entries(want)) assert.equal(fullOrbit({ colouring: { mode } }), f, mode);
+  assert.equal(fullOrbit({}), false, "no colouring is the smooth default");
+  assert.equal(orbitSource("void main(){}", false), "void main(){}");
+  assert.equal(orbitSource("#version 300 es\nvoid main(){}", true), "#version 300 es\n#define ORBIT_FULL 1\nvoid main(){}");
+  assert.equal(orbitSource("void main(){}", true), "#define ORBIT_FULL 1\nvoid main(){}");
 });

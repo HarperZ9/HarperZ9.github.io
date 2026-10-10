@@ -133,14 +133,16 @@ vec3 oklabToLinear(vec3 lab) {
     -0.0041960863 * lms.x - 0.7034186147 * lms.y + 1.7076147010 * lms.z), vec3(0.0));
 }
 
-// WebGL1 forbids dynamic indexing of a uniform array, so the fetch is a branch ladder.
-vec3 palStop(int i) {
-  if (i < 8) {
-    if (i < 4) { if (i == 0) return u_pal[0]; if (i == 1) return u_pal[1]; if (i == 2) return u_pal[2]; return u_pal[3]; }
-    if (i == 4) return u_pal[4]; if (i == 5) return u_pal[5]; if (i == 6) return u_pal[6]; return u_pal[7];
+// WebGL1 forbids dynamic indexing of a uniform array, so the four stops the spline needs are
+// gathered in one pass over the array, indexed by the loop counter (a constant index once
+// unrolled). The comparisons become selects, with no branch: a branch ladder per stop cost a
+// software rasteriser, which runs every branch under a mask, several times the whole frame.
+void palStops(int ia, int ib, int ic, int id, out vec3 p0, out vec3 p1, out vec3 p2, out vec3 p3) {
+  p0 = u_pal[0]; p1 = u_pal[0]; p2 = u_pal[0]; p3 = u_pal[0];
+  for (int k = 1; k < 16; k++) {
+    vec3 s = u_pal[k];
+    p0 = k == ia ? s : p0; p1 = k == ib ? s : p1; p2 = k == ic ? s : p2; p3 = k == id ? s : p3;
   }
-  if (i < 12) { if (i == 8) return u_pal[8]; if (i == 9) return u_pal[9]; if (i == 10) return u_pal[10]; return u_pal[11]; }
-  if (i == 12) return u_pal[12]; if (i == 13) return u_pal[13]; if (i == 14) return u_pal[14]; return u_pal[15];
 }
 
 // t is in stops: t = 1.0 is exactly the second stop, and the ramp wraps after the last one.
@@ -154,7 +156,8 @@ vec3 ramp(float t) {
   int ia = i  == 0 ? n - 1 : i  - 1;
   int ic = i  == n - 1 ? 0 : i  + 1;
   int id = ic == n - 1 ? 0 : ic + 1;
-  vec3 p0 = palStop(ia), p1 = palStop(i), p2 = palStop(ic), p3 = palStop(id);
+  vec3 p0, p1, p2, p3;
+  palStops(ia, i, ic, id, p0, p1, p2, p3);
   float f2 = f * f;
   float f3 = f2 * f;
   vec3 c = 0.5 * ((2.0 * p1)
