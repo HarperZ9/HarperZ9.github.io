@@ -122,6 +122,9 @@ NDIM_GPU_REVISION = "20261010-ndim-gpu"
 # 10 October 2026, later: recordings and the Music meter go through raw-native's sound engine;
 # studio.js takes a new stamp.
 SOUND_ENGINE_REVISION = "20261010-sound-engine"
+# 10 October 2026, later: Living neural draws through raw-native's web GPU host; studio.js takes
+# a new stamp.
+NEURAL_GPU_REVISION = "20261010-neural-gpu"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -172,7 +175,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": SOUND_ENGINE_REVISION,
+    "system/studio.js": NEURAL_GPU_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
     "system/studio-shell.css": POLISH_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
