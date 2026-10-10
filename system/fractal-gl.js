@@ -27,6 +27,11 @@ import { PALETTES } from "./fractal.js";
 import { preparePalette } from "./fractal-color.js";
 import { VERT, MAX_ITERS, DS_LIB, buildFragment } from "./fractal-glsl.js";
 import { renderDeep, DEEP_MIN_SCALE } from "./fractal-gl-deep.js";
+import { renderFormulaGL, renderLyapunovGL } from "./fractal-gl-formula.js";
+import { FORMULA_TYPES } from "./fractal-formulas.js";
+import { BUDDHA_TYPES, buildBuddhaDisplay } from "./fractal-buddhabrot.js";
+import { runBuddhabrot, stopBuddhabrot, buddhaSupported } from "./fractal-gl-buddhabrot.js";
+import { RAMP_LIB, ENCODE_LIB } from "./fractal-glsl-lib.js";
 
 // Formulas the perturbation path draws. Every other formula stays on the float32 and df64 programs.
 const DEEP_TYPES = new Set(["mandelbrot", "julia", "burningship", "tricorn"]);
@@ -211,6 +216,15 @@ export function renderFractalGL(canvas, opts) {
   const gl = getGL(canvas);
   const w = canvas.width, h = canvas.height;
 
+  // The Buddhabrot accumulates over many frames on its own engine; any other view stops it.
+  if (BUDDHA_TYPES.includes(type)) {
+    if (!canvas.__fractalGL2 || !buddhaSupported(gl)) throw new Error("the GPU Buddhabrot needs WebGL2 with float render targets");
+    runBuddhabrot(gl, canvas, { ...opts, cx, cy, scale, maxIter }, buildBuddhaDisplay(RAMP_LIB, ENCODE_LIB), { pal: palToFloats(palette) });
+    canvas.__fractalPrecisionUsed = "single";
+    return true;
+  }
+  stopBuddhabrot(canvas);
+
   // Deep zoom: past df64's reach, a WebGL2 context draws by perturbation against a BigInt reference
   // orbit (fractal-gl-deep.js), which holds every pixel apart down to 1e-300. Between float32's
   // floor and df64's, df64 stays: on an RTX 4090 at 1280 x 720 it drew Seahorse Deep in 7 ms where
@@ -226,6 +240,17 @@ export function renderFractalGL(canvas, opts) {
       pal: palToFloats(palette), tint: tintToFloats(palette),
     }, { aa: Math.max(1, Math.min(4, Math.round(aa))), glitchView: !!opts.glitchView, bla: opts.bla });
     canvas.__fractalPrecisionUsed = "perturbation";
+    return true;
+  }
+
+  // Formulas past the three hand-written kernels, and the Lyapunov fractal: programs generated
+  // from the formula's syntax tree (fractal-gl-formula.js), in float32.
+  if (FORMULA_TYPES.includes(type) || type === "lyapunov") {
+    const colour = { pal: palToFloats(palette), tint: tintToFloats(palette) };
+    const a = Math.max(1, Math.min(4, Math.round(aa)));
+    if (type === "lyapunov") renderLyapunovGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
+    else renderFormulaGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
+    canvas.__fractalPrecisionUsed = "single";
     return true;
   }
 
@@ -314,6 +339,9 @@ export function clampGLBackingToDPR(canvas, tier) {
     return false;   // fail-safe: never let a sizing probe break the render path
   }
 }
+
+// The Studio stops a running Buddhabrot when it leaves the source.
+export { stopBuddhabrot };
 
 export const _MAX_ITERS = MAX_ITERS;   // exported for tests
 export const _buildFragment = buildFragment;   // exported for tests (shader-source assertions)

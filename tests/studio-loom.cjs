@@ -13,6 +13,7 @@ const VIEWS = [
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 const wait = (page, ms) => page.waitForTimeout(ms);
+const W = require('./lib/studio-wait.cjs');
 function controls(rootSel) {
   const root = document.querySelector(rootSel);
   const label = (el) => (el.getAttribute('aria-label') || el.textContent || '').trim().replace(/\s+/g, ' ').toLowerCase();
@@ -48,38 +49,38 @@ const pick = (page, s) => page.evaluate((s) => document.querySelector(`#studio-s
       page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
       try {
         await page.goto(`${base}/studio.html?source=loom`);
-        await page.waitForSelector('#src-loom #wv-panel', { timeout: 20000 }); await wait(page, 2500);
+        await W.ready(page, 'loom');
         const got = await page.evaluate(controls, '#src-loom');
         const ids = new Set(got.map((c) => c.id).filter(Boolean)), labels = new Set(got.map((c) => c.label));
         const missing = page0.filter((c) => !(c.id && ids.has(c.id)) && !labels.has(c.label));
         assert.deepEqual(missing, [], `${tag} every control from loom.html is in the Studio`);
 
         // A still cloth: weaving off, so each rebuild draws the finished cloth at once.
-        await page.evaluate(() => { const w = document.getElementById('wv-weaveit'); if (w.checked) w.click(); }); await wait(page, 800);
-        const first = await frame(page);
-        await page.evaluate(() => [...document.querySelectorAll('#wv-structures .re-chip')].find((c) => c.getAttribute('aria-checked') !== 'true').click()); await wait(page, 1200);
-        const changed = await frame(page);
+        await page.evaluate(() => { const w = document.getElementById('wv-weaveit'); if (w.checked) w.click(); });
+        const first = await W.settled(page);
+        await page.evaluate(() => [...document.querySelectorAll('#wv-structures .re-chip')].find((c) => c.getAttribute('aria-checked') !== 'true').click());
+        const changed = await W.changed(page, first);
         assert.notEqual(changed, first, `${tag} a structure change rebuilds the cloth`);
         await page.evaluate(() => document.querySelector('#inspector-actions [data-action="undo"]').click());
         // The rebuild lands within a frame or two; allow up to 3 s on a slow machine.
-        for (let i = 0; i < 15 && (await frame(page)) !== first; i++) await wait(page, 200);
-        assert.equal(await frame(page), first, `${tag} Undo brings the first cloth back exactly`);
-        await page.evaluate(() => document.querySelector('#inspector-actions [data-action="redo"]').click()); await wait(page, 1200);
-        assert.equal(await frame(page), changed, `${tag} Redo brings the changed cloth back exactly`);
+        assert.equal(await W.becomes(page, first), first, `${tag} Undo brings the first cloth back exactly`);
+        await page.evaluate(() => document.querySelector('#inspector-actions [data-action="redo"]').click());
+        assert.equal(await W.becomes(page, changed), changed, `${tag} Redo brings the changed cloth back exactly`);
 
         const dl = page.waitForEvent('download', { timeout: 10000 });
         await page.evaluate(() => document.querySelector('#inspector-actions [data-export="wv-wif"]').click());
         assert.match((await dl).suggestedFilename(), /\.wif$/i, `${tag} the bar's WIF export downloads a .wif`);
 
-        await pick(page, 'sketch'); await wait(page, 1500);
+        await pick(page, 'sketch'); await W.ready(page, 'sketch');
         assert.equal(await page.evaluate(() => !!document.getElementById('studio-canvas').closest('[data-hub]')), false, `${tag} another source gets the Studio's own canvas back`);
         const weave = await page.evaluate(() => document.getElementById('wv-weaveit').checked);
         await page.keyboard.press('Space'); await wait(page, 300);
         assert.equal(await page.evaluate(() => document.getElementById('wv-weaveit').checked), weave, `${tag} Space on another source leaves the Loom alone`);
-        await pick(page, 'loom'); await wait(page, 2000);
-        assert.equal(await frame(page), changed, `${tag} a switch away and back keeps the cloth`);
+        await pick(page, 'loom'); await W.ready(page, 'loom');
+        assert.equal(await W.becomes(page, changed), changed, `${tag} a switch away and back keeps the cloth`);
 
-        await page.evaluate(() => document.getElementById('wv-send-retro').click()); await wait(page, 5000);
+        await page.evaluate(() => document.getElementById('wv-send-retro').click());
+        await W.until(page, () => window.__studioActiveSource === 'retro');
         assert.equal(await page.evaluate(() => window.__studioActiveSource), 'retro', `${tag} Send to Retro moves to the Retro source in the page`);
         assert.ok(new URL(page.url()).pathname.endsWith('/studio.html'), `${tag} and stays on studio.html`);
         assert.deepEqual(errors, [], `${tag} no console errors`);

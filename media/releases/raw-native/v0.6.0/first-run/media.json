@@ -73,8 +73,8 @@
   "engine/worlds.mjs": "7962aca6ae7022ec6bfcbeaea6dc788852853b01e1be53b4686beede0dc364fe",
   "engine/worlds.wgsl": "824149067f51cd19fafcd7d97258b395265cb222b24908faecd50f2fac570138",
   "facts.json": "c189c60e5984968ccb5441700900dfbda95b829cfbcdca912093de2132c86245",
-  "first-run-1080p.mp4": "b592b9837b234416cc9a5c43ff835762937cbf499f507148ae0e8930f5b6929c",
-  "first-run-2160p.mp4": "2ec803f687b921dd30ba932cc97c330920bb49370f6693203a93f9ca03741053",
+  "first-run-1080p.mp4": "3d8d93aaae8a1cb3467d6d716754a43dc58040268a489563a4db8fd3f35e9592",
+  "first-run-2160p.mp4": "7d3ca08a77938cbbb1ae01c3924449472eeb1f7091bfecc9812072cfc6fdbfc4",
   "first-run.cast.json": "433d57c086189bfc204f9e66fc07e7e77382df416b2ac7cbf8c404f293a6f893",
   "first-run.script.json": "1b995f82893b259ac6c86730f015828a92f2da44a384297da71b88fe4876705b",
   "first-run.vtt": "c187b5d5f34e92645f90fe9674816d31bf2e1eb98e64ddb97e7b351b1823c02d",
@@ -84,6 +84,24 @@
   "scene/atlas.json": "e319da67ce990a6d163411db1ef81641fbe76b9047f98575e9067280f69cb6bd",
   "scene/first-run.json": "3d6553bb80e85d541c3417517d9501055fa93f985398cb102984c062453d350d",
   "scene/first-run.scene.mjs": "1e2229f0510b89187991b5cc40e89aa0c0c53b23562fe68bdec4cf2d297e1922",
+  "sound/receipt.json": "12a3a0456979991dd702dad3dfcc9c622fd2d1eb907cc30b7e4634cda7a08ffc",
+  "sound/report.json": "12bb7ff7dc4afd29f90f498a4b01a796e4a763ec7e8423046ef821247abcd07b",
+  "sound/sheet.json": "495605037e48cc9407728dd7a6d9bb24f95807f9ec1817f0c516afd7f184bfa8",
+  "sound/sheet.resolved.json": "affb9af6df76c7cd907af2c4e2e82cbcfcc68ecdd42709222e6fb01527d5f529",
   "timing.json": "9c0a14afe25a9a7e40af9a95c6fee8533130d9cc461cf1f1c5b8bff4d4d6bf05"
+ },
+ "sound": {
+  "mix": "B",
+  "added": "2026-10-10",
+  "engine": "raw-native web/sound, main 4c7ddaa",
+  "integrated_lufs": -16.000000000000004,
+  "true_peak_dbtp": -2.0028675909802613,
+  "loudness_range_lu": 3.844475033668692,
+  "music_under_speech_lu": 17.808602312779513,
+  "loudness_verdict": "verified",
+  "cues": 6,
+  "pcm_sha256": "dee8b42a00909d9d0dba2fed2f6bbd1b40a318cb235405a357de060592db406a",
+  "meter": "raw-native-bs1770/1",
+  "note": "Narration, pictures, facts and captions are as released. The videos first attached carried the narration alone; to return to them, remux the narration WAV (or render with --no-sound)."
  }
 }

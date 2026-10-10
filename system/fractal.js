@@ -11,6 +11,9 @@ import { preparePalette, rampLinear, relief, reliefDir, encodeChannel, ditherOff
          DERIV_RESCALE_AT, DERIV_RESCALE_BY } from "./fractal-color.js";
 import { chooseReference, buildBLA, perturbPixel, hasBLA } from "./fractal-perturb.js";
 import { viewCentre, decDiff } from "./fractal-hp.js";
+import { renderFormulaCPU, renderLyapunovCPU } from "./fractal-formula-cpu.js";
+import { FORMULA_TYPES } from "./fractal-formulas.js";
+import { BUDDHA_TYPES, renderBuddhabrotCPU } from "./fractal-buddhabrot.js";
 
 const LOG2 = Math.log(2);
 // Bailout R=256 (R^2=65536), needed for the smooth-coloring formula to be accurate.
@@ -195,6 +198,9 @@ export function renderFractal(canvas, opts) {
   } = opts || {};
 
   const pal = PALETTES[palette] || PAL_OCEAN;
+  if (FORMULA_TYPES.includes(type)) { renderFormulaCPU(canvas, { ...opts, cx, cy, scale, maxIter }, pal); return; }
+  if (type === "lyapunov") { renderLyapunovCPU(canvas, { ...opts, cx, cy, scale, maxIter }, pal); return; }
+  if (BUDDHA_TYPES.includes(type)) { renderBuddhabrotCPU(canvas, { ...opts, type, cx, cy, scale, maxIter }, pal); return; }
   if (["mandelbrot", "julia", "burningship"].includes(type) && cpuNeedsPerturbation({ ...opts, scale }, canvas.width)) {
     renderFractalDeepCPU(canvas, { ...opts, type, scale, maxIter, jx, jy }, pal);
     return;

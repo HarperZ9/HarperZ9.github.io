@@ -1,0 +1,91 @@
+SHA = "5f59ff5ca7598ec8c94135d7f3725d5b9d669d75"
+B = f"https://github.com/HarperZ9/telos/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+LOOP = ["render", "perceive", "check vs criterion", "amplify", "certificate", "recheck"]
+LANE = ["fixture", "assemble", "completeness", "recompute", "join", "derive", "witness", "replay"]
+
+SPEC = {
+    "slug": "telos", "repo": "telos", "sha": SHA, "name": "telos", "version": "version 0.9.0",
+    "description": "An animated walk through telos, a local workbench whose packets recompute their own claims: a perceive and check loop that certifies a 4-D cube or returns UNVERIFIABLE, and a proof packet whose verifier turns every edit into DRIFT with the finding named. Built from telos at commit 5f59ff5.",
+    "lede": "One workbench, and packets that recompute their own claims.",
+    "for_you": "telos is a local workbench for AI work, served to any MCP host as one surface over five tools: gather, index, forum, crucible and telos itself. Its proof packets carry the materials behind a claim, and a verifier recomputes every load-bearing value from those materials. A packet that brings its own MATCH cannot pass with it: the verdict is derived, never read.",
+    "uses": [
+        ("One MCP surface", "78 tools across five servers, with host config for Codex, Claude and OpenAI Agents."),
+        ("Packets that recompute", "<code>node demo/proof.mjs verify</code> replays a packet from its own embedded materials."),
+        ("A verdict that cannot be canned", "An embedded verdict that disagrees with the derived one is itself recorded as a failure."),
+        ("Honest coverage", "A witness that cannot be reached is recorded as coverage lost, never counted as a pass."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. The panel follows two of telos's own demos: <code>demo/run.mjs</code>, the loop that explains the idea, and <code>demo/proof.mjs</code>, an agent-action proof packet. Every line is output from telos at commit 5f59ff5, run with Node and no network.",
+    "steps": [
+        {"title": "A criterion the loop did not write",
+         "paras": ["The loop renders a 4-D cube, a tesseract, and must recover its shape from the picture. The criterion is fixed outside the loop: 16 vertices and 32 edges.",
+                   "Two channels read the render independently: a geometric channel and a pixel channel. CERTIFIED needs every channel to agree and to match the criterion."],
+         "src": L("demo/run.mjs"),
+         "scene": [{"pipe": {"stages": LOOP, "active": 2}},
+                   {"io": {"lines": ['criterion  {"vertices":16,"edges":32,"polytopeKind":"cube"}', "CERTIFIED    every channel agreed AND matched the criterion (fail-closed)", "UNVERIFIABLE could not verify, reported as such"]}}]},
+        {"title": "Run A: perceive, check, amplify",
+         "paras": ["The first reading is not unanimous, so the loop amplifies: it tries more views and a sound channel, each step witnessed. At the fourth step every channel agrees with the criterion and the certificate reads CERTIFIED.",
+                   "<code>recheck()</code> then re-derives the verdict from the stored evidence alone and returns true."],
+         "src": L("demo/run.mjs") + ", run A",
+         "scene": [{"pipe": {"stages": LOOP, "active": 4}},
+                   {"io": {"lines": ["[0] INITIAL  -> not unanimous yet, begin amplification", "[1] GENERIC  -> UNVERIFIABLE  vertices=12 edges=32 (pixel: v=31 e=7)",
+                                     "[2] VIEW2    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=31 e=8)", "[3] VIEW3    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=31 e=8)",
+                                     ["[4] SOUND    -> CERTIFIED     vertices=16 edges=32 (pixel: v=18 e=19)", "hi"]],
+                           "verdict": ["CERTIFIED", "ok", "recheck() true, from stored evidence alone"]}}]},
+        {"title": "Run B: a render too small to read",
+         "paras": ["Run B renders the same cube at 8 by 8 pixels, far too coarse to resolve 16 vertices. The channels never agree, so after the same amplification steps the certificate reads UNVERIFIABLE.",
+                   "The loop does not guess. A verifier that cannot fail is not a verifier, and this run is the proof that this one can."],
+         "src": L("demo/run.mjs") + ", run B",
+         "scene": [{"pipe": {"stages": LOOP, "active": 4}},
+                   {"io": {"lines": ["[1] GENERIC  -> UNVERIFIABLE  vertices=12 edges=32 (pixel: v=0 e=0)", "[2] VIEW2    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)",
+                                     "[3] VIEW3    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)", ["[4] SOUND    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=49 e=40)", "hi"]],
+                           "verdict": ["UNVERIFIABLE", "unv", "recheck() true: the verdict re-derives, and it is not a pass"]}}]},
+        {"title": "A proof packet carries its materials",
+         "paras": ["<code>node demo/proof.mjs agent-action --demo</code> assembles a packet for one admitted action: the objective, two source refs with content hashes, a context envelope, the route that decided it, the admission decision, the action's side effect, the output digests and the artifact text itself.",
+                   "The packet embeds what is needed to recompute its claims, so a verifier never has to trust the run that made it."],
+         "src": L("demo/proof.mjs") + "; " + L("docs/PROOF-LANES.md"),
+         "scene": [{"pipe": {"stages": LANE, "active": 1}},
+                   {"table": {"head": ["field", "value"], "rows": [
+                       ["source_refs", "2, each with a sha256"], ["route", "function-routing, decided by forum.route"],
+                       ["admission", "allow, under policy:external-write-approval-v1"], ["outputs", "status_summary, sha256:23d71288132b..."],
+                       ["artifacts.status_summary", "Telos proof-lane demo: two source refs joined, one action admitted, one message sent under operator consent."]]}}]},
+        {"title": "Verify it from the packet alone",
+         "paras": ["<code>proof.mjs verify</code> runs a fixed set of checks: required fields, source and context refs, the state model, the packet hash, artifact digests, the join between admission and action, and their order. The verdict is folded out of the checks: MATCH.",
+                   "The witness here is a second reader, Emet, that is not installed on this machine. The packet records it as unavailable, so the MATCH stands on the verifier alone and says so."],
+         "src": L("demo/proof.mjs") + ", " + L("demo/proof-witness.mjs"),
+         "scene": [{"pipe": {"stages": LANE, "active": 7}},
+                   {"io": {"cmd": "node demo/proof.mjs verify packet.json", "lines": [["verdict       MATCH", "hi"], "witness       unavailable / UNVERIFIABLE"],
+                           "verdict": ["MATCH", "ok", "witness_coverage: not_witnessed, disclosed"]}}]},
+        {"title": "Every edit is named",
+         "paras": ["Change the packet and verify again. Pick each edit in the panel. Every one comes back DRIFT, and each finding names the check that failed and where.",
+                   "The last case edits the artifact and also writes MATCH into the packet's own verdict. It does not help: the embedded verdict disagrees with the derived one, and that disagreement is itself a finding."],
+         "src": L("demo/proof.mjs") + "; README.md, \"Worked example: a proof packet that can fail\"",
+         "scene": [{"pipe": {"stages": LANE, "active": 5}},
+                   {"cases": {"label": "Choose an edit", "items": [
+                       {"label": "artifact text edited", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify edited.json", "lines": ["packet_hash_mismatch (DRIFT)", ["artifact_digest_mismatch (DRIFT) outputs[0].digest", "hi"], "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift"]}}]},
+                       {"label": "artifact removed", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify missing.json", "lines": ["packet_hash_mismatch (DRIFT)", ["missing_required_field (UNVERIFIABLE) artifacts.status_summary", "hi"], "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift", "the worst finding sets the verdict"]}}]},
+                       {"label": "admission set to deny", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify deny.json", "lines": [["state_model_violation (DRIFT) admission.decision", "hi"], "packet_hash_mismatch (DRIFT)", "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift", "a denied action cannot have executed"]}}]},
+                       {"label": "edited, with MATCH written in", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify canned.json", "lines": ["packet_hash_mismatch (DRIFT)", "artifact_digest_mismatch (DRIFT) outputs[0].digest", ["embedded_verdict_not_derived (DRIFT)", "hi"]], "verdict": ["DRIFT", "drift", "an embedded MATCH cannot win"]}}]}]}}]},
+    ],
+    "try": [
+        ("Run the MCP server without cloning, or clone to run the demos (Node 20 or newer, no dependencies).",
+         "$ npx -y project-telos-mcp\n$ git clone https://github.com/HarperZ9/telos.git && cd telos\n$ node demo/run.mjs\n<span class=\"out\">  RUN A (honest render)  : CERTIFIED      recheck=true\n  RUN B (broken render)  : UNVERIFIABLE   recheck=true</span>\n$ node demo/proof.mjs agent-action --demo --json &gt; packet.json\n$ node demo/proof.mjs verify packet.json\n<span class=\"out\">verdict       MATCH\nwitness       unavailable / UNVERIFIABLE</span>"),
+    ],
+    "try_src": "Output from telos at 5f59ff5 on Windows with Node 25. The README shows the witness line as witnessed / MATCH where Emet is installed; it was not installed here. project-telos-mcp 0.9.0 is the current npm release.",
+    "limits": [
+        "A MATCH on a packet is a claim about what was recomputed. It is not a claim that everything was looked at, and the witness coverage says how much was.",
+        "The demo regulator adjudicates by unanimity and does not yet weight channels; the run prints this disclosure itself.",
+        "Native workstation control can affect the foreground window. Read the control contract before actuation.",
+        "The research proof packets are deterministic preflights with stated non-claims, not experimental results.",
+    ],
+    "limits_src": "README.md at 5f59ff5, \"What it does\" and \"Worked example\"; demo/run.mjs output",
+    "recall": [
+        ("What does CERTIFIED require in the tesseract loop?", "Every channel must agree and match the criterion of 16 vertices and 32 edges, which the loop did not write."),
+        ("Why does run B end UNVERIFIABLE and not DRIFT?", "At 8 by 8 pixels the channels cannot resolve the shape, so the loop cannot verify either way. It reports that, and makes no guess."),
+        ("A packet carries MATCH in its own verdict but its artifact was edited. What does verify say?", "DRIFT. The verdict is derived from the checks, and an embedded verdict that disagrees is itself a finding."),
+        ("What does witness unavailable mean for a MATCH?", "The verdict stands on the verifier alone, and the packet discloses that no second reader checked it."),
+    ],
+    "license_line": "telos is released under FSL-1.1-ALv2.",
+}

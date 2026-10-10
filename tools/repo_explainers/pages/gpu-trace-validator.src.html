@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How GPU Trace Validator works</title>
+<meta name="description" content="An animated walk through GPU Trace Validator: a renderer&#x27;s trace checked against a bundled JSON schema, its assertion verdicts counted, a fixture that fails on purpose matched against an expected count in both directions, and a redacted JSON receipt. Built from gpu-trace-validator at commit b205bd4.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/gpu-trace-validator.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/gpu-trace-validator">HarperZ9/gpu-trace-validator</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/gpu-trace-validator/tree/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc">b205bd4</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>GPU Trace Validator</h1>
+  <p class="lede">Check a GPU trace against its schema and its expected failures, with a redacted receipt.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Renderers need more than screenshots. GPU Trace Validator checks a recorded trace of frames, resources and events against a bundled schema, counts the assertion verdicts in it, and tells you whether the number of failures matches what you expected. It prints a short summary or one JSON receipt with private values redacted, so a demo or a CI job can carry evidence without exposing payloads.</p>
+  </div>
+  <ul class="uses">
+    <li><b>A closed schema</b>Six required root fields, and an unexpected property is named with its path anywhere in the trace.</li>
+    <li><b>Counts, not vibes</b>Each assertion carries pass, fail, unknown or not applicable, and the failures and unknowns are counted.</li>
+    <li><b>Failure on purpose</b>A fixture recorded to fail passes only when the failures equal the number you supplied.</li>
+    <li><b>Redacted receipts</b>Each failure is summarised in nine named fields, with secrets and absolute paths removed.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/README.md">README.md</a> at b205bd4 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/passing-check/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/passing-check/passing-check.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/passing-check/passing-check.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>A passing check can still be wrong</b> (2 min 24 s, narrated, captioned). With --expect-failures the validator shows it can fail on a known-bad trace, the test this film argues for. <a href="https://harperz9.github.io/explainers.html#passing-check-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel uses the two fixtures shipped in <code>tests/fixtures/</code>. Every line is output from gpu-trace-validator at commit b205bd4.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A trace is one JSON object</h3>
+        <p>The passing fixture records one frame, one 64 by 64 RGBA texture and one event: an assertion named <code>frame_count</code> in the decode stage, with the verdict pass. The source says it is a hand-written fixture.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/tests/fixtures/trace_pass.json">tests/fixtures/trace_pass.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Validate it</h3>
+        <p>The bundled schema checks every field, then the assertions are counted. One assertion, no failures, no unknowns: pass, exit 0.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/src/gpu_trace_validator/validator.py">src/gpu_trace_validator/validator.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>An unexpected field is named, wherever it sits</h3>
+        <p>Add a field the schema does not define, such as <code>approved</code> inside a frame. The trace fails and the error gives the path.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/src/gpu_trace_validator/schemas">src/gpu_trace_validator/schemas</a>; README.md, the trace lane</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>A fixture that fails on purpose</h3>
+        <p>The failing fixture carries two assertions, <code>frame_count</code> and <code>checksum</code>, both fail. Run with no expectation and the run fails. Tell it to expect 2 and it passes. Expect 1 or 3 and it fails: fewer failures than expected is refused as firmly as more. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/tests/fixtures/trace_fail.json">tests/fixtures/trace_fail.json</a>; README.md, the expectation lane</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>The receipt</h3>
+        <p>With <code>--json</code> the run prints one object: the expectation and its status, the assertion counts, and each failure summarised by sequence, frame, pass, stage, slot, resource, assertion, verdict and provenance. No buffer or payload is carried out, and every string goes through the redactor first.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gpu-trace-validator/blob/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc/src/gpu_trace_validator/cli.py">src/gpu_trace_validator/cli.py</a>; README.md, the expectation lane</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout. Python 3.10 or newer; it is not on PyPI.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/gpu-trace-validator && cd gpu-trace-validator
+$ python -m pip install -e ".[test]"</code></pre></li>
+    <li><h3>First run: a passing trace</h3><p>Validate the bundled passing trace.</p>
+<pre class="cmd"><code>$ gpu-trace-validator tests/fixtures/trace_pass.json
+<span class="out">gpu_trace_validation: pass
+trace_id: trace-ok
+assertions: 1 total, 0 fail, 0 unknown</span></code></pre></li>
+    <li><h3>A failing trace</h3><p>The failing fixture fails, as it should.</p>
+<pre class="cmd"><code>$ gpu-trace-validator tests/fixtures/trace_fail.json
+<span class="out">assertions: 2 total, 2 fail, 0 unknown
+error: observed 2 assertion failure(s)</span></code></pre></li>
+    <li><h3>Show the check can fail</h3><p>Declare how many failures the fixture must produce. Two expected and two found passes.</p>
+<pre class="cmd"><code>$ gpu-trace-validator --expect-failures 2 tests/fixtures/trace_fail.json
+<span class="out">gpu_trace_validation: pass
+assertions: 2 total, 2 fail, 0 unknown</span></code></pre></li>
+  </ol>
+  <p class="src">Output from gpu-trace-validator at b205bd4 on Windows with Python 3.12.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It validates traces produced elsewhere. It does not capture GPU work.</li>
+    <li>A pass says the trace matches the schema and the expected failure count. It does not certify that the renderer is correct.</li>
+    <li>An unknown verdict is reported, and the run can still exit 0, because unknown is a reading about the trace and not a refusal of it.</li>
+    <li>Summaries are truncated at 240 characters after redaction.</li>
+  </ul>
+  <p class="src">Source: README.md at b205bd4, "Current status", "Notes" and the status table</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does a fixture that fails on purpose pass with --expect-failures 2?</summary><p>Its two failures equal the number supplied, which is what the run checks.</p></details>
+  <details><summary>Expect 3 failures when 2 occur. What happens?</summary><p>The run fails: fewer failures than expected is refused as firmly as more.</p></details>
+  <details><summary>What does the receipt carry for each failure?</summary><p>Nine named fields: sequence, frame, pass, stage, slot, resource, assertion, verdict and provenance. No raw payload.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/gpu-trace-validator/tree/b205bd4bdea45d1b1e5c80cde2c75e439ab78afc">HarperZ9/gpu-trace-validator at b205bd4</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. GPU Trace Validator is released under FSL-1.1-MIT from version 0.2.0.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["trace", "schema", "source", "events", "assertions", "verdicts", "expectation", "exit code"], "active": 0}}, {"io": {"lines": ["trace_id        trace-ok", "source.kind     manual-fixture", "frames          [{frame_id: 1, present_seq: 1}]", "resources       [{r1, texture, rgba8, 64 x 64}]", ["events          [{assertion frame_count, stage decode, verdict pass}]", "hi"]]}}], "k1": [{"pipe": {"stages": ["trace", "schema", "source", "events", "assertions", "verdicts", "expectation", "exit code"], "active": 5}}, {"io": {"cmd": "gpu-trace-validator tests/fixtures/trace_pass.json", "lines": ["gpu_trace_validation: pass", "trace_id: trace-ok", "assertions: 1 total, 0 fail, 0 unknown"], "verdict": ["pass", "ok", "exit 0"]}}], "k2": [{"pipe": {"stages": ["trace", "schema", "source", "events", "assertions", "verdicts", "expectation", "exit code"], "active": 1}}, {"io": {"cmd": "gpu-trace-validator extra.json", "lines": ["gpu_trace_validation: fail", ["error: frames/0: Additional properties are not allowed ('approved' was unexpected)", "hi"]], "verdict": ["fail", "drift", "exit 1"]}}], "k3": [{"pipe": {"stages": ["trace", "schema", "source", "events", "assertions", "verdicts", "expectation", "exit code"], "active": 6}}, {"cases": {"label": "Choose the expectation", "items": [{"label": "none", "blocks": [{"io": {"cmd": "gpu-trace-validator tests/fixtures/trace_fail.json", "lines": ["assertions: 2 total, 2 fail, 0 unknown", "error: observed 2 assertion failure(s)"], "verdict": ["fail", "drift", "exit 1"]}}]}, {"label": "--expect-failures 2", "blocks": [{"io": {"cmd": "gpu-trace-validator --expect-failures 2 tests/fixtures/trace_fail.json", "lines": ["gpu_trace_validation: pass", "assertions: 2 total, 2 fail, 0 unknown"], "verdict": ["pass", "ok", "exit 0: the failures were expected"]}}]}, {"label": "--expect-failures 1", "blocks": [{"io": {"cmd": "gpu-trace-validator --expect-failures 1 tests/fixtures/trace_fail.json", "lines": ["error: expected 1 assertion failure(s), observed 2"], "verdict": ["fail", "drift", "exit 1"]}}]}, {"label": "--expect-failures 3", "blocks": [{"io": {"cmd": "gpu-trace-validator --expect-failures 3 tests/fixtures/trace_fail.json", "lines": ["error: expected 3 assertion failure(s), observed 2"], "verdict": ["fail", "drift", "exit 1: fewer is refused too"]}}]}]}}], "k4": [{"pipe": {"stages": ["trace", "schema", "source", "events", "assertions", "verdicts", "expectation", "exit code"], "active": 7}}, {"io": {"cmd": "gpu-trace-validator --expect-failures 2 --json tests/fixtures/trace_fail.json", "lines": ["\"assertion_expectation\": {\"expected_failures\": 2, \"observed_failures\": 2, \"status\": \"pass\"}", "\"assertion_count\": 2, \"failure_count\": 2, \"unknown_count\": 0", "{\"seq\": 1, \"frame_id\": 1, \"pass_id\": \"p1\", \"stage\": \"decode\", \"slot\": \"0\", \"resource_id\": \"r1\", \"assertion\": \"frame_count\", \"verdict\": \"fail\", \"provenance\": \"gpu\"}", "{\"seq\": 2, \"frame_id\": 2, \"pass_id\": \"p2\", \"stage\": \"decode\", \"slot\": \"1\", \"resource_id\": \"r2\", \"assertion\": \"checksum\", \"verdict\": \"fail\", \"provenance\": \"gpu\"}", ["\"status\": \"pass\"", "hi"]]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

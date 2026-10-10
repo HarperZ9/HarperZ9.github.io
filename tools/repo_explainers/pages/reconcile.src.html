@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How reconcile works</title>
+<meta name="description" content="An animated walk through reconcile, a zero-dependency engine that turns creative generators into replayable worlds: a gyroid at seed 7 scored on four axes, refined toward its weakest one over ten recorded steps, labelled best-effort when it stops short of the target, emitted as a GLSL program with a timeline, palette and receipt, and reproduced to the same id on a second run. Built from reconcile at commit ba20136.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/reconcile.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/reconcile">HarperZ9/reconcile</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/reconcile/tree/ba20136e330e489bf36d6ed9334d15ae87e7e77b">ba20136</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>reconcile</h1>
+  <p class="lede">Turn creative generators into replayable browser worlds.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>A generated image is easier to trust when you can see how it was made and make it again. reconcile runs a generator, scores the result against criteria the generator did not write, adjusts its parameters toward the weakest score, and writes everything into one World record: the shader program, the refinement path, a motion timeline, a palette and a receipt. The same generator and seed give the same World in Node and in the browser.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Ten generators</b>Seven field generators emit closed-form expressions; three form generators emit point recipes.</li>
+    <li><b>Refinement you can read</b>Every step records its parameters, scores and the weakest axis it moved toward.</li>
+    <li><b>Honest labels</b>A result short of the target is labelled best-effort, never verified.</li>
+    <li><b>No dependencies</b>Node 18 or newer, or a browser that imports the same module.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/README.md">README.md</a> at ba20136 (version 0.2.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. Every line is output from <code>node cli.js</code> at commit ba20136, mostly from <code>create gyroid --seed 7</code> and the World JSON it wrote.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Pick a generator and a seed</h3>
+        <p>The library has ten generators. Seven describe a field as a formula over u, v and t: gyroid, quasicrystal, flowfield, turbulence, metaballs, rings and moire. Three produce point sets: phyllotaxis, attractor and harmonograph. Every one has the same interface, so the engine treats them alike.</p>
+        <p>The walk-through uses the gyroid with seed 7.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/organs">src/organs</a>, <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/organ.js">src/organ.js</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Score it on every axis</h3>
+        <p>The gyroid is sampled and scored from 0 to 1 on axes it did not author: how close its frequency sits to a whole number, its contrast, its complexity, and its novelty against earlier results. The overall cohesion is the harmonic mean, so one weak axis pulls the whole score down.</p>
+        <p>At the seed's starting point, with frequency 6.928, cohesion is 0.8237 and contrast is the weakest axis.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/criteria.js">src/criteria.js</a>, <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/refine.js">src/refine.js</a>, <code>evaluate</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Refine toward the weakest axis</h3>
+        <p>Refinement tries moving each parameter up and down, keeps the move that raises cohesion most, and halves its step when nothing helps. Each step is recorded. Over ten steps the frequency falls from 6.928 to 2, a whole number, and z rises to 0.28. Cohesion climbs to 0.8624.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/refine.js">src/refine.js</a>, <code>refine</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Short of the target is best-effort</h3>
+        <p>The target is a cohesion of 0.9 with every axis at 0.6 or above. The gyroid stops at 0.8624, so the result is labelled unverifiable, best-effort, and the record says it did not converge. Contrast at 0.73 is still the weakest axis.</p>
+        <p>Skipping refinement with <code>--no-refine</code> gives a one-step trajectory at 0.8237 and a different World id.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/criteria.js">src/criteria.js</a>, <code>tag</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Emit a program, a timeline and a receipt</h3>
+        <p>The World carries the shader as data: a GLSL fragment program for the field sin(2u)cos(2v) + sin(2v)cos(2t) + sin(2t)cos(2u), with the refined frequency of 2. A motion timeline with a period of pi seconds is checked for a loop with no jump and for staying on criterion. A six-colour palette and a receipt with the seed, generator, content hash and witness close the record.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/world.js">src/world.js</a>, <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/temporal.js">src/temporal.js</a>, <a href="https://github.com/HarperZ9/reconcile/blob/ba20136e330e489bf36d6ed9334d15ae87e7e77b/src/expr.js">src/expr.js</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Same input, same World</h3>
+        <p>Run the same command again and the World id and witness are identical. Change the seed or the refinement setting and both change. Pick each run in the panel.</p>
+        <p class="src">Source: README.md, "What to test first"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Get it</h3><p>Clone it. Node 18 or newer, no install step.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/reconcile && cd reconcile</code></pre></li>
+    <li><h3>First run: create a world</h3><p>Generate a gyroid at seed 7. It is refined toward its weakest axis and labelled best-effort when it stops short of the target.</p>
+<pre class="cmd"><code>$ node cli.js create gyroid --seed 7 --out out
+<span class="out">reasoning: 10 steps · cohesion 0.8624
+margins: clean_freq=1.00 contrast=0.73 complexity=0.79 novelty=1.00</span></code></pre></li>
+    <li><h3>Compose two generators</h3><p>Layer two generators and score the composition.</p>
+<pre class="cmd"><code>$ node cli.js compose gyroid,phyllotaxis --seed 7
+<span class="out">composition: 0.5829 (depth_complementarity=0.425, contrast_balance=0.9273)</span></code></pre></li>
+    <li><h3>See it in a browser</h3><p>Serve the folder and open <code>web/index.html</code> to run the same engine and render the shader in WebGL.</p>
+<pre class="cmd"><code>$ python -m http.server</code></pre></li>
+  </ol>
+  <p class="src">Output from cli.js at ba20136 with Node on Windows. npm test reported 25 tests passing.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The criteria are coarse aesthetic axes. A high cohesion is a measured read of those axes and makes no claim about beauty or quality.</li>
+    <li>The content hash is cyrb53, a fast digest for identity and tamper evidence. It is not cryptographic.</li>
+    <li>The engine emits shader programs and point recipes as data and checks them on the CPU. Rendering and audio belong to the host.</li>
+  </ul>
+  <p class="src">Source: README.md at ba20136, "Honest scope" and "Current status"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does one weak axis pull cohesion down so far?</summary><p>Cohesion is the harmonic mean of the axis scores.</p></details>
+  <details><summary>The gyroid stops at 0.8624. What label does it get?</summary><p>Unverifiable, best-effort: it is under the 0.9 target.</p></details>
+  <details><summary>What happens to the World id if you rerun seed 7?</summary><p>It stays the same: 0ccddf32f6535e.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/reconcile/tree/ba20136e330e489bf36d6ed9334d15ae87e7e77b">HarperZ9/reconcile at ba20136</a> (version 0.2.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. reconcile is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["generate", "critique", "refine", "render program", "timeline", "receipt"], "active": 0}}, {"table": {"head": ["kind", "generators"], "rows": [["field (formula)", "gyroid, quasicrystal, flowfield, turbulence, metaballs, rings, moire"], ["form (points)", "phyllotaxis, attractor, harmonograph"]]}}], "k1": [{"pipe": {"stages": ["generate", "critique", "refine", "render program", "timeline", "receipt"], "active": 1}}, {"io": {"lines": ["step 0   freq 6.928  z 0.178", ["cohesion 0.8237   weakest contrast", "hi"]]}}], "k2": [{"pipe": {"stages": ["generate", "critique", "refine", "render program", "timeline", "receipt"], "active": 2}}, {"table": {"head": ["step", "freq", "z", "cohesion"], "rows": [["0", "6.928", "0.178", "0.8237"], ["2", "5.058", "0.178", "0.8372"], ["4", "4.029", "0.178", "0.8485"], ["5", "3.001", "0.178", "0.8546"], ["6", "2", "0.178", "0.8603"], ["7 to 9", "2", "0.28", "0.8624"]]}}], "k3": [{"pipe": {"stages": ["generate", "critique", "refine", "render program", "timeline", "receipt"], "active": 2}}, {"io": {"cmd": "node cli.js create gyroid --seed 7 --out out", "lines": ["reasoning: 10 steps \u00b7 cohesion 0.8624", "margins: clean_freq=1.00 contrast=0.73 complexity=0.79 novelty=1.00"], "verdict": ["unverifiable", "unv", "best-effort: 0.8624 is under the 0.9 target"]}}], "k4": [{"pipe": {"stages": ["generate", "critique", "refine", "render program", "timeline", "receipt"], "active": 5}}, {"io": {"lines": ["layers: gyroid\u00b7glsl", "timeline: period 3.141593s \u00b7 continuity verified \u00b7 on-criterion verified", "palette: #287425 #2f9546 #39b576 #51c8aa #72d1d2 #92c8dd", ["receipt: seed 7 \u00b7 witness 1bde4e6783a2a5", "hi"]]}}], "k5": [{"cases": {"label": "Choose a run", "items": [{"label": "seed 7", "blocks": [{"io": {"lines": ["world 0ccddf32f6535e \u00b7 10 steps \u00b7 cohesion 0.8624"], "verdict": ["same id on a second run", "ok"]}}]}, {"label": "seed 7, --no-refine", "blocks": [{"io": {"lines": ["world 0fcae661b381a6 \u00b7 1 step \u00b7 cohesion 0.8237"]}}]}, {"label": "seed 8", "blocks": [{"io": {"lines": ["world 00ebeea2717aa6 \u00b7 8 steps \u00b7 cohesion 0.863"]}}]}, {"label": "gyroid + phyllotaxis", "blocks": [{"io": {"cmd": "node cli.js compose gyroid,phyllotaxis --seed 7", "lines": ["composition: 0.5829 (depth_complementarity=0.425, contrast_balance=0.9273)"], "verdict": ["refuted", "drift", "the layers do not complement in depth"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ const VIEWS = [
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 const wait = (page, ms) => page.waitForTimeout(ms);
+const W = require('./lib/studio-wait.cjs');
 async function frame(page) {
   return page.evaluate(async () => {
     const c = document.getElementById('studio-canvas');
@@ -23,7 +24,7 @@ async function frame(page) {
 }
 async function keepPreset(page, name) {
   await page.evaluate((n) => { document.getElementById('inspector-presets').open = true; document.getElementById('inspector-preset-name').value = n; document.getElementById('inspector-preset-keep').click(); }, name);
-  await wait(page, 300);
+  await W.until(page, (n) => !!document.querySelector(`.ia-preset-apply[data-preset="${n}"]`), name);
 }
 const applyPreset = (page, name) => page.evaluate((n) => { document.getElementById('inspector-presets').open = true; document.querySelector(`.ia-preset-apply[data-preset="${n}"]`).click(); }, name);
 const undo = (page) => page.evaluate(() => document.querySelector('#inspector-actions [data-action="undo"]').click());
@@ -40,31 +41,31 @@ const undo = (page) => page.evaluate(() => document.querySelector('#inspector-ac
       const errors = [];
       page.on('pageerror', (e) => errors.push(String(e.message)));
       try {
-        await page.goto(`${base}/studio.html?source=fractal`); await wait(page, 3000);
-        await page.evaluate(() => document.querySelector('[data-ftype="julia"]').click()); await wait(page, 1500);
-        const julia = await frame(page);
+        await page.goto(`${base}/studio.html?source=fractal`); const mandel = await W.ready(page, 'fractal');
+        await page.evaluate(() => document.querySelector('[data-ftype="julia"]').click());
+        const julia = await W.changed(page, mandel);
         await page.evaluate(() => { document.getElementById('inspector-presets').open = true; document.getElementById('inspector-preset-name').value = ''; document.getElementById('inspector-preset-keep').click(); });
         assert.match(await page.textContent('.ia-presets-note'), /name/i, `${tag} a preset with no name is refused`);
         await keepPreset(page, 'My Julia');
-        await page.evaluate(() => document.querySelector('[data-ftype="burningship"]').click()); await wait(page, 1500);
-        const ship = await frame(page);
+        await page.evaluate(() => document.querySelector('[data-ftype="burningship"]').click());
+        const ship = await W.changed(page, julia);
         assert.notEqual(ship, julia);
-        await applyPreset(page, 'My Julia'); await wait(page, 1500);
-        assert.equal(await frame(page), julia, `${tag} applying the preset gives back its pixels`);
-        await undo(page); await wait(page, 1500);
-        assert.equal(await frame(page), ship, `${tag} Undo returns to what was there before`);
-        await page.reload(); await wait(page, 3000);
+        await applyPreset(page, 'My Julia');
+        assert.equal(await W.becomes(page, julia), julia, `${tag} applying the preset gives back its pixels`);
+        await undo(page);
+        assert.equal(await W.becomes(page, ship), ship, `${tag} Undo returns to what was there before`);
+        await page.reload(); await W.ready(page, 'fractal');
         assert.ok(await page.evaluate(() => !!document.querySelector('.ia-preset-apply[data-preset="My Julia"]')), `${tag} the preset survives a reload`);
 
         await page.goto(`${base}/studio.html?source=loom`);
-        await page.waitForSelector('#src-loom #wv-panel', { timeout: 20000 }); await wait(page, 2500);
-        await page.evaluate(() => { const w = document.getElementById('wv-weaveit'); if (w.checked) w.click(); }); await wait(page, 800);
-        const cloth = await frame(page);
+        await W.ready(page, 'loom');
+        await page.evaluate(() => { const w = document.getElementById('wv-weaveit'); if (w.checked) w.click(); });
+        const cloth = await W.settled(page);
         await keepPreset(page, 'Plain');
-        await page.evaluate(() => [...document.querySelectorAll('#wv-structures .re-chip')].find((c) => c.getAttribute('aria-checked') !== 'true').click()); await wait(page, 1200);
+        await page.evaluate(() => [...document.querySelectorAll('#wv-structures .re-chip')].find((c) => c.getAttribute('aria-checked') !== 'true').click());
+        await W.changed(page, cloth);
         await applyPreset(page, 'Plain');
-        for (let i = 0; i < 15 && (await frame(page)) !== cloth; i++) await wait(page, 200);
-        assert.equal(await frame(page), cloth, `${tag} a Loom preset gives back its cloth`);
+        assert.equal(await W.becomes(page, cloth), cloth, `${tag} a Loom preset gives back its cloth`);
         assert.deepEqual(errors, [], `${tag} no page errors`);
         console.log(`${tag} studio presets: pass`);
       } catch (e) {

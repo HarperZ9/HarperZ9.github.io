@@ -1,0 +1,86 @@
+SHA = "802165f61e73640afee0fe59e2e13957f7039843"
+B = f"https://github.com/HarperZ9/canon/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+FLOW = ["record", "validate", "resolve", "render", "region", "write"]
+REGION = ["<!-- canon:begin scope=workspace -->", '<!-- canon:block id="canon-workspace-brief" -->', "## Resume brief: exporter", "### Focus", "Goal: Ship the JSON export",
+          "Areas: src/export", "### Decisions", "- Keep the CSV writer [accepted] (decision-2): Add JSON beside CSV", "  Why: Downstream scripts parse CSV",
+          "  Rejected: Replace CSV. Reason: breaks three scripts", "<!-- canon:end -->"]
+
+SPEC = {
+    "slug": "canon", "repo": "canon", "sha": SHA, "name": "canon", "version": "release 0.6.0",
+    "description": "An animated walk through canon: a project's focus and decisions kept as typed records, a secret refused before it is stored, a size-budgeted brief, the brief written between canon's markers in the next agent's file, and an edit inside that region turned into a proposal. Built from canon at commit 802165f.",
+    "lede": "One record for your memory and your voice, shared across every model and tool.",
+    "for_you": "canon keeps one typed record of how you work and what a project is doing, and writes it into the file each tool reads at startup: CLAUDE.md, AGENTS.md, GEMINI.md and others. When you hand a repository to another agent, it starts with the focus, the open work and the decisions, including the alternatives you dropped and why. canon writes only between its own markers and turns any edit made there into a proposal for you to accept.",
+    "uses": [
+        ("Project state, bound to the project", "Focus, work items, decisions and constraints are records that name their project. A read that finds another project's record fails."),
+        ("Decisions with their alternatives", "A dropped alternative cannot be recorded without its reason."),
+        ("Secrets stay out", "Keys, tokens and secret-named assignments are redacted, and a record that still looks like one is refused."),
+        ("Writes it owns, nothing more", "canon rewrites only the span between its markers, in a fixed list of seven paths."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. The panel follows a small repository, <code>exporter</code>, through the workspace commands and a switch to Codex. Every line is output from canon at commit 802165f, run with <code>CANON_HOME</code> pointed at a temporary folder.",
+    "steps": [
+        {"title": "Record the focus",
+         "paras": ["The project is shipping a JSON export, working in <code>src/export</code>. <code>canon workspace focus</code> stores that as a focus record for this project.",
+                   "The project id comes from the repository: here from <code>git config canon.project exporter</code>. Without one it comes from the remote, or from a nonce canon keeps in <code>.git</code>."],
+         "src": "README.md, \"Moving a project between models\"; " + L("src/canon/cli_workspace.py"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 0}},
+                   {"io": {"cmd": 'canon workspace focus --goal "Ship the JSON export" --area src/export', "lines": [["focus set: workspace-focus focus: Ship the JSON export", "hi"]]}}]},
+        {"title": "Record a decision with what you dropped",
+         "paras": ["The team keeps the CSV writer and adds JSON beside it, because downstream scripts parse CSV. The alternative, replacing CSV, was dropped because it breaks three scripts.",
+                   "<code>--reject</code> takes the alternative and its reason together. Give one without the other and the command refuses."],
+         "src": "README.md, \"Moving a project between models\"",
+         "scene": [{"pipe": {"stages": FLOW, "active": 1}},
+                   {"cases": {"label": "Choose a command", "items": [
+                       {"label": "with a reason", "blocks": [{"io": {"cmd": 'canon workspace decide --title "Keep the CSV writer" --decision "Add JSON beside CSV" --context "Downstream scripts parse CSV" --reject "Replace CSV" "breaks three scripts"', "lines": ["recorded adr-decision decision-2: Keep the CSV writer"], "verdict": ["stored", "ok", "exit 0"]}}]},
+                       {"label": "alternative without a reason", "blocks": [{"io": {"cmd": 'canon workspace decide --title "Drop CSV" --decision "JSON only" --context simpler --reject "Keep CSV"', "lines": ["FAIL canon: invalid arguments"], "verdict": ["refused", "drift", "exit 2"]}}]}]}}]},
+        {"title": "A secret is refused before it is stored",
+         "paras": ["Someone records a decision whose text includes <code>api_key=sk-live-...</code>. The workspace store checks every record for secret shapes and refuses this one, naming the shape it found. Nothing is written."],
+         "src": "README.md, \"Secrets stay out of workspace records\"; " + L("src/canon/workspace"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 1}},
+                   {"io": {"cmd": 'canon workspace decide --title "Use the token" --decision "export with api_key=sk-live-..." --context ci',
+                           "lines": [["FAIL workspace decide: record 'decision-3' carries secret-shaped values ['env-assignment']; nothing was stored", "hi"]],
+                           "verdict": ["refused", "drift", "exit 4"]}}]},
+        {"title": "A brief for the next agent",
+         "paras": ["<code>canon handoff --to codex</code> lists focus, open work, recent decisions and constraints, in that order, inside the target's size budget. It says plainly that it holds what was recorded, not everything that happened in earlier sessions."],
+         "src": L("src/canon/cli_handoff.py"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 3}},
+                   {"io": {"cmd": "canon handoff --to codex", "lines": ["# Resume brief: exporter", "It holds what was recorded, not everything that happened in earlier sessions.",
+                                                                       "## Focus", "Goal: Ship the JSON export", "## Decisions", ["- Keep the CSV writer [accepted] (decision-2): Add JSON beside CSV", "hi"],
+                                                                       "  Why: Downstream scripts parse CSV", "  Rejected: Replace CSV. Reason: breaks three scripts"]}}]},
+        {"title": "Switch: write it between the markers",
+         "paras": ["<code>canon switch --to codex --create</code> writes the brief into <code>AGENTS.md</code>, the file Codex reads at startup. Everything canon writes sits between its begin and end markers; every byte outside them is left as it was."],
+         "src": "README.md, \"How one record becomes the file each tool reads\"",
+         "scene": [{"pipe": {"stages": FLOW, "active": 5}},
+                   {"io": {"cmd": "canon switch --to codex --create", "lines": ["Codex CLI: created AGENTS.md", "brief: 2 records, 0 left out"]}},
+                   {"io": {"lines": REGION}}]},
+        {"title": "An edit inside the region becomes a proposal",
+         "paras": ["An agent changes the goal in <code>AGENTS.md</code> to an XML export. The next switch does not overwrite that edit. It turns it into a proposal and stops until you accept or reject it."],
+         "src": "README.md, \"Switch in one command\"",
+         "scene": [{"pipe": {"stages": FLOW, "active": 4}},
+                   {"io": {"cmd": "canon switch --to codex", "lines": [["FAIL switch: 1 edits made inside the canon region of AGENTS.md are now proposals (focus); accept or reject each with canon workspace accept|reject, then switch again", "hi"]],
+                           "verdict": ["stopped", "unv", "exit 5: a person decides"]}},
+                   {"io": {"cmd": "canon workspace list --proposed", "lines": ["proposed records for exporter: 1", "- workspace-focus focus: Ship the XML export"]}}]},
+    ],
+    "try": [
+        ("Install from PyPI (Python 3.11 or newer). The workspace commands make no network call and run no model.",
+         "$ python -m pip install flywheel-canon\n$ cd your-repo\n$ canon workspace focus --goal \"Ship the JSON export\" --area src/export\n<span class=\"out\">focus set: workspace-focus focus: Ship the JSON export</span>\n$ canon switch --to codex --create\n<span class=\"out\">Codex CLI: created AGENTS.md</span>"),
+    ],
+    "try_src": "Output from canon at 802165f run from source; flywheel-canon 0.6.0 is the current PyPI release.",
+    "limits": [
+        "The session importers match fixed patterns with no model in the loop, and the session formats they read are not stable interfaces.",
+        "The secret scrubber recognises secrets by shape. A secret in an unfamiliar shape can pass.",
+        "A brief knows only what was recorded or imported. It is not a transcript of earlier sessions.",
+        "No target file can load a block for some files only, so a block scoped to certain files is written for all of them with an Applies to line.",
+        "canon stores and retrieves context. It runs no model and hosts no inference; your client supplies the model.",
+    ],
+    "limits_src": "README.md at 802165f, \"Moving a project between models\" and \"What it does\"",
+    "recall": [
+        ("What does canon require along with a rejected alternative?", "Its reason. --reject takes both, and one without the other is refused."),
+        ("A decision's text contains api_key=sk-live-... . What is stored?", "Nothing. The store names the secret shape it found and refuses the record."),
+        ("Which part of AGENTS.md does canon rewrite?", "Only the span between its begin and end markers. Everything outside is left byte for byte."),
+        ("An agent edits the goal inside canon's region. What does the next switch do?", "It turns the edit into a proposal and stops, exit 5, until you accept or reject it."),
+    ],
+    "license_line": "canon is released under FSL-1.1-MIT.",
+}
