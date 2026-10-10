@@ -55,7 +55,8 @@
             "on": 2,
             "label": "task solved?",
             "value": "no",
-            "verdict": "FAIL"
+            "verdict": "FAIL",
+            "tag": "not solved"
           }
         ]
       }
@@ -97,7 +98,7 @@
           "on": 1,
           "text": "15,000 rated answer pairs, 266 misconceptions"
         },
-        "hot_note": "hot bar: the answer that agrees (high liability)",
+        "hot_note": "marked bar: the answer that agrees",
         "label_w": 480
       }
     },
@@ -135,7 +136,8 @@
             "on": 3,
             "label": "setting",
             "value": "built to allow gaming",
-            "verdict": "UNVERIFIED"
+            "verdict": "UNVERIFIED",
+            "tag": "built setting"
           }
         ]
       }

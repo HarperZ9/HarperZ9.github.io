@@ -57,7 +57,8 @@
             "on": 3,
             "label": "the explanation",
             "value": "a reason, not the whole cause",
-            "verdict": "DRIFT"
+            "verdict": "DRIFT",
+            "tag": "partial cause"
           }
         ]
       }
@@ -107,7 +108,7 @@
           "text": "six kinds of hint, MMLU and GPQA questions"
         },
         "label_w": 560,
-        "hot_note": "hot bar: a planted shortcut (high liability)"
+        "hot_note": "marked bar: a planted shortcut"
       }
     },
     {
@@ -151,7 +152,7 @@
         ],
         "caption": "recall of a monitor on two test-gaming tricks",
         "label_w": 680,
-        "hot_note": "hot bar: after the penalty (high liability)"
+        "hot_note": "marked bar: after the penalty"
       }
     },
     {
