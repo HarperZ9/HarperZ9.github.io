@@ -20,6 +20,7 @@ export function registerKeys(source, list) {
 registerKeys("", [
   ["Ctrl+K or /", "Search every source and control"],
   ["?", "This list of keys"],
+  ["T", "Open or close the timeline (keyframe any slider)"],
   ["Ctrl+Z, Cmd+Z", "Undo in the source on stage"],
   ["Ctrl+Shift+Z, Ctrl+Y", "Redo"],
   ["Escape", "Close the source menu, the search or this list"],

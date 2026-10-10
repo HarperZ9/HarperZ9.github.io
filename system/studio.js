@@ -26,11 +26,12 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-presets";
+import { mountShell } from "./studio-shell-dom.js?v=20261009-timeline";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
-import { mountPalette } from "./studio-palette.js?v=20261009-palette";
+import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
 import { mountLayout } from "./studio-layout.js?v=20261009-layout";
+import { mountTimeline } from "./studio-timeline.js?v=20261009-timeline";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -261,6 +262,7 @@ const _voxelPick = document.createElement("canvas");
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
 let _layout = null;   // studio-layout.js, mounted with the shell
+let _timeline = null; // studio-timeline.js
 // The Splat Lab draws its splat worlds in place with the Spatial renderer (9 October 2026): the two
 // sources share the renderer and its inspector, and the Splat Lab adds its own record.
 const isSpatial = (s) => s === "spatial" || s === "splats";
@@ -792,6 +794,7 @@ function setSource(next) {
   if (_shell) _shell.sourceChanged(next);
   if (_readings) _readings.sourceChanged();
   if (_layout) _layout.sourceChanged();
+  if (_timeline) _timeline.sourceChanged(next);
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
   if (next === "gallery") enterGallerySource(epoch);
@@ -7427,6 +7430,11 @@ _shell = mountShell({
   contracts: SHELL_CONTRACTS,
   storage: keepStorage,
   onMaking: () => _readings.action(),
+  // Timelines travel in project files with the sessions and presets.
+  projectExtras: {
+    save: (sources) => ({ timelines: _timeline ? _timeline.all(sources) : {} }),
+    open: (doc, sources) => { if (_timeline && doc.timelines) _timeline.putAll(doc.timelines, sources); },
+  },
   // The deck's formats, offered in every source's Export menu when they apply (9 October 2026).
   stageExports: [
     { label: "PNG frame", target: "rt-export-png" },
@@ -7470,6 +7478,13 @@ _layout = mountLayout({
   app: document.querySelector(".studio-app"), panel: $("studio-panel"), deckMore: $("deck-more"),
   getSource: () => activeSource, storage: keepStorage,
   onChange: () => { try { onStageResize(); } catch (_) {} },
+});
+
+// One timeline for every source (studio-timeline.js): keyframes on any slider of the source on stage.
+_timeline = mountTimeline({
+  stage: $("viewport-stage"), deck: $("rt-fullscreen") ? $("rt-fullscreen").parentElement : null,
+  getSource: () => activeSource, blockOf: (s) => (SOURCES[s] ? $(SOURCES[s].block) : null),
+  storage: keepStorage, say: (t) => say("model", t),
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.

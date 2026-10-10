@@ -100,6 +100,7 @@ function exportMenu(ctx, c) {
 function saveProject(ctx) {
   const doc = buildProject(ctx.store, Object.keys(ctx.contracts), ctx.getSource());
   doc.presets = ctx.presets.all(Object.keys(ctx.contracts));
+  if (ctx.projectExtras && ctx.projectExtras.save) { try { Object.assign(doc, ctx.projectExtras.save(Object.keys(ctx.contracts))); } catch (err) { console.error("[studio-shell] project extras failed:", err); } }
   const blob = new Blob([JSON.stringify(doc, null, 1), "\n"], { type: "application/json" });
   const a = ctx.doc.createElement("a");
   const stamp = doc.savedAt.replace(/[-:]/g, "").slice(0, 13);
@@ -125,6 +126,7 @@ async function openProjectFile(ctx, file) {
   if (!ctx.store.available()) { sayLine(ctx, "Not opened: this browser blocks site storage, so the sessions have nowhere to go."); return false; }
   const r = applyProject(ctx.store, read);
   if (read.doc.presets) ctx.presets.putAll(read.doc.presets, Object.keys(ctx.contracts));
+  if (ctx.projectExtras && ctx.projectExtras.open) { try { ctx.projectExtras.open(read.doc, Object.keys(ctx.contracts)); } catch (err) { console.error("[studio-shell] project extras failed:", err); } }
   if (r.refused.length) console.warn("[studio-shell] project sessions not kept:", r.refused);
   const go = read.active || ctx.getSource();
   const url = new URL(ctx.doc.location.href);
@@ -308,12 +310,12 @@ function markBarTargets(ctx) {
 }
 
 /** mountShell({ doc, rail, getSource, contracts, storage, onMaking }) -> the shell's handle. */
-export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {}, stageExports = [] }) {
+export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {}, stageExports = [], projectExtras = null }) {
   const $ = (id) => doc.getElementById(id);
   const maxBytes = (typeof window !== "undefined" && window.__studioKeepMaxBytes) || undefined;
   const ctx = { doc, $, rail, getSource, contracts, onMaking,
     sw: $("source-switch"), menu: $("studio-source"), head: $("inspector-head"), bar: $("inspector-actions"),
-    history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports };
+    history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports, projectExtras };
   wireSwitch(ctx);
   wireKeys(ctx);
   markBarTargets(ctx);
