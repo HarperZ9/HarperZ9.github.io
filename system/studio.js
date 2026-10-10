@@ -136,7 +136,24 @@ const loadFractal2D = lazyLoader(
 
 // 3D fractal source: the WebGL1 raymarcher.
 let _fractal3d = null;
-const loadFractal3D = lazyLoader(() => import("./fractal3d.js"), m => { _fractal3d = m; });
+// The progressive WebGL2 renderer (fractal3d-pro.js) when the browser has WebGL2, the WebGL1
+// raymarcher (fractal3d.js) otherwise; studio-fractal3d.js holds the controls both read.
+let _f3ui = null;
+const loadFractal3D = lazyLoader(
+  () => Promise.all([import("./fractal3d.js"), import("./fractal3d-pro.js?v=20261009f5"), import("./studio-fractal3d.js?v=20261009f5")]),
+  ([legacy, pro, ui]) => {
+    _fractal3d = {
+      render3D(canvas, opts) {
+        try { return pro.render3DPro(canvas, opts); }
+        catch (err) { console.warn("[studio] progressive 3D renderer unavailable, using WebGL1:", err && err.message); return legacy.render3D(canvas, opts); }
+      },
+    };
+    _f3ui = ui.mountFractal3D({
+      getType: () => active3DType,
+      getHandle: () => fractal3dHandle,
+      onChange: { record: () => { if (_shell && activeSource === "fractal3d") _shell.recordSoon("fractal3d"); }, extra: () => ({ power: parseFloat(f3("f3-power").value), scale: parseFloat(f3("f3-scale").value), iterations: parseInt(f3("f3-iterations").value, 10) }) },
+    });
+  });
 
 // Dimensions source: the render-nd barrel (geometry + pick + paint-state) + the WebGL backend.
 let _ndim = null, _ndGLBackend = null;
@@ -3510,7 +3527,7 @@ async function render3DInto(opts) {
     if (!canvasIsGL) return;   // left 3D before the timer fired
     const obs = perceive($("studio-canvas"));
     const relief = obs.features.contrast > 0.6 ? "deep relief and strong light" : "soft, diffuse form";
-    const label = opts.type === "mandelbulb" ? "Mandelbulb" : "Mandelbox";
+    const label = { mandelbulb: "Mandelbulb", surf: "Amazing Surf", menger: "Menger sponge", kleinian: "pseudo-Kleinian", hybrid: "hybrid" }[opts.type] || "Mandelbox";
     const col3 = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
     say("model",
       `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash}: ${relief}`
@@ -3539,6 +3556,7 @@ function read3DOpts() {
     scale: parseFloat(f3("f3-scale").value),
     power: parseFloat(f3("f3-power").value),
     iterations: parseInt(f3("f3-iterations").value, 10),
+    ...(_f3ui ? _f3ui.read() : {}),
     // Supersample the silhouette on High quality, or on a device the render
     // plan already rates high. One march per sample, so it stays off below
     // that. The plan carries the tier; the raw capability record does not.
@@ -3569,7 +3587,9 @@ f3("f3-render").addEventListener("click", () => render3DInto(read3DOpts()));
 // the camera angle uniforms in fractal3d.js via the handle's orbit()/dolly(); a gentle idle
 // auto-orbit resumes ~1.4s after the user lets go (handled in render3D). Touch supported.
 // Bound on the same stable .stage container; guarded so it only acts when a 3D orbit is mounted.
-function fractal3dInteractive() { return activeSource === "fractal3d" && !!fractal3dHandle; }
+// The progressive renderer binds raw-native's explorer controls itself (ownsInput), so these
+// handlers serve only the WebGL1 fallback.
+function fractal3dInteractive() { return activeSource === "fractal3d" && !!fractal3dHandle && !fractal3dHandle.ownsInput; }
 let _3drag = null;
 fStage.addEventListener("pointerdown", e => {
   if (!fractal3dInteractive() || e.pointerType === "touch") return;
@@ -7375,7 +7395,7 @@ const SHELL_CONTRACTS = {
     making: true,
     primary: { label: "Render", target: "f3-render", title: "Render the fractal with these settings" },
     exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
-    snapshot() { const o = read3DOpts(); return { type: o.type, scale: o.scale, power: o.power, iterations: o.iterations }; },
+    snapshot() { const o = read3DOpts(); delete o.aa; return o; },
     restore(state) {
       active3DType = state.type;
       radioChips("data-f3type", state.type);
@@ -7384,6 +7404,7 @@ const SHELL_CONTRACTS = {
       setRange("f3-scale", state.scale, "f3-scale-val", (v) => (+v).toFixed(2));
       setRange("f3-power", state.power, "f3-power-val", (v) => (+v).toFixed(1));
       setRange("f3-iterations", state.iterations, "f3-iterations-val");
+      if (_f3ui) _f3ui.apply(state);
       render3DInto(read3DOpts());
     },
     reset() {

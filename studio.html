@@ -820,6 +820,19 @@
                 <div class="at-chips" role="group" aria-label="3D fractal type">
                   <button type="button" class="chip active" data-f3type="mandelbox">Mandelbox</button>
                   <button type="button" class="chip" data-f3type="mandelbulb">Mandelbulb</button>
+                  <button type="button" class="chip" data-f3type="surf">Amazing Surf</button>
+                  <button type="button" class="chip" data-f3type="menger">Menger</button>
+                  <button type="button" class="chip" data-f3type="kleinian">Kleinian</button>
+                  <button type="button" class="chip" data-f3type="hybrid">Hybrid</button>
+                </div>
+              </div>
+              <div class="at-group" id="f3-hybrid-row" hidden>
+                <span class="at-glab">Hybrid <span class="hint">one formula per iteration, in turn</span></span>
+                <div class="at-chips">
+                  <select id="f3-seq-0" class="at-seed" aria-label="Hybrid step 1"><option value="box" selected>Box</option><option value="bulb">Bulb</option><option value="surf">Surf</option></select>
+                  <select id="f3-seq-1" class="at-seed" aria-label="Hybrid step 2"><option value="">none</option><option value="box">Box</option><option value="bulb" selected>Bulb</option><option value="surf">Surf</option></select>
+                  <select id="f3-seq-2" class="at-seed" aria-label="Hybrid step 3"><option value="" selected>none</option><option value="box">Box</option><option value="bulb">Bulb</option><option value="surf">Surf</option></select>
+                  <select id="f3-seq-3" class="at-seed" aria-label="Hybrid step 4"><option value="" selected>none</option><option value="box">Box</option><option value="bulb">Bulb</option><option value="surf">Surf</option></select>
                 </div>
               </div>
             </details>
@@ -836,6 +849,68 @@
               <div class="at-group">
                 <span class="at-glab">Iterations <span class="hint">depth of detail (<span id="f3-iterations-val">12</span>)</span></span>
                 <input type="range" class="at-slider" id="f3-iterations" min="4" max="20" step="1" value="12" aria-label="Iterations">
+              </div>
+              <!-- Progressive renderer parameters (9 October 2026): studio-fractal3d.js, fractal3d-pro.js. -->
+              <div class="at-group" id="f3-fold-row">
+                <span class="at-glab">Fold limit <span class="hint">(<span id="f3-fold-val">1.00</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-fold" min="0.5" max="2" step="0.01" value="1" aria-label="Fold limit">
+                <span class="at-glab">Sphere fold <span class="hint">inner (<span id="f3-minr-val">0.50</span>) and outer (<span id="f3-fixedr-val">1.00</span>) radius</span></span>
+                <input type="range" class="at-slider" id="f3-minr" min="0.05" max="1" step="0.01" value="0.5" aria-label="Inner sphere fold radius">
+                <input type="range" class="at-slider" id="f3-fixedr" min="0.5" max="2" step="0.01" value="1" aria-label="Outer sphere fold radius">
+              </div>
+              <div class="at-group" id="f3-kleinian-row" hidden>
+                <span class="at-glab">Box size (<span id="f3-ksize-val">0.924</span>) and inversion (<span id="f3-kinv-val">1.00</span>)</span>
+                <input type="range" class="at-slider" id="f3-ksize" min="0.6" max="1.2" step="0.005" value="0.924" aria-label="Kleinian box size">
+                <input type="range" class="at-slider" id="f3-kinv" min="0.6" max="1.6" step="0.01" value="1" aria-label="Kleinian inversion">
+              </div>
+              <div class="at-group" id="f3-menger-row" hidden>
+                <span class="at-glab">Menger scale <span class="hint">(<span id="f3-mscale-val">3.00</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-mscale" min="2" max="4" step="0.05" value="3" aria-label="Menger scale">
+              </div>
+            </details>
+            <details class="rail-group" id="f3-look-group">
+              <summary>Material, light and lens</summary>
+              <div class="at-group">
+                <span class="at-glab">Palette</span>
+                <div class="at-chips" role="group" aria-label="3D palette">
+                  <button type="button" class="chip active" data-f3pal="bone">bone</button>
+                  <button type="button" class="chip" data-f3pal="ember">ember</button>
+                  <button type="button" class="chip" data-f3pal="ocean">ocean</button>
+                  <button type="button" class="chip" data-f3pal="dusk">dusk</button>
+                  <button type="button" class="chip" data-f3pal="terminal">terminal</button>
+                </div>
+                <span class="at-glab">Trap colour <span class="hint">cycles (<span id="f3-trap-val">0.60</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-trap" min="0" max="4" step="0.05" value="0.6" aria-label="Orbit trap colour cycles">
+                <span class="at-glab">Roughness (<span id="f3-rough-val">0.45</span>) and metal (<span id="f3-metal-val">0.00</span>)</span>
+                <input type="range" class="at-slider" id="f3-rough" min="0.03" max="1" step="0.01" value="0.45" aria-label="Roughness">
+                <input type="range" class="at-slider" id="f3-metal" min="0" max="1" step="0.01" value="0" aria-label="Metalness">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Sun azimuth (<span id="f3-sunaz-val">40</span>) and elevation (<span id="f3-sunel-val">50</span>)</span>
+                <input type="range" class="at-slider" id="f3-sunaz" min="0" max="360" step="1" value="40" aria-label="Sun azimuth">
+                <input type="range" class="at-slider" id="f3-sunel" min="2" max="88" step="1" value="50" aria-label="Sun elevation">
+                <span class="at-glab">Shadow sharpness (<span id="f3-shadow-val">12</span>) and occlusion (<span id="f3-ao-val">1.00</span>)</span>
+                <input type="range" class="at-slider" id="f3-shadow" min="2" max="64" step="1" value="12" aria-label="Shadow sharpness">
+                <input type="range" class="at-slider" id="f3-ao" min="0" max="2" step="0.05" value="1" aria-label="Ambient occlusion">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Fog (<span id="f3-fog-val">0.004</span>) and glow (<span id="f3-glow-val">0.40</span>)</span>
+                <input type="range" class="at-slider" id="f3-fog" min="0" max="0.1" step="0.001" value="0.004" aria-label="Fog density">
+                <input type="range" class="at-slider" id="f3-glow" min="0" max="3" step="0.05" value="0.4" aria-label="Glow">
+                <div class="at-chips" role="group" aria-label="Background">
+                  <button type="button" class="chip active" data-f3bg="0">Studio</button>
+                  <button type="button" class="chip" data-f3bg="1">Palette</button>
+                  <button type="button" class="chip" data-f3bg="2">Black</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Aperture <span class="hint">depth of field; double-click to focus (<span id="f3-aperture-val">0.00</span>)</span></span>
+                <input type="range" class="at-slider" id="f3-aperture" min="0" max="2" step="0.01" value="0" aria-label="Aperture">
+                <span class="at-glab">Exposure (<span id="f3-exposure-val">1.50</span>) and samples (<span id="f3-samples-val">64</span>)</span>
+                <input type="range" class="at-slider" id="f3-exposure" min="0.3" max="4" step="0.05" value="1.5" aria-label="Exposure">
+                <input type="range" class="at-slider" id="f3-samples" min="1" max="512" step="1" value="64" aria-label="Samples per pixel">
+                <label class="at-check" style="display:block"><input type="checkbox" id="f3-turntable" checked> Turn while idle</label>
+                <p class="src-hint" id="f3-readout" aria-live="polite"></p>
               </div>
             </details>
             <div class="at-actions">
