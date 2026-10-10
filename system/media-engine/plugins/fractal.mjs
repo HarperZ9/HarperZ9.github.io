@@ -12,7 +12,7 @@
 // fall back as it did before the plugin existed.
 
 import { renderFractal } from "../../fractal.js?v=20260903a";
-import { renderFractalGL } from "../../fractal-gl.js?v=20261009f2";
+import { renderFractalGL } from "../../fractal-gl.js?v=20261009f4";
 
 export const fractal = {
   id: "fractal",

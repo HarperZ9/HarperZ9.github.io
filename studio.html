@@ -636,6 +636,78 @@
                 <input type="range" class="at-slider" id="fractal-detail" min="0.5" max="2.5" step="0.1" value="1" aria-label="Fractal detail multiplier">
               </div>
             </details>
+            <!-- Large stills (9 October 2026): drawn in strips and streamed into one PNG, so a still
+                 can be larger than any canvas. fractal-tiles.js; studio-fractal-still.js. -->
+            <details class="rail-group" id="fractal-still-group">
+              <summary>Large still</summary>
+              <div class="at-group">
+                <span class="at-glab">Size <span class="hint">the view as it is, at print size</span></span>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-still-4k" type="button">4K PNG</button>
+                  <button class="btn" id="fractal-still-8k" type="button">8K PNG</button>
+                  <button class="btn" id="fractal-still-16k" type="button">16K PNG</button>
+                </div>
+                <span class="at-glab">Samples per pixel <span class="hint">(<span id="fractal-still-aa-val">2</span> x <span id="fractal-still-aa-val2">2</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-still-aa" min="1" max="4" step="1" value="2" aria-label="Samples per pixel axis for the still">
+                <p class="src-hint" id="fractal-still-status" role="status" aria-live="polite"></p>
+              </div>
+            </details>
+            <!-- Colouring (9 October 2026): the colouring algorithm, the palette editor and import,
+                 and colour cycling. studio-fractal-colour.js; the algorithms are fractal-colouring.js. -->
+            <details class="rail-group" open id="fractal-colour-group">
+              <summary>Colouring</summary>
+              <div class="at-group">
+                <span class="at-glab">Algorithm</span>
+                <div class="at-chips" role="group" aria-label="Colouring algorithm">
+                  <button type="button" class="chip active" data-fcolour="smooth">Smooth</button>
+                  <button type="button" class="chip" data-fcolour="distance">Distance</button>
+                  <button type="button" class="chip" data-fcolour="trap-point">Point trap</button>
+                  <button type="button" class="chip" data-fcolour="trap-line">Line trap</button>
+                  <button type="button" class="chip" data-fcolour="trap-cross">Cross trap</button>
+                  <button type="button" class="chip" data-fcolour="trap-image">Image trap</button>
+                  <button type="button" class="chip" data-fcolour="tia">Triangle average</button>
+                  <button type="button" class="chip" data-fcolour="histogram">Histogram</button>
+                </div>
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Density <span class="hint">palette cycles (<span id="fractal-density-val">1.00</span>x)</span></span>
+                <input type="range" class="at-slider" id="fractal-density" min="0.1" max="4" step="0.05" value="1" aria-label="Palette density">
+                <span class="at-glab">Offset <span class="hint">palette phase (<span id="fractal-offset-val">0.00</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-offset" min="0" max="16" step="0.05" value="0" aria-label="Palette offset">
+                <label class="at-check" style="display:block"><input type="checkbox" id="fractal-cycle"> Cycle the colours</label>
+                <span class="at-glab">Cycle speed <span class="hint">stops a second (<span id="fractal-cycle-speed-val">1.0</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-cycle-speed" min="0.1" max="6" step="0.1" value="1" aria-label="Colour cycle speed">
+              </div>
+              <div class="at-group" id="fractal-trap-row" hidden>
+                <span class="at-glab">Trap <span class="hint">centre (real, imaginary)</span></span>
+                <div class="at-chips">
+                  <input type="number" class="at-seed" id="fractal-trap-x" step="0.01" value="0" style="width:46%" aria-label="Trap centre, real part">
+                  <input type="number" class="at-seed" id="fractal-trap-y" step="0.01" value="0" style="width:46%" aria-label="Trap centre, imaginary part">
+                </div>
+                <span class="at-glab">Line angle <span class="hint">(<span id="fractal-trap-angle-val">30</span> degrees)</span></span>
+                <input type="range" class="at-slider" id="fractal-trap-angle" min="0" max="180" step="1" value="30" aria-label="Line trap angle">
+                <span class="at-glab">Image size <span class="hint">(<span id="fractal-trap-size-val">0.25</span>)</span></span>
+                <input type="range" class="at-slider" id="fractal-trap-size" min="0.02" max="2" step="0.01" value="0.25" aria-label="Image trap size">
+                <label class="at-glab" for="fractal-trap-image">Trap image</label>
+                <input type="file" id="fractal-trap-image" accept="image/*" aria-label="Image for the image trap">
+              </div>
+              <div class="at-group">
+                <span class="at-glab">Gradient <span class="hint">2 to 16 stops; pick a palette above to reset</span></span>
+                <div class="at-chips" id="fractal-stops" role="group" aria-label="Gradient stops"></div>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-stop-add" type="button">Add stop</button>
+                  <button class="btn" id="fractal-stop-remove" type="button">Remove stop</button>
+                  <button class="btn" id="fractal-gradient-copy" type="button">Copy gradient</button>
+                </div>
+                <span class="at-glab">Import <span class="hint">colours, a CSS gradient, a .map or .ggr, or an image</span></span>
+                <textarea id="fractal-gradient-text" class="at-seed" rows="2" spellcheck="false" style="width:100%;font-family:var(--mono, monospace);font-size:12px;padding:.4em .5em;resize:vertical" aria-label="Gradient to import"></textarea>
+                <div class="at-actions">
+                  <button class="btn" id="fractal-gradient-import" type="button">Import</button>
+                </div>
+                <input type="file" id="fractal-gradient-file" accept=".map,.ggr,.txt,.css,image/*" aria-label="Gradient file">
+                <p class="src-hint" id="fractal-gradient-status" role="status" aria-live="polite"></p>
+              </div>
+            </details>
             <!-- Formula (9 October 2026): the parameters of the formula types, and the formula editor.
                  Shown for the types that read them. studio-fractal-formula.js. -->
             <details class="rail-group" open id="fractal-formula-group" hidden>

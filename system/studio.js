@@ -68,7 +68,7 @@ function lazyLoader(importer, onLoad) {
 }
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
-let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null, _fform = null;
+let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null, _fform = null, _fcolour = null;
 // The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
 // camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
 // node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
@@ -76,6 +76,7 @@ let _fractalEngine = null, _fractalHandle = null, _fractalHandleCanvas = null;
 function dropFractalHandle() {
   // A Buddhabrot keeps accumulating on its own frames until it is stopped.
   if (_fractalGL && _fractalGL.stopBuddhabrot && _fractalHandleCanvas) _fractalGL.stopBuddhabrot(_fractalHandleCanvas);
+  if (_fcolour) _fcolour.stop();   // colour cycling stops with the source
   if (_fractalHandle) { try { _fractalHandle.dispose(); } catch (e) { console.error("[studio] fractal plugin dispose failed:", e); } }
   _fractalHandle = null; _fractalHandleCanvas = null;
 }
@@ -91,12 +92,29 @@ function drawFractalView(canvas, view, path) {
   return _fractalHandle.instance.lastError;
 }
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f2"),
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f4"),
     import("./media-engine/page.mjs").then(m => m.usePlugin("fractal")),
     import("./fractal-hp.js?v=20261009f1"), import("./studio-fractal-deep.js?v=20261009f2"),
-    import("./studio-fractal-formula.js?v=20261009f2")]),
-  ([f, g, e, hp, deep, form]) => {
+    import("./studio-fractal-formula.js?v=20261009f2"), import("./studio-fractal-colour.js?v=20261009f4"),
+    import("./studio-fractal-still.js?v=20261009f4")]),
+  ([f, g, e, hp, deep, form, colour, still]) => {
     _fractal = f; _fractalGL = g; _fractalEngine = e; _fhp = hp;
+    still.mountFractalStill({
+      getView: () => fractalView,
+      decorate: (v) => { const d = _fdeep ? _fdeep.decorate(v) : v; return { ...d, maxIter: Math.round(d.maxIter * currentQuality().iterMult) }; },
+      // Each strip draws on its own canvas through the GPU renderer, or the CPU one without WebGL.
+      draw: (sv, canvas) => { if (GL_AVAILABLE) { try { g.renderFractalGL(canvas, sv); return; } catch (err) { console.warn("[studio] still strip fell back to the CPU:", err); } } f.renderFractal(canvas, sv); },
+      stageAspect: () => { const c = $("studio-canvas"); return c && c.width ? c.height / c.width : 0.5625; },
+      say: (t) => say("model", t),
+    });
+    _fcolour = colour.mountFractalColour({
+      getView: () => fractalView,
+      setView: (v) => { fractalView = v; },
+      repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+      paintFast: () => { if (fractalView) paintFractal(fractalView, 1); },
+      say: (t) => say("model", t),
+      isActive: () => activeSource === "fractal",
+    });
     _fform = form.mountFractalFormula({
       getView: () => fractalView,
       setView: (v) => { fractalView = v; },
@@ -3183,6 +3201,7 @@ async function renderPreset() {
   fractalView = applyFractalRenderControls({ ...preset });
   fractalDefault = { ...fractalView };   // remember the default framing for Reset view
   if (_fform) _fform.sync(fractalView);
+  if (_fcolour) _fcolour.sync(fractalView);
   const canvas = paintFractal(fractalView);
   const obs = perceive(canvas);
   const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship",
@@ -7425,7 +7444,10 @@ const SHELL_CONTRACTS = {
       renderPreset();
     },
     primary: { label: "Render", target: "fractal-render", title: "Draw the chosen preset from its starting view" },
-    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" },
+      // Stills past any canvas, drawn in strips and streamed into a PNG (fractal-tiles.js).
+      { label: "4K still (PNG)", target: "fractal-still-4k" }, { label: "8K still (PNG)", target: "fractal-still-8k" },
+      { label: "16K still (PNG)", target: "fractal-still-16k" }],
     snapshot: () => (fractalView ? {
       view: fractalView, start: fractalDefault, type: activeFType, preset: fractalPresetEl.value,
       palette: activeFractalPalette, detail: ($("fractal-detail") || {}).value || "1",
@@ -7445,6 +7467,7 @@ const SHELL_CONTRACTS = {
       fractalDefault = state.start ? { ...state.start } : null;
       fractalView = { ...state.view };
       if (_fform) _fform.sync(fractalView);
+      if (_fcolour) _fcolour.sync(fractalView);
       const c = paintFractal(fractalView);
       try { perceive(c); } catch (_) {}
       startMeterLoop();
