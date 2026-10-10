@@ -1,0 +1,151 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "scene/Checking the light",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 2563200,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Sound for \"Checking the light\", from the scene's own timeline. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "91bd8e186877dcc0a3f38cfbcaa9a0dd2d21ff75675fa35af13e9bcaa714b46d"
+ },
+ "score": {
+  "root_hz": 73.416,
+  "sections": [
+   {
+    "at": 0,
+    "chord": [
+     0,
+     7,
+     12,
+     17
+    ]
+   },
+   {
+    "at": 750720,
+    "chord": [
+     0,
+     7,
+     12,
+     15
+    ]
+   },
+   {
+    "at": 1400640,
+    "chord": [
+     -4,
+     3,
+     8,
+     12
+    ]
+   },
+   {
+    "at": 2218560,
+    "chord": [
+     3,
+     10,
+     15,
+     19
+    ]
+   }
+  ],
+  "silences": []
+ },
+ "cues": [
+  {
+   "at": 335040,
+   "x": 960,
+   "gain_db": -12,
+   "type": "texture",
+   "n": 4096,
+   "dur": 3,
+   "why": "the reference's points gather into a field"
+  },
+  {
+   "at": 750720,
+   "x": 960,
+   "gain_db": -13,
+   "type": "move",
+   "x1": 560,
+   "dur": 1.6,
+   "why": "the reference moves left to make room"
+  },
+  {
+   "at": 1096320,
+   "x": 1360,
+   "gain_db": -12,
+   "type": "texture",
+   "n": 4096,
+   "dur": 2,
+   "why": "the fast estimate gathers on the right"
+  },
+  {
+   "at": 1400640,
+   "x": 960,
+   "gain_db": -13,
+   "type": "move",
+   "dur": 1.6,
+   "f0": 1200,
+   "f1": 500,
+   "why": "the two fields merge into their difference"
+  },
+  {
+   "at": 1439040,
+   "x": 960,
+   "gain_db": -10,
+   "type": "count",
+   "from": 1,
+   "to": 37996,
+   "per": 100,
+   "dur": 1.4,
+   "why": "the comparison bars grow"
+  },
+  {
+   "at": 1939200,
+   "x": 960,
+   "gain_db": -6,
+   "type": "motif",
+   "why": "hot mark: the certificate says refuted"
+  },
+  {
+   "at": 2208960,
+   "x": 960,
+   "gain_db": -7,
+   "type": "chapter",
+   "why": "section: the certificate"
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "depth_db": -6
+   },
+   "gain_db": -5.4294154595384185
+  },
+  "sfx": {
+   "gain_db": -8.00051645766366
+  }
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {},
+  "target_lufs": -16,
+  "ceiling_dbtp": -1.5,
+  "gain_db": 1.2650521373535533
+ }
+}
