@@ -26,7 +26,7 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-timeline";
+import { mountShell } from "./studio-shell-dom.js?v=20261010-flush-steps";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";

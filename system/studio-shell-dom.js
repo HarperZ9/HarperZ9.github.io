@@ -98,6 +98,7 @@ function exportMenu(ctx, c) {
 // Project files (studio-project.js): save what this browser keeps for every source; open one by
 // writing its sessions back and reloading onto its source, so each resumes as after a reload.
 function saveProject(ctx) {
+  flush(ctx, ctx.getSource());
   const doc = buildProject(ctx.store, Object.keys(ctx.contracts), ctx.getSource());
   doc.presets = ctx.presets.all(Object.keys(ctx.contracts));
   if (ctx.projectExtras && ctx.projectExtras.save) { try { Object.assign(doc, ctx.projectExtras.save(Object.keys(ctx.contracts))); } catch (err) { console.error("[studio-shell] project extras failed:", err); } }
@@ -181,6 +182,7 @@ function presetsBlock(ctx, source) {
   return d;
 }
 function applyPreset(ctx, source, p, note) {
+  flush(ctx, source);
   ctx.onMaking();
   apply(ctx, source, JSON.parse(JSON.stringify(p.state)));
   record(ctx, source, "preset " + p.name);
@@ -231,9 +233,20 @@ function sayKept(ctx, source) {
 }
 
 // History and keeping.
-function record(ctx, source, label) {
+// A step a source asked to record "soon" (a zoom settling, a redraw landing) is recorded now when
+// anything else is about to happen: another step, Undo or Redo, a preset, Start fresh, or leaving
+// the source. Without this, a quick switch or Undo inside the 400 ms window lost the step (found by
+// the condition-wait tests, 10 October 2026).
+function flush(ctx, source) {
+  const pending = ctx.timers.get(source);
+  if (!pending) return;
+  clearTimeout(pending.id);
+  ctx.timers.delete(source);
+  record(ctx, source, pending.label, { leaving: true });
+}
+function record(ctx, source, label, { leaving = false } = {}) {
   const c = ctx.contracts[source];
-  if (!c || !c.snapshot || ctx.restoring || source !== ctx.getSource()) return false;
+  if (!c || !c.snapshot || ctx.restoring || (!leaving && source !== ctx.getSource())) return false;
   let state = null;
   try { state = c.snapshot(); } catch (err) { console.error("[studio-shell] snapshot failed for " + source + ":", err); return false; }
   const changed = ctx.history.record(source, state, label);
@@ -277,6 +290,7 @@ function resume(ctx, source, { apply: applyKept = true } = {}) {
 function startFresh(ctx) {
   const s = ctx.getSource(), c = ctx.contracts[s];
   if (!c || !c.reset) return false;
+  flush(ctx, s);
   ctx.store.clear(s);
   ctx.kept.delete(s);
   ctx.restoring = true;
@@ -287,8 +301,8 @@ function startFresh(ctx) {
   sayKept(ctx, s);
   return true;
 }
-function undo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.undo(s)) : false; }
-function redo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.redo(s)) : false; }
+function undo(ctx) { const s = ctx.getSource(); flush(ctx, s); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.undo(s)) : false; }
+function redo(ctx) { const s = ctx.getSource(); flush(ctx, s); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.redo(s)) : false; }
 
 function wireKeys(ctx) {
   ctx.doc.addEventListener("keydown", (e) => {
@@ -315,20 +329,20 @@ export function mountShell({ doc = globalThis.document, rail, getSource, contrac
   const maxBytes = (typeof window !== "undefined" && window.__studioKeepMaxBytes) || undefined;
   const ctx = { doc, $, rail, getSource, contracts, onMaking,
     sw: $("source-switch"), menu: $("studio-source"), head: $("inspector-head"), bar: $("inspector-actions"),
-    history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports, projectExtras };
+    history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports, projectExtras, timers: new Map() };
   wireSwitch(ctx);
   wireKeys(ctx);
   markBarTargets(ctx);
   paintHead(ctx, getSource());
   paintBar(ctx, getSource());
   if (rail && !rail.dataset.sources) setOpen(ctx, false);
-  const timers = new Map();
   return {
-    sourceChanged(next) { paintHead(ctx, next); paintBar(ctx, next); },
-    record: (source, label) => record(ctx, source, label),
+    sourceChanged(next) { for (const s of [...ctx.timers.keys()]) if (s !== next) flush(ctx, s); paintHead(ctx, next); paintBar(ctx, next); },
+    record: (source, label) => { flush(ctx, source); return record(ctx, source, label); },
     recordSoon(source, label, ms = 400) {
-      clearTimeout(timers.get(source));
-      timers.set(source, setTimeout(() => record(ctx, source, label), ms));
+      const old = ctx.timers.get(source); if (old) clearTimeout(old.id);
+      const id = setTimeout(() => { ctx.timers.delete(source); record(ctx, source, label); }, ms);
+      ctx.timers.set(source, { id, label });
     },
     resume: (source, opts) => resume(ctx, source, opts),
     startFresh: () => startFresh(ctx),
