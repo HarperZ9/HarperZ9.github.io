@@ -30,6 +30,7 @@ import { mountShell } from "./studio-shell-dom.js?v=20261009-presets";
 import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
 import { mountPalette } from "./studio-palette.js?v=20261009-palette";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
+import { mountLayout } from "./studio-layout.js?v=20261009-layout";
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -259,6 +260,7 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
+let _layout = null;   // studio-layout.js, mounted with the shell
 // The Splat Lab draws its splat worlds in place with the Spatial renderer (9 October 2026): the two
 // sources share the renderer and its inspector, and the Splat Lab adds its own record.
 const isSpatial = (s) => s === "spatial" || s === "splats";
@@ -789,6 +791,7 @@ function setSource(next) {
   // The shell names the source, and swaps the action bar to this source's actions (studio-shell.js).
   if (_shell) _shell.sourceChanged(next);
   if (_readings) _readings.sourceChanged();
+  if (_layout) _layout.sourceChanged();
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
   if (next === "gallery") enterGallerySource(epoch);
@@ -7459,6 +7462,14 @@ mountDnd({
     put();
   },
   say: (t) => say("model", t),
+});
+
+// The stage gets the room (studio-layout.js): readings fold to a strip on making sources, the deck's
+// extra rows start folded; a change of column size refits the source on stage.
+_layout = mountLayout({
+  app: document.querySelector(".studio-app"), panel: $("studio-panel"), deckMore: $("deck-more"),
+  getSource: () => activeSource, storage: keepStorage,
+  onChange: () => { try { onStageResize(); } catch (_) {} },
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.
