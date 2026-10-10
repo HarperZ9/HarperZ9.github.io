@@ -17,6 +17,7 @@
 // so a view crossing from the float32 program into this one keeps its palette, relief and glow.
 
 import { RAMP_LIB, SHADE_LIB, ENCODE_LIB, BAILOUT2 } from "./fractal-glsl-lib.js";
+import { ORBIT_GLSL, COLOURIZE_GLSL, DECODE_GLSL } from "./fractal-colouring.js";
 
 export const DEEP_TEX_W = 2048;      // texels per row in the reference and BLA textures
 export const DEEP_MAX_LEVELS = 32;
@@ -91,9 +92,9 @@ uniform float u_flipY;
 uniform int   u_aa;
 uniform int   u_glitchView;     // 1: no rebasing, paint Pauldelbrot-flagged pixels in the mark colour
 uniform vec4  u_band;           // x0, y0, x1, y1 of the band this draw covers (for long frames)
-uniform vec3  u_pal[6];
 uniform vec3  u_tint;
 uniform vec3  u_mark;           // the glitch mark, linear light
+uniform vec2  u_cApprox;        // c to float precision, for the triangle inequality average
 
 const float BAILOUT2 = ${BAILOUT2.toFixed(1)};
 const float LOG2 = 0.69314718056;
@@ -102,6 +103,10 @@ const int   TEXW = ${DEEP_TEX_W};
 ${RAMP_LIB}
 ${SHADE_LIB}
 ${ENCODE_LIB}
+#define texture2D texture
+${DECODE_GLSL}${ORBIT_GLSL}${COLOURIZE_GLSL}
+float g_mu;
+bool  g_in;
 
 vec4 refAt(int m) { return texelFetch(u_ref, ivec2(m % TEXW, m / TEXW), 0); }
 vec4 blaAt(int i) { return texelFetch(u_bla, ivec2(i % TEXW, i / TEXW), 0); }
@@ -149,8 +154,11 @@ vec3 deepColor(vec2 pix) {
   vec2 z = R.xy + w * exp2(e);
   float trap = 1e20;
   bool glitch = false;
+  orbitInit();
+  g_in = false;
   bool rebase = u_glitchView == 0;
   while (n < u_maxIter) {
+    vec2 zq = z;
     bool took = false;
     ${useBLA ? `
     if (m > 0) {
@@ -170,7 +178,8 @@ vec3 deepColor(vec2 pix) {
         vec4 c0 = blaAt(b);
         if (!(ldz < c0.w)) break;
         vec4 c1 = blaAt(b + 1);
-        if (n + int(c1.w + 0.5) > u_maxIter) break;
+        // A step of length zero would never end the loop; a table that reads as zeros is no table.
+        if (int(c1.w + 0.5) < 1 || n + int(c1.w + 0.5) > u_maxIter) break;
         base = b; t0 = c0; t1 = c1;
       }
       if (base >= 0) {
@@ -202,7 +211,7 @@ vec3 deepColor(vec2 pix) {
     z = R.xy + dz;
     float r2 = dot(z, z);
     if (r2 > BAILOUT2) break;
-    if (!took) trap = min(trap, min(abs(z.x), abs(z.y)));
+    if (!took) { trap = min(trap, min(abs(z.x), abs(z.y))); orbitStep(z, zq, u_cApprox); }
     if (r2 < 1e-6 * dot(R.xy, R.xy)) glitch = true;     // Pauldelbrot's criterion
     vec2 zr = R.zw + dz;
     if (rebase && (dot(zr, zr) < dot(dz, dz) || m >= u_refLen)) {
@@ -214,19 +223,28 @@ vec3 deepColor(vec2 pix) {
     }
   }
   if (u_glitchView == 1 && glitch) return u_mark;
-  if (n >= u_maxIter) return vec3(0.0);
+  if (n >= u_maxIter) { g_in = true; return vec3(0.0); }
   float log_r = 0.5 * log(dot(z, z));
   float mu = float(n) - log(log_r / LOG2) / LOG2;
-  vec3 base = ramp(mu / 8.0);
+  g_mu = mu; g_z = z;
   float glow = exp(-trap * 4.0) * 0.30;
   ${kind === "burningship"
     ? "float shade = reliefDir(vec2(dot(z, u), dot(z, v) * exp2(clamp(fv - f, -100.0, 100.0))));"
     : "float shade = relief(z, u);"}
-  return holdGamut(base * shade + u_tint * trapWeight(glow));
+  // u is dz per pixel already, so the distance comes out in pixels with no view scale.
+  float dePx = exp2(log2(0.5 * sqrt(dot(z, z)) * log_r) - (log2(max(length(u), 1e-30)) + f));
+  return holdGamut(colourize(mu, shade, dePx, u_tint * trapWeight(glow)));
 }
 
 void main() {
   if (gl_FragCoord.x < u_band.x || gl_FragCoord.y < u_band.y || gl_FragCoord.x >= u_band.z || gl_FragCoord.y >= u_band.w) discard;
+  if (u_colourMode == 8) {
+    vec2 pix0 = gl_FragCoord.xy - 0.5 * u_resolution;
+    pix0.y *= u_flipY;
+    deepColor(pix0);
+    fragColor = g_in ? vec4(0.0) : packMu(g_mu);
+    return;
+  }
   int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);

@@ -126,7 +126,7 @@ export function paintAccumulation(canvas, acc, view, pal, ref = exposureOf(acc))
       r = tone(acc[i], ref[0], gamma); g = tone(acc[i + 1], ref[1], gamma); b = tone(acc[i + 2], ref[2], gamma);
     } else {
       const t = tone(acc[i], ref[0], gamma);
-      if (t <= 0) { r = g = b = 0; } else { rampLinear(lab, t * 5, col); r = col[0] * t; g = col[1] * t; b = col[2] * t; }
+      if (t <= 0) { r = g = b = 0; } else { rampLinear(lab, t * (lab.length - 1), col); r = col[0] * t; g = col[1] * t; b = col[2] * t; }
     }
     const d = ditherOffset(px, py);
     buf[p * 4] = encodeChannel(r, d); buf[p * 4 + 1] = encodeChannel(g, d); buf[p * 4 + 2] = encodeChannel(b, d); buf[p * 4 + 3] = 255;
@@ -153,7 +153,6 @@ uniform sampler2D u_acc;
 uniform vec3  u_ref;
 uniform float u_gamma;
 uniform int   u_nebula;
-uniform vec3  u_pal[6];
 out vec4 fragColor;
 ${RAMP_LIB}
 ${ENCODE_LIB}
@@ -162,7 +161,7 @@ void main() {
   vec4 a = texelFetch(u_acc, ivec2(gl_FragCoord.xy), 0);
   vec3 c;
   if (u_nebula == 1) c = vec3(tone(a.r, u_ref.r), tone(a.g, u_ref.g), tone(a.b, u_ref.b));
-  else { float t = tone(a.r, u_ref.r); c = t <= 0.0 ? vec3(0.0) : ramp(t * 5.0) * t; }
+  else { float t = tone(a.r, u_ref.r); c = t <= 0.0 ? vec3(0.0) : ramp(t * float(u_palN - 1)) * t; }
   fragColor = vec4(encodeOut(c, gl_FragCoord.xy), 1.0);
 }`;
 }

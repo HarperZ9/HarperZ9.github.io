@@ -14,6 +14,7 @@ import { viewCentre, decDiff } from "./fractal-hp.js";
 import { renderFormulaCPU, renderLyapunovCPU } from "./fractal-formula-cpu.js";
 import { FORMULA_TYPES } from "./fractal-formulas.js";
 import { BUDDHA_TYPES, renderBuddhabrotCPU } from "./fractal-buddhabrot.js";
+import { renderColouredCPU } from "./fractal-colouring-cpu.js";
 
 const LOG2 = Math.log(2);
 // Bailout R=256 (R^2=65536), needed for the smooth-coloring formula to be accurate.
@@ -175,6 +176,16 @@ export const PALETTES = {
 
 export { PRESETS } from "./fractal-presets.js";
 
+/**
+ * The stops a view draws with: its own gradient (2 to 16 sRGB byte triples, from the palette
+ * editor or an import) when it has one, else a named palette.
+ */
+export function paletteOf(view) {
+  const g = view && view.gradient;
+  if (Array.isArray(g) && g.length >= 2 && g.length <= 16 && g.every((s) => Array.isArray(s) && s.length === 3 && s.every((v) => v >= 0 && v <= 255))) return g;
+  return PALETTES[view && view.palette] || PAL_OCEAN;
+}
+
 // ── Renderer ─────────────────────────────────────────────────────────────────
 
 /**
@@ -197,12 +208,18 @@ export function renderFractal(canvas, opts) {
     jx = -0.8, jy = 0.156,
   } = opts || {};
 
-  const pal = PALETTES[palette] || PAL_OCEAN;
+  const pal = paletteOf(opts || {});
   if (FORMULA_TYPES.includes(type)) { renderFormulaCPU(canvas, { ...opts, cx, cy, scale, maxIter }, pal); return; }
   if (type === "lyapunov") { renderLyapunovCPU(canvas, { ...opts, cx, cy, scale, maxIter }, pal); return; }
   if (BUDDHA_TYPES.includes(type)) { renderBuddhabrotCPU(canvas, { ...opts, type, cx, cy, scale, maxIter }, pal); return; }
   if (["mandelbrot", "julia", "burningship"].includes(type) && cpuNeedsPerturbation({ ...opts, scale }, canvas.width)) {
     renderFractalDeepCPU(canvas, { ...opts, type, scale, maxIter, jx, jy }, pal);
+    return;
+  }
+  // Any colouring but the default goes through the colouring layer's CPU twin; the fast kernels
+  // below stay exactly the reference the preset tests pin.
+  if (opts && opts.colouring && opts.colouring.mode && opts.colouring.mode !== "smooth") {
+    renderColouredCPU(canvas, { ...opts, type, cx, cy, scale, maxIter, jx, jy }, pal);
     return;
   }
   const { lab, tint: glowTint } = preparePalette(pal);   // stops in OKLab, plus the lightest in linear

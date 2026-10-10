@@ -175,7 +175,9 @@ test("_palToFloats uploads OKLab stops, not linear RGB", () => {
   for (const name of PAL_NAMES) {
     const pal = PALETTES[name];
     const got = _palToFloats(name);
-    assert.equal(got.length, 18);
+    // Room for sixteen stops (the palette editor's limit); the built-ins use six.
+    assert.equal(got.length, 48);
+    assert.equal(got.n, 6);
     const { lab } = preparePalette(pal);
     for (let i = 0; i < 6; i++) {
       for (let k = 0; k < 3; k++) {
@@ -213,7 +215,8 @@ test("the GPU carries every step of the CPU recipe, in both precisions", () => {
     const src = _buildFragment("mandelbrot", precision);
     // The palette is read in OKLab and returned to light before anything is done with it.
     assert.ok(src.includes("vec3 oklabToLinear(vec3 lab)"), `${precision}: OKLab conversion present`);
-    assert.match(src, /uniform vec3\s+u_pal\[6\];/);
+    assert.match(src, /uniform vec3\s+u_pal\[16\];/);
+    assert.match(src, /uniform int\s+u_palN;/);
     // The tint travels separately, in linear light, because the glow adds it rather than mixing it.
     assert.match(src, /uniform vec3\s+u_tint;/);
     assert.ok(src.includes("const float TRAP_GAMMA = 2.2;"), `${precision}: same trap gamma as the CPU`);
@@ -221,7 +224,7 @@ test("the GPU carries every step of the CPU recipe, in both precisions", () => {
     assert.ok(src.includes("u_tint * trapWeight(glow)"), `${precision}: the glow is added as light`);
     // Highlight hold, then the single encode point.
     assert.ok(src.includes("vec3 holdGamut(vec3 c)"), `${precision}: highlight hold present`);
-    assert.ok(src.includes("holdGamut(base * relief("), `${precision}: hold wraps the shaded colour`);
+    assert.ok(src.includes("holdGamut(colourize(mu, shade,"), `${precision}: hold wraps the shaded colour`);
     assert.ok(src.includes("encodeOut("), `${precision}: dithered encode is the last step`);
   }
 });
@@ -233,6 +236,8 @@ test("the trap glow is emission, not a blend toward the tint", () => {
   for (const precision of ["single", "double"]) {
     const src = _buildFragment("mandelbrot", precision);
     assert.ok(!/mix\(\s*base[^)]*u_tint/.test(src), `${precision}: no blend toward the tint survives`);
-    assert.match(src, /base \* relief\(.*?\) \+ u_tint \* trapWeight\(glow\)/);
+    // The glow reaches colourize() as light, and the default mode adds it after the shading.
+    assert.match(src, /colourize\(mu, shade, dePx, u_tint \* trapWeight\(glow\)\)/);
+    assert.match(src, /return ramp\(mu \/ 8\.0 \* u_density \+ u_offset\) \* shade \+ glow;/);
   }
 });

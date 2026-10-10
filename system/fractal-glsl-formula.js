@@ -15,6 +15,7 @@
 
 import { RAMP_LIB, SHADE_LIB, ENCODE_LIB, MAX_ITERS } from "./fractal-glsl-lib.js";
 import { compileGLSL, COMPLEX_GLSL } from "./fractal-formula.js";
+import { ORBIT_GLSL, COLOURIZE_GLSL, DECODE_GLSL } from "./fractal-colouring.js";
 
 const g = (x) => { const s = String(+x); return /[.eE]/.test(s) ? (s.includes("e") && !s.includes(".") ? s.replace("e", ".0e") : s) : s + ".0"; };
 
@@ -56,7 +57,6 @@ uniform vec2  u_p;          // the formula's constants p and q
 uniform vec2  u_q;
 uniform float u_bailout2;
 uniform float u_degree;
-uniform vec3  u_pal[6];
 uniform vec3  u_tint;
 uniform int   u_aa;
 
@@ -67,6 +67,9 @@ ${RAMP_LIB}
 ${SHADE_LIB}
 ${ENCODE_LIB}
 ${COMPLEX_GLSL}
+${DECODE_GLSL}${ORBIT_GLSL}${COLOURIZE_GLSL}
+float g_mu;
+bool  g_in;
 
 // A smooth count for a converging orbit: the step that crossed the threshold, interpolated in log
 // size between the last step above it and the first below. Continuous in n whether the orbit
@@ -86,6 +89,10 @@ vec3 fractalColor(vec2 uv) {
   bool done = false;
   float trap = 1e20;
   float step2 = 1.0, prev2 = 1.0;
+  float dk = 0.0;             // rescales of the tangents, for the distance estimate
+  orbitInit();
+  o_deg = u_degree;
+  g_in = false;
   for (int i = 0; i < MAX_ITERS; i++) {
     if (i >= u_maxIter) break;
     ${converge ? "" : "if (dot(z, z) > u_bailout2) { done = true; break; }"}
@@ -96,17 +103,18 @@ vec3 fractalColor(vec2 uv) {
     if (!(abs(z.x) < 1e30 && abs(z.y) < 1e30)) { ${converge ? "" : "done = true;"} break; }
     ${converge
       ? "prev2 = step2; step2 = dot(z - zp, z - zp); if (step2 < 1e-9) { done = true; break; }"
-      : "trap = min(trap, min(abs(z.x), abs(z.y)));"}
-    if (max(dot(za, za), dot(zb, zb)) > 1e18) { za *= 1e-9; zb *= 1e-9; zpa *= 1e-9; zpb *= 1e-9; ts *= 1e-9; }
+      : "trap = min(trap, min(abs(z.x), abs(z.y))); orbitStep(z, zp, c);"}
+    if (max(dot(za, za), dot(zb, zb)) > 1e18) { za *= 1e-9; zb *= 1e-9; zpa *= 1e-9; zpb *= 1e-9; ts *= 1e-9; dk += 1.0; }
   }
-  if (!done) return vec3(0.0);
+  if (!done) { g_in = true; return vec3(0.0); }
   ${converge && rootColour(spec) ? `
   float nu = convergedCount(n, step2, prev2);
   float hue = atan(z.y, z.x) / 6.28318530718 + 0.5;
-  vec3 base = ramp(hue * 6.0 + 0.5);
+  vec3 base = ramp(hue * float(u_palN) + 0.5);
   // Newton converges in a handful of steps inside a basin and slowly near its boundary, so the
   // brightness falls with the smoothed count and the boundary draws itself in shade.
-  float bright = 1.6 * exp(-0.2 * max(nu, 0.0)) + 0.05;
+  // Rings at each whole step of the smoothed count show how the basins nest toward their edges.
+  float bright = (1.6 * exp(-0.2 * max(nu, 0.0)) + 0.05) * (0.78 + 0.22 * cos(6.28318530718 * nu));
   return holdGamut(base * bright);` : converge ? `
   // Where c is in the formula (Nova), each pixel settles on its own point, so there is no root to
   // name; the speed of settling is the picture, cycled through the palette as escape counts are.
@@ -114,13 +122,24 @@ vec3 fractalColor(vec2 uv) {
   return ramp(nu / 6.0);` : `
   float log_r = 0.5 * log(dot(z, z));
   float mu = float(n) - log(max(log_r / LOG2, 1e-6)) / log(u_degree);
-  vec3 base = ramp(mu / 8.0);
+  g_mu = mu; g_z = z;
   float glow = exp(-trap * 4.0) * 0.30;
-  return holdGamut(base * reliefDir(vec2(dot(z, za), dot(z, zb))) + u_tint * trapWeight(glow));`}
+  float shade = reliefDir(vec2(dot(z, za), dot(z, zb)));
+  // Distance in pixels from the larger Jacobian column, with the rescales put back.
+  float dePx = exp2(log2(0.5 * sqrt(dot(z, z)) * log_r) - log2(max(max(length(za), length(zb)), 1e-30))
+                    - dk * 29.8973529 - log2(u_scale / u_resolution.x));
+  return holdGamut(colourize(mu, shade, dePx, u_tint * trapWeight(glow)));`}
 }
 
 void main() {
   float aspect = u_resolution.y / u_resolution.x;
+  if (u_colourMode == 8) {
+    vec2 ndc0 = gl_FragCoord.xy / u_resolution - 0.5;
+    g_mu = 0.0;
+    fractalColor(vec2(u_center.x + ndc0.x * u_scale, u_center.y + ndc0.y * u_scale * aspect));
+    gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu);
+    return;
+  }
   int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);

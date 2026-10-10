@@ -23,15 +23,17 @@
 // returns true. Throws a clear Error if WebGL is unavailable or the program fails to compile/link,
 // and the Studio catches that and falls back to the CPU renderFractal().
 
-import { PALETTES } from "./fractal.js";
+import { PALETTES, paletteOf } from "./fractal.js";
 import { preparePalette } from "./fractal-color.js";
 import { VERT, MAX_ITERS, DS_LIB, buildFragment } from "./fractal-glsl.js";
+import { MAX_STOPS } from "./fractal-glsl-lib.js";
 import { renderDeep, DEEP_MIN_SCALE } from "./fractal-gl-deep.js";
 import { renderFormulaGL, renderLyapunovGL } from "./fractal-gl-formula.js";
 import { FORMULA_TYPES } from "./fractal-formulas.js";
 import { BUDDHA_TYPES, buildBuddhaDisplay } from "./fractal-buddhabrot.js";
 import { runBuddhabrot, stopBuddhabrot, buddhaSupported } from "./fractal-gl-buddhabrot.js";
 import { RAMP_LIB, ENCODE_LIB } from "./fractal-glsl-lib.js";
+import { drawColoured } from "./fractal-gl-colour.js";
 
 // Formulas the perturbation path draws. Every other formula stays on the float32 and df64 programs.
 const DEEP_TYPES = new Set(["mandelbrot", "julia", "burningship", "tricorn"]);
@@ -96,22 +98,24 @@ function compile(gl, type, src) {
 // interpolates between them and a palette gradient is read rather than integrated. preparePalette()
 // in fractal-color.js does the conversion, and is the same call the CPU renderer makes, which is
 // what keeps the two images the same colour. It caches per palette, so this costs one map per frame.
-function palToFloats(palName) {
-  const pal = PALETTES[palName] || PALETTES.ocean;
+function palToFloats(palName, gradient) {
+  const pal = paletteOf({ palette: palName, gradient });
   const { lab } = preparePalette(pal);
-  const out = new Float32Array(18);
-  for (let i = 0; i < 6; i++) {
-    const s = lab[Math.min(i, lab.length - 1)];
+  const n = Math.max(2, Math.min(MAX_STOPS, lab.length));
+  const out = new Float32Array(MAX_STOPS * 3);
+  for (let i = 0; i < n; i++) {
+    const s = lab[i];
     out[i * 3 + 0] = s[0];
     out[i * 3 + 1] = s[1];
     out[i * 3 + 2] = s[2];
   }
+  out.n = n;   // how many stops are in use; the shader's u_palN
   return out;
 }
 
 // The trap glow ADDS the lightest stop as light, so that one stop is also needed in linear light.
-function tintToFloats(palName) {
-  const { tint } = preparePalette(PALETTES[palName] || PALETTES.ocean);
+function tintToFloats(palName, gradient) {
+  const { tint } = preparePalette(paletteOf({ palette: palName, gradient }));
   return new Float32Array(tint);
 }
 
@@ -219,7 +223,7 @@ export function renderFractalGL(canvas, opts) {
   // The Buddhabrot accumulates over many frames on its own engine; any other view stops it.
   if (BUDDHA_TYPES.includes(type)) {
     if (!canvas.__fractalGL2 || !buddhaSupported(gl)) throw new Error("the GPU Buddhabrot needs WebGL2 with float render targets");
-    runBuddhabrot(gl, canvas, { ...opts, cx, cy, scale, maxIter }, buildBuddhaDisplay(RAMP_LIB, ENCODE_LIB), { pal: palToFloats(palette) });
+    runBuddhabrot(gl, canvas, { ...opts, cx, cy, scale, maxIter }, buildBuddhaDisplay(RAMP_LIB, ENCODE_LIB), { pal: palToFloats(palette, opts.gradient) });
     canvas.__fractalPrecisionUsed = "single";
     return true;
   }
@@ -237,7 +241,7 @@ export function renderFractalGL(canvas, opts) {
     || (precision === "auto" && (mode === "exhausted" || (mode === "double" && maxIter > MAX_ITERS)));
   if (wantDeep && deepType && canvas.__fractalGL2 && hasUsableHighp(gl)) {
     renderDeep(gl, canvas, { ...opts, type: deepType, scale: Math.max(DEEP_MIN_SCALE, scale) }, {
-      pal: palToFloats(palette), tint: tintToFloats(palette),
+      pal: palToFloats(palette, opts.gradient), tint: tintToFloats(palette, opts.gradient),
     }, { aa: Math.max(1, Math.min(4, Math.round(aa))), glitchView: !!opts.glitchView, bla: opts.bla });
     canvas.__fractalPrecisionUsed = "perturbation";
     return true;
@@ -246,7 +250,7 @@ export function renderFractalGL(canvas, opts) {
   // Formulas past the three hand-written kernels, and the Lyapunov fractal: programs generated
   // from the formula's syntax tree (fractal-gl-formula.js), in float32.
   if (FORMULA_TYPES.includes(type) || type === "lyapunov") {
-    const colour = { pal: palToFloats(palette), tint: tintToFloats(palette) };
+    const colour = { pal: palToFloats(palette, opts.gradient), tint: tintToFloats(palette, opts.gradient) };
     const a = Math.max(1, Math.min(4, Math.round(aa)));
     if (type === "lyapunov") renderLyapunovGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
     else renderFormulaGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
@@ -279,8 +283,10 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform1f(P.u.scale, scale);
   gl.uniform1i(P.u.maxIter, Math.max(1, Math.min(MAX_ITERS, Math.round(maxIter))));
   gl.uniform1f(P.u.flipY, ftype === "burningship" ? -1 : 1);
-  gl.uniform3fv(P.u.pal, palToFloats(palette));
-  gl.uniform3fv(P.u.tint, tintToFloats(palette));
+  const palF = palToFloats(palette, opts.gradient);
+  gl.uniform3fv(P.u.pal, palF);
+  gl.uniform1i(gl.getUniformLocation(P.prog, "u_palN"), palF.n);
+  gl.uniform3fv(P.u.tint, tintToFloats(palette, opts.gradient));
   gl.uniform1i(P.u.aa, effAA);
   // Coordinates in both forms; the variant that isn't compiled has null locations and ignores its set.
   gl.uniform2f(P.u.center, cx, cy);
@@ -293,7 +299,7 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform2f(P.u.juliaY, jyHi, jyLo);
   gl.uniform1f(P.u.one, 1.0);   // the df64 optimizer barrier; null (and ignored) in the single program
 
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  drawColoured(gl, P.prog, opts, w, h);
   // Record what actually ran, not what was wanted. On a device whose fragment shaders demote highp
   // the deep program is refused and this stays "single", which is the difference between the Studio
   // telling the truth about the frame and making a claim the hardware did not honour.

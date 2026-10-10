@@ -11,6 +11,13 @@
 // dither on the way to 8 bits.
 
 import { VERT, MAX_ITERS, BAILOUT2, DS_LIB, RAMP_LIB, SHADE_LIB, ENCODE_LIB } from "./fractal-glsl-lib.js";
+import { ORBIT_GLSL, COLOURIZE_GLSL, DECODE_GLSL } from "./fractal-colouring.js";
+
+// The colouring layer every program shares (fractal-colouring.js), plus the globals main() reads
+// back for the histogram's first pass.
+const COLOUR_BLOCK = `${DECODE_GLSL}${ORBIT_GLSL}${COLOURIZE_GLSL}
+float g_mu;
+bool  g_in;`;
 
 // Re-exported so a consumer needs one import for the whole shader layer.
 export { VERT, MAX_ITERS, BAILOUT2, DS_LIB, RAMP_LIB, SHADE_LIB, ENCODE_LIB };
@@ -65,7 +72,6 @@ uniform float u_scale;      // width of the view in complex units
 uniform int   u_maxIter;
 uniform vec2  u_julia;      // jx, jy (Julia only)
 uniform float u_flipY;      // +1, or -1 for Burning Ship (matches fractal.js vertical reflection)
-uniform vec3  u_pal[6];     // palette stops in OKLab; ramp() converts back to linear light
 uniform vec3  u_tint;       // the lightest stop, kept in LINEAR light for the additive trap glow
 uniform int   u_aa;         // supersampling samples per axis (1..4); SSAA for the cleanest signal
 
@@ -76,6 +82,7 @@ const float LOG2      = 0.69314718056;
 ${RAMP_LIB}
 ${SHADE_LIB}
 ${ENCODE_LIB}
+${COLOUR_BLOCK}
 
 // Per-sample fractal color at one complex coordinate, in LINEAR light. Extracted so main() can
 // average several sub-pixel samples for supersampled anti-aliasing, and averaging in linear light is
@@ -85,34 +92,52 @@ vec3 fractalColor(vec2 uv) {
   ${cExpr}
   int n = 0;
   float trap = 1e20;          // cross orbit trap: min(|re|,|im|)
+  float dk = 0.0;             // how many times dz was rescaled by 1e-9 (the distance estimate needs it)
+  orbitInit();
+  g_in = false;
   for (int i = 0; i < MAX_ITERS; i++) {
     if (i >= u_maxIter) break;
     if (dot(z, z) > BAILOUT2) break;
+    vec2 zprev = z;
     ${stepBody}
     trap = min(trap, min(abs(z.x), abs(z.y)));
+    orbitStep(z, zprev, c);
     // The derivative grows like 2^n and would reach float32's ceiling well before 2000 iterations.
     // Rescaling dz and its additive seed by the SAME factor leaves the represented derivative's
-    // DIRECTION exact, and direction is all the shading reads.
-    if (dot(dz, dz) > 1e18) { dz *= 1e-9; dseed *= 1e-9; }
+    // DIRECTION exact, and direction is all the shading reads. dk counts the rescales, so the
+    // distance estimate can put the magnitude back in log space.
+    if (dot(dz, dz) > 1e18) { dz *= 1e-9; dseed *= 1e-9; dk += 1.0; }
     n++;
   }
-  if (n >= u_maxIter) return vec3(0.0);   // interior: black (matches fractal.js)
+  if (n >= u_maxIter) { g_in = true; return vec3(0.0); }   // interior: black (matches fractal.js)
   // Smooth coloring: mu = n - log( log|z| / ln2 ) / ln2  (fractal.js uses the same form).
   float r2 = dot(z, z);
   float log_r = 0.5 * log(r2);
   float mu = float(n) - log(log_r / LOG2) / LOG2;
-  vec3 base = ramp(mu / 8.0);              // same cycle density as the CPU path
+  g_mu = mu;
+  g_z = z;
   // Orbit-trap cross glow, exp(-trap*4) at 30% of the lightest stop (u_tint).
   float glow = exp(-trap * 4.0) * 0.30;
   // Added as emission rather than blended over the base. A blend pulls every lit pixel toward the
   // lightest stop, which drains the palette wherever the trap is weak, and the trap is weak across
   // most of a frame. Adding light leaves the base hue alone where the glow is faint and still prints
   // the filament where it is strong.
-  return holdGamut(base * ${type === "burningship" ? "reliefDir(vec2(dot(z, dz), dot(z, dzy)))" : "relief(z, dz)"} + u_tint * trapWeight(glow));
+  float shade = ${type === "burningship" ? "reliefDir(vec2(dot(z, dz), dot(z, dzy)))" : "relief(z, dz)"};
+  // Distance to the set in pixels, |z| ln|z| / (2 |dz|), with the rescales put back in log space.
+  float dePx = exp2(log2(0.5 * sqrt(r2) * log_r) - log2(max(length(dz), 1e-30)) - dk * 29.8973529
+                    - log2(u_scale / u_resolution.x));
+  return holdGamut(colourize(mu, shade, dePx, u_tint * trapWeight(glow)));
 }
 
 void main() {
   float aspect = u_resolution.y / u_resolution.x;
+  // The histogram's first pass: mu itself, packed in 24 bits, for the pixel centre.
+  if (u_colourMode == 8) {
+    vec2 ndc0 = gl_FragCoord.xy / u_resolution - 0.5;
+    fractalColor(vec2(u_center.x + ndc0.x * u_scale, u_center.y + u_flipY * ndc0.y * u_scale * aspect));
+    gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu);
+    return;
+  }
   int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);
@@ -175,7 +200,6 @@ uniform int   u_maxIter;
 uniform vec2  u_juliaX;     // jx as a df64 pair (Julia only)
 uniform vec2  u_juliaY;     // jy as a df64 pair (Julia only)
 uniform float u_flipY;      // +1, or -1 for Burning Ship (matches fractal.js vertical reflection)
-uniform vec3  u_pal[6];     // palette stops in OKLab; ramp() converts back to linear light
 uniform vec3  u_tint;       // the lightest stop, kept in LINEAR light for the additive trap glow
 uniform int   u_aa;         // supersampling samples per axis (1..4)
 
@@ -186,6 +210,7 @@ ${DS_LIB}
 ${RAMP_LIB}
 ${SHADE_LIB}
 ${ENCODE_LIB}
+${COLOUR_BLOCK}
 
 // Per-sample fractal color at one df64 complex coordinate (ux + i*uy), in LINEAR light.
 vec3 fractalColor(vec2 ux, vec2 uy) {
@@ -193,6 +218,9 @@ vec3 fractalColor(vec2 ux, vec2 uy) {
   ${cInit}
   int n = 0;
   float trap = 1e20;          // cross orbit trap: min(|re|,|im|), read off the hi limbs
+  float dk = 0.0;             // rescales of dz, for the distance estimate
+  orbitInit();
+  g_in = false;
   for (int i = 0; i < MAX_ITERS; i++) {
     if (i >= u_maxIter) break;
     ${dFold}
@@ -204,27 +232,39 @@ vec3 fractalColor(vec2 ux, vec2 uy) {
     ${dStep}
     vec2 nx = dsAdd(dsAdd(xx, -yy), cx);            // x^2 - y^2 + cx
     vec2 ny = dsAdd(dsMul(dsAdd(zx, zx), zy), cy);  // 2xy + cy
+    vec2 zprevh = vec2(zx.x, zy.x);
     zx = nx; zy = ny;
     trap = min(trap, min(abs(zx.x), abs(zy.x)));
-    if (dot(dz, dz) > 1e18) { dz *= 1e-9; dseed *= 1e-9; }
+    orbitStep(vec2(zx.x, zy.x), zprevh, vec2(cx.x, cy.x));
+    if (dot(dz, dz) > 1e18) { dz *= 1e-9; dseed *= 1e-9; dk += 1.0; }
     n++;
   }
-  if (n >= u_maxIter) return vec3(0.0);   // interior: black (matches fractal.js)
+  if (n >= u_maxIter) { g_in = true; return vec3(0.0); }   // interior: black (matches fractal.js)
   // Smooth coloring reads the hi limbs: |z| is O(bailout) here, so float32 is ample for a log.
   float r2 = zx.x * zx.x + zy.x * zy.x;
   float log_r = 0.5 * log(r2);
   float mu = float(n) - log(log_r / LOG2) / LOG2;
-  vec3 base = ramp(mu / 8.0);
+  g_mu = mu;
+  g_z = vec2(zx.x, zy.x);
   float glow = exp(-trap * 4.0) * 0.30;
   // Added as emission rather than blended over the base. A blend pulls every lit pixel toward the
   // lightest stop, which drains the palette wherever the trap is weak, and the trap is weak across
   // most of a frame. Adding light leaves the base hue alone where the glow is faint and still prints
   // the filament where it is strong.
-  return holdGamut(base * ${type === "burningship" ? "reliefDir(vec2(dot(vec2(zx.x, zy.x), dz), dot(vec2(zx.x, zy.x), dzy)))" : "relief(vec2(zx.x, zy.x), dz)"} + u_tint * trapWeight(glow));
+  float shade = ${type === "burningship" ? "reliefDir(vec2(dot(vec2(zx.x, zy.x), dz), dot(vec2(zx.x, zy.x), dzy)))" : "relief(vec2(zx.x, zy.x), dz)"};
+  float dePx = exp2(log2(0.5 * sqrt(r2) * log_r) - log2(max(length(dz), 1e-30)) - dk * 29.8973529
+                    - log2(u_scale / u_resolution.x));
+  return holdGamut(colourize(mu, shade, dePx, u_tint * trapWeight(glow)));
 }
 
 void main() {
   float aspect = u_resolution.y / u_resolution.x;
+  if (u_colourMode == 8) {
+    vec2 ndc0 = gl_FragCoord.xy / u_resolution - 0.5;
+    fractalColor(dsAdd(u_centerX, vec2(ndc0.x * u_scale, 0.0)), dsAdd(u_centerY, vec2(u_flipY * ndc0.y * u_scale * aspect, 0.0)));
+    gl_FragColor = g_in ? vec4(0.0) : packMu(g_mu);
+    return;
+  }
   int aa = u_aa < 1 ? 1 : (u_aa > 4 ? 4 : u_aa);
   float inv = 1.0 / float(aa);
   vec3 acc = vec3(0.0);

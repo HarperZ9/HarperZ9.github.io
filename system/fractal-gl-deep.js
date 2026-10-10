@@ -12,6 +12,8 @@
 import { buildBLA, packBLA, hasBLA, BLA_TEXELS, chooseReference } from "./fractal-perturb.js";
 import { viewCentre, decDiff, bitsForScale } from "./fractal-hp.js";
 import { buildDeepFragment, DEEP_VERT, DEEP_TEX_W, DEEP_MAX_LEVELS } from "./fractal-glsl-deep.js";
+import { drawColoured } from "./fractal-gl-colour.js";
+import { colourSettings } from "./fractal-colouring.js";
 
 export const DEEP_MAX_ITERS = 1000000;
 export const DEEP_MIN_SCALE = 1e-300;   // a JS double holds the view width down to here
@@ -40,7 +42,7 @@ function program(gl, st, kind, bla) {
   gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error("fractal deep link failed: " + gl.getProgramInfoLog(prog));
   const names = ["u_ref", "u_bla", "u_refLen", "u_maxIter", "u_blaLevels", "u_blaOffset[0]", "u_blaCount[0]",
-    "u_resolution", "u_refOffset", "u_m0", "u_e0", "u_flipY", "u_aa", "u_glitchView", "u_band", "u_pal[0]", "u_tint", "u_mark"];
+    "u_resolution", "u_refOffset", "u_m0", "u_e0", "u_flipY", "u_aa", "u_glitchView", "u_band", "u_pal[0]", "u_tint", "u_mark", "u_cApprox"];
   const u = {};
   for (const n of names) u[n.replace("[0]", "")] = gl.getUniformLocation(prog, n);
   st.progs[key] = { prog, u };
@@ -121,7 +123,10 @@ export function renderDeep(gl, canvas, view, colour, opts = {}) {
   }
 
   // BLA: built for the largest |dc| in the view; rebuilt when the view outgrows it.
-  const useBLA = hasBLA(kind) && opts.bla !== false;
+  // Orbit traps and the triangle inequality average read every iterate, so BLA, which skips them,
+  // is off for those colourings (modes 2 to 6).
+  const cmode = colourSettings(view).mode;
+  const useBLA = hasBLA(kind) && opts.bla !== false && !(cmode >= 2 && cmode <= 6);
   let blaMs = 0;
   const halfDiag = 0.5 * Math.hypot(w, h) * pixelStep;
   const lDc = julia ? -Infinity : Math.log2(Math.hypot(offX, offY) + halfDiag);
@@ -162,6 +167,7 @@ export function renderDeep(gl, canvas, view, colour, opts = {}) {
   gl.uniform1i(u.u_aa, Math.max(1, Math.min(4, Math.round(opts.aa || 1))));
   gl.uniform1i(u.u_glitchView, opts.glitchView ? 1 : 0);
   gl.uniform3fv(u.u_pal, colour.pal);
+  gl.uniform1i(gl.getUniformLocation(P.prog, "u_palN"), colour.pal.n || 6);
   gl.uniform3fv(u.u_tint, colour.tint);
   gl.uniform3f(u.u_mark, 1.0, 0.18, 0.02);
 
@@ -170,12 +176,15 @@ export function renderDeep(gl, canvas, view, colour, opts = {}) {
   const cost = w * h * Math.min(maxIter, 20000) * Math.max(1, (opts.aa || 1) ** 2);
   const bands = Math.max(1, Math.min(h, Math.ceil(cost / 4e8)));
   const rows = Math.ceil(h / bands);
+  gl.uniform2f(u.u_cApprox, julia ? +jRe : view.cx, julia ? +jIm : view.cy);
   const t2 = performance.now();
-  for (let y = 0; y < h; y += rows) {
-    gl.uniform4f(u.u_band, 0, y, w, Math.min(h, y + rows));
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-    if (bands > 1) gl.flush();
-  }
+  drawColoured(gl, P.prog, view, w, h, () => {
+    for (let y = 0; y < h; y += rows) {
+      gl.uniform4f(u.u_band, 0, y, w, Math.min(h, y + rows));
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      if (bands > 1) gl.flush();
+    }
+  });
   const stats = {
     path: "perturbation", kind, maxIter, refLen: ref.len, refBits: ref.bits, refMs, blaMs,
     blaEntries: useBLA && st.bla ? st.bla.entries : 0, blaLevels: lv.length, bands,

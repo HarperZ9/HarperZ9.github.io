@@ -113,7 +113,12 @@ vec2 dsAbs(vec2 a) { return a.x < 0.0 ? -a : a; }
 // saturation lift, and clipped in L, where it would mean a lightness below black.
 //
 // Shared verbatim by both precision variants so the two programs colour identically.
+export const MAX_STOPS = 16;
 export const RAMP_LIB = `
+// The palette: up to 16 stops in OKLab, u_palN of them in use (the built-in palettes have 6).
+uniform vec3 u_pal[16];
+uniform int  u_palN;
+
 // OKLab -> linear sRGB. Only this direction is needed on the GPU; the stops are converted once per
 // frame on the CPU. Components are clipped at zero because a spline through OKLab can leave the sRGB
 // gamut, and negative radiance has no meaning downstream.
@@ -130,22 +135,25 @@ vec3 oklabToLinear(vec3 lab) {
 
 // WebGL1 forbids dynamic indexing of a uniform array, so the fetch is a branch ladder.
 vec3 palStop(int i) {
-  if (i == 0)      return u_pal[0];
-  else if (i == 1) return u_pal[1];
-  else if (i == 2) return u_pal[2];
-  else if (i == 3) return u_pal[3];
-  else if (i == 4) return u_pal[4];
-  return u_pal[5];
+  if (i < 8) {
+    if (i < 4) { if (i == 0) return u_pal[0]; if (i == 1) return u_pal[1]; if (i == 2) return u_pal[2]; return u_pal[3]; }
+    if (i == 4) return u_pal[4]; if (i == 5) return u_pal[5]; if (i == 6) return u_pal[6]; return u_pal[7];
+  }
+  if (i < 12) { if (i == 8) return u_pal[8]; if (i == 9) return u_pal[9]; if (i == 10) return u_pal[10]; return u_pal[11]; }
+  if (i == 12) return u_pal[12]; if (i == 13) return u_pal[13]; if (i == 14) return u_pal[14]; return u_pal[15];
 }
 
+// t is in stops: t = 1.0 is exactly the second stop, and the ramp wraps after the last one.
 vec3 ramp(float t) {
-  t = mod(t, 6.0);
-  if (t < 0.0) t += 6.0;
+  float N = float(u_palN);
+  t = mod(t, N);
+  if (t < 0.0) t += N;
+  int n = u_palN;
   int i = int(floor(t));
   float f = t - floor(t);
-  int ia = i  == 0 ? 5 : i  - 1;
-  int ic = i  == 5 ? 0 : i  + 1;
-  int id = ic == 5 ? 0 : ic + 1;
+  int ia = i  == 0 ? n - 1 : i  - 1;
+  int ic = i  == n - 1 ? 0 : i  + 1;
+  int id = ic == n - 1 ? 0 : ic + 1;
   vec3 p0 = palStop(ia), p1 = palStop(i), p2 = palStop(ic), p3 = palStop(id);
   float f2 = f * f;
   float f3 = f2 * f;

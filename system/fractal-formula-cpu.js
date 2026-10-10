@@ -58,8 +58,8 @@ export function renderFormulaCPU(canvas, opts, pal) {
     if (spec.mode === "converge") {
       const nu = convergedCount(r.n, r.step2, r.prev2);
       const hue = Math.atan2(r.zy, r.zx) / (2 * Math.PI) + 0.5;
-      rampLinear(lab, hue * 6 + 0.5, col);
-      const bright = 1.6 * Math.exp(-0.2 * Math.max(nu, 0)) + 0.05;
+      rampLinear(lab, hue * lab.length + 0.5, col);
+      const bright = (1.6 * Math.exp(-0.2 * Math.max(nu, 0)) + 0.05) * (0.78 + 0.22 * Math.cos(2 * Math.PI * nu));
       col[0] *= bright; col[1] *= bright; col[2] *= bright;
       return true;
     }
@@ -88,7 +88,7 @@ export function renderLyapunovCPU(canvas, opts, pal) {
     const l = lyapunovExponent(a, b, seq, iters, warm, opts.x0 ?? 0.5);
     if (l < 0) {
       const t = 1 - Math.exp(l * 1.6);
-      rampLinear(lab, t * 5, col);
+      rampLinear(lab, t * (lab.length - 1), col);
       const k = 0.55 + 0.6 * t;
       col[0] *= k; col[1] *= k; col[2] *= k;
     } else {
