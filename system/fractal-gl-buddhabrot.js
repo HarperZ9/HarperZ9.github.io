@@ -170,9 +170,14 @@ function createEngine(gl, canvas, view, displayFrag, colour, key) {
   function unbindAttrs(p, names) { for (const n of names) { const l = loc(p, n); if (l >= 0) gl.disableVertexAttribArray(l); } }
 
   // One batch: candidates, escape counts, compaction, then every step of the kept orbits.
-  const BATCH = Math.max(1 << 14, Math.min(BATCH_MAX, target));
+  // Batch size adapts to the device: it starts at 2^15 and doubles while an escape pass takes
+  // under 40 ms, up to 2^20. A software renderer then keeps answering between batches instead of
+  // freezing the page for a minute on its first one, and a fast GPU still reaches full size.
+  let BATCH = 1 << 15;
+  const keepMin = KEEP_MIN;
   // One escape pass over a fresh set of candidates: returns the kept c and their counts.
   function escapePass() {
+    const te = performance.now();
     const rand = rng(1 + batches * 7919 + (view.seed || 0) * 104729);
     const cand = new Float32Array(BATCH * 2);
     for (let i = 0; i < BATCH; i++) {
@@ -200,8 +205,12 @@ function createEngine(gl, canvas, view, displayFrag, colour, key) {
     gl.bindBuffer(gl.ARRAY_BUFFER, outN);
     gl.getBufferSubData(gl.ARRAY_BUFFER, 0, ns);
     batches++; drawn += BATCH;
+    // The read-back waits for the pass, so this is its true cost.
+    const passMs = performance.now() - te;
+    const size = BATCH;
+    if (passMs < 40 && BATCH < BATCH_MAX) BATCH *= 2;
     const c = [], n = [];
-    for (let i = 0; i < BATCH; i++) { const k = ns[i]; if (k < lim.max && k >= lim.min) { c.push(cand[2 * i], cand[2 * i + 1]); n.push(k); } }
+    for (let i = 0; i < size; i++) { const k = ns[i]; if (k < lim.max && k >= lim.min) { c.push(cand[2 * i], cand[2 * i + 1]); n.push(k); } }
     return { c, n };
   }
 
@@ -214,7 +223,7 @@ function createEngine(gl, canvas, view, displayFrag, colour, key) {
       const r = escapePass();
       for (const v of r.c) c.push(v);
       for (const v of r.n) n.push(v);
-    } while (n.length < KEEP_MIN && drawn < target && performance.now() - t < 200);
+    } while (n.length < keepMin && drawn < target && performance.now() - t < 200);
     const count = n.length;
     if (!count) return;
     // Longest first: at step k the orbits still running are a prefix of the buffer, and each
@@ -309,7 +318,9 @@ function createEngine(gl, canvas, view, displayFrag, colour, key) {
     if (!canvas.isConnected) { stop(); return; }
     const t = performance.now();
     // Spend about 40 ms of work per frame, at least one batch.
-    do { batch(); } while (drawn < target && performance.now() - t < 40);
+    do {
+      batch();
+    } while (drawn < target && performance.now() - t < 40);
     if (performance.now() - lastExposure > 400 || drawn >= target) { measure(); lastExposure = performance.now(); }
     display();
     lastMs = performance.now() - t0;

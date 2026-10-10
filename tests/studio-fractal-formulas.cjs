@@ -62,7 +62,9 @@ const click = (page, sel) => page.evaluate((s) => document.querySelector(s).clic
         }
 
         // The Buddhabrot accumulates and says so; it finishes, and it stops when another type draws.
-        await click(page, '[data-ftype="buddhabrot"]');
+        await click(page, '[data-ftype="buddhabrot"]'); await wait(page, 500);
+        // One million orbits keeps this quick on a software renderer; the budget is the slider's.
+        await page.evaluate(() => { const s = document.getElementById('fractal-orbits'); s.value = '1'; s.dispatchEvent(new Event('change', { bubbles: true })); });
         await page.waitForFunction(() => /done in/.test(document.getElementById('fractal-deep-readout').textContent) || /CPU/.test(document.getElementById('fractal-deep-readout').textContent), null, { timeout: 180000 });
         const br = await page.textContent('#fractal-deep-readout');
         assert.match(br, /Buddhabrot on the GPU: .* million orbits sampled|CPU/, `${tag} the Buddhabrot readout: ${br}`);
