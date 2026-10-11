@@ -11,114 +11,176 @@ Don't take it on trust.
 A paper reports an effect.
 
 4
-00:00:06,940 --> 00:00:11,100
-The statistics say it is unlikely to be chance, and the journal published it.
+00:00:06,940 --> 00:00:09,571
+The statistics say it is unlikely
+to be chance,
 
 5
-00:00:11,700 --> 00:00:16,580
-You can trust the paper, or you can run the study again and see whether the effect
-comes back.
+00:00:09,571 --> 00:00:11,100
+and the journal published it.
 
 6
+00:00:11,700 --> 00:00:13,164
+You can trust the paper,
+
+7
+00:00:13,164 --> 00:00:16,580
+or you can run the study again and see
+whether the effect comes back.
+
+8
 00:00:17,180 --> 00:00:18,840
 Trust is cheap and fast.
 
-7
-00:00:19,160 --> 00:00:23,340
-Running it again is slow, and it is the only one of the two that can say no.
-
-8
-00:00:24,540 --> 00:00:30,760
-In 2015, the Open Science Collaboration repeated one hundred psychology studies from
-three journals.
-
 9
-00:00:31,360 --> 00:00:34,720
-Ninety-seven of the hundred originals had reported a positive result.
+00:00:19,160 --> 00:00:23,340
+Running it again is slow, and it is
+the only one of the two that can say no.
 
 10
-00:00:35,040 --> 00:00:39,020
-Of those ninety-seven, thirty-five came back significant in the repeat.
+00:00:24,540 --> 00:00:27,137
+In 2015, the Open Science Collaboration
 
 11
-00:00:39,620 --> 00:00:43,600
-On average, the repeated effects were about half the size of the originals.
+00:00:27,137 --> 00:00:30,760
+repeated one hundred psychology studies
+from three journals.
 
 12
-00:00:44,200 --> 00:00:46,420
-That does not show the other studies were wrong.
+00:00:31,360 --> 00:00:34,720
+Ninety-seven of the hundred originals
+had reported a positive result.
 
 13
+00:00:35,040 --> 00:00:36,487
+Of those ninety-seven,
+
+14
+00:00:36,487 --> 00:00:39,020
+thirty-five came back
+significant in the repeat.
+
+15
+00:00:39,620 --> 00:00:43,600
+On average, the repeated effects
+were about half the size of the originals.
+
+16
+00:00:44,200 --> 00:00:46,420
+That does not show
+the other studies were wrong.
+
+17
 00:00:46,740 --> 00:00:49,040
 A single repeat can miss a real effect.
 
-14
-00:00:49,360 --> 00:00:52,300
-It shows how much a published result can rest on one run.
-
-15
-00:00:53,500 --> 00:00:58,160
-Re-running an analysis is cheaper than re-running a study, if the data and code
-exist.
-
-16
-00:00:58,760 --> 00:01:03,040
-Victoria Stodden and colleagues took two hundred and four papers from Science,
-published after the journal required authors to share data and code on request, and
-
-17
-00:01:03,040 --> 00:01:07,320
-asked for them.
-
 18
-00:01:07,920 --> 00:01:13,760
-They got the materials for forty-four percent of the papers, and estimated that
-about twenty-six percent would reproduce.
+00:00:49,360 --> 00:00:52,300
+It shows how much a published result
+can rest on one run.
 
 19
-00:01:14,360 --> 00:01:18,760
-A rule that relies on the author answering an email checks only the authors who
-answer.
+00:00:53,500 --> 00:00:55,278
+Re-running an analysis is cheaper
 
 20
-00:01:19,960 --> 00:01:25,160
-Web certificates are public records, so anyone can check them without asking the
-issuer.
+00:00:55,278 --> 00:00:58,160
+than re-running a study,
+if the data and code exist.
 
 21
-00:01:25,760 --> 00:01:31,760
-Deepak Kumar and colleagues wrote two hundred and twenty checks and ran them over
-two hundred and forty million certificates.
+00:00:58,760 --> 00:01:02,607
+Victoria Stodden and colleagues took
+two hundred and four papers from Science,
 
 22
-00:01:32,360 --> 00:01:36,180
-In 2012, more than twelve percent of certificates had errors.
+00:01:02,607 --> 00:01:05,099
+published after the journal
+required authors to share
 
 23
-00:01:36,500 --> 00:01:39,960
-By 2017 the share was two hundredths of one percent.
+00:01:05,099 --> 00:01:07,320
+data and code on request,
+and asked for them.
 
 24
-00:01:40,560 --> 00:01:43,380
-The paper does not show the checks caused that fall.
+00:01:07,920 --> 00:01:10,894
+They got the materials
+for forty-four percent of the papers,
 
 25
-00:01:43,700 --> 00:01:47,980
-It shows a public record can be re-checked by a stranger, at the scale of the whole
-web.
+00:01:10,894 --> 00:01:13,760
+and estimated that about
+twenty-six percent would reproduce.
 
 26
-00:01:49,180 --> 00:01:52,100
-A result you can re-derive does not need your trust.
+00:01:14,360 --> 00:01:16,927
+A rule that relies
+on the author answering an email
 
 27
-00:01:52,420 --> 00:01:55,740
-Ask for the data, the code and a check you can run yourself.
+00:01:16,927 --> 00:01:18,760
+checks only the authors who answer.
 
 28
-00:01:56,340 --> 00:01:58,660
-The voice you heard is a synthesized version of mine.
+00:01:19,960 --> 00:01:22,330
+Web certificates are public records,
 
 29
+00:01:22,330 --> 00:01:25,160
+so anyone can check them
+without asking the issuer.
+
+30
+00:01:25,760 --> 00:01:29,383
+Deepak Kumar and colleagues wrote
+two hundred and twenty checks and ran them
+
+31
+00:01:29,383 --> 00:01:31,760
+over two hundred
+and forty million certificates.
+
+32
+00:01:32,360 --> 00:01:36,180
+In 2012, more than twelve percent
+of certificates had errors.
+
+33
+00:01:36,500 --> 00:01:39,960
+By 2017 the share
+was two hundredths of one percent.
+
+34
+00:01:40,560 --> 00:01:43,380
+The paper does not show
+the checks caused that fall.
+
+35
+00:01:43,700 --> 00:01:45,697
+It shows a public record can be re-checked
+
+36
+00:01:45,697 --> 00:01:47,980
+by a stranger,
+at the scale of the whole web.
+
+37
+00:01:49,180 --> 00:01:52,100
+A result you can re-derive
+does not need your trust.
+
+38
+00:01:52,420 --> 00:01:55,740
+Ask for the data,
+the code and a check you can run yourself.
+
+39
+00:01:56,340 --> 00:01:58,660
+The voice you heard
+is a synthesized version of mine.
+
+40
 00:01:58,980 --> 00:02:01,840
-Every number on screen links to its source under the video.
+Every number on screen links
+to its source under the video.
