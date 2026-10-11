@@ -79,6 +79,9 @@ export function draw(t, A, T, items, zoom) {
   if (m <= 0) {
     const d1 = span(t, 0.5, 1.5, ease.out), d2 = span(t, 2.2, 3.7, ease.inOut);
     const f1 = span(t, 1.3, 1.9), f2 = span(t, 3.3, 3.9);
+    // The gathering cloud stays clear of the title box (fix 3): a soft plate in the void colour.
+    const tb = bounds([...S.title[0].shape, ...S.title[1].shape]), pad = 0.9;
+    items.push({ shape: rect(tb.x0 - pad * 1.4, tb.y0 - pad, tb.w + pad * 2.8, tb.h + pad * 2, pad), fill: C.void, opacity: 0.92 * span(t, 0, 0.5), blur: pad });
     items.push({ shape: trim(S.title[0].shape, 0, d1), stroke: C.ink, width: 0.03, fill: f1 > 0 ? C.ink : null, opacity: 1 });
     if (f1 > 0) items.push({ shape: S.title[0].shape, fill: C.ink, opacity: f1 });
     if (d2 > 0) items.push({ shape: trim(S.title[1].shape, 0, d2), stroke: C.ink, width: 0.03 });

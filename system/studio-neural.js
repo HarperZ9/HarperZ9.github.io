@@ -192,6 +192,11 @@ let _nextId = 1;
 const _waiters = new Map();   // id -> { resolve, gen, time, canvas }
 let _verified = null;
 let _scratch = null;   // the solid's low-resolution canvas, reused
+// raw-native's GPU drawer (neural-gpu.js, 10 October 2026), set by the Studio once it starts.
+// While it is set, live frames are drawn by it on the main thread in well under a frame; the
+// worker and main-thread paths stay as they were for every browser without WebGPU.
+let _gpu = null;
+let _gpuMode = "full";
 
 function prefersReducedMotion() {
   return typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -273,10 +278,66 @@ function onWorkerFrame(e) {
     if (!_inFlight) drawLive(w.time);
     return;
   }
+  if (gpuReady(L)) {
+    // The GPU drawer started while this worker frame was in flight: draw the same time on it.
+    w.resolve(false);
+    drawLive(w.time);
+    return;
+  }
   blit(L.ctx, m);
   L.time = w.time;
   w.resolve(true);
   if (L.onFrame) { try { L.onFrame({ time: w.time, playing: _playing }); } catch (_) { /* a listener never stops the instrument */ } }
+}
+
+/* Use raw-native's GPU drawer for live frames (null to stop). mode "full" draws every pixel,
+   "grid" samples where the CPU path samples, for comparison. */
+export function setNeuralGPU(gpu, mode) {
+  _gpu = gpu || null;
+  _gpuMode = mode === "grid" ? "grid" : "full";
+  if (_live && !_playing && !_inFlight) drawLive(_live.time);
+}
+
+/* Which path draws the live frames now. */
+export function neuralBackend() {
+  if (gpuReady(_live)) return _gpuMode === "grid" ? "raw-native webgpu (grid)" : "raw-native webgpu";
+  return _worker ? "worker" : (_workerBroken ? "main thread" : "worker");
+}
+
+function gpuReady(o) {
+  return !!(_gpu && !_gpu.host.lost && o && _gpu.fits(o.instrument, o.instrument === "solid" ? o.sdf : o.net));
+}
+
+// Draw one frame through the GPU drawer and copy it onto ctx, laid out as the CPU path lays it.
+function gpuDraw(ctx, W, H, o, time, mode) {
+  const r = _gpu.draw({ instrument: o.instrument, net: o.instrument === "solid" ? o.sdf : o.net, time, tint: o.palette, seedNum: o.seedNum, mode }, W, H);
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.fillStyle = o.instrument === "solid" ? "rgba(4,5,12,1)" : "rgba(6,7,14,1)";
+  ctx.fillRect(0, 0, W, H);
+  const prevSmooth = ctx.imageSmoothingEnabled;
+  if (mode === "grid" && o.instrument !== "solid") {
+    ctx.imageSmoothingEnabled = false;   // one flat colour per cell, as renderField paints
+    ctx.drawImage(_gpu.canvas, 0, 0, r.W * r.cell, r.H * r.cell);
+  } else {
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(_gpu.canvas, 0, 0, W, H);
+  }
+  ctx.imageSmoothingEnabled = prevSmooth;
+  ctx.restore();
+}
+
+/* Draw the frame at opts.time onto any canvas through the GPU drawer, in "full" or "grid" mode.
+   Resolves false when there is no GPU drawer. For checks. */
+export function drawNeuralGPUAt(canvas, opts = {}, mode = "full") {
+  const seed = String(opts.seed == null ? "living" : opts.seed);
+  const instrument = opts.instrument === "solid" ? "solid" : "field";
+  const seedNum = neuralSeed(seed);
+  const o = { instrument, seedNum, palette: opts.palette || DEFAULT_TINT,
+    net: instrument === "field" ? buildCppn(seedNum) : null, sdf: instrument === "solid" ? buildNeuralSdf(seedNum) : null };
+  if (!gpuReady(o)) return Promise.resolve(false);
+  gpuDraw(canvas.getContext("2d"), canvas.width, canvas.height, o, opts.time || 0, mode);
+  return Promise.resolve(true);
 }
 
 // Post a frame request to the worker. Returns null when there is no worker.
@@ -297,6 +358,17 @@ function request(time, canvas, o) {
 // else synchronously here.
 function drawLive(time) {
   const L = _live; if (!L) return;
+  if (gpuReady(L)) {
+    try {
+      gpuDraw(L.ctx, L.canvas.width, L.canvas.height, L, time, _gpuMode);
+      L.time = time;
+      if (L.onFrame) { try { L.onFrame({ time, playing: _playing }); } catch (_) { /* never fatal */ } }
+      return;
+    } catch (err) {
+      console.error("[studio-neural] the GPU drawer failed; drawing on the CPU paths:", err);
+      _gpu = null;
+    }
+  }
   if (request(time)) return;
   renderNeuralFrame(L.ctx, L.canvas.width, L.canvas.height, { seed: L.seed, instrument: L.instrument, time, palette: L.palette, net: L.net, sdf: L.sdf });
   L.time = time;
@@ -318,7 +390,7 @@ export function startNeural(canvas, opts = {}) {
   // The main-thread fallback builds the network once and reuses it every frame.
   const net = instrument === "field" ? buildCppn(seedNum) : null;
   const sdf = instrument === "solid" ? buildNeuralSdf(seedNum) : null;
-  _live = { canvas, ctx, seed, instrument, palette, net, sdf, time: 0, onFrame: opts.onFrame || null };
+  _live = { canvas, ctx, seed, seedNum, instrument, palette, net, sdf, time: 0, onFrame: opts.onFrame || null };
   drawLive(0);
   return { animating: false };
 }

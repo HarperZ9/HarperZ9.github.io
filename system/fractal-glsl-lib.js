@@ -113,7 +113,12 @@ vec2 dsAbs(vec2 a) { return a.x < 0.0 ? -a : a; }
 // saturation lift, and clipped in L, where it would mean a lightness below black.
 //
 // Shared verbatim by both precision variants so the two programs colour identically.
+export const MAX_STOPS = 16;
 export const RAMP_LIB = `
+// The palette: up to 16 stops in OKLab, u_palN of them in use (the built-in palettes have 6).
+uniform vec3 u_pal[16];
+uniform int  u_palN;
+
 // OKLab -> linear sRGB. Only this direction is needed on the GPU; the stops are converted once per
 // frame on the CPU. Components are clipped at zero because a spline through OKLab can leave the sRGB
 // gamut, and negative radiance has no meaning downstream.
@@ -128,25 +133,31 @@ vec3 oklabToLinear(vec3 lab) {
     -0.0041960863 * lms.x - 0.7034186147 * lms.y + 1.7076147010 * lms.z), vec3(0.0));
 }
 
-// WebGL1 forbids dynamic indexing of a uniform array, so the fetch is a branch ladder.
-vec3 palStop(int i) {
-  if (i == 0)      return u_pal[0];
-  else if (i == 1) return u_pal[1];
-  else if (i == 2) return u_pal[2];
-  else if (i == 3) return u_pal[3];
-  else if (i == 4) return u_pal[4];
-  return u_pal[5];
+// WebGL1 forbids dynamic indexing of a uniform array, so the four stops the spline needs are
+// gathered in one pass over the array, indexed by the loop counter (a constant index once
+// unrolled). The comparisons become selects, with no branch: a branch ladder per stop cost a
+// software rasteriser, which runs every branch under a mask, several times the whole frame.
+void palStops(int ia, int ib, int ic, int id, out vec3 p0, out vec3 p1, out vec3 p2, out vec3 p3) {
+  p0 = u_pal[0]; p1 = u_pal[0]; p2 = u_pal[0]; p3 = u_pal[0];
+  for (int k = 1; k < 16; k++) {
+    vec3 s = u_pal[k];
+    p0 = k == ia ? s : p0; p1 = k == ib ? s : p1; p2 = k == ic ? s : p2; p3 = k == id ? s : p3;
+  }
 }
 
+// t is in stops: t = 1.0 is exactly the second stop, and the ramp wraps after the last one.
 vec3 ramp(float t) {
-  t = mod(t, 6.0);
-  if (t < 0.0) t += 6.0;
+  float N = float(u_palN);
+  t = mod(t, N);
+  if (t < 0.0) t += N;
+  int n = u_palN;
   int i = int(floor(t));
   float f = t - floor(t);
-  int ia = i  == 0 ? 5 : i  - 1;
-  int ic = i  == 5 ? 0 : i  + 1;
-  int id = ic == 5 ? 0 : ic + 1;
-  vec3 p0 = palStop(ia), p1 = palStop(i), p2 = palStop(ic), p3 = palStop(id);
+  int ia = i  == 0 ? n - 1 : i  - 1;
+  int ic = i  == n - 1 ? 0 : i  + 1;
+  int id = ic == n - 1 ? 0 : ic + 1;
+  vec3 p0, p1, p2, p3;
+  palStops(ia, i, ic, id, p0, p1, p2, p3);
   float f2 = f * f;
   float f3 = f2 * f;
   vec3 c = 0.5 * ((2.0 * p1)
