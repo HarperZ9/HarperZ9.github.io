@@ -1,0 +1,316 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "passing-check/sound-1",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 6907200,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Film 2 sound, mix C. Cues are placed from the scene's timeline; each says what it marks. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "7741ebfb00c47911c4b68297f3af34e0553a695d29eae2d0cbdbf24cefa62b99"
+ },
+ "cues": [
+  {
+   "at": 0,
+   "type": "move",
+   "why": "the code lines fly in to the aperture around the title",
+   "x": 960,
+   "dur": 2.4,
+   "f0": 300,
+   "f1": 1100,
+   "gain_db": -15
+  },
+  {
+   "at": 182400,
+   "type": "move",
+   "why": "the lines lay themselves out as a program",
+   "x": 940,
+   "dur": 1.5,
+   "f0": 900,
+   "f1": 500,
+   "gain_db": -14
+  },
+  {
+   "at": 371520,
+   "type": "land",
+   "why": "test 1 lands \"pass\"",
+   "x": 1660,
+   "pitch": 0,
+   "gain_db": -11
+  },
+  {
+   "at": 400320,
+   "type": "land",
+   "why": "test 2 lands \"pass\"",
+   "x": 1660,
+   "pitch": 2,
+   "gain_db": -11
+  },
+  {
+   "at": 429120,
+   "type": "land",
+   "why": "test 3 lands \"pass\"",
+   "x": 1660,
+   "pitch": 4,
+   "gain_db": -11
+  },
+  {
+   "at": 549120,
+   "type": "motif",
+   "why": "hot mark: the crack opens in the line no test runs",
+   "x": 960,
+   "hz": 587.33,
+   "gain_db": -6
+  },
+  {
+   "at": 672960,
+   "type": "reveal",
+   "why": "a pass: the check found nothing",
+   "x": 960,
+   "gain_db": -11
+  },
+  {
+   "at": 791040,
+   "type": "reveal",
+   "why": "not: the check could have found it",
+   "x": 960,
+   "pitch": -3,
+   "gain_db": -11
+  },
+  {
+   "at": 963840,
+   "type": "chapter",
+   "why": "section: lines run are not faults found",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 1215360,
+   "type": "scale",
+   "why": "the camera pulls back from one program to five",
+   "x": 960,
+   "dur": 3.2,
+   "gain_db": -12
+  },
+  {
+   "at": 1359360,
+   "type": "texture",
+   "why": "the programs dissolve into 31,000 points: one texture, not 31,000 clicks",
+   "x": 420,
+   "n": 31000,
+   "cap": 220,
+   "dur": 3.5,
+   "x1": 1500,
+   "gain_db": -14
+  },
+  {
+   "at": 1719360,
+   "type": "land",
+   "why": "the gauge settles on low to moderate",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -6
+  },
+  {
+   "at": 1936320,
+   "type": "motif",
+   "why": "hot mark: Joda Time, essentially zero",
+   "x": 560,
+   "hz": 587.33,
+   "gain_db": -6
+  },
+  {
+   "at": 2112000,
+   "type": "reveal",
+   "why": "their advice appears: not a quality target",
+   "x": 960,
+   "gain_db": -10
+  },
+  {
+   "at": 2314560,
+   "type": "chapter",
+   "why": "section: check the check",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -7
+  },
+  {
+   "at": 2381760,
+   "type": "texture",
+   "why": "six mutants crack into the program, one by one",
+   "x": 940,
+   "n": 6,
+   "cap": 6,
+   "dur": 2.7,
+   "hz": 1100,
+   "gain_db": -15
+  },
+  {
+   "at": 2725440,
+   "type": "texture",
+   "why": "357 real bugs appear as dots",
+   "x": 1300,
+   "n": 357,
+   "cap": 200,
+   "dur": 2,
+   "gain_db": -14
+  },
+  {
+   "at": 3024000,
+   "type": "reveal",
+   "why": "73% gain a ring: coupled to a mutant",
+   "x": 1300,
+   "gain_db": -11
+  },
+  {
+   "at": 3192960,
+   "type": "motif",
+   "why": "hot mark: 17% coupled to none",
+   "x": 1300,
+   "hz": 587.33,
+   "gain_db": -6
+  },
+  {
+   "at": 3496320,
+   "type": "chapter",
+   "why": "section: when AI writes the patch",
+   "x": 960,
+   "pitch": 3,
+   "gain_db": -7
+  },
+  {
+   "at": 3744960,
+   "type": "move",
+   "why": "the bars of patches counted solved draw out",
+   "x": 460,
+   "x1": 1460,
+   "dur": 1.4,
+   "f0": 500,
+   "f1": 1200,
+   "gain_db": -13
+  },
+  {
+   "at": 4008000,
+   "type": "motif",
+   "why": "hot mark: 7.8% failed the developers' own tests and peel away",
+   "x": 1420,
+   "hz": 587.33,
+   "gain_db": -6
+  },
+  {
+   "at": 4152000,
+   "type": "move",
+   "why": "29.6% behaved unlike the real fix and peel away",
+   "x": 1250,
+   "x1": 1290,
+   "dur": 1.4,
+   "f0": 800,
+   "f1": 500,
+   "gain_db": -13
+  },
+  {
+   "at": 4459200,
+   "type": "texture",
+   "why": "251 passing patches appear as dots",
+   "x": 700,
+   "n": 251,
+   "cap": 200,
+   "dur": 1.8,
+   "x1": 1220,
+   "gain_db": -14
+  },
+  {
+   "at": 4649280,
+   "type": "reveal",
+   "why": "about a third turn into cards: the fix was in the task text",
+   "x": 960,
+   "gain_db": -11
+  },
+  {
+   "at": 4774080,
+   "type": "reveal",
+   "why": "about another third gain rings: weak tests",
+   "x": 960,
+   "pitch": -3,
+   "gain_db": -11
+  },
+  {
+   "at": 5274240,
+   "type": "chapter",
+   "why": "section: a check that can show it can fail",
+   "x": 960,
+   "pitch": 5,
+   "gain_db": -7
+  },
+  {
+   "at": 5312640,
+   "type": "move",
+   "why": "the same known-wrong input travels to both checks",
+   "x": 310,
+   "x1": 1190,
+   "dur": 4.3,
+   "f0": 400,
+   "f1": 900,
+   "gain_db": -15
+  },
+  {
+   "at": 5490240,
+   "type": "motif",
+   "why": "hot mark: check A lets the wrong input through",
+   "x": 640,
+   "hz": 587.33,
+   "gain_db": -6
+  },
+  {
+   "at": 5868480,
+   "type": "land",
+   "why": "check B fails, as it should: the film's one verified mark",
+   "x": 1280,
+   "pitch": 7,
+   "gain_db": -4
+  },
+  {
+   "at": 6219840,
+   "type": "chapter",
+   "why": "section: the aperture returns, the untested line now lit",
+   "x": 960,
+   "gain_db": -7
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "lookahead_ms": 150,
+    "hold_ms": 350,
+    "attack_ms": 60,
+    "release_ms": 700
+   }
+  },
+  "sfx": {}
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {
+   "threshold_db": -20,
+   "ratio": 2,
+   "knee_db": 6,
+   "attack_ms": 10,
+   "release_ms": 200
+  }
+ }
+}
