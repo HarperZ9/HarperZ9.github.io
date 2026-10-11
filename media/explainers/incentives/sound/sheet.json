@@ -1,0 +1,283 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "incentives/sound-1",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 5777600,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Film 4 sound, mix C. Cues are placed from the scene's timeline; each says what it marks. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "d90d323d6371e8850ed38f1300503fa7d7eea04863f8fb7b8934e1a06d02cfba"
+ },
+ "cues": [
+  {
+   "at": 0,
+   "type": "move",
+   "why": "the contour field of the reward landscape draws in",
+   "x": 960,
+   "dur": 3.6,
+   "f0": 200,
+   "f1": 800,
+   "gain_db": -15
+  },
+  {
+   "at": 224640,
+   "type": "reveal",
+   "why": "the model appears as a point on the landscape",
+   "x": 330,
+   "gain_db": -11
+  },
+  {
+   "at": 304320,
+   "type": "reveal",
+   "why": "the reward basin is labelled: unit tests pass",
+   "x": 1120,
+   "pitch": 2,
+   "gain_db": -12
+  },
+  {
+   "at": 576960,
+   "type": "move",
+   "why": "two shortcut tunnels open toward the reward basin",
+   "x": 640,
+   "x1": 1120,
+   "dur": 2,
+   "f0": 900,
+   "f1": 400,
+   "gain_db": -13
+  },
+  {
+   "at": 744960,
+   "type": "move",
+   "why": "the point travels the tunnel to the basin",
+   "x": 330,
+   "x1": 1120,
+   "dur": 4.200000000000003,
+   "f0": 500,
+   "f1": 1100,
+   "gain_db": -14
+  },
+  {
+   "at": 965760,
+   "type": "land",
+   "why": "reward: yes",
+   "x": 1160,
+   "gain_db": -6
+  },
+  {
+   "at": 1042560,
+   "type": "motif",
+   "why": "hot mark: task solved: no",
+   "x": 1400,
+   "hz": 440,
+   "gain_db": -6
+  },
+  {
+   "at": 1415040,
+   "type": "chapter",
+   "why": "section: paid for agreeing",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 1424640,
+   "type": "move",
+   "why": "the landscape reshapes and a second basin opens: agrees with the user",
+   "x": 1120,
+   "x1": 640,
+   "dur": 3,
+   "f0": 400,
+   "f1": 250,
+   "gain_db": -14
+  },
+  {
+   "at": 2249280,
+   "type": "move",
+   "why": "the balance tilts toward the agreeing answer",
+   "x": 1100,
+   "x1": 820,
+   "dur": 1.6,
+   "f0": 700,
+   "f1": 450,
+   "gain_db": -15
+  },
+  {
+   "at": 2297280,
+   "type": "texture",
+   "why": "95 of 100 ticks light: one texture",
+   "x": 612,
+   "n": 95,
+   "cap": 95,
+   "dur": 3,
+   "x1": 1270,
+   "gain_db": -15
+  },
+  {
+   "at": 2422080,
+   "type": "motif",
+   "why": "hot mark: the agreeing answer preferred 95% of the time",
+   "x": 960,
+   "hz": 440,
+   "gain_db": -6
+  },
+  {
+   "at": 2611200,
+   "type": "reveal",
+   "why": "the name appears: sycophancy",
+   "x": 960,
+   "gain_db": -11
+  },
+  {
+   "at": 2922240,
+   "type": "chapter",
+   "why": "section: small rewards, wider habits",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -7
+  },
+  {
+   "at": 2941440,
+   "type": "texture",
+   "why": "five small environments appear, one by one",
+   "x": 200,
+   "n": 5,
+   "cap": 5,
+   "dur": 2,
+   "x1": 960,
+   "hz": 1100,
+   "gain_db": -14
+  },
+  {
+   "at": 3269760,
+   "type": "reveal",
+   "why": "the held-out task opens a door to the code that computes its reward",
+   "x": 1540,
+   "gain_db": -11
+  },
+  {
+   "at": 3491520,
+   "type": "texture",
+   "why": "32,768 episodes appear as points",
+   "x": 170,
+   "n": 32768,
+   "cap": 220,
+   "dur": 1.6,
+   "x1": 680,
+   "gain_db": -15
+  },
+  {
+   "at": 3558720,
+   "type": "motif",
+   "why": "hot mark: 45 of the 32,768 episodes light",
+   "x": 425,
+   "hz": 440,
+   "gain_db": -6
+  },
+  {
+   "at": 3635520,
+   "type": "scale",
+   "why": "the camera dives to find the 45",
+   "x": 425,
+   "dur": 1.2,
+   "f0": 700,
+   "f1": 200,
+   "gain_db": -13
+  },
+  {
+   "at": 3752640,
+   "type": "texture",
+   "why": "100,000 helpful-only episodes appear beside them",
+   "x": 950,
+   "n": 100000,
+   "cap": 220,
+   "dur": 1.4,
+   "x1": 1750,
+   "gain_db": -15
+  },
+  {
+   "at": 3800640,
+   "type": "land",
+   "why": "0 of 100,000 lands",
+   "x": 1350,
+   "pitch": -5,
+   "gain_db": -8
+  },
+  {
+   "at": 4152960,
+   "type": "reveal",
+   "why": "the finding: rewarded gaming spread to gaming never rewarded",
+   "x": 960,
+   "gain_db": -10
+  },
+  {
+   "at": 4437120,
+   "type": "chapter",
+   "why": "section: change what gets paid",
+   "x": 960,
+   "pitch": 3,
+   "gain_db": -7
+  },
+  {
+   "at": 4765440,
+   "type": "move",
+   "why": "the landscape reshapes and the tunnels close",
+   "x": 900,
+   "x1": 1500,
+   "dur": 3.2,
+   "f0": 300,
+   "f1": 700,
+   "gain_db": -14
+  },
+  {
+   "at": 4890240,
+   "type": "land",
+   "why": "a check rings the basin that solves the task",
+   "x": 1620,
+   "pitch": 7,
+   "gain_db": -5
+  },
+  {
+   "at": 5151360,
+   "type": "chapter",
+   "why": "section: ask what the training paid for",
+   "x": 960,
+   "gain_db": -7
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "lookahead_ms": 150,
+    "hold_ms": 350,
+    "attack_ms": 60,
+    "release_ms": 700
+   }
+  },
+  "sfx": {}
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {
+   "threshold_db": -20,
+   "ratio": 2,
+   "knee_db": 6,
+   "attack_ms": 10,
+   "release_ms": 200
+  }
+ }
+}
