@@ -47,7 +47,6 @@ uniform float u_seq;        // bit mask of the sequence, B = 1
 uniform int   u_seqLen;
 uniform int   u_warmup;
 uniform float u_x0;
-uniform vec3  u_pal[6];
 uniform vec3  u_tint;
 uniform int   u_aa;
 
@@ -83,7 +82,7 @@ vec3 lyapColor(vec2 ab) {
   float l = exponent(ab);
   if (l < 0.0) {
     float t = 1.0 - exp(l * 1.6);           // 0 at the edge of chaos, toward 1 deep in order
-    return holdGamut(ramp(t * 5.0) * (0.55 + 0.6 * t));
+    return holdGamut(ramp(t * float(u_palN - 1)) * (0.55 + 0.6 * t));
   }
   return ramp(0.15) * exp(-l * 2.5) * 0.7;
 }

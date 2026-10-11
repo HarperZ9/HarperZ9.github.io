@@ -6,6 +6,8 @@ import { formulaSpec } from "./fractal-formulas.js";
 import { buildFormulaFragment } from "./fractal-glsl-formula.js";
 import { buildLyapunovFragment, lyapunovSequence } from "./fractal-glsl-lyapunov.js";
 import { VERT, MAX_ITERS } from "./fractal-glsl-lib.js";
+import { drawColoured } from "./fractal-gl-colour.js";
+import { fullOrbit, orbitSource } from "./fractal-colouring.js";
 
 const CACHE = Symbol("fractalFormulaPrograms");
 
@@ -56,7 +58,8 @@ function bind(gl, P, cache, w, h) {
 /** Draw a formula view. colour: { pal, tint } from fractal-gl.js. Throws FormulaError on a bad formula. */
 export function renderFormulaGL(gl, canvas, view, colour, aa) {
   const spec = formulaSpec(view);
-  const { P, cache } = program(gl, canvas, "f|" + spec.key, () => buildFormulaFragment(spec));
+  const full = fullOrbit(view);
+  const { P, cache } = program(gl, canvas, "f|" + spec.key + (full ? "|orbit" : ""), () => orbitSource(buildFormulaFragment(spec), full));
   const w = canvas.width, h = canvas.height;
   bind(gl, P, cache, w, h);
   const u = P.u;
@@ -70,9 +73,10 @@ export function renderFormulaGL(gl, canvas, view, colour, aa) {
   gl.uniform1f(u.u_bailout2, spec.bailout2);
   gl.uniform1f(u.u_degree, spec.degree);
   gl.uniform3fv(u.u_pal, colour.pal);
+  gl.uniform1i(P.U("u_palN"), colour.pal.n || 6);
   gl.uniform3fv(u.u_tint, colour.tint);
   gl.uniform1i(u.u_aa, Math.max(1, Math.min(4, Math.round(aa || 1))));
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  drawColoured(gl, P.prog, view, w, h);
   return spec;
 }
 
@@ -92,6 +96,7 @@ export function renderLyapunovGL(gl, canvas, view, colour, aa) {
   gl.uniform1i(u.u_warmup, Math.max(0, Math.min(400, Math.round(view.warmup ?? 100))));
   gl.uniform1f(u.u_x0, view.x0 ?? 0.5);
   gl.uniform3fv(u.u_pal, colour.pal);
+  gl.uniform1i(P.U("u_palN"), colour.pal.n || 6);
   gl.uniform3fv(u.u_tint, colour.tint);
   gl.uniform1i(u.u_aa, Math.max(1, Math.min(4, Math.round(aa || 1))));
   gl.drawArrays(gl.TRIANGLES, 0, 3);

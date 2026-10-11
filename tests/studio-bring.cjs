@@ -4,7 +4,7 @@
 // what this browser keeps is the file's name, never the file.
 const assert = require('node:assert/strict');
 const path = require('node:path');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const chromium = require('./lib/browser.cjs');   // BROWSER=firefox runs this file in Firefox
 
 const base = process.env.SITE_BASE_URL || 'http://127.0.0.1:8810';
 const IMAGE = path.join(__dirname, '..', 'brand', 'aperture-mark.png');

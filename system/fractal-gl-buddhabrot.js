@@ -307,6 +307,7 @@ function createEngine(gl, canvas, view, displayFrag, colour, key) {
     gl.uniform1f(U(pShow, "u_gamma"), v.gamma ?? 2);
     gl.uniform1i(U(pShow, "u_nebula"), v.type === "nebulabrot" ? 1 : 0);
     gl.uniform3fv(U(pShow, "u_pal[0]"), col.pal);
+    gl.uniform1i(U(pShow, "u_palN"), col.pal.n || 6);
     bindAttr(pShow, "p", full, 2);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     unbindAttrs(pShow, ["p"]);
