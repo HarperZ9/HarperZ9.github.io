@@ -1,0 +1,261 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "rederive/sound-1",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 5977600,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Film 3 sound, mix C. Cues are placed from the scene's timeline; each says what it marks. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "4382ae3c0b74b9229a9628820f74fb8b34b2f39e91d0d5f7c533396b409615af"
+ },
+ "cues": [
+  {
+   "at": 76800,
+   "type": "move",
+   "why": "the cyan negative of the title slides in off register",
+   "x": 990,
+   "dur": 2,
+   "f0": 500,
+   "f1": 900,
+   "gain_db": -15
+  },
+  {
+   "at": 172800,
+   "type": "land",
+   "why": "the negative locks into register",
+   "x": 960,
+   "pitch": -5,
+   "gain_db": -11
+  },
+  {
+   "at": 272640,
+   "type": "reveal",
+   "why": "the paper's one effect appears",
+   "x": 530,
+   "gain_db": -11
+  },
+  {
+   "at": 561600,
+   "type": "reveal",
+   "why": "the two choices appear: trust it, or run it again",
+   "x": 1300,
+   "pitch": 2,
+   "gain_db": -11
+  },
+  {
+   "at": 824640,
+   "type": "land",
+   "why": "the trust stamp comes down",
+   "x": 1520,
+   "pitch": -7,
+   "gain_db": -8
+  },
+  {
+   "at": 919680,
+   "type": "move",
+   "why": "a negative of the paper exposes over two seconds",
+   "x": 1530,
+   "dur": 2,
+   "f0": 300,
+   "f1": 700,
+   "gain_db": -14
+  },
+  {
+   "at": 1177920,
+   "type": "chapter",
+   "why": "section: a hundred studies, run again",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 1206720,
+   "type": "texture",
+   "why": "100 cards appear, one per study",
+   "x": 560,
+   "n": 100,
+   "cap": 100,
+   "dur": 2,
+   "x1": 1360,
+   "gain_db": -14
+  },
+  {
+   "at": 1505280,
+   "type": "texture",
+   "why": "97 originals gain a positive mark",
+   "x": 560,
+   "n": 97,
+   "cap": 97,
+   "dur": 1.6,
+   "hz": 1800,
+   "x1": 1360,
+   "gain_db": -15
+  },
+  {
+   "at": 1681920,
+   "type": "motif",
+   "why": "hot mark: the repeat exposes, and 62 of the 97 fade with a drift edge",
+   "x": 960,
+   "hz": 493.88,
+   "gain_db": -6
+  },
+  {
+   "at": 1901760,
+   "type": "land",
+   "why": "the repeated effects land at about half the originals",
+   "x": 860,
+   "pitch": -3,
+   "gain_db": -6
+  },
+  {
+   "at": 2568000,
+   "type": "chapter",
+   "why": "section: asking for the data",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -7
+  },
+  {
+   "at": 2916480,
+   "type": "move",
+   "why": "an envelope leaves every one of the 204 papers",
+   "x": 433,
+   "x1": 1300,
+   "dur": 3,
+   "f0": 600,
+   "f1": 1500,
+   "gain_db": -14
+  },
+  {
+   "at": 3260160,
+   "type": "move",
+   "why": "envelopes come back for 44% of the papers",
+   "x": 1300,
+   "x1": 433,
+   "dur": 2.2,
+   "f0": 1500,
+   "f1": 600,
+   "gain_db": -14
+  },
+  {
+   "at": 3365760,
+   "type": "land",
+   "why": "materials obtained: 44% lands",
+   "x": 433,
+   "gain_db": -6
+  },
+  {
+   "at": 3404160,
+   "type": "reveal",
+   "why": "a negative exposes over about 26%, tagged as an estimate",
+   "x": 600,
+   "pitch": -3,
+   "gain_db": -10
+  },
+  {
+   "at": 3838080,
+   "type": "chapter",
+   "why": "section: a check that anyone can run",
+   "x": 960,
+   "pitch": 3,
+   "gain_db": -7
+  },
+  {
+   "at": 3866880,
+   "type": "scale",
+   "why": "the camera pulls back from one certificate to the whole field",
+   "x": 960,
+   "dur": 7.200000000000017,
+   "gain_db": -12
+  },
+  {
+   "at": 3910080,
+   "type": "texture",
+   "why": "the field of points standing for 240 million certificates gathers: one texture",
+   "x": 300,
+   "n": 262144,
+   "cap": 220,
+   "dur": 5.300000000000011,
+   "front": true,
+   "x1": 1620,
+   "gain_db": -15
+  },
+  {
+   "at": 4433280,
+   "type": "motif",
+   "why": "hot mark: in 2012 more than 12% of the field lights with errors",
+   "x": 960,
+   "hz": 493.88,
+   "gain_db": -6
+  },
+  {
+   "at": 4651200,
+   "type": "land",
+   "why": "2017: the lit share falls to 0.02%",
+   "x": 960,
+   "pitch": 5,
+   "gain_db": -8
+  },
+  {
+   "at": 4670400,
+   "type": "scale",
+   "why": "the camera dives to find the few lit points",
+   "x": 960,
+   "dur": 1.6,
+   "f0": 700,
+   "f1": 200,
+   "gain_db": -13
+  },
+  {
+   "at": 5240640,
+   "type": "chapter",
+   "why": "section: the first page returns",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 5365440,
+   "type": "land",
+   "why": "a negative registers over the page and locks",
+   "x": 580,
+   "pitch": -5,
+   "gain_db": -10
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "lookahead_ms": 150,
+    "hold_ms": 350,
+    "attack_ms": 60,
+    "release_ms": 700
+   }
+  },
+  "sfx": {}
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {
+   "threshold_db": -20,
+   "ratio": 2,
+   "knee_db": 6,
+   "attack_ms": 10,
+   "release_ms": 200
+  }
+ }
+}
