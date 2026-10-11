@@ -213,4 +213,24 @@ export const PRESETS = [
     maxIter: 2000,
     palette: "bone",
   },
+  // Formula types (9 October 2026). Each draws through a program generated from its formula
+  // (fractal-formulas.js). A Tricorn zoomed past float32 goes through perturbation like the Mandelbrot.
+  { name: "Multibrot: Cubic (d = 3)", type: "multibrot", power: 3, cx: 0, cy: 0, scale: 3, maxIter: 400, palette: "dusk" },
+  { name: "Multibrot: Quintic (d = 5)", type: "multibrot", power: 5, cx: 0, cy: 0, scale: 2.8, maxIter: 400, palette: "ember" },
+  { name: "Tricorn: Whole", type: "tricorn", cx: -0.3, cy: 0, scale: 4, maxIter: 400, palette: "ocean" },
+  { name: "Celtic: Honeycomb", type: "celtic", cx: -0.81, cy: 0.17, scale: 0.25, maxIter: 600, palette: "bone" },
+  { name: "Magnet: Whole", type: "magnet", cx: 1.5, cy: 0, scale: 6, maxIter: 300, palette: "bone" },
+  { name: "Phoenix: Ushiki's Julia", type: "phoenix", julia: true, jx: 0.5667, jy: 0, p: [-0.5, 0], cx: 0, cy: 0, scale: 2.6, maxIter: 400, palette: "ember" },
+  { name: "Newton: z^3 - 1", type: "newton", f: "z^3 - 1", cx: 0, cy: 0, scale: 3, maxIter: 60, palette: "ember" },
+  { name: "Newton: z^5 - 3z + 1", type: "newton", f: "z^5 - 3*z + 1", cx: 0, cy: 0, scale: 4.5, maxIter: 60, palette: "dusk" },
+  { name: "Nova: z^3 - 1", type: "nova", f: "z^3 - 1", cx: -0.6, cy: 0, scale: 2.2, maxIter: 300, palette: "dusk" },
+  { name: "Nova: Spine", type: "nova", f: "z^3 - 1", cx: -0.78, cy: 0, scale: 0.3, maxIter: 300, palette: "ember" },
+  { name: "Lyapunov: AABAB", type: "lyapunov", sequence: "AABAB", cx: 3, cy: 3, scale: 2, maxIter: 300, palette: "ember" },
+  { name: "Lyapunov: BBBBBBAAAAAA", type: "lyapunov", sequence: "BBBBBBAAAAAA", cx: 3.7, cy: 2.95, scale: 0.6, maxIter: 300, palette: "ocean" },
+  { name: "Formula: c sin z", type: "formula", formula: "c*sin(z)", z0: "c", bailout2: 2500, cx: 0, cy: 0, scale: 9, maxIter: 200, palette: "ocean" },
+  { name: "Formula: z^2 + c / z", type: "formula", formula: "sqr(z) + c/z", z0: "c", cx: 0, cy: 0, scale: 3, maxIter: 200, palette: "ember" },
+  // Density plots (9 October 2026), accumulated on the GPU over a few seconds (fractal-gl-buddhabrot.js).
+  { name: "Buddhabrot: Whole", type: "buddhabrot", cx: -0.45, cy: 0, scale: 2.8, maxIter: 2000, minIter: 20, orbits: 20, gamma: 2, palette: "ember" },
+  { name: "Buddhabrot: Long Orbits Only", type: "buddhabrot", cx: -0.45, cy: 0, scale: 2.8, maxIter: 5000, minIter: 500, orbits: 60, gamma: 2.2, palette: "dusk" },
+  { name: "Nebulabrot: 5000 / 1000 / 200", type: "nebulabrot", cx: -0.45, cy: 0, scale: 2.8, maxIter: 5000, limits: [5000, 1000, 200], minIter: 50, orbits: 30, gamma: 2, palette: "ocean" },
 ];

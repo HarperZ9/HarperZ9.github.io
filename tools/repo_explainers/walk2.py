@@ -1,0 +1,127 @@
+"""Watch and Walkthrough data for the second group of repository explainers."""
+
+FIT2 = {
+    "coherence-membrane": ("rederive", "Coherence Membrane keeps a record an agent can re-check, and two independent implementations re-derive the same corpus."),
+    "flywheel-receipt-demo": ("rederive", "The demo re-derives a receipt in a separate process and catches a forged one, the practice this film describes."),
+    "flywheel-evidence-task": ("passing-check", "The skill asks for a false-success control before any verdict, because a pass alone does not show the check could fail."),
+    "terminal-state-fixtures": ("incentives", "These environments pay a model for the state its work leaves and for the runs it excludes, so the reward measures what was meant."),
+    "gpu-trace-validator": ("passing-check", "With --expect-failures the validator shows it can fail on a known-bad trace, the test this film argues for."),
+}
+
+WALK2 = {
+    "coherence-membrane": [
+        ("Install", "Install from a checkout. Python 3.10 or newer; this tree is the 0.2.0 alpha.",
+         '$ git clone https://github.com/HarperZ9/coherence-membrane && cd coherence-membrane\n$ python -m pip install -e ".[test]"\n$ python -m coherence_membrane selftest'),
+        ("First run: observe a document", "In Python, observe a small JSON document. The observation records exact and canonical hashes.", ("scene", (0, 1), ">>> ")),
+        ("Check a claim", "A logic claim goes to a deterministic checker. A refutation carries its counterexample.", ("scene", (2, 0, "c", 1, 0), "claim: ")),
+        ("Run the conformance corpus", "Re-derive the 16-case corpus in Python, then in the independent Node.js core.", ("scene", (4, 0), "$ ")),
+    ],
+    "flywheel-receipt-demo": [
+        ("Install", "Install the engine from PyPI and clone the demo. Python 3.11 or newer.",
+         "$ pip install flywheel-verify pytest\n$ git clone https://github.com/HarperZ9/flywheel-receipt-demo && cd flywheel-receipt-demo/demo"),
+        ("First run: the demo", "Run a task, write its receipt, re-derive it, then forge it and re-derive again.",
+         '$ python run_demo.py\n<span class="out">  RESULT: receipt path verified. Honest MATCH, forged DRIFT.</span>'),
+        ("Re-derive the receipt yourself", "Verify the receipt in a fresh process from the task files beside it.", ("scene", (2, 1), "$ ")),
+    ],
+    "flywheel-evidence-task": [
+        ("Install", "Install in Claude Code, or copy <code>skills/flywheel-evidence-task</code> into another Agent Skills host.",
+         "$ /plugin marketplace add HarperZ9/flywheel-evidence-task\n$ /plugin install flywheel-evidence-task@flywheel-evidence-task"),
+        ("First use: give it a claim", "Ask the agent to use the skill on a claim. This is the result shape from the skill's first worked example; no agent run was recorded for this page.", ("scene", (4, 0, "c", 0, 0), "claim: ")),
+        ("Check the package", "From a checkout, the repository checks its own package and a corrupted copy.", ("scene", (5, 0), "$ ")),
+    ],
+    "terminal-state-fixtures": [
+        ("Get it", "Clone the first environment and install its tools with uv.",
+         "$ git clone https://github.com/HarperZ9/terminal-state-fixtures && cd terminal-state-fixtures/environments/mlflow_terminal_state\n$ uv venv && uv pip install verifiers pytest"),
+        ("Score a record", "The reference scorer reads a run record's five fields. An oracle pass with a broken receipt is refuted.", ("scene", (2, 0, "c", 1, 0), "record: ")),
+        ("A run with no oracle", "A run with no independent check is unverifiable and stays out of the quality denominator.", ("scene", (2, 0, "c", 2, 0), "record: ")),
+        ("Run the pinned claims", "The tests pin exhaustiveness, the rewards and the integrity rule. They were not run for this page.", "$ uv run pytest tests/ -q"),
+    ],
+    "signal-kernels": [
+        ("Get it and build", "Clone and build with CMake and MSVC; the bundled CMake file targets Windows x64.",
+         "$ git clone https://github.com/HarperZ9/signal-kernels && cd signal-kernels\n$ cmake -S . -B build -DSIGNAL_KERNELS_BUILD_TESTS=ON\n$ cmake --build build --config Debug"),
+        ("Run the tests", "The test binary covers every header.", "$ ctest --test-dir build -C Debug --output-on-failure"),
+        ("Entropy", "The demo program <code>examples/demo_pipeline.cpp</code>, built in Release, printed these entropy values.", ("scene", (0, 1), "")),
+        ("Change points", "On a step series, PELT finds one change point at index 25.", ("scene", (3, 1), "input: ")),
+    ],
+    "secret-redact-io": [
+        ("Install", "Install the pinned release from GitHub. Python 3.10 or newer; it is not on PyPI.",
+         '$ python -m pip install "secret-redact-io @ git+https://github.com/HarperZ9/secret-redact-io.git@v0.1.0"'),
+        ("First run: redact text", "In Python, redact a token and a password before the text goes anywhere.", ("scene", (1, 1), ">>> ")),
+        ("Guard a write", "A guarded write in dry-run mode shows what it would write, redacted, and writes nothing.", ("scene", (2, 1, "c", 1, 0), ">>> ")),
+        ("Guard a command's output", "A guarded run redacts what the command prints.", ("scene", (2, 1, "c", 2, 0), ">>> ")),
+    ],
+    "public-surface-sweeper": [
+        ("Install", "Install from a checkout. Python 3.10 or newer.",
+         '$ git clone https://github.com/HarperZ9/public-surface-sweeper && cd public-surface-sweeper\n$ python -m pip install -e ".[test]"'),
+        ("First run: a clean repository", "Sweep the bundled clean example.", ("scene", (0, 1), "$ ")),
+        ("A repository with a problem", "Sweep a repository that carries a finding. The sweep blocks it.", ("scene", (1, 1), "$ ")),
+        ("A proof packet", "Write the result as a packet another tool can check.", ("scene", (3, 1), "$ ")),
+    ],
+    "repo-proof-index": [
+        ("Install", "Install from PyPI and clone for the examples. Python 3.10 or newer.",
+         "$ python -m pip install repo-proof-index\n$ git clone https://github.com/HarperZ9/repo-proof-index && cd repo-proof-index"),
+        ("First run: index one record", "Read one proof record and report its kind and verification state.", ("scene", (1, 1), "$ ")),
+        ("Summarize a folder", "Count records by verification state.", ("scene", (2, 1), "$ ")),
+        ("A malformed record is rejected", "A file with a duplicate key is refused.", ("scene", (4, 1, "c", 0, 0), "$ ")),
+    ],
+    "proof-surface-report": [
+        ("Install", "Install the proof-surface contract, then this package. Python 3.10 or newer.",
+         "$ pip install git+https://github.com/HarperZ9/proof-surface.git\n$ git clone https://github.com/HarperZ9/proof-surface-report && cd proof-surface-report\n$ pip install ."),
+        ("First run: render a report", "Render a packet and a receipt into one report.", ("scene", (1, 1), "$ ")),
+        ("An inflated title is refused", "A title that claims more than the evidence shows is refused.", ("scene", (4, 1, "c", 0, 0), "$ ")),
+    ],
+    "model-provenance-validator": [
+        ("Install", "Install from PyPI and clone for the examples. Python 3.10 or newer.",
+         "$ python -m pip install model-provenance-validator\n$ git clone https://github.com/HarperZ9/model-provenance-validator && cd model-provenance-validator"),
+        ("First run: a valid envelope", "Validate the bundled release envelope.", ("scene", (1, 1), "$ ")),
+        ("An invalid envelope", "Each problem is named.", ("scene", (2, 1), "$ ")),
+        ("A proof packet", "Write the result as a packet.", ("scene", (4, 1, "c", 1, 0), "$ ")),
+    ],
+    "gpu-trace-validator": [
+        ("Install", "Install from a checkout. Python 3.10 or newer; it is not on PyPI.",
+         '$ git clone https://github.com/HarperZ9/gpu-trace-validator && cd gpu-trace-validator\n$ python -m pip install -e ".[test]"'),
+        ("First run: a passing trace", "Validate the bundled passing trace.", ("scene", (1, 1), "$ ")),
+        ("A failing trace", "The failing fixture fails, as it should.", ("scene", (3, 1, "c", 0, 0), "$ ")),
+        ("Show the check can fail", "Declare how many failures the fixture must produce. Two expected and two found passes.", ("scene", (3, 1, "c", 1, 0), "$ ")),
+    ],
+    "context-curator-lite": [
+        ("Install", "Install from a checkout. Python 3.10 or newer.",
+         '$ git clone https://github.com/HarperZ9/context-curator-lite.git && cd context-curator-lite\n$ python -m pip install -e ".[test]"'),
+        ("Scrub before it is stored", "Personal data and secrets are removed from text before curation.", ("scene", (2, 1), ">>> ")),
+        ("Curate a project", "Curate a project's notes and sessions into a bundle with a Telos envelope.", ("scene", (3, 1), "$ ")),
+    ],
+    "workflow-harness-lite": [
+        ("Get it", "Clone it. Node 18 or newer, no dependencies.",
+         "$ git clone https://github.com/HarperZ9/workflow-harness-lite && cd workflow-harness-lite\n$ npm test"),
+        ("First run: the demo", "Run a two-step workflow and build its receipt.",
+         '$ node examples/demo.mjs\n<span class="out">runWorkflow -&gt; status=pass total=2 passed=2 failed=0 skipped=0\nbuildTelosReceipt -&gt; project-telos.bounded-run-receipt/v1 ok</span>'),
+        ("Run your own workflow", "A step that fails makes the run fail.", ("scene", (1, 1), "$ ")),
+        ("Write a receipt", "Record the bounded run as a receipt.", ("scene", (4, 1), "$ ")),
+    ],
+    "reconcile": [
+        ("Get it", "Clone it. Node 18 or newer, no install step.", "$ git clone https://github.com/HarperZ9/reconcile && cd reconcile"),
+        ("First run: create a world", "Generate a gyroid at seed 7. It is refined toward its weakest axis and labelled best-effort when it stops short of the target.", ("scene", (3, 1), "$ ")),
+        ("Compose two generators", "Layer two generators and score the composition.", ("scene", (5, 0, "c", 3, 0), "$ ")),
+        ("See it in a browser", "Serve the folder and open <code>web/index.html</code> to run the same engine and render the shader in WebGL.", "$ python -m http.server"),
+    ],
+    "bulletin": [
+        ("Read the board", "Read the live board's discovery document. No account is needed.", ("scene", (0, 1), "$ ")),
+        ("Join with the reference client", "The one-file client generates your key, solves the proof of work, registers and posts once. Node 22 or newer.",
+         "$ git clone https://github.com/HarperZ9/bulletin && cd bulletin\n$ node examples/client.mjs --base https://bulletin.zaindharper.workers.dev --handle your-name"),
+        ("What registration does", "Run against a local copy of the board, the signed registration answered like this.", ("scene", (2, 1), "$ ")),
+        ("A signed post", "Every write is signed. The post reads back the same over HTTP and MCP.", ("scene", (3, 1), "$ ")),
+    ],
+    "studio-engine": [
+        ("Get it", "Clone it. Python 3.10 or newer, no install step.", "$ git clone https://github.com/HarperZ9/studio-engine && cd studio-engine"),
+        ("First run: a world with frames", "Generate the gyroid at seed 7 and render PNG frames with no GPU.",
+         "$ python -m studio_engine --render-frames 7 gyroid\n<span class=\"out\">world 1e1312cf579e9deb | 'Gyroid #7'\n  steps=8 converged=False final_score=0.8922\n  render=glsl-fragment expr_sha=528f4a81a82a6ea2\n  timeline period=0.628319 continuity=verified\n  rendered 8 PNG frame(s) -&gt; studio-out/frames-7/ (+ frames.json)</span>"),
+        ("Open the chamber", "Start the API, then open <code>handoff/reference-chamber.html</code> to see the shader and hear the synth.", "$ python -m studio_engine.server 8777"),
+    ],
+    "engine-revival": [
+        ("Install", "Install from a checkout. Python 3.11 or newer.",
+         '$ git clone https://github.com/HarperZ9/engine-revival && cd engine-revival\n$ python -m pip install -e ".[test]"'),
+        ("First run: validate the archive", "Check every record and reference. A clean archive prints nothing.", ("scene", (1, 1, "c", 0, 0), "$ ")),
+        ("The public-clean guard", "Run the audit before publishing.", ("scene", (3, 1, "c", 0, 0), "$ ")),
+        ("A record that breaks validation", "Rename one id and validation names every record it orphans.", ("scene", (1, 1, "c", 1, 0), "$ ")),
+    ],
+}

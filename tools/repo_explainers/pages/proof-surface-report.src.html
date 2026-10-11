@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Proof Surface Report works</title>
+<meta name="description" content="An animated walk through Proof Surface Report: a proof-surface packet and an EMET witness receipt rendered into one Markdown handoff for a reviewer, and the guards that refuse a title, a claim or a verdict worded as approval or certification. Built from proof-surface-report at commit a930401.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/proof-surface-report.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/proof-surface-report">HarperZ9/proof-surface-report</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/proof-surface-report/tree/a930401909cdaa4875c63c8561a4f8a696765c72">a930401</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>Proof Surface Report</h1>
+  <p class="lede">Turn proof packets and witness receipts into Markdown a reviewer can read.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Receipts help only when a reviewer can read them quickly. Proof Surface Report takes proof-surface packets and EMET witness receipts and writes one Markdown handoff: a summary table, each packet's claims, checks and action items, and each receipt's verdict, subject and evidence. It refuses wording that would turn the handoff into an approval or a certification.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One readable handoff</b>Packets and receipts in, one Markdown report out, with sources named.</li>
+    <li><b>Shape checked first</b>Unknown fields and ungoverned verdicts are rejected before anything renders.</li>
+    <li><b>No authority words</b>Certified, approved, compliant and safe to release are refused in titles, claims and verdicts.</li>
+    <li><b>A small adapter</b>Standard library plus the shared proof-surface contract package.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/README.md">README.md</a> at a930401 (version 0.1.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel renders the bundled synthetic examples, <code>examples/public-surface.packet.json</code> and <code>examples/emet.receipt.json</code>. Every line is output from proof-surface-report at commit a930401.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A packet and a receipt</h3>
+        <p>The packet comes from a public-surface sweep: three claims, one check that warned at score 90, and one action item about an em dash in a README. The receipt is from EMET: a MATCH on README.md with its digest and the witness's own facts.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/examples/public-surface.packet.json">examples/public-surface.packet.json</a>, <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/examples/emet.receipt.json">examples/emet.receipt.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>One Markdown handoff</h3>
+        <p>The renderer validates both, then writes a summary table and a section for each artifact. The report opens by calling itself an evidence handoff, and disclaims certification, safety verdicts and authority in the same sentence.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/src/proof_surface_report/core.py">src/proof_surface_report/core.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Two packets roll up to the weaker status</h3>
+        <p>Render the public-surface packet with the provenance packet beside it. The provenance packet is ready; the public-surface packet needs polish. The summary counts six claims and two checks, and the aggregate status is needs-polish: the report carries the weaker of the two forward.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/examples/provenance.packet.json">examples/provenance.packet.json</a>; <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/src/proof_surface_report/core.py">src/proof_surface_report/core.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Shape is checked before wording</h3>
+        <p>Add a field the packet contract does not define, such as <code>reviewer_signoff</code>, and validation fails before rendering starts. A handoff cannot carry a sign-off field in through the side.</p>
+        <p class="src">Source: the proof-surface packet contract; <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/src/proof_surface_report/core.py">src/proof_surface_report/core.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Words that would overclaim are refused</h3>
+        <p>Give the report the title "Certified release review" and it refuses to render. Write a claim that the release is approved and safe to release, and the packet fails validation, naming each word. Set a receipt's verdict to TRUSTED, a word outside EMET's closed set, and it is rejected. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/proof-surface-report/blob/a930401909cdaa4875c63c8561a4f8a696765c72/src/proof_surface_report/core.py">src/proof_surface_report/core.py</a>; README.md, "Existing technical notes"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install the proof-surface contract, then this package. Python 3.10 or newer.</p>
+<pre class="cmd"><code>$ pip install git+https://github.com/HarperZ9/proof-surface.git
+$ git clone https://github.com/HarperZ9/proof-surface-report && cd proof-surface-report
+$ pip install .</code></pre></li>
+    <li><h3>First run: render a report</h3><p>Render a packet and a receipt into one report.</p>
+<pre class="cmd"><code>$ proof-surface-report examples/public-surface.packet.json examples/emet.receipt.json
+<span class="out"># Proof Surface Handoff Report
+This report summarizes proof-surface artifacts. It is an evidence handoff,
+not a certification, safety verdict, or authority claim.
+| Packets | 1 |  | Witness receipts | 1 |  | Aggregate status | needs-polish |
+### Claims
+- Public text hygiene is checkable. Evidence: em-dash findings=1
+### Action Items
+- README.md:14: replace em dash with plain punctuation
+## Witness Receipt: emet-verify-example-7d26e03c2a4f13b0
+| Verdict | MATCH |</span></code></pre></li>
+    <li><h3>An inflated title is refused</h3><p>A title that claims more than the evidence shows is refused.</p>
+<pre class="cmd"><code>$ proof-surface-report examples/public-surface.packet.json --title &quot;Certified release review&quot;
+<span class="out">error: report title validation failed: $.title contains authority-shaped wording: certified</span></code></pre></li>
+  </ol>
+  <p class="src">Output from proof-surface-report at a930401 with proof-surface on the path. The two refused files change one field each in copies of the bundled examples.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>It renders a handoff. It is not a release approval system and makes no certification, safety or compliance finding.</li>
+    <li>The wording guard catches the words on its list. A claim can still overstate in other words, and a reviewer reads for that.</li>
+    <li>It validates two artifact shapes, proof-surface packets and EMET witness receipts. Other shapes are rejected.</li>
+  </ul>
+  <p class="src">Source: README.md at a930401, "Current status" and "Existing technical notes"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does the report call itself at the top?</summary><p>An evidence handoff, with certification, safety verdicts and authority disclaimed.</p></details>
+  <details><summary>Why is a receipt with the verdict TRUSTED rejected twice over?</summary><p>TRUSTED is outside EMET's closed verdict set, and it is also a forbidden authority token.</p></details>
+  <details><summary>Where does the authority-word guard apply?</summary><p>In artifact text, such as claims, and in the report title.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/proof-surface-report/tree/a930401909cdaa4875c63c8561a4f8a696765c72">HarperZ9/proof-surface-report at a930401</a> (version 0.1.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. Proof Surface Report is released under the MIT license.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["packet or receipt", "validate shape", "check wording", "render", "Markdown handoff"], "active": 0}}, {"table": {"head": ["artifact", "what it says"], "rows": [["packet", "status needs-polish; 3 claims; public-surface-sweeper warn, score=90"], ["packet action item", "README.md:14: replace em dash with plain punctuation"], ["receipt", "verdict MATCH, witness emet-python-reference, check verify"], ["receipt subject", "README.md sha256 2c26b46b68ffc68f..."]]}}], "k1": [{"pipe": {"stages": ["packet or receipt", "validate shape", "check wording", "render", "Markdown handoff"], "active": 4}}, {"io": {"cmd": "proof-surface-report examples/public-surface.packet.json examples/emet.receipt.json", "lines": ["# Proof Surface Handoff Report", "This report summarizes proof-surface artifacts. It is an evidence handoff,", "not a certification, safety verdict, or authority claim.", "| Packets | 1 |  | Witness receipts | 1 |  | Aggregate status | needs-polish |", "### Claims", "- Public text hygiene is checkable. Evidence: em-dash findings=1", "### Action Items", "- README.md:14: replace em dash with plain punctuation", "## Witness Receipt: emet-verify-example-7d26e03c2a4f13b0", ["| Verdict | MATCH |", "hi"]], "verdict": ["rendered", "ok", "exit 0"]}}], "k2": [{"pipe": {"stages": ["packet or receipt", "validate shape", "check wording", "render", "Markdown handoff"], "active": 3}}, {"io": {"cmd": "proof-surface-report examples/public-surface.packet.json examples/provenance.packet.json", "lines": ["| Packets | 2 |", "| Witness receipts | 0 |", ["| Aggregate status | needs-polish |", "hi"], "| Claims | 6 |", "| Checks | 2 |", "| Action items | 1 |"]}}], "k3": [{"pipe": {"stages": ["packet or receipt", "validate shape", "check wording", "render", "Markdown handoff"], "active": 1}}, {"io": {"cmd": "proof-surface-report extra.json", "lines": ["error: extra.json packet validation failed: $.reviewer_signoff unexpected field"], "verdict": ["refused", "drift"]}}], "k4": [{"pipe": {"stages": ["packet or receipt", "validate shape", "check wording", "render", "Markdown handoff"], "active": 2}}, {"cases": {"label": "Choose an input", "items": [{"label": "title: Certified release review", "blocks": [{"io": {"cmd": "proof-surface-report examples/public-surface.packet.json --title \"Certified release review\"", "lines": ["error: report title validation failed: $.title contains authority-shaped wording: certified"], "verdict": ["refused", "drift", "exit 1"]}}]}, {"label": "claim: approved and safe to release", "blocks": [{"io": {"cmd": "proof-surface-report approved.json", "lines": ["error: approved.json packet validation failed:", "$.claims[0].claim contains authority-shaped wording: approved;", "$.claims[0].claim contains authority-shaped wording: safe-for-release"], "verdict": ["refused", "drift"]}}]}, {"label": "verdict: TRUSTED", "blocks": [{"io": {"cmd": "proof-surface-report trusted.json", "lines": ["error: trusted.json receipt validation failed:", "$.verdict expected one of: COHERENT, CORROBORATED, DRIFT, MATCH, QUARANTINE_READ_PATH_DIVERGENCE, UNVERIFIABLE, VIEW_DIFFERS_FROM_SOURCE;", "$.verdict forbidden authority token: TRUSTED"], "verdict": ["refused", "drift"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

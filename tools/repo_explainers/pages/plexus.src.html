@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How plexus works</title>
+<meta name="description" content="An animated walk through plexus: tools declare what they emit and consume, plexus wires producer to consumer, names unmet inputs and loops, plans the pipeline that feeds a goal, and pins it to the manifests with a receipt that fails when a manifest changes. Built from plexus at commit d889be9.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/plexus.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/plexus">HarperZ9/plexus</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/plexus/tree/d889be902e1e293b089266461cffcbe885a401a0">d889be9</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>plexus</h1>
+  <p class="lede">Find what each tool emits and consumes, and wire them together.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>MCP tells an agent which tools exist. plexus tells it how their outputs plug into each other's inputs. Each tool ships a small manifest; plexus builds the wiring graph, plans the pipeline that feeds the tool you want, and reports what does not connect. A plan carries a receipt tied to the exact manifests it came from, so a changed tool shows up as drift.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Wiring from declarations</b>An edge A to B forms when B consumes a capability A emits. Each edge cites the producer's own source pointer.</li>
+    <li><b>Honest gaps</b>Inputs nothing emits, outputs nothing consumes, feedback loops and duplicate tool ids are all named.</li>
+    <li><b>Plans for a goal</b><code>plexus plan --goal</code> orders the tools that feed one target and names its sources.</li>
+    <li><b>Plans you can re-check</b><code>plexus verify</code> re-derives a plan's receipt from the current manifests and exits 1 on drift.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/README.md">README.md</a> at d889be9 (release 0.4.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The first steps use two small manifests written for this page, <code>notes</code> and <code>review</code>. The last uses the ten built-in manifests that ship with plexus. Every line is output from plexus at commit d889be9.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Two tools declare their ports</h3>
+        <p><code>notes</code> emits <code>notes.summary/1</code>. <code>review</code> consumes <code>notes.summary/1</code> and a <code>style.guide/1</code>, and emits <code>review.verdict/1</code>. Each port names the module behind it, such as <code>src/notes/summary.py:build</code>.</p>
+        <p>A manifest is plain JSON. A tool ships one and it joins the mesh.</p>
+        <p class="src">Source: README.md, "How a tool plugs in"; <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/manifest.py">src/plexus/manifest.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Discover the edge</h3>
+        <p><code>plexus discover</code> matches capability strings. <code>review</code> consumes what <code>notes</code> emits, so one edge forms: notes to review via <code>notes.summary/1</code>.</p>
+        <p>The edge is tagged <code>evidence: declared</code>. plexus copies the producer's module pointer into <code>via</code> but never imports or runs it. The citation is a claim for you to check.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/mesh.py">src/plexus/mesh.py</a>; README.md, "Declared, not probed"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Name what does not connect</h3>
+        <p>Nothing in the set emits <code>style.guide/1</code>, so it is an unmet input: an external or human input, or a tool that is not here. Nothing consumes <code>review.verdict/1</code>, so it is a terminal output.</p>
+        <p>Both come from the same comparison. An unmet input means only that no manifest in this set produces it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/mesh.py">src/plexus/mesh.py</a>, <code>orphans</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Plan the pipeline, with a receipt</h3>
+        <p><code>plexus plan --goal review</code> orders the tools that feed review: notes, then review. Its receipt records the SHA-256 of each manifest and a hash over the derived plan, under a method version.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/plan.py">src/plexus/plan.py</a>, <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/receipt.py">src/plexus/receipt.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Verify against the manifests you have now</h3>
+        <p><code>plexus verify</code> re-derives the plan from the current manifests and rebuilds its receipt. Unchanged, it matches and exits 0.</p>
+        <p>Now change <code>notes</code> to emit <code>notes.summary/2</code>. The manifest hash changes, the wiring changes, and verify exits 1. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/receipt.py">src/plexus/receipt.py</a>, <code>verify_plan</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>The built-in mesh</h3>
+        <p>plexus ships manifests for ten tools. Its tour wires them: gather feeds crucible through <code>gather.digest/1</code>, mneme and crucible feed each other replay packs, and the plan for crucible reports its feedback loop as a loop.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/examples/tour.py">examples/tour.py</a>; <a href="https://github.com/HarperZ9/plexus/blob/d889be902e1e293b089266461cffcbe885a401a0/src/plexus/registry.py">src/plexus/registry.py</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.11 or newer; discovery runs no tool.</p>
+<pre class="cmd"><code>$ python -m pip install plexus-mesh</code></pre></li>
+    <li><h3>First run: is there a route?</h3><p>Ask whether one tool's output can reach another's input through the built-in manifests.</p>
+<pre class="cmd"><code>$ plexus route --from gather --to crucible --builtin
+<span class="out">  "connected": true,
+  "hops": 1,</span></code></pre></li>
+    <li><h3>Discover your own tools</h3><p>Point plexus at a folder of manifests to see each tool's ports.</p>
+<pre class="cmd"><code>$ plexus discover --dir m
+<span class="out">producer    notes
+consumer    review
+capability  notes.summary/1
+self_loop   false
+via         src/notes/summary.py:build
+evidence    declared</span></code></pre></li>
+    <li><h3>Plan and verify a pipeline</h3><p>Plan a pipeline toward a goal, then verify the plan against the manifests you have now.</p>
+<pre class="cmd"><code>$ plexus plan --dir m --goal review
+<span class="out">order    notes -&gt; review
+sources  notes
+cyclic   []
+receipt  plexus.plan-receipt/1, method plexus-plan/1
+  notes   53ab6c24d374afa4...
+  review  0d50accb0759561e...
+  plan_sha256  aeb01289ea823d89...</span></code></pre></li>
+  </ol>
+  <p class="src">Output from plexus at d889be9 run from source; plexus-mesh 0.4.0 is the current PyPI release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>Edges come from declarations. Discovery never runs a tool, so an edge says two manifests agree. Whether the tools work together is a separate test. <code>probe_lane</code> checks that a lane's server is live.</li>
+    <li>An unmet input means no manifest in the set you gave produces it. plexus reasons about nothing outside that set.</li>
+    <li><code>verify</code> checks a saved plan's receipt against one re-derived from the current manifests. Act on the re-derived plan it reports, not on a saved file you have not re-derived.</li>
+    <li>The built-in manifests are kept in plexus. Their presence does not show that each tool publishes its own manifest.</li>
+  </ul>
+  <p class="src">Source: README.md at d889be9, "Declared, not probed" and "How a tool plugs in"; src/plexus/receipt.py</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>When does an edge from A to B form?</summary><p>When B consumes a capability that A emits, directly or through A's consumable_as list.</p></details>
+  <details><summary>What does evidence: declared mean on an edge?</summary><p>The edge comes from what the manifests say. plexus copied the producer's module pointer but did not follow or run it.</p></details>
+  <details><summary>style.guide/1 shows up as an unmet input. Does that mean no such tool exists?</summary><p>No. It means no manifest in the set plexus was given emits it.</p></details>
+  <details><summary>A tool's manifest changes after you saved a plan. What does verify do?</summary><p>It re-derives the receipt from the current manifests, the hashes no longer agree, and it exits 1.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/plexus/tree/d889be902e1e293b089266461cffcbe885a401a0">HarperZ9/plexus at d889be9</a> (release 0.4.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. plexus is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["manifests", "discover", "wire", "plan", "receipt", "verify"], "active": 0}}, {"table": {"head": ["tool", "emits", "consumes"], "rows": [["notes", "notes.summary/1", "nothing"], ["review", "review.verdict/1", "notes.summary/1, style.guide/1"]]}}], "k1": [{"pipe": {"stages": ["manifests", "discover", "wire", "plan", "receipt", "verify"], "active": 2}}, {"io": {"cmd": "plexus discover --dir m", "lines": ["producer    notes", "consumer    review", ["capability  notes.summary/1", "hi"], "self_loop   false", "via         src/notes/summary.py:build", ["evidence    declared", "hi"]]}}], "k2": [{"pipe": {"stages": ["manifests", "discover", "wire", "plan", "receipt", "verify"], "active": 2}}, {"io": {"lines": ["unmet_inputs        [\"style.guide/1\"]", "unconsumed_outputs  [\"review.verdict/1\"]", "collisions          []"], "verdict": ["1 unmet input", "unv", "reported, never filled in"]}}], "k3": [{"pipe": {"stages": ["manifests", "discover", "wire", "plan", "receipt", "verify"], "active": 4}}, {"io": {"cmd": "plexus plan --dir m --goal review", "lines": ["order    notes -> review", "sources  notes", "cyclic   []", "receipt  plexus.plan-receipt/1, method plexus-plan/1", "  notes   53ab6c24d374afa4...", "  review  0d50accb0759561e...", ["  plan_sha256  aeb01289ea823d89...", "hi"]]}}], "k4": [{"pipe": {"stages": ["manifests", "discover", "wire", "plan", "receipt", "verify"], "active": 5}}, {"cases": {"label": "Choose the manifests", "items": [{"label": "unchanged", "blocks": [{"io": {"cmd": "plexus verify --plan plan.json --dir m", "lines": ["\"verified\": true"], "verdict": ["exit 0", "ok", "the receipt re-derives"]}}]}, {"label": "notes now emits notes.summary/2", "blocks": [{"io": {"cmd": "plexus verify --plan plan.json --dir m", "lines": ["\"verified\": false"], "verdict": ["exit 1", "drift", "the manifest moved under the plan"]}}]}]}}], "k5": [{"io": {"cmd": "python examples/tour.py", "lines": ["== plan: feed crucible ==", "  order: forum -> gather -> crucible -> index -> learn -> mneme -> telos", "  sources: forum, gather", ["  feedback loop: crucible <-> index <-> learn <-> mneme <-> telos", "hi"], "== route: gather -> crucible ==", "  [gather->crucible via gather.digest/1]"]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

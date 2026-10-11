@@ -39,8 +39,8 @@
   }
  ],
  "files": {
-  "ao-check-1080p.mp4": "b06c598f05c0c444a75114a2183d26995cfb22d6ddeafa8cd01a60fe2e41808b",
-  "ao-check-2160p.mp4": "8d08ede2ad54e8db3df718909d086b2c8f4bbcc9e963454c3f5de06d9cdb9a0f",
+  "ao-check-1080p.mp4": "4d8a03a1603f4eacd3e308de172b5844183865fec2cc745d0b20b01346756f06",
+  "ao-check-2160p.mp4": "70d6051eaeb96a3a8a4988766ae3bb9916f60a01e8611f554d33b5e47c431b64",
   "ao-check.script.json": "1187d0ff03d275c628ab819a9400160088c45f80b9002350eec23a0907dc81de",
   "ao-check.vtt": "765e1a1ff17764845f96cf7aa2e9a16fe8e32f9a58769ebf90919c670e463c7b",
   "engine/camera.mjs": "1c6a4d4aff76e8a6a777eb0ab91ec5899a545faaa52713d09254f36a6e296831",
@@ -69,6 +69,24 @@
   "poster.jpg": "dc4475c1368592bd6c2dc2d7f4eb623ff9eb3e444fcda034361f9857c283b2ff",
   "scene/ao-check.scene.mjs": "349ef1e19554fa29ab63d24c5cbcdc4daeba392c6cbf9dbd9ab763c6b778e4d5",
   "scene/atlas.json": "e319da67ce990a6d163411db1ef81641fbe76b9047f98575e9067280f69cb6bd",
+  "sound/receipt.json": "a2f4e0e1f93d8e0706fc58072f5205085dbbdcf5a4df50c5665cead4fe0a68f8",
+  "sound/report.json": "a330998766eb0199e87ee4dd689cf281b5ea079083c9fe02d7dafa0a06808b01",
+  "sound/sheet.json": "2bcae9dcfeac77cd1637fa7fca76ada5ee8e365e2bb75c216d90a509baf27c0c",
+  "sound/sheet.resolved.json": "14296cc8e73e17458e594bcbada1e99f8667d907ba07710be508febfaa74e840",
   "timing.json": "71bca1de6fc61680f142b8921bee5c716ba379101a66fdeb7c0a10bba0ec1e7b"
+ },
+ "sound": {
+  "mix": "B",
+  "added": "2026-10-10",
+  "engine": "raw-native web/sound, main 4c7ddaa",
+  "integrated_lufs": -16.001141646724747,
+  "true_peak_dbtp": -1.7999999999999545,
+  "loudness_range_lu": 3.4253884831433243,
+  "music_under_speech_lu": 17.93718152008234,
+  "loudness_verdict": "verified",
+  "cues": 7,
+  "pcm_sha256": "aac742b66f365a4e11a893afe03aa209372c2b2ecdd16e709d19ec311d8193e2",
+  "meter": "raw-native-bs1770/1",
+  "note": "Narration, pictures, facts and captions are as released. The videos first attached carried the narration alone; to return to them, remux the narration WAV (or render with --no-sound)."
  }
 }

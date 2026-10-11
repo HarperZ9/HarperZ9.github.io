@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How telos works</title>
+<meta name="description" content="An animated walk through telos, a local workbench whose packets recompute their own claims: a perceive and check loop that certifies a 4-D cube or returns UNVERIFIABLE, and a proof packet whose verifier turns every edit into DRIFT with the finding named. Built from telos at commit 5f59ff5.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/telos.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/telos">HarperZ9/telos</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/telos/tree/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75">5f59ff5</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>telos</h1>
+  <p class="lede">One workbench, and packets that recompute their own claims.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>telos is a local workbench for AI work, served to any MCP host as one surface over five tools: gather, index, forum, crucible and telos itself. Its proof packets carry the materials behind a claim, and a verifier recomputes every load-bearing value from those materials. A packet that brings its own MATCH cannot pass with it: the verdict is derived, never read.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One MCP surface</b>78 tools across five servers, with host config for Codex, Claude and OpenAI Agents.</li>
+    <li><b>Packets that recompute</b><code>node demo/proof.mjs verify</code> replays a packet from its own embedded materials.</li>
+    <li><b>A verdict that cannot be canned</b>An embedded verdict that disagrees with the derived one is itself recorded as a failure.</li>
+    <li><b>Honest coverage</b>A witness that cannot be reached is recorded as coverage lost, never counted as a pass.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/README.md">README.md</a> at 5f59ff5 (version 0.9.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/passing-check/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/passing-check/passing-check.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/passing-check/passing-check.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>A passing check can still be wrong</b> (2 min 24 s, narrated, captioned). Telos scores a render against a criterion the loop did not write, so a pass has to be earned. <a href="https://harperz9.github.io/explainers.html#passing-check-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows two of telos's own demos: <code>demo/run.mjs</code>, the loop that explains the idea, and <code>demo/proof.mjs</code>, an agent-action proof packet. Every line is output from telos at commit 5f59ff5, run with Node and no network.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A criterion the loop did not write</h3>
+        <p>The loop renders a 4-D cube, a tesseract, and must recover its shape from the picture. The criterion is fixed outside the loop: 16 vertices and 32 edges.</p>
+        <p>Two channels read the render independently: a geometric channel and a pixel channel. CERTIFIED needs every channel to agree and to match the criterion.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/run.mjs">demo/run.mjs</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Run A: perceive, check, amplify</h3>
+        <p>The first reading is not unanimous, so the loop amplifies: it tries more views and a sound channel, each step witnessed. At the fourth step every channel agrees with the criterion and the certificate reads CERTIFIED.</p>
+        <p><code>recheck()</code> then re-derives the verdict from the stored evidence alone and returns true.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/run.mjs">demo/run.mjs</a>, run A</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>Run B: a render too small to read</h3>
+        <p>Run B renders the same cube at 8 by 8 pixels, far too coarse to resolve 16 vertices. The channels never agree, so after the same amplification steps the certificate reads UNVERIFIABLE.</p>
+        <p>The loop does not guess. A verifier that cannot fail is not a verifier, and this run is the proof that this one can.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/run.mjs">demo/run.mjs</a>, run B</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>A proof packet carries its materials</h3>
+        <p><code>node demo/proof.mjs agent-action --demo</code> assembles a packet for one admitted action: the objective, two source refs with content hashes, a context envelope, the route that decided it, the admission decision, the action's side effect, the output digests and the artifact text itself.</p>
+        <p>The packet embeds what is needed to recompute its claims, so a verifier never has to trust the run that made it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/proof.mjs">demo/proof.mjs</a>; <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/docs/PROOF-LANES.md">docs/PROOF-LANES.md</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Verify it from the packet alone</h3>
+        <p><code>proof.mjs verify</code> runs a fixed set of checks: required fields, source and context refs, the state model, the packet hash, artifact digests, the join between admission and action, and their order. The verdict is folded out of the checks: MATCH.</p>
+        <p>The witness here is a second reader, Emet, that is not installed on this machine. The packet records it as unavailable, so the MATCH stands on the verifier alone and says so.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/proof.mjs">demo/proof.mjs</a>, <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/proof-witness.mjs">demo/proof-witness.mjs</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Every edit is named</h3>
+        <p>Change the packet and verify again. Pick each edit in the panel. Every one comes back DRIFT, and each finding names the check that failed and where.</p>
+        <p>The last case edits the artifact and also writes MATCH into the packet's own verdict. It does not help: the embedded verdict disagrees with the derived one, and that disagreement is itself a finding.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/telos/blob/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75/demo/proof.mjs">demo/proof.mjs</a>; README.md, "Worked example: a proof packet that can fail"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Run the MCP server without cloning, or clone to run the demos. Node 20 or newer, no dependencies.</p>
+<pre class="cmd"><code>$ npx -y project-telos-mcp
+$ git clone https://github.com/HarperZ9/telos.git && cd telos</code></pre></li>
+    <li><h3>First run: two renders</h3><p>The demo checks an honest render and a broken one against a criterion the loop did not write.</p>
+<pre class="cmd"><code>$ node demo/run.mjs
+<span class="out">  RUN A (honest render)  : CERTIFIED      recheck=true
+  RUN B (broken render)  : UNVERIFIABLE   recheck=true</span></code></pre></li>
+    <li><h3>Make a proof packet and verify it</h3><p>Write a packet for an agent action, then verify it from the packet alone.</p>
+<pre class="cmd"><code>$ node demo/proof.mjs agent-action --demo --json &gt; packet.json
+$ node demo/proof.mjs verify packet.json
+<span class="out">verdict       MATCH
+witness       unavailable / UNVERIFIABLE</span></code></pre></li>
+    <li><h3>An edited packet is named</h3><p>Change the packet and verify again.</p>
+<pre class="cmd"><code>$ node demo/proof.mjs verify edited.json
+<span class="out">packet_hash_mismatch (DRIFT)
+artifact_digest_mismatch (DRIFT) outputs[0].digest
+embedded_verdict_not_derived (DRIFT)</span></code></pre></li>
+  </ol>
+  <p class="src">Output from telos at 5f59ff5 on Windows with Node 25. The README shows the witness line as witnessed / MATCH where Emet is installed; it was not installed here. project-telos-mcp 0.9.0 is the current npm release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>A MATCH on a packet is a claim about what was recomputed. It is not a claim that everything was looked at, and the witness coverage says how much was.</li>
+    <li>The demo regulator adjudicates by unanimity and does not yet weight channels; the run prints this disclosure itself.</li>
+    <li>Native workstation control can affect the foreground window. Read the control contract before actuation.</li>
+    <li>The research proof packets are deterministic preflights with stated non-claims, not experimental results.</li>
+  </ul>
+  <p class="src">Source: README.md at 5f59ff5, "What it does" and "Worked example"; demo/run.mjs output</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does CERTIFIED require in the tesseract loop?</summary><p>Every channel must agree and match the criterion of 16 vertices and 32 edges, which the loop did not write.</p></details>
+  <details><summary>Why does run B end UNVERIFIABLE and not DRIFT?</summary><p>At 8 by 8 pixels the channels cannot resolve the shape, so the loop cannot verify either way. It reports that, and makes no guess.</p></details>
+  <details><summary>A packet carries MATCH in its own verdict but its artifact was edited. What does verify say?</summary><p>DRIFT. The verdict is derived from the checks, and an embedded verdict that disagrees is itself a finding.</p></details>
+  <details><summary>What does witness unavailable mean for a MATCH?</summary><p>The verdict stands on the verifier alone, and the packet discloses that no second reader checked it.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/telos/tree/5f59ff5ca7598ec8c94135d7f3725d5b9d669d75">HarperZ9/telos at 5f59ff5</a> (version 0.9.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. telos is released under FSL-1.1-ALv2.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["render", "perceive", "check vs criterion", "amplify", "certificate", "recheck"], "active": 2}}, {"io": {"lines": ["criterion  {\"vertices\":16,\"edges\":32,\"polytopeKind\":\"cube\"}", "CERTIFIED    every channel agreed AND matched the criterion (fail-closed)", "UNVERIFIABLE could not verify, reported as such"]}}], "k1": [{"pipe": {"stages": ["render", "perceive", "check vs criterion", "amplify", "certificate", "recheck"], "active": 4}}, {"io": {"lines": ["[0] INITIAL  -> not unanimous yet, begin amplification", "[1] GENERIC  -> UNVERIFIABLE  vertices=12 edges=32 (pixel: v=31 e=7)", "[2] VIEW2    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=31 e=8)", "[3] VIEW3    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=31 e=8)", ["[4] SOUND    -> CERTIFIED     vertices=16 edges=32 (pixel: v=18 e=19)", "hi"]], "verdict": ["CERTIFIED", "ok", "recheck() true, from stored evidence alone"]}}], "k2": [{"pipe": {"stages": ["render", "perceive", "check vs criterion", "amplify", "certificate", "recheck"], "active": 4}}, {"io": {"lines": ["[1] GENERIC  -> UNVERIFIABLE  vertices=12 edges=32 (pixel: v=0 e=0)", "[2] VIEW2    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)", "[3] VIEW3    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=184 e=49)", ["[4] SOUND    -> UNVERIFIABLE  vertices=16 edges=32 (pixel: v=49 e=40)", "hi"]], "verdict": ["UNVERIFIABLE", "unv", "recheck() true: the verdict re-derives, and it is not a pass"]}}], "k3": [{"pipe": {"stages": ["fixture", "assemble", "completeness", "recompute", "join", "derive", "witness", "replay"], "active": 1}}, {"table": {"head": ["field", "value"], "rows": [["source_refs", "2, each with a sha256"], ["route", "function-routing, decided by forum.route"], ["admission", "allow, under policy:external-write-approval-v1"], ["outputs", "status_summary, sha256:23d71288132b..."], ["artifacts.status_summary", "Telos proof-lane demo: two source refs joined, one action admitted, one message sent under operator consent."]]}}], "k4": [{"pipe": {"stages": ["fixture", "assemble", "completeness", "recompute", "join", "derive", "witness", "replay"], "active": 7}}, {"io": {"cmd": "node demo/proof.mjs verify packet.json", "lines": [["verdict       MATCH", "hi"], "witness       unavailable / UNVERIFIABLE"], "verdict": ["MATCH", "ok", "witness_coverage: not_witnessed, disclosed"]}}], "k5": [{"pipe": {"stages": ["fixture", "assemble", "completeness", "recompute", "join", "derive", "witness", "replay"], "active": 5}}, {"cases": {"label": "Choose an edit", "items": [{"label": "artifact text edited", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify edited.json", "lines": ["packet_hash_mismatch (DRIFT)", ["artifact_digest_mismatch (DRIFT) outputs[0].digest", "hi"], "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift"]}}]}, {"label": "artifact removed", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify missing.json", "lines": ["packet_hash_mismatch (DRIFT)", ["missing_required_field (UNVERIFIABLE) artifacts.status_summary", "hi"], "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift", "the worst finding sets the verdict"]}}]}, {"label": "admission set to deny", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify deny.json", "lines": [["state_model_violation (DRIFT) admission.decision", "hi"], "packet_hash_mismatch (DRIFT)", "embedded_verdict_not_derived (DRIFT)"], "verdict": ["DRIFT", "drift", "a denied action cannot have executed"]}}]}, {"label": "edited, with MATCH written in", "blocks": [{"io": {"cmd": "node demo/proof.mjs verify canned.json", "lines": ["packet_hash_mismatch (DRIFT)", "artifact_digest_mismatch (DRIFT) outputs[0].digest", ["embedded_verdict_not_derived (DRIFT)", "hi"]], "verdict": ["DRIFT", "drift", "an embedded MATCH cannot win"]}}]}]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>
