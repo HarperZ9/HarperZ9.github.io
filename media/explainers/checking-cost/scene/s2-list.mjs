@@ -48,6 +48,7 @@ export function prepare(A) {
     title: GROUPS.map((G, g) => text(`${G.name}: ${G.n} references`, { atlas: A.sans, size: 30, x: cell(g, 0)[0] - R, y: TOP - 40 })),
     fab: GROUPS.map((G, g) => text(`did not exist: ${G.share}`, { atlas: A.sans, size: 28, x: cell(g, 0)[0] - R, y: 0 })),
     wrong: GROUPS.map((G, g) => text(`real, wrong details: ${G.wshare}`, { atlas: A.sans, size: 28, x: cell(g, 0)[0] - R, y: 0 })),
+    unit: GROUPS.map((G, g) => text("1 dot = 1 reference", { atlas: A.mono, size: 26, x: cell(g, 0)[0] - R, y: 0 })),
     look: text("On the page, they look the same.", { atlas: A.sans, size: 36, x: 960, y: 960, anchor: "center" }),
     search: text("Only the search tells them apart.", { atlas: A.sans, size: 36, x: 960, y: 960, anchor: "center" }),
     dot: circle(0, 0, R, 36),
@@ -95,6 +96,8 @@ export function draw(t, A, T, items, zoom) {
     const yFab = TOP + rows(G.n) * SPACING + 26, yWrong = yFab + 40;
     if (mark > 0) items.push({ shape: shiftY(S.fab[g].shape, yFab), fill: C.hot, opacity: vis * mark * (1 - 0.6 * same) });
     if (wrongOn > 0) items.push({ shape: shiftY(S.wrong[g].shape, yWrong), fill: C.ink2, opacity: vis * wrongOn * (1 - 0.6 * same) });
+    // What one dot stands for (fix 6): true for both grids, 222 and 414 dots.
+    items.push({ shape: shiftY(S.unit[g].shape, yWrong + 46), fill: C.dim, opacity: vis * span(t, T.enter + 1.6, T.enter + 2.8) });
   });
   // The count of references searched, and the beams.
   if (beam1 > 0 && beam1 < 1) items.push({ shape: line(bx1, TOP - 70, bx1, 900), stroke: C.ok, width: 2, opacity: vis * 0.7, blend: "add" });

@@ -27,7 +27,7 @@ export function prepare(A) {
     hourTag: text("1 hour", { atlas: A.sans, size: 0.62, x: left + CELL / 2, y: oy - CELL / 2 - 0.6, anchor: "center" }).shape,
     eqHours: tex("21{,}800{,}126 \\times 6\\,\\text{hours} \\approx 130{,}800{,}757\\,\\text{hours}", { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape,
     eqYears: tex("130{,}800{,}757\\,\\text{hours} \\div 8{,}760 \\approx 14{,}932\\,\\text{years}", { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape,
-    years: text("about 15,000 years of work, spent in one year", { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" }).shape,
+    ...yearsLine(text("about 15,000 years of work, spent in one year", { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" })),
     caveat: text("an estimate from approximate rates; the authors expect the true figure to be higher", { atlas: A.sans, size: 28, x: 960, y: 1010, anchor: "center" }).shape,
     paper: text("the paper's own figures", { atlas: A.sans, size: 24, x: 960, y: 196, anchor: "center" }).shape,
     pays: text("Science already pays people to check.", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
@@ -45,11 +45,13 @@ function side(t, T, hours = 6) {
   const h = span(t, T.six, T.six + 2.2, ease.inOut);
   return CELL * Math.sqrt(n) * lerp(1, Math.sqrt(hours), h);
 }
+// The years line and its width, so the "estimate" tag can sit beside it.
+const yearsLine = (l) => ({ years: l.shape, yearsW: l.width });
 const texNum = (n) => fmt(n).replace(/,/g, "{,}");
 // The arithmetic at a chosen number of hours per review; at 6 it is the paper's own.
 function sums(A, hours) {
   const S = A.s3;
-  if (hours === 6) return { eqHours: S.eqHours, eqYears: S.eqYears, years: S.years, note: S.paper };
+  if (hours === 6) return { eqHours: S.eqHours, eqYears: S.eqYears, years: S.years, yearsW: S.yearsW, note: S.paper };
   const key = String(hours);
   S.what = S.what || new Map();
   if (!S.what.has(key)) {
@@ -58,7 +60,7 @@ function sums(A, hours) {
     S.what.set(key, {
       eqHours: eq(`21{,}800{,}126 \\times ${hours}\\,\\text{hours} = ${texNum(total)}\\,\\text{hours}`),
       eqYears: eq(`${texNum(total)}\\,\\text{hours} \\div 8{,}760 \\approx ${texNum(years)}\\,\\text{years}`),
-      years: text(`about ${fmt(years)} years of work, at ${hours} hours a review`, { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" }).shape,
+      ...yearsLine(text(`about ${fmt(years)} years of work, at ${hours} hours a review`, { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" })),
       note: text("your value; the paper uses about 6 hours a review", { atlas: A.sans, size: 24, x: 960, y: 196, anchor: "center" }).shape,
     });
   }
@@ -141,6 +143,9 @@ export function draw(t, A, T, items, zoom) {
   scr(Q.eqHours, C.ink, eqH);
   scr(Q.eqYears, C.ink, eqY);
   scr(Q.note, C.ink2, Math.max(eqH, eqY) * 0.9);
-  scr(Q.years, C.ink, window(t, T.years + 0.8, T.exit, 0.6, 0.4));
+  const yearsA = window(t, T.years + 0.8, T.exit, 0.6, 0.4);
+  scr(Q.years, C.ink, yearsA);
+  // A claim tag in drift beside the total (storyboard fix 7): it is an estimate.
+  if (yearsA > 0) scr(text("estimate", { atlas: A.mono, size: 28, x: 960 + Q.yearsW / 2 + 30, y: 960 }).shape, C.hot, yearsA);
   scr(S.caveat, C.unv, window(t, T.caveat, T.exit, 0.6, 0.4));
 }
