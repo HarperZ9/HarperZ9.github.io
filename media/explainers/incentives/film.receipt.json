@@ -5,7 +5,7 @@
   "page": "explainers.html#incentives",
   "script": {
     "path": "media/explainers/incentives/film.json",
-    "sha256": "6575726620228a10168fc4de4815b9d592be61a7ee649d68be312d04340883a5"
+    "sha256": "464c7a3f3afe402d45e9341441a55ad3e12850a89fcb2bb73199db1ec37d86d3"
   },
   "evidence": {
     "path": "media/explainers/incentives/evidence.json",
@@ -36,7 +36,8 @@
     "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
     "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
     "tools/explainer/film/motion.py": "8ce14c93ccc630558348e48edbd6d5c484ac5b80f49a6ddcbc236c70e4f89044",
-    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898",
+    "media/explainers/incentives/sound/film.sound.mjs": "fd2d1402dcd575557b1d50810f51f0a5c4088d08b748334445fac7d479662c65"
   },
   "toolchain": {
     "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
@@ -121,12 +122,35 @@
   "fps": 30,
   "seconds": 120.36666666666666,
   "outputs": {
-    "incentives.mp4": "290d1d9f97e84ff064ea9aa24126feac74ba69049bbd2cc25e338a80ed311f07",
+    "incentives.mp4": "78c401ee5b5089f0826335fe7413469a4d8a55c949a4ed444a3be2b3eccc8a22",
     "incentives.vtt": "0e9a493b217ce91a7fdcd9e8bf82d3b9d296a03e0839873069180b89aed0598b",
     "incentives.srt": "2695f22443177469bb4f4e7591bca6c3fa850295258f7c01bb8c96f25b3aaff9",
     "poster.jpg": "6442725520d5dfce7d699bd7909f80537149b5b0a91336198eed4429101c752a",
     "timing.json": "333f6e7bdb062c18447c2831a5b2526953d0db637832a0c8e0dc5a9c60cef2f0",
-    "incentives.m4a": "52864780812b416340b185cd71e0e22a0311c024428121c97bda5e381f05656c"
+    "incentives.m4a": "49233fe7c02bb099b94762e26f1cc694446807ba6c78131d665d8d4c657e93ea"
   },
-  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes.",
+  "sound": {
+    "mix": "C",
+    "since": "2026-10-10",
+    "engine": "raw-native web/sound (main 66662c9; web/sound unchanged since 4c7ddaa)",
+    "what": "The narration with 26 short cues, each placed from the scene timeline and panned to what it marks; no score bed under the voice.",
+    "why": "The same choice as film 1. Moreno and Mayer (2000) found a music bed under narration lowered recall and transfer; cues tied one-to-one to events did not significantly hurt. Reversible.",
+    "files": {
+      "sound/film.sound.mjs": "fd2d1402dcd575557b1d50810f51f0a5c4088d08b748334445fac7d479662c65",
+      "sound/sheet.json": "370d80235abcb22c0feed14b9ad63e567858ec1a41f699d258ba3155857aff24",
+      "sound/sheet.resolved.json": "c28595222e64b4955ddb9ffbca53f6ba80544ca4e07681dbe74fdb80fb75b1b4",
+      "sound/report.json": "c8138905e3271d667147d10eae117050d162d4e22995c16a7895162c9af30187",
+      "sound/receipt.json": "104def787c723bc8df3c1db645e61d6016db136dfe419ac204bc3e23f8c01c8d"
+    },
+    "pcm_sha256": "11ab6c641dea41c0040b33c3684cf45f8ce5bc57783f7909e5c3c4703765952c",
+    "meter": "raw-native-bs1770/1",
+    "true_peak_meter": "raw-native-truepeak/1",
+    "integrated_lufs": -16,
+    "true_peak_dbtp": -2.24,
+    "loudness_range_lu": 3.19,
+    "loudness_verdict": "verified",
+    "second_meter": "ffmpeg 7.1 ebur128=peak=true on incentives.m4a: -16.0 LUFS, LRA 3.2 LU, true peak -2.8",
+    "revert": "Restore incentives.mp4 and incentives.m4a and their output hashes from the commit before this one (bare narration)."
+  }
 }
