@@ -1,0 +1,20 @@
+{
+ "meter": "raw-native-bs1770/1",
+ "true_peak_meter": "raw-native-truepeak/1",
+ "integrated_lufs": -16.002858396599652,
+ "loudness_range_lu": 2.665904226384777,
+ "max_momentary_lufs": -12.307851869109562,
+ "max_short_term_lufs": -14.553701764857314,
+ "true_peak_dbtp": -1.7999999999999508,
+ "sample_peak_dbfs": -1.8121812237397694,
+ "target_lufs": -16,
+ "ceiling_dbtp": -1.5,
+ "true_peak_filter": "ITU-R BS.1770-5 (11/2023) Annex 2, order 48, 4 phases",
+ "loudness_verdict": "verified",
+ "music_under_speech_lu": null,
+ "music_in_gaps_lufs": null,
+ "sfx_peak_under_dialog_peak_db": 11.840847108280048,
+ "cues": 31,
+ "narration_lufs": -12.989965210294008,
+ "render_seconds": 9.764
+}
