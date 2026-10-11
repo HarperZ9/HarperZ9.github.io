@@ -129,3 +129,9 @@ The rebuild was decided on 3 October 2026: it changed each MP4's audio and hash.
 ## What the parity check covers
 
 `tools/explainer/scene.py` (the video) and `system/explainer/state.mjs` (the live figure) each compute what a frame shows. `tests/test_explainer_parity.py` runs both over 98 sampled frames of every explainer, at the defaults and with each parameter at its limits, and requires the same scene, text, verdicts, hot mark, alphas and bar values. It does not compare pixels: Pillow and the browser draw type differently, so the check is on what is drawn. The live stage does not draw the video's film grain.
+
+## Film captions
+
+The five long films (`media/explainers/<slug>/film.json`) take their VTT and SRT from `tools/explainer/film/captions.py`, called by `film/render.py`'s `write_captions`. Each cue holds at most two lines of at most 42 characters, so a player at 1280 px never re-wraps a line. Breaks are chosen by cost: after punctuation is preferred; inside a number phrase, after an article, between the words of a name or a listed noun compound costs more; a line or cue of one or two words costs the most. timing.json carries sentence times only, so a sentence split into several cues shares its own span by each part's letters plus a short pause per comma. That split is an estimate, not a word-level alignment.
+
+To regenerate after a script or timing change: `python -c "import json; from pathlib import Path; from tools.explainer.film import render; d = Path('media/explainers/<slug>'); render.write_captions(d, '<slug>', json.loads((d / 'timing.json').read_text(encoding='utf-8')))"`, then refresh the vtt and srt hashes in that film's `film.receipt.json`. `tests/test_explainer_caption_lines.py` fails on any line over 42 characters, any orphan line, any change to the narrated words, and any committed file the generator would not write; its controls require the earlier 84-character layout to fail.
