@@ -86,8 +86,8 @@ Meanwhile, the unchecked claim does not wait.
 
 21
 00:01:27,540 --> 00:01:37,700
-Soroush Vosoughi, Deb Roy and Sinan Aral followed about a hundred and twenty-six
-thousand rumor cascades on Twitter, from 2006 to 2017.
+Soroush Vosoughi, Deb Roy and Sinan Aral followed about a hundred and
+twenty-six thousand rumor cascades on Twitter, from 2006 to 2017.
 
 22
 00:01:38,300 --> 00:01:44,860
