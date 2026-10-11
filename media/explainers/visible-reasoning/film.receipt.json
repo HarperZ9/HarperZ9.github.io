@@ -5,7 +5,7 @@
   "page": "explainers.html#visible-reasoning",
   "script": {
     "path": "media/explainers/visible-reasoning/film.json",
-    "sha256": "0d91586499fa582c01582fab040b1100f168467d46eeb2c56a669674cbebfcc6"
+    "sha256": "44959bd3bcb7d837292474b47c7e1e7bb5562d46f90013db7557e5e02d3fd94a"
   },
   "evidence": {
     "path": "media/explainers/visible-reasoning/evidence.json",
@@ -36,7 +36,8 @@
     "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
     "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
     "tools/explainer/film/motion.py": "8ce14c93ccc630558348e48edbd6d5c484ac5b80f49a6ddcbc236c70e4f89044",
-    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898",
+    "media/explainers/visible-reasoning/sound/film.sound.mjs": "03189dcd04d5a451c00f947f764b0a3aeb2e0105486808e1794db914cea838e5"
   },
   "toolchain": {
     "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
@@ -121,12 +122,35 @@
   "fps": 30,
   "seconds": 109.33333333333333,
   "outputs": {
-    "visible-reasoning.mp4": "4870212ddc577567470986b3281e285206fbb8574e385b3edea036cbd3707a93",
+    "visible-reasoning.mp4": "b9581c60ab5c626368901bae4a66b5cd3b3e45cb38415210d48078c873d6563e",
     "visible-reasoning.vtt": "fae4d0d2b40a677905460432560598d44d1482dfe7febf233ea5fcc025e4c186",
     "visible-reasoning.srt": "42684f31884751b5e9a05a61b167dd6144ae317b06cad2a81107fab5df6eca49",
     "poster.jpg": "ab9ed317f42a048d6fcc899b0b067fdc120e61262d18851edf5aedebefc4323c",
     "timing.json": "fea617149253a3a465c02f85c4b4be60d63af5008b8efb9731f563762bd32337",
-    "visible-reasoning.m4a": "d9fea8ed971142847e011aee01d84738ab6ba735ccdbcff6d1c1617fac7b2110"
+    "visible-reasoning.m4a": "2f588a2cdf53cff62ed8184299ae434e31af0414cad8fcb43868165fbf24e111"
   },
-  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes.",
+  "sound": {
+    "mix": "C",
+    "since": "2026-10-10",
+    "engine": "raw-native web/sound (main 66662c9; web/sound unchanged since 4c7ddaa)",
+    "what": "The narration with 20 short cues, each placed from the scene timeline and panned to what it marks; no score bed under the voice.",
+    "why": "The same choice as film 1. Moreno and Mayer (2000) found a music bed under narration lowered recall and transfer; cues tied one-to-one to events did not significantly hurt. Reversible.",
+    "files": {
+      "sound/film.sound.mjs": "03189dcd04d5a451c00f947f764b0a3aeb2e0105486808e1794db914cea838e5",
+      "sound/sheet.json": "1370a3dfeab8d77a17b1171d2adaf750cec8420597cf6bb144074f1bee5c947d",
+      "sound/sheet.resolved.json": "7d536b098eea3c584bd6db46114111d1f1815c4ee9c046ac9a8b3bfdc90ff4d7",
+      "sound/report.json": "5f45358a61df9c12a2a8c9151c02448cd6a8bfcd19226c1ba7eae11ac01754ea",
+      "sound/receipt.json": "8923ab56a8cea5487112dd62f47a2da0e5c414061e050a8525cfb71299187edf"
+    },
+    "pcm_sha256": "96d8ef10bccb712a5ab9a406ace1572ea1d2fc7174d2e16cce8aa37cfca531e5",
+    "meter": "raw-native-bs1770/1",
+    "true_peak_meter": "raw-native-truepeak/1",
+    "integrated_lufs": -16.0,
+    "true_peak_dbtp": -2.21,
+    "loudness_range_lu": 2.7,
+    "loudness_verdict": "verified",
+    "second_meter": "ffmpeg 7.1 ebur128=peak=true on visible-reasoning.m4a: -16.0 LUFS, LRA 2.7 LU, true peak -2.5",
+    "revert": "Restore visible-reasoning.mp4 and visible-reasoning.m4a and their output hashes from the commit before this one (bare narration)."
+  }
 }
