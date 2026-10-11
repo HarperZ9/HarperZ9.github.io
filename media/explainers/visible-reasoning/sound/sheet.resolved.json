@@ -1,0 +1,231 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "visible-reasoning/sound-1",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 5248000,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Film 5 sound, mix C. Cues are placed from the scene's timeline; each says what it marks. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "e8b9bbe0f2c746f60903215645b59f833dce49e0ba64590f5b1b0f78a934a111"
+ },
+ "cues": [
+  {
+   "at": 14400,
+   "type": "move",
+   "why": "the title's glyphs flow out of the eye's pupil as the first ribbon",
+   "x": 960,
+   "dur": 3.3,
+   "f0": 300,
+   "f1": 1000,
+   "gain_db": -15
+  },
+  {
+   "at": 210240,
+   "type": "reveal",
+   "why": "a multiple-choice question appears, options A to D",
+   "x": 450,
+   "gain_db": -11
+  },
+  {
+   "at": 420716,
+   "type": "move",
+   "why": "a thread runs from the added line to answer A",
+   "x": 600,
+   "x1": 295,
+   "dur": 1.6,
+   "f0": 900,
+   "f1": 500,
+   "gain_db": -13
+  },
+  {
+   "at": 780480,
+   "type": "move",
+   "why": "the reasoning ribbon flows and argues for A, never touching the thread",
+   "x": 200,
+   "x1": 1700,
+   "dur": 4,
+   "f0": 400,
+   "f1": 900,
+   "gain_db": -15
+  },
+  {
+   "at": 1053120,
+   "type": "land",
+   "why": "accuracy down by as much as 36%, worst case",
+   "x": 960,
+   "pitch": -3,
+   "gain_db": -5
+  },
+  {
+   "at": 1448640,
+   "type": "motif",
+   "why": "hot mark: the hint's thread pulses: not the whole cause",
+   "x": 400,
+   "hz": 554.37,
+   "gain_db": -6
+  },
+  {
+   "at": 1573440,
+   "type": "chapter",
+   "why": "section: how often the hint is named",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 2028480,
+   "type": "texture",
+   "why": "25 of 100 segments dip to name the hint",
+   "x": 300,
+   "n": 25,
+   "cap": 25,
+   "dur": 2,
+   "x1": 1620,
+   "gain_db": -14
+  },
+  {
+   "at": 2105280,
+   "type": "texture",
+   "why": "39 of 100 segments dip to name the hint",
+   "x": 300,
+   "n": 39,
+   "cap": 39,
+   "dur": 2,
+   "hz": 1200,
+   "x1": 1620,
+   "gain_db": -14
+  },
+  {
+   "at": 2383680,
+   "type": "motif",
+   "why": "hot mark: the planted shortcut taken on over 99% of prompts",
+   "x": 1600,
+   "hz": 554.37,
+   "gain_db": -6
+  },
+  {
+   "at": 2900160,
+   "type": "chapter",
+   "why": "section: still worth reading",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -7
+  },
+  {
+   "at": 3005760,
+   "type": "land",
+   "why": "the monitor that reads the actions catches 60%",
+   "x": 640,
+   "pitch": -3,
+   "gain_db": -7
+  },
+  {
+   "at": 3379200,
+   "type": "land",
+   "why": "the monitor that also reads the reasoning catches 95%",
+   "x": 1280,
+   "pitch": 2,
+   "gain_db": -6
+  },
+  {
+   "at": 3577920,
+   "type": "move",
+   "why": "the penalty: the ribbon reads clean and the catch drains away",
+   "x": 1280,
+   "dur": 2.4,
+   "f0": 900,
+   "f1": 300,
+   "gain_db": -13
+  },
+  {
+   "at": 3742080,
+   "type": "motif",
+   "why": "hot mark: the tricks continued; the catch falls to near zero",
+   "x": 1280,
+   "hz": 554.37,
+   "gain_db": -6
+  },
+  {
+   "at": 3989760,
+   "type": "chapter",
+   "why": "section: useful, and fragile",
+   "x": 960,
+   "pitch": 3,
+   "gain_db": -7
+  },
+  {
+   "at": 4061760,
+   "type": "reveal",
+   "why": "the glass ribbon cracks at one edge",
+   "x": 960,
+   "pitch": -5,
+   "gain_db": -12
+  },
+  {
+   "at": 4318080,
+   "type": "reveal",
+   "why": "written reasoning is a readout",
+   "x": 960,
+   "gain_db": -10
+  },
+  {
+   "at": 4681920,
+   "type": "chapter",
+   "why": "section: the eye returns",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 4710720,
+   "type": "move",
+   "why": "the reasoning ribbon and the thread flow again",
+   "x": 300,
+   "x1": 1600,
+   "dur": 3.4,
+   "f0": 400,
+   "f1": 800,
+   "gain_db": -15
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "lookahead_ms": 150,
+    "hold_ms": 350,
+    "attack_ms": 60,
+    "release_ms": 700
+   }
+  },
+  "sfx": {
+   "gain_db": -8.00051645766366
+  }
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {
+   "threshold_db": -20,
+   "ratio": 2,
+   "knee_db": 6,
+   "attack_ms": 10,
+   "release_ms": 200
+  },
+  "target_lufs": -16,
+  "ceiling_dbtp": -1.5,
+  "gain_db": 1.7301991489948279
+ }
+}
