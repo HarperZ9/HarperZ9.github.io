@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How learn works</title>
+<meta name="description" content="An animated walk through learn, a study loop built from your own attempts: spaced review, misconception tracking, a mastery gate that only your scored attempts can move, a receipt that re-derives the verdict, and a course engine that halts at every graded step. Built from learn at commit a3abd8c.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/learn.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/learn">HarperZ9/learn</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/learn/tree/a3abd8c6f263e0f0523c634034cade201488425e">a3abd8c</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>learn</h1>
+  <p class="lede">Turn your own material into a study loop that never takes the test for you.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>learn turns what you are studying into a loop: it schedules reviews, tracks what you keep getting wrong, orders practice, and tells you when you are ready, all from attempts you recorded yourself. Its readiness verdict can be re-derived from a receipt. A second engine automates course logistics and stops at every graded step, so the graded work stays yours.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One plan from your attempts</b><code>learn tutor study</code> puts together what is due, your misconceptions, a practice order and the mastery verdict.</li>
+    <li><b>A gate only you can move</b>Mastery reads only your scored attempts: at least 3 per objective and 80% accuracy by default.</li>
+    <li><b>A receipt that re-derives</b><code>tutor reverify</code> recomputes the hash chain and the verdict, and names CHAIN_BROKEN or VERDICT_MISMATCH.</li>
+    <li><b>Logistics that halt at graded work</b><code>learn run</code> stops at every step tagged <code>assess</code> and waits for you.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/README.md">README.md</a> at a3abd8c (version 2.3.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows a derivatives session through the <code>learn tutor</code> commands, then the bundled course workflow. Every line is output from learn at commit a3abd8c, run with Node and no network.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Plan a session</h3>
+        <p>A session names a topic and its objectives. Here the topic is derivatives, with two objectives: the power rule and the chain rule.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/session.mjs">src/tutor/session.mjs</a>; README.md, "Quickstart"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Record an attempt, then ask what to study</h3>
+        <p>You answer <code>d/dx x^3</code> with <code>3x^2</code> and record it as correct. <code>tutor study</code> then builds the plan: the chain rule is due because you have not practised it, the order mixes both, and both are unlocked because neither has a prerequisite.</p>
+        <p>Times are passed in with <code>--now</code>, so the same log always gives the same schedule.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/study.mjs">src/tutor/study.mjs</a>, <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/schedule.mjs">src/tutor/schedule.mjs</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A wrong answer becomes a misconception</h3>
+        <p>Answer <code>d/dx sin(x^2)</code> with <code>cos(x^2)</code>, mark it wrong, and note why: you forgot the inner derivative. learn groups wrong attempts and your own feedback by objective and ranks them by count, so the next session spends time there.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/misconception.mjs">src/tutor/misconception.mjs</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>The mastery gate</h3>
+        <p>Mastery is ready only when every objective has at least 3 attempts at 80% accuracy or better. One perfect attempt is not enough, and a 50% objective holds the whole session back. The command exits 1 until the gate opens.</p>
+        <p>Pick the state of the log in the panel. The scheduler can suggest what to practise, but it cannot move this line: only your scored attempts can.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/session.mjs">src/tutor/session.mjs</a>, <code>mastery</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>A receipt you can re-derive</h3>
+        <p><code>tutor study-receipt</code> writes the plan with its practice entries in a hash chain and the mastery verdict with the policy that produced it. <code>tutor reverify</code> recomputes the chain and re-derives the verdict from the receipt's own entries.</p>
+        <p>Edit one recorded attempt and the chain breaks, and the verdict no longer follows from the entries. Edit only the verdict and it no longer matches what the entries give. Pick each case in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/src/tutor/reverify.mjs">src/tutor/reverify.mjs</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>Course logistics halt at the graded step</h3>
+        <p>The second engine runs a declarative course workflow. The bundled example navigates to a course, waits for module 1, clicks start and captures the page. Step 4 is tagged <code>assess</code>, a quiz, so the engine halts there and waits for you.</p>
+        <p>Once you resume, it completes and the run's ledger verifies. A step tagged <code>assess</code> never completes on its own.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/examples/course.json">examples/course.json</a>, <a href="https://github.com/HarperZ9/learn/blob/a3abd8c6f263e0f0523c634034cade201488425e/examples/demo.mjs">examples/demo.mjs</a>; README.md, "Credential-logistics engine"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install with npm. Node 20 or newer.</p>
+<pre class="cmd"><code>$ npm install -g @harperz9/learn@2.3.0</code></pre></li>
+    <li><h3>First run: plan a session</h3><p>Name a topic and the objectives you want to master.</p>
+<pre class="cmd"><code>$ learn tutor plan mysession --topic &quot;derivatives&quot; --objectives &quot;power-rule,chain-rule&quot;
+<span class="out">tutor plan mysession: 2 objective(s)</span></code></pre></li>
+    <li><h3>Record what you answered</h3><p>Record each attempt with your own answer and whether it was right.</p>
+<pre class="cmd"><code>$ learn tutor record mysession --objective power-rule --prompt &quot;d/dx x^3&quot; --answer &quot;3x^2&quot; --correct true
+<span class="out">tutor record mysession: 1 practice attempt(s)</span></code></pre></li>
+    <li><h3>Ask what to study next</h3><p>Learn schedules review from your attempts and names what is due.</p>
+<pre class="cmd"><code>$ learn tutor study mysession --now 2026-06-30T00:00:00Z
+<span class="out">tutor study mysession: 1 due, 0 misconception(s), mastery not yet
+  due: chain-rule</span></code></pre></li>
+  </ol>
+  <p class="src">Output from learn at a3abd8c run from a clone; @harperz9/learn 2.3.0 is the current npm release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>learn grades nothing for you. An attempt is marked correct or wrong by you, and the mastery gate reads those marks.</li>
+    <li>The adaptive scheduler is a hint. It can reorder practice; it never changes the mastery verdict.</li>
+    <li>The course engine recognises a graded page only when the workflow tags it <code>assess</code>. An untagged submit or fee runs as an ordinary step, so read a workflow from someone else before you run it.</li>
+    <li>A verified receipt shows the verdict follows from the recorded attempts. It does not show the attempts were honest.</li>
+  </ul>
+  <p class="src">Source: README.md at a3abd8c, "Features"; src/tutor/session.mjs and src/tutor/reverify.mjs</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why does one perfect attempt not open the mastery gate?</summary><p>The default gate needs at least 3 attempts per objective as well as 80% accuracy.</p></details>
+  <details><summary>Can the scheduler move a session to READY?</summary><p>No. Only your scored attempts can. The scheduler only suggests what to practise next.</p></details>
+  <details><summary>You flip one recorded attempt inside a receipt. Which two failures does reverify report?</summary><p>CHAIN_BROKEN, because the hash chain no longer recomputes, and VERDICT_MISMATCH, because the stored verdict no longer follows from the entries.</p></details>
+  <details><summary>What does the course engine do at a step tagged assess?</summary><p>It halts and waits for you. It never completes that step itself.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/learn/tree/a3abd8c6f263e0f0523c634034cade201488425e">HarperZ9/learn at a3abd8c</a> (version 2.3.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. learn is released under its Fair Source License.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["plan", "record", "study", "mastery", "receipt"], "active": 0}}, {"io": {"cmd": "learn tutor plan mysession --topic \"derivatives\" --objectives \"power-rule,chain-rule\"", "lines": [["tutor plan mysession: 2 objective(s)", "hi"]]}}], "k1": [{"pipe": {"stages": ["plan", "record", "study", "mastery", "receipt"], "active": 2}}, {"io": {"cmd": "learn tutor record mysession --objective power-rule --prompt \"d/dx x^3\" --answer \"3x^2\" --correct true", "lines": ["tutor record mysession: 1 practice attempt(s)"]}}, {"io": {"cmd": "learn tutor study mysession --now 2026-06-30T00:00:00Z", "lines": ["tutor study mysession: 1 due, 0 misconception(s), mastery not yet", ["  due: chain-rule", "hi"], "  order: power-rule, chain-rule", "  readiness: power-rule:unlocked, chain-rule:unlocked"]}}], "k2": [{"pipe": {"stages": ["plan", "record", "study", "mastery", "receipt"], "active": 1}}, {"io": {"cmd": "learn tutor record mysession --objective chain-rule --prompt \"d/dx sin(x^2)\" --answer \"cos(x^2)\" --correct false --feedback \"forgot the inner derivative 2x\"", "lines": ["tutor record mysession: 2 practice attempt(s)"]}}, {"io": {"cmd": "learn tutor misconceptions mysession", "lines": ["tutor misconceptions mysession: 1 objective(s)", ["  chain-rule (1x): forgot the inner derivative 2x", "hi"]]}}], "k3": [{"pipe": {"stages": ["plan", "record", "study", "mastery", "receipt"], "active": 3}}, {"cases": {"label": "Choose the attempt log", "items": [{"label": "after 3 attempts", "blocks": [{"io": {"cmd": "learn tutor mastery mysession", "lines": ["  [keep going] power-rule: 1/1 (100%)", ["  [keep going] chain-rule: 1/2 (50%)", "hi"]], "verdict": ["not yet", "drift", "exit 1: too few attempts and too low accuracy"]}}]}, {"label": "3 correct each", "blocks": [{"io": {"cmd": "learn tutor mastery s", "lines": ["  [ready] power-rule: 3/3 (100%)", "  [ready] chain-rule: 3/3 (100%)"], "verdict": ["READY", "ok", "exit 0: every objective clears 3 attempts at 80%"]}}]}]}}], "k4": [{"pipe": {"stages": ["plan", "record", "study", "mastery", "receipt"], "active": 4}}, {"cases": {"label": "Choose an edit", "items": [{"label": "untouched", "blocks": [{"io": {"cmd": "learn tutor reverify s", "lines": ["  [VERIFIED] s.study-receipt.json", "    witnessed: 6 entries, mastery READY re-derived"], "verdict": ["VERIFIED", "ok", "exit 0"]}}]}, {"label": "one attempt flipped to wrong", "blocks": [{"io": {"cmd": "learn tutor reverify s", "lines": [["CHAIN_BROKEN @entry seq=0: hash chain does not recompute at entry seq 0", "hi"], ["VERDICT_MISMATCH: stored mastery verdict (ready=true) does not re-derive from the receipt's own 6 recorded practice entries (re-derived ready=false)", "hi"]], "verdict": ["NOT VERIFIED", "drift", "exit 1"]}}]}, {"label": "verdict set to not ready", "blocks": [{"io": {"cmd": "learn tutor reverify s", "lines": [["VERDICT_MISMATCH: stored mastery verdict (ready=false) does not re-derive from the receipt's own 6 recorded practice entries (re-derived ready=true)", "hi"]], "verdict": ["NOT VERIFIED", "drift", "exit 1"]}}]}]}}], "k5": [{"pipe": {"stages": ["navigate", "waitFor", "click", "capture", "assess", "complete"], "active": 4, "note": "the engine stops at assess"}}, {"io": {"cmd": "node examples/demo.mjs", "lines": ["workflow \"Intro to Accountable Automation\" (fake adapter): 6 steps, seal sha256:783761b489e8...", ["status: halted-assess @ step 4 (assess: \"Quiz 1: what the engine may automate\")", "hi"], "the engine will not touch the graded step. it waits for the operator.", "resumed -> status: completed", "ledger verify: chain ok"], "verdict": ["halted at assess", "ok", "the quiz is yours"]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

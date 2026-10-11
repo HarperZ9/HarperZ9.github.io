@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How gather works</title>
+<meta name="description" content="An animated walk through gather, research intake with receipts: page extraction with per-block hashes, a grounding check that rejects values not on the page, a content-addressed corpus that reports corrupt and missing bodies, and a digest that catches a tampered receipt. Built from gather at commit bba8cce.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/gather.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/gather">HarperZ9/gather</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/gather/tree/bba8cce608f7c6155a9fd044f8b46d226d0aa04f">bba8cce</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>gather</h1>
+  <p class="lede">Pull research out of hard sources, and keep a receipt for every piece.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>gather collects research from the places other tools break on: arXiv, authenticated APIs, JavaScript pages, scanned PDFs, audio, video, feeds and your own documents. Every block it extracts is bound to where it came from by a hash. A value a model proposes is kept only if it can be found on the page that was fetched. What you store can be re-hashed later, and anything changed or missing is named.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Markdown with a receipt</b><code>gather extract</code> turns a page into Markdown and binds every block to its node path and content hash.</li>
+    <li><b>No ungrounded fields</b><code>verify_record</code> rejects a proposed value that appears nowhere on the fetched page, matched on word boundaries.</li>
+    <li><b>A corpus you can re-check</b>Bodies are stored by hash and deduplicated. <code>gather corpus verify</code> reports CORRUPT and MISSING and exits non-zero.</li>
+    <li><b>Grants before reach</b>A run that would start a command, use the network or send a credential needs a grant you set at launch.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/README.md">README.md</a> at bba8cce (version 2.3.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/checking-cost/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/checking-cost/checking-cost.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/checking-cost/checking-cost.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Claiming got cheap. Checking did not.</b> (2 min 57 s, narrated, captioned). Gather keeps a receipt for every source it pulls, so checking a citation stays cheap. <a href="https://harperz9.github.io/explainers.html#checking-cost-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows a short local page and two notes files through gather's own CLI and Python API, with no network. Every hash, count and verdict is output from gather at commit bba8cce.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k6" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k7" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Extract a page into blocks</h3>
+        <p>Start with a small HTML page about the aperiodic monotile: a heading and two paragraphs. <code>gather extract article.html</code> parses it and returns one record per block.</p>
+        <p>Each block records its path in the document tree and a SHA-256 of its content. The whole record also carries hashes of the source and of the Markdown made from it.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/extract.py">src/gather/extract.py</a>; README.md, "Quickstart"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>The Markdown it binds to</h3>
+        <p><code>gather markdown</code> prints the same extraction as plain Markdown, ready for a model's context. The hashes in the previous step let anyone check later that this text came from that page.</p>
+        <p class="src">Source: README.md, "Features"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A proposed value must be on the page</h3>
+        <p>Suppose a model extracts a record from the page. <code>verify_record</code> checks every value against the fetched content and marks each field grounded or not.</p>
+        <p>Matching is on word boundaries, so a claimed <code>100</code> does not match inside <code>1000</code>. A year the page never states is rejected too. Pick each record in the panel.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/schema_extract.py">src/gather/schema_extract.py</a>, <code>verify_record</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Store by content hash</h3>
+        <p>Any fetch command takes <code>--store DIR</code>. Gathering two notes files writes each body under its own SHA-256, in <code>objects/75/24e3e0...</code> and <code>objects/77/a65127...</code>, and records them in a catalog.</p>
+        <p>Run the same command again and nothing new is written: both bodies are already there under the same hashes.</p>
+        <p class="src">Source: README.md, "A durable local corpus"; <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/store.py">src/gather/store.py</a>, <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/corpus_cmd.py">src/gather/corpus_cmd.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Re-check what you stored</h3>
+        <p><code>gather corpus verify</code> re-hashes every stored body and compares it with its address. Untouched, both read MATCH and it exits 0.</p>
+        <p>Change one word in a stored body and it reads CORRUPT. Delete a body and it reads MISSING. Either way the command exits 1. Pick each case in the panel.</p>
+        <p class="src">Source: README.md, "Quickstart"; <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/store.py">src/gather/store.py</a>, <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/corpus_cmd.py">src/gather/corpus_cmd.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>A scope filter, and a sealed digest</h3>
+        <p><code>--scope monotile</code> keeps the items that mention the scope terms and counts what it dropped. The run ends with a digest: a seal over every item's receipt, verified on the spot.</p>
+        <p class="src">Source: README.md, "Filter ledgers"; <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/src/gather/digest.py">src/gather/digest.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k6" data-state="s"><div class="card">
+        <span class="num">07</span><h3>A tampered receipt breaks the digest</h3>
+        <p>The bundled demo parses one video into three items, metadata, transcript and a comment, each with a receipt that verifies. It seals them into a digest, then edits one receipt. The digest no longer verifies.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/examples/demo.py">examples/demo.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k7" data-state="s"><div class="card">
+        <span class="num">08</span><h3>A pilot run puts it together</h3>
+        <p><code>gather pilot</code> takes a closed list of sources through capture, extraction, grounding and storage, then writes a redacted report and a hash-chained receipt. A source whose extracted values are not on the fetched page is recorded as an error and nothing from it is stored.</p>
+        <p>A third party re-checks the bundle with no network. This step is described from the README and docs/PILOT.md; a pilot fetches live sources, so it was not run for this page.</p>
+        <p class="src">Source: README.md, "How a pilot run works"; <a href="https://github.com/HarperZ9/gather/blob/bba8cce608f7c6155a9fd044f8b46d226d0aa04f/docs/PILOT.md">docs/PILOT.md</a></p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from a checkout to run the demo. Python 3.11 or newer; none of this needs the network.</p>
+<pre class="cmd"><code>$ git clone https://github.com/HarperZ9/gather && cd gather
+$ pip install -e .</code></pre></li>
+    <li><h3>First run: the demo</h3><p>The demo builds a sealed digest of three receipts, then tampers with one and shows the digest no longer verifies.</p>
+<pre class="cmd"><code>$ python examples/demo.py
+<span class="out">witnessed digest: 3 receipts, seal 7da7dc456b11..., verified True
+
+after tampering one receipt, digest verifies: False  &lt;- caught</span></code></pre></li>
+    <li><h3>Extract a page</h3><p>Pull a saved page into structured blocks, each with its source position.</p>
+<pre class="cmd"><code>$ gather extract article.html
+<span class="out">html[1]/body[1]/h1[1]  h1  sha256 b09abb7b64e1424e...
+html[1]/body[1]/p[1]   p   sha256 1a8f9554b2960300...
+html[1]/body[1]/p[2]   p   sha256 95355aaf2715a43d...
+content_sha256   4c907012d520ed44...
+markdown_sha256  94812767e4d6dd59...
+method           html-extract</span></code></pre></li>
+    <li><h3>Store your notes and re-check them</h3><p>Store a folder by content hash, then verify the corpus later. A clean corpus exits 0.</p>
+<pre class="cmd"><code>$ gather docs ./notes --store ./corpus
+$ gather corpus verify ./corpus</code></pre></li>
+  </ol>
+  <p class="src">Output from gather at bba8cce, run from source. gather-engine 2.3.0 is the current PyPI release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>A grounded value is one that appears on the fetched page. That shows the page says it. Whether the page is right is a separate check.</li>
+    <li>Grounding is a word-boundary text match. A value written differently on the page, such as a number with a thousands separator, may read as ungrounded.</li>
+    <li>Browser rendering, OCR, audio transcription and fast parsing are optional. <code>gather caps</code> reports which ones your install has.</li>
+    <li>Corpus context selection is acquisition context. It makes no claim about truth, claim support or completeness.</li>
+    <li>Video, Reddit and the scholarly APIs run under each service's terms and your own credentials.</li>
+  </ul>
+  <p class="src">Source: README.md at bba8cce, "Current status" and "Features"; src/gather/schema_extract.py</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Why is a proposed copies value of 100 rejected when the page says 1000?</summary><p>Grounding matches whole words, so 100 is not found inside 1000.</p></details>
+  <details><summary>You run the same gather docs command twice with --store. What does the second run write?</summary><p>Nothing new. The bodies are stored under their own hashes, so both are deduplicated.</p></details>
+  <details><summary>What is the difference between CORRUPT and MISSING in corpus verify?</summary><p>CORRUPT means the stored bytes no longer hash to their address. MISSING means the body is gone. Both make the command exit 1.</p></details>
+  <details><summary>A pilot source's extracted fields are not on its fetched page. What is stored?</summary><p>Nothing from that source. It is recorded as an error.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/gather/tree/bba8cce608f7c6155a9fd044f8b46d226d0aa04f">HarperZ9/gather at bba8cce</a> (version 2.3.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. gather is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"io": {"cmd": "gather extract article.html", "lines": ["html[1]/body[1]/h1[1]  h1  sha256 b09abb7b64e1424e...", "html[1]/body[1]/p[1]   p   sha256 1a8f9554b2960300...", "html[1]/body[1]/p[2]   p   sha256 95355aaf2715a43d...", ["content_sha256   4c907012d520ed44...", "hi"], ["markdown_sha256  94812767e4d6dd59...", "hi"], "method           html-extract"]}}], "k1": [{"io": {"cmd": "gather markdown article.html", "lines": ["# Aperiodic monotile", "", "The hat tile was announced in 2023 and tiles the plane with 1000 copies shown in the figure.", "", "Authors: Smith, Myers, Kaplan, Goodman-Strauss."]}}], "k2": [{"cases": {"label": "Choose a proposed record", "items": [{"label": "copies 1000", "blocks": [{"table": {"head": ["field", "value", "grounded"], "rows": [["title", "Aperiodic monotile", "yes"], ["year", "2023", "yes"], ["copies", "1000", "yes"]]}}, {"verdict": ["all grounded", "ok", "every value is on the page"]}]}, {"label": "copies 100", "blocks": [{"table": {"head": ["field", "value", "grounded"], "rows": [["title", "Aperiodic monotile", "yes"], ["year", "2023", "yes"], ["copies", "100", "no"]]}}, {"verdict": ["rejected", "drift", "100 is not a word on the page; 1000 is"]}]}, {"label": "year 2024", "blocks": [{"table": {"head": ["field", "value", "grounded"], "rows": [["title", "Aperiodic monotile", "yes"], ["year", "2024", "no"]]}}, {"verdict": ["rejected", "drift", "the page says 2023"]}]}]}}], "k3": [{"io": {"cmd": "gather docs notes --store corpus", "lines": ["gathered 2 item(s)", "  document   monotile.md", "  document   rubik.md", "digest seal: 93971a3b1559c14b... | verified: True", ["stored to corpus: 2 added, 0 deduped", "hi"]]}}, {"io": {"cmd": "gather docs notes --store corpus", "lines": [["stored to corpus: 0 added, 2 deduped", "hi"]]}}], "k4": [{"cases": {"label": "Choose a change", "items": [{"label": "nothing", "blocks": [{"io": {"cmd": "gather corpus verify corpus", "lines": ["verified 2 item(s): {'MATCH': 2}"], "verdict": ["exit 0", "ok", "every body re-hashes to its address"]}}]}, {"label": "one word edited", "blocks": [{"io": {"cmd": "gather corpus verify corpus", "lines": ["verified 2 item(s): {'CORRUPT': 1, 'MATCH': 1}", ["  CORRUPT  monotile.md 7524e3e0d010", "hi"]], "verdict": ["exit 1", "drift", "the bytes no longer match their hash"]}}]}, {"label": "and a body deleted", "blocks": [{"io": {"cmd": "gather corpus verify corpus", "lines": ["verified 2 item(s): {'CORRUPT': 1, 'MISSING': 1}", "  CORRUPT  monotile.md 7524e3e0d010", ["  MISSING  rubik.md 77a65127fc9f", "hi"]], "verdict": ["exit 1", "unv", "a missing body is named, never skipped"]}}]}]}}], "k5": [{"io": {"cmd": "gather docs notes --scope monotile", "lines": [["gathered 1 item(s), dropped 1 out of scope", "hi"], "  document   monotile.md", "digest seal: df1e36f2f44fa6aa... | verified: True"]}}], "k6": [{"io": {"cmd": "python examples/demo.py", "lines": ["  metadata   abc123  sha256=40d9839ffb0e...  verify=True", "  transcript abc123  sha256=f798cd2c334c...  verify=True", "  comment    c1  sha256=301cf39d5091...  verify=True", "witnessed digest: 3 receipts, seal 7da7dc456b11..., verified True", ["after tampering one receipt, digest verifies: False  <- caught", "hi"]], "verdict": ["verified False", "drift", "one edited receipt is enough"]}}], "k7": [{"pipe": {"stages": ["manifest", "capture", "extract", "ground", "store", "receipt", "report", "re-check"], "active": 3, "note": "grounding drops a source before anything is stored"}}, {"cap": "Not run for this page: a pilot reaches the network."}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

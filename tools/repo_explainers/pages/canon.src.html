@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How canon works</title>
+<meta name="description" content="An animated walk through canon: a project&#x27;s focus and decisions kept as typed records, a secret refused before it is stored, a size-budgeted brief, the brief written between canon&#x27;s markers in the next agent&#x27;s file, and an edit inside that region turned into a proposal. Built from canon at commit 802165f.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/canon.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/canon">HarperZ9/canon</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/canon/tree/802165f61e73640afee0fe59e2e13957f7039843">802165f</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>canon</h1>
+  <p class="lede">One record for your memory and your voice, shared across every model and tool.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>canon keeps one typed record of how you work and what a project is doing, and writes it into the file each tool reads at startup: CLAUDE.md, AGENTS.md, GEMINI.md and others. When you hand a repository to another agent, it starts with the focus, the open work and the decisions, including the alternatives you dropped and why. canon writes only between its own markers and turns any edit made there into a proposal for you to accept.</p>
+  </div>
+  <ul class="uses">
+    <li><b>Project state, bound to the project</b>Focus, work items, decisions and constraints are records that name their project. A read that finds another project's record fails.</li>
+    <li><b>Decisions with their alternatives</b>A dropped alternative cannot be recorded without its reason.</li>
+    <li><b>Secrets stay out</b>Keys, tokens and secret-named assignments are redacted, and a record that still looks like one is refused.</li>
+    <li><b>Writes it owns, nothing more</b>canon rewrites only the span between its markers, in a fixed list of seven paths.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/canon/blob/802165f61e73640afee0fe59e2e13957f7039843/README.md">README.md</a> at 802165f (release 0.6.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <p class="measure">No concept film fits this tool closely yet. The walkthrough below covers it in text, with real commands and output.</p>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. The panel follows a small repository, <code>exporter</code>, through the workspace commands and a switch to Codex. Every line is output from canon at commit 802165f, run with <code>CANON_HOME</code> pointed at a temporary folder.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k5" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>Record the focus</h3>
+        <p>The project is shipping a JSON export, working in <code>src/export</code>. <code>canon workspace focus</code> stores that as a focus record for this project.</p>
+        <p>The project id comes from the repository: here from <code>git config canon.project exporter</code>. Without one it comes from the remote, or from a nonce canon keeps in <code>.git</code>.</p>
+        <p class="src">Source: README.md, "Moving a project between models"; <a href="https://github.com/HarperZ9/canon/blob/802165f61e73640afee0fe59e2e13957f7039843/src/canon/cli_workspace.py">src/canon/cli_workspace.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Record a decision with what you dropped</h3>
+        <p>The team keeps the CSV writer and adds JSON beside it, because downstream scripts parse CSV. The alternative, replacing CSV, was dropped because it breaks three scripts.</p>
+        <p><code>--reject</code> takes the alternative and its reason together. Give one without the other and the command refuses.</p>
+        <p class="src">Source: README.md, "Moving a project between models"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A secret is refused before it is stored</h3>
+        <p>Someone records a decision whose text includes <code>api_key=sk-live-...</code>. The workspace store checks every record for secret shapes and refuses this one, naming the shape it found. Nothing is written.</p>
+        <p class="src">Source: README.md, "Secrets stay out of workspace records"; <a href="https://github.com/HarperZ9/canon/blob/802165f61e73640afee0fe59e2e13957f7039843/src/canon/workspace">src/canon/workspace</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>A brief for the next agent</h3>
+        <p><code>canon handoff --to codex</code> lists focus, open work, recent decisions and constraints, in that order, inside the target's size budget. It says plainly that it holds what was recorded, not everything that happened in earlier sessions.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/canon/blob/802165f61e73640afee0fe59e2e13957f7039843/src/canon/cli_handoff.py">src/canon/cli_handoff.py</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>Switch: write it between the markers</h3>
+        <p><code>canon switch --to codex --create</code> writes the brief into <code>AGENTS.md</code>, the file Codex reads at startup. Everything canon writes sits between its begin and end markers; every byte outside them is left as it was.</p>
+        <p class="src">Source: README.md, "How one record becomes the file each tool reads"</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k5" data-state="s"><div class="card">
+        <span class="num">06</span><h3>An edit inside the region becomes a proposal</h3>
+        <p>An agent changes the goal in <code>AGENTS.md</code> to an XML export. The next switch does not overwrite that edit. It turns it into a proposal and stops until you accept or reject it.</p>
+        <p class="src">Source: README.md, "Switch in one command"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install from PyPI. Python 3.11 or newer; no network call and no model.</p>
+<pre class="cmd"><code>$ python -m pip install flywheel-canon
+$ cd your-repo</code></pre></li>
+    <li><h3>First run: record the focus</h3><p>Tell canon what you are working on.</p>
+<pre class="cmd"><code>$ canon workspace focus --goal "Ship the JSON export" --area src/export
+<span class="out">focus set: workspace-focus focus: Ship the JSON export</span></code></pre></li>
+    <li><h3>Hand off to another agent</h3><p>Write a brief for the next agent from what canon holds.</p>
+<pre class="cmd"><code>$ canon handoff --to codex
+<span class="out"># Resume brief: exporter
+It holds what was recorded, not everything that happened in earlier sessions.
+## Focus
+Goal: Ship the JSON export
+## Decisions
+- Keep the CSV writer [accepted] (decision-2): Add JSON beside CSV
+  Why: Downstream scripts parse CSV
+  Rejected: Replace CSV. Reason: breaks three scripts</span></code></pre></li>
+    <li><h3>Switch tools</h3><p>Write the same record into another tool's instruction file, between markers canon owns.</p>
+<pre class="cmd"><code>$ canon switch --to codex --create
+<span class="out">Codex CLI: created AGENTS.md</span></code></pre></li>
+  </ol>
+  <p class="src">Output from canon at 802165f run from source; flywheel-canon 0.6.0 is the current PyPI release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The session importers match fixed patterns with no model in the loop, and the session formats they read are not stable interfaces.</li>
+    <li>The secret scrubber recognises secrets by shape. A secret in an unfamiliar shape can pass.</li>
+    <li>A brief knows only what was recorded or imported. It is not a transcript of earlier sessions.</li>
+    <li>No target file can load a block for some files only, so a block scoped to certain files is written for all of them with an Applies to line.</li>
+    <li>canon stores and retrieves context. It runs no model and hosts no inference; your client supplies the model.</li>
+  </ul>
+  <p class="src">Source: README.md at 802165f, "Moving a project between models" and "What it does"</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>What does canon require along with a rejected alternative?</summary><p>Its reason. --reject takes both, and one without the other is refused.</p></details>
+  <details><summary>A decision's text contains api_key=sk-live-... . What is stored?</summary><p>Nothing. The store names the secret shape it found and refuses the record.</p></details>
+  <details><summary>Which part of AGENTS.md does canon rewrite?</summary><p>Only the span between its begin and end markers. Everything outside is left byte for byte.</p></details>
+  <details><summary>An agent edits the goal inside canon's region. What does the next switch do?</summary><p>It turns the edit into a proposal and stops, exit 5, until you accept or reject it.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/canon/tree/802165f61e73640afee0fe59e2e13957f7039843">HarperZ9/canon at 802165f</a> (release 0.6.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. canon is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 0}}, {"io": {"cmd": "canon workspace focus --goal \"Ship the JSON export\" --area src/export", "lines": [["focus set: workspace-focus focus: Ship the JSON export", "hi"]]}}], "k1": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 1}}, {"cases": {"label": "Choose a command", "items": [{"label": "with a reason", "blocks": [{"io": {"cmd": "canon workspace decide --title \"Keep the CSV writer\" --decision \"Add JSON beside CSV\" --context \"Downstream scripts parse CSV\" --reject \"Replace CSV\" \"breaks three scripts\"", "lines": ["recorded adr-decision decision-2: Keep the CSV writer"], "verdict": ["stored", "ok", "exit 0"]}}]}, {"label": "alternative without a reason", "blocks": [{"io": {"cmd": "canon workspace decide --title \"Drop CSV\" --decision \"JSON only\" --context simpler --reject \"Keep CSV\"", "lines": ["FAIL canon: invalid arguments"], "verdict": ["refused", "drift", "exit 2"]}}]}]}}], "k2": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 1}}, {"io": {"cmd": "canon workspace decide --title \"Use the token\" --decision \"export with api_key=sk-live-...\" --context ci", "lines": [["FAIL workspace decide: record 'decision-3' carries secret-shaped values ['env-assignment']; nothing was stored", "hi"]], "verdict": ["refused", "drift", "exit 4"]}}], "k3": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 3}}, {"io": {"cmd": "canon handoff --to codex", "lines": ["# Resume brief: exporter", "It holds what was recorded, not everything that happened in earlier sessions.", "## Focus", "Goal: Ship the JSON export", "## Decisions", ["- Keep the CSV writer [accepted] (decision-2): Add JSON beside CSV", "hi"], "  Why: Downstream scripts parse CSV", "  Rejected: Replace CSV. Reason: breaks three scripts"]}}], "k4": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 5}}, {"io": {"cmd": "canon switch --to codex --create", "lines": ["Codex CLI: created AGENTS.md", "brief: 2 records, 0 left out"]}}, {"io": {"lines": ["<!-- canon:begin scope=workspace -->", "<!-- canon:block id=\"canon-workspace-brief\" -->", "## Resume brief: exporter", "### Focus", "Goal: Ship the JSON export", "Areas: src/export", "### Decisions", "- Keep the CSV writer [accepted] (decision-2): Add JSON beside CSV", "  Why: Downstream scripts parse CSV", "  Rejected: Replace CSV. Reason: breaks three scripts", "<!-- canon:end -->"]}}], "k5": [{"pipe": {"stages": ["record", "validate", "resolve", "render", "region", "write"], "active": 4}}, {"io": {"cmd": "canon switch --to codex", "lines": [["FAIL switch: 1 edits made inside the canon region of AGENTS.md are now proposals (focus); accept or reject each with canon workspace accept|reject, then switch again", "hi"]], "verdict": ["stopped", "unv", "exit 5: a person decides"]}}, {"io": {"cmd": "canon workspace list --proposed", "lines": ["proposed records for exporter: 1", "- workspace-focus focus: Ship the XML export"]}}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

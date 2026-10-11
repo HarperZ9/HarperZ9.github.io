@@ -1,0 +1,244 @@
+{
+ "kind": "superstack.sound/1",
+ "seed": "checking-cost/sound-1",
+ "rate": 48000,
+ "channels": 2,
+ "duration_samples": 8518400,
+ "producer": "raw-native-sound/1",
+ "design": [
+  1920,
+  1080
+ ],
+ "about": "Film 1 sound, mix C. Cues are placed from the scene's timeline; each says what it marks. Creative media: no claim.",
+ "narration": {
+  "src": "narration.wav",
+  "sha256": "bb8fc56f56c0c4e9dc1f43b5dac9f5cb8eb3cedf28bd4e27086bcecaeb7fbc77"
+ },
+ "cues": [
+  {
+   "at": 184800,
+   "type": "move",
+   "why": "the title folds into one reference card",
+   "x": 960,
+   "dur": 0.8,
+   "gain_db": -12,
+   "f0": 400,
+   "f1": 1400
+  },
+  {
+   "at": 603840,
+   "type": "motif",
+   "why": "hot mark: the reference was made up",
+   "x": 960,
+   "gain_db": -6
+  },
+  {
+   "at": 1123680,
+   "type": "scale",
+   "why": "the camera pulls back from one reference to all 636",
+   "x": 960,
+   "dur": 4.800000000000001,
+   "gain_db": -11
+  },
+  {
+   "at": 1502517,
+   "type": "texture",
+   "why": "the search passes every one of the 636 references: one texture, not 636 clicks",
+   "x": 420,
+   "n": 636,
+   "cap": 220,
+   "dur": 4,
+   "x1": 1340,
+   "gain_db": -13
+  },
+  {
+   "at": 1728960,
+   "type": "motif",
+   "why": "hot mark: 55% of the GPT-3.5 references did not exist",
+   "x": 560,
+   "gain_db": -6
+  },
+  {
+   "at": 1979520,
+   "type": "land",
+   "why": "18% for GPT-4 lands on its grid",
+   "x": 1330,
+   "pitch": -3,
+   "gain_db": -5
+  },
+  {
+   "at": 2144640,
+   "type": "reveal",
+   "why": "a second kind of error appears: real references with wrong details",
+   "x": 960,
+   "gain_db": -11
+  },
+  {
+   "at": 2819520,
+   "type": "chapter",
+   "why": "section: a year of checking",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 2944320,
+   "type": "count",
+   "why": "one review fills six hours, square by square",
+   "x": 960,
+   "from": 1,
+   "to": 6,
+   "per": 6,
+   "dur": 2.4,
+   "gain_db": -10
+  },
+  {
+   "at": 3222720,
+   "type": "count",
+   "why": "the count of reviews rolls up to 19,917,481 and lands",
+   "x": 960,
+   "from": 1,
+   "to": 19917481,
+   "per": 1000,
+   "dur": 1,
+   "gain_db": -8
+  },
+  {
+   "at": 3598080,
+   "type": "land",
+   "why": "about 15,000 years of work lands",
+   "x": 960,
+   "pitch": -5,
+   "gain_db": -4
+  },
+  {
+   "at": 4078080,
+   "type": "chapter",
+   "why": "section: faster than the check",
+   "x": 960,
+   "pitch": -2,
+   "gain_db": -7
+  },
+  {
+   "at": 4201920,
+   "type": "texture",
+   "why": "126,000 cascades gather into one field",
+   "x": 960,
+   "n": 126000,
+   "cap": 200,
+   "dur": 2.6,
+   "front": true,
+   "gain_db": -14
+  },
+  {
+   "at": 4718400,
+   "type": "move",
+   "why": "false stories spread first, on the left",
+   "x": 640,
+   "dur": 1.6,
+   "f0": 600,
+   "f1": 2400,
+   "gain_db": -13
+  },
+  {
+   "at": 5810880,
+   "type": "chapter",
+   "why": "section: where the gap can close",
+   "x": 960,
+   "pitch": 3,
+   "gain_db": -7
+  },
+  {
+   "at": 6127680,
+   "type": "move",
+   "why": "the rerun loop draws around the claim",
+   "x": 380,
+   "dur": 0.9,
+   "f0": 700,
+   "f1": 1600,
+   "gain_db": -13
+  },
+  {
+   "at": 6605760,
+   "type": "land",
+   "why": "two to four person hours lands on the time axis",
+   "x": 1040,
+   "gain_db": -5
+  },
+  {
+   "at": 6849600,
+   "type": "move",
+   "why": "with the authors' help the range stretches to weeks",
+   "x": 1040,
+   "x1": 1500,
+   "dur": 1.2,
+   "f0": 500,
+   "f1": 900,
+   "gain_db": -13
+  },
+  {
+   "at": 7130880,
+   "type": "motif",
+   "why": "hot mark: 13 of 35 papers had a number nobody could reproduce",
+   "x": 1300,
+   "gain_db": -6
+  },
+  {
+   "at": 7654080,
+   "type": "chapter",
+   "why": "section: two things to keep",
+   "x": 960,
+   "gain_db": -7
+  },
+  {
+   "at": 7724160,
+   "type": "reveal",
+   "why": "the first thing to keep appears",
+   "x": 960,
+   "gain_db": -10
+  },
+  {
+   "at": 7891200,
+   "type": "reveal",
+   "why": "the second thing to keep appears",
+   "x": 960,
+   "pitch": 5,
+   "gain_db": -10
+  }
+ ],
+ "buses": {
+  "dialog": {
+   "gain_db": 0
+  },
+  "music": {
+   "duck": {
+    "lookahead_ms": 150,
+    "hold_ms": 350,
+    "attack_ms": 60,
+    "release_ms": 700
+   }
+  },
+  "sfx": {
+   "gain_db": -8.00051645766366
+  }
+ },
+ "master": {
+  "class": "speech",
+  "eq": [
+   {
+    "type": "highpass",
+    "f": 30,
+    "q": 0.707
+   }
+  ],
+  "comp": {
+   "threshold_db": -20,
+   "ratio": 2,
+   "knee_db": 6,
+   "attack_ms": 10,
+   "release_ms": 200
+  },
+  "target_lufs": -16,
+  "ceiling_dbtp": -1.5,
+  "gain_db": 1.7600435310334994
+ }
+}

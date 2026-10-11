@@ -44,7 +44,7 @@ const snapStep = (el, v) => {
   return x;
 };
 
-export function mountTimeline({ stage, deck, getSource, blockOf, storage, say = () => {} }) {
+export function mountTimeline({ stage, deck, getSource, blockOf, storage, say = () => {}, audio = null }) {
   const doc = stage.ownerDocument;
   const el = (tag, attrs = {}, text) => { const n = doc.createElement(tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); if (text != null) n.textContent = text; return n; };
   const store = () => { try { return storage(); } catch (_) { return null; } };
@@ -152,10 +152,18 @@ export function mountTimeline({ stage, deck, getSource, blockOf, storage, say = 
   render.addEventListener("click", () => {
     const c = doc.getElementById("studio-canvas");
     if (!c || typeof c.captureStream !== "function" || typeof MediaRecorder === "undefined") { note.textContent = "This browser cannot record the canvas."; return; }
-    if (!state.keys.length) { note.textContent = "Add at least two keys first."; return; }
+    // With no keys the render records the source as it runs (an animation, a sound) for the length.
     stop();
     const type = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"].find((x) => MediaRecorder.isTypeSupported(x));
-    const mr = new MediaRecorder(c.captureStream(30), type ? { mimeType: type, videoBitsPerSecond: 8e6 } : {});
+    // Sound comes along when a source is making it: the mastered branch from raw-native's sound
+    // engine (studio-audio.js), and the recording is measured with its meter.
+    const stream = c.captureStream(30);
+    const sound = audio && audio.tracks ? audio.tracks() : [];
+    for (const tr of sound) stream.addTrack(tr);
+    const stopMeasure = sound.length && audio.measure ? audio.measure() : null;
+    const withSound = sound.length > 0;
+    const type2 = withSound ? ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"].find((x) => MediaRecorder.isTypeSupported(x)) : null;
+    const mr = new MediaRecorder(stream, (type2 || type) ? { mimeType: type2 || type, videoBitsPerSecond: 8e6 } : {});
     const chunks = [];
     mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
     mr.onstop = () => {
@@ -163,7 +171,9 @@ export function mountTimeline({ stage, deck, getSource, blockOf, storage, say = 
       const a = el("a", { href: URL.createObjectURL(blob), download: `studio-timeline-${src}-${state.length}s.webm` });
       doc.body.append(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-      note.textContent = `Rendered ${state.length} s, ${Math.round(blob.size / 1024)} KB.`;
+      const m = stopMeasure ? stopMeasure() : null;
+      const loud = m && !m.silent && Number.isFinite(m.lufs) ? `, sound ${m.lufs.toFixed(1)} LUFS, true peak ${m.truePeakDb.toFixed(1)} dBTP (mastered by raw-native)` : withSound ? ", no sound played" : "";
+      note.textContent = `Rendered ${state.length} s, ${Math.round(blob.size / 1024)} KB${loud}.`;
     };
     rec = { mr };
     t = 0; apply(); mr.start(250);

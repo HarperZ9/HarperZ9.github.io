@@ -5,7 +5,7 @@
   "page": "explainers.html#incentives",
   "script": {
     "path": "media/explainers/incentives/film.json",
-    "sha256": "6575726620228a10168fc4de4815b9d592be61a7ee649d68be312d04340883a5"
+    "sha256": "464c7a3f3afe402d45e9341441a55ad3e12850a89fcb2bb73199db1ec37d86d3"
   },
   "evidence": {
     "path": "media/explainers/incentives/evidence.json",
@@ -14,7 +14,7 @@
   "render_code": {
     "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
     "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
-    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
+    "tools/explainer/film/figures.py": "7c0d76056a3b9d09c8c483ef90e649584c581f32f78c11f4dd54ba55c8b9c257",
     "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
     "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
     "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
@@ -85,12 +85,12 @@
   "frames": 3611,
   "fps": 30,
   "seconds": 120.36666666666666,
-  "frame_chain_sha256": "2ec0cc7c023e3867f988b9cd5db16e09d72fb99ebbc9e2a1c824298282efa383",
+  "frame_chain_sha256": "b82b6f078b895e4c51dad56e86021103e4aeb81006e8f9ce657e6d985d6dbf05",
   "outputs": {
-    "incentives.mp4": "71208543ea1b6a78faf96d2dc0cbdeba3b17525a29d49e1a24e0857b9621a4d9",
+    "incentives.mp4": "2f646c788d5fb12b9197a82a39a0615cc6e661e268c26d026ad4c58da7c21355",
     "incentives.vtt": "0e9a493b217ce91a7fdcd9e8bf82d3b9d296a03e0839873069180b89aed0598b",
     "incentives.srt": "2695f22443177469bb4f4e7591bca6c3fa850295258f7c01bb8c96f25b3aaff9",
-    "poster.jpg": "0b0c23f576a50efe833ac7f282186b5d69c0a6962c5d2efd2b6dfbccbf34a452",
+    "poster.jpg": "943cf0877ed2fb518552ad70d15cd8ea534bb645ed5957a6884efd9e41b6f897",
     "timing.json": "333f6e7bdb062c18447c2831a5b2526953d0db637832a0c8e0dc5a9c60cef2f0"
   },
   "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."

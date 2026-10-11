@@ -114,7 +114,7 @@ export function draw(t, A, T, items) {
       if (S.nodes) items.push({ kind: "particles", system: S.nodes[k], from: 0, to: 1, t: u, spread: 0.04, drift: 0, time: t, size: [0, 4.2], blend: "add", opacity: raceA * vis });
       const botA = span(t, T.bots, T.bots + 1.0) * raceA;
       if (botA > 0 && bots.length) items.push({ shape: bots, stroke: C.ink, width: 1.4, opacity: botA });
-      scr(text(`${fmt(n)} people`, { atlas: A.mono, size: 30, x: ROOTS[k][0], y: 840, anchor: "center" }).shape, k === 0 ? C.hot : C.ink, raceA);
+      scr(text(`${fmt(n)} ${n === 1 ? "person" : "people"}`, { atlas: A.mono, size: 30, x: ROOTS[k][0], y: 840, anchor: "center" }).shape, k === 0 ? C.hot : C.ink, raceA);
     }
     scr(S.falseL, C.hot, raceA); scr(S.trueL, C.ink, raceA);
     // The time axis: a marker per tree runs until its tree reaches 1,500.
