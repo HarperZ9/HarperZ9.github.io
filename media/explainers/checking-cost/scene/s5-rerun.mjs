@@ -71,7 +71,7 @@ export function draw(t, A, T, items) {
   const ic = span(t, T.rerun, T.rerun + 1.0, ease.out);
   if (ic > 0) {
     const g = icon(360, 820, (t - T.rerun) * 0.45 % 1);
-    st(g.card, C.ink2, 1.8, ic); put(g.bars, C.dim, ic * 0.8); st(g.data, C.ok, 1.8, ic);
+    st(g.card, C.ink2, 1.8, ic); put(g.bars, C.dim, ic * 0.8); st(g.data, C.ink, 1.8, ic);
     st(g.loop, C.ink2, 2, ic * window(t, T.rerun + 0.6, T.exit, 0.4, 0.4) * (1 + 0.6 * window(t, T.none, T.exit, 0.4, 0.4)));
     put(S.rerun, C.ink, window(t, T.rerun, T.papers + 0.2, 0.5, 0.5));
   }
@@ -82,7 +82,7 @@ export function draw(t, A, T, items) {
     for (let i = 0; i < 35; i++) {
       const x = GRID.x + (i % GRID.cols) * GRID.s, y = GRID.y + Math.floor(i / GRID.cols) * GRID.s;
       const grp = i < 11 ? 0 : i < 22 ? 1 : 2, at = [T.quick, T.help, T.missed][grp] + 0.4 + (i % 11) * 0.05;
-      const f = span(t, at, at + 0.5, ease.out), col = [C.ok, C.ink2, C.hot][grp];
+      const f = span(t, at, at + 0.5, ease.out), col = [C.ink, C.ink2, C.hot][grp];
       st(rect(x, y, 36, 36, 4), C.ink2, 1.6, pA * span(t, T.papers + i * 0.02, T.papers + 0.4 + i * 0.02));
       if (f > 0) put(rect(x + 4, y + 4, 28, 28, 3), col, f);
     }
@@ -91,7 +91,7 @@ export function draw(t, A, T, items) {
   // The authors' hour estimates as bands on the same axis.
   const band = (a, b, y, col, o) => { put(rect(X(a), y - 10, Math.max(2, X(b) - X(a)), 20, 4), col, o * 0.9); };
   const q = span(t, T.quick, T.quick + 1.0, ease.out), hlp = span(t, T.help, T.help + 1.0, ease.out);
-  band(2 * H, 4 * H, Y + 84, C.ok, q); put(S.reproduced, C.ok, q);
+  band(2 * H, 4 * H, Y + 84, C.ink, q); put(S.reproduced, C.ink, q);
   band(5 * H, 25 * H, Y + 146, C.ink2, hlp); put(S.helped, C.ink2, hlp);
   st(dashed(X(25 * H) + 6, Y + 146, lerp(X(25 * H) + 6, X(21 * 24 * H), hlp), Y + 146, 8, 8), C.ink2, 2, hlp * 0.8);
   put(S.est, C.dim, Math.max(q, hlp) * 0.9);

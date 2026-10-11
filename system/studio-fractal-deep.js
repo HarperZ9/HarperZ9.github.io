@@ -6,8 +6,8 @@
 // current centre and width out and flies to a pasted one. studio.js mounts it once the fractal
 // graph has loaded and calls decorate() on every view it paints and painted() after.
 
-import { autoIterations, DEEP_MIN_SCALE } from "./fractal-gl-deep.js?v=20261009f1";
-import { viewCentre } from "./fractal-hp.js?v=20261009f1";
+import { autoIterations, DEEP_MIN_SCALE } from "./fractal-gl-deep.js";
+import { viewCentre } from "./fractal-hp.js";
 
 const $ = (id) => document.getElementById(id);
 
@@ -65,6 +65,8 @@ export function mountFractalDeep({ getView, setView, repaint, say, canvas, isAct
   const box = $("fractal-location"), go = $("fractal-location-go"), copy = $("fractal-location-copy");
   const depthEl = $("fractal-depth"), readout = $("fractal-deep-readout");
   for (const el of [auto, bla, glitch]) if (el) el.addEventListener("change", () => { if (getView()) repaint(); });
+  // A Buddhabrot finishes after its paint returned; its readout updates when it does.
+  document.addEventListener("buddhabrot:done", () => { const v = getView(); if (v) painted(v, null); });
 
   if (go) go.addEventListener("click", () => {
     const v = getView();
@@ -113,7 +115,12 @@ export function mountFractalDeep({ getView, setView, repaint, say, canvas, isAct
     const used = c && c.__fractalPrecisionUsed;
     const st = c && c.__fractalDeepStats;
     let text;
-    if (used === "perturbation" && st) {
+    const buddha = c && (view.type === "buddhabrot" || view.type === "nebulabrot") && c.__fractalBuddhaStats;
+    if (buddha) {
+      const b = c.__fractalBuddhaStats();
+      text = `${view.type === "nebulabrot" ? "Nebulabrot" : "Buddhabrot"} on the GPU: ${(b.drawn / 1e6).toFixed(1)} million orbits sampled (budget ${(b.target / 1e6).toFixed(0)} million), `
+        + `${(b.points / 1e6).toFixed(0)} million points drawn` + (b.done ? `, done in ${(b.ms / 1000).toFixed(1)} s.` : ", accumulating.");
+    } else if (used === "perturbation" && st) {
       text = `Perturbation, ${st.maxIter.toLocaleString()} iterations. Reference ${st.refLen.toLocaleString()} long at ${st.refBits} bits`
         + (st.refReused ? " (kept)" : `, ${Math.round(st.refMs)} ms`)
         + (st.blaEntries ? `; ${st.blaLevels} BLA levels` : "; no BLA")

@@ -12,14 +12,14 @@
     "sha256": "bf36f2204c9f04389e3b138fad7b2f26e96dfb2b7c2950f75f65361dc6389870"
   },
   "render_code": {
-    "media/explainers/checking-cost/film.scene.mjs": "42334bba8f79432e94290ef9c9fb59ed88ff590bd49ce301168a040263c0009c",
+    "media/explainers/checking-cost/film.scene.mjs": "e7c78257c9f3df12999c9d7649b88f8ee1ee94a817b9459257175796e135d178",
     "media/explainers/checking-cost/scene/lib.mjs": "eac691919a1d7d82bf80ee14897fa3b9b26d642b04fdec535f38bb08161be9a6",
-    "media/explainers/checking-cost/scene/s1-reference.mjs": "15c839ff1a73dd12428da7a88f166902de3b5e9acc27b0069c1b6dc16e982206",
-    "media/explainers/checking-cost/scene/s2-list.mjs": "d7c67d73127f6122f0f6a3895e918d759ff764b6fb495f2deaf7d1051252229c",
-    "media/explainers/checking-cost/scene/s3-year.mjs": "c290dd28ce2cca7d540a3b3644857e3fff15e3837903fdad7e46f52a5ea25635",
-    "media/explainers/checking-cost/scene/s4-spread.mjs": "a3f9b49ae734242836c7081e01251b0dfc88dc507d495d3c585e1dceb7c12738",
-    "media/explainers/checking-cost/scene/s5-rerun.mjs": "390a74720ff7228ae9ebdd11a4ed694f88ef231d34e614dc341c9e68c67157ae",
-    "media/explainers/checking-cost/scene/s6-close.mjs": "349a340174bfc55e477acccf3697da3b7e40da1bf2d8c37dfb630f348db90bb1",
+    "media/explainers/checking-cost/scene/s1-reference.mjs": "30a96bc77c4e74b58c76316ccb899b7fc6054f4ee730eb2d2e1b3bbf8c34064d",
+    "media/explainers/checking-cost/scene/s2-list.mjs": "5c959f3db778bc870d5e84540637088c7fd907be50c71cc885f6f61ce0a35714",
+    "media/explainers/checking-cost/scene/s3-year.mjs": "8dc2c32a5677d513a26427b842994316b44d82616fb7aba81f00e2ea079e233a",
+    "media/explainers/checking-cost/scene/s4-spread.mjs": "f7e40ca96fd5bc9ae3435e4b1ebe13a924bc31c99ea66338248029bdffc7e421",
+    "media/explainers/checking-cost/scene/s5-rerun.mjs": "b42e10d2b812d69baf25a0b255558114ee15636e6e3725f14d460087792f56cb",
+    "media/explainers/checking-cost/scene/s6-close.mjs": "c3f7f5090489041432c264aa1951a6fce2aaba7f62c3719c296c3370a96445aa",
     "media/explainers/checking-cost/score.json": "8c3ecddcf7159a6fcc3b50890000cb65229ce6454ea214358e03c46c3db914e4",
     "media/raw-native/web-23ec93f/motion/capture.html": "fc2595317f6db46d3fdc39832123e2e8a67e2ee7825c11f393e9da7973852f8c",
     "media/raw-native/web-23ec93f/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
@@ -59,10 +59,10 @@
       "width": 3840,
       "height": 2160,
       "frames": 5324,
-      "frame_ms_median": 26.5,
-      "frame_ms_p95": 36.1,
-      "wall_seconds": 181.8,
-      "sha256": "304f1dd54ea2edcd3dbec89bac7ec5565d80eef7191117e536e35ad877f80b7e"
+      "frame_ms_median": 10.4,
+      "frame_ms_p95": 15.2,
+      "wall_seconds": 92.3,
+      "sha256": "90354fbbabd1a7f3c1a9fde797ce81b301a702a5aa189586c9e106fdfdbc2b34"
     },
     "score": {
       "generator": "tools/explainer/film/score.py",
@@ -138,10 +138,10 @@
   "fps": 30,
   "seconds": 177.46666666666667,
   "outputs": {
-    "checking-cost.mp4": "5ffe7126e4a706e696373f7c3e2fe0b7e10a845c9a4fc53fd2665ee844e9e108",
+    "checking-cost.mp4": "afece10b125b5932bb3d50d591b67054e9117362702d0f8818bb10239a206cce",
     "checking-cost.vtt": "b100a8d9a2f67113067c75bebfb69ca99ec0c5c216b05f0c1ca25a2613547f0a",
     "checking-cost.srt": "5d220119850a63dc7818a974ff7bff44f478ef8d78a4ed148feb1bf4bb491408",
-    "poster.jpg": "a2f8b23dce382b182c5ae1712d48a8327d11d333c50c25401f39806540c67b5f",
+    "poster.jpg": "6d4788700d8e404b9578f16f58834f401f7f1c30f3a14f0ab45daf03bc230d75",
     "timing.json": "698e3ff04b82a95f75de7eb6d71e047ed910f554a60da8ba256a2381a733d6f7",
     "checking-cost.m4a": "91ed67f02f764419c3ca6767aa1375f210528f96355a58ac43f8a35286105fff"
   },
