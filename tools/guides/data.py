@@ -8,7 +8,7 @@ from __future__ import annotations
 
 GUIDES = [
     {
-        "id": "tallow", "name": "Tallow", "title": "the night clerk", "style": "retro thriller",
+        "id": "tallow", "intro_s": 26, "name": "Tallow", "title": "the night clerk", "style": "retro thriller",
         "role": "His head is a candle, and the wax is the time he has: every claim he checks burns a little of it.",
         "habit": "Before he looks, he asks what you think. Then you find the source together.",
         "home": "A dark claims office, lit only by his flame.",
@@ -17,7 +17,7 @@ GUIDES = [
         "close_alt": "Tallow's face: one eye in the wax under the flame.",
     },
     {
-        "id": "pylon", "name": "Pylon", "title": "the claims inspector", "style": "painted isometric",
+        "id": "pylon", "intro_s": 26, "name": "Pylon", "title": "the claims inspector", "style": "painted isometric",
         "role": "A harbour seal in a traffic cone. A cone means nobody has checked a claim yet, and she puts one on every claim that washes in.",
         "habit": "She shows you where each claim came from, tells you what is still waiting, and leaves the call to you.",
         "home": "A painted harbour town, seen from above.",
@@ -26,7 +26,7 @@ GUIDES = [
         "close_alt": "Pylon's face under her cone, deadpan.",
     },
     {
-        "id": "rerun", "name": "Rerun", "title": "the hermit crab", "style": "pixel 2.5D",
+        "id": "rerun", "intro_s": 20, "name": "Rerun", "title": "the hermit crab", "style": "pixel 2.5D",
         "role": "Its shell is glass with the receipts inside: a claim should carry its own evidence, so anyone can run the check again.",
         "habit": "It knocks on a claim to hear whether anything is in there, and keeps count of its own wrong guesses on its claw.",
         "home": "A pixel beach at two depths, with one spectral flare in the glass.",
@@ -45,7 +45,19 @@ FILM_TITLES = {
     "release-media": "the films from the latest releases",
 }
 
-VOICE = "Each introduction runs about 25 seconds, with captions and no sound."
+VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "
+         "recordings reads the lines, and code written for the guides reshapes that reading into each guide's voice. "
+         "Captions are on, and the sound plays only when you press play.")
+
+# The introductions that carry a sound track, and which voice take each one is. Only a take the
+# author approved after listening goes here (2026-10-12, verbatim: "I do like the voice changes.").
+# tools/guides/build_media.py refuses --intro for any other guide, and tests/test_guides.py checks
+# that an introduction has sound exactly when it is listed here.
+INTRO_VOICES = {
+    "tallow": "character voice, round 7, setting H",
+    "pylon": "character voice, round 7, setting S",
+    "rerun": "character voice, round 10, setting V5",
+}
 
 
 def by_film(slug: str) -> dict:

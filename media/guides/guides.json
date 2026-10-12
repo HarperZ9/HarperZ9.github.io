@@ -9,13 +9,14 @@
         "sheet.jpg": "65661dea76bf37bf4989f2d7c664b0dff788fdd37337e5029afd4d06b411a87a",
         "idle.mp4": "5102b3844bb18dc1e2b7fea8fa20bcbaee31bb6b24f06aaae1fecdf0c355ee0b",
         "action.mp4": "b95c68f372eb2fc5d084b6401a7605181b5d441d0f3fa9ddb287b5809399745d",
-        "intro.mp4": "ec9c078c993a14dca6840ab9a061d9fed491ac7ac0aee8a71728456f9a3e39a7",
-        "intro.jpg": "81bdcc47f53fb91e1e4eccd4abc3afc57bb11f3f95ee5c601e926e1cc76713c3",
-        "intro.vtt": "7f7fd643154904a187f7a2304d3dedb537ce91f8b553ab799bc6bbcaadcee387",
-        "intro.timing.json": "af8248fd1d37ac0ba6fa42583f6f029db5278f8755ba26cf20c35339f14c6260"
+        "intro.mp4": "b566d82d243c8782fa2e197ecbd0f2b60bedfb97bc8155bcb835e99a2a71515c",
+        "intro.jpg": "58619357b86d18d06889259472d31f85d4ab09b90302b0a21d657ae73dc00af7",
+        "intro.vtt": "457ac3d6e26dfc7b0d72cccebf6e60bd647273d136ff68dba40edbd62839298b",
+        "intro.timing.json": "802422c534a22a787233436710e48b85ad477a70e2c4aaf4518ac75227db1238"
       },
-      "bytes": 950323,
-      "intro_audio": false
+      "bytes": 1261179,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 7, setting H"
     },
     "pylon": {
       "world": "painted",
@@ -25,13 +26,14 @@
         "sheet.jpg": "7b4686ec51e27bf2d5145737e1ba8e913278be9951cf05ac88293f04cbbb2471",
         "idle.mp4": "39fc950d712ccb9bb113f8921e2c334382c4e955461d07de08e114650e8ca5ce",
         "action.mp4": "09ebf421bcaf6c6f20e13664857a2dcc169b115ec4232bd13e070fcc2ee8a490",
-        "intro.mp4": "7e3be90bf27d4e8881607ba255bca176552559cba378b38f877152edba4f2855",
-        "intro.jpg": "dca519695ea7dcf7cf71c85d9baf3d8368f0e997dc04dc13124a012f8652e337",
-        "intro.vtt": "0021fd24653be5ef1da4dd6e88cb8cd9bf413a4994748418d14a7f46b7937ca7",
-        "intro.timing.json": "0a124b5c262788b5fecc72de118d007989409c27669cd4d522d25e95b1711683"
+        "intro.mp4": "1c6b3b47e8a42247d59af96ef350560a51c6d4ab16439008904c9bffa1465266",
+        "intro.jpg": "e7f6b8b06b283bccbe2cc71d9c5032a6b0707779f3b6e0422a8220aa08f9202f",
+        "intro.vtt": "81e90338e40aea6b95f2ed80074160406f09250d52a0efdce3d72b2ef34d4a6e",
+        "intro.timing.json": "9b7a6c590240ce72dc49bb72610a3d1da961fb1b4544e1697d9e87685c33125a"
       },
-      "bytes": 1718027,
-      "intro_audio": false
+      "bytes": 1951243,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 7, setting S"
     },
     "rerun": {
       "world": "pixel",
@@ -41,13 +43,14 @@
         "sheet.jpg": "9e5e753827ee8f21cfef2375e3f38ae8d394d6cb62178b9864ef4cd5fade009f",
         "idle.mp4": "85021d66c00df91ca141a8a11329a1121cbc9a605b9ade34cc73b2cf8382a2f3",
         "action.mp4": "bdc2c03480a1a62f9bbd786a6b1397dc9b57a6dd3e8e13a91fadc045c272f238",
-        "intro.mp4": "3a4f710d6915daf0436182dd86e7c381d668ae54460ad858adb9074561292f21",
-        "intro.jpg": "3ec2cb81ac885caabac108efa908ff75a0cafa30822b60f469bdcdacfb43b155",
-        "intro.vtt": "5747b66905e00d22413c42ccd3a38cb3788d6670eca5f9a533c4f304c82075ae",
-        "intro.timing.json": "500112ee438bcb4a129309ee9f535c74b389b0a7429114656798627bd4764397"
+        "intro.mp4": "e86ccef2f4ac87054ab1ac1caaa9fc71031d7e7abf8f68fb93c4798fdb060bbc",
+        "intro.jpg": "c024347e3f91c5aa45a6c833dd72002b1388d969d390af1bc80d179e7b3473ee",
+        "intro.vtt": "e37a00169acf88d47b8413af9c6503a32fade84c9db0709090ec11b32770719a",
+        "intro.timing.json": "7ccfd8dba096dd671181b2c385c8b08a158abca0380042c127aa57e5fc97040e"
       },
-      "bytes": 405289,
-      "intro_audio": false
+      "bytes": 657187,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 10, setting V5"
     }
   }
 }
