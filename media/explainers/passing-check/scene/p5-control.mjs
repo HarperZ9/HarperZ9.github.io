@@ -23,15 +23,15 @@ export function prepare(A) {
     passA: t("pass", { atlas: A.mono, size: 34, x: GATES[0], y: GY + 190, anchor: "center" }),
     broken: t("so check A is broken", { atlas: A.sans, size: 28, x: GATES[0], y: GY + 236, anchor: "center" }),
     failB: t("failed, as it should", { atlas: A.mono, size: 34, x: GATES[1], y: GY + 190, anchor: "center" }),
-    control: t("a false-success control: one planted failure, one extra run", { atlas: A.sans, size: 30, x: 960, y: 900, anchor: "center" }),
-    evidence: t("a pass with a control that failed: evidence", { atlas: A.sans, size: 30, x: 960, y: 900, anchor: "center" }),
-    absence: t("a pass on its own: the absence of a complaint", { atlas: A.sans, size: 30, x: 960, y: 944, anchor: "center" }),
+    control: t("a false-success control: one planted failure, one extra run", { atlas: A.sans, size: 30, x: 960, y: 150, anchor: "center" }),
+    evidence: t("a pass with a control that failed: evidence", { atlas: A.sans, size: 30, x: 960, y: 150, anchor: "center" }),
+    absence: t("a pass on its own: the absence of a complaint", { atlas: A.sans, size: 30, x: 960, y: 192, anchor: "center" }),
     noControl: t("no control run", { atlas: A.mono, size: 34, x: 960, y: 250, anchor: "center" }),
     plainPass: [t("pass", { atlas: A.mono, size: 34, x: GATES[0], y: GY + 190, anchor: "center" }), t("pass", { atlas: A.mono, size: 34, x: GATES[1], y: GY + 190, anchor: "center" })],
     closeA: t("A check earns trust", { atlas: A.head, size: 50, x: 960, y: 520, anchor: "center" }),
     closeB: t("by failing when it should.", { atlas: A.head, size: 50, x: 960, y: 586, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 960, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 1000, anchor: "center" }),
+    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 680, anchor: "center" }),
+    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 720, anchor: "center" }),
   };
 }
 

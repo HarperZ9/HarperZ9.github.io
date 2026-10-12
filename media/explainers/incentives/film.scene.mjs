@@ -36,7 +36,7 @@ export default {
     };
     const tab = (id) => {
       const e = evidence.sources[id], hd = e.short.replace(/(\d{4}), /, "$1 . ");
-      return text(`${hd} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 1058 }).shape;
+      return text(`${hd} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 58 }).shape;
     };
     A.tabs = [["baker2025", c.at(1, 1, 0), c.at(2, 0, 0)], ["sharma2024", c.at(2, 1, 0), c.at(3, 0, 0)], ["denison2024", c.at(3, 0, 0), c.at(4, 0, 0)]]
       .map(([id, t0, t1]) => ({ shape: tab(id), t0, t1 }));

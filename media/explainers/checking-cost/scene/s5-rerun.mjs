@@ -10,11 +10,11 @@ import { span, window, ease, lerp } from "../../../raw-native/web-23ec93f/motion
 import { C, rect, line, arc, arrow, dashed } from "./lib.mjs";
 
 // Log axis: 0.1 s to about 3 months.
-const X0 = 180, X1 = 1740, L0 = -1, L1 = 6.9, Y = 400;
+const X0 = 180, X1 = 1740, L0 = -1, L1 = 6.9, Y = 300;   // the axis, the grid and the notes all sit above the captions
 export const X = (sec) => X0 + (X1 - X0) * ((Math.log10(sec) - L0) / (L1 - L0));
 const H = 3600;
 const TICKS = [[1, "1 s"], [60, "1 min"], [H, "1 hour"], [24 * H, "1 day"], [7 * 24 * H, "1 week"], [30 * 24 * H, "1 month"]];
-const GRID = { x: 1240, y: 720, s: 46, cols: 7 };
+const GRID = { x: 1000, y: 560, s: 34, cols: 7 };
 
 export function prepare(A) {
   const lab = (s, x, y, o = {}) => text(s, { atlas: A.sans, size: 28, x, y, anchor: "center", ...o }).shape;
@@ -24,13 +24,13 @@ export function prepare(A) {
     claim: lab("claiming: under a second", X(0.8), Y - 112, { size: 32 }),
     review: lab("one peer review: about 6 hours", X(6 * H), Y - 112, { size: 32 }),
     gap: lab("the gap closes from the checking side", (X(0.8) + X(6 * H)) / 2, Y - 196, { size: 34 }),
-    rerun: text("data travels with the claim: a check becomes a rerun", { atlas: A.sans, size: 32, x: X0, y: 600 }).shape,
+    rerun: text("data travels with the claim: a check becomes a rerun", { atlas: A.sans, size: 32, x: 480, y: 600 }).shape,
     papers: text("35 psychology papers that shared their data", { atlas: A.sans, size: 28, x: GRID.x - 14, y: GRID.y - 30 }).shape,
     reproduced: text("reproduced: 2 to 4 person hours", { atlas: A.sans, size: 28, x: X(2 * H), y: Y + 120 }).shape,
     helped: text("with the authors' help: 5 to 25, and weeks of waiting", { atlas: A.sans, size: 28, x: X(5 * H), y: Y + 182 }).shape,
-    missed: text("13 of 35: a number not reproduced", { atlas: A.sans, size: 28, x: GRID.x - 14, y: GRID.y + 5 * GRID.s + 30 }).shape,
-    none: text("none of those misses clearly changed a conclusion", { atlas: A.sans, size: 30, x: 960, y: 1010, anchor: "center" }).shape,
-    est: text("hours: the authors' estimates, not measurements", { atlas: A.sans, size: 22, x: X0, y: Y + 232 }).shape,
+    missed: text("13 of 35: a number not reproduced", { atlas: A.sans, size: 28, x: GRID.x + GRID.cols * GRID.s + 6, y: GRID.y + 4 * GRID.s + 22 }).shape,
+    none: text("none of those misses clearly changed a conclusion", { atlas: A.sans, size: 30, x: 960, y: 760, anchor: "center" }).shape,
+    est: text("hours: the authors' estimates, not measurements", { atlas: A.sans, size: 22, x: X0, y: Y + 120 }).shape,
   };
   for (let d = L0; d < L1; d++) for (let k = 2; k < 10; k++) { const x = X(k * Math.pow(10, d)); if (x < X1) A.s5.minor.push(contour([x, Y - 6, x, Y + 6], false)); }
 }
@@ -70,7 +70,7 @@ export function draw(t, A, T, items) {
   // The rerun: card and data, and a loop that keeps turning.
   const ic = span(t, T.rerun, T.rerun + 1.0, ease.out);
   if (ic > 0) {
-    const g = icon(360, 820, (t - T.rerun) * 0.45 % 1);
+    const g = icon(300, 620, (t - T.rerun) * 0.45 % 1);
     st(g.card, C.ink2, 1.8, ic); put(g.bars, C.dim, ic * 0.8); st(g.data, C.ink, 1.8, ic);
     st(g.loop, C.ink2, 2, ic * window(t, T.rerun + 0.6, T.exit, 0.4, 0.4) * (1 + 0.6 * window(t, T.none, T.exit, 0.4, 0.4)));
     put(S.rerun, C.ink, window(t, T.rerun, T.papers + 0.2, 0.5, 0.5));
@@ -83,8 +83,8 @@ export function draw(t, A, T, items) {
       const x = GRID.x + (i % GRID.cols) * GRID.s, y = GRID.y + Math.floor(i / GRID.cols) * GRID.s;
       const grp = i < 11 ? 0 : i < 22 ? 1 : 2, at = [T.quick, T.help, T.missed][grp] + 0.4 + (i % 11) * 0.05;
       const f = span(t, at, at + 0.5, ease.out), col = [C.ink, C.ink2, C.hot][grp];
-      st(rect(x, y, 36, 36, 4), C.ink2, 1.6, pA * span(t, T.papers + i * 0.02, T.papers + 0.4 + i * 0.02));
-      if (f > 0) put(rect(x + 4, y + 4, 28, 28, 3), col, f);
+      st(rect(x, y, GRID.s - 8, GRID.s - 8, 4), C.ink2, 1.6, pA * span(t, T.papers + i * 0.02, T.papers + 0.4 + i * 0.02));
+      if (f > 0) put(rect(x + 3, y + 3, GRID.s - 14, GRID.s - 14, 3), col, f);
     }
     put(S.missed, C.hot, span(t, T.missed + 0.8, T.missed + 1.6));
   }

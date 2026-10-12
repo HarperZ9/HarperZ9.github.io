@@ -17,6 +17,8 @@ const dashedPath = (p, dash = 12, gap = 9) => {
   }
   return out;
 };
+// The browser draws captions centred over the lowest 30% of the frame, so labels stay above it (tests/explainer-film-labels.mjs).
+const BAL = 380;   // the balance in segment 2 sits this far above its first place
 const pointOn = (p, u) => { const n = p.length / 2 - 1, f = Math.min(n - 1e-6, Math.max(0, u * n)), i = Math.floor(f), w = f - i; return [lerp(p[2 * i], p[2 * i + 2], w), lerp(p[2 * i + 1], p[2 * i + 3], w)]; };
 
 export function prepare(A) {
@@ -30,27 +32,27 @@ export function prepare(A) {
     title: t("Models do what training pays for", { atlas: A.head, size: 58, x: 960, y: 560, anchor: "center" }),
     testsL: t("unit tests pass", { atlas: A.sans, size: 30, x: P.tests[0], y: P.tests[1] + 6, anchor: "center" }),
     rewardL: t("reward", { atlas: A.mono, size: 24, x: P.tests[0], y: P.tests[1] + 40, anchor: "center" }),
-    solveL: t("solve the task", { atlas: A.sans, size: 30, x: P.solve[0], y: P.solve[1] + 50, anchor: "center" }),
+    solveL: t("solve the task", { atlas: A.sans, size: 30, x: P.solve[0] + 22, y: P.solve[1] + 50, anchor: "center" }),
     startL: t("the model", { atlas: A.mono, size: 22, x: P.start[0], y: P.start[1] - 22, anchor: "center" }),
     exitL: t("exit(0) before the tests run", { atlas: A.mono, size: 26, x: 720, y: 240, anchor: "center" }),
     skipL: t("raise SkipTest", { atlas: A.mono, size: 26, x: 640, y: 470, anchor: "center" }),
     yes: t("reward: yes", { atlas: A.mono, size: 30, x: P.tests[0] + 40, y: P.tests[1] - 70 }),
     no: t(". task solved: no", { atlas: A.mono, size: 30, x: P.tests[0] + 230, y: P.tests[1] - 70 }),
-    measured: t("The reward measured passing tests. Training produced passing tests.", { atlas: A.sans, size: 32, x: 960, y: 980, anchor: "center" }),
-    agreeL: t("agrees with the user", { atlas: A.sans, size: 30, x: P.agree[0], y: P.agree[1] + 6, anchor: "center" }),
+    measured: t("The reward measured passing tests. Training produced passing tests.", { atlas: A.sans, size: 32, x: 960, y: 124, anchor: "center" }),
+    agreeL: t("agrees with the user", { atlas: A.sans, size: 30, x: P.agree[0], y: P.agree[1] - 66, anchor: "center" }),
     trained: t("trained toward answers that people, and models of their preferences, rate highly", { atlas: A.sans, size: 28, x: 960, y: 120, anchor: "center" }),
     sharma: t("matching the user's beliefs: among the best predictors of the preferred answer", { atlas: A.sans, size: 28, x: 960, y: 120, anchor: "center" }),
-    beamL: t("agrees, convincing", { atlas: A.sans, size: 26, x: 690, y: 900, anchor: "center" }),
-    beamR: t("truthful, standard", { atlas: A.sans, size: 26, x: 1230, y: 900, anchor: "center" }),
-    pref: t("preferred 95% of the time", { atlas: A.mono, size: 30, x: 960, y: 1004, anchor: "center" }),
+    beamL: t("agrees, convincing", { atlas: A.sans, size: 26, x: 690, y: 900 - BAL, anchor: "center" }),
+    beamR: t("truthful, standard", { atlas: A.sans, size: 26, x: 1230, y: 900 - BAL, anchor: "center" }),
+    pref: t("preferred 95% of the time", { atlas: A.mono, size: 30, x: 960, y: 1004 - BAL, anchor: "center" }),
     syco: t("sycophancy, traced in part to the preference data", { atlas: A.sans, size: 30, x: 960, y: 120, anchor: "center" }),
     wants: t("None of this needs a model that wants anything.", { atlas: A.head, size: 44, x: 960, y: 140, anchor: "center" }),
     needs: t("a reward that pays for the wrong thing, and an optimizer that finds it", { atlas: A.sans, size: 30, x: 960, y: 196, anchor: "center" }),
-    fix: t("pay for the property you need; check it with a test no shortcut satisfies", { atlas: A.sans, size: 30, x: 960, y: 980, anchor: "center" }),
+    fix: t("pay for the property you need; check it with a test no shortcut satisfies", { atlas: A.sans, size: 30, x: 960, y: 252, anchor: "center" }),
     check: t("check", { atlas: A.mono, size: 24, x: P.solve[0], y: P.solve[1] - 150, anchor: "center" }),
     close: t("Ask what the training paid for.", { atlas: A.head, size: 50, x: 960, y: 140, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 960, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 1000, anchor: "center" }),
+    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 214, anchor: "center" }),
+    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 254, anchor: "center" }),
   };
 }
 
@@ -113,13 +115,13 @@ export function draw(t, A, T, items) {
   put(S.sharma, C.ink2, window(t, T.s2.sharma, T.s2.syco - 0.2, 0.5, 0.4));
   const bal = window(t, T.s2.given, T.s3.enter, 0.8, 0.8);
   if (bal > 0) {
-    const tilt = 0.12 * span(t, T.s2.given + 1.0, T.s2.given + 2.6, ease.inOut), cx = 960, cy = 850;
-    items.push({ shape: rect(560, 760, 800, 280, 16), fill: "#060607", opacity: 0.72 * bal, blur: 14 });
+    const tilt = 0.12 * span(t, T.s2.given + 1.0, T.s2.given + 2.6, ease.inOut), cx = 960, cy = 850 - BAL;
+    items.push({ shape: rect(560, 760 - BAL, 800, 280, 16), fill: "#060607", opacity: 0.72 * bal, blur: 14 });
     strk([contour(new Float32Array([cx - 300 * Math.cos(tilt), cy + 300 * Math.sin(tilt), cx + 300 * Math.cos(tilt), cy - 300 * Math.sin(tilt)]), false)], C.ink, 3, bal);
     strk([contour(new Float32Array([cx, cy, cx - 16, cy + 30, cx + 16, cy + 30, cx, cy]), true)], C.ink2, 2, bal);
     put(S.beamL, C.hot, bal); put(S.beamR, C.ink2, bal);
     const lit = Math.round(95 * span(t, T.s2.given + 2.0, T.s2.given + 5.0, ease.out)), hot = [], cool = [];
-    for (let i = 0; i < 100; i++) (i < 95 && i < lit ? hot : cool).push(...rect(612 + i * 7, 940, 3, 26));
+    for (let i = 0; i < 100; i++) (i < 95 && i < lit ? hot : cool).push(...rect(612 + i * 7, 940 - BAL, 3, 26));
     put(hot, C.hot, bal); put(cool, C.ink2, bal * 0.7);
     put(S.pref, C.hot, bal * span(t, T.s2.given + 4.6, T.s2.given + 5.4));
   }

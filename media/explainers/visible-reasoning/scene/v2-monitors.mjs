@@ -29,21 +29,21 @@ export function prepare(A) {
     scale: (y) => [contour(new Float32Array([X0, y, X1, y]), false), ...[0, 0.5, 1].map((u) => contour(new Float32Array([lerp(X0, X1, u), y - 8, lerp(X0, X1, u), y + 8]), false))],
     pct: (y) => ["0%", "50%", "100%"].map((s, k) => t(s, { atlas: A.mono, size: 20, x: lerp(X0, X1, k / 2), y: y + 34, anchor: "center" })),
     // Segment 3.
-    lens: [{ x: 640, y: 560, col: C.violet, name: t("reads the actions", { atlas: A.sans, size: 28, x: 640, y: 380, anchor: "center" }) },
-      { x: 1280, y: 560, col: C.cyan, name: t("reads the actions and the reasoning", { atlas: A.sans, size: 28, x: 1280, y: 380, anchor: "center" }) }],
-    caught: [t("caught 60%", { atlas: A.mono, size: 30, x: 640, y: 780, anchor: "center" }), t("caught 95%", { atlas: A.mono, size: 30, x: 1280, y: 780, anchor: "center" }),
-      t("near zero", { atlas: A.mono, size: 30, x: 1280, y: 780, anchor: "center" })],
-    penalty: t("the penalty: flagged reasoning is trained against", { atlas: A.sans, size: 28, x: 960, y: 900, anchor: "center" }),
-    continues: t("the tricks continued", { atlas: A.mono, size: 26, x: 960, y: 940, anchor: "center" }),
+    lens: [{ x: 640, y: 420, col: C.violet, name: t("reads the actions", { atlas: A.sans, size: 28, x: 640, y: 240, anchor: "center" }) },
+      { x: 1280, y: 420, col: C.cyan, name: t("reads the actions and the reasoning", { atlas: A.sans, size: 28, x: 1280, y: 240, anchor: "center" }) }],
+    caught: [t("caught 60%", { atlas: A.mono, size: 30, x: 640, y: 640, anchor: "center" }), t("caught 95%", { atlas: A.mono, size: 30, x: 1280, y: 640, anchor: "center" }),
+      t("near zero", { atlas: A.mono, size: 30, x: 1280, y: 640, anchor: "center" })],
+    penalty: t("the penalty: flagged reasoning is trained against", { atlas: A.sans, size: 28, x: 960, y: 712, anchor: "center" }),
+    continues: t("the tricks continued", { atlas: A.mono, size: 26, x: 960, y: 752, anchor: "center" }),
     ribbonRun: run("step . step . a shortcut . step . done", A.sans, 30),
     cleanRun: run("step . step . step . step . done", A.sans, 30),
     top: curve(bezier([300, 200], [700, 140], [1200, 260], [1640, 190])),
     // Segment 4.
     glass: curve(bezier([300, 520], [700, 440], [1200, 600], [1640, 500])),
-    position: t("a position paper, no measurements", { atlas: A.mono, size: 26, x: 960, y: 700, anchor: "center" }),
+    position: t("a position paper, no measurements", { atlas: A.mono, size: 26, x: 960, y: 610, anchor: "center" }),
     fragile: t("useful, and fragile", { atlas: A.head, size: 44, x: 960, y: 300, anchor: "center" }),
-    readout: t("Written reasoning is a readout.", { atlas: A.head, size: 44, x: 960, y: 820, anchor: "center" }),
-    checkIt: t("Check it against what the model does; do not pay it to look clean.", { atlas: A.sans, size: 30, x: 960, y: 890, anchor: "center" }),
+    readout: t("Written reasoning is a readout.", { atlas: A.head, size: 44, x: 960, y: 686, anchor: "center" }),
+    checkIt: t("Check it against what the model does; do not pay it to look clean.", { atlas: A.sans, size: 30, x: 960, y: 742, anchor: "center" }),
   };
 }
 

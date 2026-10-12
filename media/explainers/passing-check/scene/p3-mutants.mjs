@@ -10,7 +10,7 @@ import { C, N, BROKEN, lineShape, grid } from "./world.mjs";
 import { ring, dashed } from "../../checking-cost/scene/lib.mjs";
 
 export const BUGS = 357, COUPLED = 261, NONE = 61;
-const COLS = 21, GAP = 26, GX = 1480, GY = 545 - (17 * GAP) / 2, R = 8;
+const COLS = 21, GAP = 26, GX = 1480, GY = 545 - (17 * GAP) / 2 - 110, R = 8;   // 110 above centre: the notes under the grid stay clear of the captions
 
 export function prepare(A) {
   const P = A.prog, r = rng(357);
@@ -23,7 +23,7 @@ export function prepare(A) {
   });
   A.p3 = {
     mutants,
-    named: t("mutant: a deliberate break", { atlas: A.sans, size: 30, x: 960, y: 960, anchor: "center" }),
+    named: t("mutant: a deliberate break", { atlas: A.sans, size: 30, x: 960, y: 120, anchor: "center" }),
     cells: grid(BUGS, COLS, GX, GY, GAP),
     dot: circle(0, 0, R, 24),
     ghost: ring(0, 0, R + 4.5, 1.2),

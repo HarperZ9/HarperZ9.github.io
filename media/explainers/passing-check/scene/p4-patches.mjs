@@ -10,7 +10,7 @@ import { span, window, ease, lerp } from "../../../raw-native/web-23ec93f/motion
 import { C, grid } from "./world.mjs";
 import { ring } from "../../checking-cost/scene/lib.mjs";
 
-const BX = 460, BW = 1000, PATCHES = 251, LEAK = 82, WEAK = 78, COLS = 21, GAP = 26;
+const BX = 460, BW = 1000, PATCHES = 251, LEAK = 82, WEAK = 78, COLS = 21, GAP = 26, PY = 340;   // the dot grid's top; its notes stay clear of the captions
 
 export function prepare(A) {
   const t = (s, o) => text(s, o).shape;
@@ -21,16 +21,16 @@ export function prepare(A) {
       { y: 520, share: 0.296, label: t("29.6%: behaved unlike the real fix", { atlas: A.mono, size: 26, x: BX, y: 610 }), hot: false },
     ],
     tagA: t("preprint", { atlas: A.mono, size: 24, x: BX + BW, y: 300, anchor: "right" }),
-    cells: grid(PATCHES, COLS, 960 - ((COLS - 1) * GAP) / 2, 560, GAP),
+    cells: grid(PATCHES, COLS, 960 - ((COLS - 1) * GAP) / 2, PY, GAP),
     dot: circle(0, 0, 8, 24),
     card: rect(-6, -8, 12, 16, 2),
     weak: ring(0, 0, 9, 1.4),
-    head2: t("251 passing patches from one agent, checked by hand", { atlas: A.sans, size: 30, x: 960, y: 520, anchor: "center" }),
-    unit: t("1 dot = 1 patch", { atlas: A.mono, size: 22, x: 960 - ((COLS - 1) * GAP) / 2 - 8, y: 560 + 12 * GAP + 10 }),
-    leak: t("about a third: the fix was in the task text (32.67%)", { atlas: A.mono, size: 24, x: 960, y: 930, anchor: "center" }),
-    weakL: t("about another third: passed weak tests (31.08%)", { atlas: A.mono, size: 24, x: 960, y: 966, anchor: "center" }),
-    tagB: t("preprint", { atlas: A.mono, size: 24, x: 960 + ((COLS - 1) * GAP) / 2 + 30, y: 590 }),
-    far: t("how far a pass can sit from a fix, on these benchmarks", { atlas: A.sans, size: 32, x: 960, y: 1004, anchor: "center" }),
+    head2: t("251 passing patches from one agent, checked by hand", { atlas: A.sans, size: 30, x: 960, y: PY - 40, anchor: "center" }),
+    unit: t("1 dot = 1 patch", { atlas: A.mono, size: 22, x: 960 - ((COLS - 1) * GAP) / 2 - 8, y: PY + 12 * GAP + 10 }),
+    leak: t("about a third: the fix was in the task text (32.67%)", { atlas: A.mono, size: 24, x: 960, y: PY + 370, anchor: "center" }),
+    weakL: t("about another third: passed weak tests (31.08%)", { atlas: A.mono, size: 24, x: 960, y: PY + 406, anchor: "center" }),
+    tagB: t("preprint", { atlas: A.mono, size: 24, x: 960 + ((COLS - 1) * GAP) / 2 + 30, y: PY + 30 }),
+    far: t("how far a pass can sit from a fix, on these benchmarks", { atlas: A.sans, size: 32, x: 960, y: 200, anchor: "center" }),
   };
 }
 

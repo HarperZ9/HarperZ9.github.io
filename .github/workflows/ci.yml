@@ -24,7 +24,7 @@ jobs:
       - name: Python content contracts
         run: python -m pytest
       - name: Navigation and font catalog contracts
-        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs
+        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs
       # The vendored superstack contract: the copy must hold its pinned SHA-256, and it must pass
       # the release's own vectors on this runner's Node.
       - name: Superstack contract pin and vectors
