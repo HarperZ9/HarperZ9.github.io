@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-jmVIw9rV.js",
     "assets/index-C3mo4X0I.js",
     "assets/index-Se2ioCLN.css",
     "assets/index-Dv8VLt1g.js",
@@ -681,7 +682,10 @@ RELEASE_PATHS = (
 # registry and the site index with its own page card; the home leads with the guides, so the home
 # bundle is rebuilt (release paths listed and reviewed); the Writing hub carries a host line and
 # the publication receipt records the hub and the sitemap. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "85274e010547553ac482539192c8ba4505069e103c3e0973aa5fcef0092868e8"
+# October 12, 2026, later: after the live check, the "Your call" answer is reworded and the guides
+# stylesheet keeps an introduction's captions readable on a phone; home bundle and Writing hub
+# change with them (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "abd0f6182578d6c8dcf94f955d997b6a30c11999c470e9a96039f1548c51096e"
 
 
 BRIEFING_FIGURES = (
@@ -897,7 +901,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 12, 2026: the home leads with the three guides who host the films (Guides.tsx) and
     # guides.html joins the registry, so the bundle is index-C3mo4X0I.js with the sheet
     # index-Se2ioCLN.css. index-Dv8VLt1g.js and index-DbZyfUEO.css stay as retained history.
-    current_js = "index-C3mo4X0I.js"
+    # October 12, 2026, later: the "Your call" answer is reworded after the live check, so the bundle
+    # is index-jmVIw9rV.js with the same sheet. index-C3mo4X0I.js stays as retained history.
+    current_js = "index-jmVIw9rV.js"
+    previous_guides_js = "index-C3mo4X0I.js"
+    assert previous_guides_js not in source
+    assert (ROOT / "assets" / previous_guides_js).is_file()
+    assert f"assets/{previous_guides_js}" in RELEASE_PATHS
     previous_guides_pair = ("index-Dv8VLt1g.js", "index-DbZyfUEO.css")
     for superseded in previous_guides_pair:
         assert superseded not in source

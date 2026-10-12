@@ -47,3 +47,5 @@
 .gd-faces img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;background:#060608;border:1px solid color-mix(in srgb,currentColor 24%,transparent)}
 .gd-faces a:hover span,.gd-faces a:focus-visible span{text-decoration:underline;text-underline-offset:.2em}
 .gd-faces a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+/* On a phone the player is small, and the browser sizes captions to it; keep an introduction's captions readable. */
+@media (max-width:600px){.gd-intro video::cue{font-size:15px;line-height:1.3}}

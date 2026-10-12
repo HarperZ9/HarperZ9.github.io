@@ -143,8 +143,8 @@ REVIEWED_ASSET_REVISIONS = {
     # 9 October 2026: the interactive version of a film drawn by raw-native's Motion layer.
     "system/explainer/film.css": "20261009-motion",
     # 12 October 2026: the three guides who host the films (guides.html, the films, the Writing hub).
-    "system/guides.css": "20261012-guides",
-    "system/guides.mjs": "20261012-guides",
+    "system/guides.css": "20261012-guides-2",
+    "system/guides.mjs": "20261012-guides-2",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",

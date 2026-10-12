@@ -40,7 +40,7 @@ const CHOICES = ["It exists", "It does not", "I can't tell from the page"];
 export default function Guides() {
   useEffect(() => {
     // Built at runtime so the bundler leaves it as a browser import of the shared site file.
-    const url = ["", "system", "guides.mjs?v=20261012-guides"].join("/");
+    const url = ["", "system", "guides.mjs?v=20261012-guides-2"].join("/");
     import(/* @vite-ignore */ url).catch((e) => console.warn("guides:", e));
   }, []);
   return (
@@ -96,9 +96,10 @@ export default function Guides() {
             ))}
           </div>
           <p className="gd-answer" hidden aria-live="polite">
-            You said: <span data-gd-said="" />. It does not exist: it was made up for the first film, and nothing on the page gives that away.
-            Only a search tells. In the study the film follows, 55% of GPT-3.5&apos;s 222 references and 18% of GPT-4&apos;s 414 did not exist.{" "}
-            <a href="/explainers.html#checking-cost">Claiming got cheap. Checking did not.</a>, hosted by Tallow, shows the search.
+            Your answer: <span data-gd-said="" />. Rerun knocks, and the shell rings hollow: this reference was made up for the first film,
+            and nothing on the page gives that away. Only a search tells. In the study the film follows, 55% of GPT-3.5&apos;s 222 references
+            and 18% of GPT-4&apos;s 414 did not exist. The first film, hosted by Tallow, shows the search:{" "}
+            <a href="/explainers.html#checking-cost">Claiming got cheap. Checking did not.</a>
           </p>
         </div>
         <span className="gd-frame" data-gd-action="/media/guides/rerun/action.mp4">
