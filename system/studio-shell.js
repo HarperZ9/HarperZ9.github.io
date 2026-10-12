@@ -1,4 +1,4 @@
-// studio-shell.js: the Studio's one shell. A source switch that folds the 27 sources away once one
+// studio-shell.js: the Studio's one shell. A source switch that folds the 28 sources away once one
 // is chosen, an inspector header that names the source and what it does, and one action bar with
 // the same order everywhere: the source's main action, Undo, Redo, Export, Pin. Undo and Redo
 // share one history model: every source that joins the shell hands over snapshot() and
@@ -43,6 +43,7 @@ export const SOURCE_GUIDE = Object.freeze({
   brender:   { name: "BRender", purpose: "Re-hash the BRender restoration's release media in this browser." },
   revival:   { name: "Engine Revival", purpose: "Re-hash Engine Revival's release media in this browser." },
   raw:       { name: "RAW", purpose: "Render one scene with raw-native and check the fast path against the reference." },
+  viewer:    { name: "Verified viewer", purpose: "Open a glTF model, render it on your GPU and on the CPU reference, and read the certificate." },
 });
 
 // The action bar's fixed order. A source leaves out what it does not have; it never reorders.

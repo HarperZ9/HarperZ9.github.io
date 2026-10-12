@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
-<link rel="stylesheet" href="system/studio-shell.css?v=20261009-polish">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261012-viewer">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -108,6 +108,7 @@
         <button type="button" role="tab" data-source="brender"   aria-selected="false" aria-controls="src-engine" tabindex="-1">BRender</button>
         <button type="button" role="tab" data-source="revival"   aria-selected="false" aria-controls="src-engine" tabindex="-1">Engine Revival</button>
         <button type="button" role="tab" data-source="raw"       aria-selected="false" aria-controls="src-engine" tabindex="-1">RAW</button>
+        <button type="button" role="tab" data-source="viewer"    aria-selected="false" aria-controls="src-viewer" tabindex="-1">Verified viewer</button>
       </div>
     </div>
 
@@ -1350,6 +1351,16 @@
            and re-checkable. Wave 1 skeleton: the controls below are in place but inert;
            system/showcase/first-integral.js draws a labeled settled placeholder. Wave 2 wires
            the live scene, the receipt, and the re-check. -->
+      <!-- SOURCE: raw-native's verified viewer (studio-viewer.js), the release's own page on the stage. -->
+      <section class="src-block" id="src-viewer" role="tabpanel" aria-label="Verified viewer controls" hidden>
+        <p class="transform-note">raw-native renders a glTF model twice, on your GPU through WebGPU and on its CPU reference, then shows both frames, the error map between them and the certificate that says whether they agree within the committed tolerance. This is the engine's own viewer from the raw-native 0.7.0 release, unchanged.</p>
+        <div class="src-actions">
+          <button class="btn" id="viewer-hero" type="button" title="Render raw-hero, the owned test figure">raw-hero</button>
+          <button class="btn" id="viewer-hall" type="button" title="Render raw-hall, the owned hall scene">raw-hall</button>
+        </div>
+        <div id="viewer-status" class="studio-readout" aria-live="polite">not started</div>
+        <p class="src-hint">Everything else is on the stage: open your own glTF or GLB file, choose the size, add the ray-traced AO reference and set the error scale there. raw-hall takes longer, since the CPU reference draws every column. <a href="media/raw-native/viewer-0.7.0/web/viewer/index.html">Open the viewer on its own page</a>.</p>
+      </section>
       <section class="src-block" id="src-showcase" role="tabpanel" aria-label="Engine showcase controls" hidden>
         <div class="fractal-source" id="showcase-source">
           <div class="at-panel">
@@ -1843,7 +1854,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261010-neural-gpu"></script>
+<script type="module" src="system/studio.js?v=20261012-viewer"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

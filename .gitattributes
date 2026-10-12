@@ -54,3 +54,6 @@ system/media-engine/contracts.mjs -text
 system/media-engine/SUPERSTACK.sha256 -text
 # Release media bundles (raw-native media render) are hashed in their media.json: no EOL conversion.
 media/releases/** -text
+
+# raw-native release copies are checked byte for byte against the release's SHA256SUMS.
+media/raw-native/viewer-*/** -text
