@@ -12,7 +12,7 @@ from tools.guides.data import FILM_TITLES, GUIDES, VOICE, by_film
 
 ROOT = Path(__file__).resolve().parents[2]
 E = html.escape
-V = "20261012-guides"
+V = "20261012-guides-2"
 REF = "Hale, R., &amp; Morrow, J. (2019). Signal decay in peer networks. <i>Journal of Applied Inference</i>, 12(3), 44-61."
 
 
@@ -69,9 +69,10 @@ def your_call(prefix: str = "") -> str:
     return (f'<div class="gd-call" data-gd-call>'
             f'<div><blockquote class="gd-ref"><cite>{REF}</cite></blockquote>'
             f'<p class="gd-call-q">Does this work exist? Your call.</p><div class="gd-actions">{choices}</div>'
-            f'<p class="gd-answer" hidden aria-live="polite">You said: <span data-gd-said></span>. It does not exist: it was made up for the first film, '
-            f'and nothing on the page gives that away. Only a search tells. In the study the film follows, 55% of GPT-3.5\'s 222 references '
-            f'and 18% of GPT-4\'s 414 did not exist. {film_link("checking-cost", prefix)}, hosted by Tallow, shows the search.</p></div>'
+            f'<p class="gd-answer" hidden aria-live="polite">Your answer: <span data-gd-said></span>. Rerun knocks, and the shell rings hollow: '
+            f'this reference was made up for the first film, and nothing on the page gives that away. Only a search tells. In the study the film '
+            f'follows, 55% of GPT-3.5\'s 222 references and 18% of GPT-4\'s 414 did not exist. The first film, hosted by Tallow, shows the search: '
+            f'{film_link("checking-cost", prefix)}</p></div>'
             f'<span class="gd-frame" data-gd-action="{prefix}media/guides/rerun/action.mp4"><img src="{prefix}media/guides/rerun/close.jpg" width="480" height="480" '
             f'alt="{E(r["close_alt"])} When you answer, Rerun knocks on a shell and it rings hollow." loading="lazy" decoding="async" style="object-fit:contain"></span></div>')
 
