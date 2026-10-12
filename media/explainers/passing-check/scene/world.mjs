@@ -53,7 +53,7 @@ export function veil() {
 // The source tab (film 1's rule): evidence.json short and n, on the lower third.
 export function tab(evidence, id, mono) {
   const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 . ");
-  return text(`${head} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 1058 }).shape;
+  return text(`${head} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 58 }).shape;
 }
 
 export function grid(n, cols, x0, y0, gap) {

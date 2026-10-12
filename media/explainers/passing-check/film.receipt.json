@@ -13,12 +13,12 @@
   },
   "render_code": {
     "media/explainers/passing-check/film.scene.mjs": "4879c5a19730c2b63878dcc161982b8b7c01343db5fe2e73a0f06c6d9213ab35",
-    "media/explainers/passing-check/scene/p1-pass.mjs": "5a53e41d540147fd5d4a97ba65a4fc1caa736c135adc27864db2521c06e53672",
-    "media/explainers/passing-check/scene/p2-coverage.mjs": "b9b632fb17a6afba334c231ddd7985474a5b7eb9208838486592407265ac0a4e",
-    "media/explainers/passing-check/scene/p3-mutants.mjs": "d9727bf743490e1a728a1f20e0f3e3225bf16c58bb2cbd0bca881e561ac5b8e0",
-    "media/explainers/passing-check/scene/p4-patches.mjs": "6b983fc2513b684b485b2f0ba5c9b6649b4de18ccc8c14adaef16e3260276fe5",
-    "media/explainers/passing-check/scene/p5-control.mjs": "95a84e81c3ff18f5cfa0af30dca662969c37db2ed88a0b9067e79ac44ded504c",
-    "media/explainers/passing-check/scene/world.mjs": "7371ccf89a86780d8c8212b212f06089859a44b4688d10ec58438f91ca6c2526",
+    "media/explainers/passing-check/scene/p1-pass.mjs": "e93b40d90adb78204920ab4feb6d777bd5fd99fa0b5c0fa62158cf366a6fb65f",
+    "media/explainers/passing-check/scene/p2-coverage.mjs": "afbee450913e3fec30ab325e60b8e913cb05fa34b69aa0e411b960c322e1d6b5",
+    "media/explainers/passing-check/scene/p3-mutants.mjs": "42a3d0a89039f0c75d2f90b89d200aa56cc2f277c4107fe1113e61c293f7442c",
+    "media/explainers/passing-check/scene/p4-patches.mjs": "5c09e5e8ddcb5ed7b39acf81791b691181f2c19785b11472a5b3db4fdb786811",
+    "media/explainers/passing-check/scene/p5-control.mjs": "d94eb7f712e3f4b6cae660db1f6b180713c2402dfa719352be0b2df0a83dc41a",
+    "media/explainers/passing-check/scene/world.mjs": "1a57656b3b3cced0eb44351c8072834c8ba449c4c992b7804d275a23c5e8e75a",
     "media/raw-native/web-23ec93f/motion/capture.html": "fc2595317f6db46d3fdc39832123e2e8a67e2ee7825c11f393e9da7973852f8c",
     "media/raw-native/web-23ec93f/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
     "media/raw-native/web-23ec93f/motion/morph.mjs": "ed8776e6400cbf0e63c597d384669f40ccbc47b6790ec15a03dedbc1bf68c2cd",
@@ -39,8 +39,7 @@
     "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
     "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
     "tools/explainer/film/motion.py": "8ce14c93ccc630558348e48edbd6d5c484ac5b80f49a6ddcbc236c70e4f89044",
-    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898",
-    "media/explainers/passing-check/sound/film.sound.mjs": "1dca886d5b8337cc09b4f14bdd5f01339153cbb18259488f62fe1d9697980881"
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
   },
   "toolchain": {
     "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
@@ -57,10 +56,10 @@
       "width": 3840,
       "height": 2160,
       "frames": 4317,
-      "frame_ms_median": 10,
-      "frame_ms_p95": 13.9,
-      "wall_seconds": 61.3,
-      "sha256": "9eb1dd46e9258714f9c6418fea85ef6606699083acd781d28ae4b9c5d2ce580b"
+      "frame_ms_median": 9.8,
+      "frame_ms_p95": 13.4,
+      "wall_seconds": 48.0,
+      "sha256": "abb29e7a96672d9ea45960ce99c93c7edb68c225423974490781c576d2c547ac"
     },
     "score": null
   },
@@ -125,10 +124,10 @@
   "fps": 30,
   "seconds": 143.9,
   "outputs": {
-    "passing-check.mp4": "739ae5e2561d572a8987906843230b387a35ad113b3e49e9cf949906f9d9d6bd",
+    "passing-check.mp4": "4933dfa55ea685db6eaa0d5cdbceec47c2a22058894534c22935e7614b0e98eb",
     "passing-check.vtt": "53c93b60285e66391e11fc83830723b52dc00187e7185b9beb302c7b74eb5256",
     "passing-check.srt": "2baf11ea3e7802ed00fb5932a939d29d546ab6610d7b440f7742964f4eddc042",
-    "poster.jpg": "da4f52a4042cf0388d95979aabb2056bbfe62c3c2570ebd10102d481c426f1c4",
+    "poster.jpg": "5ad3d0b462d1130201ff794629920db14bb9d95edebdf8f5d2def7862b2974e0",
     "timing.json": "191a4bef42c582eeb8fe7ff144cbb0707361cdd42f916645ccf22aa29e7d6628",
     "passing-check.m4a": "a4a536d3de6e2c8b29962007f7a241618315ffcb70428a778f04e7401e5c1993"
   },
@@ -155,5 +154,10 @@
     "loudness_verdict": "verified",
     "second_meter": "ffmpeg 7.1 ebur128=peak=true on passing-check.m4a: -16.0 LUFS, LRA 2.7 LU, true peak -1.8",
     "revert": "Restore passing-check.mp4 and passing-check.m4a and their output hashes from the commit before this one (bare narration)."
+  },
+  "layout": {
+    "since": "2026-10-12",
+    "what": "On-screen labels moved clear of the area where the browser draws captions (tests/explainer-film-labels.mjs). The picture was re-rendered; the audio stream was copied unchanged from the previous mp4.",
+    "audio_stream_md5": "MD5=1c13fb6f6c60451307eaa9c9ac7a88e1"
   }
 }

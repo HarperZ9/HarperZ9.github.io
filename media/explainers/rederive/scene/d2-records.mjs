@@ -18,31 +18,32 @@ export function prepare(A, ctx) {
   const env = [...rect(0, 0, 22, 15, 2), contour(new Float32Array([0, 0, 11, 8, 22, 0]), false)];
   // The field: 2^18 points in a soft rectangle; the lit subsets are drawn as their own systems.
   const pts = new Float32Array(2 * FIELD);
-  for (let i = 0; i < FIELD; i++) { pts[2 * i] = 160 + r() * 1600; pts[2 * i + 1] = 150 + r() * 720; }
+  // The field sits between the lines at the top and the note under it, above the captions (tests/explainer-film-labels.mjs).
+  for (let i = 0; i < FIELD; i++) { pts[2 * i] = 160 + r() * 1600; pts[2 * i + 1] = 250 + r() * 470; }
   const pick = (n) => { const a = new Float32Array(2 * n); for (let i = 0; i < n; i++) { const j = Math.floor(r() * FIELD); a[2 * i] = pts[2 * j]; a[2 * i + 1] = pts[2 * j + 1]; } return a; };
   const lit17 = pick(LIT17);
   const sys = (p, n, col, seed) => ctx.motion ? ctx.motion.particles({ count: n, formations: [p, p], colors: [col, col], seed }) : null;
   A.d2 = {
-    cells: grid(PAPERS, 17, 433, 150, 62, 46), c: card(52, 36), env, got: spread(GOT, PAPERS), repro: null,
-    unit: t("1 card = 1 paper . 204 papers in Science", { atlas: A.mono, size: 22, x: 433, y: 728 }),
-    gotL: t("materials obtained: 44%", { atlas: A.mono, size: 26, x: 433, y: 770 }),
-    reproL: t("about 26% estimated to reproduce", { atlas: A.mono, size: 26, x: 433, y: 810 }),
-    est: t("estimate", { atlas: A.mono, size: 22, x: 900, y: 810 }),
-    rule: t("A rule that relies on the author answering checks only the authors who answer.", { atlas: A.sans, size: 30, x: 960, y: 960, anchor: "center" }),
+    cells: grid(PAPERS, 17, 433, 104, 62, 42), c: card(52, 36), env, got: spread(GOT, PAPERS), repro: null,
+    unit: t("1 card = 1 paper . 204 papers in Science", { atlas: A.mono, size: 22, x: 433, y: 634 }),
+    gotL: t("materials obtained: 44%", { atlas: A.mono, size: 26, x: 433, y: 672 }),
+    reproL: t("about 26% estimated to reproduce", { atlas: A.mono, size: 26, x: 433, y: 710 }),
+    est: t("estimate", { atlas: A.mono, size: 22, x: 900, y: 710 }),
+    rule: t("A rule that relies on the author answering checks only the authors who answer.", { atlas: A.sans, size: 30, x: 960, y: 754, anchor: "center" }),
     cert: card(120, 80, [0.9, 0.6, 0.75]),
-    public: t("a public record: anyone can check it", { atlas: A.sans, size: 30, x: 960, y: 960, anchor: "center" }),
+    public: t("a public record: anyone can check it", { atlas: A.sans, size: 30, x: 960, y: 110, anchor: "center" }),
     field: sys(pts, FIELD, "#3a3833", 21), f12: sys(pick(LIT12), LIT12, "#b8482b", 22), f17: sys(lit17, LIT17, "#b8482b", 23),
     dive: [lit17[0], lit17[1]],
-    fieldTag: t("field drawn at 2^18 points; 1 point is about 900 certificates", { atlas: A.mono, size: 22, x: 160, y: 900 }),
+    fieldTag: t("field drawn at 2^18 points; 1 point is about 900 certificates", { atlas: A.mono, size: 22, x: 160, y: 752 }),
     checks: t("220 checks over 240 million certificates", { atlas: A.mono, size: 28, x: 960, y: 110, anchor: "center" }),
-    y2012: t("2012: more than 12% with errors", { atlas: A.mono, size: 30, x: 960, y: 960, anchor: "center" }),
-    y2017: t("2017: 0.02%, too few to see from here", { atlas: A.mono, size: 30, x: 960, y: 960, anchor: "center" }),
-    caused: t("the paper does not show the checks caused the fall", { atlas: A.mono, size: 26, x: 960, y: 1004, anchor: "center" }),
+    y2012: t("2012: more than 12% with errors", { atlas: A.mono, size: 30, x: 960, y: 164, anchor: "center" }),
+    y2017: t("2017: 0.02%, too few to see from here", { atlas: A.mono, size: 30, x: 960, y: 164, anchor: "center" }),
+    caused: t("the paper does not show the checks caused the fall", { atlas: A.mono, size: 26, x: 960, y: 210, anchor: "center" }),
     closeA: t("A result you can re-derive", { atlas: A.head, size: 50, x: 1300, y: 480, anchor: "center" }),
     closeB: t("does not need your trust.", { atlas: A.head, size: 50, x: 1300, y: 546, anchor: "center" }),
     ask: t("Ask for the data, the code and a check you can run yourself.", { atlas: A.sans, size: 28, x: 1300, y: 620, anchor: "center" }),
-    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 960, y: 960, anchor: "center" }),
-    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 960, y: 1000, anchor: "center" }),
+    voice: t("The voice is a synthesized version of the author's.", { atlas: A.sans, size: 26, x: 1300, y: 690, anchor: "center" }),
+    sources: t("Every number on screen links to its source under the video.", { atlas: A.sans, size: 26, x: 1300, y: 728, anchor: "center" }),
   };
   const gotIdx = [...A.d2.got].sort((a, b) => a - b), keep = spread(REPRO, GOT);
   A.d2.repro = new Set(gotIdx.filter((_, k) => keep.has(k)));

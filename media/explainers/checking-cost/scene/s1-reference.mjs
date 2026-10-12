@@ -58,9 +58,9 @@ export function prepare(A, T) {
     invented: text("invented for this video", { atlas: A.sans, size: 0.55, x: cx + CARD.w / 2, y: cy + CARD.h / 2 + 0.95, anchor: "right" }).shape,
     unverified: text("unverified", { atlas: A.sans, size: 0.62, x: cx + CARD.w / 2 - 0.9, y: cy - CARD.h / 2 - 0.55, anchor: "right" }).shape,
     labels: {
-      fast: text("A chatbot writes one like it in under a second.", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
-      page: text("Nothing on the page says whether the work exists.", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
-      look: text("To find out, someone has to go and look.", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
+      fast: text("A chatbot writes one like it in under a second.", { atlas: A.sans, size: 34, x: 960, y: 748, anchor: "center" }).shape,
+      page: text("Nothing on the page says whether the work exists.", { atlas: A.sans, size: 34, x: 960, y: 748, anchor: "center" }).shape,
+      look: text("To find out, someone has to go and look.", { atlas: A.sans, size: 34, x: 960, y: 748, anchor: "center" }).shape,
     },
   };
 }
@@ -142,7 +142,9 @@ export function draw(t, A, T, items, zoom) {
 }
 
 // The camera from the title to the end of the pull-back.
-export function camera(t, A, T, reduced) {
+// LIFT: the card sits this many pixels above centre until the pull-back, clear of the captions.
+const LIFT = 110;
+export function camera(t, A, T, reduced, to = { x: 960, y: 545, zoom: 1 }) {
   const S = A.s1;
   const Z0 = 68, Z1 = 15, Z2 = 40;
   const fly = (u, za, zb, ca, cb) => {
@@ -151,11 +153,13 @@ export function camera(t, A, T, reduced) {
     const w = (1 / z - 1 / za) / (1 / zb - 1 / za || 1);
     return { x: lerp(ca[0], cb[0], w), y: lerp(ca[1], cb[1], w), zoom: z };
   };
-  const home = [S.cx, S.cy], world = [960, 545];
+  const home = [S.cx, S.cy], world = [to.x, to.y];
+  const lift = (c, k = 1) => ({ ...c, y: c.y + (LIFT * k) / c.zoom });
   const step = (u) => (reduced ? (u < 0.5 ? 0 : 1) : u);
-  if (t < T.copies + 0.2) return { x: S.cx, y: S.cy, zoom: Z0 };
-  if (t < T.look) return { ...fly(step(span(t, T.copies + 0.2, T.copies + 2.6, ease.inOut)), Z0, Z1, home, home), aperture: 0.6 };
-  if (t < T.pull) return fly(step(span(t, T.look, T.look + 1.2, ease.inOut)), Z1, Z2, home, home);
-  return fly(step(span(t, T.pull, T.pull + 4.6, ease.inOut)), Z2, 1, home, world);
+  if (t < T.copies + 0.2) return lift({ x: S.cx, y: S.cy, zoom: Z0 });
+  if (t < T.look) return lift({ ...fly(step(span(t, T.copies + 0.2, T.copies + 2.6, ease.inOut)), Z0, Z1, home, home), aperture: 0.6 });
+  if (t < T.pull) return lift(fly(step(span(t, T.look, T.look + 1.2, ease.inOut)), Z1, Z2, home, home));
+  const u = step(span(t, T.pull, T.pull + 4.6, ease.inOut));
+  return lift(fly(u, Z2, to.zoom, home, world), 1 - u);
 }
 export { SPACING, translateShape };

@@ -32,12 +32,12 @@ export function prepare(A, ctx) {
     aHead: t("after the gaming curriculum", { atlas: A.sans, size: 26, x: GA.x, y: GA.y - 40 }),
     aCount: t("45 of 32,768 episodes", { atlas: A.mono, size: 30, x: GA.x, y: GA.y + 128 * SP + 46 }),
     bHead: t("a model trained only to be helpful", { atlas: A.sans, size: 26, x: GB.x, y: GB.y - 40 }),
-    bCount: t("0 of 100,000 episodes", { atlas: A.mono, size: 30, x: GB.x, y: GB.y + 250 * SP + 46 }),
+    bCount: t("0 of 100,000 episodes", { atlas: A.mono, size: 30, x: 1750, y: GB.y - 40, anchor: "right" }),
     unit: t("1 point = 1 episode", { atlas: A.mono, size: 22, x: GA.x, y: GA.y + 128 * SP + 82 }),
-    built: t("environments built to allow gaming", { atlas: A.mono, size: 26, x: 960, y: 920, anchor: "center" }),
-    small: t("the rate is small", { atlas: A.sans, size: 28, x: 960, y: 880, anchor: "center" }),
-    direction: t("rewarded gaming spread to gaming that was never rewarded", { atlas: A.sans, size: 32, x: 960, y: 980, anchor: "center" }),
-    yourTag: t("your value, at the paper's rate; not a measurement", { atlas: A.mono, size: 20, x: 1530, y: 932, anchor: "center" }),
+    built: t("environments built to allow gaming", { atlas: A.mono, size: 26, x: 960, y: 156, anchor: "center" }),
+    small: t("the rate is small", { atlas: A.sans, size: 28, x: 960, y: 114, anchor: "center" }),
+    direction: t("rewarded gaming spread to gaming that was never rewarded", { atlas: A.sans, size: 32, x: 960, y: 208, anchor: "center" }),
+    yourTag: t("your value, at the paper's rate; not a measurement", { atlas: A.mono, size: 20, x: 1600, y: 742, anchor: "center" }),
   };
 }
 
@@ -54,15 +54,16 @@ export function draw(t, A, T, items, cam) {
   const strk = (shape, color, w, o) => { if (o > 0) items.push({ shape, stroke: color, width: w, opacity: o * vis }); };
   // The environments and the held-out task.
   const envA = span(t, R.enter + 0.4, R.enter + 2.4, ease.out);
+  const dive = 1 - span(cam.u, 0, 0.05), top = (1 - span(t, R.small - 0.9, R.small - 0.1)) * dive;
   S.envs.forEach((e, k) => {
     const a = span(envA, k * 0.15, k * 0.15 + 0.4);
-    strk(rect(e.x, e.y - 40, 120, 80, 8), C.ink2, 1.6, a);
-    strk([...circle(e.x + 60, e.y, 26, 32), ...circle(e.x + 60, e.y, 14, 24)], C.ink, 1.1, a * 0.7);
-    strk([contour(new Float32Array([e.x + 8, e.y - 30, e.x + 56, e.y - 2]), false)], C.hot, 1.8, a);
+    strk(rect(e.x, e.y - 40, 120, 80, 8), C.ink2, 1.6, a * top);
+    strk([...circle(e.x + 60, e.y, 26, 32), ...circle(e.x + 60, e.y, 14, 24)], C.ink, 1.1, a * 0.7 * top);
+    strk([contour(new Float32Array([e.x + 8, e.y - 30, e.x + 56, e.y - 2]), false)], C.hot, 1.8, a * top);
   });
-  put(S.flattery, C.ink2, envA); put(S.paid, C.ink2, envA);
-  const door = span(t, R.heldout, R.heldout + 1.2, ease.out);
-  strk(rect(1380, 140, 320, 110, 10), C.ink, 2, door); put(S.heldout, C.ink, door); put(S.door, C.hot, door * span(t, R.heldout + 1.0, R.heldout + 2.0));
+  put(S.flattery, C.ink2, envA * top); put(S.paid, C.ink2, envA * top);
+  const door = span(t, R.heldout, R.heldout + 1.2, ease.out) * (1 - span(t, R.helpful - 1.0, R.helpful));
+  strk(rect(1380, 140, 320, 110, 10), C.ink, 2, door * dive); put(S.heldout, C.ink, door * dive); put(S.door, C.hot, door * dive * span(t, R.heldout + 1.0, R.heldout + 2.0));
   // The episodes, at their real counts.
   const ga = span(t, R.did - 0.4, R.did + 1.2), gb = span(t, R.helpful, R.helpful + 1.4);
   const size = [1.6, 1.6];
@@ -73,8 +74,8 @@ export function draw(t, A, T, items, cam) {
     const r = 1.4 + 3.0 / Math.max(1, cam.zoom) * (1 - cam.u);
     put(S.litXY.flatMap(([x, y]) => circle(x, y, Math.max(1.3, r), 12)), C.hot, litA);
   }
-  put(S.aHead, C.ink2, ga); put(S.aCount, C.hot, litA); put(S.unit, C.dim, ga);
-  put(S.bHead, C.ink2, gb); put(S.bCount, C.ink, gb * span(t, R.helpful + 1.0, R.helpful + 1.8));
+  put(S.aHead, C.ink2, ga * dive); put(S.aCount, C.hot, litA * dive); put(S.unit, C.dim, ga * dive);
+  put(S.bHead, C.ink2, gb * dive); put(S.bCount, C.ink, gb * span(t, R.helpful + 1.0, R.helpful + 1.8));
   put(S.small, C.ink2, window(t, R.small, R.direction + 0.2, 0.5, 0.4), true);
   put(S.built, C.hot, window(t, R.small + 0.6, R.exit, 0.5, 0.6), true);
   put(S.direction, C.ink, window(t, R.direction, R.exit, 0.5, 0.6), true);
@@ -83,7 +84,7 @@ export function draw(t, A, T, items, cam) {
   if (v !== undefined) {
     const n = Math.round(Math.pow(10, v));
     if (Math.abs(n - CURRICULUM) / CURRICULUM > 0.01) {
-      put(text(`at ${fmt(n)} episodes: about ${fmt(Math.round((n * TAMPERED) / CURRICULUM))}`, { atlas: A.mono, size: 24, x: 1530, y: 900, anchor: "center" }).shape, C.ink, 1, true);
+      put(text(`at ${fmt(n)} episodes: about ${fmt(Math.round((n * TAMPERED) / CURRICULUM))}`, { atlas: A.mono, size: 24, x: 1600, y: 710, anchor: "center" }).shape, C.ink, 1, true);
       put(S.yourTag, C.hot, 1, true);
     }
   }

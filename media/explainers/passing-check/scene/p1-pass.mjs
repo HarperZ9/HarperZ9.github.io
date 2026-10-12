@@ -26,8 +26,8 @@ export function prepare(A) {
     pass: TESTS.map((_, k) => t("pass", { atlas: A.mono, size: 30, x: 1660, y: 330 + k * 56 }).shape),
     changed: t("changed", { atlas: A.mono, size: 20, x: B.x - 16, y: B.y + 6, anchor: "right" }).shape,
     never: t("never run by any test", { atlas: A.mono, size: 30, x: 960, y: 640, anchor: "center" }).shape,
-    found: t("a pass: the check found nothing", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
-    could: t("not: the check could have found it", { atlas: A.sans, size: 34, x: 960, y: 1004, anchor: "center" }).shape,
+    found: t("a pass: the check found nothing", { atlas: A.sans, size: 34, x: 960, y: 100, anchor: "center" }).shape,
+    could: t("not: the check could have found it", { atlas: A.sans, size: 34, x: 960, y: 144, anchor: "center" }).shape,
     // The crack: a gap in the line and a jagged hairline across it.
     crackAt: cut,
     crack: [contour(new Float32Array([cut - 2, B.y - 10, cut + 1.8, B.y - 5, cut - 1.2, B.y - 0.5, cut + 2.2, B.y + 4, cut - 0.6, B.y + 9.5]), false)],
