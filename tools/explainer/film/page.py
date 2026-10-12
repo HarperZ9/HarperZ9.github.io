@@ -19,6 +19,11 @@ SHORTS = [("cost-to-verify", "The cost to verify", "no-receipt-no-accept.html#ex
           ("receipt-loop", "From a proposed answer to a kept receipt", "flywheel.html#explainer-receipt-loop", "65 s")]
 E = html.escape
 
+
+def host(slug: str) -> str:
+    from tools.guides.page import host_line
+    return host_line(slug)
+
 DESIGN = [
     ("Retrieval, not rereading.", "Each film stops to ask you to recall what it just showed. In a classic study, students who were tested on a passage recalled 56% of it a week later, against 42% for students who reread it; rereading won only on a test five minutes later.",
      "Roediger and Karpicke 2006, Psychological Science", "https://doi.org/10.1111/j.1467-9280.2006.01693.x"),
@@ -120,6 +125,7 @@ def film_section(slug: str) -> str:
     return f"""
 <section class="mv" id="{slug}" aria-labelledby="{slug}-h">
   <h2 id="{slug}-h">{E(f["title"])}</h2>
+  {host(slug)}
   <figure class="film" data-film="{slug}" data-folder="{folder}">
     <video controls preload="metadata" playsinline width="1920" height="1080" poster="{folder}/poster.jpg" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
     {heads}
@@ -189,6 +195,7 @@ def release_section() -> str:
     return f"""
 <section class="mv" id="release-media" aria-labelledby="release-media-h">
   <h2 id="release-media-h">From the latest releases</h2>
+  {host("release-media")}
   <p class="body-text">Each release renders its own short films and walkthroughs from its own output, so a number on screen is the number that release produced.</p>{"".join(items)}
 </section>"""
 
@@ -221,6 +228,7 @@ def page() -> str:
 <link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
 <link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
 <link rel="stylesheet" href="system/explainer/film.css?v=20261009-motion">
+<link rel="stylesheet" href="system/guides.css?v=20261012-guides">
 </head>
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -233,6 +241,7 @@ def page() -> str:
   <div class="mid">
     <h1>Explainers. <span class="g">Every number has a source.</span></h1>
     <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
+    <p class="lede">Three guides host them: <a class="inline" href="guides.html#tallow">Tallow</a>, <a class="inline" href="guides.html#pylon">Pylon</a> and <a class="inline" href="guides.html#rerun">Rerun</a>. <a class="inline" href="guides.html">Meet the guides</a>.</p>
   </div>
   {film_index()}
 </div>
