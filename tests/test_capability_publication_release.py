@@ -685,7 +685,9 @@ RELEASE_PATHS = (
 # October 12, 2026, later: after the live check, the "Your call" answer is reworded and the guides
 # stylesheet keeps an introduction's captions readable on a phone; home bundle and Writing hub
 # change with them (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "abd0f6182578d6c8dcf94f955d997b6a30c11999c470e9a96039f1548c51096e"
+# October 12, 2026, later: studio.html gains the Verified viewer source (raw-native 0.7.0) and loads
+# studio.js and studio-shell.css at a new stamp. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "f95fb16214cdeb5fdb26fc9489a4e2709d326e32ed57f6f93d81641e34ab632a"
 
 
 BRIEFING_FIGURES = (
