@@ -1,0 +1,53 @@
+{
+  "schema": "site-guides/1",
+  "guides": {
+    "tallow": {
+      "world": "thriller",
+      "files": {
+        "still.jpg": "60b4b05948caaf9606bd29b041fd4ea1e3fe93b69d1f03becac34f3b54d924b7",
+        "close.jpg": "1f2607e0b64a9930e6e28c9c34c170dcd908b7f3d9edebd5f511faf067944cd9",
+        "sheet.jpg": "65661dea76bf37bf4989f2d7c664b0dff788fdd37337e5029afd4d06b411a87a",
+        "idle.mp4": "5102b3844bb18dc1e2b7fea8fa20bcbaee31bb6b24f06aaae1fecdf0c355ee0b",
+        "action.mp4": "b95c68f372eb2fc5d084b6401a7605181b5d441d0f3fa9ddb287b5809399745d",
+        "intro.mp4": "ec9c078c993a14dca6840ab9a061d9fed491ac7ac0aee8a71728456f9a3e39a7",
+        "intro.jpg": "81bdcc47f53fb91e1e4eccd4abc3afc57bb11f3f95ee5c601e926e1cc76713c3",
+        "intro.vtt": "7f7fd643154904a187f7a2304d3dedb537ce91f8b553ab799bc6bbcaadcee387",
+        "intro.timing.json": "af8248fd1d37ac0ba6fa42583f6f029db5278f8755ba26cf20c35339f14c6260"
+      },
+      "bytes": 950323,
+      "intro_audio": false
+    },
+    "pylon": {
+      "world": "painted",
+      "files": {
+        "still.jpg": "629655f877ab171d6f3b41ebea4cdc1d90b7d675f7d61a65bcdbe2095b045f19",
+        "close.jpg": "d2c1ef06983c033948d1353c78b76dda582c6721aef2487d56a8dbe697c59ba4",
+        "sheet.jpg": "7b4686ec51e27bf2d5145737e1ba8e913278be9951cf05ac88293f04cbbb2471",
+        "idle.mp4": "39fc950d712ccb9bb113f8921e2c334382c4e955461d07de08e114650e8ca5ce",
+        "action.mp4": "09ebf421bcaf6c6f20e13664857a2dcc169b115ec4232bd13e070fcc2ee8a490",
+        "intro.mp4": "7e3be90bf27d4e8881607ba255bca176552559cba378b38f877152edba4f2855",
+        "intro.jpg": "dca519695ea7dcf7cf71c85d9baf3d8368f0e997dc04dc13124a012f8652e337",
+        "intro.vtt": "0021fd24653be5ef1da4dd6e88cb8cd9bf413a4994748418d14a7f46b7937ca7",
+        "intro.timing.json": "0a124b5c262788b5fecc72de118d007989409c27669cd4d522d25e95b1711683"
+      },
+      "bytes": 1718027,
+      "intro_audio": false
+    },
+    "rerun": {
+      "world": "pixel",
+      "files": {
+        "still.jpg": "281ce42a13bb5bf4f8635a396d57aa6d6e5b8013e31662e11c4f1783cc908883",
+        "close.jpg": "8746d55c5edd21725a57cb7ef1f3fa782cbd0b6ae36989f8e825b0550a2781dd",
+        "sheet.jpg": "9e5e753827ee8f21cfef2375e3f38ae8d394d6cb62178b9864ef4cd5fade009f",
+        "idle.mp4": "85021d66c00df91ca141a8a11329a1121cbc9a605b9ade34cc73b2cf8382a2f3",
+        "action.mp4": "bdc2c03480a1a62f9bbd786a6b1397dc9b57a6dd3e8e13a91fadc045c272f238",
+        "intro.mp4": "3a4f710d6915daf0436182dd86e7c381d668ae54460ad858adb9074561292f21",
+        "intro.jpg": "3ec2cb81ac885caabac108efa908ff75a0cafa30822b60f469bdcdacfb43b155",
+        "intro.vtt": "5747b66905e00d22413c42ccd3a38cb3788d6670eca5f9a533c4f304c82075ae",
+        "intro.timing.json": "500112ee438bcb4a129309ee9f535c74b389b0a7429114656798627bd4764397"
+      },
+      "bytes": 405289,
+      "intro_audio": false
+    }
+  }
+}

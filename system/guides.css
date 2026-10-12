@@ -1,0 +1,49 @@
+/* system/guides.css: the three guides (Tallow, Pylon, Rerun) wherever they appear. The art sits in
+   its own frame; words sit on the page's calm ground. No colour beyond the page's ink and the
+   pictures themselves. Shapes are hairlines and square corners, like the films' plates. */
+.gd-cast{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1.6rem 1.4rem}
+.gd-card{margin:0;display:grid;grid-template-rows:auto 1fr;gap:.7rem;min-width:0}
+.gd-frame{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#060608;border:1px solid color-mix(in srgb,currentColor 24%,transparent)}
+.gd-frame img,.gd-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gd-frame video{opacity:0;transition:opacity .4s ease}
+.gd-frame video.gd-on{opacity:1}
+.gd-card h3{margin:0;font-size:clamp(1.25rem,1.1rem + .5vw,1.6rem);font-weight:720;letter-spacing:-.02em;line-height:1.1}
+.gd-card h3 a{color:inherit;text-decoration:none}
+.gd-card h3 a:hover,.gd-card h3 a:focus-visible{text-decoration:underline;text-underline-offset:.2em}
+.gd-role{margin:.15rem 0 0;font-size:1rem;line-height:1.5}
+.gd-meta{margin:.35rem 0 0;font-family:"Conso",ui-monospace,monospace;font-size:.8rem;line-height:1.5;color:color-mix(in srgb,currentColor 70%,transparent)}
+.gd-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 0}
+.gd-btn{font:inherit;font-size:.95rem;color:inherit;background:none;border:1px solid currentColor;border-radius:0;padding:.5rem .85rem;min-height:44px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.gd-btn:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.gd-btn:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.gd-btn[aria-pressed="true"]{background:color-mix(in srgb,currentColor 14%,transparent)}
+.gd-intro{margin:.8rem 0 0}
+.gd-intro video{display:block;width:100%;height:auto;background:#060608;border:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.gd-intro figcaption{font-size:.88rem;margin:.5rem 0 0;color:color-mix(in srgb,currentColor 72%,transparent)}
+/* A film's host: a small portrait and one line, at the head of the film. */
+.gd-host{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:.9rem;align-items:center;max-width:44rem;margin:0 0 1rem;padding:.7rem 0;border-top:1px solid color-mix(in srgb,currentColor 24%,transparent);border-bottom:1px solid color-mix(in srgb,currentColor 24%,transparent)}
+.gd-host img{display:block;width:4.5rem;height:4.5rem;object-fit:cover;background:#060608}
+.gd-host p{margin:0;font-size:.98rem;line-height:1.5}
+.gd-host a{color:inherit}
+/* Your call: one reference, three answers, then the knock. Nothing is scored or kept. */
+.gd-call{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1.2rem 1.6rem;align-items:start;max-width:64rem}
+.gd-ref{margin:0;padding:1rem 1.1rem;border:1px solid color-mix(in srgb,currentColor 40%,transparent);font-size:1.02rem;line-height:1.6}
+.gd-ref cite{font-style:normal}
+.gd-call-q{margin:.9rem 0 0;font-weight:650}
+.gd-answer{margin:.8rem 0 0;font-size:1rem;line-height:1.6}
+.gd-answer[hidden]{display:none}
+@media (max-width:760px){.gd-call{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.gd-frame video{display:none}}
+.gd-sheets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem;margin-top:1.2rem;max-width:64rem}
+.gd-sheet{margin:0}
+.gd-sheet img{display:block;width:100%;height:auto;background:#060608;border:1px solid color-mix(in srgb,currentColor 24%,transparent)}
+.gd-call .gd-frame img{background:#060608}
+.gd-card p a,.gd-answer a,.gd-intro a,#guides .section-lead a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+/* An open introduction takes the whole row, so the video is large enough to watch. */
+@media (min-width:761px){.gd-card:has(.gd-intro:not([hidden])){grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,2fr);grid-template-rows:auto;align-items:start;column-gap:1.4rem}}
+/* The three faces under the title of guides.html. */
+.gd-faces{list-style:none;margin:1.4rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,8.5rem));gap:.8rem}
+.gd-faces a{display:grid;gap:.35rem;color:inherit;text-decoration:none;font-weight:650}
+.gd-faces img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;background:#060608;border:1px solid color-mix(in srgb,currentColor 24%,transparent)}
+.gd-faces a:hover span,.gd-faces a:focus-visible span{text-decoration:underline;text-underline-offset:.2em}
+.gd-faces a:focus-visible{outline:2px solid currentColor;outline-offset:3px}

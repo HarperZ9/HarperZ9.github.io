@@ -415,8 +415,10 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     assert main
     order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
     # 25 September 2026: Recent work sits between the mission and Flywheel.
-    assert order[:8] == [
+    # 12 October 2026: the guides who host the films lead, right after the name (author direction).
+    assert order[:9] == [
         "IdentityHero",
+        "Guides",
         "MissionFrame",
         "RecentWork",
         "FeaturedFlywheel",
