@@ -12,10 +12,10 @@
     "sha256": "5d833c8950e324283bbb9938924bc70688e7aa1f4f617933e8339fc7b78e152d"
   },
   "render_code": {
-    "media/explainers/visible-reasoning/film.scene.mjs": "0e6e5de269adff3c49fc4618755d181ac3d4f9b18f424c013b0ceff1445917bc",
+    "media/explainers/visible-reasoning/film.scene.mjs": "58f60234ac2bd03ed9ff35632de6f3d844599d32eacea1d9b8e094a4b37ce5da",
     "media/explainers/visible-reasoning/scene/ribbon.mjs": "48a6b907e1c9bd61b9aa83c6582fc4781bc26ef3d61dd8272331d27b3fad075f",
-    "media/explainers/visible-reasoning/scene/v1-hint.mjs": "da2514c653bb9ca32ae3ea7887841a639007338ff0d7814c01fe0edf77c92617",
-    "media/explainers/visible-reasoning/scene/v2-monitors.mjs": "ba387014ad7ab5020c934da480eb1d6c9f18a68182794e2215a4623dd34bf118",
+    "media/explainers/visible-reasoning/scene/v1-hint.mjs": "06a4118b5d8f9d4e708df077c3dec22f3c0911a819d1bd43ac506cdf891ec50f",
+    "media/explainers/visible-reasoning/scene/v2-monitors.mjs": "4171f0a41ab60c147dc480372fe2f120026e2f6a069e929ea5e5e05474558a6a",
     "media/raw-native/web-23ec93f/motion/capture.html": "fc2595317f6db46d3fdc39832123e2e8a67e2ee7825c11f393e9da7973852f8c",
     "media/raw-native/web-23ec93f/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
     "media/raw-native/web-23ec93f/motion/morph.mjs": "ed8776e6400cbf0e63c597d384669f40ccbc47b6790ec15a03dedbc1bf68c2cd",
@@ -36,8 +36,7 @@
     "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
     "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
     "tools/explainer/film/motion.py": "8ce14c93ccc630558348e48edbd6d5c484ac5b80f49a6ddcbc236c70e4f89044",
-    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898",
-    "media/explainers/visible-reasoning/sound/film.sound.mjs": "03189dcd04d5a451c00f947f764b0a3aeb2e0105486808e1794db914cea838e5"
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
   },
   "toolchain": {
     "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
@@ -54,10 +53,10 @@
       "width": 3840,
       "height": 2160,
       "frames": 3280,
-      "frame_ms_median": 9.9,
-      "frame_ms_p95": 12.5,
-      "wall_seconds": 42.9,
-      "sha256": "ba754f8a0e74134263c1e69b4795b2e5217ec7cb94750e9330ab9a32e8b31ba7"
+      "frame_ms_median": 10.5,
+      "frame_ms_p95": 19,
+      "wall_seconds": 40.4,
+      "sha256": "0dc553564b74cc02f4821e6f5d161b31f23c2a48ab19c65bf6a05c7f0ca545ab"
     },
     "score": null
   },
@@ -122,10 +121,10 @@
   "fps": 30,
   "seconds": 109.33333333333333,
   "outputs": {
-    "visible-reasoning.mp4": "b9581c60ab5c626368901bae4a66b5cd3b3e45cb38415210d48078c873d6563e",
+    "visible-reasoning.mp4": "d6f2ba7cf4c4767def9fb99ad21b172a1316da90bdbb37c17ba390f9ed5a0842",
     "visible-reasoning.vtt": "767db82d0e6a0a637c10cd1ba7c97d80001985b28a80d3afe1a6d38ff9155a1b",
     "visible-reasoning.srt": "58265a18d33627d7a8d5aa599f4f03ea62b742a4b12f3e6ba2183324e568f3f7",
-    "poster.jpg": "ab9ed317f42a048d6fcc899b0b067fdc120e61262d18851edf5aedebefc4323c",
+    "poster.jpg": "ecdd7c056d89554cc8a47b126b47624e40ea6c605da162a2621d58c515b1fcd8",
     "timing.json": "fea617149253a3a465c02f85c4b4be60d63af5008b8efb9731f563762bd32337",
     "visible-reasoning.m4a": "2f588a2cdf53cff62ed8184299ae434e31af0414cad8fcb43868165fbf24e111"
   },
@@ -152,5 +151,10 @@
     "loudness_verdict": "verified",
     "second_meter": "ffmpeg 7.1 ebur128=peak=true on visible-reasoning.m4a: -16.0 LUFS, LRA 2.7 LU, true peak -2.5",
     "revert": "Restore visible-reasoning.mp4 and visible-reasoning.m4a and their output hashes from the commit before this one (bare narration)."
+  },
+  "layout": {
+    "since": "2026-10-12",
+    "what": "On-screen labels moved clear of the area where the browser draws captions (tests/explainer-film-labels.mjs). The picture was re-rendered; the audio stream was copied unchanged from the previous mp4.",
+    "audio_stream_md5": "MD5=98febe14c32cc13d1c2e4ae58f1bdd14"
   }
 }

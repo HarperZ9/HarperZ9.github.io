@@ -10,7 +10,10 @@ import { text } from "../../../raw-native/web-23ec93f/motion/text.mjs";
 import { span, window, ease, lerp } from "../../../raw-native/web-23ec93f/motion/timeline.mjs";
 import { C, at, card, grid, spread } from "./print.mjs";
 
-const N = 100, POS = 97, BACK = 35, CW = 76, CH = 52, GX = 520, GY = 120;
+const N = 100, POS = 97, BACK = 35, CW = 76, CH = 52, GX = 520, GY = 100;
+// Labels stay above the lowest 30% of the frame, where the browser draws captions (tests/explainer-film-labels.mjs):
+// when the effect sizes arrive, the grid of studies shrinks toward the top and the plot sits under it.
+const SHRINK = 0.62, PY = -246;
 
 export function prepare(A) {
   const t = (s, o) => text(s, o).shape;
@@ -22,7 +25,7 @@ export function prepare(A) {
     title: [t("Re-derive it.", { atlas: A.head, size: 72, x: 960, y: 500, anchor: "center" }), t("Don't take it on trust.", { atlas: A.head, size: 72, x: 960, y: 590, anchor: "center" })],
     page, effect: rect(340, 650, 380, 26, 4),
     effectL: t("the effect", { atlas: A.mono, size: 24, x: 734, y: 670 }),
-    published: t("published", { atlas: A.mono, size: 22, x: 580, y: 860, anchor: "center" }),
+    published: t("published", { atlas: A.mono, size: 22, x: 580, y: 750, anchor: "center" }),
     trust: t("trust it", { atlas: A.sans, size: 34, x: 1180, y: 330 }),
     rerun: t("run it again", { atlas: A.sans, size: 34, x: 1180, y: 600 }),
     fast: t("fast", { atlas: A.mono, size: 24, x: 1180, y: 372 }),
@@ -34,10 +37,10 @@ export function prepare(A) {
     unit: t("1 card = 1 study", { atlas: A.mono, size: 22, x: GX, y: GY + 10 * (CH + 12) + 14 }),
     counts: t("97 positive originals . 35 came back significant", { atlas: A.mono, size: 26, x: GX + 10 * (CW + 12) - 12, y: GY + 10 * (CH + 12) + 14, anchor: "right" }),
     scale: (y) => [contour(new Float32Array([560, y, 1360, y]), false)],
-    orig: t("originals: 0.403 (SD 0.188)", { atlas: A.mono, size: 24, x: 1380, y: 846 }),
-    rep: t("repeats: 0.197 (SD 0.257)", { atlas: A.mono, size: 24, x: 1380, y: 896 }),
-    sdTag: t("mean and one SD, not distributions", { atlas: A.mono, size: 22, x: 560, y: 940 }),
-    miss: t("a single repeat can miss a real effect", { atlas: A.mono, size: 26, x: 960, y: 985, anchor: "center" }),
+    orig: t("originals: 0.403 (SD 0.188)", { atlas: A.mono, size: 24, x: 1380, y: 846 + PY }),
+    rep: t("repeats: 0.197 (SD 0.257)", { atlas: A.mono, size: 24, x: 1380, y: 896 + PY }),
+    sdTag: t("mean and one SD, not distributions", { atlas: A.mono, size: 22, x: 560, y: 940 + PY }),
+    miss: t("a single repeat can miss a real effect", { atlas: A.mono, size: 26, x: 960, y: 985 + PY, anchor: "center" }),
   };
 }
 const X = (v) => lerp(560, 1360, (v + 0.1) / 0.8);   // effect size axis, -0.1 to 0.7
@@ -84,15 +87,17 @@ export function draw(t, A, T, items) {
     if (isPos && pos > j / POS) pluses.push(...S.plus(x + CW - 12, y + CH - 12));
     if (cameBack && neg > 0) negs.push(...at(S.c.bars, x + 3, y + 2));
   });
-  strk(edges, C.ink2, 1.2, s2); put(bars, C.ink2, s2 * 0.8); put(pluses, C.ink, s2);
-  put(faded, C.faint, s2); strk(fadedEdge, C.hot, 1.2, s2 * neg);
-  put(negs, C.cyan, s2 * 0.75 * neg);
-  put(S.unit, C.dim, s2); put(S.counts, C.ink, s2 * span(t, T.s2.came + 1.4, T.s2.came + 2.4));
+  const lift = lerp(1, SHRINK, span(t, T.s2.half - 0.4, T.s2.half + 0.8, ease.inOut));
+  const L = (sh) => (lift === 1 ? sh : sh.map((c) => { const p = c.pts, o = new Float32Array(p.length); for (let q = 0; q < p.length; q += 2) { o[q] = 960 + (p[q] - 960) * lift; o[q + 1] = GY + (p[q + 1] - GY) * lift; } return contour(o, c.closed); }));
+  strk(L(edges), C.ink2, 1.2, s2); put(L(bars), C.ink2, s2 * 0.8); put(L(pluses), C.ink, s2);
+  put(L(faded), C.faint, s2); strk(L(fadedEdge), C.hot, 1.2, s2 * neg);
+  put(L(negs), C.cyan, s2 * 0.75 * neg);
+  put(L(S.unit), C.dim, s2); put(L(S.counts), C.ink, s2 * span(t, T.s2.came + 1.4, T.s2.came + 2.4));
   // Effect sizes, means with one-SD bars.
   const es = window(t, T.s2.half, T.s3.enter, 0.6, 0.8);
   if (es > 0) {
-    strk(S.scale(870), C.ink2, 1.4, es);
-    for (const [m, sd, y, col, lab] of [[0.403, 0.188, 846, C.ink, S.orig], [0.197, 0.257, 896, C.cyan, S.rep]]) {
+    strk(S.scale(870 + PY), C.ink2, 1.4, es);
+    for (const [m, sd, y, col, lab] of [[0.403, 0.188, 846 + PY, C.ink, S.orig], [0.197, 0.257, 896 + PY, C.cyan, S.rep]]) {
       put(rect(X(m - sd), y - 4, X(m + sd) - X(m - sd), 8, 3), col, es * 0.55);
       put(circle(X(m), y, 7, 20), col, es); put(lab, col, es);
     }

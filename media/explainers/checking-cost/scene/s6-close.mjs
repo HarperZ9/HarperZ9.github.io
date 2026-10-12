@@ -8,7 +8,8 @@ import { text } from "../../../raw-native/web-23ec93f/motion/text.mjs";
 import { span, window, ease, rng } from "../../../raw-native/web-23ec93f/motion/timeline.mjs";
 import { C } from "./lib.mjs";
 
-const CX = 960, CY = 470, R0 = 300, R1 = 390, RIM = 404;
+// The ring sits high and a little smaller, so the line along its rim stays above the captions.
+const CX = 960, CY = 400, R0 = 240, R1 = 290, RIM = 300;
 const SPECTRUM = ["#ff5a5a", "#ffb347", "#f6f06a", "#6ee7a8", "#5ab8ff", "#9b7bff"];   // art layer only
 
 // Bend a glyph run (laid on y = 0 from x = 0) along an arc, left to right across the bottom.
@@ -35,16 +36,16 @@ export function prepare(A) {
     if (k === 1) { const rr = R0 + 6 + r() * 12; fab.push([CX + Math.cos(a) * rr, CY + Math.sin(a) * rr]); }
     else { const rr = R0 + 34 + r() * (R1 - R0 - 34); real.push([CX + Math.cos(a) * rr, CY + Math.sin(a) * rr]); }
   }));
-  const rim = text("The cheapest check ships with the claim.", { atlas: A.head, size: 40, x: 0, y: 0 });
+  const rim = text("The cheapest check ships with the claim.", { atlas: A.head, size: 36, x: 0, y: 0 });
   A.s6 = {
     real, fab,
     keep: t("Two things to keep.", 34, 48, A.sans),
-    oneA: t("How a claim looks says nothing", 38, CY - 6),
-    oneB: t("about whether it holds.", 38, CY + 44),
+    oneA: t("How a claim looks says nothing", 32, CY - 4),
+    oneB: t("about whether it holds.", 32, CY + 38),
     rim: onArc(rim, RIM + 52, Math.PI * 0.86, Math.PI * 0.14),
     flare: SPECTRUM.map((_, k) => { const a = -Math.PI * 0.33 + (k - 2.5) * 0.012; return [contour(new Float32Array([CX + Math.cos(a) * (R1 - 6), CY + Math.sin(a) * (R1 - 6), CX + Math.cos(a) * (R1 + 34), CY + Math.sin(a) * (R1 + 34)]), false)]; }),
-    voice: t("The voice is a synthesized version of the author's.", 26, 978, A.sans),
-    sources: t("Every number on screen links to its source under the video.", 26, 1018, A.sans),
+    voice: t("The voice is a synthesized version of the author's.", 26, 46, A.sans),
+    sources: t("Every number on screen links to its source under the video.", 26, 82, A.sans),
   };
 }
 
@@ -63,7 +64,7 @@ export function draw(t, A, T, items) {
   if (dark.length) items.push({ shape: dark, stroke: C.dim, width: 1.2, opacity: 0.9 * vis * out, screen: true });
   // The void: a soft plate in the ground colour so the threads stay outside the aperture.
   items.push({ shape: circle(CX, CY, R0 - 4, 96), fill: C.void, opacity: 0.94 * vis * out * gather, blur: 18, screen: true });
-  put(S.keep, C.ink2, span(t, T.enter, T.enter + 0.8));
+  put(S.keep, C.ink2, span(t, T.enter, T.enter + 0.8) * (1 - span(t, T.voice - 0.7, T.voice - 0.1)));
   const one = window(t, T.one, T.end + 1, 0.8, 0.01);
   put(S.oneA, C.ink, one); put(S.oneB, C.ink, one);
   put(S.rim, C.ink, span(t, T.two + 0.3, T.two + 1.6));

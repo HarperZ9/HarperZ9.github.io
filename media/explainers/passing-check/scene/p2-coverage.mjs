@@ -10,6 +10,9 @@ import { C, N, lineShape, rect, line } from "./world.mjs";
 
 const SUITES = 31000, PROGRAMS = 5, SPACING = 1250, ZOUT = 0.3;
 
+// The gauge sits G above its first place, clear of the captions (tests/explainer-film-labels.mjs).
+const G = 200;
+
 export function prepare(A, ctx) {
   const P = A.prog, r = rng(31000);
   const t = (s, o) => text(s, o).shape;
@@ -23,18 +26,18 @@ export function prepare(A, ctx) {
   }
   A.p2 = {
     field: ctx.motion ? ctx.motion.particles({ count: SUITES, formations: [a, b], colors: ["#e3e4d2", "#e3e4d2"], delay, seed: 9 }) : null,
-    define: t("coverage: the share of the code the tests run", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }),
+    define: t("coverage: the share of the code the tests run", { atlas: A.sans, size: 34, x: 960, y: 120, anchor: "center" }),
     count: t("31,000 test suites . 5 Java programs", { atlas: A.mono, size: 34, x: 960, y: 120, anchor: "center" }),
     unit: t("1 point = 1 test suite", { atlas: A.mono, size: 26, x: 960, y: 166, anchor: "center" }),
     arrangement: t("arrangement, not data", { atlas: A.mono, size: 26, x: 960, y: 202, anchor: "center" }),
-    gaugeTitle: t("coverage vs faults caught, suite size controlled", { atlas: A.sans, size: 32, x: 960, y: 760, anchor: "center" }),
-    words: ["none", "low", "moderate", "strong"].map((w, k) => t(w, { atlas: A.sans, size: 26, x: 560 + k * 266.7, y: 878, anchor: "center" })),
-    axis: line(560, 836, 1360, 836),
-    ticks: [0, 1, 2, 3].flatMap((k) => line(560 + k * 266.7, 828, 560 + k * 266.7, 844)),
-    band: rect(560 + 266.7 * 0.75, 826, 266.7 * 1.5, 20, 4),
-    bandLabel: t("low to moderate", { atlas: A.mono, size: 28, x: 960, y: 812, anchor: "center" }),
-    joda: rect(552, 826, 16, 20, 4),
-    jodaLabel: t("Joda Time: essentially zero", { atlas: A.mono, size: 26, x: 560, y: 918, anchor: "center" }),
+    gaugeTitle: t("coverage vs faults caught, suite size controlled", { atlas: A.sans, size: 32, x: 960, y: 760 - G, anchor: "center" }),
+    words: ["none", "low", "moderate", "strong"].map((w, k) => t(w, { atlas: A.sans, size: 26, x: 560 + k * 266.7, y: 878 - G, anchor: "center" })),
+    axis: line(560, 836 - G, 1360, 836 - G),
+    ticks: [0, 1, 2, 3].flatMap((k) => line(560 + k * 266.7, 828 - G, 560 + k * 266.7, 844 - G)),
+    band: rect(560 + 266.7 * 0.75, 826 - G, 266.7 * 1.5, 20, 4),
+    bandLabel: t("low to moderate", { atlas: A.mono, size: 28, x: 960, y: 812 - G, anchor: "center" }),
+    joda: rect(552, 826 - G, 16, 20, 4),
+    jodaLabel: t("Joda Time: essentially zero", { atlas: A.mono, size: 26, x: 560, y: 918 - G, anchor: "center" }),
     advice: t("Their advice:", { atlas: A.sans, size: 30, x: 960, y: 470, anchor: "center" }),
     quote: t("\"should not be used as a quality target\"", { atlas: A.mono, size: 40, x: 960, y: 540, anchor: "center" }),
   };

@@ -5,7 +5,7 @@
 // below is a sentence start in timing.json, so the pictures move with the voice.
 import { rect, circle } from "../../raw-native/web-23ec93f/motion/path.mjs";
 import { morph } from "../../raw-native/web-23ec93f/motion/morph.mjs";
-import { span, window, ease } from "../../raw-native/web-23ec93f/motion/timeline.mjs";
+import { span, window, ease, lerp } from "../../raw-native/web-23ec93f/motion/timeline.mjs";
 import { text } from "../../raw-native/web-23ec93f/motion/text.mjs";
 import { C, cues } from "./scene/lib.mjs";
 import * as s1 from "./scene/s1-reference.mjs";
@@ -16,6 +16,7 @@ import * as s5 from "./scene/s5-rerun.mjs";
 import * as s6 from "./scene/s6-close.mjs";
 
 const FRAMES = 5324, FPS = 30;
+const WORLD = Object.freeze({ x: 960, y: 722, zoom: 0.8 });
 
 export default {
   title: "Claiming got cheap. Checking did not.",
@@ -56,7 +57,7 @@ export default {
     // on the lower third while its segment plays. Brandolini takes over from the adage on.
     const tab = (id) => {
       const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 . ");
-      return text(e.n === "no measurement" ? head : `${head} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 1058 }).shape;
+      return text(e.n === "no measurement" ? head : `${head} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 58 }).shape;
     };
     A.tabs = [["walters2023", c.at(2, 0, 0), c.at(3, 0, 0)], ["aczel2021", c.at(3, 0, 0), c.at(4, 0, 0)],
       ["vosoughi2018", c.at(4, 0, 0), A.T.s4.adage], ["brandolini", A.T.s4.adage, c.at(5, 0, 0)],
@@ -70,12 +71,17 @@ export default {
   frame(t, ctx) {
     const A = ctx.assets, T = A.T, items = [];
     A.params = ctx.params;
-    const world = { x: 960, y: 545, zoom: 1 };
+    // The browser draws captions centred over the lowest 30% of the frame, so the cameras frame the
+    // pictures above it (tests/explainer-film-labels.mjs). WORLD fits segment 2's grids and their notes.
+    const world = WORLD;
     let camera;
-    if (t < T.s1.pull + 4.6) camera = s1.camera(t, A, T.s1, ctx.reduced);
+    if (t < T.s1.pull + 4.6) camera = s1.camera(t, A, T.s1, ctx.reduced, world);
     else if (t < T.s3.enter) camera = world;
     else if (t < T.s3.exit) camera = s3.camera(t, A, T.s3, ctx.reduced, world);
-    else camera = { x: 960, y: 540, zoom: 1 };
+    else if (t < T.s5.enter) {
+      const u = span(t, T.s4.enter, T.s4.enter + 3.0, ease.inOut);
+      camera = { x: 960, y: lerp(540, 634, u), zoom: lerp(1, 0.7, u) };
+    } else camera = { x: 960, y: 540, zoom: 1 };
     const threads = Math.max(0.6 * window(t, 0, T.s1.morph + 1.2, 0.01, 1.4), 0.4 * window(t, T.s6.enter - 0.5, T.s6.end + 1, 2.0, 0.01));
     if (threads > 0) items.push({ kind: "threads", opacity: threads });
     if (t < T.s2.exit + 0.1) s2.draw(t, A, T.s2, items, camera.zoom);
