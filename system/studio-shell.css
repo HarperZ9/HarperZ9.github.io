@@ -139,6 +139,11 @@ html body.studio-page #viewport-stage .studio-hub-preview{
   aspect-ratio:auto;width:auto;height:auto;max-height:none;border-radius:0;
 }
 html body.studio-page #viewport-stage .studio-hub-preview[hidden]{display:none!important}
+/* The Verified viewer: raw-native's own page fills the stage and scrolls inside it (studio-viewer.js). */
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="viewer"]{align-items:stretch;justify-content:stretch;background:transparent}
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="viewer"] iframe{flex:1 1 auto;width:100%;height:100%;border:0;display:block;background:transparent}
+/* On a phone the viewer page needs more height than the sticky stage gives; the stage joins the flow instead. */
+@media (max-width: 760px){html body.studio-page #viewport-stage:has(> #viewer-stage:not([hidden])){position:relative;top:auto;aspect-ratio:auto;height:78vh;max-height:none}}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate{width:100%;height:100%;margin:0;border:0;display:flex;flex-direction:column}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate-art{flex:1 1 auto;min-height:0;aspect-ratio:auto;height:auto}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate-art canvas{width:100%;height:100%;display:block}

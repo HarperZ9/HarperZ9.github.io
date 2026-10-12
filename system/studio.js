@@ -27,7 +27,7 @@ import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
 import { mountShell } from "./studio-shell-dom.js?v=20261010-flush-steps";
-import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
+import { SOURCE_GUIDE } from "./studio-shell.js?v=20261012-viewer";
 import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
 import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
 import { mountLayout } from "./studio-layout.js?v=20261009-layout";
@@ -657,6 +657,8 @@ const SOURCES = {
   revival:   { block: "src-engine",    mode: "generate", engine: true },
   raw:       { block: "src-engine",    mode: "generate", engine: true },
   type:      { block: "src-engine",    mode: "generate", engine: true },
+  // raw-native's verified viewer, the release's own page on the stage (studio-viewer.js).
+  viewer:    { block: "src-viewer",    mode: "generate" },
 };
 
 // The full Retro Engine, on first entry (studio-retro.js reads retro.html's own markup).
@@ -733,6 +735,29 @@ async function enterFilmsSource(epoch) {
   } catch (err) {
     console.error("[studio] the films failed to load:", err);
     say("model", "The films failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+
+// The Verified viewer: raw-native's viewer page from a pinned release, on the stage (studio-viewer.js).
+const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261012-viewer"));
+let _viewer = null;
+async function enterViewerSource(epoch) {
+  try {
+    _viewer = await loadViewer();
+    if (epoch !== _sourceEpoch) return;
+    const loaded = _viewer.enterViewer({ stage: $("viewport-stage"), status: $("viewer-status") });
+    markStagePainted();
+    await loaded;
+  } catch (err) {
+    console.error("[studio] the verified viewer failed to load:", err);
+    say("model", "The verified viewer failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+// The rail presses the viewer page's own buttons.
+function initViewerControls() {
+  for (const [id, target] of [["viewer-hero", "raw-hero"], ["viewer-hall", "raw-hall"]]) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", () => { if (activeSource === "viewer" && _viewer) _viewer.pressViewer(target); });
   }
 }
 
@@ -844,6 +869,7 @@ function setSource(next) {
     if (activeSource === "gallery" && _galleryHub) _galleryHub.leaveGallery();   // park the desk
     if (activeSource === "loom" && _loomHub) _loomHub.leaveLoom();               // park the loom, stop the shuttle
     if (activeSource === "films" && _filmsSource) _filmsSource.leaveFilms();     // pause, give the stage back
+    if (activeSource === "viewer" && _viewer) _viewer.leaveViewer();              // hide the page; a render in flight finishes
     if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
@@ -900,6 +926,7 @@ function setSource(next) {
   if (next === "gallery") enterGallerySource(epoch);
   if (next === "loom") enterLoomSource(epoch);
   if (next === "films") enterFilmsSource(epoch);
+  if (next === "viewer") enterViewerSource(epoch);
   if (SOURCES[next].engine) {
     // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
     // is given, so on a phone it inherited whatever size the previous source left (a square from
@@ -2752,6 +2779,7 @@ function initShelf() {
 initNeuralControls();
 initThreadsControls();
 initWorldsControls();
+initViewerControls();
 // The Films panel fills itself the first time it is opened.
 import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
   .catch((e) => console.error("[studio] the films panel failed to load:", e));
@@ -7352,6 +7380,15 @@ const SHELL_CONTRACTS = {
     history: false,
     snapshot: () => (_filmsSource ? _filmsSource.filmsState() : null),
     restore(state) { if (_filmsSource && state && state.film) _filmsSource.chooseFilm(state.film); },
+  },
+  // The Verified viewer (studio-viewer.js): the bar runs the rail's raw-hero button, which presses
+  // the viewer page's own. The page keeps its own record of runs; there is nothing to undo.
+  viewer: {
+    primary: { label: "Render raw-hero", target: "viewer-hero", title: "Render raw-hero on the GPU and the CPU reference" },
+    exports: [],
+    history: false,
+    snapshot: () => null,
+    restore() {},
   },
   // The whole Loom (studio-loom.js): its structure and setup fields are the snapshot; every
   // rebuilt cloth is one step. The source picture is not kept, as with the Loom's own setups.
