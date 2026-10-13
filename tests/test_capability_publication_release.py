@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DwjtCOsP.js",
     "assets/index-jmVIw9rV.js",
     "assets/index-C3mo4X0I.js",
     "assets/index-Se2ioCLN.css",
@@ -687,7 +688,10 @@ RELEASE_PATHS = (
 # change with them (release paths listed and reviewed). The release is rehashed.
 # October 12, 2026, later: studio.html gains the Verified viewer source (raw-native 0.7.0) and loads
 # studio.js and studio-shell.css at a new stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "f95fb16214cdeb5fdb26fc9489a4e2709d326e32ed57f6f93d81641e34ab632a"
+# October 12, 2026, evening: the guides' introductions carry their own voices, approved by the
+# author after listening; guides.html and the home bundle change with the intro buttons and the
+# voice note (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "4b2ebda4682e387a0901ed251399680bd4209cc2bc87208095ba53dcae1e4152"
 
 
 BRIEFING_FIGURES = (
@@ -905,7 +909,14 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # index-Se2ioCLN.css. index-Dv8VLt1g.js and index-DbZyfUEO.css stay as retained history.
     # October 12, 2026, later: the "Your call" answer is reworded after the live check, so the bundle
     # is index-jmVIw9rV.js with the same sheet. index-C3mo4X0I.js stays as retained history.
-    current_js = "index-jmVIw9rV.js"
+    # October 12, 2026, evening: the introductions carry the guides' own voices, approved by the
+    # author after listening, so the intro buttons and the voice note change and the bundle is
+    # index-DwjtCOsP.js with the same sheet. index-jmVIw9rV.js stays as retained history.
+    current_js = "index-DwjtCOsP.js"
+    previous_voice_js = "index-jmVIw9rV.js"
+    assert previous_voice_js not in source
+    assert (ROOT / "assets" / previous_voice_js).is_file()
+    assert f"assets/{previous_voice_js}" in RELEASE_PATHS
     previous_guides_js = "index-C3mo4X0I.js"
     assert previous_guides_js not in source
     assert (ROOT / "assets" / previous_guides_js).is_file()

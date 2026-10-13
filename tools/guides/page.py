@@ -36,7 +36,7 @@ def intro_figure(g: dict, prefix: str = "") -> str:
 
 def intro_button(g: dict) -> str:
     return (f'<button type="button" class="gd-btn" data-gd-intro aria-controls="gd-intro-{g["id"]}" aria-expanded="false">'
-            f'Watch {E(g["name"])} (25 s, captions)</button>')
+            f'Hear {E(g["name"])} ({g["intro_s"]} s, sound and captions)</button>')
 
 
 def card(g: dict, prefix: str = "", heading: str = "h3", link: bool = True) -> str:

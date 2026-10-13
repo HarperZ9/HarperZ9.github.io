@@ -18,7 +18,8 @@ enough for a page:
 and media/guides/guides.json with the SHA-256 of every file. The page links fixed file names,
 so an introduction's sound is added or swapped by running this again with --intro GUIDE=FILE
 and, if the words or their times changed, a new intro.timing.json; no page code changes. Without
---intro the introduction has no sound track at all, and the page shows it with captions. The
+--intro the introduction has no sound track at all, and the page shows it with captions. Only a
+guide listed in INTRO_VOICES (tools/guides/data.py, takes the author approved) can be given --intro. The
 mouths were animated to a recorded take, so a different take needs the picture re-rendered from it.
 """
 from __future__ import annotations
@@ -89,6 +90,10 @@ def main() -> int:
     ap.add_argument("--intro", action="append", default=[], help="GUIDE=FILE: audio to put under that guide's introduction")
     a = ap.parse_args()
     audio = dict(x.split("=", 1) for x in a.intro)
+    from tools.guides.data import INTRO_VOICES
+    unapproved = sorted(set(audio) - set(INTRO_VOICES))
+    if unapproved:
+        ap.error(f"no approved voice for {', '.join(unapproved)}: add the take to INTRO_VOICES in tools/guides/data.py first")
     manifest = {"schema": "site-guides/1", "guides": {}}
     for g, world in GUIDES.items():
         d = OUT / g
@@ -103,7 +108,7 @@ def main() -> int:
         files = ["still.jpg", "close.jpg", "sheet.jpg", "idle.mp4", "action.mp4", "intro.mp4", "intro.jpg", "intro.vtt", "intro.timing.json"]
         manifest["guides"][g] = {"world": world, "files": {f: sha(d / f) for f in files},
                                  "bytes": sum((d / f).stat().st_size for f in files),
-                                 "intro_audio": g in audio}
+                                 "intro_audio": g in audio, "intro_voice": INTRO_VOICES[g] if g in audio else None}
     (OUT / "guides.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     for g, m in manifest["guides"].items():
         print(g, m["bytes"])

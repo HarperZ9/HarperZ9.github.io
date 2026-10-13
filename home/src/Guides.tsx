@@ -8,25 +8,25 @@ import { useEffect } from "react";
  * /system/guides.mjs, loaded after this renders; nothing plays sound or moves on by itself.
  */
 
-type Guide = { id: string; name: string; title: string; style: string; role: string; habit: string; alt: string; hosts: Array<[string, string]> };
+type Guide = { id: string; intro: number; name: string; title: string; style: string; role: string; habit: string; alt: string; hosts: Array<[string, string]> };
 
 export const GUIDES: Guide[] = [
   {
-    id: "tallow", name: "Tallow", title: "the night clerk", style: "retro thriller",
+    id: "tallow", intro: 26, name: "Tallow", title: "the night clerk", style: "retro thriller",
     role: "His head is a candle, and the wax is the time he has: every claim he checks burns a little of it.",
     habit: "Before he looks, he asks what you think. Then you find the source together.",
     alt: "Tallow, a tall clerk whose head is a lit candle, holds a reference card up to his flame in a dark office.",
     hosts: [["checking-cost", "Claiming got cheap. Checking did not."], ["visible-reasoning", "What a model's written reasoning can and cannot show"]],
   },
   {
-    id: "pylon", name: "Pylon", title: "the claims inspector", style: "painted isometric",
+    id: "pylon", intro: 26, name: "Pylon", title: "the claims inspector", style: "painted isometric",
     role: "A harbour seal in a traffic cone. A cone means nobody has checked a claim yet, and she puts one on every claim that washes in.",
     habit: "She shows you where each claim came from, tells you what is still waiting, and leaves the call to you.",
     alt: "Pylon, a heavy harbour seal wearing an orange traffic cone and a sash, stands on a lamplit harbour street holding a paper.",
     hosts: [["rederive", "Re-derive it. Don't take it on trust."], ["incentives", "Models do what training pays for"]],
   },
   {
-    id: "rerun", name: "Rerun", title: "the hermit crab", style: "pixel 2.5D",
+    id: "rerun", intro: 20, name: "Rerun", title: "the hermit crab", style: "pixel 2.5D",
     role: "Its shell is glass with the receipts inside: a claim should carry its own evidence, so anyone can run the check again.",
     habit: "It knocks on a claim to hear whether anything is in there, and keeps count of its own wrong guesses on its claw.",
     alt: "Rerun, a red hermit crab with a glass prism for a shell, on a pixel-art beach; light through the prism splits into a small spectrum.",
@@ -34,7 +34,7 @@ export const GUIDES: Guide[] = [
   },
 ];
 
-const VOICE = "Each introduction runs about 25 seconds, with captions and no sound.";
+const VOICE = "Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's recordings reads the lines, and code written for the guides reshapes that reading into each guide's voice. Captions are on, and the sound plays only when you press play.";
 const CHOICES = ["It exists", "It does not", "I can't tell from the page"];
 
 export default function Guides() {
@@ -69,7 +69,7 @@ export default function Guides() {
               </p>
               <div className="gd-actions">
                 <button type="button" className="gd-btn" data-gd-intro="" aria-controls={`gd-intro-${g.id}`} aria-expanded="false">
-                  Watch {g.name} (25 s, captions)
+                  Hear {g.name} ({g.intro} s, sound and captions)
                 </button>
               </div>
               <figure className="gd-intro" id={`gd-intro-${g.id}`} hidden>

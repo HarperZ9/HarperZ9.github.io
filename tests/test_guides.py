@@ -60,8 +60,11 @@ def test_media_match_the_manifest_and_stay_small() -> None:
         assert rec["bytes"] < 3_000_000, f"{gid}: {rec['bytes']} bytes"
         for loop in ("idle.mp4", "action.mp4"):
             assert (MEDIA / gid / loop).stat().st_size < 200_000, f"{gid}/{loop} is too large for a loop"
-        # An introduction carries a sound track only when one was given on purpose (build_media --intro).
+        # An introduction carries a sound track only when one was given on purpose (build_media --intro),
+        # and only for a voice take the author approved (data.INTRO_VOICES).
         assert (b"soun" in (MEDIA / gid / "intro.mp4").read_bytes()) == rec["intro_audio"], f"{gid}/intro.mp4 sound track"
+        assert rec["intro_audio"] == (gid in data.INTRO_VOICES), f"{gid}: sound without an approved voice, or an approved voice left out"
+        assert rec.get("intro_voice") == data.INTRO_VOICES.get(gid), f"{gid}: intro voice take"
         for still in ("still.jpg", "close.jpg"):
             assert (MEDIA / gid / still).stat().st_size < 160_000
 
@@ -72,6 +75,15 @@ def test_intro_captions_cover_every_spoken_sentence() -> None:
         vtt = (MEDIA / g["id"] / "intro.vtt").read_text(encoding="utf-8")
         words = " ".join(line for line in vtt.splitlines()[2:] if line and "-->" not in line)
         assert words.split() == " ".join(r["text"] for r in timing).split()
+
+
+def test_intro_lengths_on_the_buttons_match_the_clips() -> None:
+    for g in data.GUIDES:
+        timing = json.loads((MEDIA / g["id"] / "intro.timing.json").read_text(encoding="utf-8"))
+        # The clip ends 0.35 s after the last word (raw-native tools/guides/render_clips.py, TAIL).
+        assert g["intro_s"] == round(timing[-1]["end"] + 0.35), g["id"]
+        assert f'Hear {g["name"]} ({g["intro_s"]} s, sound and captions)' in page.page()
+        assert f'intro: {g["intro_s"]},' in HOME, f"home intro length for {g['id']}"
 
 
 def test_nothing_plays_sound_on_its_own() -> None:
