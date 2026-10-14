@@ -1,0 +1,167 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "provenance-commons",
+  "title": "Provenance and the commons",
+  "page": "explainers.html#provenance-commons",
+  "seed": 20261010,
+  "voice": "author",
+  "draft": true,
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": {
+      "seconds": 4.0,
+      "what": "Pylon on the painted harbour sets a cone on a paper boat that has just washed in: a claim nobody has checked. No words."
+    },
+    "close": {
+      "seconds": 5.0,
+      "what": "Back on the harbour: the boat now carries its manifest; Pylon reads it, leaves the call to the viewer, and the film ends."
+    }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Provenance and the commons",
+      "lines": [
+        "Provenance and the commons.",
+        "A commons is anything people share and draw from, like open data or open source code. What keeps it usable?"
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "xz",
+      "heading": "One small library",
+      "sources": [
+        "collin2022",
+        "collin2022b",
+        "cox-timeline",
+        "tukaani",
+        "freund2024"
+      ],
+      "lines": [
+        "Start with a small compression library called xz.",
+        "In 2022 its maintainer wrote that it was an unpaid hobby project.",
+        "A helpful newcomer had been sending patches since 2021. Within months, the maintainer called the newcomer practically a co-maintainer.",
+        "In February 2024, the newcomer signed and shipped a new release.",
+        "Part of a backdoor sat only in the release download, and not in the public source.",
+        "An engineer caught it because remote logins ran about half a second slow."
+      ],
+      "predict": [
+        {
+          "after": [
+            4,
+            0
+          ],
+          "question": "How could anyone downstream have checked that the download matched the source?",
+          "hold": 2.5
+        }
+      ]
+    },
+    {
+      "key": "lesson",
+      "heading": "The wrong lesson",
+      "sources": [
+        "hardin1968",
+        "ostrom2010"
+      ],
+      "lines": [
+        "In 1968, Garrett Hardin wrote that freedom in a commons brings ruin to all.",
+        "Many readers took the lesson that a commons needs a private owner or an outside ruler.",
+        "Hardin himself asked for coercion agreed on by the people affected."
+      ]
+    },
+    {
+      "key": "lasting",
+      "heading": "What lasting commons do",
+      "sources": [
+        "ostrom2010"
+      ],
+      "lines": [
+        "Elinor Ostrom compared shared fisheries, forests and irrigation systems that lasted with ones that failed.",
+        "In the ones that lasted she found eight design principles.",
+        "Most of the people the rules affect take part in making and changing them.",
+        "The people who watch for cheating are the users, or people the users can hold to account.",
+        "A review of over a hundred studies found that about two thirds supported her principles.",
+        "Across 178 forest user groups, more monitoring went with denser forest."
+      ]
+    },
+    {
+      "key": "lost",
+      "heading": "Where provenance gets lost",
+      "sources": [
+        "longpre2023",
+        "longpre2024"
+      ],
+      "lines": [
+        "One audit traced the licences of 1,858 datasets used to train AI.",
+        "On GitHub, 72 percent were listed with no licence at all.",
+        "In 29 percent, the licence listed was looser than the author's own terms.",
+        "Tracing each one back to where it was made cut the missing share to 30 percent.",
+        "Meanwhile, in one year about 5 percent of a widely used training corpus became fully closed to AI crawlers."
+      ],
+      "predict": [
+        {
+          "before": [
+            0,
+            0
+          ],
+          "question": "When a dataset is copied to a popular site, how often does its licence survive the trip?",
+          "hold": 2.5
+        }
+      ]
+    },
+    {
+      "key": "record",
+      "heading": "A record made at the source",
+      "sources": [
+        "slsa12"
+      ],
+      "lines": [
+        "In software, a provenance record says where, when and how a release was built.",
+        "With it, anyone can check a download against its source."
+      ]
+    },
+    {
+      "key": "limits",
+      "heading": "What this does not prove",
+      "sources": [
+        "ostrom2010",
+        "longpre2023",
+        "freund2024"
+      ],
+      "lines": [
+        "Ostrom's cases are fisheries and forests. Applying them to code and data is our inference.",
+        "The licence audit counts missing records. It does not measure harm.",
+        "And a provenance record alone would not have stopped xz. Most of the backdoor was in the public source, signed by a maintainer people trusted."
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Two things to keep",
+      "lines": [
+        "Two things to keep. Record where a thing came from at the moment it is made.",
+        "And let the people who depend on it make the rules and check them.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Record where a thing came from when it is made."
+          },
+          {
+            "on": 1,
+            "text": "Let the people who depend on it make the rules."
+          }
+        ]
+      }
+    }
+  ],
+  "length_note": "The film runs at the author's measured pace, about 4:15 with the host's open and close and the prediction pauses, not the 2:15 the first script assumed. Author decision, 2026-10-14: \"Keep the longer films.\" No lines are cut for length."
+}
