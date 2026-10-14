@@ -13,7 +13,10 @@ from pathlib import Path
 from tools.explainer.film import render
 
 ROOT = Path(__file__).resolve().parents[1]
-FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json"))
+# A film whose film.json says "draft": true has scene code in review and no narration, render or
+# page yet; tests/test_explainer_film_drafts.py checks it instead.
+FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json")
+               if not json.loads(p.read_text(encoding="utf-8")).get("draft"))
 PAGE = (ROOT / "explainers.html").read_text(encoding="utf-8")
 TEXT = html.unescape(re.sub(r"<[^>]+>", " ", PAGE))
 TEXT = re.sub(r"\s+", " ", TEXT)

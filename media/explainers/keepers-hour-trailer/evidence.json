@@ -1,0 +1,74 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "keepers-hour-trailer",
+  "read": "2026-10-10",
+  "sources": {
+    "kh-night": {
+      "short": "The Keeper's Hour, night.txt",
+      "citation": "Zain Dana Harper (2026). The Keeper's Hour, games/keepers-hour/data/night.txt, HarperZ9/brender-archival main 5e02174. Words CC BY 4.0.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/games/keepers-hour/data/night.txt",
+      "read": "full",
+      "claims": [
+        "Every on-screen line of the trailer is quoted verbatim from this file."
+      ],
+      "n": "9 lines from 8 nodes, five cut at a sentence boundary (arrive, letters_read, radio_tune as the script lists, and kettle_light and decide, found 14 October 2026)",
+      "interval": "Not applicable.",
+      "quote": "Whatever you do, do it on purpose.",
+      "does_not_prove": "Anything about the game beyond the lines quoted."
+    },
+    "kh-design": {
+      "short": "The Keeper's Hour, DESIGN.md",
+      "citation": "games/keepers-hour/DESIGN.md, HarperZ9/brender-archival main 5e02174.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/games/keepers-hour/DESIGN.md",
+      "read": "full",
+      "claims": [
+        "About 25 minutes; a skill check shows the voice, its rating, the two dice and the target; every frame is drawn by BRender.",
+        "Three endings follow from what you learned and who you listened to (DESIGN.md; claim added 14 October 2026 by the scene-code agent for the end card's 'Three endings', pending the author's review)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "The game is about 25 minutes and then it lets you go.",
+      "does_not_prove": "Play time for any particular player."
+    },
+    "kh-world": {
+      "short": "The Keeper's Hour, kh_world.c",
+      "citation": "games/keepers-hour/src/kh_world.c line 145.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/games/keepers-hour/src/kh_world.c",
+      "read": "full",
+      "claims": [
+        "The lamp turns 90 degrees a second: four seconds a sweep."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "four seconds a sweep",
+      "does_not_prove": "Not applicable."
+    },
+    "kh-credits": {
+      "short": "The Keeper's Hour, CREDITS.txt and LICENSE-NOTE.md",
+      "citation": "games/keepers-hour/CREDITS.txt and LICENSE-NOTE.md, HarperZ9/brender-archival main 5e02174.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/games/keepers-hour/CREDITS.txt",
+      "read": "full",
+      "claims": [
+        "Engine: BRender by Argonaut Software (1.3.2, 1998; MIT via Foone Turing with Jez San's approval), running as BRender 1.4 from BlazingRenderer/BRender (Zane van Iperen, erysdren and contributors, MIT). Credit line: The Keeper's Hour by Zain Dana Harper, CC BY 4.0."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "The Keeper's Hour by Zain Dana Harper, CC BY 4.0.",
+      "does_not_prove": "Not applicable."
+    },
+    "kh-release": {
+      "short": "The Keeper's Hour 0.3.0 release",
+      "citation": "HarperZ9/brender-archival release keepers-v0.3.0, 10 October 2026.",
+      "url": "https://github.com/HarperZ9/brender-archival/releases/tag/keepers-v0.3.0",
+      "read": "full",
+      "claims": [
+        "A Windows x64 download is published.",
+        "Release keepers-v0.3.1 (10 October 2026) adds the frame recorder (KEEPERS_RECORD) and publishes keepers-hour-0.3.1-windows-x64.zip; the trailer's frames come from it (added 14 October 2026)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Other platforms; only Windows is built."
+    }
+  }
+}

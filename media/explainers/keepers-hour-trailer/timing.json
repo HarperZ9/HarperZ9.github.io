@@ -1,0 +1,101 @@
+[
+ {
+  "segment": 0,
+  "line": 0,
+  "sentence": 0,
+  "start": 0.4,
+  "end": 7.6,
+  "text": "By order of the Coastal Authority, the light at Relay Nine is to be extinguished at dawn.",
+  "speaker": "LETTER",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 1,
+  "line": 0,
+  "sentence": 0,
+  "start": 8.4,
+  "end": 15.6,
+  "text": "There is a coast. You are standing on it. It just has no sea.",
+  "speaker": "TIDE",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 2,
+  "line": 0,
+  "sentence": 0,
+  "start": 16.4,
+  "end": 23.6,
+  "text": "Three hundred and twelve facets of pressed glass. Each one holds a smaller lamp, turning.",
+  "speaker": "LENS",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 3,
+  "line": 0,
+  "sentence": 0,
+  "start": 24.4,
+  "end": 27.6,
+  "text": "I will boil. It takes a while. Most things worth doing do.",
+  "speaker": "KETTLE",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 4,
+  "line": 0,
+  "sentence": 0,
+  "start": 28.4,
+  "end": 35.6,
+  "text": "...this is the Marigold, out of nowhere... we have been at sea since the sea left... we navigate by you...",
+  "speaker": "STATIC",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 6,
+  "line": 0,
+  "sentence": 0,
+  "start": 40.4,
+  "end": 47.6,
+  "text": "\"Dear Keeper, I can see your light from my bedroom. When it comes round I say goodnight to it.\"",
+  "speaker": "TIDE",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 7,
+  "line": 0,
+  "sentence": 0,
+  "start": 48.4,
+  "end": 51.6,
+  "text": "When the beam crosses the town, the shape lifts a hand.",
+  "speaker": "LENS",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 8,
+  "line": 0,
+  "sentence": 0,
+  "start": 52.4,
+  "end": 55.6,
+  "text": "Dawn at 06:12. Fourteen minutes.",
+  "speaker": "LEDGER",
+  "source": "sweeps",
+  "provisional": false
+ },
+ {
+  "segment": 9,
+  "line": 0,
+  "sentence": 0,
+  "start": 56.4,
+  "end": 59.6,
+  "text": "Whatever you do, do it on purpose.",
+  "speaker": "TIDE",
+  "source": "sweeps",
+  "provisional": false
+ }
+]
