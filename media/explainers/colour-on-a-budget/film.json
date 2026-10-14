@@ -18,7 +18,6 @@
       "what": "Back on the tidepool, Rerun's glass shell throws its one spectral flare; it looks at the viewer and the film ends."
     }
   },
-  "status": "draft scene code: no narration, provisional timing, predict beat pending the author",
   "segments": [
     {
       "key": "title",
@@ -45,12 +44,12 @@
       ],
       "predict": [
         {
-          "after_line": 1,
-          "hold": 2.5,
+          "after": [
+            1,
+            0
+          ],
           "question": "A photograph has thousands of colours. Which 256 would you keep?",
-          "picture": "the photograph beside an empty 256-cell palette",
-          "status": "pending the author's script decision",
-          "narrated": false
+          "hold": 2.5
         }
       ]
     },

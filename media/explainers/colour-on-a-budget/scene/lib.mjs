@@ -11,7 +11,7 @@ export const C = Object.freeze({
 
 export function cues(timing) {
   const list = Array.isArray(timing) ? timing : timing.rows;
-  const rows = new Map(list.map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
+  const rows = new Map(list.filter((r) => r.predict === undefined).map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
   const row = (s, l, k = 0) => { const r = rows.get(`${s}.${l}.${k}`); if (!r) throw new Error(`no sentence ${s}.${l}.${k}`); return r; };
   return {
     at: (s, l, k = 0) => row(s, l, k).start,
@@ -20,6 +20,12 @@ export function cues(timing) {
       const r = row(s, l, k), i = r.text.indexOf(phrase);
       if (i < 0) throw new Error(`"${phrase}" not in "${r.text}"`);
       return r.start + (r.end - r.start) * (i / r.text.length);
+    },
+    // A predict question (film.json segment predict n): spoken, then held in silence.
+    ask: (s, n = 0, hold = 2.5) => {
+      const r = list.find((x) => x.segment === s && x.predict === n);
+      if (!r) throw new Error(`no predict question ${s}.${n}`);
+      return { start: r.start, end: r.end, held: r.end + hold, text: r.text };
     },
     last: list[list.length - 1].end,
   };

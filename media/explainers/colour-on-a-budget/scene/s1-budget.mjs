@@ -57,7 +57,7 @@ export function prepare(A) {
     title: t("Colour on a budget", 72, 960, 100, A.head),
     mode: t("320 x 200 . one byte a pixel", 40, 1240, 110, A.sans, "left"),
     at: t("256 at once, from 262,144", 40, 1300, 150, A.sans, "left"),
-    cube: t("6 bits a channel: 64 x 64 x 64 = 262,144", 30, 1300, 740, A.mono, "left"),
+    cube: t("64 x 64 x 64 = 262,144", 30, 1300, 740, A.mono, "left"),
     arith: t("arithmetic of 6 bits a channel", 28, 1300, 700, A.mono, "left"),
     nColours: t(`${B.N.toLocaleString("en-US")} distinct colours`, 40, 760, 110),
     counted: t("counted from this picture", 28, 760, 150, A.mono),

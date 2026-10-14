@@ -7,7 +7,7 @@
 // One picture: a dusk sky over a lighthouse at 320 x 200, put through every budget the script
 // names (scene/picture.mjs computes each one when the scene loads). Rerun hosts from its pixel
 // tidepool at the cold open and the close (scene/host.mjs).
-import { C, cues, tab, span, window, ease } from "./scene/lib.mjs";
+import { C, cues, tab, words, scrim, span, window, ease } from "./scene/lib.mjs";
 import { budgets, toImage, bytesImage } from "./scene/picture.mjs";
 import * as host from "./scene/host.mjs";
 import * as s1 from "./scene/s1-budget.mjs";
@@ -65,6 +65,9 @@ const scene = {
       tb("bayer1973", c.at(4, 0, 0), c.at(4, 1, 0)), tb("bouman2013", c.at(4, 1, 0), c.at(5, 0, 0)), tb("floyd-steinberg", c.at(5, 0, 0), c.at(6, 0, 0)),
       tb("ulichney1993", c.at(6, 0, 0), c.at(7, 0, 0)),
       tb("oklab2020", c.at(7, 0, 0), c.at(8, 0, 0)), tb("rn-dither", c.at(8, 0, 0), c.at(8, 1, 0)), tb("rosewood-texel", c.at(8, 1, 0), c.at(9, 0, 0))];
+    // The predict question (approved 2026-10-14): on screen while asked and through its hold.
+    const q = c.ask(1, 0), qs = words(q.text, sans, 36, 960, 104, "center").shape;
+    A.ask = { ...q, shape: qs, scrim: scrim(qs, 16) };
     s1.prepare(A); s2.prepare(A);
     scene.chapters = film.segments.map((s, i) => ({ title: s.heading, t: Math.max(0, i === 0 ? 0 : c.at(i, 0, 0) - 0.6) }));
     return A;
@@ -76,6 +79,8 @@ const scene = {
     const items = [], camera = cameraAt(A.keys, t);
     s1.draw(t, A, T.s1, items);
     s2.draw(t, A, T.s2, items);
+    const qa = window(t, A.ask.start, A.ask.held + 0.4, 0.4, 0.6);
+    if (qa > 0) { items.push({ ...A.ask.scrim, opacity: 0.7 * qa }); items.push({ shape: A.ask.shape, fill: C.ink, opacity: qa, screen: true }); }
     for (const tb of A.tabs) {
       const a = window(t, tb.t0, tb.t1, 0.6, 0.6);
       if (a > 0) items.push({ shape: tb.shape, fill: C.dim, opacity: a, screen: true });

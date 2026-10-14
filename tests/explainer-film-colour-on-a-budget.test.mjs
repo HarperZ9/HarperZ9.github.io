@@ -98,11 +98,22 @@ test("the control: a number with no matching tab is caught", () => {
   assert.deepEqual(numbers("320 x 200 . one byte a pixel"), ["320", "200"]);
 });
 
-test("the timing is provisional and says the script's words, in order", () => {
+test("the timing is provisional, says the script's words in order, and holds the predict question", () => {
   assert.ok(Array.isArray(timing) && timing.every((r) => r.provisional === true));
-  const said = timing.map((r) => r.text).join(" "), script = film.segments.flatMap((s) => s.lines).join(" ");
+  const said = timing.filter((r) => r.predict === undefined).map((r) => r.text).join(" "), script = film.segments.flatMap((s) => s.lines).join(" ");
   assert.equal(said, script);
   for (let i = 1; i < timing.length; i++) assert.ok(timing[i].start >= timing[i - 1].end, `row ${i} overlaps`);
+  const asks = timing.filter((r) => r.predict !== undefined);
+  assert.equal(asks.length, 1);
+  assert.ok(timing[timing.indexOf(asks[0]) + 1].start - asks[0].end >= 2.5 - 1e-6, "no hold after the question");
+  assert.ok(timing.some((r) => r.text.startsWith("In 1973, B. E. Bayer")), "the Bayer line is one sentence");
+});
+
+test("the predict question is on screen from its first word through its hold", () => {
+  for (const q of timing.filter((r) => r.predict !== undefined)) for (const t of [q.start + 0.5, q.end + 1.2]) {
+    const shown = evaluate(scene, ctx, t).items.some((it) => LABELS.get(it.shape) === q.text && (it.opacity ?? 1) > 0.5);
+    assert.ok(shown, `${t.toFixed(1)}s: "${q.text}" not on screen`);
+  }
 });
 
 test("no label meets the caption area while a sentence is spoken", async () => {
