@@ -141,6 +141,7 @@ def page() -> str:
   <h2 id="how-h">How they host</h2>
   <p class="body-text">A guide asks, waits and shows the source. It never makes the call for you. Nothing here keeps score, and nothing plays the next thing on its own.</p>
   <p class="body-text">They introduce and host the films on this site; they do not appear inside the films yet. Each hosts the films closest to its home style: Tallow the ones lit by a single light in the dark, Pylon the ones laid out like a map or a printed page, and Rerun the one built from grids where one dot is one thing. Rerun, whose shell carries its receipts, also hosts the release films, which each release renders from its own output.</p>
+  <p class="body-text">Beside each film, its guide also hosts something to play with: <a class="inline" href="explainers.html#checking-cost-play">Night Shift</a>, one night at the claims desk with Tallow; <a class="inline" href="explainers.html#passing-check-play">Check the check</a> with Rerun; <a class="inline" href="explainers.html#rederive-play">Run it again</a> and <a class="inline" href="explainers.html#incentives-play">What gets paid</a> with Pylon; and <a class="inline" href="explainers.html#visible-reasoning-play">Slip in a hint</a> with Tallow. Each loads only when you press it, ends or rests on its own terms, and keeps no score.</p>
   <p class="body-text">They were drawn, rigged and animated with the <a class="inline" href="https://github.com/HarperZ9/raw-native">raw-native</a> engine. {E(VOICE)}</p>
   <div class="gd-sheets">{sheets}</div>
 </section>
