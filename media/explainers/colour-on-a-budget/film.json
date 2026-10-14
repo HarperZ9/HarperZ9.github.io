@@ -1,0 +1,160 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "colour-on-a-budget",
+  "title": "Colour on a budget",
+  "page": "explainers.html#colour-on-a-budget",
+  "seed": 20261010,
+  "voice": "author",
+  "draft": true,
+  "host": {
+    "guide": "rerun",
+    "style": "pixel",
+    "open": {
+      "seconds": 4.0,
+      "what": "Rerun on the pixel tidepool knocks on a shell: knock, knock, hollow. No words."
+    },
+    "close": {
+      "seconds": 5.0,
+      "what": "Back on the tidepool, Rerun's glass shell throws its one spectral flare; it looks at the viewer and the film ends."
+    }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Colour on a budget",
+      "lines": [
+        "Colour on a budget."
+      ],
+      "plate": {
+        "from": 0,
+        "to": 0
+      }
+    },
+    {
+      "key": "budget",
+      "heading": "The budget",
+      "sources": [
+        "vga",
+        "abrash"
+      ],
+      "lines": [
+        "In 1987, an IBM PC with VGA graphics had a mode of 320 by 200 pixels, one byte each.",
+        "A byte holds 256 values, so the screen showed 256 colours at once, each one picked from a palette of 262,144."
+      ],
+      "predict": [
+        {
+          "after": [
+            1,
+            0
+          ],
+          "question": "A photograph has thousands of colours. Which 256 would you keep?",
+          "hold": 2.5
+        }
+      ]
+    },
+    {
+      "key": "choosing",
+      "heading": "Choosing the 256",
+      "sources": [
+        "heckbert1982"
+      ],
+      "lines": [
+        "In 1982, Paul Heckbert described a way to choose them, called median cut.",
+        "Put every colour in the picture into a box. Cut the box in two at the median of its longest side, and keep cutting the biggest piece until there are 256 boxes.",
+        "Each box becomes one palette colour, and each colour stands for about the same number of pixels.",
+        "He found pictures could drop to 8 bits per pixel with little visible loss."
+      ]
+    },
+    {
+      "key": "wrong-fix",
+      "heading": "The wrong fix",
+      "lines": [
+        "When a smooth sky turns into stripes, the obvious fix is more colours. There is another way: keep the error, and spread it where the eye will average it out."
+      ]
+    },
+    {
+      "key": "ordered",
+      "heading": "Ordered dither",
+      "sources": [
+        "bayer1973",
+        "bouman2013"
+      ],
+      "lines": [
+        "In 1973, B. E. Bayer published a pattern for this. Compare each pixel with a threshold from a small grid that repeats across the image.",
+        "With an 8 by 8 grid, black and white alone can show 65 levels of grey."
+      ]
+    },
+    {
+      "key": "diffusion",
+      "heading": "Error diffusion",
+      "sources": [
+        "floyd-steinberg",
+        "ostromoukhov2001"
+      ],
+      "lines": [
+        "In the mid-1970s, Floyd and Steinberg passed each pixel's rounding error on to the neighbours not yet drawn.",
+        "Seven sixteenths go to the right. Three, five and one sixteenths go to the row below.",
+        "The noise is fine enough that the eye blends it back into the colour that was meant."
+      ]
+    },
+    {
+      "key": "blue",
+      "heading": "Blue noise",
+      "sources": [
+        "ulichney1993",
+        "rn-dither"
+      ],
+      "lines": [
+        "A third way uses a grid of thresholds with no clumps and no repeats you can see, built by Robert Ulichney's void-and-cluster method.",
+        "It reads as fine grain instead of a pattern."
+      ]
+    },
+    {
+      "key": "space",
+      "heading": "Choosing in the right space",
+      "sources": [
+        "oklab2020"
+      ],
+      "lines": [
+        "Which palette colour is nearest depends on how you measure. raw-native measures in Oklab, a colour space designed so that equal steps look roughly equal."
+      ]
+    },
+    {
+      "key": "engines",
+      "heading": "In both engines",
+      "sources": [
+        "rn-dither",
+        "brender-pal",
+        "rosewood-texel"
+      ],
+      "lines": [
+        "raw-native's dither pass runs on the graphics card. For two palettes, it picks the same colour as the slow reference for every one of 16,777,216 colours.",
+        "BRender, from 1998, kept its textures the same way: each texel is an 8-bit index into a 256-colour palette."
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "Two things to keep",
+      "lines": [
+        "Two things to keep. Pick the colours where the pixels are. Spend the error where the eye averages it away.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ],
+      "figure": {
+        "type": "keep",
+        "items": [
+          {
+            "on": 0,
+            "text": "Pick the colours where the pixels are."
+          },
+          {
+            "on": 0,
+            "text": "Spend the error where the eye averages it away."
+          }
+        ]
+      }
+    }
+  ],
+  "length_note": "The film runs at the author's measured pace, about 3:54 with the host's open and close and the prediction pauses, not the 2:35 the first script assumed. Author decision, 2026-10-14: \"Keep the longer films.\" No lines are cut for length."
+}
