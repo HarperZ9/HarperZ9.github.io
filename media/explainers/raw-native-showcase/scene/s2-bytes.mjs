@@ -1,9 +1,9 @@
 // Segment 2, "Same bytes, every build". Three tiles of the same box, one per build, slide
 // together and overlap exactly. Then two film strips of the same scene, each frame a function of
 // time alone, run side by side and merge into one, while the frame count rolls up.
-import { contour, rect, transform } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { fmt } from "../../../raw-native/tree-dev/web/motion/text.mjs";
-import { countUp } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { contour, rect, transform } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { fmt } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
+import { countUp } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 import { C, box, view, inFacet, put, T, tab, fact, span, window, ease, lerp } from "./world.mjs";
 
 const BUILDS = ["MSVC", "GCC", "WebAssembly"];

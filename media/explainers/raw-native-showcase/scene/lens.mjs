@@ -2,7 +2,7 @@
 // ridges drawn on), the title sits in the void at its core, and each facet carries a small
 // preview of the box in that facet's look. A facet lights when the film first enters it and
 // stays lit, so the close shows every facet lit. The spectrum lives only inside the glass.
-import { trim, transform } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { trim, transform } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, FACETS, FACET, LENS, box, view, inFacet, put, T, span, window, ease } from "./world.mjs";
 
 // Each facet's preview: the same box, recoloured toward its look (art layer only).

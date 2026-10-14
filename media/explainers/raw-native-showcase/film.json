@@ -6,12 +6,18 @@
   "seed": 20261014,
   "voice": "author",
   "draft": true,
-  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace), the predict beat waits on the author's script decision, the narration is not recorded and the 4K render has not run. Segment 7 of the script was cut by the script's own rule on 14 October 2026: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6 with their own numbers. Those three lines are drafted from the evidence and wait for the author's read.",
+  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration is not recorded and the 4K render has not run. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule on 14 October 2026: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6 with their own numbers. Those three lines are drafted from the evidence and wait for the author's read.",
   "host": {
     "guide": "rerun",
     "home_style": "pixel",
-    "open": { "seconds": 4.0, "beat": "Rerun knocks twice on its own glass shell; the camera goes into the prism, which opens into the lens." },
-    "close": { "seconds": 4.5, "beat": "The camera pulls out of the lens until the lens is Rerun's shell again; one spectral flare on the rim." }
+    "open": {
+      "seconds": 4.0,
+      "beat": "Rerun knocks twice on its own glass shell; the camera goes into the prism, which opens into the lens."
+    },
+    "close": {
+      "seconds": 4.5,
+      "beat": "The camera pulls out of the lens until the lens is Rerun's shell again; one spectral flare on the rim."
+    }
   },
   "segments": [
     {
@@ -25,23 +31,32 @@
     {
       "key": "check",
       "heading": "The shortcut and the check",
-      "sources": ["rn-cert"],
+      "sources": [
+        "rn-cert"
+      ],
       "lines": [
         "Here is a box on a floor, lit from one side. Real-time engines darken the creases with a cheap trick called screen-space ambient occlusion.",
         "raw-native draws the trick, and then it draws the slow answer by tracing rays, and measures how far apart the two are.",
         "For this view the gap is 0.129, against a tolerance of 0.120. The certificate says refuted."
       ],
-      "predict": {
-        "before": [2, 0],
-        "seconds": 2.5,
-        "question": "The shortcut looks right. Is it inside the tolerance?",
-        "status": "pending the author's script decision: held as a 2.5 s silent still, the question not shown or spoken"
-      }
+      "predict": [
+        {
+          "before": [
+            2,
+            0
+          ],
+          "question": "The shortcut looks right. Is it inside the tolerance?",
+          "hold": 2.5
+        }
+      ]
     },
     {
       "key": "bytes",
       "heading": "Same bytes, every build",
-      "sources": ["rn-readme", "rn-determinism"],
+      "sources": [
+        "rn-readme",
+        "rn-determinism"
+      ],
       "lines": [
         "The same render comes out byte for byte the same from three compilers and from the WebAssembly build.",
         "The film you are watching is drawn the same way: every frame is a function of time alone. Rendered twice, 1,456 frames matched exactly."
@@ -50,7 +65,11 @@
     {
       "key": "colour",
       "heading": "Lines and colour",
-      "sources": ["rn-vector", "rn-colour-gpu", "rn-ocio"],
+      "sources": [
+        "rn-vector",
+        "rn-colour-gpu",
+        "rn-ocio"
+      ],
       "lines": [
         "The box's outline is drawn as vector paths. Over 20 test drawings, the average edge error against a slow reference stays under 0.028 in every one.",
         "Light brighter than a screen can show goes through a tone mapper. The GPU matches its own C++ reference within 1 step in 255, and the C++ version of ACES 2.0 matches OpenColorIO within a colour difference of 0.0024."
@@ -59,7 +78,10 @@
     {
       "key": "tube",
       "heading": "A tube, simulated as a tube",
-      "sources": ["rn-shaders", "rn-crt-parity"],
+      "sources": [
+        "rn-shaders",
+        "rn-crt-parity"
+      ],
       "lines": [
         "Now the same box on an old television. raw-native does not paint scanlines on. It encodes the picture as a broadcast signal, decodes it the way a television did, and fires simulated electron beams at a phosphor mask.",
         "Dot crawl and rainbow fringes appear because the decoder gets things wrong, the way a real one did.",
@@ -69,7 +91,11 @@
     {
       "key": "film",
       "heading": "Film, simulated as film",
-      "sources": ["rn-shaders", "rn-film-parity", "newson2017"],
+      "sources": [
+        "rn-shaders",
+        "rn-film-parity",
+        "newson2017"
+      ],
       "lines": [
         "On film, the box exposes a negative through three layers, is developed, printed and projected.",
         "Grain comes from a published model of how silver clouds form, and the red halo around bright light comes from light bouncing inside the film base."
@@ -79,7 +105,16 @@
     {
       "key": "looks",
       "heading": "Paint, tape, pixels and what landed",
-      "sources": ["rn-shaders", "rn-paint-parity", "rn-vhs-parity", "rn-pixel", "rn-dither", "rn-pr73", "rn-pr74", "rn-m3"],
+      "sources": [
+        "rn-shaders",
+        "rn-paint-parity",
+        "rn-vhs-parity",
+        "rn-pixel",
+        "rn-dither",
+        "rn-pr73",
+        "rn-pr74",
+        "rn-m3"
+      ],
       "lines": [
         "The same box, painted. The paint pass turns each colour into amounts of four real pigments, so blue and yellow brushed together make green, the way paint does.",
         "On a videotape, the picture goes through a simulated tape head: detail washes out, colour smears behind the edges, and the bottom lines skip where the heads switch.",
@@ -90,8 +125,12 @@
         "And the box can now be fully lit. Over 55,270 test points, the clustered lights missed none that the full list found."
       ],
       "drafted_lines": {
-        "lines": [4, 5, 6],
-        "why": "The script's segment 7 rule: a piece that passes its bounds and merges moves into segment 6 with its own number. Drafted from evidence on 14 October 2026; pending the author's read."
+        "lines": [
+          4,
+          5,
+          6
+        ],
+        "why": "The script's segment 7 rule: a piece that passes its bounds and merges moves into segment 6 with its own number. Drafted from evidence on 14 October 2026; for the author's read."
       }
     },
     {

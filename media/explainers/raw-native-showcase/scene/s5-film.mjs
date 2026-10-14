@@ -4,7 +4,7 @@
 // drawn: a ray reflects at the critical angle and comes back up 2 t tan(theta_c) away, the
 // ring's radius, while the pass switches to the stock without its anti-halation layer. The
 // constants are flagged as the shader library flags them.
-import { contour, rect } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { contour, rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, box, view, inFacet, put, T, tab, tag, fact, span, window, ease, lerp, FACET } from "./world.mjs";
 
 const LAYERS = [["blue", [0.35, 0.5, 1]], ["green", [0.35, 0.9, 0.45]], ["red", [1, 0.35, 0.3]]];

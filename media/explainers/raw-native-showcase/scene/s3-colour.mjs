@@ -2,7 +2,7 @@
 // joins and dashes change while the error tag lands. The colour facet: the box with its light
 // pushed far past what a screen shows, finished by the engine's own colour pipelines in turn
 // (post.colour): clip, then AgX, then ACES 2.0, each named as it comes on.
-import { contour } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { contour } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, box, view, inFacet, put, T, tab, fact, span, window, FACET, ZF } from "./world.mjs";
 
 const PIPES = [["clip", "clip/srgb"], ["AgX", "agx/srgb"], ["ACES 2.0", "aces2-sdr/srgb"]];

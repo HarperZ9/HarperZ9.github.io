@@ -3,11 +3,11 @@
 // of its pixels): the screen-space shortcut on the left and the ray-traced reference on the
 // right, resolving as its samples count up; then the two fold into one difference image, the
 // cells over the tolerance light in the drift ink, and the gauge gives the certificate's verdict.
-import { rect } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { rng, countUp } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { rng, countUp } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 import { C, box, view, inFacet, put, T, tab, tag, span, window, ease, lerp } from "./world.mjs";
 
-const N = 64, CELL = 8.6, LEVELS = 20, Y = 470;
+const N = 64, CELL = 8.6, LEVELS = 20, Y = 452;
 const X = { left: 560, right: 1360, mid: 960 };
 
 export function prepare(A, facts, c) {
@@ -24,12 +24,13 @@ export function prepare(A, facts, c) {
     tol: T(A, `tolerance ${tol.toFixed(3)}`, { size: 36, x: 1300, y: 450, anchor: "left", atlas: "mono" }),
     verdict: T(A, F.verdict.value, { size: 64, x: 1300, y: 620, anchor: "left", atlas: "head" }),
     view: tag(A, "for this view"),
+    question: T(A, A.film.segments[1].predict[0].question, { size: 44, x: X.mid, y: 172 }),
     draw: T(A, "convergence drawn, samples counted", { size: 28, x: X.right, y: 214, atlas: "mono" }),
   };
   L.tab = tab(A, A.ev, "rn-cert");
   A.T1 = {
     enter: c.at(1, 0, 0), creases: c.word(1, 0, 1, "creases"), trick: c.at(1, 1, 0), tracing: c.word(1, 1, 0, "tracing"),
-    gap: c.at(1, 2, 0), refuted: c.word(1, 2, 1, "refuted"), exit: c.at(2, 0, 0),
+    ask: c.ask(1, 0).start, gap: c.at(1, 2, 0), refuted: c.word(1, 2, 1, "refuted"), exit: c.at(2, 0, 0),
   };
 }
 
@@ -83,9 +84,13 @@ export function draw(t, A, items) {
   items.push(...inFacet(content, "check"));
   const L = S.L, hold = window(t, T1.enter, T1.exit + 0.4, 0.8, 0.8);
   put(items, L.tab, C.ink2, hold * span(t, T1.creases - 0.5, T1.creases + 0.5) * 0.85);
-  put(items, L.ss, C.ink, window(t, T1.creases + 0.6, T1.gap + 1.0, 0.6, 0.5));
-  put(items, L.rt, C.ink, window(t, T1.tracing + 0.6, T1.gap + 1.0, 0.6, 0.5));
+  // The image labels give their line to the question while it is asked and held.
+  const asking = window(t, T1.ask - 0.3, T1.gap - 0.1, 0.3, 0.4);
+  put(items, L.ss, C.ink, window(t, T1.creases + 0.6, T1.gap + 1.0, 0.6, 0.5) * (1 - asking));
+  put(items, L.rt, C.ink, window(t, T1.tracing + 0.6, T1.gap + 1.0, 0.6, 0.5) * (1 - asking));
   put(items, L.draw, C.dim, window(t, T1.tracing + 0.9, T1.tracing + 5.2, 0.6, 0.8));
+  // The prediction pause: the question lands with the voice and stays through the held silence.
+  put(items, L.question, C.ink, window(t, T1.ask, T1.gap - 0.1, 0.4, 0.4));
   put(items, L.cells, C.dim, window(t, T1.tracing + 1.2, T1.exit, 0.6, 0.6));
   gauge(t, A, T1, items, hold);
 }

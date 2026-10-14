@@ -7,12 +7,12 @@
 //
 // Two settings were tested (PROGRESS.md, step 4): "shore", Rerun's own tidepool world, and
 // "floor", the film's own floor drawn in Rerun's pixel style. setHostStyle picks one.
-import { pose } from "../../../raw-native/tree-dev/templates/guides/rig.mjs";
-import { rerun, FLARE } from "../../../raw-native/tree-dev/templates/guides/rerun.mjs";
-import { clipBeat } from "../../../raw-native/tree-dev/templates/guides/motion.mjs";
-import { world } from "../../../raw-native/tree-dev/templates/guides/stage.mjs";
-import { LOOKS } from "../../../raw-native/tree-dev/templates/guides/look.mjs";
-import { contour, transform } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { pose } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
+import { rerun, FLARE } from "../../../raw-native/tree-c6b114d/templates/guides/rerun.mjs";
+import { clipBeat } from "../../../raw-native/tree-c6b114d/templates/guides/motion.mjs";
+import { world } from "../../../raw-native/tree-c6b114d/templates/guides/stage.mjs";
+import { LOOKS } from "../../../raw-native/tree-c6b114d/templates/guides/look.mjs";
+import { contour, transform } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, box, view, span, ease, lerp } from "./world.mjs";
 
 export let HOST_STYLE = "shore";

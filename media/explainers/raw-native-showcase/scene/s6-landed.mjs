@@ -5,7 +5,7 @@
 // as the camera turns. Lit: the box under three coloured lights, with the cluster grid that
 // assigns lights to cells drawn over the view. The retro and lit drawings are depictions; the
 // numbers are the checks'.
-import { contour, rect } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { contour, rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, box, view, inFacet, put, T, tab, tag, fact, span, window, ease } from "./world.mjs";
 
 const FACES = [[[0, 1, 0], [[-1, 2, -1], [1, 2, -1], [1, 2, 1], [-1, 2, 1]]], [[0, 0, 1], [[-1, 0, 1], [1, 0, 1], [1, 2, 1], [-1, 2, 1]]],

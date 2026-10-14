@@ -4,7 +4,7 @@
 // to one triad of the slot mask (drawn, not rendered: the pass works at the frame's size), and
 // comes back out to the whole tube, where the dot crawl on the box's edges is the decoder's own
 // error. Then the parity number lands.
-import { contour, rect } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+import { contour, rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 import { C, box, view, inFacet, put, T, tab, tag, fact, span, window, ease, lerp, FACET } from "./world.mjs";
 
 const V = { yaw: 34, pitch: 22, dist: 9.5, cy: 470 }, LINE_Y = 470;

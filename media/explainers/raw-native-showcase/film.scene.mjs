@@ -6,7 +6,7 @@
 // then timing.json is provisional (tools/explainer/film/provisional_timing.py).
 // Host: Rerun (pixel 2.5D), at the cold open and the close. Storyboard: media-excellence films,
 // raw-native-showcase/storyboard.md. The predict beat is a 2.5 s still with no question shown.
-import { loadTidepool } from "../../raw-native/tree-dev/templates/guides/worlds/tidepool.mjs";
+import { loadTidepool } from "../../raw-native/tree-c6b114d/templates/guides/worlds/tidepool.mjs";
 import { C, FACETS, cues, cameraOn, move, LENS_CAM, ZF, span, ease, lerp } from "./scene/world.mjs";
 import * as host from "./scene/host.mjs";
 import * as lens from "./scene/lens.mjs";

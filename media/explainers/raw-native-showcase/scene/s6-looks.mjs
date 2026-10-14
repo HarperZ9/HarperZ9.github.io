@@ -6,8 +6,8 @@
 // beside the naive way (render small, scale up), which shimmers. Palette: the box in Motion's
 // pixel mode through the engine's dither pass, the EGA palette with noise, a pair the exhaustive
 // check covered.
-import { contour, rect, transform } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { kmDecode } from "../../../raw-native/tree-dev/web/shaders/paint/pigments.mjs";
+import { contour, rect, transform } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { kmDecode } from "../../../raw-native/tree-c6b114d/web/shaders/paint/pigments.mjs";
 import { C, box, view, inFacet, put, T, tab, tag, fact, span, window, ease, FACET } from "./world.mjs";
 
 const enc = (v) => (v <= 0.0031308 ? 12.92 * v : 1.055 * Math.pow(v, 1 / 2.4) - 0.055);

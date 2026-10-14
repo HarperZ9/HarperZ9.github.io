@@ -3,9 +3,9 @@
 // shows the same box through one of raw-native's passes, and each chapter is a camera move into
 // one facet. This file holds the palette, the cue clock, the lens, the box and the source tab.
 // The scene adds no claim: every number comes from evidence.json's facts block by key.
-import { contour, rect, transform } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-dev/web/motion/text.mjs";
-import { span, window, ease, lerp } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { contour, rect, transform } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
+import { span, window, ease, lerp } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 
 // Storyboard colour script: void ground, bone ink, one hot mark (drift ember) on "refuted".
 export const C = Object.freeze({
@@ -15,7 +15,7 @@ export const C = Object.freeze({
 
 // Cue times from timing.json: at(seg, line, sentence) is a sentence start, word() a phrase in it.
 export function cues(timing) {
-  const rows = new Map(timing.map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
+  const rows = new Map(timing.filter((r) => r.predict == null).map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
   const row = (s, l, k = 0) => { const r = rows.get(`${s}.${l}.${k}`); if (!r) throw new Error(`no sentence ${s}.${l}.${k}`); return r; };
   return {
     at: (s, l, k = 0) => row(s, l, k).start,
@@ -25,6 +25,8 @@ export function cues(timing) {
       if (i < 0) throw new Error(`"${phrase}" not in "${r.text}"`);
       return r.start + (r.end - r.start) * (i / r.text.length);
     },
+    // A spoken predict question: segment s, its n-th pause (timing rows keyed by "predict").
+    ask: (s, n = 0) => { const r = timing.find((x) => x.segment === s && x.predict === n); if (!r) throw new Error(`no question ${s}.${n}`); return r; },
     last: timing[timing.length - 1].end,
   };
 }
