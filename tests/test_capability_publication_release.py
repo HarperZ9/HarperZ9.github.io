@@ -694,7 +694,10 @@ RELEASE_PATHS = (
 # October 14, 2026: two dated corrections close the ledger second read: Who Knew First's finding 6
 # evidence note gives the one date in Irregular's August 14 account, and Who Pays the Referees
 # section 3 names the Opus 5.5 card's three contracted red-teaming firms. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "8130031442841d72617bb20710a21d9a22d5c29a9d8db47f02304c3ab696c573"
+# October 14, 2026, later: studio.html gains the Finish layer (raw-native 0.8.0's post stack over the
+# stage), moves the Verified viewer to the raw-native 0.8.0 release, and loads studio.js and
+# studio-shell.css at a new stamp. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "e5f0d8bc173e8a86fd108d029c0630df896e5cdd84dabc00ce82aebf56072c9c"
 
 
 BRIEFING_FIGURES = (
