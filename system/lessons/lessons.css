@@ -39,3 +39,4 @@
 .rd-row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
 .rd-row input[type=range]{flex:1 1 12rem;min-height:44px}
 #rd-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+#in-call{font:inherit;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent);max-width:100%}
