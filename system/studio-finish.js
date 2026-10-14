@@ -90,11 +90,15 @@ function finishFrame(source, tex, context, p, W, H, f) {
 }
 
 function stageCanvas() { return document.getElementById("studio-canvas"); }
+// Why the layer is or is not drawing over the stage, kept for the rail and the tests.
+let stageWhy = "";
 function onStage(c) {
-  if (!c || !c.width || !c.height || !c.isConnected) return false;
-  if (OWN_SURFACE.has(window.__studioActiveSource)) return false;
+  if (!c || !c.width || !c.height || !c.isConnected) { stageWhy = "no source canvas"; return false; }
+  if (OWN_SURFACE.has(window.__studioActiveSource)) { stageWhy = `${window.__studioActiveSource} has its own surface`; return false; }
   const cs = getComputedStyle(c);
-  return cs.display !== "none" && cs.visibility !== "hidden" && c.offsetWidth > 0;
+  if (cs.display === "none" || cs.visibility === "hidden" || c.offsetWidth <= 0) { stageWhy = "the source canvas is not shown"; return false; }
+  stageWhy = "";
+  return true;
 }
 
 // Lay the overlay on the source canvas. Absolute offsets start inside the stage's border.
@@ -188,7 +192,7 @@ export async function setFinish(name, { stage = null, status = null } = {}) {
 export function finishState() {
   return { chosen, state, reason, engine: ENGINE_VERSION, size: [...size], frames: frameNo,
     adapter: host && host.info ? host.info.description || host.info.architecture || "" : null,
-    overlay: !!(overlay && !overlay.hidden) };
+    overlay: !!(overlay && !overlay.hidden), stage: stageWhy || "on stage" };
 }
 
 // The committed frame set through the layer's own path, against the engine's CPU references at 8 bits.

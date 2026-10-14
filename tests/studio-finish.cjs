@@ -62,9 +62,11 @@ const rects = (page) => page.evaluate(() => {
         rec.fallback = st;
       } else {
         assert.equal(st.state, 'on', `${tag} the layer runs: ${JSON.stringify(st)}`);
-        await page.waitForFunction(() => window.__studioFinish.state().frames > 3, null, { timeout: 60000 });
+        // The overlay shows once the layer has drawn a few frames over a source canvas on stage.
+        const shown = await page.waitForFunction(() => { const s = window.__studioFinish.state(); return s.frames > 3 && s.overlay; }, null, { timeout: 60000 })
+          .then(() => true, () => false);
         const g = await rects(page);
-        assert.ok(!g.hidden && g.overlay, `${tag} the overlay shows`);
+        assert.ok(shown && !g.hidden && g.overlay, `${tag} the overlay shows: ${JSON.stringify({ state: await finish(page), rects: g, source: await page.evaluate(() => window.__studioActiveSource) })}`);
         for (let i = 0; i < 4; i++) assert.ok(Math.abs(g.overlay[i] - g.canvas[i]) <= 1, `${tag} the overlay covers the source canvas: ${JSON.stringify(g)}`);
         assert.match(await page.textContent('#finish-status'), /^Classic tube on raw-native \d+\.\d+\.\d+ \(WebGPU\)/);
         rec.rects = g; rec.adapter = st.adapter;
