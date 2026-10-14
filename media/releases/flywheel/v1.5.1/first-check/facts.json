@@ -1,0 +1,75 @@
+{
+ "schema": "raw-native.media-facts/1",
+ "commit": "ff67e163fa20b8e24cbd29f9e08b3a1ba0e39db8",
+ "platform": "linux",
+ "facts": {
+  "version": {
+   "value": "1.5.1",
+   "source": "pyproject.toml /(?m)^version = \"([^\"]+)\"/"
+  },
+  "income": {
+   "value": 36700,
+   "source": "examples/output-validation/answer-as-filed.json#/taxable_income/value"
+  },
+  "filed_tax": {
+   "value": 4165.5,
+   "source": "examples/output-validation/answer-as-filed.json#/tax/value"
+  },
+  "table_tax": {
+   "value": 4169,
+   "source": "examples/output-validation/answer-from-the-table.json#/tax/value"
+  },
+  "authority": {
+   "value": "irs-2025-tax-table-single",
+   "source": "examples/output-validation/form-1040.contract.json#/fields/1/source"
+  },
+  "row_width": {
+   "value": "50",
+   "source": "examples/output-validation/tax_table.py /ROW_WIDTH = Decimal\\(\"(\\d+)\"\\)/"
+  },
+  "bracket1": {
+   "value": "11925",
+   "source": "examples/output-validation/tax_table.py /BRACKETS = \\(\\(Decimal\\(\"(\\d+)\"\\)/"
+  },
+  "rate1": {
+   "value": "0.10",
+   "source": "examples/output-validation/tax_table.py /BRACKETS = \\(\\(Decimal\\(\"\\d+\"\\), Decimal\\(\"([0-9.]+)\"\\)\\)/"
+  },
+  "bracket2": {
+   "value": "48475",
+   "source": "examples/output-validation/tax_table.py /\\(Decimal\\(\"(\\d+)\"\\), Decimal\\(\"[0-9.]+\"\\)\\)\\)/"
+  },
+  "rate2": {
+   "value": "0.12",
+   "source": "examples/output-validation/tax_table.py /\\(Decimal\\(\"\\d+\"\\), Decimal\\(\"([0-9.]+)\"\\)\\)\\)/"
+  },
+  "checker_value": {
+   "value": "4169",
+   "source": "(in examples/output-validation) python tax_table.py"
+  },
+  "filed_verdict": {
+   "value": "FAIL",
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-as-filed.json --allow-commands"
+  },
+  "filed_exit": {
+   "value": 1,
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-as-filed.json --allow-commands"
+  },
+  "table_verdict": {
+   "value": "PASS",
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json --allow-commands"
+  },
+  "table_exit": {
+   "value": 0,
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json --allow-commands"
+  },
+  "unchecked_verdict": {
+   "value": "UNVERIFIABLE",
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json"
+  },
+  "unchecked_exit": {
+   "value": 3,
+   "source": "(in examples/output-validation) python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json"
+  }
+ }
+}

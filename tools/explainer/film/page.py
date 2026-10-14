@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -197,7 +198,17 @@ def interactive(slug: str, folder: str, title: str) -> str:
 # Media rendered by a repository's release (raw-native ADR 0012): media/releases/<repo>/<tag>/<scene>/,
 # copied from the release's media bundle. Each folder holds the video, poster, captions, the facts it
 # was drawn from, and an interactive index.html with the engine beside it.
-RELEASES = [("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+RELEASES = [("flywheel", "v1.5.1", ["first-check", "which-source"]),
+            ("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+
+
+def web_rendition(m: dict) -> tuple[str, int, int]:
+    """The largest video rendition up to 1080p a release media.json lists, with its frame size.
+    raw-native bundles carry 1080p (and a 2160p master the site does not serve); Flywheel's carry 540p."""
+    sizes = [(int(r.group(1)), f) for f in m["files"] if (r := re.search(r"-(\d+)p\.mp4$", f))]
+    h, f = max(x for x in sizes if x[0] <= 1080)
+    w = round(m.get("width", 16 * h / 9) * h / m.get("height", h))
+    return f, w, h
 
 
 def release_section() -> str:
@@ -206,7 +217,8 @@ def release_section() -> str:
         for sid in scenes:
             folder = f"media/releases/{repo}/{tag}/{sid}"
             m = json.loads((ROOT / folder / "media.json").read_text(encoding="utf-8"))
-            video = next(f for f in m["files"] if f.endswith("-1080p.mp4"))
+            # The site serves renditions up to 1080p; a 4K master stays on the release.
+            video, vw, vh = web_rendition(m)
             vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
             track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
             voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
@@ -214,7 +226,7 @@ def release_section() -> str:
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>
-    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
+    <video controls preload="none" playsinline width="{vw}" height="{vh}" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
     <figcaption>{clock(m["duration"])}. Rendered by the <a class="inline" href="https://github.com/HarperZ9/{repo}/releases/tag/{tag}">{E(repo)} {E(tag)}</a> release from values read at its commit {E(m["commit"][:7])}: <a class="inline" href="{folder}/facts.json">facts.json</a>. {voice} <a class="inline" href="{folder}/index.html">Open it live</a> to scrub it frame by frame in your browser.</figcaption>
   </figure>""")
     return f"""

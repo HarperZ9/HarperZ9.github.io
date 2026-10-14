@@ -102,3 +102,22 @@ def test_tool_has_no_local_paths_or_em_dashes() -> None:
             # capture/ holds sample inputs for the writing checker, which contain em dashes on purpose.
             if "capture" not in p.parts:
                 assert "—" not in text, f"{p.relative_to(ROOT)} has an em dash"
+
+
+def test_release_films_use_the_largest_rendition_the_site_serves(tmp_path, monkeypatch) -> None:
+    """A bundle with only a 540p rendition still gets its films; a 2160p master, which stays on the
+    release, is never linked."""
+    import json
+    d = tmp_path / "media" / "releases" / "demo" / "v1.0.0"
+    for scene, files in (("small", ["small-540p.mp4"]), ("big", ["big-1080p.mp4", "big-2160p.mp4"])):
+        (d / scene).mkdir(parents=True)
+        (d / scene / "media.json").write_text(json.dumps({"title": scene, "duration": 30, "commit": "abcdef0123",
+            "width": 3840 if scene == "big" else 960, "height": 2160 if scene == "big" else 540,
+            "files": {f: "" for f in files}}), encoding="utf-8")
+    monkeypatch.setattr(wt, "SITE_CHECKOUT", tmp_path)
+    tag, films = wt.release_films("demo")
+    assert {s for s, _, _ in films} == {"small", "big"}
+    html = wt.watch_html("demo")
+    assert "small-540p.mp4" in html and 'width="960" height="540"' in html
+    assert "big-1080p.mp4" in html and 'width="1920" height="1080"' in html
+    assert "2160p" not in html
