@@ -30,6 +30,8 @@ media/raw-native/wasm-*/** -text
 media/raw-native/web-*/** -text
 # raw-native's sound engine, pinned by SHA256SUMS in its directory: no EOL conversion.
 media/raw-native/sound-*/** -text
+# raw-native's post stack (the Studio's Finish layer), pinned by SHA256SUMS in its directory: no EOL conversion.
+media/raw-native/post-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text

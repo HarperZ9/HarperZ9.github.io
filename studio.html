@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="system/studio-sheet.css?v=20260925-studio-plate">
 <link rel="stylesheet" href="system/studio-modes.css?v=20261003-engine">
 <link rel="stylesheet" href="system/media-engine/risk.css?v=20261003-engine">
-<link rel="stylesheet" href="system/studio-shell.css?v=20261012-viewer">
+<link rel="stylesheet" href="system/studio-shell.css?v=20261014-finish">
 <!-- Snapshot the source and hero query params before any module or deferred script runs. The
      Atelier engine rewrites location.search to its own state on boot (history.replaceState),
      which would erase ?source=showcase before studio.js reads it, so the Studio reads these
@@ -1424,6 +1424,25 @@
         </div>
       </section>
 
+      <!-- LAYER: the Finish (studio-finish.js). raw-native's post stack draws the stage's frame again
+           through one of the engine's looks, on a WebGPU canvas laid over #studio-canvas. The source
+           itself is untouched; Off, or a browser without WebGPU, shows it as it is. -->
+      <details class="rail-group studio-finish" id="finish-group">
+        <summary>Finish <span class="hint">raw-native looks over the stage</span></summary>
+        <div class="at-group">
+          <span class="at-glab">Look</span>
+          <select id="finish-look" class="at-seed" style="width:100%" aria-label="Finish look" aria-describedby="finish-status">
+            <option value="off" selected>Off</option>
+            <option value="classic">Classic tube</option>
+            <option value="tube">PVM-20 tube</option>
+            <option value="film">500T print</option>
+            <option value="dither">PICO-8 dither</option>
+          </select>
+        </div>
+        <p class="src-hint" id="finish-status" aria-live="polite">Off: the source draws as it is.</p>
+        <p class="src-hint">Applies to sources that draw on the main canvas. Exports save the source's own frame.</p>
+      </details>
+
       <!-- The shelf: the studio's memory, cross-source, quiet by design. Every pin is a RECIPE
            (seed + controls, plus raw strokes for sketches) that reproduces the creation exactly;
            it persists in this browser and travels as a JSON file. No streaks, no scores - the
@@ -1854,7 +1873,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261012-viewer"></script>
+<script type="module" src="system/studio.js?v=20261014-finish"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>

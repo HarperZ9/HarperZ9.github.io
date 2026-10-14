@@ -761,6 +761,24 @@ function initViewerControls() {
   }
 }
 
+// The Finish layer (studio-finish.js): raw-native's post stack draws the stage's frame again through
+// one of the engine's looks, over #studio-canvas. Loaded on the first choice other than Off.
+const loadFinish = lazyLoader(() => import("./studio-finish.js?v=20261014-finish"));
+function initFinishControls() {
+  const sel = document.getElementById("finish-look");
+  if (!sel) return;
+  sel.addEventListener("change", () => {
+    const look = sel.value;
+    loadFinish()
+      .then((m) => m.setFinish(look, { stage: $("viewport-stage"), status: $("finish-status") }))
+      .catch((err) => {
+        console.error("[studio] the finish failed to load:", err);
+        const st = $("finish-status");
+        if (st) st.textContent = "Off: the finish could not load. The source draws as it is.";
+      });
+  });
+}
+
 // The Loom: loom.html's whole loom, adopted in place (studio-loom.js).
 const loadLoomHub = lazyLoader(() => import("./studio-loom.js?v=20261009-loom-hub"));
 let _loomHub = null;
@@ -2780,6 +2798,7 @@ initNeuralControls();
 initThreadsControls();
 initWorldsControls();
 initViewerControls();
+initFinishControls();
 // The Films panel fills itself the first time it is opened.
 import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
   .catch((e) => console.error("[studio] the films panel failed to load:", e));
