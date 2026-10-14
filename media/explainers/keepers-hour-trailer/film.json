@@ -1,0 +1,203 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "keepers-hour-trailer",
+  "title": "The Keeper's Hour trailer",
+  "page": "explainers.html#keepers-hour-trailer",
+  "seed": 20261014,
+  "voice": "none: no narration; every word on screen is the game's own (night.txt, CC BY 4.0)",
+  "host": "tallow (end card only)",
+  "status": "draft: frames captured from the game at a fixed step (keepers-v0.3.1, software rasteriser); no score mix; no 4K render",
+  "sweep_seconds": 4.0,
+  "duration": 68,
+  "segments": [
+    {
+      "key": "sweep-1",
+      "heading": "LETTER",
+      "speaker": "LETTER",
+      "node": "arrive",
+      "sweeps": [
+        1,
+        2
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "By order of the Coastal Authority, the light at Relay Nine is to be extinguished at dawn."
+      ]
+    },
+    {
+      "key": "sweep-3",
+      "heading": "TIDE",
+      "speaker": "TIDE",
+      "node": "arrive",
+      "sweeps": [
+        3,
+        4
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "There is a coast. You are standing on it. It just has no sea."
+      ]
+    },
+    {
+      "key": "sweep-5",
+      "heading": "LENS",
+      "speaker": "LENS",
+      "node": "lamp_look",
+      "sweeps": [
+        5,
+        6
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "Three hundred and twelve facets of pressed glass. Each one holds a smaller lamp, turning."
+      ]
+    },
+    {
+      "key": "sweep-7",
+      "heading": "KETTLE",
+      "speaker": "KETTLE",
+      "node": "kettle_light",
+      "sweeps": [
+        7,
+        7
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "I will boil. It takes a while. Most things worth doing do."
+      ]
+    },
+    {
+      "key": "sweep-8",
+      "heading": "STATIC",
+      "speaker": "STATIC",
+      "node": "radio_tune",
+      "sweeps": [
+        8,
+        9
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "...this is the Marigold, out of nowhere... we have been at sea since the sea left... we navigate by you..."
+      ]
+    },
+    {
+      "key": "sweep-10",
+      "heading": "The game's dialogue box",
+      "speaker": "UI",
+      "node": "logbook",
+      "sweeps": [
+        10,
+        10
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [],
+      "picture": "the game's own dialogue box on the logbook's first line, as the game draws it (night.txt line 63, logbook); the storyboard's [TIDE 8] check is pending a scripted choice in the recorder"
+    },
+    {
+      "key": "sweep-11",
+      "heading": "TIDE",
+      "speaker": "TIDE",
+      "node": "letters_read",
+      "sweeps": [
+        11,
+        12
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "\"Dear Keeper, I can see your light from my bedroom. When it comes round I say goodnight to it.\""
+      ]
+    },
+    {
+      "key": "sweep-13",
+      "heading": "LENS",
+      "speaker": "LENS",
+      "node": "town_window",
+      "sweeps": [
+        13,
+        13
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "When the beam crosses the town, the shape lifts a hand."
+      ]
+    },
+    {
+      "key": "sweep-14",
+      "heading": "LEDGER",
+      "speaker": "LEDGER",
+      "node": "decide",
+      "sweeps": [
+        14,
+        14
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "Dawn at 06:12. Fourteen minutes."
+      ]
+    },
+    {
+      "key": "sweep-15",
+      "heading": "TIDE",
+      "speaker": "TIDE",
+      "node": "decide",
+      "sweeps": [
+        15,
+        15
+      ],
+      "sources": [
+        "kh-night"
+      ],
+      "lines": [
+        "Whatever you do, do it on purpose."
+      ]
+    },
+    {
+      "key": "title",
+      "heading": "The Keeper's Hour",
+      "sweeps": [
+        16,
+        16
+      ],
+      "lines": []
+    },
+    {
+      "key": "end-card",
+      "layout": "close",
+      "heading": "End card",
+      "sweeps": [
+        17,
+        17
+      ],
+      "sources": [
+        "kh-design",
+        "kh-credits",
+        "kh-release"
+      ],
+      "lines": [],
+      "card": [
+        "About 25 minutes. Three endings. Free for Windows.",
+        "The Keeper's Hour by Zain Dana Harper, CC BY 4.0.",
+        "Drawn by BRender, the real-time 3D engine by Argonaut Software (1998), running as BRender 1.4 from BlazingRenderer/BRender: Zane van Iperen, erysdren and contributors (MIT).",
+        "Free download: github.com/HarperZ9/brender-archival/releases"
+      ]
+    }
+  ]
+}
