@@ -82,11 +82,26 @@ test("the control: a number with no matching tab is caught", () => {
   assert.deepEqual(numbers("about 5% of C4 tokens"), ["5%"]);
 });
 
-test("the timing is provisional and says the script's words, in order", () => {
+test("the timing is provisional, says the script's words in order, and holds each predict question", () => {
   assert.ok(Array.isArray(timing) && timing.every((r) => r.provisional === true));
-  const said = timing.map((r) => r.text).join(" "), script = film.segments.flatMap((s) => s.lines).join(" ");
+  const said = timing.filter((r) => r.predict === undefined).map((r) => r.text).join(" "), script = film.segments.flatMap((s) => s.lines).join(" ");
   assert.equal(said, script);
   for (let i = 1; i < timing.length; i++) assert.ok(timing[i].start >= timing[i - 1].end, `row ${i} overlaps`);
+  const asks = timing.filter((r) => r.predict !== undefined);
+  assert.equal(asks.length, 2);
+  for (const q of asks) {
+    const next = timing[timing.indexOf(q) + 1];
+    assert.ok(next.start - q.end >= 2.5 - 1e-6, `no hold after "${q.text}"`);
+  }
+});
+
+test("each predict question is on screen from its first word through its hold", () => {
+  for (const q of timing.filter((r) => r.predict !== undefined)) {
+    for (const t of [q.start + 0.5, q.end + 1.2]) {
+      const shown = evaluate(scene, ctx, t).items.some((it) => LABELS.get(it.shape) === q.text && (it.opacity ?? 1) > 0.5);
+      assert.ok(shown, `${t.toFixed(1)}s: "${q.text}" not on screen`);
+    }
+  }
 });
 
 test("no label meets the caption area while a sentence is spoken", async () => {

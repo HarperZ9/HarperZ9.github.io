@@ -18,7 +18,6 @@
       "what": "Back on the harbour: the boat now carries its manifest; Pylon reads it, leaves the call to the viewer, and the film ends."
     }
   },
-  "status": "draft scene code: no narration, provisional timing, predict beats pending the author",
   "segments": [
     {
       "key": "title",
@@ -53,12 +52,12 @@
       ],
       "predict": [
         {
-          "after_line": 4,
-          "hold": 2.5,
+          "after": [
+            4,
+            0
+          ],
           "question": "How could anyone downstream have checked that the download matched the source?",
-          "picture": "the two file trees side by side",
-          "status": "pending the author's script decision",
-          "narrated": false
+          "hold": 2.5
         }
       ]
     },
@@ -106,12 +105,12 @@
       ],
       "predict": [
         {
-          "before_line": 0,
-          "hold": 2.5,
+          "before": [
+            0,
+            0
+          ],
           "question": "When a dataset is copied to a popular site, how often does its licence survive the trip?",
-          "picture": "one dataset card about to be copied",
-          "status": "pending the author's script decision",
-          "narrated": false
+          "hold": 2.5
         }
       ]
     },
