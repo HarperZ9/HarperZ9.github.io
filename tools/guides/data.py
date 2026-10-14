@@ -13,6 +13,7 @@ GUIDES = [
         "habit": "Before he looks, he asks what you think. Then you find the source together.",
         "home": "A dark claims office, lit only by his flame.",
         "films": ["checking-cost", "visible-reasoning"],
+        "drafts": ["brender-frame", "keepers-hour-trailer"],
         "alt": "Tallow, a tall clerk whose head is a lit candle, holds a reference card up to his flame in a dark office.",
         "close_alt": "Tallow's face: one eye in the wax under the flame.",
     },
@@ -43,6 +44,14 @@ FILM_TITLES = {
     "incentives": "Models do what training pays for",
     "visible-reasoning": "What a model's written reasoning can and cannot show",
     "release-media": "the films from the latest releases",
+}
+
+# Films whose scene code is in review and not yet on a live page: the host is decided (the rule
+# in this file: Tallow for one light in the dark), but no page lists them until each one ships,
+# when its slug moves into the guide's "films" and its title into FILM_TITLES.
+DRAFT_TITLES = {
+    "brender-frame": "How a 1998 engine drew a frame",
+    "keepers-hour-trailer": "The Keeper's Hour trailer",
 }
 
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "

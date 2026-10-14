@@ -1,0 +1,105 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "brender-frame",
+  "title": "How a 1998 engine drew a frame",
+  "page": "explainers.html#brender-frame",
+  "seed": 20261014,
+  "voice": "author",
+  "host": "tallow",
+  "status": "draft: provisional timing, no narration, predict beat pending the author",
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "How a 1998 engine drew a frame",
+      "lines": [
+        "How a 1998 engine drew a frame."
+      ]
+    },
+    {
+      "key": "engine",
+      "heading": "The engine",
+      "sources": ["brender-wiki", "foone", "brender-readme"],
+      "lines": [
+        "In the 1990s, Argonaut Software licensed a real-time 3D engine called BRender. Games such as Carmageddon and Croc were built on it.",
+        "In 2022 a 1998 version of its source was published under the MIT licence, with the approval of Argonaut's former chief executive, Jez San."
+      ]
+    },
+    {
+      "key": "ladder",
+      "heading": "A ladder, not a leap",
+      "sources": ["brender-readme"],
+      "lines": [
+        "To rebuild it, we did not try to run a whole game first. We built a ladder: twenty-one small programs, each proving one step a frame depends on.",
+        "If a rung fails, you know which step broke."
+      ],
+      "predict": {
+        "after_line": 1,
+        "question": "Which step do you think breaks first on a modern computer?",
+        "hold": 2.5,
+        "status": "pending the author's script decision: held as a silent still of the empty ladder; the question is not spoken or shown"
+      }
+    },
+    {
+      "key": "points",
+      "heading": "Points to lines",
+      "sources": ["brender-readme"],
+      "lines": [
+        "The first rungs are plain maths: vectors, the engine starting and stopping, and a perspective matrix that turns 3D points into 2D ones.",
+        "Join the points and you have a wireframe cube. Hang models on a scene graph and the engine moves them as one."
+      ]
+    },
+    {
+      "key": "filling",
+      "heading": "Filling and hiding",
+      "sources": ["brender-readme", "gouraud1971"],
+      "lines": [
+        "Next the ladder fills each triangle a row of pixels at a time, lighting each face by how much it faces the light.",
+        "A depth buffer stores how far away every pixel is, so nearer surfaces hide farther ones.",
+        "Gouraud shading, from Henri Gouraud's 1971 paper, lights the corners of each triangle and blends between them, so a sphere looks round instead of faceted."
+      ]
+    },
+    {
+      "key": "surfaces",
+      "heading": "Pictures on surfaces",
+      "sources": ["brender-readme", "hecker1995"],
+      "lines": [
+        "Textures are pictures wrapped onto triangles. Getting the perspective right meant a division at every pixel, and a division was slow.",
+        "One programmer who wrote about it at the time found that dropping the division made his texture mapper seven times faster, and made the picture look wrong.",
+        "Real models load from the period files: a globe with its map, and a car made of twelve parts."
+      ],
+      "picture_beat": {
+        "after_line": 2,
+        "shot": "5.4",
+        "hold": 3.0,
+        "what": "an 8-bit texel index travels into a 256-colour palette strip and comes out as a colour; no narration"
+      }
+    },
+    {
+      "key": "rebuild",
+      "heading": "Where the rebuild stands",
+      "sources": ["brender-readme", "brender-modern", "blazing"],
+      "lines": [
+        "On the 1998 code, built as 32-bit, all twenty-one rungs pass, and the engine's own software renderer draws a lit sphere. A textured frame from that path is not working yet, and we do not claim it.",
+        "On BRender 1.4, the modern fork kept by Zane van Iperen, erysdren and contributors, the same twenty-one rungs pass in 64-bit."
+      ]
+    },
+    {
+      "key": "run",
+      "heading": "What you can run",
+      "sources": ["brender-readme"],
+      "lines": [
+        "You can open the 1998 sample models in a viewer on a modern PC today, and play a short game built on the same engine."
+      ]
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "lines": [
+        "One thing to keep: rebuild in steps you can check, and a failure tells you where to look.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ]
+    }
+  ]
+}
