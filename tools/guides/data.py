@@ -51,12 +51,14 @@ VOICE = ("Each guide speaks its introduction in its own synthesized voice. A spe
 
 # The introductions that carry a sound track, and which voice take each one is. Only a take the
 # author approved after listening goes here (2026-10-12, verbatim: "I do like the voice changes.").
+# Rerun's take moved from round 10 (V5) to round 11 (V8) when the author chose it over round 10
+# (2026-10-14, verbatim: "r11").
 # tools/guides/build_media.py refuses --intro for any other guide, and tests/test_guides.py checks
 # that an introduction has sound exactly when it is listed here.
 INTRO_VOICES = {
     "tallow": "character voice, round 7, setting H",
     "pylon": "character voice, round 7, setting S",
-    "rerun": "character voice, round 10, setting V5",
+    "rerun": "character voice, round 11, setting V8",
 }
 
 
