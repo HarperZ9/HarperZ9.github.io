@@ -16,8 +16,8 @@
     }
   },
   "sweep_seconds": 4.0,
-  "duration": 68,
-  "length": "68 s is the trailer's structure (17 lamp sweeps of 4 s, kh_world.c), not a pace target, so the author's 2026-10-14 decision 'Keep the longer films.' leaves it as is. Five card lines are trimmed at sentence boundaries so each card can be read in its sweeps; restoring the trimmed sentences would add sweeps, which is the author's call.",
+  "duration": 84.0,
+  "length": "84 s: 21 lamp sweeps of 4 s (kh_world.c). Author, 2026-10-14, 'Keep the longer films.': the four card lines that had been trimmed at sentence boundaries (arrive, kettle_light, letters_read, decide) are whole again, each card holding long enough to read at 3 words a second.",
   "segments": [
     {
       "key": "sweep-1",
@@ -26,23 +26,23 @@
       "node": "arrive",
       "sweeps": [
         1,
-        2
+        3
       ],
       "sources": [
         "kh-night"
       ],
       "lines": [
-        "By order of the Coastal Authority, the light at Relay Nine is to be extinguished at dawn."
+        "By order of the Coastal Authority, the light at Relay Nine is to be extinguished at dawn. There is no longer a coast to guard."
       ]
     },
     {
-      "key": "sweep-3",
+      "key": "sweep-4",
       "heading": "TIDE",
       "speaker": "TIDE",
       "node": "arrive",
       "sweeps": [
-        3,
-        4
+        4,
+        5
       ],
       "sources": [
         "kh-night"
@@ -52,13 +52,13 @@
       ]
     },
     {
-      "key": "sweep-5",
+      "key": "sweep-6",
       "heading": "LENS",
       "speaker": "LENS",
       "node": "lamp_look",
       "sweeps": [
-        5,
-        6
+        6,
+        7
       ],
       "sources": [
         "kh-night"
@@ -68,29 +68,29 @@
       ]
     },
     {
-      "key": "sweep-7",
+      "key": "sweep-8",
       "heading": "KETTLE",
       "speaker": "KETTLE",
       "node": "kettle_light",
       "sweeps": [
-        7,
-        7
+        8,
+        9
       ],
       "sources": [
         "kh-night"
       ],
       "lines": [
-        "I will boil. It takes a while. Most things worth doing do."
+        "Then nobody has done that since today. I will boil. It takes a while. Most things worth doing do."
       ]
     },
     {
-      "key": "sweep-8",
+      "key": "sweep-10",
       "heading": "STATIC",
       "speaker": "STATIC",
       "node": "radio_tune",
       "sweeps": [
-        8,
-        9
+        10,
+        11
       ],
       "sources": [
         "kh-night"
@@ -100,13 +100,13 @@
       ]
     },
     {
-      "key": "sweep-10",
+      "key": "sweep-12",
       "heading": "The game's dialogue box",
       "speaker": "UI",
       "node": "logbook",
       "sweeps": [
-        10,
-        10
+        12,
+        12
       ],
       "sources": [
         "kh-night"
@@ -115,29 +115,29 @@
       "picture": "the game's own dialogue box on the logbook's first line, as the game draws it (night.txt line 63, logbook)"
     },
     {
-      "key": "sweep-11",
+      "key": "sweep-13",
       "heading": "TIDE",
       "speaker": "TIDE",
       "node": "letters_read",
       "sweeps": [
-        11,
-        12
+        13,
+        15
       ],
       "sources": [
         "kh-night"
       ],
       "lines": [
-        "\"Dear Keeper, I can see your light from my bedroom. When it comes round I say goodnight to it.\""
+        "\"Dear Keeper, I can see your light from my bedroom. When it comes round I say goodnight to it. Does it say goodnight back. From Ilse, age 7.\""
       ]
     },
     {
-      "key": "sweep-13",
+      "key": "sweep-16",
       "heading": "LENS",
       "speaker": "LENS",
       "node": "town_window",
       "sweeps": [
-        13,
-        13
+        16,
+        16
       ],
       "sources": [
         "kh-night"
@@ -147,29 +147,29 @@
       ]
     },
     {
-      "key": "sweep-14",
+      "key": "sweep-17",
       "heading": "LEDGER",
       "speaker": "LEDGER",
       "node": "decide",
       "sweeps": [
-        14,
-        14
+        17,
+        18
       ],
       "sources": [
         "kh-night"
       ],
       "lines": [
-        "Dawn at 06:12. Fourteen minutes."
+        "Dawn at 06:12. Fourteen minutes. The switch is on the wall, where it has always been, under a little brass cover."
       ]
     },
     {
-      "key": "sweep-15",
+      "key": "sweep-19",
       "heading": "TIDE",
       "speaker": "TIDE",
       "node": "decide",
       "sweeps": [
-        15,
-        15
+        19,
+        19
       ],
       "sources": [
         "kh-night"
@@ -182,8 +182,8 @@
       "key": "title",
       "heading": "The Keeper's Hour",
       "sweeps": [
-        16,
-        16
+        20,
+        20
       ],
       "lines": []
     },
@@ -192,8 +192,8 @@
       "layout": "close",
       "heading": "End card",
       "sweeps": [
-        17,
-        17
+        21,
+        21
       ],
       "sources": [
         "kh-design",

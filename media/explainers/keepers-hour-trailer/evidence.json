@@ -9,9 +9,9 @@
       "url": "https://github.com/HarperZ9/brender-archival/blob/main/games/keepers-hour/data/night.txt",
       "read": "full",
       "claims": [
-        "Every on-screen line of the trailer is quoted verbatim from this file."
+        "Every on-screen line of the trailer is quoted verbatim and whole from this file."
       ],
-      "n": "9 lines from 8 nodes, five cut at a sentence boundary (arrive, letters_read, radio_tune as the script lists, and kettle_light and decide, found 14 October 2026)",
+      "n": "10 lines from 9 nodes, quoted whole (corrected 14 October 2026: an earlier version trimmed four lines at sentence boundaries; the author's decision 'Keep the longer films.' restored them; radio_tune's card was never trimmed, it is that node's first STATIC line)",
       "interval": "Not applicable.",
       "quote": "Whatever you do, do it on purpose.",
       "does_not_prove": "Anything about the game beyond the lines quoted."

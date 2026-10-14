@@ -9,7 +9,7 @@
     {
       "sweeps": [
         1,
-        2
+        3
       ],
       "room": "gallery",
       "yaw": 0,
@@ -17,12 +17,14 @@
       "push": [
         1.0,
         1.12
-      ]
+      ],
+      "clock": 0,
+      "seconds": 12
     },
     {
       "sweeps": [
-        3,
-        4
+        4,
+        5
       ],
       "room": "gallery",
       "yaw": 300,
@@ -30,12 +32,14 @@
       "push": [
         1.0,
         1.0
-      ]
+      ],
+      "clock": 12,
+      "seconds": 8
     },
     {
       "sweeps": [
-        5,
-        6
+        6,
+        7
       ],
       "room": "lamp",
       "yaw": 0,
@@ -47,12 +51,14 @@
       "focus": [
         0.5,
         0.25
-      ]
+      ],
+      "clock": 20,
+      "seconds": 8
     },
     {
       "sweeps": [
-        7,
-        7
+        8,
+        9
       ],
       "room": "keeper",
       "yaw": 0,
@@ -60,12 +66,14 @@
       "push": [
         1.15,
         1.25
-      ]
+      ],
+      "clock": 28,
+      "seconds": 8
     },
     {
       "sweeps": [
-        8,
-        9
+        10,
+        11
       ],
       "room": "radio",
       "yaw": 0,
@@ -73,12 +81,14 @@
       "push": [
         1.0,
         1.15
-      ]
+      ],
+      "clock": 36,
+      "seconds": 8
     },
     {
       "sweeps": [
-        10,
-        10
+        12,
+        12
       ],
       "room": "lamp",
       "yaw": 0,
@@ -92,12 +102,14 @@
       "focus": [
         0.43,
         0.88
-      ]
+      ],
+      "clock": 44,
+      "seconds": 4
     },
     {
       "sweeps": [
-        11,
-        12
+        13,
+        15
       ],
       "room": "radio",
       "yaw": 180,
@@ -105,12 +117,14 @@
       "push": [
         1.1,
         1.3
-      ]
+      ],
+      "clock": 48,
+      "seconds": 12
     },
     {
       "sweeps": [
-        13,
-        13
+        16,
+        16
       ],
       "room": "gallery",
       "yaw": 60,
@@ -118,12 +132,14 @@
       "push": [
         1.0,
         1.1
-      ]
+      ],
+      "clock": 60,
+      "seconds": 4
     },
     {
       "sweeps": [
-        14,
-        14
+        17,
+        18
       ],
       "room": "stairs",
       "yaw": 0,
@@ -131,12 +147,14 @@
       "push": [
         1.0,
         1.1
-      ]
+      ],
+      "clock": 64,
+      "seconds": 8
     },
     {
       "sweeps": [
-        15,
-        15
+        19,
+        19
       ],
       "room": "lamp",
       "yaw": 90,
@@ -144,9 +162,12 @@
       "push": [
         1.4,
         1.6
-      ]
+      ],
+      "clock": 72,
+      "seconds": 4
     }
   ],
   "camera_note": "The recorder's camera orbits above each room, so the storyboard's low angle on the tower, the dry seabed and the town far off are not in view; the yaw of each gallery shot was chosen from four test stills (60, 120, 210, 300 degrees) as the one with the most of the tower in frame.",
-  "ui_note": "KEEPERS_OPEN=logbook opens the node's first line; reaching its [TIDE 8] check needs a choice the recorder cannot make, so sweep 10 shows the game's dialogue box on the logbook's opening line instead of the check (pending: a scripted choice in the recorder, owned by the brender-archival session)."
+  "ui_note": "KEEPERS_OPEN=logbook opens the node's first line; reaching its [TIDE 8] check needs a choice the recorder cannot make, so sweep 12 shows the game's dialogue box on the logbook's opening line instead of the check (pending: a scripted choice in the recorder, owned by the brender-archival session).",
+  "status": "Shots laid out on 14 October 2026 for the 84 s cut (21 sweeps). None is recorded for this cut yet. Each shot's clock is its trailer time; one sweep is one full turn of the lamp, so the beam keeps its phase across cuts."
 }
