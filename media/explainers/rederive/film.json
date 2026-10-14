@@ -118,7 +118,8 @@
             "on": 3,
             "label": "status",
             "value": "an estimate from a subset",
-            "verdict": "UNVERIFIED"
+            "verdict": "UNVERIFIED",
+            "tag": "estimate"
           }
         ]
       }
@@ -160,7 +161,7 @@
           "on": 1,
           "text": "220 checks over 240 million certificates"
         },
-        "hot_note": "hot bar: 2012 (high liability)"
+        "hot_note": "marked bar: 2012"
       }
     },
     {

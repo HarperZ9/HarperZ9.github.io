@@ -11,7 +11,7 @@ import { text, fmt } from "../../../raw-native/web-23ec93f/motion/text.mjs";
 import { span, window, ease, rng, lerp } from "../../../raw-native/web-23ec93f/motion/timeline.mjs";
 import { C, rect, line, scrim } from "./lib.mjs";
 
-const N = 126000, PEOPLE = 1500, AX0 = 360, AX1 = 1560, AXY = 940;
+const N = 126000, PEOPLE = 1500, AX0 = 360, AX1 = 1560, AXY = 712;   // the time axis sits above the captions
 const ROOTS = [[640, 520], [1280, 520]];
 
 function tree(seed, rootX, rootY) {
@@ -36,7 +36,7 @@ export function prepare(A, ctx) {
   const r = rng(126000);
   A.s4 = {
     trees: [tree(11, ...ROOTS[0]), tree(29, ...ROOTS[1])],
-    cascades: text("about 126,000 rumor cascades on Twitter, 2006 to 2017", { atlas: A.sans, size: 30, x: 960, y: 1000, anchor: "center" }).shape,
+    cascades: text("about 126,000 rumor cascades on Twitter, 2006 to 2017", { atlas: A.sans, size: 30, x: 960, y: 188, anchor: "center" }).shape,
     falseL: text("false", { atlas: A.head, size: 34, x: ROOTS[0][0], y: 200, anchor: "center" }).shape,
     trueL: text("true", { atlas: A.head, size: 34, x: ROOTS[1][0], y: 200, anchor: "center" }).shape,
     retweet: text("false stories: 70% more likely to be retweeted", { atlas: A.sans, size: 28, x: 960, y: 120, anchor: "center" }).shape,
@@ -114,7 +114,7 @@ export function draw(t, A, T, items) {
       if (S.nodes) items.push({ kind: "particles", system: S.nodes[k], from: 0, to: 1, t: u, spread: 0.04, drift: 0, time: t, size: [0, 4.2], blend: "add", opacity: raceA * vis });
       const botA = span(t, T.bots, T.bots + 1.0) * raceA;
       if (botA > 0 && bots.length) items.push({ shape: bots, stroke: C.ink, width: 1.4, opacity: botA });
-      scr(text(`${fmt(n)} people`, { atlas: A.mono, size: 30, x: ROOTS[k][0], y: 840, anchor: "center" }).shape, k === 0 ? C.hot : C.ink, raceA);
+      scr(text(`${fmt(n)} ${n === 1 ? "person" : "people"}`, { atlas: A.mono, size: 30, x: ROOTS[k][0], y: 650, anchor: "center" }).shape, k === 0 ? C.hot : C.ink, raceA);
     }
     scr(S.falseL, C.hot, raceA); scr(S.trueL, C.ink, raceA);
     // The time axis: a marker per tree runs until its tree reaches 1,500.

@@ -1,0 +1,80 @@
+SHA = "7587e22f88f08a8ef589fb3a29bc0943172a9f44"
+B = f"https://github.com/HarperZ9/superstack/blob/{SHA}/"
+def L(path, label=None):
+    return f'<a href="{B}{path}">{label or path}</a>'
+
+FLOW = ["scene", "canonical JSON", "seed", "clock", "content", "receipt", "verify"]
+
+SPEC = {
+    "slug": "superstack", "repo": "superstack", "sha": SHA, "name": "superstack", "version": "release 0.2.0",
+    "description": "An animated walk through superstack, one contract for renderers and sound engines: canonical JSON that three languages write byte for byte, a seed rule and an integer clock, and a sealed receipt with an identity verdict and a tolerance verdict, checked against a proof scene. Built from superstack at commit 7587e22.",
+    "lede": "One contract for renderers and sound engines, checked byte for byte.",
+    "for_you": "superstack lets a frame or a sound made by one engine be checked against another, byte for byte. You copy one file for your language: Python, JavaScript or C++. It hashes any scene the same way in all three, draws the same random numbers from the same seed string, keeps time on one integer clock, and seals a receipt that says whether your bytes equal the reference and whether they fall within tolerance. Every receipt also lists what it does not prove.",
+    "uses": [
+        ("Same bytes in three languages", "Canonical JSON v2 has one number form that Python, JavaScript and C++ all write."),
+        ("Same randomness from a string", "A seed string goes through xmur3 into mulberry32, so every language draws the same stream."),
+        ("Two verdicts, kept apart", "Identity is MATCH or DRIFT. Tolerance is verified, refuted or unverifiable."),
+        ("Conformance you can run", "383 vector checks per language, and 59 paired mutations that each break one rule."),
+    ],
+    "how_intro": "Scroll, or use the step buttons. Every value below is output from the Python and JavaScript files at commit 7587e22, or from <code>examples/run_all.py --ci</code>, which CI runs on Linux and Windows.",
+    "steps": [
+        {"title": "One number form for every language",
+         "paras": ["Hash a scene in Python and in JavaScript and you need the same bytes first. <code>canonical</code> sorts keys, writes compact UTF-8 and uses one number form: <code>1.0</code> becomes <code>1</code> and <code>1e-7</code> becomes <code>0.0000001</code>, which C++ writes the same way."],
+         "src": L("SPEC.md", "SPEC.md") + ", section 3; " + L("superstack.py"),
+         "scene": [{"pipe": {"stages": FLOW, "active": 1}},
+                   {"io": {"cmd": 'ss.canonical({"b": 1.0, "a": 1e-7})', "lines": [['{"a":0.0000001,"b":1}', "hi"]]}}]},
+        {"title": "A seed string, one stream everywhere",
+         "paras": ["The seed rule turns a string into numbers: xmur3 hashes it and mulberry32 draws from it. The seed <code>folded-light</code> gives the same stream in each language, and its 32-bit value goes into the receipt."],
+         "src": "SPEC.md, section 4",
+         "scene": [{"pipe": {"stages": FLOW, "active": 2}},
+                   {"io": {"cmd": 'r = ss.rng("folded-light")', "lines": ["0.9906783360056579", "0.32101074047386646", "0.3623448656871915", ["seed_u32 2941645112", "hi"]]}}]},
+        {"title": "Time on one integer clock",
+         "paras": ["Time is counted in flicks, 705,600,000 per second. Common frame and sample rates land on whole numbers: one sample at 48 kHz is 14,700 flicks and at 44.1 kHz is 16,000. Four samples at 48 kHz last 58,800 flicks, with no rounding."],
+         "src": "SPEC.md, section 5",
+         "scene": [{"pipe": {"stages": FLOW, "active": 3}},
+                   {"table": {"head": ["rate", "flicks per sample"], "rows": [["48,000 Hz", "14,700"], ["44,100 Hz", "16,000"], ["4 samples at 48 kHz", "58,800"]]}}]},
+        {"title": "Seal a receipt",
+         "paras": ["Four float samples are quantised to 16-bit PCM and hashed. <code>make_receipt</code> records the scene hash, the seed, the clock, the media description with its access settings (no autoplay, a reduced-sound mode) and the content hash, then seals the whole receipt with SHA-256.",
+                   "A <code>does_not_prove</code> line is required: here, that a PCM hash says nothing about how a device plays the sound."],
+         "src": L("superstack.py") + ", <code>make_receipt</code>; SPEC.md, section 6",
+         "scene": [{"pipe": {"stages": FLOW, "active": 5}},
+                   {"io": {"cmd": "ss.make_receipt(producer='my-synth', ..., content=ss.quantize_s16([0.0, 0.25, -0.25, 0.5]))",
+                           "lines": ["schema          superstack.receipt/1", "scene_sha256    42fbae6d8011ad33...", "seed_rule       xmur3-mulberry32/1", "duration_flicks 58800",
+                                     "content_sha256  33b047ac8f974190...", "does_not_prove  A PCM hash says nothing about how a device plays the sound.", ["receipt_sha256  9b10693f6e0f65eb...", "hi"]]}}]},
+        {"title": "Verify, and what fails it",
+         "paras": ["<code>verify_receipt</code> returns a list of problems. A fresh receipt returns none. Change a field after sealing and the seal fails. Empty the <code>does_not_prove</code> list and that rule fails by name. Pick each case in the panel."],
+         "src": L("superstack.py") + ", <code>verify_receipt</code>",
+         "scene": [{"pipe": {"stages": FLOW, "active": 6}},
+                   {"cases": {"label": "Choose an edit", "items": [
+                       {"label": "untouched", "blocks": [{"io": {"cmd": "ss.verify_receipt(receipt)", "lines": ["[]"], "verdict": ["valid", "ok", "no problems"]}}]},
+                       {"label": "a field changed after sealing", "blocks": [{"io": {"cmd": "ss.verify_receipt(edited)", "lines": ["['seal']"], "verdict": ["invalid", "drift", "the seal no longer matches"]}}]},
+                       {"label": "does_not_prove emptied", "blocks": [{"io": {"cmd": "ss.verify_receipt(edited)", "lines": ["['does_not_prove']"], "verdict": ["invalid", "drift", "the limits line is required"]}}]}]}}]},
+        {"title": "The proof scene, with its controls",
+         "paras": ["The examples render one scene and one sound through more than one engine and check each against its reference. A numpy port of raw-native gives the reference pixel hash, <code>0282ef9c</code>, and the JavaScript sound path gives the reference PCM hash, <code>692ead20</code>.",
+                   "Three controls must fail, and they do: an AO radius of 1.5 where the scene says 2, one flipped byte, and one voice one sample late."],
+         "src": L("examples/run_all.py") + "; " + L("examples/README.md"),
+         "scene": [{"io": {"cmd": "python examples/run_all.py --ci", "lines": ["pixels python               MATCH verified", "sound  sound-js-exact       MATCH verified",
+                                                                                 "control wrong_ao_radius          DRIFT refuted   as expected", "control one_byte_flipped         DRIFT verified  as expected",
+                                                                                 "control sound_one_sample_late    DRIFT refuted   as expected", ["examples: all expectations held", "hi"]],
+                           "verdict": ["all held", "ok", "exit 0"]}}]},
+    ],
+    "try": [
+        ("Clone and run the vectors (Python 3.11 or newer, Node 20 or newer). No install step.",
+         "$ git clone https://github.com/HarperZ9/superstack && cd superstack\n$ python tests/run_vectors.py\n<span class=\"out\">python: 383/383 checks passed</span>\n$ node tests/run_vectors.mjs\n<span class=\"out\">javascript: 383/383 checks passed</span>\n$ python examples/run_all.py --ci"),
+    ],
+    "try_src": "Output from superstack at 7587e22 on Windows with Python 3.12 and Node 25. The C++ runner was not built for this page; the README reports 383 checks for it too.",
+    "limits": [
+        "A content hash proves the bytes. It says nothing about how a screen shows them or a device plays them, and each receipt says so in its own words.",
+        "The proof observed equality on one workstation and on CI runners. It does not show equality across GPU vendors or drivers.",
+        "The pixel reference's own certificate refutes its screen-space AO against its ray-traced AO on the proof view. The contract checks agreement between engines. Whether the reference is good is a separate question.",
+        "Narration backends are never references. Their output is checked for tolerance only.",
+    ],
+    "limits_src": "README.md at 7587e22, \"Evidence\"; SPEC.md, section 8",
+    "recall": [
+        ("What does canonical JSON write for 1.0 and 1e-7?", "1 and 0.0000001, in every language."),
+        ("How many flicks are in one sample at 48 kHz?", "14,700. A second is 705,600,000 flicks, chosen so common rates divide it evenly."),
+        ("What are a receipt's two verdicts?", "Identity, MATCH or DRIFT, and tolerance: verified, refuted or unverifiable."),
+        ("One byte of a frame is flipped. Which verdicts does the control get?", "DRIFT for identity and verified for tolerance: the bytes differ, but by one level on one pixel."),
+    ],
+    "license_line": "superstack's code is released under FSL-1.1-MIT and its text under CC BY 4.0.",
+}

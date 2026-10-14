@@ -9,3 +9,10 @@ html body.studio-page .sf-fallback{position:absolute;inset:0;display:flex;flex-d
 html body.studio-page .sf-fallback .sf-film figcaption{color:#cfc8bb}
 html body.studio-page .sf-fallback .sf-film figcaption b{color:#f2ede4}
 html body.studio-page .sf-fallback .sf-film figcaption a{color:#f2ede4}
+/* What a One Step film's pictures stand for, and the sources for the mechanisms depicted. */
+html body.studio-page .sf-about{font-family:var(--st-sans, system-ui);font-size:.8rem;line-height:1.45;color:var(--st-soft, #555);margin-top:.4rem}
+html body.studio-page .sf-about summary{cursor:pointer;color:var(--st-ink, #111);min-height:28px}
+html body.studio-page .sf-about dl{display:grid;grid-template-columns:minmax(6rem,auto) 1fr;gap:.2rem .7rem;margin:.4rem 0}
+html body.studio-page .sf-about dt{font-weight:600;color:var(--st-ink, #111)}
+html body.studio-page .sf-about dd{margin:0}
+html body.studio-page .sf-about ul{margin:.2rem 0 0;padding-left:1.1rem}

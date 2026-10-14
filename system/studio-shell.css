@@ -139,6 +139,11 @@ html body.studio-page #viewport-stage .studio-hub-preview{
   aspect-ratio:auto;width:auto;height:auto;max-height:none;border-radius:0;
 }
 html body.studio-page #viewport-stage .studio-hub-preview[hidden]{display:none!important}
+/* The Verified viewer: raw-native's own page fills the stage and scrolls inside it (studio-viewer.js). */
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="viewer"]{align-items:stretch;justify-content:stretch;background:transparent}
+html body.studio-page #viewport-stage .studio-hub-preview[data-hub="viewer"] iframe{flex:1 1 auto;width:100%;height:100%;border:0;display:block;background:transparent}
+/* On a phone the viewer page needs more height than the sticky stage gives; the stage joins the flow instead. */
+@media (max-width: 760px){html body.studio-page #viewport-stage:has(> #viewer-stage:not([hidden])){position:relative;top:auto;aspect-ratio:auto;height:78vh;max-height:none}}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate{width:100%;height:100%;margin:0;border:0;display:flex;flex-direction:column}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate-art{flex:1 1 auto;min-height:0;aspect-ratio:auto;height:auto}
 html body.studio-page #viewport-stage .studio-hub-preview[data-hub="gallery"] .plate-art canvas{width:100%;height:100%;display:block}
@@ -198,3 +203,63 @@ html body.studio-page #studio-rail .ia-export-group{margin:.45rem .2rem .1rem;fo
 @media (hover:none) and (pointer:coarse){
   html body.studio-page .studio-find kbd{display:none}
 }
+/* Presets (studio-shell-dom.js): a folded list under the keep line, in the rail's own faces. */
+html body.studio-page #studio-rail .ia-presets{margin:.1rem 0 .6rem}
+html body.studio-page #studio-rail .ia-presets>summary{display:inline-flex;list-style:none}
+html body.studio-page #studio-rail .ia-presets-new{display:flex;gap:.4rem;margin:.5rem 0}
+html body.studio-page #studio-rail .ia-presets-new input{flex:1 1 auto;min-width:0;font:inherit;padding:.35rem .5rem;border:1px solid var(--chrome-line-strong,#7b7262);background:transparent;color:inherit}
+html body.studio-page #studio-rail .ia-presets-list{list-style:none;margin:0;padding:0;display:grid;gap:.25rem}
+html body.studio-page #studio-rail .ia-presets-list li{display:flex;gap:.3rem;align-items:center}
+html body.studio-page #studio-rail .ia-preset-apply{flex:1 1 auto;justify-content:flex-start;text-align:left}
+html body.studio-page #studio-rail .ia-presets-empty,html body.studio-page #studio-rail .ia-presets-note{font-size:.8rem;color:var(--chrome-muted,#5f584d);margin:.3rem 0}
+/* Drag frame (studio-dnd.js): a small handle at the stage's top right, and the tools that take a
+   frame marked in the source menu while one is being dragged. */
+html body.studio-page #viewport-stage .stage-drag{position:absolute;top:.5rem;right:.5rem;z-index:6;font:inherit;font-size:.75rem;padding:.25rem .55rem;border:1px solid var(--chrome-line-strong,#7b7262);background:var(--chrome-ground,#ebe5d8);color:var(--chrome-ink,#16130f);cursor:grab;opacity:.85}
+html body.studio-page #viewport-stage .stage-drag:hover,html body.studio-page #viewport-stage .stage-drag:focus-visible{opacity:1}
+@media (hover:none) and (pointer:coarse){html body.studio-page #viewport-stage .stage-drag{display:none}}
+html body.studio-page #studio-source button.drop-ok{outline:1px dashed var(--chrome-ink,#16130f);outline-offset:-3px}
+html body.studio-page #studio-source button.drop-over{outline:2px solid var(--chrome-ink,#16130f);outline-offset:-3px}
+/* The stage gets the room (studio-layout.js). On a desktop the readings fold to a strip with one
+   button; the strip is the whole column, so the stage takes the width the readings gave up. */
+html body.studio-page .readings-toggle{display:none}
+@media (min-width:900px){
+  html body.studio-page .readings-toggle{display:block;width:100%;font:inherit;font-size:.8125rem;font-weight:600;padding:.55rem .5rem;border:0;border-bottom:1px solid var(--st-line);background:var(--st-paper);color:var(--st-ink);cursor:pointer;text-align:left}
+  html body.studio-page .readings-toggle:focus-visible{outline:2px solid var(--st-ink);outline-offset:-2px}
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(236px,16rem) minmax(0,1fr) 2.75rem}
+  html body.studio-page .studio-app.readings-collapsed #studio-panel > :not(.readings-toggle){display:none!important}
+  html body.studio-page .studio-app.readings-collapsed .readings-toggle{writing-mode:vertical-rl;height:100%;text-align:start;padding:.9rem .6rem;border-bottom:0}
+  /* The workshop line under the plate: one line, the rest on hover or focus. */
+  html body.studio-page #studio-viewport #st-flow{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html body.studio-page #studio-viewport #st-flow:is(:hover,:focus-within){white-space:normal}
+}
+@media (min-width:1280px){
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(272px,19.5rem) minmax(0,1fr) 2.75rem}
+}
+@media (min-width:900px){
+  /* Tighter mat and notes under the plate: every pixel saved goes to the picture. */
+  html body.studio-page #studio-viewport{padding-top:.6rem;padding-bottom:.4rem;gap:.35rem}
+  html body.studio-page #studio-viewport .engine-status{margin:0}
+  html body.studio-page #studio-viewport .engine-status>summary{padding-top:.2rem;padding-bottom:.2rem;min-height:0}
+  html body.studio-page #studio-viewport #st-flow{margin:0;padding:.15rem 0}
+}
+@media (min-width:1280px) and (max-width:1599.98px){
+  html body.studio-page .studio-app.readings-collapsed{grid-template-columns:minmax(272px,17.5rem) minmax(0,1fr) 2.75rem}
+}
+/* The timeline (studio-timeline.js): a strip over the foot of the stage, ink on the calm ground. */
+html body.studio-page #viewport-stage .studio-timeline{position:absolute;left:.5rem;right:.5rem;bottom:.5rem;z-index:7;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;padding:.45rem .6rem;background:var(--st-paper,#ebe5d8);color:var(--st-ink,#16130f);border:1px solid var(--st-line-strong,#7b7262);font-size:.8125rem}
+html body.studio-page #viewport-stage .studio-timeline[hidden]{display:none}
+html body.studio-page .studio-timeline .tl-track{position:relative;flex:1 1 12rem;min-width:8rem}
+html body.studio-page .studio-timeline input[type=range]{width:100%;accent-color:currentColor;margin:0}
+html body.studio-page .studio-timeline .tl-marks{position:absolute;left:0;right:0;top:-.35rem;height:.3rem;pointer-events:none}
+html body.studio-page .studio-timeline .tl-mark{position:absolute;width:2px;height:.45rem;margin-left:-1px;background:currentColor}
+html body.studio-page .studio-timeline .tl-time{font-family:var(--st-mono,monospace);min-width:4.5rem}
+html body.studio-page .studio-timeline select{font:inherit}
+html body.studio-page .studio-timeline .tl-note{flex-basis:100%;min-height:1em;color:var(--st-soft,#4a443b)}
+/* On a phone the timeline sits under the stage, in the page's flow. */
+html body.studio-page .studio-timeline.tl-below{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;margin:.4rem 1rem 0;padding:.45rem .6rem;border:1px solid var(--st-line-strong,#7b7262);background:var(--st-paper,#ebe5d8);color:var(--st-ink,#16130f);font-size:.8125rem}
+html body.studio-page .studio-timeline.tl-below[hidden]{display:none}
+html body.studio-page .studio-timeline.tl-below .tl-track{position:relative;flex:1 1 100%}
+html body.studio-page .studio-timeline.tl-below input[type=range]{width:100%;accent-color:currentColor}
+html body.studio-page .studio-timeline.tl-below .tl-marks{position:absolute;left:0;right:0;top:-.35rem;height:.3rem;pointer-events:none}
+html body.studio-page .studio-timeline.tl-below .tl-mark{position:absolute;width:2px;height:.45rem;margin-left:-1px;background:currentColor}
+html body.studio-page .studio-timeline.tl-below .tl-note{flex-basis:100%}

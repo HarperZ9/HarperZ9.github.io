@@ -72,3 +72,6 @@ details[id$="-transcript"] h4{margin:1rem 0 .3rem}
   .fl-ix-t{grid-column:2;grid-row:2;font-size:.95rem}
   .fl-ix-m{grid-column:2;grid-row:3}
 }
+/* "Source now": the source of the chapter playing, under the player (film.mjs). */
+.fl-now{margin:.2rem 0 .6rem;font-size:.86rem;line-height:1.45;color:color-mix(in srgb,currentColor 80%,transparent);max-width:64rem}
+.fl-now-k{font-family:"Conso",ui-monospace,monospace;font-size:.76rem;margin-right:.6rem;padding-right:.6rem;border-right:1px solid color-mix(in srgb,currentColor 30%,transparent)}

@@ -11,9 +11,10 @@
 // Undo, Redo or keep line; history: false keeps a snapshot without Undo and Redo (a file's name,
 // say, which can be remembered but not undone).
 
-import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261009-films-source";
+import { SOURCE_GUIDE, createHistory, isTextEntry, chordOf } from "./studio-shell.js?v=20261012-viewer";
 import { createStore, keepMessage } from "./studio-store.js?v=20261004-studio-keep";
-import { buildProject, readProject, applyProject } from "./studio-project.js?v=20261009-export-project";
+import { buildProject, readProject, applyProject } from "./studio-project.js?v=20261009-presets";
+import { createPresets } from "./studio-presets.js?v=20261009-presets";
 
 function el(ctx, tag, cls, text, attrs = {}) {
   const n = ctx.doc.createElement(tag);
@@ -97,7 +98,10 @@ function exportMenu(ctx, c) {
 // Project files (studio-project.js): save what this browser keeps for every source; open one by
 // writing its sessions back and reloading onto its source, so each resumes as after a reload.
 function saveProject(ctx) {
+  flush(ctx, ctx.getSource());
   const doc = buildProject(ctx.store, Object.keys(ctx.contracts), ctx.getSource());
+  doc.presets = ctx.presets.all(Object.keys(ctx.contracts));
+  if (ctx.projectExtras && ctx.projectExtras.save) { try { Object.assign(doc, ctx.projectExtras.save(Object.keys(ctx.contracts))); } catch (err) { console.error("[studio-shell] project extras failed:", err); } }
   const blob = new Blob([JSON.stringify(doc, null, 1), "\n"], { type: "application/json" });
   const a = ctx.doc.createElement("a");
   const stamp = doc.savedAt.replace(/[-:]/g, "").slice(0, 13);
@@ -122,6 +126,8 @@ async function openProjectFile(ctx, file) {
   if (!read.ok) { sayLine(ctx, "Not opened: " + read.reason + "."); return false; }
   if (!ctx.store.available()) { sayLine(ctx, "Not opened: this browser blocks site storage, so the sessions have nowhere to go."); return false; }
   const r = applyProject(ctx.store, read);
+  if (read.doc.presets) ctx.presets.putAll(read.doc.presets, Object.keys(ctx.contracts));
+  if (ctx.projectExtras && ctx.projectExtras.open) { try { ctx.projectExtras.open(read.doc, Object.keys(ctx.contracts)); } catch (err) { console.error("[studio-shell] project extras failed:", err); } }
   if (r.refused.length) console.warn("[studio-shell] project sessions not kept:", r.refused);
   const go = read.active || ctx.getSource();
   const url = new URL(ctx.doc.location.href);
@@ -140,12 +146,55 @@ function keepLine(ctx) {
       title: "Clear the work kept for this source and go back to its first state. Undo brings it back." }));
   return keep;
 }
+// Presets (studio-presets.js): name the setup on screen and keep it; apply one as one undo step.
+function presetsBlock(ctx, source) {
+  const d = el(ctx, "details", "ia-presets", null, { id: "inspector-presets" });
+  const sum = el(ctx, "summary", "btn ghost", "Presets");
+  const body = el(ctx, "div", "ia-presets-body");
+  const row = el(ctx, "div", "ia-presets-new");
+  const name = el(ctx, "input", null, null, { type: "text", id: "inspector-preset-name", maxlength: "60", placeholder: "Name this setup", "aria-label": "Name for a new preset", autocomplete: "off", spellcheck: "false" });
+  const list = el(ctx, "ul", "ia-presets-list", null, { "aria-label": "Saved presets" });
+  const note = el(ctx, "p", "ia-presets-note", null, { role: "status", "aria-live": "polite" });
+  const paint = () => {
+    list.replaceChildren();
+    const items = ctx.presets.list(source);
+    if (!items.length) list.append(el(ctx, "li", "ia-presets-empty", "None yet. Set things the way you like, name it, and press Keep."));
+    for (const p of items) {
+      const li = el(ctx, "li");
+      li.append(button(ctx, p.name, "btn ghost ia-preset-apply", () => applyPreset(ctx, source, p, note), { "data-preset": p.name, title: "Put this setup back (Undo returns to what you had)" }),
+        button(ctx, "Remove", "btn ghost ia-preset-remove", () => { ctx.presets.remove(source, p.name); paint(); note.textContent = `Removed "${p.name}".`; }, { "aria-label": `Remove the preset ${p.name}` }));
+      list.append(li);
+    }
+  };
+  const keep = () => {
+    let state = null;
+    try { state = ctx.contracts[source].snapshot(); } catch (err) { console.error("[studio-shell] snapshot failed for " + source + ":", err); }
+    const r = ctx.presets.save(source, name.value, state);
+    note.textContent = r.ok ? `Kept "${r.name}".` : r.reason === "no name" ? "Give it a name first." : r.reason === "blocked" ? "Not kept: this browser blocks site storage." : "Not kept: " + r.reason + ".";
+    if (r.ok) { name.value = ""; paint(); }
+  };
+  name.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); keep(); } });
+  row.append(name, button(ctx, "Keep", "btn ghost", keep, { id: "inspector-preset-keep" }));
+  body.append(row, list, note);
+  d.append(sum, body);
+  d.addEventListener("toggle", () => { if (d.open) paint(); });
+  paint();
+  return d;
+}
+function applyPreset(ctx, source, p, note) {
+  flush(ctx, source);
+  ctx.onMaking();
+  apply(ctx, source, JSON.parse(JSON.stringify(p.state)));
+  record(ctx, source, "preset " + p.name);
+  note.textContent = `Applied "${p.name}". Undo goes back.`;
+}
 // The action bar, in one order: main action, Undo, Redo, Export, Pin; the keep line sits under it.
 function paintBar(ctx, source) {
   const bar = ctx.bar; if (!bar) return;
   const c = ctx.contracts[source];
   bar.replaceChildren();
   const oldKeep = ctx.$("inspector-keep"); if (oldKeep) oldKeep.remove();
+  const oldPresets = ctx.$("inspector-presets"); if (oldPresets) oldPresets.remove();
   if (ctx.rail) ctx.rail.dataset.inspector = c ? "unified" : "legacy";
   if (!c) { bar.hidden = true; return; }
   bar.hidden = false;
@@ -162,7 +211,11 @@ function paintBar(ctx, source) {
   }
   if (c.exports && c.exports.length) bar.append(exportMenu(ctx, c));
   if (c.pin) bar.append(button(ctx, "Pin", "btn ghost", proxy(ctx, c.pin), { "data-action": "pin" }));
-  if (c.snapshot) { bar.after(keepLine(ctx)); sayKept(ctx, source); }   // under the bar: one row on a phone
+  if (c.snapshot) {
+    const keep = keepLine(ctx);
+    bar.after(keep); sayKept(ctx, source);   // under the bar: one row on a phone
+    keep.after(presetsBlock(ctx, source));
+  }
   syncHistoryButtons(ctx, source);
 }
 const hasHistory = (c) => !!(c && c.snapshot && c.history !== false);
@@ -180,9 +233,20 @@ function sayKept(ctx, source) {
 }
 
 // History and keeping.
-function record(ctx, source, label) {
+// A step a source asked to record "soon" (a zoom settling, a redraw landing) is recorded now when
+// anything else is about to happen: another step, Undo or Redo, a preset, Start fresh, or leaving
+// the source. Without this, a quick switch or Undo inside the 400 ms window lost the step (found by
+// the condition-wait tests, 10 October 2026).
+function flush(ctx, source) {
+  const pending = ctx.timers.get(source);
+  if (!pending) return;
+  clearTimeout(pending.id);
+  ctx.timers.delete(source);
+  record(ctx, source, pending.label, { leaving: true });
+}
+function record(ctx, source, label, { leaving = false } = {}) {
   const c = ctx.contracts[source];
-  if (!c || !c.snapshot || ctx.restoring || source !== ctx.getSource()) return false;
+  if (!c || !c.snapshot || ctx.restoring || (!leaving && source !== ctx.getSource())) return false;
   let state = null;
   try { state = c.snapshot(); } catch (err) { console.error("[studio-shell] snapshot failed for " + source + ":", err); return false; }
   const changed = ctx.history.record(source, state, label);
@@ -226,6 +290,7 @@ function resume(ctx, source, { apply: applyKept = true } = {}) {
 function startFresh(ctx) {
   const s = ctx.getSource(), c = ctx.contracts[s];
   if (!c || !c.reset) return false;
+  flush(ctx, s);
   ctx.store.clear(s);
   ctx.kept.delete(s);
   ctx.restoring = true;
@@ -236,8 +301,8 @@ function startFresh(ctx) {
   sayKept(ctx, s);
   return true;
 }
-function undo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.undo(s)) : false; }
-function redo(ctx) { const s = ctx.getSource(); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.redo(s)) : false; }
+function undo(ctx) { const s = ctx.getSource(); flush(ctx, s); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.undo(s)) : false; }
+function redo(ctx) { const s = ctx.getSource(); flush(ctx, s); return hasHistory(ctx.contracts[s]) ? apply(ctx, s, ctx.history.redo(s)) : false; }
 
 function wireKeys(ctx) {
   ctx.doc.addEventListener("keydown", (e) => {
@@ -259,25 +324,25 @@ function markBarTargets(ctx) {
 }
 
 /** mountShell({ doc, rail, getSource, contracts, storage, onMaking }) -> the shell's handle. */
-export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {}, stageExports = [] }) {
+export function mountShell({ doc = globalThis.document, rail, getSource, contracts = {}, storage, onMaking = () => {}, stageExports = [], projectExtras = null }) {
   const $ = (id) => doc.getElementById(id);
   const maxBytes = (typeof window !== "undefined" && window.__studioKeepMaxBytes) || undefined;
   const ctx = { doc, $, rail, getSource, contracts, onMaking,
     sw: $("source-switch"), menu: $("studio-source"), head: $("inspector-head"), bar: $("inspector-actions"),
-    history: createHistory(), store: createStore({ storage, maxBytes }), kept: new Map(), resumed: new Set(), restoring: false, stageExports };
+    history: createHistory(), store: createStore({ storage, maxBytes }), presets: createPresets({ storage }), kept: new Map(), resumed: new Set(), restoring: false, stageExports, projectExtras, timers: new Map() };
   wireSwitch(ctx);
   wireKeys(ctx);
   markBarTargets(ctx);
   paintHead(ctx, getSource());
   paintBar(ctx, getSource());
   if (rail && !rail.dataset.sources) setOpen(ctx, false);
-  const timers = new Map();
   return {
-    sourceChanged(next) { paintHead(ctx, next); paintBar(ctx, next); },
-    record: (source, label) => record(ctx, source, label),
+    sourceChanged(next) { for (const s of [...ctx.timers.keys()]) if (s !== next) flush(ctx, s); paintHead(ctx, next); paintBar(ctx, next); },
+    record: (source, label) => { flush(ctx, source); return record(ctx, source, label); },
     recordSoon(source, label, ms = 400) {
-      clearTimeout(timers.get(source));
-      timers.set(source, setTimeout(() => record(ctx, source, label), ms));
+      const old = ctx.timers.get(source); if (old) clearTimeout(old.id);
+      const id = setTimeout(() => { ctx.timers.delete(source); record(ctx, source, label); }, ms);
+      ctx.timers.set(source, { id, label });
     },
     resume: (source, opts) => resume(ctx, source, opts),
     startFresh: () => startFresh(ctx),

@@ -23,9 +23,21 @@
 // returns true. Throws a clear Error if WebGL is unavailable or the program fails to compile/link,
 // and the Studio catches that and falls back to the CPU renderFractal().
 
-import { PALETTES } from "./fractal.js";
+import { PALETTES, paletteOf } from "./fractal.js";
 import { preparePalette } from "./fractal-color.js";
 import { VERT, MAX_ITERS, DS_LIB, buildFragment } from "./fractal-glsl.js";
+import { MAX_STOPS } from "./fractal-glsl-lib.js";
+import { renderDeep, DEEP_MIN_SCALE } from "./fractal-gl-deep.js";
+import { renderFormulaGL, renderLyapunovGL } from "./fractal-gl-formula.js";
+import { FORMULA_TYPES } from "./fractal-formulas.js";
+import { BUDDHA_TYPES, buildBuddhaDisplay } from "./fractal-buddhabrot.js";
+import { runBuddhabrot, stopBuddhabrot, buddhaSupported } from "./fractal-gl-buddhabrot.js";
+import { RAMP_LIB, ENCODE_LIB } from "./fractal-glsl-lib.js";
+import { drawColoured } from "./fractal-gl-colour.js";
+import { fullOrbit, orbitSource } from "./fractal-colouring.js";
+
+// Formulas the perturbation path draws. Every other formula stays on the float32 and df64 programs.
+const DEEP_TYPES = new Set(["mandelbrot", "julia", "burningship", "tricorn"]);
 
 // Split a JS double into the two float32 limbs the df64 shader expects. `hi` is the nearest float32;
 // `v - hi` is then exact in double arithmetic and itself representable as a float32, so hi + lo
@@ -87,22 +99,24 @@ function compile(gl, type, src) {
 // interpolates between them and a palette gradient is read rather than integrated. preparePalette()
 // in fractal-color.js does the conversion, and is the same call the CPU renderer makes, which is
 // what keeps the two images the same colour. It caches per palette, so this costs one map per frame.
-function palToFloats(palName) {
-  const pal = PALETTES[palName] || PALETTES.ocean;
+function palToFloats(palName, gradient) {
+  const pal = paletteOf({ palette: palName, gradient });
   const { lab } = preparePalette(pal);
-  const out = new Float32Array(18);
-  for (let i = 0; i < 6; i++) {
-    const s = lab[Math.min(i, lab.length - 1)];
+  const n = Math.max(2, Math.min(MAX_STOPS, lab.length));
+  const out = new Float32Array(MAX_STOPS * 3);
+  for (let i = 0; i < n; i++) {
+    const s = lab[i];
     out[i * 3 + 0] = s[0];
     out[i * 3 + 1] = s[1];
     out[i * 3 + 2] = s[2];
   }
+  out.n = n;   // how many stops are in use; the shader's u_palN
   return out;
 }
 
 // The trap glow ADDS the lightest stop as light, so that one stop is also needed in linear light.
-function tintToFloats(palName) {
-  const { tint } = preparePalette(PALETTES[palName] || PALETTES.ocean);
+function tintToFloats(palName, gradient) {
+  const { tint } = preparePalette(paletteOf({ palette: palName, gradient }));
   return new Float32Array(tint);
 }
 
@@ -112,17 +126,17 @@ function tintToFloats(palName) {
 // the canvas is replaced, as the 3D source does on mount/unmount).
 const GLCACHE = Symbol("fractalGLCache");
 
-function getProgram(gl, canvas, type, precision) {
+function getProgram(gl, canvas, type, precision, full = false) {
   let cache = canvas[GLCACHE];
   if (!cache || cache.gl !== gl) {
     cache = canvas[GLCACHE] = { gl, byType: {} };
   }
-  const key = precision === "double" ? type + ":df" : type;
+  const key = (precision === "double" ? type + ":df" : type) + (full ? ":orbit" : "");
   if (cache.byType[key]) return cache.byType[key];
 
   const prog = gl.createProgram();
   const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-  const fs = compile(gl, gl.FRAGMENT_SHADER, buildFragment(type, precision));
+  const fs = compile(gl, gl.FRAGMENT_SHADER, orbitSource(buildFragment(type, precision), full));
   gl.attachShader(prog, vs);
   gl.attachShader(prog, fs);
   gl.linkProgram(prog);
@@ -170,10 +184,17 @@ function hasUsableHighp(gl) {
 
 // Acquire (or reuse) a WebGL context on `canvas`. Caches it so repeated interaction frames don't
 // re-getContext. preserveDrawingBuffer:true so perceive()/the meter loop can read the pixels back.
+//
+// WebGL2 first: the deep-zoom program needs it (float textures, texelFetch, integer ops, loops with
+// a runtime bound), and a WebGL2 context still compiles the GLSL ES 1.00 programs unchanged. A
+// canvas binds to its first context type for good, so the choice is made here, once.
 function getGL(canvas) {
   if (canvas.__fractalGLContext) return canvas.__fractalGLContext;
-  const gl = canvas.getContext("webgl", { preserveDrawingBuffer: true, antialias: false })
-    || canvas.getContext("experimental-webgl", { preserveDrawingBuffer: true, antialias: false });
+  const attrs = { preserveDrawingBuffer: true, antialias: false };
+  let gl = null;
+  try { gl = canvas.getContext("webgl2", attrs); } catch (_) { gl = null; }
+  if (gl) canvas.__fractalGL2 = true;
+  gl = gl || canvas.getContext("webgl", attrs) || canvas.getContext("experimental-webgl", attrs);
   if (!gl) throw new Error("2D GPU fractals need WebGL. This browser/context has none.");
   canvas.__fractalGLContext = gl;
   return gl;
@@ -200,6 +221,44 @@ export function renderFractalGL(canvas, opts) {
   const gl = getGL(canvas);
   const w = canvas.width, h = canvas.height;
 
+  // The Buddhabrot accumulates over many frames on its own engine; any other view stops it.
+  if (BUDDHA_TYPES.includes(type)) {
+    if (!canvas.__fractalGL2 || !buddhaSupported(gl)) throw new Error("the GPU Buddhabrot needs WebGL2 with float render targets");
+    runBuddhabrot(gl, canvas, { ...opts, cx, cy, scale, maxIter }, buildBuddhaDisplay(RAMP_LIB, ENCODE_LIB), { pal: palToFloats(palette, opts.gradient) });
+    canvas.__fractalPrecisionUsed = "single";
+    return true;
+  }
+  stopBuddhabrot(canvas);
+
+  // Deep zoom: past df64's reach, a WebGL2 context draws by perturbation against a BigInt reference
+  // orbit (fractal-gl-deep.js), which holds every pixel apart down to 1e-300. Between float32's
+  // floor and df64's, df64 stays: on an RTX 4090 at 1280 x 720 it drew Seahorse Deep in 7 ms where
+  // perturbation took 27. A budget past the df64 program's 2000-iteration loop also goes to
+  // perturbation, which has no such ceiling. opts.precision "perturbation" forces this path;
+  // "single" and "double" force the older programs, for the precision tests.
+  const mode = fractalPrecisionMode(cx, cy, scale, w);
+  const deepType = DEEP_TYPES.has(type) ? type : null;
+  const wantDeep = precision === "perturbation"
+    || (precision === "auto" && (mode === "exhausted" || (mode === "double" && maxIter > MAX_ITERS)));
+  if (wantDeep && deepType && canvas.__fractalGL2 && hasUsableHighp(gl)) {
+    renderDeep(gl, canvas, { ...opts, type: deepType, scale: Math.max(DEEP_MIN_SCALE, scale) }, {
+      pal: palToFloats(palette, opts.gradient), tint: tintToFloats(palette, opts.gradient),
+    }, { aa: Math.max(1, Math.min(4, Math.round(aa))), glitchView: !!opts.glitchView, bla: opts.bla });
+    canvas.__fractalPrecisionUsed = "perturbation";
+    return true;
+  }
+
+  // Formulas past the three hand-written kernels, and the Lyapunov fractal: programs generated
+  // from the formula's syntax tree (fractal-gl-formula.js), in float32.
+  if (FORMULA_TYPES.includes(type) || type === "lyapunov") {
+    const colour = { pal: palToFloats(palette, opts.gradient), tint: tintToFloats(palette, opts.gradient) };
+    const a = Math.max(1, Math.min(4, Math.round(aa)));
+    if (type === "lyapunov") renderLyapunovGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
+    else renderFormulaGL(gl, canvas, { ...opts, cx, cy, scale, maxIter }, colour, a);
+    canvas.__fractalPrecisionUsed = "single";
+    return true;
+  }
+
   // Pick the arithmetic from the view itself: float32 while it still separates neighbouring pixels,
   // df64 once it doesn't. Automatic, so panning and zooming cross the boundary without a control.
   // opts.precision forces a variant ("single" | "double") instead; the visual-QA harness uses it to
@@ -208,7 +267,7 @@ export function renderFractalGL(canvas, opts) {
     ? precision
     : fractalPrecisionMode(cx, cy, scale, w);
   const deep = want !== "single" && hasUsableHighp(gl);
-  const P = getProgram(gl, canvas, ftype, deep ? "double" : "single");
+  const P = getProgram(gl, canvas, ftype, deep ? "double" : "single", fullOrbit(opts));
 
   // df64 costs roughly an order of magnitude more ALU per iteration, so trim supersampling when it
   // is on: full-rate SSAA over a 3200-wide backing at 2000 iterations would stall the tab.
@@ -225,8 +284,10 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform1f(P.u.scale, scale);
   gl.uniform1i(P.u.maxIter, Math.max(1, Math.min(MAX_ITERS, Math.round(maxIter))));
   gl.uniform1f(P.u.flipY, ftype === "burningship" ? -1 : 1);
-  gl.uniform3fv(P.u.pal, palToFloats(palette));
-  gl.uniform3fv(P.u.tint, tintToFloats(palette));
+  const palF = palToFloats(palette, opts.gradient);
+  gl.uniform3fv(P.u.pal, palF);
+  gl.uniform1i(gl.getUniformLocation(P.prog, "u_palN"), palF.n);
+  gl.uniform3fv(P.u.tint, tintToFloats(palette, opts.gradient));
   gl.uniform1i(P.u.aa, effAA);
   // Coordinates in both forms; the variant that isn't compiled has null locations and ignores its set.
   gl.uniform2f(P.u.center, cx, cy);
@@ -239,7 +300,7 @@ export function renderFractalGL(canvas, opts) {
   gl.uniform2f(P.u.juliaY, jyHi, jyLo);
   gl.uniform1f(P.u.one, 1.0);   // the df64 optimizer barrier; null (and ignored) in the single program
 
-  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  drawColoured(gl, P.prog, opts, w, h);
   // Record what actually ran, not what was wanted. On a device whose fragment shaders demote highp
   // the deep program is refused and this stays "single", which is the difference between the Studio
   // telling the truth about the frame and making a claim the hardware did not honour.
@@ -285,6 +346,9 @@ export function clampGLBackingToDPR(canvas, tier) {
     return false;   // fail-safe: never let a sizing probe break the render path
   }
 }
+
+// The Studio stops a running Buddhabrot when it leaves the source.
+export { stopBuddhabrot };
 
 export const _MAX_ITERS = MAX_ITERS;   // exported for tests
 export const _buildFragment = buildFragment;   // exported for tests (shader-source assertions)

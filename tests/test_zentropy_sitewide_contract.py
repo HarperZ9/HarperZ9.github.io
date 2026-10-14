@@ -103,6 +103,31 @@ PALETTE_REVISION = "20261009-palette"
 # 9 October 2026, later: one Export menu everywhere and project files; studio.js and studio-shell.css
 # take a new stamp.
 EXPORT_PROJECT_REVISION = "20261009-export-project"
+# 9 October 2026, later: presets for every source; studio.js and studio-shell.css take a new stamp.
+PRESETS_REVISION = "20261009-presets"
+# 9 October 2026, later: drag and drop; studio.js and studio-shell.css take a new stamp.
+DRAG_DROP_REVISION = "20261009-drag-drop"
+# 9 October 2026, later: the layout pass; studio.js and studio-shell.css take a new stamp.
+LAYOUT_REVISION = "20261009-layout"
+# 9 October 2026, later: the shared timeline; studio.js and studio-shell.css take a new stamp.
+TIMELINE_REVISION = "20261009-timeline"
+# 10 October 2026: the timeline sits under the stage on a phone; studio.js and studio-shell.css
+# take a new stamp.
+POLISH_REVISION = "20261009-polish"
+# 10 October 2026: a step recorded "soon" is kept when the visitor moves on at once; studio.js takes
+# a new stamp.
+FLUSH_REVISION = "20261010-flush-steps"
+# 10 October 2026: Dimensions draws through raw-native's web GPU host; studio.js takes a new stamp.
+NDIM_GPU_REVISION = "20261010-ndim-gpu"
+# 10 October 2026, later: recordings and the Music meter go through raw-native's sound engine;
+# studio.js takes a new stamp.
+SOUND_ENGINE_REVISION = "20261010-sound-engine"
+# 10 October 2026, later: Living neural draws through raw-native's web GPU host; studio.js takes
+# a new stamp.
+NEURAL_GPU_REVISION = "20261010-neural-gpu"
+# 12 October 2026: the Verified viewer source (raw-native 0.7.0); studio.js and studio-shell.css take
+# a new stamp.
+VIEWER_REVISION = "20261012-viewer"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -120,6 +145,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/explainer/explainer.css": "20261003-explainers",
     # 9 October 2026: the interactive version of a film drawn by raw-native's Motion layer.
     "system/explainer/film.css": "20261009-motion",
+    # 12 October 2026: the three guides who host the films (guides.html, the films, the Writing hub).
+    "system/guides.css": "20261012-guides-2",
+    "system/guides.mjs": "20261012-guides-2",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
@@ -153,9 +181,9 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": EXPORT_PROJECT_REVISION,
+    "system/studio.js": VIEWER_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
-    "system/studio-shell.css": EXPORT_PROJECT_REVISION,
+    "system/studio-shell.css": VIEWER_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
     "system/type-forge/forge-page.css": MEDIA_ENGINE_REVISION,
     "system/type-forge/forge-page.js": MEDIA_ENGINE_REVISION,

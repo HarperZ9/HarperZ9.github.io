@@ -5,7 +5,8 @@
 // below is a sentence start in timing.json, so the pictures move with the voice.
 import { rect, circle } from "../../raw-native/web-23ec93f/motion/path.mjs";
 import { morph } from "../../raw-native/web-23ec93f/motion/morph.mjs";
-import { span, window, ease } from "../../raw-native/web-23ec93f/motion/timeline.mjs";
+import { span, window, ease, lerp } from "../../raw-native/web-23ec93f/motion/timeline.mjs";
+import { text } from "../../raw-native/web-23ec93f/motion/text.mjs";
 import { C, cues } from "./scene/lib.mjs";
 import * as s1 from "./scene/s1-reference.mjs";
 import * as s2 from "./scene/s2-list.mjs";
@@ -15,6 +16,7 @@ import * as s5 from "./scene/s5-rerun.mjs";
 import * as s6 from "./scene/s6-close.mjs";
 
 const FRAMES = 5324, FPS = 30;
+const WORLD = Object.freeze({ x: 960, y: 722, zoom: 0.8 });
 
 export default {
   title: "Claiming got cheap. Checking did not.",
@@ -27,8 +29,9 @@ export default {
   // any other value recomputes the total from the paper's count of reviews and says it is yours.
   params: [{ id: "hours", label: "hours per review", min: 2, max: 12, step: 0.5, value: 6, window: [58.5, 85], note: "the paper uses about 6" }],
   async load(ctx) {
-    const [sans, head, mono, timing] = await Promise.all([
-      ctx.json("../motion/hanken-500.json"), ctx.json("../motion/hanken-650.json"), ctx.json("../motion/conso-400.json"), ctx.json("timing.json")]);
+    const [sans, head, mono, timing, evidence] = await Promise.all([
+      ctx.json("../motion/hanken-500.json"), ctx.json("../motion/hanken-650.json"), ctx.json("../motion/conso-400.json"), ctx.json("timing.json"),
+      ctx.json("evidence.json")]);
     const c = cues(timing);
     const A = { sans, head, mono };
     const pull = c.end(1, 3, 0) + 0.15;
@@ -50,6 +53,15 @@ export default {
     const m = morph(card, dot, { density: 0.3 });
     A.cardToDotU = (zoom) => 1 - span(Math.log(zoom), Math.log(1.7), Math.log(7), ease.linear);
     A.cardToDot = (u, x, y) => s2.translateShape(m(u), x, y);
+    // The source tab (storyboard fix 1): the source behind the numbers on screen, from evidence.json,
+    // on the lower third while its segment plays. Brandolini takes over from the adage on.
+    const tab = (id) => {
+      const e = evidence.sources[id], head = e.short.replace(/(\d{4}), /, "$1 . ");
+      return text(e.n === "no measurement" ? head : `${head} . ${e.n}`, { atlas: mono, size: 28, x: 96, y: 58 }).shape;
+    };
+    A.tabs = [["walters2023", c.at(2, 0, 0), c.at(3, 0, 0)], ["aczel2021", c.at(3, 0, 0), c.at(4, 0, 0)],
+      ["vosoughi2018", c.at(4, 0, 0), A.T.s4.adage], ["brandolini", A.T.s4.adage, c.at(5, 0, 0)],
+      ["hardwicke2018", c.at(5, 0, 0), c.at(6, 0, 0)]].map(([id, t0, t1]) => ({ shape: tab(id), t0, t1 }));
     s2.prepare(A); s1.prepare(A, c); s3.prepare(A); s4.prepare(A, ctx); s5.prepare(A); s6.prepare(A);
     this.chapters = [["Claiming got cheap", 0], ["One reference", c.at(1, 0, 0)], ["One study's worth of references", c.at(2, 0, 0)],
       ["A year of checking", c.at(3, 0, 0)], ["Faster than the check", c.at(4, 0, 0)], ["Where the gap can close", c.at(5, 0, 0)],
@@ -59,12 +71,17 @@ export default {
   frame(t, ctx) {
     const A = ctx.assets, T = A.T, items = [];
     A.params = ctx.params;
-    const world = { x: 960, y: 545, zoom: 1 };
+    // The browser draws captions centred over the lowest 30% of the frame, so the cameras frame the
+    // pictures above it (tests/explainer-film-labels.mjs). WORLD fits segment 2's grids and their notes.
+    const world = WORLD;
     let camera;
-    if (t < T.s1.pull + 4.6) camera = s1.camera(t, A, T.s1, ctx.reduced);
+    if (t < T.s1.pull + 4.6) camera = s1.camera(t, A, T.s1, ctx.reduced, world);
     else if (t < T.s3.enter) camera = world;
     else if (t < T.s3.exit) camera = s3.camera(t, A, T.s3, ctx.reduced, world);
-    else camera = { x: 960, y: 540, zoom: 1 };
+    else if (t < T.s5.enter) {
+      const u = span(t, T.s4.enter, T.s4.enter + 3.0, ease.inOut);
+      camera = { x: 960, y: lerp(540, 634, u), zoom: lerp(1, 0.7, u) };
+    } else camera = { x: 960, y: 540, zoom: 1 };
     const threads = Math.max(0.6 * window(t, 0, T.s1.morph + 1.2, 0.01, 1.4), 0.4 * window(t, T.s6.enter - 0.5, T.s6.end + 1, 2.0, 0.01));
     if (threads > 0) items.push({ kind: "threads", opacity: threads });
     if (t < T.s2.exit + 0.1) s2.draw(t, A, T.s2, items, camera.zoom);
@@ -73,6 +90,10 @@ export default {
     if (t >= T.s4.enter) s4.draw(t, A, T.s4, items);
     s5.draw(t, A, T.s5, items);
     s6.draw(t, A, T.s6, items);
+    for (const tb of A.tabs) {
+      const a = window(t, tb.t0, tb.t1, 0.6, 0.6);
+      if (a > 0) items.push({ shape: tb.shape, fill: C.dim, opacity: a, screen: true });
+    }
     return { background: C.void, camera, items, post: { bloom: 0.4, threshold: 0.82, vignette: 0.3, grain: 0.008 } };
   },
 };

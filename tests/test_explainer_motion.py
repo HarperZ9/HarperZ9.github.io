@@ -67,14 +67,18 @@ def test_scene_text_on_screen_is_from_the_script_or_its_sources() -> None:
 
 def test_no_em_dashes_or_local_paths_in_scene_code() -> None:
     for folder in FILMS:
-        for f in [*scene_files(folder), folder / "score.json"]:
+        # score.json exists only for films first mixed with the generated score; sound/ holds the cue sheet builder.
+        extra = [f for f in (folder / "score.json", *sorted((folder / "sound").glob("*.mjs"))) if f.exists()]
+        for f in [*scene_files(folder), *extra]:
             body = f.read_text(encoding="utf-8")
             assert "—" not in body, f"{f.name} has an em dash"
             assert not re.search(r"[A-Z]:[\\/]", body), f"{f.name} has a local path"
 
 
 def test_score_cues_fall_inside_the_film() -> None:
-    for folder in FILMS:
+    scored = [f for f in FILMS if (f / "score.json").exists()]
+    assert scored, "no film keeps a score.json, so this test checks nothing"
+    for folder in scored:
         rec = json.loads((folder / "film.receipt.json").read_text(encoding="utf-8"))
         cues = json.loads((folder / "score.json").read_text(encoding="utf-8"))
         assert all(0 <= t < rec["seconds"] for t in cues["bells"])

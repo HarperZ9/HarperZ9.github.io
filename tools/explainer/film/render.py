@@ -53,26 +53,9 @@ def stamp(s: float, sep: str) -> str:
     return f"{ms // 3600000:02}:{ms // 60000 % 60:02}:{ms // 1000 % 60:02}{sep}{ms % 1000:03}"
 
 
-def cues(timing: list[dict], width: int = 84) -> list[tuple[float, float, str]]:
-    """One caption cue per sentence, split at word boundaries into parts of at most two lines."""
-    out = []
-    for row in timing:
-        words, parts, cur = row["text"].split(), [], ""
-        for w in words:
-            if len(cur) + len(w) + 1 > width and cur:
-                parts.append(cur)
-                cur = w
-            else:
-                cur = f"{cur} {w}".strip()
-        parts.append(cur)
-        chunks = [" ".join(parts[k:k + 1]) for k in range(len(parts))]
-        groups = ["\n".join(chunks[k:k + 2]) for k in range(0, len(chunks), 2)]
-        span = (row["end"] - row["start"]) / len(groups)
-        out += [(row["start"] + k * span, row["start"] + (k + 1) * span, g) for k, g in enumerate(groups)]
-    return out
-
-
 def write_captions(folder: Path, slug: str, timing: list[dict]) -> None:
+    """The VTT and SRT captions, laid out by captions.py: at most two lines of 42 characters."""
+    from tools.explainer.film.captions import cues
     cs = cues(timing)
     vtt = "WEBVTT\n\n" + "\n".join(f"{stamp(a, '.')} --> {stamp(b, '.')}\n{t}\n" for a, b, t in cs)
     srt = "\n".join(f"{n}\n{stamp(a, ',')} --> {stamp(b, ',')}\n{t}\n" for n, (a, b, t) in enumerate(cs, 1))

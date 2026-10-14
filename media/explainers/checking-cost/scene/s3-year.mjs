@@ -25,12 +25,12 @@ export function prepare(A) {
     brace: brace(left, right, oy + CELL / 2 + 0.6, 0.9),
     review: text("one peer review: about 6 hours", { atlas: A.sans, size: 0.95, x: ox, y: oy + CELL / 2 + 3.1, anchor: "center" }).shape,
     hourTag: text("1 hour", { atlas: A.sans, size: 0.62, x: left + CELL / 2, y: oy - CELL / 2 - 0.6, anchor: "center" }).shape,
-    eqHours: tex("21{,}800{,}126 \\times 6\\,\\text{hours} \\approx 130{,}800{,}757\\,\\text{hours}", { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape,
-    eqYears: tex("130{,}800{,}757\\,\\text{hours} \\div 8{,}760 \\approx 14{,}932\\,\\text{years}", { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape,
-    years: text("about 15,000 years of work, spent in one year", { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" }).shape,
-    caveat: text("an estimate from approximate rates; the authors expect the true figure to be higher", { atlas: A.sans, size: 28, x: 960, y: 1010, anchor: "center" }).shape,
-    paper: text("the paper's own figures", { atlas: A.sans, size: 24, x: 960, y: 196, anchor: "center" }).shape,
-    pays: text("Science already pays people to check.", { atlas: A.sans, size: 34, x: 960, y: 960, anchor: "center" }).shape,
+    eqHours: tex("21{,}800{,}126 \\times 6\\,\\text{hours} \\approx 130{,}800{,}757\\,\\text{hours}", { atlas: A.mono, size: 44, x: 960, y: 120, anchor: "center" }).shape,
+    eqYears: tex("130{,}800{,}757\\,\\text{hours} \\div 8{,}760 \\approx 14{,}932\\,\\text{years}", { atlas: A.mono, size: 44, x: 960, y: 120, anchor: "center" }).shape,
+    ...yearsLine(text("about 15,000 years of work, spent in one year", { atlas: A.head, size: 46, x: 960, y: 236, anchor: "center" })),
+    caveat: text("an estimate from approximate rates; the authors expect the true figure to be higher", { atlas: A.sans, size: 28, x: 960, y: 748, anchor: "center" }).shape,
+    paper: text("the paper's own figures", { atlas: A.sans, size: 24, x: 960, y: 166, anchor: "center" }).shape,
+    pays: text("Science already pays people to check.", { atlas: A.sans, size: 34, x: 960, y: 754, anchor: "center" }).shape,
   };
 }
 
@@ -45,39 +45,44 @@ function side(t, T, hours = 6) {
   const h = span(t, T.six, T.six + 2.2, ease.inOut);
   return CELL * Math.sqrt(n) * lerp(1, Math.sqrt(hours), h);
 }
+// The years line and its width, so the "estimate" tag can sit beside it.
+const yearsLine = (l) => ({ years: l.shape, yearsW: l.width });
 const texNum = (n) => fmt(n).replace(/,/g, "{,}");
 // The arithmetic at a chosen number of hours per review; at 6 it is the paper's own.
 function sums(A, hours) {
   const S = A.s3;
-  if (hours === 6) return { eqHours: S.eqHours, eqYears: S.eqYears, years: S.years, note: S.paper };
+  if (hours === 6) return { eqHours: S.eqHours, eqYears: S.eqYears, years: S.years, yearsW: S.yearsW, note: S.paper };
   const key = String(hours);
   S.what = S.what || new Map();
   if (!S.what.has(key)) {
     const total = REVIEWS * hours, years = Math.round(total / 8760);
-    const eq = (src) => tex(src, { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape;
+    const eq = (src) => tex(src, { atlas: A.mono, size: 44, x: 960, y: 120, anchor: "center" }).shape;
     S.what.set(key, {
       eqHours: eq(`21{,}800{,}126 \\times ${hours}\\,\\text{hours} = ${texNum(total)}\\,\\text{hours}`),
       eqYears: eq(`${texNum(total)}\\,\\text{hours} \\div 8{,}760 \\approx ${texNum(years)}\\,\\text{years}`),
-      years: text(`about ${fmt(years)} years of work, at ${hours} hours a review`, { atlas: A.head, size: 46, x: 960, y: 960, anchor: "center" }).shape,
-      note: text("your value; the paper uses about 6 hours a review", { atlas: A.sans, size: 24, x: 960, y: 196, anchor: "center" }).shape,
+      ...yearsLine(text(`about ${fmt(years)} years of work, at ${hours} hours a review`, { atlas: A.head, size: 46, x: 960, y: 236, anchor: "center" })),
+      note: text("your value; the paper uses about 6 hours a review", { atlas: A.sans, size: 24, x: 960, y: 166, anchor: "center" }).shape,
     });
   }
   return S.what.get(key);
 }
 
+// The block and the square sit LIFT pixels above centre, and the square is framed FIT pixels wide,
+// so the lines under it stay clear of the captions.
+const LIFT = 40, FIT = 380;
 export function camera(t, A, T, reduced, from) {
   const S = A.s3, step = (u) => (reduced ? (u < 0.5 ? 0 : 1) : u);
   const block = { x: S.ox, y: S.oy, zoom: 44 };
   if (t < T.count) {
     const u = step(span(t, T.enter, T.enter + 2.2, ease.inOut));
     const z = lerpLog(from.zoom, block.zoom, u), w = (1 / z - 1 / from.zoom) / (1 / block.zoom - 1 / from.zoom);
-    return { x: lerp(from.x, block.x, w), y: lerp(from.y, block.y, w), zoom: z };
+    return { x: lerp(from.x, block.x, w), y: lerp(from.y, block.y, w) + (LIFT * u) / z, zoom: z };
   }
   // The square grows from the review cell's top-left corner; keep it framed.
   const L = side(t, T, A.params ? A.params.hours : 6), x0 = S.ox - CELL / 2, y0 = S.oy - CELL / 2;
-  const fit = Math.min(44, 600 / L);
-  const out = span(t, T.exit - 1.3, T.exit, ease.in);
-  return { x: x0 + L / 2, y: y0 + L / 2, zoom: fit * lerpLog(1, 0.02, out) };
+  const fit = Math.min(44, FIT / L);
+  const out = span(t, T.exit - 1.3, T.exit, ease.in), zoom = fit * lerpLog(1, 0.02, out);
+  return { x: x0 + L / 2, y: y0 + L / 2 + LIFT / zoom, zoom };
 }
 
 export function draw(t, A, T, items, zoom) {
@@ -123,7 +128,7 @@ export function draw(t, A, T, items, zoom) {
     // Name the smallest square still drawn: the scale the camera has reached.
     if (finest >= 0 && t < T.caveat) {
       const n = Math.pow(10, finest), unitName = h < 0.5 ? (n === 1 ? "review" : "reviews") : (n === 1 ? "hour" : "hours");
-      const sh = text(`each small square: ${fmt(n)} ${unitName}`, { atlas: A.mono, size: 30, x: 960, y: 925, anchor: "center" }).shape;
+      const sh = text(`each small square: ${fmt(n)} ${unitName}`, { atlas: A.mono, size: 30, x: 960, y: 748, anchor: "center" }).shape;
       items.push({ shape: sh, fill: C.ink2, opacity: vis * collapse * (1 - span(t, T.caveat - 0.8, T.caveat)), screen: true });
     }
     // The estimate's edge: a soft, larger outline that keeps growing.
@@ -136,11 +141,14 @@ export function draw(t, A, T, items, zoom) {
   }
   // The count and the arithmetic, in screen space.
   const counting = window(t, T.count, T.six + 0.2, 0.4, 0.3);
-  if (counting > 0) scr(text(`${fmt(reviews(t, T))} reviews in 2020`, { atlas: A.mono, size: 44, x: 960, y: 150, anchor: "center" }).shape, C.ink, counting);
+  if (counting > 0) scr(text(`${fmt(reviews(t, T))} reviews in 2020`, { atlas: A.mono, size: 44, x: 960, y: 120, anchor: "center" }).shape, C.ink, counting);
   const eqH = window(t, T.six + 0.2, T.years + 0.2, 0.5, 0.4), eqY = window(t, T.years + 0.2, T.exit, 0.5, 0.4);
   scr(Q.eqHours, C.ink, eqH);
   scr(Q.eqYears, C.ink, eqY);
   scr(Q.note, C.ink2, Math.max(eqH, eqY) * 0.9);
-  scr(Q.years, C.ink, window(t, T.years + 0.8, T.exit, 0.6, 0.4));
+  const yearsA = window(t, T.years + 0.8, T.exit, 0.6, 0.4);
+  scr(Q.years, C.ink, yearsA);
+  // A claim tag in drift beside the total (storyboard fix 7): it is an estimate.
+  if (yearsA > 0) scr(text("estimate", { atlas: A.mono, size: 28, x: 960 + Q.yearsW / 2 + 30, y: 236 }).shape, C.hot, yearsA);
   scr(S.caveat, C.unv, window(t, T.caveat, T.exit, 0.6, 0.4));
 }

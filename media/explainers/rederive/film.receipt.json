@@ -5,25 +5,60 @@
   "page": "explainers.html#rederive",
   "script": {
     "path": "media/explainers/rederive/film.json",
-    "sha256": "3411070248591d01bd416085a2bfe8c3e16e0e94c262940be8563b0042a365c1"
+    "sha256": "0a6843ccbafb2298581abfa49b0489aa0d9a4a9e4df187dfcc9d7b9dec69b0cb"
   },
   "evidence": {
     "path": "media/explainers/rederive/evidence.json",
     "sha256": "6da915e5c135a5780e9abe472a3867181aebdcac4a00309d392e213b9f07dba4"
   },
   "render_code": {
-    "tools/explainer/film/__init__.py": "1c68de3eaf60d4bd347cf52e0b259326eb4fabeba8c7ec291fc3d16c419a2866",
-    "tools/explainer/film/timeline.py": "107a318162298abe409e906a7f6ff3ee56ab984eba120f7678710538284f481b",
-    "tools/explainer/film/figures.py": "d80dd3d3975fe6806512608541a5ad76617da3b03a947c6f6565685cfe05f330",
-    "tools/explainer/film/plate.py": "43a68d3e2ea36d2337fed0298dec85a318d447e185b8d2c5f99b2089c196cddd",
-    "tools/explainer/film/render.py": "de5eb4a123f97decbb1cdcdb6556d931fed7b32c36de8fbca1c026e79a86f7a4",
-    "tools/explainer/film/narrate.py": "95a878f114cd5695e55439d07d172c0e6bc0780f40f6c82e8a31cd96193f0c8d"
+    "media/explainers/rederive/film.scene.mjs": "e50f9a7e4adc2cde11934b6aca143c760d7fa9dea033051862e32a38b3300701",
+    "media/explainers/rederive/scene/d1-repeat.mjs": "ceb501478f3d874f4e9cd9b9823c563f203cf59376c7fc3fad1e05837796fac0",
+    "media/explainers/rederive/scene/d2-records.mjs": "5e33fc0a4338f00294083de62ce1b62c43be5d7df1ed94364ee61031d854766c",
+    "media/explainers/rederive/scene/print.mjs": "595bd77ed76056adcaec41d403466e48a87034ee1dbbdae0568eaee361828c4a",
+    "media/raw-native/web-23ec93f/motion/capture.html": "fc2595317f6db46d3fdc39832123e2e8a67e2ee7825c11f393e9da7973852f8c",
+    "media/raw-native/web-23ec93f/motion/engine.mjs": "8725bf9d55f282b4e1e90351fcd18419457aeca7e1e6abd3eb1227889c41124b",
+    "media/raw-native/web-23ec93f/motion/morph.mjs": "ed8776e6400cbf0e63c597d384669f40ccbc47b6790ec15a03dedbc1bf68c2cd",
+    "media/raw-native/web-23ec93f/motion/particles.mjs": "bc1e664f68c2e3fa35e9219e09a4b782467bdcb64ab76939e019abbdd2d94650",
+    "media/raw-native/web-23ec93f/motion/path.mjs": "7b802dbf34ed4f930aa0223d61d64b2e98b0cb8de24d93d2d47a7ccc085a4a44",
+    "media/raw-native/web-23ec93f/motion/player.mjs": "c545f53c5667c6ba3f1ff14fa7788772c3fcb52a99fb23cb1e2727aa8b5b78cc",
+    "media/raw-native/web-23ec93f/motion/renderer.mjs": "165f1256576f1a64e6ddfb7d28450fee44d2f79fb6c66abd1d888dc6f2047553",
+    "media/raw-native/web-23ec93f/motion/scene.mjs": "e8a97ea8a0811f773818ad5a5df7eefb563cee11416dac3029bc46c7d87a4839",
+    "media/raw-native/web-23ec93f/motion/shaders.mjs": "987b6255e6b6bad7eb5a7273641d7b337cba6278c78bf39ad4e48520d9a7631d",
+    "media/raw-native/web-23ec93f/motion/text.mjs": "f895f535ad21bf88e18c8daa55fdab36939c0219d2e25d275bb6e561494eea73",
+    "media/raw-native/web-23ec93f/motion/timeline.mjs": "ad6fcef445ddecc1aee634d2124759cb4a357d04e14428b9f3e4a6df67f4eb1e",
+    "media/raw-native/web-23ec93f/motion/vector.mjs": "5fc6f381071459f3648dd64ba674f0983a0adf856fbadb5afadd2bb09c58b5db",
+    "media/raw-native/web-23ec93f/raw-gpu.mjs": "e6fad74db2d11ba107b8c04d9dfdfcf7ee8a7745d09b79e107df2be35625e7ec",
+    "media/raw-native/web-23ec93f/frame-graph.mjs": "71244a0e499ce3d61758fa9237e686fbfdc827979ac4718415934607e9f93bef",
+    "media/raw-native/web-23ec93f/threads.mjs": "8fe4f8d5119563faec3ed1aaf796a57833a5a77a34e41a33e00040d5ca5e34ea",
+    "media/raw-native/web-23ec93f/threads.wgsl": "8fa08424ec68ee1de040b090e671897ce9897be2cb75cca59c2f4637b1c30632",
+    "media/explainers/motion/hanken-500.json": "dac04490546485d2ddd94baffe1396c0e5435dabaa5a069bf5d5ac8f5b234814",
+    "media/explainers/motion/hanken-650.json": "20c548f8ac04ac5c200748e7e6425d51d010a37a61da4ea951ad5ad10e18b366",
+    "media/explainers/motion/conso-400.json": "ac833366bae7b28541dd3b6ccf036fee96ca215be571080411717bd880b0310b",
+    "tools/explainer/film/motion.py": "8ce14c93ccc630558348e48edbd6d5c484ac5b80f49a6ddcbc236c70e4f89044",
+    "tools/explainer/film/score.py": "a0929e7f2f144aedca39b3bf34b24a6493cd2e25da6cef79b036043f6897c898"
   },
   "toolchain": {
+    "renderer": "raw-native Motion (web/motion), WebGPU in headless Chrome, frames encoded by WebCodecs H.264",
+    "adapter": {
+      "vendor": "nvidia",
+      "architecture": "lovelace",
+      "device": "",
+      "description": ""
+    },
     "python": "3.12.10",
-    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
     "os": "Windows-11-10.0.26220-SP0",
-    "plate": "GLSL 330 on moderngl, headless, GPU"
+    "ffmpeg": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "master": {
+      "width": 3840,
+      "height": 2160,
+      "frames": 3736,
+      "frame_ms_median": 11,
+      "frame_ms_p95": 22,
+      "wall_seconds": 63.1,
+      "sha256": "b2eeb1b7157d9707ee5d5545d0e97c2e44062384c629c11eb13082ca4ff318b3"
+    },
+    "score": null
   },
   "narration": {
     "wav_sha256": "4382ae3c0b74b9229a9628820f74fb8b34b2f39e91d0d5f7c533396b409615af",
@@ -85,13 +120,41 @@
   "frames": 3736,
   "fps": 30,
   "seconds": 124.53333333333333,
-  "frame_chain_sha256": "47851d24fa6e17f2f8b8f80afa0f014af967d3320d1c9ae92bed59c36bd6dd9b",
   "outputs": {
-    "rederive.mp4": "71b9cdab073c37037d621569688fb25e2551d17ee3d581ce5c4a8ec30f7ed422",
-    "rederive.vtt": "0dac3c5767644143f6c47cc54fd928e30b95574c8a0fdf14e022c20acb49e4ea",
-    "rederive.srt": "71b80c281df52152df158a490e93eac14af23d3feca6773172d7c6efa0200c25",
-    "poster.jpg": "060957092e9b2fa5edfa1df5a303262f5943a8006211ce3d2cea93d6e43318af",
-    "timing.json": "2e9d7d0477325de6ce58bb469e19b7eae0b22aec0defb1f8352f3a97c9a54c20"
+    "rederive.mp4": "932d0338815554d69fa832f5ecd48afd4643b4a796d977511a1a47cc4b7e0080",
+    "rederive.vtt": "fa543b5d9405d47847c5a22b9937280153c86d3c2fe1c6736b5d542c3fe4714a",
+    "rederive.srt": "63992fb5f1bfe805180919984e3c0d63293c6da311075f17fb96742e4725e564",
+    "poster.jpg": "8191fecc6195e5168dbb26acb926939e134d3878ccd15e74ea94062a699d59d5",
+    "timing.json": "2e9d7d0477325de6ce58bb469e19b7eae0b22aec0defb1f8352f3a97c9a54c20",
+    "rederive.m4a": "e126df4f69c0e7982032b556ca331c915e801663e4d2f03ee2da5b9b423e78cc"
   },
-  "does_not_prove": "Matching hashes show these files are the ones this render made from this script, code and narration. They do not show that the explanation is correct or that it teaches. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes."
+  "does_not_prove": "Matching hashes show these files are the ones this build made from this script, scene code, engine and narration. They do not show that the explanation is correct or that it teaches. The pictures are drawn for explanation: shapes such as the cascade trees and the order of the dots are illustrations, and only the numbers on screen come from the sources. The narration is a synthesized version of the author's voice, sampled from a speech model, so a rerun need not give the same audio bytes.",
+  "sound": {
+    "mix": "C",
+    "since": "2026-10-10",
+    "engine": "raw-native web/sound (main 66662c9; web/sound unchanged since 4c7ddaa)",
+    "what": "The narration with 24 short cues, each placed from the scene timeline and panned to what it marks; no score bed under the voice.",
+    "why": "The same choice as film 1. Moreno and Mayer (2000) found a music bed under narration lowered recall and transfer; cues tied one-to-one to events did not significantly hurt. Reversible.",
+    "files": {
+      "sound/film.sound.mjs": "10f0a1ebf2c147fe683e5a97ccd03e7391dce57e26e9e42c86e3d43b7619fe13",
+      "sound/sheet.json": "c6389d7f6e281f0105469654661644959e720c53c1d55ae87cbefd2250fa0568",
+      "sound/sheet.resolved.json": "2b4ed7567e4a10220894a53f7bfce9236622cb1a1c057697ab47768dfb2b945f",
+      "sound/report.json": "3fdabba77d4a8d9f821ebab8c572e5a5fd5dbfea1f8e12e7730e41c86e95a86c",
+      "sound/receipt.json": "c237ab57bf0910fd94a3e5987d8896d248ce4ddac290cb07a2026943660ea9a2"
+    },
+    "pcm_sha256": "c1118e321128c737954735e385e6dd62dcd19e4533ee581a33c34d0c020741fe",
+    "meter": "raw-native-bs1770/1",
+    "true_peak_meter": "raw-native-truepeak/1",
+    "integrated_lufs": -16.0,
+    "true_peak_dbtp": -1.98,
+    "loudness_range_lu": 2.97,
+    "loudness_verdict": "verified",
+    "second_meter": "ffmpeg 7.1 ebur128=peak=true on rederive.m4a: -16.0 LUFS, LRA 3.0 LU, true peak -2.0",
+    "revert": "Restore rederive.mp4 and rederive.m4a and their output hashes from the commit before this one (bare narration)."
+  },
+  "layout": {
+    "since": "2026-10-12",
+    "what": "On-screen labels moved clear of the area where the browser draws captions (tests/explainer-film-labels.mjs). The picture was re-rendered; the audio stream was copied unchanged from the previous mp4.",
+    "audio_stream_md5": "MD5=a9d01f0f237276f32773aea4c8ec2c29"
+  }
 }

@@ -1,0 +1,56 @@
+{
+  "schema": "site-guides/1",
+  "guides": {
+    "tallow": {
+      "world": "thriller",
+      "files": {
+        "still.jpg": "60b4b05948caaf9606bd29b041fd4ea1e3fe93b69d1f03becac34f3b54d924b7",
+        "close.jpg": "1f2607e0b64a9930e6e28c9c34c170dcd908b7f3d9edebd5f511faf067944cd9",
+        "sheet.jpg": "65661dea76bf37bf4989f2d7c664b0dff788fdd37337e5029afd4d06b411a87a",
+        "idle.mp4": "5102b3844bb18dc1e2b7fea8fa20bcbaee31bb6b24f06aaae1fecdf0c355ee0b",
+        "action.mp4": "b95c68f372eb2fc5d084b6401a7605181b5d441d0f3fa9ddb287b5809399745d",
+        "intro.mp4": "b566d82d243c8782fa2e197ecbd0f2b60bedfb97bc8155bcb835e99a2a71515c",
+        "intro.jpg": "58619357b86d18d06889259472d31f85d4ab09b90302b0a21d657ae73dc00af7",
+        "intro.vtt": "457ac3d6e26dfc7b0d72cccebf6e60bd647273d136ff68dba40edbd62839298b",
+        "intro.timing.json": "802422c534a22a787233436710e48b85ad477a70e2c4aaf4518ac75227db1238"
+      },
+      "bytes": 1261179,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 7, setting H"
+    },
+    "pylon": {
+      "world": "painted",
+      "files": {
+        "still.jpg": "629655f877ab171d6f3b41ebea4cdc1d90b7d675f7d61a65bcdbe2095b045f19",
+        "close.jpg": "d2c1ef06983c033948d1353c78b76dda582c6721aef2487d56a8dbe697c59ba4",
+        "sheet.jpg": "7b4686ec51e27bf2d5145737e1ba8e913278be9951cf05ac88293f04cbbb2471",
+        "idle.mp4": "39fc950d712ccb9bb113f8921e2c334382c4e955461d07de08e114650e8ca5ce",
+        "action.mp4": "09ebf421bcaf6c6f20e13664857a2dcc169b115ec4232bd13e070fcc2ee8a490",
+        "intro.mp4": "1c6b3b47e8a42247d59af96ef350560a51c6d4ab16439008904c9bffa1465266",
+        "intro.jpg": "e7f6b8b06b283bccbe2cc71d9c5032a6b0707779f3b6e0422a8220aa08f9202f",
+        "intro.vtt": "81e90338e40aea6b95f2ed80074160406f09250d52a0efdce3d72b2ef34d4a6e",
+        "intro.timing.json": "9b7a6c590240ce72dc49bb72610a3d1da961fb1b4544e1697d9e87685c33125a"
+      },
+      "bytes": 1951243,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 7, setting S"
+    },
+    "rerun": {
+      "world": "pixel",
+      "files": {
+        "still.jpg": "281ce42a13bb5bf4f8635a396d57aa6d6e5b8013e31662e11c4f1783cc908883",
+        "close.jpg": "8746d55c5edd21725a57cb7ef1f3fa782cbd0b6ae36989f8e825b0550a2781dd",
+        "sheet.jpg": "9e5e753827ee8f21cfef2375e3f38ae8d394d6cb62178b9864ef4cd5fade009f",
+        "idle.mp4": "85021d66c00df91ca141a8a11329a1121cbc9a605b9ade34cc73b2cf8382a2f3",
+        "action.mp4": "bdc2c03480a1a62f9bbd786a6b1397dc9b57a6dd3e8e13a91fadc045c272f238",
+        "intro.mp4": "1e920be7b8141c8ea867d39e7ba08ea1a9dbe409e79cb9615c082ccc3ff968a0",
+        "intro.jpg": "799ffd6140464a52691a010d19b41d9feea04b37def28582c14c036239e2dfb2",
+        "intro.vtt": "e37a00169acf88d47b8413af9c6503a32fade84c9db0709090ec11b32770719a",
+        "intro.timing.json": "7ccfd8dba096dd671181b2c385c8b08a158abca0380042c127aa57e5fc97040e"
+      },
+      "bytes": 656540,
+      "intro_audio": true,
+      "intro_voice": "character voice, round 11, setting V8"
+    }
+  }
+}

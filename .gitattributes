@@ -28,6 +28,8 @@ plugins/data/** text eol=lf
 media/raw-native/wasm-*/** -text
 # raw-native's web GPU host, pinned by SHA256SUMS in its directory: no EOL conversion.
 media/raw-native/web-*/** -text
+# raw-native's sound engine, pinned by SHA256SUMS in its directory: no EOL conversion.
+media/raw-native/sound-*/** -text
 
 # The vendored Learn copy is checked byte for byte against VENDOR.json.
 system/vendor/learn/** -text
@@ -52,3 +54,6 @@ system/media-engine/contracts.mjs -text
 system/media-engine/SUPERSTACK.sha256 -text
 # Release media bundles (raw-native media render) are hashed in their media.json: no EOL conversion.
 media/releases/** -text
+
+# raw-native release copies are checked byte for byte against the release's SHA256SUMS.
+media/raw-native/viewer-*/** -text

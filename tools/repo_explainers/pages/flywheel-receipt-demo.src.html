@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How flywheel-receipt-demo works</title>
+<meta name="description" content="An animated walk through flywheel-receipt-demo: one coding task run through Flywheel&#x27;s receipt path, the receipt re-derived in a fresh process to MATCH, then forged and caught as DRIFT, with no API key, GPU or network. Built from flywheel-receipt-demo at commit 8932608.">
+<link rel="canonical" href="https://harperz9.github.io/repo-explainers/flywheel-receipt-demo.html">
+<style>
+/*CORE_CSS*/
+/*KIT_CSS*/
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top wrap">
+  <div class="crumbs"><a href="https://github.com/HarperZ9/flywheel-receipt-demo">HarperZ9/flywheel-receipt-demo</a><span>Explainer, built from commit <a href="https://github.com/HarperZ9/flywheel-receipt-demo/tree/89326085ecb7f0261c73370833ca524780c864c1">8932608</a></span><a href="https://harperz9.github.io/repo-explainers.html">All repository explainers</a><button type="button" class="btn theme" data-theme-toggle>Dark page</button></div>
+  <h1>flywheel-receipt-demo</h1>
+  <p class="lede">Run a re-derivable receipt in one command, and catch a forged one.</p>
+</header>
+<main id="main">
+<section class="block wrap" aria-labelledby="for-you">
+  <h2 id="for-you">What it does for you</h2>
+  <div class="measure">
+    <p>Flywheel's rule is no receipt, no accept, and no learned model on the path that accepts an answer. This repository lets you see that rule work on your own machine in one command: a real coding task runs, a receipt is written, a separate process re-derives it, and a forged copy is caught. It also lays out how the receipt could pair with hardware-attested inference, as a proposal.</p>
+  </div>
+  <ul class="uses">
+    <li><b>One command</b><code>python run_demo.py</code>, with no API key, no GPU and no network.</li>
+    <li><b>A separate process re-checks</b><code>harness.verify_receipt</code> re-derives the receipt in its own process.</li>
+    <li><b>A control that must fail</b>The demo forges the receipt and requires the re-derivation to say DRIFT.</li>
+    <li><b>Check it yourself</b>Edit any field of the receipt and run the verifier again.</li>
+  </ul>
+  <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel-receipt-demo/blob/89326085ecb7f0261c73370833ca524780c864c1/README.md">README.md</a> at 8932608 (demo against flywheel-verify 1.5.0)</p>
+</section>
+
+<section class="block wrap" aria-labelledby="watch">
+  <h2 id="watch">Watch</h2>
+  <figure class="film">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="https://harperz9.github.io/media/explainers/rederive/poster.jpg">
+      <source src="https://harperz9.github.io/media/explainers/rederive/rederive.mp4" type="video/mp4">
+      <track kind="captions" src="https://harperz9.github.io/media/explainers/rederive/rederive.vtt" srclang="en" label="English">
+    </video>
+    <figcaption><b>Re-derive it. Don&#x27;t take it on trust.</b> (2 min 5 s, narrated, captioned). The demo re-derives a receipt in a separate process and catches a forged one, the practice this film describes. <a href="https://harperz9.github.io/explainers.html#rederive-h">Transcript, sources and recall questions</a>.</figcaption>
+  </figure>
+  <p class="soon">Video walkthrough: coming with the next release.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="how">
+  <h2 id="how">How it works, one step at a time</h2>
+  <p class="measure">Scroll, or use the step buttons. Every line is output from <code>demo/run_demo.py</code> at commit 8932608, run against flywheel-verify 1.5.0 installed from PyPI.</p>
+  <div class="walk">
+    <div class="stage-wrap">
+      <div class="stage" aria-label="Animated diagram for the current step">
+        <div class="scene" data-scene="k0" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k1" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k2" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k3" aria-hidden="true"><div class="kscene"></div></div>
+        <div class="scene" data-scene="k4" aria-hidden="true"><div class="kscene"></div></div>
+      </div>
+      <div class="stage-bar">
+        <button type="button" class="btn" data-prev>Previous</button>
+        <span class="cap" data-cap aria-live="polite"></span>
+        <span data-count></span>
+        <button type="button" class="btn" data-next>Next</button>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="step" tabindex="-1" data-scene="k0" data-state="s"><div class="card">
+        <span class="num">01</span><h3>A real task with a real check</h3>
+        <p>The task asks for <code>merge_intervals</code>: merge overlapping integer intervals and return them sorted, where intervals that touch, like [1,2] and [2,3], merge into one. The oracle is pytest running <code>test_merge_intervals.py</code>.</p>
+        <p>The candidate answer comes from a stub, recorded as <code>model_ref: stub</code>, so the demo needs no model. What is under test is the receipt path.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel-receipt-demo/blob/89326085ecb7f0261c73370833ca524780c864c1/demo/task/task.json">demo/task/task.json</a></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k1" data-state="s"><div class="card">
+        <span class="num">02</span><h3>Run it and write the receipt</h3>
+        <p>The engine runs the oracle against the candidate. The tests pass, the result is accepted, and the receipt records the task, the exact command, the candidate, the oracle's output hash and the verdict.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel-receipt-demo/blob/89326085ecb7f0261c73370833ca524780c864c1/demo/run_demo.py">demo/run_demo.py</a>, steps 2 and 3</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k2" data-state="s"><div class="card">
+        <span class="num">03</span><h3>A fresh process re-derives it</h3>
+        <p>A separate process reads the receipt, re-runs the oracle from the task files beside it, and compares. The recomputed verdict and output hash both match the claimed ones: MATCH, exit 0.</p>
+        <p class="src">Source: README.md, "Quick start"; flywheel <code>harness/verify_receipt.py</code></p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k3" data-state="s"><div class="card">
+        <span class="num">04</span><h3>Forge it, and the re-derivation catches it</h3>
+        <p>The demo flips the stored verdict from PASS to FAIL and runs the verifier again. The output hash still matches, but the recomputed verdict is PASS against a claimed FAIL: DRIFT, exit 1.</p>
+        <p>A receipt that could not be forged would still say MATCH here. This control is what shows the check can fail.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel-receipt-demo/blob/89326085ecb7f0261c73370833ca524780c864c1/demo/run_demo.py">demo/run_demo.py</a>, step 5</p>
+      </div></li>
+      <li class="step" tabindex="-1" data-scene="k4" data-state="s"><div class="card">
+        <span class="num">05</span><h3>What it proves, and what it does not</h3>
+        <p>The demo ends by saying what it showed: the result re-derives from its receipt, and a forged result does not. It does not show the task is hard, that the answer is the best one, or anything about a model.</p>
+        <p>The repository also describes pairing a receipt with hardware-attested inference: attestation shows what ran, and the receipt shows the answer re-derives. That pairing is a proposal and is not shipped.</p>
+        <p class="src">Source: <a href="https://github.com/HarperZ9/flywheel-receipt-demo/blob/89326085ecb7f0261c73370833ca524780c864c1/demo/run_demo.py">demo/run_demo.py</a>, step 6; README.md, "The two layers" and "Honest state"</p>
+      </div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block wrap" aria-labelledby="walkthrough">
+  <h2 id="walkthrough">Walkthrough</h2>
+  <p class="measure">Install it, run it once, then use the main feature. Each command below is real, and so is its output.</p>
+  <ol class="walkthrough">
+    <li><h3>Install</h3><p>Install the engine from PyPI and clone the demo. Python 3.11 or newer.</p>
+<pre class="cmd"><code>$ pip install flywheel-verify pytest
+$ git clone https://github.com/HarperZ9/flywheel-receipt-demo && cd flywheel-receipt-demo/demo</code></pre></li>
+    <li><h3>First run: the demo</h3><p>Run a task, write its receipt, re-derive it, then forge it and re-derive again.</p>
+<pre class="cmd"><code>$ python run_demo.py
+<span class="out">  RESULT: receipt path verified. Honest MATCH, forged DRIFT.</span></code></pre></li>
+    <li><h3>Re-derive the receipt yourself</h3><p>Verify the receipt in a fresh process from the task files beside it.</p>
+<pre class="cmd"><code>$ python -m harness.verify_receipt --receipt out/receipt.json --task-dir task
+<span class="out">claimed     verdict PASS, output_hash a2e1d126b3cd1870
+recomputed  verdict PASS, output_hash a2e1d126b3cd1870
+checks      output_hash_matches true, verdict_matches true</span></code></pre></li>
+  </ol>
+  <p class="src">Output from demo/run_demo.py at 8932608 with flywheel-verify 1.5.0 from PyPI on Windows. The repository's CI pins flywheel-verify 1.0.0.</p>
+</section>
+
+<section class="block wrap" aria-labelledby="limits">
+  <h2 id="limits">What it does not do</h2>
+  <ul class="limits">
+    <li>The candidate answer comes from a stub. The demo tests the receipt path; generation is outside it.</li>
+    <li>On the shipped benchmark the verified loop shows no accuracy gain over single-shot, and no capability uplift is claimed.</li>
+    <li>The pairing with hardware-attested inference is a proposal and is not shipped.</li>
+  </ul>
+  <p class="src">Source: README.md at 8932608, "Honest state"; demo/run_demo.py step 6</p>
+</section>
+
+<section class="block wrap recall" aria-labelledby="recall">
+  <h2 id="recall">Check what stuck</h2>
+  <p class="measure">Answer each one in your head before you open it.</p>
+  <details><summary>Who re-derives the receipt?</summary><p>A separate process running harness.verify_receipt from the task files.</p></details>
+  <details><summary>When the verdict is forged to FAIL, which check fails?</summary><p>verdict_matches. The output hash still matches, and the recomputed verdict is PASS.</p></details>
+  <details><summary>What does hardware attestation add that a receipt cannot?</summary><p>Evidence of what code ran in sealed hardware. The receipt shows the answer re-derives.</p></details>
+</section>
+</main>
+<footer class="foot wrap">
+  <p>Built from <a href="https://github.com/HarperZ9/flywheel-receipt-demo/tree/89326085ecb7f0261c73370833ca524780c864c1">HarperZ9/flywheel-receipt-demo at 8932608</a> (demo against flywheel-verify 1.5.0). The source of this page is <code>docs/explainer/index.html</code> in that repository. flywheel-receipt-demo is released under FSL-1.1-MIT.</p>
+  <p>Zain Dana Harper. <a href="https://harperz9.github.io/repo-explainers.html">More repository explainers</a>.</p>
+</footer>
+<script>
+/*CORE_JS*/
+</script>
+<script>
+window.KSCENES = {"k0": [{"pipe": {"stages": ["task", "run the oracle", "receipt", "re-derive", "forge", "re-derive again"], "active": 0}}, {"io": {"lines": ["task id     merge-intervals.v1", "oracle      pytest", "oracle cmd  python -m pytest test_merge_intervals.py", "prompt      Implement merge_intervals(intervals) in solution.py ..."]}}], "k1": [{"pipe": {"stages": ["task", "run the oracle", "receipt", "re-derive", "forge", "re-derive again"], "active": 2}}, {"io": {"lines": ["verdict             PASS", "accepted            True", "oracle_cmd          python -m pytest test_merge_intervals.py --junitxml=_oracle_junit.xml -q", ["oracle_output_hash  a2e1d126b3cd1870", "hi"], "model_ref           stub", "receipt file        out/receipt.json"]}}], "k2": [{"pipe": {"stages": ["task", "run the oracle", "receipt", "re-derive", "forge", "re-derive again"], "active": 3}}, {"io": {"cmd": "python -m harness.verify_receipt --receipt out/receipt.json --task-dir task", "lines": ["claimed     verdict PASS, output_hash a2e1d126b3cd1870", "recomputed  verdict PASS, output_hash a2e1d126b3cd1870", "checks      output_hash_matches true, verdict_matches true"], "verdict": ["MATCH", "ok", "exit 0"]}}], "k3": [{"pipe": {"stages": ["task", "run the oracle", "receipt", "re-derive", "forge", "re-derive again"], "active": 5}}, {"cases": {"label": "Choose the receipt", "items": [{"label": "honest", "blocks": [{"io": {"lines": ["claimed PASS, recomputed PASS"], "verdict": ["MATCH", "ok", "exit 0"]}}]}, {"label": "forged: verdict set to FAIL", "blocks": [{"io": {"lines": ["claimed FAIL, recomputed PASS", "checks  output_hash_matches true, verdict_matches false"], "verdict": ["DRIFT", "drift", "exit 1"]}}]}]}}], "k4": [{"table": {"head": ["layer", "shows", "status"], "rows": [["hardware attestation", "what code ran, in sealed hardware", "proposal"], ["Flywheel receipt", "the answer re-derives offline", "shipped, shown here"]]}}, {"verdict": ["honest MATCH, forged DRIFT", "ok", "the receipt path checks out"]}]};
+</script>
+<script>
+/*KIT_JS*/
+</script>
+</body>
+</html>

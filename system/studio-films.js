@@ -6,10 +6,37 @@
 const BASE = "https://github.com/HarperZ9/HarperZ9.github.io/releases/download/films-2026-10-04/";
 const POSTERS = new URL("../media/films/", import.meta.url).href;
 
+// The One Step films depict one forward pass of a language model. Nothing in them comes from a
+// real run: the attention, the layer count and the distribution are seeded stand-ins. These are
+// the primary sources for the mechanisms the pictures stand for (read 9 October 2026).
+const ONE_STEP_SOURCES = Object.freeze([
+  ["Attention", "Vaswani et al. 2017, Attention Is All You Need", "https://arxiv.org/abs/1706.03762"],
+  ["The residual stream, which each layer reads from and writes back to", "Elhage, Nanda, Olah et al. 2021, A Mathematical Framework for Transformer Circuits", "https://transformer-circuits.pub/2021/framework/index.html"],
+  ["Superposition, a hypothesis about how features share directions", "Elhage et al. 2022, Toy Models of Superposition", "https://arxiv.org/abs/2209.10652"],
+]);
+
 export const FILMS = Object.freeze([
-  { id: "one-step-v1", title: "One Step", length: "1:48", note: "The first cut, a short film in drawn light." },
-  { id: "one-step-v2", title: "One Step, second cut", length: "2:02", note: "Seven plates: the automaton, the eye, liquid chrome, lanterns, the orb, the hill, the lattice." },
-  { id: "one-step-threads", title: "One Step, threads", length: "5:06", note: "The fifteen worlds drawn in light threads, two million particles each." },
+  { id: "one-step-v1", title: "One Step", length: "1:48", note: "The first cut, a short film in drawn light.", about: [
+    ["The field", "The context: every token so far, in reading order."],
+    ["Weighing", "Attention: the newest position draws lines back to earlier ones, and brightness stands for weight."],
+    ["The stream", "The residual stream: each of thirteen gates is a layer that reads from it and writes back."],
+    ["Superposition", "More features than directions, sharing one space. A leading hypothesis, labelled as one in the film."],
+    ["The spread", "The next-token distribution. One token, not the most likely, is drawn."],
+    ["Rejoin", "The drawn token joins the context, and the step begins again."],
+    ["Many", "Many contexts at once, none connected to another."],
+  ], sources: ONE_STEP_SOURCES },
+  { id: "one-step-v2", title: "One Step, second cut", length: "2:02", note: "Seven plates: the automaton, the eye, liquid chrome, lanterns, the orb, the hill, the lattice.", about: [
+    ["I The field", "A cellular automaton grown from one cell: the context, every token so far."],
+    ["II The eye", "Attention: the new position looking back."],
+    ["III The stream", "Liquid chrome through twelve rings: the residual stream, rewritten layer by layer."],
+    ["IV The lanterns", "Superposition, labelled a hypothesis."],
+    ["V The draw", "Sampling: the orb's spikes become the next-token spread, and one, not the longest, flares."],
+    ["VI The burden", "The drawn token pushed uphill: the step begins again."],
+    ["VII The many", "Many contexts, none connected."],
+  ], sources: ONE_STEP_SOURCES },
+  { id: "one-step-threads", title: "One Step, threads", length: "5:06", note: "The fifteen worlds drawn in light threads, two million particles each.", about: [
+    ["Fifteen worlds", "Drawn in light threads. No world is mapped to a mechanism; the film is art first."],
+  ] },
   { id: "study-morphogen", title: "Study: Morphogen", length: "0:40", note: "A reaction-diffusion field grows, and an eye opens in it." },
   { id: "study-cathedral", title: "Study: Cathedral", length: "0:40", note: "An endless cathedral cut as a Menger sponge, until its blocks begin to fall." },
   { id: "study-droste", title: "Study: Droste", length: "0:40", note: "Tiles that turn and fall into themselves." },
@@ -51,7 +78,33 @@ export function filmPlayer(f, { caption = true } = {}) {
     c.append(a);
     fig.append(c);
   }
+  const about = aboutNote(f);
+  if (about) fig.append(about);
   return fig;
+}
+
+/** What a One Step film's pictures stand for, and its sources: a closed note, or null. */
+export function aboutNote(f) {
+  if (!f.about) return null;
+  css();
+  const d = document.createElement("details");
+  d.className = "sf-about";
+  d.append(Object.assign(document.createElement("summary"), { textContent: "What the pictures stand for" }));
+  const dl = document.createElement("dl");
+  for (const [k, v] of f.about) dl.append(Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: v }));
+  d.append(dl);
+  if (f.sources) {
+    d.append(Object.assign(document.createElement("p"), { textContent: "A depiction, not a readout: nothing here comes from a real model run. The attention, the layer count and the distribution are seeded stand-ins." }));
+    const ul = document.createElement("ul");
+    for (const [what, cite, url] of f.sources) {
+      const li = document.createElement("li");
+      const a = Object.assign(document.createElement("a"), { href: url, textContent: cite, rel: "external noopener" });
+      li.append(`${what}: `, a);
+      ul.append(li);
+    }
+    d.append(Object.assign(document.createElement("p"), { textContent: "Sources for the mechanisms depicted:" }), ul);
+  }
+  return d;
 }
 
 /** Fill the Films panel the first time it opens. */

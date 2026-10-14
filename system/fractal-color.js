@@ -132,6 +132,19 @@ export function relief(zr, zi, dre, dim) {
 }
 
 /**
+ * The same Lambert multiplier from a gradient already in hand: (z . dz/dcx, z . dz/dcy), for maps
+ * that are not holomorphic (the Burning Ship). Twin of reliefDir() in SHADE_LIB.
+ */
+export function reliefDir(gx, gy) {
+  const m = Math.max(Math.abs(gx), Math.abs(gy));
+  if (!(m > 0 && m < 1e30)) return 1;
+  const ux = gx / m, uy = gy / m, l = Math.hypot(ux, uy);
+  const dot = (ux / l) * LIGHT_X + (uy / l) * LIGHT_Y;
+  const t = Math.min(1, Math.max(0, (dot + LIGHT_H) / (1 + LIGHT_H)));
+  return (1 - RELIEF) + t * (2 * RELIEF);
+}
+
+/**
  * Convert a trap opacity authored in DISPLAY code values into the radiance fraction that encodes
  * back to it. Twin of TRAP_GAMMA / trapWeight() in SHADE_LIB, and the reason the glow survived the
  * move to linear light: 0.30 of the radiance is 0.58 of the code value, so compositing the authored

@@ -52,7 +52,8 @@
             "on": 1,
             "label": "the changed line",
             "value": "never run by any test",
-            "verdict": "UNVERIFIED"
+            "verdict": "UNVERIFIED",
+            "tag": "not tested"
           }
         ]
       }
@@ -178,7 +179,8 @@
             "on": 3,
             "label": "status",
             "value": "two preprints",
-            "verdict": "UNVERIFIED"
+            "verdict": "UNVERIFIED",
+            "tag": "preprints"
           }
         ]
       }

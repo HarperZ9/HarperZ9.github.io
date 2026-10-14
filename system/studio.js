@@ -26,9 +26,16 @@ import { buildCertificate, structuralOracle, cognitiveOracle } from "../shared-f
 import { renderCertificate } from "../shared-frame/certificate-panel.js";
 import { openLog, normaliseEntry, orderEntries } from "../shared-frame/audit-log.js";
 import { openLog as openFidelityLog } from "../shared-frame/fidelity-log.js";
-import { mountShell } from "./studio-shell-dom.js?v=20261009-export-project";
-import { SOURCE_GUIDE } from "./studio-shell.js?v=20261009-films-source";
-import { mountPalette } from "./studio-palette.js?v=20261009-palette";
+import { mountShell } from "./studio-shell-dom.js?v=20261010-flush-steps";
+import { SOURCE_GUIDE } from "./studio-shell.js?v=20261012-viewer";
+import { mountPalette } from "./studio-palette.js?v=20261009-timeline";
+import { mountDnd } from "./studio-dnd.js?v=20261009-drag-drop";
+import { mountLayout } from "./studio-layout.js?v=20261009-layout";
+import { mountTimeline } from "./studio-timeline.js?v=20261010-sound-engine";
+// The Studio's sound through raw-native's sound engine (studio-audio.js): tapped before any source
+// makes a sound, mastered on a side branch for recording, measured with raw-native's meter.
+import { installTap, masteredTracks, startMeasure, liveMeter } from "./studio-audio.js?v=20261010-sound-engine";
+installTap();
 import { formSnapshot, formRestore } from "./studio-form.js?v=20261004-studio-spatial";
 import { mountReadings } from "./studio-readings.js?v=20261004-studio-keep";
 import {
@@ -61,12 +68,16 @@ function lazyLoader(importer, onLoad) {
 }
 
 // 2D fractal source: fractal.js (CPU reference + PRESETS/PALETTES) + fractal-gl.js (GPU path).
-let _fractal = null, _fractalGL = null;
+let _fractal = null, _fractalGL = null, _fhp = null, _fdeep = null, _fform = null, _fcolour = null, _fflight = null;
 // The draw itself is the media engine's "fractal" plugin (media-engine/plugins/fractal.mjs); the
 // camera, canvas mounting, sizing and the CPU path's progression stay here. One handle per canvas
 // node (the GL and 2D canvases are different nodes), disposed when the Studio leaves the source.
 let _fractalEngine = null, _fractalHandle = null, _fractalHandleCanvas = null;
 function dropFractalHandle() {
+  // A Buddhabrot keeps accumulating on its own frames until it is stopped.
+  if (_fractalGL && _fractalGL.stopBuddhabrot && _fractalHandleCanvas) _fractalGL.stopBuddhabrot(_fractalHandleCanvas);
+  if (_fcolour) _fcolour.stop();   // colour cycling stops with the source
+  if (_fflight) _fflight.stop();   // and so does a flight preview
   if (_fractalHandle) { try { _fractalHandle.dispose(); } catch (e) { console.error("[studio] fractal plugin dispose failed:", e); } }
   _fractalHandle = null; _fractalHandleCanvas = null;
 }
@@ -82,27 +93,116 @@ function drawFractalView(canvas, view, path) {
   return _fractalHandle.instance.lastError;
 }
 const loadFractal2D = lazyLoader(
-  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20260903a"),
-    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal"))]),
-  ([f, g, e]) => {
-    _fractal = f; _fractalGL = g; _fractalEngine = e;
+  () => Promise.all([import("./fractal.js?v=20260903a"), import("./fractal-gl.js?v=20261009f4"),
+    import("./media-engine/page.mjs").then(m => m.usePlugin("fractal")),
+    import("./fractal-hp.js?v=20261009f1"), import("./studio-fractal-deep.js?v=20261009f2"),
+    import("./studio-fractal-formula.js?v=20261009f2"), import("./studio-fractal-colour.js?v=20261009f4"),
+    import("./studio-fractal-still.js?v=20261009f4"), import("./studio-fractal-flight.js?v=20261009f6")]),
+  ([f, g, e, hp, deep, form, colour, still, flight]) => {
+    _fractal = f; _fractalGL = g; _fractalEngine = e; _fhp = hp;
     GL_AVAILABLE = !!g.isFractalGLAvailable();
     buildFractalPalettes();            // idempotent (builds once)
     buildPresetMenuNow(activeFType);   // populate the preset dropdown for the active type
+    // The rail groups mount after the menu, each on its own: one that fails is logged and the
+    // source still draws and keeps every other control.
+    const mount = (name, fn) => { try { fn(); } catch (err) { console.error(`[studio] the fractal ${name} group did not mount:`, err); } };
+    mount("flight", () => {
+      _fflight = flight.mountFractalFlight({
+        getView: () => fractalView,
+        setView: (v) => { fractalView = v; },
+        repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+        repaintFast: () => { if (fractalView) paintFractal(fractalView, 1); },
+        decorate: (v) => { const d = _fdeep ? _fdeep.decorate(v) : v; return { ...d, maxIter: Math.round(d.maxIter * currentQuality().iterMult) }; },
+        // Each video frame draws on its own canvas through the GPU renderer, or the CPU one without WebGL.
+        draw: (v, canvas) => { if (GL_AVAILABLE) { try { g.renderFractalGL(canvas, v); return; } catch (err) { console.warn("[studio] flight frame fell back to the CPU:", err); } } f.renderFractal(canvas, v); },
+        say: (t) => say("model", t),
+        isActive: () => activeSource === "fractal",
+      });
+    });
+    mount("still", () => {
+      still.mountFractalStill({
+        getView: () => fractalView,
+        decorate: (v) => { const d = _fdeep ? _fdeep.decorate(v) : v; return { ...d, maxIter: Math.round(d.maxIter * currentQuality().iterMult) }; },
+        // Each strip draws on its own canvas through the GPU renderer, or the CPU one without WebGL.
+        draw: (sv, canvas) => { if (GL_AVAILABLE) { try { g.renderFractalGL(canvas, sv); return; } catch (err) { console.warn("[studio] still strip fell back to the CPU:", err); } } f.renderFractal(canvas, sv); },
+        stageAspect: () => { const c = $("studio-canvas"); return c && c.width ? c.height / c.width : 0.5625; },
+        say: (t) => say("model", t),
+      });
+    });
+    mount("colouring", () => {
+      _fcolour = colour.mountFractalColour({
+        getView: () => fractalView,
+        setView: (v) => { fractalView = v; },
+        repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+        paintFast: () => { if (fractalView) paintFractal(fractalView, 1); },
+        say: (t) => say("model", t),
+        isActive: () => activeSource === "fractal",
+      });
+    });
+    mount("formula", () => {
+      _fform = form.mountFractalFormula({
+        getView: () => fractalView,
+        setView: (v) => { fractalView = v; },
+        repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+        say: (t) => say("model", t),
+      });
+    });
+    mount("deep zoom", () => {
+      _fdeep = deep.mountFractalDeep({
+        getView: () => fractalView,
+        setView: (v) => { fractalView = v; },
+        repaint: () => { if (!fractalView) return; const c = paintFractal(fractalView); try { perceive(c); } catch (_) {} startMeterLoop(); },
+        say: (t) => say("model", t),
+        canvas: () => $("studio-canvas"),
+        isActive: () => activeSource === "fractal",
+      });
+    });
   });
 
 // 3D fractal source: the WebGL1 raymarcher.
 let _fractal3d = null;
-const loadFractal3D = lazyLoader(() => import("./fractal3d.js"), m => { _fractal3d = m; });
+// The progressive WebGL2 renderer (fractal3d-pro.js) when the browser has WebGL2, the WebGL1
+// raymarcher (fractal3d.js) otherwise; studio-fractal3d.js holds the controls both read.
+let _f3ui = null;
+const loadFractal3D = lazyLoader(
+  () => Promise.all([import("./fractal3d.js"), import("./fractal3d-pro.js?v=20261009f5"), import("./studio-fractal3d.js?v=20261009f5")]),
+  ([legacy, pro, ui]) => {
+    _fractal3d = {
+      render3D(canvas, opts) {
+        try { return pro.render3DPro(canvas, opts); }
+        catch (err) { console.warn("[studio] progressive 3D renderer unavailable, using WebGL1:", err && err.message); return legacy.render3D(canvas, opts); }
+      },
+    };
+    _f3ui = ui.mountFractal3D({
+      getType: () => active3DType,
+      getHandle: () => fractal3dHandle,
+      onChange: { record: () => { if (_shell && activeSource === "fractal3d") _shell.recordSoon("fractal3d"); }, extra: () => ({ power: parseFloat(f3("f3-power").value), scale: parseFloat(f3("f3-scale").value), iterations: parseInt(f3("f3-iterations").value, 10) }) },
+    });
+  });
 
 // Dimensions source: the render-nd barrel (geometry + pick + paint-state) + the WebGL backend.
 let _ndim = null, _ndGLBackend = null;
+// Dimensions on raw-native (ndim-gpu.js, 10 October 2026): the WebGPU drawer starts in the
+// background; until it answers, and wherever WebGPU is missing, WebGL draws, then the 2D canvas.
+// ?ndim=webgl or ?ndim=2d pins a fallback, so the three paths can be compared side by side.
+let _ndGPU = null, _ndGPUTried = false;
+const _ndPin = (new URLSearchParams(window.__studioBootSearch || location.search).get("ndim") || "").toLowerCase();
+function startNDimGPU() {
+  if (_ndGPUTried || _ndPin === "webgl" || _ndPin === "2d") return;
+  _ndGPUTried = true;
+  import("./ndim-gpu.js?v=20261010-ndim-gpu").then((m) => m.createNDimGPU()).then((d) => {
+    if (!d) return;
+    _ndGPU = d;
+    if (activeSource === "ndim" && _ndimRaf == null) ndimRepaintNow();   // a held pose redraws on the new path
+  }).catch((e) => console.error("[studio] Dimensions on raw-native failed to start:", e));
+}
 const loadNDimEngine = lazyLoader(
   () => Promise.all([import("./ndim.js"), import("./lib/render-nd/backends/webgl.mjs")]),
   ([nd, glb]) => {
     _ndim = nd; _ndGLBackend = glb;
     if (!_ndPaint) _ndPaint = nd.createPaintState();
     ndimBuildPalette();                // idempotent (builds once)
+    startNDimGPU();
   });
 
 // Physics source: the discovery engine.
@@ -130,7 +230,19 @@ const loadWorlds = lazyLoader(() => import("./studio-worlds.js?v=20261004-worlds
 // Threads: raw-native's web GPU host draws the frame; studio-threads.js copies it onto the stage.
 let _threads = null;
 const loadThreads = lazyLoader(() => import("./studio-threads.js?v=20261009-choosing-shows"), m => { _threads = m; });
-const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261003-neural-rest"), m => { _neural = m; });
+// Living neural on raw-native (neural-gpu.js, 10 October 2026): once the GPU drawer starts, the
+// networks run per pixel on the GPU; until then, and wherever WebGPU is missing, the worker and
+// main-thread paths draw as before. ?neural=cpu pins the CPU paths; ?neural=grid samples on the GPU
+// exactly where the CPU samples, so the two can be compared.
+const _nnPin = (new URLSearchParams(window.__studioBootSearch || location.search).get("neural") || "").toLowerCase();
+const loadNeural = lazyLoader(() => import("./studio-neural.js?v=20261010-neural-gpu"), m => {
+  _neural = m;
+  window.__studioNeuralBackend = () => m.neuralBackend();
+  if (_nnPin === "cpu") return;
+  import("./neural-gpu.js?v=20261010-neural-gpu").then((g) => g.createNeuralGPU()).then((d) => {
+    if (d) m.setNeuralGPU(d, _nnPin === "grid" ? "grid" : "full");
+  }).catch((e) => console.error("[studio] Living neural on raw-native failed to start:", e));
+});
 let _neuralSeed = "living";
 let _neuralInstrument = "field";
 let _neuralStatic = false;   // true when reduced motion holds a single frame
@@ -249,6 +361,8 @@ const _voxelPick = document.createElement("canvas");
 // block to the device tier's budget, and holds a still frame under reduced
 // motion (mirrors the neural instrument's static flag).
 let _spatial = null;
+let _layout = null;   // studio-layout.js, mounted with the shell
+let _timeline = null; // studio-timeline.js
 // The Splat Lab draws its splat worlds in place with the Spatial renderer (9 October 2026): the two
 // sources share the renderer and its inspector, and the Splat Lab adds its own record.
 const isSpatial = (s) => s === "spatial" || s === "splats";
@@ -543,6 +657,8 @@ const SOURCES = {
   revival:   { block: "src-engine",    mode: "generate", engine: true },
   raw:       { block: "src-engine",    mode: "generate", engine: true },
   type:      { block: "src-engine",    mode: "generate", engine: true },
+  // raw-native's verified viewer, the release's own page on the stage (studio-viewer.js).
+  viewer:    { block: "src-viewer",    mode: "generate" },
 };
 
 // The full Retro Engine, on first entry (studio-retro.js reads retro.html's own markup).
@@ -619,6 +735,29 @@ async function enterFilmsSource(epoch) {
   } catch (err) {
     console.error("[studio] the films failed to load:", err);
     say("model", "The films failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+
+// The Verified viewer: raw-native's viewer page from a pinned release, on the stage (studio-viewer.js).
+const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261012-viewer"));
+let _viewer = null;
+async function enterViewerSource(epoch) {
+  try {
+    _viewer = await loadViewer();
+    if (epoch !== _sourceEpoch) return;
+    const loaded = _viewer.enterViewer({ stage: $("viewport-stage"), status: $("viewer-status") });
+    markStagePainted();
+    await loaded;
+  } catch (err) {
+    console.error("[studio] the verified viewer failed to load:", err);
+    say("model", "The verified viewer failed to load: " + (err && err.message ? err.message : String(err)));
+  }
+}
+// The rail presses the viewer page's own buttons.
+function initViewerControls() {
+  for (const [id, target] of [["viewer-hero", "raw-hero"], ["viewer-hall", "raw-hall"]]) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", () => { if (activeSource === "viewer" && _viewer) _viewer.pressViewer(target); });
   }
 }
 
@@ -730,6 +869,7 @@ function setSource(next) {
     if (activeSource === "gallery" && _galleryHub) _galleryHub.leaveGallery();   // park the desk
     if (activeSource === "loom" && _loomHub) _loomHub.leaveLoom();               // park the loom, stop the shuttle
     if (activeSource === "films" && _filmsSource) _filmsSource.leaveFilms();     // pause, give the stage back
+    if (activeSource === "viewer" && _viewer) _viewer.leaveViewer();              // hide the page; a render in flight finishes
     if (activeSource === "byo") stashByo();   // before the video is released: keep its last frame
     leave3D();          // restore the 2D canvas if a WebGL orbit was mounted
     stopNDim();         // stop the n-dim animation RAF if one is running
@@ -779,11 +919,14 @@ function setSource(next) {
   // The shell names the source, and swaps the action bar to this source's actions (studio-shell.js).
   if (_shell) _shell.sourceChanged(next);
   if (_readings) _readings.sourceChanged();
+  if (_layout) _layout.sourceChanged();
+  if (_timeline) _timeline.sourceChanged(next);
   if (next === "poster") enterPosterWorkshop(epoch);
   if (next === "retro") enterRetro(epoch);
   if (next === "gallery") enterGallerySource(epoch);
   if (next === "loom") enterLoomSource(epoch);
   if (next === "films") enterFilmsSource(epoch);
+  if (next === "viewer") enterViewerSource(epoch);
   if (SOURCES[next].engine) {
     // Fit the backing to the stage before the surface draws: a surface draws into the canvas it
     // is given, so on a phone it inherited whatever size the previous source left (a square from
@@ -810,6 +953,7 @@ function setSource(next) {
   // idle-visual starter directly on that button, so only that listener runs (the delegated
   // #studio-source handlers never see a non-bubbling event, so setSource is not re-entered).
   if (next === "music") {
+    startMusicLoudness();
     startMeterLoop();
     loadReactive().then(() => {
       if (epoch !== _sourceEpoch) return;
@@ -2635,6 +2779,7 @@ function initShelf() {
 initNeuralControls();
 initThreadsControls();
 initWorldsControls();
+initViewerControls();
 // The Films panel fills itself the first time it is opened.
 import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
   .catch((e) => console.error("[studio] the films panel failed to load:", e));
@@ -3019,7 +3164,10 @@ function paintFractal(opts, aaOverride) {
   // Defensive: every caller is gated on fractalView, which is only set after the lazy fractal
   // graph loaded (renderPreset awaits it), so this guard should never fire in practice.
   if (!_fractal) return $("studio-canvas");
-  const maxIter = Math.round(opts.maxIter * currentQuality().iterMult);
+  const t0 = performance.now();
+  // The Deep zoom group: iterations that follow the depth, the BLA switch, the glitch view.
+  const view = _fdeep ? _fdeep.decorate(opts) : opts;
+  const maxIter = Math.round(view.maxIter * currentQuality().iterMult);
   const aa = aaOverride !== undefined ? aaOverride : currentQuality().aa;
   if (GL_AVAILABLE && _fractalGL) {
     // Mount a GL canvas if one isn't already up (or if a 3D orbit's node is mounted, reuse it).
@@ -3032,7 +3180,11 @@ function paintFractal(opts, aaOverride) {
     // Tier-gated DPR clamp (spec 1.4): on tier mid+, lift the GL backing to CSS * min(dpr, 2)
     // for a crisp hi-DPI fragment pass. Fail-safe no-op below mid or when the plan is absent.
     try { _fractalGL.clampGLBackingToDPR(c, window.__studioHardwareRenderPlan && window.__studioHardwareRenderPlan.tier); } catch (_) {}
-    if (!drawFractalView(c, { ...opts, maxIter, aa }, "gl")) { noteFractalPainted(); return c; }
+    if (!drawFractalView(c, { ...view, maxIter, aa }, "gl")) {
+      noteFractalPainted();
+      if (_fdeep) _fdeep.timeFrame({ ...view, maxIter }, t0, aaOverride === undefined);
+      return c;
+    }
     // GPU failed at runtime: fall back to CPU on the original 2D canvas.
     dropFractalHandle();
     leave3D();
@@ -3040,8 +3192,9 @@ function paintFractal(opts, aaOverride) {
   // CPU path (fallback / no WebGL): progressive render so the UI never blocks (Task 8n perf).
   const c = $("studio-canvas");
   sizeCanvas(c);
-  cpuFractalProgressive(c, { ...opts, maxIter });
+  cpuFractalProgressive(c, { ...view, maxIter });
   noteFractalPainted();
+  if (_fdeep) _fdeep.timeFrame({ ...view, maxIter }, t0, false);
   return c;
 }
 // The shell records a fractal view once it has held still for 400 ms, so a wheel zoom is one undo
@@ -3063,6 +3216,15 @@ function fractalPrecisionNote() {
   const want = _fractalGL.fractalPrecisionMode(
     fractalView.cx, fractalView.cy, fractalView.scale, (c && c.width) || 1600);
   if (want === "single") return "";
+  if (!["mandelbrot", "julia", "burningship", "tricorn"].includes(fractalView.type)) {
+    return "This formula draws in float32, which stops separating neighbouring pixels near this depth. "
+      + "The deep path covers the Mandelbrot, Julia, Burning Ship and Tricorn sets. ";
+  }
+  if (c && c.__fractalPrecisionUsed === "perturbation") {
+    return "Past float32's reach here, so every pixel is iterated as a small difference from one "
+      + "reference orbit computed in exact arithmetic (perturbation, with rebasing and bilinear "
+      + "approximation). It holds detail down to a view 1e-300 wide. ";
+  }
   if (c && c.__fractalPrecisionUsed !== "double") {
     return "Heads up: this view is past float32's reach, but this device's fragment shaders do not "
       + "carry full precision, so neighbouring pixels are collapsing onto the same point. ";
@@ -3106,11 +3268,18 @@ async function renderPreset() {
   // Reset fractalView to a fresh shallow copy of the canonical preset (decouples zoom from PRESETS).
   fractalBaseMaxIter = preset.maxIter || 500;
   fractalBasePalette = preset.palette || "ocean";
-  fractalView = applyFractalRenderControls({ ...preset });
+  // Flight keyframes outlive a change of preset: a flight is framed across several views.
+  const keptFlight = fractalView && fractalView.flight;
+  fractalView = applyFractalRenderControls({ ...preset, ...(keptFlight ? { flight: keptFlight } : {}) });
   fractalDefault = { ...fractalView };   // remember the default framing for Reset view
+  if (_fform) _fform.sync(fractalView);
+  if (_fcolour) _fcolour.sync(fractalView);
+  if (_fflight) _fflight.sync(fractalView);
   const canvas = paintFractal(fractalView);
   const obs = perceive(canvas);
-  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship" }[fractalView.type] || fractalView.type;
+  const typeLabel = { mandelbrot: "Mandelbrot set", julia: "Julia set", burningship: "Burning Ship",
+    multibrot: "Multibrot set", tricorn: "Tricorn", celtic: "Celtic set", magnet: "Magnet set", phoenix: "Phoenix set",
+    newton: "Newton fractal", nova: "Nova fractal", lyapunov: "Lyapunov fractal", formula: "formula" }[fractalView.type] || fractalView.type;
   const detail = obs.features.entropy > 0.8
     ? "dense filament detail, the boundary is alive here"
     : obs.features.entropy < 0.45
@@ -3164,16 +3333,31 @@ if ($("fractal-detail")) {
 const fStage = $("studio-canvas").closest(".stage");
 let _fractalRaf = 0, _fractalDirty = false;
 
-// Convert a client-space point on the canvas to its complex-plane coordinate under the current view.
-function fractalPointToComplex(clientX, clientY, canvas, rect) {
-  const fx = (clientX - rect.left) / rect.width;   // 0..1 across the displayed canvas
-  const fy = (clientY - rect.top) / rect.height;
+// A client-space point's OFFSET from the view centre, in plane units. Offsets rather than absolute
+// coordinates, because past 1e-16 a double centre cannot hold the point under the cursor; the
+// offset is the size of the view and stays exact. The image puts larger imaginary parts higher up
+// (the GPU programs' convention, which fractal.js now shares), and the Burning Ship is drawn
+// reflected, as is customary for it.
+function fractalPointOffset(clientX, clientY, canvas, rect) {
+  const fx = (clientX - rect.left) / rect.width - 0.5;
+  const fy = (clientY - rect.top) / rect.height - 0.5;
   const aspect = canvas.height / canvas.width;
   const flipY = fractalView.type === "burningship" ? -1 : 1;
-  return {
-    re: fractalView.cx + (fx - 0.5) * fractalView.scale,
-    im: fractalView.cy + flipY * (fy - 0.5) * fractalView.scale * aspect,
-  };
+  return { re: fx * fractalView.scale, im: -flipY * fy * fractalView.scale * aspect };
+}
+// The deepest view a double can describe; the perturbation path draws down to here.
+const FRACTAL_MIN_SCALE = 1e-300;
+// Move or zoom the view through fractal-hp.js, which carries the centre at the precision the depth
+// needs. Before the graph loads (it always has by the time a view exists) the doubles move instead.
+function fractalShift(dre, dim) {
+  if (_fhp) _fhp.shiftView(fractalView, dre, dim);
+  else { fractalView.cx += dre; fractalView.cy += dim; }
+}
+function fractalZoomAbout(off, factor) {
+  const next = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * factor);
+  factor = next / fractalView.scale;
+  if (_fhp) _fhp.zoomViewAbout(fractalView, off.re, off.im, factor);
+  else { fractalView.scale = next; fractalView.cx += off.re * (1 - factor); fractalView.cy += off.im * (1 - factor); }
 }
 
 // Schedule a throttled re-render of the current fractalView (coalesces rapid wheel/drag events to
@@ -3206,13 +3390,9 @@ fStage.addEventListener("wheel", e => {
   e.preventDefault();
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  const before = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
   const factor = Math.exp((e.deltaY > 0 ? 1 : -1) * 0.18);   // smooth multiplicative zoom
-  fractalView.scale *= factor;
-  // Keep the point under the cursor fixed: shift center by how much that point moved.
-  const after = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
-  fractalView.cx += before.re - after.re;
-  fractalView.cy += before.im - after.im;
+  // Keep the point under the cursor fixed.
+  fractalZoomAbout(fractalPointOffset(e.clientX, e.clientY, canvas, rect), factor);
   startMeterLoop();
   scheduleFractalRender();
 }, { passive: false });
@@ -3234,8 +3414,7 @@ fStage.addEventListener("pointermove", e => {
   _fdrag.x = e.clientX; _fdrag.y = e.clientY;
   const aspect = canvas.height / canvas.width;
   const flipY = fractalView.type === "burningship" ? -1 : 1;
-  fractalView.cx -= (dx / _fdrag.w) * fractalView.scale;
-  fractalView.cy -= flipY * (dy / _fdrag.h) * fractalView.scale * aspect;
+  fractalShift(-(dx / _fdrag.w) * fractalView.scale, flipY * (dy / _fdrag.h) * fractalView.scale * aspect);
   startMeterLoop();
   scheduleFractalRender();
 });
@@ -3252,11 +3431,15 @@ fStage.addEventListener("pointercancel", endFractalDrag);
 fStage.addEventListener("click", e => {
   if (!fractalInteractive()) return;
   if (_fdrag && _fdrag.moved) return;   // was a drag, not a click
-  if (!e.target.closest("#studio-canvas")) return;
   const canvas = $("studio-canvas");
   const rect = canvas.getBoundingClientRect();
-  const at = fractalPointToComplex(e.clientX, e.clientY, canvas, rect);
-  fractalView.cx = at.re; fractalView.cy = at.im; fractalView.scale *= 0.5;
+  // By position, not by target: pointerdown captures the pointer on the stage, so the click that
+  // follows is aimed at the stage and never at the canvas. The target test made click-to-zoom a
+  // dead gesture (found 9 October 2026; it was dead on the live site too).
+  if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) return;
+  const at = fractalPointOffset(e.clientX, e.clientY, canvas, rect);
+  fractalShift(at.re, at.im);
+  fractalView.scale = Math.max(FRACTAL_MIN_SCALE, fractalView.scale * 0.5);
   paintFractal(fractalView, /* aaOverride */ 1);
   const obs = perceive(canvas);
   say("model",
@@ -3288,12 +3471,8 @@ fStage.addEventListener("touchmove", e => {
     const [a, b] = [..._ftouch.pts.values()];
     const mid = { clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 };
     const dist = Math.hypot(a.x - b.x, a.y - b.y) || 1;
-    const before = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
     const factor = _ftouch.pinchDist / dist;   // fingers apart → zoom in
-    fractalView.scale *= factor;
-    const after = fractalPointToComplex(mid.clientX, mid.clientY, canvas, rect);
-    fractalView.cx += before.re - after.re;
-    fractalView.cy += before.im - after.im;
+    fractalZoomAbout(fractalPointOffset(mid.clientX, mid.clientY, canvas, rect), factor);
     _ftouch.pinchDist = dist;
   } else {
     const p = [..._ftouch.pts.values()][0];
@@ -3301,8 +3480,7 @@ fStage.addEventListener("touchmove", e => {
     _ftouch.panX = p.x; _ftouch.panY = p.y;
     const aspect = canvas.height / canvas.width;
     const flipY = fractalView.type === "burningship" ? -1 : 1;
-    fractalView.cx -= (dx / rect.width) * fractalView.scale;
-    fractalView.cy -= flipY * (dy / rect.height) * fractalView.scale * aspect;
+    fractalShift(-(dx / rect.width) * fractalView.scale, flipY * (dy / rect.height) * fractalView.scale * aspect);
   }
   startMeterLoop();
   scheduleFractalRender();
@@ -3358,7 +3536,8 @@ function leave3D() {
     glCanvas.replaceWith(originalCanvas);   // remount the intact 2D node
     // Release the WebGL context to prevent resource leaks when cycling sources (browsers cap ~16 contexts).
     try {
-      const _gl = glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
+      // The 2D fractal path asks for WebGL2 first, and a canvas answers only its own context type.
+      const _gl = glCanvas.__fractalGLContext || glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
       _gl && _gl.getExtension("WEBGL_lose_context") && _gl.getExtension("WEBGL_lose_context").loseContext();
     } catch (e) { /* non-fatal */ }
     canvasIsGL = false;
@@ -3404,7 +3583,7 @@ async function render3DInto(opts) {
     if (!canvasIsGL) return;   // left 3D before the timer fired
     const obs = perceive($("studio-canvas"));
     const relief = obs.features.contrast > 0.6 ? "deep relief and strong light" : "soft, diffuse form";
-    const label = opts.type === "mandelbulb" ? "Mandelbulb" : "Mandelbox";
+    const label = { mandelbulb: "Mandelbulb", surf: "Amazing Surf", menger: "Menger sponge", kleinian: "pseudo-Kleinian", hybrid: "hybrid" }[opts.type] || "Mandelbox";
     const col3 = (obs.rich && obs.rich.dominantColors || []).slice(0, 3).join(", ");
     say("model",
       `A raymarched ${label}, lit in 3D and slowly orbiting. I read it at ${obs.phash}: ${relief}`
@@ -3433,6 +3612,7 @@ function read3DOpts() {
     scale: parseFloat(f3("f3-scale").value),
     power: parseFloat(f3("f3-power").value),
     iterations: parseInt(f3("f3-iterations").value, 10),
+    ...(_f3ui ? _f3ui.read() : {}),
     // Supersample the silhouette on High quality, or on a device the render
     // plan already rates high. One march per sample, so it stays off below
     // that. The plan carries the tier; the raw capability record does not.
@@ -3463,7 +3643,9 @@ f3("f3-render").addEventListener("click", () => render3DInto(read3DOpts()));
 // the camera angle uniforms in fractal3d.js via the handle's orbit()/dolly(); a gentle idle
 // auto-orbit resumes ~1.4s after the user lets go (handled in render3D). Touch supported.
 // Bound on the same stable .stage container; guarded so it only acts when a 3D orbit is mounted.
-function fractal3dInteractive() { return activeSource === "fractal3d" && !!fractal3dHandle; }
+// The progressive renderer binds raw-native's explorer controls itself (ownsInput), so these
+// handlers serve only the WebGL1 fallback.
+function fractal3dInteractive() { return activeSource === "fractal3d" && !!fractal3dHandle && !fractal3dHandle.ownsInput; }
 let _3drag = null;
 fStage.addEventListener("pointerdown", e => {
   if (!fractal3dInteractive() || e.pointerType === "touch") return;
@@ -3617,14 +3799,26 @@ function drawNDimFrame(canvas, n, t, speed, kind, projection, rotation) {
 
   const lineW = Math.max(0.5, 1.4 - n * 0.05);
 
-  const gl = ndGL();
-  if (gl) {
+  const gl = _ndPin === "2d" ? null : ndGL();
+  const drawT0 = performance.now();
+  if (_ndGPU && !_ndGPU.host.lost) {
+    // raw-native: drawn on the GPU, then copied onto the stage in this same task (a WebGPU
+    // canvas reads back black once its frame has been presented).
+    _ndGPU.draw(scene, w, h, Math.max(1.2, lineW * (window.devicePixelRatio || 1)));
+    ctx.drawImage(_ndGPU.canvas, 0, 0, w, h);
+    window.__studioNdimBackend = "raw-native webgpu";
+  } else if (gl) {
     _ndGLCanvas.width = w; _ndGLCanvas.height = h;
     _ndGLBackend.drawSceneGL3D(gl, scene, { width: w, height: h });
     ctx.drawImage(_ndGLCanvas, 0, 0, w, h);
+    window.__studioNdimBackend = "webgl";
   } else {
     draw3DSceneTo2D(ctx, scene, w, h, lineW);
+    window.__studioNdimBackend = "2d canvas";
   }
+  // The backend's own cost per frame, drawing and copying onto the stage (the scene build above is
+  // the same on every path), for the readout and the port's before-and-after numbers.
+  window.__studioNdimDrawMs = performance.now() - drawT0;
   return scene.meta;
 }
 
@@ -6805,6 +6999,8 @@ if (tierBtn) {
   const sendFrame = async (target) => {
     const cv = document.getElementById("studio-canvas");
     if (!cv) return;
+    // The Loom lives in the Studio now too (9 October 2026): hand over in this page, never navigate.
+    if (target !== "retro") { handFrameTo(target); return; }
     try {
       const wb = await import("./workbench.js?v=20260812-cohesion");
       // The Retro Engine lives in the Studio now: hand the frame over in this page and switch.
@@ -6827,6 +7023,58 @@ if (tierBtn) {
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire, { once: true });
   else wire();
 })();
+
+// Music's loudness, measured by raw-native's BS.1770 meter on the mastered branch of the sound
+// (studio-audio.js): integrated over the last 3 s and the true peak, about twice a second while
+// the source is on stage. Nothing is shown until sound has played.
+let _musicMeterStop = null;
+function startMusicLoudness() {
+  const block = $("src-music"); if (!block) return;
+  let line = $("music-loudness");
+  if (!line) {
+    line = document.createElement("p");
+    line.id = "music-loudness"; line.className = "transform-note music-loudness";
+    line.setAttribute("aria-live", "off");
+    line.textContent = "Loudness: play something to measure it.";
+    block.prepend(line);
+  }
+  if (_musicMeterStop) return;
+  _musicMeterStop = liveMeter(({ lufs, truePeakDb }) => {
+    if (activeSource !== "music") { _musicMeterStop(); _musicMeterStop = null; return; }
+    const l = Number.isFinite(lufs) ? lufs.toFixed(1) + " LUFS" : "below the gate";
+    const p = Number.isFinite(truePeakDb) ? truePeakDb.toFixed(1) + " dBTP" : "silent";
+    line.textContent = `Loudness over the last 3 s: ${l}, true peak ${p}, measured by raw-native's BS.1770 meter.`;
+  });
+}
+
+// Hand the stage's frame to another tool in this page: the Retro Engine as its upload, the Loom as
+// the picture it weaves, Bring your own as a still image (9 October 2026).
+async function handFrameTo(target) {
+  const cv = $("studio-canvas");
+  if (!cv || target === activeSource) return;
+  try {
+    if (target === "retro") {
+      const wb = await import("./workbench.js?v=20260812-cohesion");
+      if (!wb.sendPiece("retro", cv.toDataURL("image/png"), { surface: "studio", label: "studio frame" }, false)) { say("model", "That frame is too large to hand over."); return; }
+      setSource("retro");
+      const take = () => { if (window.__retroStudio && activeSource === "retro") window.__retroStudio.importHandoff(); else setTimeout(take, 200); };
+      take();
+    } else if (target === "loom") {
+      const flows = await import("./studio-engine-flows.js");
+      await flows.stageHandoff(cv, SOURCE_GUIDE[activeSource] ? SOURCE_GUIDE[activeSource].name : "Studio");
+      setSource("loom");
+    } else if (target === "byo") {
+      const from = activeSource;
+      const blob = await new Promise((r) => cv.toBlob(r, "image/png"));
+      if (!blob) { say("model", "That frame could not be copied."); return; }
+      setSource("byo");
+      loadFile(new File([blob], `studio-frame-${from}.png`, { type: "image/png" }));
+    }
+  } catch (err) {
+    console.error("[studio] hand-over to " + target + " failed:", err);
+    say("model", "That frame could not be handed over: " + (err && err.message ? err.message : String(err)));
+  }
+}
 
 // The studio joins the instrument family: sound on the toolbar, the frame
 // as a score, a clip of the moving canvas, the house feel, the workshop line.
@@ -7133,6 +7381,15 @@ const SHELL_CONTRACTS = {
     snapshot: () => (_filmsSource ? _filmsSource.filmsState() : null),
     restore(state) { if (_filmsSource && state && state.film) _filmsSource.chooseFilm(state.film); },
   },
+  // The Verified viewer (studio-viewer.js): the bar runs the rail's raw-hero button, which presses
+  // the viewer page's own. The page keeps its own record of runs; there is nothing to undo.
+  viewer: {
+    primary: { label: "Render raw-hero", target: "viewer-hero", title: "Render raw-hero on the GPU and the CPU reference" },
+    exports: [],
+    history: false,
+    snapshot: () => null,
+    restore() {},
+  },
   // The whole Loom (studio-loom.js): its structure and setup fields are the snapshot; every
   // rebuilt cloth is one step. The source picture is not kept, as with the Loom's own setups.
   loom: {
@@ -7203,7 +7460,7 @@ const SHELL_CONTRACTS = {
     making: true,
     primary: { label: "Render", target: "f3-render", title: "Render the fractal with these settings" },
     exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
-    snapshot() { const o = read3DOpts(); return { type: o.type, scale: o.scale, power: o.power, iterations: o.iterations }; },
+    snapshot() { const o = read3DOpts(); delete o.aa; return o; },
     restore(state) {
       active3DType = state.type;
       radioChips("data-f3type", state.type);
@@ -7212,6 +7469,7 @@ const SHELL_CONTRACTS = {
       setRange("f3-scale", state.scale, "f3-scale-val", (v) => (+v).toFixed(2));
       setRange("f3-power", state.power, "f3-power-val", (v) => (+v).toFixed(1));
       setRange("f3-iterations", state.iterations, "f3-iterations-val");
+      if (_f3ui) _f3ui.apply(state);
       render3DInto(read3DOpts());
     },
     reset() {
@@ -7272,7 +7530,10 @@ const SHELL_CONTRACTS = {
       renderPreset();
     },
     primary: { label: "Render", target: "fractal-render", title: "Draw the chosen preset from its starting view" },
-    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" }],
+    exports: [PNG_FRAME, { label: "Perception record (JSON)", target: "rt-export-json" },
+      // Stills past any canvas, drawn in strips and streamed into a PNG (fractal-tiles.js).
+      { label: "4K still (PNG)", target: "fractal-still-4k" }, { label: "8K still (PNG)", target: "fractal-still-8k" },
+      { label: "16K still (PNG)", target: "fractal-still-16k" }, { label: "Flight video (WebM)", target: "fractal-flight-export" }],
     snapshot: () => (fractalView ? {
       view: fractalView, start: fractalDefault, type: activeFType, preset: fractalPresetEl.value,
       palette: activeFractalPalette, detail: ($("fractal-detail") || {}).value || "1",
@@ -7291,6 +7552,9 @@ const SHELL_CONTRACTS = {
       [fractalBaseMaxIter, fractalBasePalette] = state.base;
       fractalDefault = state.start ? { ...state.start } : null;
       fractalView = { ...state.view };
+      if (_fform) _fform.sync(fractalView);
+      if (_fcolour) _fcolour.sync(fractalView);
+      if (_fflight) _fflight.sync(fractalView);
       const c = paintFractal(fractalView);
       try { perceive(c); } catch (_) {}
       startMeterLoop();
@@ -7363,6 +7627,11 @@ _shell = mountShell({
   contracts: SHELL_CONTRACTS,
   storage: keepStorage,
   onMaking: () => _readings.action(),
+  // Timelines travel in project files with the sessions and presets.
+  projectExtras: {
+    save: (sources) => ({ timelines: _timeline ? _timeline.all(sources) : {} }),
+    open: (doc, sources) => { if (_timeline && doc.timelines) _timeline.putAll(doc.timelines, sources); },
+  },
   // The deck's formats, offered in every source's Export menu when they apply (9 October 2026).
   stageExports: [
     { label: "PNG frame", target: "rt-export-png" },
@@ -7378,17 +7647,42 @@ _shell = mountShell({
     } },
   ],
 });
-// A project file dropped anywhere on the page opens it (the shell checks it before anything is kept).
-document.addEventListener("dragover", (e) => {
-  const items = e.dataTransfer && [...(e.dataTransfer.items || [])];
-  if (items && items.some((i) => i.kind === "file")) e.preventDefault();
+// Drag and drop between tools and from the desktop (studio-dnd.js); a dropped project file goes to
+// the shell, which checks it before anything is kept.
+mountDnd({
+  stage: $("viewport-stage"), menu: $("studio-source"), getSource: () => activeSource,
+  openMenu: (open) => { if (_shell) _shell.setOpen(open); },
+  sendFrame: (target) => handFrameTo(target),
+  openProject: (f) => { if (_shell) _shell.openProjectFile(f); },
+  loadIntoByo: (f) => { setSource("byo"); loadFile(f); },
+  openWif: (f) => {
+    setSource("loom");
+    const put = (n = 0) => {
+      const input = $("wv-wif-in");
+      if (!input) { if (n < 100) setTimeout(() => put(n + 1), 150); return; }
+      const dt = new DataTransfer(); dt.items.add(f);
+      input.files = dt.files;
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    };
+    put();
+  },
+  say: (t) => say("model", t),
 });
-document.addEventListener("drop", (e) => {
-  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-  if (e.defaultPrevented || !f || !/\.json$/i.test(f.name) || !_shell) return;
-  if (e.target.closest && e.target.closest("[data-drop-own], .at-drop, #studio-file, .plate-art, #wv-out")) return;
-  e.preventDefault();
-  _shell.openProjectFile(f);
+
+// The stage gets the room (studio-layout.js): readings fold to a strip on making sources, the deck's
+// extra rows start folded; a change of column size refits the source on stage.
+_layout = mountLayout({
+  app: document.querySelector(".studio-app"), panel: $("studio-panel"), deckMore: $("deck-more"),
+  getSource: () => activeSource, storage: keepStorage,
+  onChange: () => { try { onStageResize(); } catch (_) {} },
+});
+
+// One timeline for every source (studio-timeline.js): keyframes on any slider of the source on stage.
+_timeline = mountTimeline({
+  stage: $("viewport-stage"), deck: $("rt-fullscreen") ? $("rt-fullscreen").parentElement : null,
+  getSource: () => activeSource, blockOf: (s) => (SOURCES[s] ? $(SOURCES[s].block) : null),
+  storage: keepStorage, say: (t) => say("model", t),
+  audio: { tracks: masteredTracks, measure: startMeasure },
 });
 
 // Search and keys (studio-palette.js): every source, every control drawn so far, the bar's actions.

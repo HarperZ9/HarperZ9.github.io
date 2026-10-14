@@ -13,6 +13,10 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-DwjtCOsP.js",
+    "assets/index-jmVIw9rV.js",
+    "assets/index-C3mo4X0I.js",
+    "assets/index-Se2ioCLN.css",
     "assets/index-Dv8VLt1g.js",
     "assets/index-BniK76UM.js",
     "assets/index-DXjCZzHu.js",
@@ -675,7 +679,19 @@ RELEASE_PATHS = (
 # October 9, 2026, later: the site menu, the home page, Systems and the Studio link the explainer
 # films and the repository explainers, sixteen product records link their explainer, and the home
 # bundle is rebuilt from that registry (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "5633bd8a3150afed32c7f71087134a20d49ad32edbad1afb0f8e9cd7c7e4b52a"
+# October 12, 2026: guides.html (the three guides who host the films) joins the sitemap, the route
+# registry and the site index with its own page card; the home leads with the guides, so the home
+# bundle is rebuilt (release paths listed and reviewed); the Writing hub carries a host line and
+# the publication receipt records the hub and the sitemap. The release is rehashed.
+# October 12, 2026, later: after the live check, the "Your call" answer is reworded and the guides
+# stylesheet keeps an introduction's captions readable on a phone; home bundle and Writing hub
+# change with them (release paths listed and reviewed). The release is rehashed.
+# October 12, 2026, later: studio.html gains the Verified viewer source (raw-native 0.7.0) and loads
+# studio.js and studio-shell.css at a new stamp. The release is rehashed.
+# October 12, 2026, evening: the guides' introductions carry their own voices, approved by the
+# author after listening; guides.html and the home bundle change with the intro buttons and the
+# voice note (release paths listed and reviewed). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "4b2ebda4682e387a0901ed251399680bd4209cc2bc87208095ba53dcae1e4152"
 
 
 BRIEFING_FIGURES = (
@@ -888,7 +904,28 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 9, 2026: the home links the explainer films and the repository explainers, and
     # sixteen registry records carry an explainer link, so the bundle rebuilt from the registry
     # is index-Dv8VLt1g.js with the same sheet. index-mtbFWZrz.js stays as retained history.
-    current_js = "index-Dv8VLt1g.js"
+    # October 12, 2026: the home leads with the three guides who host the films (Guides.tsx) and
+    # guides.html joins the registry, so the bundle is index-C3mo4X0I.js with the sheet
+    # index-Se2ioCLN.css. index-Dv8VLt1g.js and index-DbZyfUEO.css stay as retained history.
+    # October 12, 2026, later: the "Your call" answer is reworded after the live check, so the bundle
+    # is index-jmVIw9rV.js with the same sheet. index-C3mo4X0I.js stays as retained history.
+    # October 12, 2026, evening: the introductions carry the guides' own voices, approved by the
+    # author after listening, so the intro buttons and the voice note change and the bundle is
+    # index-DwjtCOsP.js with the same sheet. index-jmVIw9rV.js stays as retained history.
+    current_js = "index-DwjtCOsP.js"
+    previous_voice_js = "index-jmVIw9rV.js"
+    assert previous_voice_js not in source
+    assert (ROOT / "assets" / previous_voice_js).is_file()
+    assert f"assets/{previous_voice_js}" in RELEASE_PATHS
+    previous_guides_js = "index-C3mo4X0I.js"
+    assert previous_guides_js not in source
+    assert (ROOT / "assets" / previous_guides_js).is_file()
+    assert f"assets/{previous_guides_js}" in RELEASE_PATHS
+    previous_guides_pair = ("index-Dv8VLt1g.js", "index-DbZyfUEO.css")
+    for superseded in previous_guides_pair:
+        assert superseded not in source
+        assert (ROOT / "assets" / superseded).is_file()
+        assert f"assets/{superseded}" in RELEASE_PATHS
     previous_five_js = "index-mtbFWZrz.js"
     assert previous_five_js not in source
     assert (ROOT / "assets" / previous_five_js).is_file()
@@ -983,7 +1020,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    current_css = "index-DbZyfUEO.css"
+    current_css = "index-Se2ioCLN.css"
     previous_copy_pass_css = "index-DPe17JSn.css"
     assert previous_copy_pass_css not in source
     assert (ROOT / "assets" / previous_copy_pass_css).is_file()

@@ -19,6 +19,11 @@ SHORTS = [("cost-to-verify", "The cost to verify", "no-receipt-no-accept.html#ex
           ("receipt-loop", "From a proposed answer to a kept receipt", "flywheel.html#explainer-receipt-loop", "65 s")]
 E = html.escape
 
+
+def host(slug: str) -> str:
+    from tools.guides.page import host_line
+    return host_line(slug)
+
 DESIGN = [
     ("Retrieval, not rereading.", "Each film stops to ask you to recall what it just showed. In a classic study, students who were tested on a passage recalled 56% of it a week later, against 42% for students who reread it; rereading won only on a test five minutes later.",
      "Roediger and Karpicke 2006, Psychological Science", "https://doi.org/10.1111/j.1467-9280.2006.01693.x"),
@@ -80,13 +85,23 @@ def source_card(slug: str, k: str, s: dict, heard: tuple) -> str:
             f'<p class="fl-src-cite">{E(s["citation"])} <a class="inline" href="{E(s["url"])}" rel="external noopener">{E(s["url"])}</a></p></li>')
 
 
+def sound_note(snd: dict | None) -> str:
+    """One sentence on the sound, from a receipt's or manifest's "sound" block."""
+    if not snd:
+        return ""
+    bed = ", with no music under the voice" if snd.get("mix") == "C" else ", with a score held well under the voice"
+    return (f" Sound: the narration and a few short cues tied to what changes on screen{bed},"
+            f" mastered to {snd['integrated_lufs']:.0f} LUFS.")
+
+
 def film_section(slug: str) -> str:
     x = load(slug)
     f, ev, rec, timing = x["film"], x["evidence"], x["receipt"], x["timing"]
     folder = f"media/explainers/{slug}"
     secs = rec["seconds"]
     at = starts(f, timing)
-    heads = "".join(f'<span hidden data-chapter="{E(s["key"])}">{E(s["heading"])}</span>' for s in f["segments"])
+    heads = "".join(f'<span hidden data-chapter="{E(s["key"])}" data-sources="{E(" ".join(s.get("sources", [])))}">{E(s["heading"])}</span>'
+                    for s in f["segments"])
     by_line: dict = {}
     for r in timing:
         by_line.setdefault((r["segment"], r["line"]), []).append(r)
@@ -110,10 +125,11 @@ def film_section(slug: str) -> str:
     return f"""
 <section class="mv" id="{slug}" aria-labelledby="{slug}-h">
   <h2 id="{slug}-h">{E(f["title"])}</h2>
+  {host(slug)}
   <figure class="film" data-film="{slug}" data-folder="{folder}">
     <video controls preload="metadata" playsinline width="1920" height="1080" poster="{folder}/poster.jpg" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
     {heads}
-    <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.</figcaption>
+    <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
   </figure>{live}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
@@ -169,7 +185,7 @@ def release_section() -> str:
             vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
             track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
             voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
-                     else "Captions only; no narration yet.")
+                     else "Captions only; no narration yet.") + sound_note(m.get("sound"))
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>
@@ -179,6 +195,7 @@ def release_section() -> str:
     return f"""
 <section class="mv" id="release-media" aria-labelledby="release-media-h">
   <h2 id="release-media-h">From the latest releases</h2>
+  {host("release-media")}
   <p class="body-text">Each release renders its own short films and walkthroughs from its own output, so a number on screen is the number that release produced.</p>{"".join(items)}
 </section>"""
 
@@ -211,6 +228,7 @@ def page() -> str:
 <link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
 <link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
 <link rel="stylesheet" href="system/explainer/film.css?v=20261009-motion">
+<link rel="stylesheet" href="system/guides.css?v=20261012-guides-2">
 </head>
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -223,6 +241,7 @@ def page() -> str:
   <div class="mid">
     <h1>Explainers. <span class="g">Every number has a source.</span></h1>
     <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
+    <p class="lede">Three guides host them: <a class="inline" href="guides.html#tallow">Tallow</a>, <a class="inline" href="guides.html#pylon">Pylon</a> and <a class="inline" href="guides.html#rerun">Rerun</a>. <a class="inline" href="guides.html">Meet the guides</a>.</p>
   </div>
   {film_index()}
 </div>

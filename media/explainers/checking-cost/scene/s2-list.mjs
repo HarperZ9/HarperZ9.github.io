@@ -48,8 +48,9 @@ export function prepare(A) {
     title: GROUPS.map((G, g) => text(`${G.name}: ${G.n} references`, { atlas: A.sans, size: 30, x: cell(g, 0)[0] - R, y: TOP - 40 })),
     fab: GROUPS.map((G, g) => text(`did not exist: ${G.share}`, { atlas: A.sans, size: 28, x: cell(g, 0)[0] - R, y: 0 })),
     wrong: GROUPS.map((G, g) => text(`real, wrong details: ${G.wshare}`, { atlas: A.sans, size: 28, x: cell(g, 0)[0] - R, y: 0 })),
-    look: text("On the page, they look the same.", { atlas: A.sans, size: 36, x: 960, y: 960, anchor: "center" }),
-    search: text("Only the search tells them apart.", { atlas: A.sans, size: 36, x: 960, y: 960, anchor: "center" }),
+    unit: GROUPS.map((G, g) => text("1 dot = 1 reference", { atlas: A.mono, size: 26, x: cell(g, 0)[0] - R, y: 0 })),
+    look: text("On the page, they look the same.", { atlas: A.sans, size: 36, x: 960, y: 756, anchor: "center" }),
+    search: text("Only the search tells them apart.", { atlas: A.sans, size: 36, x: 960, y: 756, anchor: "center" }),
     dot: circle(0, 0, R, 36),
     hollow: ring(0, 0, R, 2.6),
   };
@@ -90,11 +91,16 @@ export function draw(t, A, T, items, zoom) {
       const fill = k === 1 && m > 0 ? C.hot : w > 0.5 ? C.dim : C.ink;
       items.push({ shape: translateShape(shape, px, py), fill, opacity: appear * (0.92 + 0.08 * lit) * (k === 2 ? 1 - 0.35 * w : 1), stroke: lit > 0 ? C.ok : null, width: 2, z: 0 });
     }
-    items.push({ shape: S.title[g].shape, fill: C.ink, opacity: vis * span(t, T.enter + 1.6, T.enter + 2.8) });
+    // The grid's words come in once the camera has pulled back and leave before it moves on, so they never
+    // sweep through the caption area.
+    const words = span(t, T.enter + 4.0, T.enter + 4.6) * (1 - span(t, T.exit - 1.4, T.exit - 1.0));
+    items.push({ shape: S.title[g].shape, fill: C.ink, opacity: vis * words });
     const rows = (n) => Math.ceil(n / G.cols);
     const yFab = TOP + rows(G.n) * SPACING + 26, yWrong = yFab + 40;
-    if (mark > 0) items.push({ shape: shiftY(S.fab[g].shape, yFab), fill: C.hot, opacity: vis * mark * (1 - 0.6 * same) });
-    if (wrongOn > 0) items.push({ shape: shiftY(S.wrong[g].shape, yWrong), fill: C.ink2, opacity: vis * wrongOn * (1 - 0.6 * same) });
+    if (mark > 0) items.push({ shape: shiftY(S.fab[g].shape, yFab), fill: C.hot, opacity: vis * words * mark * (1 - 0.6 * same) });
+    if (wrongOn > 0) items.push({ shape: shiftY(S.wrong[g].shape, yWrong), fill: C.ink2, opacity: vis * words * wrongOn * (1 - 0.6 * same) });
+    // What one dot stands for (fix 6): true for both grids, 222 and 414 dots.
+    items.push({ shape: shiftY(S.unit[g].shape, yWrong + 46), fill: C.dim, opacity: vis * words });
   });
   // The count of references searched, and the beams.
   if (beam1 > 0 && beam1 < 1) items.push({ shape: line(bx1, TOP - 70, bx1, 900), stroke: C.ok, width: 2, opacity: vis * 0.7, blend: "add" });
@@ -102,8 +108,8 @@ export function draw(t, A, T, items, zoom) {
   const searched = beam1 > 0 ? countUp(t, T.search, T.search + 4.2, 1, 636, ease.linear, false) : 0;
   if (beam1 > 0) items.push({ shape: text(`searched: ${fmt(searched)} of 636`, { atlas: A.mono, size: 30, x: 1680, y: TOP - 84, anchor: "right" }).shape, fill: C.ink2, opacity: vis * (1 - span(t, T.fab3 - 0.5, T.fab3 + 0.5)) });
   const lookA = window(t, T.same, T.apart - 0.1, 0.5, 0.4), apartA = window(t, T.apart, T.exit, 0.5, 0.8);
-  if (lookA > 0) items.push({ shape: S.look.shape, fill: C.ink, opacity: vis * lookA });
-  if (apartA > 0) items.push({ shape: S.search.shape, fill: C.ink, opacity: vis * apartA });
+  if (lookA > 0) items.push({ shape: S.look.shape, fill: C.ink, opacity: vis * lookA, screen: true });
+  if (apartA > 0) items.push({ shape: S.search.shape, fill: C.ink, opacity: vis * apartA, screen: true });
 }
 
 function translateShape(shape, x, y) {
