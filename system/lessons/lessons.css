@@ -1,0 +1,53 @@
+/* The playable lessons and demos beside the explainer films: a canvas, plain-language
+   state, and controls large enough for a thumb. Two faces (the site's), verdict colours only. */
+.ns{max-width:72rem}
+.ns-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#060608;border:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.ns-status,.ns-event{margin:.6rem 0 0;font-size:.95rem}
+.ns-status{font-family:var(--mono,"Conso",monospace);font-size:.85rem;color:color-mix(in srgb,currentColor 72%,transparent)}
+.ns-event{min-height:1.5em}
+.ns-card{margin:.5rem 0;font-size:1rem}
+.ns-acts{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0}
+.ns-btn{font:inherit;font-size:.95rem;color:inherit;background:none;border:1px solid currentColor;border-radius:0;padding:.5rem .85rem;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem}
+.ns-btn:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.ns-btn:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.ns-btn:disabled{opacity:.45;cursor:not-allowed}
+.ns-key{font-family:var(--mono,"Conso",monospace);font-size:.8rem;border:1px solid color-mix(in srgb,currentColor 50%,transparent);padding:0 .3rem}
+.ns-cost{font-size:.8rem;color:color-mix(in srgb,currentColor 65%,transparent)}
+.ns-quiet{border-color:color-mix(in srgb,currentColor 40%,transparent);font-size:.88rem}
+.ns-intro p,.ns-end p{max-width:44rem}
+.ns-intro label{margin-right:.4rem}
+.ns-intro input{font:inherit;width:5rem;min-height:44px;padding:.3rem .5rem;margin-right:.6rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+.ns-go{border-width:2px}
+.ns-note{font-size:.85rem;color:color-mix(in srgb,currentColor 68%,transparent)}
+.ns-end ul{padding-left:1.1rem;max-width:44rem}
+.ns-end li{margin:.35rem 0}
+.ns-close{font-size:1.05rem}
+.ns-held{display:flex;flex-wrap:wrap;gap:.5rem}
+.ns-open{margin:.6rem 0}
+@media (max-width:480px){.ns-btn{flex:1 1 calc(50% - .5rem);justify-content:center}}
+/* Check the check: the code beside the tests. */
+.pc-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1rem;margin:.6rem 0}
+.pc-code{margin:0;padding:.7rem .8rem;background:color-mix(in srgb,currentColor 5%,transparent);border:1px solid color-mix(in srgb,currentColor 22%,transparent);font-family:var(--mono,"Conso",monospace);font-size:.82rem;line-height:1.5;overflow-x:auto;white-space:pre}
+.pc-line{display:block;color:color-mix(in srgb,currentColor 55%,transparent)}
+.pc-line.pc-ran{color:inherit;background:color-mix(in srgb,currentColor 7%,transparent)}
+.pc-tests{border:1px solid color-mix(in srgb,currentColor 22%,transparent);margin:0;padding:.5rem .8rem}
+.pc-test{display:flex;gap:.5rem;align-items:flex-start;margin:.35rem 0;min-height:32px}
+.pc-test input{width:1.2rem;height:1.2rem;margin-top:.15rem}
+#pc-guess{font:inherit;width:4rem;min-height:44px;padding:.3rem .5rem;margin:0 .6rem 0 .3rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+@media (max-width:640px){.pc-grid{grid-template-columns:1fr}}
+/* Run it again. */
+.rd-row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.rd-row input[type=range]{flex:1 1 12rem;min-height:44px}
+#rd-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+#in-call{font:inherit;min-height:44px;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent);max-width:100%}
+/* Slip in a hint. */
+#vr-rate{font:inherit;min-height:44px;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent);max-width:100%}
+#vr-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+.vr-bars{display:grid;gap:.5rem;max-width:44rem;margin:.5rem 0}
+.vr-bar{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr) auto;gap:.6rem;align-items:center;font-size:.9rem}
+.vr-track{display:block;height:14px;border:1px solid color-mix(in srgb,currentColor 40%,transparent)}
+.vr-fill{display:block;height:100%;background:currentColor;opacity:.75}
+@media (max-width:520px){.vr-bar{grid-template-columns:1fr}}
+/* The block beside a film that holds its lesson or demo. */
+.ls{margin:1.2rem 0 0;padding:1rem 0 0;border-top:1px solid color-mix(in srgb,currentColor 22%,transparent)}
+.ls h3{margin:0 0 .3rem}

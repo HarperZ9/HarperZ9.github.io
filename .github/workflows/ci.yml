@@ -24,7 +24,7 @@ jobs:
       - name: Python content contracts
         run: python -m pytest
       - name: Navigation and font catalog contracts
-        run: node --test system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs
+        run: node --test system/lessons/*.test.mjs system/nav.test.mjs tests/font-catalog.test.mjs tests/navigation-discovery.mjs tests/pillar-navigation.test.mjs tests/ident-tokens.test.mjs tests/explainer-film-labels.test.mjs
       # The vendored superstack contract: the copy must hold its pinned SHA-256, and it must pass
       # the release's own vectors on this runner's Node.
       - name: Superstack contract pin and vectors
@@ -280,6 +280,10 @@ jobs:
       - name: raw-native web host with textures and the compositor matches its SHA256SUMS
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/web-4edf976
+        run: sha256sum -c --strict SHA256SUMS
+      - name: raw-native web host, Motion and the explainer guides at c6b114d match their SHA256SUMS
+        if: ${{ !cancelled() }}
+        working-directory: media/raw-native/tree-c6b114d
         run: sha256sum -c --strict SHA256SUMS
       - name: raw-native sound engine matches its SHA256SUMS
         if: ${{ !cancelled() }}
