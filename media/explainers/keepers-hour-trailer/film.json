@@ -5,8 +5,16 @@
   "page": "explainers.html#keepers-hour-trailer",
   "seed": 20261014,
   "voice": "none: no narration; every word on screen is the game's own (night.txt, CC BY 4.0)",
-  "host": "tallow (end card only)",
-  "status": "draft: frames captured from the game at a fixed step (keepers-v0.3.1, software rasteriser); no score mix; no 4K render",
+  "draft": true,
+  "narration": false,
+  "host": {
+    "guide": "tallow",
+    "style": "retro thriller",
+    "close": {
+      "seconds": 4.0,
+      "what": "the end card, sweep 17: Tallow lifts his flame toward the credit line, then the trailer ends"
+    }
+  },
   "sweep_seconds": 4.0,
   "duration": 68,
   "segments": [
@@ -103,7 +111,7 @@
         "kh-night"
       ],
       "lines": [],
-      "picture": "the game's own dialogue box on the logbook's first line, as the game draws it (night.txt line 63, logbook); the storyboard's [TIDE 8] check is pending a scripted choice in the recorder"
+      "picture": "the game's own dialogue box on the logbook's first line, as the game draws it (night.txt line 63, logbook)"
     },
     {
       "key": "sweep-11",

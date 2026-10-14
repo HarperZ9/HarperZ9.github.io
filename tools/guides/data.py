@@ -12,7 +12,7 @@ GUIDES = [
         "role": "His head is a candle, and the wax is the time he has: every claim he checks burns a little of it.",
         "habit": "Before he looks, he asks what you think. Then you find the source together.",
         "home": "A dark claims office, lit only by his flame.",
-        "films": ["checking-cost", "visible-reasoning"],
+        "films": ["checking-cost", "visible-reasoning", "keepers-hour-trailer"],
         "alt": "Tallow, a tall clerk whose head is a lit candle, holds a reference card up to his flame in a dark office.",
         "close_alt": "Tallow's face: one eye in the wax under the flame.",
     },
@@ -43,6 +43,7 @@ FILM_TITLES = {
     "incentives": "Models do what training pays for",
     "visible-reasoning": "What a model's written reasoning can and cannot show",
     "release-media": "the films from the latest releases",
+    "keepers-hour-trailer": "The Keeper's Hour trailer",
 }
 
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "

@@ -28,8 +28,15 @@ def scene_files(folder: Path) -> list[Path]:
     return [folder / "film.scene.mjs", *sorted((folder / "scene").glob("*.mjs"))]
 
 
+# Films with "narration": false have no voice to estimate: their words are on-screen cards, and the
+# picture sets the clock (the Keeper's Hour trailer cuts to the game's four-second lamp sweep). The
+# provisional-narration rule does not apply to them; test_unnarrated_timing_follows_its_cards does.
+NARRATED = [f for f in DRAFTS if load(f, "film.json").get("narration", True) is not False]
+UNNARRATED = [f for f in DRAFTS if f not in NARRATED]
+
+
 def test_timing_is_provisional_and_covers_the_script() -> None:
-    for folder in DRAFTS:
+    for folder in NARRATED:
         film, timing = load(folder, "film.json"), load(folder, "timing.json")
         said = [e["text"] for e in plan(film) if e["kind"] in ("say", "ask")]
         assert [r["text"] for r in timing] == said, folder.name
@@ -37,6 +44,18 @@ def test_timing_is_provisional_and_covers_the_script() -> None:
         assert all(a["end"] <= b["start"] for a, b in zip(timing, timing[1:])), folder.name
         # The file is what the generator writes from this script: no hand-edited times.
         assert [(r["start"], r["end"]) for r in build(film)] == [(r["start"], r["end"]) for r in timing], folder.name
+
+
+def test_unnarrated_timing_follows_its_cards() -> None:
+    """A film with no narration: one timing row per card line, in order, inside its card's sweeps."""
+    for folder in UNNARRATED:
+        film, timing = load(folder, "film.json"), load(folder, "timing.json")
+        cards = [(s, line) for s in film["segments"] for line in s["lines"]]
+        assert [r["text"] for r in timing] == [line for _, line in cards], folder.name
+        step = film["sweep_seconds"]
+        for r, (seg, _) in zip(timing, cards):
+            assert (seg["sweeps"][0] - 1) * step <= r["start"] < r["end"] <= seg["sweeps"][1] * step, f"{folder.name}: {r['text'][:30]}"
+        assert not any(seg.get("predict") for seg in film["segments"]), f"{folder.name}: a predict pause needs a voice"
 
 
 def test_predict_pauses_follow_the_one_convention() -> None:
