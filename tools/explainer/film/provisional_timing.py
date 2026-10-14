@@ -6,11 +6,11 @@ The scene code takes every cue from timing.json, so a film can be built and chec
 voice exists. This writes one row per sentence, split the way narrate.py splits them, at the
 author's measured pace: 3.79 syllables a second while speaking and 2.94 overall with the pauses.
 Syllables are counted by the same vowel-group rule as that measurement, over the words narrate.py
-would hear (digits spelled out). The pauses
-keep narrate.py's proportions (head, sentence, line and segment gaps), scaled so the overall rate
-comes out at 2.94. Held beats that are not narration are added on top: the host's cold open
-before the first line, a segment's predict beat (a silent still), and the host's close after the
-last line. Every row carries "provisional": true. The real narration replaces the file.
+would hear (digits spelled out). The pauses are layout.plan()'s, the same ones narrate.py records:
+the sentence, line and segment gaps are scaled so the spoken part comes out at 2.94 overall; held
+beats (the host's open and close, each predict question's hold, picture holds) are added as they
+are. Predict questions are spoken, so they get rows too, keyed by "predict". Every row carries
+"provisional": true. The real narration replaces the file.
 """
 
 from __future__ import annotations
@@ -20,7 +20,8 @@ import re
 import sys
 from pathlib import Path
 
-from tools.explainer.film.narrate import GAP_LINE, GAP_SEGMENT, GAP_SENTENCE, HEAD, norm, sentences
+from tools.explainer.film.layout import plan
+from tools.explainer.film.narrate import norm
 
 ARTICULATION, OVERALL = 3.79, 2.94
 
@@ -43,31 +44,24 @@ def syllables(text: str) -> int:
 
 
 def build(film: dict) -> list[dict]:
-    plan = []   # (segment, line, sentence, text, gap_after_base)
-    segs = film["segments"]
-    for i, seg in enumerate(segs):
-        for j, line in enumerate(seg["lines"]):
-            said = sentences(line)
-            for k, text in enumerate(said):
-                last_l = j == len(seg["lines"]) - 1
-                gap = GAP_SENTENCE if k < len(said) - 1 else GAP_SEGMENT if last_l else GAP_LINE
-                plan.append((i, j, k, text, gap))
-    syl = [syllables(p[3]) for p in plan]
-    total_syl = sum(syl)
-    speech = total_syl / ARTICULATION
-    base_pause = HEAD + sum(p[4] for p in plan[:-1])
-    scale = (total_syl / OVERALL - speech) / base_pause
-    host = film.get("host", {})
-    t = HEAD * scale + host.get("open", {}).get("seconds", 0.0)
-    rows = []
-    for (i, j, k, text, gap), s in zip(plan, syl):
-        pred = segs[i].get("predict")
-        if pred and [j, k] == pred["before"]:
-            t += pred["seconds"]
-        d = s / ARTICULATION
-        rows.append({"segment": i, "line": j, "sentence": k, "start": round(t, 3), "end": round(t + d, 3), "text": text,
-                     "syllables": s, "seconds": round(d, 3), "provisional": True, "accepted": True})
-        t += d + gap * scale
+    events = plan(film)
+    spoken = [e for e in events if e["kind"] in ("say", "ask")]
+    syl = {id(e): syllables(e["text"]) for e in spoken}
+    total = sum(syl.values())
+    gaps = sum(e["seconds"] for e in events if e["kind"] == "silence" and e["why"] in ("head", "gap"))
+    last_gap = next((e["seconds"] for e in reversed(events) if e["kind"] == "silence" and e["why"] == "gap"), 0.0)
+    # Scale the ordinary gaps (not the trailing one) so speech plus gaps runs at OVERALL.
+    scale = (total / OVERALL - total / ARTICULATION) / max(1e-9, gaps - last_gap)
+    t, rows = 0.0, []
+    for e in events:
+        if e["kind"] == "silence":
+            t += e["seconds"] * (scale if e["why"] in ("head", "gap") else 1.0)
+            continue
+        d = syl[id(e)] / ARTICULATION
+        where = {"segment": e["segment"], "line": e["line"], "sentence": e["sentence"]} if e["kind"] == "say" else {"segment": e["segment"], "predict": e["predict"]}
+        rows.append({**where, "start": round(t, 3), "end": round(t + d, 3), "text": e["text"], "syllables": syl[id(e)],
+                     "seconds": round(d, 3), "provisional": True, "accepted": True})
+        t += d
     return rows
 
 

@@ -46,14 +46,6 @@ FILM_TITLES = {
     "raw-native-showcase": "One box, many eyes",
 }
 
-# Films a guide hosts whose scene code is in review and which no page shows yet (their film.json
-# says "draft": true). The pages and the home page leave them out until the film ships.
-DRAFTS = {"raw-native-showcase"}
-
-
-def live_films(g: dict) -> list[str]:
-    return [f for f in g["films"] if f not in DRAFTS]
-
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "
          "recordings reads the lines, and code written for the guides reshapes that reading into each guide's voice. "
          "Captions are on, and the sound plays only when you press play.")
@@ -69,6 +61,23 @@ INTRO_VOICES = {
     "pylon": "character voice, round 7, setting S",
     "rerun": "character voice, round 11, setting V8",
 }
+
+
+# Films a guide hosts whose scene code is in review and which no page shows yet: their film.json
+# says "draft": true (tests/test_explainer_film_drafts.py). Pages and the home page leave them out
+# until the film ships, which is when the flag comes off.
+def _drafts() -> set[str]:
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2] / "media" / "explainers"
+    return {p.parent.name for p in root.glob("*/film.json") if json.loads(p.read_text(encoding="utf-8")).get("draft")}
+
+
+DRAFTS = _drafts()
+
+
+def live_films(g: dict) -> list[str]:
+    return [f for f in g["films"] if f not in DRAFTS]
 
 
 def by_film(slug: str) -> dict:

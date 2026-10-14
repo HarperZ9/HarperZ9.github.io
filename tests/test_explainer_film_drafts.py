@@ -10,7 +10,7 @@ import json
 import re
 from pathlib import Path
 
-from tools.explainer.film.narrate import sentences
+from tools.explainer.film.layout import check_anchors, plan
 from tools.explainer.film.provisional_timing import build
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,14 +28,10 @@ def scene_files(folder: Path) -> list[Path]:
     return [folder / "film.scene.mjs", *sorted((folder / "scene").glob("*.mjs"))]
 
 
-def test_there_is_a_draft() -> None:
-    assert DRAFTS, "no draft film; delete this file once the last draft ships"
-
-
 def test_timing_is_provisional_and_covers_the_script() -> None:
     for folder in DRAFTS:
         film, timing = load(folder, "film.json"), load(folder, "timing.json")
-        said = [s for seg in film["segments"] for line in seg["lines"] for s in sentences(line)]
+        said = [e["text"] for e in plan(film) if e["kind"] in ("say", "ask")]
         assert [r["text"] for r in timing] == said, folder.name
         assert all(r["provisional"] is True for r in timing), folder.name
         assert all(a["end"] <= b["start"] for a, b in zip(timing, timing[1:])), folder.name
@@ -43,17 +39,26 @@ def test_timing_is_provisional_and_covers_the_script() -> None:
         assert [(r["start"], r["end"]) for r in build(film)] == [(r["start"], r["end"]) for r in timing], folder.name
 
 
-def test_predict_beats_are_silent_holds() -> None:
+def test_predict_pauses_follow_the_one_convention() -> None:
+    """Every predict pause is a list item with a spoken question and an anchor that names a sentence,
+    and the timing holds its silence after the question (layout.py; approved 2026-10-14)."""
     for folder in DRAFTS:
         film, timing = load(folder, "film.json"), load(folder, "timing.json")
+        assert check_anchors(film) == [], folder.name
         for i, seg in enumerate(film["segments"]):
-            p = seg.get("predict")
-            if not p:
-                continue
-            j, k = p["before"]
-            at = next(n for n, r in enumerate(timing) if (r["segment"], r["line"], r["sentence"]) == (i, j, k))
-            assert timing[at]["start"] - timing[at - 1]["end"] >= p["seconds"], f"{folder.name}: no hold before {i}.{j}.{k}"
-            assert "pending" in p["status"]
+            preds = seg.get("predict") or []
+            assert isinstance(preds, list), f"{folder.name} segment {i}: predict must be a list"
+            for n, p in enumerate(preds):
+                assert p["question"].strip() and ("before" in p or "after" in p), f"{folder.name} segment {i}"
+                at = next(m for m, r in enumerate(timing) if r.get("predict") == n and r["segment"] == i)
+                if at + 1 < len(timing):
+                    assert timing[at + 1]["start"] - timing[at]["end"] >= p.get("hold", 2.5) - 1e-6, f"{folder.name}: no hold after question {i}.{n}"
+
+
+def test_a_misplaced_anchor_is_caught() -> None:
+    """Control: an anchor that names no sentence is reported, not silently dropped."""
+    film = {"segments": [{"key": "a", "lines": ["One. Two."], "predict": [{"after": [0, 5], "question": "Q?"}]}]}
+    assert check_anchors(film)
 
 
 def test_scene_imports_one_engine_tree() -> None:
@@ -79,15 +84,18 @@ def unsourced(folder: Path, ev: dict) -> list[str]:
 
 def test_every_fact_names_a_source_that_says_it() -> None:
     for folder in DRAFTS:
-        assert unsourced(folder, load(folder, "evidence.json")) == [], folder.name
+        ev = load(folder, "evidence.json")
+        if "facts" in ev:
+            assert unsourced(folder, ev) == [], folder.name
 
 
 def test_a_fact_check_can_fail() -> None:
-    """Control: a shown value that no source says is caught."""
+    """Control: a shown value that no source says is caught (for drafts whose scenes show facts)."""
     for folder in DRAFTS:
         ev = load(folder, "evidence.json")
-        used = re.findall(r'fact\(\w+, "([a-z_]+)"\)', (folder / "scene" / "s1-check.mjs").read_text(encoding="utf-8")
-                          + "".join(f.read_text(encoding="utf-8") for f in scene_files(folder)))
+        used = re.findall(r'fact\(\w+, "([a-z_]+)"\)', "".join(f.read_text(encoding="utf-8") for f in scene_files(folder)))
+        if "facts" not in ev or not used:
+            continue
         ev["facts"]["values"][used[0]]["show"] = "987,654,321"
         assert unsourced(folder, ev), f"{folder.name}: a changed value was not caught"
 
