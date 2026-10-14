@@ -118,3 +118,4 @@ export async function mountNightShift(box, { seed = (Date.now() % 100000) + 1, f
   }
   return { get state() { return s; }, backend: be.kind };
 }
+export const mount = mountNightShift;
