@@ -20,6 +20,31 @@ SHORTS = [("cost-to-verify", "The cost to verify", "no-receipt-no-accept.html#ex
 E = html.escape
 
 
+# The playable lesson and the demos beside each film (system/lessons/), each hosted by the
+# film's guide. Each loads only on a press; none keeps a score or plays on by itself.
+DEMOS = {
+    "checking-cost": ("night-shift", "Play: Night Shift", "Work one night shift at the claims desk with Tallow. Claims come in faster than anyone could check them, and you have 40 hours. About four minutes, one shift, then it ends."),
+    "passing-check": ("passing-check", "Try it: Check the check", "Switch the tests on and off for a small function, make your call, then Rerun knocks on six deliberate breaks and one planted failure to see which ones the passing tests catch."),
+    "rederive": ("rederive", "Try it: Run it again", "A field where only significant results get published. Choose how big the repeats are, make your call, and Pylon runs every published study again."),
+    "incentives": ("incentives", "Try it: What gets paid", "Set what a test checker counts as a pass, make your call, and watch a small optimizer learn to do whatever the checker pays for."),
+    "visible-reasoning": ("visible-reasoning", "Try it: Slip in a hint", "Slip a hint toward a wrong answer onto twenty questions, make your call, and Tallow reads every written reason to see how many name it."),
+}
+
+
+def demo(slug: str) -> str:
+    if slug not in DEMOS:
+        return ""
+    name, title, lede = DEMOS[slug]
+    return f"""
+  <div class="ls" id="{slug}-play" data-lesson="{name}">
+    <h3>{E(title)}</h3>
+    <p class="body-text">{E(lede)}</p>
+    <p><button type="button" class="ns-btn ns-go" data-lesson-open>Open it here</button></p>
+    <p class="ns-note" data-lesson-note aria-live="polite">Drawn live by the raw-native engine in your browser, with WebGPU where it is available and a 2D canvas where it is not. Keyboard and touch both work.</p>
+    <div data-lesson-stage></div>
+  </div>"""
+
+
 def host(slug: str) -> str:
     from tools.guides.page import host_line
     return host_line(slug)
@@ -131,7 +156,7 @@ def film_section(slug: str) -> str:
     {heads}
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
-  </figure>{live}
+  </figure>{live}{demo(slug)}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
   <h3 id="{slug}-sources" class="fl-src-h">Sources, with what each one does not prove</h3>
   <div class="fl-src-wrap"><ol class="fl-sources">{sources}</ol></div>
@@ -229,6 +254,7 @@ def page() -> str:
 <link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
 <link rel="stylesheet" href="system/explainer/film.css?v=20261009-motion">
 <link rel="stylesheet" href="system/guides.css?v=20261012-guides-2">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
 </head>
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -268,6 +294,7 @@ def page() -> str:
 </footer>
 <script type="module" src="system/explainer/film.mjs?v=20261004-films"></script>
 <script type="module" src="system/explainer/motion-film.mjs?v=20261009-motion"></script>
+<script type="module" src="system/lessons/launch.mjs?v=20261014-lessons"></script>
 </body>
 </html>
 """
