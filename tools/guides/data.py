@@ -22,6 +22,7 @@ GUIDES = [
         "habit": "She shows you where each claim came from, tells you what is still waiting, and leaves the call to you.",
         "home": "A painted harbour town, seen from above.",
         "films": ["rederive", "incentives"],
+        "drafts": ["provenance-commons"],
         "alt": "Pylon, a heavy harbour seal wearing an orange traffic cone and a sash, stands on a lamplit harbour street holding a paper.",
         "close_alt": "Pylon's face under her cone, deadpan.",
     },
@@ -43,6 +44,13 @@ FILM_TITLES = {
     "incentives": "Models do what training pays for",
     "visible-reasoning": "What a model's written reasoning can and cannot show",
     "release-media": "the films from the latest releases",
+}
+
+# Films whose scene code is in review and not yet on a live page: the host is decided (the rule
+# in this file: Pylon for a map or printed ground seen from above), but no page lists them until
+# each one ships, when its slug moves into the guide's "films" and its title into FILM_TITLES.
+DRAFT_TITLES = {
+    "provenance-commons": "Provenance and the commons",
 }
 
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "

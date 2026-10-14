@@ -17,7 +17,15 @@ from pathlib import Path
 from tools.explainer.film import captions, render
 
 ROOT = Path(__file__).resolve().parents[1]
-FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json"))
+
+def _live(folder: Path) -> bool:
+    """A film folder whose film.json says "draft": true is scene code in review, with no narration,
+    captions, receipt or page yet; the checks on shipped films skip it until it ships."""
+    f = folder / "film.json"
+    return not (f.is_file() and json.loads(f.read_text(encoding="utf-8")).get("draft") is True)
+
+
+FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json") if _live(p.parent))
 STAMP = re.compile(r"^(\d\d):(\d\d):(\d\d)[.,](\d\d\d) --> (\d\d):(\d\d):(\d\d)[.,](\d\d\d)$")
 
 
