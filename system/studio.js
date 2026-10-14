@@ -272,8 +272,9 @@ const loadPlotBridge = lazyLoader(() => import("./plot-bridge.js"), m => { _plot
 // manifest into a catalogue the picker can band the same way the archive page bands it.
 let _library = null;
 let _libraryMod = null;
-const loadLibraryMod = lazyLoader(() => import("./studio-library.js"), m => { _libraryMod = m; });
+const loadLibraryMod = lazyLoader(() => import("./studio-library.js?v=20261014-plot-order"), m => { _libraryMod = m; });
 let _libraryFilter = "all";
+let _libraryOrder = "archived";   // the archive page's orderings (studio-library.js LIBRARY_ORDERS)
 // The work a deep link or a restored pin asked for, held until the picker exists to receive it.
 // Without it, whichever async path filled the picker first selected the first work in the band,
 // drew it, and the requested work then drew second — two sheets, the first one wrong.
@@ -1652,7 +1653,11 @@ function fillLibraryPicker(keepId) {
   const sel = $("plot-work");
   if (!sel) return Promise.resolve(null);
   return loadLibrary().then(lib => {
-    const shown = _libraryMod.filterWorks(lib.works, _libraryFilter);
+    const shown = _libraryMod.orderWorks(_libraryMod.filterWorks(lib.works, _libraryFilter), _libraryOrder, lib.works);
+    document.querySelectorAll("[data-plot-order]").forEach(b => {
+      const on = b.dataset.plotOrder === _libraryOrder;
+      b.classList.toggle("active", on); b.setAttribute("aria-pressed", String(on));
+    });
     const want = keepId || _libraryWant || sel.value;
     sel.innerHTML = "";
     shown.forEach((w, i) => {
@@ -1716,6 +1721,13 @@ function initPlotMapControls() {
           drawPlotMap();
         }
       });
+    });
+  });
+  // The order changes the list, never the work on the canvas: the chosen work stays chosen.
+  document.querySelectorAll("[data-plot-order]").forEach(chip => {
+    chip.addEventListener("click", () => {
+      _libraryOrder = chip.dataset.plotOrder;
+      fillLibraryPicker(($("plot-work") || {}).value);
     });
   });
   const workSel = $("plot-work");

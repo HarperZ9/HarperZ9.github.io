@@ -316,6 +316,13 @@
             <button type="button" class="chip" data-plot-band="cool" data-plot-band-label="Cool">Cool</button>
             <button type="button" class="chip" data-plot-band="collage" data-plot-band-label="Collages">Collages</button>
           </div>
+          <div class="at-chips" role="group" aria-label="Order the archive">
+            <button type="button" class="chip active" aria-pressed="true" data-plot-order="archived">As archived</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="spectrum">By light</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="tone">By tone</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="colour">By colour</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="kind">By kind</button>
+          </div>
           <div class="dropdown" data-dropdown="plot-work"></div>
           <div id="plot-work" hidden></div>
           <span class="hint" id="plot-work-note">the catalogue loads when this material is chosen</span>
