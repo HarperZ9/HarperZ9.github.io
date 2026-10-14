@@ -691,7 +691,10 @@ RELEASE_PATHS = (
 # October 12, 2026, evening: the guides' introductions carry their own voices, approved by the
 # author after listening; guides.html and the home bundle change with the intro buttons and the
 # voice note (release paths listed and reviewed). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "4b2ebda4682e387a0901ed251399680bd4209cc2bc87208095ba53dcae1e4152"
+# October 14, 2026: two dated corrections close the ledger second read: Who Knew First's finding 6
+# evidence note gives the one date in Irregular's August 14 account, and Who Pays the Referees
+# section 3 names the Opus 5.5 card's three contracted red-teaming firms. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "8130031442841d72617bb20710a21d9a22d5c29a9d8db47f02304c3ab696c573"
 
 
 BRIEFING_FIGURES = (
