@@ -26,7 +26,9 @@ PATHS = ["web", "templates/guides", "docs/motion/hanken-grotesk-500.atlas.json"]
 
 
 def keep(name: str) -> bool:
-    return not (name.endswith(".test.mjs") or name.startswith("web/test/") or name.endswith("/") or "/__pycache__/" in name)
+    # Pages are left out too: the lessons load modules, not upstream demo pages (one of which,
+    # web/shaders/showcase.html at c6b114d, is not valid UTF-8 and trips the site's page checks).
+    return not (name.endswith((".test.mjs", ".html")) or name.startswith("web/test/") or name.endswith("/") or "/__pycache__/" in name)
 
 
 def vendor(repo: Path, sha: str) -> Path:
