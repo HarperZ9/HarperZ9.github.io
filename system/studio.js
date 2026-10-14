@@ -739,7 +739,7 @@ async function enterFilmsSource(epoch) {
 }
 
 // The Verified viewer: raw-native's viewer page from a pinned release, on the stage (studio-viewer.js).
-const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261012-viewer"));
+const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261014-viewer-080"));
 let _viewer = null;
 async function enterViewerSource(epoch) {
   try {
