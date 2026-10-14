@@ -40,3 +40,11 @@
 .rd-row input[type=range]{flex:1 1 12rem;min-height:44px}
 #rd-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
 #in-call{font:inherit;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent);max-width:100%}
+/* Slip in a hint. */
+#vr-rate{font:inherit;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent);max-width:100%}
+#vr-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+.vr-bars{display:grid;gap:.5rem;max-width:44rem;margin:.5rem 0}
+.vr-bar{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr) auto;gap:.6rem;align-items:center;font-size:.9rem}
+.vr-track{display:block;height:14px;border:1px solid color-mix(in srgb,currentColor 40%,transparent)}
+.vr-fill{display:block;height:100%;background:#63d4ce}
+@media (max-width:520px){.vr-bar{grid-template-columns:1fr}}
