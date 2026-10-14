@@ -1,0 +1,434 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "raw-native-showcase",
+  "read": "2026-10-14",
+  "note": "Engine facts are read at render time from the release being filmed. Values below were re-read on 14 October 2026 from raw-native main fdee283 (release v0.7.0 is the current release); first read 10 October from main 6b33552 and ba9fb0f. The scene takes every number from the facts block by key.",
+  "sources": {
+    "rn-cert": {
+      "short": "raw-native v0.6.0 release, ao-check certificate",
+      "citation": "HarperZ9/raw-native v0.6.0, out/media/certificate.json, recorded in the release media facts.json (commit 158afa8).",
+      "url": "https://harperz9.github.io/media/releases/raw-native/v0.6.0/ao-check/facts.json",
+      "read": "full",
+      "claims": [
+        "Screen-space AO against ray-traced AO for the media view: rmse 0.129436031 against a tolerance of 0.119999997; verdict refuted."
+      ],
+      "n": "37,996 covered pixels; 64 ray-traced and 24 screen-space samples",
+      "interval": "None; one deterministic render.",
+      "quote": "screen-space AO matches ray-traced ground truth within tolerance",
+      "does_not_prove": "Anything about other views or other AO methods; the verdict is for this camera."
+    },
+    "rn-readme": {
+      "short": "raw-native README",
+      "citation": "HarperZ9/raw-native README.md, main 6b33552.",
+      "url": "https://github.com/HarperZ9/raw-native",
+      "read": "full",
+      "claims": [
+        "MSVC, GCC and the WebAssembly build write byte-identical files for the default render."
+      ],
+      "n": "the default render",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "That every render is identical across builds; it is checked for the default render and the identity matrix."
+    },
+    "rn-determinism": {
+      "short": "raw-native M1 frame determinism evidence",
+      "citation": "HarperZ9/raw-native evidence/m1-frame-determinism-swiftshader.json (scene ao-check, commit 908f781).",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/m1-frame-determinism-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "Two renders of ao-check at 640 x 360 on SwiftShader: 1,456 frames each, 0 differing, identical chain hash."
+      ],
+      "n": "1,456 frames, two runs, one adapter",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Identity across different GPUs or browsers."
+    },
+    "rn-vector": {
+      "short": "raw-native M1 vector evidence",
+      "citation": "HarperZ9/raw-native evidence/m1-vector-swiftshader.json.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/m1-vector-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "20 vector test cases; the largest per-case mean edge difference against the reference is 0.0277."
+      ],
+      "n": "20 cases on SwiftShader",
+      "interval": "Per-case max and mean reported.",
+      "quote": "",
+      "does_not_prove": "Coverage of every path shape; edge pixels differ more than interior ones, by design of the analytic coverage."
+    },
+    "rn-colour-gpu": {
+      "short": "raw-native M1 colour GPU evidence",
+      "citation": "HarperZ9/raw-native evidence/m1-colour-gpu-swiftshader.json.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/m1-colour-gpu-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "Across 11 colour pipelines the GPU differs from the C++ reference by at most 1 code in 255."
+      ],
+      "n": "11 pipelines on SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Results on hardware GPUs."
+    },
+    "rn-ocio": {
+      "short": "raw-native M1 colour against OpenColorIO 2.6.0",
+      "citation": "HarperZ9/raw-native evidence/m1-colour-ocio.json, config studio-config-v5.0.0_aces-v2.1_ocio-v2.6.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/m1-colour-ocio.json",
+      "read": "full",
+      "claims": [
+        "ACES 2.0 SDR to sRGB: largest CIEDE2000 difference from OCIO 0.002431 over 36,787 inputs, bound 0.05."
+      ],
+      "n": "36,787 inputs",
+      "interval": "Max, p99, mean and median reported.",
+      "quote": "",
+      "does_not_prove": "Agreement with other ACES implementations or on HDR outputs, which have their own rows."
+    },
+    "rn-shaders": {
+      "short": "raw-native shader library README",
+      "citation": "HarperZ9/raw-native docs/shaders/README.md and CONSTANTS.md.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/docs/shaders/README.md",
+      "read": "full",
+      "claims": [
+        "The tube is simulated as signal, decoder, beams, mask and glass; dot crawl and rainbowing come from the decoder's errors.",
+        "Film is simulated as exposure through three layers, development, print and projection; halation from the base.",
+        "Halation: light reaching the 0.125 mm film base comes back by total internal reflection; without the remjet a ring appears at 2 t tan(theta_c) = 0.22 mm (CONSTANTS.md: geometry high confidence, base thickness low)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "Most phosphor, mask, glass and film-stock constants are low confidence",
+      "does_not_prove": "That the looks are better than any other shader; the comparison protocol has not run."
+    },
+    "rn-crt-parity": {
+      "short": "raw-native tube GPU parity",
+      "citation": "HarperZ9/raw-native evidence/shaders-crt-parity-swiftshader.json, bounds fixed before the first run.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/shaders-crt-parity-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "9 tube cases at 640 x 480: maximum difference 1 code in 255 in every case."
+      ],
+      "n": "9 cases, SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Parity on hardware GPUs or at 4K."
+    },
+    "rn-film-parity": {
+      "short": "raw-native film GPU parity",
+      "citation": "HarperZ9/raw-native evidence/shaders-film-parity-swiftshader.json.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/shaders-film-parity-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "6 film cases at 480 x 270: maximum difference 1 code in 255 in every case."
+      ],
+      "n": "6 cases, SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "That the film looks like any particular stock; the print dyes were fitted, not digitised."
+    },
+    "newson2017": {
+      "short": "Newson et al. 2017, the Boolean film grain model",
+      "citation": "Cited in raw-native docs/shaders/README.md as Newson et al. 2017 (realistic film grain rendering). Read status: secondary, through the README; primary not read this session.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/docs/shaders/README.md",
+      "read": "secondary",
+      "claims": [
+        "raw-native's grain follows the Boolean model the README attributes to Newson et al. 2017."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "That the grain matches any measured stock."
+    },
+    "rn-pr74": {
+      "short": "raw-native PR #74, retro 3D flags (merged)",
+      "citation": "HarperZ9/raw-native pull request #74, merged 2026-10-10; evidence/m2-retro3d-bounds.json and m2-retro3d-swiftshader.json.",
+      "url": "https://github.com/HarperZ9/raw-native/pull/74",
+      "read": "full",
+      "claims": [
+        "Vertex snap and affine UVs against a CPU twin on SwiftShader: 12 cases, 0 coverage mismatches away from edges, no texel more than one away; both controls fail. The first run failed the texel bound and the amendment is kept beside the bounds."
+      ],
+      "n": "12 cases, SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "That the look matches any particular console, or performance."
+    },
+    "rn-m3": {
+      "short": "raw-native M3 lighting (criterion 7)",
+      "citation": "HarperZ9/raw-native pull request #79, merged 2026-10-10; evidence/m3-lighting-bounds.json and m3-lighting-runs.json; ROADMAP M3 status.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/m3-lighting-runs.json",
+      "read": "full",
+      "claims": [
+        "Clustered light assignment against a brute-force list: 0 misses over 55,270 in-frustum points of 65,536 drawn. M3 criterion 7 passes on WARP, SwiftShader and the RTX 4090."
+      ],
+      "n": "55,270 points",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Anything under does_not_prove in the bounds file; M3 criterion 1 (verified scenes with path-traced error) is still open."
+    },
+    "rn-paint-parity": {
+      "short": "raw-native paint GPU parity",
+      "citation": "HarperZ9/raw-native evidence/shaders-paint-parity-swiftshader.json (bounds fixed 2026-10-10 before the first run), main fdee283.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/shaders-paint-parity-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "15 still, motion and post paint cases on SwiftShader: maximum difference 1 code in 255 in every case."
+      ],
+      "n": "15 cases, SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "That the paint looks like any painter's work; the painted look rests on inferred technique (ADR 0016)."
+    },
+    "rn-vhs-parity": {
+      "short": "raw-native VHS GPU parity",
+      "citation": "HarperZ9/raw-native evidence/shaders-vhs-parity-swiftshader.json, main ba9fb0f.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/shaders-vhs-parity-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "3 VHS cases: maximum difference 1 code in 255."
+      ],
+      "n": "3 cases, SwiftShader",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Fidelity to any measured deck; the CPU tests check behaviours (bandwidth, chroma delay, head switch), not a real tape."
+    },
+    "rn-pixel": {
+      "short": "raw-native pixel art stability",
+      "citation": "HarperZ9/raw-native docs/shaders/README.md, Pixel art section; method after Ebert, Texel Splatting: Perspective-Stable 3D Pixel Art, arXiv 2603.14587.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/docs/shaders/README.md",
+      "read": "full",
+      "claims": [
+        "Measured by reprojection on a small orbit, turn and dolly: 0.00% of compared pixels change colour with texel splatting, against 5.5%, 12.2% and 19.2% for naive pixelisation."
+      ],
+      "n": "three camera moves on one diorama",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Stability at cell changes, where texels shift; or on meshes, since the scene is a raymarched SDF diorama."
+    },
+    "rn-dither": {
+      "short": "raw-native dither evidence",
+      "citation": "HarperZ9/raw-native evidence/shaders-dither-exhaustive-swiftshader.json and shaders-dither-parity-swiftshader.json, main ba9fb0f.",
+      "url": "https://github.com/HarperZ9/raw-native/blob/main/evidence/shaders-dither-exhaustive-swiftshader.json",
+      "read": "full",
+      "claims": [
+        "Every one of 16,777,216 sRGB colours gives the same palette index on GPU and CPU for two palette and mode pairs (pico8 with bayer8, ega with noise); 114 parity cases, 0 mismatched pixels."
+      ],
+      "n": "16,777,216 colours x 2 pairs; 114 cases",
+      "interval": "Not applicable.",
+      "quote": "local run; not part of CI",
+      "does_not_prove": "Results for other palette and mode pairs in the exhaustive test."
+    },
+    "rn-pr73": {
+      "short": "raw-native PR #73, glTF models (merged)",
+      "citation": "HarperZ9/raw-native pull request #73, merged 2026-10-10; evidence/m2-gltf-models.json (models and bounds written before the first run).",
+      "url": "https://github.com/HarperZ9/raw-native/pull/73",
+      "read": "full",
+      "claims": [
+        "Ten named glTF models import and render on the CPU reference, D3D12 and WebGPU: D3D12 WARP 10 of 10 verified, WebGPU on SwiftShader required 10 of 10 verified in CI."
+      ],
+      "n": "10 models",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Textures, materials beyond base colour, skinning or animation, or how the models look."
+    }
+  },
+  "facts": {
+    "read": "2026-10-14",
+    "raw_native": "main fdee283",
+    "values": {
+      "rmse": {
+        "value": 0.129436031,
+        "show": "0.129",
+        "source": "rn-cert",
+        "from": "media/releases/raw-native/v0.6.0/ao-check/facts.json#rmse (read at load)"
+      },
+      "tolerance": {
+        "value": 0.119999997,
+        "show": "0.120",
+        "source": "rn-cert",
+        "from": "facts.json#tolerance (read at load)"
+      },
+      "verdict": {
+        "value": "refuted",
+        "source": "rn-cert",
+        "from": "facts.json#verdict (read at load)"
+      },
+      "rt_samples": {
+        "value": 64,
+        "show": "64",
+        "source": "rn-cert",
+        "from": "facts.json#rt (read at load)"
+      },
+      "frames": {
+        "value": 1456,
+        "show": "1,456",
+        "source": "rn-determinism",
+        "from": "evidence/m1-frame-determinism-swiftshader.json#frames"
+      },
+      "frames_differing": {
+        "value": 0,
+        "show": "0",
+        "source": "rn-determinism",
+        "from": "#differing_frames"
+      },
+      "vector_cases": {
+        "value": 20,
+        "show": "20",
+        "source": "rn-vector",
+        "from": "evidence/m1-vector-swiftshader.json#cases (count)"
+      },
+      "vector_edge": {
+        "value": 0.0277,
+        "show": "0.028",
+        "source": "rn-vector",
+        "from": "largest per-case edge mean, 0.02774"
+      },
+      "colour_code": {
+        "value": 1,
+        "show": "1",
+        "source": "rn-colour-gpu",
+        "from": "evidence/m1-colour-gpu-swiftshader.json max maxCode"
+      },
+      "ocio_de": {
+        "value": 0.002431,
+        "show": "0.0024",
+        "source": "rn-ocio",
+        "from": "evidence/m1-colour-ocio.json#pipelines/aces2-sdr/srgb/max"
+      },
+      "crt_cases": {
+        "value": 9,
+        "show": "9",
+        "source": "rn-crt-parity",
+        "from": "evidence/shaders-crt-parity-swiftshader.json#cases (count)"
+      },
+      "crt_code": {
+        "value": 1,
+        "show": "1",
+        "source": "rn-crt-parity",
+        "from": "max over cases"
+      },
+      "film_cases": {
+        "value": 6,
+        "show": "6",
+        "source": "rn-film-parity",
+        "from": "evidence/shaders-film-parity-swiftshader.json#cases (count)"
+      },
+      "film_code": {
+        "value": 1,
+        "show": "1",
+        "source": "rn-film-parity",
+        "from": "max over cases"
+      },
+      "halation_mm": {
+        "value": 0.22,
+        "show": "0.22",
+        "source": "rn-shaders",
+        "from": "docs/shaders/README.md film halo row; CONSTANTS.md"
+      },
+      "base_mm": {
+        "value": 0.125,
+        "show": "0.125",
+        "source": "rn-shaders",
+        "from": "docs/shaders/CONSTANTS.md film base"
+      },
+      "paint_cases": {
+        "value": 15,
+        "show": "15",
+        "source": "rn-paint-parity",
+        "from": "evidence/shaders-paint-parity-swiftshader.json#cases (count)"
+      },
+      "paint_code": {
+        "value": 1,
+        "show": "1",
+        "source": "rn-paint-parity",
+        "from": "max over cases"
+      },
+      "vhs_cases": {
+        "value": 3,
+        "show": "3",
+        "source": "rn-vhs-parity",
+        "from": "evidence/shaders-vhs-parity-swiftshader.json#cases (count)"
+      },
+      "vhs_code": {
+        "value": 1,
+        "show": "1",
+        "source": "rn-vhs-parity",
+        "from": "max over cases"
+      },
+      "pixel_splat": {
+        "value": "0.00%",
+        "show": "0.00%",
+        "source": "rn-pixel",
+        "from": "docs/shaders/README.md pixel art"
+      },
+      "pixel_naive_lo": {
+        "value": "5.5%",
+        "show": "5.5",
+        "source": "rn-pixel",
+        "from": "same"
+      },
+      "pixel_naive_hi": {
+        "value": "19.2%",
+        "show": "19.2%",
+        "source": "rn-pixel",
+        "from": "same"
+      },
+      "dither_colours": {
+        "value": 16777216,
+        "show": "16,777,216",
+        "source": "rn-dither",
+        "from": "evidence/shaders-dither-exhaustive-swiftshader.json#runs/*/colours"
+      },
+      "dither_mismatched": {
+        "value": 0,
+        "show": "0",
+        "source": "rn-dither",
+        "from": "#runs/*/mismatched"
+      },
+      "gltf_models": {
+        "value": 10,
+        "show": "10",
+        "source": "rn-pr73",
+        "from": "evidence/m2-gltf-models.json#models (count)"
+      },
+      "retro_cases": {
+        "value": 12,
+        "show": "12",
+        "source": "rn-pr74",
+        "from": "evidence/m2-retro3d-swiftshader.json#cases (count)"
+      },
+      "retro_cover": {
+        "value": 0,
+        "show": "0",
+        "source": "rn-pr74",
+        "from": "sum of coverMismatch"
+      },
+      "light_points": {
+        "value": 55270,
+        "show": "55,270",
+        "source": "rn-m3",
+        "from": "evidence/m3-lighting-runs.json final run"
+      },
+      "light_missed": {
+        "value": 0,
+        "show": "0",
+        "source": "rn-m3",
+        "from": "same"
+      },
+      "gltf_verified": {
+        "value": 10,
+        "show": "10",
+        "source": "rn-pr73",
+        "from": "PR #73 body: D3D12 WARP 10 of 10 verified; CI requires 10 of 10 on WebGPU SwiftShader"
+      }
+    }
+  },
+  "models": [
+    "Box",
+    "BoxInterleaved",
+    "Suzanne",
+    "SciFiHelmet",
+    "Avocado",
+    "WaterBottle",
+    "Lantern",
+    "Fox",
+    "BarramundiFish",
+    "ToyCar"
+  ]
+}
