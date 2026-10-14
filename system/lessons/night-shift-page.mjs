@@ -3,36 +3,13 @@
 // has WebGPU, else with its Canvas 2D drawer. One shift, a real end, no score.
 import { RULES, newShift, tick, act, takeBack, endShift, summary, gameHour } from "./night-shift.mjs";
 import { frame } from "./night-shift-view.mjs";
+import { el, loadAtlas, backend, fitCanvas } from "./stage.mjs";
 
-const ENGINE = new URL("../../media/raw-native/tree-dev/", import.meta.url);
-const el = (tag, attrs = {}, kids = []) => {
-  const n = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs)) if (k === "text") n.textContent = v; else n.setAttribute(k, v);
-  for (const k of [].concat(kids)) n.append(k);
-  return n;
-};
 const ACTIONS = [["check", "C", "Check", `${RULES.checkHours} hours`], ["rerun", "R", "Rerun the data", "range on the card"], ["pass", "L", "Let it through", "free"], ["hold", "H", "Hold", `up to ${RULES.holdMax}`]];
-
-async function backend(canvas, A, reduced, force) {
-  if (!force && navigator.gpu) {
-    try {
-      const { createEngine } = await import(new URL("web/motion/engine.mjs", ENGINE).href);
-      await import(new URL("web/shaders/post.mjs", ENGINE).href);      // the template looks, as post passes
-      let current = null;
-      const scene = { title: "Night Shift", duration: 1e9, fps: 30, async load() { return A; }, frame: () => current };
-      const eng = await createEngine({ canvas, scene, sceneUrl: import.meta.url, timing: false, reduced });
-      return { kind: "webgpu", async draw(list, i) { current = list; const l = eng.list(0); await eng.motion.prepare(l); eng.motion.draw(l, { frame: i, time: i / 30 }); }, resize: (w, h) => eng.resize(w, h) };
-    } catch (e) { console.warn("night shift: WebGPU unavailable, drawing with Canvas 2D:", e); }
-  }
-  const { drawFrame } = await import(new URL("web/motion/canvas2d.mjs", ENGINE).href);
-  const g = canvas.getContext("2d");
-  return { kind: "canvas2d", async draw(list) { drawFrame(g, list, { width: canvas.width, height: canvas.height }); }, resize: (w, h) => { canvas.width = w; canvas.height = h; } };
-}
 
 export async function mountNightShift(box, { seed = (Date.now() % 100000) + 1, force2d = false } = {}) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const atlas = await (await fetch(new URL("docs/motion/hanken-grotesk-500.atlas.json", ENGINE))).json();
-  const A = { atlas };
+  const A = await loadAtlas();
   box.replaceChildren();
   const canvas = el("canvas", { class: "ns-canvas", width: "1280", height: "720", role: "img", "aria-label": "Tallow's desk on the night shift. The claim on the desk, the cards waiting at the door, the jar of spent hours, and the town through the window." });
   const status = el("p", { class: "ns-status" });
@@ -48,13 +25,11 @@ export async function mountNightShift(box, { seed = (Date.now() % 100000) + 1, f
   box.classList.add("ns");
   box.append(canvas, status, event, intro, controls, end);
 
-  const be = await backend(canvas, A, reduced, force2d);
-  const fit = () => { const w = Math.min(1920, Math.round(canvas.clientWidth * Math.min(2, devicePixelRatio || 1))); be.resize(w, Math.round(w * 9 / 16)); };
-  fit();
-  addEventListener("resize", fit);
+  const be = await backend(canvas, A, { reduced, force2d, title: "Night Shift" });
   let s = newShift(seed, 0), running = false, paused = false, last = 0, frameNo = 0, raf = 0;
   const say = (m) => { event.textContent = m; };
   const draw = async () => { await be.draw(frame(s, s.t, A, { reduced }), frameNo++); };
+  fitCanvas(canvas, be, () => { if (!running) draw(); });
 
   // Before the shift: Tallow asks for a prediction. The guess is never scored.
   const guess = el("input", { type: "number", min: "0", max: "40", value: "8", id: `ns-guess-${seed}`, inputmode: "numeric" });
