@@ -1,0 +1,143 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "raw-native-showcase",
+  "title": "One box, many eyes",
+  "page": "explainers.html#raw-native-showcase",
+  "seed": 20261014,
+  "voice": "author",
+  "draft": true,
+  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration is not recorded and the 4K render has not run. The length stands at the author's measured pace, about 4:53 (author, 2026-10-14: \"Keep the longer films.\"); no lines are cut for length. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6, each with one number from its evidence source (rn-pr73, rn-pr74, rn-m3). The author left the three lines to the lead's recommendation (2026-10-14: \"the three draft lines, whatever you recommend.\"), and they are kept as written.",
+  "host": {
+    "guide": "rerun",
+    "home_style": "pixel",
+    "open": {
+      "seconds": 4.0,
+      "beat": "Rerun knocks twice on its own glass shell; the camera goes into the prism, which opens into the lens."
+    },
+    "close": {
+      "seconds": 4.5,
+      "beat": "The camera pulls out of the lens until the lens is Rerun's shell again; one spectral flare on the rim."
+    }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "One box, many eyes",
+      "lines": [
+        "One box, many eyes."
+      ]
+    },
+    {
+      "key": "check",
+      "heading": "The shortcut and the check",
+      "sources": [
+        "rn-cert"
+      ],
+      "lines": [
+        "Here is a box on a floor, lit from one side. Real-time engines darken the creases with a cheap trick called screen-space ambient occlusion.",
+        "raw-native draws the trick, and then it draws the slow answer by tracing rays, and measures how far apart the two are.",
+        "For this view the gap is 0.129, against a tolerance of 0.120. The certificate says refuted."
+      ],
+      "predict": [
+        {
+          "before": [
+            2,
+            0
+          ],
+          "question": "The shortcut looks right. Is it inside the tolerance?",
+          "hold": 2.5
+        }
+      ]
+    },
+    {
+      "key": "bytes",
+      "heading": "Same bytes, every build",
+      "sources": [
+        "rn-readme",
+        "rn-determinism"
+      ],
+      "lines": [
+        "The same render comes out byte for byte the same from three compilers and from the WebAssembly build.",
+        "The film you are watching is drawn the same way: every frame is a function of time alone. Rendered twice, 1,456 frames matched exactly."
+      ]
+    },
+    {
+      "key": "colour",
+      "heading": "Lines and colour",
+      "sources": [
+        "rn-vector",
+        "rn-colour-gpu",
+        "rn-ocio"
+      ],
+      "lines": [
+        "The box's outline is drawn as vector paths. Over 20 test drawings, the average edge error against a slow reference stays under 0.028 in every one.",
+        "Light brighter than a screen can show goes through a tone mapper. The GPU matches its own C++ reference within 1 step in 255, and the C++ version of ACES 2.0 matches OpenColorIO within a colour difference of 0.0024."
+      ]
+    },
+    {
+      "key": "tube",
+      "heading": "A tube, simulated as a tube",
+      "sources": [
+        "rn-shaders",
+        "rn-crt-parity"
+      ],
+      "lines": [
+        "Now the same box on an old television. raw-native does not paint scanlines on. It encodes the picture as a broadcast signal, decodes it the way a television did, and fires simulated electron beams at a phosphor mask.",
+        "Dot crawl and rainbow fringes appear because the decoder gets things wrong, the way a real one did.",
+        "Across 9 tube settings, the GPU matches the slow CPU version within 1 step in 255."
+      ]
+    },
+    {
+      "key": "film",
+      "heading": "Film, simulated as film",
+      "sources": [
+        "rn-shaders",
+        "rn-film-parity",
+        "newson2017"
+      ],
+      "lines": [
+        "On film, the box exposes a negative through three layers, is developed, printed and projected.",
+        "Grain comes from a published model of how silver clouds form, and the red halo around bright light comes from light bouncing inside the film base."
+      ],
+      "claim_tag": "most film and tube constants: low confidence"
+    },
+    {
+      "key": "looks",
+      "heading": "Paint, tape, pixels and what landed",
+      "sources": [
+        "rn-shaders",
+        "rn-paint-parity",
+        "rn-vhs-parity",
+        "rn-pixel",
+        "rn-dither",
+        "rn-pr73",
+        "rn-pr74",
+        "rn-m3"
+      ],
+      "lines": [
+        "The same box, painted. The paint pass turns each colour into amounts of four real pigments, so blue and yellow brushed together make green, the way paint does.",
+        "On a videotape, the picture goes through a simulated tape head: detail washes out, colour smears behind the edges, and the bottom lines skip where the heads switch.",
+        "As pixel art, the box stays still while the camera turns. In the library's test, under one pixel in ten thousand changed colour as the view moved, against up to 19 percent for simply rendering small and scaling up.",
+        "And with an old sixteen-colour palette and dither, the GPU picks the same colour as the slow version for every one of 16,777,216 inputs.",
+        "Models from other tools now load: ten glTF models render on the CPU and on the GPU, and each GPU frame is verified against the CPU.",
+        "Wobbling retro geometry is checked against a CPU twin: across 12 cases, no pixel away from an edge is covered by a different triangle.",
+        "And the box can now be fully lit. Over 55,270 test points, the clustered lights missed none that the full list found."
+      ],
+      "sources_by_line": {
+        "4": "rn-pr73",
+        "5": "rn-pr74",
+        "6": "rn-m3"
+      }
+    },
+    {
+      "key": "close",
+      "layout": "close",
+      "heading": "One thing to keep",
+      "lines": [
+        "One thing to keep: a style is a claim, and every claim here comes with the test that could say no.",
+        "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
+      ]
+    }
+  ]
+}
