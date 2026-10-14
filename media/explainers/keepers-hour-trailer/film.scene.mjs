@@ -5,11 +5,11 @@
 // draws only the cards' words, in bone on black, so assemble.py can read their coverage
 // exactly. Sweeps 16 and 17 are full frames: the title with one beam in the dark, then the end
 // card, where Tallow, the host, appears once.
-import { text } from "../../raw-native/tree-dev/web/motion/text.mjs";
-import { rect, contour } from "../../raw-native/tree-dev/web/motion/path.mjs";
-import { span, window, ease, lerp } from "../../raw-native/tree-dev/web/motion/timeline.mjs";
-import { GUIDES, pose } from "../../raw-native/tree-dev/templates/guides/guides.mjs";
-import { clipBeat, CLIPS } from "../../raw-native/tree-dev/templates/guides/motion.mjs";
+import { text } from "../../raw-native/tree-c6b114d/web/motion/text.mjs";
+import { rect, contour } from "../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { span, window, ease, lerp } from "../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
+import { GUIDES, pose } from "../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { clipBeat, CLIPS } from "../../raw-native/tree-c6b114d/templates/guides/motion.mjs";
 
 export const BONE = "#ece5d6", DIM = "#b8b0a0";
 const SWEEP = 4, X = 120, MAXW = 1180;
