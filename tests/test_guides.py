@@ -27,20 +27,28 @@ def test_home_uses_the_same_words() -> None:
     for g in data.GUIDES:
         for key in ("name", "title", "style", "role", "habit", "alt"):
             assert g[key] in HOME, f"home is missing {g['id']}.{key}"
-        for f in g["films"]:
+        for f in data.live_films(g):
             assert data.FILM_TITLES[f].replace("'", "'") in HOME.replace("&apos;", "'")
     assert data.VOICE in HOME
 
 
 def test_every_film_and_the_release_films_have_one_host() -> None:
     films = ["checking-cost", "passing-check", "rederive", "incentives", "visible-reasoning", "release-media"]
-    assert sorted(f for g in data.GUIDES for f in g["films"]) == sorted(films)
+    assert sorted(f for g in data.GUIDES for f in data.live_films(g)) == sorted(films)
     hosts = re.findall(r'<aside class="gd-host"', PAGES["explainers.html"])
     assert len(hosts) == len(films)
     for f in films:
         g = data.by_film(f)
         section = PAGES["explainers.html"].split(f'id="{f}"', 1)[1].split("</h2>", 1)[1][:600]
         assert f'guides.html#{g["id"]}' in section, f"{f} is not hosted by {g['name']}"
+
+
+def test_draft_films_have_a_host_a_title_and_a_draft_scene() -> None:
+    for f in data.DRAFTS:
+        film = json.loads((ROOT / "media" / "explainers" / f / "film.json").read_text(encoding="utf-8"))
+        assert film["draft"] is True and data.FILM_TITLES[f] == film["title"]
+        assert data.by_film(f)["id"] == film["host"]["guide"]
+        assert f'id="{f}"' not in PAGES["explainers.html"], f"{f} is a draft and must not be on a live page yet"
 
 
 def test_guides_reach_home_writing_and_studio() -> None:
