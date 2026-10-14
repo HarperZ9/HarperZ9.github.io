@@ -4,10 +4,10 @@
 // first light, and the camera pushes into the tube until its delta mask shows (segment 0).
 // Segment 1 pulls back to the room. The close (segment 8) brings him back at the foot of the
 // tower. He reacts as CHARACTERS.md says and decides nothing for the viewer.
-import { GUIDES, pose } from "../../../raw-native/tree-dev/templates/guides/guides.mjs";
-import { thrillerSet } from "../../../raw-native/tree-dev/templates/guides/sets.mjs";
-import { clipBeat, CLIPS } from "../../../raw-native/tree-dev/templates/guides/motion.mjs";
-import { LOOKS } from "../../../raw-native/tree-dev/templates/guides/look.mjs";
+import { GUIDES, pose } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { thrillerSet } from "../../../raw-native/tree-c6b114d/templates/guides/sets.mjs";
+import { clipBeat, CLIPS } from "../../../raw-native/tree-c6b114d/templates/guides/motion.mjs";
+import { LOOKS } from "../../../raw-native/tree-c6b114d/templates/guides/look.mjs";
 import { C, put, image, rect, text, transform, span, window, ease, lerp, lerpLog } from "./lib.mjs";
 
 const G = GUIDES.tallow;

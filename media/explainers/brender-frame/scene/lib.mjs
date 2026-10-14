@@ -1,9 +1,9 @@
 // Shared parts for "How a 1998 engine drew a frame": palette, type, cues from the narration
 // timing, drawn forms, and the period frames as image paints. The engine is the vendored
 // raw-native tree (web/, templates/guides/, docs/motion/ at repo-root layout).
-import { rect, line, circle, contour, bounds, transform, trim } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { text, tex } from "../../../raw-native/tree-dev/web/motion/text.mjs";
-import { span, window, ease, lerp, lerpLog, clamp01 } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { rect, line, circle, contour, bounds, transform, trim } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { text, tex } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
+import { span, window, ease, lerp, lerpLog, clamp01 } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 
 // Colour script (storyboard): void black ground, bone line-work, verified lime only on a rung
 // that really passed, drift ember only on the textured period frame nobody claims.

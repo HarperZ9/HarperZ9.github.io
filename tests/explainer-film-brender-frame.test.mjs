@@ -12,7 +12,7 @@ import { overlaps, labelsAt } from "./explainer-film-labels.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DIR = path.join(ROOT, "media/explainers/brender-frame");
-const ENGINE = pathToFileURL(path.join(ROOT, "media/raw-native/tree-dev/web/motion/")).href;
+const ENGINE = pathToFileURL(path.join(ROOT, "media/raw-native/tree-c6b114d/web/motion/")).href;
 const { sceneContext, loadScene, evaluate } = await import(ENGINE + "scene.mjs");
 const read = async (f) => JSON.parse(await readFile(path.join(DIR, f), "utf8"));
 
