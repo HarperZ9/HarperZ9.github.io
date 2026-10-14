@@ -12,15 +12,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-
-def _live(folder: Path) -> bool:
-    """A film folder whose film.json says "draft": true is scene code in review, with no narration,
-    captions, receipt or page yet; the checks on shipped films skip it until it ships."""
-    f = folder / "film.json"
-    return not (f.is_file() and json.loads(f.read_text(encoding="utf-8")).get("draft") is True)
-
-
-FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.scene.mjs") if _live(p.parent))
+FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.scene.mjs"))
 PAGE = (ROOT / "explainers.html").read_text(encoding="utf-8")
 IMPORT = re.compile(r'"(?:\.\./)+raw-native/(web-[0-9a-f]{7})/motion/[a-z-]+\.mjs"')
 

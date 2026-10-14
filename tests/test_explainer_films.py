@@ -13,15 +13,7 @@ from pathlib import Path
 from tools.explainer.film import render
 
 ROOT = Path(__file__).resolve().parents[1]
-
-def _live(folder: Path) -> bool:
-    """A film folder whose film.json says "draft": true is scene code in review, with no narration,
-    captions, receipt or page yet; the checks on shipped films skip it until it ships."""
-    f = folder / "film.json"
-    return not (f.is_file() and json.loads(f.read_text(encoding="utf-8")).get("draft") is True)
-
-
-FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json") if _live(p.parent))
+FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.json"))
 PAGE = (ROOT / "explainers.html").read_text(encoding="utf-8")
 TEXT = html.unescape(re.sub(r"<[^>]+>", " ", PAGE))
 TEXT = re.sub(r"\s+", " ", TEXT)
@@ -101,12 +93,3 @@ def test_no_em_dashes_or_local_paths() -> None:
             assert "—" not in body, f"{folder.name}/{name} has an em dash"
             assert not re.search(r"[A-Z]:[\\/]", body), f"{folder.name}/{name} has a local path"
     assert "—" not in PAGE
-
-
-def test_draft_films_stay_off_the_pages() -> None:
-    # The skip above must not hide a shipped film: a draft folder is on no page.
-    drafts = [p.parent.name for p in (ROOT / "media" / "explainers").glob("*/film.json") if not _live(p.parent)]
-    for page in ("explainers.html", "studio.html", "sitemap.xml"):
-        text = (ROOT / page).read_text(encoding="utf-8")
-        for slug in drafts:
-            assert f"media/explainers/{slug}/" not in text and f"#{slug}\"" not in text, f"draft {slug} is on {page}"
