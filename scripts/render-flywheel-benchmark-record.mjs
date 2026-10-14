@@ -602,7 +602,8 @@ function build(record, matrix, evidence, font) {
     + `<dt>Check it yourself</dt><dd><p>The two source files are byte-identical copies of files committed in the Flywheel repository. Fetch them at commit <a href="${escapeMarkup(companion.sourceCommitUrl)}"><code>${escapeMarkup(SOURCE_COMMIT)}</code></a> (the benchmark code), hash them, and compare them with these digests. Record seal: <code class="digest">${escapeMarkup(record.result_sha256)}</code>. Interpreter: Python ${escapeMarkup(record.python)}.</p>`
     + `<div class="table-wrap" role="region" aria-labelledby="source-cap" tabindex="0"><table class="data-table" data-stack><caption id="source-cap">Public source files and their digests.</caption>`
     + `<thead><tr><th scope="col">File</th><th scope="col">SHA-256</th><th scope="col">Original</th></tr></thead><tbody>${evidenceRows}</tbody></table></div>`
-    + `<p>To regenerate the record, run <code>python scripts/run_offline_benchmarks.py</code> then <code>python scripts/build_benchmark_page.py</code> in the engine repository. A test there re-runs the first and compares the seal.</p></dd>`
+    + `<p>To regenerate the record, run <code>python scripts/run_offline_benchmarks.py</code> then <code>python scripts/build_benchmark_page.py</code> in the engine repository. A test there re-runs the first and compares the seal.</p>`
+    + `<p>To recheck this record's claim in one command from a clean clone, run <code>python -m harness.recheck run recheck/site-benchmark-seal.json</code> in the engine repository. It checks out the pinned commit, reruns the check and then a control that must fail. <a href="https://github.com/HarperZ9/flywheel/blob/main/RECHECK.md">RECHECK.md</a> describes the runner.</p></dd>`
     + `</dl></details>`;
 
   return { html: page("Flywheel offline benchmark record", body, "analytics/flywheel-benchmark-record.html"), svg, companion };
