@@ -613,8 +613,60 @@ function initFlow(w, h) {
   _flowInited = true;
 }
 
+// The flow field on raw-native (flow-gpu.js, 14 October 2026): the same noise, curl, steering,
+// kicks, life and fade, up to 1,024 particles a frame instead of 60 to 240. It loads on the first
+// flow-field frame; until it answers, and wherever WebGPU is missing, the Canvas2D mode below draws.
+// ?music=cpu pins the Canvas2D mode.
+let _flowGpu = null, _flowGpuState = "idle";
+function ensureFlowGpu() {
+  if (_flowGpuState !== "idle") return;
+  if (typeof window === "undefined" || attractorPinnedCpu()) { _flowGpuState = "cpu"; return; }
+  _flowGpuState = "loading";
+  import("./flow-gpu.js?v=20261014-flow-gpu")
+    .then((m) => m.createFlowGPU(_perm))
+    .then((d) => { _flowGpu = d; _flowGpuState = d ? "active" : "cpu"; })
+    .catch((e) => { console.error("[music] the flow field on raw-native failed to start:", e); _flowGpuState = "cpu"; });
+}
+export function flowBackend() {
+  return _flowGpuState === "active" && _flowGpu && !_flowGpu.host.lost ? "raw-native webgpu" : "canvas2d";
+}
+
+// The same frame as drawFlowField, computed on the GPU: same field, fade, palette, flash.
+function drawFlowFieldGpu(ctx, w, h, features, params) {
+  const intensity = params.intensity, hue = params.hue;
+  const speed = 1.2 + intensity * 2 + features.bass * 1.5;
+  const sizeMul = 1 + features.bass * 0.5;
+  const cpuN = Math.min(MAX_FLOW_PARTICLES, Math.floor(w * h / 5000) + 60);
+  const L0 = intensity * 0.1, C0 = 0.14 + features.treble * 0.08 + intensity * 0.06;
+  _flowGpu.draw({
+    scale: 0.003 + features.centroid * 0.002, phase: _flowPhase, speed,
+    kick: params.pulse > 0.4 ? params.pulse * 3 : 0, lifeDecay: 0.004 + (1 - intensity) * 0.003, sizeMul,
+    fade: 0.06 + params.pulse * 0.06,
+    cpuInk: cpuN * speed * 2.2 * sizeMul,   // particles x mean segment length x mean stroke width
+    cpuN, cpuMax: MAX_FLOW_PARTICLES,
+    intensity,
+    // The mode's palette: hues within 40 degrees of the music's hue, lighter with life.
+    colour: (s) => _oklchBytes(clamp(0.55 + s * 0.25 + L0, 0.3, 0.9), clamp(C0, 0, 0.3), (((hue - 40 + s * 80 + params.hueShift * 60) % 360) + 360) % 360),
+    voidRgb: _VOID_RGB,
+  }, w, h);
+  ctx.drawImage(_flowGpu.canvas, 0, 0, w, h);
+  if (params.pulse > 0.6) {
+    ctx.save();
+    ctx.globalAlpha = (params.pulse - 0.6) * 0.18;
+    ctx.fillStyle = oklchToRgba(0.88, 0.09, hue, 1);
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+}
+
 function drawFlowField(ctx, w, h, features, params, opts, t) {
   if (!_flowInited) initFlow(w, h);
+  ensureFlowGpu();
+  if (_flowGpuState === "active" && _flowGpu && !_flowGpu.host.lost) {
+    _flowPhase += 0.003 + features.level * 0.015 + params.pulse * 0.05;
+    try { drawFlowFieldGpu(ctx, w, h, features, params); return; }
+    catch (e) { console.error("[music] the flow field on raw-native failed; drawing on Canvas2D:", e); _flowGpuState = "cpu"; _flowGpu = null; }
+  }
 
   fillVoid(ctx, w, h, 0.06 + params.pulse * 0.06);
 
@@ -816,6 +868,8 @@ const ReactiveVisuals = {
 
   attractorBackend() { return attractorBackend(); },
 
+  flowBackend() { return flowBackend(); },
+
   setAttractorType(type) {
     _attractorType = type;
     _attrState = null;  // force re-init of attractor state
@@ -842,6 +896,7 @@ const ReactiveVisuals = {
       _needsReinit = false;
       _particlesInited = false;
       _flowInited = false;
+      if (_flowGpu) _flowGpu.reset();
       _attrState = null;
       if (_attrGpu) _attrGpu.reset();
       // Fill void on reinit so the canvas isn't transparent black
