@@ -6,13 +6,13 @@
 // Close: the same boat now carries its manifest, with a fine thread back out to sea where it
 // was made. Her cone stands beside it, off the boat. She looks at the viewer and leaves the call
 // to them. Both beats are wordless: the paint pass would smear type, so all words stay in the net.
-import { shot } from "../../../raw-native/tree-dev/templates/guides/stage.mjs";
-import { BEATS } from "../../../raw-native/tree-dev/templates/guides/beats.mjs";
-import { coneParts } from "../../../raw-native/tree-dev/templates/guides/pylon.mjs";
-import { P, INK } from "../../../raw-native/tree-dev/templates/guides/rig.mjs";
-import { S as isoS, depth as isoDepth, groundShadow } from "../../../raw-native/tree-dev/templates/guides/worlds/iso_kit.mjs";
-import { rect } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { span, ease, lerp } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { shot } from "../../../raw-native/tree-c6b114d/templates/guides/stage.mjs";
+import { BEATS } from "../../../raw-native/tree-c6b114d/templates/guides/beats.mjs";
+import { coneParts } from "../../../raw-native/tree-c6b114d/templates/guides/pylon.mjs";
+import { P, INK } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
+import { S as isoS, depth as isoDepth, groundShadow } from "../../../raw-native/tree-c6b114d/templates/guides/worlds/iso_kit.mjs";
+import { rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { span, ease, lerp } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 
 const HOME = BEATS.pylon.painted;
 // The boat she cones (the action clip's own target: one cell along i, a little back in j).

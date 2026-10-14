@@ -3,9 +3,9 @@
 // and the one world the film lives in: a net of fine threads seen from above. Every knot is a
 // thing someone made (a library, a dataset, a release); the short thread that runs back from
 // it ends at a small mark where the thing was made. That thread is its provenance.
-import { circle, contour, rect, line, bounds } from "../../../raw-native/tree-dev/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-dev/web/motion/text.mjs";
-import { span, window, ease, lerp, lerpLog, rng } from "../../../raw-native/tree-dev/web/motion/timeline.mjs";
+import { circle, contour, rect, line, bounds } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
+import { span, window, ease, lerp, lerpLog, rng } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
 
 // Ground deep navy; ink bone; verified lime only for provenance traced back to its source; drift
 // ember is the one hot mark per view (a file only in the release, a cut thread, the 72%).
@@ -171,7 +171,7 @@ export function fly(t, a, b, t0, t1) {
 }
 
 export { circle, contour, rect, line, bounds, text, span, window, ease, lerp, lerpLog, rng };
-export { trim, translate } from "../../../raw-native/tree-dev/web/motion/path.mjs";
+export { trim, translate } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
 
 // The lens: a knot opened up to show what is inside it. A void disc (or an octagon, for
 // Ostrom's eight principles) with a fine bone rim, centred on screen.

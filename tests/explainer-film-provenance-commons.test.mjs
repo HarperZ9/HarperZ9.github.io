@@ -2,7 +2,7 @@
 // every number on screen is in the source whose tab is on screen with it, the timing is the
 // script's, and no label meets the caption area while a sentence is spoken.
 // Run: node --test tests/explainer-film-provenance-commons.test.mjs
-// Needs the engine at media/raw-native/tree-dev (uncommitted until the vendored sha lands).
+// Engine: the vendored raw-native tree at media/raw-native/tree-c6b114d.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -12,7 +12,7 @@ import { CAPTION_AREA, labelsAt } from "./explainer-film-labels.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SLUG = "provenance-commons", DIR = path.join(ROOT, "media/explainers", SLUG);
-const ENGINE = pathToFileURL(path.join(ROOT, "media/raw-native/tree-dev/web/motion/")).href;
+const ENGINE = pathToFileURL(path.join(ROOT, "media/raw-native/tree-c6b114d/web/motion/")).href;
 const { sceneContext, loadScene, evaluate } = await import(ENGINE + "scene.mjs");
 
 // The guides' stage fetches its type atlas by URL; in Node, serve file: URLs from disk.
