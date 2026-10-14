@@ -17,6 +17,7 @@
   },
   "sweep_seconds": 4.0,
   "duration": 68,
+  "length": "68 s is the trailer's structure (17 lamp sweeps of 4 s, kh_world.c), not a pace target, so the author's 2026-10-14 decision 'Keep the longer films.' leaves it as is. Five card lines are trimmed at sentence boundaries so each card can be read in its sweeps; restoring the trimmed sentences would add sweeps, which is the author's call.",
   "segments": [
     {
       "key": "sweep-1",
