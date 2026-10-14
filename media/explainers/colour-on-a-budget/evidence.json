@@ -1,0 +1,167 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "colour-on-a-budget",
+  "read": "2026-10-10",
+  "sources": {
+    "vga": {
+      "short": "Mode 13h (VGA), Wikipedia and WHATVGA notes",
+      "citation": "Wikipedia contributors, Mode 13h (read 10 October 2026); WHATVGA notes (author and date not stated), hosted at sites.cs.ucsb.edu.",
+      "url": "https://en.wikipedia.org/wiki/Mode_13h",
+      "read": "secondary",
+      "claims": [
+        "Mode 13h: 320 x 200 pixels, one byte per pixel, introduced in 1987 with the IBM PS/2; the DAC has 256 entries of 18 bits, 6 bits per basic colour, allowing 256 colours out of 256K."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "256 colors out of 256K",
+      "does_not_prove": "IBM's own specification wording; the IBM VGA Technical Reference was not read. 262,144 is the arithmetic 2^18."
+    },
+    "abrash": {
+      "short": "Abrash, Graphics Programming Black Book, ch. 34",
+      "citation": "Abrash, M. Graphics Programming Black Book, chapter 34.",
+      "url": "https://www.phatcode.net/res/224/files/html/ch34/34-03.html",
+      "read": "secondary",
+      "claims": [
+        "The VGA DAC uses 6 significant bits per colour component; the upper two bits of each byte are not significant."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "upper two bits of each byte aren't significant",
+      "does_not_prove": "Not applicable."
+    },
+    "heckbert1982": {
+      "short": "Heckbert 1982, SIGGRAPH",
+      "citation": "Heckbert, P. (1982). Color image quantization for frame buffer display. Computer Graphics 16(3), 297-307 (SIGGRAPH '82). doi:10.1145/800064.801294.",
+      "url": "https://doi.org/10.1145/800064.801294",
+      "read": "full",
+      "claims": [
+        "Images can be quantized to 8 or fewer bits per pixel with little subjective degradation.",
+        "Median cut: each colormap entry should represent an equal number of pixels; boxes are split at the median along their longest dimension until K boxes exist."
+      ],
+      "n": "example images, subjective comparison",
+      "interval": "None; subjective.",
+      "quote": "little subjective degradation",
+      "does_not_prove": "That median cut is optimal, or any measured error figure."
+    },
+    "bayer1973": {
+      "short": "Bayer 1973, IEEE ICC",
+      "citation": "Bayer, B. E. (1973). An optimum method for two-level rendition of continuous-tone pictures. IEEE International Conference on Communications, vol. 1. Read through Bouman (2013).",
+      "url": "https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2013/notes/pdf/Halftoning.pdf",
+      "read": "secondary",
+      "claims": [
+        "Ordered dither compares each pixel with a threshold from a recursively built index matrix tiled over the image."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Bayer's own optimality criterion or wording; the page range is unverified."
+    },
+    "bouman2013": {
+      "short": "Bouman 2013, ECE637 lecture notes",
+      "citation": "Bouman, C. A. (2013). Digital Halftoning. ECE637 lecture notes, Purdue University, 29 January 2013.",
+      "url": "https://engineering.purdue.edu/~bouman/ece637/previous/ece637S2013/notes/pdf/Halftoning.pdf",
+      "read": "full",
+      "claims": [
+        "Bayer's index matrix can be defined recursively; the threshold matrix is T = 255 (I + 0.5) / N^2; an 8 x 8 screen gives only 65 grey levels."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "only 65 gray levels",
+      "does_not_prove": "Not applicable."
+    },
+    "floyd-steinberg": {
+      "short": "Floyd and Steinberg, mid-1970s",
+      "citation": "Floyd, R. W., and Steinberg, L. An adaptive algorithm for spatial grey scale. Cited as Proc. SID 17(2), 75-77 (1976) by Ostromoukhov 2001 and Bouman 2013, and as SID 75 Int. Symp. Dig. Tech. Papers (1975), 36 by Heckbert 1982.",
+      "url": "https://doi.org/10.1145/800064.801294",
+      "read": "secondary",
+      "claims": [
+        "Error diffusion with weights 7/16, 3/16, 5/16 and 1/16 to the unprocessed neighbours."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "7/16, 3/16, 5/16 and 1/16 in the original version",
+      "does_not_prove": "The original paper's wording or how the weights were chosen; year and venue are cited two ways."
+    },
+    "ostromoukhov2001": {
+      "short": "Ostromoukhov 2001, SIGGRAPH",
+      "citation": "Ostromoukhov, V. (2001). A simple and efficient error-diffusion algorithm. SIGGRAPH 2001.",
+      "url": "https://scis.uohyd.ac.in/~chakcs/CIP2018/SIGGRAPH01_varcoeffED.pdf",
+      "read": "full",
+      "claims": [
+        "Gives the Floyd and Steinberg weights and their placement: 7/16 ahead, 3/16 below-behind, 5/16 below, 1/16 below-ahead."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Not applicable."
+    },
+    "ulichney1993": {
+      "short": "Ulichney 1993, SPIE",
+      "citation": "Ulichney, R. A. (1993). Void-and-cluster method for dither array generation. Proc. SPIE 1913, 332-343. doi:10.1117/12.152707.",
+      "url": "https://doi.org/10.1117/12.152707",
+      "read": "metadata",
+      "claims": [
+        "The void-and-cluster method generates dither arrays (the film shows raw-native's own mask, built from this paper)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Any blue-noise property; the property shown is raw-native's own test (low-frequency power under 0.2 of high-frequency power)."
+    },
+    "oklab2020": {
+      "short": "Ottosson 2020, Oklab",
+      "citation": "Ottosson, B. (23 December 2020). A perceptual color space for image processing.",
+      "url": "https://bottosson.github.io/posts/oklab/",
+      "read": "full",
+      "claims": [
+        "Oklab is designed to predict perceived lightness, chroma and hue, so blends give even transitions."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "Blending two colors should result in even transitions.",
+      "does_not_prove": "That Euclidean distance in Oklab equals perceived colour difference."
+    },
+    "rn-dither": {
+      "short": "raw-native dither pass and evidence",
+      "citation": "HarperZ9/raw-native web/shaders/dither/, web/shaders/reference/retro-dither.mjs and retro-palettes.mjs, evidence/shaders-dither-exhaustive-swiftshader.json, main ba9fb0f.",
+      "url": "https://github.com/HarperZ9/raw-native/tree/main/web/shaders/dither",
+      "read": "full",
+      "claims": [
+        "GPU modes none, bayer2, bayer4, bayer8, noise and blue; picks in OKLab between the two palette colours that bracket the pixel.",
+        "16,777,216 colours, 0 mismatches between GPU and CPU, for pico8 with bayer8 and ega with noise; a local run, not part of CI.",
+        "A 64 x 64 void-and-cluster mask written from Ulichney 1993; its test asserts low-frequency power under 0.2 of high-frequency power."
+      ],
+      "n": "16,777,216 colours x 2 pairs",
+      "interval": "Not applicable.",
+      "quote": "local run; not part of CI",
+      "does_not_prove": "Results for other palette and mode pairs; error diffusion is CPU only and clamps error at 0.5 per channel."
+    },
+    "brender-pal": {
+      "short": "BRender INDEX_8 palette lookup",
+      "citation": "HarperZ9/brender-archival README (rung: File-texture sampling) and modern/viewer/brview_scenes.c load_texture, main 5e02174.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/modern/viewer/brview_scenes.c",
+      "read": "full",
+      "claims": [
+        "Period .pix textures are 8-bit indices resolved through a 256-entry palette (std.pal when the texture carries none)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "palette-aware INDEX_8 lookup",
+      "does_not_prove": "How every 1998 BRender title stored textures."
+    },
+    "rosewood-texel": {
+      "short": "BRender 1.3.2 data files, rosewood.pix and std.pal",
+      "citation": "BRender 1.3.2 dat/rosewood.pix (256 x 256 INDEX_8, no palette of its own) and dat/std.pal (256 entries), from foone/BRender-v1.3.2 d88d0ed, looked up as modern/viewer/brview_scenes.c load_texture does.",
+      "url": "https://github.com/foone/BRender-v1.3.2",
+      "read": "full (the two files, parsed 14 October 2026)",
+      "claims": [
+        "The 8 x 8 patch of rosewood.pix from texel (124, 124) holds the indices drawn on screen; the texel at (128, 128) holds index 170, and std.pal entry 170 is RGB 99, 24, 24."
+      ],
+      "n": "one texture, one palette",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "How any 1998 title used this texture; the patch shows the lookup, nothing about the art.",
+      "added": "by the film scene-code agent on 14 October 2026 for shot 8.2, pending the author's review; values in scene/rosewood.json, file hashes checked"
+    }
+  }
+}
