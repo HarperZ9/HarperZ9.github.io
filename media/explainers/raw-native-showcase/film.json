@@ -6,7 +6,7 @@
   "seed": 20261014,
   "voice": "author",
   "draft": true,
-  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration is not recorded and the 4K render has not run. The length stands at the author's measured pace, about 4:53 (author, 2026-10-14: \"Keep the longer films.\"); no lines are cut for length. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule on 14 October 2026: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6 with their own numbers. Those three lines are drafted from the evidence and wait for the author's read.",
+  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration is not recorded and the 4K render has not run. The length stands at the author's measured pace, about 4:53 (author, 2026-10-14: \"Keep the longer films.\"); no lines are cut for length. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6, each with one number from its evidence source (rn-pr73, rn-pr74, rn-m3). The author left the three lines to the lead's recommendation (2026-10-14: \"the three draft lines, whatever you recommend.\"), and they are kept as written.",
   "host": {
     "guide": "rerun",
     "home_style": "pixel",
@@ -124,13 +124,10 @@
         "Wobbling retro geometry is checked against a CPU twin: across 12 cases, no pixel away from an edge is covered by a different triangle.",
         "And the box can now be fully lit. Over 55,270 test points, the clustered lights missed none that the full list found."
       ],
-      "drafted_lines": {
-        "lines": [
-          4,
-          5,
-          6
-        ],
-        "why": "The script's segment 7 rule: a piece that passes its bounds and merges moves into segment 6 with its own number. Drafted from evidence on 14 October 2026; for the author's read."
+      "sources_by_line": {
+        "4": "rn-pr73",
+        "5": "rn-pr74",
+        "6": "rn-m3"
       }
     },
     {
