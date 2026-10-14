@@ -14,7 +14,8 @@ export const C = Object.freeze({
 
 // Cue times from timing.json: at(seg, line, sentence) is when that sentence starts.
 export function cues(timing) {
-  const rows = new Map(timing.map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
+  const rows = new Map(timing.filter((r) => r.predict === undefined).map((r) => [`${r.segment}.${r.line}.${r.sentence ?? 0}`, r]));
+  const asks = new Map(timing.filter((r) => r.predict !== undefined).map((r) => [`${r.segment}.${r.predict}`, r]));
   const row = (s, l, k = 0) => { const r = rows.get(`${s}.${l}.${k}`); if (!r) throw new Error(`no sentence ${s}.${l}.${k}`); return r; };
   return {
     at: (s, l, k = 0) => row(s, l, k).start,
@@ -25,6 +26,8 @@ export function cues(timing) {
       if (i < 0) throw new Error(`"${phrase}" not in "${r.text}"`);
       return r.start + (r.end - r.start) * (i / r.text.length);
     },
+    // A predict question's row (spoken, then held in silence): ask(seg, n) is { start, end, text }.
+    ask: (s, n = 0) => { const r = asks.get(`${s}.${n}`); if (!r) throw new Error(`no predict question ${s}.${n}`); return r; },
     last: timing[timing.length - 1].end,
   };
 }

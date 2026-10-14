@@ -23,18 +23,19 @@ export default {
   chapters: [],
   params: [],
   async load(ctx) {
-    const [sans, head, mono, timing, evidence, tree, rosewood] = await Promise.all([
+    const [sans, head, mono, timing, evidence, tree, rosewood, film] = await Promise.all([
       ctx.json("../motion/hanken-500.json"), ctx.json("../motion/hanken-650.json"), ctx.json("../motion/conso-400.json"),
-      ctx.json("timing.json"), ctx.json("evidence.json"), ctx.json("frames/source-tree.json"), ctx.json("frames/rosewood.json")]);
+      ctx.json("timing.json"), ctx.json("evidence.json"), ctx.json("frames/source-tree.json"), ctx.json("frames/rosewood.json"), ctx.json("film.json")]);
     await loadImages(ctx, [...world.IMAGES, ...close.IMAGES].map(([name, file, k]) => ({ name, file: "frames/" + file, k: k ?? 1 })));
     const c = cues(timing), A = { sans, head, mono, tree, rosewood, evidence };
-    const end = c.last + 4.0;
+    // The film ends after the host's close (film.json host.close.seconds), as provisional_timing.duration says.
+    const end = c.last + film.host.close.seconds;
     this.duration = end;
     const T = {
       // Segment 0 and 1: the room (room.mjs).
       room: { strike: 0.25, title: c.at(0, 0) + 0.2, push: c.end(0, 0) - 0.6, fill: c.end(0, 0) + 0.9, pull: c.at(1, 0, 0), back: c.at(1, 0, 0) + 3.2,
         argonaut: c.word(1, 0, 0, "Argonaut"), games: c.at(1, 0, 1), v132: c.word(1, 1, 0, "a 1998 version"), exit: c.at(2, 0, 0) - 0.6 },
-      ladder: c.word(2, 0, 1, "ladder"), programs: c.word(2, 0, 1, "twenty-one"), hold: c.end(2, 1), s3: c.at(3, 0),
+      ladder: c.word(2, 0, 1, "ladder"), programs: c.word(2, 0, 1, "twenty-one"), ask: c.ask(2, 0), s3: c.at(3, 0),
       // Segments 3 and 4 (plates.mjs).
       matrix: c.word(3, 0, 0, "a perspective matrix"), project: c.word(3, 0, 0, "turns 3D points"), cube: c.at(3, 1, 0), cubeImg: c.at(3, 1, 0) + 1.8,
       graph: c.at(3, 1, 1), asOne: c.word(3, 1, 1, "moves them as one"), s4: c.at(4, 0), rows: c.at(4, 0) + 0.3, depth: c.at(4, 1),
@@ -57,7 +58,9 @@ export default {
     const st = (s, size = 44, y = 150, atlas = head) => text(s, { atlas, size, x: 96, y }).shape;
     const tag = (s) => text(s, { atlas: sans, size: 30, x: 96, y: 198 }).shape;
     A.statements = [
-      [st("21 programs"), T.programs, T.s3],
+      [st("21 programs"), T.programs, T.ask.start - 0.2],
+      // The predict pause (approved by the author, 2026-10-14): the question is spoken, then the empty ladder holds in silence.
+      [st(T.ask.text), T.ask.start, T.s3 - 0.3],
       [st("per-face lighting"), T.rows + 0.4, T.depth, tag("portable C rung, not the 1998 assembly path")],
       [st("per-pixel occlusion"), T.depth + 0.4, T.gouraud, tag("portable C rung, not the 1998 assembly path")],
       [st("a divide per pixel"), T.divide, T.wobble],
@@ -67,7 +70,7 @@ export default {
       [st("21/21 . Win32 . 27 Aug 2026 . final_frame_lit 19,284", 40), T.lit, T.modern],
       [st("21/21 . x64 . BRender 1.4 . 10 Oct 2026", 40), T.bit64, T.s7],
     ];
-    A.statementText = ["21 programs", "per-face lighting", "per-pixel occlusion", "a divide per pixel", "7x faster . looks wrong", "12-part coupe . BrModelLoadMany",
+    A.statementText = ["21 programs", T.ask.text, "per-face lighting", "per-pixel occlusion", "a divide per pixel", "7x faster . looks wrong", "12-part coupe . BrModelLoadMany",
       "8-bit index, 256-colour palette", "21/21 . Win32 . 27 Aug 2026 . final_frame_lit 19,284", "21/21 . x64 . BRender 1.4 . 10 Oct 2026"];
     A.tabs = [["brender-wiki", T.room.pull, T.room.v132], ["foone", T.room.v132, T.ladder - 1], ["brender-readme", T.ladder - 1, T.gouraud, "21 rungs"],
       ["gouraud1971", T.gouraud, T.s5, "method via a secondary summary"], ["brender-readme", T.s5, T.divide], ["hecker1995", T.divide, T.models, "one test on the author's machine"],

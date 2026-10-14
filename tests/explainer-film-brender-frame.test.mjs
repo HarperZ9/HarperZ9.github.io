@@ -34,10 +34,13 @@ test("the scene evaluates every 0.1 s over its whole length without throwing", (
   assert.ok(scene.duration > timing[timing.length - 1].end, "the scene ends before the narration");
 });
 
-test("timing is the provisional one and every sentence of the script is in it", () => {
-  const said = film.segments.flatMap((s) => s.lines).join(" ");
-  assert.equal(timing.map((r) => r.text).join(" "), said);
+test("timing is the provisional one, the script's sentences in order, plus the spoken predict question", () => {
+  const said = timing.filter((r) => r.predict === undefined).map((r) => r.text).join(" ");
+  assert.equal(said, film.segments.flatMap((s) => s.lines).join(" "));
   assert.ok(timing.every((r) => r.provisional === true));
+  const asks = timing.filter((r) => r.predict !== undefined);
+  assert.deepEqual(asks.map((r) => r.text), film.segments.flatMap((s) => (s.predict || []).map((p) => p.question)));
+  assert.ok(Math.abs(scene.duration - (timing.at(-1).end + film.host.close.seconds)) < 1e-6, "the scene ends after the host's close");
 });
 
 // Numbers on screen: each must appear in evidence.json, as digits or as words.
