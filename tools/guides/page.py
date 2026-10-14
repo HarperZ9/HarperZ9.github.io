@@ -8,7 +8,7 @@ import html
 import json
 from pathlib import Path
 
-from tools.guides.data import FILM_TITLES, GUIDES, VOICE, by_film
+from tools.guides.data import FILM_TITLES, GUIDES, VOICE, by_film, live_films
 
 ROOT = Path(__file__).resolve().parents[2]
 E = html.escape
@@ -42,7 +42,7 @@ def intro_button(g: dict) -> str:
 def card(g: dict, prefix: str = "", heading: str = "h3", link: bool = True) -> str:
     m = f"{prefix}media/guides/{g['id']}"
     name = f'<a href="{prefix}guides.html#{g["id"]}">{E(g["name"])}</a>' if link else E(g["name"])
-    hosts = " and ".join(film_link(f, prefix) for f in g["films"])
+    hosts = " and ".join(film_link(f, prefix) for f in live_films(g))
     return (f'<li class="gd-card" id="{g["id"] if not link else "gd-" + g["id"]}">'
             f'<span class="gd-frame" data-gd-loop="{m}/idle.mp4"><img src="{m}/still.jpg" width="960" height="540" alt="{E(g["alt"])}" loading="lazy" decoding="async"></span>'
             f'<div><{heading}>{name}, {E(g["title"])}</{heading}>'
