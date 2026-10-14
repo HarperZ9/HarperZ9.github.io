@@ -80,6 +80,39 @@ export function filterCounts(works) {
   return out;
 }
 
+// The archive page's own orderings (session-archive.js ORDERS), so a visitor who ordered the
+// corpus there finds it in the same order here. "By light" is one continuous gradient; the grouped
+// orderings put the page's bands in the page's order and sort inside each band the way it does.
+// A work's archive position is its place in the manifest.
+export const LIBRARY_ORDERS = Object.freeze([
+  { key: "archived", label: "As archived", group: null, sort: (a, b) => a.i - b.i },
+  { key: "spectrum", label: "By light", group: null, sort: (a, b) => a.w.lightness - b.w.lightness },
+  { key: "tone", label: "By tone", group: (w) => w.tone, order: ["dark", "mid", "luminous"],
+    sort: (a, b) => a.w.lightness - b.w.lightness },
+  { key: "colour", label: "By colour", group: (w) => w.family, order: ["monochrome", "warm", "cool"],
+    sort: (a, b) => b.w.chroma - a.w.chroma },
+  { key: "kind", label: "By kind", group: (w) => w.kind, order: ["single", "collage"], sort: (a, b) => a.i - b.i },
+]);
+
+/**
+ * orderWorks(works, key, all) → the works in that ordering. `all` is the whole catalogue in
+ * archive order (positions come from it, so a filtered list keeps each work's archive place).
+ */
+export function orderWorks(works, key, all = works) {
+  const spec = LIBRARY_ORDERS.find((o) => o.key === key) || LIBRARY_ORDERS[0];
+  const pos = new Map(all.map((w, i) => [w.id, i]));
+  const items = works.map((w) => ({ w, i: pos.has(w.id) ? pos.get(w.id) : Infinity })).sort(spec.sort);
+  if (!spec.group) return items.map((it) => it.w);
+  const buckets = new Map();
+  for (const it of items) {
+    const k = spec.group(it.w);
+    if (!buckets.has(k)) buckets.set(k, []);
+    buckets.get(k).push(it.w);
+  }
+  const keys = spec.order.filter((k) => buckets.has(k)).concat([...buckets.keys()].filter((k) => !spec.order.includes(k)));
+  return keys.flatMap((k) => buckets.get(k));
+}
+
 /** What the picker shows: position, title, and the two measurements the filters band on. */
 export function workLabel(work, position) {
   const n = position == null ? work.id.slice(1) : String(position).padStart(3, "0");
