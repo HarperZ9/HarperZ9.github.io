@@ -3,8 +3,9 @@
 // XY), with the same parameters, colours, fade and beat flash. The Canvas2D mode plots 800 to 2,600
 // points a frame, one fillRect each, so the figure builds up as speckle. Here 16,384 orbits each take
 // 64 steps a frame in a WGSL compute pass, about a million points, splatted bilinearly into a
-// density buffer. Each point carries the weight that keeps the expected brightness of the Canvas2D
-// mode, so the picture is the same figure at the same exposure, drawn without the speckle.
+// density buffer. Each point carries the Canvas2D mode's expected brightness times an exposure, and
+// a log tone map keeps the dense ribbon from flattening, so the picture is the same figure
+// drawn without the speckle.
 //
 // Fallback: without WebGPU, or if the host cannot start, reactive-visuals.js draws the Canvas2D mode
 // exactly as before.
@@ -14,10 +15,16 @@ const ORBITS = 16384;
 const STEPS = 64;
 const WG = 64;
 const Q = 16;   // fixed-point weight of a bilinear splat corner
-// Exposure over the Canvas2D mode's expected brightness. A million points spread the same exposure
-// evenly over the whole figure, where the Canvas2D mode piles it on the few rings it drew lately;
-// at 1 the lobes fall below the void. 6 was chosen by eye on the contact sheet (slices/c3).
-const EXPOSURE = 6;
+// Exposure over the Canvas2D mode's expected brightness, with a log tone map (in fs below). A
+// million points spread the exposure evenly over the whole figure, where the Canvas2D mode piles it
+// on the few rings it drew lately, so at 1 the lobes fall below the void. Chosen on 14 October 2026
+// from a contact sheet of eight curves and exposures at desktop and phone sizes: log at 20 keeps
+// both spiral eyes and the ribbon legible on both, clips nothing, and lands nearest the Canvas2D
+// figure's use of the palette. The coverage curve at 6, the first choice, washed the phone figure
+// into one flat wedge at 4.6 times the Canvas2D brightness.
+const EXPOSURE = 20;
+// Hits at which a pixel reaches full colour under the log tone map.
+const FULL = 256;
 
 // Uniforms, 16-byte rows:
 //  0 size.xy, scale.xy
@@ -116,8 +123,9 @@ struct VO { @builtin(position) p: vec4f, }
 @fragment fn fs(i: VO) -> @location(0) vec4f {
   let q = vec2u(floor(i.p.xy));
   let t = trailR[q.y * u32(u.size.x) + q.x];
-  // Coverage of n points at the Canvas2D mode's alpha each: 1 - (1 - alpha)^n.
-  let cov = 1.0 - pow(1.0 - u.alpha, t.w);
+  // Log tone map of n points at the Canvas2D mode's alpha each: dim regions lift, dense ones keep
+  // their gradation instead of flattening at full coverage.
+  let cov = clamp(log2(1.0 + u.alpha * t.w) / log2(1.0 + u.alpha * ${FULL}.0), 0.0, 1.0);
   // Colour by density along the mode's own palette: thin regions take its first hue, dense ones its
   // last. Averaging each point's hue instead would grey the figure out, since the hues cancel.
   let s = clamp(log2(1.0 + t.w) / 6.0, 0.0, 1.0);

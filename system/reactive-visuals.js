@@ -380,7 +380,7 @@ function ensureAttractorGpu() {
   if (_attrGpuState !== "idle") return;
   if (typeof window === "undefined" || attractorPinnedCpu()) { _attrGpuState = "cpu"; return; }
   _attrGpuState = "loading";
-  import("./attractor-gpu.js?v=20261010-attractor-gpu")
+  import("./attractor-gpu.js?v=20261014-attractor-gpu")
     .then((m) => m.createAttractorGPU())
     .then((d) => { _attrGpu = d; _attrGpuState = d ? "active" : "cpu"; })
     .catch((e) => { console.error("[music] the attractor on raw-native failed to start:", e); _attrGpuState = "cpu"; });
