@@ -7,7 +7,9 @@ in this repository). Each sentence is generated alone with a seed derived from i
 film, trimmed of edge silence, levelled, and transcribed by faster-whisper on the CPU. A take is
 kept when its transcript matches the script (ratio at or above ACCEPT); otherwise it is redone with
 the next seed, up to TRIES times, and the closest take is kept and flagged. Takes are joined with
-fixed pauses and the join is brought to -16 LUFS by tools/explainer/loudness.py. Writes
+the pauses of tools/explainer/film/layout.py (sentence, line and segment gaps, the host's cold open
+and close, spoken prediction questions with their held silence, picture holds) and the join is
+brought to -16 LUFS by tools/explainer/loudness.py. Writes
 narration.wav, timing.json (one row per sentence) and narration.json (how it was made).
 """
 
@@ -25,7 +27,7 @@ from pathlib import Path
 import numpy as np
 
 ACCEPT, TRIES = 0.92, 5
-HEAD, GAP_SENTENCE, GAP_LINE, GAP_SEGMENT = 0.6, 0.32, 0.6, 1.2
+from tools.explainer.film.layout import GAP_LINE, GAP_SEGMENT, GAP_SENTENCE, HEAD, plan, sentences  # noqa: F401  (re-exported)
 SETTINGS = {"dtype": "bfloat16", "attn_implementation": "sdpa", "do_sample": True, "temperature": 0.9, "top_k": 50,
             "top_p": 1.0, "repetition_penalty": 1.05, "subtalker_temperature": 0.9, "subtalker_top_k": 50,
             "language": "Auto", "speaker": "author", "mode": "custom_voice"}
@@ -69,10 +71,6 @@ def norm(text: str) -> list[str]:
 
 def ratio(script: str, heard: str) -> float:
     return difflib.SequenceMatcher(a=norm(script), b=norm(heard), autojunk=False).ratio()
-
-
-def sentences(line: str) -> list[str]:
-    return [s for s in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9])", line.strip()) if s]
 
 
 def seed_of(tag: str) -> int:
@@ -195,28 +193,34 @@ def load_models(model_dir: Path, asr_name: str, device: str):
 
 
 def speak(film: dict, model, asr, out: Path):
-    """Every sentence in order, with the pauses between them; returns the parts, timing rows and rate."""
-    parts, rows, t, sr = [], [], HEAD, None
-    for i, seg in enumerate(film["segments"]):
-        for j, line in enumerate(seg["lines"]):
-            said = sentences(line)
-            for k, text in enumerate(said):
-                print(f"[{i}.{j}.{k}] {text}", flush=True)
-                x, row, sr = cached_take(out / "takes", f"{i}.{j}.{k}", text,
-                                         lambda: take(model, asr, text, f"{film['slug']}/{i}/{j}/{k}"))
-                x = level(x, sr)
-                if not parts:
-                    parts.append(np.zeros(int(HEAD * sr)))
-                parts.append(x)
-                rows.append({"segment": i, "line": j, "sentence": k, "start": round(t, 3),
-                             "end": round(t + len(x) / sr, 3), "text": text, **row,
-                             "accepted": row["ratio"] >= ACCEPT and row["pace_ok"]})
-                t += len(x) / sr
-                last_l = j == len(seg["lines"]) - 1
-                gap = GAP_SENTENCE if k < len(said) - 1 else GAP_SEGMENT if last_l else GAP_LINE
-                parts.append(np.zeros(int(gap * sr)))
-                t += int(gap * sr) / sr
+    """Every sentence and predict question in order, with the pauses and holds of layout.plan();
+    returns the parts, timing rows and rate. A predict question's row carries "predict" (its index
+    in the segment) in place of "line" and "sentence", so the scenes' sentence cues do not shift."""
+    events = plan(film)
+    first = next(e for e in events if e["kind"] in ("say", "ask"))
+    _, _, sr = cached_take(out / "takes", tag_of(first), first["text"], lambda: take(model, asr, first["text"], f"{film['slug']}/{tag_of(first)}"))
+    parts, rows, t = [], [], 0.0
+    for e in events:
+        if e["kind"] == "silence":
+            n = int(e["seconds"] * sr)
+            parts.append(np.zeros(n))
+            t += n / sr
+            continue
+        tag = tag_of(e)
+        print(f"[{tag}] {e['text']}", flush=True)
+        x, row, sr = cached_take(out / "takes", tag, e["text"], lambda: take(model, asr, e["text"], f"{film['slug']}/{tag.replace('.', '/')}"))
+        x = level(x, sr)
+        parts.append(x)
+        where = {"segment": e["segment"], "line": e["line"], "sentence": e["sentence"]} if e["kind"] == "say" else {"segment": e["segment"], "predict": e["predict"]}
+        rows.append({**where, "start": round(t, 3), "end": round(t + len(x) / sr, 3), "text": e["text"], **row,
+                     "accepted": row["ratio"] >= ACCEPT and row["pace_ok"]})
+        t += len(x) / sr
     return parts, rows, sr
+
+
+def tag_of(e: dict) -> str:
+    """The take's cache name: segment.line.sentence for a sentence (as before), segment.pN for a question."""
+    return f"{e['segment']}.{e['line']}.{e['sentence']}" if e["kind"] == "say" else f"{e['segment']}.p{e['predict']}"
 
 
 def write_wav(path: Path, parts: list, sr: int) -> dict:

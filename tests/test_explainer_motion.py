@@ -12,7 +12,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.scene.mjs"))
+# Draft films (film.json "draft": true) are checked by tests/test_explainer_film_drafts.py.
+FILMS = sorted(p.parent for p in (ROOT / "media" / "explainers").glob("*/film.scene.mjs")
+               if not json.loads((p.parent / "film.json").read_text(encoding="utf-8")).get("draft"))
 PAGE = (ROOT / "explainers.html").read_text(encoding="utf-8")
 IMPORT = re.compile(r'"(?:\.\./)+raw-native/(web-[0-9a-f]{7})/motion/[a-z-]+\.mjs"')
 

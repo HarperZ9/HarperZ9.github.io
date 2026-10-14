@@ -1,0 +1,117 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "brender-frame",
+  "read": "2026-10-10",
+  "sources": {
+    "brender-readme": {
+      "short": "brender-archival README",
+      "citation": "HarperZ9/brender-archival README.md, main 5e02174.",
+      "url": "https://github.com/HarperZ9/brender-archival",
+      "read": "full",
+      "claims": [
+        "The period ladder: 21/21 native CTest targets pass, Visual Studio Win32 Debug, verified 27 August 2026.",
+        "The period-pipeline rung compiles softrend and pentprim from upstream and renders dat/sph32.dat as an eight-frame nonblack orbit, final_frame_lit=19284.",
+        "The experimental textured path executes but its output is black; completed textured rendering is not claimed.",
+        "The 21-step ladder passes against BRender 1.4, 64-bit.",
+        "The rung table names 21 rungs, among them Multi-part assembly: BrModelLoadMany composites the 12-part coupe (claim added 14 October 2026 by the scene-code agent from the same README, pending the author's review)."
+      ],
+      "n": "21 rungs",
+      "interval": "Not applicable.",
+      "quote": "does not claim completed textured rendering",
+      "does_not_prove": "x64 or production readiness of the 1998 code; the filling, depth, Gouraud and texture rungs prove the portable C path, not BRender's 1998 assembly path."
+    },
+    "brender-modern": {
+      "short": "brender-archival modern/README.md",
+      "citation": "HarperZ9/brender-archival modern/README.md, main 5e02174.",
+      "url": "https://github.com/HarperZ9/brender-archival/blob/main/modern/README.md",
+      "read": "full",
+      "claims": [
+        "ladder64 runs the same 21 programs against BRender 1.4, 64-bit: 21 of 21 pass on 10 October 2026 (Visual Studio 18 2026, SDL3 3.4.16, BlazingRenderer ed5e7a91); CI runs it on every change.",
+        "Two documented differences are bridged: BR_COLOUR_RGB's alpha byte, and a 1.4 renderer step that demands over 500 lit and over 500 coloured pixels."
+      ],
+      "n": "21 programs",
+      "interval": "Not applicable.",
+      "quote": "21 of 21 pass",
+      "does_not_prove": "Anything beyond the ladder's 21 programs."
+    },
+    "blazing": {
+      "short": "BlazingRenderer/BRender",
+      "citation": "BlazingRenderer/BRender README: Blazing Renderer (BRender) 1.4.0, an updated, modernized fork of BRender; MIT; copyright Argonaut 1992-1998, Zane van Iperen 2014-2026, erysdren 2022-2025.",
+      "url": "https://github.com/BlazingRenderer/BRender",
+      "read": "full",
+      "claims": [
+        "BRender 1.4.0 is an updated, modernized fork with OpenGL and SDL drivers and a portable software backend, MIT."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "an updated, modernized fork of BRender",
+      "does_not_prove": "Endorsement of this film or of brender-archival."
+    },
+    "foone": {
+      "short": "foone/BRender-v1.3.2",
+      "citation": "foone/BRender-v1.3.2 README: BRender 1.3.2, code from approximately 1998/11/17, MIT, copyright 1998 Argonaut Software Limited; released by Foone Turing and Scott Hanselman; Jez San approved the release.",
+      "url": "https://github.com/foone/BRender-v1.3.2",
+      "read": "full",
+      "claims": [
+        "The published source is version 1.3.2, from about November 1998, under MIT, with the approval of Argonaut's former CEO Jez San."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "from approximately 1998/11/17",
+      "does_not_prove": "The date of the approval, which the README does not give."
+    },
+    "brender-wiki": {
+      "short": "Wikipedia, BRender",
+      "citation": "Wikipedia contributors. BRender. Read 10 October 2026.",
+      "url": "https://en.wikipedia.org/wiki/BRender",
+      "read": "secondary",
+      "claims": [
+        "Developed and licensed by Argonaut Software; games include Carmageddon and Croc: Legend of the Gobbos; source released under MIT on 3 May 2022."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Which BRender version each game shipped with; the game list was not checked against game credits."
+    },
+    "gouraud1971": {
+      "short": "Gouraud 1971, IEEE Transactions on Computers",
+      "citation": "Gouraud, H. (1971). Continuous Shading of Curved Surfaces. IEEE Transactions on Computers C-20(6), 623-629. doi:10.1109/T-C.1971.223313. Method summary read through Wikipedia, Gouraud shading.",
+      "url": "https://doi.org/10.1109/T-C.1971.223313",
+      "read": "metadata, plus secondary summary",
+      "claims": [
+        "Lighting is computed at the vertices, from normals averaged over the faces that meet there, and interpolated across the face."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "Gouraud's own formulation; the paper itself was not read."
+    },
+    "hecker1995": {
+      "short": "Hecker 1995-96, Perspective Texture Mapping",
+      "citation": "Hecker, C. (1995-1996). Perspective Texture Mapping, parts I to V. Game Developer magazine. Parts I, II and IV read.",
+      "url": "https://www.chrishecker.com/Miscellaneous_Technical_Articles",
+      "read": "full (parts I, II, IV)",
+      "claims": [
+        "A perspective-correct inner loop does a divide and two multiplies per pixel; removing the divide made the mapper seven times faster in the author's test, and the result looks wrong."
+      ],
+      "n": "one test on the author's machine",
+      "interval": "None.",
+      "quote": "seven times faster in my test",
+      "does_not_prove": "The speedup on other CPUs, or what BRender itself did. The PDFs are for personal reading only: cite and link, do not show the pages."
+    },
+    "rosewood-texel": {
+      "short": "BRender 1.3.2 dat/rosewood.pix and dat/std.pal",
+      "citation": "foone/BRender-v1.3.2 at d88d0ed, dat/rosewood.pix (sha256 6a82c629c2958d38775b4b673e7f15814a688149a9a548225192a71933695ffa) and dat/std.pal (sha256 ab8b5a477e900144b56f2c9c3c14882230c10a2733ea547a08414183307df40d), looked up as HarperZ9/brender-archival modern/viewer/brview_scenes.c load_texture does. Read 14 October 2026 for shot 5.4.",
+      "url": "https://github.com/foone/BRender-v1.3.2/tree/master/dat",
+      "read": "full (both files parsed)",
+      "claims": [
+        "rosewood.pix is a 256 x 256 INDEX_8 pixelmap with no palette of its own, so load_texture falls back to std.pal, which holds 256 entries.",
+        "The centre texel (128, 128) holds index 170; std.pal entry 170 is RGB 99, 24, 24."
+      ],
+      "n": "one texel",
+      "interval": "Not applicable.",
+      "quote": "",
+      "does_not_prove": "What any game drew with this texture; the lookup was read by a small parser that follows load_texture, not by running brview. Added by the scene-code agent on 14 October 2026, pending the author's review."
+    }
+  }
+}

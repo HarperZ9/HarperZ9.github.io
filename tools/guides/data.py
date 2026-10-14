@@ -12,7 +12,7 @@ GUIDES = [
         "role": "His head is a candle, and the wax is the time he has: every claim he checks burns a little of it.",
         "habit": "Before he looks, he asks what you think. Then you find the source together.",
         "home": "A dark claims office, lit only by his flame.",
-        "films": ["checking-cost", "visible-reasoning"],
+        "films": ["checking-cost", "visible-reasoning", "brender-frame"],
         "alt": "Tallow, a tall clerk whose head is a lit candle, holds a reference card up to his flame in a dark office.",
         "close_alt": "Tallow's face: one eye in the wax under the flame.",
     },
@@ -43,6 +43,7 @@ FILM_TITLES = {
     "incentives": "Models do what training pays for",
     "visible-reasoning": "What a model's written reasoning can and cannot show",
     "release-media": "the films from the latest releases",
+    "brender-frame": "How a 1998 engine drew a frame",
 }
 
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "
@@ -60,6 +61,23 @@ INTRO_VOICES = {
     "pylon": "character voice, round 7, setting S",
     "rerun": "character voice, round 11, setting V8",
 }
+
+
+# Films a guide hosts whose scene code is in review and which no page shows yet: their film.json
+# says "draft": true (tests/test_explainer_film_drafts.py). Pages and the home page leave them out
+# until the film ships, which is when the flag comes off.
+def _drafts() -> set[str]:
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2] / "media" / "explainers"
+    return {p.parent.name for p in root.glob("*/film.json") if json.loads(p.read_text(encoding="utf-8")).get("draft")}
+
+
+DRAFTS = _drafts()
+
+
+def live_films(g: dict) -> list[str]:
+    return [f for f in g["films"] if f not in DRAFTS]
 
 
 def by_film(slug: str) -> dict:
