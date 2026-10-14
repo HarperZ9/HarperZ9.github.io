@@ -3,7 +3,7 @@
 import { RULES, OSC, makeField, rerun, summarize } from "./rederive.mjs";
 import { frame, runLength } from "./rederive-view.mjs";
 import { el, loadAtlas, backend, fitCanvas } from "./stage.mjs";
-import { pylonTextures } from "../../media/raw-native/tree-dev/templates/guides/pylon.mjs";
+import { pylonTextures } from "../../media/raw-native/tree-c6b114d/templates/guides/pylon.mjs";
 
 export async function mount(box, { force2d = false, seed = 11 } = {}) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;

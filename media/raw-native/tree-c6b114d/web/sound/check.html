@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sound live check</title>
+<body style="background:#060608;color:#ebe5d8;font:14px monospace">
+<pre id="out">running</pre>
+<script type="module">
+// Renders a resolved sheet through the AudioWorklet in an OfflineAudioContext and
+// reconciles its s16 PCM with the offline reference WAV (superstack PCM tolerance).
+// ?sheet=URL&narration=URL&ref=URL[&seconds=S&start=S]
+import * as ss from "../../third_party/superstack/superstack.mjs";
+import { renderInBrowser, loadNarration } from "./live.mjs";
+import { readWav, interleaveS16 } from "./sheet.mjs";
+const q = new URLSearchParams(location.search), out = document.getElementById("out");
+try {
+  const sheet = await (await fetch(q.get("sheet"))).json();
+  const narration = await loadNarration(q.get("narration"));
+  const start = Number(q.get("start") || 0), seconds = Number(q.get("seconds") || sheet.duration_samples / sheet.rate);
+  const t0 = performance.now();
+  const [L, R] = await renderInBrowser({ sheet, narration, seconds, start });
+  const ms = performance.now() - t0;
+  const ref = readWav(new Uint8Array(await (await fetch(q.get("ref"))).arrayBuffer())).channels;
+  const a = Math.round(start * sheet.rate), n = L.length;
+  // The reference WAV is s16: rebuild exact floats from it (v/32768) and requantize both the same way.
+  const s16 = (x) => Math.round(x * 32768) / 32767;
+  const refLR = [Float64Array.from(ref[0].subarray(a, a + n), s16), Float64Array.from(ref[1].subarray(a, a + n), s16)];
+  const rec = ss.reconcilePcmS16(interleaveS16(refLR), interleaveS16([L, R]));
+  window.result = { ms, frames: n, start, ua: navigator.userAgent, ...rec };
+  out.textContent = JSON.stringify(window.result, null, 1);
+} catch (e) { window.result = { error: String(e && e.stack || e) }; out.textContent = window.result.error; }
+</script>

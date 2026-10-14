@@ -2,11 +2,11 @@
 // a marked shell for the planted failure. During a run he knocks each shell in turn: a caught
 // break rings solid, a missed one rings hollow. Two bars above compare what ran with what was
 // caught. A Motion frame list, pure in (view state, time), drawn by WebGPU or Canvas 2D.
-import { pose } from "../../media/raw-native/tree-dev/templates/guides/rig.mjs";
-import { GUIDES } from "../../media/raw-native/tree-dev/templates/guides/guides.mjs";
-import { clipBeat } from "../../media/raw-native/tree-dev/templates/guides/motion.mjs";
-import { rect, circle } from "../../media/raw-native/tree-dev/web/motion/path.mjs";
-import { text } from "../../media/raw-native/tree-dev/web/motion/text.mjs";
+import { pose } from "../../media/raw-native/tree-c6b114d/templates/guides/rig.mjs";
+import { GUIDES } from "../../media/raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { clipBeat } from "../../media/raw-native/tree-c6b114d/templates/guides/motion.mjs";
+import { rect, circle } from "../../media/raw-native/tree-c6b114d/web/motion/path.mjs";
+import { text } from "../../media/raw-native/tree-c6b114d/web/motion/text.mjs";
 
 export const INK = "#ece5d6", DIM = "#958e80", OK = "#63d4ce", HOT = "#e29472";
 const R = GUIDES.rerun, STEP = 1.6, Y = 860, X0 = 470, DX = 190;

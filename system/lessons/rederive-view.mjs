@@ -1,12 +1,12 @@
 // "Run it again", drawn: Pylon at the harbour with one boat per published study, each under a
 // cone until it is run again. On the right, every published effect and its repeat on one axis,
 // with both means. A Motion frame list, pure in (view state, time).
-import { pose, P } from "../../media/raw-native/tree-dev/templates/guides/rig.mjs";
-import { GUIDES } from "../../media/raw-native/tree-dev/templates/guides/guides.mjs";
-import { coneParts } from "../../media/raw-native/tree-dev/templates/guides/pylon.mjs";
-import { clipBeat } from "../../media/raw-native/tree-dev/templates/guides/motion.mjs";
-import { rect, circle, line } from "../../media/raw-native/tree-dev/web/motion/path.mjs";
-import { text } from "../../media/raw-native/tree-dev/web/motion/text.mjs";
+import { pose, P } from "../../media/raw-native/tree-c6b114d/templates/guides/rig.mjs";
+import { GUIDES } from "../../media/raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { coneParts } from "../../media/raw-native/tree-c6b114d/templates/guides/pylon.mjs";
+import { clipBeat } from "../../media/raw-native/tree-c6b114d/templates/guides/motion.mjs";
+import { rect, circle, line } from "../../media/raw-native/tree-c6b114d/web/motion/path.mjs";
+import { text } from "../../media/raw-native/tree-c6b114d/web/motion/text.mjs";
 
 export const INK = "#ece5d6", DIM = "#958e80", OK = "#63d4ce", HOT = "#e29472", UNV = "#b3b1e6";
 const G = GUIDES.pylon, EACH = 0.22, AX = { x0: 1040, x1: 1840, lo: -0.4, hi: 1.4 };

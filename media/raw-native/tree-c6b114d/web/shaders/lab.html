@@ -1,0 +1,158 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>raw-native shader lab</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --ink: #e9e6df; --ground: #0e0e0f; --dim: #8a877f; --rule: #2a2a2c; --mark: #e8a35a; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 14px/1.45 "Hanken Grotesk", system-ui, sans-serif; }
+  main { max-width: 1280px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 20px; font-weight: 600; margin: 4px 0 2px; }
+  p.lede, p.note { color: var(--dim); margin: 0 0 14px; max-width: 76ch; }
+  p.note { margin: 10px 0 0; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; padding: 10px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  label { display: inline-flex; gap: 6px; align-items: center; color: var(--dim); }
+  select, input { accent-color: var(--mark); }
+  [hidden] { display: none !important; }
+  canvas { display: block; width: 100%; height: auto; margin-top: 12px; background: #000; }
+  .legend { display: flex; justify-content: space-between; color: var(--dim); font-size: 12px; margin-top: 4px; }
+  .stats { font: 12px/1.4 "Conso", ui-monospace, monospace; color: var(--dim); margin-top: 8px; white-space: pre-wrap; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tabs button { background: none; color: var(--dim); border: 1px solid var(--rule); padding: 6px 12px; font: inherit; cursor: pointer; }
+  .tabs button[aria-pressed="true"] { color: var(--ink); border-color: var(--mark); }
+</style>
+<main>
+  <h1>raw-native shader lab</h1>
+  <p class="lede">Lab techniques, each simulated from a physical or perceptual mechanism on the GPU and matched to a CPU reference. Left of the line: the conventional result. Right: the technique. Drag the slider to move the line.</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="bar">
+    <label>Preset <select id="preset"></select></label>
+    <label id="k1-l"><span id="k1-n"></span> <input id="k1" type="range"></label>
+    <label id="anim-l"><input id="anim" type="checkbox" checked> Animate</label>
+    <label>Split <input id="split" type="range" min="0" max="1" step="0.01" value="0.5"></label>
+  </div>
+  <canvas id="c" width="960" height="600"></canvas>
+  <div class="legend"><span id="left-l"></span><span id="right-l"></span></div>
+  <p class="note" id="note"></p>
+  <div class="stats" id="stats">Starting the GPU</div>
+</main>
+<script type="module">
+import { createHost, HostUnavailable } from "../raw-gpu.mjs";
+import { Access } from "../frame-graph.mjs";
+import { streetScene } from "./fixtures/street.mjs";
+import { gameFrame } from "./fixtures/game.mjs";
+import { labEncode8 } from "./lab/gpu-kit.mjs";
+import { createSplit, uploadBytes } from "./lab/split.mjs";
+import { toSignal } from "./lab/sources.mjs";
+import { ADJ_PRESETS } from "./adjacency/adjacency.mjs";
+import { createGpuAdjacency } from "./adjacency/gpu.mjs";
+import { SAG_PRESETS, signal8 } from "./sag/sag.mjs";
+import { createGpuSag } from "./sag/gpu.mjs";
+import { LP_PRESETS } from "./lightpaint/lightpaint.mjs";
+import { createGpuLightpaint } from "./lightpaint/gpu.mjs";
+import { GLAZE_PRESETS } from "./glaze/glaze.mjs";
+import { createGpuGlaze } from "./glaze/gpu.mjs";
+import { HYST_PRESETS } from "./hysteresis/hysteresis.mjs";
+import { createGpuHysteresis } from "./hysteresis/gpu.mjs";
+import { PURITY_PRESETS, displayEncode8 } from "./purity/purity.mjs";
+import { createGpuPurity } from "./purity/gpu.mjs";
+import { FIBRE_PRESETS } from "./fibre/fibre.mjs";
+import { createGpuFibre } from "./fibre/gpu.mjs";
+import { HATCH_PRESETS } from "./hatch/hatch.mjs";
+import { createGpuHatch } from "./hatch/gpu.mjs";
+import { CARI_PRESETS } from "./caricature/caricature.mjs";
+import { createGpuCaricature } from "./caricature/gpu.mjs";
+import { displayLinear } from "./lab/sources.mjs";
+
+const $ = (id) => document.getElementById(id), canvas = $("c"), stats = $("stats");
+const W = 480, H = 300;
+// Each look: presets, one control, the labels of the two halves, and a note.
+const LOOKS = {
+  adjacency: { name: "Development adjacency", presets: ADJ_PRESETS, k: ["Exposure", 0.25, 4, 0.05, 1], left: "scene", right: "developed", note: "Developer runs out where the negative is dense and bromide holds development back. Bright edges overshoot, dark rims form beside them, small highlights develop harder than large ones." },
+  sag: { name: "Scan-causal EHT sag", presets: SAG_PRESETS, k: ["Flash", 0, 1, 0.01, 0.7], left: "signal", right: "tube supply sagging", note: "Bright lines pull the tube's high voltage down while the beam draws them, so the raster below them widens and softens. Lines above a flash never move." },
+  lightpaint: { name: "Pigment-space lighting", presets: LP_PRESETS, key: "strength", k: ["Strength", 0, 1, 0.01, -1], left: "RGB multiply", right: "pigment mixing", note: "Shadow and light are mixed into each surface's paint by Kubelka-Munk, as on a palette: yellow in shadow goes olive, red goes maroon. Value still comes from the light." },
+  glaze: { name: "Interference glazes", presets: GLAZE_PRESETS, key: "coverage", k: ["Coverage", 0, 1, 0.01, -1], left: "body paint", right: "with pearlescent flakes", note: "Thin-film flakes over the paint: colour that slides with the viewing angle, strongest over dark grounds such as the puddle." },
+  purity: { name: "CRT purity and degauss", presets: PURITY_PRESETS, k: ["Degauss every (s)", 1, 4, 0.1, 2], left: "signal", right: "stray field on the mask", note: "A magnetised mask or the earth's field bends the beams onto the wrong phosphor stripes: colour patches. Degauss rings the field down at the mains frequency, line by line." },
+  fibre: { name: "Fibre watercolour", presets: FIBRE_PRESETS, key: "edgeDry", k: ["Edge dryness", 0, 12, 0.5, -1], left: "picture", right: "washed on fibre paper", note: "Pigment travels along the paper's fibres and settles where they cross. Wet areas bleed; the picture's strong edges stay dry and crisp." },
+  hatch: { name: "Curvature hatching", presets: HATCH_PRESETS, key: "freq", k: ["Lines per metre", 10, 60, 1, -1], left: "paper, no lines", right: "hatched along the bend", note: "Lines follow each surface's strongest bend, read from the distance field's Hessian. Spheres and the floor have no single bend, so they take planar slices." },
+  caricature: { name: "Caricature warp", presets: CARI_PRESETS, key: "gain", k: ["Strength", 0, 1, 0.01, -1], left: "street", right: "swollen by salience", note: "The head, hat and lamp swell and the street gives way. The map cannot fold: its strength is clamped by the largest bend of the salience field." },
+  hysteresis: { name: "Hysteresis quantisation", presets: HYST_PRESETS, k: ["Flicker", 0, 0.3, 0.005, 0.08], left: "plain bands", right: "bands with memory", note: "The lamp flickers. Plain posterisation boils at every band edge; decisions with memory hold still and still follow real changes after 0.2 s." },
+};
+let mode = "adjacency", host, street = null, run = null, frame = 0, dirty = true, building = false, present = null, split = null, offBuf = null;
+for (const [k, v] of Object.entries(LOOKS)) { const b = document.createElement("button"); b.textContent = v.name; b.id = "t-" + k; b.setAttribute("aria-pressed", k === mode); b.onclick = () => select(k); $("tabs").append(b); }
+
+function select(k) {
+  mode = k; const L = LOOKS[k];
+  for (const kk of Object.keys(LOOKS)) $("t-" + kk).setAttribute("aria-pressed", kk === k);
+  $("preset").innerHTML = ""; for (const p of Object.keys(L.presets)) $("preset").add(new Option(p, p));
+  const [n, lo, hi, st, def] = L.k; $("k1-n").textContent = n; Object.assign($("k1"), { min: lo, max: hi, step: st });
+  const pp = L.presets[$("preset").value];
+  $("k1").value = def >= 0 ? def : pp[L.key];
+  $("left-l").textContent = L.left; $("right-l").textContent = L.right; $("note").textContent = L.note; dirty = true;
+}
+async function presenter(buf) {
+  await host.presenter();
+  const g = host.graph(), b = g.importBuffer("packed", buf), c = g.createHost("canvas");
+  g.addPass("present", [[b, Access.StorageRead], [c, Access.Attachment]], (ctx) => ctx.presentFrame(buf, W, H));
+  g.markOutput(c); g.compile();
+  return () => host.frame(g);
+}
+const scaled = (arr, g) => { const o = new Float32Array(arr.length); for (let i = 0; i < arr.length; i++) o[i] = (i & 3) === 3 ? arr[i] : arr[i] * g; return o; };
+const flicker = (t, a) => 1 + a * Math.sin(t * 17) * Math.sin(t * 5.3);
+const flash = (t) => { const u = t % 3.2; return u < 0.08 ? 1 : u < 0.2 ? 0.25 : u > 1.6 && u < 1.66 ? 0.7 : 0; };
+
+async function rebuild() {
+  building = true; dirty = false;
+  // The look is captured once: a tab click during an await below must not mix one look's preset
+  // with another's builder (it did: "p.paper is not iterable"); the click sets dirty and rebuilds.
+  const m = mode;
+  if (run) for (const r of [].concat(run)) r.destroy();
+  if (!street) { stats.textContent = "Rendering the street on the CPU (a few seconds)"; await new Promise((r) => setTimeout(r, 30)); street = streetScene(W, H, 0); street.signal = toSignal(street); }
+  const L0 = LOOKS[m], preset = L0.presets[$("preset").value] ? $("preset").value : Object.keys(L0.presets)[0], k = +$("k1").value, size = { w: W, h: H };
+  canvas.width = W; canvas.height = H;
+  if (!split) { split = await createSplit(host, size); offBuf = host.buffer({ size: 4 * W * H, usage: ["storage", "copy-dst"], label: "lab off" }); }
+  if (m === "adjacency") { run = await createGpuAdjacency(host, preset, { exposure: k }, size); run.upload(street.data); uploadBytes(host, offBuf, labEncode8(street)); }
+  else if (m === "sag") run = await createGpuSag(host, preset, {}, size);
+  else if (m === "lightpaint") { run = await createGpuLightpaint(host, preset, { strength: k }, size); uploadBytes(host, offBuf, labEncode8(street)); }
+  else if (m === "glaze") { run = await createGpuGlaze(host, preset, { coverage: k }, size); uploadBytes(host, offBuf, labEncode8(street)); }
+  else if (m === "purity") { run = await createGpuPurity(host, preset, {}, size); run.disp = displayLinear("street", W, H); run.upload(run.disp.data); uploadBytes(host, offBuf, displayEncode8(run.disp)); }
+  else if (m === "fibre") { const d = displayLinear("street", W, H); run = await createGpuFibre(host, preset, { edgeDry: k }, size); run.upload(d.data); uploadBytes(host, offBuf, displayEncode8(d)); }
+  else if (m === "hatch") { run = await createGpuHatch(host, preset, { freq: k }, size); const off = await createGpuHatch(host, preset, { freq: k, width: 0 }, size); off.frame(); const bytes = (await off.read()).packed; off.destroy(); uploadBytes(host, offBuf, bytes); }
+  else if (m === "caricature") { run = await createGpuCaricature(host, preset, { gain: k }, size); run.upload(street.data, street.mat); uploadBytes(host, offBuf, labEncode8(street)); }
+  else run = [await createGpuHysteresis(host, preset, {}, size, { hysteresis: false }), await createGpuHysteresis(host, preset, {}, size)];
+  present = await presenter(split.packed);
+  building = false;
+}
+function tick() {
+  if (dirty && !building) {
+    rebuild().then(() => requestAnimationFrame(tick), (e) => { building = false; run = null; stats.textContent = `Could not build ${mode} (preset ${$("preset").value}): ${e.message}`; console.error("lab rebuild failed", mode, $("preset").value, e); requestAnimationFrame(tick); });
+    return;
+  }
+  if (run && !building) {
+    const t = frame / 30, anim = $("anim").checked, k = +$("k1").value, at = +$("split").value;
+    if (mode === "adjacency") { if (!run.done) { run.frame(null); run.done = true; } split.run(offBuf, run.packed, at); }
+    else if (mode === "sag") {
+      const g = anim ? 1 + 3 * k * flash(t) : 1, s = scaled(street.signal.data, g); for (let i = 0; i < s.length; i++) if (s[i] > 1) s[i] = 1;
+      uploadBytes(host, offBuf, signal8({ width: W, height: H, data: s })); run.frame(s); split.run(offBuf, run.packed, at);
+    } else if (mode === "lightpaint" || mode === "glaze") {
+      const g = anim ? flicker(t, 0.25) : 1; run.frame({ ...street, light: scaled(street.light, g) });
+      if (anim) uploadBytes(host, offBuf, labEncode8({ width: W, height: H, data: scaled(street.data, g) }));
+      split.run(offBuf, run.packed, at);
+    } else if (mode === "purity") { run.frame(null, anim ? t % k : 0.4); split.run(offBuf, run.packed, at); }
+    else if (mode === "fibre" || mode === "hatch" || mode === "caricature") { if (!run.done) { run.frame(); run.done = true; } split.run(offBuf, run.packed, at); }
+    else {
+      const g = anim ? flicker(t, k) : 1, s = scaled(street.data, g);
+      for (const r of run) r.frame(s, null, street.depth);
+      split.run(run[0].packed, run[1].packed, at);
+    }
+    present(); frame++;
+    if (frame % 30 === 0) stats.textContent = `${LOOKS[mode].name}, ${W} x ${H}, frame ${frame}. GPU times: tests/web/lab2_timing.py.`;
+  }
+  requestAnimationFrame(tick);
+}
+$("k1").addEventListener("change", () => { dirty = true; });
+$("preset").addEventListener("change", () => { const L = LOOKS[mode], p = L.presets[$("preset").value]; if (L.k[4] < 0) $("k1").value = p[L.key]; dirty = true; });
+select(mode);
+try { host = await createHost({ canvas, timing: false }); window.__labReady = true; requestAnimationFrame(tick); }
+catch (e) { stats.textContent = e instanceof HostUnavailable ? "This browser has no WebGPU, so the live shaders cannot run here." : String(e); console.error("lab failed to start", e); }
+</script>
