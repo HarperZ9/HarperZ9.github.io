@@ -12,7 +12,8 @@ export const el = (tag, attrs = {}, kids = []) => {
 
 export const loadAtlas = async () => ({ atlas: await (await fetch(new URL("docs/motion/hanken-grotesk-500.atlas.json", ENGINE))).json() });
 
-export async function backend(canvas, A, { reduced = false, force2d = false, title = "demo" } = {}) {
+// images: name -> { width, height, data (RGBA8) }, for image paints (a guide's textures).
+export async function backend(canvas, A, { reduced = false, force2d = false, title = "demo", images = {} } = {}) {
   if (!force2d && navigator.gpu) {
     try {
       const { createEngine } = await import(new URL("web/motion/engine.mjs", ENGINE).href);
@@ -20,12 +21,19 @@ export async function backend(canvas, A, { reduced = false, force2d = false, tit
       let current = null;
       const scene = { title, duration: 1e9, fps: 30, async load() { return A; }, frame: () => current };
       const eng = await createEngine({ canvas, scene, sceneUrl: import.meta.url, timing: false, reduced });
+      for (const [name, im] of Object.entries(images)) eng.motion.image(name, im);
       return { kind: "webgpu", async draw(list, i) { current = list; const l = eng.list(0); await eng.motion.prepare(l); eng.motion.draw(l, { frame: i, time: i / 30 }); }, resize: (w, h) => eng.resize(w, h) };
     } catch (e) { console.warn(`${title}: WebGPU unavailable, drawing with Canvas 2D:`, e); }
   }
   const { drawFrame } = await import(new URL("web/motion/canvas2d.mjs", ENGINE).href);
-  const g = canvas.getContext("2d");
-  return { kind: "canvas2d", async draw(list) { drawFrame(g, list, { width: canvas.width, height: canvas.height }); }, resize: (w, h) => { canvas.width = w; canvas.height = h; } };
+  const g = canvas.getContext("2d"), pics = {};
+  for (const [name, im] of Object.entries(images)) {
+    const c = document.createElement("canvas");
+    c.width = im.width; c.height = im.height;
+    c.getContext("2d").putImageData(new ImageData(new Uint8ClampedArray(im.data), im.width, im.height), 0, 0);
+    pics[name] = c;
+  }
+  return { kind: "canvas2d", async draw(list) { drawFrame(g, list, { width: canvas.width, height: canvas.height, images: pics }); }, resize: (w, h) => { canvas.width = w; canvas.height = h; } };
 }
 
 // Keep the canvas's pixels matched to its laid-out width (16:9), up to 1920 wide.

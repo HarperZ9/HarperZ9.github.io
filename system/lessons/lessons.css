@@ -35,3 +35,7 @@
 .pc-test input{width:1.2rem;height:1.2rem;margin-top:.15rem}
 #pc-guess{font:inherit;width:4rem;min-height:44px;padding:.3rem .5rem;margin:0 .6rem 0 .3rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
 @media (max-width:640px){.pc-grid{grid-template-columns:1fr}}
+/* Run it again. */
+.rd-row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.rd-row input[type=range]{flex:1 1 12rem;min-height:44px}
+#rd-guess{font:inherit;width:4.5rem;min-height:44px;padding:.3rem .5rem;background:#0b0b0e;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
