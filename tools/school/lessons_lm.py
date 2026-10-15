@@ -131,6 +131,49 @@ def spec_trainloop(f: dict) -> dict:
             "Each changed setting is one run with one seed; only differences larger than the spread of the noise runs mean anything.",
             "Timings are from one test machine; the lab's runs in your browser will be slower or faster.",
         ],
-        "next": "Before this: <a class=\"inline\" href=\"night-school-block.html\">The transformer block</a> (L11). Next: data, what goes in comes out (L13), planned.",
+        "next": "Before this: <a class=\"inline\" href=\"night-school-block.html\">The transformer block</a> (L11). Next: <a class=\"inline\" href=\"night-school-data.html\">Data</a> (L13).",
+    }
+
+
+def spec_data(f: dict) -> dict:
+    lb = {r["name"]: r for r in f["lookback"]["runs"]}
+    return {
+        "id": "L13", "slug": "data", "guide": "Pylon",
+        "title": "Data: what goes in comes out",
+        "h1": "Data. <span class=\"g\">What goes in comes out.</span>",
+        "desc": "The same model trained on different crates: how much of a skill's data it needs, what wrong labels and repeated rows do, and what it never saw.",
+        "lede": "A model learns whatever is in its training crates. Pylon changes what goes in, trains the same model the same way, and shows what comes out.",
+        "film": "It asks you two questions and waits for your answer before it shows you.",
+        "lab_h": "The lab: the crate yard",
+        "lab": (f"Choose how many episodes need a look back, how many labels are wrong, and fresh rows or a small repeated pile; train the model in this page and score it on held-out rows. "
+                f"In the film, cutting look-back episodes from 80% to 5% took look-back words from {lb['reference']['summary']['copyAccuracy'] * 100:.0f}% right to {lb['lb05']['summary']['copyAccuracy'] * 100:.0f}%."),
+        "lab_btn": "Open the crate yard", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/data/facts.json")],
+        "limits": [
+            "One small model and one seed per mix (three at two of them): the shapes are clear, the exact thresholds are not general.",
+            "Removing copy episodes removes a sentence frame as well as a skill, so the failure to carry over cannot be pinned on one of them alone.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-trainloop.html\">The training loop</a> (L12). Next: <a class=\"inline\" href=\"night-school-scaling.html\">Scaling</a> (L14).",
+    }
+
+
+def spec_scaling(f: dict) -> dict:
+    return {
+        "id": "L14", "slug": "scaling", "guide": "Tallow",
+        "title": "Scaling: bigger, longer, how much",
+        "h1": "Scaling. <span class=\"g\">Bigger, longer, how much.</span>",
+        "desc": "Twelve small models of different sizes trained on the same text: what size buys, what more work buys, and what the scaling-law papers found.",
+        "lede": "Making models bigger and training them longer kept making them better. Tallow builds a shelf of small ones and measures how far each gets toward the floor its text allows.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: the shelf",
+        "lab": (f"Pick a width and a number of floors, train the model in this page, and watch its gap above the floor against the work done, over the film's frontier. "
+                f"The film's twelve models run from {f['grid']['runs'][0]['params']['nonEmbedding']:,} to {f['grid']['runs'][-1]['params']['nonEmbedding']:,} numbers outside their word and place tables."),
+        "lab_btn": "Open the shelf", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/scaling/facts.json")],
+        "limits": [
+            "The shelf is tiny next to the papers' models and one learning rate serves every size; it shows the shape of scaling, not their exponents.",
+            "Above about 4,500 numbers, the differences between sizes are within the spread of three seeds.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-data.html\">Data</a> (L13). Later: <a class=\"inline\" href=\"night-school-decoding.html\">Decoding</a> (L15).",
     }
 

@@ -1,0 +1,46 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "scaling",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-scaling": {
+   "short": "Night School's shelf of small models, trained for this film",
+   "citation": "media/school/scaling/facts.json, written by tools/school/fill_scaling.mjs from system/school/scaling.mjs: 12 models (width 8 to 64, depth 1 to 3) trained 4,000 steps on the same text, scored by held-out loss above the generator's floor; fits on log-log axes; the frontier over compute; three seeds at two grid points.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/scaling",
+   "read": "full",
+   "claims": [
+    "Excess over the floor (0.6585): smallest 0.15426, d16 L2 0.016079, d32 L2 0.014979, d64 L3 0.022533.",
+    "Seed spread of log10 excess: 0.13761 (d16 L2), 0.11772 (d32 L2).",
+    "Frontier slope of excess against compute: -0.64767 (R2 0.97109); best size against budget slope 0.41372."
+   ],
+   "n": "12 grid runs, one seed each, plus two extra seeds at two points.",
+   "interval": "Slope standard errors in facts.json.",
+   "does_not_prove": "The papers' exponents; one learning rate and schedule for every size is a confound."
+  },
+  "kaplan2020": {
+   "short": "Kaplan and others 2020, Scaling Laws for Neural Language Models",
+   "citation": "Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., Amodei, D. (2020). Scaling Laws for Neural Language Models. arXiv:2001.08361.",
+   "url": "https://arxiv.org/abs/2001.08361",
+   "read": "read by the core sub-agent; to be re-read by the fact-check",
+   "claims": [
+    "Loss falls as a power law in non-embedding parameters, data and compute over about 768 to 1.5e9 parameters and several orders of magnitude of compute."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "hoffmann2022": {
+   "short": "Hoffmann and others 2022, Training Compute-Optimal Large Language Models (Chinchilla)",
+   "citation": "Hoffmann, J., Borgeaud, S., Mensch, A., and others (2022). Training Compute-Optimal Large Language Models. arXiv:2203.15556.",
+   "url": "https://arxiv.org/abs/2203.15556",
+   "read": "read by the core sub-agent; to be re-read by the fact-check",
+   "claims": [
+    "Parameters and training tokens should grow in equal proportion with compute; many large models of the time were undertrained; Chinchilla (70B parameters, 1.4T tokens) outperforms Gopher (280B, 300B tokens) at the same compute."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ },
+ "factcheck": "Independent fact-check 2026-10-15 (FACTCHECK.md): 21 correct, 9 reword, 0 wrong. Applied: look-back words named; 99.6 not rounded to 100; the one-floor 32 outlier excepted; the lesson's recipe at twice the length; the slope fits the gap above the floor; the best size grows mostly, not at every step; the closing claim about real text removed; the place table named; 'no brighter'."
+}

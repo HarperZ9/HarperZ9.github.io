@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scaling: bigger, longer, how much</title>
+<meta name="description" content="Twelve small models of different sizes trained on the same text: what size buys, what more work buys, and what the scaling-law papers found.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-scaling.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Scaling: bigger, longer, how much">
+<meta property="og:description" content="Twelve small models of different sizes trained on the same text: what size buys, what more work buys, and what the scaling-law papers found.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-scaling.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Scaling: bigger, longer, how much, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Scaling: bigger, longer, how much, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L14</span></div>
+  <div class="mid">
+    <h1>Scaling. <span class="g">Bigger, longer, how much.</span></h1>
+    <p class="lede">Making models bigger and training them longer kept making them better. Tallow builds a shelf of small ones and measures how far each gets toward the floor its text allows.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 3:45, hosted by Tallow. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/scaling/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the shelf</h2>
+  <p class="body-text">Pick a width and a number of floors, train the model in this page, and watch its gap above the floor against the work done, over the film&#x27;s frontier. The film&#x27;s twelve models run from 616 to 100,544 numbers outside their word and place tables.</p>
+  <div class="ls" data-school="lab" data-lab="scaling">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the shelf</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Scaling</h3><p>Scaling. Bigger, longer, how much.</p><p>Large language models are large because, for years, making them bigger and training them longer kept making them better. Tonight we try that on a shelf of small ones, and we are honest about what a shelf this small can show.</p>
+<h3>The shelf</h3><p>We built 12 versions of the attention model: 8 to 64 numbers per word, one to three floors. The smallest has 616 numbers outside its word and place tables; the largest, 100,544.</p><p>Each trained for 4,000 steps on the same text, and each is scored by how far its held-out loss sits above the floor, 0.6585, the loss of the rules themselves.</p>
+<h3>Bigger</h3><p>The smallest ends 0.15 above the floor and gets 36 percent of look-back words right. Two floors of 16: 0.0161 above the floor, and 99.6 percent.</p><p class="sc-ask">Over twenty times more numbers than the two-floor model of 16. How much closer to the floor? <span>(the film pauses here)</span></p><p>Past that, for the models with two or three floors, the gap barely moves. The lesson&#x27;s own recipe, trained twice as long, ends 0.0150 above the floor, and the largest 0.0225.</p><p>Three runs of the same model with different seeds spread about as much as that. So on this text, at this length, we cannot see any gain from size above about 4,480 numbers.</p>
+<h3>Longer, and the frontier</h3><p>Now count the work instead: the arithmetic each training run has done, in floating-point operations.</p><p>At every amount of work, take the lowest loss any model on the shelf had reached. Plotted on a log-log chart, their gaps above the floor fall on a straight line, with a slope of -0.65. More work, a smaller gap, at a steady rate.</p><p>And the best model for each amount of work mostly grows as the work grows: small models win the small budgets and bigger ones the big ones, though not at every step.</p>
+<h3>The real curves</h3><p>Kaplan and colleagues, in 2020, found curves like this over models from hundreds of numbers to more than a billion, and over a much wider range of work.</p><p>Hoffmann and colleagues, in 2022, found that most large models of the time were too big for their training text. Their Chinchilla had 70 billion numbers, a quarter of Gopher&#x27;s, trained on more than four times the text, and beat it.</p><p>Our shelf is far too small to test their numbers. What it can show is the shape: a floor, a gap that shrinks with work, and a best size that grows with the budget.</p>
+<h3>Goodnight</h3><p>Bigger and longer help until a model gets close to what its text allows. On our shelf, that comes early.</p><p>Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/scaling/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s shelf of small models, trained for this film.</strong> media/school/scaling/facts.json, written by tools/school/fill_scaling.mjs from system/school/scaling.mjs: 12 models (width 8 to 64, depth 1 to 3) trained 4,000 steps on the same text, scored by held-out loss above the generator&#x27;s floor; fits on log-log axes; the frontier over compute; three seeds at two grid points. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/scaling">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/scaling</a></p><p>Used for: Excess over the floor (0.6585): smallest 0.15426, d16 L2 0.016079, d32 L2 0.014979, d64 L3 0.022533. Seed spread of log10 excess: 0.13761 (d16 L2), 0.11772 (d32 L2). Frontier slope of excess against compute: -0.64767 (R2 0.97109); best size against budget slope 0.41372.</p><p class="sc-dnp">Does not prove: The papers&#x27; exponents; one learning rate and schedule for every size is a confound.</p></li><li><p><strong>Kaplan and others 2020, Scaling Laws for Neural Language Models.</strong> Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., Amodei, D. (2020). Scaling Laws for Neural Language Models. arXiv:2001.08361. <a class="inline" href="https://arxiv.org/abs/2001.08361">https://arxiv.org/abs/2001.08361</a></p><p>Used for: Loss falls as a power law in non-embedding parameters, data and compute over about 768 to 1.5e9 parameters and several orders of magnitude of compute.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Hoffmann and others 2022, Training Compute-Optimal Large Language Models (Chinchilla).</strong> Hoffmann, J., Borgeaud, S., Mensch, A., and others (2022). Training Compute-Optimal Large Language Models. arXiv:2203.15556. <a class="inline" href="https://arxiv.org/abs/2203.15556">https://arxiv.org/abs/2203.15556</a></p><p>Used for: Parameters and training tokens should grow in equal proportion with compute; many large models of the time were undertrained; Chinchilla (70B parameters, 1.4T tokens) outperforms Gopher (280B, 300B tokens) at the same compute.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The shelf is tiny next to the papers&#x27; models and one learning rate serves every size; it shows the shape of scaling, not their exponents.</p><p class="body-text">Above about 4,500 numbers, the differences between sizes are within the spread of three seeds.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-data.html">Data</a> (L13). Later: <a class="inline" href="night-school-decoding.html">Decoding</a> (L15).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L14: scaling.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

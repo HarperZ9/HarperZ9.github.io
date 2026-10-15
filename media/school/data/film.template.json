@@ -1,0 +1,97 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "data",
+  "title": "Data: what goes in comes out",
+  "page": "night-school-data.html",
+  "seed": 20261028,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/data/facts.json, computed by tools/school/fill_data.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "Pylon's dock at dusk. Crates of sentences come off a ship and onto the cart for the training loop. Pylon opens one, reads the label, and frowns. No words." },
+    "close": { "seconds": 5.0, "what": "Pylon stacks the crates by kind, checks the labels against her clipboard, and puts a cone on the one marked 'never seen'. She turns the dock lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Data",
+      "lines": [
+        "Data. What goes in comes out.",
+        "The loop from last time learns whatever is in the crates. Tonight we change what goes in, train the same model the same way, and see what comes out."
+      ]
+    },
+    {
+      "key": "mix",
+      "heading": "What is in the crates",
+      "sources": ["ours-data"],
+      "lines": [
+        "The guides' sentences come in three kinds of episode. In copy episodes, a thing found earlier has to come back later. In who episodes, a question has to be answered with the guide who did the deed. Plain episodes need no looking back at all.",
+        "In the usual mix, {{lookback.runs.5.lookbackShare|pct}} percent of episodes need a look back. Trained on that, the model gets look-back words right {{reproduce.split.lookback.accuracy|pct}} percent of the time."
+      ]
+    },
+    {
+      "key": "less",
+      "heading": "How much is enough",
+      "sources": ["ours-data"],
+      "lines": [
+        "Now cut the look-back episodes down, and keep everything else the same.",
+        "At {{lookback.runs.4.lookbackShare|pct}} percent, it still gets {{lookback.runs.4.summary.copyAccuracy|pct}} percent right. At {{lookback.runs.3.lookbackShare|pct}} percent, {{lookback.runs.3.summary.copyAccuracy|pct}}. At {{lookback.runs.2.lookbackShare|pct}} percent, {{lookback.runs.2.summary.copyAccuracy|pct}}.",
+        "And with none at all, the model is right {{lookback.runs.0.summary.copyAccuracy|pct}} percent of the time, less than the untrained model's {{block:ablations.untrained.base.copyAccuracy|pct}}. Its loss on unseen rows is {{lookback.runs.0.summary.heldOut|f2}}, worse than before it was trained. It learned to be sure, and wrong."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Cut the look-back episodes from most of the crates to a twentieth. How much of the skill survives?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "transfer",
+      "heading": "A skill in one frame only",
+      "sources": ["ours-data"],
+      "lines": [
+        "Take out only the copy episodes, and keep the who episodes, which also need a look back.",
+        "On who questions, the model is still right {{shift.noCopyEpisodes.whoOnly.lookback|pct}} percent of the time. On copy episodes, a kind it never saw in training, {{shift.noCopyEpisodes.copyOnly.lookback|pct}} percent. The looking back did not carry over to a kind of sentence it had never seen."
+      ]
+    },
+    {
+      "key": "noise",
+      "heading": "Wrong labels",
+      "sources": ["ours-data"],
+      "lines": [
+        "Now swap {{labelNoise.runs.0.share|pct}} percent of the training answers for random words.",
+        "Ordinary next words barely notice: still right {{labelNoise.runs.0.summary.localAccuracy|pct}} percent of the time. But the look-back skill comes slower: after the same training it gets look-back words right only {{labelNoise.runs.0.summary.copyAccuracy|pct}} percent of the time. Copy episodes stay at {{labelNoise.runs.0.split.copyEpisodes.accuracy|pct}} percent; the who questions take the loss, at {{labelNoise.runs.0.split.whoEpisodes.accuracy|pct}}. At {{labelNoise.runs.1.share|pct}} percent noise, look-back words drop to {{labelNoise.runs.1.summary.copyAccuracy|pct}}."
+      ]
+    },
+    {
+      "key": "repeat",
+      "heading": "The same rows, over and over",
+      "sources": ["ours-data"],
+      "lines": [
+        "Last, keep the amount of text the same, but draw it from a small pile of rows, used again and again.",
+        "With {{duplication.runs.0.rows}} rows, each seen {{duplication.runs.0.passes}} times, the model learns the pile by heart and fails on new rows: a held-out loss of {{duplication.runs.0.summary.heldOut|f2}}. Its held-out loss was lowest at the first check, step {{duplication.runs.0.summary.bestStep}}, and only got worse as it learned the pile.",
+        "With {{duplication.runs.2.rows|int}} rows: {{duplication.runs.2.summary.heldOut|f2}}. With fresh rows every step: {{duplication.fresh.summary.heldOut|f2}}."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Same amount of text, but only 64 different rows. Better, worse, or the same?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "shift",
+      "heading": "Never seen it done",
+      "sources": ["ours-data"],
+      "lines": [
+        "One more crate. Train a model on sentences where Rerun never does the deed in a who episode. Then ask it who did something, when the answer is Rerun.",
+        "It names the right guide {{shift.rerunNeverDoes.whoRerunDoes.guideAnswer|pct}} percent of the time. When the answer is Tallow or Pylon, {{shift.rerunNeverDoes.whoOthersDo.guideAnswer|pct}} percent. It has learned its crates faithfully, and its crates never showed Rerun doing it."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "A model knows the world through its crates. Whatever is rare in them is weak in the model, and whatever is missing from them is missing from it.",
+        "Next in the lighthouse: what happens when the model and the crates get bigger. Goodnight."
+      ]
+    }
+  ]
+}
