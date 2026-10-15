@@ -13,6 +13,7 @@ from xml.etree import ElementTree
 ROOT = Path(__file__).resolve().parents[1]
 
 RELEASE_PATHS = (
+    "assets/index-amx6uI37.js",
     "assets/index-DwjtCOsP.js",
     "assets/index-jmVIw9rV.js",
     "assets/index-C3mo4X0I.js",
@@ -705,10 +706,13 @@ RELEASE_PATHS = (
 # (raw-native flow field). The release is rehashed.
 # October 15, 2026: batch 3 of the full Who Knew First second read adds dated corrections and
 # sources; the series tables follow the new reading time (75 min). The release is rehashed.
+# October 15, 2026: Night School joins the sitemap (night-school.html and its first lesson,
+# night-school-attention.html), each with its own link card, and the route registry, the site
+# index and the home bundle; guides.html links it. The release is rehashed.
 # October 14, 2026, later: studio.html gains the Finish layer (raw-native 0.8.0's post stack over the
 # stage), moves the Verified viewer to the raw-native 0.8.0 release, and loads studio.js and
 # studio-shell.css at a new stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "c2eaaacc6e4fbbb537fdd93c4244b3b7e153d14930598f5a7eb1a498709eb77c"
+REVIEWED_RELEASE_SHA256 = "8a7d9fd0309ea64a8966a791bffc3dd9c4f2c475354389d479225da12ca02ed6"
 
 
 BRIEFING_FIGURES = (
@@ -929,7 +933,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 12, 2026, evening: the introductions carry the guides' own voices, approved by the
     # author after listening, so the intro buttons and the voice note change and the bundle is
     # index-DwjtCOsP.js with the same sheet. index-jmVIw9rV.js stays as retained history.
-    current_js = "index-DwjtCOsP.js"
+    # October 15, 2026: Night School and its first lesson join the route registry, so the bundle
+    # rebuilt from it is index-amx6uI37.js with the same sheet. index-DwjtCOsP.js stays as
+    # retained history.
+    current_js = "index-amx6uI37.js"
+    assert "index-DwjtCOsP.js" not in source
+    assert (ROOT / "assets" / "index-DwjtCOsP.js").is_file()
     previous_voice_js = "index-jmVIw9rV.js"
     assert previous_voice_js not in source
     assert (ROOT / "assets" / previous_voice_js).is_file()

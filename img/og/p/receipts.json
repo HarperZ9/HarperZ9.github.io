@@ -2952,6 +2952,78 @@
     "t": 0
    }
   },
+  "night-school-attention.jpg": {
+   "backend": "chrome-155.0.8059.40-skia",
+   "content_sha256": "392175c7b34aae2e43b3d024edbafd55cbe89d520817992d3d3d1bbc27955a7f",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "night-school-attention.jpg": "b3e4d6248856d6dd551b429b71dbd7e8837fc3602349fc56cbe4ef9c5b796796",
+    "night-school-attention.svg": "3650d4a6973b6f47e2be7b929b3ad04cf893731cba1cce9f7df6237d95bc113f"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "650e403440978910119a2521d608c7a611e57cbcb27cb65f2f0d8aa6199355a0",
+   "reconcile": null,
+   "scene_sha256": "f0090ff4392aac34e9597545468a44ff7393a513241a4893b619c0c19c330dd0",
+   "schema": "superstack.receipt/1",
+   "seed": "night-school-attention",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 3564041787,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "night-school.jpg": {
+   "backend": "chrome-155.0.8059.40-skia",
+   "content_sha256": "22159cc1fca2d77585aa01ff06929a44a6bf7d59d54ca0a6e28b064a13096772",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "night-school.jpg": "6acee49426c6e946eac992a01ffa80386bd91e97fb3b61ca780f680bc623c092",
+    "night-school.svg": "a10b3a2e1bd55ddf5237aff4e2aacd869ecc1d415de872632b14af6c74cfeac4"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "398fbe0345f27556ee558203bd6b291f848557eb0a9532472c1c363d5857b580",
+   "reconcile": null,
+   "scene_sha256": "c8a3ae39db9faf1b65510fcaefb06188fe89bb88e8be08bd6afa219f88bdfb76",
+   "schema": "superstack.receipt/1",
+   "seed": "night-school",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 2989242394,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "no-receipt-no-accept.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "1e47099211d1d41cb6717ac2d094c7712fc1fbc3b66c2a3bd9f5ef3222de09c5",

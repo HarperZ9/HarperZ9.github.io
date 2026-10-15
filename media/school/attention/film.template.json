@@ -1,0 +1,127 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "attention",
+  "title": "Attention: how a language model decides what matters",
+  "page": "night-school-attention.html",
+  "seed": 20261015,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/attention/model.json (tools/school/fill_film.mjs fills every double-brace token below from it)",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": {"seconds": 4.0, "what": "Black. A match strikes. Tallow lights himself, then the great lamp of the lighthouse; the lens begins to turn. No words."},
+    "close": {"seconds": 5.0, "what": "Back in the lamp room. Tallow sets the query card on the ledger, pinches a drip of wax into the jar, and turns the lamp down. The lens closes to one point of light."}
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Attention",
+      "lines": [
+        "Attention. How a language model decides what matters.",
+        "I keep the lamp at Night School. Tonight the lamp is the lesson."
+      ]
+    },
+    {
+      "key": "hole",
+      "heading": "A hole at the end",
+      "sources": ["ours-model"],
+      "lines": [
+        "Here is a sentence with a hole at the end.",
+        "{{probe_spoken}}",
+        "You said {{probe_answer}}. And you did not read the sentence again. You glanced back, past the full stop, to one word near the start, and took it."
+      ],
+      "predict": [{"after": [1, 1], "question": "What word goes in the hole?", "hold": 2.5}]
+    },
+    {
+      "key": "whisper",
+      "heading": "The old way: a whisper down the line",
+      "sources": ["bahdanau2015"],
+      "lines": [
+        "A language model like this one does one job. It reads the words so far and guesses the next one.",
+        "The first neural translation models squeezed the whole sentence into one fixed-length list of numbers, and worked from that.",
+        "Think of a message whispered down a line of people. By the end of a long line, the message has worn thin.",
+        "In 2014, Bahdanau, Cho and Bengio let a translation model look at every word of the sentence while it wrote each new word, and weigh how much each one counts. They called it an alignment model. Today we call the idea attention."
+      ]
+    },
+    {
+      "key": "lamp",
+      "heading": "Question, label, cargo",
+      "sources": ["vaswani2017"],
+      "lines": [
+        "Here is how the looking works. Every word does three things.",
+        "It asks a question. It holds up a label. And it carries some cargo.",
+        "The word at the end shines its question back along the sentence. Each earlier word answers with its label.",
+        "A good match gets a high score. The scores are turned into shares that add up to one hundred percent.",
+        "Then the word takes a blend of the cargo of every word so far, itself included, in those shares. That blend is what it carries forward."
+      ]
+    },
+    {
+      "key": "inside",
+      "heading": "Inside the lamp",
+      "sources": ["vaswani2017", "ours-model"],
+      "lines": [
+        "Let's go inside the lamp.",
+        "Every word here is a list of {{d_model}} numbers. One dot is one number.",
+        "A match is a dot product: multiply the two lists number by number, and add it all up.",
+        "Each head works on a shorter list of its own, {{d_head}} numbers here, and the score is divided by the square root of that length. Without it, long lists give huge scores, the shares go all or nothing, and the model learns slowly.",
+        "This is a real model, trained on sentences from our coast. It has {{params}} numbers in total, and nothing in it was set by hand.",
+        "On this sentence, the word at the end gives {{probe_top_share}} percent of its light to {{probe_top_word}}."
+      ],
+      "predict": [{"after": [4, 1], "question": "Which earlier word will get most of the light?", "hold": 2.5}]
+    },
+    {
+      "key": "heads",
+      "heading": "One beam, several heads",
+      "sources": ["vaswani2017", "olsson2022", "ours-model"],
+      "lines": [
+        "One beam asks one kind of question. A transformer runs several at once, and calls each one a head.",
+        "The base transformer in the 2017 paper had eight heads in every attention layer. The larger one had sixteen.",
+        "Ours has {{n_heads}} heads in each of {{n_layers}} layers. Nobody told them what to look for.",
+        "{{heads_sentence}}",
+        "In small attention-only models, researchers at Anthropic found pairs of heads, in different layers, that work together to copy. The first writes into each word a note about the word before it. The second uses that note to find an earlier copy of the current word, and reads the word that followed it. They called them induction heads."
+      ]
+    },
+    {
+      "key": "switch",
+      "heading": "Turn the lamp off",
+      "sources": ["ours-model"],
+      "lines": [
+        "Here is the test that matters. We trained the same model again with the lamp turned off, so each word could see only itself.",
+        "With attention, it filled the copy holes correctly {{copy_on}} percent of the time.",
+        "With each word seeing only itself, {{copy_off}} percent.",
+        "Then one more run. Every word got an even share of light over everything before it, with no choosing. That run reached {{copy_uniform}} percent.",
+        "Knowing which words came before helps. Choosing where to look is what finishes the job."
+      ]
+    },
+    {
+      "key": "cost",
+      "heading": "What the light costs",
+      "sources": ["vaswani2017", "dao2022", "arithmetic"],
+      "lines": [
+        "There's a bill. Every word compares itself with every word before it.",
+        "In each head, a thousand words means about half a million comparisons. Double the text, and the attention work goes up about four times.",
+        "That's why people build special machinery to do this fast. We take it apart in the cannery, in a later lesson."
+      ]
+    },
+    {
+      "key": "edge",
+      "heading": "What the light does not tell you",
+      "sources": ["jain2019", "wiegreffe2019", "elhage2021"],
+      "lines": [
+        "One warning before you go.",
+        "The light shows where a head is reading from. It does not, on its own, tell you why the model answered what it did.",
+        "In 2019, researchers showed that in some text classifiers, very different attention patterns can give almost the same answer. Others replied that it depends on what you mean by explain, and proposed tests. Treat the light as a clue, and check it."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Your turn",
+      "lines": [
+        "The lamp room is open below this film. Train the model yourself, and watch the heads learn where to look.",
+        "My voice is synthesized, made from the author's voice."
+      ]
+    }
+  ]
+}
