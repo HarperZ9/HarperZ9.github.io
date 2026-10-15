@@ -73,6 +73,9 @@ const PAIR = [
   // Pair 6: the tower is driven by a switch; the dock by Train (250 laps for speed).
   { slug: 'block', at: '180', first: /Everything on\. On 6,144 held-out next words: loss 0\.69, copies 99%/, tab: null, act: '#bl-l1-h1', second: /Off \(zero\): top floor, head 2\. On 6,144 held-out next words: loss \d\.\d\d, copies \d+%/, done: 1 },
   { slug: 'trainloop', at: '226', first: /Choose the settings and press Train/, tab: null, select: ['#tl2-laps', '250'], second: /lap 250, held-out loss \d\.\d\d on 64 held-out rows, copies \d+%\./, done: 1 },
+  // Pair 7: both labs train in the page; 250 laps keeps the check short.
+  { slug: 'data', at: '154', first: /Choose a mix and press Train/, tab: null, select: ['#dl2-laps', '250'], second: /lap 250, held-out loss \d\.\d\d on 64 held-out rows; look-back words \d+% right\./, done: 1 },
+  { slug: 'scaling', at: '100', first: /Choose a size and press Train/, tab: null, select: ['#sl-laps', '250'], second: /lap 250, held-out loss \d\.\d{3} on 6,144 next words/, done: 1 },
   { slug: 'embeddings', at: '140', first: /seed 1, 32 numbers per word, window 2, 5 noise words\. At 100% of training, \d+% of the 46 words/, tab: null, select: ['#el-seed', '2'], second: /seed 2, 32 numbers per word.*At 100% of training, \d+% of the 46 words/, done: 1 },
 ];
 async function checkLesson(browser, width, force2d, L) {
@@ -124,7 +127,7 @@ async function checkLesson(browser, width, force2d, L) {
     for (const L of PAIR.filter((x) => !only.length || only.includes(x.slug))) for (const [w, f] of process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all) await checkLesson(browser, w, f, L);
     const idx = await browser.newPage();
     await idx.goto(`${base}/night-school.html`, { waitUntil: 'networkidle' });
-    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html', 'night-school-nextword.html', 'night-school-decoding.html', 'night-school-block.html', 'night-school-trainloop.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
+    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html', 'night-school-nextword.html', 'night-school-decoding.html', 'night-school-block.html', 'night-school-trainloop.html', 'night-school-data.html', 'night-school-scaling.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
     console.log('night-school.html: ok');
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });

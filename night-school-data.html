@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data: what goes in comes out</title>
+<meta name="description" content="The same model trained on different crates: how much of a skill&#x27;s data it needs, what wrong labels and repeated rows do, and what it never saw.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-data.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Data: what goes in comes out">
+<meta property="og:description" content="The same model trained on different crates: how much of a skill&#x27;s data it needs, what wrong labels and repeated rows do, and what it never saw.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-data.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Data: what goes in comes out, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Data: what goes in comes out, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L13</span></div>
+  <div class="mid">
+    <h1>Data. <span class="g">What goes in comes out.</span></h1>
+    <p class="lede">A model learns whatever is in its training crates. Pylon changes what goes in, trains the same model the same way, and shows what comes out.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:26, hosted by Pylon. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/data/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the crate yard</h2>
+  <p class="body-text">Choose how many episodes need a look back, how many labels are wrong, and fresh rows or a small repeated pile; train the model in this page and score it on held-out rows. In the film, cutting look-back episodes from 80% to 5% took look-back words from 99% right to 19%.</p>
+  <div class="ls" data-school="lab" data-lab="data">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the crate yard</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Data</h3><p>Data. What goes in comes out.</p><p>The loop from last time learns whatever is in the crates. Tonight we change what goes in, train the same model the same way, and see what comes out.</p>
+<h3>What is in the crates</h3><p>The guides&#x27; sentences come in three kinds of episode. In copy episodes, a thing found earlier has to come back later. In who episodes, a question has to be answered with the guide who did the deed. Plain episodes need no looking back at all.</p><p>In the usual mix, 80 percent of episodes need a look back. Trained on that, the model gets look-back words right 99 percent of the time.</p>
+<h3>How much is enough</h3><p>Now cut the look-back episodes down, and keep everything else the same.</p><p class="sc-ask">Cut the look-back episodes from most of the crates to a twentieth. How much of the skill survives? <span>(the film pauses here)</span></p><p>At 40 percent, it still gets 99 percent right. At 20 percent, 56. At 5 percent, 19.</p><p>And with none at all, the model is right 3 percent of the time, less than the untrained model&#x27;s 7. Its loss on unseen rows is 8.25, worse than before it was trained. It learned to be sure, and wrong.</p>
+<h3>A skill in one frame only</h3><p>Take out only the copy episodes, and keep the who episodes, which also need a look back.</p><p>On who questions, the model is still right 100 percent of the time. On copy episodes, a kind it never saw in training, 5 percent. The looking back did not carry over to a kind of sentence it had never seen.</p>
+<h3>Wrong labels</h3><p>Now swap 10 percent of the training answers for random words.</p><p>Ordinary next words barely notice: still right 70 percent of the time. But the look-back skill comes slower: after the same training it gets look-back words right only 76 percent of the time. Copy episodes stay at 100 percent; the who questions take the loss, at 70. At 30 percent noise, look-back words drop to 33.</p>
+<h3>The same rows, over and over</h3><p>Last, keep the amount of text the same, but draw it from a small pile of rows, used again and again.</p><p class="sc-ask">Same amount of text, but only 64 different rows. Better, worse, or the same? <span>(the film pauses here)</span></p><p>With 64 rows, each seen 500 times, the model learns the pile by heart and fails on new rows: a held-out loss of 3.02. Its held-out loss was lowest at the first check, step 100, and only got worse as it learned the pile.</p><p>With 1,024 rows: 0.71. With fresh rows every step: 0.69.</p>
+<h3>Never seen it done</h3><p>One more crate. Train a model on sentences where Rerun never does the deed in a who episode. Then ask it who did something, when the answer is Rerun.</p><p>It names the right guide 0 percent of the time. When the answer is Tallow or Pylon, 100 percent. It has learned its crates faithfully, and its crates never showed Rerun doing it.</p>
+<h3>Goodnight</h3><p>A model knows the world through its crates. Whatever is rare in them is weak in the model, and whatever is missing from them is missing from it.</p><p>Next in the lighthouse: what happens when the model and the crates get bigger. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/data/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s attention model, retrained on altered crates for this film.</strong> media/school/data/facts.json, written by tools/school/fill_data.mjs from system/school/data.mjs: the same model, seeds and 2,000 steps on altered training data (look-back share, copy episodes removed, label noise, a small repeated pool, a guide never shown in one role), each scored on the same 256 held-out rows; the default recipe reproduces the lesson&#x27;s curve exactly. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/data">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/data</a></p><p>Used for: Look-back accuracy by look-back share of episodes: 0: 0.0316, 0.01: 0.1798, 0.05: 0.1917, 0.2: 0.5593, 0.4: 0.9862, 0.8: 0.9921; with none, held-out loss 8.2495 (untrained 3.84). Copy episodes removed: who look-back 1, copy-only rows 0.0464. Label noise 10% and 30%: look-back 0.7609 and 0.3281; local accuracy 0.7001. Pools of 64, 256 and 1,024 rows at the same tokens: held-out 3.0157, 1.7508, 0.7062; fresh rows 0.6874. Rerun never the doer in training: names Rerun 0 of the time when he is the answer, others 1.</p><p class="sc-dnp">Does not prove: How much data a skill needs in large models; the removed-copy result could come from the missing sentence frame as much as from the missing skill.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One small model and one seed per mix (three at two of them): the shapes are clear, the exact thresholds are not general.</p><p class="body-text">Removing copy episodes removes a sentence frame as well as a skill, so the failure to carry over cannot be pinned on one of them alone.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-trainloop.html">The training loop</a> (L12). Next: <a class="inline" href="night-school-scaling.html">Scaling</a> (L14).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L13: data.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
