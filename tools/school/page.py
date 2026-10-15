@@ -45,7 +45,7 @@ def head(rel: str, title: str, desc: str, card: str, alt: str) -> str:
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
-<link rel="stylesheet" href="system/lessons/lessons.css?v={V}">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
 <link rel="stylesheet" href="system/school/school.css?v={V}">
 </head>
 <body class="inner-clean hub-plate">
@@ -109,7 +109,7 @@ def school_page(cur: dict, facts: dict) -> str:
 </section>
 </main>
 """
-    return head("night-school.html", "Night School: how AI works", desc, "media/school/attention/card.jpg",
+    return head("night-school.html", "Night School: how AI works", desc, "img/og/p/night-school.jpg",
                 "Night School, by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.") + body + foot("Night School.")
 
 

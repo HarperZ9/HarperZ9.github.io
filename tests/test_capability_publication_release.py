@@ -703,7 +703,10 @@ RELEASE_PATHS = (
 # attractor, log tone map). The release is rehashed.
 # October 14, 2026, later: studio.html loads studio.js at the Music flow field's new stamp
 # (raw-native flow field). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "6953d44e68c1e812d374b143ab22b1616b9f9e09d313ed95d4151bd4627851f6"
+# October 15, 2026: Night School joins the sitemap (night-school.html and its first lesson,
+# night-school-attention.html), each with its own link card; guides.html links it. The release
+# is rehashed.
+REVIEWED_RELEASE_SHA256 = "8b838fc684f91a94675fc47459c85cb794a2620037967d49c734e844d4e70e22"
 
 
 BRIEFING_FIGURES = (

@@ -67,7 +67,7 @@ def lesson_page(film: dict, ev: dict, facts: dict, timing: list) -> str:
 </section>
 </main>
 """
-    return head("night-school-attention.html", "Attention: how a language model decides what matters", desc, "media/school/attention/card.jpg",
+    return head("night-school-attention.html", "Attention: how a language model decides what matters", desc, "img/og/p/night-school-attention.jpg",
                 "Attention, a Night School lesson by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.") + body + foot("Night School, lesson L10: attention.")
 
 
@@ -78,6 +78,11 @@ def main() -> None:
     cur = load(SCHOOL / "curriculum.json")
     (ROOT / "night-school.html").write_text(school_page(cur, facts), encoding="utf-8", newline="\n")
     (ROOT / "night-school-attention.html").write_text(lesson_page(film, ev, facts, timing), encoding="utf-8", newline="\n")
+    # Point each head at its own link card (img/og/p, rendered by tools/repo_art/site_cards.py).
+    from tools.repo_art import site_cards
+    for c in site_cards.plan():
+        if c["rel"] in ("night-school.html", "night-school-attention.html"):
+            site_cards.stamp(c)
     print("night-school.html and night-school-attention.html written")
 
 
