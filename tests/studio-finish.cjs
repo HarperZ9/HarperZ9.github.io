@@ -1,8 +1,8 @@
 // The Finish layer (studio-finish.js, 14 October 2026), at desktop and phone widths: raw-native's
 // post stack laid over the stage. Chrome runs on SwiftShader (forced), so CI and a local run use
 // the same software adapter. raw-native's roadmap M1 criterion 9 (the Studio layer): on the
-// committed frame set (960 x 600, fixed seeds) every look's output, read back from the layer's own
-// WebGPU canvas, is within one 8-bit code of the engine's CPU reference, and a control with a
+// committed frame set (960 x 600, fixed seeds) every look's output, drawn by the layer's own frame
+// function into a texture of the canvas's format and read back, is within one 8-bit code of the engine's CPU reference, and a control with a
 // shifted reference fails. Also: the overlay covers exactly the source canvas, leaves for a source
 // with its own surface and comes back, Off hides it, and without WebGPU the source draws as it is
 // and the rail says why. No page or console errors. BROWSER=firefox runs the fallback path.
@@ -16,7 +16,8 @@ const VIEWS = [
   { name: 'desktop', viewport: { width: 1440, height: 900 }, mobile: false },
   { name: 'phone', viewport: { width: 390, height: 844 }, mobile: true },
 ];
-const ARGS = ['--enable-unsafe-webgpu', '--enable-unsafe-swiftshader', '--use-webgpu-adapter=swiftshader'];
+// The same flags raw-native's own CI uses for its SwiftShader pass checks (tests/web/post_passes.py).
+const ARGS = ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader', '--use-webgpu-adapter=swiftshader'];
 
 async function pick(page, source) {
   const sw = page.locator('#source-switch'); await sw.scrollIntoViewIfNeeded(); await sw.click();

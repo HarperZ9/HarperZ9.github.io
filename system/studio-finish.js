@@ -10,8 +10,8 @@
 // Without WebGPU the layer stays off and the source draws as it is; the rail says why.
 //
 // check(name) runs the committed frame set of the engine's own pass check (960 x 600, fixed
-// seeds) through this layer's own path (a 2D canvas, the upload, the post stack, a WebGPU canvas,
-// read back) and compares every channel with the engine's CPU reference at 8 bits.
+// seeds) through this layer's own path (a 2D canvas, the upload, the post stack, a texture of the
+// canvas's format, read back) and compares every channel with the engine's CPU reference at 8 bits.
 
 export const ENGINE_VERSION = "0.8.0";
 const RAW = `../media/raw-native/post-${ENGINE_VERSION}/`;
@@ -105,10 +105,13 @@ function upload(source, tex, W, H) {
   }
 }
 
-function finishFrame(source, tex, context, p, W, H, f) {
+// target: a WebGPU canvas context (the stage), or a texture of the canvas's format (the check,
+// read back from a plain texture: reading a canvas texture back lost the WebGPU instance on the
+// Linux CI runner's SwiftShader every time).
+function finishFrame(source, tex, target0, p, W, H, f) {
   upload(source, tex, W, H);
   const enc = host.device.createCommandEncoder({ label: "finish" });
-  const target = context.getCurrentTexture();
+  const target = target0.getCurrentTexture ? target0.getCurrentTexture() : target0;
   runner.run(enc, p.specs, tex, W, H, f, f / 60, { view: target.createView(), format }, p.stage);
   return { enc, target };
 }
@@ -228,10 +231,11 @@ async function check(name, { frames: only = null, control = false, upload: via =
   const fr = await import(`${RAW}tests/web/post_frames.mjs`);
   const set = fr.frameSet(), W = set.width, H = set.height, p = plan(name);
   const toCode = (v) => Math.round(255 * Math.min(1, Math.max(0, v)));
-  const plate = document.createElement("canvas"), out = document.createElement("canvas");
-  plate.width = out.width = W; plate.height = out.height = H;
-  const pctx = plate.getContext("2d", { willReadFrequently: true }), octx = out.getContext("webgpu");
-  configure(octx);
+  const plate = document.createElement("canvas");
+  plate.width = W; plate.height = H;
+  const pctx = plate.getContext("2d", { willReadFrequently: true });
+  const outTex = host.device.createTexture({ label: "finish check out", size: [W, H], format,
+    usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC });
   const r = new eng.run.PostRunner(host, host.sampler({ filter: "linear", address: "clamp" }));
   await r.prepare(p.specs, W, H);
   const keep = runner; runner = r; forceBytes = via === "bytes";
@@ -245,7 +249,7 @@ async function check(name, { frames: only = null, control = false, upload: via =
       const bytes = new Uint8ClampedArray(W * H * 4), src = set.data[i];
       for (let k = 0; k < bytes.length; k++) bytes[k] = (k & 3) === 3 ? 255 : toCode(src[k]);
       pctx.putImageData(new ImageData(bytes, W, H), 0, 0);
-      const { enc, target } = finishFrame(plate, tex, octx, p, W, H, n++);
+      const { enc, target } = finishFrame(plate, tex, outTex, p, W, H, n++);
       const bpr = Math.ceil((W * 4) / 256) * 256;
       const buf = host.device.createBuffer({ size: bpr * H, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
       enc.copyTextureToBuffer({ texture: target }, { buffer: buf, bytesPerRow: bpr }, [W, H]);
@@ -273,7 +277,7 @@ async function check(name, { frames: only = null, control = false, upload: via =
       if (maxCode > res.maxCode) { res.maxCode = maxCode; res.worst = worst; }
     }
   } finally {
-    runner = keep; forceBytes = false; r.destroy(); tex.destroy();
+    runner = keep; forceBytes = false; r.destroy(); tex.destroy(); outTex.destroy();
   }
   res.adapter = host.info.description || host.info.architecture || "";
   res.pass = res.over === 0 && res.maxCode <= 1;
