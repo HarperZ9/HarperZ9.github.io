@@ -694,7 +694,7 @@ RELEASE_PATHS = (
 # October 14, 2026: two dated corrections close the ledger second read: Who Knew First's finding 6
 # evidence note gives the one date in Irregular's August 14 account, and Who Pays the Referees
 # section 3 names the Opus 5.5 card's three contracted red-teaming firms. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "8130031442841d72617bb20710a21d9a22d5c29a9d8db47f02304c3ab696c573"
+REVIEWED_RELEASE_SHA256 = "844f48fee22f20f09e556c76547a4921d74d917de02e7b11dd7334ef00fc3c72"
 
 
 BRIEFING_FIGURES = (
