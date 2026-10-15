@@ -1,0 +1,34 @@
+/* Night School: the lesson list, the film player and the lab. Two faces (the site's), verdict ink only. */
+.sc-track{margin:1.4rem 0 0}
+.sc-track h3{margin:0 0 .2rem}
+.sc-place{margin:0 0 .5rem;font-size:.9rem;color:color-mix(in srgb,currentColor 68%,transparent)}
+.sc-lessons{list-style:none;padding:0;margin:0;max-width:52rem}
+.sc-lesson{padding:.45rem 0;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);display:flex;flex-wrap:wrap;gap:.2rem .6rem;align-items:baseline}
+.sc-id{font-family:var(--mono,"Conso",monospace);font-size:.82rem;min-width:2.6rem}
+.sc-needs,.sc-status{font-size:.82rem;color:color-mix(in srgb,currentColor 62%,transparent)}
+.sc-status{margin-left:auto}
+.sc-planned{color:color-mix(in srgb,currentColor 80%,transparent)}
+.sc-draft .sc-status,.sc-ready .sc-status{color:inherit}
+.sc-transcript{max-width:44rem}
+.sc-transcript h3{margin:1.2rem 0 .3rem;font-size:1rem}
+.sc-transcript p{margin:.3rem 0}
+.sc-ask{font-style:italic}
+.sc-ask span{font-style:normal;font-size:.85rem;color:color-mix(in srgb,currentColor 62%,transparent)}
+.sc-sources{padding-left:1.1rem;max-width:52rem}
+.sc-sources li{margin:.8rem 0}
+.sc-sources p{margin:.2rem 0;overflow-wrap:anywhere}
+.sc-dnp{font-size:.88rem;color:color-mix(in srgb,currentColor 70%,transparent)}
+/* The film player. */
+.sf-cap{min-height:3em;margin:.5rem 0 0;font-size:1.02rem;line-height:1.45;text-align:center}
+.sf-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .75rem;margin:.4rem 0}
+.sf-scrub{flex:1 1 12rem;min-width:8rem;min-height:44px;accent-color:currentColor}
+.sf-time{font-family:var(--mono,"Conso",monospace);font-size:.85rem;min-width:7.5rem;text-align:right}
+.sf-chapters{display:flex;flex-wrap:wrap;gap:.25rem .8rem;font-size:.88rem}
+.sf-chapters button{font:inherit;color:inherit;background:none;border:0;padding:.35rem 0;min-height:44px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;opacity:.8}
+/* The lab. */
+.lab-controls{margin:.5rem 0}
+.lab-row{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .7rem;margin:.45rem 0}
+.lab-select{font:inherit;font-size:.92rem;min-height:44px;max-width:100%;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+.lab-select option{background:#111;color:#ece5d6}
+#lab-guess{font:inherit;width:6rem;min-height:44px;padding:.3rem .5rem;margin:0 .6rem 0 .3rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+@media (max-width:520px){.sc-status{margin-left:0;flex-basis:100%}.lab-select{flex:1 1 100%}}
