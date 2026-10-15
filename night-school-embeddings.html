@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Embeddings: every token gets coordinates</title>
+<meta name="description" content="How a list of numbers per word comes to mean something: the skip-gram learns places from the company words keep, measured against a shuffled control.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-embeddings.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Embeddings: every token gets coordinates">
+<meta property="og:description" content="How a list of numbers per word comes to mean something: the skip-gram learns places from the company words keep, measured against a shuffled control.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-embeddings.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Embeddings: every token gets coordinates, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Embeddings: every token gets coordinates, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L8</span></div>
+  <div class="mid">
+    <h1>Embeddings. <span class="g">Every token gets coordinates.</span></h1>
+    <p class="lede">Each piece of text gets a list of numbers, and training moves those lists until words that keep the same company sit close. Tallow hangs the words as cards in her lamp room and lets them drift.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 3:38, hosted by Tallow. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/embeddings/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the lamp room</h2>
+  <p class="body-text">Train your own skip-gram on the guides&#x27; sentences: choose the seed, the numbers per word, the window and the noise words, then step through its snapshots and pick a word to see its neighbours. The film&#x27;s run ends with 65% of words beside a word of the same kind, against about 23% shuffled.</p>
+  <div class="ls" data-school="lab" data-lab="embeddings">
+    <button type="button" class="ns-btn ns-go" data-school-open>Light the lamp</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Embeddings</h3><p>Embeddings. Every word gets coordinates.</p><p>Pylon showed you that a word in a model is a list of numbers, a place. Tonight, where those places come from.</p>
+<h3>Before anything is learned</h3><p>At the start, every word gets a list of 32 small random numbers. The places mean nothing yet.</p><p>Check the neighbours: only 26 percent of words sit next to a word of the same kind, about what a shuffle gives.</p>
+<h3>You are the company you keep</h3><p>The trick is a guessing game. Take a word in a sentence, and the words around it.</p><p>Each word gets two lists: one for when it&#x27;s the word in the middle, one for when it&#x27;s a neighbour. Nudge the lists so that the middle word&#x27;s list and each real neighbour&#x27;s neighbour-list get a bigger dot product, the measure from the vectors lesson.</p><p>And for every real neighbour, pick 5 words at random, common words more often than rare ones, and push those the other way. Tomas Mikolov and his colleagues called it negative sampling, in 2013.</p>
+<h3>The cards drift</h3><p>Run the game over the guides&#x27; sentences, 5 times through, and watch the places move.</p><p class="sc-ask">Will the neighbours keep getting tidier all the way through training? <span>(the film pauses here)</span></p><p>Very early, by 5 percent of the way, the neighbours look their tidiest of any checkpoint: 72 percent of words sit next to a word of the same kind. By the end, in this run, it has slipped back to 65, three words fewer out of 46, while the guessing game keeps getting better on sentences it never trained on.</p><p>Better at the game is not always tidier on the chart. The game is the goal; the neat neighbours are a side effect.</p>
+<h3>Another roll of the dice</h3><p>Start from different random numbers, four more times, and you get different coordinates, but much the same neighbours: against the first run, 75 to 80 percent of each word&#x27;s three nearest neighbours agree.</p>
+<h3>Two ways to the same chart</h3><p>The language model from the attention lesson learned its word lists a different way: as a side effect of guessing the next word, through two layers of attention.</p><p>Its lists put 80 percent of words next to a word of the same kind. And between the two tables, about 33 percent of each word&#x27;s three nearest neighbours agree. By chance it would be about 7 percent.</p><p>So the two methods agree on far more than chance, and far less than two runs of the same method agree with each other. Neither one is the true map. Each is a map of what its own game needed.</p>
+<h3>Goodnight</h3><p>Nobody draws the chart. A guessing game moves the cards, and words used alike end up close.</p><p>Next in the lighthouse: guessing the next word, and keeping score. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/embeddings/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s skip-gram, trained for this film.</strong> media/school/embeddings/facts.json, written by tools/school/fill_embeddings.mjs from system/school/embeddings.mjs: skip-gram with negative sampling (32 numbers per word, window 1 to 2, 5 noise words, 5 epochs, seed 1) on the guides&#x27; corpus; a finite-difference check of the hand-written gradient (worst 5.3e-7). <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings</a></p><p>Used for: Same-kind nearest neighbour share: 26% at the start (shuffle control mean 22%, 95% interval 9% to 39%); highest of the 12 snapshots at 5% of training (72%), 65% at the end, from one seed; held-out loss falls at every snapshot (2.14 at 5%, 1.92 at the end). Seed 1 against each of four other seeds: 75% to 80% of each word&#x27;s three nearest neighbours agree (pairs among seeds 2 to 5 not measured).</p><p class="sc-dnp">Does not prove: Anything about large embedding tables.</p></li><li><p><strong>Mikolov and others 2013, Distributed Representations of Words and Phrases and their Compositionality.</strong> Mikolov, T., Sutskever, I., Chen, K., Corrado, G., Dean, J. (2013). Distributed Representations of Words and Phrases and their Compositionality. NeurIPS 26. arXiv:1310.4546. <a class="inline" href="https://arxiv.org/abs/1310.4546">https://arxiv.org/abs/1310.4546</a></p><p>Used for: The skip-gram model learns an input and an output vector for every word, trained so a word&#x27;s vector predicts the words around it (section 2). Negative sampling replaces the full softmax: each real (word, context) pair is pushed together and k words drawn from a noise distribution (the unigram distribution to the 3/4 power) are pushed apart (section 2.2, equation 4).</p><p class="sc-dnp">Does not prove: That the learned neighbours reflect meaning beyond how words are used in the training text.</p></li><li><p><strong>Night School&#x27;s tiny transformer, its word table.</strong> media/school/attention/model.json (wte), compared in media/school/embeddings/facts.json. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings</a></p><p>Used for: The attention model&#x27;s word table puts 80% of words next to a same-kind word; its top-3 neighbour lists overlap the skip-gram&#x27;s by 33% (chance about 7%; shuffled control 2% to 12%).</p><p class="sc-dnp">Does not prove: Which table is better; they were trained for different games.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Forty-six words from a made-up corpus are enough to see the effect and far too few to show what large tables learn; the categories used to score neighbours are ours.</p><p class="body-text">The chart shows two directions out of many, so two cards can look close and be far apart; neighbours are measured in all the dimensions.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-tokens.html">Tokens</a> (L7). Later: <a class="inline" href="night-school-attention.html">Attention</a> (L10), where this table is put to work.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L8: embeddings.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

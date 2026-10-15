@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tokens: cutting text into crates</title>
+<meta name="description" content="How a language model cuts text into pieces: letters, merges learned from counts (byte-pair encoding), and bytes so nothing is left on the dock.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-tokens.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Tokens: cutting text into crates">
+<meta property="og:description" content="How a language model cuts text into pieces: letters, merges learned from counts (byte-pair encoding), and bytes so nothing is left on the dock.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-tokens.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tokens: cutting text into crates, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Tokens: cutting text into crates, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L7</span></div>
+  <div class="mid">
+    <h1>Tokens. <span class="g">Cutting text into crates.</span></h1>
+    <p class="lede">A model never sees letters or words. It sees pieces. Pylon runs the customs shed where text is cut into crates, and the crates are learned from counting pairs.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:48, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/tokens/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the customs shed</h2>
+  <p class="body-text">Type any text and cut it with merges learned on the guides&#x27; sentences, on Moby-Dick&#x27;s opening, or on your own text. Slide the number of merges and switch the base to bytes. On the guides&#x27; 47,002 words, every word is one piece after 136 merges; Moby-Dick&#x27;s opening takes 878.</p>
+  <div class="ls" data-school="lab" data-lab="tokens">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the shed</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Tokens</h3><p>Tokens. Cutting text into crates.</p><p>Everything that comes through my customs shed goes into a standard crate. Text too, before any language model can touch it.</p>
+<h3>How big a crate</h3><p>A language model doesn&#x27;t read letters. It reads a list of pieces, each one a number from its vocabulary. The question is how big to cut the pieces.</p><p>Cut by letter, with one extra mark for the end of each word, and the guides&#x27; sentences take about 4.39 pieces per word, counting each full stop and question mark as a word: tiny crates, a great many trips.</p><p>Cut by whole word, and every word is one piece. But a word the model has never seen has no crate at all.</p>
+<h3>Merge the common pairs</h3><p>Byte-pair encoding meets in the middle. Start from single letters. Count every pair of neighbouring pieces, inside words. The most common pair gets a crate of its own. Then count again.</p><p>On the guides&#x27; sentences, the first merge joins an e to the end-of-word mark, so an e that ends a word gets one crate. By the fifth merge, the whole word &#x27;the&#x27; has its own crate.</p><p class="sc-ask">After fifty merges, how many pieces does a word take? <span>(the film pauses here)</span></p><p>After 50 merges, a word takes 1.80 pieces on average. After 136, every one of the guides&#x27; words is a single piece.</p>
+<h3>A word nobody shipped before</h3><p>Now a word that never came through the shed: lamplit. There&#x27;s no crate for it.</p><p>So it&#x27;s cut into pieces that do have crates: l, am, p, and lit at the end of a word. Nothing is thrown away. Rico Sennrich and his colleagues used this method, in a 2016 paper, to translate rare words.</p>
+<h3>Real English</h3><p>The guides only know 44 words and 2 marks. So here&#x27;s real English: the opening of Moby-Dick, about 599 words of it, to learn the merges from.</p><p>Then a page it never saw, the opening of Pride and Prejudice. With 400 merges, the new page takes 2.14 pieces per word. The word lighthouse, never seen, comes out as li, gh, thou and se.</p>
+<h3>Why the common pairs</h3><p>Does it matter which pairs we merge? Merge random pairs instead, the same number of times, and over ten tries the guides&#x27; words still take 1.32 to 1.67 pieces each, instead of one.</p>
+<h3>The smallest crates</h3><p>There&#x27;s one more choice: what the very first pieces are. Characters run out fast. The page from Pride and Prejudice has curly quotation marks, and a capital D and E, that Moby-Dick never used, so with characters as the base, they have no crate.</p><p>GPT-2 starts from bytes instead. There are only 256 of them, and any text at all is some list of bytes. An a is one byte, an e with its accent built in is two, a curly apostrophe three, and a seal emoji four.</p><p>Start from bytes, and that new page has 0 pieces without a crate, instead of 16.</p>
+<h3>The lighthouse model</h3><p>The little language model from the attention lesson skips all of this. It has one crate per word, 46 of them counting the full stop and question mark, because its whole world is those 46.</p><p>Byte-pair encoding needs 136 merges, and a vocabulary of 160, to cut the same sentences into whole words, because every piece it made on the way stays in the vocabulary.</p>
+<h3>Goodnight</h3><p>Common pairs get their own crates, rare words come apart into pieces, and bytes mean nothing is ever left on the dock.</p><p>Next: giving every crate a place on the chart. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/tokens/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s tokenizer runs, computed for this film.</strong> media/school/tokens/facts.json, written by tools/school/fill_tokens.mjs from system/school/tokens.mjs: BPE learned on the guides&#x27; corpus (3,000 generated episodes, 47,002 words) and on the first five paragraphs of Moby-Dick (716 words), measured on held-out text. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens</a></p><p>Used for: Guides&#x27; corpus: 4.39 tokens per word at 0 merges (characters plus one end-of-word symbol per word; &#x27;.&#x27; and &#x27;?&#x27; count as words), 1.80 at 50 merges, 1.00 at 136 merges (vocabulary 160). The first merge is e with the end-of-word mark; the fifth makes &#x27;the&#x27;. Unseen &#x27;lamplit&#x27; is cut into l, am, p, lit (end of word). Ten runs of 136 random merges leave 1.32 to 1.67 tokens per word. English: with 400 merges learned on Moby-Dick (716 pre-tokens, 599 words split on spaces), the opening of Pride and Prejudice takes 2.14 tokens per word; &#x27;lighthouse&#x27; is cut into li, gh, thou, se, the same at 400 and at 878 merges. The attention model is word-level with 46 entries: 44 words and two marks (&#x27;.&#x27; and &#x27;?&#x27;).</p><p class="sc-dnp">Does not prove: Anything about large tokenizers; small texts chosen to show the mechanism.</p></li><li><p><strong>Sennrich, Haddow and Birch 2016, Neural Machine Translation of Rare Words with Subword Units.</strong> Sennrich, R., Haddow, B., Birch, A. (2016). Neural Machine Translation of Rare Words with Subword Units. ACL 2016. arXiv:1508.07909. <a class="inline" href="https://arxiv.org/abs/1508.07909">https://arxiv.org/abs/1508.07909</a></p><p>Used for: Byte-pair encoding for word segmentation: start from characters with an end-of-word symbol, repeatedly merge the most frequent adjacent pair of symbols within words, and add the merged symbol to the vocabulary (section 3.2, Algorithm 1). Rare and unseen words are represented as sequences of subword units, which lets a translation model handle them.</p><p class="sc-dnp">Does not prove: That BPE is the best segmentation for every language or task.</p></li><li><p><strong>Gage 1994, A New Algorithm for Data Compression.</strong> Gage, P. (1994). A New Algorithm for Data Compression. The C Users Journal 12(2), 23-38. <a class="inline" href="https://www.derczynski.com/papers/archive/BPE_Gage.pdf">https://www.derczynski.com/papers/archive/BPE_Gage.pdf</a></p><p>Used for: Byte pair encoding began as compression: replace the most frequent adjacent pair of bytes with a byte that does not occur in the data, and repeat.</p><p class="sc-dnp">Does not prove: Anything about language models.</p></li><li><p><strong>Melville 1851, Moby-Dick.</strong> Melville, H. (1851). Moby-Dick; or, The Whale. Chapter 1, paragraphs 1 to 5. Project Gutenberg eBook #2701. <a class="inline" href="https://www.gutenberg.org/ebooks/2701">https://www.gutenberg.org/ebooks/2701</a></p><p>Used for: Public-domain English text used as training text for the English BPE.</p><p class="sc-dnp">Does not prove: Nothing; it is sample text.</p></li><li><p><strong>Austen 1813, Pride and Prejudice.</strong> Austen, J. (1813). Pride and Prejudice. Chapter 1, paragraphs 1 to 10. Project Gutenberg eBook #1342. <a class="inline" href="https://www.gutenberg.org/ebooks/1342">https://www.gutenberg.org/ebooks/1342</a></p><p>Used for: Public-domain English text used as held-out text.</p><p class="sc-dnp">Does not prove: Nothing; it is sample text.</p></li><li><p><strong>Radford and others 2019, Language Models are Unsupervised Multitask Learners (GPT-2).</strong> Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI. <a class="inline" href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf</a></p><p>Used for: GPT-2 applies BPE to bytes rather than Unicode code points: a base vocabulary of 256 instead of over 130,000, so any string can be encoded (section 2.2). Its vocabulary has 50,257 entries (section 2.3).</p><p class="sc-dnp">Does not prove: That byte-level BPE is better on every measure; ours compresses slightly worse than character-level BPE on the held-out page.</p></li><li><p><strong>UTF-8 byte counts and byte-level BPE, computed for this film.</strong> media/school/tokens/facts.json (bytes section): TextEncoder byte counts; character-level and byte-level BPE with 878 merges on Moby-Dick, measured on Pride and Prejudice. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tokens</a></p><p>Used for: UTF-8: a is 1 byte, a precomposed accented e (U+00E9) 2 (an e with a combining accent is 3), a curly apostrophe 3, the seal emoji 4. On the held-out page, character-level BPE leaves 16 unknown tokens (7 open and 7 close curly quotes, one D and one E never seen in training); byte-level BPE leaves 0.</p><p class="sc-dnp">Does not prove: That bytes are the right base for every language model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The merges here are learned on small texts, so the pieces are short and odd; production tokenizers learn tens of thousands of merges on far more text.</p><p class="body-text">Real tokenizers add rules this one leaves out (how spaces attach, special tokens, normalisation), so their pieces for the same text will differ.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-heldout.html">The held-out set</a> (F6). Next: <a class="inline" href="night-school-embeddings.html">Embeddings</a> (L8).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L7: tokens.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
