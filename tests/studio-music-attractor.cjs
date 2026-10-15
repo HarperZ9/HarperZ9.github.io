@@ -66,6 +66,12 @@ const backend = (p) => p.page.evaluate(() => window.ReactiveVisuals.attractorBac
         await W.sleep(5000);
         assert.equal(await backend(cpu), 'canvas2d', `${tag} ?music=cpu draws the Canvas2D mode`);
         const cpuCells = await grown(cpu.page);
+        if (cpuCells.length <= 20) {
+          // Say what the stage is doing, for the open Linux-Firefox finding (see ci.yml).
+          const f1 = await W.frame(cpu.page); await W.sleep(1000); const f2 = await W.frame(cpu.page);
+          const playing = await cpu.page.evaluate(() => (document.getElementById('music-play') || {}).textContent);
+          console.log(`${tag} stage ${f1 === f2 ? 'still' : 'changing'}, play button "${(playing || '').trim()}", errors ${JSON.stringify(cpu.errors)}`);
+        }
         assert.ok(cpuCells.length > 20, `${tag} the Canvas2D Lorenz figure is drawn (${cpuCells.length} cells)`);
         const cpuControls = await controls(cpu.page);
         const hidden = await open(ctx, '', 'lorenz2d', true);
