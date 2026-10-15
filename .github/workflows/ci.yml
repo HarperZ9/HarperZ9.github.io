@@ -165,6 +165,7 @@ jobs:
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-neural-gpu.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-viewer.cjs
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-attractor.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-music-flow.cjs
       # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
       # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
       # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources
@@ -192,6 +193,7 @@ jobs:
           # Windows and in Chrome on this runner, and the Canvas2D paths are unchanged by the GPU ports.
           # Cause unknown; possibly the same missing audio backend as the sound finding above.
           webgl_only="$webgl_only studio-music-attractor "
+          webgl_only="$webgl_only studio-music-flow "
           failed=""; reported=""
           # Only tests that pick their engine through tests/lib/browser.cjs can run in Firefox.
           for t in $(grep -l "lib/browser.cjs" tests/studio-*.cjs); do

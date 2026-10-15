@@ -701,7 +701,9 @@ RELEASE_PATHS = (
 # rehashed.
 # October 14, 2026: studio.html loads studio.js at the Music attractor's new stamp (raw-native
 # attractor, log tone map). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "260d39dee6fecdd1f642c849062491af58063bbe1cd19edeecad2b14bbcf3987"
+# October 14, 2026, later: studio.html loads studio.js at the Music flow field's new stamp
+# (raw-native flow field). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "6953d44e68c1e812d374b143ab22b1616b9f9e09d313ed95d4151bd4627851f6"
 
 
 BRIEFING_FIGURES = (
