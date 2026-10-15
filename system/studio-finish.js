@@ -44,7 +44,8 @@ function loadEngine() {
       import(`${RAW}web/motion/post.mjs`),
       import(`${RAW}web/motion/post_run.mjs`),
       import(`${RAW}web/shaders/post.mjs`),        // registers crt, film, crt-classic, dither, paint
-    ]).then(([gpu, post, run]) => (eng = { gpu, post, run }));
+      import(`${RAW}tests/web/post_frames.mjs`),   // toHalf, for the upload fallback
+    ]).then(([gpu, post, run, , frames]) => (eng = { gpu, post, run, frames }));
   }
   return engLoad;
 }
@@ -81,8 +82,31 @@ function sourceTexture(W, H, old) {
 
 // One frame of the layer: canvas in, the finish's passes, the WebGPU canvas out. The same function
 // draws the stage and the check, so the check measures the path the stage uses.
+// The upload: the canvas straight into the texture. Chrome on a Linux runner's SwiftShader refused
+// that copy for a 2D canvas after a few frames ("Failed to copy content from external image"), so a
+// refused copy falls back to reading the canvas's bytes and writing the same half floats the copy
+// would give (f16 of b / 255). Both paths hand the post stack the same texels.
+let scratch = null, uploads = { direct: 0, bytes: 0 }, forceBytes = false;
+function upload(source, tex, W, H) {
+  try {
+    if (forceBytes) throw new Error("bytes path chosen");
+    host.device.queue.copyExternalImageToTexture({ source }, { texture: tex }, [W, H]);
+    uploads.direct++;
+    return;
+  } catch (e) {
+    if (!scratch) scratch = document.createElement("canvas");
+    if (scratch.width !== W || scratch.height !== H) { scratch.width = W; scratch.height = H; }
+    const c = scratch.getContext("2d", { willReadFrequently: true });
+    c.clearRect(0, 0, W, H); c.drawImage(source, 0, 0, W, H);
+    const bytes = c.getImageData(0, 0, W, H).data, f = new Float32Array(bytes.length);
+    for (let i = 0; i < bytes.length; i++) f[i] = bytes[i] / 255;
+    host.device.queue.writeTexture({ texture: tex }, eng.frames.toHalf(f), { bytesPerRow: W * 8 }, [W, H]);
+    uploads.bytes++;
+  }
+}
+
 function finishFrame(source, tex, context, p, W, H, f) {
-  host.device.queue.copyExternalImageToTexture({ source }, { texture: tex }, [W, H]);
+  upload(source, tex, W, H);
   const enc = host.device.createCommandEncoder({ label: "finish" });
   const target = context.getCurrentTexture();
   runner.run(enc, p.specs, tex, W, H, f, f / 60, { view: target.createView(), format }, p.stage);
@@ -192,12 +216,12 @@ export async function setFinish(name, { stage = null, status = null } = {}) {
 export function finishState() {
   return { chosen, state, reason, engine: ENGINE_VERSION, size: [...size], frames: frameNo,
     adapter: host && host.info ? host.info.description || host.info.architecture || "" : null,
-    overlay: !!(overlay && !overlay.hidden), stage: stageWhy || "on stage" };
+    overlay: !!(overlay && !overlay.hidden), stage: stageWhy || "on stage", uploads: { ...uploads } };
 }
 
 // The committed frame set through the layer's own path, against the engine's CPU references at 8 bits.
 // The plate is 8-bit (a canvas), so the reference reads b / 255 as the upload gives it to the GPU.
-async function check(name, { frames: only = null, control = false } = {}) {
+async function check(name, { frames: only = null, control = false, upload: via = "direct" } = {}) {
   const f = FINISHES[name];
   if (!f || !f.specs.length) throw new Error("no finish " + name);
   await ensureHost();
@@ -210,10 +234,10 @@ async function check(name, { frames: only = null, control = false } = {}) {
   configure(octx);
   const r = new eng.run.PostRunner(host, host.sampler({ filter: "linear", address: "clamp" }));
   await r.prepare(p.specs, W, H);
-  const keep = runner; runner = r;
+  const keep = runner; runner = r; forceBytes = via === "bytes";
   const tex = sourceTexture(W, H, null), bgra = /bgra/.test(format);
   const cpuSpecs = p.specs.map((s) => ({ ...s }));   // one object per pass: the references keep state per spec
-  const res = { finish: name, control, passes: p.specs.map((s) => s.pass), size: [W, H], frames: [], maxCode: 0, over: 0, worst: null };
+  const res = { finish: name, control, upload: via, passes: p.specs.map((s) => s.pass), size: [W, H], frames: [], maxCode: 0, over: 0, worst: null };
   let n = 0;                                          // the frame clock both sides see
   try {
     for (let i = 0; i < set.data.length; i++) {
@@ -249,7 +273,7 @@ async function check(name, { frames: only = null, control = false } = {}) {
       if (maxCode > res.maxCode) { res.maxCode = maxCode; res.worst = worst; }
     }
   } finally {
-    runner = keep; r.destroy(); tex.destroy();
+    runner = keep; forceBytes = false; r.destroy(); tex.destroy();
   }
   res.adapter = host.info.description || host.info.architecture || "";
   res.pass = res.over === 0 && res.maxCode <= 1;

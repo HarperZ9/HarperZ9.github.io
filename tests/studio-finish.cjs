@@ -86,6 +86,11 @@ const rects = (page) => page.evaluate(() => {
             assert.ok(!c.pass && c.over > 0, `${tag} ${look}: the control with a shifted reference fails`);
             rec.checks[look + '-control'] = { pass: c.pass, over: c.over, maxCode: c.maxCode };
           }
+          // The upload fallback (bytes read from the canvas, written as half floats) gives the same result.
+          const viaBytes = await page.evaluate(() => window.__studioFinish.check('classic', { upload: 'bytes' }));
+          rec.checks['classic-bytes'] = viaBytes;
+          assert.ok(viaBytes.pass, `${tag} classic through the byte upload: ${JSON.stringify(viaBytes.worst)} over ${viaBytes.over}`);
+          rec.uploads = (await finish(page)).uploads;
         }
         // Off: the overlay goes and the rail says so.
         await choose(page, 'off');
