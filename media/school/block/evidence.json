@@ -1,0 +1,59 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "block",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-block": {
+   "short": "Night School's attention model, taken apart for this film",
+   "citation": "media/school/block/facts.json, written by tools/school/fill_block.mjs from system/school/block.mjs: a hooked forward pass (equal to the model's own forward, bit for bit) that reads the residual stream, applies the final norm and output matrix at each depth, and knocks out heads, attention layers and MLPs by zero, mean or shuffle, or makes a sub-layer replace the stream instead of adding to it; scored on 256 held-out rows (6,144 next words, 506 copy positions).",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/block",
+   "read": "full",
+   "claims": [
+    "Parameters: 20864 in all; attention 8448, MLP 8384, embeddings 2240, output 1472, norms 320.",
+    "Readout at each depth (held-out loss): 2.33 from the table, 1.73 after layer 0 attention, 0.86 after layer 0 MLP, 0.75 after layer 1 attention, 0.69 at the top; copy accuracy 0.12, 0.21, 0.43, 0.82, 0.99.",
+    "Zero knockouts: layer 1 head 1 drops copy accuracy to 0.4032; layer 1 head 0 leaves it at 0.9921; layer 0 MLP raises the loss to 5.9605. On the untrained model knockouts move the loss by under 0.05.",
+    "Replace instead of add: layer 1 attention loss 6.62, layer 0 attention 4.93, layer 1 MLP 2.85, layer 0 MLP 0.69 (its output is about 10 times the stream it reads)."
+   ],
+   "n": "6,144 held-out next words (506 copy positions); one trained model; one untrained control.",
+   "interval": "No interval: one model; mean and shuffle knockouts given beside zero knockouts in facts.json.",
+   "does_not_prove": "That large models divide work the same way; a knockout shows what the model needs here, not what a part means."
+  },
+  "vaswani2017": {
+   "short": "Vaswani and others 2017, Attention Is All You Need",
+   "citation": "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. NeurIPS 30. arXiv:1706.03762.",
+   "url": "https://arxiv.org/abs/1706.03762",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "The transformer layer has two sub-layers, multi-head self-attention and a position-wise feed-forward network, each with a residual connection and layer normalisation (section 3.1); the paper applies the norm after the add."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "radford2019": {
+   "short": "Radford and others 2019, Language Models are Unsupervised Multitask Learners (GPT-2)",
+   "citation": "Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI report.",
+   "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Layer normalisation was moved to the input of each sub-block (section 2.3)."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "nostalgebraist2020": {
+   "short": "nostalgebraist 2020, interpreting GPT: the logit lens (blog post)",
+   "citation": "nostalgebraist (2020). interpreting GPT: the logit lens. LessWrong, 31 August 2020. A blog post, not peer reviewed.",
+   "url": "https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Applying the output step to the stream at intermediate layers gives guesses that improve with depth."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ },
+ "factcheck": "Independent fact-check 2026-10-15 (FACTCHECK.md): film 16 correct, 4 reword, 0 wrong; evidence 7 correct, 1 reword. Applied: two tables added for the stream; layer norm reads a rescaled copy and leaves the stream alone; the readout named (final norm and output table); the first floor's copy head named beside the top floor's."
+}

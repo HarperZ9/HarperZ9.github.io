@@ -65,7 +65,7 @@ def spec_nextword(f: dict) -> dict:
             "The held-out rows are new, but the sentences in them all occur somewhere in training: a 46-word grammar can only make so many. Real held-out text is far less forgiving.",
             "We can show the floor only because we wrote the rules; for real text the floor is unknown, so no one can say how much lower a loss could go.",
         ],
-        "next": "Before this: <a class=\"inline\" href=\"night-school-embeddings.html\">Embeddings</a> (L8). Next: <a class=\"inline\" href=\"night-school-attention.html\">Attention</a> (L10). Later: <a class=\"inline\" href=\"night-school-decoding.html\">Decoding</a> (L15).",
+        "next": "Before this: <a class=\"inline\" href=\"night-school-embeddings.html\">Embeddings</a> (L8). Next: <a class=\"inline\" href=\"night-school-attention.html\">Attention</a> (L10), then <a class=\"inline\" href=\"night-school-block.html\">The transformer block</a> (L11). Later: <a class=\"inline\" href=\"night-school-decoding.html\">Decoding</a> (L15).",
     }
 
 
@@ -88,5 +88,49 @@ def spec_decoding(f: dict) -> dict:
             "Following the rules is a strict check, but not the only one that matters: a run can follow every rule and still say nothing new.",
         ],
         "next": "Before this: <a class=\"inline\" href=\"night-school-nextword.html\">Next-word prediction</a> (L9). Next: evaluating a language model (L16), planned.",
+    }
+
+
+def spec_block(f: dict) -> dict:
+    a, c = f["ablations"]["trained"], f["params"]["counts"]
+    return {
+        "id": "L11", "slug": "block", "guide": "Tallow",
+        "title": "The transformer block",
+        "h1": "The transformer block. <span class=\"g\">Two floors, one stream.</span>",
+        "desc": "What one transformer block does: layer norm, attention, the MLP and the residual stream, taken apart room by room on a real model.",
+        "lede": "Every word's list of numbers climbs the tower. On each floor, attention and a small network read it and add to it. Tallow switches the rooms off one at a time to see what each was doing.",
+        "film": "It asks you two questions and waits for your answer before it shows you.",
+        "lab_h": "The lab: the tower",
+        "lab": (f"Switch off any head or MLP of the attention model, or make a room replace the stream instead of adding to it, and score it on its held-out rows. "
+                f"With everything on it copies {a['base']['copyAccuracy'] * 100:.0f}% of far-back words; attention and the MLP hold {c['attention']:,} and {c['mlp']:,} of its {c['total']:,} numbers."),
+        "lab_btn": "Climb the tower", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/block/facts.json")],
+        "limits": [
+            "Two layers and two heads on a 46-word grammar: large models spread the same jobs over many more parts, and a knockout here shows what this model needs, not what a part means.",
+            "Reading the stream early uses the model's own final norm and output table; other readouts give other numbers, and facts.json gives both.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-attention.html\">Attention</a> (L10). Next: <a class=\"inline\" href=\"night-school-trainloop.html\">The training loop</a> (L12).",
+    }
+
+
+def spec_trainloop(f: dict) -> dict:
+    r = f["reproduce"]
+    return {
+        "id": "L12", "slug": "trainloop", "guide": "Pylon",
+        "title": "The training loop",
+        "h1": "The training loop. <span class=\"g\">Five steps, two thousand times.</span>",
+        "desc": "Batch, forward, loss, backward, step: the whole loop that trains a language model, rerun exactly, with one setting changed at a time.",
+        "lede": "Every earlier lesson holds one piece of training. Pylon runs them round the dock together and watches a blind guess become a model that copies.",
+        "film": "It asks you two questions and waits for your answer before it shows you.",
+        "lab_h": "The lab: the training dock",
+        "lab": (f"Train the attention model from scratch in this page with your own step size, batch, clipping and weight decay, and watch its held-out loss and copy rate against the film's run. "
+                f"Rerun from its seeds, the loop gives back the lesson's model exactly: {r['tensorsEqual']} of {r['tensorsTotal']} weight tables."),
+        "lab_btn": "Open the dock", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/trainloop/facts.json")],
+        "limits": [
+            "Each changed setting is one run with one seed; only differences larger than the spread of the noise runs mean anything.",
+            "Timings are from one test machine; the lab's runs in your browser will be slower or faster.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-block.html\">The transformer block</a> (L11). Next: data, what goes in comes out (L13), planned.",
     }
 

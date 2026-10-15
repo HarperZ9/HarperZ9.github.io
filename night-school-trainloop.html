@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The training loop</title>
+<meta name="description" content="Batch, forward, loss, backward, step: the whole loop that trains a language model, rerun exactly, with one setting changed at a time.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-trainloop.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The training loop">
+<meta property="og:description" content="Batch, forward, loss, backward, step: the whole loop that trains a language model, rerun exactly, with one setting changed at a time.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-trainloop.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The training loop, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="The training loop, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L12</span></div>
+  <div class="mid">
+    <h1>The training loop. <span class="g">Five steps, two thousand times.</span></h1>
+    <p class="lede">Every earlier lesson holds one piece of training. Pylon runs them round the dock together and watches a blind guess become a model that copies.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:40, hosted by Pylon. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/trainloop/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the training dock</h2>
+  <p class="body-text">Train the attention model from scratch in this page with your own step size, batch, clipping and weight decay, and watch its held-out loss and copy rate against the film&#x27;s run. Rerun from its seeds, the loop gives back the lesson&#x27;s model exactly: 29 of 29 weight tables.</p>
+  <div class="ls" data-school="lab" data-lab="trainloop">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the dock</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>The training loop</h3><p>The training loop. Five steps, two thousand times.</p><p>Every lesson so far has a piece of training in it. Tonight they go round together, and we watch the whole loop teach the attention model, from the first step to the last.</p>
+<h3>One lap</h3><p>One lap goes like this. Take a batch of 16 rows from the training text. Run the model forward and score every next word: that is the loss.</p><p>Run backward to get the slope for every one of the model&#x27;s 20,864 numbers. Then the optimiser takes one step downhill. That is one lap.</p><p>On one core of our test machine, with this lesson&#x27;s own code, a lap takes about 21 milliseconds, and most of that is the backward pass: 14 of them.</p>
+<h3>The settings</h3><p>The optimiser is Adam, with a little weight decay that shrinks most of the numbers slightly each step, as in AdamW. The layer norms&#x27; gains and the biases are left out.</p><p>The step size starts tiny and grows over the first 30 laps to 0.01. That is warmup.</p><p>And if the whole slope, all the numbers taken together, is ever longer than 1, it is shortened to 1 before the step. That is clipping. It fired on 76 of the 2,000 laps, 62 of them in the first 250.</p>
+<h3>Two thousand laps</h3><p>Now run it. At lap zero, the held-out loss is 3.84, a blind guess.</p><p>By lap 100 it is 0.97: the easy patterns, which word tends to follow which, come first.</p><p class="sc-ask">Will copying a word from far back be learned early, late, or bit by bit? <span>(the film pauses here)</span></p><p>Copying a word from far back comes late, and then fast. At lap 500, copying is right 43 percent of the time. By lap 750, 97 percent.</p><p>We ran the loop again from the same seeds, and got the attention lesson&#x27;s model back exactly: 29 of 29 weight tables, number for number.</p>
+<h3>Change one thing</h3><p>Change one setting at a time, train for 1,000 laps, and compare. First, the noise: the same recipe on two other sets of training rows ends at 0.70 and 0.70, and the original at 0.70, all three within a few thousandths. A difference smaller than that cannot be told apart from luck.</p><p>A step size ten times smaller ends at 0.78, and copies right only 54 percent of the time. Ten times larger ends worse, at 0.95, copying 22 percent.</p><p class="sc-ask">Make the step size ten times larger. Faster, or worse? <span>(the film pauses here)</span></p><p>Without weight decay: 0.70, inside the noise. On this small model, at this length, it makes no difference we can see.</p><p>Batches of 4 rows for the same number of laps see a quarter of the text, and end at 0.87. Given the same text over four times the laps, they still end at 0.76.</p>
+<h3>A loop that cannot learn</h3><p>Two broken loops, as checks. With a step size of zero, nothing moves: the loss stays at 3.84.</p><p>Turn every slope around, so each step goes uphill, and the loss climbs to 68. The loop only works because the slope points the right way.</p>
+<h3>Goodnight</h3><p>Batch, forward, loss, backward, step. Two thousand times, and a blind guess becomes a model that copies.</p><p>Next on the dock: what goes into the batches. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/trainloop/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s training loop, rerun for this film.</strong> media/school/trainloop/facts.json, written by tools/school/fill_trainloop.mjs from system/school/trainloop.mjs: the attention model retrained from its seeds (2,000 steps) and compared with model.json; one-change variants of 1,000 steps each; gradient norms and clipping; timing in Node; two broken-loop controls. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/trainloop">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/trainloop</a></p><p>Used for: The retrained model equals model.json: 29 of 29 weight tensors byte for byte, 81 of 81 curve points. Clipping at norm 1 fired on 76 of 2000 steps, 62 of them in steps 1 to 250; warmup 30 steps to learning rate 0.01. Held-out loss 3.84 at step 0, 0.97 at 100, 0.82 at 500, 0.72 at 750; copy accuracy 0.43 at 500 and 0.97 at 750. Variants at 1,000 steps: reference 0.6981; other data seeds 0.700 and 0.702; learning rate 0.001 0.7835 (copy 0.5395); 0.1 0.9506 (copy 0.2174); no weight decay 0.6995; batch 4 at the same steps 0.8702. Controls: learning rate 0 stays at 3.8414; the gradient sign flipped climbs to 68.5. About 21 ms per step in Node on one core: forward 6.3 ms, backward 14.0 ms, update 0.2 ms.</p><p class="sc-dnp">Does not prove: That these settings are best for larger models; timings are for one machine.</p></li><li><p><strong>Kingma and Ba 2015, Adam: A Method for Stochastic Optimization.</strong> Kingma, D. P., Ba, J. (2015). Adam: A Method for Stochastic Optimization. ICLR 2015. arXiv:1412.6980. <a class="inline" href="https://arxiv.org/abs/1412.6980">https://arxiv.org/abs/1412.6980</a></p><p>Used for: Adam keeps running averages of each gradient and its square and steps by the first divided by the square root of the second (Algorithm 1); this model uses beta2 0.99 where the paper suggests 0.999.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Loshchilov and Hutter 2019, Decoupled Weight Decay Regularization (AdamW).</strong> Loshchilov, I., Hutter, F. (2019). Decoupled Weight Decay Regularization. ICLR 2019. arXiv:1711.05101. <a class="inline" href="https://arxiv.org/abs/1711.05101">https://arxiv.org/abs/1711.05101</a></p><p>Used for: Weight decay applied directly to the weights, separate from the gradient step (AdamW, Algorithm 2); here the decay is scaled by the full learning rate, as common libraries do.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Each changed setting is one run with one seed; only differences larger than the spread of the noise runs mean anything.</p><p class="body-text">Timings are from one test machine; the lab&#x27;s runs in your browser will be slower or faster.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-block.html">The transformer block</a> (L11). Next: data, what goes in comes out (L13), planned.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L12: trainloop.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

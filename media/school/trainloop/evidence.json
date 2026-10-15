@@ -1,0 +1,49 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "trainloop",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-trainloop": {
+   "short": "Night School's training loop, rerun for this film",
+   "citation": "media/school/trainloop/facts.json, written by tools/school/fill_trainloop.mjs from system/school/trainloop.mjs: the attention model retrained from its seeds (2,000 steps) and compared with model.json; one-change variants of 1,000 steps each; gradient norms and clipping; timing in Node; two broken-loop controls.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/trainloop",
+   "read": "full",
+   "claims": [
+    "The retrained model equals model.json: 29 of 29 weight tensors byte for byte, 81 of 81 curve points.",
+    "Clipping at norm 1 fired on 76 of 2000 steps, 62 of them in steps 1 to 250; warmup 30 steps to learning rate 0.01.",
+    "Held-out loss 3.84 at step 0, 0.97 at 100, 0.82 at 500, 0.72 at 750; copy accuracy 0.43 at 500 and 0.97 at 750.",
+    "Variants at 1,000 steps: reference 0.6981; other data seeds 0.700 and 0.702; learning rate 0.001 0.7835 (copy 0.5395); 0.1 0.9506 (copy 0.2174); no weight decay 0.6995; batch 4 at the same steps 0.8702.",
+    "Controls: learning rate 0 stays at 3.8414; the gradient sign flipped climbs to 68.5.",
+    "About 21 ms per step in Node on one core: forward 6.3 ms, backward 14.0 ms, update 0.2 ms."
+   ],
+   "n": "One full reproduction; one seed per variant, with two data-seed noise runs.",
+   "interval": "Noise runs give the spread to read single-seed variants against.",
+   "does_not_prove": "That these settings are best for larger models; timings are for one machine."
+  },
+  "kingma2015": {
+   "short": "Kingma and Ba 2015, Adam: A Method for Stochastic Optimization",
+   "citation": "Kingma, D. P., Ba, J. (2015). Adam: A Method for Stochastic Optimization. ICLR 2015. arXiv:1412.6980.",
+   "url": "https://arxiv.org/abs/1412.6980",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Adam keeps running averages of each gradient and its square and steps by the first divided by the square root of the second (Algorithm 1); this model uses beta2 0.99 where the paper suggests 0.999."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "loshchilov2019": {
+   "short": "Loshchilov and Hutter 2019, Decoupled Weight Decay Regularization (AdamW)",
+   "citation": "Loshchilov, I., Hutter, F. (2019). Decoupled Weight Decay Regularization. ICLR 2019. arXiv:1711.05101.",
+   "url": "https://arxiv.org/abs/1711.05101",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Weight decay applied directly to the weights, separate from the gradient step (AdamW, Algorithm 2); here the decay is scaled by the full learning rate, as common libraries do."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ },
+ "factcheck": "Independent fact-check 2026-10-15 (FACTCHECK.md): film 13 correct, 6 reword, 1 wrong; evidence 7 correct, 1 reword. Wrong: weight decay shrinks every number (the gains and biases, 768 of 20,864, are exempt). Applied with the rewordings: five steps; one test machine; clipping on the whole gradient's length; late then fast; noise runs within a few thousandths; batch 4 at matched text; tables counted from tensorsEqual; Adam divides by the square root of the second average."
+}
