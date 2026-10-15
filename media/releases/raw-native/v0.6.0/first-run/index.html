@@ -38,6 +38,7 @@
     sceneUrl: new URL("scene/first-run.scene.mjs", location.href).href,
     shaders: new URL("engine/", location.href).href,
     audio: media.narrated && video ? video : null,
+    burnedCaptions: !!media.captions_burned,
     captions: vtt || null,
     label: "raw-native: build, render, check",
   });
