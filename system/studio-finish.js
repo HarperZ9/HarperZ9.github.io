@@ -189,7 +189,28 @@ export async function setFinish(name, { stage = null, status = null } = {}) {
   }
   if (!navigator.gpu) { fail("this browser has no WebGPU"); return state; }
   state = state === "on" ? "on" : "starting"; report();
-  try {
+  // One retry of the start: a software adapter can refuse a device for a moment while the browser
+  // is busy. The second failure turns the layer off and names the error.
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try { await start(name, stage); break; } catch (e) {
+      console.warn(`[studio-finish] raw-native did not start (attempt ${attempt}):`, e);
+      if (attempt === 2) {
+        fail(eng && e instanceof eng.gpu.HostUnavailable ? String(e.message) : `raw-native could not start here (${String(e && e.message || e).slice(0, 120)})`);
+        return state;
+      }
+      host = null; runner = null; srcTex = null;
+      if (overlay) { overlay.remove(); overlay = null; ctx = null; }
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  }
+  if (chosen !== name) return state;            // another choice arrived while starting
+  state = "on"; report();
+  if (!raf) raf = requestAnimationFrame(tick);
+  return state;
+}
+
+async function start(name, stage) {
+  {
     await ensureHost();
     if (!overlay) {
       overlay = document.createElement("canvas");
@@ -204,15 +225,7 @@ export async function setFinish(name, { stage = null, status = null } = {}) {
     if (src && src.width) await runner.prepare(plan(name).specs, src.width, src.height);
     size = src ? [src.width, src.height] : [0, 0];
     if (src && src.width) { overlay.width = src.width; overlay.height = src.height; srcTex = sourceTexture(src.width, src.height, srcTex); }
-  } catch (e) {
-    console.warn("[studio-finish] raw-native did not start:", e);
-    fail(eng && e instanceof eng.gpu.HostUnavailable ? String(e.message) : "raw-native could not start here");
-    return state;
   }
-  if (chosen !== name) return state;            // another choice arrived while starting
-  state = "on"; report();
-  if (!raf) raf = requestAnimationFrame(tick);
-  return state;
 }
 
 /** The layer's own record, for the rail, the shell and the tests. */
