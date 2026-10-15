@@ -120,7 +120,99 @@ def lesson_page(s: dict, film: dict, ev: dict, timing: list) -> str:
                 f"{s['title']}, a Night School lesson by Zain Dana Harper.") + body + foot(f"Night School, lesson {s['id']}: {slug}.")
 
 
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices}
+def spec_gradients(f: dict) -> dict:
+    b, g, o = f["bowl"], f["gradientNorm"], f["oneNumber"]
+    return {
+        "id": "F3", "slug": "gradients", "guide": "Pylon",
+        "title": "Gradients: which way is downhill",
+        "h1": "Gradients. <span class=\"g\">Which way is downhill.</span>",
+        "desc": "Pylon feels her way down a hill in fog: the gradient, a step that goes over the edge, a real model's loss, then you walk the hills yourself.",
+        "lede": "Training a model means walking downhill on a landscape you cannot see. Pylon does it in fog on the hill above the harbour, and then hands you her lantern.",
+        "film": "It asks you two questions and waits for your answer before it shows you.",
+        "lab_h": "The lab: Pylon in the fog",
+        "lab": (f"Pick a hill, click the map to place your start, choose a step and walk down by gradient descent, seen from above or as a relief. On the tilted bowl the edge is "
+                f"2 / {b['curvatures'][0]} = {b['predictedBound']}: try either side of it. Then turn the dial on the attention model's last matrix and step it with the model's own backward pass, "
+                f"on 64 sentences it never trained on. In the film's run, the dial's lowest point was {o['sStar']:.2f}, and the gradient's length fell from {g['init']['rows256']['norm']:.2f} "
+                f"before training to {g['trained']['rows256']['norm']:.2f} after."),
+        "lab_btn": "Into the fog", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/gradients/facts.json"), ("model.json", "media/school/attention/model.json")],
+        "limits": [
+            "The bowl, the narrow valley and the two valleys are toy surfaces chosen to show one effect each. Real loss surfaces have thousands or billions of directions, and the slice of the model's loss in the film is one flat view through them along two random directions, which are almost at right angles to the steepest one.",
+            "The model's own training uses AdamW with a warmup and gradient clipping, on 16 stretches of text per step, not the plain fixed-step descent shown here. Better ways to step are lesson F5.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-matrices.html\">Matrices</a> (F2). Next along the hill: <a class=\"inline\" href=\"night-school-backprop.html\">Backpropagation</a> (F4).",
+    }
+
+
+def spec_backprop(f: dict) -> dict:
+    tr, c = f["training"], f["cost"]
+    return {
+        "id": "F4", "slug": "backprop", "guide": "Pylon",
+        "title": "Backpropagation: blame, passed backwards",
+        "h1": "Backpropagation. <span class=\"g\">Blame, passed backwards.</span>",
+        "desc": "A chain of buckets down the hill: how a network gets every number's slope in one walk back, checked number by number, then trained in your browser.",
+        "lede": "A model needs the slope for every one of its numbers. Nudging each one costs a whole run apiece. Pylon's bucket chain shows the trick that gets them all in one walk back.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: Pylon's bucket chain",
+        "lab": (f"Train a {'-'.join(str(x) for x in f['net']['sizes'])} network ({f['net']['nParams']} numbers) on two spirals, in your browser. Click any point to see its chain: the value in every bucket and the "
+                f"blame arriving at it. Check the walk back against nudging every number, then break one link on purpose and watch the check point at it. In the film's run, one walk back cost "
+                f"{c['backward']} multiply-adds against {c['forward']} for the forward pass, and the network was right on {tr['finalHeldAccuracy'] * 100:.1f}% of new points after {tr['steps']:,} steps."),
+        "lab_btn": "Fill the buckets", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/backprop/facts.json")],
+        "limits": [
+            "The network is tiny and the spirals are a toy task, so it trains in well under a second. Large models are trained the same way in principle, by software that writes the backward pass automatically rather than by hand.",
+            "The count of multiply-adds leaves out the curves (tanh, exp and log) and is for one point. The general bound for reverse mode is a small constant times the cost of the function; our measured 2.12 is one network, not that bound.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-gradients.html\">Gradients</a> (F3). Next along the hill: optimisers (F5), planned.",
+    }
+
+
+def spec_optimisers(f: dict) -> dict:
+    E, sp = f["races"]["rosenbrock"]["entrants"], f["spiral"]
+    return {
+        "id": "F5", "slug": "optimisers", "guide": "Pylon",
+        "title": "Optimisers: momentum, Adam and the step size",
+        "h1": "Optimisers. <span class=\"g\">Better ways to step.</span>",
+        "desc": "Careful steps, a heavy ball and Adam race down the same valleys, then train a real network: who wins depends on the hill.",
+        "lede": "Plain gradient descent crawls along narrow valleys. Pylon gives her walker weight, then a pair of shoes, and races all three on hills where each one wins.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: Pylon's race",
+        "lab": (f"Race careful steps, the heavy ball and Adam on three hills, each with the step you give it, from wherever you click. On the long narrow valley, at the steps the film chose, "
+                f"the heavy ball got down to stay in {E['momentum']['stepsToThreshold']:,} updates, careful steps in {E['sgd']['stepsToThreshold']:,} and Adam in {E['adam']['stepsToThreshold']:,}. "
+                f"Then train the spiral network from the bucket chain with any walker and step, and compare the runs."),
+        "lab_btn": "Line them up", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/optimisers/facts.json")],
+        "limits": [
+            "Which walker wins depends on the hill and on the handful of steps tried for each; comparisons between optimisers are sensitive to how carefully each one is tuned, and these are small, chosen surfaces.",
+            f"The language model comparison covers its first {f['transformer']['steps']} updates only, a fifth of its training, before it has properly learned to copy; it shows who gets off the line fastest, not who finishes best.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-backprop.html\">Backpropagation</a> (F4). Next: <a class=\"inline\" href=\"night-school-heldout.html\">The held-out set</a> (F6).",
+    }
+
+
+def spec_heldout(f: dict) -> dict:
+    p, sp = f["poly"], f["spiral"]
+    return {
+        "id": "F6", "slug": "heldout", "guide": "Pylon",
+        "title": "The held-out set: learning, or remembering?",
+        "h1": "The held-out set. <span class=\"g\">Learning, or remembering?</span>",
+        "desc": "A curve that passes through every point and fails on new ones: overfitting, the held-out set, a leash, and how even a held-out score is one draw.",
+        "lede": "A model can learn its training examples by heart and still be lost on new ones. Pylon fits curves at her desk, keeps some points back, and shows what they reveal.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: practice and test",
+        "lab": (f"Fit a curve of any flexibility to {p['nTrain']} points, with or without a leash, and see its error on them and on {p['nHeld']} held-out points; draw new training points and watch the best "
+                f"flexibility move. Then train the spiral network on 10 to 400 points. In the film, 40 points gave {sp['small']['finalHeldAccuracy'] * 100:.1f}% on new points and 400 gave {sp['full']['finalHeldAccuracy'] * 100:.1f}%."),
+        "lab_btn": "Open the chart", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/heldout/facts.json")],
+        "limits": [
+            "The curve and the spirals are toy problems with known answers, so overfitting is easy to see; in real work the truth is unknown and the held-out set is the only window onto it.",
+            "Some choices in the film (the best degree, the best leash) were picked on the same held-out points they are scored on, which flatters them a little; the film says so, and the closing rule (a third set, looked at once) is the fix.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-optimisers.html\">Optimisers</a> (F5). Next, at the dock: tokens (L7), planned.",
+    }
+
+
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout}
 
 
 def write_all(root) -> list[str]:

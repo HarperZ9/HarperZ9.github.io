@@ -1,0 +1,89 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "gradients",
+  "read": "2026-10-15",
+  "sources": {
+    "cauchy1847": {
+      "short": "Cauchy 1847, the method of steepest descent",
+      "citation": "Cauchy, A. (1847). Methode generale pour la resolution des systemes d'equations simultanees. Comptes Rendus de l'Academie des Sciences 25, 536-538.",
+      "url": "https://gallica.bnf.fr/ark:/12148/bpt6k2982c/f540.item",
+      "read": "primary scan not read (Gallica refused access); read Lemarechal 2012, Documenta Mathematica Extra Volume ISMP, 251-254, which quotes the note (Comptes Rendus 25, 536-538, 18 October 1847)",
+      "claims": [
+        "Cauchy described moving a point step by step in the direction that most decreases a function, using its partial derivatives (steepest descent), in 1847.",
+        "Cauchy outlined the method and gave no proof of convergence."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That the method works well on a given problem; the step size and the shape of the function decide that."
+    },
+    "goodfellow2016": {
+      "short": "Goodfellow, Bengio and Courville 2016, Deep Learning",
+      "citation": "Goodfellow, I., Bengio, Y., Courville, A. (2016). Deep Learning. MIT Press. Chapter 4.3 (gradient-based optimization) and chapter 8 (minibatch training).",
+      "url": "https://www.deeplearningbook.org/",
+      "read": "sections 4.2, 4.3, 4.3.1, 8.1.3 and 8.2.1 (free online)",
+      "claims": [
+        "The gradient points in the direction of steepest increase; gradient descent steps in the negative gradient direction (4.3).",
+        "With a quadratic approximation, the optimal step along the steepest curvature is 1 divided by the largest Hessian eigenvalue, and a step is uphill once its second-order term outweighs its first-order term (eq. 4.9, 4.10, 8.10). The edge of 2 divided by the largest eigenvalue for a quadratic is our derivation from these, and our runs measure it.",
+        "Ill-conditioning (very different curvatures in different directions) makes gradient descent slow (8.2.1).",
+        "Training uses minibatches, so each step uses an estimate of the gradient (8.1.3)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about a particular trained model."
+    },
+    "rosenbrock1960": {
+      "short": "Rosenbrock 1960, the curved valley test function",
+      "citation": "Rosenbrock, H. H. (1960). An automatic method for finding the greatest or least value of a function. The Computer Journal 3(3), 175-184.",
+      "url": "https://doi.org/10.1093/comjnl/3.3.175",
+      "read": "not read (paywalled); the function's form is from the GAMS model library entry that cites the paper; the start (-1.2, 1) is the usual one in later use, not confirmed against the paper",
+      "claims": [
+        "The function f(x, y) = (1 - x)^2 + 100 (y - x^2)^2 has a long, curved, narrow valley with its minimum at (1, 1); it later became a standard hard case for gradient methods."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "How hard real training problems are."
+    },
+    "ours-surfaces": {
+      "short": "Night School's surfaces, computed for this film",
+      "citation": "media/school/gradients/facts.json, written by tools/school/fill_gradients.mjs from system/school/gradients.mjs: exact gradients, a finite-difference check, curvatures from a finite-difference Hessian, and the stability edge found by bisection on real runs.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients",
+      "read": "full",
+      "claims": [
+        "The bowl's curvatures are 4 and 0.5; the predicted edge 2/4 = 0.5 and the measured edge agree to about 1e-13; runs at 0.5, 0.99 and 1.01 times the edge converge, crawl and diverge over 60 steps, and at 2 times the edge the loss passes the 1e12 cap at step 12; runs at 0.6 and 1.2 times the edge (the film's doubled step) converge and diverge.",
+        "Rosenbrock from (-1.2, 1) with step 0.001: loss below 1e-2 at step 3,925 and below 1e-6 at step 15,068; curvature ratio at the minimum about 2,508.",
+        "Two valleys: starts at (-0.3, 0) and (0.3, 0) end in different valleys; the right valley's bottom (0.197) is higher than the left's (-0.202)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about real models; these are toy surfaces chosen to show one effect each."
+    },
+    "li2018": {
+      "short": "Li, Xu, Taylor, Studer and Goldstein 2018, Visualizing the Loss Landscape of Neural Nets",
+      "citation": "Li, H., Xu, Z., Taylor, G., Studer, C., Goldstein, T. (2018). Visualizing the Loss Landscape of Neural Nets. NeurIPS 31. arXiv:1712.09913.",
+      "url": "https://arxiv.org/abs/1712.09913",
+      "read": "full text, arXiv v3 (NeurIPS 2018), sections 4, 6 and 7.1",
+      "claims": [
+        "A loss surface can be viewed by plotting the loss along two random directions through the trained parameters, with each direction normalised filter by filter to the size of the weights.",
+        "In high dimensions two random directions are nearly orthogonal to any fixed direction (section 7.1 gives an expected cosine of about 0.0055 at this size); ours measure -0.0024 and 0.0079 against the gradient."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "What the full high-dimensional surface looks like; a 2D slice is one view."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, the attention lesson's trained weights",
+      "citation": "media/school/attention/model.json, read by tools/school/fill_gradients.mjs (system/school/gradients-landscape.mjs uses the model's own backward pass).",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients",
+      "read": "full",
+      "claims": [
+        "20,864 numbers; gradient norm of the mean held-out loss on 256 rows: 1.87 at initialisation, 0.124 trained.",
+        "A 21 x 21 slice along two filter-normalised random directions on 64 held-out rows: 0.70 at the centre, 13.99 at most; the directions' cosines with the gradient are under 0.01.",
+        "An added multiplier s on the readout matrix: the loss is lowest at s = 0.92 (0.6988), against 0.69996 at s = 1; descent from s = 0.05 for 40 steps reaches 0.84 with step 0.05; step 0.2 overshoots to about 2.46 and comes back to 1.27. The 0.92 is measured on 64 held-out rows."
+      ],
+      "n": "One trained model; 64 or 256 held-out rows as stated.",
+      "interval": "One seed; no interval across seeds.",
+      "does_not_prove": "Anything about large models' loss surfaces."
+    }
+  },
+  "factcheck": "media/school/gradients/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}

@@ -716,7 +716,7 @@ RELEASE_PATHS = (
 # stamp. The release is rehashed.
 # October 15, 2026: batch 7 of the full Who Knew First second read adds dated corrections and
 # sources; the series tables follow the new reading time (80 min). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "1febe545bb063a5a08ed18f5bf99d9dcc880bd06477139f5fce55fe623811c07"
+REVIEWED_RELEASE_SHA256 = "71ed3b0ab73460b92b8181586aafe25b4b40c82363b7b35960756a0a7de7ae33"
 
 
 BRIEFING_FIGURES = (

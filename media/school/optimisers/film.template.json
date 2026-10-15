@@ -1,0 +1,114 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "optimisers",
+  "title": "Optimisers: momentum, Adam and the step size",
+  "page": "night-school-optimisers.html",
+  "seed": 20261020,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/optimisers/facts.json, computed by tools/school/fill_optimisers.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "The foggy hill again. Pylon rolls a heavy ball to the top, ties a pair of odd shoes to her flippers, and looks down the long valley. No words." },
+    "close": { "seconds": 5.0, "what": "Three markers at the bottom of three different hills, each with a different winner's ribbon. Pylon puts a cone on the one she trusts least and walks home." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Optimisers",
+      "lines": [
+        "Optimisers. Better ways to step.",
+        "Last time I walked downhill one careful step at a time. Tonight the walker gets weight, and then a pair of shoes."
+      ]
+    },
+    {
+      "key": "valley",
+      "heading": "The trouble with careful steps",
+      "sources": ["ours-surfaces"],
+      "lines": [
+        "Remember the long, narrow valley. Steep across, nearly flat along.",
+        "Careful steps have to stay small for the steep way, so along the floor they crawl. At the best step we tried, it takes {{races.rosenbrock.entrants.sgd.stepsToThreshold|int}} steps to get the loss under a ten-thousandth and keep it there."
+      ]
+    },
+    {
+      "key": "momentum",
+      "heading": "Give the walker weight",
+      "sources": ["polyak1964", "ours-surfaces"],
+      "lines": [
+        "Now make the walker heavy. Each step keeps {{races.rosenbrock.settings.momentum.beta|pct}} percent of the last step's motion and adds the new slope on top.",
+        "Across the valley, the slopes keep flipping, so they cancel. Along the floor they all point the same way, so they add up. The walker picks up speed exactly where it was crawling.",
+        "Boris Polyak described it in 1964. It's known as the heavy ball method."
+      ]
+    },
+    {
+      "key": "adam",
+      "heading": "Shoes for every direction",
+      "sources": ["kingma2015"],
+      "lines": [
+        "The other idea is shoes that adjust to the ground. Adam keeps a running average of each slope, and a running average of each slope squared.",
+        "It divides the first by the square root of the second. So a direction with a steady slope gets a step of about the same size, however steep or gentle it is: steep directions are slowed down, gentle ones sped up. A direction whose slope keeps flipping gets a short step.",
+        "Both averages start at zero, so at first they're too small. Adam scales them back up, so its very first step is the step size you chose, to within a hair, in every direction that has any slope at all."
+      ]
+    },
+    {
+      "key": "race",
+      "heading": "The race",
+      "sources": ["ours-surfaces"],
+      "lines": [
+        "Same valley, same start. Each walker gets the best step from a few we tried.",
+        "The heavy ball, by a mile: {{races.rosenbrock.entrants.momentum.stepsToThreshold|int}} steps. Careful steps take {{races.rosenbrock.entrants.sgd.stepsToThreshold|int}}. Adam dips under the line at step {{races.rosenbrock.entrants.adam.firstBelow|int}}, keeps wandering around it, and only stays under after {{races.rosenbrock.entrants.adam.stepsToThreshold|int}}.",
+        "And on the gentle bowl from last time, careful steps win: {{races.bowl.entrants.sgd.stepsToThreshold|int}} steps, against {{races.bowl.entrants.momentum.stepsToThreshold|int}} for the other two. No walker is best on every hill."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Which walker gets down this valley first?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "edge",
+      "heading": "Past the edge",
+      "sources": ["polyak1964", "ours-surfaces"],
+      "lines": [
+        "Remember the edge on the bowl: past a step of {{aboveEdge.plainBound.predicted}}, careful steps fly off. Try {{aboveEdge.lr}}.",
+        "Careful steps fly off, as before. The heavy ball's edge here is {{aboveEdge.momentumBound.predicted}}, so it gets down. Adam's steps don't grow with the slope, so it doesn't fly off, and here it gets down too."
+      ]
+    },
+    {
+      "key": "schedule",
+      "heading": "Changing the step as you go",
+      "sources": ["loshchilov2017", "loshchilov2019", "goyal2017"],
+      "lines": [
+        "The step size doesn't have to stay fixed. Many models start with a warmup, small steps while everything is new, then let the step size fall away along a smooth curve.",
+        "And AdamW adds one more thing: almost every number shrinks by a small fraction at each step, kept separate from Adam's own step. It pulls numbers that aren't earning their keep back towards zero."
+      ]
+    },
+    {
+      "key": "real",
+      "heading": "On real networks",
+      "sources": ["ours-spiral", "ours-model"],
+      "lines": [
+        "On the spirals from the bucket chain, with each walker's step chosen on a separate set of points, careful steps first pass {{spiral.target|pct}} percent on new points at step {{spiral.arms.sgd.firstHeldAtTarget|int}}, the heavy ball at {{spiral.arms.momentum.firstHeldAtTarget|int}}, and Adam at {{spiral.arms.adam.firstHeldAtTarget|int}}.",
+        "But run five different starting networks and batch orders, and Adam's final score ranges from {{spiral.seedSpread.arms.adam.finalHeldAccuracy.min|pct1}} to {{spiral.seedSpread.arms.adam.finalHeldAccuracy.max|pct1}} percent, while careful steps stay between {{spiral.seedSpread.arms.sgd.finalHeldAccuracy.min|pct1}} and {{spiral.seedSpread.arms.sgd.finalHeldAccuracy.max|pct1}}. Fast, and on this network, less steady.",
+        "The language model from the attention lesson trains with AdamW. For its first {{transformer.steps|int}} steps, with the same start and the same sentences, AdamW reaches a held-out loss of {{transformer.arms.adamw.finalHeldOut|f2}}, the heavy ball {{transformer.arms.momentum.finalHeldOut|f2}}, and careful steps {{transformer.arms.sgd.finalHeldOut|f2}}."
+      ]
+    },
+    {
+      "key": "limits",
+      "heading": "What a race can't tell you",
+      "sources": ["ours-spiral", "ours-model"],
+      "lines": [
+        "Every number tonight depends on the hill and on the handful of steps we tried for each walker. Try more, or a different hill, and the order can change.",
+        "And four hundred steps is the first fifth of the language model's training. It has barely started to copy, so this shows who gets off the line fastest, not who finishes best."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Weight carries you through the zigzags. Shoes give every direction its own stride. Neither wins every hill.",
+        "Next along the hill: learning a harbour by heart, and why that's a trap. Goodnight."
+      ]
+    }
+  ]
+}

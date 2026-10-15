@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gradients: which way is downhill</title>
+<meta name="description" content="Pylon feels her way down a hill in fog: the gradient, a step that goes over the edge, a real model&#x27;s loss, then you walk the hills yourself.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-gradients.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Gradients: which way is downhill">
+<meta property="og:description" content="Pylon feels her way down a hill in fog: the gradient, a step that goes over the edge, a real model&#x27;s loss, then you walk the hills yourself.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-gradients.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Gradients: which way is downhill, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Gradients: which way is downhill, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F3</span></div>
+  <div class="mid">
+    <h1>Gradients. <span class="g">Which way is downhill.</span></h1>
+    <p class="lede">Training a model means walking downhill on a landscape you cannot see. Pylon does it in fog on the hill above the harbour, and then hands you her lantern.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:45, hosted by Pylon. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/gradients/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Pylon in the fog</h2>
+  <p class="body-text">Pick a hill, click the map to place your start, choose a step and walk down by gradient descent, seen from above or as a relief. On the tilted bowl the edge is 2 / 4 = 0.5: try either side of it. Then turn the dial on the attention model&#x27;s last matrix and step it with the model&#x27;s own backward pass, on 64 sentences it never trained on. In the film&#x27;s run, the dial&#x27;s lowest point was 0.92, and the gradient&#x27;s length fell from 1.87 before training to 0.12 after.</p>
+  <div class="ls" data-school="lab" data-lab="gradients">
+    <button type="button" class="ns-btn ns-go" data-school-open>Into the fog</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Gradients</h3><p>Gradients. Which way is downhill.</p><p>Tonight the hill is in fog. I can&#x27;t see the bottom. All I can do is feel the ground under my flippers.</p>
+<h3>Feel the slope</h3><p>Put one flipper a little to the east and feel how much higher the ground is there. That&#x27;s the slope going east.</p><p>Do the same going north. Two slopes, written as a list: that list is the gradient.</p><p>The gradient points the steepest way up. So to go down, step the opposite way. Feel, step, feel again. That&#x27;s gradient descent. Augustin Cauchy wrote it down in 1847.</p>
+<h3>How big a step</h3><p>Here is a bowl, steep one way and gentle the other: the steep way curves 8 times as sharply as the gentle way.</p><p>Bigger steps should get me down faster, so let&#x27;s double mine.</p><p class="sc-ask">If I double my step, do I get down twice as fast? <span>(the film pauses here)</span></p><p>Over the edge. On this bowl, any step longer than two divided by the steep way&#x27;s curvature, 4, overshoots further each time. That edge is 0.5, and running the bowl puts it exactly there.</p><p>Half that step gets down smoothly. Just under the edge, I zigzag and crawl. Just over it, I zigzag outwards. At twice it, the loss passes a trillion in just 12 steps.</p>
+<h3>A long, narrow valley</h3><p>Now a valley that is steep across and almost flat along. At the bottom, the steep way curves about 2,508 times as sharply as the flat way.</p><p>The steep way sets the largest safe step, so along the flat way I creep. It takes 3,925 steps to get the loss under a hundredth, and 15,068 to get it under a millionth.</p>
+<h3>Which valley</h3><p>One more hill, with two valleys and a ridge between them. I start just left of the ridge, then just right of it.</p><p class="sc-ask">Do the two starts end in the same valley? <span>(the film pauses here)</span></p><p>Different valleys. The right one is not even the lower one. Gradient descent finds a bottom near where it starts, not the lowest bottom there is.</p>
+<h3>The model&#x27;s own hill</h3><p>The language model from the attention lesson has 20,864 numbers. Its loss is a hill with 20,864 directions, and its gradient is a list of 20,864 slopes.</p><p>Before training, the length of that list was 1.87. After training it is 0.12: the ground under the trained model is much flatter.</p><p>To see any of it, we cut a slice through the trained point along two random directions, the way Li and colleagues did in 2018. The loss is 0.70 in the middle and climbs to 13.99 at one corner.</p><p>One warning. In a hill with 20,864 directions, two random ones are almost at right angles to the steepest one. This slice shows that the model sits in a dip along these two directions. It cannot show the whole hill.</p>
+<h3>One number, by hand</h3><p>So let&#x27;s follow one direction we choose. Freeze every number, and add one dial that turns the model&#x27;s last matrix up or down. At one, it&#x27;s the model as trained.</p><p>On sentences it never trained on, the bottom of this one-way slice is at 0.92, not at one, though the loss there is only a hair lower. Turning the dial down makes the model a little less sure of itself, and new text likes that.</p><p>Start the dial near zero, feel the slope with the model&#x27;s own arithmetic, and step. With small steps, forty of them walk the dial up to 0.84. A step too big for the steep ground near zero overshoots to well past one, and has to walk back.</p>
+<h3>What the fog hides</h3><p>This model&#x27;s training never feels the whole hill at once. Each step feels the slope on 16 short stretches of text, so every step is a little off.</p><p>And I haven&#x27;t said how a model with 20,864 numbers works out 20,864 slopes at once without feeling each one separately. That&#x27;s the bucket chain, next.</p>
+<h3>Goodnight</h3><p>The gradient is the list of slopes. Step the other way, not too far, and you go down. Where you end up depends on where you start.</p><p>Next along the hill: blame, passed backwards. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/gradients/facts.json">facts.json</a>, <a class="inline" href="media/school/attention/model.json">model.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Cauchy 1847, the method of steepest descent.</strong> Cauchy, A. (1847). Methode generale pour la resolution des systemes d&#x27;equations simultanees. Comptes Rendus de l&#x27;Academie des Sciences 25, 536-538. <a class="inline" href="https://gallica.bnf.fr/ark:/12148/bpt6k2982c/f540.item">https://gallica.bnf.fr/ark:/12148/bpt6k2982c/f540.item</a></p><p>Used for: Cauchy described moving a point step by step in the direction that most decreases a function, using its partial derivatives (steepest descent), in 1847. Cauchy outlined the method and gave no proof of convergence.</p><p class="sc-dnp">Does not prove: That the method works well on a given problem; the step size and the shape of the function decide that.</p></li><li><p><strong>Goodfellow, Bengio and Courville 2016, Deep Learning.</strong> Goodfellow, I., Bengio, Y., Courville, A. (2016). Deep Learning. MIT Press. Chapter 4.3 (gradient-based optimization) and chapter 8 (minibatch training). <a class="inline" href="https://www.deeplearningbook.org/">https://www.deeplearningbook.org/</a></p><p>Used for: The gradient points in the direction of steepest increase; gradient descent steps in the negative gradient direction (4.3). With a quadratic approximation, the optimal step along the steepest curvature is 1 divided by the largest Hessian eigenvalue, and a step is uphill once its second-order term outweighs its first-order term (eq. 4.9, 4.10, 8.10). The edge of 2 divided by the largest eigenvalue for a quadratic is our derivation from these, and our runs measure it. Ill-conditioning (very different curvatures in different directions) makes gradient descent slow (8.2.1). Training uses minibatches, so each step uses an estimate of the gradient (8.1.3).</p><p class="sc-dnp">Does not prove: Anything about a particular trained model.</p></li><li><p><strong>Rosenbrock 1960, the curved valley test function.</strong> Rosenbrock, H. H. (1960). An automatic method for finding the greatest or least value of a function. The Computer Journal 3(3), 175-184. <a class="inline" href="https://doi.org/10.1093/comjnl/3.3.175">https://doi.org/10.1093/comjnl/3.3.175</a></p><p>Used for: The function f(x, y) = (1 - x)^2 + 100 (y - x^2)^2 has a long, curved, narrow valley with its minimum at (1, 1); it later became a standard hard case for gradient methods.</p><p class="sc-dnp">Does not prove: How hard real training problems are.</p></li><li><p><strong>Night School&#x27;s surfaces, computed for this film.</strong> media/school/gradients/facts.json, written by tools/school/fill_gradients.mjs from system/school/gradients.mjs: exact gradients, a finite-difference check, curvatures from a finite-difference Hessian, and the stability edge found by bisection on real runs. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients</a></p><p>Used for: The bowl&#x27;s curvatures are 4 and 0.5; the predicted edge 2/4 = 0.5 and the measured edge agree to about 1e-13; runs at 0.5, 0.99 and 1.01 times the edge converge, crawl and diverge over 60 steps, and at 2 times the edge the loss passes the 1e12 cap at step 12; runs at 0.6 and 1.2 times the edge (the film&#x27;s doubled step) converge and diverge. Rosenbrock from (-1.2, 1) with step 0.001: loss below 1e-2 at step 3,925 and below 1e-6 at step 15,068; curvature ratio at the minimum about 2,508. Two valleys: starts at (-0.3, 0) and (0.3, 0) end in different valleys; the right valley&#x27;s bottom (0.197) is higher than the left&#x27;s (-0.202).</p><p class="sc-dnp">Does not prove: Anything about real models; these are toy surfaces chosen to show one effect each.</p></li><li><p><strong>Li, Xu, Taylor, Studer and Goldstein 2018, Visualizing the Loss Landscape of Neural Nets.</strong> Li, H., Xu, Z., Taylor, G., Studer, C., Goldstein, T. (2018). Visualizing the Loss Landscape of Neural Nets. NeurIPS 31. arXiv:1712.09913. <a class="inline" href="https://arxiv.org/abs/1712.09913">https://arxiv.org/abs/1712.09913</a></p><p>Used for: A loss surface can be viewed by plotting the loss along two random directions through the trained parameters, with each direction normalised filter by filter to the size of the weights. In high dimensions two random directions are nearly orthogonal to any fixed direction (section 7.1 gives an expected cosine of about 0.0055 at this size); ours measure -0.0024 and 0.0079 against the gradient.</p><p class="sc-dnp">Does not prove: What the full high-dimensional surface looks like; a 2D slice is one view.</p></li><li><p><strong>Night School&#x27;s tiny transformer, the attention lesson&#x27;s trained weights.</strong> media/school/attention/model.json, read by tools/school/fill_gradients.mjs (system/school/gradients-landscape.mjs uses the model&#x27;s own backward pass). <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/gradients</a></p><p>Used for: 20,864 numbers; gradient norm of the mean held-out loss on 256 rows: 1.87 at initialisation, 0.124 trained. A 21 x 21 slice along two filter-normalised random directions on 64 held-out rows: 0.70 at the centre, 13.99 at most; the directions&#x27; cosines with the gradient are under 0.01. An added multiplier s on the readout matrix: the loss is lowest at s = 0.92 (0.6988), against 0.69996 at s = 1; descent from s = 0.05 for 40 steps reaches 0.84 with step 0.05; step 0.2 overshoots to about 2.46 and comes back to 1.27. The 0.92 is measured on 64 held-out rows.</p><p class="sc-dnp">Does not prove: Anything about large models&#x27; loss surfaces.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The bowl, the narrow valley and the two valleys are toy surfaces chosen to show one effect each. Real loss surfaces have thousands or billions of directions, and the slice of the model&#x27;s loss in the film is one flat view through them along two random directions, which are almost at right angles to the steepest one.</p><p class="body-text">The model&#x27;s own training uses AdamW with a warmup and gradient clipping, on 16 stretches of text per step, not the plain fixed-step descent shown here. Better ways to step are lesson F5.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-matrices.html">Matrices</a> (F2). Next along the hill: <a class="inline" href="night-school-backprop.html">Backpropagation</a> (F4).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F3: gradients.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

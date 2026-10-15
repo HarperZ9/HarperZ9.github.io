@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The held-out set: learning, or remembering?</title>
+<meta name="description" content="A curve that passes through every point and fails on new ones: overfitting, the held-out set, a leash, and how even a held-out score is one draw.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-heldout.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The held-out set: learning, or remembering?">
+<meta property="og:description" content="A curve that passes through every point and fails on new ones: overfitting, the held-out set, a leash, and how even a held-out score is one draw.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-heldout.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The held-out set: learning, or remembering?, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="The held-out set: learning, or remembering?, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F6</span></div>
+  <div class="mid">
+    <h1>The held-out set. <span class="g">Learning, or remembering?</span></h1>
+    <p class="lede">A model can learn its training examples by heart and still be lost on new ones. Pylon fits curves at her desk, keeps some points back, and shows what they reveal.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:18, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/heldout/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: practice and test</h2>
+  <p class="body-text">Fit a curve of any flexibility to 16 points, with or without a leash, and see its error on them and on 500 held-out points; draw new training points and watch the best flexibility move. Then train the spiral network on 10 to 400 points. In the film, 40 points gave 78.2% on new points and 400 gave 99.5%.</p>
+  <div class="ls" data-school="lab" data-lab="heldout">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the chart</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>The held-out set</h3><p>The held-out set. Learning, or remembering?</p><p>I could learn this harbour by heart, every crate in its place. Then one night they send me to a different harbour.</p>
+<h3>Sixteen points</h3><p>Here are 16 points. They come from a smooth curve, plus a little noise, the way real measurements do.</p><p>Let&#x27;s fit a curve through them. A straight line misses the bend. A gentle curve follows it. And a wild one, with enough freedom, passes through every single point.</p><p class="sc-ask">Which curve will do best on points it has never seen? <span>(the film pauses here)</span></p><p>The wild one gets every point right: its error on them is about one part in a hundred billion. That&#x27;s zero, apart from rounding in the arithmetic.</p>
+<h3>Points kept back</h3><p>So keep some points back. 500 of them, drawn the same way, never used for fitting. That&#x27;s the held-out set.</p><p>On those, the gentle curve&#x27;s error is 0.33. The wild one&#x27;s is 3,936. Between the points it learned it swings wildly, and past the outermost ones it shoots off the chart.</p><p>Make the curve more flexible, step by step, and the error on the training points only ever goes down. The error on the held-out points goes down, then turns around and climbs, with a few bumps on the way.</p>
+<h3>A leash</h3><p>One fix is a leash: keep the wild curve, but charge it for every large number it uses.</p><p>A moderate charge brings its held-out error down from 3,936 to 0.43. That&#x27;s the best of seven charges we tried, picked by looking at these same held-out points, so it flatters the leash a little. Pull too hard and it gets worse again: at the heaviest pull we tried, 0.70.</p>
+<h3>The spirals, with too few points</h3><p>The bucket chain from last time learned two spirals from 400 points. Give it only 40.</p><p>It still gets every training point right. On new points it&#x27;s right 78.3 percent of the time, against 99.5 with all 400.</p><p>Watch the held-out loss. It&#x27;s lowest early, at step 300, and then climbs while the training loss keeps falling. Its score on new points still creeps up for a while, to 80 percent by step 1,000, but it grows ever more sure of itself, wrong answers included. After that the score stops improving, and training only tightens its grip on these forty points.</p>
+<h3>One draw is one draw</h3><p>And a score from one training set is one draw. Pick five different sets of 40 training points, and the held-out score runs from 75.5 to 86.0 percent.</p><p>Even which curve looks best depends on the draw. Over two hundred draws of sixteen points, the gentle curve came out best 113 times, not every time.</p>
+<h3>The language model</h3><p>The language model from the attention lesson was trained on a stream of freshly made sentences, a new batch every step. Its little grammar does repeat itself: 507 of its 32,000 training rows were exact copies of earlier ones. But no row came round more than 5 times, so it had little chance to learn its training rows by heart.</p><p>Score the finished model on rows it trained on, and its loss is about 0.63. On the next stretch of the same stream, which it didn&#x27;t train on, 0.67. A small gap, not a chasm.</p><p>And its own held-out set turns out to be a little hard: 0.69, higher than five fresh draws of the same size, which range from 0.65 to 0.67.</p>
+<h3>Keep it held out</h3><p>One rule makes all of this work. Once you use the held-out points to choose anything, how flexible the curve is, how long to train, they stop being held out.</p><p>So careful work keeps a third set locked away until the very end, and looks at it once.</p>
+<h3>Goodnight</h3><p>Getting the practice right is not the test. Keep points back, and check on those.</p><p>That&#x27;s the hill done. Next, down at the dock, we cut words into crates. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/heldout/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s curve fits, computed for this film.</strong> media/school/heldout/facts.json (poly section), written by tools/school/fill_heldout.mjs from system/school/heldout.mjs: least squares by Householder QR; ridge by QR on the design matrix stacked over sqrt(lambda) times the identity. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout</a></p><p>Used for: 16 training points from sin(pi x) with noise sigma 0.2; 500 held-out points. Degree 3 held-out RMSE 0.330; degree 15 train RMSE 1.4e-11 and held-out RMSE 3,936. Ridge at degree 15: held-out RMSE 3,936 at lambda 0, 0.429 at 0.01 (the best of 7), 0.703 at 100. Over 200 training draws, degree 3 is the best degree on held-out data 113 times. Degree 3 and the penalty 0.01 were picked on the same held-out points they are scored on, which flatters them a little. The wild curve&#x27;s held-out error is 2.99 on points inside the training range and far larger past the outermost training points.</p><p class="sc-dnp">Does not prove: Anything about real data; a toy curve chosen to show one effect.</p></li><li><p><strong>Goodfellow, Bengio and Courville 2016, Deep Learning.</strong> Goodfellow, I., Bengio, Y., Courville, A. (2016). Deep Learning. MIT Press. Chapter 5.2 (capacity, overfitting and underfitting) and 5.3 (hyperparameters and validation sets). <a class="inline" href="https://www.deeplearningbook.org/">https://www.deeplearningbook.org/</a></p><p>Used for: Training error falls as capacity grows, while test error typically falls and then rises (overfitting). Choosing hyperparameters on the test set biases it; a separate validation set is used for choices, and the test set only to estimate generalisation at the end.</p><p class="sc-dnp">Does not prove: Anything about a particular model.</p></li><li><p><strong>Hoerl and Kennard 1970, Ridge Regression.</strong> Hoerl, A. E., Kennard, R. W. (1970). Ridge Regression: Biased Estimation for Nonorthogonal Problems. Technometrics 12(1), 55-67. <a class="inline" href="https://doi.org/10.1080/00401706.1970.10488634">https://doi.org/10.1080/00401706.1970.10488634</a></p><p>Used for: Ridge regression adds a penalty on the size of the coefficients (lambda times their sum of squares) to least squares.</p><p class="sc-dnp">Does not prove: Which lambda to use.</p></li><li><p><strong>Night School&#x27;s spiral network on 40 points against 400.</strong> media/school/heldout/facts.json (spiral section): the F4 network, plain descent at 0.3, 10,000 updates, on the first 40 of the 400 training points and, as the control, on all 400. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout</a></p><p>Used for: Both reach training accuracy 1. Held-out accuracy 0.7825 with 40 points, 0.995 with 400. With 40 points the held-out loss is lowest at update 300 (0.648) and ends at 1.487. Over five different 40-point draws, held-out accuracy ranges from 0.755 to 0.86. After the held-out loss minimum at update 300, held-out accuracy still rises, to 0.8025 at update 1,000, while the held-out loss climbs.</p><p class="sc-dnp">Does not prove: Anything general about how many points a task needs.</p></li><li><p><strong>Night School&#x27;s tiny transformer, its training and held-out losses.</strong> media/school/heldout/facts.json (attention section): model.json&#x27;s own curves, and the final weights rescored on rows they were trained on, on unseen rows of the same stream, on the lab&#x27;s 256 held-out rows and on five fresh 256-row draws. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout</a></p><p>Used for: The trainer draws a fresh batch every update; the generator repeats rows by chance: 507 of the 32,000 training rows were exact copies of earlier rows, and no row came round more than 5 times. 8 of the 256 &#x27;unseen&#x27; rows and 3 of the lab&#x27;s 256 held-out rows also occur in training (facts.json, attention.repeats). Final weights: loss 0.626 on the last 16 trained batches, 0.668 on the next 16 unseen batches, 0.687 on the lab&#x27;s held-out rows, 0.650 to 0.672 on five fresh draws.</p><p class="sc-dnp">Does not prove: That the model would not memorise with repeated data; it never had any.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The curve and the spirals are toy problems with known answers, so overfitting is easy to see; in real work the truth is unknown and the held-out set is the only window onto it.</p><p class="body-text">Some choices in the film (the best degree, the best leash) were picked on the same held-out points they are scored on, which flatters them a little; the film says so, and the closing rule (a third set, looked at once) is the fix.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-optimisers.html">Optimisers</a> (F5). Next, at the dock: tokens (L7), planned.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F6: heldout.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
