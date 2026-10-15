@@ -296,3 +296,33 @@ def test_batch5_rows_cite_the_source_in_table_and_graph_data() -> None:
 def test_batch5_note_is_dated() -> None:
     notes = CORRECTIONS.search(text()).group(1)
     assert "October 15, 2026: sources added, information and interest table: nine rows" in notes
+
+
+# Batch 6 (WKF-0583 to WKF-0872). Op-ed paragraphs stay byte-identical; asides beside them carry the
+# fixes, and the follow-up findings section takes an inline source.
+B6_ASIDES = (
+    ("Google's three companies were unaware for 57 to 91 days", "#source-s59"),
+    ("Anthropic will also fund its new embedded evaluator, Faculty", "anthropic-accenture-partnership"),
+    ("since 5 hours is short next to the roughly 21 hours", "#source-s35"),
+    ('called its intrusions "mistaken identity" and "not misalignment,"', "not an instance of model misalignment"),
+    ("OpenAI launched GPT-6 Astra, which it says is its first model", "research/assessing-gpt-6-astra"),
+)
+
+
+def test_batch6_asides_follow_their_op_ed_paragraphs() -> None:
+    t = text()
+    for phrase, marker in B6_ASIDES:
+        i = t.index(phrase)
+        line_end = t.index("\n", i)
+        aside = t[line_end + 1:t.index("</aside>", line_end)]
+        assert aside.startswith('<aside class="wkf-finding-note"'), phrase
+        assert "October 15, 2026" in aside and marker in aside, (phrase, marker)
+
+
+def test_batch6_follow_up_cites_anthropic_post_and_notes_are_dated() -> None:
+    t = text()
+    assert ("cannot be used to influence any election (vendor-claimed; "
+            '<a href="https://www.anthropic.com/news/donation-public-first-action"') in t
+    notes = CORRECTIONS.search(t).group(1)
+    assert "October 15, 2026: correction, the op-ed: a sentence quoted Google" in notes
+    assert "October 15, 2026: sources added, the op-ed and the follow-up: five sentences" in notes
