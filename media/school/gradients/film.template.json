@@ -1,0 +1,110 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "gradients",
+  "title": "Gradients: which way is downhill",
+  "page": "night-school-gradients.html",
+  "seed": 20261018,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/gradients/facts.json, computed by tools/school/fill_gradients.mjs (the surfaces, and the attention lesson's trained model); tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "The hill above the harbour at night, in fog. Pylon climbs into the fog with her lantern; the harbour lights vanish behind her. No words." },
+    "close": { "seconds": 5.0, "what": "The fog thins. Pylon is at the bottom of a valley, not the lowest one; she plants a cone there, looks at the next hill, and puts out the lantern." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Gradients",
+      "lines": [
+        "Gradients. Which way is downhill.",
+        "Tonight the hill is in fog. I can't see the bottom. All I can do is feel the ground under my flippers."
+      ]
+    },
+    {
+      "key": "slope",
+      "heading": "Feel the slope",
+      "sources": ["cauchy1847", "goodfellow2016"],
+      "lines": [
+        "Put one flipper a little to the east and feel how much higher the ground is there. That's the slope going east.",
+        "Do the same going north. Two slopes, written as a list: that list is the gradient.",
+        "The gradient points the steepest way up. So to go down, step the opposite way. Feel, step, feel again. That's gradient descent. Augustin Cauchy wrote it down in 1847."
+      ]
+    },
+    {
+      "key": "step",
+      "heading": "How big a step",
+      "sources": ["goodfellow2016", "ours-surfaces"],
+      "lines": [
+        "Here is a bowl, steep one way and gentle the other: the steep way curves {{bowl.conditionNumber}} times as sharply as the gentle way.",
+        "Bigger steps should get me down faster, so let's double mine.",
+        "Over the edge. On this bowl, any step longer than two divided by the steep way's curvature, {{bowl.curvatures.0}}, overshoots further each time. That edge is {{bowl.predictedBound}}, and running the bowl puts it exactly there.",
+        "Half that step gets down smoothly. Just under the edge, I zigzag and crawl. Just over it, I zigzag outwards. At twice it, the loss passes a trillion in just {{bowl.runs.3.steps}} steps."
+      ],
+      "predict": [
+        { "after": [1, 0], "question": "If I double my step, do I get down twice as fast?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "valley",
+      "heading": "A long, narrow valley",
+      "sources": ["rosenbrock1960", "ours-surfaces"],
+      "lines": [
+        "Now a valley that is steep across and almost flat along. At the bottom, the steep way curves about {{rosenbrock.conditionNumberAtMinimum|int}} times as sharply as the flat way.",
+        "The steep way sets the largest safe step, so along the flat way I creep. It takes {{rosenbrock.firstStepBelow.1e-2|int}} steps to get the loss under a hundredth, and {{rosenbrock.firstStepBelow.1e-6|int}} to get it under a millionth."
+      ]
+    },
+    {
+      "key": "valleys",
+      "heading": "Which valley",
+      "sources": ["ours-surfaces"],
+      "lines": [
+        "One more hill, with two valleys and a ridge between them. I start just left of the ridge, then just right of it.",
+        "Different valleys. The right one is not even the lower one. Gradient descent finds a bottom near where it starts, not the lowest bottom there is."
+      ],
+      "predict": [
+        { "after": [0, 1], "question": "Do the two starts end in the same valley?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "real",
+      "heading": "The model's own hill",
+      "sources": ["li2018", "ours-model"],
+      "lines": [
+        "The language model from the attention lesson has {{gradientNorm.nParams|int}} numbers. Its loss is a hill with {{gradientNorm.nParams|int}} directions, and its gradient is a list of {{gradientNorm.nParams|int}} slopes.",
+        "Before training, the length of that list was {{gradientNorm.init.rows256.norm|f2}}. After training it is {{gradientNorm.trained.rows256.norm|f2}}: the ground under the trained model is much flatter.",
+        "To see any of it, we cut a slice through the trained point along two random directions, the way Li and colleagues did in 2018. The loss is {{landscape.trained.center|f2}} in the middle and climbs to {{landscape.trained.max|f2}} at one corner.",
+        "One warning. In a hill with {{gradientNorm.nParams|int}} directions, two random ones are almost at right angles to the steepest one. This slice shows that the model sits in a dip along these two directions. It cannot show the whole hill."
+      ]
+    },
+    {
+      "key": "one",
+      "heading": "One number, by hand",
+      "sources": ["ours-model"],
+      "lines": [
+        "So let's follow one direction we choose. Freeze every number, and add one dial that turns the model's last matrix up or down. At one, it's the model as trained.",
+        "On sentences it never trained on, the bottom of this one-way slice is at {{oneNumber.sStar|f2}}, not at one, though the loss there is only a hair lower. Turning the dial down makes the model a little less sure of itself, and new text likes that.",
+        "Start the dial near zero, feel the slope with the model's own arithmetic, and step. With small steps, forty of them walk the dial up to {{oneNumber.descents.1.end|f2}}. A step too big for the steep ground near zero overshoots to well past one, and has to walk back."
+      ]
+    },
+    {
+      "key": "edge",
+      "heading": "What the fog hides",
+      "sources": ["goodfellow2016", "li2018"],
+      "lines": [
+        "This model's training never feels the whole hill at once. Each step feels the slope on {{batch}} short stretches of text, so every step is a little off.",
+        "And I haven't said how a model with {{gradientNorm.nParams|int}} numbers works out {{gradientNorm.nParams|int}} slopes at once without feeling each one separately. That's the bucket chain, next."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "The gradient is the list of slopes. Step the other way, not too far, and you go down. Where you end up depends on where you start.",
+        "Next along the hill: blame, passed backwards. Goodnight."
+      ]
+    }
+  ]
+}
