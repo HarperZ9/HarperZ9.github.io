@@ -169,5 +169,5 @@
   ],
   "camera_note": "The recorder's camera orbits above each room, so the storyboard's low angle on the tower, the dry seabed and the town far off are not in view; the yaw of each gallery shot was chosen from four test stills (60, 120, 210, 300 degrees) as the one with the most of the tower in frame.",
   "ui_note": "KEEPERS_OPEN=logbook opens the node's first line; reaching its [TIDE 8] check needs a choice the recorder cannot make, so sweep 12 shows the game's dialogue box on the logbook's opening line instead of the check (pending: a scripted choice in the recorder, owned by the brender-archival session).",
-  "status": "Shots laid out on 14 October 2026 for the 84 s cut (21 sweeps). None is recorded for this cut yet. Each shot's clock is its trailer time; one sweep is one full turn of the lamp, so the beam keeps its phase across cuts."
+  "status": "All ten shots recorded on 14 October 2026 from keepers-hour-0.3.1-windows-x64.zip (sha256 3fbad7fb4f8dbb368a967d62eb0333a8c9e68dc9cfc18834049b9ea3e36c11ae, the digest GitHub reports for the asset): 2,280 frames, 1280 x 720, software rasteriser on the CPU. Shot s16 recorded twice: 120 of 120 frames byte-identical. Each shot's clock is its trailer time; one sweep is one full turn of the lamp, so the beam keeps its phase across cuts."
 }
