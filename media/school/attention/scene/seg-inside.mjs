@@ -57,7 +57,12 @@ export function inside(t, A, T, F) {
     items.push({ shape: hole, fill: [0, 0, 0, 1], screen: true }, ...view(t, A, T, F).map((it) => ({ ...it, screen: true, clip: hole })));
     return { items, camera: cam };
   }
-  return { items: view(t, A, T, F), camera: { x: 960, y: 540, zoom: 1 + 0.03 * span(t, T.enter + 2.2, T.end) } };
+  // After the reveal the voice explains for several seconds; the camera drifts down the bundle
+  // toward the word that took the light, so the picture keeps moving while it holds still in meaning.
+  // It eases back to the plain frame before the cut, so the prism scene starts where this one ends.
+  const n = F.probe.words.length, back = span(t, T.end - 2.2, T.end - 0.2, ease.inOut), d = span(t, T.reveal + 1.2, T.reveal + 7, ease.inOut) * (1 - back);
+  const cx = lerp(960, (colX(F.probe.answerFrom, n) + colX(F.probe.query, n)) / 2, 0.3 * d);
+  return { items: view(t, A, T, F), camera: { x: cx, y: 540 + 40 * d, zoom: 1 + 0.03 * span(t, T.enter + 2.2, T.reveal) * (1 - back) + 0.09 * d } };
 }
 
 function view(t, A, T, F) {
@@ -68,7 +73,9 @@ function view(t, A, T, F) {
   const lit = shares.map((s) => clamp(s * 2.2, 0.15, 1)), dpa = window(t, T.dot - 0.3, T.ask.start - 0.6, 0.5, 0.6);
   items.push(...columns(A, F, { appear: span(t, T.enter + 0.4, T.enter + 2.6), lit, shares: reveal > 0.5 ? F.shares : null }).map((it) => (dpa > 0 ? { ...it, opacity: (it.opacity ?? 1) * (1 - 0.75 * dpa) } : it)));
   const thr = window(t, T.ask.start - 0.5, T.end + 1, 0.8, 0.5);
-  if (thr > 0) items.push(...threads(F, shares, { grow: span(t, T.ask.start - 0.5, T.ask.start + 1.5), alpha: 0.03 + 0.05 * reveal, count: 1400, py: 300 }));
+  // Before the reveal the bundle only breathes; once the light lands, sparks run along it.
+  if (thr > 0) items.push(...threads(F, shares, { grow: span(t, T.ask.start - 0.5, T.ask.start + 1.5), alpha: 0.03 + 0.05 * reveal, count: 1400, py: 300,
+    t, sway: 0.6 + 0.4 * reveal, pulse: span(t, T.reveal + 0.8, T.reveal + 2.2) * thr }));
   // The dot product, set to the right of the columns while the voice explains it.
   if (dpa > 0) {
     items.push({ shape: rect(560, 90, 800, 820, 12), fill: [0, 0, 0, 0.82 * dpa], screen: true });
@@ -88,12 +95,14 @@ function view(t, A, T, F) {
 // head's attention map assembles as a grid of light.
 export function heads(t, A, T, F) {
   const items = [], split = span(t, T.split, T.split + 2.0, ease.inOut), grids = span(t, T.ours, T.ours + 2.5, ease.out), q = F.probe.query;
-  const px = 960, py = 280;
+  const px = 960, py = 300;
   items.push(...columns(A, F, { appear: 1, lit: F.shares.map((s) => clamp(s * 2.2, 0.15, 1)), labels: true }).map((it) => ({ ...it, opacity: (it.opacity ?? 1) * (1 - 0.7 * grids) })));
   const cols = [[1, 0.9, 0.75], [0.55, 0.85, 1], [0.75, 1, 0.7], [1, 0.7, 0.85]];
   const hs = F.heads.filter((h) => h.layer === F.layer);
-  if (split < 1) items.push(...threads(F, F.shares, { alpha: 0.06 * (1 - split) * (1 - grids), py }));
-  hs.forEach((h, k) => { if (split > 0) items.push(...threads(F, h.shares, { alpha: 0.06 * split * (1 - grids), count: 900, seed: 7 + k, colour: cols[k % 4], px: px + (k - (hs.length - 1) / 2) * 120 * split, py: py + 30 * split })); });
+  // The same bundle as the last shot (same seed, sway and sparks), so the cut does not jump; then
+  // each head's bundle keeps the motion, its sparks in the head's own colour.
+  if (split < 1) items.push(...threads(F, F.shares, { alpha: 0.08 * (1 - split) * (1 - grids), py, t, sway: 1, pulse: 1 - split }));
+  hs.forEach((h, k) => { if (split > 0) items.push(...threads(F, h.shares, { alpha: 0.06 * split * (1 - grids), count: 900, seed: 7 + k, colour: cols[k % 4], sparkColour: cols[k % 4], px: px + (k - (hs.length - 1) / 2) * 120 * split, py: py + 30 * split, t, sway: 1, pulse: split * (1 - grids) })); });
   items.push(...prism(px, py, split, 1.1));
   // Rerun on the prism: knocks twice as the beam enters, then reads the grids with stalks out.
   const knock = (t0) => window(t, t0, t0 + 0.25, 0.08, 0.12);

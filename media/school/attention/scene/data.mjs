@@ -26,19 +26,34 @@ const pick = (w, u, q) => { let s = 0; for (let i = 0; i < q; i++) { s += w[i]; 
 
 // The bundle: count threads from the reading word, up over the prism at (px, py), down to their
 // words. grow (0..1) draws them out; each bundle spreads in proportion to its weight.
-export function threads(F, shares, { grow = 1, count = 1400, seed = 42, px = 960, py = 300, colour = [1, 0.9, 0.75], alpha = 0.075, q = F.probe.query, lift = 0 } = {}) {
+// With a time t: sway (0..1) lets every thread's crest drift on its own slow phase, and pulse
+// (0..1) sends ember sparks (the query's own mark) along every sixth thread from the reading word to the word it
+// reads, so the share each word gets is also the rate of light arriving at it. Phases come from
+// the thread's index, not from rng, so the bundle's layout is the same with or without motion.
+export function threads(F, shares, { grow = 1, count = 1400, seed = 42, px = 960, py = 300, colour = [1, 0.9, 0.75], alpha = 0.075, q = F.probe.query, lift = 0, t = 0, sway = 0, pulse = 0, sparkColour = [1, 0.62, 0.38] } = {}) {
   const r = rng(seed), n = F.probe.words.length, out = [], qx = colX(q, n), y = COL.y0 - 14;
   if (grow <= 0) return out;
   const m = Math.max(50, Math.round(count * QUALITY.threads)), boost = Math.min(4, count / m);
   for (let j = 0; j < m; j++) {
     const key = pick(shares, r(), q), w = shares[key], spread = 10 + 220 * Math.sqrt(w);
-    const mx = px + (r() - 0.5) * spread, my = py + (r() - 0.5) * spread * 0.35 - lift;
+    const ph = j * 2.39996, mx = px + (r() - 0.5) * spread + 22 * sway * Math.sin(0.7 * t + ph), my = py + (r() - 0.5) * spread * 0.35 - lift + 12 * sway * Math.cos(0.53 * t + 1.3 * ph);
     const kx = colX(key, n) + (r() - 0.5) * (6 + 30 * w), h1 = 120 + r() * 80, h2 = 60 + r() * 60;
     const a = quad(qx, y, (qx + mx) / 2 + 40, my - h1, mx, my, 14), b = quad(mx, my, (mx + kx) / 2 - 20, my - h2 * 0.3, kx, y, 14);
     const pts = [...a, ...b.slice(2)], keep = Math.max(2, Math.floor((pts.length / 2) * grow)) * 2;
     out.push({ shape: polyline(pts.slice(0, keep)), fill: null, stroke: [...colour, alpha * boost], width: 1, blend: "add" });
+    if (pulse > 0 && grow >= 1 && j % 6 === 0) out.push(...spark(pts, (0.38 * t + ((j * 0.618034) % 1)) % 1, sparkColour, pulse));
   }
   return out;
+}
+
+// A spark at fraction u along a point list, with a short tail behind it; it fades in and out at
+// the ends so sparks never pop.
+function spark(pts, u, colour, a) {
+  const n = pts.length / 2 - 1, at = (v) => { const f = Math.max(0, Math.min(n, v * n)), i = Math.min(n - 1, Math.floor(f)), k = f - i; return [pts[2 * i] + (pts[2 * i + 2] - pts[2 * i]) * k, pts[2 * i + 1] + (pts[2 * i + 3] - pts[2 * i + 1]) * k]; };
+  const fade = a * Math.min(1, u / 0.08, (1 - u) / 0.08), [x, y] = at(u), tail = [];
+  for (let k = 0; k <= 4; k++) tail.push(...at(Math.max(0, u - 0.012 * k)));
+  return [{ shape: polyline(tail), fill: null, stroke: [...colour, 0.7 * fade], width: 3.5, blend: "add" },
+    { shape: circle(x, y, 5, 10), fill: [...colour, fade], blend: "add" }];
 }
 
 // Rerun's prism, and the spectrum at its exit edge (the only place the spectrum appears).
