@@ -128,6 +128,9 @@ NEURAL_GPU_REVISION = "20261010-neural-gpu"
 # 12 October 2026: the Verified viewer source (raw-native 0.7.0); studio.js and studio-shell.css take
 # a new stamp.
 VIEWER_REVISION = "20261012-viewer"
+# 14 October 2026: the Music attractor draws through raw-native, with a log tone map chosen by
+# test; studio.js takes a new stamp and imports reactive.js at a new stamp.
+ATTRACTOR_GPU_REVISION = "20261014-attractor-gpu"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -184,7 +187,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": VIEWER_REVISION,
+    "system/studio.js": ATTRACTOR_GPU_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
     "system/studio-shell.css": VIEWER_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
