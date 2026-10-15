@@ -714,7 +714,9 @@ RELEASE_PATHS = (
 # studio-shell.css at a new stamp. The release is rehashed.
 # October 15, 2026: studio.html gains the archive orderings in Plot maps and loads studio.js at a new
 # stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "77bb953189a0be4c3e11e38c26ca22ec859f689d9018b15118c1da677cbfcae8"
+# October 15, 2026: batch 7 of the full Who Knew First second read adds dated corrections and
+# sources; the series tables follow the new reading time (80 min). The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "1febe545bb063a5a08ed18f5bf99d9dcc880bd06477139f5fce55fe623811c07"
 
 
 BRIEFING_FIGURES = (

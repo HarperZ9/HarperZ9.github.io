@@ -326,3 +326,53 @@ def test_batch6_follow_up_cites_anthropic_post_and_notes_are_dated() -> None:
     notes = CORRECTIONS.search(t).group(1)
     assert "October 15, 2026: correction, the op-ed: a sentence quoted Google" in notes
     assert "October 15, 2026: sources added, the op-ed and the follow-up: five sentences" in notes
+
+
+# Batch 7 (WKF-0876 to WKF-1362). Private-interest items carry an evidence label and no Sources list,
+# so citation fixes name the carrying source inside the label.
+B7_GONE = (
+    "&#x27;not a sandbox escape&#x27;)",
+    "Third, the labels &#x27;not a sandbox escape&#x27;",
+    "Two JFrog CVEs published on 12 Aug credit a researcher",
+    "The &#x27;voluntarily notified&#x27; wording of the 30 Jul notice",
+    "&#x27;the same evaluation partner&#x27; in the 9 Sep post and the transcript README,",
+)
+B7_PRESENT = (
+    "&#x27;not a sophisticated offensive cyber attack or sandbox escape&#x27;",
+    "Third, the labels saying it was not a sandbox escape,",
+    "Four JFrog CVEs published on 12 Aug (CVE-2026-66376, CVE-2026-68756, CVE-2026-68757 and CVE-2026-68760)",
+    "The &#x27;voluntarily notified&#x27; wording of the 24 Aug letter&#x27;s account of the 30 Jul notice",
+    "and to &#x27;our third-party partner who designed the evaluation environments&#x27; in the transcript README,",
+)
+B7_LABELS = (
+    ("Truffle&#x27;s secret scanning (TruffleHog)", "trufflesecurity.com/blog/the-stolen-keys-openai-used-to-breach-hugging-face"),
+    ("Its CEO spoke as an invited expert at an EU AI Office evaluation session", "irregular-cybersecurity-talk-at-ai-evaluations-session-of-euc-ai-office"),
+    ("It reports metrics for a Glasswing security program to Alpha", "https://alpha-omega.dev/"),
+    ("In February 2026 AMD issued Meta a warrant for up to 160M AM", "AMD 10-Q for the quarter ended 27 Jun 2026"),
+    ("They received earlier versions of the model.", "R-SYSCARD section 4.1.1"),
+)
+
+
+def test_batch7_fixes_present_and_old_wording_gone() -> None:
+    t = body(text())
+    for phrase in B7_GONE:
+        assert phrase not in t, phrase
+    for phrase in B7_PRESENT:
+        assert phrase in t, phrase
+
+
+def test_batch7_labels_name_the_carrying_source() -> None:
+    t = text()
+    for phrase, marker in B7_LABELS:
+        i = t.index(phrase)
+        assert marker in t[i:t.index("</li>", i)], (phrase, marker)
+
+
+def test_batch7_notes_are_dated_and_quote_the_old_text() -> None:
+    notes = CORRECTIONS.search(text()).group(1)
+    assert "October 15, 2026: correction, Meta ledger: two passages quoted the Meta retrospective" in notes
+    assert "October 15, 2026: correction, Hugging Face, Anthropic and Irregular, and Mythos ledgers" in notes
+    assert "&quot;Two JFrog CVEs published on 12 Aug credit a researcher working with Claude&quot;" in notes
+    assert "October 15, 2026: sources added, ledger private-interest lists: thirty-seven entries" in notes
+    tail = notes[notes.index("October 15, 2026: correction, Meta ledger"):]
+    assert "—" not in tail
