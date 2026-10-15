@@ -1,0 +1,85 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "embeddings",
+  "title": "Embeddings: every word gets coordinates",
+  "page": "night-school-embeddings.html",
+  "seed": 20261023,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/embeddings/facts.json, computed by tools/school/fill_embeddings.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": { "seconds": 4.0, "what": "The lamp room. Forty-six cards hang from strings in the dark, turning slowly, in no order. Tallow lights his wick. No words." },
+    "close": { "seconds": 5.0, "what": "The cards have drifted into loose groups, names with names, things with things. One card, cone, hangs among the verbs. Tallow pinches a drip of wax onto it and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Embeddings",
+      "lines": [
+        "Embeddings. Every word gets coordinates.",
+        "Pylon showed you that a word in a model is a list of numbers, a place. Tonight, where those places come from."
+      ]
+    },
+    {
+      "key": "start",
+      "heading": "Before anything is learned",
+      "sources": ["mikolov2013", "ours-embed"],
+      "lines": [
+        "At the start, every word gets a list of 32 small random numbers. The places mean nothing yet.",
+        "Check the neighbours: only 26 percent of words sit next to a word of the same kind, about what a shuffle gives."
+      ]
+    },
+    {
+      "key": "idea",
+      "heading": "You are the company you keep",
+      "sources": ["mikolov2013"],
+      "lines": [
+        "The trick is a guessing game. Take a word in a sentence, and the words around it.",
+        "Each word gets two lists: one for when it's the word in the middle, one for when it's a neighbour. Nudge the lists so that the middle word's list and each real neighbour's neighbour-list get a bigger dot product, the measure from the vectors lesson.",
+        "And for every real neighbour, pick 5 words at random, common words more often than rare ones, and push those the other way. Tomas Mikolov and his colleagues called it negative sampling, in 2013."
+      ]
+    },
+    {
+      "key": "train",
+      "heading": "The cards drift",
+      "sources": ["ours-embed"],
+      "lines": [
+        "Run the game over the guides' sentences, 5 times through, and watch the places move.",
+        "Very early, by 5 percent of the way, the neighbours look their tidiest of any checkpoint: 72 percent of words sit next to a word of the same kind. By the end, in this run, it has slipped back to 65, three words fewer out of 46, while the guessing game keeps getting better on sentences it never trained on.",
+        "Better at the game is not always tidier on the chart. The game is the goal; the neat neighbours are a side effect."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Will the neighbours keep getting tidier all the way through training?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "seeds",
+      "heading": "Another roll of the dice",
+      "sources": ["ours-embed"],
+      "lines": [
+        "Start from different random numbers, four more times, and you get different coordinates, but much the same neighbours: against the first run, 75 to 80 percent of each word's three nearest neighbours agree."
+      ]
+    },
+    {
+      "key": "compare",
+      "heading": "Two ways to the same chart",
+      "sources": ["ours-embed", "ours-model"],
+      "lines": [
+        "The language model from the attention lesson learned its word lists a different way: as a side effect of guessing the next word, through two layers of attention.",
+        "Its lists put 80 percent of words next to a word of the same kind. And between the two tables, about 33 percent of each word's three nearest neighbours agree. By chance it would be about 7 percent.",
+        "So the two methods agree on far more than chance, and far less than two runs of the same method agree with each other. Neither one is the true map. Each is a map of what its own game needed."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Nobody draws the chart. A guessing game moves the cards, and words used alike end up close.",
+        "Next in the lighthouse: guessing the next word, and keeping score. Goodnight."
+      ]
+    }
+  ]
+}
