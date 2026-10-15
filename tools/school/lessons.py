@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 
 from tools.school.page import SCHOOL, E, head, foot, sources, transcript
+from tools.school.lessons_lm import spec_tokens, spec_embeddings, spec_nextword, spec_decoding
 
 
 def _pct(v: float) -> str:
@@ -212,51 +213,7 @@ def spec_heldout(f: dict) -> dict:
     }
 
 
-def spec_tokens(f: dict) -> dict:
-    c, e = f["corpus"], f["english"]
-    return {
-        "id": "L7", "slug": "tokens", "guide": "Pylon",
-        "title": "Tokens: cutting text into crates",
-        "h1": "Tokens. <span class=\"g\">Cutting text into crates.</span>",
-        "desc": "How a language model cuts text into pieces: letters, merges learned from counts (byte-pair encoding), and bytes so nothing is left on the dock.",
-        "lede": "A model never sees letters or words. It sees pieces. Pylon runs the customs shed where text is cut into crates, and the crates are learned from counting pairs.",
-        "film": "It asks you one question and waits for your answer before it shows you.",
-        "lab_h": "The lab: the customs shed",
-        "lab": (f"Type any text and cut it with merges learned on the guides' sentences, on Moby-Dick's opening, or on your own text. Slide the number of merges and switch the base to bytes. "
-                f"On the guides' {c['words']:,} words, every word is one piece after {c['totalMerges']} merges; Moby-Dick's opening takes {e['totalMerges']}."),
-        "lab_btn": "Open the shed", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
-        "data": [("facts.json", "media/school/tokens/facts.json")],
-        "limits": [
-            "The merges here are learned on small texts, so the pieces are short and odd; production tokenizers learn tens of thousands of merges on far more text.",
-            "Real tokenizers add rules this one leaves out (how spaces attach, special tokens, normalisation), so their pieces for the same text will differ.",
-        ],
-        "next": "Before this: <a class=\"inline\" href=\"night-school-heldout.html\">The held-out set</a> (F6). Next: <a class=\"inline\" href=\"night-school-embeddings.html\">Embeddings</a> (L8).",
-    }
-
-
-def spec_embeddings(f: dict) -> dict:
-    c = f["comparison"]
-    return {
-        "id": "L8", "slug": "embeddings", "guide": "Tallow",
-        "title": "Embeddings: every token gets coordinates",
-        "h1": "Embeddings. <span class=\"g\">Every token gets coordinates.</span>",
-        "desc": "How a list of numbers per word comes to mean something: the skip-gram learns places from the company words keep, measured against a shuffled control.",
-        "lede": "Each piece of text gets a list of numbers, and training moves those lists until words that keep the same company sit close. Tallow hangs the words as cards in her lamp room and lets them drift.",
-        "film": "It asks you one question and waits for your answer before it shows you.",
-        "lab_h": "The lab: the lamp room",
-        "lab": (f"Train your own skip-gram on the guides' sentences: choose the seed, the numbers per word, the window and the noise words, then step through its snapshots and pick a word to see its neighbours. "
-                f"The film's run ends with {c['skipGram']['top1'] * 100:.0f}% of words beside a word of the same kind, against about {c['skipGram']['control']['top1']['mean'] * 100:.0f}% shuffled."),
-        "lab_btn": "Light the lamp", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
-        "data": [("facts.json", "media/school/embeddings/facts.json")],
-        "limits": [
-            "Forty-six words from a made-up corpus are enough to see the effect and far too few to show what large tables learn; the categories used to score neighbours are ours.",
-            "The chart shows two directions out of many, so two cards can look close and be far apart; neighbours are measured in all the dimensions.",
-        ],
-        "next": "Before this: <a class=\"inline\" href=\"night-school-tokens.html\">Tokens</a> (L7). Later: <a class=\"inline\" href=\"night-school-attention.html\">Attention</a> (L10), where this table is put to work.",
-    }
-
-
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings}
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding}
 
 
 def write_all(root) -> list[str]:
