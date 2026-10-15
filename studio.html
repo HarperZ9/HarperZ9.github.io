@@ -316,6 +316,13 @@
             <button type="button" class="chip" data-plot-band="cool" data-plot-band-label="Cool">Cool</button>
             <button type="button" class="chip" data-plot-band="collage" data-plot-band-label="Collages">Collages</button>
           </div>
+          <div class="at-chips" role="group" aria-label="Order the archive">
+            <button type="button" class="chip active" aria-pressed="true" data-plot-order="archived">As archived</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="spectrum">By light</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="tone">By tone</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="colour">By colour</button>
+            <button type="button" class="chip" aria-pressed="false" data-plot-order="kind">By kind</button>
+          </div>
           <div class="dropdown" data-dropdown="plot-work"></div>
           <div id="plot-work" hidden></div>
           <span class="hint" id="plot-work-note">the catalogue loads when this material is chosen</span>
@@ -1873,7 +1880,7 @@
      Atelier source attaches the CSS pan/zoom layer), so it stays a static tag.
      Tweakpane v4.0.5: ESM named exports, lazy-imported by studio-surface.js. -->
 <script src="system/lib/vendor/panzoom-anvaka-9.4.3.min.js?v=20260902-creative-chassis"></script>
-<script type="module" src="system/studio.js?v=20261015-finish"></script>
+<script type="module" src="system/studio.js?v=20261015-plot-order"></script>
 <!-- Music reactive engine (reactive.js + reactive-music-ui.js): lazy-loaded by studio.js on the
      first entry into the Music source, so it is no longer a static tag here. -->
 </body>
