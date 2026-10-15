@@ -7,7 +7,7 @@
 // frame, the CPU reference, the error map, the certificate). The rail's buttons press the page's
 // own buttons, and the rail reads the verdict from the page's own record (window.__viewer).
 
-export const VIEWER_VERSION = "0.7.0";
+export const VIEWER_VERSION = "0.8.0";
 export const VIEWER_DIR = `media/raw-native/viewer-${VIEWER_VERSION}/`;
 export const VIEWER_PAGE = `${VIEWER_DIR}web/viewer/index.html`;
 
