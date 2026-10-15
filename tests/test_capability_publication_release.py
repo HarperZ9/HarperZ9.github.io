@@ -705,7 +705,7 @@ RELEASE_PATHS = (
 # (raw-native flow field). The release is rehashed.
 # October 15, 2026: batch 3 of the full Who Knew First second read adds dated corrections and
 # sources; the series tables follow the new reading time (75 min). The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "5d0d6abcd68e007dbcd3e08c5e753d33f42c82aaf11d506adea3b295ae03f461"
+REVIEWED_RELEASE_SHA256 = "1d1d0fb60b0367aa1be8a57771d6d8aaeba073e57c5cec1750504a18f25326b4"
 
 
 BRIEFING_FIGURES = (
