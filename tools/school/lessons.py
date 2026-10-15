@@ -167,7 +167,52 @@ def spec_backprop(f: dict) -> dict:
     }
 
 
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop}
+def spec_optimisers(f: dict) -> dict:
+    E, sp = f["races"]["rosenbrock"]["entrants"], f["spiral"]
+    return {
+        "id": "F5", "slug": "optimisers", "guide": "Pylon",
+        "title": "Optimisers: momentum, Adam and the step size",
+        "h1": "Optimisers. <span class=\"g\">Better ways to step.</span>",
+        "desc": "Careful steps, a heavy ball and Adam race down the same valleys, then train a real network: who wins depends on the hill.",
+        "lede": "Plain gradient descent crawls along narrow valleys. Pylon gives her walker weight, then a pair of shoes, and races all three on hills where each one wins.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: Pylon's race",
+        "lab": (f"Race careful steps, the heavy ball and Adam on three hills, each with the step you give it, from wherever you click. On the long narrow valley, at the steps the film chose, "
+                f"the heavy ball got down to stay in {E['momentum']['stepsToThreshold']:,} updates, careful steps in {E['sgd']['stepsToThreshold']:,} and Adam in {E['adam']['stepsToThreshold']:,}. "
+                f"Then train the spiral network from the bucket chain with any walker and step, and compare the runs."),
+        "lab_btn": "Line them up", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/optimisers/facts.json")],
+        "limits": [
+            "Which walker wins depends on the hill and on the handful of steps tried for each; comparisons between optimisers are sensitive to how carefully each one is tuned, and these are small, chosen surfaces.",
+            f"The language model comparison covers its first {f['transformer']['steps']} updates only, a fifth of its training, before it has properly learned to copy; it shows who gets off the line fastest, not who finishes best.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-backprop.html\">Backpropagation</a> (F4). Next: <a class=\"inline\" href=\"night-school-heldout.html\">The held-out set</a> (F6).",
+    }
+
+
+def spec_heldout(f: dict) -> dict:
+    p, sp = f["poly"], f["spiral"]
+    return {
+        "id": "F6", "slug": "heldout", "guide": "Pylon",
+        "title": "The held-out set: learning, or remembering?",
+        "h1": "The held-out set. <span class=\"g\">Learning, or remembering?</span>",
+        "desc": "A curve that passes through every point and fails on new ones: overfitting, the held-out set, a leash, and how even a held-out score is one draw.",
+        "lede": "A model can learn its training examples by heart and still be lost on new ones. Pylon fits curves at her desk, keeps some points back, and shows what they reveal.",
+        "film": "It asks you one question and waits for your answer before it shows you.",
+        "lab_h": "The lab: practice and test",
+        "lab": (f"Fit a curve of any flexibility to {p['nTrain']} points, with or without a leash, and see its error on them and on {p['nHeld']} held-out points; draw new training points and watch the best "
+                f"flexibility move. Then train the spiral network on 10 to 400 points. In the film, 40 points gave {sp['small']['finalHeldAccuracy'] * 100:.1f}% on new points and 400 gave {sp['full']['finalHeldAccuracy'] * 100:.1f}%."),
+        "lab_btn": "Open the chart", "lab_note": "Everything is computed on your computer, in this page. Nothing is sent anywhere.",
+        "data": [("facts.json", "media/school/heldout/facts.json")],
+        "limits": [
+            "The curve and the spirals are toy problems with known answers, so overfitting is easy to see; in real work the truth is unknown and the held-out set is the only window onto it.",
+            "Some choices in the film (the best degree, the best leash) were picked on the same held-out points they are scored on, which flatters them a little; the film says so, and the closing rule (a third set, looked at once) is the fix.",
+        ],
+        "next": "Before this: <a class=\"inline\" href=\"night-school-optimisers.html\">Optimisers</a> (F5). Next, at the dock: tokens (L7), planned.",
+    }
+
+
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout}
 
 
 def write_all(root) -> list[str]:

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Optimisers: momentum, Adam and the step size</title>
+<meta name="description" content="Careful steps, a heavy ball and Adam race down the same valleys, then train a real network: who wins depends on the hill.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-optimisers.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Optimisers: momentum, Adam and the step size">
+<meta property="og:description" content="Careful steps, a heavy ball and Adam race down the same valleys, then train a real network: who wins depends on the hill.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-optimisers.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Optimisers: momentum, Adam and the step size, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Optimisers: momentum, Adam and the step size, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F5</span></div>
+  <div class="mid">
+    <h1>Optimisers. <span class="g">Better ways to step.</span></h1>
+    <p class="lede">Plain gradient descent crawls along narrow valleys. Pylon gives her walker weight, then a pair of shoes, and races all three on hills where each one wins.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:50, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/optimisers/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Pylon&#x27;s race</h2>
+  <p class="body-text">Race careful steps, the heavy ball and Adam on three hills, each with the step you give it, from wherever you click. On the long narrow valley, at the steps the film chose, the heavy ball got down to stay in 285 updates, careful steps in 6,217 and Adam in 16,790. Then train the spiral network from the bucket chain with any walker and step, and compare the runs.</p>
+  <div class="ls" data-school="lab" data-lab="optimisers">
+    <button type="button" class="ns-btn ns-go" data-school-open>Line them up</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Optimisers</h3><p>Optimisers. Better ways to step.</p><p>Last time I walked downhill one careful step at a time. Tonight the walker gets weight, and then a pair of shoes.</p>
+<h3>The trouble with careful steps</h3><p>Remember the long, narrow valley. Steep across, nearly flat along.</p><p>Careful steps have to stay small for the steep way, so along the floor they crawl. At the best step we tried, it takes 6,217 steps to get the loss under a ten-thousandth and keep it there.</p>
+<h3>Give the walker weight</h3><p>Now make the walker heavy. Each step keeps 90 percent of the last step&#x27;s motion and adds the new slope on top.</p><p>Across the valley, the slopes keep flipping, so they cancel. Along the floor they all point the same way, so they add up. The walker picks up speed exactly where it was crawling.</p><p>Boris Polyak described it in 1964. It&#x27;s known as the heavy ball method.</p>
+<h3>Shoes for every direction</h3><p>The other idea is shoes that adjust to the ground. Adam keeps a running average of each slope, and a running average of each slope squared.</p><p>It divides the first by the square root of the second. So a direction with a steady slope gets a step of about the same size, however steep or gentle it is: steep directions are slowed down, gentle ones sped up. A direction whose slope keeps flipping gets a short step.</p><p>Both averages start at zero, so at first they&#x27;re too small. Adam scales them back up, so its very first step is the step size you chose, to within a hair, in every direction that has any slope at all.</p>
+<h3>The race</h3><p>Same valley, same start. Each walker gets the best step from a few we tried.</p><p class="sc-ask">Which walker gets down this valley first? <span>(the film pauses here)</span></p><p>The heavy ball, by a mile: 285 steps. Careful steps take 6,217. Adam dips under the line at step 10,346, keeps wandering around it, and only stays under after 16,790.</p><p>And on the gentle bowl from last time, careful steps win: 33 steps, against 146 for the other two. No walker is best on every hill.</p>
+<h3>Past the edge</h3><p>Remember the edge on the bowl: past a step of 0.5, careful steps fly off. Try 0.6.</p><p>Careful steps fly off, as before. The heavy ball&#x27;s edge here is 0.95, so it gets down. Adam&#x27;s steps don&#x27;t grow with the slope, so it doesn&#x27;t fly off, and here it gets down too.</p>
+<h3>Changing the step as you go</h3><p>The step size doesn&#x27;t have to stay fixed. Many models start with a warmup, small steps while everything is new, then let the step size fall away along a smooth curve.</p><p>And AdamW adds one more thing: almost every number shrinks by a small fraction at each step, kept separate from Adam&#x27;s own step. It pulls numbers that aren&#x27;t earning their keep back towards zero.</p>
+<h3>On real networks</h3><p>On the spirals from the bucket chain, with each walker&#x27;s step chosen on a separate set of points, careful steps first pass 95 percent on new points at step 2,000, the heavy ball at 1,300, and Adam at 900.</p><p>But run five different starting networks and batch orders, and Adam&#x27;s final score ranges from 91.8 to 99.3 percent, while careful steps stay between 99.0 and 99.8. Fast, and on this network, less steady.</p><p>The language model from the attention lesson trains with AdamW. For its first 400 steps, with the same start and the same sentences, AdamW reaches a held-out loss of 0.85, the heavy ball 0.89, and careful steps 0.96.</p>
+<h3>What a race can&#x27;t tell you</h3><p>Every number tonight depends on the hill and on the handful of steps we tried for each walker. Try more, or a different hill, and the order can change.</p><p>And four hundred steps is the first fifth of the language model&#x27;s training. It has barely started to copy, so this shows who gets off the line fastest, not who finishes best.</p>
+<h3>Goodnight</h3><p>Weight carries you through the zigzags. Shoes give every direction its own stride. Neither wins every hill.</p><p>Next along the hill: learning a harbour by heart, and why that&#x27;s a trap. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/optimisers/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s surfaces and optimiser races, computed for this film.</strong> media/school/optimisers/facts.json, written by tools/school/fill_optimisers.mjs from system/school/optimisers.mjs and gradients.mjs. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers</a></p><p>Used for: Rosenbrock from (-1.2, 1), threshold 1e-4 and staying under: plain descent (best of 5 steps, 0.0015) 6,217 updates; heavy ball (beta 0.9, best step 0.003) 285; Adam (best step 0.001) first under at 10,346, stays under from 16,790. Tilted bowl, threshold 1e-6: plain descent (0.4) 33 updates; heavy ball and Adam 146 each. At step 0.6 on the bowl: plain descent diverges; the heavy ball&#x27;s measured edge is 0.95 (predicted 0.95) and it converges; Adam converges.</p><p class="sc-dnp">Does not prove: Anything general about optimisers; the order depends on the surface and on the step grids tried.</p></li><li><p><strong>Polyak 1964, the heavy ball method.</strong> Polyak, B. T. (1964). Some methods of speeding up the convergence of iteration methods. USSR Computational Mathematics and Mathematical Physics 4(5), 1-17. <a class="inline" href="https://doi.org/10.1016/0041-5553(64)90137-5">https://doi.org/10.1016/0041-5553(64)90137-5</a></p><p>Used for: The heavy ball method adds a multiple of the previous step to the gradient step: x(k+1) = x(k) - a g(k) + b (x(k) - x(k-1)); it is widely known as the heavy ball method.</p><p class="sc-dnp">Does not prove: That momentum helps on every problem.</p></li><li><p><strong>Kingma and Ba 2015, Adam: A Method for Stochastic Optimization.</strong> Kingma, D. P., Ba, J. (2015). Adam: A Method for Stochastic Optimization. ICLR 2015. arXiv:1412.6980. <a class="inline" href="https://arxiv.org/abs/1412.6980">https://arxiv.org/abs/1412.6980</a></p><p>Used for: Adam keeps exponential moving averages of the gradient and of its elementwise square, corrects both for their initialisation at zero, and divides the first by the square root of the second (Algorithm 1). With bias correction, the first step is alpha times g / (|g| + eps) in each coordinate: alpha to within eps wherever the gradient is non-zero; with a steady gradient the step is about alpha whatever the gradient&#x27;s scale (section 2.1).</p><p class="sc-dnp">Does not prove: That Adam generalises as well as other methods on every task.</p></li><li><p><strong>Loshchilov and Hutter 2017, SGDR: Stochastic Gradient Descent with Warm Restarts.</strong> Loshchilov, I., Hutter, F. (2017). SGDR: Stochastic Gradient Descent with Warm Restarts. ICLR 2017. arXiv:1608.03983. <a class="inline" href="https://arxiv.org/abs/1608.03983">https://arxiv.org/abs/1608.03983</a></p><p>Used for: Cosine annealing lowers the learning rate along half a cosine from its maximum to its minimum.</p><p class="sc-dnp">Does not prove: That cosine decay is the best schedule.</p></li><li><p><strong>Loshchilov and Hutter 2019, Decoupled Weight Decay Regularization.</strong> Loshchilov, I., Hutter, F. (2019). Decoupled Weight Decay Regularization. ICLR 2019. arXiv:1711.05101. <a class="inline" href="https://arxiv.org/abs/1711.05101">https://arxiv.org/abs/1711.05101</a></p><p>Used for: AdamW applies weight decay directly to the weights, separately from the adaptive gradient step and scaled by the schedule multiplier, instead of adding an L2 term to the gradient. In our model the decay applies to the matrices and embeddings (20,096 of 20,864 numbers), not to gains and biases.</p><p class="sc-dnp">Does not prove: That decoupled decay is better for every model.</p></li><li><p><strong>Goyal and others 2017, Accurate, Large Minibatch SGD.</strong> Goyal, P., et al. (2017). Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour. arXiv:1706.02677. <a class="inline" href="https://arxiv.org/abs/1706.02677">https://arxiv.org/abs/1706.02677</a></p><p>Used for: A gradual warmup of the learning rate over the first 5 epochs made large-minibatch training work at a high learning rate (section 2.2).</p><p class="sc-dnp">Does not prove: That warmup is needed for every model, or how common it is.</p></li><li><p><strong>Night School&#x27;s spiral network, retrained with each optimiser.</strong> media/school/optimisers/facts.json (spiral section): the F4 network, 4,000 updates, batch 32; steps chosen on a separate validation draw (seed 4), never on the held-out set. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers</a></p><p>Used for: First update at 95% held-out accuracy: plain descent 2,000, heavy ball 1,300, Adam 900. Over 5 network and batch-order seed pairs, final held-out accuracy ranges: Adam 0.9175 to 0.9925, plain descent 0.99 to 0.9975, heavy ball 0.995 to 0.9975 (facts.json, spiral.seedSpread).</p><p class="sc-dnp">Does not prove: That Adam is less stable in general; one small network, five seeds.</p></li><li><p><strong>Night School&#x27;s tiny transformer, retrained for 400 updates with three optimisers.</strong> media/school/optimisers/facts.json (transformer section): same initial weights, batches, warmup and clipping as the lab trainer; only the update rule differs; AdamW is the trainer&#x27;s own and reproduces model.json&#x27;s curve. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers</a></p><p>Used for: After 400 updates, held-out loss: AdamW 0.8456, heavy ball 0.8925, plain descent 0.9608 (each at its best step from a 3 or 4 point grid, chosen on 64 validation rows). Besides the update rule, the AdamW arm differs in its weight decay and its second-moment average; at 400 updates copy accuracy is 0.32 (AdamW) against a chance level of about 0.10.</p><p class="sc-dnp">Does not prove: Anything about full training: at 400 updates no arm has learned the copy skill yet.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Which walker wins depends on the hill and on the handful of steps tried for each; comparisons between optimisers are sensitive to how carefully each one is tuned, and these are small, chosen surfaces.</p><p class="body-text">The language model comparison covers its first 400 updates only, a fifth of its training, before it has properly learned to copy; it shows who gets off the line fastest, not who finishes best.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-backprop.html">Backpropagation</a> (F4). Next: <a class="inline" href="night-school-heldout.html">The held-out set</a> (F6).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F5: optimisers.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

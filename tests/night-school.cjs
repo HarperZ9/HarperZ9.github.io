@@ -61,6 +61,9 @@ const PAIR = [
   { slug: 'matrices', at: '250', first: /Determinant -?\d/, second: /gives \d+% of its light to "\w+" \(score -?\d+\.\d\d\)/ },
   // Pair 2: the dial view needs one press before it has a number from the model; F4's end button is the fourth.
   { slug: 'gradients', at: '210', first: /steps of 0\.25\. At \(/, act: '[data-school="lab"] .lab-row:not([hidden]) button', second: /Dial at 0\.\d+: held-out loss \d\.\d{4}, slope -?\d/ },
+  // Pair 3: the race has a number once it runs (it starts on Line them up); the network view needs one Train press.
+  { slug: 'optimisers', at: '163', first: /update \d+: careful steps/, act: '[data-school="lab"] .lab-row:not([hidden]) button', second: /held-out accuracy \d+\.\d% after 4,000 updates/ },
+  { slug: 'heldout', at: '158', first: /Degree 3: error \d\.\d+e-?\d+ on its 16 training points, \d/, act: '[data-school="lab"] .lab-row:not([hidden]) button', second: /40 training points, 4000 updates: training accuracy \d+\.\d%, held-out \d+\.\d%/ },
   { slug: 'backprop', at: '200', first: /Step \d+ of 4000\. Held-out accuracy \d+\.\d%/, second: /Check: worst layer \w+ at \d\.\de-\d+/, done: 4 },
 ];
 async function checkLesson(browser, width, force2d, L) {
@@ -110,7 +113,7 @@ async function checkLesson(browser, width, force2d, L) {
     for (const L of PAIR.filter((x) => !only.length || only.includes(x.slug))) for (const [w, f] of process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all) await checkLesson(browser, w, f, L);
     const idx = await browser.newPage();
     await idx.goto(`${base}/night-school.html`, { waitUntil: 'networkidle' });
-    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
+    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
     console.log('night-school.html: ok');
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
