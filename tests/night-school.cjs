@@ -67,6 +67,9 @@ const PAIR = [
   { slug: 'backprop', at: '200', first: /Step \d+ of 4000\. Held-out accuracy \d+\.\d%/, second: /Check: worst layer \w+ at \d\.\de-\d+/, done: 4 },
   // Pair 4: both labs have one view, so no tab press (tab: null) and the end button is the first.
   { slug: 'tokens', at: '120', first: /the guides' merges, 50 merges: \d+ pieces for \d+ words/, tab: null, act: '#tl-bytes', second: /bytes as the base: \d+ pieces for \d+ words/, done: 1 },
+  // Pair 5: the next-word lab is driven by its text box (fill), the decoding lab by Spin 200.
+  { slug: 'nextword', at: '205', first: /the next word "on" had share \d+\.\d%, surprise \d\.\d\d\. Over your text, mean surprise/, tab: null, fill: ['#nl-text', 'tallow found a map .'], second: /After "tallow found a map \.": that is the end of your text\. Over your text, mean surprise \d\.\d\d, torn between \d/, done: 1 },
+  { slug: 'decoding', at: '200', first: /temperature 1\.00: \d+ words keep a slot after "pylon"/, tab: null, act: '[data-school="lab"] .lab-row button:nth-child(2)', second: /200 runs: \d+ follow the rules \(\d+%\), \d+ different texts/, done: 1 },
   { slug: 'embeddings', at: '140', first: /seed 1, 32 numbers per word, window 2, 5 noise words\. At 100% of training, \d+% of the 46 words/, tab: null, select: ['#el-seed', '2'], second: /seed 2, 32 numbers per word.*At 100% of training, \d+% of the 46 words/, done: 1 },
 ];
 async function checkLesson(browser, width, force2d, L) {
@@ -93,6 +96,7 @@ async function checkLesson(browser, width, force2d, L) {
   await save(page, '[data-school="lab"] canvas', `lab-${tag}-a.png`);
   if (L.tab !== null) await page.click(L.tab || '[data-school="lab"] .ns-acts button:nth-child(2)');
   if (L.act) await page.click(L.act);
+  if (L.fill) await page.fill(L.fill[0], L.fill[1]);
   if (L.select) { await page.selectOption(L.select[0], L.select[1]); await page.click('[data-school="lab"] .lab-row button'); }
   await page.waitForFunction((re) => new RegExp(re).test(document.querySelector('.lab .ns-status')?.textContent || ''), L.second.source, { timeout: 60000 });
   await save(page, '[data-school="lab"] canvas', `lab-${tag}-b.png`);
@@ -117,7 +121,7 @@ async function checkLesson(browser, width, force2d, L) {
     for (const L of PAIR.filter((x) => !only.length || only.includes(x.slug))) for (const [w, f] of process.env.NS_MODES === '2d' ? all.filter((x) => x[1]) : all) await checkLesson(browser, w, f, L);
     const idx = await browser.newPage();
     await idx.goto(`${base}/night-school.html`, { waitUntil: 'networkidle' });
-    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
+    for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html', 'night-school-nextword.html', 'night-school-decoding.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
     console.log('night-school.html: ok');
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });

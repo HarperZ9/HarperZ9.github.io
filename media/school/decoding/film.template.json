@@ -1,0 +1,102 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "decoding",
+  "title": "Decoding: temperature, top-k, top-p",
+  "page": "night-school-decoding.html",
+  "seed": 20261025,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/decoding/facts.json, computed by tools/school/fill_decoding.mjs; tools/school/fill_script.mjs fills every double-brace token below from it (nextword: tokens read lesson L9's facts)",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": { "seconds": 4.0, "what": "The lamp room. The brass wheel stands by the glass, its forty-six slots cut wide and thin by the model's spread. Tallow lights his wick. No words." },
+    "close": { "seconds": 5.0, "what": "A ribbon of word cards runs out of the gallery window into the night, a sentence written one spin at a time. Tallow stops the wheel with one finger and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Decoding",
+      "lines": [
+        "Decoding. Turning guesses into sentences.",
+        "In the lesson on next-word prediction, the model's guess was a spread of belief over every word. A sentence needs one word at a time. Tonight, how the choosing is done, and what each way of choosing does."
+      ]
+    },
+    {
+      "key": "greedy",
+      "heading": "Always the widest",
+      "sources": ["ours-decoding", "holtzman2020"],
+      "lines": [
+        "The simplest way: always take the widest slot. That is called greedy decoding.",
+        "Start the model on pylon and let it run. It writes: pylon found a kettle. Pylon put a cone on the kettle. Pylon found a kettle. And again, until the page runs out.",
+        "Why the kettle every time? After found a, the rules choose among {{nextword:torn.rows.1.truthBetween|int}} things equally, but the model leans a little: kettle gets {{shapes.rows.1.top.0.p|pct}} percent. A small lean, taken every time, becomes the only story it tells."
+      ]
+    },
+    {
+      "key": "sample",
+      "heading": "Spin the wheel",
+      "sources": ["ours-decoding"],
+      "lines": [
+        "The other way: spin a wheel where each word's slot is as wide as its share, and take whatever comes up.",
+        "We spun it {{prompts.2.settings.t1.n|int}} times from the same start. Those runs wrote {{prompts.2.settings.t1.distinctTexts|int}} different texts, and {{prompts.2.settings.t1.grammatical|pct}} percent of the runs could have been written by the rules.",
+        "Our check for that is strict. It parses each run with the rules themselves, including the long-range ones: the cone goes on the thing that was found, and the answer to who names the guide who did it."
+      ]
+    },
+    {
+      "key": "temperature",
+      "heading": "Temperature",
+      "sources": ["ours-decoding"],
+      "lines": [
+        "Before the wheel is cut, the scores can be divided by a number called the temperature. Below 1, the wide slots get wider and the thin ones shrink. Above 1, the shares move toward even.",
+        "After tallow found a, the kettle's slot is {{shapes.rows.0.top.0.p|pct}} percent of the wheel at temperature 0.5, and {{shapes.rows.2.top.0.p|pct}} percent at temperature 2, where words that make no sense there get bigger slots too.",
+        "At temperature 0.5, {{prompts.2.settings.t0.5.grammatical|pct}} percent of runs follow the rules. At 1, {{prompts.2.settings.t1.grammatical|pct}}. At 1.5, {{prompts.2.settings.t1.5.grammatical|pct}}. At 2, only {{prompts.2.settings.t2.grammatical|pct}}.",
+        "And at temperature close to zero, the widest slot takes the whole wheel. In {{prompts.2.nearZeroTemperature.n|int}} spins at 0.01, every run was the greedy one."
+      ],
+      "predict": [
+        { "after": [1, 0], "question": "Turn the temperature up to 2. What share of runs will still follow the rules?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "topk",
+      "heading": "Top-k: only the widest few",
+      "sources": ["ours-decoding", "fan2018"],
+      "lines": [
+        "Another fix cuts the wheel down to the k widest slots before spinning. Fan and colleagues used ten for writing stories in 2018.",
+        "With k at 3, after tallow found a, the wheel keeps {{shapes.rows.3.kept}} slots: {{shapes.rows.3.top|words3}}. The other things that could be found are never written there at all.",
+        "The catch is that k never changes. Where only two words make sense, three slots is one too many. Where ten make sense, three is too few."
+      ]
+    },
+    {
+      "key": "topp",
+      "heading": "Top-p: as many as it takes",
+      "sources": ["ours-decoding", "holtzman2020"],
+      "lines": [
+        "Holtzman and colleagues, in 2020, cut the wheel by share instead: keep the widest slots until together they reach p, and drop the rest. Where the model is sure, that is one or two words. Where it is torn, it is many.",
+        "With p at 0.9, after tallow found a, the wheel keeps {{shapes.rows.5.kept}} slots. Runs that follow the rules: {{prompts.2.settings.p0.9.grammatical|pct}} percent.",
+        "Push p down to 0.5 and nearly every run follows the rules, {{prompts.2.settings.p0.5.grammatical|pct1}} percent. But its {{prompts.2.settings.p0.5.n|int}} runs wrote only {{prompts.2.settings.p0.5.distinctTexts|int}} different texts. Safe, and samey."
+      ],
+      "predict": [
+        { "after": [2, 0], "question": "Nearly every run follows the rules. What has it given up?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "tail",
+      "heading": "What we did not find",
+      "sources": ["ours-decoding", "holtzman2020"],
+      "lines": [
+        "That paper also found that plain spinning, at temperature 1, drifts into nonsense in big models. Thousands of unlikely words each get a sliver of the wheel, and together the slivers add up to far too much.",
+        "Ours shows a small version. At temperature 1, {{prompts.2.settings.t1.unseenPair|pct}} percent of runs contain a word pair it never saw in training. Top-p at 0.9 lets none through, and rule-following rises from {{prompts.2.settings.t1.grammatical|pct}} to {{prompts.2.settings.p0.9.grammatical|pct}} percent.",
+        "The paper's other warning sign does not show here: scoring its own runs, the model is torn between {{prompts.2.settings.t1.modelPerplexity|f2}} words per step, and scoring the rules' own runs, {{prompts.2.settings.generator.modelPerplexity|f2}}. With only {{nextword:model.vocab}} words, the tail is short. The full problem needs a bigger model to see."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Greedy tells one story forever. Spinning tells many. Temperature, top-k and top-p decide how wide the wheel's slots are before it spins.",
+        "Next in the lighthouse: how to tell whether a language model is any good. Goodnight."
+      ]
+    }
+  ]
+}

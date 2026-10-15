@@ -1,0 +1,103 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "nextword",
+  "title": "Next-word prediction and the loss",
+  "page": "night-school-nextword.html",
+  "seed": 20261024,
+  "voice": "tallow",
+  "draft": true,
+  "numbers_from": "media/school/nextword/facts.json, computed by tools/school/fill_nextword.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "tallow",
+    "style": "thriller",
+    "open": { "seconds": 4.0, "what": "The lamp room at night. A brass wheel stands by the glass, cut into forty-six even slots, one per word. A word card clips onto the stand beside it. Tallow lights his wick. No words." },
+    "close": { "seconds": 5.0, "what": "The wheel holds a few wide slots and many thin ones. The next card arrives; its slot was already wide. Tallow nods and turns the lamp down." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Next-word prediction",
+      "lines": [
+        "Next-word prediction. One guess, spread over every word.",
+        "A language model is first trained on one job: read some words, and say what comes next. Tonight, what that guess looks like, and how it is scored."
+      ]
+    },
+    {
+      "key": "guess",
+      "heading": "A guess is a spread",
+      "sources": ["ours-nextword"],
+      "lines": [
+        "Take the small model from the attention lesson, give it one word, pylon, and ask what comes next.",
+        "It does not answer with one word. It cuts the wheel into a slot for every word, some wider than others: found gets {{torn.rows.0.model.0.p|pct}} percent of its belief, painted about {{torn.rows.0.model.1.p|pct}}, and the rest is shared out thinner.",
+        "We know the rules that wrote these sentences, so we can check it. After pylon, the rules choose found {{torn.rows.0.truth.0.p|pct}} percent of the time. From examples alone, the model got close."
+      ]
+    },
+    {
+      "key": "softmax",
+      "heading": "From scores to shares",
+      "sources": ["ours-nextword", "bengio2003"],
+      "lines": [
+        "Inside, the model ends with one score per word. Scores can be any number, even below zero, so they are not yet a share of belief.",
+        "Take four words with scores {{worked.logits.0}}, {{worked.logits.1}}, {{worked.logits.2}} and minus 1. Raise e to each score, which makes every one positive, then divide by their total.",
+        "The shares come out {{worked.probs.0|pct}}, {{worked.probs.1|pct}}, {{worked.probs.2|pct}} and {{worked.probs.3|pct}} percent. A score one higher means about 2.7 times the share. This step is called the softmax."
+      ]
+    },
+    {
+      "key": "surprise",
+      "heading": "The loss is surprise",
+      "sources": ["ours-nextword", "jurafsky"],
+      "lines": [
+        "Then the real next word arrives. Say it was {{worked.answer}}, the word with {{worked.probs.0|pct}} percent.",
+        "The score for the guess is the surprise: minus the log of the share it gave the word that came. Here that is {{worked.loss|f2}}.",
+        "Give the right word half, and the surprise is about 0.69. Give it all of its belief, and the surprise is zero. Give it almost nothing, and the surprise grows without limit. This number is the loss, and training is the work of making it small.",
+        "The slope of the loss for each score is that word's share, minus one for the word that came. Training steps the other way: the right word's score goes up, and every other score comes down, each by an amount set by its share. We checked that rule against tiny test nudges, and they agree. A version with the minus one left out fails the same check."
+      ],
+      "predict": [
+        { "after": [2, 0], "question": "If the model had given the right word every bit of its belief, what would the loss be?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "torn",
+      "heading": "Torn between how many?",
+      "sources": ["ours-nextword", "jurafsky"],
+      "lines": [
+        "A loss in logs is hard to picture, so turn it back. Raise e to the average surprise, and you get how many words the guesses are torn between, as if they were all equally likely. That is called perplexity. The same count can be read off a single guess, before any word arrives.",
+        "After rerun knocked, the rules allow two words, on or twice, half each: torn between exactly {{torn.rows.2.truthBetween|int}}. The model's guess there: torn between {{torn.rows.2.modelBetween|f2}}.",
+        "After tallow found a, the rules allow {{torn.rows.1.truthBetween|int}} things, all equally. The model is torn between {{torn.rows.1.modelBetween|f2}}, but it leans: it gives kettle {{torn.rows.1.model.0.p|pct}} percent where the rules give {{torn.rows.1.truth.0.p|pct}}."
+      ]
+    },
+    {
+      "key": "scores",
+      "heading": "What context buys",
+      "sources": ["ours-nextword", "jurafsky", "shannon1951"],
+      "lines": [
+        "Now score it properly, on {{held.positions|int}} next words from rows it never trained on, against simpler guessers. The rows are new; the sentences in them are not, because the rules can only make so many.",
+        "A blind guess is torn between all {{model.vocab}} words. Counting how often each word appears gets that down to {{held.scores.unigram.all.perplexity|f2}}. Counting which word follows which: {{held.scores.bigram.all.perplexity|f2}}. Which word follows each pair: {{held.scores.trigram.all.perplexity|f2}}.",
+        "The attention model: torn between {{held.scores.trained.all.perplexity|f2}}.",
+        "The gap is widest where a word must come back from far earlier, like the cone going on the thing found seven words before. There, counting which word follows which is torn between {{held.scores.bigram.copy.perplexity|f2}} and the model between {{held.scores.trained.copy.perplexity|f2}}. That is what attention is for."
+      ],
+      "predict": [
+        { "after": [3, 2], "question": "Can any guesser get to torn between one, never surprised at all?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "floor",
+      "heading": "The floor",
+      "sources": ["ours-nextword", "shannon1951"],
+      "lines": [
+        "No. Some next words are a coin toss in the rules themselves. Even the rules, scoring their own sentences, are torn between {{held.scores.generator.all.perplexity|f2}}. That is the floor.",
+        "Over {{curve.steps|int}} training steps, the model's loss on those held-out rows fell from {{curve.points.0.heldOut|f2}} to {{curve.points.80.heldOut|f2}}. The floor is {{held.scores.generator.all.loss|f2}}. What is left above it is {{held.excessOverGenerator.all|f2}}.",
+        "We can say that only because we wrote the rules. For real text nobody knows exactly where the floor is, so nobody can say how much lower a loss could go."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "A guess is a spread of belief over every word. The loss is the surprise when the real word arrives, and training makes the surprise small.",
+        "Next in the lighthouse: how the attention lamp chooses what to look at. Goodnight."
+      ]
+    }
+  ]
+}

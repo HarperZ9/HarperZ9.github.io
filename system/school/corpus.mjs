@@ -49,7 +49,7 @@ const tok = (w, src = -1) => ({ w, src });
 
 // Plain sentences that need only local context. Character specific, so the
 // guide's name predicts the verb that follows it.
-const LOCAL_SENTENCES = [
+export const LOCAL_SENTENCES = [
   () => ["tallow", "lit", "the", "lamp"],
   () => ["tallow", "kept", "the", "lamp", "bright"],
   () => ["rerun", "knocked", "twice"],

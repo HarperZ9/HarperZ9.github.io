@@ -1,0 +1,65 @@
+# Fact-check: L9, Next-word prediction and the loss
+
+Checked 2026-10-15 against `media/school/nextword/film.json` (filled), `film.template.json`, `facts.json`, `system/school/nextword.mjs`, `system/school/corpus.mjs`, `system/school/corpus-grammar.mjs` and `tools/school/fill_nextword.mjs`, plus the three outside sources in `evidence.json`. The fill script was not re-run. One read-only probe was run at below-normal priority from a scratch directory: it loads the same model and corpus modules, writes nothing to the repo, and checks whether held-out sentences occur in the training batches.
+
+Verdicts: **correct** 26, **reword** 6, **wrong** 2.
+
+## Film lines
+
+| # | Segment | Line or claim | Verdict | Evidence | Suggested rewording |
+|---|---|---|---|---|---|
+| 1 | title | "One guess, spread over every word." | correct | softmax gives every word a share above zero (`nextword.mjs` softmax) | |
+| 2 | title | "A language model is trained on one job: read some words, and say what comes next." | reword | True of pretraining. Chat models then get further training (fine-tuning, preference training), so "one job" overstates it for the models a viewer uses. | "A language model is first trained on one job: read some words, and say what comes next." |
+| 3 | guess | "Give the attention model one word, pylon" | correct | `torn.rows.0.words` = ["pylon"]; rows start at an episode boundary (`corpus.mjs` stream), so a one-word context is in distribution | |
+| 4 | guess | found 50 percent, painted about 9, every lamp lit | correct | `torn.rows.0.model.0.p` 0.498, `model.1.p` 0.0868 | |
+| 5 | guess | "After pylon, the rules choose found 42 percent of the time. The model learned that from examples alone." | reword | `torn.rows.0.truth.0.p` 0.4211 is correct. The model gives 0.498, eight points high, so "learned that" claims more agreement than the numbers show. | "After pylon, the rules choose found 42 percent of the time. From examples alone, the model got close, and a little too sure." |
+| 6 | softmax | Scores can be any number, even below zero | correct | Bengio 2003 calls the outputs "unnormalized log-probabilities for each output word" | |
+| 7 | softmax | Scores 2, 1, 0, minus 1; raise e, divide by the total | correct | `worked.logits`, `worked.exp`; `nextword.mjs` softmax | |
+| 8 | softmax | Shares 64, 24, 9 and 3 percent | correct | `worked.probs` [0.64391, 0.23688, 0.08714, 0.03206] | |
+| 9 | softmax | "A score one higher means about 2.7 times the share." | correct | Hand-typed, not a token. Exact by algebra: the ratio of shares is e = 2.718; `worked.exp.1` 2.71828 and probs 0.64391 / 0.23688 = 2.718 | Optional: fill it from `worked.exp.1` so it is not hand-typed. |
+| 10 | softmax | "This step is called the softmax." | correct | Bengio 2003 eq. for P̂(w_t given context) uses "a softmax output layer" | |
+| 11 | surprise | Lamp, the word with 64 percent | correct | `worked.answer` lamp, `worked.probs.0` | |
+| 12 | surprise | Loss is minus log of the share; here 0.44 | correct | `worked.loss` 0.44019 | |
+| 13 | surprise | "Give the right word half, and the surprise is about 0.69." | correct | Hand-typed. ln 2 = 0.693. Note: the film later says the trained loss fell "to 0.69", a coincidence a viewer may read as "the model gives the right word half". The held-out average is not that (`held.scores.trained.all.top1` 0.7243). | Optional: keep, or say "about 0.7" here so the two 0.69s do not collide. |
+| 14 | surprise | Near-zero share gives unbounded surprise | correct | minus log p goes to infinity as p goes to 0 | |
+| 15 | surprise | "This number is the loss, and training is the work of making it small." | correct | `nextword.mjs` crossEntropy; training minimises the mean of it | |
+| 16 | surprise | "each score is nudged by its share, minus one for the word that came. The right word's score goes up by the most, and every other score comes down by its share." | reword | `worked.grad` is p minus one-hot: [-0.356, 0.237, 0.087, 0.032]. That is the slope; training steps the other way and by a step size, so "nudged by its share" has the sign backwards for the right word and drops the step size. "Up by the most" holds: 1 minus p of the right word equals the sum of the other shares. | "To make it smaller, each score gets a slope: its share, minus one for the word that came. Training takes a small step against that slope. The right word's score goes up the most, and every other score comes down in proportion to its share." |
+| 17 | surprise | Checked against tiny test nudges; version without the minus one fails | correct | `worked.gradError` 1.09e-10, `worked.brokenError` 1, `passes` true, `controlFails` true | |
+| 18 | surprise | Predict: loss if the right word got all the belief | correct | minus log 1 = 0 | |
+| 19 | torn | "Raise e to the loss, and you get how many words the guess is torn between ... That is called perplexity." | reword | For the held-out score this is right: perplexity = exp(mean loss) (`held.about`; J&M eq. 3.14 to 3.15). The two examples that follow are not exp(loss): they are `torn.rows.*.modelBetween` = exp(entropy of the model's spread) (`fill_nextword.mjs`, `torn.about`). No word "came" in those examples, so there is no loss to exponentiate. | "A loss in logs is hard to picture, so turn it back. Raise e to it and you get a count: how many equally likely words would leave you this unsure. Averaged over a text, that is called perplexity. We can do the same for a single guess, from how spread out it is." |
+| 20 | torn | After rerun knocked: on or twice, half each, exactly 2; model 2.04 | correct | `torn.rows.2.truth` on 0.5, twice 0.5, `truthBetween` 2, `modelBetween` 2.04; `corpus.mjs` LOCAL_SENTENCES has both rerun knocked sentences | |
+| 21 | torn | After tallow found a: 10 things equally; model 10.07; kettle 14 where the rules give 10 | correct | `torn.rows.1.truthBetween` 10, `modelBetween` 10.07, `model.0.p` 0.1428, `truth.0.p` 0.1; THINGS has 10 entries | |
+| 22 | scores | "on 6,144 next words from sentences it never trained on" | **wrong** | `held.positions` 6144 is right. The rows are fresh (generator seed differs from the training stream), but the sentences are not: the probe found all 1,143 complete sentences in the held-out rows also occur in the training batches (351 distinct training sentences), and 6 of the 256 held-out rows match a training row word for word. The grammar is tiny, so every sentence recurs. | "Now score it properly, on 6,144 next words from 256 fresh rows of text. The sentences are ones it has met; the order they come in is new." |
+| 23 | scores | Blind 46; unigram 26.37; bigram 3.60; trigram 2.91 | correct | `model.vocab` 46; `held.scores.unigram.all.perplexity` 26.3654, `bigram` 3.5989, `trigram` 2.9133 | |
+| 24 | scores | Attention model torn between 1.99 | correct | `held.scores.trained.all.perplexity` 1.9886 | |
+| 25 | scores | Gap widest where a word comes back from far earlier, like the cone on the thing found seven words before | correct | Bigram over model is 7.11 / 1.06 on copy against 3.39 / 2.10 on local (`held.scores.*.copy`, `*.local`). "Seven words" is hand-typed from `probes.rows.0.note`: kettle at index 3, the current word "the" at index 10, counting the full stop as a word, as the vocabulary does. The 506 copy positions also include who-did-it targets at varying distances; "like" carries that. | |
+| 26 | scores | Bigram 7.11, model 1.06 on those positions | correct | `held.scores.bigram.copy.perplexity` 7.1101, `trained.copy.perplexity` 1.0576 | |
+| 27 | scores | "That is what attention is for." | correct | Design statement, matches `corpus.mjs` header ("the job attention does"). The film shows the attention model wins on copy positions; it runs no ablation, so it does not show attention is the cause inside this model. | |
+| 28 | scores | Predict: can any guesser reach one? | correct | Answered in the next line; generator perplexity 1.932 above 1 | |
+| 29 | floor | Coin tosses in the rules; the rules score their own sentences at 1.93; the floor | correct | `held.scores.generator.all.perplexity` 1.932; `held.about`: no model can beat it on average. J&M 3.7: cross-entropy is "an upper bound on the entropy". | |
+| 30 | floor | "the model's loss on unseen sentences fell from 3.84 to 0.69" | **wrong** | Numbers right: `curve.points.0.heldOut` 3.8414, `curve.points.80.heldOut` 0.6874, `curve.steps` 2000. "Unseen sentences" is false for the same reason as row 22. | "Over 2,000 training steps, the model's loss on the held-out rows fell from 3.84 to 0.69." |
+| 31 | floor | Floor 0.66; left above it 0.03 | correct | `held.scores.generator.all.loss` 0.6585; `held.excessOverGenerator.all` 0.0289 | |
+| 32 | floor | "For real text nobody knows where the floor is, so a lower loss is better, and how much lower is possible is an open question." | reword | The "so" does not follow, and "better" is ambiguous: J&M support "lower cross-entropy, more accurate model", while `evidence.json` does_not_prove rules out "a lower loss means better text". Shannon 1951 did put bounds on the floor for English letters, so "nobody knows" should be "nobody knows exactly". | "For real text nobody knows exactly where the floor is. Shannon could only bracket it for English letters. So a lower loss means a model that fits the text better, and how much lower anyone can go is an open question." |
+| 33 | close | Summary: a spread of belief; the loss is the surprise; training makes it small | correct | Restates rows 4, 12, 15 | |
+| 34 | close | "Next in the lighthouse: turning those spreads into sentences." | reword | `media/school/curriculum.json` puts L10 (Attention) after L9; decoding is L15. If the films run in curriculum order the hand-off points at the wrong lesson. The same order question applies to calling it "the attention model" before L10. | If curriculum order holds: "Next in the lighthouse: attention, the part that lets the model look back." Otherwise, update the curriculum order. |
+
+## Evidence claims (`evidence.json`)
+
+| Claim | Verdict | Evidence |
+|---|---|---|
+| ours: held-out perplexities model 1.9886, trigram 2.9133, bigram 3.5989, unigram 26.3654, uniform 46, generator 1.932 | correct | `held.scores.*.all.perplexity` |
+| ours: copy positions bigram 7.1101, model 1.0576 (506 positions) | correct | `held.nCopy` 506, `held.scores.*.copy` |
+| ours: worked example shares, loss 0.440, gradient check about 1e-10, control fails | correct | `worked` |
+| ours: pylon, rerun knocked, tallow found a numbers | correct | `torn.rows` |
+| ours: held-out loss 3.8414 to 0.6874; generator 0.6585 | correct | `curve.points`, `held.scores.generator` |
+| ours citation: held-out rows "never trained on" (in `held.about`) | reword | 6 of 256 held-out rows equal a training row, and every held-out sentence occurs in training. Suggest "drawn from a separate generator seed; the small grammar repeats sentences, and 6 rows equal a training row". |
+| bengio2003: one score per word, softmax to probabilities, compared by held-out perplexity | correct | Bengio 2003 sec. 2 and 4.2: perplexity "the exponential of the average negative log-likelihood"; test-set perplexity tables |
+| jurafsky: perplexity is exp of average negative log probability; weighted average branching factor | correct | J&M ch. 3 eq. 3.14 to 3.15, sec. 3.3.1 "weighted average branching factor", sec. 3.7 links it to cross-entropy |
+| jurafsky: unigram, bigram, trigram predict from counts | correct | J&M ch. 3 sec. 3.1 to 3.2, maximum likelihood estimates from counts |
+| shannon1951: predicting the next letter measures information; predictions improve with more preceding text | correct | Shannon 1951 abstract and sec. 1; Table I and Fig. 4 bounds fall as N grows |
+
+## Sources read
+
+- **Bengio, Ducharme, Vincent, Jauvin 2003 (JMLR 3).** Full PDF fetched from jmlr.org and read in text form. Supports the softmax output ("guarantees positive probabilities summing to 1"), scores as unnormalized log-probabilities, and evaluation by test-set perplexity. The paper's results compare against smoothed trigrams; the film makes no claim about those results.
+- **Jurafsky and Martin, SLP3 chapter 3, N-gram Language Models.** Full PDF fetched from stanford.edu; the copy is the draft dated August 19, 2026. Read sections 3.1 to 3.4 and 3.7. Supports perplexity as normalized inverse probability, the branching-factor reading, n-gram counts, and cross-entropy as an upper bound on the true entropy, which is the film's "floor".
+- **Shannon 1951, Prediction and Entropy of Printed English (BSTJ 30).** The DOI resolves to IEEE Xplore, which returned no readable text. Read instead from a scanned copy hosted on a princeton.edu course reference page (a university mirror, not the publisher), OCR text. Abstract, sections 1, 5 and 6 checked. It supports the evidence claim, and it shows the floor for English is bounded, not known: long-range effects bring it "of the order of one bit per letter", with experimental upper and lower bounds.
