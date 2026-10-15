@@ -47,11 +47,34 @@ export async function usePlugin(idOrPlugin) {
   if (typeof idOrPlugin === "object") { e.register(idOrPlugin); return e; }
   if (e.plugins().includes(idOrPlugin)) return e;
   if (!loading.has(idOrPlugin)) {
-    const load = LOADERS[idOrPlugin];
+    const listed = LOADERS[idOrPlugin];
+    const load = listed || conventionLoader(idOrPlugin);
     if (!load) throw new Error("media-engine: no loader for plugin " + idOrPlugin);
-    loading.set(idOrPlugin, load().then((p) => { e.register(p); return e; }));
+    const pending = load().then((p) => { e.register(p); return e; });
+    // A miss by convention is not cached, so a later call (after the file deploys) can succeed.
+    if (!listed) pending.catch(() => loading.delete(idOrPlugin));
+    loading.set(idOrPlugin, pending);
   }
   return loading.get(idOrPlugin);
+}
+
+// A plugin the table above does not list is tried by file convention: id "foo-bar" lives in
+// plugins/foo-bar.mjs and exports fooBar (or a default export). This file is imported without a
+// cache stamp, so for up to ten minutes after a deploy a returning visitor can hold a copy whose
+// table predates a new plugin. The new plugin file has never been cached, so the convention finds
+// it. An id that is not lower-case letters, digits and hyphens is refused, and a missing file
+// rejects with the same "no loader" error as before.
+export function conventionLoader(id, importer = (path) => import(path)) {
+  if (typeof id !== "string" || !/^[a-z][a-z0-9-]*$/.test(id)) return null;
+  const name = id.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
+  return () => importer(`./plugins/${id}.mjs`).then(
+    (m) => {
+      const plugin = m[name] || m.default;
+      if (!plugin) throw new Error(`media-engine: plugins/${id}.mjs exports neither ${name} nor a default`);
+      return plugin;
+    },
+    (cause) => { throw new Error("media-engine: no loader for plugin " + id, { cause }); },
+  );
 }
 
 // Add a plugin loader at run time. A slot in plugins/slots.mjs (raw, revival) becomes live the
