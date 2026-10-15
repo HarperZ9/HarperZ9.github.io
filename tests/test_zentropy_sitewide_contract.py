@@ -137,6 +137,9 @@ FLOW_GPU_REVISION = "20261014-flow-gpu"
 # 14 October 2026: the Finish layer (raw-native 0.8.0's post stack over the stage); studio.js and
 # studio-shell.css take a new stamp (15 October: after the Music attractor and flow field).
 FINISH_REVISION = "20261015-finish"
+# 15 October 2026: Plot maps orders the archive as the archive page does; studio.js takes a new
+# stamp.
+PLOT_ORDER_REVISION = "20261015-plot-order"
 # 27 September 2026, copy pass: the sheets that gained the .ident rule (system.css,
 # figure.css) and the record-facts flex change (catalog.css) take one new revision on
 # every page, generator and builder that links them. A cached catalog sheet from
@@ -196,7 +199,7 @@ REVIEWED_ASSET_REVISIONS = {
     "system/publications.js": SITE_IA_REVISION,
     "system/series.css": "20261001-series-opener",
     "system/series-table.css": "20261001-series-opener",
-    "system/studio.js": FINISH_REVISION,
+    "system/studio.js": PLOT_ORDER_REVISION,
     "system/gallery-desk.js": GALLERY_DESK_REVISION,
     "system/studio-shell.css": FINISH_REVISION,
     "system/atelier.js": STUDIO_ENTRY_REVISION,
