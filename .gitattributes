@@ -12,6 +12,9 @@
 *.tex text eol=lf
 *.srt text eol=lf
 *.vtt text eol=lf
+# Markdown sources are hashed by their builders (the open letter, the career release), so a
+# Windows checkout must keep the LF bytes Git stores.
+*.md text eol=lf
 frontier-safety/data/*.json text eol=lf
 frontier-safety/data/**/*.json text eol=lf
 frontier-safety/social/*.txt text eol=lf
