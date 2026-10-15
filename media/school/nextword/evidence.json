@@ -1,0 +1,61 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "nextword",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-nextword": {
+   "short": "Night School's attention model, scored for this film",
+   "citation": "media/school/nextword/facts.json, written by tools/school/fill_nextword.mjs from system/school/nextword.mjs and corpus-grammar.mjs: the attention lab's trained model (seed 7, data seed 11, 2,000 steps) scored on the corpus's 256 held-out rows against a uniform guess, the untrained model, unigram, bigram and trigram counts of the exact training tokens, and the corpus generator's own odds.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/nextword",
+   "read": "full",
+   "claims": [
+    "Held-out perplexity over 6144 positions: model 1.9886, trigram 2.9133, bigram 3.5989, unigram 26.3654, uniform 46, generator (floor) 1.932.",
+    "On the 506 copy positions: bigram perplexity 7.1101, model 1.0576.",
+    "Worked example: scores 2, 1, 0, -1 give softmax shares 0.644, 0.237, 0.087, 0.032 and loss 0.440 for the first; the gradient p minus one-hot matches finite differences (relative error about 1e-10) and the control without the minus one fails.",
+    "After 'pylon' the model gives found 0.498; the generator 0.421. After 'rerun knocked' the generator allows on and twice at 0.5 each; the model's perplexity there is 2.04. After 'tallow found a' the generator allows 10 things at 0.1 each; the model gives kettle 0.143.",
+    "Held-out loss fell from 3.8414 at step 0 to 0.6874 at step 2,000 (curve recorded in model.json); the generator's loss is 0.6585."
+   ],
+   "n": "6,144 held-out positions from 256 rows; one trained model; three contexts for the torn examples.",
+   "interval": "No interval: one model, one held-out set; the split by kind of position is stated.",
+   "does_not_prove": "Anything about real text, where the floor is unknown; or that a lower loss means better text."
+  },
+  "bengio2003": {
+   "short": "Bengio and others 2003, A Neural Probabilistic Language Model",
+   "citation": "Bengio, Y., Ducharme, R., Vincent, P., Jauvin, C. (2003). A Neural Probabilistic Language Model. Journal of Machine Learning Research 3, 1137 to 1155.",
+   "url": "https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "A neural network outputs one score per vocabulary word and a softmax turns the scores into next-word probabilities; models are compared by perplexity on held-out text."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "jurafsky": {
+   "short": "Jurafsky and Martin, Speech and Language Processing, chapter 3 (N-gram Language Models)",
+   "citation": "Jurafsky, D., Martin, J. H. Speech and Language Processing, 3rd edition draft, chapter 3: N-gram Language Models.",
+   "url": "https://web.stanford.edu/~jurafsky/slp3/3.pdf",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Perplexity is the exponent of the average negative log probability per word; it can be read as a weighted average branching factor, the number of possible next words.",
+    "Unigram, bigram and trigram models predict from counts of words, pairs and triples."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "shannon1951": {
+   "short": "Shannon 1951, Prediction and Entropy of Printed English",
+   "citation": "Shannon, C. E. (1951). Prediction and Entropy of Printed English. Bell System Technical Journal 30(1), 50 to 64.",
+   "url": "https://doi.org/10.1002/j.1538-7305.1951.tb01366.x",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Predicting the next letter of text measures how much information the text carries; predictions improve as more preceding text is used."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ },
+ "factcheck": "Independent fact-check 2026-10-15 (FACTCHECK.md): 26 correct, 6 reword, 2 wrong. Both wrong lines said the held-out sentences were unseen; every held-out sentence also occurs in training and 6 of 256 rows equal a training row, so the film now says the rows are new and the sentences are not. All six rewordings applied."
+}

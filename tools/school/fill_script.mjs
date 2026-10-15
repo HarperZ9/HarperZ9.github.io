@@ -26,11 +26,17 @@ export const FORMATS = {
   none: (v) => String(v),
 };
 
+// A key may itself hold a dot (decoding's "t0.5", "p0.9"): at each step the longest run of
+// segments that names a key wins.
 export function lookup(facts, path) {
+  const parts = path.split(".");
   let v = facts;
-  for (const k of path.split(".")) {
-    if (v === null || typeof v !== "object" || !(k in v)) throw new Error(`no value at ${path}`);
-    v = v[k];
+  for (let i = 0; i < parts.length;) {
+    if (v === null || typeof v !== "object") throw new Error(`no value at ${path}`);
+    let j = parts.length;
+    while (j > i && !(parts.slice(i, j).join(".") in v)) j--;
+    if (j === i) throw new Error(`no value at ${path}`);
+    v = v[parts.slice(i, j).join(".")]; i = j;
   }
   return v;
 }

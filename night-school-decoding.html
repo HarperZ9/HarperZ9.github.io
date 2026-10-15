@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decoding: temperature, top-k, top-p</title>
+<meta name="description" content="How a language model&#x27;s spread of belief becomes text: greedy choice, sampling, temperature, top-k and top-p, measured against the rules.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-decoding.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Decoding: temperature, top-k, top-p">
+<meta property="og:description" content="How a language model&#x27;s spread of belief becomes text: greedy choice, sampling, temperature, top-k and top-p, measured against the rules.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-decoding.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Decoding: temperature, top-k, top-p, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Decoding: temperature, top-k, top-p, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L15</span></div>
+  <div class="mid">
+    <h1>Decoding. <span class="g">Turning guesses into sentences.</span></h1>
+    <p class="lede">A model&#x27;s guess is a spread over every word, and a sentence needs one word at a time. Tallow spins the wheel, and shows what each way of cutting it writes.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:52, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/decoding/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the wheel room</h2>
+  <p class="body-text">Give the model a start, cut the wheel by temperature, top-k or top-p, and spin once or two hundred times; each run is checked against the rules that wrote the guides&#x27; sentences. From pylon at temperature 1, 89% of runs follow the rules; at temperature 2, 11%.</p>
+  <div class="ls" data-school="lab" data-lab="decoding">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the wheel room</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Decoding</h3><p>Decoding. Turning guesses into sentences.</p><p>In the lesson on next-word prediction, the model&#x27;s guess was a spread of belief over every word. A sentence needs one word at a time. Tonight, how the choosing is done, and what each way of choosing does.</p>
+<h3>Always the widest</h3><p>The simplest way: always take the widest slot. That is called greedy decoding.</p><p>Start the model on pylon and let it run. It writes: pylon found a kettle. Pylon put a cone on the kettle. Pylon found a kettle. And again, until the page runs out.</p><p>Why the kettle every time? After found a, the rules choose among 10 things equally, but the model leans a little: kettle gets 14 percent. A small lean, taken every time, becomes the only story it tells.</p>
+<h3>Spin the wheel</h3><p>The other way: spin a wheel where each word&#x27;s slot is as wide as its share, and take whatever comes up.</p><p>We spun it 1,500 times from the same start. Those runs wrote 1,482 different texts, and 89 percent of the runs could have been written by the rules.</p><p>Our check for that is strict. It parses each run with the rules themselves, including the long-range ones: the cone goes on the thing that was found, and the answer to who names the guide who did it.</p>
+<h3>Temperature</h3><p>Before the wheel is cut, the scores can be divided by a number called the temperature. Below 1, the wide slots get wider and the thin ones shrink. Above 1, the shares move toward even.</p><p>After tallow found a, the kettle&#x27;s slot is 20 percent of the wheel at temperature 0.5, and 11 percent at temperature 2, where words that make no sense there get bigger slots too.</p><p class="sc-ask">Turn the temperature up to 2. What share of runs will still follow the rules? <span>(the film pauses here)</span></p><p>At temperature 0.5, 98 percent of runs follow the rules. At 1, 89. At 1.5, 51. At 2, only 11.</p><p>And at temperature close to zero, the widest slot takes the whole wheel. In 200 spins at 0.01, every run was the greedy one.</p>
+<h3>Top-k: only the widest few</h3><p>Another fix cuts the wheel down to the k widest slots before spinning. Fan and colleagues used ten for writing stories in 2018.</p><p>With k at 3, after tallow found a, the wheel keeps 3 slots: kettle, map and crate. The other things that could be found are never written there at all.</p><p>The catch is that k never changes. Where only two words make sense, three slots is one too many. Where ten make sense, three is too few.</p>
+<h3>Top-p: as many as it takes</h3><p>Holtzman and colleagues, in 2020, cut the wheel by share instead: keep the widest slots until together they reach p, and drop the rest. Where the model is sure, that is one or two words. Where it is torn, it is many.</p><p>With p at 0.9, after tallow found a, the wheel keeps 9 slots. Runs that follow the rules: 94 percent.</p><p>Push p down to 0.5 and nearly every run follows the rules, 99.7 percent. But its 1,500 runs wrote only 210 different texts. Safe, and samey.</p><p class="sc-ask">Nearly every run follows the rules. What has it given up? <span>(the film pauses here)</span></p>
+<h3>What we did not find</h3><p>That paper also found that plain spinning, at temperature 1, drifts into nonsense in big models. Thousands of unlikely words each get a sliver of the wheel, and together the slivers add up to far too much.</p><p>Ours shows a small version. At temperature 1, 4 percent of runs contain a word pair it never saw in training. Top-p at 0.9 lets none through, and rule-following rises from 89 to 94 percent.</p><p>The paper&#x27;s other warning sign does not show here: scoring its own runs, the model is torn between 1.87 words per step, and scoring the rules&#x27; own runs, 1.92. With only 46 words, the tail is short. The full problem needs a bigger model to see.</p>
+<h3>Goodnight</h3><p>Greedy tells one story forever. Spinning tells many. Temperature, top-k and top-p decide how wide the wheel&#x27;s slots are before it spins.</p><p>Next in the lighthouse: how to tell whether a language model is any good. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/decoding/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s attention model, sampled for this film.</strong> media/school/decoding/facts.json, written by tools/school/fill_decoding.mjs from system/school/decoding.mjs and corpus-grammar.mjs: 1,500 continuations per setting from three prompts with shared random streams, judged by a parser of the corpus generator&#x27;s own rules. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/decoding">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/decoding</a></p><p>Used for: From the prompt &#x27;pylon&#x27;, greedy decoding writes &#x27;found a kettle . pylon put a cone on the kettle . pylon found a kettle ...&#x27;. Grammatical share from &#x27;pylon&#x27;: temperature 0.5 0.9807, 1 0.8907, 1.5 0.5107, 2 0.106; top-k 3 0.9487; top-p 0.9 0.9447, 0.5 0.9973; uniform 0; generator 1. Distinct continuations per run from &#x27;pylon&#x27;: temperature 1 0.988, top-p 0.5 0.14. After &#x27;tallow found a&#x27;: kettle&#x27;s share is 0.197 at temperature 0.5 and 0.110 at temperature 2; top-k 3 keeps kettle, map and crate; top-p 0.9 keeps 9 words. Temperature 0.01 reproduces greedy in 200 of 200 runs. Model perplexity of its own temperature-1 runs from &#x27;pylon&#x27;: 1.873; of the generator&#x27;s runs: 1.921.</p><p class="sc-dnp">Does not prove: That any setting is best for large models or human text.</p></li><li><p><strong>Fan, Lewis and Dauphin 2018, Hierarchical Neural Story Generation.</strong> Fan, A., Lewis, M., Dauphin, Y. (2018). Hierarchical Neural Story Generation. ACL 2018. arXiv:1805.04833. <a class="inline" href="https://arxiv.org/abs/1805.04833">https://arxiv.org/abs/1805.04833</a></p><p>Used for: Stories are generated by sampling from the k = 10 most likely words (top-k sampling); beam search tends to produce common, repetitive phrases.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Holtzman and others 2020, The Curious Case of Neural Text Degeneration.</strong> Holtzman, A., Buys, J., Du, L., Forbes, M., Choi, Y. (2020). The Curious Case of Neural Text Degeneration. ICLR 2020. arXiv:1904.09751. <a class="inline" href="https://arxiv.org/abs/1904.09751">https://arxiv.org/abs/1904.09751</a></p><p>Used for: Nucleus (top-p) sampling samples from the smallest set of most likely words whose total probability reaches p. Maximization-based decoding such as greedy and beam search produces repetitive text; pure sampling from the full distribution produces incoherent text through the unreliable low-probability tail.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One small model and a 46-word grammar: a setting that does well here is not shown to do well on open-ended text, and the papers&#x27; main findings are about large models.</p><p class="body-text">Following the rules is a strict check, but not the only one that matters: a run can follow every rule and still say nothing new.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-nextword.html">Next-word prediction</a> (L9). Next: evaluating a language model (L16), planned.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L15: decoding.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
