@@ -714,7 +714,7 @@ RELEASE_PATHS = (
 # studio-shell.css at a new stamp. The release is rehashed.
 # October 15, 2026: studio.html gains the archive orderings in Plot maps and loads studio.js at a new
 # stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "77bb953189a0be4c3e11e38c26ca22ec859f689d9018b15118c1da677cbfcae8"
+REVIEWED_RELEASE_SHA256 = "687dac234687aadecad2a5fc3e7238d2aa79d6cc6c865737ec672817a3a700d2"
 
 
 BRIEFING_FIGURES = (
