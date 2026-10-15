@@ -1,0 +1,75 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "heldout",
+  "read": "2026-10-15",
+  "sources": {
+    "ours-poly": {
+      "short": "Night School's curve fits, computed for this film",
+      "citation": "media/school/heldout/facts.json (poly section), written by tools/school/fill_heldout.mjs from system/school/heldout.mjs: least squares by Householder QR; ridge by QR on the design matrix stacked over sqrt(lambda) times the identity.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout",
+      "read": "full",
+      "claims": [
+        "16 training points from sin(pi x) with noise sigma 0.2; 500 held-out points. Degree 3 held-out RMSE 0.330; degree 15 train RMSE 1.4e-11 and held-out RMSE 3,936.",
+        "Ridge at degree 15: held-out RMSE 3,936 at lambda 0, 0.429 at 0.01 (the best of 7), 0.703 at 100.",
+        "Over 200 training draws, degree 3 is the best degree on held-out data 113 times.",
+        "Degree 3 and the penalty 0.01 were picked on the same held-out points they are scored on, which flatters them a little. The wild curve's held-out error is 2.99 on points inside the training range and far larger past the outermost training points."
+      ],
+      "n": "16 training and 500 held-out points; 200 draws for the spread.",
+      "interval": "5th to 95th percentiles over 200 draws are in facts.json.",
+      "does_not_prove": "Anything about real data; a toy curve chosen to show one effect."
+    },
+    "goodfellow2016": {
+      "short": "Goodfellow, Bengio and Courville 2016, Deep Learning",
+      "citation": "Goodfellow, I., Bengio, Y., Courville, A. (2016). Deep Learning. MIT Press. Chapter 5.2 (capacity, overfitting and underfitting) and 5.3 (hyperparameters and validation sets).",
+      "url": "https://www.deeplearningbook.org/",
+      "read": "full text of chapter 5 (sections 5.2 and 5.3)",
+      "claims": [
+        "Training error falls as capacity grows, while test error typically falls and then rises (overfitting).",
+        "Choosing hyperparameters on the test set biases it; a separate validation set is used for choices, and the test set only to estimate generalisation at the end."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about a particular model."
+    },
+    "hoerl1970": {
+      "short": "Hoerl and Kennard 1970, Ridge Regression",
+      "citation": "Hoerl, A. E., Kennard, R. W. (1970). Ridge Regression: Biased Estimation for Nonorthogonal Problems. Technometrics 12(1), 55-67.",
+      "url": "https://doi.org/10.1080/00401706.1970.10488634",
+      "read": "full text (open scan), equation 2.1",
+      "claims": [
+        "Ridge regression adds a penalty on the size of the coefficients (lambda times their sum of squares) to least squares."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Which lambda to use."
+    },
+    "ours-spiral": {
+      "short": "Night School's spiral network on 40 points against 400",
+      "citation": "media/school/heldout/facts.json (spiral section): the F4 network, plain descent at 0.3, 10,000 updates, on the first 40 of the 400 training points and, as the control, on all 400.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout",
+      "read": "full",
+      "claims": [
+        "Both reach training accuracy 1. Held-out accuracy 0.7825 with 40 points, 0.995 with 400. With 40 points the held-out loss is lowest at update 300 (0.648) and ends at 1.487.",
+        "Over five different 40-point draws, held-out accuracy ranges from 0.755 to 0.86.",
+        "After the held-out loss minimum at update 300, held-out accuracy still rises, to 0.8025 at update 1,000, while the held-out loss climbs."
+      ],
+      "n": "400 held-out points; 5 draws.",
+      "interval": "Range over 5 draws, stated.",
+      "does_not_prove": "Anything general about how many points a task needs."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, its training and held-out losses",
+      "citation": "media/school/heldout/facts.json (attention section): model.json's own curves, and the final weights rescored on rows they were trained on, on unseen rows of the same stream, on the lab's 256 held-out rows and on five fresh 256-row draws.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/heldout",
+      "read": "full",
+      "claims": [
+        "The trainer draws a fresh batch every update; the generator repeats rows by chance: 507 of the 32,000 training rows were exact copies of earlier rows, and no row came round more than 5 times. 8 of the 256 'unseen' rows and 3 of the lab's 256 held-out rows also occur in training (facts.json, attention.repeats).",
+        "Final weights: loss 0.626 on the last 16 trained batches, 0.668 on the next 16 unseen batches, 0.687 on the lab's held-out rows, 0.650 to 0.672 on five fresh draws."
+      ],
+      "n": "256 rows per score; five fresh draws.",
+      "interval": "Range over five draws, stated.",
+      "does_not_prove": "That the model would not memorise with repeated data; it never had any."
+    }
+  },
+  "factcheck": "media/school/heldout/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied; the 'no row repeated' claim was wrong in the code comment and facts too, and is corrected there"
+}

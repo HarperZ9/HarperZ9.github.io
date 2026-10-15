@@ -1,0 +1,109 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "optimisers",
+  "read": "2026-10-15",
+  "sources": {
+    "ours-surfaces": {
+      "short": "Night School's surfaces and optimiser races, computed for this film",
+      "citation": "media/school/optimisers/facts.json, written by tools/school/fill_optimisers.mjs from system/school/optimisers.mjs and gradients.mjs.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers",
+      "read": "full",
+      "claims": [
+        "Rosenbrock from (-1.2, 1), threshold 1e-4 and staying under: plain descent (best of 5 steps, 0.0015) 6,217 updates; heavy ball (beta 0.9, best step 0.003) 285; Adam (best step 0.001) first under at 10,346, stays under from 16,790.",
+        "Tilted bowl, threshold 1e-6: plain descent (0.4) 33 updates; heavy ball and Adam 146 each.",
+        "At step 0.6 on the bowl: plain descent diverges; the heavy ball's measured edge is 0.95 (predicted 0.95) and it converges; Adam converges."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything general about optimisers; the order depends on the surface and on the step grids tried."
+    },
+    "polyak1964": {
+      "short": "Polyak 1964, the heavy ball method",
+      "citation": "Polyak, B. T. (1964). Some methods of speeding up the convergence of iteration methods. USSR Computational Mathematics and Mathematical Physics 4(5), 1-17.",
+      "url": "https://doi.org/10.1016/0041-5553(64)90137-5",
+      "read": "not read (publisher copy paywalled, mathnet.ru unreachable); the update rule was checked against an open secondary account, arXiv:2410.16849, equations 1 and 2",
+      "claims": [
+        "The heavy ball method adds a multiple of the previous step to the gradient step: x(k+1) = x(k) - a g(k) + b (x(k) - x(k-1)); it is widely known as the heavy ball method."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That momentum helps on every problem."
+    },
+    "kingma2015": {
+      "short": "Kingma and Ba 2015, Adam: A Method for Stochastic Optimization",
+      "citation": "Kingma, D. P., Ba, J. (2015). Adam: A Method for Stochastic Optimization. ICLR 2015. arXiv:1412.6980.",
+      "url": "https://arxiv.org/abs/1412.6980",
+      "read": "full text, arXiv:1412.6980, sections 2 and 2.1 and Algorithm 1",
+      "claims": [
+        "Adam keeps exponential moving averages of the gradient and of its elementwise square, corrects both for their initialisation at zero, and divides the first by the square root of the second (Algorithm 1).",
+        "With bias correction, the first step is alpha times g / (|g| + eps) in each coordinate: alpha to within eps wherever the gradient is non-zero; with a steady gradient the step is about alpha whatever the gradient's scale (section 2.1)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That Adam generalises as well as other methods on every task."
+    },
+    "loshchilov2017": {
+      "short": "Loshchilov and Hutter 2017, SGDR: Stochastic Gradient Descent with Warm Restarts",
+      "citation": "Loshchilov, I., Hutter, F. (2017). SGDR: Stochastic Gradient Descent with Warm Restarts. ICLR 2017. arXiv:1608.03983.",
+      "url": "https://arxiv.org/abs/1608.03983",
+      "read": "full text, arXiv:1608.03983, section 3, equation 5",
+      "claims": [
+        "Cosine annealing lowers the learning rate along half a cosine from its maximum to its minimum."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That cosine decay is the best schedule."
+    },
+    "loshchilov2019": {
+      "short": "Loshchilov and Hutter 2019, Decoupled Weight Decay Regularization",
+      "citation": "Loshchilov, I., Hutter, F. (2019). Decoupled Weight Decay Regularization. ICLR 2019. arXiv:1711.05101.",
+      "url": "https://arxiv.org/abs/1711.05101",
+      "read": "full text, arXiv:1711.05101, section 2 and Algorithm 2",
+      "claims": [
+        "AdamW applies weight decay directly to the weights, separately from the adaptive gradient step and scaled by the schedule multiplier, instead of adding an L2 term to the gradient. In our model the decay applies to the matrices and embeddings (20,096 of 20,864 numbers), not to gains and biases."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That decoupled decay is better for every model."
+    },
+    "goyal2017": {
+      "short": "Goyal and others 2017, Accurate, Large Minibatch SGD",
+      "citation": "Goyal, P., et al. (2017). Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour. arXiv:1706.02677.",
+      "url": "https://arxiv.org/abs/1706.02677",
+      "read": "full text, arXiv:1706.02677, section 2.2",
+      "claims": [
+        "A gradual warmup of the learning rate over the first 5 epochs made large-minibatch training work at a high learning rate (section 2.2)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That warmup is needed for every model, or how common it is."
+    },
+    "ours-spiral": {
+      "short": "Night School's spiral network, retrained with each optimiser",
+      "citation": "media/school/optimisers/facts.json (spiral section): the F4 network, 4,000 updates, batch 32; steps chosen on a separate validation draw (seed 4), never on the held-out set.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers",
+      "read": "full",
+      "claims": [
+        "First update at 95% held-out accuracy: plain descent 2,000, heavy ball 1,300, Adam 900.",
+        "Over 5 network and batch-order seed pairs, final held-out accuracy ranges: Adam 0.9175 to 0.9925, plain descent 0.99 to 0.9975, heavy ball 0.995 to 0.9975 (facts.json, spiral.seedSpread)."
+      ],
+      "n": "400 held-out points; 5 seeds for the spread.",
+      "interval": "Range over 5 seeds, stated.",
+      "does_not_prove": "That Adam is less stable in general; one small network, five seeds."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, retrained for 400 updates with three optimisers",
+      "citation": "media/school/optimisers/facts.json (transformer section): same initial weights, batches, warmup and clipping as the lab trainer; only the update rule differs; AdamW is the trainer's own and reproduces model.json's curve.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/optimisers",
+      "read": "full",
+      "claims": [
+        "After 400 updates, held-out loss: AdamW 0.8456, heavy ball 0.8925, plain descent 0.9608 (each at its best step from a 3 or 4 point grid, chosen on 64 validation rows).",
+        "Besides the update rule, the AdamW arm differs in its weight decay and its second-moment average; at 400 updates copy accuracy is 0.32 (AdamW) against a chance level of about 0.10."
+      ],
+      "n": "256 held-out rows; one seed.",
+      "interval": "One seed; no interval.",
+      "does_not_prove": "Anything about full training: at 400 updates no arm has learned the copy skill yet."
+    }
+  },
+  "factcheck": "media/school/optimisers/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}
