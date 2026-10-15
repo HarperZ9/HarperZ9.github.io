@@ -18,14 +18,14 @@ CORRECTIONS = re.compile(r'id="corrections"[^>]*>(.*?)<h2 id="sources">', re.S)
 # Batch 1 (WKF-0001 to WKF-0115) and the confirmed WKF-0319 reader note.
 GONE = (
     "The two posts name different models: the 16 Jul disclosure names zai-org/GLM-5.2, and",
-    "Reopened registrations after about 3.86 days.",
-    "the registration pause of about 3.86 days",
 )
 PRESENT = (
     "The two posts name different builds of one model: the 16 Jul disclosure links zai-org/GLM-5.2"
     " (the link was added on 30 Jul)",
-    "Reopened registrations after about 3.85 days.",
-    "the registration pause of about 3.85 days",
+    # The batch 1 change from 3.86 to 3.85 days was withdrawn in batch 3: the ledger counts from the
+    # 08:35 UTC commit that disabled registrations, which gives 3.86.
+    "Reopened registrations after about 3.86 days, counted from the 08:35 UTC change that disabled them",
+    "the registration pause of about 3.86 days",
 )
 NOTES = (
     "October 15, 2026: correction, Hugging Face ledger",
@@ -135,4 +135,75 @@ def test_batch2_notes_are_dated_and_quote_the_old_text() -> None:
         assert phrase in notes, phrase
     for old in ("a scan that missed one incident found later in August", "within minutes",
                 "committed to clearer setup documentation with customers and to continuous re-checking"):
+        assert old in notes, old
+
+
+# Batch 3 (WKF-0234 to WKF-0357).
+B3_GONE = (
+    "OpenAI&#x27;s first observation of agent message-board activity",
+    "had not (vendor-claimed, 24 Aug letter)",
+    "Irregular&#x27;s news page lists no press item after 2026-06-16",
+    "and no Gemini assessment at any date; whether Meta or Google still use Irregular is unknown",
+)
+B3_PRESENT = (
+    "an OpenAI internal team&#x27;s observation of agent message-board activity",
+    "had not (vendor-claimed: the 24 Aug letter for A, B and C, the 9 Sep post for D)",
+    "Irregular&#x27;s news page listed no press item after 2026-06-16 when read on 24 Sep; a 28 Sep item has since been added",
+    "On 13 Oct it added one of Gemini 4 Argon, which Google DeepMind ran on CyScenarioBench",
+    "once OpenAI linked its agents (Hugging Face ledger).",
+)
+B3_SOURCES = (
+    ("whether the Code applied to a model not yet on the EU market is unknown", "policies/contents-code-gpai"),
+    ("only the linked 244-page card described the escape", "Claude%20Mythos%20Preview%20System%20Card.pdf"),
+    ("commitment to clear reporting criteria came later, on 9 Sep", "research/alignment-assessment-cybersecurity-incidents"),
+    ("Google says it notified the three companies and federal authorities (vendor-claimed)", "rcna598651"),
+    ("(OpenAI is a signatory; a voluntary compliance route", "policies/contents-code-gpai"),
+    ("Against the roughly 21 hours it took to acknowledge DSEWiki", "exclusive-openai-agents-hijacked-german-100307199"),
+    ("Against the roughly 21 hours it took to acknowledge DSEWiki", "x.com/OpenAI/status/2096133504417616165"),
+    ("said there was no formal report", "exclusive-openai-didnt-report-another-incident-under-eu-ai-safety-rules"),
+    ("said there was no formal report", "ai-safety-incident-reporting-not-just-a-tick-box-warns-eu"),
+    ("8-K on its Hugging Face acquisition was accepted the same morning", "0001045810-26-000078-index.htm"),
+    ("figures of 6 and 12 business days appear only in third-party reports", "openai-six-misalignment-incident-reports"),
+    ("the public prospectus was not expected until late September", "anthropic-ipo-launch-shifts-toward-mid-october-reuters"),
+    ("3.5 Flash Cyber was already cited in the 22 Jul earnings release", "googexhibit991q22026.htm"),
+    ("the 9 Sep post for D)", "1AI7pCaa_s6cb_jRBHVonGa50OjUyBqkQ"),
+    ("the 9 Sep post for D)", "research/alignment-assessment-cybersecurity-incidents"),
+)
+B3_NOTES = (
+    "October 15, 2026: correction, interests table: five OpenAI entries dated",
+    "October 15, 2026: correction, interests table: the Anthropic Series H entry",
+    "October 15, 2026: update, interests table: two Irregular entries",
+    "October 15, 2026: sources added, ledger entries and interests table: thirteen entries",
+    "October 15, 2026: correction withdrawn, RubyGems ledger",
+)
+
+
+def test_batch3_fixes_present_and_old_wording_gone() -> None:
+    t = body(text())
+    for phrase in B3_GONE:
+        assert phrase not in t, phrase
+    for phrase in B3_PRESENT:
+        assert phrase in t, phrase
+
+
+def test_batch3_entries_cite_the_source_that_carries_the_claim() -> None:
+    t = text()
+    for phrase, url in B3_SOURCES:
+        block = entry_sources(t, phrase)
+        assert url in block, (phrase, url)
+        n = int(re.search(r"Sources \((\d+)\)", block).group(1))
+        assert block.count("<li>") == n, phrase
+    # The Meta 8-K index goes to the interests entry, not the chart tooltip that repeats the text.
+    i = t.index("Q2 2026 earnings (8-K accepted 2026-07-29 20:03:23Z)")
+    j = t.index("Q2 2026 earnings (8-K accepted 2026-07-29 20:03:23Z)", i + 1)
+    assert "0001628280-26-050596-index.htm" in entry_sources(t[j:], "Q2 2026 earnings")
+
+
+def test_batch3_notes_are_dated_and_quote_the_old_text() -> None:
+    notes = CORRECTIONS.search(text()).group(1)
+    for phrase in B3_NOTES:
+        assert phrase in notes, phrase
+    for old in ("OpenAI&#x27;s first observation of agent message-board activity",
+                "vendor-claimed, 24 Aug letter", "lists no press item after 2026-06-16",
+                "no Gemini assessment at any date"):
         assert old in notes, old

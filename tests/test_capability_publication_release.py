@@ -703,10 +703,12 @@ RELEASE_PATHS = (
 # attractor, log tone map). The release is rehashed.
 # October 14, 2026, later: studio.html loads studio.js at the Music flow field's new stamp
 # (raw-native flow field). The release is rehashed.
+# October 15, 2026: batch 3 of the full Who Knew First second read adds dated corrections and
+# sources; the series tables follow the new reading time (75 min). The release is rehashed.
 # October 14, 2026, later: studio.html gains the Finish layer (raw-native 0.8.0's post stack over the
 # stage), moves the Verified viewer to the raw-native 0.8.0 release, and loads studio.js and
 # studio-shell.css at a new stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "33a0c824e76f94cbe2c5ef7c46088930fa522c62b834b2ec184ac2d815eeb6a9"
+REVIEWED_RELEASE_SHA256 = "f3c378e194e52f86782ba0ff3d71b7b9f77bcc2898023a6c849f67da08749912"
 
 
 BRIEFING_FIGURES = (
