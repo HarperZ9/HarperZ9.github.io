@@ -50,7 +50,8 @@ export default {
     const credit = end.card.slice(1, 3).flatMap((c) => wrap(c, sans, 30, 1100));
     return {
       cards,
-      checkTag: { t0: (check.sweeps[0] - 1) * SWEEP, t1: check.sweeps[1] * SWEEP, shape: text("the game's own dialogue box", { atlas: mono, size: 28, x: X, y: 150 }).shape },
+      // The dialogue-box sweep may carry a kind label like the cards' speaker names (film.json card.kind), or none.
+      checkTag: { t0: (check.sweeps[0] - 1) * SWEEP, t1: check.sweeps[1] * SWEEP, shape: check.card && check.card.kind ? text(check.card.kind, { atlas: mono, size: 32, x: X, y: 150 }).shape : null },
       title: text("The Keeper's Hour", { atlas: head, size: 104, x: 960, y: 500, anchor: "center" }).shape,
       facts: text(end.card[0], { atlas: head, size: 48, x: X, y: 200 }).shape,
       credit: credit.map((l, k) => text(l, { atlas: sans, size: 30, x: X, y: 290 + k * 44 }).shape),
@@ -69,7 +70,7 @@ export default {
       put(c.speaker, DIM, a);
       c.lines.forEach((s) => put(s, BONE, a));
     }
-    put(A.checkTag.shape, DIM, window(t, A.checkTag.t0 + 0.35, A.checkTag.t1 - 0.25, 0.5, 0.45));
+    if (A.checkTag.shape) put(A.checkTag.shape, DIM, window(t, A.checkTag.t0 + 0.35, A.checkTag.t1 - 0.25, 0.5, 0.45));
     // The title sweep: black, the beam crosses once (the trailer's one warm-white), the title lands.
     const T0 = A.T0, E0 = A.E0, END = A.END;
     if (t >= T0 && t < T0 + SWEEP) {

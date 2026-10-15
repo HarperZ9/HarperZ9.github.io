@@ -9,7 +9,7 @@ recorder's frame-00000.ppm onwards. OVERLAY is the Motion layer rendered at the 
 frame rate (scripts/motion_render.py). In the card sweeps that layer is words in bone on black,
 so its pixels are the words' colour times their coverage: each output pixel is the game frame
 times (1 - coverage) plus the layer. The game frame is pushed in by a centred crop (capture.json
-"push", smootherstep over the shot, about its "focus" point), a soft plate darkens the card's corner while a card shows,
+"push", smootherstep over the shot, about its "focus" point; with "pad" the crop may pass the frame edge, in black), a soft plate darkens the card's corner while a card shows,
 and a vignette closes the edges. In the title and end-card sweeps the layer is the whole frame.
 Every frame is a function of its index: two runs give the same bytes for the same inputs.
 """
@@ -85,7 +85,9 @@ def main(argv=None) -> int:
             z = shot["push"][0] + (shot["push"][1] - shot["push"][0]) * smooth((t - t0) / (t1 - t0))
             cw, ch = im.width / z, im.height / z
             fx, fy = shot.get("focus", [0.5, 0.5])
-            x0 = min(max(fx * im.width - cw / 2, 0), im.width - cw); y0 = min(max(fy * im.height - ch / 2, 0), im.height - ch)
+            x0, y0 = fx * im.width - cw / 2, fy * im.height - ch / 2
+            if not shot.get("pad"):   # "pad": the crop may pass the frame's edge, filled with black, to centre its focus
+                x0 = min(max(x0, 0), im.width - cw); y0 = min(max(y0, 0), im.height - ch)
             im = im.crop((x0, y0, x0 + cw, y0 + ch)).resize((W, H), Image.LANCZOS)
             base = np.asarray(im, np.float32) * vignette
             shade = max((window(t, c0 + 0.1, c1, 0.6, 0.4) for c0, c1 in cards), default=0.0)
