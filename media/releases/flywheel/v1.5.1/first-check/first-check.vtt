@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:03.400 --> 00:00:12.846
+Check the answer as it was filed. The contract names the tax table as the authority, and the filed tax disagrees with it.
+
+00:00:12.846 --> 00:00:18.062
+Check the answer that took its tax from the table. It passes.
+
+00:00:18.062 --> 00:00:25.200
+Run the same check with nothing allowed to decide. The same correct answer is unverifiable, not passed.

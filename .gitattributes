@@ -60,3 +60,5 @@ media/releases/** -text
 
 # raw-native release copies are checked byte for byte against the release's SHA256SUMS.
 media/raw-native/viewer-*/** -text
+# raw-native at one commit in its repository layout (web/, templates/guides/, docs/motion/), pinned by SHA256SUMS: no EOL conversion.
+media/raw-native/tree-*/** -text
