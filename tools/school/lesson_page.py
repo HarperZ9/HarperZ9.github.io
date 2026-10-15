@@ -78,6 +78,9 @@ def main() -> None:
     cur = load(SCHOOL / "curriculum.json")
     (ROOT / "night-school.html").write_text(school_page(cur, facts), encoding="utf-8", newline="\n")
     (ROOT / "night-school-attention.html").write_text(lesson_page(film, ev, facts, timing), encoding="utf-8", newline="\n")
+    from tools.school.lessons import write_all
+    for rel in write_all(ROOT):
+        print(rel, "written")
     # Point each head at its own link card (img/og/p, rendered by tools/repo_art/site_cards.py).
     from tools.repo_art import site_cards
     for c in site_cards.plan():

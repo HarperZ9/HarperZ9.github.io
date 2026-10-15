@@ -17,9 +17,13 @@ export async function mountFilm(box, { scene: sceneUrl, force2d = false } = {}) 
   const scrub = el("input", { type: "range", min: "0", max: "1", step: "0.1", value: "0", class: "sf-scrub", "aria-label": "Position in the film" });
   bar.append(play, scrub, time);
   box.replaceChildren(canvas, cap, bar, chapters);
-  const be = await backend(canvas, {}, { reduced, force2d, title: scene.title });
-  const { QUALITY: Q } = await import(new URL("../../media/school/attention/scene/lib.mjs", import.meta.url).href);
+  // Every guide's textures (Pylon's spots and the rest) go to the drawer up front: a live scene
+  // has no engine handle in load() to register them itself.
+  const { QUALITY: Q, GUIDES } = await import(new URL("../../media/school/shared/lib.mjs", import.meta.url).href);
+  const images = Object.assign({}, ...Object.values(GUIDES).filter((g) => g.textures).map((g) => g.textures()));
+  const be = await backend(canvas, {}, { reduced, force2d, title: scene.title, images });
   Q.threads = be.kind === "webgpu" ? 1 : 0.3;
+  Q.paint = be.kind === "webgpu" ? 1 : 0;
   const ctx = sceneContext(scene, { baseUrl: sceneUrl, reduced });
   await loadScene(scene, ctx);
   const rows = await ctx.json("timing.json");
@@ -40,6 +44,7 @@ export async function mountFilm(box, { scene: sceneUrl, force2d = false } = {}) 
     // A slow device draws fewer threads, so the film keeps time instead of stalling.
     const ms = performance.now() - t0;
     if (ms > 70 && Q.threads > 0.08) Q.threads = Math.max(0.08, Q.threads * 0.75);
+    if (ms > 70) Q.paint = 0;
   };
   const loop = (now) => {
     if (!playing) return;

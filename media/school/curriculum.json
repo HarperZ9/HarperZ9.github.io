@@ -10,8 +10,8 @@
     {"id": "E", "title": "Evaluation and honesty", "place": "The prism at the tide line", "guide": "rerun"}
   ],
   "lessons": [
-    {"id": "F1", "track": "F", "title": "Vectors: a list of numbers is a place", "needs": [], "status": "planned"},
-    {"id": "F2", "track": "F", "title": "Matrices move space", "needs": ["F1"], "status": "planned"},
+    {"id": "F1", "track": "F", "title": "Vectors: a list of numbers is a place", "needs": [], "status": "draft", "href": "night-school-vectors.html"},
+    {"id": "F2", "track": "F", "title": "Matrices move space", "needs": ["F1"], "status": "draft", "href": "night-school-matrices.html"},
     {"id": "F3", "track": "F", "title": "Gradients: which way is downhill", "needs": ["F1"], "status": "planned"},
     {"id": "F4", "track": "F", "title": "Backpropagation: blame, passed backwards", "needs": ["F2", "F3"], "status": "planned"},
     {"id": "F5", "track": "F", "title": "Optimisers: momentum, Adam and the learning rate", "needs": ["F3"], "status": "planned"},
