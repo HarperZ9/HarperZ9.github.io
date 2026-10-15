@@ -66,8 +66,10 @@ def test_gate_reads_before_publication_hold() -> None:
     assert "reads the goal as likely" not in text
     # Netflix's ending page: the Creature finds Harlander's abandoned photographs of the corpse.
     assert "Harlander photographed the experiment" not in text
-    # Held items stay held: the studio quote and The Fifth Element's test scene.
-    assert "is the studio" not in text
+    # The studio quote was read at the source on 15 October 2026 and published.
+    assert '"is the studio"' in text
+    assert "read directly on 15 October 2026" in text
+    # The Fifth Element's test scene stays held.
     assert "held from this piece" in text
 
 
