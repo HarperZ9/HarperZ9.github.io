@@ -54,6 +54,10 @@ FINGERPRINT_PROFILES = HTML_FINGERPRINT_PROFILES | {
     "pdf_document",
 }
 SCHEMA_VERSION = 1
+# HTML profiles hash visible text plus every link target inside the container, written
+# as <href> after the link text. Before 2026-10-14 link targets were dropped, so a cited
+# page that kept its words and changed where a link pointed fingerprinted as unchanged.
+HTML_NORMALIZER = "text-and-link-targets/1"
 REGISTRY_STATUSES = {"available", "context-only", "pending"}
 STATE_STATUSES = {"available", "pending"}
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
@@ -220,15 +224,20 @@ def _starts_skipped_subtree(profile: str, tag: str, attributes: dict[str, str]) 
 class _SubstantiveHTMLParser(HTMLParser):
     """Collect one balanced, profile-specific substantive container."""
 
-    def __init__(self, profile: str) -> None:
+    def __init__(self, profile: str, link_targets: bool = True) -> None:
         super().__init__(convert_charrefs=True)
         self.profile = profile
+        self.keep_link_targets = link_targets
         self.target_stack: list[str] = []
         self.skip_start_depth: int | None = None
         self.targets_started = 0
         self.targets_completed = 0
         self.structure_error: str | None = None
         self.parts: list[str] = []
+        self.link_targets: list[str | None] = []
+
+    def _collecting(self) -> bool:
+        return bool(self.target_stack) and self.skip_start_depth is None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {name: value or "" for name, value in attrs}
@@ -245,6 +254,9 @@ class _SubstantiveHTMLParser(HTMLParser):
             self.target_stack.append(tag)
         if self.skip_start_depth is None and _starts_skipped_subtree(self.profile, tag, attributes):
             self.skip_start_depth = len(self.target_stack)
+        if tag == "a":
+            href = attributes.get("href", "").strip()
+            self.link_targets.append(href if href and self._collecting() else None)
 
     def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = {name: value or "" for name, value in attrs}
@@ -259,6 +271,10 @@ class _SubstantiveHTMLParser(HTMLParser):
         if tag != expected:
             self.structure_error = f"unbalanced target container: expected </{expected}>, got </{tag}>"
             return
+        if tag == "a" and self.link_targets:
+            href = self.link_targets.pop()
+            if href is not None and self.keep_link_targets and self._collecting():
+                self.parts.append(f" <{href}> ")
         self.target_stack.pop()
         if self.skip_start_depth is not None and len(self.target_stack) < self.skip_start_depth:
             self.skip_start_depth = None
@@ -266,7 +282,7 @@ class _SubstantiveHTMLParser(HTMLParser):
             self.targets_completed += 1
 
     def handle_data(self, data: str) -> None:
-        if self.target_stack and self.skip_start_depth is None:
+        if self._collecting():
             self.parts.append(data)
 
 
@@ -274,7 +290,10 @@ def normalize_html(
     raw: bytes,
     profile: str | None = None,
     selector: str | None = None,
+    link_targets: bool = True,
 ) -> str:
+    """link_targets=False reproduces the pre-2026-10-14 text-only HTML fingerprint, kept
+    only so a stored baseline can be checked before it is renormalized."""
     if profile not in FINGERPRINT_PROFILES:
         raise ValueError(f"unknown fingerprint profile: {profile!r}")
     text = "" if profile == "openai_sitemap_entry" else raw.decode("utf-8", errors="replace")
@@ -362,7 +381,7 @@ def normalize_html(
             sort_keys=True,
         )
     else:
-        parser = _SubstantiveHTMLParser(profile)
+        parser = _SubstantiveHTMLParser(profile, link_targets=link_targets)
         parser.feed(text)
         parser.close()
         if parser.structure_error:
@@ -427,13 +446,32 @@ def fetch(
                 "last_modified": response.headers.get("Last-Modified"),
             }
         normalized = normalize_html(raw, profile=profile, selector=selector)
-        return {
+        record = {
             "url": response.geturl(),
             "sha256": hashlib.sha256(normalized.encode("utf-8")).hexdigest(),
             "normalized_characters": len(normalized),
             "etag": response.headers.get("ETag"),
             "last_modified": response.headers.get("Last-Modified"),
         }
+        if profile in HTML_FINGERPRINT_PROFILES:
+            record["normalizer"] = HTML_NORMALIZER
+            text_only = normalize_html(raw, profile=profile, selector=selector, link_targets=False)
+            record["text_only_sha256"] = hashlib.sha256(text_only.encode("utf-8")).hexdigest()
+        return record
+
+
+def _compare_baseline(previous: dict, fetched: dict) -> tuple[bool, bool]:
+    """Return (unbaselined, changed). A text-only baseline from before link targets were
+    hashed is compared on its words: different words are a change; the same words still
+    need a new baseline, because the link targets were never reviewed."""
+    if not previous.get("sha256"):
+        return True, False
+    if previous.get("normalizer") == fetched.get("normalizer"):
+        return False, previous["sha256"] != fetched["sha256"]
+    if previous.get("normalizer") is None and fetched.get("text_only_sha256"):
+        if previous["sha256"] != fetched["text_only_sha256"]:
+            return False, True
+    return True, False
 
 
 def check(registry_path: Path, state_path: Path | None, timeout: float) -> dict:
@@ -468,8 +506,7 @@ def check(registry_path: Path, state_path: Path | None, timeout: float) -> dict:
             if "fingerprint_url" in source:
                 fetched["fingerprint_url"] = source["fingerprint_url"]
             previous = prior.get(source["id"], {})
-            unbaselined = not previous.get("sha256")
-            changed = bool(not unbaselined and previous["sha256"] != fetched["sha256"])
+            unbaselined, changed = _compare_baseline(previous, fetched)
             results.append({
                 "id": source["id"],
                 "status": "unbaselined" if unbaselined else "available",
