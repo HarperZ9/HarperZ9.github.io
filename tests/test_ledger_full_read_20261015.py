@@ -8,6 +8,8 @@ old text.
 
 from __future__ import annotations
 
+import html
+import json
 import re
 from pathlib import Path
 
@@ -260,3 +262,37 @@ def test_batch4_notes_are_dated_and_quote_the_old_text() -> None:
     assert "October 15, 2026: sources added, interests table: ten entries" in notes
     assert "JFrog declined to map its CVEs to the Hugging Face incident" in notes
     assert "&quot;about 27%&quot;" in notes
+
+
+# Batch 5 (WKF-0472 to WKF-0582, the information and interest table): citation additions only.
+# Each row's Sources cell and the same edge's "source" list in the graph data must cite the source.
+B5_ROWS = (
+    ("<td>Compute purchase. AWS named primary cloud and training partner (2024-11-22).", "anthropic-amazon-trainium"),
+    ("<td>$200M ceiling contract announced with xAI for Government;", "pentagon-ai-contracts-musk-xai-google-openai-anthropic-cdao"),
+    ("seven days past the 24 Aug deadline); follow-up letter 2026-09-02", "oversight-letter-to-openai-openai-hugging-face-incident.pdf"),
+    ("<td>Compute supply and Stargate participation. Oracle is a Stargate equity", "announcing-the-stargate-project"),
+    ("<td>Equity investment in xAI: named in Series C ($6B, 2024-12-23)", "x.ai/news/xai-joins-spacex"),
+    ("<td>Staff flow (organizational level): a Redwood Research staff member", "OpenAI-Hugging-Face%20Incident-Technical-Report.pdf"),
+    ("<td>GSA schedule listing and OneGov offer of Claude for Enterprise", "gsa-strikes-onegov-deal-with-anthropic-08122025"),
+    ("<td>Intergovernmental AI dialogue: first AI risk and safety talks, Geneva,", "content_WS6642c51dc6d0868f4e8e713d.html"),
+    ("<td>Congressional oversight request (2026-08-10) and Anthropic reply (2026", "oversight-letter-to-anthropic-regaring-security-incidents-1.pdf"),
+)
+
+
+def test_batch5_rows_cite_the_source_in_table_and_graph_data() -> None:
+    t = text()
+    graph = json.loads(re.search(r'<script[^>]*type="application/json"[^>]*>(.*?)</script>', t, re.S).group(1))
+    edges = graph["edges"] if isinstance(graph, dict) and "edges" in graph else graph.get("links", [])
+    for phrase, url in B5_ROWS:
+        i = t.index(phrase)
+        row = t[i:t.index("</td></tr>", i)]
+        assert url in row, (phrase, url)
+        rel = html.unescape(phrase.replace("<td>", ""))
+        match = [e for e in edges if rel.split(";")[0][:50] in e.get("relation", "") or rel[:50] in e.get("relation", "")]
+        assert len(match) == 1, (phrase, len(match))
+        assert any(url in s for s in match[0]["source"]), (phrase, url)
+
+
+def test_batch5_note_is_dated() -> None:
+    notes = CORRECTIONS.search(text()).group(1)
+    assert "October 15, 2026: sources added, information and interest table: nine rows" in notes
