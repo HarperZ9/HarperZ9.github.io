@@ -1,0 +1,78 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "matrices",
+  "read": "2026-10-15",
+  "sources": {
+    "strang2016": {
+      "short": "Strang 2016, Introduction to Linear Algebra",
+      "citation": "Strang, G. (2016). Introduction to Linear Algebra, 5th edition. Wellesley-Cambridge Press. Chapter 1 (vectors, linear combinations, lengths and dot products) and chapters 2 and 8 (matrices, multiplication, linear transformations).",
+      "url": "https://math.mit.edu/~gs/linearalgebra/",
+      "read": "table of contents and the free sample section 1.3; sections 1.1, 1.2, 2.1, 2.4, 5.1 and 8.1 are not in the free samples, so those claims were checked on their mathematical merits, not against the book's text",
+      "claims": [
+        "A matrix applied to a vector gives a combination of the matrix's columns, weighted by the vector's components; so the first column is where the first unit vector lands and the second column where the second lands (section 2.1).",
+        "A linear transformation keeps straight lines straight and sends the zero vector to zero (chapter 8).",
+        "A rotation by 90 degrees has columns (0, 1) and (-1, 0); a stretch along x by 2 has columns (2, 0) and (0, 1); a shear [[1, 1], [0, 1]] slides each row sideways by its height.",
+        "The determinant of a 2 by 2 matrix is the factor by which it scales areas; a shear has determinant 1.",
+        "Doing one transformation after another is multiplying their matrices, and matrix multiplication is not commutative in general: AB and BA can differ (section 2.4).",
+        "A product of linear transformations is again a linear transformation, so stacking matrices without anything between them gives one matrix."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about language models; it is the mathematics the lesson uses."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, the attention lesson's trained weights",
+      "citation": "media/school/attention/model.json, read by tools/school/fill_matrices.mjs, which rebuilds the attention film's query, key and score from the layer-norm output and the head's slices of the query-key-value matrix, and refuses to write if they differ from the film's by more than 1e-4.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/matrices",
+      "read": "full",
+      "claims": [
+        "Each layer has biases after its matrices (the query-key-value projection, the output projection and both MLP matrices).",
+        "At layer 2, head 2, the input (after layer normalisation) is 32 numbers; the head's query and key slices are 32 by 16 with 16 biases each; q . k = 41.28 and q . k / 4 = 10.32, the score the attention film shows.",
+        "The model's MLP uses GELU between its two matrices."
+      ],
+      "n": "One trained model.",
+      "interval": "Not applicable: exact recomputation from stored weights.",
+      "does_not_prove": "Anything about how large models' query matrices behave."
+    },
+    "vaswani2017": {
+      "short": "Vaswani and others 2017, Attention Is All You Need",
+      "citation": "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. NeurIPS 30.",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "read": "full",
+      "claims": [
+        "Queries, keys and values are made by multiplying the input by learned projection matrices, one set per head (section 3.2.2).",
+        "Scores are dot products of queries and keys divided by the square root of the key length (section 3.2.1).",
+        "The paper writes the attention projections as matrices without biases; our model's projections have biases."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "How a particular trained model uses its projections."
+    },
+    "ba2016": {
+      "short": "Ba, Kiros and Hinton 2016, Layer Normalization",
+      "citation": "Ba, J. L., Kiros, J. R., Hinton, G. E. (2016). Layer Normalization. arXiv:1607.06450.",
+      "url": "https://arxiv.org/abs/1607.06450",
+      "read": "full",
+      "claims": [
+        "Layer normalisation shifts each input's numbers to mean zero and scales them to unit spread, then applies a learned gain and bias, so the output's spread is set by the learned gain."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Why it helps in a particular model."
+    },
+    "hendrycks2016": {
+      "short": "Hendrycks and Gimpel 2016, Gaussian Error Linear Units",
+      "citation": "Hendrycks, D., Gimpel, K. (2016). Gaussian Error Linear Units (GELUs). arXiv:1606.08415.",
+      "url": "https://arxiv.org/abs/1606.08415",
+      "read": "full",
+      "claims": [
+        "GELU is a smooth nonlinearity, x times the standard normal cumulative distribution at x, so it treats large, small and negative inputs differently.",
+        "Our model uses the paper's tanh approximation of GELU."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That GELU is the best choice."
+    }
+  },
+  "factcheck": "media/school/matrices/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}

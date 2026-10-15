@@ -16,6 +16,7 @@ SCHOOL = ROOT / "media" / "school"
 V = "20261015-school-1"
 E = html.escape
 GUIDE = {"tallow": "Tallow", "pylon": "Pylon", "rerun": "Rerun"}
+NUM = {2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight"}
 STATUS = {"ready": "ready", "draft": "film and lab live; narration not recorded yet", "planned": "planned, not made yet"}
 
 
@@ -82,6 +83,8 @@ def lesson_list(cur: dict) -> str:
 def school_page(cur: dict, facts: dict) -> str:
     desc = "Night School teaches how AI works, from gradients to GPU kernels, in animated films and labs that run real models in your browser."
     n = len(cur["lessons"])
+    k = sum(1 for le in cur["lessons"] if le["status"] != "planned")
+    live = "One lesson is" if k == 1 else f"{NUM.get(k, k)} lessons are"
     body = f"""<div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">night school</span></div>
   <div class="mid">
@@ -93,12 +96,13 @@ def school_page(cur: dict, facts: dict) -> str:
 <main id="main">
 <section class="mv" id="start" aria-labelledby="start-h">
   <h2 id="start-h">Start here</h2>
+  <p class="body-text">New to the maths? Begin with Pylon on the hill above the harbour: <a class="inline" href="night-school-vectors.html">Vectors: a list of numbers is a place</a>, then <a class="inline" href="night-school-matrices.html">Matrices move space</a>. Both use the same small language model as the attention lesson, so the numbers carry over.</p>
   <p class="body-text"><a class="inline" href="night-school-attention.html">Attention: how a language model decides what matters</a>. Tallow keeps the lamp at the top of the lighthouse. A word shines its question back along the sentence, and the earlier words that answer it best get the light. In the lab you train a {facts["nLayers"]}-layer model with {facts["params"]:,} numbers on sentences from the coast and watch its heads learn where to look.</p>
 </section>
 
 <section class="mv" id="lessons" aria-labelledby="lessons-h">
   <h2 id="lessons-h">The lessons</h2>
-  <p class="body-text">{n} lessons in six tracks, from vectors to fused attention kernels. "After" names the lessons that help first; nothing is locked. One lesson is live so far; the rest are planned and listed so you can see where this is going.</p>
+  <p class="body-text">{n} lessons in six tracks, from vectors to fused attention kernels. "After" names the lessons that help first; nothing is locked. {live} live so far; the rest are planned and listed so you can see where this is going.</p>
   {lesson_list(cur)}
 </section>
 

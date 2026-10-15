@@ -1,0 +1,64 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "vectors",
+  "read": "2026-10-15",
+  "sources": {
+    "strang2016": {
+      "short": "Strang 2016, Introduction to Linear Algebra",
+      "citation": "Strang, G. (2016). Introduction to Linear Algebra, 5th edition. Wellesley-Cambridge Press. Chapter 1 (vectors, linear combinations, lengths and dot products) and chapters 2 and 8 (matrices, multiplication, linear transformations).",
+      "url": "https://math.mit.edu/~gs/linearalgebra/",
+      "read": "table of contents and the free sample section 1.3; sections 1.1, 1.2, 2.1, 2.4, 5.1 and 8.1 are not in the free samples, so those claims were checked on their mathematical merits, not against the book's text",
+      "claims": [
+        "A vector is an ordered list of numbers; in two dimensions it can be drawn as a point or as an arrow from the origin (section 1.1).",
+        "Vectors add component by component, and the sum is the arrow reached by following one arrow and then the other; multiplying by a number scales the length, and a negative number reverses the direction (section 1.1).",
+        "The dot product multiplies matching components and adds them; it is zero exactly when the vectors are perpendicular (section 1.2).",
+        "The dot product divided by both lengths is the cosine of the angle between the vectors, and its size never exceeds 1 (the Schwarz inequality, section 1.2)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Anything about language models; it is the mathematics the lesson uses."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, the attention lesson's trained weights",
+      "citation": "media/school/attention/model.json (seed 7, 2,000 steps), read by tools/school/fill_vectors.mjs; categories fixed in system/school/vectors.mjs before any measurement.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/vectors",
+      "read": "full",
+      "claims": [
+        "Every word in the model starts as a list of 32 numbers (the embedding table, 46 words by 32).",
+        "Nearest neighbours are by cosine. The share of words whose nearest neighbour is of the same kind (guide name, noun, verb, adjective, function word, punctuation) is measured on the trained table, on the table before training, and against 2,000 shuffles of which word owns which list.",
+        "The word cone appears in the training sentences only in the phrase 'pylon put a cone on the' (system/school/corpus.mjs).",
+        "The flat chart is the first two principal components of the 46 lists (mean subtracted), computed by power iteration; same-kind neighbours on it are measured by distance on the chart, as a viewer would judge them."
+      ],
+      "n": "46 words; one trained model (one seed); 2,000 shuffles for the control.",
+      "interval": "95% interval of the shuffle control is stated in facts.json; one training seed, so no interval across seeds.",
+      "does_not_prove": "That word lists in large models are organised the same way, or that same-kind neighbours mean the model understands the words. Our categories are grammatical slots in a toy language, and slots are exactly what next-word training rewards."
+    },
+    "mikolov2013": {
+      "short": "Mikolov and others 2013, Efficient Estimation of Word Representations in Vector Space",
+      "citation": "Mikolov, T., Chen, K., Corrado, G., Dean, J. (2013). Efficient Estimation of Word Representations in Vector Space. arXiv:1301.3781.",
+      "url": "https://arxiv.org/abs/1301.3781",
+      "read": "full",
+      "claims": [
+        "Word vectors trained by predicting words from their neighbours place similar words close together.",
+        "The paper reports that vector('King') - vector('Man') + vector('Woman') is closest to vector('Queen'), citing earlier work (its reference [20]) whose vectors were trained on about 320 million words; the search for the nearest vector leaves out the question words.",
+        "The paper's own models were trained on a Google News corpus of about 6 billion tokens."
+      ],
+      "n": "Their word-analogy test set (semantic and syntactic questions).",
+      "interval": "Not reported as intervals.",
+      "does_not_prove": "That every analogy works, or that the offsets are exact; the paper reports accuracy on a test set, with many failures."
+    },
+    "jolliffe2016": {
+      "short": "Jolliffe and Cadima 2016, Principal component analysis: a review and recent developments",
+      "citation": "Jolliffe, I. T., Cadima, J. (2016). Principal component analysis: a review and recent developments. Philosophical Transactions of the Royal Society A 374: 20150202.",
+      "url": "https://doi.org/10.1098/rsta.2015.0202",
+      "read": "full",
+      "claims": [
+        "Principal components are the directions that keep the most variance of a data set; the first two give the best two-dimensional linear view in that sense, and the share of variance they keep says how much of the spread a flat picture retains."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That distances in the flat picture match distances in the full space; a projection can bring far points together."
+    }
+  },
+  "factcheck": "media/school/vectors/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}

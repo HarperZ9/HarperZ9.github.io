@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vectors: a list of numbers is a place</title>
+<meta name="description" content="Watch Pylon turn crates into arrows, dot products and cosines, then drag them yourself and explore the attention model&#x27;s own word table.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-vectors.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Vectors: a list of numbers is a place">
+<meta property="og:description" content="Watch Pylon turn crates into arrows, dot products and cosines, then drag them yourself and explore the attention model&#x27;s own word table.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-vectors.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vectors: a list of numbers is a place, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Vectors: a list of numbers is a place, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F1</span></div>
+  <div class="mid">
+    <h1>Vectors. <span class="g">A list of numbers is a place.</span></h1>
+    <p class="lede">Every word inside a language model is a list of numbers, and a list of numbers is a place. Pylon shows you on her harbour chart, and then hands you the chart and the model&#x27;s own word table.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:51, hosted by Pylon. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/vectors/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Pylon&#x27;s chart room</h2>
+  <p class="body-text">Drag two crates and watch the dot product, the lengths and the cosine change. Then open the word table of the model from the attention lesson: 46 words, 32 numbers each. Pick a word and see its nearest neighbours, computed in your browser from the trained lists. Two controls rebuild the table: the lists shuffled between words, and the lists from before training. In the film&#x27;s measurement, 80% of words had a nearest neighbour of the same kind, about 23% with shuffled lists, and 9% before training.</p>
+  <div class="ls" data-school="lab" data-lab="vectors">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the chart room</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Vectors</h3><p>Vectors. A list of numbers is a place.</p><p>I run the dock at Night School. Every crate that comes in gets an address on my chart.</p>
+<h3>Two numbers make a place</h3><p>Here is a crate. It sits four squares east of the corner and one and a half squares north.</p><p>Write that down as a list: four, then one and a half. That list is a vector.</p><p>You can read it as a place, or as an arrow from the corner to the crate. Same list, same thing.</p>
+<h3>Arrows add and stretch</h3><p>Arrows add. Walk the first one, then walk the second from where you stopped. Where you end up is the sum, and its numbers are the two lists added place by place.</p><p>Arrows stretch. Times two keeps the direction and doubles the length. Times minus one turns it round to face the other way.</p>
+<h3>The dot product</h3><p>Now two crates, and a game. Multiply their lists number by number, and add it all up.</p><p>I&#x27;ll swing the second crate round the corner while the sum keeps count.</p><p class="sc-ask">As the second crate swings round, where will the sum hit zero? <span>(the film pauses here)</span></p><p>Right there. At a right angle, the sum is zero. That sum is called the dot product. It is big when two arrows point the same way, zero when they meet at a right angle, and below zero when they point apart.</p>
+<h3>Length, and the cosine</h3><p>The dot product has a catch. Watch what happens if I push the second crate twice as far out, in the same direction.</p><p class="sc-ask">What happens to the dot product? <span>(the film pauses here)</span></p><p>It doubles. Nothing about the direction changed, but the score did.</p><p>So divide by the two lengths. What is left depends only on the angle. It is the cosine of the angle between the arrows: one when they point the same way, zero at a right angle, minus one when they point opposite. It always stays between minus one and one.</p>
+<h3>Thirty-two directions</h3><p>My chart has two directions, east and north. A list can be as long as you like.</p><p>In the little language model from the attention lesson, every word starts as a list of 32 numbers. That makes each word a place in a space with 32 directions.</p><p>Nobody can picture 32 directions. The arithmetic doesn&#x27;t care. The dot product is still multiply and add, now 32 times over, and the cosine is still a cosine.</p>
+<h3>Where the words live</h3><p>Nobody set those numbers by hand. Training moved them, a little at a time, until the model got better at guessing the next word.</p><p>So look at who ended up close to whom. The nearest neighbours of kettle are map, shell and crate. Tallow&#x27;s are rerun, pylon and map.</p><p>Across all 46 words, 80 percent have a nearest neighbour of the same kind as themselves: names next to names, things next to things, doing words next to doing words. Shuffle which word owns which list, and it drops to about 23 percent. Before training it was 9 percent.</p><p>Trained on hundreds of millions of words, the same idea goes much further. In 2013, researchers reported word lists where king, minus man, plus woman, landed closest to queen, once the three words in the question were left out of the search.</p>
+<h3>My cone</h3><p>And then there&#x27;s my cone.</p><p>A cone is cargo. It should sit with the crates. Its nearest neighbours are who, stood and mended.</p><p>In our sentences a cone only ever turns up in one phrase: put a cone on. Nothing there marks it as cargo, so the model had no reason to park it with the crates. Where it did park it is something we measured. Why there, we can only guess.</p><p>Closeness in these lists comes from how words are used in the training sentences, not from what they mean. Here, with 46 words, you can read every sentence the model learned from.</p>
+<h3>A flat picture of a big space</h3><p>One warning about pictures, this lesson&#x27;s included.</p><p>To lay the words out on my flat chart, I squash 32 directions down to the two that keep the most spread. Those two keep 31 percent of it.</p><p>On the flat chart, only 52 percent of the words sit nearest to a word of the same kind. In all 32 directions it was 80. Flattening throws a lot of closeness away.</p>
+<h3>Goodnight</h3><p>A list of numbers is a place. The dot product mixes how much two places point the same way with how far out they are, and the cosine keeps only the direction.</p><p>Next along the coast is my crane. It moves every place on the chart at once, and that is a matrix. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/vectors/facts.json">facts.json</a>, <a class="inline" href="media/school/attention/model.json">model.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Strang 2016, Introduction to Linear Algebra.</strong> Strang, G. (2016). Introduction to Linear Algebra, 5th edition. Wellesley-Cambridge Press. Chapter 1 (vectors, linear combinations, lengths and dot products) and chapters 2 and 8 (matrices, multiplication, linear transformations). <a class="inline" href="https://math.mit.edu/~gs/linearalgebra/">https://math.mit.edu/~gs/linearalgebra/</a></p><p>Used for: A vector is an ordered list of numbers; in two dimensions it can be drawn as a point or as an arrow from the origin (section 1.1). Vectors add component by component, and the sum is the arrow reached by following one arrow and then the other; multiplying by a number scales the length, and a negative number reverses the direction (section 1.1). The dot product multiplies matching components and adds them; it is zero exactly when the vectors are perpendicular (section 1.2). The dot product divided by both lengths is the cosine of the angle between the vectors, and its size never exceeds 1 (the Schwarz inequality, section 1.2).</p><p class="sc-dnp">Does not prove: Anything about language models; it is the mathematics the lesson uses.</p></li><li><p><strong>Night School&#x27;s tiny transformer, the attention lesson&#x27;s trained weights.</strong> media/school/attention/model.json (seed 7, 2,000 steps), read by tools/school/fill_vectors.mjs; categories fixed in system/school/vectors.mjs before any measurement. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/vectors">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/vectors</a></p><p>Used for: Every word in the model starts as a list of 32 numbers (the embedding table, 46 words by 32). Nearest neighbours are by cosine. The share of words whose nearest neighbour is of the same kind (guide name, noun, verb, adjective, function word, punctuation) is measured on the trained table, on the table before training, and against 2,000 shuffles of which word owns which list. The word cone appears in the training sentences only in the phrase &#x27;pylon put a cone on the&#x27; (system/school/corpus.mjs). The flat chart is the first two principal components of the 46 lists (mean subtracted), computed by power iteration; same-kind neighbours on it are measured by distance on the chart, as a viewer would judge them.</p><p class="sc-dnp">Does not prove: That word lists in large models are organised the same way, or that same-kind neighbours mean the model understands the words. Our categories are grammatical slots in a toy language, and slots are exactly what next-word training rewards.</p></li><li><p><strong>Mikolov and others 2013, Efficient Estimation of Word Representations in Vector Space.</strong> Mikolov, T., Chen, K., Corrado, G., Dean, J. (2013). Efficient Estimation of Word Representations in Vector Space. arXiv:1301.3781. <a class="inline" href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a></p><p>Used for: Word vectors trained by predicting words from their neighbours place similar words close together. The paper reports that vector(&#x27;King&#x27;) - vector(&#x27;Man&#x27;) + vector(&#x27;Woman&#x27;) is closest to vector(&#x27;Queen&#x27;), citing earlier work (its reference [20]) whose vectors were trained on about 320 million words; the search for the nearest vector leaves out the question words. The paper&#x27;s own models were trained on a Google News corpus of about 6 billion tokens.</p><p class="sc-dnp">Does not prove: That every analogy works, or that the offsets are exact; the paper reports accuracy on a test set, with many failures.</p></li><li><p><strong>Jolliffe and Cadima 2016, Principal component analysis: a review and recent developments.</strong> Jolliffe, I. T., Cadima, J. (2016). Principal component analysis: a review and recent developments. Philosophical Transactions of the Royal Society A 374: 20150202. <a class="inline" href="https://doi.org/10.1098/rsta.2015.0202">https://doi.org/10.1098/rsta.2015.0202</a></p><p>Used for: Principal components are the directions that keep the most variance of a data set; the first two give the best two-dimensional linear view in that sense, and the share of variance they keep says how much of the spread a flat picture retains.</p><p class="sc-dnp">Does not prove: That distances in the flat picture match distances in the full space; a projection can bring far points together.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The words here live in a tiny model trained on a made-up language of 46 words. Its neighbours track the job a word does in those sentences, which is exactly what next-word training rewards; they do not show that the model understands anything. The kinds of word (names, things, doing words and so on) were set by us before measuring, and other choices would give other numbers.</p><p class="body-text">The flat chart throws most of the space away: its two directions keep about a third of the spread. Any flat picture of a word space, including the ones in this lesson, should be read with that in mind.</p>
+  <p class="body-text">Next along the hill: <a class="inline" href="night-school-matrices.html">Matrices move space</a> (F2).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F1: vectors.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

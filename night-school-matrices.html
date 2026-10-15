@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matrices move space</title>
+<meta name="description" content="Watch Pylon&#x27;s crane move the whole chart with a matrix, then drive it yourself and rebuild the attention model&#x27;s question from its trained weights.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-matrices.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Matrices move space">
+<meta property="og:description" content="Watch Pylon&#x27;s crane move the whole chart with a matrix, then drive it yourself and rebuild the attention model&#x27;s question from its trained weights.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-matrices.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Matrices move space, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Matrices move space, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F2</span></div>
+  <div class="mid">
+    <h1>Matrices. <span class="g">One move for every place at once.</span></h1>
+    <p class="lede">A matrix is a move that takes every place on a chart somewhere at once. Pylon&#x27;s crane shows you how to read one, why the order of two moves matters, and how the attention lesson&#x27;s question was made by one.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:30, hosted by Pylon. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/matrices/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Pylon&#x27;s crane cab</h2>
+  <p class="body-text">Type a matrix, or pick a move, and watch the tracing sheet go where it sends it; put two cranes in a row and swap their order. Then the attention question: every earlier word&#x27;s score, q . k / 4, computed in your browser from the trained query and key matrices (32 x 16 each), with a control that sets the query matrix to zero. In the film&#x27;s sentence the score of &quot;the&quot; against &quot;kettle&quot; is 41.28 / 4 = 10.32.</p>
+  <div class="ls" data-school="lab" data-lab="matrices">
+    <button type="button" class="ns-btn ns-go" data-school-open>Climb into the cab</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Matrices</h3><p>Matrices move space.</p><p>Last time every crate got a place on my chart. Tonight the crane moves all of them at once.</p>
+<h3>One move for every place</h3><p>A crane that lifts one crate is useful. This crane takes the whole chart, and every crate on it, and turns it, or stretches it, or leans it over, in one go.</p><p>A matrix is that kind of move written as a grid of numbers. It sends every place on the chart somewhere, it keeps straight lines straight, and it leaves the corner where it is.</p>
+<h3>Read the columns</h3><p>Here&#x27;s how to read one. Forget the crates and watch two short arrows from the corner: one step east, one step north.</p><p>The first column of the matrix says where the east step lands. The second column says where the north step lands.</p><p>That is all a matrix has to say. Every place on the chart is so many east steps plus so many north steps, so it lands at the same number of the new east steps plus the new north steps.</p>
+<h3>Turn, stretch, lean</h3><p>A quarter turn sends east to north, and north to west. Columns: zero, one, and minus one, zero.</p><p>A stretch sends east to two steps east and leaves north alone. Every patch of the dock gets twice the area, and that factor has a name: the determinant.</p><p>A lean, called a shear, slides the top of the chart sideways. Squares become slanted boxes, and yet the area stays the same: determinant one.</p>
+<h3>Two cranes in a row</h3><p>Two cranes, one after the other. The first stretches the dock east, twice as wide. The second turns it a quarter turn.</p><p class="sc-ask">Does it matter which crane goes first? <span>(the film pauses here)</span></p><p>Stretch then turn sends the east step to 0, 2: two steps north. Turn then stretch sends it to 0, 1: one step north. So yes, the order matters.</p><p>Two moves in a row are still one move, and its matrix is the product of the two. Multiplying matrices means doing the moves one after the other, and that is why the order of a product matters.</p>
+<h3>The corner never moves</h3><p>Here&#x27;s a harder one.</p><p class="sc-ask">Can any matrix move the corner of the chart? <span>(the film pauses here)</span></p><p>No. A matrix times a list of zeros gives a list of zeros, so the corner always stays put. To slide the whole chart over, you add a fixed list after the move.</p><p>Many language models do exactly that: a matrix, then a list added on, called a bias. Every layer of the model from the attention lesson does it.</p>
+<h3>How a word makes its question</h3><p>Back at the lighthouse, in the attention lesson, the word &#x27;the&#x27; asked a question and kettle answered. Tallow skipped how the question was made. A matrix made it.</p><p>By the second layer, the list of 32 numbers at each word has been through a step called layer normalisation. It shifts the numbers to average zero and scales them to a standard spread, then applies a learned scale and shift of its own. Then it meets the head&#x27;s query matrix: 32 rows by 16 columns, plus a bias.</p><p>Out comes the question, a list of 16 numbers. Kettle&#x27;s list goes through a different matrix, the key matrix, and comes out as a label of the same length.</p><p>Multiply the question and the label number by number and add it up: 41.28. Divide by 4, the square root of 16: 10.32. That is the score the attention film showed, rebuilt here from the trained weights.</p>
+<h3>What a matrix cannot do</h3><p>A matrix can only do moves that keep lines straight. Stack ten of them and you still have one straight-line move: their product.</p><p>So a model puts bends between its matrices. In the one from the attention lesson, a smooth curve called GELU sits between the two matrices in the second half of each layer and bends every number that passes through. The softmax and the layer normalisation bend things too.</p><p>How a model learns the numbers in its matrices is where the next lessons along the hill go.</p>
+<h3>Goodnight</h3><p>A matrix moves every place at once. Read its columns to see where the steps go, multiply two to do one move after another, and mind the order.</p><p>Next along the hill, we find out which way is downhill. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/matrices/facts.json">facts.json</a>, <a class="inline" href="media/school/attention/model.json">model.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Strang 2016, Introduction to Linear Algebra.</strong> Strang, G. (2016). Introduction to Linear Algebra, 5th edition. Wellesley-Cambridge Press. Chapter 1 (vectors, linear combinations, lengths and dot products) and chapters 2 and 8 (matrices, multiplication, linear transformations). <a class="inline" href="https://math.mit.edu/~gs/linearalgebra/">https://math.mit.edu/~gs/linearalgebra/</a></p><p>Used for: A matrix applied to a vector gives a combination of the matrix&#x27;s columns, weighted by the vector&#x27;s components; so the first column is where the first unit vector lands and the second column where the second lands (section 2.1). A linear transformation keeps straight lines straight and sends the zero vector to zero (chapter 8). A rotation by 90 degrees has columns (0, 1) and (-1, 0); a stretch along x by 2 has columns (2, 0) and (0, 1); a shear [[1, 1], [0, 1]] slides each row sideways by its height. The determinant of a 2 by 2 matrix is the factor by which it scales areas; a shear has determinant 1. Doing one transformation after another is multiplying their matrices, and matrix multiplication is not commutative in general: AB and BA can differ (section 2.4). A product of linear transformations is again a linear transformation, so stacking matrices without anything between them gives one matrix.</p><p class="sc-dnp">Does not prove: Anything about language models; it is the mathematics the lesson uses.</p></li><li><p><strong>Night School&#x27;s tiny transformer, the attention lesson&#x27;s trained weights.</strong> media/school/attention/model.json, read by tools/school/fill_matrices.mjs, which rebuilds the attention film&#x27;s query, key and score from the layer-norm output and the head&#x27;s slices of the query-key-value matrix, and refuses to write if they differ from the film&#x27;s by more than 1e-4. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/matrices">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/matrices</a></p><p>Used for: Each layer has biases after its matrices (the query-key-value projection, the output projection and both MLP matrices). At layer 2, head 2, the input (after layer normalisation) is 32 numbers; the head&#x27;s query and key slices are 32 by 16 with 16 biases each; q . k = 41.28 and q . k / 4 = 10.32, the score the attention film shows. The model&#x27;s MLP uses GELU between its two matrices.</p><p class="sc-dnp">Does not prove: Anything about how large models&#x27; query matrices behave.</p></li><li><p><strong>Vaswani and others 2017, Attention Is All You Need.</strong> Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. NeurIPS 30. <a class="inline" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></p><p>Used for: Queries, keys and values are made by multiplying the input by learned projection matrices, one set per head (section 3.2.2). Scores are dot products of queries and keys divided by the square root of the key length (section 3.2.1). The paper writes the attention projections as matrices without biases; our model&#x27;s projections have biases.</p><p class="sc-dnp">Does not prove: How a particular trained model uses its projections.</p></li><li><p><strong>Ba, Kiros and Hinton 2016, Layer Normalization.</strong> Ba, J. L., Kiros, J. R., Hinton, G. E. (2016). Layer Normalization. arXiv:1607.06450. <a class="inline" href="https://arxiv.org/abs/1607.06450">https://arxiv.org/abs/1607.06450</a></p><p>Used for: Layer normalisation shifts each input&#x27;s numbers to mean zero and scales them to unit spread, then applies a learned gain and bias, so the output&#x27;s spread is set by the learned gain.</p><p class="sc-dnp">Does not prove: Why it helps in a particular model.</p></li><li><p><strong>Hendrycks and Gimpel 2016, Gaussian Error Linear Units.</strong> Hendrycks, D., Gimpel, K. (2016). Gaussian Error Linear Units (GELUs). arXiv:1606.08415. <a class="inline" href="https://arxiv.org/abs/1606.08415">https://arxiv.org/abs/1606.08415</a></p><p>Used for: GELU is a smooth nonlinearity, x times the standard normal cumulative distribution at x, so it treats large, small and negative inputs differently. Our model uses the paper&#x27;s tanh approximation of GELU.</p><p class="sc-dnp">Does not prove: That GELU is the best choice.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Real models use matrices thousands of numbers wide, and what a trained query matrix has learned is far harder to read than a crane&#x27;s turn. The lesson shows one head of a two-layer toy model on one sentence.</p><p class="body-text">The bends between matrices (GELU, softmax, layer normalisation) get one picture here; how a model learns the numbers in its matrices is the next lessons&#x27; subject.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-vectors.html">Vectors</a> (F1). Next along the hill: gradients, which way is downhill (F3), planned.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F2: matrices.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

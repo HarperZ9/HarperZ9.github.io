@@ -1,0 +1,111 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "matrices",
+  "title": "Matrices move space",
+  "page": "night-school-matrices.html",
+  "seed": 20261017,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/matrices/facts.json, computed from the attention film's model.json by tools/school/fill_matrices.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "The quay at night in drizzle. The crane's lamp comes on; Pylon climbs into the cab and pulls a lever, and the whole chart chalked on the quay swings. No words." },
+    "close": { "seconds": 5.0, "what": "Pylon climbs down. The chalk grid settles square again. She sets a cone on the corner of the chart, the one place no crane can move, and the crane's lamp goes out." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Matrices",
+      "lines": [
+        "Matrices move space.",
+        "Last time every crate got a place on my chart. Tonight the crane moves all of them at once."
+      ]
+    },
+    {
+      "key": "crane",
+      "heading": "One move for every place",
+      "sources": ["strang2016"],
+      "lines": [
+        "A crane that lifts one crate is useful. This crane takes the whole chart, and every crate on it, and turns it, or stretches it, or leans it over, in one go.",
+        "A matrix is that kind of move written as a grid of numbers. It sends every place on the chart somewhere, it keeps straight lines straight, and it leaves the corner where it is."
+      ]
+    },
+    {
+      "key": "columns",
+      "heading": "Read the columns",
+      "sources": ["strang2016"],
+      "lines": [
+        "Here's how to read one. Forget the crates and watch two short arrows from the corner: one step east, one step north.",
+        "The first column of the matrix says where the east step lands. The second column says where the north step lands.",
+        "That is all a matrix has to say. Every place on the chart is so many east steps plus so many north steps, so it lands at the same number of the new east steps plus the new north steps."
+      ]
+    },
+    {
+      "key": "kinds",
+      "heading": "Turn, stretch, lean",
+      "sources": ["strang2016"],
+      "lines": [
+        "A quarter turn sends east to north, and north to west. Columns: zero, one, and minus one, zero.",
+        "A stretch sends east to two steps east and leaves north alone. Every patch of the dock gets twice the area, and that factor has a name: the determinant.",
+        "A lean, called a shear, slides the top of the chart sideways. Squares become slanted boxes, and yet the area stays the same: determinant one."
+      ]
+    },
+    {
+      "key": "order",
+      "heading": "Two cranes in a row",
+      "sources": ["strang2016"],
+      "lines": [
+        "Two cranes, one after the other. The first stretches the dock east, twice as wide. The second turns it a quarter turn.",
+        "Stretch then turn sends the east step to {{order.eastArrow.AB.0}}, {{order.eastArrow.AB.1}}: two steps north. Turn then stretch sends it to {{order.eastArrow.BA.0}}, {{order.eastArrow.BA.1}}: one step north. So yes, the order matters.",
+        "Two moves in a row are still one move, and its matrix is the product of the two. Multiplying matrices means doing the moves one after the other, and that is why the order of a product matters."
+      ],
+      "predict": [
+        { "after": [0, 2], "question": "Does it matter which crane goes first?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "corner",
+      "heading": "The corner never moves",
+      "sources": ["strang2016", "ours-model"],
+      "lines": [
+        "Here's a harder one.",
+        "No. A matrix times a list of zeros gives a list of zeros, so the corner always stays put. To slide the whole chart over, you add a fixed list after the move.",
+        "Many language models do exactly that: a matrix, then a list added on, called a bias. Every layer of the model from the attention lesson does it."
+      ],
+      "predict": [
+        { "after": [0, 0], "question": "Can any matrix move the corner of the chart?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "question",
+      "heading": "How a word makes its question",
+      "sources": ["vaswani2017", "ba2016", "ours-model"],
+      "lines": [
+        "Back at the lighthouse, in the attention lesson, the word 'the' asked a question and kettle answered. Tallow skipped how the question was made. A matrix made it.",
+        "By the second layer, the list of {{finale.dModel}} numbers at each word has been through a step called layer normalisation. It shifts the numbers to average zero and scales them to a standard spread, then applies a learned scale and shift of its own. Then it meets the head's query matrix: {{finale.dModel}} rows by {{finale.dHead}} columns, plus a bias.",
+        "Out comes the question, a list of {{finale.dHead}} numbers. Kettle's list goes through a different matrix, the key matrix, and comes out as a label of the same length.",
+        "Multiply the question and the label number by number and add it up: {{finale.qkRaw|f2}}. Divide by {{finale.sqrtDHead}}, the square root of {{finale.dHead}}: {{finale.scaled|f2}}. That is the score the attention film showed, rebuilt here from the trained weights."
+      ]
+    },
+    {
+      "key": "edge",
+      "heading": "What a matrix cannot do",
+      "sources": ["strang2016", "hendrycks2016", "ours-model"],
+      "lines": [
+        "A matrix can only do moves that keep lines straight. Stack ten of them and you still have one straight-line move: their product.",
+        "So a model puts bends between its matrices. In the one from the attention lesson, a smooth curve called GELU sits between the two matrices in the second half of each layer and bends every number that passes through. The softmax and the layer normalisation bend things too.",
+        "How a model learns the numbers in its matrices is where the next lessons along the hill go."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "A matrix moves every place at once. Read its columns to see where the steps go, multiply two to do one move after another, and mind the order.",
+        "Next along the hill, we find out which way is downhill. Goodnight."
+      ]
+    }
+  ]
+}
