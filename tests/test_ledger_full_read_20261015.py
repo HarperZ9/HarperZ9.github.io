@@ -207,3 +207,56 @@ def test_batch3_notes_are_dated_and_quote_the_old_text() -> None:
                 "vendor-claimed, 24 Aug letter", "lists no press item after 2026-06-16",
                 "no Gemini assessment at any date"):
         assert old in notes, old
+
+
+# Batch 4 (WKF-0359 to WKF-0470).
+B4_GONE = (
+    "JFrog declined to map its CVEs to the Hugging Face incident",
+    "&#x27;about 27%&#x27; figure from the 2025-10-28 blog",
+    "'about 27%' figure from the 2025-10-28 blog",
+)
+B4_PRESENT = (
+    "JFrog has not published a mapping of its CVEs to the Hugging Face incident",
+    "&#x27;roughly 27 percent&#x27; figure from the 2025-10-28 blog",
+    "'roughly 27 percent' figure from the 2025-10-28 blog",
+)
+B4_SOURCES = (
+    ("the Anthropic letter carries 24, which matches its release", "casar-leads-demand-information-anthropic-about-security-incidents"),
+    ("The Senate letter of 10 Sep predates the attribution and omits RubyGems", "2026-09-10-Hawley-Letter-to-OpenAI"),
+    ("The Senate letter of 10 Sep predates the attribution and omits RubyGems", "alex-bores-new-york-ai-regulation"),
+    ("Google&#x27;s public confirmation likewise followed a press report", "hcws314"),
+    ("Google&#x27;s public confirmation likewise followed a press report", "rcna598651"),
+    ("OpenAI&#x27;s 22 Aug request to extend SB 53", "openai-california-ai-safety-law-sb53"),
+    ("the congressional responses found in this pass were letters from House Democrats", "AI-Pause-Letter-FINAL.pdf"),
+    ("the congressional responses found in this pass were letters from House Democrats", "shadow-hearing-calling-us-china-ai-agreement"),
+    ("the same frame the House Science chairman used", "chairman-babin-issues-statement"),
+    ("AI-opportunity MoUs with Anthropic, OpenAI and Google DeepMind", "memorandum-of-understanding-between-uk-and-openai"),
+    ("which the court decided largely in its favour on 2026-08-27", "USCOURTS-cand-3_26-cv-01996-5.pdf"),
+    ("It does not mention Meta&#x27;s incident (public since 5 Aug)", "cnn.com/2026/08/05/tech/meta-ai-hacking"),
+    ("Google, whose incident became public on 18 Sep, and Meta were not among those briefing", "rcna598651"),
+)
+
+
+def test_batch4_fixes_present_and_old_wording_gone() -> None:
+    t = body(text())
+    for phrase in B4_GONE:
+        assert phrase not in t, phrase
+    for phrase in B4_PRESENT:
+        assert phrase in t, phrase
+
+
+def test_batch4_entries_cite_the_source_that_carries_the_claim() -> None:
+    t = text()
+    for phrase, url in B4_SOURCES:
+        block = entry_sources(t, phrase)
+        assert url in block, (phrase, url)
+        n = int(re.search(r"Sources \((\d+)\)", block).group(1))
+        assert block.count("<li>") == n, phrase
+
+
+def test_batch4_notes_are_dated_and_quote_the_old_text() -> None:
+    notes = CORRECTIONS.search(text()).group(1)
+    assert "October 15, 2026: correction, interests table and the information and interest table" in notes
+    assert "October 15, 2026: sources added, interests table: ten entries" in notes
+    assert "JFrog declined to map its CVEs to the Hugging Face incident" in notes
+    assert "&quot;about 27%&quot;" in notes
