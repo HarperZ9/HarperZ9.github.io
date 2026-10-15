@@ -94,14 +94,14 @@
       "yaw": 0,
       "yaw_speed": 0,
       "push": [
-        1.6,
-        1.8
+        2.35,
+        2.35
       ],
       "ui": true,
       "open": "logbook",
       "focus": [
-        0.43,
-        0.88
+        0.33,
+        0.93
       ],
       "clock": 44,
       "seconds": 4

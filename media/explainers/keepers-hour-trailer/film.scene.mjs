@@ -37,7 +37,9 @@ export default {
     const [sans, head, mono, film] = await Promise.all([ctx.json("../motion/hanken-500.json"), ctx.json("../motion/hanken-650.json"),
       ctx.json("../motion/conso-400.json"), ctx.json("film.json")]);
     const cards = film.segments.filter((s) => s.lines.length).map((s) => {
-      const size = 50, lines = wrap(s.lines[0], sans, size, MAXW);
+      // A card may set its own wrap width (film.json segment card.maxw) to keep clear of a bright
+      // part of its shot; PROGRESS.md records each choice.
+      const size = 50, lines = wrap(s.lines[0], sans, size, (s.card && s.card.maxw) || MAXW);
       return { t0: (s.sweeps[0] - 1) * SWEEP, t1: s.sweeps[1] * SWEEP, speaker: text(s.speaker, { atlas: mono, size: 32, x: X, y: 150 }).shape,
         lines: lines.map((l, k) => text(l, { atlas: sans, size, x: X, y: 226 + k * 66 }).shape), text: lines };
     });

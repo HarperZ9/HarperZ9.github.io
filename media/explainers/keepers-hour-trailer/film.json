@@ -65,7 +65,10 @@
       ],
       "lines": [
         "Three hundred and twelve facets of pressed glass. Each one holds a smaller lamp, turning."
-      ]
+      ],
+      "card": {
+        "maxw": 620
+      }
     },
     {
       "key": "sweep-8",
@@ -81,7 +84,10 @@
       ],
       "lines": [
         "Then nobody has done that since today. I will boil. It takes a while. Most things worth doing do."
-      ]
+      ],
+      "card": {
+        "maxw": 760
+      }
     },
     {
       "key": "sweep-10",
