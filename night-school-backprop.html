@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backpropagation: blame, passed backwards</title>
+<meta name="description" content="A chain of buckets down the hill: how a network gets every number&#x27;s slope in one walk back, checked number by number, then trained in your browser.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-backprop.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Backpropagation: blame, passed backwards">
+<meta property="og:description" content="A chain of buckets down the hill: how a network gets every number&#x27;s slope in one walk back, checked number by number, then trained in your browser.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-backprop.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Backpropagation: blame, passed backwards, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="Backpropagation: blame, passed backwards, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / F4</span></div>
+  <div class="mid">
+    <h1>Backpropagation. <span class="g">Blame, passed backwards.</span></h1>
+    <p class="lede">A model needs the slope for every one of its numbers. Nudging each one costs a whole run apiece. Pylon&#x27;s bucket chain shows the trick that gets them all in one walk back.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:59, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/backprop/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Pylon&#x27;s bucket chain</h2>
+  <p class="body-text">Train a 2-8-8-2 network (114 numbers) on two spirals, in your browser. Click any point to see its chain: the value in every bucket and the blame arriving at it. Check the walk back against nudging every number, then break one link on purpose and watch the check point at it. In the film&#x27;s run, one walk back cost 208 multiply-adds against 98 for the forward pass, and the network was right on 99.8% of new points after 4,000 steps.</p>
+  <div class="ls" data-school="lab" data-lab="backprop">
+    <button type="button" class="ns-btn ns-go" data-school-open>Fill the buckets</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Backpropagation</h3><p>Backpropagation. Blame, passed backwards.</p><p>Last time I could feel the slope for two numbers. A model has thousands. Tonight, how it gets all their slopes in one go.</p>
+<h3>A chain of buckets</h3><p>Here is a small network. It looks at a point on a map and says which of two spirals the point belongs to.</p><p>It has 114 numbers. Two go in at the top, pass through two layers of 8 buckets each, and come out as two guesses at the bottom.</p><p>Every bucket in the middle takes what the buckets above hand it, weighs it, adds it up, and squashes the total through a smooth curve. The last two turn their totals into two guesses that add up to one. That&#x27;s the forward pass.</p>
+<h3>Feeling every slope by hand</h3><p>At the bottom we measure how wrong it was: the loss. Now we want each of the 114 slopes.</p><p>The slow way: nudge one number, run the whole chain again, see how the loss moved. That&#x27;s one extra run for every number. For the model from the attention lesson, that&#x27;s 20,864 runs, for every single step of training.</p>
+<h3>Pass the blame back</h3><p>The fast way runs the chain once, then walks it backwards.</p><p class="sc-ask">How many backward walks does it take to get all the slopes? <span>(the film pauses here)</span></p><p>Each bucket at the bottom knows how much the loss changes when its own output changes. It hands that blame up to each bucket that fed it, multiplied by how much its own output moved when that input moved. A bucket that fed several adds up the blame from all of them, then does the same, all the way to the top.</p><p>That&#x27;s the chain rule from school, done in reverse order. Seppo Linnainmaa worked out this reverse order in 1970, and in 1986 Rumelhart, Hinton and Williams showed what it could do for training networks.</p>
+<h3>One walk back</h3><p>One. A single walk back hands every number its slope.</p><p>Counting multiply-adds for one point, and leaving the curves aside: the forward pass takes 98, the backward pass 208, about 2.12 times as many. Not 114 extra runs. About two runs&#x27; worth.</p>
+<h3>Checking the chain</h3><p>A walk back like this is easy to get slightly wrong, so we check it the slow way. Nudge every number, compare.</p><p>After training, they agree layer by layer to about one part in a billion, and the worst single number is off by about three parts in a hundred million.</p><p>Now I break one link on purpose: in the second layer, the curve&#x27;s slope is written wrong. The check fails in that layer and every layer above it, and still passes in the last layer, below the break. The check doesn&#x27;t just say something is wrong. It points to where.</p>
+<h3>Downhill, every number at once</h3><p>Now put it together with last time: walk forward, walk back, step every number a little downhill, repeat.</p><p>On points it never trained on, the network starts out right 36 percent of the time. It is past 95 percent by step 2,000, and after 4,000 steps it gets 99.8 percent right.</p>
+<h3>The same walk, inside the language model</h3><p>The model from the attention lesson walks forward and back the same way, with a backward pass written out by hand for every part: the attention, the layer norms, the bends. It steps downhill a little more cleverly, and that&#x27;s next time.</p><p>We checked it the slow way too, on 36 of its numbers. In full precision the worst disagreement is a few parts in ten million.</p>
+<h3>Goodnight</h3><p>Run forward once, pass the blame back once, and every number knows its slope.</p><p>Next along the hill: better ways to step than straight downhill. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/backprop/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s small network, built for this film.</strong> media/school/backprop/facts.json, written by tools/school/fill_backprop.mjs from system/school/backprop.mjs: a 2, 8, 8, 2 tanh network (114 numbers) on seeded two spirals, with a hand-written forward and backward pass and a finite-difference check of every number. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop</a></p><p>Used for: Counted multiply-adds for one point: forward 98, backward 208 (ratio 2.12); tanh, exp and log calls counted apart. Finite-difference check of every number: worst tensor error 1.2e-9 after training; worst single entry 3.3e-8. With the second hidden layer&#x27;s local slope written as 1 - a instead of 1 - a^2, the check fails for W1, b1, W2 and b2 and passes for W3 and b3. Held-out accuracy on 400 points, measured every 100 steps: 0.355 at the start, 0.95 reached by step 2,000, 0.9975 after 4,000 steps.</p><p class="sc-dnp">Does not prove: Anything about large networks; one seed, one task.</p></li><li><p><strong>Linnainmaa 1970, reverse-mode accumulation of rounding errors.</strong> Linnainmaa, S. (1970). The representation of the cumulative rounding error of an algorithm as a Taylor expansion of the local rounding errors. Master&#x27;s thesis, University of Helsinki. <a class="inline" href="https://people.idsia.ch/~juergen/who-invented-backpropagation.html">https://people.idsia.ch/~juergen/who-invented-backpropagation.html</a></p><p>Used for: Linnainmaa&#x27;s 1970 thesis described what is now called reverse-mode automatic differentiation, for the accumulated rounding error of an algorithm; it was published in English in 1976, and the idea was also found independently by others, among them Werbos (1982) for networks.</p><p class="sc-dnp">Does not prove: That the method was then used to train neural networks.</p></li><li><p><strong>Rumelhart, Hinton and Williams 1986, Learning representations by back-propagating errors.</strong> Rumelhart, D. E., Hinton, G. E., Williams, R. J. (1986). Learning representations by back-propagating errors. Nature 323, 533-536. <a class="inline" href="https://doi.org/10.1038/323533a0">https://doi.org/10.1038/323533a0</a></p><p>Used for: The paper describes back-propagation for networks of neuron-like units and shows that hidden units come to represent useful features of the task.</p><p class="sc-dnp">Does not prove: That it was the first description of reverse-mode differentiation.</p></li><li><p><strong>Griewank and Walther 2008, Evaluating Derivatives.</strong> Griewank, A., Walther, A. (2008). Evaluating Derivatives: Principles and Techniques of Algorithmic Differentiation, 2nd edition. SIAM. <a class="inline" href="https://doi.org/10.1137/1.9780898717761">https://doi.org/10.1137/1.9780898717761</a></p><p>Used for: Reverse mode computes the gradient of a scalar function at a cost bounded by a small constant times the cost of the function, whatever the number of inputs. Our count of 2.12 is the backward pass alone; forward plus backward is 3.12 times the forward pass.</p><p class="sc-dnp">Does not prove: The exact constant for a given program; we measured ours.</p></li><li><p><strong>Night School&#x27;s tiny transformer, the attention lesson&#x27;s trained weights.</strong> media/school/attention/model.json; system/school/backprop-attention.mjs checks tinyformer&#x27;s hand-written backward pass by central differences. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop</a></p><p>Used for: On 36 entries over 9 tensors, two held-out rows: worst relative error 2.9e-7 in float64; a control that drops the softmax Jacobian term fails 18 of 36. This model trains with AdamW, a warmup and gradient clipping, not plain gradient descent.</p><p class="sc-dnp">Does not prove: That every entry is right; 36 of 20,864 were checked here (the lab&#x27;s own test checks every tensor on a small model).</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The network is tiny and the spirals are a toy task, so it trains in well under a second. Large models are trained the same way in principle, by software that writes the backward pass automatically rather than by hand.</p><p class="body-text">The count of multiply-adds leaves out the curves (tanh, exp and log) and is for one point. The general bound for reverse mode is a small constant times the cost of the function; our measured 2.12 is one network, not that bound.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-gradients.html">Gradients</a> (F3). Next along the hill: optimisers (F5), planned.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson F4: backprop.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

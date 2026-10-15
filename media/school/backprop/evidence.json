@@ -1,0 +1,71 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "backprop",
+  "read": "2026-10-15",
+  "sources": {
+    "ours-net": {
+      "short": "Night School's small network, built for this film",
+      "citation": "media/school/backprop/facts.json, written by tools/school/fill_backprop.mjs from system/school/backprop.mjs: a 2, 8, 8, 2 tanh network (114 numbers) on seeded two spirals, with a hand-written forward and backward pass and a finite-difference check of every number.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop",
+      "read": "full",
+      "claims": [
+        "Counted multiply-adds for one point: forward 98, backward 208 (ratio 2.12); tanh, exp and log calls counted apart.",
+        "Finite-difference check of every number: worst tensor error 1.2e-9 after training; worst single entry 3.3e-8. With the second hidden layer's local slope written as 1 - a instead of 1 - a^2, the check fails for W1, b1, W2 and b2 and passes for W3 and b3.",
+        "Held-out accuracy on 400 points, measured every 100 steps: 0.355 at the start, 0.95 reached by step 2,000, 0.9975 after 4,000 steps."
+      ],
+      "n": "400 training and 400 held-out points; one seed.",
+      "interval": "One seed; no interval.",
+      "does_not_prove": "Anything about large networks; one seed, one task."
+    },
+    "linnainmaa1970": {
+      "short": "Linnainmaa 1970, reverse-mode accumulation of rounding errors",
+      "citation": "Linnainmaa, S. (1970). The representation of the cumulative rounding error of an algorithm as a Taylor expansion of the local rounding errors. Master's thesis, University of Helsinki.",
+      "url": "https://people.idsia.ch/~juergen/who-invented-backpropagation.html",
+      "read": "thesis not read (in Finnish); read Griewank 2012, Documenta Mathematica Extra Volume ISMP, 389-400, and Schmidhuber's history page",
+      "claims": [
+        "Linnainmaa's 1970 thesis described what is now called reverse-mode automatic differentiation, for the accumulated rounding error of an algorithm; it was published in English in 1976, and the idea was also found independently by others, among them Werbos (1982) for networks."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That the method was then used to train neural networks."
+    },
+    "rumelhart1986": {
+      "short": "Rumelhart, Hinton and Williams 1986, Learning representations by back-propagating errors",
+      "citation": "Rumelhart, D. E., Hinton, G. E., Williams, R. J. (1986). Learning representations by back-propagating errors. Nature 323, 533-536.",
+      "url": "https://doi.org/10.1038/323533a0",
+      "read": "abstract only, and Schmidhuber's history page",
+      "claims": [
+        "The paper describes back-propagation for networks of neuron-like units and shows that hidden units come to represent useful features of the task."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That it was the first description of reverse-mode differentiation."
+    },
+    "griewank2008": {
+      "short": "Griewank and Walther 2008, Evaluating Derivatives",
+      "citation": "Griewank, A., Walther, A. (2008). Evaluating Derivatives: Principles and Techniques of Algorithmic Differentiation, 2nd edition. SIAM.",
+      "url": "https://doi.org/10.1137/1.9780898717761",
+      "read": "book not read (paywalled); read Griewank 2012, which bounds the cost of the gradient by a small constant times the cost of the function (3 for multiplication counts)",
+      "claims": [
+        "Reverse mode computes the gradient of a scalar function at a cost bounded by a small constant times the cost of the function, whatever the number of inputs. Our count of 2.12 is the backward pass alone; forward plus backward is 3.12 times the forward pass."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "The exact constant for a given program; we measured ours."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, the attention lesson's trained weights",
+      "citation": "media/school/attention/model.json; system/school/backprop-attention.mjs checks tinyformer's hand-written backward pass by central differences.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/backprop",
+      "read": "full",
+      "claims": [
+        "On 36 entries over 9 tensors, two held-out rows: worst relative error 2.9e-7 in float64; a control that drops the softmax Jacobian term fails 18 of 36.",
+        "This model trains with AdamW, a warmup and gradient clipping, not plain gradient descent."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That every entry is right; 36 of 20,864 were checked here (the lab's own test checks every tensor on a small model)."
+    }
+  },
+  "factcheck": "media/school/backprop/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}
