@@ -712,7 +712,9 @@ RELEASE_PATHS = (
 # October 14, 2026, later: studio.html gains the Finish layer (raw-native 0.8.0's post stack over the
 # stage), moves the Verified viewer to the raw-native 0.8.0 release, and loads studio.js and
 # studio-shell.css at a new stamp. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "8a7d9fd0309ea64a8966a791bffc3dd9c4f2c475354389d479225da12ca02ed6"
+# October 15, 2026: studio.html gains the archive orderings in Plot maps and loads studio.js at a new
+# stamp. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "77bb953189a0be4c3e11e38c26ca22ec859f689d9018b15118c1da677cbfcae8"
 
 
 BRIEFING_FIGURES = (
