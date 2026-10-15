@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -18,6 +19,31 @@ SHORTS = [("cost-to-verify", "The cost to verify", "no-receipt-no-accept.html#ex
           ("receipt-is-not-a-verdict", "A receipt is not a verdict", "no-receipt-no-accept.html#explainer-receipt-is-not-a-verdict", "43 s"),
           ("receipt-loop", "From a proposed answer to a kept receipt", "flywheel.html#explainer-receipt-loop", "65 s")]
 E = html.escape
+
+
+# The playable lesson and the demos beside each film (system/lessons/), each hosted by the
+# film's guide. Each loads only on a press; none keeps a score or plays on by itself.
+DEMOS = {
+    "checking-cost": ("night-shift", "Play: Night Shift", "Work one night shift at the claims desk with Tallow. Claims come in faster than anyone could check them, and you have 40 hours. About four minutes, one shift, then it ends."),
+    "passing-check": ("passing-check", "Try it: Check the check", "Switch the tests on and off for a small function, make your call, then Rerun knocks on six deliberate breaks and one planted failure to see which ones the passing tests catch."),
+    "rederive": ("rederive", "Try it: Run it again", "A field where only significant results get published. Choose how big the repeats are, make your call, and Pylon runs every published study again."),
+    "incentives": ("incentives", "Try it: What gets paid", "Set what a test checker counts as a pass, make your call, and watch a small optimizer learn to do whatever the checker pays for."),
+    "visible-reasoning": ("visible-reasoning", "Try it: Slip in a hint", "Slip a hint toward a wrong answer onto twenty questions, make your call, and Tallow reads every written reason to see how many name it."),
+}
+
+
+def demo(slug: str) -> str:
+    if slug not in DEMOS:
+        return ""
+    name, title, lede = DEMOS[slug]
+    return f"""
+  <div class="ls" id="{slug}-play" data-lesson="{name}">
+    <h3>{E(title)}</h3>
+    <p class="body-text">{E(lede)}</p>
+    <p><button type="button" class="ns-btn ns-go" data-lesson-open>Open it here</button></p>
+    <p class="ns-note" data-lesson-note aria-live="polite">Drawn live by the raw-native engine in your browser, with WebGPU where it is available and a 2D canvas where it is not. Keyboard and touch both work.</p>
+    <div data-lesson-stage></div>
+  </div>"""
 
 
 def host(slug: str) -> str:
@@ -131,7 +157,7 @@ def film_section(slug: str) -> str:
     {heads}
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
-  </figure>{live}
+  </figure>{live}{demo(slug)}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
   <h3 id="{slug}-sources" class="fl-src-h">Sources, with what each one does not prove</h3>
   <div class="fl-src-wrap"><ol class="fl-sources">{sources}</ol></div>
@@ -172,7 +198,17 @@ def interactive(slug: str, folder: str, title: str) -> str:
 # Media rendered by a repository's release (raw-native ADR 0012): media/releases/<repo>/<tag>/<scene>/,
 # copied from the release's media bundle. Each folder holds the video, poster, captions, the facts it
 # was drawn from, and an interactive index.html with the engine beside it.
-RELEASES = [("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+RELEASES = [("flywheel", "v1.5.1", ["first-check", "which-source"]),
+            ("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+
+
+def web_rendition(m: dict) -> tuple[str, int, int]:
+    """The largest video rendition up to 1080p a release media.json lists, with its frame size.
+    raw-native bundles carry 1080p (and a 2160p master the site does not serve); Flywheel's carry 540p."""
+    sizes = [(int(r.group(1)), f) for f in m["files"] if (r := re.search(r"-(\d+)p\.mp4$", f))]
+    h, f = max(x for x in sizes if x[0] <= 1080)
+    w = round(m.get("width", 16 * h / 9) * h / m.get("height", h))
+    return f, w, h
 
 
 def release_section() -> str:
@@ -181,7 +217,8 @@ def release_section() -> str:
         for sid in scenes:
             folder = f"media/releases/{repo}/{tag}/{sid}"
             m = json.loads((ROOT / folder / "media.json").read_text(encoding="utf-8"))
-            video = next(f for f in m["files"] if f.endswith("-1080p.mp4"))
+            # The site serves renditions up to 1080p; a 4K master stays on the release.
+            video, vw, vh = web_rendition(m)
             vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
             track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
             voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
@@ -189,7 +226,7 @@ def release_section() -> str:
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>
-    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
+    <video controls preload="none" playsinline width="{vw}" height="{vh}" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
     <figcaption>{clock(m["duration"])}. Rendered by the <a class="inline" href="https://github.com/HarperZ9/{repo}/releases/tag/{tag}">{E(repo)} {E(tag)}</a> release from values read at its commit {E(m["commit"][:7])}: <a class="inline" href="{folder}/facts.json">facts.json</a>. {voice} <a class="inline" href="{folder}/index.html">Open it live</a> to scrub it frame by frame in your browser.</figcaption>
   </figure>""")
     return f"""
@@ -229,6 +266,7 @@ def page() -> str:
 <link rel="stylesheet" href="system/explainer/explainer.css?v=20261003-explainers">
 <link rel="stylesheet" href="system/explainer/film.css?v=20261009-motion">
 <link rel="stylesheet" href="system/guides.css?v=20261012-guides-2">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
 </head>
 <body class="inner-clean hub-plate">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -268,6 +306,7 @@ def page() -> str:
 </footer>
 <script type="module" src="system/explainer/film.mjs?v=20261004-films"></script>
 <script type="module" src="system/explainer/motion-film.mjs?v=20261009-motion"></script>
+<script type="module" src="system/lessons/launch.mjs?v=20261014-lessons"></script>
 </body>
 </html>
 """

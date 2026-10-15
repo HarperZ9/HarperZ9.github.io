@@ -151,6 +151,9 @@ REVIEWED_ASSET_REVISIONS = {
     # 12 October 2026: the three guides who host the films (guides.html, the films, the Writing hub).
     "system/guides.css": "20261012-guides-2",
     "system/guides.mjs": "20261012-guides-2",
+    # The playable lesson and the film demos beside each explainer film (2026-10-14).
+    "system/lessons/lessons.css": "20261014-lessons",
+    "system/lessons/launch.mjs": "20261014-lessons",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",
