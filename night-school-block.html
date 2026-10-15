@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The transformer block</title>
+<meta name="description" content="What one transformer block does: layer norm, attention, the MLP and the residual stream, taken apart room by room on a real model.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-block.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The transformer block">
+<meta property="og:description" content="What one transformer block does: layer norm, attention, the MLP and the residual stream, taken apart room by room on a real model.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-block.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The transformer block, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school.jpg">
+<meta name="twitter:image:alt" content="The transformer block, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L11</span></div>
+  <div class="mid">
+    <h1>The transformer block. <span class="g">Two floors, one stream.</span></h1>
+    <p class="lede">Every word&#x27;s list of numbers climbs the tower. On each floor, attention and a small network read it and add to it. Tallow switches the rooms off one at a time to see what each was doing.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:34, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/block/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the tower</h2>
+  <p class="body-text">Switch off any head or MLP of the attention model, or make a room replace the stream instead of adding to it, and score it on its held-out rows. With everything on it copies 99% of far-back words; attention and the MLP hold 8,448 and 8,384 of its 20,864 numbers.</p>
+  <div class="ls" data-school="lab" data-lab="block">
+    <button type="button" class="ns-btn ns-go" data-school-open>Climb the tower</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>The transformer block</h3><p>The transformer block. Two floors, one stream.</p><p>Every word&#x27;s list of numbers climbs the tower. On each floor, two rooms read it and add something to it. Tonight, what those rooms are, and what each one adds.</p>
+<h3>The stream</h3><p>Start with a word&#x27;s 32 numbers from the word table, its embedding, and add to them, number by number, 32 more from a second table for its place in the sentence. Call that the stream.</p><p>Each room reads the stream, works out something, and adds its answer back on. Nothing is thrown away. That adding is called the residual connection.</p><p>Before each room reads, it takes a copy of the stream rescaled to a steady size. That is layer norm, and in this model, as in GPT-2, it comes first in each room. The stream itself is left alone.</p>
+<h3>Two rooms per floor</h3><p>The first room is attention: each word looks back along the sentence and takes in what it needs. This model has 2 heads per floor, two separate ways of looking.</p><p>The second room is a small network that works on each word alone, called the MLP or feed-forward layer. It widens the 32 numbers to 64, bends them, and narrows them back.</p><p>Attention and the MLP hold almost the same number of the model&#x27;s 20,864 numbers: 8,448 and 8,384.</p>
+<h3>Reading the stream on the way up</h3><p>We can stop the stream on any landing and ask it to guess the next word early, using the model&#x27;s own last two steps: its final layer norm and its output table.</p><p class="sc-ask">Which floor will matter most for copying a word from far back? <span>(the film pauses here)</span></p><p>Straight from the table, the guess has a held-out loss of 2.33. After the first floor, 0.86. After the second, 0.69.</p><p>Copying a word from far back is the slow part: right 43 percent of the time after the first floor, and 99 percent at the top.</p>
+<h3>Switch one room off</h3><p>Now switch rooms off, one at a time, and score the model again. With everything on, it copies right 99 percent of the time.</p><p>Silence the second head on the top floor, and copying falls to 40 percent. Silence the first head there, and nothing changes: 99 percent. On the top floor, one head does most of the copying, and its neighbour is close to idle. Copying needs a head on the first floor too: silence it, and copying falls to 38 percent.</p><p>Switch off the first floor&#x27;s MLP, and the loss jumps from 0.69 to 5.96, worse than a blind guess.</p><p>On an untrained model, the same switches barely move the loss. The jobs were learned, not built in.</p>
+<h3>Why add, not replace</h3><p>What if a room replaced the stream with its answer, instead of adding to it?</p><p class="sc-ask">If a room replaces the stream instead of adding to it, what happens to the loss? <span>(the film pauses here)</span></p><p>For the top floor&#x27;s attention, the loss goes to 6.62. The room was only ever adding a little, and the rest of the stream was still needed.</p><p>One room is the odd one out. The first floor&#x27;s MLP adds a vector about 10 times the size of the stream it reads, so replacing barely matters there: 0.69.</p>
+<h3>Goodnight</h3><p>A block is two rooms on one stream: attention looks along the sentence, the MLP works on each word, and each adds its answer back on.</p><p>Next in the lighthouse: how the whole tower is trained. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/block/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s attention model, taken apart for this film.</strong> media/school/block/facts.json, written by tools/school/fill_block.mjs from system/school/block.mjs: a hooked forward pass (equal to the model&#x27;s own forward, bit for bit) that reads the residual stream, applies the final norm and output matrix at each depth, and knocks out heads, attention layers and MLPs by zero, mean or shuffle, or makes a sub-layer replace the stream instead of adding to it; scored on 256 held-out rows (6,144 next words, 506 copy positions). <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/block">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/block</a></p><p>Used for: Parameters: 20864 in all; attention 8448, MLP 8384, embeddings 2240, output 1472, norms 320. Readout at each depth (held-out loss): 2.33 from the table, 1.73 after layer 0 attention, 0.86 after layer 0 MLP, 0.75 after layer 1 attention, 0.69 at the top; copy accuracy 0.12, 0.21, 0.43, 0.82, 0.99. Zero knockouts: layer 1 head 1 drops copy accuracy to 0.4032; layer 1 head 0 leaves it at 0.9921; layer 0 MLP raises the loss to 5.9605. On the untrained model knockouts move the loss by under 0.05. Replace instead of add: layer 1 attention loss 6.62, layer 0 attention 4.93, layer 1 MLP 2.85, layer 0 MLP 0.69 (its output is about 10 times the stream it reads).</p><p class="sc-dnp">Does not prove: That large models divide work the same way; a knockout shows what the model needs here, not what a part means.</p></li><li><p><strong>Vaswani and others 2017, Attention Is All You Need.</strong> Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. NeurIPS 30. arXiv:1706.03762. <a class="inline" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></p><p>Used for: The transformer layer has two sub-layers, multi-head self-attention and a position-wise feed-forward network, each with a residual connection and layer normalisation (section 3.1); the paper applies the norm after the add.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Radford and others 2019, Language Models are Unsupervised Multitask Learners (GPT-2).</strong> Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI report. <a class="inline" href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf</a></p><p>Used for: Layer normalisation was moved to the input of each sub-block (section 2.3).</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>nostalgebraist 2020, interpreting GPT: the logit lens (blog post).</strong> nostalgebraist (2020). interpreting GPT: the logit lens. LessWrong, 31 August 2020. A blog post, not peer reviewed. <a class="inline" href="https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens">https://www.lesswrong.com/posts/AcKRB8wDpdaN6v6ru/interpreting-gpt-the-logit-lens</a></p><p>Used for: Applying the output step to the stream at intermediate layers gives guesses that improve with depth.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Two layers and two heads on a 46-word grammar: large models spread the same jobs over many more parts, and a knockout here shows what this model needs, not what a part means.</p><p class="body-text">Reading the stream early uses the model&#x27;s own final norm and output table; other readouts give other numbers, and facts.json gives both.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-attention.html">Attention</a> (L10). Next: <a class="inline" href="night-school-trainloop.html">The training loop</a> (L12).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L11: block.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 
 from tools.school.page import SCHOOL, E, head, foot, sources, transcript
-from tools.school.lessons_lm import spec_tokens, spec_embeddings, spec_nextword, spec_decoding
+from tools.school.lessons_lm import spec_tokens, spec_embeddings, spec_nextword, spec_decoding, spec_block, spec_trainloop
 
 
 def _pct(v: float) -> str:
@@ -213,7 +213,7 @@ def spec_heldout(f: dict) -> dict:
     }
 
 
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding}
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding, "block": spec_block, "trainloop": spec_trainloop}
 
 
 def write_all(root) -> list[str]:
