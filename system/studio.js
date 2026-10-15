@@ -739,7 +739,7 @@ async function enterFilmsSource(epoch) {
 }
 
 // The Verified viewer: raw-native's viewer page from a pinned release, on the stage (studio-viewer.js).
-const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261012-viewer"));
+const loadViewer = lazyLoader(() => import("./studio-viewer.js?v=20261014-viewer-080"));
 let _viewer = null;
 async function enterViewerSource(epoch) {
   try {
@@ -759,6 +759,24 @@ function initViewerControls() {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", () => { if (activeSource === "viewer" && _viewer) _viewer.pressViewer(target); });
   }
+}
+
+// The Finish layer (studio-finish.js): raw-native's post stack draws the stage's frame again through
+// one of the engine's looks, over #studio-canvas. Loaded on the first choice other than Off.
+const loadFinish = lazyLoader(() => import("./studio-finish.js?v=20261015-finish"));
+function initFinishControls() {
+  const sel = document.getElementById("finish-look");
+  if (!sel) return;
+  sel.addEventListener("change", () => {
+    const look = sel.value;
+    loadFinish()
+      .then((m) => m.setFinish(look, { stage: $("viewport-stage"), status: $("finish-status") }))
+      .catch((err) => {
+        console.error("[studio] the finish failed to load:", err);
+        const st = $("finish-status");
+        if (st) st.textContent = "Off: the finish could not load. The source draws as it is.";
+      });
+  });
 }
 
 // The Loom: loom.html's whole loom, adopted in place (studio-loom.js).
@@ -2780,6 +2798,7 @@ initNeuralControls();
 initThreadsControls();
 initWorldsControls();
 initViewerControls();
+initFinishControls();
 // The Films panel fills itself the first time it is opened.
 import("./studio-films.js?v=20261004-films").then((m) => m.mountFilms(document.getElementById("studio-films")))
   .catch((e) => console.error("[studio] the films panel failed to load:", e));

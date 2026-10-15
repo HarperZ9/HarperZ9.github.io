@@ -709,7 +709,10 @@ RELEASE_PATHS = (
 # October 15, 2026: Night School joins the sitemap (night-school.html and its first lesson,
 # night-school-attention.html), each with its own link card, and the route registry, the site
 # index and the home bundle; guides.html links it. The release is rehashed.
-REVIEWED_RELEASE_SHA256 = "a25a7dec166d4bcd7f7ac8016d7d73e81661e35d358edf8a90c8cdac2bcb4faf"
+# October 14, 2026, later: studio.html gains the Finish layer (raw-native 0.8.0's post stack over the
+# stage), moves the Verified viewer to the raw-native 0.8.0 release, and loads studio.js and
+# studio-shell.css at a new stamp. The release is rehashed.
+REVIEWED_RELEASE_SHA256 = "8a7d9fd0309ea64a8966a791bffc3dd9c4f2c475354389d479225da12ca02ed6"
 
 
 BRIEFING_FIGURES = (
