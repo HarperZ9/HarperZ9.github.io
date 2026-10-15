@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Night School: how AI works</title>
+<meta name="description" content="Night School teaches how AI works, from gradients to GPU kernels, in animated films and labs that run real models in your browser.">
+<link rel="canonical" href="https://harperz9.github.io/night-school.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Night School: how AI works">
+<meta property="og:description" content="Night School teaches how AI works, from gradients to GPU kernels, in animated films and labs that run real models in your browser.">
+<meta property="og:url" content="https://harperz9.github.io/night-school.html">
+<meta property="og:image" content="https://harperz9.github.io/media/school/attention/card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Night School, by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/media/school/attention/card.jpg">
+<meta name="twitter:image:alt" content="Night School, by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261015-school-1">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">night school</span></div>
+  <div class="mid">
+    <h1>Night School. <span class="g">How AI works, taught on a coast at night.</span></h1>
+    <p class="lede">Each lesson is a place on one stretch of coast, with a guide who works there. You watch a short film, then you open the same place in your browser and run the real thing: a tiny model trains in front of you, and every number you see is computed as you watch.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="start" aria-labelledby="start-h">
+  <h2 id="start-h">Start here</h2>
+  <p class="body-text"><a class="inline" href="night-school-attention.html">Attention: how a language model decides what matters</a>. Tallow keeps the lamp at the top of the lighthouse. A word shines its question back along the sentence, and the earlier words that answer it best get the light. In the lab you train a 2-layer model with 20,864 numbers on sentences from the coast and watch its heads learn where to look.</p>
+</section>
+
+<section class="mv" id="lessons" aria-labelledby="lessons-h">
+  <h2 id="lessons-h">The lessons</h2>
+  <p class="body-text">30 lessons in six tracks, from vectors to fused attention kernels. "After" names the lessons that help first; nothing is locked. One lesson is live so far; the rest are planned and listed so you can see where this is going.</p>
+  <section class="sc-track" aria-labelledby="t-F"><h3 id="t-F">Foundations</h3><p class="sc-place">The hill above the harbour, with Pylon</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">F1</span> Vectors: a list of numbers is a place <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">F2</span> Matrices move space <span class="sc-needs">after F1</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">F3</span> Gradients: which way is downhill <span class="sc-needs">after F1</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">F4</span> Backpropagation: blame, passed backwards <span class="sc-needs">after F2, F3</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">F5</span> Optimisers: momentum, Adam and the learning rate <span class="sc-needs">after F3</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">F6</span> Overfitting and the held-out set <span class="sc-needs">after F4</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+<section class="sc-track" aria-labelledby="t-L"><h3 id="t-L">How language models work and are built</h3><p class="sc-place">The lighthouse and the dock, with Tallow</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">L7</span> Tokens: cutting text into crates <span class="sc-needs">after F1</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L8</span> Embeddings: every token gets coordinates <span class="sc-needs">after F1, L7</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L9</span> Next-word prediction and the loss <span class="sc-needs">after F3, L8</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-draft"><span class="sc-id">L10</span> <a class="inline" href="night-school-attention.html">Attention: how a language model decides what matters</a> <span class="sc-needs">after F1, L8, L9</span> <span class="sc-status">film and lab live; narration not recorded yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L11</span> The transformer block <span class="sc-needs">after L10, F4</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L12</span> The training loop <span class="sc-needs">after L11, F5</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L13</span> Data: what goes in comes out <span class="sc-needs">after L12</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L14</span> Scaling: bigger, longer, how much <span class="sc-needs">after L12, L13</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L15</span> Decoding: temperature, top-k, top-p <span class="sc-needs">after L9</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">L16</span> Evaluating a language model <span class="sc-needs">after L15, E23</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+<section class="sc-track" aria-labelledby="t-S"><h3 id="t-S">Small models</h3><p class="sc-place">The small boatyard, with Tallow</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">S17</span> Distillation: a big teacher, a small student <span class="sc-needs">after L12</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">S18</span> Quantisation: fewer bits per number <span class="sc-needs">after F1, K21</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">S19</span> LoRA and fine-tuning <span class="sc-needs">after L12, F2</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">S20</span> Case study: our MMBU Challenge entry <span class="sc-needs">after S19, L16, E24</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+<section class="sc-track" aria-labelledby="t-K"><h3 id="t-K">GPU kernels</h3><p class="sc-place">The cannery, with Rerun</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">K21</span> Threads, workgroups and memory <span class="sc-needs">after F2</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">K22</span> Matmul tiling <span class="sc-needs">after K21</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">K23</span> Fused attention <span class="sc-needs">after K22, L10</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">K24</span> fp16, bf16 and tensor cores <span class="sc-needs">after K22, S18</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">K25</span> Case study: the denoiser&#x27;s tensor-core parity <span class="sc-needs">after K24</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+<section class="sc-track" aria-labelledby="t-A"><h3 id="t-A">Algorithms</h3><p class="sc-place">The tide tables, with Rerun</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">A26</span> Search and sorting: the cost of looking <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">A27</span> Dynamic programming: remember what you already worked out <span class="sc-needs">after A26</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+<section class="sc-track" aria-labelledby="t-E"><h3 id="t-E">Evaluation and honesty</h3><p class="sc-place">The prism at the tide line, with Rerun</p><ol class="sc-lessons"><li class="sc-lesson sc-planned"><span class="sc-id">E23</span> Error bars: how sure is the number <span class="sc-needs">after F6</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">E24</span> When the check can be fooled <span class="sc-needs">after E23</span> <span class="sc-status">planned, not made yet</span></li><li class="sc-lesson sc-planned"><span class="sc-id">E25</span> Case study: Flywheel and re-derivable evaluation <span class="sc-needs">after E24, L16</span> <span class="sc-status">planned, not made yet</span></li></ol></section>
+</section>
+
+<section class="mv" id="how" aria-labelledby="how-h">
+  <h2 id="how-h">How it works</h2>
+  <p class="body-text">The films are drawn by the <a class="inline" href="https://github.com/HarperZ9/raw-native">raw-native</a> engine, live in your browser or rendered to video, from the same scene files. The labs train real models in plain JavaScript on your own computer; nothing is sent anywhere. Every claim in a film has its source listed beside the lesson, and every number about a model comes from the trained model's own file.</p>
+  <p class="body-text">There are no points, streaks or badges here, and nothing plays the next lesson on its own. Come when you want, learn a thing, and go.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

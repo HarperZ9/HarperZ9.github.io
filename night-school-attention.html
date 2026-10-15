@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Attention: how a language model decides what matters</title>
+<meta name="description" content="Watch Tallow show how attention lets a word use the words before it, then train a tiny transformer in your browser and watch its heads learn.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-attention.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Attention: how a language model decides what matters">
+<meta property="og:description" content="Watch Tallow show how attention lets a word use the words before it, then train a tiny transformer in your browser and watch its heads learn.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-attention.html">
+<meta property="og:image" content="https://harperz9.github.io/media/school/attention/card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Attention, a Night School lesson by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/media/school/attention/card.jpg">
+<meta name="twitter:image:alt" content="Attention, a Night School lesson by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261015-school-1">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L10</span></div>
+  <div class="mid">
+    <h1>Attention. <span class="g">How a language model decides what matters.</span></h1>
+    <p class="lede">A word in a sentence often needs another word from much earlier. Attention is how a transformer goes and gets it. Tallow shows you in his lamp room, and then you train one yourself.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 6:19, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/attention/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: Tallow's lamp room</h2>
+  <p class="body-text">Train the same kind of model the film uses: 2 layers, 2 heads each, 20,864 numbers, starting from random. It learns from sentences about the coast, such as "rerun found a kettle . pylon put a cone on the", where the last word can only be guessed by looking back. Pick a head to light the sentence with, change the test sentence, or turn the lamp off and train again.</p>
+  <p class="body-text">The film's own runs of 2,000 steps filled 99% of the copy holes with attention on, 17% when each word could see only itself, and 64% with even light and no choosing. Your run is a new one, so its numbers will differ a little.</p>
+  <div class="ls" data-school="lab" data-lab="attention">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the lamp room</button>
+    <p class="ns-note" data-school-note>The model trains on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Attention</h3><p>Attention. How a language model decides what matters.</p><p>I keep the lamp at Night School. Tonight the lamp is the lesson.</p>
+<h3>A hole at the end</h3><p>Here is a sentence with a hole at the end.</p><p>Rerun found a kettle. Pylon put a cone on the...</p><p class="sc-ask">What word goes in the hole? <span>(the film pauses here)</span></p><p>You said kettle. And you did not read the sentence again. You glanced back, past the full stop, to one word near the start, and took it.</p>
+<h3>The old way: a whisper down the line</h3><p>A language model like this one does one job. It reads the words so far and guesses the next one.</p><p>The first neural translation models squeezed the whole sentence into one fixed-length list of numbers, and worked from that.</p><p>Think of a message whispered down a line of people. By the end of a long line, the message has worn thin.</p><p>In 2014, Bahdanau, Cho and Bengio let a translation model look at every word of the sentence while it wrote each new word, and weigh how much each one counts. They called it an alignment model. Today we call the idea attention.</p>
+<h3>Question, label, cargo</h3><p>Here is how the looking works. Every word does three things.</p><p>It asks a question. It holds up a label. And it carries some cargo.</p><p>The word at the end shines its question back along the sentence. Each earlier word answers with its label.</p><p>A good match gets a high score. The scores are turned into shares that add up to one hundred percent.</p><p>Then the word takes a blend of the cargo of every word so far, itself included, in those shares. That blend is what it carries forward.</p>
+<h3>Inside the lamp</h3><p>Let&#x27;s go inside the lamp.</p><p>Every word here is a list of 32 numbers. One dot is one number.</p><p>A match is a dot product: multiply the two lists number by number, and add it all up.</p><p>Each head works on a shorter list of its own, 16 numbers here, and the score is divided by the square root of that length. Without it, long lists give huge scores, the shares go all or nothing, and the model learns slowly.</p><p>This is a real model, trained on sentences from our coast. It has 20,864 numbers in total, and nothing in it was set by hand.</p><p class="sc-ask">Which earlier word will get most of the light? <span>(the film pauses here)</span></p><p>On this sentence, the word at the end gives more than 99 percent of its light to kettle.</p>
+<h3>One beam, several heads</h3><p>One beam asks one kind of question. A transformer runs several at once, and calls each one a head.</p><p>The base transformer in the 2017 paper had eight heads in every attention layer. The larger one had sixteen.</p><p>Ours has 2 heads in each of 2 layers. Nobody told them what to look for.</p><p>After training, a head in the second layer puts 71 percent of its light on the word to be copied.</p><p>In small attention-only models, researchers at Anthropic found pairs of heads, in different layers, that work together to copy. The first writes into each word a note about the word before it. The second uses that note to find an earlier copy of the current word, and reads the word that followed it. They called them induction heads.</p>
+<h3>Turn the lamp off</h3><p>Here is the test that matters. We trained the same model again with the lamp turned off, so each word could see only itself.</p><p>With attention, it filled the copy holes correctly 99 percent of the time.</p><p>With each word seeing only itself, 17 percent.</p><p>Then one more run. Every word got an even share of light over everything before it, with no choosing. That run reached 64 percent.</p><p>Knowing which words came before helps. Choosing where to look is what finishes the job.</p>
+<h3>What the light costs</h3><p>There&#x27;s a bill. Every word compares itself with every word before it.</p><p>In each head, a thousand words means about half a million comparisons. Double the text, and the attention work goes up about four times.</p><p>That&#x27;s why people build special machinery to do this fast. We take it apart in the cannery, in a later lesson.</p>
+<h3>What the light does not tell you</h3><p>One warning before you go.</p><p>The light shows where a head is reading from. It does not, on its own, tell you why the model answered what it did.</p><p>In 2019, researchers showed that in some text classifiers, very different attention patterns can give almost the same answer. Others replied that it depends on what you mean by explain, and proposed tests. Treat the light as a clue, and check it.</p>
+<h3>Your turn</h3><p>The lamp room is open below this film. Train the model yourself, and watch the heads learn where to look.</p><p>My voice is synthesized, made from the author&#x27;s voice.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with the paper it comes from and what that paper does not prove. The numbers about our model come from its weights file, which you can load and check: <a class="inline" href="media/school/attention/model.json">model.json</a> and <a class="inline" href="media/school/attention/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Vaswani and others 2017, Attention Is All You Need.</strong> Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., Polosukhin, I. (2017). Attention Is All You Need. Advances in Neural Information Processing Systems 30. <a class="inline" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></p><p>Used for: Scaled dot-product attention computes softmax(Q K^T / sqrt(d_k)) V: queries are compared with keys by dot products, the scores are divided by the square root of the key dimension, turned into weights by a softmax, and used to average the values (section 3.2.1). The authors suspect that for large d_k the dot products grow large, pushing the softmax into regions with extremely small gradients, and scale by 1/sqrt(d_k) to counteract it (section 3.2.1). Multi-head attention runs several attention functions in parallel on learned projections; the base model uses h = 8 heads and the big model h = 16 (section 3.2.2, Table 3). The decoder&#x27;s self-attention masks later positions, so a position can attend only to itself and earlier positions (section 3.2.3). Self-attention&#x27;s cost per layer grows with the square of the sequence length (Table 1, O(n^2 d)).</p><p class="sc-dnp">Does not prove: Anything about how attention behaves inside a particular trained model; the paper defines the mechanism.</p></li><li><p><strong>Bahdanau, Cho and Bengio 2015, neural machine translation by jointly learning to align and translate.</strong> Bahdanau, D., Cho, K., Bengio, Y. (2015). Neural Machine Translation by Jointly Learning to Align and Translate. ICLR 2015 (oral). arXiv:1409.0473, first posted 1 September 2014. <a class="inline" href="https://arxiv.org/abs/1409.0473">https://arxiv.org/abs/1409.0473</a></p><p>Used for: Neural encoder-decoder translation models encoded a source sentence into a fixed-length vector, which the authors conjecture is a bottleneck for long sentences; the baseline&#x27;s score drops sharply with sentence length (sections 1 and 5.1). Their model searches the source positions and weighs them for each output word; they call it an alignment model, and section 3.1 says it implements a mechanism of attention in the decoder.</p><p class="sc-dnp">Does not prove: That early words in particular fade; the paper shows degradation with sentence length.</p></li><li><p><strong>Olsson and others 2022, In-context Learning and Induction Heads.</strong> Olsson, C., Elhage, N., Nanda, N., Joseph, N., DasSarma, N., Henighan, T., and others (2022). In-context Learning and Induction Heads. Transformer Circuits Thread, Anthropic. arXiv:2209.11895. <a class="inline" href="https://arxiv.org/abs/2209.11895">https://arxiv.org/abs/2209.11895</a></p><p>Used for: An induction head attends to the token that followed an earlier occurrence of the current token and copies it ([A][B] ... [A] -&gt; [B]). It works with a previous-token head in an earlier layer (K-composition), first described for two-layer attention-only models in Elhage and others 2021.</p><p class="sc-dnp">Does not prove: That the heads in our tiny model are induction heads; that is measured on our own model, separately.</p></li><li><p><strong>Jain and Wallace 2019, Attention is not Explanation.</strong> Jain, S., Wallace, B. C. (2019). Attention is not Explanation. NAACL-HLT 2019. arXiv:1902.10186. <a class="inline" href="https://arxiv.org/abs/1902.10186">https://arxiv.org/abs/1902.10186</a></p><p>Used for: In the recurrent text-classification and question-answering models studied, attention weights often correlate weakly with gradient-based importance, and very different attention distributions can give equivalent predictions; simpler averaging encoders behaved better.</p><p class="sc-dnp">Does not prove: That attention never explains a prediction, or anything about transformer language models in particular.</p></li><li><p><strong>Wiegreffe and Pinter 2019, Attention is not not Explanation.</strong> Wiegreffe, S., Pinter, Y. (2019). Attention is not not Explanation. EMNLP-IJCNLP 2019. arXiv:1908.04626. <a class="inline" href="https://arxiv.org/abs/1908.04626">https://arxiv.org/abs/1908.04626</a></p><p>Used for: Argues that whether attention is an explanation depends on the definition of explanation, and that the earlier experiments do not settle it; proposes tests for when attention can serve as one.</p><p class="sc-dnp">Does not prove: That attention is an explanation; it argues the earlier experiments do not settle the question.</p></li><li><p><strong>Dao and others 2022, FlashAttention.</strong> Dao, T., Fu, D. Y., Ermon, S., Rudra, A., Re, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. arXiv:2205.14135. <a class="inline" href="https://arxiv.org/abs/2205.14135">https://arxiv.org/abs/2205.14135</a></p><p>Used for: Standard attention&#x27;s time and memory grow quadratically with sequence length; FlashAttention computes exact attention in tiles to cut reads and writes to GPU memory. FlashAttention keeps the exact result and the quadratic arithmetic; it cuts memory traffic and makes memory use linear in sequence length.</p><p class="sc-dnp">Does not prove: Anything about this lesson&#x27;s model, which runs on a CPU.</p></li><li><p><strong>Night School&#x27;s tiny transformer, trained for this film.</strong> media/school/attention/model.json, written by tools/school/train_film_weights.mjs from system/school/tinyformer.mjs at a fixed seed; the same code the lab runs in the browser. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/attention">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/attention</a></p><p>Used for: Every number the film states about &#x27;our model&#x27; (size, heads, the probe&#x27;s attention share, copy accuracy with and without attention) is read from model.json by tools/school/fill_film.mjs.</p><p class="sc-dnp">Does not prove: Anything about large language models&#x27; attention; it is a two-layer model on a toy language.</p></li><li><p><strong>Counting comparisons.</strong> A causal attention head compares each of n positions with itself and every earlier one: n (n + 1) / 2 scores, 500,500 for n = 1,000, or n (n - 1) / 2 = 499,500 counting only earlier words. Doubling n multiplies either by about four.</p><p>Used for: In each head, a thousand words means about half a million comparisons; doubling the text multiplies the attention work by about four (3.998).</p><p class="sc-dnp">Does not prove: Wall-clock time, which also depends on memory traffic (see dao2022).</p></li><li><p><strong>Elhage and others 2021, A Mathematical Framework for Transformer Circuits.</strong> Elhage, N., Nanda, N., Olsson, C., Henighan, T., Joseph, N., Mann, B., and others (2021). A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread, Anthropic. <a class="inline" href="https://transformer-circuits.pub/2021/framework/index.html">https://transformer-circuits.pub/2021/framework/index.html</a></p><p>Used for: Induction heads were first described in two-layer attention-only models, working with a previous-token head through K-composition. An attention pattern can be very informative and also misleading about what a head does.</p><p class="sc-dnp">Does not prove: Anything about models with MLP layers, such as ours, without measuring them.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The model here is tiny: two layers on a made-up language of 46 words, so it can train in your browser in about a minute. Large models have dozens of layers and many heads, and their heads do jobs that are much harder to name. Where a head puts its light tells you where it reads from; on its own it does not tell you why the model answered as it did.</p>
+  <p class="body-text">Next along the coast: the transformer block that attention sits in (L11), and attention rebuilt as one fast trip through the GPU (K23). Both are planned, not made yet.</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L10: attention.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
