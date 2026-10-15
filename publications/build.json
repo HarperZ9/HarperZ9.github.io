@@ -26,11 +26,11 @@
     "publications/data/listings/no-receipt-no-accept.json": "d7fcbdb4706d9faa28b89775712c44b8ffbdcf2f329116a00abf6ec29f6efb9f",
     "publications/data/listings/openai-hugging-face-incident.json": "5d71240cfde86ec9617d84861bcc59c276746dfe392e6c0dc7edbd60ae72e1dc",
     "publications/data/listings/pick-the-lock-for-everyone.json": "a04f952cc930a0d7cd31d40fb038100b1749c385b313e1cc38107f6d4a3dada6",
-    "publications/data/listings/the-maker-is-part-of-the-story.json": "7e3d551ebb4d604d7dfb9cc5741da6af361b1f8191e25a509ce73fbe544d3aaf",
+    "publications/data/listings/the-maker-is-part-of-the-story.json": "fb7a7ca391d412dcb4f27804f6188f122e8e21e43451bf2406d15354ec9cbec2",
     "publications/data/listings/the-summary-is-not-the-record.json": "9481f76634b17570e7fdef3b66d42f6466a3f2c445a24c073bf4d0ee346907c5",
     "publications/data/listings/the-terms-for-telling.json": "b82c4e35885943a9cf44c4678003abea182ba7e05ae8aa1f25ba0d12e7a5ffc8",
     "publications/data/listings/verified-is-not-trustworthy.json": "df7a1711de5453bf50f1eb72ffc01276d62785b59a53b25358caea7698f2825e",
-    "publications/data/listings/who-kept-the-books.json": "e426aae5edf62940615a0c5a012676f1bfd41ce2636b20fe2ee7fb2c46dd8d33",
+    "publications/data/listings/who-kept-the-books.json": "f772504854431c26823090183f4eaa6a5a8020ac2f82b1e6ad167b5c4d809c56",
     "publications/data/listings/who-knew-first.json": "1eb34d304c8e4208b1351532415439534e93e7517f8abf7c3bc214c716b76ac7",
     "publications/data/listings/who-pays-the-referees.json": "054275a570375b8932ae8e94a75831e52a95b68cd71326ce9a2c929be15aa7ee",
     "publications/data/listings/why-i-do-this.json": "bccf9176530a91d8321a2108d4eab514fc3b486cd01973bb30bc7a113dce6da8",
@@ -40,8 +40,8 @@
   "outputs": {
     "availability-is-not-reach.html": "9dc6dda0230381c2c38072f99a702e8409e8ab09db792659ae710863bd3b39fc",
     "borrowed-ground.html": "093f1a966f034f4afec94a110d7631d399bab0b0bcdc483e92f99ee2ef55f501",
-    "feed.json": "dd354800b1f5b685eeb34da4893fe02b8ccc733d783c0d8bab33fcad6c192eaa",
-    "feed.xml": "5c2e4f41d1018c8cf850173f36b334d0e4ec7c25d00dbd108fad6c8eb7a5c924",
+    "feed.json": "370794641bc6f9b83aa23d89f7217addbc1e4a699b0637ece7a5b213527df408",
+    "feed.xml": "c3e0ea3cebbf7b787e12ae5866ccdb980a4345a0103386163b2dfbd75492acc5",
     "figures/availability-is-not-reach.html": "5a58ed0154f5fc8e53e356aedadec0826c4c64c0bc6c6d25d9224366e7a091c0",
     "figures/availability-is-not-reach.json": "9b8e9dc1ee240d0055042c5b705019b68adda99f9bdf305a07242bbc673982cd",
     "figures/availability-is-not-reach.svg": "56b7ba92be77b156c6df1122de0642da2ef2fff1e679740c27709223d59f9b06",
@@ -65,8 +65,8 @@
     "figures/vintage-like-for-like-check.svg": "114b69736c470a02cf1821aa87f25dc070bd5173e9d2124b12a807cccb20673d",
     "growth-needs-a-before.html": "b636c08568cec1c65386216cdeae2e487164e7bebfe7cdbb5d4dd64773554bcd",
     "ltj-bukem-the-man-behind-the-atmosphere.html": "08c62122326ffd5035b07f1c89d1148dcd4ff582d9f1c151f03dde2972b832c7",
-    "publications.html": "531c7b247d538c7b34c739b8f1106879bc3ac79d8321f2d3b74f48c2f2011cae",
-    "publications/data/index.json": "6581e41725e35af9acbb544a31293f9b86794e32ecf0cb5025286344b31c1a3b",
+    "publications.html": "755ea5f71a73c95456706ab9c8b282c81105ca454f390665d0aa7cc23f9d45c0",
+    "publications/data/index.json": "1a205df787ccc62fd5bbb75513112f78b3ef4af042764347a205088d0d8cdf44",
     "sitemap.xml": "f258f9a3006744426223f245b43e5a607778f651595e3356ba4a4550d84b24b0",
     "support-has-more-than-one-record.html": "566d0dc1a576a102b2c597941825ce24e4ccd2d0de5b0d1f9601326b735cade2",
     "the-number-has-a-vintage.html": "2f5639c9ec3e3e5be4ad76a9f1a6e9d284aff884ea24bfadcff13ee648f3a1aa",
@@ -76,6 +76,6 @@
     "the-timestamp-is-not-the-order.html": "514e01251e4470f977eb61094a020845b4547c9b6edd5d4d3200e9924111dc09",
     "what-the-formula-counts.html": "eda965c5431335feb899289d2404e164baaeab1cf6a91bfdaf397a1ba4a62bee",
     "what-the-label-changes.html": "b98369abf34f58c7489748ea698c6cd878b812037b9ff28d3adfedf0c8e5d8f4",
-    "who-knew-first-series.html": "198ae08aa2d8cdcb276110e6440cdda948a793965a2562622bd823e996250013"
+    "who-knew-first-series.html": "bcae27d90e83a918f894b0720b0600684bd80821947a3a34d6fc9122da15322c"
   }
 }

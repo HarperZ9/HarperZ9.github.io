@@ -43,7 +43,7 @@ jobs:
           node --test system/retro-crt.test.mjs system/generative-field.test.mjs system/retro-engine.test.mjs
           system/retro-studio.test.mjs system/hero-aperture.test.mjs system/media-engine/seed.test.mjs
           system/media-engine/colour.test.mjs system/plotter.test.mjs system/plot-bridge.test.mjs
-          system/plot-compose.test.mjs system/plot-image-studies.test.mjs system/plot-maps.test.mjs
+          system/plot-compose.test.mjs system/plot-image-studies.test.mjs system/plot-maps.test.mjs system/studio-library.test.mjs
           system/sketch.test.mjs system/voxel-forge.test.mjs system/studio-shelf.test.mjs
           system/spatial-core.test.mjs system/engine/particles-cpu.test.mjs system/discovery/discovery.test.mjs
           system/discovery/noether.test.mjs system/showcase/showcase.test.mjs system/media-engine/page.test.mjs
@@ -181,6 +181,7 @@ jobs:
           # The Finish layer: raw-native 0.8.0's post stack over the stage, each look against the engine's
           # CPU reference on the committed frame set (M1 criterion 9), on SwiftShader.
           SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-finish.cjs
+          SITE_BASE_URL=http://127.0.0.1:8807 BROWSER_CHANNEL=chrome node tests/studio-plot-order.cjs
       # The same Studio suite in Firefox (10 October 2026): tests/lib/browser.cjs picks the engine
       # from BROWSER. Playwright's Firefox build plays no H.264, so the Films frame-copy check says so
       # and is skipped there. On this Linux runner, headless Firefox does not draw the WebGL sources
