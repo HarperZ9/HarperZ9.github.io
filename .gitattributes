@@ -64,3 +64,5 @@ media/releases/** -text
 media/raw-native/viewer-*/** -text
 # raw-native at one commit in its repository layout (web/, templates/guides/, docs/motion/), pinned by SHA256SUMS: no EOL conversion.
 media/raw-native/tree-*/** -text
+# One-line release pins (tests/release-pins/): LF everywhere so a pin conflicts only on its review id.
+tests/release-pins/** text eol=lf
