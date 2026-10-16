@@ -117,7 +117,7 @@ def lesson_page(s: dict, film: dict, ev: dict, timing: list) -> str:
 </section>
 </main>
 """
-    return head(rel, s["title"], s["desc"], "img/og/p/night-school.jpg",
+    return head(rel, s["title"], s["desc"], f"img/og/p/{rel.removesuffix('.html')}.jpg",
                 f"{s['title']}, a Night School lesson by Zain Dana Harper.") + body + foot(f"Night School, lesson {s['id']}: {slug}.")
 
 

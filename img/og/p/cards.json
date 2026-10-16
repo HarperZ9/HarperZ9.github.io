@@ -327,6 +327,70 @@
   "alt": "Models Propose, Oracles Dispose, by Zain Dana Harper. Hundreds of tangled lines from the left converge on one bright point and leave it as a few straight rays.",
   "image": "https://harperz9.github.io/img/og/p/models-propose-oracles-dispose.jpg?v=c6fc653b2a15"
  },
+ "night-school-attention.html": {
+  "alt": "Attention: how a language model decides what matters, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-attention.jpg?v=b3e4d6248856"
+ },
+ "night-school-backprop.html": {
+  "alt": "Backpropagation: blame, passed backwards, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-backprop.jpg?v=39542a75ee8b"
+ },
+ "night-school-block.html": {
+  "alt": "The transformer block, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-block.jpg?v=34a6fa8cc225"
+ },
+ "night-school-data.html": {
+  "alt": "Data: what goes in comes out, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-data.jpg?v=b56e3298c084"
+ },
+ "night-school-decoding.html": {
+  "alt": "Decoding: temperature, top-k, top-p, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-decoding.jpg?v=4bc98372fd85"
+ },
+ "night-school-embeddings.html": {
+  "alt": "Embeddings: every token gets coordinates, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-embeddings.jpg?v=de78813d2309"
+ },
+ "night-school-gradients.html": {
+  "alt": "Gradients: which way is downhill, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-gradients.jpg?v=afb8b9f7214c"
+ },
+ "night-school-heldout.html": {
+  "alt": "The held-out set: learning, or remembering?, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-heldout.jpg?v=5e820e43e269"
+ },
+ "night-school-matrices.html": {
+  "alt": "Matrices move space, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-matrices.jpg?v=1c408fe23b8f"
+ },
+ "night-school-nextword.html": {
+  "alt": "Next-word prediction and the loss, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-nextword.jpg?v=2f154fcccf2d"
+ },
+ "night-school-optimisers.html": {
+  "alt": "Optimisers: momentum, Adam and the step size, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-optimisers.jpg?v=303d3d772369"
+ },
+ "night-school-scaling.html": {
+  "alt": "Scaling: bigger, longer, how much, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-scaling.jpg?v=55d05db2f3c5"
+ },
+ "night-school-tokens.html": {
+  "alt": "Tokens: cutting text into crates, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-tokens.jpg?v=e2f9c0ea31d2"
+ },
+ "night-school-trainloop.html": {
+  "alt": "The training loop, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-trainloop.jpg?v=e0a63b6850f5"
+ },
+ "night-school-vectors.html": {
+  "alt": "Vectors: a list of numbers is a place, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-vectors.jpg?v=8d67e20e3bdf"
+ },
+ "night-school.html": {
+  "alt": "Night School: how AI works, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school.jpg?v=6acee49426c6"
+ },
  "no-receipt-no-accept.html": {
   "alt": "No Receipt, No Accept, by Zain Dana Harper. A halftone sphere cut by a vertical strip where the dots give way to scanlines, with a perforated edge like a receipt.",
   "image": "https://harperz9.github.io/img/og/p/no-receipt-no-accept.jpg?v=9403a7a362eb"

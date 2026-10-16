@@ -231,7 +231,15 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # October 15, 2026: Night School and its first lesson join the route registry, so the bundle
     # rebuilt from it is index-amx6uI37.js with the same sheet. index-DwjtCOsP.js stays as
     # retained history.
-    current_js = "index-amx6uI37.js"
+    # October 16, 2026: the fourteen lesson pages beside the pilot join the route registry
+    # (and #454's registry change, already on main, reaches the bundle), so the bundle rebuilt
+    # from it is index-DWytnneE.js with the same sheet. index-amx6uI37.js stays as retained
+    # history.
+    current_js = "index-DWytnneE.js"
+    previous_school_js = "index-amx6uI37.js"
+    assert previous_school_js not in source
+    assert (ROOT / "assets" / previous_school_js).is_file()
+    assert f"assets/{previous_school_js}" in RELEASE_PATHS
     assert "index-DwjtCOsP.js" not in source
     assert (ROOT / "assets" / "index-DwjtCOsP.js").is_file()
     previous_voice_js = "index-jmVIw9rV.js"

@@ -84,7 +84,7 @@ def main() -> None:
     # Point each head at its own link card (img/og/p, rendered by tools/repo_art/site_cards.py).
     from tools.repo_art import site_cards
     for c in site_cards.plan():
-        if c["rel"] in ("night-school.html", "night-school-attention.html"):
+        if c["rel"].startswith("night-school"):
             site_cards.stamp(c)
     print("night-school.html and night-school-attention.html written")
 
