@@ -363,6 +363,10 @@
   "alt": "Evaluating a language model, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-evaluate.jpg?v=bf6e653d8ba9"
  },
+ "night-school-fused.html": {
+  "alt": "Fused attention, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-fused.jpg?v=d1511ea40032"
+ },
  "night-school-gaming.html": {
   "alt": "When the check can be fooled, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-gaming.jpg?v=10268e89d462"
@@ -390,6 +394,10 @@
  "night-school-optimisers.html": {
   "alt": "Optimisers: momentum, Adam and the step size, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-optimisers.jpg?v=303d3d772369"
+ },
+ "night-school-precision.html": {
+  "alt": "Mixed precision, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-precision.jpg?v=25503d456482"
  },
  "night-school-quant.html": {
   "alt": "Quantisation: fewer bits per number, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",

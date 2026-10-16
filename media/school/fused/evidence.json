@@ -1,0 +1,45 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "fused",
+ "read": "2026-10-16",
+ "sources": {
+  "ours-fused": {
+   "short": "Night School's attention emulator and kernels, built for this film",
+   "citation": "media/school/fused/facts.json, written by tools/school/fill_fused.mjs from system/school/fused*.mjs: online softmax and tiled attention checked against a float64 reference on random inputs and the attention model's own Q, K and V; WGSL kernels for the lab; an exact emulator of global memory traffic for unfused and fused attention at N = 64 to 4,096, d = 16 and 64; a broken-rescale control; the overflow arithmetic.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/fused",
+   "read": "full",
+   "claims": [
+    "N 4,096: d 64 unfused 514 MiB against fused 258 MiB; d 16, 272.5 against 16.5.",
+    "The broken rescale fails on all four probe heads.",
+    "Probe row largest score 10.32, exp 30,320 in fp16; on held-out rows the largest score is 23.41."
+   ],
+   "n": "Exact counts; 256 held-out rows for the overflow check.",
+   "interval": "Not applicable: deterministic.",
+   "does_not_prove": "Any timing; caches and arithmetic cost are not modelled."
+  },
+  "flash2022": {
+   "short": "Dao and others 2022, FlashAttention",
+   "citation": "Dao, T., Fu, D. Y., Ermon, S., Rudra, A., Re, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. NeurIPS 2022. arXiv:2205.14135.",
+   "url": "https://arxiv.org/abs/2205.14135",
+   "read": "read by the fact-check, 2026-10-16",
+   "claims": [
+    "Tiling with the online softmax avoids writing the N x N attention matrix to high-bandwidth memory; Theorem 2 gives O(N^2 d^2 / M) memory accesses."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this emulator."
+  },
+  "milakov2018": {
+   "short": "Milakov and Gimelshein 2018, Online normalizer calculation for softmax",
+   "citation": "Milakov, M., Gimelshein, N. (2018). Online normalizer calculation for softmax. arXiv:1805.02867.",
+   "url": "https://arxiv.org/abs/1805.02867",
+   "read": "read by the fact-check, 2026-10-16",
+   "claims": [
+    "The softmax normaliser can be computed in one pass with a running maximum and a rescaled running sum."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}
