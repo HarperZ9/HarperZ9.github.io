@@ -391,6 +391,10 @@
   "alt": "Optimisers: momentum, Adam and the step size, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-optimisers.jpg?v=303d3d772369"
  },
+ "night-school-quant.html": {
+  "alt": "Quantisation: fewer bits per number, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-quant.jpg?v=24ef8b1fbc53"
+ },
  "night-school-scaling.html": {
   "alt": "Scaling: bigger, longer, how much, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-scaling.jpg?v=55d05db2f3c5"
@@ -398,6 +402,10 @@
  "night-school-threads.html": {
   "alt": "Threads, workgroups and memory, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-threads.jpg?v=8f065cc12972"
+ },
+ "night-school-tiling.html": {
+  "alt": "Matmul tiling, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-tiling.jpg?v=82fdfac9503e"
  },
  "night-school-tokens.html": {
   "alt": "Tokens: cutting text into crates, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",

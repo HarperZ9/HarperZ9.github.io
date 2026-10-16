@@ -1,0 +1,45 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "tiling",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-tiling": {
+   "short": "Night School's matmul emulator and kernels, built for this film",
+   "citation": "media/school/tiling/facts.json, written by tools/school/fill_tiling.mjs from system/school/tiling.mjs: naive and tiled WGSL matmul kernels, an exact emulator of global and shared memory traffic, barriers and arithmetic for n = 64 to 1,024, a float32 tolerance and a missing-barrier control.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tiling",
+   "read": "full",
+   "claims": [
+    "n = 1,024: global loads 2,147,483,648 (naive), 268,435,456 (tile 8), 134,217,728 (tile 16).",
+    "Flops per global byte 0.25, 1.99, 3.97.",
+    "The stale-tile kernel fails at every size."
+   ],
+   "n": "Exact counts.",
+   "interval": "Not applicable: deterministic.",
+   "does_not_prove": "Any timing; caches are not modelled."
+  },
+  "cuda": {
+   "short": "NVIDIA CUDA C++ Programming Guide, release 12.6 (archived), shared memory",
+   "citation": "NVIDIA (2024). CUDA C++ Programming Guide, release 12.6, section 3.2.4 (shared memory matrix multiplication example).",
+   "url": "https://docs.nvidia.com/cuda/archive/12.6.0/cuda-c-programming-guide/",
+   "read": "read by the fact-check, 2026-10-15",
+   "claims": [
+    "With shared memory tiles, A is read B.width / block_size times from global memory and B is read A.height / block_size times."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about other vendors' chips."
+  },
+  "volkov2008": {
+   "short": "Volkov and Demmel 2008, Benchmarking GPUs to tune dense linear algebra",
+   "citation": "Volkov, V., Demmel, J. W. (2008). Benchmarking GPUs to tune dense linear algebra. Proceedings of SC08.",
+   "url": "https://bebop.cs.berkeley.edu/pubs/volkov2008-benchmarking.pdf",
+   "read": "read by the fact-check, 2026-10-15",
+   "claims": [
+    "Blocking reduces global memory traffic for matrix multiply in proportion to the block size."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this emulator."
+  }
+ }
+}

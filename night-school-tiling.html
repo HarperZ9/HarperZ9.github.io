@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matmul tiling</title>
+<meta name="description" content="Multiply two tables on a graphics chip by carrying tiles to fast shared memory: how many reads it saves, why the crew must wait, and what the count leaves out.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-tiling.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Matmul tiling">
+<meta property="og:description" content="Multiply two tables on a graphics chip by carrying tiles to fast shared memory: how many reads it saves, why the crew must wait, and what the count leaves out.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-tiling.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-tiling.jpg?v=82fdfac9503e">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Matmul tiling, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-tiling.jpg?v=82fdfac9503e">
+<meta name="twitter:image:alt" content="Matmul tiling, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / K22</span></div>
+  <div class="mid">
+    <h1>Matmul <span class="g">tiling.</span></h1>
+    <p class="lede">Most of the arithmetic in a language model is multiplying tables. Pylon counts every read from memory for the simple kernel and for tiled ones, and breaks the wait on purpose to see the checker catch it.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:30, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/tiling/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the trays</h2>
+  <p class="body-text">Pick a kernel and a size; count every read and check the answer with the emulator; then, if your browser has WebGPU, run the real kernel on your own chip and time it. In the film, at 1,024 wide, tiles of 16 took 134,217,728 reads against 2,147,483,648.</p>
+  <div class="ls" data-school="lab" data-lab="tiling">
+    <button type="button" class="ns-btn ns-go" data-school-open>Hand out the trays</button>
+    <p class="ns-note" data-school-note>Counting runs in this page. Timing runs the kernel on your own graphics chip, only when you press Time. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Matmul tiling</h3><p>Matmul tiling.</p><p>Most of the arithmetic in a language model is multiplying tables of numbers. Tonight Pylon shows a classic trick for doing that fast on a graphics chip: carry a tray, not one can at a time.</p>
+<h3>One table times another</h3><p>Multiplying two square tables, each number of the answer is a row of the first table times a column of the second: multiply pairs, add them up.</p><p>For tables 1,024 wide, one answer number needs 2,048 reads from the warehouse, 1,024 from each table.</p>
+<h3>One can at a time</h3><p>The simple kernel gives each thread one answer number and lets it fetch everything itself. Every number of each table is then fetched 1,024 times, once for every thread that needs it.</p><p>In all, 2,147,483,648 reads from the warehouse, for one multiplication.</p>
+<h3>A tray to the bench</h3><p>Now give a crew of threads a square of the answer. Together they carry a square tile of each table to their bench, the chip&#x27;s small fast shared memory, and wait until every thread has put its part down.</p><p>Then each thread works through the tile on the bench. When every thread is done, the crew fetches the next pair of tiles. With tiles 16 wide, each number is fetched 64 times instead of 1,024.</p><p class="sc-ask">Tiles 16 wide. How many times fewer reads from the warehouse? <span>(the film pauses here)</span></p>
+<h3>Counting the reads</h3><p>Reads from the warehouse: 2,147,483,648 for the simple kernel; 268,435,456 with tiles of 8; 134,217,728 with tiles of 16. The wider the tile, the fewer the trips.</p><p>Another way to say it: work done per byte fetched. The simple kernel does 0.25 operations per byte, counting each multiply and each add as one. Tiles of 16 do 3.97. Vasily Volkov and James Demmel used this counting in 2008 when they tuned matrix code for graphics chips.</p>
+<h3>Wait for the whole tray</h3><p>The waiting matters. If a thread starts working before the crew has put the whole tile down, it can read a can from the last tile.</p><p>We broke the kernel that way on purpose. In our emulator, under the worst timing the missing wait allows, its answers came out wrong at every size we tried, and the checker, which compares each number with a careful answer computed on the main processor, caught it.</p>
+<h3>What the count leaves out</h3><p>These are counts of reads asked for, not times. Real chips have caches that can serve repeated reads, so the simple kernel may not be as slow as its count says. How much it gains depends on the chip.</p><p>The lab runs both kernels on your own chip, if your browser allows it, and times them beside the count.</p>
+<h3>Goodnight</h3><p>Carry a tray once, use it many times. Fast matrix code on graphics chips is built on the same idea.</p><p>Next in the cannery: attention itself, done in one trip. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/tiling/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s matmul emulator and kernels, built for this film.</strong> media/school/tiling/facts.json, written by tools/school/fill_tiling.mjs from system/school/tiling.mjs: naive and tiled WGSL matmul kernels, an exact emulator of global and shared memory traffic, barriers and arithmetic for n = 64 to 1,024, a float32 tolerance and a missing-barrier control. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tiling">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/tiling</a></p><p>Used for: n = 1,024: global loads 2,147,483,648 (naive), 268,435,456 (tile 8), 134,217,728 (tile 16). Flops per global byte 0.25, 1.99, 3.97. The stale-tile kernel fails at every size.</p><p class="sc-dnp">Does not prove: Any timing; caches are not modelled.</p></li><li><p><strong>NVIDIA CUDA C++ Programming Guide, release 12.6 (archived), shared memory.</strong> NVIDIA (2024). CUDA C++ Programming Guide, release 12.6, section 3.2.4 (shared memory matrix multiplication example). <a class="inline" href="https://docs.nvidia.com/cuda/archive/12.6.0/cuda-c-programming-guide/">https://docs.nvidia.com/cuda/archive/12.6.0/cuda-c-programming-guide/</a></p><p>Used for: With shared memory tiles, A is read B.width / block_size times from global memory and B is read A.height / block_size times.</p><p class="sc-dnp">Does not prove: Anything about other vendors&#x27; chips.</p></li><li><p><strong>Volkov and Demmel 2008, Benchmarking GPUs to tune dense linear algebra.</strong> Volkov, V., Demmel, J. W. (2008). Benchmarking GPUs to tune dense linear algebra. Proceedings of SC08. <a class="inline" href="https://bebop.cs.berkeley.edu/pubs/volkov2008-benchmarking.pdf">https://bebop.cs.berkeley.edu/pubs/volkov2008-benchmarking.pdf</a></p><p>Used for: Blocking reduces global memory traffic for matrix multiply in proportion to the block size.</p><p class="sc-dnp">Does not prove: Anything about this emulator.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Counts of reads asked for, not times; caches can serve repeated reads, so the simple kernel may be faster than its count suggests.</p><p class="body-text">The missing-wait failure was shown in the emulator under a worst-case schedule, not on a chip.</p><p class="body-text">The kernels were checked against the main processor within a float32 error bound; they were not timed on a graphics chip for this film.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-threads.html">Threads, workgroups and memory</a> (K21). Earlier: <a class="inline" href="night-school-quant.html">Quantisation</a> (S18).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson K22: tiling.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

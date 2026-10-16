@@ -241,7 +241,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # rebuilt from it is index-B4VAhGeJ.js with the same sheet. index-CoD1AHwR.js stays as retained history.
     # 2026-10-16-night-school-evaluate-threads: the route registry gains lessons, so the bundle rebuilt from it is index-Bm2nPm2b.js with the
     # same sheet. index-B4VAhGeJ.js stays as retained history.
-    current_js = "index-Bm2nPm2b.js"
+    # 2026-10-16-night-school-quant-tiling: the route registry gains lessons, so the bundle rebuilt from it is index-bJe3vRuh.js with the
+    # same sheet. index-Bm2nPm2b.js stays as retained history.
+    current_js = "index-bJe3vRuh.js"
+    previous_night_school_quant_tiling_js = "index-Bm2nPm2b.js"
+    assert previous_night_school_quant_tiling_js not in source
+    assert (ROOT / "assets" / previous_night_school_quant_tiling_js).is_file()
+    assert f"assets/{previous_night_school_quant_tiling_js}" in RELEASE_PATHS
     previous_night_school_evaluate_threads_js = "index-B4VAhGeJ.js"
     assert previous_night_school_evaluate_threads_js not in source
     assert (ROOT / "assets" / previous_night_school_evaluate_threads_js).is_file()
