@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Error bars: how sure is the number</title>
+<meta name="description" content="Rerun bootstraps the attention model&#x27;s score, checks the intervals against a truth known exactly, and shows what to resample: rows, words, or seeds.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-errorbars.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Error bars: how sure is the number">
+<meta property="og:description" content="Rerun bootstraps the attention model&#x27;s score, checks the intervals against a truth known exactly, and shows what to resample: rows, words, or seeds.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-errorbars.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-errorbars.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Error bars: how sure is the number, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-errorbars.jpg">
+<meta name="twitter:image:alt" content="Error bars: how sure is the number, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / E23</span></div>
+  <div class="mid">
+    <h1>Error bars. <span class="g">How sure is the number.</span></h1>
+    <p class="lede">Every score in this school came from one set of test rows. Rerun shows how far it could move, checks that the error bars catch the truth as often as they claim, and finds the spread the rows cannot see.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 7:02, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/errorbars/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the bucket</h2>
+  <p class="body-text">Resample the model&#x27;s held-out rows or single words and watch the interval form; or draw fresh rows from the rules again and again and count how often the interval holds the true average. In the film, 93.1% of 1,000 row intervals at 64 rows held it.</p>
+  <div class="ls" data-school="lab" data-lab="errorbars">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the bucket</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Error bars</h3><p>Error bars. How sure is the number.</p><p>Every lesson so far has quoted numbers, a loss here, a share of right answers there. Each came from one set of test rows. Tonight Rerun asks how much those numbers would move if the rows had been different.</p>
+<h3>One number</h3><p>Score the attention model on 1,024 held-out rows: a loss of 0.6676 and 73 percent of next words right.</p><p>Those rows were drawn at random. Another draw of the same size would give a slightly different loss. The question is how different.</p>
+<h3>Drawing again from what you have</h3><p>Bradley Efron&#x27;s answer, in 1979, was the bootstrap. You cannot draw more rows from the world, so draw from the rows you have: pick as many as you have, at random, allowing repeats, and score that pile. Do it thousands of times.</p><p>The scores spread out. We take the middle 95 percent of them as the interval.</p><p>With 64 rows the loss is 0.7000, and the interval runs from 0.6723 to 0.7282.</p><p class="sc-ask">Four times as many rows. How much narrower does the interval get? <span>(the film pauses here)</span></p>
+<h3>More rows, narrower bars</h3><p>Its width is 0.0838 with 16 rows, 0.0559 with 64, 0.0311 with 256 and 0.0161 with 1,024.</p><p>From 16 to 64 rows it narrows by a third; after that, by nearly half each time. Averaged over a thousand fresh draws, 0.1014, 0.0523 and 0.0264, each fourfold step halves it, as the square root of the number of rows says it should. Four times the rows buys an interval half as wide.</p>
+<h3>Does it work?</h3><p>An interval is only worth something if it catches the truth as often as it claims. Usually nobody knows the truth. Here we do: the rules that write the guides&#x27; sentences give an exact average loss for their own guesses, 0.6361.</p><p>So draw 1,000 fresh sets of 64 rows from the rules, score the rules&#x27; own guesses on each, build an interval, and count how many contain 0.6361. The answer: 93.1 percent. With 256 rows, 95.3. Close to the 95 promised, a little short when rows are few.</p>
+<h3>What to draw again</h3><p>One choice matters more than it looks: what counts as one draw. Evan Miller&#x27;s 2024 paper on error bars for evaluations warns that questions which come in clusters must be counted as clusters when the error is worked out, or the interval comes out too narrow.</p><p>Our rows are clusters too, but of a kind that steadies the score. Each holds one word at every position, so a row is a balanced sample of easy and hard places. Resampling single words instead gives intervals that are too wide here: they caught the truth 100 percent of the time.</p><p>Now make real clusters: 1,000 test sets of 16 rows, each row copied four times. Treated as 64 separate rows, the interval catches the truth only 66.9 percent of the time. Resampling the 16 distinct rows brings it back to 93.3.</p>
+<h3>Two models, same rows</h3><p>In the distillation lesson, one student learned from the text and one from the teacher&#x27;s odds. Score both on the same 1,024 rows. The student taught by the text has the lower loss, by 0.0045.</p><p>Resample the rows once for both models, keeping each row&#x27;s two scores together, and the interval for the difference runs from -0.0081 to -0.0011: it leaves out zero. Resample each model on its own and the interval is 3.27 times as wide, and it contains zero.</p><p>Keeping the pairs cancels the rows that are hard for both. Shuffle the pairing and the advantage disappears.</p>
+<h3>The spread the rows cannot see</h3><p>But that difference came from one training run of each student. Train each with five seeds, the run we just scored and four more, and score them all on the same rows.</p><p>For one student, the spread of loss across seeds is about 12 times the spread the bootstrap found from rows; for the other, about 10. Some runs never learned to look back, and those runs make most of it. Seed by seed, the difference between the two students was -0.0045, 0.0845, -0.0049, 0.0007 and 0.0064.</p><p>The first seed&#x27;s interval was honest about its rows. It said nothing about the next seed.</p>
+<h3>Goodnight</h3><p>A number without its spread is half a number. Ask what was drawn at random, the rows, the seeds or both, and draw again from that. Everything tonight came from one small model and a handful of runs; the method carries over, the numbers do not.</p><p>Next under the prism: what happens when training pushes a model toward the measure instead of the goal. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/errorbars/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s error-bar measurements, computed for this film.</strong> media/school/errorbars/facts.json, written by tools/school/fill_errorbars.mjs from system/school/errorbars.mjs and errorbars-truth.mjs: the attention model scored on 1,024 held-out rows; percentile and normal bootstrap intervals by row and by word at 16, 64, 256 and 1,024 rows; the generator&#x27;s exact expected loss and 1,000-trial coverage checks; a duplicated-row control; a paired comparison of two S17 students; five seeds per student. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/errorbars">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/errorbars</a></p><p>Used for: Loss 0.6676 and accuracy 0.7332 on 1,024 rows; row-bootstrap widths 0.0838, 0.0559, 0.0311, 0.0161 at 16, 64, 256, 1,024 rows. Exact truth 0.6361; row percentile coverage 0.934, 0.931, 0.953 at 16, 64, 256 rows; word-level 0.998 to 1; 16 rows copied four times 0.669, by distinct row 0.933. Paired difference -0.0045 [-0.0081, -0.0011], unpaired 3.27 times as wide; seed spread 11.8 times the row standard error.</p><p class="sc-dnp">Does not prove: Anything about large models or other test sets; the rows here are balanced by position, which is why word-level intervals came out too wide.</p></li><li><p><strong>Efron 1979, Bootstrap Methods: Another Look at the Jackknife.</strong> Efron, B. (1979). Bootstrap Methods: Another Look at the Jackknife. The Annals of Statistics 7(1), 1-26. <a class="inline" href="https://projecteuclid.org/journals/annals-of-statistics/volume-7/issue-1/Bootstrap-Methods-Another-Look-at-the-Jackknife/10.1214/aos/1176344552.full">https://projecteuclid.org/journals/annals-of-statistics/volume-7/issue-1/Bootstrap-Methods-Another-Look-at-the-Jackknife/10.1214/aos/1176344552.full</a></p><p>Used for: Introduces the bootstrap: estimate the sampling distribution of a statistic by resampling the observed data with replacement.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Miller 2024, Adding Error Bars to Evals.</strong> Miller, E. (2024). Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations. arXiv:2411.00640. <a class="inline" href="https://arxiv.org/abs/2411.00640">https://arxiv.org/abs/2411.00640</a></p><p>Used for: Evaluation questions that come in related groups need clustered standard errors, which can be much larger than the naive ones; paired differences reduce variance when two models answer the same questions.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One small model and its own test rows: the method carries over, the numbers do not.</p><p class="body-text">Our rows hold one word at every position, which is why single-word intervals came out too wide here; with real clusters of questions, they come out too narrow.</p><p class="body-text">Coverage at 16 and 64 rows ran about 2 standard errors under 95%; percentile intervals are a little short when rows are few.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-heldout.html">The held-out set</a> (F6). Next under the prism: <a class="inline" href="night-school-gaming.html">When the check can be fooled</a> (E24).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson E23: errorbars.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

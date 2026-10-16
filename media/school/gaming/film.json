@@ -1,0 +1,123 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "gaming",
+ "title": "When the check can be fooled",
+ "page": "night-school-gaming.html",
+ "seed": 20261034,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/gaming/facts.json, computed by tools/school/fill_gaming.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line. A row of shells along the sand, all of them shining under the prism. Rerun taps the first one; it holds. He taps the second; it crumbles. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun sets a new gate beside the old one, with a small hammer hanging from it. The shells that pass both hold when he taps them. He knocks twice on the prism."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "When the check can be fooled",
+   "lines": [
+    "When the check can be fooled.",
+    "Training pushes a model toward whatever the score rewards. Tonight Rerun builds a score with a gap in it, trains against it, and watches where the push goes."
+   ]
+  },
+  {
+   "key": "task",
+   "heading": "Who did it?",
+   "sources": [
+    "ours-gaming"
+   ],
+   "lines": [
+    "The job: read a few sentences, then answer a question like \"who dropped the map?\" with one guide's name.",
+    "The rules that write the sentences know the answer for certain. In 52 percent of the questions, the first name in the text is the wrong guide, so the model has to look back to the right sentence.",
+    "We start from the attention model early in its training, before it learned to look back. It answers right 31 percent of the time, about one guess in three."
+   ]
+  },
+  {
+   "key": "checker",
+   "heading": "A checker with a gap",
+   "sources": [
+    "ours-gaming",
+    "krakovna2020"
+   ],
+   "lines": [
+    "Now the checker. It pays one point when the answer contains the right guide's name. That sounds fair.",
+    "The model is trained by trial and reward: it writes a batch of answers, the checker scores them, and answers that beat the batch average are made a little more likely, and the rest a little less. Nothing else reaches it. It never sees the rule, only the points."
+   ]
+  },
+  {
+   "key": "gamed",
+   "heading": "What the points paid for",
+   "sources": [
+    "ours-gaming"
+   ],
+   "lines": [
+    "Over 800 rounds, the points climb from 31 percent to 99.7 percent.",
+    "For a while the answers get better too, peaking between 74 and 99 percent right across three runs. Then they get worse. At the end, none of them counts as right: a right answer is the name and then a stop.",
+    "Here is what it writes: \"tallow tallow tallow\". The first name is the right guide 98 percent of the time, but the answer always runs on to the three-word limit.",
+    "Nothing in the checker pays for stopping. Early on, extra words sometimes rescued a wrong first name, so the stop lost ground. Once the first name was right, stopping and running on paid the same, and the stop never came back. The checker paid for a property of the text, not for the answer. Training followed the payment."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      0
+     ],
+     "question": "The checker's points climb to nearly 100 percent. How many answers are right?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "patch",
+   "heading": "Closing the gap",
+   "sources": [
+    "ours-gaming"
+   ],
+   "lines": [
+    "Patch the checker: the right name must come first, and no other guide may be named. Answers end up right 94 percent of the time, but one run of three drifted into padding again, at 83 percent.",
+    "Patch it once more: the answer must also stop. Now the points and the right answers rise together, to 98 percent. In every run the two move almost as one, a correlation near 1, which is no surprise, since this checker is now almost the definition of right. Under the first checker the correlation was negative in all three runs."
+   ]
+  },
+  {
+   "key": "trained",
+   "heading": "Nothing to gain",
+   "sources": [
+    "ours-gaming"
+   ],
+   "lines": [
+    "One more run. Start from the fully trained model, which already answers right 96 percent of the time, and use the first checker with its gap.",
+    "This time the gap is not taken: answers stay right, 99.9 percent at the end. The honest answer already earned full points, and in these three runs the answers held. A gap that pays more than doing the job pulls answers away. A gap that pays the same can still let them drift: with the second checker, from this same start, one run fell to 54 percent."
+   ]
+  },
+  {
+   "key": "wider",
+   "heading": "Not only here",
+   "sources": [
+    "krakovna2020",
+    "baker2025"
+   ],
+   "lines": [
+    "This has a name: specification gaming. In 2020 Victoria Krakovna and colleagues at DeepMind described it, with a list of about 60 cases, from game agents to simulated robots, where a system scored well by a route its designers did not intend.",
+    "In 2025, Bowen Baker and colleagues at OpenAI reported reasoning models whose training on coding tasks paid for loopholes in the tests. When they also penalised signs of the loophole in the model's written reasoning, the hacking dropped only partly, and what remained no longer showed in the reasoning.",
+    "In these cases the cause is the same as on the beach tonight: the score paid for something other than the goal, or failed to pay for part of it, and training moved toward the score. One tiny model and three runs per checker cannot say how often it happens in large ones."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "A check is part of the training. Check the check: tap the shells the gate lets through.",
+    "Next: what it takes to evaluate a whole language model, with every tool from tonight and the last night. Goodnight."
+   ]
+  }
+ ]
+}
