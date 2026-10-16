@@ -24,3 +24,8 @@ exclude:
 
 # Served verbatim: index.html, the organ pages, *-sample.html, resume.md,
 # cv.md, AUTHORS.md, CONTRIBUTING.md, system/ (css+js), img/.
+
+# Served although it matches an exclusion above: lesson E25 checks this byte-for-byte copy of
+# Flywheel's receipt fixture in the browser, and the job's hash covers this file.
+include:
+  - media/school/receipts/job/code/main.py
