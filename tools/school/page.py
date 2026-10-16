@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHOOL = ROOT / "media" / "school"
-V = "20261015-school-1"
+V = "20261016-school-2"
 E = html.escape
 GUIDE = {"tallow": "Tallow", "pylon": "Pylon", "rerun": "Rerun"}
 NUM = {2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen", 20: "Twenty"}
