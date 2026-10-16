@@ -35,8 +35,8 @@
     {"id": "K23", "track": "K", "title": "Fused attention", "needs": ["K22", "L10"], "status": "draft", "href": "night-school-fused.html"},
     {"id": "K24", "track": "K", "title": "fp16, bf16 and tensor cores", "needs": ["K22", "S18"], "status": "draft", "href": "night-school-precision.html"},
     {"id": "K25", "track": "K", "title": "Case study: the denoiser's tensor-core parity", "needs": ["K24"], "status": "draft", "href": "night-school-denoiser.html"},
-    {"id": "A26", "track": "A", "title": "Search and sorting: the cost of looking", "needs": [], "status": "planned"},
-    {"id": "A27", "track": "A", "title": "Dynamic programming: remember what you already worked out", "needs": ["A26"], "status": "planned"},
+    {"id": "A26", "track": "A", "title": "Search and sorting: the cost of looking", "needs": [], "status": "draft", "href": "night-school-search.html"},
+    {"id": "A27", "track": "A", "title": "Dynamic programming: remember what you already worked out", "needs": ["A26"], "status": "draft", "href": "night-school-editdistance.html"},
     {"id": "E23", "track": "E", "title": "Error bars: how sure is the number", "needs": ["F6"], "status": "draft", "href": "night-school-errorbars.html"},
     {"id": "E24", "track": "E", "title": "When the check can be fooled", "needs": ["E23"], "status": "draft", "href": "night-school-gaming.html"},
     {"id": "E25", "track": "E", "title": "Case study: Flywheel and re-derivable evaluation", "needs": ["E24", "L16"], "status": "draft", "href": "night-school-receipts.html"}

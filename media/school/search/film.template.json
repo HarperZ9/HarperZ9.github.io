@@ -1,0 +1,134 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "search",
+ "title": "Search and sorting: the cost of looking",
+ "page": "night-school-search.html",
+ "seed": 20261043,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/search/facts.json, computed by tools/school/fill_search.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line at night, a long row of shells running out of sight. Rerun knocks on the first one, listens, moves to the next, and the next. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun stands at the middle of the row, looks left, looks right, and steps to one half. The row of shells is in order now. He knocks once and stops."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Search and sorting: the cost of looking",
+   "lines": [
+    "Search and sorting: the cost of looking.",
+    "Looking things up and putting them in order are two of the commonest jobs a computer does. Tonight Rerun counts the cost, one knock at a time."
+   ]
+  },
+  {
+   "key": "linear",
+   "heading": "One shell at a time",
+   "sources": [
+    "ours-search",
+    "knuth3"
+   ],
+   "lines": [
+    "Rerun is looking for one shell in a row of {{film.beach.shells|int}}. The plain way is to knock on each in turn until he finds it.",
+    "On average that took {{search.linear.13.successful.mean|int}} knocks, about half the row. If the shell is not there, he knocks on all {{search.linear.13.missing|int}}."
+   ]
+  },
+  {
+   "key": "binary",
+   "heading": "Halve the beach",
+   "sources": [
+    "ours-search",
+    "knuth3"
+   ],
+   "lines": [
+    "Now suppose the shells are in order, smallest to largest. Knock on the middle one. If it is too big, the shell must be in the left half; too small, the right. Half the beach is gone in one knock.",
+    "Keep halving. For {{film.beach.shells|int}} shells it takes at most {{search.binary.13.bound|int}} knocks, and about {{search.binary.13.successful.mean|int}} on average."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Sixty-five thousand shells, in order. How many knocks at most?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "order",
+   "heading": "Only if they are in order",
+   "sources": [
+    "ours-search"
+   ],
+   "lines": [
+    "Halving only works because the shells are in order. Try it on a jumbled row of the same size and it still stops within {{controls.unsortedBinary.rows.13.maxComparisons|int}} knocks, but even in its best run it missed {{controls.unsortedBinary.rows.13.wrong|int}} of the {{controls.unsortedBinary.rows.13.keys|int}} shells that are there.",
+    "Fewer knocks is no good if the answer is wrong. So first, the shells have to be put in order."
+   ]
+  },
+  {
+   "key": "insertion",
+   "heading": "Sorting by insertion",
+   "sources": [
+    "ours-search",
+    "clrs",
+    "knuth3"
+   ],
+   "lines": [
+    "The simplest way: pick up each shell in turn and slide it left past every bigger one, the way many people sort a hand of cards.",
+    "On a row that is already in order, that is {{sorting.rows.27.insertion.comparisons.mean|int}} comparisons for {{film.beach.shells|int}} shells, one for each shell after the first. On a row in reverse order it is {{sorting.rows.41.insertion.comparisons.mean|int}}. On a jumbled row, about {{sorting.rows.13.insertion.comparisons.mean|int}}."
+   ]
+  },
+  {
+   "key": "merge",
+   "heading": "Sorting by merging",
+   "sources": [
+    "ours-search",
+    "clrs",
+    "knuth3"
+   ],
+   "lines": [
+    "A better way: split the row in half, sort each half, then merge the two sorted halves by walking along both and always taking the smaller front shell.",
+    "Each half is sorted the same way, down to single shells. On jumbled rows of {{film.beach.shells|int}}, that took about {{sorting.rows.13.merge.comparisons.mean|int}} comparisons on average. Insertion took more than a thousand times as many."
+   ]
+  },
+  {
+   "key": "growth",
+   "heading": "How the cost grows",
+   "sources": [
+    "ours-search"
+   ],
+   "lines": [
+    "Double the row and see what happens. Knocking along it doubles. Halving adds one knock. Insertion sort on a jumbled row about quadruples. Merge sort a little more than doubles.",
+    "On this computer, sorting {{film.beach.shells|int}} jumbled shells took {{timing.rows.3.insertionSortMs|int}} milliseconds by insertion and {{timing.rows.3.mergeSortMs|f2}} by merging."
+   ]
+  },
+  {
+   "key": "limits",
+   "heading": "What the count leaves out",
+   "sources": [
+    "ours-search"
+   ],
+   "lines": [
+    "These are counts of comparisons, not times. A real computer also pays for moving things and for memory, and the built-in sort that comes with the JavaScript engine, which counts nothing, took {{timing.rows.3.builtinSortMs|f2}} milliseconds on the same row and the same computer.",
+    "But the counts tell you which way it grows, and that matters more as the row gets longer."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Put the shells in order once, and then halve the beach every time you look.",
+    "Goodnight."
+   ]
+  }
+ ]
+}

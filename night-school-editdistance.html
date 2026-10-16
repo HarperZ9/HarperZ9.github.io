@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dynamic programming: remember what you already worked out</title>
+<meta name="description" content="Edit distance two ways: trying every way, with billions of calls, and the table that solves each smaller question once. Plus a shortcut that fails.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-editdistance.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Dynamic programming: remember what you already worked out">
+<meta property="og:description" content="Edit distance two ways: trying every way, with billions of calls, and the table that solves each smaller question once. Plus a shortcut that fails.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-editdistance.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-editdistance.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dynamic programming: remember what you already worked out, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-editdistance.jpg">
+<meta name="twitter:image:alt" content="Dynamic programming: remember what you already worked out, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / A27</span></div>
+  <div class="mid">
+    <h1>Dynamic programming. <span class="g">Remember what you already worked out.</span></h1>
+    <p class="lede">How many single-letter edits turn one word into another? Rerun tries every way and counts the calls, then writes each answer down once in a table, the idea Richard Bellman named dynamic programming.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:15, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/editdistance/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the tide table</h2>
+  <p class="body-text">Type two strings and fill the table square by square, then trace the edits back from the corner; or try every way, with every call counted, for strings short enough to finish. In the film, kitten and sitting took 29,737 calls the slow way and 56 squares in the table; at 13 characters, 2,114,900,428 calls against 196 squares.</p>
+  <div class="ls" data-school="lab" data-lab="editdistance">
+    <button type="button" class="ns-btn ns-go" data-school-open>Find the tide table</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Dynamic programming</h3><p>Dynamic programming: remember what you already worked out.</p><p>Some problems are made of smaller problems that keep coming back. Tonight Rerun learns to solve each one once and write the answer down.</p>
+<h3>How different are two words</h3><p>How different are two words? Count the fewest single-letter edits that turn one into the other: put a letter in, take one out, or change one.</p><p>Kitten becomes sitting in 3: change the k to an s, the e to an i, and add a g. This count is called the edit distance.</p>
+<h3>Try every way</h3><p>The obvious way is to try everything. Look at the last letters: either delete one, insert one, or match or change them, and work out the rest of each case the same way.</p><p>That works, but the same smaller questions come up again and again. For kitten and sitting, the recursion made 29,737 calls. For intention and execution, 2,193,844.</p><p class="sc-ask">Two phrases of thirteen characters. How many calls does trying every way make? <span>(the film pauses here)</span></p>
+<h3>Too many calls</h3><p>For two phrases of 13 characters, it made 2,114,900,428 calls and took 11,327 milliseconds on this computer. Each extra letter multiplies the work by about five and a half, and the factor keeps rising.</p><p>Yet there are only 196 different questions in the whole problem, the big one included. The rest is repetition.</p>
+<h3>The tide table</h3><p>So write each answer down once, in a table: one row for each letter of the first word plus one for the empty start, and the same for the columns.</p><p>Each square needs only three others: the one above, the one to its left, and the one diagonally above and left. Fill them in order and the bottom corner is the answer. For kitten and sitting, 56 squares instead of 29,737 calls.</p><p>Robert Wagner and Michael Fischer published this table for strings in 1974, and others found it independently.</p>
+<h3>Reading the way back</h3><p>The table also says which edits to make. From the bottom corner, step back to whichever neighbour gave its value, and each step is one edit or one match.</p><p>Halve the beach and half the beach are 2 apart: drop the v, and change the e to an f.</p>
+<h3>A shortcut that fails</h3><p>Why not just walk along both strings and fix each difference as you meet it? We tried that. It got both classic word pairs right.</p><p>It was wrong on all 6 of our guide sentences, and too high on 576 of 1,000 random pairs. A test with only the textbook examples would have passed it.</p>
+<h3>The idea</h3><p>Richard Bellman chose the name dynamic programming around 1950, for problems solved in stages. Today it means: when a big problem is built from smaller ones that overlap, solve each smaller one once and keep the answer.</p><p>The same idea finds shortest routes and decodes speech.</p>
+<h3>Goodnight</h3><p>When the same question keeps coming back, write the answer down.</p><p>Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/editdistance/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s edit-distance measurements.</strong> media/school/editdistance/facts.json, written by tools/school/fill_editdistance.mjs from system/school/editdistance.mjs: the table, the naive and memoised recursions with call counters, a breadth-first check, and a greedy control. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/editdistance">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/editdistance</a></p><p>Used for: Every distance, call count and cell count in the film, and the greedy control.</p><p class="sc-dnp">Does not prove: Costs under other edit weights.</p></li><li><p><strong>Wagner and Fischer, The string-to-string correction problem (1974).</strong> Robert A. Wagner and Michael J. Fischer, J. ACM 21(1):168-173, 1974. <a class="inline" href="https://doi.org/10.1145/321796.321811">https://doi.org/10.1145/321796.321811</a></p><p>Used for: The dynamic-programming table for edit distance.</p><p class="sc-dnp">Does not prove: The film&#x27;s counts.</p></li><li><p><strong>Dreyfus, Richard Bellman on the birth of dynamic programming (2002).</strong> Stuart Dreyfus, Operations Research 50(1):48-51, 2002, quoting Bellman, Eye of the Hurricane (1984). <a class="inline" href="https://ideas.repec.org/a/inm/oropre/v50y2002i1p48-51.html">https://ideas.repec.org/a/inm/oropre/v50y2002i1p48-51.html</a></p><p>Used for: Bellman chose the name around 1950 at RAND, for multistage decision processes.</p><p class="sc-dnp">Does not prove: The modern overlapping-subproblems wording, which is the later textbook framing.</p></li><li><p><strong>Bellman, Dynamic Programming (1957).</strong> Richard Bellman, Dynamic Programming, Princeton University Press, 1957.</p><p>Used for: The name and the general idea of dynamic programming.</p><p class="sc-dnp">Does not prove: Any claim about edit distance.</p></li><li><p><strong>Jurafsky and Martin, Speech and Language Processing, section 2.9 (draft).</strong> Daniel Jurafsky and James H. Martin, Speech and Language Processing, 3rd edition draft, section 2.9, Minimum Edit Distance. <a class="inline" href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a></p><p>Used for: intention and execution are 5 apart with unit costs; the table was named by Wagner and Fischer and found independently by many; dynamic programming also finds shortest paths, and the Viterbi algorithm for speech extends it.</p><p class="sc-dnp">Does not prove: The film&#x27;s call counts.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Unit costs: inserting, deleting or changing a letter each costs 1.</p><p class="body-text">Call counts for long strings come from the recursion&#x27;s own formula, checked against the running counter up to 13 characters.</p><p class="body-text">Wagner and Fischer&#x27;s paper and Bellman&#x27;s book were checked by their bibliographic records; the naming date comes from Dreyfus&#x27;s 2002 account.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-search.html">Search and sorting</a> (A26).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson A27: editdistance.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

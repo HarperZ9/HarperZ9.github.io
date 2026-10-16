@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search and sorting: the cost of looking</title>
+<meta name="description" content="Count the comparisons: knocking along a row against halving it, insertion sort against merge sort, and why halving only works on a row in order.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-search.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Search and sorting: the cost of looking">
+<meta property="og:description" content="Count the comparisons: knocking along a row against halving it, insertion sort against merge sort, and why halving only works on a row in order.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-search.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-search.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Search and sorting: the cost of looking, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-search.jpg">
+<meta name="twitter:image:alt" content="Search and sorting: the cost of looking, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / A26</span></div>
+  <div class="mid">
+    <h1>Search and sorting. <span class="g">The cost of looking.</span></h1>
+    <p class="lede">Looking things up and putting them in order are two of the commonest jobs a computer does. Rerun counts every knock: one shell at a time, halving a sorted row, and two ways to sort it first.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:30, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/search/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the row of shells</h2>
+  <p class="body-text">Pick a sort, a kind of row and a size, and watch it sort with every comparison counted; then look for a shell by knocking along or by halving. In the film&#x27;s measurements, a jumbled row of 1,024 took 260,740 comparisons by insertion and 8,952 by merging; halving found any shell among 65,536 in at most 17 knocks.</p>
+  <div class="ls" data-school="lab" data-lab="search">
+    <button type="button" class="ns-btn ns-go" data-school-open>Walk the row</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Search and sorting: the cost of looking</h3><p>Search and sorting: the cost of looking.</p><p>Looking things up and putting them in order are two of the commonest jobs a computer does. Tonight Rerun counts the cost, one knock at a time.</p>
+<h3>One shell at a time</h3><p>Rerun is looking for one shell in a row of 65,536. The plain way is to knock on each in turn until he finds it.</p><p>On average that took 32,921 knocks, about half the row. If the shell is not there, he knocks on all 65,536.</p>
+<h3>Halve the beach</h3><p>Now suppose the shells are in order, smallest to largest. Knock on the middle one. If it is too big, the shell must be in the left half; too small, the right. Half the beach is gone in one knock.</p><p>Keep halving. For 65,536 shells it takes at most 17 knocks, and about 15 on average.</p><p class="sc-ask">Sixty-five thousand shells, in order. How many knocks at most? <span>(the film pauses here)</span></p>
+<h3>Only if they are in order</h3><p>Halving only works because the shells are in order. Try it on a jumbled row of the same size and it still stops within 17 knocks, but even in its best run it missed 65,515 of the 65,536 shells that are there.</p><p>Fewer knocks is no good if the answer is wrong. So first, the shells have to be put in order.</p>
+<h3>Sorting by insertion</h3><p>The simplest way: pick up each shell in turn and slide it left past every bigger one, the way many people sort a hand of cards.</p><p>On a row that is already in order, that is 65,535 comparisons for 65,536 shells, one for each shell after the first. On a row in reverse order it is 2,147,450,880. On a jumbled row, about 1,074,190,182.</p>
+<h3>Sorting by merging</h3><p>A better way: split the row in half, sort each half, then merge the two sorted halves by walking along both and always taking the smaller front shell.</p><p>Each half is sorted the same way, down to single shells. On jumbled rows of 65,536, that took about 965,755 comparisons on average. Insertion took more than a thousand times as many.</p>
+<h3>How the cost grows</h3><p>Double the row and see what happens. Knocking along it doubles. Halving adds one knock. Insertion sort on a jumbled row about quadruples. Merge sort a little more than doubles.</p><p>On this computer, sorting 65,536 jumbled shells took 1,151 milliseconds by insertion and 7.34 by merging.</p>
+<h3>What the count leaves out</h3><p>These are counts of comparisons, not times. A real computer also pays for moving things and for memory, and the built-in sort that comes with the JavaScript engine, which counts nothing, took 2.99 milliseconds on the same row and the same computer.</p><p>But the counts tell you which way it grows, and that matters more as the row gets longer.</p>
+<h3>Goodnight</h3><p>Put the shells in order once, and then halve the beach every time you look.</p><p>Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/search/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s counts of comparisons.</strong> media/school/search/facts.json, written by tools/school/fill_search.mjs from system/school/search.mjs: linear and binary search, insertion and merge sort with counters, on sizes 8 to 65,536 and seeds 1 to 10, with 134 closed-form checks, a binary-search-on-unsorted control and Node timings. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/search">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/search</a></p><p>Used for: Every count in the film, the closed-form checks and the control.</p><p class="sc-dnp">Does not prove: Times on other machines or engines; counts are of comparisons only.</p></li><li><p><strong>Knuth, The Art of Computer Programming, vol. 3, 2nd ed. (1998).</strong> Donald E. Knuth, The Art of Computer Programming, Volume 3: Sorting and Searching, 2nd edition, Addison-Wesley, 1998; sections 5.2.1 (insertion), 5.2.4 (merging), 6.2.1 (binary search).</p><p>Used for: The standard treatment of these algorithms and their costs.</p><p class="sc-dnp">Does not prove: The film&#x27;s exact counts, which are measured here; the section text was not read for this film.</p></li><li><p><strong>Cormen, Leiserson, Rivest and Stein, Introduction to Algorithms, 4th ed. (2022), chapter 2.</strong> MIT Press, 2022; 2.1 Insertion sort, 2.3 Designing algorithms (merge sort).</p><p>Used for: Insertion sort and merge sort as described.</p><p class="sc-dnp">Does not prove: The film&#x27;s counts; the book uses its own cost model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Counts of comparisons, not times; real costs also depend on moves, memory and the machine.</p><p class="body-text">The timings in the film are one computer&#x27;s, with counting switched on.</p><p class="body-text">Every closed form the film uses was checked against the counters at every size; the textbook sections were checked only by their tables of contents.</p>
+  <p class="body-text">Next, on the same beach: <a class="inline" href="night-school-editdistance.html">Dynamic programming</a> (A27).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson A26: search.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
