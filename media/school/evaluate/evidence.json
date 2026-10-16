@@ -1,0 +1,45 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "evaluate",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-evaluate": {
+   "short": "Night School's evaluation runs, computed for this film",
+   "citation": "media/school/evaluate/facts.json, written by tools/school/fill_evaluate.mjs from system/school/evaluate*.mjs: the attention model retrained at three seeds and scored at eight checkpoints by held-out loss, exact match on one-answer questions, a perfect grammar judge and a cheap word-pair judge, all with bootstrap intervals; judge agreement and order tests; contamination runs with test rows leaked into training.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/evaluate",
+   "read": "full",
+   "claims": [
+    "Step 200: loss 0.873, exact 0.179, perfect judge 0.743, cheap judge 0.973; step 2000: loss 0.673, exact 0.990.",
+    "One of 39 checkpoint pairs gives opposite resolved verdicts; 6 pairs loss better with exact match unresolved.",
+    "Cheap judge keeps its verdict after a swap on 0.274 of differing pairs; leaking 256 rows 16 times moves loss by 0.0065 on average; 32 rows 250 times by 0.305."
+   ],
+   "n": "3 seeds; 256 and 512 held-out rows.",
+   "interval": "Bootstrap intervals in facts.json.",
+   "does_not_prove": "Anything about large models, LLM judges or web-scale contamination; the cheap judge's biases are written into its rule."
+  },
+  "zheng2023": {
+   "short": "Zheng and others 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+   "citation": "Zheng, L., Chiang, W.-L., Sheng, Y., and others (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. arXiv:2306.05685; NeurIPS 2023 Datasets and Benchmarks.",
+   "url": "https://arxiv.org/abs/2306.05685",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "LLM judges show position bias; GPT-4 was consistent under swapped order in 65.0 percent of cases."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "sainz2023": {
+   "short": "Sainz and others 2023, NLP Evaluation in trouble",
+   "citation": "Sainz, O., Campos, J. A., Garcia-Ferrero, I., Etxaniz, J., Lopez de Lacalle, O., Agirre, E. (2023). NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination for each Benchmark. Findings of EMNLP 2023. arXiv:2310.18018.",
+   "url": "https://arxiv.org/abs/2310.18018",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Benchmark test data in the pretraining corpus inflates reported scores; contamination should be measured per benchmark."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

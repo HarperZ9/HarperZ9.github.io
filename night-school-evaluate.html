@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evaluating a language model</title>
+<meta name="description" content="One small model scored by loss, exact match and two judges, with error bars: where the scores agree, where they part, and how a leaked test fools them.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-evaluate.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Evaluating a language model">
+<meta property="og:description" content="One small model scored by loss, exact match and two judges, with error bars: where the scores agree, where they part, and how a leaked test fools them.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-evaluate.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-evaluate.jpg?v=bf6e653d8ba9">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Evaluating a language model, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-evaluate.jpg?v=bf6e653d8ba9">
+<meta name="twitter:image:alt" content="Evaluating a language model, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / L16</span></div>
+  <div class="mid">
+    <h1>Evaluating <span class="g">a language model.</span></h1>
+    <p class="lede">There is no single number for how good a language model is. Rerun scores one small model three ways as it trains, tests a cheap judge against a perfect one, and leaks the test into training on purpose.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 6:07, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/evaluate/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: three instruments</h2>
+  <p class="body-text">Train the model from scratch in this page and score 64 fresh rows at each checkpoint: loss, exact match, a perfect judge and a cheap one. In the film, at step 200 exact match was 18% while the cheap judge passed 97% of the writing.</p>
+  <div class="ls" data-school="lab" data-lab="evaluate">
+    <button type="button" class="ns-btn ns-go" data-school-open>Set up the instruments</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Evaluating a language model</h3><p>Evaluating a language model.</p><p>There is no single number for how good a language model is. Tonight Rerun scores the same small model three ways, and watches the three scores tell different stories.</p>
+<h3>Three ways to score</h3><p>The first way is the loss: how surprised the model is by every next word of held-out text. Lower is better.</p><p>The second is exact match. Some questions have one right answer, like &quot;who painted the rope?&quot; Count how many the model gets exactly right.</p><p>The third is a judge: let the model write freely, and have something read what it wrote and say whether it is good.</p>
+<h3>Watching it learn</h3><p>Train the same model three times, and score each run as it trains. On average, at step 200, the loss is 0.87 and exact match is 18 percent.</p><p class="sc-ask">At step 200, exact match is low. What does a judge that reads only neighbouring words say? <span>(the film pauses here)</span></p><p>By step 2,000, the loss is 0.67 and exact match is 99 percent. All three seeds agree on that much.</p>
+<h3>Two judges</h3><p>Here we can build a perfect judge, because the rules that write the guides&#x27; sentences can say whether they could have written a given text, at least as the start of a longer one. In the real world no such judge exists; people use another model, or people.</p><p>So build a cheap judge too. It passes any text where every pair of neighbouring words also turns up in a sample of the same kind of text the model trained on. At step 200 it passes 97 percent of what the model writes. The perfect judge passes 74.</p><p>Of the writing the perfect judge rejects, the cheap one still accepts between 86 and 94 percent, depending on the run. It reads each pair of words and never the whole sentence, so a wrong fact in fluent words gets through.</p>
+<h3>When the scores disagree</h3><p>Compare checkpoints in pairs, with error bars on each difference. In 6 of 39 pairs, the loss says the later model is better while exact match cannot tell.</p><p>In one pair, the scores point opposite ways. Between steps 400 and 600 of the second training run, loss, exact match and the perfect judge all say the model improved. The cheap judge says it got worse.</p><p>Each score sees part of the model. Loss sees every word. Exact match sees only the questions with one answer, and stops moving once those are right. A judge sees what it was built to look for.</p>
+<h3>Who goes first</h3><p>Judges are often asked which of two answers is better. Give our cheap judge pairs of answers, an early model&#x27;s and a late one&#x27;s, then the same pairs with the order swapped.</p><p>Where the two answers differ, it keeps its verdict after the swap only 27 percent of the time in our first run. We wrote that habit into its rule, to show what it does: the first answer shown wins.</p><p>Lianmin Zheng and colleagues ran a similar test on real model judges in 2023. GPT-4, the most consistent of the three they tried, gave the same verdict after a swap in 65 percent of cases. Most of its flips favoured the answer shown first.</p>
+<h3>The test that was in the textbook</h3><p>One more way scores lie: the test questions leak into the training text. Oscar Sainz and colleagues warned in 2023 that this happens with large models trained on the web.</p><p>So leak our test rows into training on purpose. Mixed in once, they change nothing we can measure. Even mixed in 16 times, the loss on them improves by only 0.0065 nats more than on fresh rows, and in two of three runs that is within the noise.</p><p>But leak a few rows many times, 32 rows 250 times each, and the model starts to learn them by heart: their loss drops below the floor no honest model can beat, and improves by 0.31 nats more than on fresh rows. A leak shows when the same text is seen often.</p><p>And some overlap happens by chance: 10 of our 256 test rows already appeared, word for word, in a clean training run.</p>
+<h3>Goodnight</h3><p>Ask what a score can see before you trust what it says. Use more than one, put error bars on each, and check that the test was never in the textbook. Apart from the 65 percent, all of tonight&#x27;s numbers come from one small model, trained a few times over; the questions carry over.</p><p>Next, in the cannery: how a graphics chip does thousands of small sums at once. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/evaluate/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s evaluation runs, computed for this film.</strong> media/school/evaluate/facts.json, written by tools/school/fill_evaluate.mjs from system/school/evaluate*.mjs: the attention model retrained at three seeds and scored at eight checkpoints by held-out loss, exact match on one-answer questions, a perfect grammar judge and a cheap word-pair judge, all with bootstrap intervals; judge agreement and order tests; contamination runs with test rows leaked into training. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/evaluate">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/evaluate</a></p><p>Used for: Step 200: loss 0.873, exact 0.179, perfect judge 0.743, cheap judge 0.973; step 2000: loss 0.673, exact 0.990. One of 39 checkpoint pairs gives opposite resolved verdicts; 6 pairs loss better with exact match unresolved. Cheap judge keeps its verdict after a swap on 0.274 of differing pairs; leaking 256 rows 16 times moves loss by 0.0065 on average; 32 rows 250 times by 0.305.</p><p class="sc-dnp">Does not prove: Anything about large models, LLM judges or web-scale contamination; the cheap judge&#x27;s biases are written into its rule.</p></li><li><p><strong>Zheng and others 2023, Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.</strong> Zheng, L., Chiang, W.-L., Sheng, Y., and others (2023). Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. arXiv:2306.05685; NeurIPS 2023 Datasets and Benchmarks. <a class="inline" href="https://arxiv.org/abs/2306.05685">https://arxiv.org/abs/2306.05685</a></p><p>Used for: LLM judges show position bias; GPT-4 was consistent under swapped order in 65.0 percent of cases.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Sainz and others 2023, NLP Evaluation in trouble.</strong> Sainz, O., Campos, J. A., Garcia-Ferrero, I., Etxaniz, J., Lopez de Lacalle, O., Agirre, E. (2023). NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination for each Benchmark. Findings of EMNLP 2023. arXiv:2310.18018. <a class="inline" href="https://arxiv.org/abs/2310.18018">https://arxiv.org/abs/2310.18018</a></p><p>Used for: Benchmark test data in the pretraining corpus inflates reported scores; contamination should be measured per benchmark.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One small model trained three times: the questions carry over to large models, the numbers do not.</p><p class="body-text">The perfect judge exists only because the rules that write this text are known; real evaluations use people or other models, which are not perfect.</p><p class="body-text">The cheap judge&#x27;s preference for the first-shown and longer answer is written into its rule, to show the effect; it measures nothing about real model judges.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-gaming.html">When the check can be fooled</a> (E24). Next, in the cannery: <a class="inline" href="night-school-threads.html">Threads, workgroups and memory</a> (K21).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson L16: evaluate.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
