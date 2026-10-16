@@ -1,0 +1,112 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "quant",
+ "title": "Quantisation: fewer bits per number",
+ "page": "night-school-quant.html",
+ "seed": 20261037,
+ "voice": "tallow",
+ "draft": true,
+ "numbers_from": "media/school/quant/facts.json, computed by tools/school/fill_quant.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "tallow",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The lamp room. Rerun's palette sits on the sill with only three colours on it. Tallow holds the hull of planks up to the lamp and squints. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Tallow sets the small palette beside the big one and the hull, repainted, looks almost the same. He turns the lamp down."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Quantisation",
+   "lines": [
+    "Quantisation. Fewer bits per number.",
+    "Every number in our model is stored in 32 bits. Big models have billions of numbers, so the memory adds up fast. Tonight Tallow stores the weights in fewer bits and measures what the model loses."
+   ]
+  },
+  {
+   "key": "palette",
+   "heading": "A smaller palette",
+   "sources": [
+    "ours-quant",
+    "jacob2018"
+   ],
+   "lines": [
+    "Think of a painter with fewer paints. With 255 shades a picture looks smooth. With 15, you start to see bands. With 3, you see mostly bands.",
+    "Quantising a table of weights is the same move. Pick a scale, divide every number by it, and round to the nearest of a few levels. At 4 bits our scheme has {{banding.levels.0.values.length}} levels; at 2 bits, only {{banding.levels.2.values.length}}.",
+    "To use the table again, multiply back by the scale. Every number comes back to its nearest level, off by up to half a step."
+   ]
+  },
+  {
+   "key": "size",
+   "heading": "What it saves",
+   "sources": [
+    "ours-quant"
+   ],
+   "lines": [
+    "Our model takes {{schemes.float.bytes|int}} bytes in 32-bit numbers. At 4 bits, with one scale for each output of each table, it takes {{schemes.rows.18.bytes.total|int}}: {{schemes.rows.18.bytes.ratio|pct}} percent of the size."
+   ]
+  },
+  {
+   "key": "cost",
+   "heading": "What it costs",
+   "sources": [
+    "ours-quant"
+   ],
+   "lines": [
+    "Score every version on the same {{recipe.heldOutRows|int}} held-out rows. The full model's loss is {{schemes.float.loss.value|f4}}.",
+    "At 8 bits per number, one scale per output: {{schemes.rows.2.loss.value|f4}}. At 6: {{schemes.rows.10.loss.value|f4}}. At 4: {{schemes.rows.18.loss.value|f4}}. At 3: {{schemes.rows.26.loss.value|f4}}. At 2 bits: {{schemes.rows.34.loss.value|f2}}, and the model is broken.",
+    "With one scale for each whole table instead of each output, it breaks sooner: {{schemes.rows.24.loss.value|f2}} already at 3 bits."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Four bits instead of thirty-two. How much worse is the loss?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "where",
+   "heading": "Where it hurts",
+   "sources": [
+    "ours-quant",
+    "dettmers2022"
+   ],
+   "lines": [
+    "One scale has to cover a table's biggest number. If a few numbers are much bigger than the rest, the steps get wide, and every small number is rounded coarsely.",
+    "Quantise one table at a time to 4 bits, with one scale for the whole table, and see which one hurts. The readout, the table that turns the model's last list of numbers into word scores, costs the most: {{sensitivity.rows.10.loss.diff|f4}} nats on its own.",
+    "Tim Dettmers and colleagues found in 2022 that in large models, once the activations are stored in 8 bits too, the trouble comes from a few huge values in them. Activations are the numbers flowing between tables. We left those in full precision here, so that part of the story does not show."
+   ]
+  },
+  {
+   "key": "gptq",
+   "heading": "Rounding with care",
+   "sources": [
+    "ours-quant",
+    "frantar2023"
+   ],
+   "lines": [
+    "Rounding each number on its own throws away the fact that they work together. GPTQ, from Elias Frantar and colleagues in 2023, rounds the numbers of a table one input column at a time and nudges the ones not yet rounded to make up for the error. It uses a small sample of text to see which errors matter.",
+    "At 4 bits with one scale per output, plain rounding raises the loss by {{schemes.rows.18.loss.diff|f4}}. GPTQ raises it by {{schemes.rows.19.loss.diff|f4}}, roughly a third as much.",
+    "It is not magic. At 2 bits with one scale per table, both versions are broken, and GPTQ comes out worse."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Fewer bits per number is how large models fit on smaller machines. Our model has only {{schemes.float.bytes|int}} bytes of numbers, and large ones behave differently, so how few bits you can get away with has to be measured on the model you have.",
+    "Next, in the cannery: the sums these tables are used for, and how a chip does them fast. Goodnight."
+   ]
+  }
+ ]
+}

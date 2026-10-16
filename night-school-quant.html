@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quantisation: fewer bits per number</title>
+<meta name="description" content="Store a model&#x27;s weights in 8, 6, 4, 3 or 2 bits and measure what it loses: scales per table, per output and per group, and GPTQ&#x27;s careful rounding.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-quant.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Quantisation: fewer bits per number">
+<meta property="og:description" content="Store a model&#x27;s weights in 8, 6, 4, 3 or 2 bits and measure what it loses: scales per table, per output and per group, and GPTQ&#x27;s careful rounding.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-quant.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-quant.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Quantisation: fewer bits per number, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-quant.jpg">
+<meta name="twitter:image:alt" content="Quantisation: fewer bits per number, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / S18</span></div>
+  <div class="mid">
+    <h1>Quantisation. <span class="g">Fewer bits per number.</span></h1>
+    <p class="lede">Every weight is stored in 32 bits. Tallow stores them in fewer, with one scale per table, per output or per group, rounds them plainly or with GPTQ, and scores each version on the same held-out rows.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:52, hosted by Tallow. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/quant/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the palette</h2>
+  <p class="body-text">Pick the bits, the scale and the rounding; the page quantises the model, scores it on held-out rows against the full one and repaints one table. In the film, 4 bits with one scale per output raised the loss by 0.0078 by plain rounding and 0.0028 by GPTQ, at 18% of the size.</p>
+  <div class="ls" data-school="lab" data-lab="quant">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the palette</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Quantisation</h3><p>Quantisation. Fewer bits per number.</p><p>Every number in our model is stored in 32 bits. Big models have billions of numbers, so the memory adds up fast. Tonight Tallow stores the weights in fewer bits and measures what the model loses.</p>
+<h3>A smaller palette</h3><p>Think of a painter with fewer paints. With 255 shades a picture looks smooth. With 15, you start to see bands. With 3, you see mostly bands.</p><p>Quantising a table of weights is the same move. Pick a scale, divide every number by it, and round to the nearest of a few levels. At 4 bits our scheme has 15 levels; at 2 bits, only 3.</p><p>To use the table again, multiply back by the scale. Every number comes back to its nearest level, off by up to half a step.</p>
+<h3>What it saves</h3><p>Our model takes 83,456 bytes in 32-bit numbers. At 4 bits, with one scale for each output of each table, it takes 15,376: 18 percent of the size.</p>
+<h3>What it costs</h3><p>Score every version on the same 1,024 held-out rows. The full model&#x27;s loss is 0.6676.</p><p>At 8 bits per number, one scale per output: 0.6677. At 6: 0.6685. At 4: 0.6754. At 3: 0.7249. At 2 bits: 3.48, and the model is broken.</p><p class="sc-ask">Four bits instead of thirty-two. How much worse is the loss? <span>(the film pauses here)</span></p><p>With one scale for each whole table instead of each output, it breaks sooner: 1.59 already at 3 bits.</p>
+<h3>Where it hurts</h3><p>One scale has to cover a table&#x27;s biggest number. If a few numbers are much bigger than the rest, the steps get wide, and every small number is rounded coarsely.</p><p>Quantise one table at a time to 4 bits, with one scale for the whole table, and see which one hurts. The readout, the table that turns the model&#x27;s last list of numbers into word scores, costs the most: 0.0276 nats on its own.</p><p>Tim Dettmers and colleagues found in 2022 that in large models, once the activations are stored in 8 bits too, the trouble comes from a few huge values in them. Activations are the numbers flowing between tables. We left those in full precision here, so that part of the story does not show.</p>
+<h3>Rounding with care</h3><p>Rounding each number on its own throws away the fact that they work together. GPTQ, from Elias Frantar and colleagues in 2023, rounds the numbers of a table one input column at a time and nudges the ones not yet rounded to make up for the error. It uses a small sample of text to see which errors matter.</p><p>At 4 bits with one scale per output, plain rounding raises the loss by 0.0078. GPTQ raises it by 0.0028, roughly a third as much.</p><p>It is not magic. At 2 bits with one scale per table, both versions are broken, and GPTQ comes out worse.</p>
+<h3>Goodnight</h3><p>Fewer bits per number is how large models fit on smaller machines. Our model has only 83,456 bytes of numbers, and large ones behave differently, so how few bits you can get away with has to be measured on the model you have.</p><p>Next, in the cannery: the sums these tables are used for, and how a chip does them fast. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/quant/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s quantisation runs, computed for this film.</strong> media/school/quant/facts.json, written by tools/school/fill_quant.mjs from system/school/quant.mjs and quant-gptq.mjs: the attention model&#x27;s weights quantised by round-to-nearest and GPTQ at 8, 6, 4, 3 and 2 bits, per tensor, per output channel and per group, scored on 1,024 held-out rows with bootstrap intervals; one tensor at a time; controls. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/quant">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/quant</a></p><p>Used for: Float loss 0.6676; per channel round-to-nearest 8/6/4/3/2 bits: 0.668, 0.668, 0.675, 0.725, 3.483. 4 bits per channel: 15,376 bytes (18 percent); rise +0.0078 (round-to-nearest) and +0.0028 (GPTQ). Readout alone at 4 bits: +0.0276.</p><p class="sc-dnp">Does not prove: Anything about large models; activations stay in float.</p></li><li><p><strong>Jacob and others 2018, Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference.</strong> Jacob, B., Kligys, S., Chen, B., and others (2018). CVPR 2018. arXiv:1712.05877. <a class="inline" href="https://arxiv.org/abs/1712.05877">https://arxiv.org/abs/1712.05877</a></p><p>Used for: Real values are represented by an integer and a scale (and zero point): r = S (q - Z).</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Dettmers and others 2022, LLM.int8().</strong> Dettmers, T., Lewis, M., Belkada, Y., Zettlemoyer, L. (2022). LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale. NeurIPS 2022. arXiv:2208.07339. <a class="inline" href="https://arxiv.org/abs/2208.07339">https://arxiv.org/abs/2208.07339</a></p><p>Used for: Large-magnitude outlier features in activations emerge in large transformers and break naive 8-bit quantisation.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Frantar and others 2023, GPTQ.</strong> Frantar, E., Ashkboos, S., Hoefler, T., Alistarh, D. (2023). GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers. ICLR 2023. arXiv:2210.17323. <a class="inline" href="https://arxiv.org/abs/2210.17323">https://arxiv.org/abs/2210.17323</a></p><p>Used for: Quantises weights column by column, updating the not-yet-quantised weights to compensate, using second-order information from calibration data.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One model of 83,456 bytes; large models behave differently, and their activation outliers do not show here because activations stay in full precision.</p><p class="body-text">Symmetric round-to-nearest without a zero point, and GPTQ with a symmetric grid and calibration text from the lesson&#x27;s own generator.</p><p class="body-text">Scores on 1,024 held-out rows; differences from the full model are paired on the same rows.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-threads.html">Threads, workgroups and memory</a> (K21). Next, in the cannery: <a class="inline" href="night-school-tiling.html">Matmul tiling</a> (K22).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson S18: quant.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
