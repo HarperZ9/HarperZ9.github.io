@@ -14,7 +14,7 @@ def spec_denoiser(f: dict) -> dict:
         "id": "K25", "slug": "denoiser", "guide": "Rerun",
         "title": "Case study: the denoiser's tensor-core parity",
         "h1": "The denoiser's <span class=\"g\">tensor-core parity.</span>",
-        "desc": "A real parity check that failed: 16-bit tensor-core arithmetic against a fixed bound, a sun glint that broke it, the fixes that fell short, and a bound that stayed.",
+        "desc": "A parity check that failed: 16-bit tensor-core arithmetic against a fixed bound, the sun glint that broke it, fixes that fell short, and a bound that stayed.",
         "lede": ("raw-native's neural denoiser runs on the tensor cores with 16-bit inputs and weights, or in plain 32-bit. "
                  f"On an RTX 4090 the tensor-core path missed its parity bound of {f['recipe']['bound']} by ten times, at one sun glint. "
                  "Rerun follows the search for why, and the fix that was not made: moving the bound."),
