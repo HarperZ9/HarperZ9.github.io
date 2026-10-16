@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case study: a score that carries its receipt</title>
+<meta name="description" content="Re-derive a published score from its receipt in your browser, flip any byte and watch the check fail, and see the one lie a receipt cannot catch.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-receipts.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Case study: a score that carries its receipt">
+<meta property="og:description" content="Re-derive a published score from its receipt in your browser, flip any byte and watch the check fail, and see the one lie a receipt cannot catch.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-receipts.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-receipts.jpg?v=b5dc763c46d3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Case study: a score that carries its receipt, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-receipts.jpg?v=b5dc763c46d3">
+<meta name="twitter:image:alt" content="Case study: a score that carries its receipt, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / E25</span></div>
+  <div class="mid">
+    <h1>A score that carries <span class="g">its receipt.</span></h1>
+    <p class="lede">Flywheel&#x27;s demonstration receipt says 40 of 50 and carries the fingerprints to prove its rows were not changed. Rerun recounts the rows, recomputes every fingerprint in this page, tampers with every byte, and finds the edit that only the true answers can catch.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:42, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/receipts/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the receipt</h2>
+  <p class="body-text">The real bundle, checked from scratch in this page. Flip any byte of any file and check again, or try a cheater&#x27;s edits. In the film&#x27;s sweep, all 2,892 flips of the rows file were caught, and 5,663 of 5,744 in the receipt.</p>
+  <div class="ls" data-school="lab" data-lab="receipts">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the shell</button>
+    <p class="ns-note" data-school-note>The bundle is checked on your computer, in this page, with your browser&#x27;s own SHA-256 and Ed25519. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>A score that carries its receipt</h3><p>Case study: a score that carries its receipt.</p><p>In lesson E24 we saw a check that could be fooled. Tonight Rerun opens a score that comes with its own evidence, checks it from scratch, and finds out exactly what that evidence proves.</p>
+<h3>A claim and its receipt</h3><p>Flywheel is our evaluation tool. In this demonstration a data owner runs an approved job on private questions, and the job writes one row per question: the answer given and whether it was right.</p><p>The result says 40 of 50. Beside it sits a receipt: a hash of the rows, a tree of hashes over every row, the hash of the approved job, a hash of the approval record, and a signature over the whole body.</p>
+<h3>Check it yourself</h3><p>A hash is a fingerprint of bytes: change one byte and the fingerprint changes completely.</p><p>So we counted the rows ourselves: 40 of 50. Then we recomputed, in this page&#x27;s own code, every fingerprint the files let us check, nine in all. Each matched the published value exactly. The approval record&#x27;s hash and the model and data commitments cannot be recomputed from the bundle.</p><p class="sc-ask">Flip any one byte of the rows file. Does the check catch every flip, most of them, or few? <span>(the film pauses here)</span></p>
+<h3>One byte at a time</h3><p>We flipped every byte of every file, one at a time, 10,960 tampered copies in all. In the rows file, all 2,892 of 2,892 were caught.</p><p>In the receipt itself, 5,663 of 5,744. The 81 missed bytes sit in two fields outside the signed body, the envelope&#x27;s schema name and the signature&#x27;s key name, which Flywheel&#x27;s verifier never reads. The permissions file was caught 0 times in 108: the job&#x27;s hash leaves it out on purpose.</p>
+<h3>Same score, different rows</h3><p>A sneakier edit: swap the right and wrong marks on two rows. The count is still 40, so a check on the score alone passes.</p><p>The fingerprints do not. The rows&#x27; hash and the tree both change, and the receipt no longer matches.</p>
+<h3>What the receipt cannot see</h3><p>Now the hard case. Someone signs a lie: they mark one wrong row as right, rebuild every fingerprint and sign again.</p><p>If we accept their key, every hash check passes, and the receipt is perfectly consistent. If we insist on a key we trusted before, the signature check catches the swap. But if the liar holds that trusted key, only the true answers, revealed afterwards, catch it.</p><p>A receipt proves the bytes have not changed since they were signed, and which key signed them. It cannot prove the rows were true when they were written. That needs a check against the truth, like the exact checker in lesson E24.</p>
+<h3>Found while checking</h3><p>One more thing turned up. Flywheel&#x27;s verifier never recomputes the receipt&#x27;s own identifier. Flywheel&#x27;s own test of a consistent lie rebuilds and signs everything except that identifier, and its verifier still says the receipt matches until the answers are revealed.</p><p>Our page checks the identifier too. That is a gap worth closing in Flywheel&#x27;s verifier, and it is the point of a receipt anyone can recheck: an outside check found it.</p>
+<h3>Goodnight</h3><p>Recount the rows, recompute the fingerprints, and remember what a signature cannot see.</p><p>Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/receipts/facts.json">facts.json</a>, <a class="inline" href="media/school/receipts/receipt.json">receipt.json</a>, <a class="inline" href="media/school/receipts/results.jsonl">results.jsonl</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Flywheel: the PySyft result receipt.</strong> HarperZ9/flywheel at f04ef26, docs/features/pysyft-result-receipt.md. <a class="inline" href="https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/docs/features/pysyft-result-receipt.md">https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/docs/features/pysyft-result-receipt.md</a></p><p>Used for: What the receipt binds (rows by hash and Merkle root, the approved job by its hash, an Ed25519 signature over the canonical body) and what a stranger can and cannot check.</p><p class="sc-dnp">Does not prove: That the hidden model or data were what the parties said (attestation is UNVERIFIABLE in the fixture).</p></li><li><p><strong>Flywheel: the PySyft receipt fixture.</strong> HarperZ9/flywheel at f04ef26, tests/fixtures/pysyft_receipt/ (last changed at 7d47b8f), copied unchanged to media/school/receipts/. <a class="inline" href="https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/tests/fixtures/pysyft_receipt">https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/tests/fixtures/pysyft_receipt</a></p><p>Used for: A demonstration job: 50 questions, 40 marked correct; the receipt&#x27;s published hashes and signature.</p><p class="sc-dnp">Does not prove: Anything about a real model; the job is a demonstration with a toy adder.</p></li><li><p><strong>Flywheel&#x27;s verifier.</strong> HarperZ9/flywheel at f04ef26, harness/job_result_verify.py. <a class="inline" href="https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/harness/job_result_verify.py">https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/harness/job_result_verify.py</a></p><p>Used for: Which checks the verifier runs; it does not recompute receipt_id.</p><p class="sc-dnp">Does not prove: How the verifier behaves on other receipt types.</p></li><li><p><strong>Night School&#x27;s re-derivation and tamper sweep.</strong> media/school/receipts/facts.json, written by tools/school/fill_receipts.mjs from system/school/receipts*.mjs: every derived field recomputed with WebCrypto SHA-256, canonical JSON and an RFC 6962 Merkle tree; every byte of every file flipped once; four false-success controls; verdicts compared with Flywheel&#x27;s own verifier on 8,636 tampers. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/receipts">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/receipts</a></p><p>Used for: All derived fields reproduce byte for byte; 40 of 50 re-derived; sweep counts per file; the consistent cheater passes every hash check and fails only against the revealed answers or a pinned honest key.</p><p class="sc-dnp">Does not prove: Resistance to multi-byte edits by someone without the key beyond what hashes and signatures give by construction.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The receipt is Flywheel&#x27;s demonstration fixture with a toy job, not a real model&#x27;s evaluation.</p><p class="body-text">A receipt proves the bytes have not changed since they were signed and which key signed them; it does not prove the rows were true, or that the run was the only one.</p><p class="body-text">The sweep flips one byte at a time; edits by someone who holds the key are the signed lie the film shows.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-gaming.html">When the check can be fooled</a> (E24) and <a class="inline" href="night-school-evaluate.html">Evaluating a language model</a> (L16). Earlier on this beach: <a class="inline" href="night-school-denoiser.html">The denoiser's tensor-core parity</a> (K25).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson E25: receipts.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>
