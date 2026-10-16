@@ -66,3 +66,5 @@ media/raw-native/viewer-*/** -text
 media/raw-native/tree-*/** -text
 # One-line release pins (tests/release-pins/): LF everywhere so a pin conflicts only on its review id.
 tests/release-pins/** text eol=lf
+# E25's receipt bundle is a byte-for-byte copy of a Flywheel fixture; its hashes cover these exact bytes.
+media/school/receipts/** -text

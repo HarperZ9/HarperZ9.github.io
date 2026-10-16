@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case study: the denoiser&#x27;s tensor-core parity</title>
+<meta name="description" content="A real parity check that failed: 16-bit tensor-core arithmetic against a fixed bound, a sun glint that broke it, the fixes that fell short, and a bound that stayed.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-denoiser.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Case study: the denoiser&#x27;s tensor-core parity">
+<meta property="og:description" content="A real parity check that failed: 16-bit tensor-core arithmetic against a fixed bound, a sun glint that broke it, the fixes that fell short, and a bound that stayed.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-denoiser.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-denoiser.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Case study: the denoiser&#x27;s tensor-core parity, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-denoiser.jpg">
+<meta name="twitter:image:alt" content="Case study: the denoiser&#x27;s tensor-core parity, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / K25</span></div>
+  <div class="mid">
+    <h1>The denoiser's <span class="g">tensor-core parity.</span></h1>
+    <p class="lede">raw-native&#x27;s neural denoiser runs on the tensor cores with 16-bit inputs and weights, or in plain 32-bit. On an RTX 4090 the tensor-core path missed its parity bound of 0.01 by ten times, at one sun glint. Rerun follows the search for why, and the fix that was not made: moving the bound.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 6:37, hosted by Rerun. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/denoiser/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the parity check</h2>
+  <p class="body-text">Pick a version of the arithmetic, a seed and whether the image has its glint, and run every pixel against the exact value with raw-native&#x27;s own bound and measure. The image is a small synthetic stand-in built to the note&#x27;s magnitudes: with the glint, the tensor-core arithmetic missed on 18 of 576 pixels at seed 1. The real chip&#x27;s figure was 0.106689.</p>
+  <div class="ls" data-school="lab" data-lab="denoiser">
+    <button type="button" class="ns-btn ns-go" data-school-open>Raise the prism</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>The denoiser&#x27;s tensor-core parity</h3><p>Case study: the denoiser&#x27;s tensor-core parity.</p><p>Last lesson measured where 16-bit numbers run out. Tonight Rerun follows a real case where they did: a check that failed, the search for why, and the fix that was not made.</p>
+<h3>Two paths, one check</h3><p>raw-native is a renderer with a small neural denoiser. Its network runs two ways on the graphics chip: one on the tensor cores, with 16-bit inputs and weights and 32-bit sums, and one in plain 32-bit arithmetic.</p><p>Before either ships, a parity check compares every output value with a reference. The rule is fixed in advance: no value may differ by more than 0.01.</p><p>On an RTX 4090, over 64 frames, the 32-bit path&#x27;s worst difference was 0.0029. The tensor-core path&#x27;s was 0.1067, at frame 48.</p><p class="sc-ask">The tensor-core path missed by ten times the bound. Wrong everywhere, or in a few places? <span>(the film pauses here)</span></p>
+<h3>A few places</h3><p>In a few places. Out of 24,883,200 values, the average difference was about six millionths, and 99.99 percent were under 0.0018.</p><p>A check on the average would have passed. This one asks for the worst value, so one bad pixel is enough to fail it.</p>
+<h3>Reproduce before fixing</h3><p>Before trying any fix, the note on this miss wrote down its predictions, then ran the network on the main processor with the same 16-bit rounding.</p><p>The emulation missed by 0.1085, at the same frame and the same pixel as the chip. So 16-bit arithmetic alone reproduces the miss; no fault in the chip is needed to explain it.</p><p>The note had set out two guesses: the weights alone, or the inputs alone. Both were refuted as stated. Rounding only the weights gave 0.1370, and rounding only the inputs gave 0.1041, so either rounding by itself misses the bound.</p>
+<h3>A sun glint</h3><p>The bad pixels were single sun glints. At frame 48, one sample on a glossy surface carried 1,087 units of light beside neighbours near 0.1.</p><p>The denoiser first divides by the surface&#x27;s specular reflectance, 0.04 plus a small 0.01, which turns that sample into about 21,700. Its five by five filter then weighs it down to around a hundred: the note gives 105, against a reference of 110.</p>
+<h3>The arithmetic</h3><p>Now the bound. Missing by no more than 0.01 on a value of 110 asks for about one part in ten thousand. Near 110, 16-bit marks are 0.0625 apart, as we measured last lesson.</p><p>The filter itself runs in 32-bit. The rounding happens earlier, in the 16-bit layers that compute the filter&#x27;s weights. 16-bit numbers hold about one part in a thousand, and any error that size feeding the filter, times a value of 110, moves the answer by about a tenth.</p><p>We rebuilt that step at small scale, with a made-up glint of the same size. In our seeded case the stand-in misses by 0.0789 with 16-bit inputs and weights, and differs by only 0.00002289 in 32-bit; across 200 seeds it misses in 180. Take the glint away and every version passes. These are the stand-in&#x27;s numbers, not the real network&#x27;s.</p>
+<h3>Fixes that fell short</h3><p>The natural fix is mixed precision: keep the most sensitive layers in 32-bit and the rest on the tensor cores.</p><p>In the emulation, with the full-resolution head in 32-bit, the worst difference fell to 0.0512. With three layers, 0.0341. With six, 0.0340, on 4 pixels. Still over.</p><p>None of the mixed splits tried met the bound; 32-bit throughout did.</p>
+<h3>The bound stays</h3><p>So the tensor-core path stays unchanged this round, and its parity check still fails. The options named are 32-bit throughout, which costs speed, or a model change that keeps the filter away from values that large, for example filtering a squeezed range and expanding it after, which also affects image quality.</p><p>And the note says plainly that the bound is not loosened. In our view that is the lesson: a bound loosened after the miss is seen no longer tests the result. It is fitted to it.</p>
+<h3>Goodnight</h3><p>Reproduce the miss, find the arithmetic, and leave the post where you planted it.</p><p>Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/denoiser/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>raw-native parity run on an RTX 4090.</strong> HarperZ9/raw-native at 9de6582, evidence/rr-h2-v4/rtx4090/v4-parity-raw_hero-validation.json. <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-h2-v4/rtx4090/v4-parity-raw_hero-validation.json">https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-h2-v4/rtx4090/v4-parity-raw_hero-validation.json</a></p><p>Used for: Tensor-core path max absolute difference 0.106689 at frame 48, pixel 64580; scalar fp32 path 0.00290298; 64 frames, 24,883,200 values each; p99.99 upper 0.00176668 for the tensor-core path; the perturbed-weights control fails as required.</p><p class="sc-dnp">Does not prove: Behaviour on other GPUs, other scenes or other network versions.</p></li><li><p><strong>raw-native inference bounds.</strong> HarperZ9/raw-native at 9de6582, evidence/rr-inference-bounds.json and the parity measure in vk_rrnet.cpp. <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-inference-bounds.json">https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-inference-bounds.json</a></p><p>Used for: The parity bound: maximum absolute difference at most 1e-2, measured per value in double over every value.</p><p class="sc-dnp">Does not prove: That 1e-2 is the right bound for image quality; it is the bound set in advance.</p></li><li><p><strong>raw-native evidence note on the tensor-core parity miss, 15 October 2026.</strong> HarperZ9/raw-native at 9de6582, evidence/rr-tc-note-2026-10-15.json (last changed at 6c06e62). <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-note-2026-10-15.json">https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-note-2026-10-15.json</a></p><p>Used for: Predictions written before the emulation; weights-only hypothesis refuted; single-sample specular fireflies (radiance 1,087 beside neighbours near 0.1, demodulated by 0.05 to about 21,700, filtered to about 105 against a reference of 110); per-layer and mixed-precision results; decision: no change this round and the bound is not loosened.</p><p class="sc-dnp">Does not prove: That PyTorch&#x27;s emulation reproduces the tensor cores&#x27; summation order.</p></li><li><p><strong>raw-native CPU emulations W, A and WA.</strong> HarperZ9/raw-native at 9de6582, evidence/rr-tc-2026-10-15/emu-W.json, emu-A.json, emu-WA.json (commit a0e2cc0). <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/emu-WA.json">https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/emu-WA.json</a></p><p>Used for: WA max 0.108489990234375 at frame 48, pixel 64580; W 0.13702392578125; A 0.104095458984375.</p><p class="sc-dnp">Does not prove: The GPU&#x27;s exact arithmetic; it agrees on the worst location and the order of the miss.</p></li><li><p><strong>raw-native mixed-precision runs.</strong> HarperZ9/raw-native at 9de6582, evidence/rr-tc-2026-10-15/keep-10.json, keep-10_1_9.json, keep-10_1_9_8_0_3.json. <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/keep-10.json">https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/keep-10.json</a></p><p>Used for: Layer 10 in fp32: 0.0512 (25 pixels over); layers 10, 1, 9: 0.0341 (12); layers 10, 1, 9, 8, 0, 3: 0.0340 (4).</p><p class="sc-dnp">Does not prove: That no other mixed-precision split would pass.</p></li><li><p><strong>Night School&#x27;s small re-creation of the denoiser&#x27;s arithmetic.</strong> media/school/denoiser/facts.json, written by tools/school/fill_denoiser.mjs from system/school/denoiser.mjs: one convolution step and the 5 x 5 softmax filter with a synthetic glint of the note&#x27;s magnitudes, in fp32, fp16 and bf16 variants, against raw-native&#x27;s own bound and measure. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/denoiser">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/denoiser</a></p><p>Used for: The re-created tensor-core arithmetic misses at the glint pixel and the fp32 path passes; without the glint every variant passes.</p><p class="sc-dnp">Does not prove: Anything numeric about raw-native&#x27;s network: the real frame, weights and 12 layers are not in its evidence, so every re-created number is synthetic.</p></li><li><p><strong>Night School&#x27;s precision measurements (lesson K24).</strong> media/school/precision/facts.json, written by tools/school/fill_precision.mjs. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision</a></p><p>Used for: Near 110, fp16 values are 0.0625 apart.</p><p class="sc-dnp">Does not prove: Anything about the denoiser by itself.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The film&#x27;s figures for the real denoiser come from raw-native&#x27;s published evidence; the re-creation is synthetic, because the frame&#x27;s pixel values and the network&#x27;s weights are not in that evidence.</p><p class="body-text">The emulations ran on a processor, not the tensor cores, so their summation order may differ from the chip&#x27;s; they agree with it on the worst frame and pixel.</p><p class="body-text">Three mixed-precision splits were tried, down to 0.0340; other splits were not, so the film says none of those tried met the bound.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-precision.html">Mixed precision</a> (K24). Next, on the same beach: <a class="inline" href="night-school-receipts.html">A score that carries its receipt</a> (E25).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson K25: denoiser.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

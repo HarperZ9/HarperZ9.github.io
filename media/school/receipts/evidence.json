@@ -1,0 +1,55 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "receipts",
+ "read": "2026-10-16",
+ "sources": {
+  "fw-doc": {
+   "short": "Flywheel: the PySyft result receipt",
+   "citation": "HarperZ9/flywheel at f04ef26, docs/features/pysyft-result-receipt.md.",
+   "url": "https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/docs/features/pysyft-result-receipt.md",
+   "read": "full",
+   "claims": [
+    "What the receipt binds (rows by hash and Merkle root, the approved job by its hash, an Ed25519 signature over the canonical body) and what a stranger can and cannot check."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "That the hidden model or data were what the parties said (attestation is UNVERIFIABLE in the fixture)."
+  },
+  "fw-fixture": {
+   "short": "Flywheel: the PySyft receipt fixture",
+   "citation": "HarperZ9/flywheel at f04ef26, tests/fixtures/pysyft_receipt/ (last changed at 7d47b8f), copied unchanged to media/school/receipts/.",
+   "url": "https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/tests/fixtures/pysyft_receipt",
+   "read": "full",
+   "claims": [
+    "A demonstration job: 50 questions, 40 marked correct; the receipt's published hashes and signature."
+   ],
+   "n": "50 rows.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about a real model; the job is a demonstration with a toy adder."
+  },
+  "fw-verify": {
+   "short": "Flywheel's verifier",
+   "citation": "HarperZ9/flywheel at f04ef26, harness/job_result_verify.py.",
+   "url": "https://github.com/HarperZ9/flywheel/blob/f04ef26fda8e36e3f73521ebbc5e03c4220da72d/harness/job_result_verify.py",
+   "read": "full",
+   "claims": [
+    "Which checks the verifier runs; it does not recompute receipt_id."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "How the verifier behaves on other receipt types."
+  },
+  "ours-receipts": {
+   "short": "Night School's re-derivation and tamper sweep",
+   "citation": "media/school/receipts/facts.json, written by tools/school/fill_receipts.mjs from system/school/receipts*.mjs: every derived field recomputed with WebCrypto SHA-256, canonical JSON and an RFC 6962 Merkle tree; every byte of every file flipped once; four false-success controls; verdicts compared with Flywheel's own verifier on 8,636 tampers.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/receipts",
+   "read": "full",
+   "claims": [
+    "All derived fields reproduce byte for byte; 40 of 50 re-derived; sweep counts per file; the consistent cheater passes every hash check and fails only against the revealed answers or a pinned honest key."
+   ],
+   "n": "10,960 one-byte tampers.",
+   "interval": "None; exhaustive over single-byte flips (XOR 0x01).",
+   "does_not_prove": "Resistance to multi-byte edits by someone without the key beyond what hashes and signatures give by construction."
+  }
+ }
+}
