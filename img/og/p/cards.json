@@ -355,6 +355,10 @@
   "alt": "Distillation: a big teacher, a small student, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-distill.jpg?v=f6282f6dbe71"
  },
+ "night-school-editdistance.html": {
+  "alt": "Dynamic programming: remember what you already worked out, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-editdistance.jpg?v=158ce122cfb8"
+ },
  "night-school-embeddings.html": {
   "alt": "Embeddings: every token gets coordinates, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-embeddings.jpg?v=de78813d2309"
@@ -414,6 +418,10 @@
  "night-school-scaling.html": {
   "alt": "Scaling: bigger, longer, how much, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-scaling.jpg?v=55d05db2f3c5"
+ },
+ "night-school-search.html": {
+  "alt": "Search and sorting: the cost of looking, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-search.jpg?v=2457f24a5ef0"
  },
  "night-school-threads.html": {
   "alt": "Threads, workgroups and memory, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
