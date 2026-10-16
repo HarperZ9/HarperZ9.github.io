@@ -17,7 +17,9 @@ attention-only transformer on 64 random characters with one repeated stretch.
 - Step 2: layer 1 finds the earlier copy and reads the character after it (0.85 for one head;
   both switched off, 1.7%). The columns fall when a head is switched off.
 
-Stills: `still-12.jpg`, `still-35.jpg`, `still-52.jpg`, `still-58.jpg`.
+The film: `attention-explainer.mp4` (1080p, 73 s, narrated in the author's synthesized voice) with
+captions in `attention-explainer.vtt`. Stills: `still-12.jpg`, `still-35.jpg`, `still-52.jpg`,
+`still-58.jpg`.
 
 It complements the lesson's own tinyformer film: the lesson teaches what attention computes; this
 segment shows one learned circuit doing a job, with the ablations.
@@ -37,12 +39,14 @@ against their recorded hashes. The live version lets a reader pause and point at
 
 1. Vendor raw-native at the merged commit as a new `media/raw-native/tree-<sha>/` (the lesson
    already vendors an older tree), including `web/explainer/` and `docs/explainer/`.
-2. Render it with `tools/explainer/film/motion_tree.py` at 4K, as the other films are.
+2. A 4K render is queued; until then the 1080p file here is the cut. The interactive version can be
+   rendered with `tools/explainer/film/motion_tree.py`.
 3. Captions: `docs/explainer/attention/captions.vtt` holds every line.
 
 ## Open
 
-- Narration: a narrated draft in the author's synthesized voice exists, but it is not published
-  until the author has listened to it.
+- Narration: the voice is synthesized from the author's fine-tuned model, and the author approved
+  this narrated cut on 2026-10-16 after listening ("video sounds good"). Every surface that plays it
+  should say the voice is synthesized, as the other films do.
 - Type: Hanken Grotesk for text, Conso for data, as on the site. Conso's licence terms are not
   recorded in a file; its use follows the site's own (`system/fonts/FONTS.md`).
