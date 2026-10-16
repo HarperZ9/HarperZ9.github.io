@@ -1,0 +1,46 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "lora",
+ "read": "2026-10-15",
+ "sources": {
+  "ours-lora": {
+   "short": "Night School's fine-tuning runs, trained for this film",
+   "citation": "media/school/lora/facts.json, written by tools/school/fill_lora.mjs from system/school/lora.mjs, lora-task.mjs and lora-measure.mjs: the attention lesson's model fine-tuned on a new task (things keep their look) by full fine-tuning, readout only, last layer, and LoRA at ranks 1, 2, 4, 8 on the attention tables and on every dense table; 1,500 steps, 3 seeds each, learning rate picked per method on separate validation rows; forgetting on the original 256 held-out rows; singular values of the full fine-tune's change; controls (step-0 equality, merge equality, gradient check with a wrong-transpose control, rank 0).",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/lora",
+   "read": "full",
+   "claims": [
+    "Base answer accuracy 0.149; full fine-tune 0.993; LoRA attention r1/r4/r8 0.178/0.240/0.609; every table r1/r4/r8 0.364/0.821/0.918.",
+    "Forgetting: original look-back accuracy 0.992 before; 0.295 after full; 0.705 after LoRA attention r1.",
+    "Full change's top direction: readout 0.694, l1.wqkv 0.264 of energy; random 32 x 96 0.071; l1.wqkv needs 10 of 32 directions for 90 percent."
+   ],
+   "n": "3 seeds per method; 256 task rows (6,144 targets) and 256 original held-out rows.",
+   "interval": "Per-seed values and min to max in facts.json; low-rank results spread widely across seeds.",
+   "does_not_prove": "Anything about large models; one task, one learning-rate grid, no mixing of old data into fine-tuning."
+  },
+  "hu2022": {
+   "short": "Hu and others 2021, LoRA: Low-Rank Adaptation of Large Language Models",
+   "citation": "Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., Chen, W. (2021). LoRA: Low-Rank Adaptation of Large Language Models. arXiv:2106.09685; ICLR 2022.",
+   "url": "https://arxiv.org/abs/2106.09685",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "Freeze the pretrained weights and add a trainable low-rank product B A to chosen weight matrices; B starts at zero so training starts from the pretrained model.",
+    "The update made by adaptation has a low intrinsic rank, which motivates the method."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  },
+  "biderman2024": {
+   "short": "Biderman and others 2024, LoRA Learns Less and Forgets Less",
+   "citation": "Biderman, D., Portes, J., Gonzalez Ortiz, J. J., Paul, M., Greengard, P., Jennings, C., King, D., Havens, S., Chiley, V., Frankle, J., Blakeney, C., Cunningham, J. P. (2024). LoRA Learns Less and Forgets Less. Transactions on Machine Learning Research (08/2024). arXiv:2405.09673.",
+   "url": "https://arxiv.org/abs/2405.09673",
+   "read": "to be read by the fact-check",
+   "claims": [
+    "On code and math, LoRA underperforms full fine-tuning on the target domain and better preserves the base model's performance outside it."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about this model."
+  }
+ }
+}

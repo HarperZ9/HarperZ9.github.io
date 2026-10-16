@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LoRA and fine-tuning</title>
+<meta name="description" content="Teach a trained model a new habit by changing every number, a few, or a pair of thin LoRA strips: what each learns, and what each forgets.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-lora.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="LoRA and fine-tuning">
+<meta property="og:description" content="Teach a trained model a new habit by changing every number, a few, or a pair of thin LoRA strips: what each learns, and what each forgets.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-lora.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-lora.jpg?v=b0a0985d6bd5">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LoRA and fine-tuning, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-lora.jpg?v=b0a0985d6bd5">
+<meta name="twitter:image:alt" content="LoRA and fine-tuning, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / S19</span></div>
+  <div class="mid">
+    <h1>LoRA. <span class="g">A small rudder for a big boat.</span></h1>
+    <p class="lede">Tallow teaches the attention model one new habit three ways and measures the new habit, the old skill, and whether the change really needs only a few directions, as the LoRA paper argued.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 7:05, hosted by Tallow. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/lora/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the rudder</h2>
+  <p class="body-text">Pick a method, train it in this page on the new habit, and watch the change it makes to one attention table, the new habit and the old skill. In the film, changing every number got 99% of answers right, rank-1 strips on attention 18%, and rank-8 strips on every table 92%.</p>
+  <div class="ls" data-school="lab" data-lab="lora">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the boatyard</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>LoRA</h3><p>LoRA and fine-tuning. A small rudder for a big boat.</p><p>A trained model can be taught a new job by training it a little more. That is fine-tuning. Tonight we teach the attention model one new habit, first by changing every number, then by bolting on something small and changing only that.</p>
+<h3>The new job</h3><p>The new habit: things keep their look. &quot;The boat was bright.&quot; Maybe a sentence or two about something else. Then &quot;the boat was&quot;, and the answer is bright again.</p><p>In the guides&#x27; usual sentences a thing never keeps its look; the adjective is drawn fresh every time. So the trained model gets the answer right only 15 percent of the time, about what guessing among six looks would give.</p><p>Our yardstick is the answer word. Once the thing is named again, the right look is certain, so a model that has learned the habit gets it right every time.</p>
+<h3>Change every number</h3><p>First, the plain way: train all 20,864 numbers on the new sentences for 1,500 steps.</p><p>It learns the habit: 99 percent right.</p><p>But look at the old job. Before, the model got look-back words right 99 percent of the time. After, 30 percent. It trained only on the new sentences, and it forgot much of the old skill on the way.</p>
+<h3>The rudder</h3><p>LoRA, from Hu and colleagues in 2021, leaves the trained numbers alone. Beside a table of weights it adds two thin strips: one with a number for every input, one with a number for every output. Multiply them together and you get a full-sized table of changes, added to the frozen one.</p><p>The table we are looking at is the second floor&#x27;s query, key and value table, 32 by 96: 3,072 numbers. One pair of strips is 32 plus 96 numbers. That is rank 1. Rank 2 is two pairs, and so on.</p><p>One strip starts at zero, so at the first step the model is exactly the trained one, number for number. We checked: every output the same, bit for bit.</p>
+<h3>How many strips</h3><p>Fit rank-1 strips to the four attention tables: 384 numbers. Rank 8: 3,072. The answer word comes out right 18 percent of the time at rank 1, hardly better than before, 24 at rank 4, and 61 at rank 8.</p><p class="sc-ask">Rank-1 strips on the attention tables: 384 numbers out of 20,864. How much of the habit do they learn? <span>(the film pauses here)</span></p><p>Strips on the feed-forward and readout tables too: 36 percent at rank 1, 82 at rank 4, and 92 at rank 8, with 6,768 numbers, 32 percent of the model&#x27;s.</p><p>Something odd happened along the way. Every adapter learned to name the thing again, 98 percent at rank 1. Carrying its look across the sentence was the hard part, and after 1,500 steps the thinner attention strips still had not got it.</p><p>And the seeds often disagree. At rank 2, with strips on the feed-forward and readout tables too, the three runs got 14 to 75 percent.</p>
+<h3>The shape of a change</h3><p>Why should a few strips be enough? Hu and colleagues guessed that the change fine-tuning makes has a low rank: most of it points in a few directions. We can check that here, on the change a full fine-tune made.</p><p>For the readout table, the top direction holds 69 percent of the change. For the attention table on the second floor, 26 percent. A random change of that shape would put only 7 percent there. So the change is lopsided.</p><p>But not thin. To hold nine tenths of it, that attention table needs 10 or 11 of its 32 directions. Cut every table&#x27;s change down to its best rank 1 and the answer is right only 19 percent of the time; at rank 8, 74.</p><p>So on this model and this job, the claim is partly true. The change leans toward a few directions, and it still needs more than a few.</p>
+<h3>What was lost</h3><p>Every method here trained only on the new sentences, and every one forgot some of the old job.</p><p>Rank-1 strips on attention forgot least: look-back words still 70 percent right, against 30 after changing everything. They also learned least. Strips on the feed-forward and readout tables too forgot about as much as changing everything.</p><p>Biderman and colleagues found a similar pattern in 2024, on models with billions of numbers: LoRA learned less of a new field than full fine-tuning and forgot less of the old, and more strips meant more forgetting.</p><p>We did not try the usual cure, mixing some old sentences into the new training. That is a lesson for another night.</p>
+<h3>Goodnight</h3><p>Strips need little memory to train, are small to store and easy to take off again, so one trained model can carry many jobs, one set of strips each. How many strips a job needs, Hu&#x27;s team expects, depends on the job; we tried only one.</p><p>Next, at the prism: how sure we can be of a number like the ones tonight. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/lora/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s fine-tuning runs, trained for this film.</strong> media/school/lora/facts.json, written by tools/school/fill_lora.mjs from system/school/lora.mjs, lora-task.mjs and lora-measure.mjs: the attention lesson&#x27;s model fine-tuned on a new task (things keep their look) by full fine-tuning, readout only, last layer, and LoRA at ranks 1, 2, 4, 8 on the attention tables and on every dense table; 1,500 steps, 3 seeds each, learning rate picked per method on separate validation rows; forgetting on the original 256 held-out rows; singular values of the full fine-tune&#x27;s change; controls (step-0 equality, merge equality, gradient check with a wrong-transpose control, rank 0). <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/lora">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/lora</a></p><p>Used for: Base answer accuracy 0.149; full fine-tune 0.993; LoRA attention r1/r4/r8 0.178/0.240/0.609; every table r1/r4/r8 0.364/0.821/0.918. Forgetting: original look-back accuracy 0.992 before; 0.295 after full; 0.705 after LoRA attention r1. Full change&#x27;s top direction: readout 0.694, l1.wqkv 0.264 of energy; random 32 x 96 0.071; l1.wqkv needs 10 of 32 directions for 90 percent.</p><p class="sc-dnp">Does not prove: Anything about large models; one task, one learning-rate grid, no mixing of old data into fine-tuning.</p></li><li><p><strong>Hu and others 2021, LoRA: Low-Rank Adaptation of Large Language Models.</strong> Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., Chen, W. (2021). LoRA: Low-Rank Adaptation of Large Language Models. arXiv:2106.09685; ICLR 2022. <a class="inline" href="https://arxiv.org/abs/2106.09685">https://arxiv.org/abs/2106.09685</a></p><p>Used for: Freeze the pretrained weights and add a trainable low-rank product B A to chosen weight matrices; B starts at zero so training starts from the pretrained model. The update made by adaptation has a low intrinsic rank, which motivates the method.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>Biderman and others 2024, LoRA Learns Less and Forgets Less.</strong> Biderman, D., Portes, J., Gonzalez Ortiz, J. J., Paul, M., Greengard, P., Jennings, C., King, D., Havens, S., Chiley, V., Frankle, J., Blakeney, C., Cunningham, J. P. (2024). LoRA Learns Less and Forgets Less. Transactions on Machine Learning Research (08/2024). arXiv:2405.09673. <a class="inline" href="https://arxiv.org/abs/2405.09673">https://arxiv.org/abs/2405.09673</a></p><p>Used for: On code and math, LoRA underperforms full fine-tuning on the target domain and better preserves the base model&#x27;s performance outside it.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One small model, one new habit and one learning-rate grid, three seeds per method; at low rank the seeds disagree widely.</p><p class="body-text">Every method trained on the new habit alone; mixing old text into fine-tuning, the usual guard against forgetting, was not tried.</p><p class="body-text">The low-rank test covers this model and this habit only.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-distill.html">Distillation</a> (S17). Earlier: <a class="inline" href="night-school-matrices.html">Matrices move space</a> (F2).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson S19: lora.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

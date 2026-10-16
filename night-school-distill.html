@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Distillation: a big teacher, a small student</title>
+<meta name="description" content="Train a small model on a big one&#x27;s guesses instead of the text alone: when the teacher&#x27;s soft answers help, and when the text is enough.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-distill.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Distillation: a big teacher, a small student">
+<meta property="og:description" content="Train a small model on a big one&#x27;s guesses instead of the text alone: when the teacher&#x27;s soft answers help, and when the text is enough.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-distill.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-distill.jpg?v=f6282f6dbe71">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Distillation: a big teacher, a small student, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-distill.jpg?v=f6282f6dbe71">
+<meta name="twitter:image:alt" content="Distillation: a big teacher, a small student, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / S17</span></div>
+  <div class="mid">
+    <h1>Distillation. <span class="g">A big teacher, a small student.</span></h1>
+    <p class="lede">A big model is costly to run. Tallow trains a student a fifth its size on the attention model&#x27;s whole wheel of guesses, at several temperatures, and measures when that beats the text&#x27;s own words.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 7:02, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/distill/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: two wheels</h2>
+  <p class="body-text">Choose what the student learns from (the text&#x27;s words, the teacher&#x27;s wheel at a temperature, the teacher&#x27;s top word, or the rules&#x27; own odds) and how much text it sees; train it in this page and watch its wheel and held-out loss. In the film, on 32 rows the text&#x27;s words ended at a held-out loss of 4.80 and the teacher&#x27;s wheel at 1.64; on fresh text, 0.72 and 0.74.</p>
+  <div class="ls" data-school="lab" data-lab="distill">
+    <button type="button" class="ns-btn ns-go" data-school-open>Light the lamp</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Distillation</h3><p>Distillation. A big teacher, a small student.</p><p>A big model is slow and costly to run. One way to get a small one is to train it on what the big one says, instead of on the text alone. Tonight the attention model teaches a student a fifth its size, and we find out when that helps.</p>
+<h3>Two kinds of answer</h3><p>After &quot;rerun knocked&quot;, the rules that write the guides&#x27; sentences say &quot;on&quot; half the time and &quot;twice&quot; the other half.</p><p>The text itself only ever shows one. A sentence says &quot;on&quot;, and that is the answer the model is marked against: a hard label, one word, as if the other had been impossible. Only across many sentences does the split show.</p><p>The teacher&#x27;s own guess keeps the split: 54 percent &quot;twice&quot;, 45 percent &quot;on&quot;. That is a soft target, the whole wheel instead of one slot.</p><p>Open choices like this are common. On 40 percent of the words in our held-out text, the likeliest next word has no more than three quarters of the odds.</p>
+<h3>Turning up the temperature</h3><p>Hinton, Vinyals and Dean, in 2015, added one more trick. Before the teacher&#x27;s scores become shares, divide them by a number they called the temperature.</p><p>At a temperature of 1 the wheel is the teacher&#x27;s own. At 2 and 4 the big slots shrink and the slivers grow, so the student hears more about the words the teacher thinks are unlikely, and how unlikely.</p><p>The student matches the softened wheel with its own wheel, softened the same way. The paper multiplies that loss by the temperature squared, so the push stays about the same size whatever the temperature.</p><p>Our student has 4,112 numbers, 20 percent of the teacher&#x27;s 20,864: one floor instead of two, and lists of 16 numbers per word instead of 32.</p>
+<h3>With plenty of text</h3><p>First, give the student all the fresh text it wants: 2,000 steps, new sentences every step, three students of each kind with different seeds.</p><p class="sc-ask">With all the text it wants, does the student learn more from the teacher&#x27;s wheel than from the text&#x27;s own words? <span>(the film pauses here)</span></p><p>Trained on the text&#x27;s own words, the student&#x27;s held-out loss is 0.72. On the teacher&#x27;s wheel: 0.70 at temperature 1, 0.74 at 2, 0.72 at 4. None of those differences holds up across the three seeds. Only temperature 8 is clearly different, and it is worse, by 0.04. Some students never learned to look back, whichever way they were taught, and those runs swing the averages.</p><p>So with plenty of text, we saw no gain from the teacher that three seeds could confirm. The teacher did make the student more like itself: at temperature 2, students taught by the wheel pick the teacher&#x27;s top word 92 percent of the time, against 83 for students taught by the text.</p>
+<h3>With very little text</h3><p>Hinton and his colleagues made a stronger claim: soft targets carry what the teacher learned to a student that sees very little data.</p><p>So give the student only 32 rows of 24 words, and show it the same rows over and over, 1,000 times each.</p><p class="sc-ask">Now the student gets only 32 rows, over and over. The text&#x27;s words, or the teacher&#x27;s wheel? <span>(the film pauses here)</span></p><p>Trained on those rows&#x27; own words, the student learns them by heart. Its held-out loss was 1.72 at its best check and 4.80 by the end. On the teacher&#x27;s wheel for the same rows, its best check was 1.39, and it ended at 1.64. Best against best, every seed agrees.</p><p>With 256 rows, the text&#x27;s words give 0.90 at best and 1.28 by the end, and the teacher&#x27;s wheel 0.73, close to the teacher&#x27;s own 0.69.</p><p>One caution. The teacher learned from far more text than these rows. What crosses over is what the teacher already knew, carried in its wheel.</p>
+<h3>Two teachers that fail</h3><p>A teacher can fail in two ways. Take only the teacher&#x27;s top word, and train on it as if it were certain. The student copies look-back words well, 95 percent right, but its held-out loss is 3.84, worse than just counting how often each word appears, 3.27. Where the text could go more than one way, it is sure of one word, and pays heavily whenever the text picks another.</p><p>Or take a teacher that never trained. Its wheel is close to even, and its student ends at 3.84, worse than counting words too.</p><p>And a perfect answer key, the rules&#x27; own odds, gives 0.69 with plenty of text, about what the teacher itself scores. It beat the text alone in all three seeds, but by too little for three seeds to settle.</p>
+<h3>Goodnight</h3><p>A small model can learn a lot from how a big one hesitates, most of all when there is little else to learn from. For our student, with text that never ran out, the text was enough. With a fixed training set, Hinton&#x27;s team found a gain even then.</p><p>Next in the boatyard: teaching a trained model a new job by fitting a small rudder, instead of rebuilding the hull. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/distill/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s distillation runs, trained for this film.</strong> media/school/distill/facts.json, written by tools/school/fill_distill.mjs from system/school/distill.mjs: the attention lesson&#x27;s model as teacher; a one-floor student of 4,112 numbers trained 2,000 steps on hard labels, the teacher&#x27;s soft targets at temperatures 1, 2, 4, 8, a half-and-half mix, the teacher&#x27;s top word, the generator&#x27;s exact odds, and an untrained teacher; fresh text and fixed pools of 32 and 256 rows; 3 seeds per arm; paired differences called resolved only when every seed agrees in sign and the mean is over two standard errors. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/distill">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/distill</a></p><p>Used for: Full data: hard 0.7213, soft T1 0.7019, T2 0.7355, T4 0.7229 (none resolved against hard), T8 0.7612 (worse, resolved). 32-row pool: hard 4.801 at the end (best 1.720), soft T2 1.637 (resolved better); 256-row pool: hard 1.276, soft T2 0.727. Top word as certain: held-out 3.843, copy accuracy 0.947; untrained teacher 3.839; word counts 3.273.</p><p class="sc-dnp">Does not prove: Anything about large models; the teacher learned from far more text than the pools, so the low-data result is transfer through the teacher, not learning from 32 rows.</p></li><li><p><strong>Hinton, Vinyals and Dean 2015, Distilling the Knowledge in a Neural Network.</strong> Hinton, G., Vinyals, O., Dean, J. (2015). Distilling the Knowledge in a Neural Network. arXiv:1503.02531 (NIPS 2014 Deep Learning Workshop). <a class="inline" href="https://arxiv.org/abs/1503.02531">https://arxiv.org/abs/1503.02531</a></p><p>Used for: Train a small model on the soft targets of a large one, raising the temperature of the final softmax; the soft-target loss is scaled by T squared to keep gradient magnitudes comparable. Soft targets let a model trained on very little data (3 percent of the speech training set) keep much of the full model&#x27;s accuracy.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">One teacher of 20,864 numbers and one student of 4,112, three seeds per arm: the results say what happens here, not how much distillation helps a large model.</p><p class="body-text">The teacher learned from far more text than the small pools, so the low-data result is what crosses over through the teacher&#x27;s wheel, not learning from a few rows alone.</p><p class="body-text">The best checkpoint on a pool is read off the held-out rows themselves, which flatters every arm equally.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-trainloop.html">The training loop</a> (L12). Next in the boatyard: <a class="inline" href="night-school-lora.html">LoRA and fine-tuning</a> (S19).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson S17: distill.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

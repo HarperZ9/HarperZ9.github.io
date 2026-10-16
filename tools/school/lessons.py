@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 
 from tools.school.page import SCHOOL, E, head, foot, sources, transcript
+from tools.school.lessons_small import spec_distill, spec_lora
 from tools.school.lessons_lm import spec_tokens, spec_embeddings, spec_nextword, spec_decoding, spec_block, spec_trainloop, spec_data, spec_scaling
 
 
@@ -213,7 +214,7 @@ def spec_heldout(f: dict) -> dict:
     }
 
 
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding, "block": spec_block, "trainloop": spec_trainloop, "data": spec_data, "scaling": spec_scaling}
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding, "block": spec_block, "trainloop": spec_trainloop, "data": spec_data, "scaling": spec_scaling, "distill": spec_distill, "lora": spec_lora}
 
 
 def write_all(root) -> list[str]:
