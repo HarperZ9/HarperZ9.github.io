@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fused attention</title>
+<meta name="description" content="Attention without writing its table of scores: a running largest score and total, the bytes it saves, and the overflow the running largest prevents.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-fused.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Fused attention">
+<meta property="og:description" content="Attention without writing its table of scores: a running largest score and total, the bytes it saves, and the overflow the running largest prevents.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-fused.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-fused.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Fused attention, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-fused.jpg">
+<meta name="twitter:image:alt" content="Fused attention, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / K23</span></div>
+  <div class="mid">
+    <h1>Fused <span class="g">attention.</span></h1>
+    <p class="lede">The plain way writes every head&#x27;s table of scores to memory and reads it back twice. Pylon&#x27;s crew keeps a running largest score and a running total instead, never builds the table, and leaves the rescale out on purpose to see the checker catch it.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 5:07, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/fused/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the cannery</h2>
+  <p class="body-text">Pick a kernel and sizes; the emulator counts every byte to and from memory and checks the answer against an exact one; then, if your browser has WebGPU, time the real kernels on your own chip. In the film, at 4,096 words and 16 numbers per head, the plain way moved 285,736,960 bytes and fused 17,301,504; at 64 per head, 538,968,064 against 270,532,608.</p>
+  <div class="ls" data-school="lab" data-lab="fused">
+    <button type="button" class="ns-btn ns-go" data-school-open>Open the cannery</button>
+    <p class="ns-note" data-school-note>Counting runs in this page. Timing runs the kernels on your own graphics chip, only when you press Time. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>Fused attention</h3><p>Fused attention.</p><p>Attention, the step where each word looks back at the words before it, is where the lighthouse meets the cannery. Tonight Pylon shows how to do it in one trip, without ever writing the whole table of scores to the warehouse.</p>
+<h3>The table of scores</h3><p>For every word, attention scores that word and every earlier one, turns the scores into shares, and mixes the words by those shares.</p><p>Done the plain way on a graphics chip, that takes three passes, and the table crosses the warehouse door four times. Write the scores. Read them back and write the shares. Read the shares back to mix. For 4,096 words, one head&#x27;s scores alone fill 64 mebibytes, in 32-bit numbers.</p>
+<h3>Shares without the whole row</h3><p>The trouble is the shares. To turn a score into a share you divide by a total over the whole row, and you seem to need every score before you can start.</p><p>Maxim Milakov and Natalia Gimelshein showed in 2018 that the largest score and the total can be built in one pass, as the scores go by. When a bigger score arrives, shrink the total so far to match, and carry on.</p><p>On our model&#x27;s own sentence, the tile-by-tile answer and the plain one both land within float32 rounding of the exact answer, on all four heads.</p>
+<h3>One trip</h3><p>Tri Dao and colleagues built FlashAttention on this in 2022. Our kernel follows the same idea. A crew loads a tile of questions and walks tiles of keys and values past it on its bench. It keeps the running largest score and total, and writes only the finished answers. Dao&#x27;s version loops the other way round, and also saves the running largest and total for training.</p><p>Count one head&#x27;s warehouse traffic for 4,096 words, with 64 numbers per head: 514 mebibytes the plain way, 258 fused. The bench is small, so the keys and values are fetched again for every tile of questions. With 16 numbers per head, more fits on the bench: 272.5 against 16.5.</p><p class="sc-ask">Four thousand words, sixteen numbers per head. How many times less traffic, fused? <span>(the film pauses here)</span></p>
+<h3>Forget one step</h3><p>The one step that is easy to forget: shrinking the running total when a bigger score arrives.</p><p>We left it out on purpose. On our model&#x27;s sentence, some answers came out wrong on every one of the four heads, and the checker caught it. It is right only when the biggest score happens to arrive in the first tile.</p>
+<h3>Why keep the largest</h3><p>The running largest score does a second job. Raising e to a score makes big numbers fast, and fp16, the common 16-bit format, overflows above 65,504.</p><p>The largest score in our sentence&#x27;s last row is 10.32, and e to that is 30,320. That fits, but a score of 11.09 would not. Across the held-out rows, the largest score reaches 23.41, and e to some of those scores would be infinity in fp16. Subtracting the running largest first keeps every term at 1 or below.</p>
+<h3>What the count leaves out</h3><p>These are counts of the memory requests our own kernels make, not times, and a chip&#x27;s caches may serve some of them. Fused attention also does a little more arithmetic, the rescaling, to save the trips.</p><p>The lab runs both versions on your own chip, if your browser allows it, and times them beside the count.</p>
+<h3>Goodnight</h3><p>Do the whole job on the bench, keep a running largest and a running total, and never build the wall of scores.</p><p>Next, with Tallow: what the 16-bit numbers in those trays can and cannot hold. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/fused/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s attention emulator and kernels, built for this film.</strong> media/school/fused/facts.json, written by tools/school/fill_fused.mjs from system/school/fused*.mjs: online softmax and tiled attention checked against a float64 reference on random inputs and the attention model&#x27;s own Q, K and V; WGSL kernels for the lab; an exact emulator of global memory traffic for unfused and fused attention at N = 64 to 4,096, d = 16 and 64; a broken-rescale control; the overflow arithmetic. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/fused">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/fused</a></p><p>Used for: N 4,096: d 64 unfused 514 MiB against fused 258 MiB; d 16, 272.5 against 16.5. The broken rescale fails on all four probe heads. Probe row largest score 10.32, exp 30,320 in fp16; on held-out rows the largest score is 23.41.</p><p class="sc-dnp">Does not prove: Any timing; caches and arithmetic cost are not modelled.</p></li><li><p><strong>Dao and others 2022, FlashAttention.</strong> Dao, T., Fu, D. Y., Ermon, S., Rudra, A., Re, C. (2022). FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness. NeurIPS 2022. arXiv:2205.14135. <a class="inline" href="https://arxiv.org/abs/2205.14135">https://arxiv.org/abs/2205.14135</a></p><p>Used for: Tiling with the online softmax avoids writing the N x N attention matrix to high-bandwidth memory; Theorem 2 gives O(N^2 d^2 / M) memory accesses.</p><p class="sc-dnp">Does not prove: Anything about this emulator.</p></li><li><p><strong>Milakov and Gimelshein 2018, Online normalizer calculation for softmax.</strong> Milakov, M., Gimelshein, N. (2018). Online normalizer calculation for softmax. arXiv:1805.02867. <a class="inline" href="https://arxiv.org/abs/1805.02867">https://arxiv.org/abs/1805.02867</a></p><p>Used for: The softmax normaliser can be computed in one pass with a running maximum and a rescaled running sum.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">Counts of bytes asked for, not times; caches can serve repeated reads, and the film&#x27;s kernels were not timed on a graphics chip.</p><p class="body-text">The check tolerance is a first-order float32 error bound derived for this lesson, not a published one.</p><p class="body-text">The model computes in float32 and subtracts the largest score, so it never overflows; 870 of 307,200 held-out scores would overflow fp16 without that subtraction.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-tiling.html">Matmul tiling</a> (K22). Next, in the lamp room: <a class="inline" href="night-school-precision.html">Mixed precision</a> (K24).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson K23: fused.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

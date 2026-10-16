@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mixed precision</title>
+<meta name="description" content="Run a model with 16-bit numbers: where fp16 and bf16 can put a value, why sums stall, and what keeping the sums in 32 bits buys on held-out rows.">
+<link rel="canonical" href="https://harperz9.github.io/night-school-precision.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Mixed precision">
+<meta property="og:description" content="Run a model with 16-bit numbers: where fp16 and bf16 can put a value, why sums stall, and what keeping the sums in 32 bits buys on held-out rows.">
+<meta property="og:url" content="https://harperz9.github.io/night-school-precision.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/night-school-precision.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mixed precision, a Night School lesson by Zain Dana Harper.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/night-school-precision.jpg">
+<meta name="twitter:image:alt" content="Mixed precision, a Night School lesson by Zain Dana Harper.">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
+<link rel="stylesheet" href="system/hubs.css?v=20260925-void-plates">
+<link rel="stylesheet" href="system/lessons/lessons.css?v=20261014-lessons">
+<link rel="stylesheet" href="system/school/school.css?v=20261015-school-1">
+</head>
+<body class="inner-clean hub-plate">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav" class="site-nav"></div>
+<noscript><nav class="site-nav"><a href="catalog.html">Catalog</a> <a href="studio.html">The Studio</a> <a href="overview.html">Flagships</a> <a href="research.html">Research</a> <a href="cv.html">About</a></nav></noscript>
+<script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
+<div class="frame">
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / K24</span></div>
+  <div class="mid">
+    <h1>Mixed <span class="g">precision.</span></h1>
+    <p class="lede">Graphics chips multiply 16-bit numbers fastest. Tallow measures where fp16 and bf16 can put a value, adds 1 to a running total until it stops moving, and scores the whole model with 16-bit inputs and with 16-bit sums.</p>
+  </div>
+</div>
+
+<main id="main">
+<section class="mv" id="film" aria-labelledby="film-h">
+  <h2 id="film-h">The film</h2>
+  <p class="body-text">About 4:23, hosted by Tallow. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <div class="ls" data-school="film" data-scene="media/school/precision/film.scene.mjs">
+    <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
+    <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="lab" aria-labelledby="lab-h">
+  <h2 id="lab-h">The lab: the measuring jugs</h2>
+  <p class="body-text">Type a number and see the values each format can store around it; run a long sum; or score the model on held-out rows in each mode. In the film, adding 1 stalled at 2,048 in fp16 and 256 in bf16; near 110, fp16&#x27;s marks are 0.0625 apart. The model&#x27;s loss was 0.6676 in 32 bits and 0.6679 in bf16 throughout.</p>
+  <div class="ls" data-school="lab" data-lab="precision">
+    <button type="button" class="ns-btn ns-go" data-school-open>Take down the jugs</button>
+    <p class="ns-note" data-school-note>Everything is computed on your computer, in this page. Nothing is sent anywhere.</p>
+    <div data-school-stage></div>
+  </div>
+</section>
+
+<section class="mv" id="words" aria-labelledby="words-h">
+  <h2 id="words-h">Everything the film says</h2>
+  <div class="sc-transcript"><h3>fp16, bf16 and tensor cores</h3><p>fp16, bf16 and tensor cores.</p><p>Graphics chips multiply much faster in 16-bit numbers than in 32-bit ones. Tonight Tallow measures what a 16-bit number can hold, where it goes wrong, and why the sums are often kept in 32 bits.</p>
+<h3>Measuring jugs</h3><p>Think of a number format as a measuring jug. The marks are its precision; the height is its range.</p><p>fp16 has 11 bits of significand and tops out at 65,504. bf16 keeps the range of 32-bit numbers but has only 8 bits of significand. 32-bit numbers have 24.</p>
+<h3>Near one hundred and ten</h3><p>Look at the marks near 110. In fp16 they are 0.0625 apart. In bf16, 0.5. Any number in between is rounded to the nearest mark.</p><p class="sc-ask">fp16 near 110. How far apart are the marks? <span>(the film pauses here)</span></p><p>So in fp16 a number near 110 can be off by up to one thirty-second, about 0.03. That is about three parts in ten thousand. A job that needs one part in ten thousand needs a significand of 13 bits; fp16 has 11. We will need that in the next lesson.</p>
+<h3>A sum that stops</h3><p>Now add 1 to a running total, five thousand times, keeping the total in fp16.</p><p>It stops at 2,048. There the marks are 2 apart, and adding 1 rounds back to where it was. In bf16 it stops at 256.</p>
+<h3>Small inputs, big sums</h3><p>This is why tensor cores, the units that multiply small tables of numbers in one step, can take 16-bit inputs and keep the running sums in 32 bits. With fp16 inputs they can also sum in fp16. With bf16 inputs, the sums are always 32-bit.</p><p>Paulius Micikevicius and colleagues trained large networks this way in 2018 and kept a 32-bit master copy of the weights.</p><p>On the second floor&#x27;s feed-forward table of our model, the error with fp16 inputs and 32-bit sums is about 0.0003 of the answer&#x27;s size. Keep the sums in fp16 too, and it grows to about 0.001.</p>
+<h3>The whole model</h3><p>Run the whole model with every stored number rounded to 16 bits and score it on 1,024 held-out rows.</p><p>The loss barely moves. It stays at 0.6676 with fp16 inputs and 32-bit sums, and rises to 0.6679 with bf16 throughout. Its numbers stay far below fp16&#x27;s limit, so nothing overflows. Its sums are short, at most 64 terms, so the rounding hardly shows.</p><p>We only ran this model in 16 bits; we did not train it that way. When large models are trained in 16 bits, the rounding can show. Micikevicius and colleagues needed three fixes to stop it.</p>
+<h3>Goodnight</h3><p>Small inputs, big sums: the marks you can afford for the parts, and the marks you need for the total.</p><p>Next, at the prism: one glint of light that 16 bits could not hold precisely enough. Goodnight.</p></div>
+</section>
+
+<section class="mv" id="sources" aria-labelledby="sources-h">
+  <h2 id="sources-h">Sources</h2>
+  <p class="body-text">Every claim in the film, with where it comes from and what that source does not prove. The numbers about the model are computed from its weights, which you can load and check: <a class="inline" href="media/school/precision/facts.json">facts.json</a>.</p>
+  <ul class="sc-sources"><li><p><strong>Night School&#x27;s precision measurements, computed for this film.</strong> media/school/precision/facts.json, written by tools/school/fill_precision.mjs from system/school/precision*.mjs: exact fp16 and bf16 rounding checked on every bit pattern; spacing and error by magnitude; long sums; the attention model&#x27;s layers and the whole model run with 16-bit storage and 32-bit or 16-bit accumulation, scored on 1,024 held-out rows with paired intervals. <a class="inline" href="https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision">https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision</a></p><p>Used for: Near 110: fp16 spacing 0.0625, worst rounding 0.03125; 13 significand bits needed for 1e-4, fp16 has 11. Adding 1 stalls at 2,048 in fp16 and 256 in bf16. Whole-model loss changes under 1e-3 nats in every 16-bit mode.</p><p class="sc-dnp">Does not prove: Anything about large models trained in 16 bits.</p></li><li><p><strong>IEEE 754-2019 binary16.</strong> IEEE (2019). IEEE Standard for Floating-Point Arithmetic, IEEE 754-2019 (binary16 parameters, checked against ISO/IEC TS 18661-3). <a class="inline" href="https://standards.ieee.org/ieee/754/6210/">https://standards.ieee.org/ieee/754/6210/</a></p><p>Used for: binary16: 11-bit significand, 5-bit exponent, largest finite 65,504.</p><p class="sc-dnp">Does not prove: Anything about bf16.</p></li><li><p><strong>Micikevicius and others 2018, Mixed Precision Training.</strong> Micikevicius, P., Narang, S., Alben, J., and others (2018). Mixed Precision Training. ICLR 2018. arXiv:1710.03740. <a class="inline" href="https://arxiv.org/abs/1710.03740">https://arxiv.org/abs/1710.03740</a></p><p>Used for: Train in fp16 with an fp32 master copy of weights, loss scaling, and fp32 accumulation of products.</p><p class="sc-dnp">Does not prove: Anything about this model.</p></li><li><p><strong>NVIDIA CUDA Programming Guide, tensor core element types.</strong> NVIDIA (2026). CUDA Programming Guide 13.4.2, section 5.4.11.6, Element Types and Matrix Sizes. <a class="inline" href="https://docs.nvidia.com/cuda/cuda-programming-guide/">https://docs.nvidia.com/cuda/cuda-programming-guide/</a></p><p>Used for: Tensor core operations take fp16 inputs with fp16 or fp32 accumulators, and bf16 inputs with fp32 accumulators.</p><p class="sc-dnp">Does not prove: Anything about other vendors.</p></li><li><p><strong>raw-native evidence note on the denoiser&#x27;s tensor-core parity, 15 October 2026.</strong> HarperZ9/raw-native, evidence/rr-tc-note-2026-10-15.json. <a class="inline" href="https://github.com/HarperZ9/raw-native/blob/main/evidence/rr-tc-note-2026-10-15.json">https://github.com/HarperZ9/raw-native/blob/main/evidence/rr-tc-note-2026-10-15.json</a></p><p>Used for: A value near 110 needs about 1e-4 relative precision; fp16 holds about 1e-3 there (order of magnitude).</p><p class="sc-dnp">Does not prove: Anything about this film&#x27;s arithmetic beyond the stated figures.</p></li></ul>
+</section>
+
+<section class="mv" id="limits" aria-labelledby="limits-h">
+  <h2 id="limits-h">What this lesson leaves out</h2>
+  <p class="body-text">The 16-bit formats are emulated by rounding in the main processor; no graphics chip and no tensor core ran these numbers.</p><p class="body-text">One small model; its scores are small enough that fp16 never overflows here, which large models cannot count on.</p><p class="body-text">Scores on 1,024 held-out rows; differences from 32 bits are paired on the same rows.</p>
+  <p class="body-text">Before this: <a class="inline" href="night-school-fused.html">Fused attention</a> (K23). Earlier: <a class="inline" href="night-school-quant.html">Quantisation</a> (S18).</p>
+</section>
+</main>
+<footer class="footer-seal" role="contentinfo">
+  <p class="seal">Night School, lesson K24: precision.</p>
+</footer>
+<script type="module" src="system/school/launch.mjs?v=20261015-school-1"></script>
+</body>
+</html>

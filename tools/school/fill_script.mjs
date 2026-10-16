@@ -5,7 +5,7 @@
 //   node tools/school/fill_script.mjs vectors
 //
 // path: dotted keys into facts.json, e.g. measurements.wte.top1 or neighbours.wte.kettle.
-// format: pct (0.804 -> "80"), pct1 (0.9975 -> "99.8"), int, f2, f4, abs4 (the size of a difference), words3 (the first three .word values, spoken as
+// format: pct (0.804 -> "80"), pct1 (0.9975 -> "99.8"), int, f2, f4, abs4 (the size of a difference), mib1 (bytes as mebibytes, 1 place), words3 (the first three .word values, spoken as
 // "map, shell and crate"), or none (the value as it is). An unknown path or format is an error,
 // and so is any token left unfilled.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -23,6 +23,7 @@ export const FORMATS = {
   f2: (v) => v.toFixed(2),
   f4: (v) => v.toFixed(4),
   abs4: (v) => Math.abs(v).toFixed(4),
+  mib1: (v) => (v / 1048576).toFixed(1).replace(/\.0$/, ""),
   words3: (v) => and(v.slice(0, 3).map((x) => x.word)),
   none: (v) => String(v),
 };
