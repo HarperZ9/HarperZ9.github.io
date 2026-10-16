@@ -91,6 +91,8 @@ def main() -> None:
     from tools.school.lessons import write_all
     for rel in write_all(ROOT):
         print(rel, "written")
+    from tools.school.coast import coast_page
+    (ROOT / "night-school-coast.html").write_text(coast_page(cur), encoding="utf-8", newline="\n")
     # Point each head at its own link card (img/og/p, rendered by tools/repo_art/site_cards.py).
     from tools.repo_art import site_cards
     for c in site_cards.plan():

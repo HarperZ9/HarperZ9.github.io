@@ -150,5 +150,23 @@ async function checkLesson(browser, width, force2d, L) {
     await idx.goto(`${base}/night-school.html`, { waitUntil: 'networkidle' });
     for (const rel of ['night-school-attention.html', 'night-school-vectors.html', 'night-school-matrices.html', 'night-school-gradients.html', 'night-school-backprop.html', 'night-school-optimisers.html', 'night-school-heldout.html', 'night-school-tokens.html', 'night-school-embeddings.html', 'night-school-nextword.html', 'night-school-decoding.html', 'night-school-block.html', 'night-school-trainloop.html', 'night-school-data.html', 'night-school-scaling.html', 'night-school-distill.html', 'night-school-lora.html', 'night-school-errorbars.html', 'night-school-gaming.html', 'night-school-evaluate.html', 'night-school-threads.html', 'night-school-quant.html', 'night-school-tiling.html', 'night-school-fused.html', 'night-school-precision.html', 'night-school-denoiser.html', 'night-school-receipts.html', 'night-school-search.html', 'night-school-editdistance.html']) assert.ok(await idx.locator(`a[href="${rel}"]`).count() >= 1, `the school links ${rel}`);
     console.log('night-school.html: ok');
+    assert.ok(await idx.locator('a[href="night-school-coast.html"]').count() >= 1, 'the school links the coast map');
+    // The coast map: every made lesson is a light that links to it, pointing at one shows its name, and
+    // neither width scrolls the page sideways (the map scrolls inside its own frame on a phone).
+    for (const width of [1280, 375]) {
+      const cp = await browser.newPage({ viewport: { width, height: 900 } }), errs = [];
+      cp.on('pageerror', (e) => errs.push(String(e)));
+      await cp.goto(`${base}/night-school-coast.html`, { waitUntil: 'networkidle' });
+      const made = await idx.locator('.sc-lesson a').count();
+      assert.equal(await cp.locator('.cm a').count(), made, 'one map link per made lesson');
+      const name = cp.locator('[data-for="L10"]');
+      assert.equal(Number(await name.evaluate((n) => getComputedStyle(n).opacity)), 0, 'names hidden until pointed at');
+      await cp.locator('[data-id="L10"]').hover();
+      assert.equal(Number(await name.evaluate((n) => getComputedStyle(n).opacity)), 1, 'pointing at a light shows its name');
+      assert.equal(await cp.evaluate(() => document.documentElement.scrollWidth - innerWidth), 0, `no sideways scroll at ${width}`);
+      assert.deepEqual(errs, []);
+      await cp.close();
+    }
+    console.log('night-school-coast.html: ok');
   } finally { await browser.close(); }
 })().catch((e) => { console.error(e); process.exit(1); });
