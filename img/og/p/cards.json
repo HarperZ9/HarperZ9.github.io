@@ -347,6 +347,10 @@
   "alt": "Decoding: temperature, top-k, top-p, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-decoding.jpg?v=4bc98372fd85"
  },
+ "night-school-denoiser.html": {
+  "alt": "Case study: the denoiser's tensor-core parity, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-denoiser.jpg?v=0564194b9244"
+ },
  "night-school-distill.html": {
   "alt": "Distillation: a big teacher, a small student, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-distill.jpg?v=f6282f6dbe71"
@@ -402,6 +406,10 @@
  "night-school-quant.html": {
   "alt": "Quantisation: fewer bits per number, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/night-school-quant.jpg?v=24ef8b1fbc53"
+ },
+ "night-school-receipts.html": {
+  "alt": "Case study: a score that carries its receipt, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/night-school-receipts.jpg?v=b5dc763c46d3"
  },
  "night-school-scaling.html": {
   "alt": "Scaling: bigger, longer, how much, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
