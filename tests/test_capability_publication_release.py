@@ -235,7 +235,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # (and #454's registry change, already on main, reaches the bundle), so the bundle rebuilt
     # from it is index-DWytnneE.js with the same sheet. index-amx6uI37.js stays as retained
     # history.
-    current_js = "index-DWytnneE.js"
+    # October 16, 2026, later: lessons S17 and S19 join the route registry, so the bundle rebuilt
+    # from it is index-CoD1AHwR.js with the same sheet. index-DWytnneE.js stays as retained history.
+    current_js = "index-CoD1AHwR.js"
+    previous_lessons_js = "index-DWytnneE.js"
+    assert previous_lessons_js not in source
+    assert (ROOT / "assets" / previous_lessons_js).is_file()
+    assert f"assets/{previous_lessons_js}" in RELEASE_PATHS
     previous_school_js = "index-amx6uI37.js"
     assert previous_school_js not in source
     assert (ROOT / "assets" / previous_school_js).is_file()

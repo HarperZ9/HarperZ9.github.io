@@ -1,0 +1,128 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "distill",
+ "title": "Distillation: a big teacher, a small student",
+ "page": "night-school-distill.html",
+ "seed": 20261031,
+ "voice": "tallow",
+ "draft": true,
+ "numbers_from": "media/school/distill/facts.json, computed by tools/school/fill_distill.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "tallow",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The lamp room. The big brass wheel stands on its easel; beside it, on a stool, a small new wheel with blank slots. Tallow wipes the small one clean. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Both wheels turn together. Tallow carries the small wheel down the stairs to a rowing boat at the jetty, sets it in the bow, and turns the lamp down."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Distillation",
+   "lines": [
+    "Distillation. A big teacher, a small student.",
+    "A big model is slow and costly to run. One way to get a small one is to train it on what the big one says, instead of on the text alone. Tonight the attention model teaches a student a fifth its size, and we find out when that helps."
+   ]
+  },
+  {
+   "key": "labels",
+   "heading": "Two kinds of answer",
+   "sources": [
+    "ours-distill",
+    "hinton2015"
+   ],
+   "lines": [
+    "After \"rerun knocked\", the rules that write the guides' sentences say \"on\" half the time and \"twice\" the other half.",
+    "The text itself only ever shows one. A sentence says \"on\", and that is the answer the model is marked against: a hard label, one word, as if the other had been impossible. Only across many sentences does the split show.",
+    "The teacher's own guess keeps the split: {{darkKnowledge.probes.0.odds.0.teacher|pct}} percent \"twice\", {{darkKnowledge.probes.0.odds.1.teacher|pct}} percent \"on\". That is a soft target, the whole wheel instead of one slot.",
+    "Open choices like this are common. On {{darkKnowledge.torn|pct}} percent of the words in our held-out text, the likeliest next word has no more than three quarters of the odds."
+   ]
+  },
+  {
+   "key": "temperature",
+   "heading": "Turning up the temperature",
+   "sources": [
+    "ours-distill",
+    "hinton2015"
+   ],
+   "lines": [
+    "Hinton, Vinyals and Dean, in 2015, added one more trick. Before the teacher's scores become shares, divide them by a number they called the temperature.",
+    "At a temperature of 1 the wheel is the teacher's own. At 2 and 4 the big slots shrink and the slivers grow, so the student hears more about the words the teacher thinks are unlikely, and how unlikely.",
+    "The student matches the softened wheel with its own wheel, softened the same way. The paper multiplies that loss by the temperature squared, so the push stays about the same size whatever the temperature.",
+    "Our student has {{students.sizes.d16x1.nParams|int}} numbers, {{students.sizes.d16x1.shareOfTeacher|pct}} percent of the teacher's {{teacher.nParams|int}}: one floor instead of two, and lists of {{students.sizes.d16x1.config.dModel}} numbers per word instead of {{teacher.config.dModel}}."
+   ]
+  },
+  {
+   "key": "plenty",
+   "heading": "With plenty of text",
+   "sources": [
+    "ours-distill"
+   ],
+   "lines": [
+    "First, give the student all the fresh text it wants: {{recipe.steps|int}} steps, new sentences every step, three students of each kind with different seeds.",
+    "Trained on the text's own words, the student's held-out loss is {{fullData.arms.hard.heldOut.mean|f2}}. On the teacher's wheel: {{fullData.arms.soft1.heldOut.mean|f2}} at temperature 1, {{fullData.arms.soft2.heldOut.mean|f2}} at 2, {{fullData.arms.soft4.heldOut.mean|f2}} at 4. None of those differences holds up across the three seeds. Only temperature 8 is clearly different, and it is worse, by {{fullData.arms.soft8.vsHard.heldOut.mean|f2}}. Some students never learned to look back, whichever way they were taught, and those runs swing the averages.",
+    "So with plenty of text, we saw no gain from the teacher that three seeds could confirm. The teacher did make the student more like itself: at temperature 2, students taught by the wheel pick the teacher's top word {{fullData.arms.soft2.agreement.mean|pct}} percent of the time, against {{fullData.arms.hard.agreement.mean|pct}} for students taught by the text."
+   ],
+   "predict": [
+    {
+     "after": [
+      0,
+      0
+     ],
+     "question": "With all the text it wants, does the student learn more from the teacher's wheel than from the text's own words?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "little",
+   "heading": "With very little text",
+   "sources": [
+    "ours-distill",
+    "hinton2015"
+   ],
+   "lines": [
+    "Hinton and his colleagues made a stronger claim: soft targets carry what the teacher learned to a student that sees very little data.",
+    "So give the student only {{lowData.pool.small}} rows of {{lowData.pool.words}} words, and show it the same rows over and over, {{lowData.pool.passesSmall|int}} times each.",
+    "Trained on those rows' own words, the student learns them by heart. Its held-out loss was {{lowData.pool32.hard.bestHeldOut.mean|f2}} at its best check and {{lowData.pool32.hard.heldOut.mean|f2}} by the end. On the teacher's wheel for the same rows, its best check was {{lowData.pool32.soft2.bestHeldOut.mean|f2}}, and it ended at {{lowData.pool32.soft2.heldOut.mean|f2}}. Best against best, every seed agrees.",
+    "With {{lowData.pool.mid}} rows, the text's words give {{lowData.pool256.hard.bestHeldOut.mean|f2}} at best and {{lowData.pool256.hard.heldOut.mean|f2}} by the end, and the teacher's wheel {{lowData.pool256.soft2.heldOut.mean|f2}}, close to the teacher's own {{teacher.heldOut|f2}}.",
+    "One caution. The teacher learned from far more text than these rows. What crosses over is what the teacher already knew, carried in its wheel."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Now the student gets only 32 rows, over and over. The text's words, or the teacher's wheel?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "wrong",
+   "heading": "Two teachers that fail",
+   "sources": [
+    "ours-distill"
+   ],
+   "lines": [
+    "A teacher can fail in two ways. Take only the teacher's top word, and train on it as if it were certain. The student copies look-back words well, {{fullData.arms.argmax.copyAccuracy.mean|pct}} percent right, but its held-out loss is {{fullData.arms.argmax.heldOut.mean|f2}}, worse than just counting how often each word appears, {{controls.unigramLoss|f2}}. Where the text could go more than one way, it is sure of one word, and pays heavily whenever the text picks another.",
+    "Or take a teacher that never trained. Its wheel is close to even, and its student ends at {{controls.untrainedTeacher.heldOut.mean|f2}}, worse than counting words too.",
+    "And a perfect answer key, the rules' own odds, gives {{fullData.arms.oracle1.heldOut.mean|f2}} with plenty of text, about what the teacher itself scores. It beat the text alone in all three seeds, but by too little for three seeds to settle."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "A small model can learn a lot from how a big one hesitates, most of all when there is little else to learn from. For our student, with text that never ran out, the text was enough. With a fixed training set, Hinton's team found a gain even then.",
+    "Next in the boatyard: teaching a trained model a new job by fitting a small rudder, instead of rebuilding the hull. Goodnight."
+   ]
+  }
+ ]
+}

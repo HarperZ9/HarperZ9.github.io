@@ -151,11 +151,17 @@ function layerBackward(model, w, l, B, T, broken) {
 // Mean next-token cross-entropy and its gradient for every parameter.
 // grads are model.grads (reused buffers, valid until the next call).
 // opts.brokenSoftmax is the gradient-check control, never used in training.
+// opts.lossHead (optional) replaces the cross-entropy head: it is called as
+// lossHead({ logits, probs, dlogits, y, N, V }), must fill dlogits with
+// d(loss)/d(logits) and return the loss (distillation's soft targets use it).
+// Without it the default path below runs unchanged.
 export function lossAndGrad(model, x, y, B, T, opts = {}) {
   const c = model.config, P = model.params, G = model.grads, d = c.dModel;
   const fw = forward(model, x, B, T, { keep: true });
   const w = fw.work, N = w.N;
-  const loss = softmaxXent(w.probs, w.dlogits, w.logits, y, N, c.vocab);
+  const loss = opts.lossHead
+    ? opts.lossHead({ logits: w.logits, probs: w.probs, dlogits: w.dlogits, y, N, V: c.vocab })
+    : softmaxXent(w.probs, w.dlogits, w.logits, y, N, c.vocab);
   for (const name of model.names) G[name].fill(0);
   matmulBackward(w.dln, G.wout, null, w.dlogits, w.lnf, P.wout, N, d, c.vocab);
   w.dres.fill(0);
