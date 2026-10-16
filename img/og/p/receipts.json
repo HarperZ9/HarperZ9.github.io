@@ -3204,6 +3204,42 @@
     "t": 0
    }
   },
+  "night-school-editdistance.jpg": {
+   "backend": "chrome-155.0.8059.80-skia",
+   "content_sha256": "34a8981fc960f1208c1fffeab5b3c2cbeebf29455dcea7f64d9c594e77ec8e65",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "night-school-editdistance.jpg": "158ce122cfb8fcc64a19acf80e9e96245c70c705b36637ebe289a5fbf933c08e",
+    "night-school-editdistance.svg": "01e12dc76a6565235dcfcb972a0779bd6d0abe55caf6d03c013fc6d5bb433194"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "6d88062bc4f7a11d3bafeb3b0b28615a505e81a49c53fc59bd47df04f2c0f8c8",
+   "reconcile": null,
+   "scene_sha256": "c94dd21a9fa81ba0c84c07e38ba29dae00a0beb4edf7e0e2fd776e7bb11f2851",
+   "schema": "superstack.receipt/1",
+   "seed": "night-school-editdistance",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 3930158365,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "night-school-embeddings.jpg": {
    "backend": "chrome-155.0.8059.40-skia",
    "content_sha256": "7cc79c8ac2c1cb6253e2624dc120905ab1259570abf4e184172c2a163f0312a0",
@@ -3738,6 +3774,42 @@
    "seed": "night-school-scaling",
    "seed_rule": "xmur3-mulberry32/1",
    "seed_u32": 1562505510,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
+  "night-school-search.jpg": {
+   "backend": "chrome-155.0.8059.80-skia",
+   "content_sha256": "d45a5af75dc5ea61379f39abc4b03e183c3540fe5df4825439568a78de44e907",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "night-school-search.jpg": "2457f24a5ef0ac1050653409c5dd8e90454f75f58cadaa588b199094fd43531e",
+    "night-school-search.svg": "db2859122c610e898e0176ac392b9789f2e13b49f9b453ece060ddcf3b64378d"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "0fe8a61d05d34358e7d1637744dc95f825ed2214645e457dd18c85e75a9eed1d",
+   "reconcile": null,
+   "scene_sha256": "dc4b047cba9bdb4cd413cd8c07ac2205a8f1f94c3ef3613e7c8ab5366d1605d6",
+   "schema": "superstack.receipt/1",
+   "seed": "night-school-search",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 2452010910,
    "time": {
     "base": "flicks",
     "per_second": 705600000,

@@ -1,0 +1,43 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "search",
+ "read": "2026-10-16",
+ "sources": {
+  "ours-search": {
+   "short": "Night School's counts of comparisons",
+   "citation": "media/school/search/facts.json, written by tools/school/fill_search.mjs from system/school/search.mjs: linear and binary search, insertion and merge sort with counters, on sizes 8 to 65,536 and seeds 1 to 10, with 134 closed-form checks, a binary-search-on-unsorted control and Node timings.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/search",
+   "read": "full",
+   "claims": [
+    "Every count in the film, the closed-form checks and the control."
+   ],
+   "n": "10 seeds per size; all keys for binary search.",
+   "interval": "Min and max over seeds in facts.json.",
+   "does_not_prove": "Times on other machines or engines; counts are of comparisons only."
+  },
+  "knuth3": {
+   "short": "Knuth, The Art of Computer Programming, vol. 3, 2nd ed. (1998)",
+   "citation": "Donald E. Knuth, The Art of Computer Programming, Volume 3: Sorting and Searching, 2nd edition, Addison-Wesley, 1998; sections 5.2.1 (insertion), 5.2.4 (merging), 6.2.1 (binary search).",
+   "url": "",
+   "read": "contents only",
+   "claims": [
+    "The standard treatment of these algorithms and their costs."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "The film's exact counts, which are measured here; the section text was not read for this film."
+  },
+  "clrs": {
+   "short": "Cormen, Leiserson, Rivest and Stein, Introduction to Algorithms, 4th ed. (2022), chapter 2",
+   "citation": "MIT Press, 2022; 2.1 Insertion sort, 2.3 Designing algorithms (merge sort).",
+   "url": "",
+   "read": "contents only",
+   "claims": [
+    "Insertion sort and merge sort as described."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "The film's counts; the book uses its own cost model."
+  }
+ }
+}

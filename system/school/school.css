@@ -31,4 +31,6 @@
 .lab-select{font:inherit;font-size:.92rem;min-height:44px;max-width:100%;padding:.3rem .5rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
 .lab-select option{background:#111;color:#ece5d6}
 #lab-guess{font:inherit;width:6rem;min-height:44px;padding:.3rem .5rem;margin:0 .6rem 0 .3rem;background:transparent;color:inherit;border:1px solid color-mix(in srgb,currentColor 50%,transparent)}
+/* A recorded film offered to a lesson: full width, 16:9, nothing loads before play. */
+.ns-video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#0d0611}
 @media (max-width:520px){.sc-status{margin-left:0;flex-basis:100%}.lab-select{flex:1 1 100%}}

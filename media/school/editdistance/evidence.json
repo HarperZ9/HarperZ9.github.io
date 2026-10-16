@@ -1,0 +1,67 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "editdistance",
+ "read": "2026-10-16",
+ "sources": {
+  "ours-edit": {
+   "short": "Night School's edit-distance measurements",
+   "citation": "media/school/editdistance/facts.json, written by tools/school/fill_editdistance.mjs from system/school/editdistance.mjs: the table, the naive and memoised recursions with call counters, a breadth-first check, and a greedy control.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/editdistance",
+   "read": "full",
+   "claims": [
+    "Every distance, call count and cell count in the film, and the greedy control."
+   ],
+   "n": "8 lesson pairs, 300 random pairs (check), 1,000 random pairs (control).",
+   "interval": "Not applicable.",
+   "does_not_prove": "Costs under other edit weights."
+  },
+  "wf1974": {
+   "short": "Wagner and Fischer, The string-to-string correction problem (1974)",
+   "citation": "Robert A. Wagner and Michael J. Fischer, J. ACM 21(1):168-173, 1974.",
+   "url": "https://doi.org/10.1145/321796.321811",
+   "read": "abstract",
+   "claims": [
+    "The dynamic-programming table for edit distance."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "The film's counts."
+  },
+  "dreyfus2002": {
+   "short": "Dreyfus, Richard Bellman on the birth of dynamic programming (2002)",
+   "citation": "Stuart Dreyfus, Operations Research 50(1):48-51, 2002, quoting Bellman, Eye of the Hurricane (1984).",
+   "url": "https://ideas.repec.org/a/inm/oropre/v50y2002i1p48-51.html",
+   "read": "excerpt",
+   "claims": [
+    "Bellman chose the name around 1950 at RAND, for multistage decision processes."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "The modern overlapping-subproblems wording, which is the later textbook framing."
+  },
+  "bellman1957": {
+   "short": "Bellman, Dynamic Programming (1957)",
+   "citation": "Richard Bellman, Dynamic Programming, Princeton University Press, 1957.",
+   "url": "",
+   "read": "bibliographic record",
+   "claims": [
+    "The name and the general idea of dynamic programming."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Any claim about edit distance."
+  },
+  "jm": {
+   "short": "Jurafsky and Martin, Speech and Language Processing, section 2.9 (draft)",
+   "citation": "Daniel Jurafsky and James H. Martin, Speech and Language Processing, 3rd edition draft, section 2.9, Minimum Edit Distance.",
+   "url": "https://web.stanford.edu/~jurafsky/slp3/",
+   "read": "section",
+   "claims": [
+    "intention and execution are 5 apart with unit costs; the table was named by Wagner and Fischer and found independently by many; dynamic programming also finds shortest paths, and the Viterbi algorithm for speech extends it."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "The film's call counts."
+  }
+ }
+}

@@ -49,6 +49,16 @@ def lesson_page(film: dict, ev: dict, facts: dict, timing: list) -> str:
   </div>
 </section>
 
+<section class="mv" id="circuit" aria-labelledby="circuit-h">
+  <h2 id="circuit-h">A circuit, switched off</h2>
+  <p class="body-text">A second, short film: a different small model, trained on a computer's main processor to continue random strings with one repeated stretch. One head in its first layer moves each character one place forward; a head in its second layer finds the earlier copy and reads what came next. Switch the heads off and the model loses the repeat. That is a causal test, which a picture of attention weights alone is not.</p>
+  <p class="body-text">About 73 seconds, with captions. The narration is a synthesized voice made from the author's own voice, and the author listened to this cut before it was published. Every number on screen comes from the model's data file in <a class="inline" href="https://github.com/HarperZ9/raw-native/tree/42363a1239a720a2e6d58e2bc560b751f196f5a0/docs/explainer/attention">raw-native</a>.</p>
+  <video class="ns-video" controls preload="none" playsinline poster="media/school/attention/offers/explainer-kit/still-52.jpg" aria-label="A 73-second narrated film: a small model's attention moves each character forward, then finds the earlier copy and reads what came next; switching heads off removes the effect.">
+    <source src="media/school/attention/offers/explainer-kit/attention-explainer.mp4" type="video/mp4">
+    <track kind="captions" srclang="en" label="English" src="media/school/attention/offers/explainer-kit/attention-explainer.vtt" default>
+  </video>
+</section>
+
 <section class="mv" id="words" aria-labelledby="words-h">
   <h2 id="words-h">Everything the film says</h2>
   <div class="sc-transcript">{transcript(film)}</div>
