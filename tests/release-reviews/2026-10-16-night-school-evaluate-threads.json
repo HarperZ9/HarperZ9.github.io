@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Lessons L16 Evaluating a language model and K21 Threads, workgroups and memory join the sitemap (each with its own link card), the route registry and the site index; the publication build receipt records the new sitemap. The home bundle is rebuilt from the registry as index-Bm2nPm2b.js, and index-B4VAhGeJ.js stays as retained history.",
+  "paths": {
+    "assets/index-Bm2nPm2b.js": "6ed2d712d0dbda1188a6fa306e9f17022cb9e7a945787b4e4be4c8fa1cce646f",
+    "index.html": "1de7b58477f84afe85af33cd8aa4bc27e77501ca638ddf6acff3fd3c3e052b2e",
+    "publications/build.json": "c9bf39f00ee2ebbceab69b692a53461dca9d8e31cf6377bddf54288c7cb98775",
+    "site-index.html": "565f8a31d6d9373a616a0ab9fbe15bfdb93836da4679f670af877291ed1dbb29",
+    "sitemap.xml": "6c40c824003d288654bf52f01a841459f1ba3f70b2621afeec2999c288e91d28",
+    "system/routes.js": "6ef81928725db3f0a5eab771df68e813c1311cc1935c3c2f9fed0892848db7b3"
+  }
+}

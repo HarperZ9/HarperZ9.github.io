@@ -13,7 +13,7 @@ def spec_evaluate(f: dict) -> dict:
         "id": "L16", "slug": "evaluate", "guide": "Rerun",
         "title": "Evaluating a language model",
         "h1": "Evaluating <span class=\"g\">a language model.</span>",
-        "desc": "One small model scored three ways, by loss, exact match and two judges, with error bars: where the scores agree, where they part, and how a leaked test fools them.",
+        "desc": "One small model scored by loss, exact match and two judges, with error bars: where the scores agree, where they part, and how a leaked test fools them.",
         "lede": ("There is no single number for how good a language model is. Rerun scores one small model three ways as it trains, "
                  "tests a cheap judge against a perfect one, and leaks the test into training on purpose."),
         "film": "It asks you one question and waits for your answer before it shows you.",
