@@ -29,7 +29,7 @@
     {"id": "S17", "track": "S", "title": "Distillation: a big teacher, a small student", "needs": ["L12"], "status": "draft", "href": "night-school-distill.html"},
     {"id": "S18", "track": "S", "title": "Quantisation: fewer bits per number", "needs": ["F1", "K21"], "status": "draft", "href": "night-school-quant.html"},
     {"id": "S19", "track": "S", "title": "LoRA and fine-tuning", "needs": ["L12", "F2"], "status": "draft", "href": "night-school-lora.html"},
-    {"id": "S20", "track": "S", "title": "Case study: our MMBU Challenge entry", "needs": ["S19", "L16", "E24"], "status": "planned"},
+    {"id": "S20", "track": "S", "title": "Case study: our MMBU Challenge entry", "needs": ["S19", "L16", "E24"], "status": "draft", "href": "night-school-mmbu.html"},
     {"id": "K21", "track": "K", "title": "Threads, workgroups and memory", "needs": ["F2"], "status": "draft", "href": "night-school-threads.html"},
     {"id": "K22", "track": "K", "title": "Matmul tiling", "needs": ["K21"], "status": "draft", "href": "night-school-tiling.html"},
     {"id": "K23", "track": "K", "title": "Fused attention", "needs": ["K22", "L10"], "status": "draft", "href": "night-school-fused.html"},

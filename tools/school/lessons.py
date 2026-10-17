@@ -17,6 +17,7 @@ from tools.school.lessons_pair11 import spec_quant, spec_tiling
 from tools.school.lessons_pair12 import spec_fused, spec_precision
 from tools.school.lessons_pair13 import spec_denoiser, spec_receipts
 from tools.school.lessons_pair14 import spec_search, spec_editdistance
+from tools.school.lessons_s20 import spec_mmbu
 from tools.school.lessons_lm import spec_tokens, spec_embeddings, spec_nextword, spec_decoding, spec_block, spec_trainloop, spec_data, spec_scaling
 
 
@@ -231,7 +232,7 @@ def spec_heldout(f: dict) -> dict:
     }
 
 
-SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding, "block": spec_block, "trainloop": spec_trainloop, "data": spec_data, "scaling": spec_scaling, "distill": spec_distill, "lora": spec_lora, "errorbars": spec_errorbars, "gaming": spec_gaming, "evaluate": spec_evaluate, "threads": spec_threads, "quant": spec_quant, "tiling": spec_tiling, "fused": spec_fused, "precision": spec_precision, "denoiser": spec_denoiser, "receipts": spec_receipts, "search": spec_search, "editdistance": spec_editdistance}
+SPECS = {"vectors": spec_vectors, "matrices": spec_matrices, "gradients": spec_gradients, "backprop": spec_backprop, "optimisers": spec_optimisers, "heldout": spec_heldout, "tokens": spec_tokens, "embeddings": spec_embeddings, "nextword": spec_nextword, "decoding": spec_decoding, "block": spec_block, "trainloop": spec_trainloop, "data": spec_data, "scaling": spec_scaling, "distill": spec_distill, "lora": spec_lora, "errorbars": spec_errorbars, "gaming": spec_gaming, "evaluate": spec_evaluate, "threads": spec_threads, "quant": spec_quant, "tiling": spec_tiling, "fused": spec_fused, "precision": spec_precision, "denoiser": spec_denoiser, "receipts": spec_receipts, "search": spec_search, "editdistance": spec_editdistance, "mmbu": spec_mmbu}
 
 
 def write_all(root) -> list[str]:
