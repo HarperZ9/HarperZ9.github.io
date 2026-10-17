@@ -187,7 +187,7 @@ def coast_page(cur: dict) -> str:
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><a class="inline" href="night-school.html">night school</a> / the coast</span></div>
   <div class="mid">
     <h1>The Lantern Coast. <span class="g">Every lesson is a light on the shore.</span></h1>
-    <p class="lede">Night School's {n} lessons, drawn where they happen: the hill where Pylon rolls a ball downhill, the dock and the lighthouse where language models are built, the boatyard, the cannery, the tide tables and Rerun's prism. A filled light is a lesson you can open now; a hollow one is planned. The faint paths join each lesson to the ones that help first. Nothing is locked.</p>
+    <p class="lede">Night School's {n} lessons, drawn where they happen: the hill where Pylon rolls a ball downhill, the dock and the lighthouse where language models are built, the boatyard, the cannery, the tide tables and Rerun's prism. A filled light is a lesson you can open now{"; a hollow one is planned" if k < n else ", and tonight every light is lit"}. The faint paths join each lesson to the ones that help first. Nothing is locked.</p>
   </div>
 </div>
 
