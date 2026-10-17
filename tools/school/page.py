@@ -103,7 +103,7 @@ def school_page(cur: dict, facts: dict) -> str:
 
 <section class="mv" id="lessons" aria-labelledby="lessons-h">
   <h2 id="lessons-h">The lessons</h2>
-  <p class="body-text">{n} lessons in six tracks, from vectors to fused attention kernels. "After" names the lessons that help first; nothing is locked. {live} live so far; the rest are planned and listed so you can see where this is going.</p>
+  <p class="body-text">{n} lessons in six tracks, from vectors to fused attention kernels. "After" names the lessons that help first; nothing is locked. {live} live so far; the rest are planned and listed so you can see where this is going. To see them all at once, as lights along the guides' shore, open <a class="inline" href="night-school-coast.html">the Lantern Coast</a>.</p>
   {lesson_list(cur)}
 </section>
 

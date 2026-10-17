@@ -49,6 +49,11 @@
   </div>
 </section>
 
+<section class="mv" id="corrections" aria-labelledby="corrections-h">
+  <h2 id="corrections-h">Since this lesson was made</h2>
+  <h3>16 October 2026: Flywheel closed the gap this lesson found</h3><p class="body-text">The film says Flywheel's verifier never recomputes the receipt's own identifier, and that it never reads the envelope's schema name or the signature's key name. That was true of the version this lesson checked (Flywheel at f04ef26). On 16 October 2026 Flywheel merged a fix, <a class="inline" href="https://github.com/HarperZ9/flywheel/pull/419">pull request 419</a> (commit 21d4669): its verifier now recomputes the identifier, checks the key name against the pinned key, and checks the schema name.</p><p class="body-text">We reran the one-byte sweep of the receipt against both versions. Of 5,744 flipped copies, 1,315 no longer parse. The old verifier says the receipt still matches on 81 of the rest; the fixed one, on none. The signed lie in the film still passes any check that trusts the liar's key, and only the true answers catch it; the fix does not change that. The film, its numbers and the lab are left as measured against f04ef26.</p>
+</section>
+
 <section class="mv" id="lab" aria-labelledby="lab-h">
   <h2 id="lab-h">The lab: the receipt</h2>
   <p class="body-text">The real bundle, checked from scratch in this page. Flip any byte of any file and check again, or try a cheater&#x27;s edits. In the film&#x27;s sweep, all 2,892 flips of the rows file were caught, and 5,663 of 5,744 in the receipt.</p>

@@ -54,5 +54,15 @@ def spec_receipts(f: dict) -> dict:
             "A receipt proves the bytes have not changed since they were signed and which key signed them; it does not prove the rows were true, or that the run was the only one.",
             "The sweep flips one byte at a time; edits by someone who holds the key are the signed lie the film shows.",
         ],
+        "corrections": [{"date": "16 October 2026: Flywheel closed the gap this lesson found", "body": [
+            "The film says Flywheel's verifier never recomputes the receipt's own identifier, and that it never reads the envelope's schema name or the signature's key name. "
+            "That was true of the version this lesson checked (Flywheel at f04ef26). On 16 October 2026 Flywheel merged a fix, "
+            "<a class=\"inline\" href=\"https://github.com/HarperZ9/flywheel/pull/419\">pull request 419</a> (commit 21d4669): "
+            "its verifier now recomputes the identifier, checks the key name against the pinned key, and checks the schema name.",
+            "We reran the one-byte sweep of the receipt against both versions. Of 5,744 flipped copies, 1,315 no longer parse. "
+            "The old verifier says the receipt still matches on 81 of the rest; the fixed one, on none. "
+            "The signed lie in the film still passes any check that trusts the liar's key, and only the true answers catch it; the fix does not change that. "
+            "The film, its numbers and the lab are left as measured against f04ef26.",
+        ]}],
         "next": "Before this: <a class=\"inline\" href=\"night-school-gaming.html\">When the check can be fooled</a> (E24) and <a class=\"inline\" href=\"night-school-evaluate.html\">Evaluating a language model</a> (L16). Earlier on this beach: <a class=\"inline\" href=\"night-school-denoiser.html\">The denoiser's tensor-core parity</a> (K25).",
     }

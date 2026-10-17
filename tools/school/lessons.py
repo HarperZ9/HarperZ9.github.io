@@ -73,6 +73,17 @@ def spec_matrices(f: dict) -> dict:
     }
 
 
+def _corrections(s: dict) -> str:
+    """Dated corrections, placed after the film they correct. The film and its numbers stay as made."""
+    out = "".join(f'<h3>{E(c["date"])}</h3>' + "".join(f'<p class="body-text">{p}</p>' for p in c["body"]) for c in s.get("corrections", []))
+    return f'''<section class="mv" id="corrections" aria-labelledby="corrections-h">
+  <h2 id="corrections-h">Since this lesson was made</h2>
+  {out}
+</section>
+
+''' if out else ""
+
+
 def lesson_page(s: dict, film: dict, ev: dict, timing: list) -> str:
     sec = round(timing[-1]["end"] + film["host"]["close"]["seconds"])
     slug, rel = s["slug"], f"night-school-{s['slug']}.html"
@@ -96,7 +107,7 @@ def lesson_page(s: dict, film: dict, ev: dict, timing: list) -> str:
   </div>
 </section>
 
-<section class="mv" id="lab" aria-labelledby="lab-h">
+{_corrections(s)}<section class="mv" id="lab" aria-labelledby="lab-h">
   <h2 id="lab-h">{E(s["lab_h"])}</h2>
   <p class="body-text">{E(s["lab"])}</p>
   <div class="ls" data-school="lab" data-lab="{slug}">

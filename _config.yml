@@ -25,7 +25,10 @@ exclude:
 # Served verbatim: index.html, the organ pages, *-sample.html, resume.md,
 # cv.md, AUTHORS.md, CONTRIBUTING.md, system/ (css+js), img/.
 
-# Served although it matches an exclusion above: lesson E25 checks this byte-for-byte copy of
-# Flywheel's receipt fixture in the browser, and the job's hash covers this file.
+# Served although it matches an exclusion above: lesson E25 checks a byte-for-byte copy of
+# Flywheel's receipt fixture in the browser (media/school/receipts/job/code/main.py), and the
+# job's hash covers that file. Jekyll 3.10 tests "include" against each file's own name, not its
+# path, so the entry is the name; tests/test_school_published_files.py fails if any other
+# tracked file of that name appears.
 include:
-  - media/school/receipts/job/code/main.py
+  - main.py
