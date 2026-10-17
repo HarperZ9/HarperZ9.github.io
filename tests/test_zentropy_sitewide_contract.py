@@ -166,6 +166,7 @@ REVIEWED_ASSET_REVISIONS = {
     # Night School: the school pages, the attention film player and its lab (2026-10-15).
     "system/school/school.css": "20261016-school-2",
     "system/school/launch.mjs": "20261016-school-2",
+    "system/school/coast.css": "20261016-coast-1",
     "system/career.css": VOID_PLATES_REVISION,
     "system/hire.css": VOID_PLATES_REVISION,
     "system/bulletin-board.js": "20260909-media-filters",

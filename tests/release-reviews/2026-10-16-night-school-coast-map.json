@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Night School: the Lantern Coast map joins the site (sitemap, route registry, site index, its own link card), the school page links it, and E25 gains a dated correction for Flywheel #419. The home bundle is rebuilt from the registry as index-T9NjSt7K.js, and index-C7QqdyWX.js stays as retained history.",
+  "paths": {
+    "assets/index-T9NjSt7K.js": "7d6afef3324f22905850df4da9d0d593dd5dda7440427455ade564feafffd439",
+    "index.html": "8507b0cd08e5a988194bcf9da2ce2e341b9027873ae0fcfeaa3c9df7e86df7e3",
+    "publications/build.json": "2fc6d542169a1e17f7c67591111a48427243a54890c50543276d9cb023e51769",
+    "site-index.html": "1d853628c69a8a43df1b42a37f4770e4942bcf74a0d33e035df8dd0ef3e75471",
+    "sitemap.xml": "d1c4bcc54fab9d3ca707aa0561e70ce97e878367b64d3d7c27e17cb610cd4741",
+    "system/routes.js": "aede0a96b2d412fb5d2f8051b4f9f33b3dc0294e92bae90926c6cb8261c95b38"
+  }
+}

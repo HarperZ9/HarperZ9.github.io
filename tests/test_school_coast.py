@@ -20,7 +20,9 @@ PAGE = (ROOT / "night-school-coast.html").read_text(encoding="utf-8")
 
 
 def test_the_published_page_is_the_generated_one() -> None:
-    assert PAGE == coast_page(CUR)
+    # The head's card lines are stamped afterwards by tools/repo_art/site_cards.py; the rest is the generator's.
+    body = lambda page: page[page.index('<div class="frame">'):]  # noqa: E731
+    assert body(PAGE) == body(coast_page(CUR))
 
 
 def test_every_made_lesson_is_linked_on_the_map_and_in_the_list() -> None:
