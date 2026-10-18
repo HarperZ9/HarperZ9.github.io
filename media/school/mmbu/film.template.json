@@ -143,8 +143,8 @@
     "mmbu-ledger"
    ],
    "lines": [
-    "Every bar was fingerprinted into a ledger, and all {{records.ledger.filesMatched|int}} rule files still match it, {{records.ledger.fullMatch|int}} by full fingerprint and {{records.ledger.prefixMatch|int}} by the short prefix it kept. But the ledger was meant to be pushed to GitHub, which stamps the time, before each result. Only entries up to {{ledger.lastPushedEntry|int}} were, the last on 4 October, in a private repository.",
-    "Entries {{ledger.firstUnpushed|int}} to {{ledger.lastEntry|int}}, every run tonight, sit in our own file. So the claim that each bar came before its score rests on our word. A fingerprint proves the bytes, not the hour."
+    "Every bar was fingerprinted into a ledger, and all {{records.ledger.filesMatched|int}} rule files still match it, {{records.ledger.fullMatch|int}} by full fingerprint and {{records.ledger.prefixMatch|int}} by the short prefix it kept. But the ledger was meant to be pushed to GitHub, which stamps the time, before each result. Only entries up to {{ledger.lastPushedEntry|int}} were, the last on 4 October.",
+    "Entries {{ledger.firstUnpushed|int}} to {{ledger.lastEntry|int}}, every run tonight, were first pushed on 18 October, after the results; the ledger is now public. So the claim that each bar came before its score rests on our word. A fingerprint proves the bytes, not the hour."
    ]
   },
   {

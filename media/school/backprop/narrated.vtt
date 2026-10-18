@@ -1,0 +1,140 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:06.389
+Backpropagation.
+
+00:00:06.709 --> 00:00:08.520
+Blame, passed backwards.
+
+00:00:09.120 --> 00:00:12.130
+Last time I could feel the slope for two numbers.
+
+00:00:12.450 --> 00:00:14.366
+A model has thousands.
+
+00:00:14.686 --> 00:00:17.149
+Tonight, how it gets all their slopes in one go.
+
+00:00:18.349 --> 00:00:20.328
+Here is a small network.
+
+00:00:20.648 --> 00:00:25.617
+It looks at a point on a map and says which of two spirals the point belongs to.
+
+00:00:26.217 --> 00:00:28.385
+It has 114 numbers.
+
+00:00:28.705 --> 00:00:35.673
+Two go in at the top, pass through two layers of 8 buckets each, and come out as two guesses at the bottom.
+
+00:00:36.273 --> 00:00:43.137
+Every bucket in the middle takes what the buckets above hand it, weighs it, adds it up, and squashes the total through a smooth curve.
+
+00:00:43.457 --> 00:00:47.351
+The last two turn their totals into two guesses that add up to one.
+
+00:00:47.671 --> 00:00:49.250
+That's the forward pass.
+
+00:00:50.450 --> 00:00:53.713
+At the bottom we measure how wrong it was: the loss.
+
+00:00:54.033 --> 00:00:56.812
+Now we want each of the 114 slopes.
+
+00:00:57.412 --> 00:01:02.255
+The slow way: nudge one number, run the whole chain again, see how the loss moved.
+
+00:01:02.575 --> 00:01:04.532
+That's one extra run for every number.
+
+00:01:04.852 --> 00:01:11.716
+For the model from the attention lesson, that's 20,864 runs, for every single step of training.
+
+00:01:12.916 --> 00:01:15.884
+The fast way runs the chain once, then walks it backwards.
+
+00:01:16.484 --> 00:01:19.284
+How many backward walks does it take to get all the slopes?
+
+00:01:21.784 --> 00:01:26.794
+Each bucket at the bottom knows how much the loss changes when its own output changes.
+
+00:01:27.114 --> 00:01:34.483
+It hands that blame up to each bucket that fed it, multiplied by how much its own output moved when that input moved.
+
+00:01:34.803 --> 00:01:41.350
+A bucket that fed several adds up the blame from all of them, then does the same, all the way to the top.
+
+00:01:41.950 --> 00:01:45.424
+That's the chain rule from school, done in reverse order.
+
+00:01:45.744 --> 00:01:55.849
+Seppo Linnainmaa worked out this reverse order in 1970, and in 1986 Rumelhart, Hinton and Williams showed what it could do for training networks.
+
+00:01:57.049 --> 00:01:57.891
+One.
+
+00:01:58.211 --> 00:02:01.390
+A single walk back hands every number its slope.
+
+00:02:01.990 --> 00:02:12.495
+Counting multiply-adds for one point, and leaving the curves aside: the forward pass takes 98, the backward pass 208, about 2.12 times as many.
+
+00:02:12.815 --> 00:02:15.068
+Not 114 extra runs.
+
+00:02:15.388 --> 00:02:16.967
+About two runs' worth.
+
+00:02:18.167 --> 00:02:22.525
+A walk back like this is easy to get slightly wrong, so we check it the slow way.
+
+00:02:22.845 --> 00:02:25.687
+Nudge every number, compare.
+
+00:02:26.287 --> 00:02:34.834
+After training, they agree layer by layer to about one part in a billion, and the worst single number is off by about three parts in a hundred million.
+
+00:02:35.434 --> 00:02:40.339
+Now I break one link on purpose: in the second layer, the curve's slope is written wrong.
+
+00:02:40.659 --> 00:02:46.954
+The check fails in that layer and every layer above it, and still passes in the last layer, below the break.
+
+00:02:47.274 --> 00:02:49.464
+The check doesn't just say something is wrong.
+
+00:02:49.784 --> 00:02:51.215
+It points to where.
+
+00:02:52.415 --> 00:02:58.100
+Now put it together with last time: walk forward, walk back, step every number a little downhill, repeat.
+
+00:02:58.700 --> 00:03:03.921
+On points it never trained on, the network starts out right 36 percent of the time.
+
+00:03:04.241 --> 00:03:11.672
+It is past 95 percent by step 2,000, and after 4,000 steps it gets 99.8 percent right.
+
+00:03:12.872 --> 00:03:22.030
+The model from the attention lesson walks forward and back the same way, with a backward pass written out by hand for every part: the attention, the layer norms, the bends.
+
+00:03:22.350 --> 00:03:25.655
+It steps downhill a little more cleverly, and that's next time.
+
+00:03:26.255 --> 00:03:29.708
+We checked it the slow way too, on 36 of its numbers.
+
+00:03:30.028 --> 00:03:33.649
+In full precision the worst disagreement is a few parts in ten million.
+
+00:03:34.849 --> 00:03:39.881
+Run forward once, pass the blame back once, and every number knows its slope.
+
+00:03:40.481 --> 00:03:44.144
+Next along the hill: better ways to step than straight downhill.
+
+00:03:44.464 --> 00:03:45.053
+Goodnight.
+

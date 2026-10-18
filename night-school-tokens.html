@@ -41,7 +41,11 @@
 <main id="main">
 <section class="mv" id="film" aria-labelledby="film-h">
   <h2 id="film-h">The film</h2>
-  <p class="body-text">About 4:48, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
+  <p class="body-text">About 4:48, hosted by Pylon. It asks you one question and waits for your answer before it shows you. The narrated cut runs 3:51, voiced by Pylon in a synthesized voice made from the author's own voice; the author approved these cuts for publishing. Captions are on by default. The live version under it draws the same film in your browser, waits for your answer at each question, and runs a little longer; the full words are also below.</p>
+  <video class="ns-video" controls preload="none" playsinline poster="media/school/tokens/narrated-poster.jpg" aria-label="The narrated film, with captions.">
+    <source src="media/school/tokens/narrated.mp4" type="video/mp4">
+    <track kind="captions" srclang="en" label="English" src="media/school/tokens/narrated.vtt" default>
+  </video>
   <div class="ls" data-school="film" data-scene="media/school/tokens/film.scene.mjs">
     <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
     <p class="ns-note" data-school-note>Nothing loads until you press play.</p>

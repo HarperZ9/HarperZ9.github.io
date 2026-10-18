@@ -1,6 +1,5 @@
 import { useEffect, type ReactNode } from "react";
 import LiveBoard from "./LiveBoard";
-import Guides from "./Guides";
 import { EXTERNAL_ACTIONS, NEWEST_WRITING, PRIMARY_ROUTES, SECONDARY_GROUPS, routeFamily } from "./site-routes";
 import { CAPABILITY_DOMAINS, EVIDENCE_STREAM, SYSTEMS, systemById, type SystemRecord } from "./system-registry";
 import evidenceProjectionSource from "../site/evidence-stream.json?raw";
@@ -225,7 +224,6 @@ function App() {
       <TopNav />
       <main id="main">
         <IdentityHero />
-        <Guides />
         <MissionFrame />
         <RecentWork />
         <FeaturedFlywheel />
@@ -288,9 +286,7 @@ function IdentityHero() {
           <a href="/catalog.html">Public tool catalog</a>
           <a href="/publications.html">Writing</a>
           <a href="/checking-the-machines.html">Open letter: checking the machines</a>
-          <a href="/explainers.html">Explainer films</a>
-          <a href="/guides.html">The guides who host the films</a>
-          <a href="/repo-explainers.html">Repository explainers and walkthroughs</a>
+          <a href="/night-school.html">Night School: how AI works, in short films and labs</a>
         </nav>
       </div>
       <figure className="identity-art art art-hero reveal in">

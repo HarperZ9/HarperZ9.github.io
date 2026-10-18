@@ -28,9 +28,9 @@ def spec_mmbu(f: dict) -> dict:
         "limits": [
             "Every score here comes from our own local scorers. The contest's judge was never called, and dev scores will not match the final leaderboard. Nothing has been submitted.",
             "This is benchmark work. The images are benchmark data, and nothing here is a medical tool or a clinical claim.",
-            (f"The ledger's fingerprints still match the rule files, but only entries up to {L['lastPushedEntry']} were pushed to GitHub, the last on {L['lastPushDate']}; "
-             f"entries {L['firstUnpushed']} to {L['lastEntry']}, which cover every run in the film, are in our own file and the repository is {L['visibility']}. "
-             "So the claim that each bar came before its result has no outside timestamp for those runs."),
+            (f"The ledger's fingerprints still match the rule files, but only entries up to {L['lastPushedEntry']} were pushed to GitHub before the results, the last on {L['lastPushDate']}; "
+             f"entries {L['firstUnpushed']} to {L['lastEntry']}, which cover every run in the film, were first pushed on {L['latePushDate']}, after the results, and the ledger is now {L['visibility']}. "
+             "So the claim that each bar came before its result has no outside timestamp before that date for those runs."),
             (f"The held-out vocabulary re-score (FT7 minus FT6: {v['original']['mean']} under the sources' words, +{v['harmonised']['mean']} under the paper's) was made after the fall was seen, "
              "so for these runs it is a measurement, not a test. The eighth run's reading was preregistered, but that run was paused before it was scored."),
             f"MMBU work is paused: the eighth run stopped at step {S['ft8Step']} of {S['ft8Steps']:,} when the author paused it on 16 October 2026. The contest runs to {R['challenge']['deadline']}.",

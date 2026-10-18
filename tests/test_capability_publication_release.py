@@ -253,7 +253,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # same sheet. index-C7QqdyWX.js stays as retained history.
     # 2026-10-17-night-school-mmbu: the route registry gains lessons, so the bundle rebuilt from it is index-mxSUkjU6.js with the
     # same sheet. index-T9NjSt7K.js stays as retained history.
-    current_js = "index-mxSUkjU6.js"
+    # 2026-10-18-night-school-narrated-home: the guides section and its films leave the home page (the author, 18 October 2026),
+    # so the bundle is index-DnlLsL1T.js with the same sheet. index-mxSUkjU6.js stays as retained history.
+    current_js = "index-DnlLsL1T.js"
+    previous_night_school_narrated_home_js = "index-mxSUkjU6.js"
+    assert previous_night_school_narrated_home_js not in source
+    assert (ROOT / "assets" / previous_night_school_narrated_home_js).is_file()
+    assert f"assets/{previous_night_school_narrated_home_js}" in RELEASE_PATHS
     previous_2026_10_17_night_school_mmbu_js = "index-T9NjSt7K.js"
     assert previous_2026_10_17_night_school_mmbu_js not in source
     assert (ROOT / "assets" / previous_2026_10_17_night_school_mmbu_js).is_file()

@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-18",
+  "note": "Narrated Night School films join their lesson pages; the guides' section and its films leave the home page (author, 18 October 2026: 'reorganize the explainer videos so they do not takeover my website'). The home bundle is rebuilt as index-DnlLsL1T.js, and index-mxSUkjU6.js stays as retained history.",
+  "paths": {
+    "assets/index-DnlLsL1T.js": "a61ebf8cd420b5ae82c40a07342d3ed861605cc227870a7dcf41084a6fa5957c",
+    "index.html": "677bc6db5383c9da34e74aa15eebd4d69cad8619831f61ee1ddc023a9345f02d"
+  }
+}

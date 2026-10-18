@@ -1,0 +1,215 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:05.695
+Vectors.
+
+00:00:06.015 --> 00:00:08.246
+A list of numbers is a place.
+
+00:00:08.846 --> 00:00:10.762
+I run the dock at Night School.
+
+00:00:11.082 --> 00:00:14.156
+Every crate that comes in gets an address on my chart.
+
+00:00:15.356 --> 00:00:16.219
+Here is a crate.
+
+00:00:16.539 --> 00:00:20.707
+It sits four squares east of the corner and one and a half squares north.
+
+00:00:21.307 --> 00:00:25.328
+Write that down as a list: four, then one and a half.
+
+00:00:25.648 --> 00:00:27.480
+That list is a vector.
+
+00:00:28.080 --> 00:00:32.143
+You can read it as a place, or as an arrow from the corner to the crate.
+
+00:00:32.463 --> 00:00:34.694
+Same list, same thing.
+
+00:00:35.894 --> 00:00:37.284
+Arrows add.
+
+00:00:37.604 --> 00:00:40.993
+Walk the first one, then walk the second from where you stopped.
+
+00:00:41.313 --> 00:00:46.450
+Where you end up is the sum, and its numbers are the two lists added place by place.
+
+00:00:47.050 --> 00:00:48.650
+Arrows stretch.
+
+00:00:48.970 --> 00:00:52.044
+Times two keeps the direction and doubles the length.
+
+00:00:52.364 --> 00:00:55.690
+Times minus one turns it round to face the other way.
+
+00:00:56.890 --> 00:00:58.974
+Now two crates, and a game.
+
+00:00:59.294 --> 00:01:03.863
+Multiply their lists number by number, and add it all up.
+
+00:01:04.463 --> 00:01:07.537
+I'll swing the second crate round the corner while the sum keeps count.
+
+00:01:08.136 --> 00:01:11.800
+As the second crate swings round, where will the sum hit zero?
+
+00:01:14.300 --> 00:01:15.542
+Right there.
+
+00:01:15.862 --> 00:01:18.135
+At a right angle, the sum is zero.
+
+00:01:18.455 --> 00:01:20.455
+That sum is called the dot product.
+
+00:01:20.775 --> 00:01:27.638
+It is big when two arrows point the same way, zero when they meet at a right angle, and below zero when they point apart.
+
+00:01:28.838 --> 00:01:30.481
+The dot product has a catch.
+
+00:01:30.801 --> 00:01:35.495
+Watch what happens if I push the second crate twice as far out, in the same direction.
+
+00:01:36.095 --> 00:01:37.927
+What happens to the dot product?
+
+00:01:40.427 --> 00:01:41.564
+It doubles.
+
+00:01:41.884 --> 00:01:44.810
+Nothing about the direction changed, but the score did.
+
+00:01:45.410 --> 00:01:47.473
+So divide by the two lengths.
+
+00:01:47.793 --> 00:01:50.130
+What is left depends only on the angle.
+
+00:01:50.450 --> 00:01:58.197
+It is the cosine of the angle between the arrows: one when they point the same way, zero at a right angle, minus one when they point opposite.
+
+00:01:58.517 --> 00:02:01.191
+It always stays between minus one and one.
+
+00:02:02.391 --> 00:02:04.959
+My chart has two directions, east and north.
+
+00:02:05.279 --> 00:02:07.553
+A list can be as long as you like.
+
+00:02:08.153 --> 00:02:13.774
+In the little language model from the attention lesson, every word starts as a list of 32 numbers.
+
+00:02:14.094 --> 00:02:18.389
+That makes each word a place in a space with 32 directions.
+
+00:02:18.989 --> 00:02:21.494
+Nobody can picture 32 directions.
+
+00:02:21.814 --> 00:02:24.067
+The arithmetic doesn't care.
+
+00:02:24.387 --> 00:02:30.787
+The dot product is still multiply and add, now 32 times over, and the cosine is still a cosine.
+
+00:02:31.987 --> 00:02:33.987
+Nobody set those numbers by hand.
+
+00:02:34.307 --> 00:02:39.401
+Training moved them, a little at a time, until the model got better at guessing the next word.
+
+00:02:40.001 --> 00:02:42.338
+So look at who ended up close to whom.
+
+00:02:42.658 --> 00:02:46.490
+The nearest neighbours of kettle are map, shell and crate.
+
+00:02:46.810 --> 00:02:50.010
+Tallow's are rerun, pylon and map.
+
+00:02:50.610 --> 00:03:01.515
+Across all 46 words, 80 percent have a nearest neighbour of the same kind as themselves: names next to names, things next to things, doing words next to doing words.
+
+00:03:01.835 --> 00:03:06.151
+Shuffle which word owns which list, and it drops to about 23 percent.
+
+00:03:06.471 --> 00:03:08.702
+Before training it was 9 percent.
+
+00:03:09.302 --> 00:03:13.829
+Trained on hundreds of millions of words, the same idea goes much further.
+
+00:03:14.149 --> 00:03:24.085
+In 2013, researchers reported word lists where king, minus man, plus woman, landed closest to queen, once the three words in the question were left out of the search.
+
+00:03:25.285 --> 00:03:26.780
+And then there's my cone.
+
+00:03:27.380 --> 00:03:28.622
+A cone is cargo.
+
+00:03:28.942 --> 00:03:30.416
+It should sit with the crates.
+
+00:03:30.736 --> 00:03:33.115
+Its nearest neighbours are who, stood and mended.
+
+00:03:33.715 --> 00:03:39.041
+In our sentences a cone only ever turns up in one phrase: put a cone on.
+
+00:03:39.361 --> 00:03:44.161
+Nothing there marks it as cargo, so the model had no reason to park it with the crates.
+
+00:03:44.481 --> 00:03:46.944
+Where it did park it is something we measured.
+
+00:03:47.264 --> 00:03:49.475
+Why there, we can only guess.
+
+00:03:50.075 --> 00:03:55.675
+Closeness in these lists comes from how words are used in the training sentences, not from what they mean.
+
+00:03:55.995 --> 00:04:00.858
+Here, with 46 words, you can read every sentence the model learned from.
+
+00:04:02.058 --> 00:04:04.942
+One warning about pictures, this lesson's included.
+
+00:04:05.542 --> 00:04:12.173
+To lay the words out on my flat chart, I squash 32 directions down to the two that keep the most spread.
+
+00:04:12.493 --> 00:04:15.336
+Those two keep 31 percent of it.
+
+00:04:15.936 --> 00:04:20.567
+On the flat chart, only 52 percent of the words sit nearest to a word of the same kind.
+
+00:04:20.887 --> 00:04:23.519
+In all 32 directions it was 80.
+
+00:04:23.839 --> 00:04:26.197
+Flattening throws a lot of closeness away.
+
+00:04:27.397 --> 00:04:29.144
+A list of numbers is a place.
+
+00:04:29.464 --> 00:04:36.622
+The dot product mixes how much two places point the same way with how far out they are, and the cosine keeps only the direction.
+
+00:04:37.222 --> 00:04:39.580
+Next along the coast is my crane.
+
+00:04:39.900 --> 00:04:44.342
+It moves every place on the chart at once, and that is a matrix.
+
+00:04:44.662 --> 00:04:45.378
+Goodnight.
+

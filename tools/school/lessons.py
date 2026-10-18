@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-from tools.school.page import SCHOOL, E, head, foot, sources, transcript
+from tools.school.page import SCHOOL, E, head, foot, sources, transcript, narrated
 from tools.school.lessons_small import spec_distill, spec_lora
 from tools.school.lessons_eval import spec_errorbars, spec_gaming
 from tools.school.lessons_pair10 import spec_evaluate, spec_threads
@@ -100,8 +100,8 @@ def lesson_page(s: dict, film: dict, ev: dict, timing: list) -> str:
 <main id="main">
 <section class="mv" id="film" aria-labelledby="film-h">
   <h2 id="film-h">The film</h2>
-  <p class="body-text">About {sec // 60}:{sec % 60:02d}, hosted by {s["guide"]}. {E(s["film"])} The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
-  <div class="ls" data-school="film" data-scene="media/school/{slug}/film.scene.mjs">
+  <p class="body-text">About {sec // 60}:{sec % 60:02d}, hosted by {s["guide"]}. {E(s["film"])} {narrated(slug, s["guide"])[0]}</p>
+  {narrated(slug, s["guide"])[1]}<div class="ls" data-school="film" data-scene="media/school/{slug}/film.scene.mjs">
     <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
     <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
     <div data-school-stage></div>
