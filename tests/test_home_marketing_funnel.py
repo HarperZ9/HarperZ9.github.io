@@ -61,11 +61,10 @@ def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     assert "someone else can rerun on their own computer" in hero
     assert 'href="/start-here.html"' in hero
     assert '<a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>' in hero
-    # 12 October 2026: the three guides who host the films lead the page after the name, by the
-    # author's direction that the guides be central to the site; mission and Flywheel still precede evidence.
+    # 18 October 2026: the guides' section with its films left the home page, by the author's
+    # direction that the explainer videos not take over the site (12 October had put it here).
     assert main_component_order(source) == [
         "IdentityHero",
-        "Guides",
         "MissionFrame",
         "RecentWork",
         "FeaturedFlywheel",

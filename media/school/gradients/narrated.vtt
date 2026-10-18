@@ -1,0 +1,185 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:05.421
+Gradients.
+
+00:00:05.741 --> 00:00:07.446
+Which way is downhill.
+
+00:00:08.046 --> 00:00:09.899
+Tonight the hill is in fog.
+
+00:00:10.219 --> 00:00:11.440
+I can't see the bottom.
+
+00:00:11.760 --> 00:00:14.665
+All I can do is feel the ground under my flippers.
+
+00:00:15.865 --> 00:00:19.865
+Put one flipper a little to the east and feel how much higher the ground is there.
+
+00:00:20.185 --> 00:00:21.995
+That's the slope going east.
+
+00:00:22.596 --> 00:00:24.406
+Do the same going north.
+
+00:00:24.726 --> 00:00:28.347
+Two slopes, written as a list: that list is the gradient.
+
+00:00:28.947 --> 00:00:31.052
+The gradient points the steepest way up.
+
+00:00:31.372 --> 00:00:33.541
+So to go down, step the opposite way.
+
+00:00:33.861 --> 00:00:35.798
+Feel, step, feel again.
+
+00:00:36.118 --> 00:00:37.360
+That's gradient descent.
+
+00:00:37.680 --> 00:00:40.837
+Augustin Cauchy wrote it down in 1847.
+
+00:00:42.038 --> 00:00:47.890
+Here is a bowl, steep one way and gentle the other: the steep way curves 8 times as sharply as the gentle way.
+
+00:00:48.490 --> 00:00:51.711
+Bigger steps should get me down faster, so let's double mine.
+
+00:00:52.311 --> 00:00:55.153
+If I double my step, do I get down twice as fast?
+
+00:00:57.653 --> 00:00:58.706
+Over the edge.
+
+00:00:59.026 --> 00:01:06.521
+On this bowl, any step longer than two divided by the steep way's curvature, 4, overshoots further each time.
+
+00:01:06.841 --> 00:01:11.156
+That edge is 0.5, and running the bowl puts it exactly there.
+
+00:01:11.756 --> 00:01:14.072
+Half that step gets down smoothly.
+
+00:01:14.392 --> 00:01:16.897
+Just under the edge, I zigzag and crawl.
+
+00:01:17.217 --> 00:01:20.017
+Just over it, I zigzag outwards.
+
+00:01:20.337 --> 00:01:24.906
+At twice it, the loss passes a trillion in just 12 steps.
+
+00:01:26.106 --> 00:01:29.748
+Now a valley that is steep across and almost flat along.
+
+00:01:30.068 --> 00:01:35.415
+At the bottom, the steep way curves about 2,508 times as sharply as the flat way.
+
+00:01:36.015 --> 00:01:40.499
+The steep way sets the largest safe step, so along the flat way I creep.
+
+00:01:40.819 --> 00:01:48.904
+It takes 3,925 steps to get the loss under a hundredth, and 15,068 to get it under a millionth.
+
+00:01:50.104 --> 00:01:53.619
+One more hill, with two valleys and a ridge between them.
+
+00:01:53.939 --> 00:01:57.203
+I start just left of the ridge, then just right of it.
+
+00:01:57.803 --> 00:02:00.287
+Do the two starts end in the same valley?
+
+00:02:02.787 --> 00:02:04.197
+Different valleys.
+
+00:02:04.517 --> 00:02:07.001
+The right one is not even the lower one.
+
+00:02:07.321 --> 00:02:12.606
+Gradient descent finds a bottom near where it starts, not the lowest bottom there is.
+
+00:02:13.806 --> 00:02:19.006
+The language model from the attention lesson has 20,864 numbers.
+
+00:02:19.326 --> 00:02:26.463
+Its loss is a hill with 20,864 directions, and its gradient is a list of 20,864 slopes.
+
+00:02:27.063 --> 00:02:30.705
+Before training, the length of that list was 1.87.
+
+00:02:31.025 --> 00:02:36.161
+After training it is 0.12: the ground under the trained model is much flatter.
+
+00:02:36.761 --> 00:02:45.056
+To see any of it, we cut a slice through the trained point along two random directions, the way Li and colleagues did in 2018.
+
+00:02:45.376 --> 00:02:50.976
+The loss is 0.70 in the middle and climbs to 13.99 at one corner.
+
+00:02:51.576 --> 00:02:52.545
+One warning.
+
+00:02:52.865 --> 00:03:02.022
+In a hill with 20,864 directions, two random ones are almost at right angles to the steepest one.
+
+00:03:02.342 --> 00:03:06.448
+This slice shows that the model sits in a dip along these two directions.
+
+00:03:06.768 --> 00:03:08.410
+It cannot show the whole hill.
+
+00:03:09.610 --> 00:03:11.883
+So let's follow one direction we choose.
+
+00:03:12.203 --> 00:03:17.572
+Freeze every number, and add one dial that turns the model's last matrix up or down.
+
+00:03:17.892 --> 00:03:20.144
+At one, it's the model as trained.
+
+00:03:20.744 --> 00:03:29.650
+On sentences it never trained on, the bottom of this one-way slice is at 0.92, not at one, though the loss there is only a hair lower.
+
+00:03:29.970 --> 00:03:35.485
+Turning the dial down makes the model a little less sure of itself, and new text likes that.
+
+00:03:36.085 --> 00:03:41.664
+Start the dial near zero, feel the slope with the model's own arithmetic, and step.
+
+00:03:41.984 --> 00:03:46.258
+With small steps, forty of them walk the dial up to 0.84.
+
+00:03:46.578 --> 00:03:52.431
+A step too big for the steep ground near zero overshoots to well past one, and has to walk back.
+
+00:03:53.631 --> 00:03:56.557
+This model's training never feels the whole hill at once.
+
+00:03:56.877 --> 00:04:02.330
+Each step feels the slope on 16 short stretches of text, so every step is a little off.
+
+00:04:02.930 --> 00:04:11.793
+And I haven't said how a model with 20,864 numbers works out 20,864 slopes at once without feeling each one separately.
+
+00:04:12.113 --> 00:04:13.734
+That's the bucket chain, next.
+
+00:04:14.934 --> 00:04:17.081
+The gradient is the list of slopes.
+
+00:04:17.401 --> 00:04:20.748
+Step the other way, not too far, and you go down.
+
+00:04:21.068 --> 00:04:22.984
+Where you end up depends on where you start.
+
+00:04:23.584 --> 00:04:27.016
+Next along the hill: blame, passed backwards.
+
+00:04:27.336 --> 00:04:28.178
+Goodnight.
+

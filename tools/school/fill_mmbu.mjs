@@ -112,14 +112,19 @@ function readRecords() {
 }
 
 function readLedger() {
+  // The gap: the last entry pushed before the runs' results, and when the later entries were first pushed.
+  // The commit that first holds the latest entry is the late push; its parent is what GitHub held before.
   const g = (...a) => execFileSync("git", ["-C", LEDGER, ...a], { encoding: "utf8" });
-  const count = (s) => (s.match(/^## .*entry \d+/gim) || []).length;
-  const local = readFileSync(join(LEDGER, "ATTESTATIONS.md"), "utf8"), remote = g("show", "origin/main:ATTESTATIONS.md");
   const last = (s) => Math.max(...[...s.matchAll(/^## .*entry (\d+)/gim)].map((m) => +m[1]));
+  const local = readFileSync(join(LEDGER, "ATTESTATIONS.md"), "utf8"), lastEntry = last(local);
+  const commits = g("log", "--format=%H %cI", "origin/main", "--", "ATTESTATIONS.md").trim().split(String.fromCharCode(10)).map((l) => l.trim().split(" "));
+  let late = null;
+  for (const [h, d] of commits) { if (last(g("show", `${h}:ATTESTATIONS.md`)) === lastEntry) late = [h, d]; else break; }
+  const before = g("show", `${late[0]}^:ATTESTATIONS.md`), beforeDate = g("log", "-1", "--format=%cI", `${late[0]}^`).trim();
   let visibility = "unknown";
   try { visibility = execFileSync("gh", ["api", "repos/HarperZ9/prereg-ledger", "--jq", ".visibility"], { encoding: "utf8" }).trim(); } catch (e) { console.error("gh visibility read failed:", e.message); }
-  return { lastEntry: last(local), lastPushedEntry: last(remote), firstUnpushed: last(remote) + 1, headings: count(local), pushedHeadings: count(remote),
-    lastPushDate: g("log", "-1", "--format=%cI", "origin/main").trim().slice(0, 10), uncommitted: g("status", "--porcelain", "ATTESTATIONS.md").trim().startsWith("M"), visibility };
+  return { lastEntry, lastPushedEntry: last(before), firstUnpushed: last(before) + 1, lastPushDate: new Date(beforeDate).toISOString().slice(0, 10),
+    latePushDate: new Date(late[1]).toISOString().slice(0, 10), latePushCommit: late[0].slice(0, 7), visibility };
 }
 
 // Part 3: every interval the lab can re-derive, against the published digits.

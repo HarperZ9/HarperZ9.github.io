@@ -118,6 +118,20 @@ def school_page(cur: dict, facts: dict) -> str:
                 "Night School, by Zain Dana Harper. Fine threads of light arc from one word back to an earlier word along a sentence.") + body + foot("Night School.")
 
 
+def narrated(slug: str, guide: str) -> tuple[str, str]:
+    """The narrated cut of a lesson's film, when its web copy exists: (the sentence about the voice, the video)."""
+    d = SCHOOL / slug
+    if not (d / "narrated.mp4").exists():
+        return ("The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.", "")
+    note = (f"Narrated by {guide}, in a synthesized voice made from the author's own voice; the author approved these cuts for publishing. "
+            "Captions are on by default, and the full words are also below. The live version under it draws the same film in your browser and waits for your answer at its question.")
+    nl = chr(10)
+    video = (f'<video class="ns-video" controls preload="none" playsinline poster="media/school/{slug}/narrated-poster.jpg" aria-label="The narrated film, with captions.">{nl}'
+             f'    <source src="media/school/{slug}/narrated.mp4" type="video/mp4">{nl}'
+             f'    <track kind="captions" srclang="en" label="English" src="media/school/{slug}/narrated.vtt" default>{nl}  </video>{nl}  ')
+    return note, video
+
+
 def transcript(film: dict) -> str:
     out = []
     for i, sg in enumerate(film["segments"]):

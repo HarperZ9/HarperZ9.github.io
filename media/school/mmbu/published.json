@@ -320,10 +320,9 @@
   "lastEntry": 89,
   "lastPushedEntry": 27,
   "firstUnpushed": 28,
-  "headings": 92,
-  "pushedHeadings": 30,
   "lastPushDate": "2026-10-04",
-  "uncommitted": true,
-  "visibility": "private"
+  "latePushDate": "2026-10-18",
+  "latePushCommit": "5c65ea8",
+  "visibility": "public"
  }
 }

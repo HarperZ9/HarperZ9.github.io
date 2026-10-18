@@ -100,7 +100,7 @@ export function ledger(t, A, F, T) {
   out.push(ink(A, `${R.filesMatched} rule files match: ${R.fullMatch} by full fingerprint, ${R.prefixMatch} by prefix`, 20, 1280, 260, span(t, T.start, T.start + 0.8)));
   out.push(ink(A, `pushed to GitHub: entries 1 to ${L.lastPushedEntry}, last on ${L.lastPushDate}`, 20, 1280, 320, span(t, T.pushed, T.pushed + 0.8)));
   out.push(ink(A, `the repository: ${L.visibility}`, 20, 1280, 360, span(t, T.pushed, T.pushed + 0.8)));
-  out.push(ink(A, `entries ${L.firstUnpushed} to ${n}: our own file only`, 20, 1280, 420, span(t, T.local, T.local + 0.8), "#a8502e"));
+  out.push(ink(A, `entries ${L.firstUnpushed} to ${n}: first pushed ${L.latePushDate}, after the results`, 20, 1280, 420, span(t, T.local, T.local + 0.8), "#a8502e"));
   out.push(ink(A, "a fingerprint proves the bytes, not the hour", 26, 640, 880, span(t, T.hour, T.hour + 0.8)));
   return out;
 }

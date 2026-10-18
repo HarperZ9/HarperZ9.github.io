@@ -1,0 +1,158 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:06.032
+The held-out set.
+
+00:00:06.352 --> 00:00:08.562
+Learning, or remembering?
+
+00:00:09.162 --> 00:00:12.404
+I could learn this harbour by heart, every crate in its place.
+
+00:00:12.724 --> 00:00:15.545
+Then one night they send me to a different harbour.
+
+00:00:16.745 --> 00:00:18.198
+Here are 16 points.
+
+00:00:18.518 --> 00:00:22.749
+They come from a smooth curve, plus a little noise, the way real measurements do.
+
+00:00:23.349 --> 00:00:25.118
+Let's fit a curve through them.
+
+00:00:25.438 --> 00:00:27.290
+A straight line misses the bend.
+
+00:00:27.610 --> 00:00:29.526
+A gentle curve follows it.
+
+00:00:29.846 --> 00:00:33.383
+And a wild one, with enough freedom, passes through every single point.
+
+00:00:33.983 --> 00:00:36.467
+Which curve will do best on points it has never seen?
+
+00:00:38.967 --> 00:00:43.599
+The wild one gets every point right: its error on them is about one part in a hundred billion.
+
+00:00:43.919 --> 00:00:46.782
+That's zero, apart from rounding in the arithmetic.
+
+00:00:47.982 --> 00:00:49.645
+So keep some points back.
+
+00:00:49.965 --> 00:00:53.881
+500 of them, drawn the same way, never used for fitting.
+
+00:00:54.201 --> 00:00:55.611
+That's the held-out set.
+
+00:00:56.211 --> 00:01:00.464
+On those, the gentle curve's error is 0.33.
+
+00:01:00.784 --> 00:01:04.173
+The wild one's is 3,936.
+
+00:01:04.493 --> 00:01:09.314
+Between the points it learned it swings wildly, and past the outermost ones it shoots off the chart.
+
+00:01:09.914 --> 00:01:16.462
+Make the curve more flexible, step by step, and the error on the training points only ever goes down.
+
+00:01:16.782 --> 00:01:22.234
+The error on the held-out points goes down, then turns around and climbs, with a few bumps on the way.
+
+00:01:23.434 --> 00:01:28.634
+One fix is a leash: keep the wild curve, but charge it for every large number it uses.
+
+00:01:29.234 --> 00:01:34.687
+A moderate charge brings its held-out error down from 3,936 to 0.43.
+
+00:01:35.007 --> 00:01:41.807
+That's the best of seven charges we tried, picked by looking at these same held-out points, so it flatters the leash a little.
+
+00:01:42.127 --> 00:01:47.664
+Pull too hard and it gets worse again: at the heaviest pull we tried, 0.70.
+
+00:01:48.864 --> 00:01:53.306
+The bucket chain from last time learned two spirals from 400 points.
+
+00:01:53.626 --> 00:01:54.826
+Give it only 40.
+
+00:01:55.426 --> 00:01:57.910
+It still gets every training point right.
+
+00:01:58.230 --> 00:02:04.399
+On new points it's right 78.3 percent of the time, against 99.5 with all 400.
+
+00:02:04.999 --> 00:02:06.641
+Watch the held-out loss.
+
+00:02:06.961 --> 00:02:11.782
+It's lowest early, at step 300, and then climbs while the training loss keeps falling.
+
+00:02:12.102 --> 00:02:21.323
+Its score on new points still creeps up for a while, to 80 percent by step 1,000, but it grows ever more sure of itself, wrong answers included.
+
+00:02:21.643 --> 00:02:26.548
+After that the score stops improving, and training only tightens its grip on these forty points.
+
+00:02:27.748 --> 00:02:30.716
+And a score from one training set is one draw.
+
+00:02:31.036 --> 00:02:38.278
+Pick five different sets of 40 training points, and the held-out score runs from 75.5 to 86.0 percent.
+
+00:02:38.878 --> 00:02:41.636
+Even which curve looks best depends on the draw.
+
+00:02:41.956 --> 00:02:48.756
+Over two hundred draws of sixteen points, the gentle curve came out best 113 times, not every time.
+
+00:02:49.956 --> 00:02:57.219
+The language model from the attention lesson was trained on a stream of freshly made sentences, a new batch every step.
+
+00:02:57.539 --> 00:03:03.813
+Its little grammar does repeat itself: 507 of its 32,000 training rows were exact copies of earlier ones.
+
+00:03:04.133 --> 00:03:09.712
+But no row came round more than 5 times, so it had little chance to learn its training rows by heart.
+
+00:03:10.312 --> 00:03:15.828
+Score the finished model on rows it trained on, and its loss is about 0.63.
+
+00:03:16.148 --> 00:03:20.737
+On the next stretch of the same stream, which it didn't train on, 0.67.
+
+00:03:21.057 --> 00:03:23.520
+A small gap, not a chasm.
+
+00:03:24.120 --> 00:03:34.120
+And its own held-out set turns out to be a little hard: 0.69, higher than five fresh draws of the same size, which range from 0.65 to 0.67.
+
+00:03:35.320 --> 00:03:37.363
+One rule makes all of this work.
+
+00:03:37.683 --> 00:03:44.146
+Once you use the held-out points to choose anything, how flexible the curve is, how long to train, they stop being held out.
+
+00:03:44.746 --> 00:03:49.903
+So careful work keeps a third set locked away until the very end, and looks at it once.
+
+00:03:51.103 --> 00:03:53.188
+Getting the practice right is not the test.
+
+00:03:53.508 --> 00:03:55.592
+Keep points back, and check on those.
+
+00:03:56.192 --> 00:03:57.371
+That's the hill done.
+
+00:03:57.691 --> 00:04:01.207
+Next, down at the dock, we cut words into crates.
+
+00:04:01.527 --> 00:04:02.327
+Goodnight.
+

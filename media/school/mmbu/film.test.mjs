@@ -40,7 +40,7 @@ test("the numbers on screen are facts values", () => {
   assert.ok(has(T.words.flip + 2.5, ivText(F.vocab.ft7minusFt6.harmonised)) && has(T.words.flip + 2.5, ivText(F.vocab.ft7minusFt6.original)));
   assert.ok(has(T.prior.cheat + 1.5, `${(F.baselines.oracle * 100).toFixed(1)} percent`));
   assert.ok(has(T.lights.dup + 1.5, `${F.records.survival.dupSteps} steps lost`));
-  assert.ok(has(T.ledger.local + 1.5, `entries ${F.ledger.firstUnpushed} to ${F.ledger.lastEntry}: our own file only`));
+  assert.ok(has(T.ledger.local + 1.5, `entries ${F.ledger.firstUnpushed} to ${F.ledger.lastEntry}: first pushed ${F.ledger.latePushDate}`));
   assert.ok(has(T.close.ft8 + 1.5, `step ${F.records.survival.ft8Step} of`));
 });
 

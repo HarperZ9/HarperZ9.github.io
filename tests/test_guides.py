@@ -52,7 +52,10 @@ def test_draft_films_have_a_host_a_title_and_a_draft_scene() -> None:
 
 
 def test_guides_reach_home_writing_and_studio() -> None:
-    assert 'href="/guides.html"' in HOME and "<Guides />" in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    # 18 October 2026, the author: the explainer videos must not take over the site. The guides'
+    # section left the home page; the films live in Night School and on their lesson pages.
+    assert "<Guides />" not in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    assert 'href="/night-school.html"' in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     assert "/system/guides.css" in PAGES["index.html"]
     assert 'guides.html#tallow' in PAGES["publications.html"]
     assert 'href="guides.html"' in PAGES["studio.html"]

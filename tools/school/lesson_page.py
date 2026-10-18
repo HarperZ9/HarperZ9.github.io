@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import json
 
-from tools.school.page import ROOT, SCHOOL, E, head, foot, school_page, sources, transcript
+from tools.school.page import narrated, ROOT, SCHOOL, E, head, foot, school_page, sources, transcript
 
 
 def minutes(timing: list, close: float) -> str:
@@ -30,8 +30,8 @@ def lesson_page(film: dict, ev: dict, facts: dict, timing: list) -> str:
 <main id="main">
 <section class="mv" id="film" aria-labelledby="film-h">
   <h2 id="film-h">The film</h2>
-  <p class="body-text">About {length}, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.</p>
-  <div class="ls" data-school="film" data-scene="media/school/attention/film.scene.mjs">
+  <p class="body-text">About {length}, hosted by Tallow. It asks you two questions and waits for your answer before it shows you. {narrated("attention", "Tallow")[0]}</p>
+  {narrated("attention", "Tallow")[1]}<div class="ls" data-school="film" data-scene="media/school/attention/film.scene.mjs">
     <button type="button" class="ns-btn ns-go" data-school-open>Play the film</button>
     <p class="ns-note" data-school-note>Nothing loads until you press play.</p>
     <div data-school-stage></div>
