@@ -123,8 +123,9 @@ def narrated(slug: str, guide: str) -> tuple[str, str]:
     d = SCHOOL / slug
     if not (d / "narrated.mp4").exists():
         return ("The guide's voice is not recorded yet, so for now the film plays with captions; the full words are also below.", "")
-    note = (f"Narrated by {guide}, in a synthesized voice made from the author's own voice; the author approved these cuts for publishing. "
-            "Captions are on by default, and the full words are also below. The live version under it draws the same film in your browser and waits for your answer at its question.")
+    secs = round(json.loads((d / "narrated.json").read_text(encoding="utf-8"))["seconds"])
+    note = (f"The narrated cut runs {secs // 60}:{secs % 60:02d}, voiced by {guide} in a synthesized voice made from the author's own voice; the author approved these cuts for publishing. "
+            "Captions are on by default. The live version under it draws the same film in your browser, waits for your answer at each question, and runs a little longer; the full words are also below.")
     nl = chr(10)
     video = (f'<video class="ns-video" controls preload="none" playsinline poster="media/school/{slug}/narrated-poster.jpg" aria-label="The narrated film, with captions.">{nl}'
              f'    <source src="media/school/{slug}/narrated.mp4" type="video/mp4">{nl}'
