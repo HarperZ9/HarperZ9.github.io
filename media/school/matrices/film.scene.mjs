@@ -5,7 +5,7 @@
 // 12): Pylon's printed chart with a tracing sheet the crane moves; the attention question in the
 // dark, as data art; the painted harbour's crane for the cold open.
 import { cues, LOOKS, span, label, plate, C, GUIDES, QUALITY } from "../shared/lib.mjs";
-import { loadHarbour } from "../../raw-native/tree-c6b114d/templates/guides/worlds/harbour.mjs";
+import { loadHarbour } from "../../raw-native/tree-ada041f/templates/guides/worlds/harbour.mjs";
 import * as a from "./scene/seg-a.mjs";
 import * as b from "./scene/seg-b.mjs";
 

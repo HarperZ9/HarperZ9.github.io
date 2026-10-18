@@ -3,7 +3,7 @@
 // determinants (from facts.json's demos).
 import { rect, polyline, span, ease, lerp, window, words, label } from "../../shared/lib.mjs";
 import { K, P, desk, paper, arrow, pylon, talking } from "../../vectors/scene/chart.mjs";
-import { harbour, sortedThings, S } from "../../../raw-native/tree-c6b114d/templates/guides/worlds/harbour.mjs";
+import { harbour, sortedThings, S } from "../../../raw-native/tree-ada041f/templates/guides/worlds/harbour.mjs";
 import { I2, apply, mix, rot, det, sheet, steps, crateOn, block, pin, onPlate, f2 } from "./sheet.mjs";
 
 const PY = [1745, 1015];

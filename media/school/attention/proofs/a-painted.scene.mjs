@@ -2,11 +2,11 @@
 // doing the reading is the lighthouse at the near end, and Tallow on its gallery turns the lamp.
 // Beams fan back along the road with strength equal to the attention weight; the brightest
 // cottage sends its cargo back up the beam. Oil-grotesque paint pass.
-import { rect, circle, polyline } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { rng } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
-import { pose, lin, rad } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { rect, circle, polyline } from "../../../raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { rng } from "../../../raw-native/tree-ada041f/web/motion/timeline.mjs";
+import { pose, lin, rad } from "../../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../../raw-native/tree-ada041f/templates/guides/guides.mjs";
 import { WORDS, QUERY, WEIGHTS, smooth, loadAtlas } from "./common.mjs";
 
 const LAMP = [1500, 400];

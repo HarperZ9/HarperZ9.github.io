@@ -3,7 +3,7 @@
 // crate swings (with the held question), and the cosine on a gauge.
 import { rect, circle, polyline, span, ease, lerp, window, words, label, plate, C } from "../../shared/lib.mjs";
 import { K, P, O, desk, paper, arrow, vec, arc, rightMark, crate, tag, pylon, talking } from "./chart.mjs";
-import { harbour, sortedThings, S } from "../../../raw-native/tree-c6b114d/templates/guides/worlds/harbour.mjs";
+import { harbour, sortedThings, S } from "../../../raw-native/tree-ada041f/templates/guides/worlds/harbour.mjs";
 
 export const A_VEC = [4, 1.5];
 export const aA = Math.atan2(A_VEC[1], A_VEC[0]);

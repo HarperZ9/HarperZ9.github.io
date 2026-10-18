@@ -3,13 +3,13 @@
 // the cosine of the angle between them are computed live from the drawn coordinates. ?dir= picks
 // A (painted isometric harbour), B (data art, the attention film's look), C (a printed chart from
 // above, light gouache), D (the same chart in the pixel look) or E (the chart printed, no paint).
-import { rect, circle, polyline } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { rng } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
-import { pose, lin, rad } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { LOOKS } from "../../../raw-native/tree-c6b114d/templates/guides/look.mjs";
-import { loadHarbour, harbour, sortedThings, S } from "../../../raw-native/tree-c6b114d/templates/guides/worlds/harbour.mjs";
+import { rect, circle, polyline } from "../../../raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { rng } from "../../../raw-native/tree-ada041f/web/motion/timeline.mjs";
+import { pose, lin, rad } from "../../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../../raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { LOOKS } from "../../../raw-native/tree-ada041f/templates/guides/look.mjs";
+import { loadHarbour, harbour, sortedThings, S } from "../../../raw-native/tree-ada041f/templates/guides/worlds/harbour.mjs";
 
 const DIR = new URL(import.meta.url).searchParams.get("dir") || "C";
 const sm = (a, b, t) => { const u = Math.max(0, Math.min(1, (t - a) / (b - a))); return u * u * (3 - 2 * u); };

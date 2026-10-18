@@ -1,15 +1,15 @@
 // Shared vocabulary for Night School scenes: the engine imports, cue times from timing.json, the
 // palette, and small drawing helpers. Pure; runs in Node for tests. (Moved here from the attention
 // lesson when the second lesson needed it; media/school/attention/scene/lib.mjs re-exports it.)
-export { rect, circle, polyline, line, contour, trim, translate, scaleAbout, rotateAbout } from "../../raw-native/tree-c6b114d/web/motion/path.mjs";
-export { text } from "../../raw-native/tree-c6b114d/web/motion/text.mjs";
-export { span, window, ease, lerp, lerpLog, rng, track, stagger } from "../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
-export { pose, lin, rad, ellipse } from "../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-export { GUIDES } from "../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
-export { LOOKS, darkness, glow } from "../../raw-native/tree-c6b114d/templates/guides/look.mjs";
-export { clipBeat } from "../../raw-native/tree-c6b114d/templates/guides/motion.mjs";
-import { text } from "../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { rect } from "../../raw-native/tree-c6b114d/web/motion/path.mjs";
+export { rect, circle, polyline, line, contour, trim, translate, scaleAbout, rotateAbout } from "../../raw-native/tree-ada041f/web/motion/path.mjs";
+export { text } from "../../raw-native/tree-ada041f/web/motion/text.mjs";
+export { span, window, ease, lerp, lerpLog, rng, track, stagger } from "../../raw-native/tree-ada041f/web/motion/timeline.mjs";
+export { pose, lin, rad, ellipse } from "../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+export { GUIDES } from "../../raw-native/tree-ada041f/templates/guides/guides.mjs";
+export { LOOKS, darkness, glow } from "../../raw-native/tree-ada041f/templates/guides/look.mjs";
+export { clipBeat } from "../../raw-native/tree-ada041f/templates/guides/motion.mjs";
+import { text } from "../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { rect } from "../../raw-native/tree-ada041f/web/motion/path.mjs";
 
 // Ink on the dark (the thriller look's own), the one hot mark (the query, ember), and the
 // spectrum, used only at the prism's exit edge.

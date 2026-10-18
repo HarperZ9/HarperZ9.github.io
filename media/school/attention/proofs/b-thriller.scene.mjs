@@ -1,11 +1,11 @@
 // Direction B: the lamp room, retro thriller. The earlier words are cards pinned around the
 // curved glass of the lantern; the great lens turns, and its light pools on each card in
 // proportion to the attention weight. Tallow stands at the lens. Film stock and the soft tube.
-import { rect, circle, polyline } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { pose, lin, rad } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { LOOKS, darkness, glow } from "../../../raw-native/tree-c6b114d/templates/guides/look.mjs";
+import { rect, circle, polyline } from "../../../raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { pose, lin, rad } from "../../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../../raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { LOOKS, darkness, glow } from "../../../raw-native/tree-ada041f/templates/guides/look.mjs";
 import { WORDS, QUERY, WEIGHTS, smooth, loadAtlas } from "./common.mjs";
 
 export const LENS = [1120, 470];

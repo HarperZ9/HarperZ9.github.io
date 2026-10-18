@@ -310,6 +310,10 @@ jobs:
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/tree-c6b114d
         run: sha256sum -c --strict SHA256SUMS
+      - name: raw-native web host, Motion and the explainer guides at ada041f match their SHA256SUMS
+        if: ${{ !cancelled() }}
+        working-directory: media/raw-native/tree-ada041f
+        run: sha256sum -c --strict SHA256SUMS
       - name: raw-native sound engine matches its SHA256SUMS
         if: ${{ !cancelled() }}
         working-directory: media/raw-native/sound-4edf976
