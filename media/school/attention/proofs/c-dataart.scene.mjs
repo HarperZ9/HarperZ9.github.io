@@ -3,11 +3,11 @@
 // an earlier word with probability equal to that word's attention weight, so the density of
 // light is the weight. The bundle passes through the prism and splits into two heads; the
 // spectrum appears only at the prism's exit edge (the art's one hot mark).
-import { rect, circle, polyline } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { rng } from "../../../raw-native/tree-c6b114d/web/motion/timeline.mjs";
-import { pose } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
+import { rect, circle, polyline } from "../../../raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { rng } from "../../../raw-native/tree-ada041f/web/motion/timeline.mjs";
+import { pose } from "../../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../../raw-native/tree-ada041f/templates/guides/guides.mjs";
 import { WORDS, QUERY, WEIGHTS, WEIGHTS2, smooth, loadAtlas } from "./common.mjs";
 
 const D = 24, X0 = 150, DX = 150, Y0 = 640, DY = 13, PRISM = [960, 250];

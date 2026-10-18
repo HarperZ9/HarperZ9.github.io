@@ -4,7 +4,7 @@
 // silent with captions, and the page says so. Mounted on a press, never on load.
 import { el, backend, fitCanvas } from "../lessons/stage.mjs";
 
-const ENGINE = new URL("../../media/raw-native/tree-c6b114d/", import.meta.url);
+const ENGINE = new URL("../../media/raw-native/tree-ada041f/", import.meta.url);
 const clock = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
 export async function mountFilm(box, { scene: sceneUrl, force2d = false } = {}) {

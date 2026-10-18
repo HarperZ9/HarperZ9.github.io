@@ -1,11 +1,11 @@
 // Direction D, a hybrid of B and C: Tallow's lamp room (the world), and inside the great lens the
 // data view (the mechanism). The camera pushes into the lens; the lens opens as an aperture until
 // the data view fills the frame. Thriller film stock over both, so world and data share one look.
-import { circle, rect } from "../../../raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../../raw-native/tree-c6b114d/web/motion/text.mjs";
-import { pose } from "../../../raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../../raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { LOOKS, darkness, glow } from "../../../raw-native/tree-c6b114d/templates/guides/look.mjs";
+import { circle, rect } from "../../../raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../../raw-native/tree-ada041f/web/motion/text.mjs";
+import { pose } from "../../../raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../../raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { LOOKS, darkness, glow } from "../../../raw-native/tree-ada041f/templates/guides/look.mjs";
 import { room, lens, LENS } from "./b-thriller.scene.mjs";
 import { dataItems } from "./c-dataart.scene.mjs";
 import { smooth, loadAtlas } from "./common.mjs";

@@ -6,7 +6,7 @@
 // (PROGRESS.md, step 11): Pylon's printed chart from above for the geometry, the attention film's
 // columns of dots for 32 directions, the painted harbour for the cold open.
 import { cues, LOOKS, span, label, plate, C, GUIDES, QUALITY } from "../shared/lib.mjs";
-import { loadHarbour } from "../../raw-native/tree-c6b114d/templates/guides/worlds/harbour.mjs";
+import { loadHarbour } from "../../raw-native/tree-ada041f/templates/guides/worlds/harbour.mjs";
 import * as ch from "./scene/seg-chart.mjs";
 import * as sp from "./scene/seg-space.mjs";
 
