@@ -2,7 +2,7 @@
 // ways: the last word of "pylon found a crate . pylon put a cone on the" looks back along the
 // sentence, and most of its attention lands on "crate". The scores here are set by hand for the
 // proof (labelled on screen as an illustration); the film itself uses the trained model.
-export const ENGINE = "../../../raw-native/tree-c6b114d/";
+export const ENGINE = "../../../raw-native/tree-ada041f/";
 export const WORDS = ["pylon", "found", "a", "crate", ".", "pylon", "put", "a", "cone", "on", "the"];
 export const QUERY = WORDS.length - 1;
 // Hand-set scores (logits) for the query against each earlier word.

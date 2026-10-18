@@ -2,7 +2,7 @@
 // 11): a real chart's line-work (coastline, soundings), a square grid so angles on screen are the
 // true angles, crates as vectors from the corner, and the small drawing helpers the segments share.
 import { rect, circle, polyline, rng, lin, rad, words, pose, GUIDES, clipBeat, span, ease } from "../../shared/lib.mjs";
-import { coneParts } from "../../../raw-native/tree-c6b114d/templates/guides/pylon.mjs";
+import { coneParts } from "../../../raw-native/tree-ada041f/templates/guides/pylon.mjs";
 
 // Ink on the paper; rust is the lesson's one hot mark (the second crate, b); the night inks are
 // for the dark (data-art) segments.

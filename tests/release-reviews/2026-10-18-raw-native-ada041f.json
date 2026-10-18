@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-18",
+  "note": "raw-native vendored at ada041f (upstream #183, the 4K post-pass dispatch fix); every Night School lesson, lab and film scene now loads tree-ada041f. Pins the three files that differ from tree-c6b114d.",
+  "paths": {
+    "media/raw-native/tree-ada041f/web/motion/capture.html": "8c57de8692498d4e0d2df096eb1d7b666bc73abcd5a91b67192c4ef21b09546f",
+    "media/raw-native/tree-ada041f/web/motion/renderer.mjs": "c791d373e6cae6ba1ca7d7394ee740738007093d98addcca7ce86304a0abe293",
+    "media/raw-native/tree-ada041f/web/shaders/post.mjs": "b98a52f6d7354ffc35bfad3bb5c5facd81d3d274307abab867cad4306c7b4bd8"
+  }
+}

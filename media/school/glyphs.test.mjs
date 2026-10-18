@@ -5,7 +5,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { sceneContext, loadScene, evaluate } from "../raw-native/tree-c6b114d/web/motion/scene.mjs";
+import { sceneContext, loadScene, evaluate } from "../raw-native/tree-ada041f/web/motion/scene.mjs";
 import { LABELS } from "./shared/lib.mjs";
 
 const here = new URL("./", import.meta.url);
