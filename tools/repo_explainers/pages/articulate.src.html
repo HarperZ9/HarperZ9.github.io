@@ -52,7 +52,7 @@ mark.on{text-decoration-color:var(--ink)}
 <section class="block wrap" aria-labelledby="for-you">
   <h2 id="for-you">What it does for you</h2>
   <div class="measure">
-    <p>Articulate reads a draft and points at the exact words that make it read as stock or generated: a corporate verb, an antithesis, a stock connective, an em dash. It tells you whether the draft passes the bar for its kind of writing, and it can record that result so anyone can replay it later. The checks make no network call.</p>
+    <p>Articulate reads a draft and points at the exact words that make it read as stock: a corporate verb, an antithesis, a stock connective, an em dash. It tells you whether the draft passes the bar for its kind of writing, and it can record that result so anyone can replay it later. The checks make no network call.</p>
   </div>
   <ul class="uses">
     <li><b>Findings with locations</b>Each finding names its rule, its precision tier and the line and column it sits on.</li>
@@ -144,13 +144,13 @@ mark.on{text-decoration-color:var(--ink)}
       </div></li>
       <li class="step" tabindex="-1" data-scene="texture" data-state="score"><div class="card">
         <span class="num">03</span><h3>A graded score beside the gate</h3>
-        <p>The texture score is a separate 0 to 100 read of how machine-textured the whole draft is. Each HIGH or MEDIUM finding is worth 8 points per 100 words. Five findings in 57 words gives 70.2, rounded to 70. Uniform sentence lengths, repeated openers, and adverb or passive rates above a threshold add more.</p>
+        <p>The texture score is a separate 0 to 100 read of how densely the whole draft uses these devices. Each HIGH or MEDIUM finding is worth 8 points per 100 words. Five findings in 57 words gives 70.2, rounded to 70. Uniform sentence lengths, repeated openers, and adverb or passive rates above a threshold add more.</p>
         <p>The score never changes the gate. Under 30 words it returns 0, because there is too little text to say anything.</p>
         <p class="src">Source: <a href="https://github.com/HarperZ9/articulate/blob/c94bf176411d56972f34a38c53c71d3373716c8e/src/articulate/detector.py">detector.py</a>, <code>texture_score</code></p>
       </div></li>
       <li class="step" tabindex="-1" data-scene="spans" data-state="spans"><div class="card">
         <span class="num">04</span><h3>Find the paragraph, and abstain on the rest</h3>
-        <p>A whole-file score can hide one generated paragraph in otherwise clean prose. <code>--spans</code> scores each block on its own. The middle paragraph is flagged at 100. The heading and the last paragraph have no findings and fewer than 30 words, so they read unverifiable. The tool abstains and makes no clean claim about them.</p>
+        <p>A whole-file score can hide one device-heavy paragraph in otherwise clean prose. <code>--spans</code> scores each block on its own. The middle paragraph is flagged at 100. The heading and the last paragraph have no findings and fewer than 30 words, so they read unverifiable. The tool abstains and makes no clean claim about them.</p>
         <p class="src">Source: <a href="https://github.com/HarperZ9/articulate/blob/c94bf176411d56972f34a38c53c71d3373716c8e/src/articulate/detector.py">detector.py</a>, <code>MIN_WORDS_FOR_VERDICT = 30</code>; docs/walkthrough.md, step 2</p>
       </div></li>
       <li class="step" tabindex="-1" data-scene="receipt" data-state="rcpt"><div class="card">
@@ -194,7 +194,7 @@ $ articulate verify post.receipt.json post.md
 <section class="block wrap" aria-labelledby="limits">
   <h2 id="limits">What it does not do</h2>
   <ul class="limits">
-    <li>It does not establish who or what wrote a text. A flag is evidence of a pattern, not proof of authorship.</li>
+    <li>It does not establish who or what wrote a text. On 183 texts of known origin it flagged all 84 AI texts and also 57 of 75 human texts, 10 of 18 English-learner essays among them. Never use a finding to accuse a person or to judge a student's work. <a href="https://github.com/HarperZ9/articulate/blob/a914515096f872ab0c79cbb00a4e3d6028ec59ac/corpus/provenance/README.md">The results</a>.</li>
     <li>The checks are patterns over the text. They cannot see token probability, so device-clean generated prose can still score low.</li>
     <li>It is not an evasion tool. The editor works toward writing quality and never tunes prose toward a lower detector score.</li>
     <li>A clean gate or a Match receipt says the prose was screened under a named ruleset. It says nothing about whether the content is true; a clearly written proof can still be false.</li>
