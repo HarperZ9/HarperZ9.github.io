@@ -5,7 +5,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Articulate | Zain Dana Harper</title>
-<meta name="description" content="Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.">
+<meta name="description" content="Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose.">
 <link rel="canonical" href="https://harperz9.github.io/articulate.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
@@ -34,7 +34,7 @@
   .how-we-know ul { margin: .6rem 0 0; }
 </style>
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/articulate.html#software","name":"Articulate","description":"Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.","url":"https://harperz9.github.io/articulate.html","codeRepository":"https://github.com/HarperZ9/articulate","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Articulate","item":"https://harperz9.github.io/articulate.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/articulate.html#software","name":"Articulate","description":"Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose.","url":"https://harperz9.github.io/articulate.html","codeRepository":"https://github.com/HarperZ9/articulate","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Articulate","item":"https://harperz9.github.io/articulate.html"}]}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="doc">
@@ -63,7 +63,7 @@
 
   <section aria-labelledby="what-title">
     <h2 id="what-title">What it is</h2>
-    <p data-purpose>Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.</p>
+    <p data-purpose>Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose.</p>
     <p>Each check runs in a writing mode, such as a memo that argues a case or technical documentation that explains. The mode sets which patterns count and how strictly. Fiction, memoir, screenplays and poetry each get their own reading. Under a fiction mode, a character's quoted line is never scored as the author's prose.</p>
     <p>Flywheel 1.1.0 bundles Articulate 0.5.0 as one of its lanes. Its installed-app check exercised score and check, but not the hosted editor. The <a href="figures/system-capability-map.html">system map</a> shows where it sits among the other tools.</p>
   </section>
@@ -96,6 +96,12 @@ articulate check notes.md --mode technical-docs/explain --gate</code></pre>
     <p>A clean check means none of the patterns Articulate knows appeared in the text. It says nothing about whether the writing is true or clear, so a reader still needs the sources. The documentation states that Articulate is not a tool for evading AI detection. Writing quality is the goal, and a detector score is a side effect it never aims at.</p>
   </section>
 
+  <section aria-labelledby="evidence-title">
+    <h2 id="evidence-title">What a flag does not tell you</h2>
+    <p>A flag says the text uses a named device. It does not say who wrote the text. On 183 texts of known origin, Articulate flagged all 84 texts written by local AI models, and it also flagged 57 of the 75 human texts (76%, 95% interval 65% to 84%): Darwin, Thoreau, Melville and school essays among them. Ten of 18 essays by English learners were flagged.</p>
+    <p>Never use a finding to accuse a person of using AI, and never to grade or discipline a student. The <a href="https://github.com/HarperZ9/articulate/blob/a914515096f872ab0c79cbb00a4e3d6028ec59ac/corpus/provenance/README.md">results and their limits</a> and the <a href="https://github.com/HarperZ9/articulate/blob/a914515096f872ab0c79cbb00a4e3d6028ec59ac/corpus/provenance/results.json">raw figures</a> are public.</p>
+  </section>
+
   <section aria-labelledby="receipt-title">
     <h2 id="receipt-title">Receipts</h2>
     <p>A receipt records a check so that anyone can replay it later against the same file.</p>
@@ -112,7 +118,7 @@ articulate verify notes.receipt.json notes.md</code></pre>
 
   <section aria-labelledby="fairness-title">
     <h2 id="fairness-title">The later fairness check failed</h2>
-    <p>Version 0.5.0 remains the published release. Later source removes authorship language and records a failed confirmatory release gate; version 0.6.0 is not published. That source change does not alter the installed 0.5.0 package.</p>
+    <p>The reworked ruleset described here lives on a development branch and has not shipped. Releases from 0.7.0 to 0.12.0 keep the published v0.5.2 detector rules.</p>
     <p>Under strict profiles on the PERSUADE 2.0 school-essay corpus, the evaluated ruleset blocked 80 of 1,330 learner essays and 1,889 of 13,467 other essays. The learner-minus-other gap was -8.0 percentage points, with a 95% interval of [-9.3, -6.5]. The gate checks differences in either direction and failed; rule-level and wrapping checks also failed.</p>
     <p>The default profile blocked none of the essays, which does not clear the failed gate. The learner label is a school classification; first language was not measured. These results establish neither authorship nor the cause of the group difference. Read the <a href="https://github.com/HarperZ9/articulate/blob/bd43ccd748d0304b10f9efc650a5b0307dda380f/docs/fairness-confirmatory.md">confirmatory result and its limits</a> before relying on the checks.</p>
   </section>
@@ -129,7 +135,7 @@ articulate verify notes.receipt.json notes.md</code></pre>
       <li>Release dates come from the upload times on <a href="https://pypi.org/project/articulate-writing/#history" translate="no">PyPI's release history</a>, in UTC: 0.1.0 at 13:07 on 18 September 2026, 0.4.1 at 03:14 on 24 September 2026, 0.4.2 at 07:56 and 0.5.0 at 16:40 on 26 September 2026. The 0.5.0 change comes from its <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.5.0" translate="no">release notes</a>. The matching <a href="https://github.com/HarperZ9/articulate/releases" translate="no">GitHub releases</a> carry the same dates. File hashes for each release are listed on PyPI.</li>
       <li>The example output above is from Articulate 0.4.1, run on 25 September 2026. The receipt answers come from the same run: a replay of the unchanged file gave match, and a replay after one added line gave unverifiable.</li>
       <li>The no-network claim rests on the project README, which says the detector never touches the network, and on a search of the 0.4.1 check, receipt and command-line code, which found no network library imported. The editing tools call a language model, so they are outside that claim.</li>
-      <li>This page does not show that Articulate finds every weak pattern, or that its findings agree with a human editor. The package ships a benchmark, <code>python -m articulate.bench</code>, for anyone who wants to test that.</li>
+      <li>The known-provenance figures come from <code>scripts/provenance_eval.py</code> in the Articulate repository, run on 21 October 2026 with the v0.5.2 detector rules, which 0.12.0 keeps. This page does not show that Articulate finds every weak pattern, or that its findings agree with a human editor.</li>
     </ul>
   </details>
 </article>

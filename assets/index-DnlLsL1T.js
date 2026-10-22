@@ -380,10 +380,10 @@ Error generating stack: `+e.message+`
         {
           "label": "Articulate",
           "href": "articulate.html",
-          "summary": "Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.",
+          "summary": "Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose.",
           "primary": false,
           "maturity": "shipped",
-          "searchText": "Articulate Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool. prose checks in CI and pre-commit review of AI-assisted writing content-free audit receipts local prose checker v0.5.0 on GitHub and PyPI; v0.6.0 is not published and its confirmatory release gate failed shipped Evaluation and verification Developer infrastructure Research and education shipped Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool."
+          "searchText": "Articulate Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose. prose checks in CI and pre-commit review of AI-assisted writing content-free audit receipts local prose checker v0.5.0 on GitHub and PyPI; v0.6.0 is not published and its confirmatory release gate failed shipped Evaluation and verification Developer infrastructure Research and education shipped Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose."
         },
         {
           "label": "Flywheel: route, receipt, tamper, refusal.",
@@ -6008,7 +6008,7 @@ Error generating stack: `+e.message+`
     {
       "id": "articulate",
       "name": "Articulate",
-      "purpose": "Articulate checks prose locally for named writing patterns and reports where they occur. Published version 0.5.0 includes detector labels and a texture score; neither establishes who or what wrote a text. Its optional editor sends the draft to a hosted model through the Claude command-line tool.",
+      "purpose": "Articulate checks prose locally for named writing patterns and reports where they occur. It is a style tool. It is not an authorship detector: on 183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts. Version 0.12.0 is the current release, and its optional editor can send the draft to a model you choose.",
       "useCases": [
         "prose checks in CI and pre-commit",
         "review of AI-assisted writing",

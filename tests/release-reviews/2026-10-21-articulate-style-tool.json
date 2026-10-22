@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-21",
+  "note": "Articulate purpose rewritten from the known-provenance result: a style tool, not an authorship detector (flags 57 of 75 human texts); current release 0.12.0. Pages regenerated from system/systems.json; the four embedded copies in the home bundle replaced with the same string, without a rebuild, since home/node_modules is not installed in this checkout.",
+  "paths": {
+    "assets/index-DnlLsL1T.js": "db8a6a5e648fe6ed3c3f3e4ba40f3ee923d2e43688231bd4e1152f32dd82a923",
+    "catalog.html": "63607c75a3bd16df58d3b419e150ee4d845b25465ef612003445f69a83ed30f8",
+    "overview.html": "5271b2635d93773325bf260606527728bcd0d8d0f855ba1bd579b365a5a9c938",
+    "site-index.html": "aac800a04312a8857aab7907254853d49dd3fa040eed6db35b3222ee704be29f",
+    "system/routes.js": "9ffa4a8a1f995238a6bde90a266f98ff6fe17286dc856c6e8e4d4db2160d8d01",
+    "system/systems.js": "67c936e028bf0b718f40f1653e67d7c0e8af333bf1a2a256e64404806abdaccd",
+    "system/systems.json": "e1ff62369bcea2044413f56f6accbce7c58e667e9de0881107edb96672d413a1"
+  }
+}
