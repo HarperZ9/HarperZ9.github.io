@@ -5,7 +5,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recorded workflows · Zain Dana Harper</title>
-<meta name="description" content="Four current, recorded workflows for Index, Gather, Forum, and Crucible, with short cuts, full runs, transcripts, evidence, and explicit claim boundaries.">
+<meta name="description" content="Four recorded workflows for Index, Gather, Forum, and Crucible, with short cuts, full runs, transcripts and the files to run them yourself.">
 <link rel="canonical" href="https://harperz9.github.io/demonstrations.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/demonstrations.jpg?v=cf6d3c576c7b">
 <meta name="twitter:image:alt" content="Recorded workflows, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
 <meta name="twitter:title" content="Recorded workflows · Zain Dana Harper">
-<meta name="twitter:description" content="Four current tool workflows, shown with their transcripts, evidence, and limits.">
+<meta name="twitter:description" content="Four tool workflows, shown with their transcripts and run files.">
 <link rel="stylesheet" href="system/doc.css?v=20260907-reading-completion">
 <style>
   .demo-library{width:min(100%,68rem);max-width:68rem}
@@ -160,7 +160,7 @@
 
   <section class="doc-set" aria-labelledby="doc-set-h">
     <h2 id="doc-set-h">Documented in the repository, not yet recorded on video.</h2>
-    <p class="lead">Three current buildlang threads, tracked here as they land. Each links straight to its source or its pull request; nothing below is claimed as finished or merged unless its status line says so.</p>
+    <p class="lead">Three buildlang threads, each linked to its source or pull request. The status line on each says whether it is merged.</p>
     <ul class="doc-links" aria-label="Documented buildlang workflows">
       <li>
         <h3>Five modes, one receipt chain</h3>
@@ -179,18 +179,18 @@
       <li>
         <h3>Executed Monte Carlo intervals, with a witnessed denominator</h3>
         <p class="doc-status review">In review &middot; not yet merged</p>
-        <p class="doc-copy">An open pull request computes the Monte Carlo interval from what the run actually executed, rather than an assumed sample count, then re-verifies it instead of trusting the stored figure. The pull request states its own count refresh: once merged, the invariant corpus would move from main&rsquo;s current 27/27 to 29/29, the self-test suite from 9/9 to 10/10, and the full Cargo suite from main&rsquo;s current 1605 passing, 0 failing, 11 ignored, toward 1683 passing, 0 failing.</p>
+        <p class="doc-copy">An open pull request computes the Monte Carlo interval from the samples the run executed and checks it against the stored figure. The pull request states its own count refresh: once merged, the invariant corpus would move from main&rsquo;s current 27/27 to 29/29, the self-test suite from 9/9 to 10/10, and the full Cargo suite from main&rsquo;s current 1605 passing, 0 failing, 11 ignored, toward 1683 passing, 0 failing.</p>
         <ul class="doc-facts" aria-label="Monte Carlo interval discipline facts"><li>buildlang PR #34, open, base main</li><li>corpus 29/29 proposed (main: 27/27)</li><li>self-test 10/10 proposed (main: 9/9)</li></ul>
         <a class="workflow-action" href="https://github.com/HarperZ9/buildlang/pull/34">Read buildlang PR #34</a>
       </li>
     </ul>
-    <p class="entry-note">Surveyed 2026-07-29 against buildlang and local-model origin/main and their open pull requests. Pull request status changes; the linked source is the current record, not this page.</p>
+    <p class="entry-note">Surveyed 2026-07-29. Follow the links for current pull request status.</p>
   </section>
 
   <section class="boundary">
-    <h2>What these recordings establish</h2>
-    <p class="lead">They show the named tool paths running over small, inspectable fixtures and preserve the artifacts needed to check what appears on screen. They are not broad product benchmarks, scale tests, or evidence that every input shape is covered.</p>
-    <p class="entry-note">Recorded and checked 2026-07-12. Each workflow page states its own fixture, runtime, evidence package, and narrower claim boundary.</p>
+    <h2>About the recordings</h2>
+    <p class="lead">Each recording runs the named tool on a small fixture. Its workflow page has the fixture, the transcript and the files you need to run it yourself.</p>
+    <p class="entry-note">Recorded and checked 2026-07-12.</p>
   </section>
 </article>
 </main>

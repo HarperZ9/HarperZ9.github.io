@@ -33,7 +33,7 @@ def expand(blocks: list[dict], groups: dict, stack: tuple[str, ...] = ()) -> lis
 
 
 def linkify(text: str) -> str:
-    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/)[^\s|]*'
+    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/|nexusmods\.com/)[^\s|]*'
     parts, previous = [], 0
     for match in re.finditer(pattern, text):
         end = match.end()
@@ -182,7 +182,7 @@ def source_note(source: dict) -> str:
     return f'''<aside class="career-source-note">
 <p>Updated <time datetime="{source['reviewed']}">{source['reviewed']}</time>. All formats share the same reviewed content.</p>
 <p><a href="career/source-ledger.md">Source and date notes</a> · <a href="career/resume-source.json">Structured career source</a> · <a href="career/career-build-receipt.json">Build receipt</a></p>
-<details><summary>Work-history and evidence notes</summary>{dates}<p>Descriptions of public software are not claims of customer adoption, external certification, or universal safety. Private material is excluded.</p></details>
+<details><summary>Work-history and evidence notes</summary>{dates}</details>
 </aside>'''
 
 
@@ -216,7 +216,7 @@ def router_body(source: dict, *, hire: bool) -> str:
         out[4] = out[4].replace('</header>', f'<p>{escape(availability["roles"])} {escape(availability["travel"])}</p><p>Sole proprietor since September 2026; no paid software clients.</p></header>')
     cards = [
         ('support-operations-qa', 'engineering-path', 'Support, developer operations, and software quality', 'Technical support and self-directed developer tools: reproducible troubleshooting, accepted tests and documentation for Free Law Project, Hebbian Robotics, and Voxwire, software delivery, and customer communication.'),
-        ('evaluation-python-tools', 'technical-operations-path', 'AI systems, evaluation, and Python tooling', 'Flywheel, Rowan, controlled-action interfaces, writing tools, and verification infrastructure, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
+        ('evaluation-python-tools', 'technical-operations-path', 'AI and security evaluation, and Python tooling', 'Flywheel, Daylight Commons, release checks scored against planted faults, and verification tools, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
         ('grounds', 'public-service-field-path', 'Arboriculture, field operations, and estimating', 'Eleven years of ground-based tree-care operations, site assessment, estimates, scheduling, client education, and safety coordination. A public-operations variant is also available.'),
     ]
     for key, anchor, title, description in cards:
@@ -225,7 +225,7 @@ def router_body(source: dict, *, hire: bool) -> str:
         if key == 'grounds':
             out += ['<p class="career-variant"><a href="resume-public-operations.html">Public operations and facilities-support variant</a></p>', downloads(docs['public-operations'], include_html=False)]
         out += ['</div>']
-    out += ['</div></section>', '<section><h2>Full CV and portfolio</h2><p>The full CV retains the expanded record separately from the one-page resumes. It covers AI systems, compilers, security and verification tooling, graphics, technical writing, the earlier programming trajectory, and independent research.</p>', downloads(docs['page:cv']), '<p><a href="portfolio.html">Explore the portfolio</a> · <a href="flywheel.html">Flywheel platform</a> · <a href="publications.html">Publications</a></p></section>', '<section><h2>Research and contribution record</h2><p>Thirteen independent research records include <a href="https://doi.org/10.5281/zenodo.21230267">EMET</a> and other DOI-indexed papers and manuscripts. These records are not peer reviewed. The <a href="portfolio.html">contribution record</a> distinguishes merged, open, and closed without merge outcomes.</p></section>', '<section><h2>Using the files</h2><p>Use the employer\'s requested format: PDF for layout, DOCX for editing, plain text for forms. Check information filled in automatically after upload.</p></section>', '<section><h2>Contact</h2><p><a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a> · <a href="https://www.linkedin.com/in/zaindanaharper/">LinkedIn</a> · <a href="https://github.com/HarperZ9">GitHub</a></p></section>', '</article>', source_note(source)]
+    out += ['</div></section>', '<section><h2>Full CV and portfolio</h2><p>The full CV retains the expanded record separately from the one-page resumes. It leads with selected evidence, then covers security evaluation, AI evaluation, graphics and rendering, developer tools, technical writing, and independent research.</p>', downloads(docs['page:cv']), '<p><a href="portfolio.html">Explore the portfolio</a> · <a href="flywheel.html">Flywheel platform</a> · <a href="publications.html">Publications</a></p></section>', '<section><h2>Research and contribution record</h2><p>Thirteen independent research records include <a href="https://doi.org/10.5281/zenodo.21230267">EMET</a> and other DOI-indexed papers and manuscripts. These records are not peer reviewed. The <a href="portfolio.html">contribution record</a> distinguishes merged, open, and closed without merge outcomes.</p></section>', '<section><h2>Using the files</h2><p>Use the employer\'s requested format: PDF for layout, DOCX for editing, plain text for forms. Check information filled in automatically after upload.</p></section>', '<section><h2>Contact</h2><p><a href="mailto:zaindharper@gmail.com">zaindharper@gmail.com</a> · <a href="https://www.linkedin.com/in/zaindanaharper/">LinkedIn</a> · <a href="https://github.com/HarperZ9">GitHub</a></p></section>', '</article>', source_note(source)]
     credentials = source.get('credentials', [])
     skills = [item for item in credentials if item['kind'] == 'Applied Skills credential']
     advanced = [item for item in credentials if item['kind'].startswith('Advanced ') and item['provider'] == 'Microsoft Learn']

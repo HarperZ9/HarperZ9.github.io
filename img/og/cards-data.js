@@ -124,7 +124,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "flywheel.html",
     "routeTitle": "Flywheel",
-    "routeSummary": "Flywheel runs AI tasks with a model you choose and keeps a record you can recheck. Version 1.1.0 is available as a Python package and a Windows installer. Lane cards in the app run tools and show the setup they need. Flywheel keeps its own records on your machine; request content goes to the model provider you choose.",
+    "routeSummary": "Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick.",
     "imagePath": "img/og/flywheel.png"
   },
   "relay": {
@@ -306,7 +306,7 @@ window.CARD_DATA = {
     "constellationCard": true,
     "routeHref": "accountable-surface.html",
     "routeTitle": "Accountable Surface",
-    "routeSummary": "Accountable Surface lets an AI agent take only the file, command, web, or browser action a person has approved. It checks the request and authorization, blocks or pauses when needed, verifies the outcome, rolls back reversible failures, and records decisions and outcomes in a journal. Persisted journals are hash-chained so later edits, deletions, or reordering are detected.",
+    "routeSummary": "Accountable Surface lets an AI agent take only the file, command, web or browser actions a person has approved. It checks each request, blocks or pauses when needed, checks the outcome, rolls back reversible failures, and keeps a hash-chained journal of decisions and outcomes.",
     "imagePath": "img/og/accountable-surface.png"
   },
   "accountable-engine": {

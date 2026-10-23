@@ -1,13 +1,28 @@
 {
  "user": "HarperZ9",
+ "excluded_admin_orgs": 1,
  "buckets": {
   "merged": {
-   "total": 34,
-   "engineering": 31,
+   "total": 40,
+   "engineering": 37,
    "listings": 3,
-   "engineering_repos": 26,
-   "repos": 29,
+   "engineering_repos": 30,
+   "repos": 33,
    "items": [
+    {
+     "repo": "YoadElkayam/mcp-fuse",
+     "title": "test(conformance): expose dropped-response retry identity gap",
+     "url": "https://github.com/YoadElkayam/mcp-fuse/pull/9",
+     "listing": false,
+     "closed_at": "2026-09-05T23:27:18Z"
+    },
+    {
+     "repo": "biomejs/biome",
+     "title": "fix(formatter): print declare before accessibility modifiers",
+     "url": "https://github.com/biomejs/biome/pull/11518",
+     "listing": false,
+     "closed_at": "2026-08-29T08:23:45Z"
+    },
     {
      "repo": "Hebbian-Robotics/hflow",
      "title": "Test episodes view reserved-column drift",
@@ -21,6 +36,20 @@
      "url": "https://github.com/freelawproject/litigant-portal/pull/820",
      "listing": false,
      "closed_at": "2026-08-25T15:16:10Z"
+    },
+    {
+     "repo": "gkroiz/agent-interp-envs",
+     "title": "docs: correct precommit arm and resume details",
+     "url": "https://github.com/gkroiz/agent-interp-envs/pull/55",
+     "listing": false,
+     "closed_at": "2026-09-17T02:49:02Z"
+    },
+    {
+     "repo": "tylerjrbuell/reactive-agents-ts",
+     "title": "feat(tools): corrective path-traversal rejections + relative-path schema hints",
+     "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/202",
+     "listing": false,
+     "closed_at": "2026-09-05T20:43:34Z"
     },
     {
      "repo": "dgenio/agentfence",
@@ -58,6 +87,13 @@
      "closed_at": "2026-08-15T19:49:29Z"
     },
     {
+     "repo": "hsaghir/looplet",
+     "title": "Recipe: migrate a private tool loop to one outcome-grounded regression contract",
+     "url": "https://github.com/hsaghir/looplet/pull/109",
+     "listing": false,
+     "closed_at": "2026-08-28T18:05:27Z"
+    },
+    {
      "repo": "sundeep-dayalan/sentient-trader",
      "title": "feat: add config-gated deterministic no-key replay mode (#31)",
      "url": "https://github.com/sundeep-dayalan/sentient-trader/pull/53",
@@ -77,6 +113,13 @@
      "url": "https://github.com/open-multi-agent/open-multi-agent/pull/452",
      "listing": false,
      "closed_at": "2026-07-29T02:25:59Z"
+    },
+    {
+     "repo": "simonw/datasette",
+     "title": "Give each non-blocking write a distinct task id",
+     "url": "https://github.com/simonw/datasette/pull/2861",
+     "listing": false,
+     "closed_at": "2026-09-08T17:03:52Z"
     },
     {
      "repo": "redxzeta/runtrail",
@@ -249,15 +292,29 @@
    ]
   },
   "open": {
-   "total": 26,
-   "engineering": 17,
-   "listings": 9,
-   "engineering_repos": 15,
-   "repos": 24,
+   "total": 21,
+   "engineering": 14,
+   "listings": 7,
+   "engineering_repos": 13,
+   "repos": 20,
    "items": [
     {
+     "repo": "Codelab-Davis/Anchor",
+     "title": "test: cover file metadata preservation",
+     "url": "https://github.com/Codelab-Davis/Anchor/pull/102",
+     "listing": false,
+     "closed_at": null
+    },
+    {
+     "repo": "rfingerlin9284/coinbase_clean_rbotz",
+     "title": "Add startup key-hygiene check",
+     "url": "https://github.com/rfingerlin9284/coinbase_clean_rbotz/pull/2",
+     "listing": false,
+     "closed_at": null
+    },
+    {
      "repo": "finos/opengris-scaler",
-     "title": "Fix pickle round trips for PyYMQ exceptions",
+     "title": "fix: pickle round trips for PyYMQ exceptions",
      "url": "https://github.com/finos/opengris-scaler/pull/961",
      "listing": false,
      "closed_at": null
@@ -291,30 +348,9 @@
      "closed_at": null
     },
     {
-     "repo": "gkroiz/agent-interp-envs",
-     "title": "docs: correct precommit arm and resume details",
-     "url": "https://github.com/gkroiz/agent-interp-envs/pull/55",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "tylerjrbuell/reactive-agents-ts",
-     "title": "feat(tools): corrective path-traversal rejections + relative-path schema hints",
-     "url": "https://github.com/tylerjrbuell/reactive-agents-ts/pull/202",
-     "listing": false,
-     "closed_at": null
-    },
-    {
      "repo": "confident-ai/deepeval",
      "title": "fix(metrics): measure() returns the score under async_mode=True across all metrics",
      "url": "https://github.com/confident-ai/deepeval/pull/3091",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "hsaghir/looplet",
-     "title": "Recipe: migrate a private tool loop to one outcome-grounded regression contract",
-     "url": "https://github.com/hsaghir/looplet/pull/109",
      "listing": false,
      "closed_at": null
     },
@@ -333,30 +369,9 @@
      "closed_at": null
     },
     {
-     "repo": "simonw/datasette",
-     "title": "Give each non-blocking write a distinct task id",
-     "url": "https://github.com/simonw/datasette/pull/2861",
-     "listing": false,
-     "closed_at": null
-    },
-    {
-     "repo": "modelcontextprotocol/python-sdk",
-     "title": "Clarify missing tool_result validation error",
-     "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3053",
-     "listing": false,
-     "closed_at": null
-    },
-    {
      "repo": "jim-schwoebel/awesome_ai_agents",
      "title": "Add Project Telos agent tooling",
      "url": "https://github.com/jim-schwoebel/awesome_ai_agents/pull/372",
-     "listing": true,
-     "closed_at": null
-    },
-    {
-     "repo": "slavakurilyak/awesome-ai-agents",
-     "title": "Add Project Telos observability framework",
-     "url": "https://github.com/slavakurilyak/awesome-ai-agents/pull/330",
      "listing": true,
      "closed_at": null
     },
@@ -378,13 +393,6 @@
      "repo": "Puliczek/awesome-mcp-security",
      "title": "Add Project Telos MCP security tool",
      "url": "https://github.com/Puliczek/awesome-mcp-security/pull/222",
-     "listing": true,
-     "closed_at": null
-    },
-    {
-     "repo": "MobinX/awesome-mcp-list",
-     "title": "Add Project Telos developer tool",
-     "url": "https://github.com/MobinX/awesome-mcp-list/pull/336",
      "listing": true,
      "closed_at": null
     },
@@ -440,12 +448,19 @@
    ]
   },
   "closed_unmerged": {
-   "total": 17,
-   "engineering": 15,
-   "listings": 2,
-   "engineering_repos": 14,
-   "repos": 16,
+   "total": 21,
+   "engineering": 17,
+   "listings": 4,
+   "engineering_repos": 16,
+   "repos": 20,
    "items": [
+    {
+     "repo": "Codelab-Davis/Anchor",
+     "title": "test: cover file metadata propagation",
+     "url": "https://github.com/Codelab-Davis/Anchor/pull/101",
+     "listing": false,
+     "closed_at": "2026-09-07T20:34:47Z"
+    },
     {
      "repo": "kysely-org/kysely",
      "title": "test(cancellation): cover connection release when abort strategy is unsupported",
@@ -494,6 +509,27 @@
      "url": "https://github.com/modelcontextprotocol/inspector/pull/1728",
      "listing": false,
      "closed_at": "2026-07-31T19:03:53Z"
+    },
+    {
+     "repo": "modelcontextprotocol/python-sdk",
+     "title": "Clarify missing tool_result validation error",
+     "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3053",
+     "listing": false,
+     "closed_at": "2026-10-05T11:30:04Z"
+    },
+    {
+     "repo": "slavakurilyak/awesome-ai-agents",
+     "title": "Add Project Telos observability framework",
+     "url": "https://github.com/slavakurilyak/awesome-ai-agents/pull/330",
+     "listing": true,
+     "closed_at": "2026-09-24T17:22:38Z"
+    },
+    {
+     "repo": "MobinX/awesome-mcp-list",
+     "title": "Add Project Telos developer tool",
+     "url": "https://github.com/MobinX/awesome-mcp-list/pull/336",
+     "listing": true,
+     "closed_at": "2026-09-14T11:18:16Z"
     },
     {
      "repo": "PyCQA/isort",
@@ -569,9 +605,9 @@
   }
  },
  "totals": {
-  "all": 77,
-  "engineering": 63,
+  "all": 82,
+  "engineering": 68,
   "listings": 14,
-  "engineering_repos": 50
+  "engineering_repos": 54
  }
 }

@@ -8,7 +8,7 @@ Technical Support | Developer Operations | Quality Assurance
 
 ## Summary
 
-Self-directed software builder transitioning from eleven years of full-time arboriculture. Turns reported failures into reproducible tests and usable fixes; combines released personal projects with technical support and customer-facing field operations.
+Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests.
 
 ## Technical Skills
 
@@ -18,11 +18,13 @@ Python, SQL, Git, GitHub Actions, pytest, Linux, Windows, HTTP/JSON APIs, WebSoc
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.
+- Built Flywheel, a Python/Flutter AI workstation on PyPI, Homebrew, Scoop and a Windows installer, with permission-checked tools.
 
 - Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
 
-- Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.
+- Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2, a browser extension that shows the sources behind social media replies.
+
+- Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.
 
 ### Freelance Technical Writer | Independent projects | Began 2017
 
@@ -42,7 +44,7 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
-## Selected Open-Source Contributions: 6 Merged
+## Open-Source Contributions: 37 Merged in 30 Repositories
 
 - Free Law Project #820: documented runnable database-free tests, giving contributors a focused check path without starting the full database-backed stack. Merged.
 

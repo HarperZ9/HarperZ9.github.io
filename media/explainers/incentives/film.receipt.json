@@ -9,7 +9,10 @@
   },
   "evidence": {
     "path": "media/explainers/incentives/evidence.json",
-    "sha256": "3c0891448f5ba4e8a209d324acebd360861f77a98c7a89e3c568acae38e2ff36"
+    "sha256": "ad92e3beb5836a08bbfd1ee36817493b639f96e51d176836c30c6dfd1a8caa79",
+    "rendered_from_sha256": "3c0891448f5ba4e8a209d324acebd360861f77a98c7a89e3c568acae38e2ff36",
+    "revised": "2026-10-23",
+    "revision_note": "Source labels and context reworded for the page; the field does_not_prove is renamed context. The MP4 was rendered from the earlier file, so its burned-in source tab shows the earlier labels until the next render."
   },
   "render_code": {
     "media/explainers/incentives/film.scene.mjs": "164107cae0561989e538f7cf65f5f574febb8ed16fd8756ad2e8218791cad2a9",

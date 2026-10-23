@@ -47,7 +47,7 @@ const stream = {
 // ---- logit lens ----
 const lensOf = (m, o) => logitLens(m, held, o).map(r);
 const lens = {
-  about: `Logit lens (nostalgebraist 2020, a blog post, not a peer-reviewed paper): apply the model's final layer norm and output matrix to the stream after each sub-step, as if the network ended there, and score those predictions on the ${N} held-out targets. loss in nats; top1 is the share of targets that are the first choice; copy and local split the targets as the corpus labels them. The last row is the model's real output (equal to its evaluated loss, ${round(ev.loss, 6)}). normOnly skips the final norm's learned gain and bias. untrained is the control. The readout was trained only on the last stream, so an early row measures what that readout can decode from an earlier stream; a poor score there does not prove the information is absent.`,
+  about: `Logit lens (nostalgebraist 2020, a LessWrong blog post): apply the model's final layer norm and output matrix to the stream after each sub-step, as if the network ended there, and score those predictions on the ${N} held-out targets. loss in nats; top1 is the share of targets that are the first choice; copy and local split the targets as the corpus labels them. The last row is the model's real output (equal to its evaluated loss, ${round(ev.loss, 6)}). normOnly skips the final norm's learned gain and bias. untrained is the control. The readout was trained only on the last stream, so an early row measures what that readout can decode from an earlier stream; a poor score there does not prove the information is absent.`,
   trained: lensOf(model), normOnly: lensOf(model, { normOnly: true }), untrained: lensOf(untrained),
 };
 
