@@ -1764,6 +1764,42 @@
     "t": 0
    }
   },
+  "flywheel-pilot.jpg": {
+   "backend": "chrome-155.0.8059.85-skia",
+   "content_sha256": "62cdcbdee9db3cfb8d684043fdb58311a648d220b8d26f95d30c6b3384639790",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "flywheel-pilot.jpg": "578074b5125275dae103d92e35c99ec273c968192726c10db72cfbc5f5ff632b",
+    "flywheel-pilot.svg": "daa6e13f56b48d8157b5498c68a998c67a585845b9e434b86b3d795009c7c496"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "8f9c5f64f1eeee432736c3520cafce684585e54e5ca1b16929de5e25f6e4bb01",
+   "reconcile": null,
+   "scene_sha256": "e44027645bdb493d06ffb5f785e42db650e002e04d7643c68b529c7a8ef8daa5",
+   "schema": "superstack.receipt/1",
+   "seed": "flywheel-pilot",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 391783572,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "flywheel.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "c2bc5a35636d4411629c92f01ad02f0f40f33242dca4f81a0a74ce5015ce54b2",
