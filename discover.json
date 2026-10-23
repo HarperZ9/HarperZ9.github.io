@@ -1,0 +1,141 @@
+{
+  "origin": "https://harperz9.github.io",
+  "scope": "sitemap",
+  "exclude": [
+    "tests/**",
+    "home/**",
+    "node_modules/**",
+    "img/og/_card.html",
+    "frontier-safety.html",
+    "frontier-safety/**",
+    "checking-the-machines.html",
+    "briefings/2026-08-26-openai-hugging-face-incident/**"
+  ],
+  "notes": {
+    "exclude": "frontier-safety and checking-the-machines are written by builders that pin their own bytes (tools/build_frontier_safety_briefing.py, tools/build_checking_machines.py); their Article markup belongs in those builders. The incident briefing's bytes are pinned by its own build.json receipt; its social card belongs in that build. img/og/_card.html is the card render template, not a page.",
+    "tools": "One record per tool. tools/structured_data.py reads this list for the SoftwareApplication markup, and discover checks llms.txt, llms-full.txt and the markup against it. `discover site . --online` compares each version with its registry."
+  },
+  "tools": [
+    {
+      "name": "Flywheel",
+      "repo": "flywheel",
+      "page": "flywheel.html",
+      "version": "1.9.0",
+      "registry": "pypi",
+      "package": "flywheel-verify",
+      "downloadUrl": "https://pypi.org/project/flywheel-verify/",
+      "install": "python -m pip install flywheel-verify",
+      "license": "https://github.com/HarperZ9/flywheel/blob/main/LICENSE",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    },
+    {
+      "name": "Articulate",
+      "repo": "articulate",
+      "page": "articulate.html",
+      "version": "0.16.0",
+      "registry": "pypi",
+      "package": "articulate-writing",
+      "downloadUrl": "https://pypi.org/project/articulate-writing/",
+      "install": "python -m pip install articulate-writing",
+      "license": "https://github.com/HarperZ9/articulate/blob/main/LICENSE",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    },
+    {
+      "name": "Daylight Commons",
+      "repo": "daylight-commons",
+      "version": "3.5.0",
+      "registry": "github",
+      "package": "HarperZ9/daylight-commons",
+      "downloadUrl": "https://github.com/HarperZ9/daylight-commons/releases/latest",
+      "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
+      "os": "Chrome, Edge, Brave, Firefox",
+      "category": "BrowserApplication"
+    },
+    {
+      "name": "EMET",
+      "repo": "emet",
+      "page": "emet.html",
+      "version": "1.3.1",
+      "registry": "pypi",
+      "package": "emet",
+      "downloadUrl": "https://pypi.org/project/emet/",
+      "install": "python -m pip install emet",
+      "license": "https://spdx.org/licenses/MPL-2.0.html",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    },
+    {
+      "name": "BuildLang",
+      "repo": "buildlang",
+      "page": "buildlang.html",
+      "version": "1.10.0",
+      "registry": "github",
+      "package": "HarperZ9/buildlang",
+      "downloadUrl": "https://crates.io/crates/buildlang",
+      "install": "cargo install buildlang",
+      "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    },
+    {
+      "name": "raw-native",
+      "repo": "raw-native",
+      "page": "raw.html",
+      "version": "0.8.0",
+      "registry": "github",
+      "package": "HarperZ9/raw-native",
+      "downloadUrl": "https://github.com/HarperZ9/raw-native/releases/latest",
+      "license": "https://github.com/HarperZ9/raw-native/blob/main/LICENSE",
+      "os": "Windows, Linux, WebAssembly",
+      "category": "MultimediaApplication"
+    },
+    {
+      "name": "Telos",
+      "repo": "telos",
+      "version": "0.9.0",
+      "registry": "npm",
+      "package": "project-telos-mcp",
+      "downloadUrl": "https://www.npmjs.com/package/project-telos-mcp",
+      "install": "npx -y project-telos-mcp",
+      "license": "https://github.com/HarperZ9/telos/blob/main/LICENSE",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    },
+    {
+      "name": "learn",
+      "repo": "learn",
+      "page": "learn.html",
+      "version": "2.3.0",
+      "registry": "npm",
+      "package": "@harperz9/learn",
+      "downloadUrl": "https://www.npmjs.com/package/@harperz9/learn",
+      "install": "npm install -g @harperz9/learn",
+      "license": "https://github.com/HarperZ9/learn/blob/main/LICENSE",
+      "os": "Windows, macOS, Linux",
+      "category": "EducationalApplication"
+    },
+    {
+      "name": "open-archives",
+      "repo": "open-archives",
+      "version": "0.1.0",
+      "downloadUrl": "https://github.com/HarperZ9/open-archives",
+      "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
+      "os": "Windows, macOS, Linux",
+      "category": "MultimediaApplication"
+    },
+    {
+      "name": "discover",
+      "repo": "discover",
+      "version": "0.1.2",
+      "registry": "github",
+      "package": "HarperZ9/discover",
+      "downloadUrl": "https://github.com/HarperZ9/discover/releases/latest",
+      "install": "python -m pip install \"git+https://github.com/HarperZ9/discover@v0.1.2\"",
+      "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
+      "os": "Windows, macOS, Linux",
+      "category": "DeveloperApplication"
+    }
+  ]
+}

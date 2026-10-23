@@ -1,0 +1,31 @@
+name: Tool versions in llms files
+
+# llms.txt, llms-full.txt and the SoftwareApplication markup name each tool's
+# current version from discover.json. This compares those versions with PyPI,
+# npm and GitHub Releases every day, and on any change to the files, and fails
+# when a tool has shipped a version the site does not name yet.
+
+on:
+  schedule:
+    - cron: "17 14 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths: ["discover.json", "llms.txt", "llms-full.txt"]
+
+permissions:
+  contents: read
+
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Compare tool versions with their registries
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python -m pip install --quiet "git+https://github.com/HarperZ9/discover@v0.1.2"
+          discover site . --gate --online

@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-23",
+  "note": "Search and AI-search metadata: SoftwareApplication nodes (version, download, licence) from discover.json on tool pages, VideoObject nodes from system/videos.json on pages with playable videos, the YouTube channel in Person.sameAs, and description, canonical and Open Graph tags for the analytics records and the cleanroom demo. Head and generated-block changes only.",
+  "paths": {
+    "analytics/benchmark-evidence-status.html": "15b88acc1b2bb2dee700366a8c215f46d5beca9eb4ba9d0c1e940f58dc5d88e0",
+    "analytics/current-cross-harness-pilot.html": "e0a4c46a31477582c8b0c0c66c9d97f348ee1cd73f3eaa110f43c8642339c422",
+    "analytics/exploratory-stack-comparison.html": "c1f58dfa4c9aa297b0e18f56a564d45ebd3ca6e7151751e3e5c601bb9489e5b0",
+    "analytics/flywheel-benchmark-record.html": "9d2734b45f1534260989cf1edc25e0c3be4f667ad783c3ec05be5b874289847d",
+    "analytics/model-pass-at-1-comparison.html": "edf7070cd46f0c882119f0fa5c7401215125ee570d6dee6811ae25c16d52fe6e",
+    "analytics/portfolio-source-inventory.html": "ac5d2578bfed967f458827a3e13f9b73afa696e40a049203108133f31ee10c20",
+    "demos/crucible-cleanroom/index.html": "d71e90f5b4a747b5d2fa2859ec07423fab64c2738a69fc94fac5a9899554e791",
+    "flywheel.html": "70f999cc6185eabee535b470e57b2701f9f2039f3fef465960d3f1669ab57a47",
+    "index.html": "22b4df336c96c4e7c564cd703b2331a85d4ede0f44021ce38f487df7d8538e0d",
+    "no-receipt-no-accept.html": "6464d397df3bac621c0713eaa920ccbb0a334552fa701a67f81e2e37f06a1592"
+  }
+}
