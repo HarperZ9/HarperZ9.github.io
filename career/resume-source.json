@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-10-07",
+  "reviewed": "2026-10-23",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -353,7 +353,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.",
+          "text": "Built Flywheel, a Python/Flutter AI workstation installable from PyPI, Homebrew, Scoop, or a Windows installer, with Rowan orchestration, model routing, and permission-checked tools.",
           "evidence": [
             "flywheel"
           ]
@@ -368,7 +368,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.",
+          "text": "Built Articulate writing tools, Accountable Surface approval interfaces, and the Daylight Commons browser extension; each supplies inspectable reports and records for troubleshooting and review.",
           "evidence": [
             "articulate",
             "accountable-surface"
@@ -489,7 +489,7 @@
         },
         {
           "kind": "li",
-          "text": "Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.",
+          "text": "Built and shipped Flywheel 1.9.0 on PyPI, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer; its behavior-check caught 20 of 20 planted changes with 0 of 50 false alarms.",
           "evidence": [
             "flywheel"
           ]
@@ -503,7 +503,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.",
+          "text": "Built Articulate 0.14.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks, and Phantom audit/restore workflows for inspectable changes.",
           "evidence": [
             "articulate",
             "accountable-surface",
@@ -906,10 +906,10 @@
         },
         {
           "kind": "p",
-          "text": "Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
+          "text": "Primary owned platform. Flywheel v1.9.0, released October 15, 2026, is published on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
           "evidence": [
             "flywheel",
-            "flywheel-150"
+            "flywheel-190"
           ]
         },
         {
@@ -948,6 +948,13 @@
           ]
         },
         {
+          "kind": "li",
+          "text": "Added behavior-check in v1.9.0: it replays 13 scripted sessions on two builds and names the first event that differs. On a corpus written before it ran, it flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. These checks used a scripted model on Windows; no hosted model was called.",
+          "evidence": [
+            "flywheel-190"
+          ]
+        },
+        {
           "kind": "h3",
           "text": "Accountable Surface | Governed actions and computer-use adapters"
         },
@@ -971,10 +978,21 @@
         },
         {
           "kind": "p",
-          "text": "Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.9.0, released October 3, 2026, adds project-specific writing rules, domain profiles, writing-process records, and reports of guarded edits. Detector rules retain the published v0.5.2 fingerprint.",
+          "text": "Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.14.0, released October 23, 2026 and published on PyPI as articulate-writing, masks Markdown structure before the detector rules run. On 3,000 Markdown files the masks removed 5,123 findings on table separator rows and added none; the detector rules and their fingerprint did not change.",
           "evidence": [
             "articulate",
-            "articulate-090"
+            "articulate-0140"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Daylight Commons | Browser extension for checkable evidence"
+        },
+        {
+          "kind": "p",
+          "text": "Built a browser extension that shows the sourced evidence behind replies on X, Reddit, YouTube, Bluesky, Mastodon, and other sites. Each sign names its source and states what it does not prove; the extension never labels an account a bot and runs with no server, account, or analytics. Version 3.0.0, released October 23, 2026 under AGPL-3.0, stores evidence lookups as a hash-chained file that a command-line tool verifies offline. No Mozilla-signed build exists yet, and most signs have no measured precision.",
+          "evidence": [
+            "daylight-commons-300"
           ]
         },
         {
@@ -1025,9 +1043,11 @@
         },
         {
           "kind": "p",
-          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Experimental backends and linear-type work remain distinguished from the supported path.",
+          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. For 1.7.0, 27 held-out tasks were sealed by hash first; two fresh agents scored 20 and 17 of 27, short of the 22 set in advance, and each failure class became an issue.",
           "evidence": [
-            "buildlang"
+            "buildlang",
+            "buildlang-170",
+            "buildlang-180"
           ]
         },
         {
@@ -1058,11 +1078,12 @@
         },
         {
           "kind": "p",
-          "text": "Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product.",
+          "text": "Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub, each documented with a checked first run, a comparison with adjacent tools, and stated limits.",
           "evidence": [
             "gather",
             "index",
-            "forum"
+            "forum",
+            "suite-20261023"
           ]
         },
         {
@@ -1078,6 +1099,13 @@
             "enb-runtime-core",
             "brender-archival",
             "engine-revival"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "raw-native is a C++ renderer that draws each scene on a CPU reference and on the GPU through D3D12 or WebGPU, then writes a certificate stating whether the two agree within committed tolerances. Version 0.8.0, released October 14, 2026, produced byte-identical default renders from its Windows, D3D12, Linux, and WebAssembly builds and passed 60 of 60 tests with MSVC and GCC. No hardware-GPU render was checked for that release; Vulkan is an optional hardware probe, not a render backend.",
+          "evidence": [
+            "raw-native-080"
           ]
         },
         {
@@ -1190,7 +1218,7 @@
         },
         {
           "kind": "p",
-          "text": "Graphics and domain knowledge: D3D11/HLSL, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.",
+          "text": "Graphics and domain knowledge: D3D11/D3D12, HLSL, WebGPU/WGSL, CPU reference rendering and GPU parity checks, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.",
           "evidence": [
             "history",
             "elder-enb",

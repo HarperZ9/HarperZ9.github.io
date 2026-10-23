@@ -18,11 +18,11 @@ Self-Directed Projects
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.
+- Built and shipped Flywheel 1.9.0 on PyPI, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer; its behavior-check caught 20 of 20 planted changes with 0 of 50 false alarms.
 
 - Built 324 exhaustive terminal-state fixtures and 337 synthetic component cases with 5,058 frozen expectations, distinguishing failed outputs from valid results within defined schemas.
 
-- Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.
+- Built Articulate 0.14.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks, and Phantom audit/restore workflows for inspectable changes.
 
 - Executed a pinned METR count_odds check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.
 

@@ -54,7 +54,7 @@ AI Platform and Agent Systems
 
 Flywheel | Model-agnostic AI workstation and coding harness
 
-Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
+Primary owned platform. Flywheel v1.9.0, released October 15, 2026, is published on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.
 
 - Routes tasks to hosted or local models through an OpenAI-compatible gateway; keeps model selection separate from the task record and exposes command-line, desktop, and API entry points.
 
@@ -66,6 +66,8 @@ Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Wi
 
 - Released a monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the admission check and no installed signer; Windows anchoring was parse-checked only.
 
+- Added behavior-check in v1.9.0: it replays 13 scripted sessions on two builds and names the first event that differs. On a corpus written before it ran, it flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. These checks used a scripted model on Windows; no hosted model was called.
+
 Accountable Surface | Governed actions and computer-use adapters
 
 Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions; persisted journals preserve decisions and observed effects. Reversible adapters include restoration paths. Fake drivers make browser and desktop scenarios testable without uncontrolled live actions.
@@ -74,7 +76,11 @@ The v0.2.0 release provides source and wheel artifacts on GitHub. The project re
 
 Articulate | Writing analysis and accountable editing
 
-Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.9.0, released October 3, 2026, adds project-specific writing rules, domain profiles, writing-process records, and reports of guarded edits. Detector rules retain the published v0.5.2 fingerprint.
+Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.14.0, released October 23, 2026 and published on PyPI as articulate-writing, masks Markdown structure before the detector rules run. On 3,000 Markdown files the masks removed 5,123 findings on table separator rows and added none; the detector rules and their fingerprint did not change.
+
+Daylight Commons | Browser extension for checkable evidence
+
+Built a browser extension that shows the sourced evidence behind replies on X, Reddit, YouTube, Bluesky, Mastodon, and other sites. Each sign names its source and states what it does not prove; the extension never labels an account a bot and runs with no server, account, or analytics. Version 3.0.0, released October 23, 2026 under AGPL-3.0, stores evidence lookups as a hash-chained file that a command-line tool verifies offline. No Mozilla-signed build exists yet, and most signs have no measured precision.
 
 Agent tools, memory, and coordination
 
@@ -92,7 +98,7 @@ Developed Python, Rust, Node, and Go implementations around shared conformance c
 
 BuildLang | Rust compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Experimental backends and linear-type work remain distinguished from the supported path.
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. For 1.7.0, 27 held-out tasks were sealed by hash first; two fresh agents scored 20 and 17 of 27, short of the 22 set in advance, and each failure class became an issue.
 
 Phantom | Hardware-identity inspection and reversible system changes
 
@@ -104,11 +110,13 @@ Private systems work includes Array for approval-gated assessment orchestration 
 
 Research intake and workspace tooling
 
-Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product.
+Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub, each documented with a checked first run, a comparison with adjacent tools, and stated limits.
 
 Graphics, Color, and Runtime Work
 
 Developed HLSL and C++ graphics and game-modding work spanning post-processing, Direct3D 11 integration, shader debugging, GPU traces, and shared-memory interfaces. Related public projects include Elder ENB, SkyrimBridge, ENB Runtime Core, Brender Archival, and Engine Revival. Existing engines and collaborators retain their own attribution.
+
+raw-native is a C++ renderer that draws each scene on a CPU reference and on the GPU through D3D12 or WebGPU, then writes a certificate stating whether the two agree within committed tolerances. Version 0.8.0, released October 14, 2026, produced byte-identical default renders from its Windows, D3D12, Linux, and WebAssembly builds and passed 60 of 60 tests with MSVC and GCC. No hardware-GPU render was checked for that release; Vulkan is an optional hardware probe, not a render backend.
 
 Color and creative-tool work includes Build Color, Calibrate Pro, Studio Engine, and browser-based studio/print surfaces: perceptual color spaces, color difference, HDR/tone-mapping tools, display characterization, and generative visual systems. These are engineering projects, not claims of professional calibration certification.
 
@@ -138,7 +146,7 @@ Verification and controlled actions: capability effects, operator grants, action
 
 Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, static websites, release documentation, and checksums.
 
-Graphics and domain knowledge: D3D11/HLSL, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.
+Graphics and domain knowledge: D3D11/D3D12, HLSL, WebGPU/WGSL, CPU reference rendering and GPU parity checks, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.
 
 Working Practice
 

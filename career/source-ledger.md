@@ -1,6 +1,6 @@
 # Career source ledger
 
-Reviewed October 7, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
+Reviewed October 23, 2026. The structured career source is `resume-source.json`. It generates the current resume/CV HTML, Markdown, and plain text; the reviewed HTML generates the PDF and DOCX files.
 
 ## Recovery and authority
 
@@ -667,3 +667,41 @@ Published October 4, 2026. The Windows installer is attached to the release. The
 https://github.com/HarperZ9/articulate/releases/tag/v0.9.0
 
 Published October 3, 2026. Includes project writing rules, domain profiles, writing-process records, and guarded edit reports. Detector rules retain the published v0.5.2 fingerprint. Articulate MCP reported version 0.9.0 during this review.
+
+## October 23, 2026 release review
+
+Each entry was checked against its GitHub release page and, where named, the package registry on October 23, 2026 (UTC). The four targeted resumes keep their role focus and one-page layout. Low Water is a private repository and is not described. No customer, adoption, store-listing, revenue or employment claim is added.
+
+### flywheel-190
+
+https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0 and https://pypi.org/project/flywheel-verify/1.9.0/
+
+Published October 15, 2026; the PyPI upload is dated the same day. Adds Homebrew and Scoop manifests, `flywheel behavior-check` and `flywheel report scope`. On a corpus written before it ran, behavior-check reported 20 of 20 planted changes as DRIFT and 0 of 50 unchanged pairs. The checks used a scripted model on Windows only and called no hosted model. The desktop app ships for Windows only.
+
+### articulate-0140
+
+https://github.com/HarperZ9/articulate/releases/tag/v0.14.0 and https://pypi.org/project/articulate-writing/0.14.0/
+
+Published October 23, 2026. Markdown structure is masked before the detector rules run. On 3,000 Markdown files the masks removed 5,123 separator findings, 8 register words inside names and 2 findings inside indented code, and added none. Detector rules and their fingerprint are unchanged in this release. Writing signals do not prove authorship or factual truth.
+
+### daylight-commons-300
+
+https://github.com/HarperZ9/daylight-commons/releases/tag/v3.0.0
+
+Published October 23, 2026, as the first release under the Daylight Commons name (formerly Radar) and under AGPL-3.0 for code. Known limits from the release: no Mozilla-signed build, most signs unmeasured, no measured precision for the campaign lens, and private vulnerability reporting not yet enabled. A valid release signature does not show the code is safe.
+
+### buildlang-170 and buildlang-180
+
+https://github.com/HarperZ9/buildlang/releases/tag/v1.7.0 and https://github.com/HarperZ9/buildlang/releases/tag/v1.8.0; https://crates.io/crates/buildlang/1.8.0
+
+1.7.0 was published October 15, 2026. Before it, 27 held-out tasks were sealed by hash; two fresh agents scored 20 and 17 of 27 against a preset bar of 22, so the bar was missed. 1.8.0 was published October 23, 2026, to GitHub and crates.io and adds `Box<T>` and recursive types. Boxed memory is not freed until the program exits.
+
+### raw-native-080
+
+https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0
+
+Published October 14, 2026. Render backends are the CPU reference, D3D12 and WebGPU. Vulkan appears only as an optional hardware probe and compute kernels, not as a render backend. Default render outputs were byte-identical across the packaged Windows, Windows D3D12, Linux and CPU WebAssembly builds; ctest passed 60 of 60 with MSVC and GCC 13.3. No hardware-GPU render was checked for this release.
+
+### suite-20261023
+
+Gather 2.4.0 (https://github.com/HarperZ9/gather/releases/tag/v2.4.0, https://pypi.org/project/gather-engine/2.4.0/), Crucible 1.6.0 (https://github.com/HarperZ9/crucible/releases/tag/v1.6.0, https://pypi.org/project/crucible-bench/1.6.0/), EMET 1.3.1 (https://github.com/HarperZ9/emet/releases/tag/v1.3.1, https://pypi.org/project/emet/1.3.1/) and Canon 0.7.0 (https://github.com/HarperZ9/canon/releases/tag/v0.7.0, GitHub only) were published October 23, 2026. Gather and Canon move future releases to AGPL-3.0-only. Crucible 1.6.0 and EMET 1.3.1 change documentation and metadata only.

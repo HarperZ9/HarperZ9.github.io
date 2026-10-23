@@ -18,11 +18,11 @@ Self-Directed Projects
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.
+- Built Flywheel, a Python/Flutter AI workstation installable from PyPI, Homebrew, Scoop, or a Windows installer, with Rowan orchestration, model routing, and permission-checked tools.
 
 - Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
 
-- Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.
+- Built Articulate writing tools, Accountable Surface approval interfaces, and the Daylight Commons browser extension; each supplies inspectable reports and records for troubleshooting and review.
 
 Freelance Technical Writer | Independent projects | Began 2017
 
