@@ -33,7 +33,7 @@ export function prepare(A) {
     common: t("the common reading", 36, 900, 150, A.head, "right"),
     miscon: t("the misconception", 32, 930, 150, A.mono, "left"),
     mutual: t("“mutual coercion, mutually agreed upon”", 40, 960, 712),
-    picture: t("a picture of the argument, not a count", 28, 960, 196, A.mono),
+    picture: t("an illustration of Hardin's argument", 28, 960, 196, A.mono),
   };
 }
 

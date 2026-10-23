@@ -11,7 +11,7 @@
     "style": "painted",
     "open": {
       "seconds": 4.0,
-      "what": "Pylon on the painted harbour sets a cone on a paper boat that has just washed in: a claim nobody has checked. No words."
+      "what": "Pylon on the painted harbour sets a cone on a paper boat that has just washed in: a claim waiting for its first check. The open is silent."
     },
     "close": {
       "seconds": 5.0,
@@ -47,7 +47,7 @@
         "In 2022 its maintainer wrote that it was an unpaid hobby project.",
         "A helpful newcomer had been sending patches since 2021. Within months, the maintainer called the newcomer practically a co-maintainer.",
         "In February 2024, the newcomer signed and shipped a new release.",
-        "Part of a backdoor sat only in the release download, and not in the public source.",
+        "Part of the backdoor was in the release download and missing from the public source.",
         "An engineer caught it because remote logins ran about half a second slow."
       ],
       "predict": [
@@ -98,7 +98,7 @@
       ],
       "lines": [
         "One audit traced the licences of 1,858 datasets used to train AI.",
-        "On GitHub, 72 percent were listed with no licence at all.",
+        "On GitHub, 72 percent were listed as licence unspecified.",
         "In 29 percent, the licence listed was looser than the author's own terms.",
         "Tracing each one back to where it was made cut the missing share to 30 percent.",
         "Meanwhile, in one year about 5 percent of a widely used training corpus became fully closed to AI crawlers."
@@ -127,7 +127,7 @@
     },
     {
       "key": "limits",
-      "heading": "What this does not prove",
+      "heading": "Where each source stops",
       "sources": [
         "ostrom2010",
         "longpre2023",
@@ -135,8 +135,8 @@
       ],
       "lines": [
         "Ostrom's cases are fisheries and forests. Applying them to code and data is our inference.",
-        "The licence audit counts missing records. It does not measure harm.",
-        "And a provenance record alone would not have stopped xz. Most of the backdoor was in the public source, signed by a maintainer people trusted."
+        "The licence audit counts missing records. Harm is a separate measurement.",
+        "And most of the xz backdoor was in the public source itself. A maintainer people trusted signed it, so a build record would have matched."
       ]
     },
     {
@@ -163,5 +163,5 @@
       }
     }
   ],
-  "length_note": "The film runs at the author's measured pace, about 4:15 with the host's open and close and the prediction pauses, not the 2:15 the first script assumed. Author decision, 2026-10-14: \"Keep the longer films.\" No lines are cut for length."
+  "length_note": "The film runs at the author's measured pace, about 4:15 with the host's open and close and the prediction pauses; the first script assumed 2:15. Author decision, 2026-10-14: \"Keep the longer films.\" Every line stays."
 }
