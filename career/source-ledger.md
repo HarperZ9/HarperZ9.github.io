@@ -749,3 +749,7 @@ Private repository, described without spoilers or private detail. Five era scrip
 https://harperz9.github.io/career/open-source-census.json
 
 From `tools/pr_census.py`: 37 merged engineering pull requests in 30 external repositories (3 merged listings counted apart), 14 open and 17 closed without merge. The counts on the pages are plain text and are not census-stamped, so a census rerun must update the text with it.
+
+### synthesis-20261023
+
+The CV presents six flagships (Flywheel, Daylight Commons, Articulate, BuildLang, raw-native and Low Water) as pillars of one credo: make checking cheap, protect the commons, and keep provenance at the source. The credo is the author's stated aim; each pillar line cites a public figure from the entries above. The connections come from a private working map read October 23, 2026. Only one of its rows is cited: each Low Water inner-arena fight maps to an entry in the Daylight Commons technique catalogue (status building), and no effect on players is claimed. The offline-verification overlap between Daylight evidence chains, Flywheel receipts and raw-native certificates is stated from each public release. Shared code between the projects is planned and not claimed.

@@ -8,7 +8,7 @@ Technical Support | Developer Operations | Quality Assurance
 
 Summary
 
-Self-directed software builder after eleven years of full-time arboriculture. Turns reported failures into reproducible tests and fixes, backed by technical support and customer-facing field work.
+Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests. Flagship projects aim to make checking cheap.
 
 Technical Skills
 
@@ -18,7 +18,7 @@ Self-Directed Projects
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built Flywheel, a Python/Flutter AI workstation installable from PyPI, Homebrew, Scoop, or a Windows installer, with Rowan orchestration, model routing, and permission-checked tools.
+- Built Flywheel, a Python/Flutter AI workstation on PyPI, Homebrew, Scoop and a Windows installer, with permission-checked tools.
 
 - Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
 

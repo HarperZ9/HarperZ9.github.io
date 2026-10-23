@@ -8,7 +8,7 @@ Curriculum Vitae | Security Evaluation, AI Evaluation, Graphics, and Developer T
 
 Profile
 
-Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 996,649 downloads on Nexus Mods. Flywheel, an AI workstation published on PyPI, runs release checks scored against planted faults. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
+Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 996,649 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.
 
 Seeking red-team, purple-team and security-evaluation work, AI evaluation roles, and graphics engineering. Willing to relocate to London; available for regular travel to San Francisco.
 
@@ -16,15 +16,25 @@ Selected Evidence
 
 - Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327
 
-- Flywheel 1.9.0 behavior-check: flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs, on a corpus written before the check ran. Scripted model, Windows only. github.com/HarperZ9/flywheel/releases/tag/v1.9.0
-
-- Daylight Commons slur sign: precision 91.0%, 3,995 of 4,392, with a 95% interval of 90.1 to 91.8 on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
-
-- raw-native: GPU frames matched the CPU reference in 16 of 16 D3D12 and 16 of 16 WebGPU certificates on an RTX 4090. github.com/HarperZ9/raw-native
-
-- Articulate 0.14.0: Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
-
 - Open source: 37 merged engineering pull requests in 30 external repositories, with 17 closed without merge and 14 open, counted from the GitHub API on October 23, 2026. harperz9.github.io/career/open-source-census.json
+
+Pillars and the Shared Credo
+
+Six flagship projects carry one credo: make checking cheap, protect the commons, and keep provenance at the source.
+
+- Flywheel, make checking cheap: sealed receipts replay offline to MATCH, DRIFT or UNVERIFIABLE. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs, with a scripted model on Windows only. github.com/HarperZ9/flywheel/releases/tag/v1.9.0
+
+- Daylight Commons, protect the commons: AGPL-3.0-only, no server and no data sales, and each sign names its source. Its slur sign holds precision 91.0%, 3,995 of 4,392, with a 95% interval of 90.1 to 91.8 on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
+
+- Articulate, make checking cheap: deterministic findings with content-free receipts. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
+
+- BuildLang, provenance at the source: typed capability effects show a program's ambient access to the compiler. Before 1.7.0, 27 held-out tasks were sealed by hash; two fresh agents scored 20 and 17 against a preset bar of 22, and the miss stays on the record. github.com/HarperZ9/buildlang/releases/tag/v1.7.0
+
+- raw-native, the engine, make checking cheap: each GPU frame carries a certificate against a CPU reference, and 16 of 16 D3D12 and 16 of 16 WebGPU certificates read verified on an RTX 4090. github.com/HarperZ9/raw-native
+
+- Low Water, the game, provenance at the source: art moving to first-party tools, and combat traces checked byte for byte. Private repository; no release claimed.
+
+Where they meet: Daylight's evidence chains, Flywheel's receipts and raw-native's certificates each verify offline from a file, and each Low Water inner-arena fight maps to a technique in the Daylight Commons catalogue, with no effect on players claimed. Shared code between them is still only planned.
 
 Self-Directed Projects
 
@@ -34,7 +44,7 @@ Sole proprietor since September 2026; no paid software clients
 
 - Own the architecture, implementation, integration, tests, documentation, and release work for Flywheel and related tools. Work spans Python services and command-line tools, Flutter desktop software, Rust systems tooling, and browser interfaces.
 
-- Develop model-agnostic workflows, evaluation harnesses, controlled-action interfaces, and source-linked records that can be checked without relying on a model to approve its own answer.
+- Develop model-agnostic workflows, evaluation harnesses, and controlled-action interfaces whose records can be checked without a model approving its own answer.
 
 Personal programming began with game modding, reverse engineering, bot and rotation logic, and runtime-memory tooling, then developed into systems engineering, graphics, compilers, and AI infrastructure.
 
@@ -62,25 +72,25 @@ Subcontracted through Stream/Convergys | Wilsonville, Oregon | 2014 to 2015
 
 Security Evaluation: Red Team and Purple Team
 
-No paid red-team or purple-team engagement to date. This work runs on my own systems and owned test targets. Faults and attacks are planted on purpose, so each defensive check is measured against a known answer and its misses stay on the record.
+No paid red-team or purple-team engagement to date. This work runs on my own systems and owned test targets, with faults and attacks planted on purpose so each defensive check is measured against a known answer.
 
 Planted controls in release checks
 
-Released a Flywheel monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the check and no installed signer; Windows anchoring was parse-checked only. Behavior-check, below, was scored the same way on planted changes.
+Released a Flywheel monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the check and no installed signer; Windows anchoring was parse-checked only.
 
 Accountable Surface | Governed actions and computer-use adapters
 
-Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions; persisted journals preserve decisions and observed effects. Reversible adapters include restoration paths. Fake drivers make browser and desktop scenarios testable without uncontrolled live actions.
+Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions, journals preserve decisions and observed effects, and fake drivers make browser and desktop scenarios testable without live actions.
 
 Version 0.2.0 ships source and wheel artifacts on GitHub. The project remains alpha, and a tool refusal or unknown result is never promoted into a successful action.
 
 Phantom | Hardware-identity inspection and reversible system changes
 
-Developed a Rust-based Windows and Linux utility with deterministic profiles, read-only audit, backup-before-write behavior, validation, restoration, and platform packages. The released v1.1.1 scope is userland-reversible identifiers. Kernel and firmware layers are modeled, not shipped.
+Developed a Rust utility for Windows and Linux with read-only audit, backup-before-write, validation, restoration, and platform packages. Release v1.1.1 covers userland-reversible identifiers; kernel and firmware layers are modeled, not shipped.
 
 Controlled assessment and detection engineering
 
-Private systems work includes Array for approval-gated assessment orchestration and containment records, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and Runtime/ORCA for local workspaces, reports, bundles, and release provenance. Public descriptions cover architecture and safe interfaces; private implementations, target material, and operational details are not published here.
+Private systems work includes Array for approval-gated assessment orchestration and containment records, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and Runtime/ORCA for local workspaces and release provenance. Private implementations, target material, and operational details are not published.
 
 AI Evaluation
 
@@ -92,21 +102,17 @@ Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as
 
 - Provides Rowan, a desktop assistant that translates requests into recorded tasks, together with permission-checked coding and tool-use workflows, session state, and inspectable outcomes.
 
-- Produces sealed, re-derivable receipts and offline MATCH, DRIFT, or UNVERIFIABLE outcomes. A reproducible receipt establishes the bounded check it records, not universal model accuracy or safety.
-
-- Added behavior-check in v1.9.0: it replays 13 scripted sessions on two builds and names the first event that differs. Its planted-change result is listed under Selected Evidence; no hosted model was called.
-
 Terminal State Fixtures and Crucible
 
 Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.
 
 Daylight Commons | Independent, offline-first evidence for readers
 
-Built a browser extension that shows the sourced evidence behind replies on nine platforms: X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Each sign names its source, states what it does not prove, and shows its measured precision or "not measured yet"; it never calls an account a bot. No server, account or analytics, no data sold or shared, and saved evidence chains verify offline. Version 3.1.0, released October 23, 2026 under AGPL-3.0-only, ships reproducible packages with signed checksums and a full-source git bundle. No Mozilla-signed build exists yet, and the campaign lens is not yet measured.
+Built a browser extension that shows the sourced evidence behind replies on nine platforms: X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Each sign shows its measured precision or "not measured yet", and none calls an account a bot. No server, account or analytics, no data sold or shared, and saved evidence chains verify offline. Version 3.1.0, released October 23, 2026 under AGPL-3.0-only, ships reproducible packages with signed checksums and a full-source git bundle. No Mozilla-signed build exists yet, and the campaign lens is not yet measured.
 
 Articulate | Writing analysis and accountable editing
 
-Built deterministic prose analysis with register and genre profiles and optional model-assisted editing, through command-line, library, MCP, language-server, and SARIF surfaces. Content-free audit receipts record checks without retaining the prose. Version 0.14.0 is on PyPI as articulate-writing. Version 0.15.0, on GitHub October 23, 2026, keeps the original paragraph when a model rewrite reorders a date or adds a flagged device, and prints the reason.
+Built deterministic prose analysis with register and genre profiles and optional model-assisted editing, through command-line, library, MCP, language-server, and SARIF surfaces. Version 0.14.0 is on PyPI as articulate-writing. Version 0.15.0, on GitHub October 23, 2026, keeps the original paragraph when a model rewrite reorders a date or adds a flagged device, and prints the reason.
 
 Graphics and Rendering
 
@@ -116,25 +122,23 @@ Built and maintained an ENBSeries preset with a layered design: weather presets 
 
 raw-native | C++ renderer with a CPU reference and checked GPU backends
 
-raw-native draws each scene on a CPU reference and on the GPU, then writes a certificate stating whether the two agree within committed tolerances. Release 0.8.0, October 14, 2026, renders through D3D12 and WebGPU and passed 60 of 60 tests with MSVC and GCC; no hardware-GPU render was checked for that release.
+Release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC; no hardware-GPU render was checked for that release.
 
-Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe in CI match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; and a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps.
+Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; and a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps.
 
 Low Water | Original narrative game in development
 
-An original narrative game written and built on my own engine. All five eras of the story are written, and scripted runs reach the ending on every playable class. Fights run on a deterministic combat simulation whose traces are checked byte for byte. Character art is moving to the first-party asset tools above, with no third-party modelling package. A C++ port onto raw-native is in progress. The repository is private, and no release date or store listing is claimed.
+An original narrative game written and built on my own engine. All five eras of the story are written, and scripted runs reach the ending on every playable class. Fights run on a deterministic combat simulation. A C++ port onto raw-native is in progress. The repository is private, and no release date or store listing is claimed.
 
 Earlier graphics and color work
 
-Earlier HLSL and C++ modding work covered post-processing, Direct3D 11 integration, shader debugging, GPU traces, and shared-memory interfaces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival, and Engine Revival. Existing engines and collaborators retain their own attribution.
-
-Color tools include Build Color, Calibrate Pro and Studio Engine: perceptual color spaces, color difference, HDR and tone mapping, and display characterization. No professional calibration certification is claimed.
+Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival; their engines and collaborators keep their own attribution. Color tools include Build Color, Calibrate Pro and Studio Engine, with no professional calibration certification claimed.
 
 Developer Tools and Languages
 
 BuildLang | Rust compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. For 1.7.0, 27 held-out tasks were sealed by hash first; two fresh agents scored 20 and 17 of 27, short of the 22 set in advance, and each failure class became an issue.
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types.
 
 EMET | Byte-integrity witnessing
 
@@ -168,15 +172,15 @@ Security evaluation: planted-fault and control design, approval-gated assessment
 
 AI infrastructure and quality: multi-provider/local-model routing, tool-use loops, task decomposition, MCP, evaluation design, deterministic fixtures, regression testing, worker/verifier separation, failure analysis, and terminal-state scoring.
 
-Verification and controlled actions: capability effects, operator grants, action envelopes, source provenance, hash-chained journals, offline replay, scoped postconditions, conformance suites, and release evidence.
+Verification and controlled actions: capability effects, operator grants, source provenance, hash-chained journals, offline replay, and conformance suites.
 
-Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, static websites, release documentation, and checksums.
+Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, and release checksums.
 
 Graphics and domain knowledge: D3D11/D3D12, Vulkan, HLSL, WebGPU/WGSL, ENBSeries presets, painterly and stylised post-processing, signed distance fields, CPU reference rendering and GPU parity checks, color-space and tone-mapping work, GPU instrumentation, and applied arboriculture/horticulture from field practice.
 
 Working Practice
 
-AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings.
+AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine, and negative or inconclusive findings stay on the record.
 
 Research Agenda
 
