@@ -61,8 +61,8 @@ export default {
       [st("21 programs"), T.programs, T.ask.start - 0.2],
       // The predict pause (approved by the author, 2026-10-14): the question is spoken, then the empty ladder holds in silence.
       [st(T.ask.text), T.ask.start, T.s3 - 0.3],
-      [st("per-face lighting"), T.rows + 0.4, T.depth, tag("portable C rung, not the 1998 assembly path")],
-      [st("per-pixel occlusion"), T.depth + 0.4, T.gouraud, tag("portable C rung, not the 1998 assembly path")],
+      [st("per-face lighting"), T.rows + 0.4, T.depth, tag("drawn by the portable C path")],
+      [st("per-pixel occlusion"), T.depth + 0.4, T.gouraud, tag("drawn by the portable C path")],
       [st("a divide per pixel"), T.divide, T.wobble],
       [st("7x faster . looks wrong"), T.wobble + 0.4, T.models, tag("one test, on one machine")],
       [st("12-part coupe . BrModelLoadMany"), T.globe, T.palette + 0.4],
