@@ -420,7 +420,7 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     # not take over the site).
     assert order[:8] == [
         "IdentityHero",
-        "MissionFrame",
+        "Flagships",
         "RecentWork",
         "FeaturedFlywheel",
         "ProductSelection",
@@ -428,7 +428,7 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
         "ResearchPilotRoutes",
         "CapabilityOverview",
     ]
-    assert order.index("MissionFrame") < order.index("FeaturedFlywheel")
+    assert order.index("Flagships") < order.index("FeaturedFlywheel")
     assert order.index("FeaturedFlywheel") < order.index("ProductSelection")
     assert order.index("ProductSelection") < order.index("ResearchPilotRoutes")
 

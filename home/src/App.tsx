@@ -222,7 +222,7 @@ function App() {
       <TopNav />
       <main id="main">
         <IdentityHero />
-        <MissionFrame />
+        <Flagships />
         <RecentWork />
         <FeaturedFlywheel />
         <ProductSelection />
@@ -309,27 +309,189 @@ function IdentityHero() {
   );
 }
 
-function MissionFrame() {
+type Flagship = {
+  id: string;
+  name: string;
+  headline: string;
+  body: string;
+  proof?: { text: string; href: string; label: string };
+  visual:
+    | { kind: "image"; srcLight: string; srcDark?: string; width: number; height: number; alt: string; caption: string; href?: string }
+    | { kind: "terminal"; command: string; output: string; caption: string };
+  install?: string;
+  links: Array<{ label: string; href: string }>;
+};
+
+const ARTICULATE_OUTPUT = `[articulate] notes.md [technical-docs/explain]: 1 high, 3 medium (blocked)
+  L1 [HIGH filler-intensifier] genuinely / really / truly / actually
+  L1 [MEDIUM throat-clearing] throat-clearing opener
+  L1 [MEDIUM hedge-stack] stacked hedge
+  L1 [MEDIUM throat-clearing] worth-noting preamble`;
+
+const BUILDLANG_OUTPUT = `Lexing... OK (12 tokens)
+Parsing... OK (1 items)
+Type errors found:
+  1:1: [BL0402] function \`load_config\` performs effect \`FileSystem\` but does not declare it
+  help: add \`FileSystem\` to the function's effect row
+  note: capability \`FileSystem\` was triggered by ambient call(s): read_file`;
+
+const FLAGSHIPS: Flagship[] = [
+  {
+    id: "flywheel",
+    name: "Flywheel",
+    headline: "Catch a wrong answer before your team acts on it.",
+    body: "Flywheel runs AI tasks with the model you choose and checks each answer against the record it came from. In the demo, a summary says 42 tests passed; the record says 41, and Flywheel flags the difference.",
+    proof: {
+      text: "In release 1.9.0, its behavior check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs.",
+      href: "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0",
+      label: "Release notes",
+    },
+    visual: {
+      kind: "image",
+      srcLight: "/media/flywheel-output-check-20260905/poster.png",
+      width: 1080,
+      height: 1920,
+      alt: "Flywheel demo card. The summary says 42 tests passed. The record says 41. Flywheel checks the answer against the record before it reaches your team.",
+      caption: "A frame from the 36-second demo.",
+      href: "/media/flywheel-output-check-20260905/short.mp4",
+    },
+    install: "pip install flywheel-verify",
+    links: [
+      { label: "Watch the demo", href: "/media/flywheel-output-check-20260905/short.mp4" },
+      { label: "Flywheel 1.9.0", href: "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0" },
+      { label: "How it works", href: "/flywheel.html" },
+    ],
+  },
+  {
+    id: "daylight-commons",
+    name: "Daylight Commons",
+    headline: "See who is behind a reply before you believe it.",
+    body: "Rest the pointer on a reply on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok or Mastodon, and a window opens with where the account is based, how it posts, signs of coordination and who owns the outlets it links, each with its source. It works in Chrome, Edge, Brave and Firefox with no account, and it is open source (AGPL-3.0).",
+    visual: {
+      kind: "image",
+      srcLight: "/media/daylight-commons/finding-sources.png",
+      width: 600,
+      height: 690,
+      alt: "Daylight Commons on a synthetic demo thread. A window beside a reply that links rt.com says the outlet is state-owned by Russia, cites Wikidata for RT America, and links the Wikidata entry.",
+      caption: "A synthetic demo thread: the window names the owner of a linked outlet and links its Wikidata source.",
+    },
+    links: [
+      { label: "Install it", href: "https://harperz9.github.io/daylight-commons/install.html" },
+      { label: "Daylight Commons 3.2.2", href: "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2" },
+      { label: "Source", href: "https://github.com/HarperZ9/daylight-commons" },
+    ],
+  },
+  {
+    id: "articulate",
+    name: "Articulate",
+    headline: "Find the filler in your writing, line by line.",
+    body: "Articulate names each writing pattern it finds and the line it is on: in the terminal, in your editor through its language server, or as SARIF in code review. Its optional editor rewrites a flagged passage with the model you choose.",
+    visual: {
+      kind: "terminal",
+      command: "articulate check notes.md --mode technical-docs/explain",
+      output: ARTICULATE_OUTPUT,
+      caption: "Articulate 0.15.1 on one sentence: “It is important to note that this release really represents a significant step forward. Arguably, the new cache could potentially make builds faster in many cases.” Quoted text trimmed from each line.",
+    },
+    install: "pip install articulate-writing",
+    links: [
+      { label: "Try Articulate", href: "/articulate.html" },
+      { label: "Articulate 0.15.1", href: "https://github.com/HarperZ9/articulate/releases/tag/v0.15.1" },
+      { label: "PyPI", href: "https://pypi.org/project/articulate-writing/" },
+    ],
+  },
+  {
+    id: "buildlang",
+    name: "BuildLang",
+    headline: "Know what a program can touch before it runs.",
+    body: "In BuildLang a function declares the effects it uses, such as file access. The compiler rejects code that reaches further than its signature says, and names the call that did it.",
+    visual: {
+      kind: "terminal",
+      command: "buildc check missing_effect.bld",
+      output: BUILDLANG_OUTPUT,
+      caption: "buildc 1.8.0 on fn load_config() { read_file(\"ops.toml\"); }. The handler suggestion in the full output is cut for length.",
+    },
+    install: "cargo install buildlang",
+    links: [
+      { label: "See more examples", href: "/buildlang.html" },
+      { label: "BuildLang 1.8.0 on crates.io", href: "https://crates.io/crates/buildlang/1.8.0" },
+      { label: "Source", href: "https://github.com/HarperZ9/buildlang" },
+    ],
+  },
+  {
+    id: "raw-native",
+    name: "raw-native",
+    headline: "One renderer, the same frame on the CPU, D3D12 and the web.",
+    body: "raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. The RAW page runs it live in your browser.",
+    proof: {
+      text: "In release 0.8.0, default renders came out byte-identical across the Windows, D3D12, Linux and WebAssembly builds, and 60 of 60 tests passed with MSVC and GCC.",
+      href: "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+      label: "Release notes",
+    },
+    visual: {
+      kind: "image",
+      srcLight: "/media/raw-native/high-frame.png",
+      width: 512,
+      height: 512,
+      alt: "A red cube on a pale ground plane with soft ambient-occlusion shadow, rendered by the RAW CPU renderer.",
+      caption: "A frame from the RAW CPU reference renderer.",
+      href: "/raw.html",
+    },
+    links: [
+      { label: "Render it live", href: "/raw.html" },
+      { label: "raw-native 0.8.0", href: "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0" },
+      { label: "Source", href: "https://github.com/HarperZ9/raw-native" },
+    ],
+  },
+];
+
+function FlagshipVisual({ item }: { item: Flagship }) {
+  const visual = item.visual;
+  if (visual.kind === "terminal") {
+    return (
+      <figure className="flagship-visual flagship-terminal data-plate">
+        <pre><code><span className="flagship-prompt">$ {visual.command}</span>{"\n"}{visual.output}</code></pre>
+        <figcaption>{visual.caption}</figcaption>
+      </figure>
+    );
+  }
+  const img = (
+    <img src={visual.srcLight} width={visual.width} height={visual.height} alt={visual.alt} loading="lazy" decoding="async" />
+  );
   return (
-    <section id="mission" className="section mission-section" aria-labelledby="mission-title">
+    <figure className={`flagship-visual flagship-image flagship-image-${item.id}`}>
+      {visual.href ? <a href={visual.href}>{img}</a> : img}
+      <figcaption>{visual.caption}</figcaption>
+    </figure>
+  );
+}
+
+function Flagships() {
+  return (
+    <section id="flagships" className="section flagships-section" aria-labelledby="flagships-title">
       <div className="section-heading">
-        <h2 id="mission-title">Try a check</h2>
-        <p className="section-lead">
-          Flywheel checks a model&apos;s answer against the task contract and saves the result as a file you can run again.
-        </p>
+        <h2 id="flagships-title">Flagship tools</h2>
+        <p className="section-lead">Five tools you can try in a few minutes. Each one shows its work.</p>
       </div>
-      <div className="mission-grid mission-grid-two">
-        <article className="mission-card">
-          <h3>Install and run</h3>
-          <p><code>pip install <Idents text="flywheel-verify" /></code></p>
-          <p><code>flywheel check-output --contract task.contract.json --answer answer.json</code></p>
-          <p><a className="text-link" href="/flywheel.html">See what the output looks like</a></p>
-        </article>
-        <article className="mission-card">
-          <h3>A pilot for evaluators</h3>
-          <p>Bring one claim that matters to a decision and the evidence behind it. We build the check together, and you keep a check you can run again and a list of the cases that still need a person.</p>
-          <p><a className="text-link" href="/test-run-request.html">Request a pilot</a></p>
-        </article>
+      <div className="flagship-list">
+        {FLAGSHIPS.map((item) => (
+          <article className="flagship" id={`flagship-${item.id}`} key={item.id} aria-labelledby={`flagship-${item.id}-name`}>
+            <div className="flagship-copy">
+              <p className="flagship-name" id={`flagship-${item.id}-name`}>{item.name}</p>
+              <h3>{item.headline}</h3>
+              <p>{item.body}</p>
+              {item.proof ? (
+                <p className="flagship-proof">{item.proof.text} <a href={item.proof.href} rel="noopener">{item.proof.label}</a></p>
+              ) : null}
+              {item.install ? <p className="flagship-install"><code><Idents text={item.install} /></code></p> : null}
+              <p className="flagship-links">
+                {item.links.map((link, index) => (
+                  <a className={index === 0 ? "btn solid" : "text-link"} href={link.href} key={link.href} rel={link.href.startsWith("http") ? "noopener" : undefined}>{link.label}</a>
+                ))}
+              </p>
+            </div>
+            <FlagshipVisual item={item} />
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -349,15 +511,6 @@ const WKF_CASES: Array<{ label: string; first: "outsider" | "operator" | "same-d
 
 const RECENT_WORK = [
   {
-    title: "Flywheel 1.9.0",
-    meta: "Release, 15 October 2026.",
-    text: "Runs a task with the model you choose and checks the answer against the task contract. On PyPI as flywheel-verify, with a Windows installer.",
-    href: "/flywheel.html",
-    action: "See what Flywheel does",
-    cover: "pillar-flywheel",
-    alt: "Fine lines sweep around a bright ring, like a wheel drawn by a plotter pen.",
-  },
-  {
     title: "An open letter on checking the machines",
     meta: "Letter, 19 September 2026, revised 20 September 2026.",
     text: "A signed letter to the people who build AI systems. It argues that a person should be able to question a machine's answer without first winning an argument with its owner.",
@@ -367,15 +520,6 @@ const RECENT_WORK = [
     alt: "A grid of small square drawings, each a set of nested squares, with one square lit.",
   },
   {
-    title: "Articulate",
-    meta: "Release 0.15.1, 23 October 2026.",
-    text: "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on. On PyPI as articulate-writing.",
-    href: "/articulate.html",
-    action: "Try Articulate",
-    cover: "cover-articulate",
-    alt: "Rows of short dashes, like lines of text, bend around a bright circle. One run of dashes lifts out of its line.",
-  },
-  {
     title: "Frontier Safety briefing",
     meta: "Recurring briefing, current edition.",
     text: "A dated record of safety news from the UK AI Security Institute, Anthropic, OpenAI and others, with each item linked to its source.",
@@ -383,15 +527,6 @@ const RECENT_WORK = [
     action: "Read the current edition",
     cover: "cover-frontier-safety",
     alt: "A bright core ringed by fifty-two fine tick marks, one of them drawn long past the outer rings.",
-  },
-  {
-    title: "Daylight Commons",
-    meta: "Release 3.2.2, 23 October 2026.",
-    text: "A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0).",
-    href: "https://harperz9.github.io/daylight-commons/install.html",
-    action: "Install it",
-    cover: "",
-    alt: "",
   },
 ];
 

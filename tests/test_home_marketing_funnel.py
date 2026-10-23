@@ -54,7 +54,7 @@ def array_items(source: str, array_name: str) -> list[str]:
 # three stay one click away under How we know.
 def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     source = read(HOME_SOURCE)
-    hero = section(source, "identity", "mission")
+    hero = section(source, "identity", "flagships")
 
     assert "Zain Dana Harper" in hero
     assert "Flywheel and open-source tools for testing AI systems." in hero
@@ -65,7 +65,7 @@ def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     # direction that the explainer videos not take over the site (12 October had put it here).
     assert main_component_order(source) == [
         "IdentityHero",
-        "MissionFrame",
+        "Flagships",
         "RecentWork",
         "FeaturedFlywheel",
         "ProductSelection",
@@ -226,7 +226,7 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
 
     for value in (
         "Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.",
-        "Try a check",
+        "Flagship tools",
         "Flagship platform: Flywheel",
         "Built tooling ecosystem",
         "Evidence board",
@@ -238,11 +238,11 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     ):
         assert value in fallback
 
-    assert fallback.index("Try a check") < fallback.index("Flagship platform: Flywheel")
+    assert fallback.index("Flagship tools") < fallback.index("Flagship platform: Flywheel")
     assert fallback.index("Flagship platform: Flywheel") < fallback.index("Built tooling ecosystem")
     assert fallback.index("Built tooling ecosystem") < fallback.index("Evidence board")
     assert fallback.index("Evidence board") < fallback.index("Research, pilot, and support routes")
-    assert fallback.index("Try a check") < fallback.index("Recent work")
+    assert fallback.index("Flagship tools") < fallback.index("Recent work")
     assert fallback.index("Recent work") < fallback.index("Flagship platform: Flywheel")
     assert "workshop behind Flywheel" not in fallback
 

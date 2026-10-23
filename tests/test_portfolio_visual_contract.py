@@ -109,7 +109,7 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
         "Zain Dana Harper",
         "Zain Dana Harper",
         "Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.",
-        "Try a check",
+        "Flagship tools",
         "Flagship platform: Flywheel",
         "Built tooling ecosystem",
         "Evidence board",

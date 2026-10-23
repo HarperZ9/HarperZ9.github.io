@@ -28,7 +28,7 @@ Flagship Projects
 
 - BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang
 
-- raw-native is a C++ renderer that checks each GPU frame against a CPU reference; 16 of 16 D3D12 and 16 of 16 WebGPU frame certificates verified on an RTX 4090. github.com/HarperZ9/raw-native
+- raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. In release 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
 
 - Low Water is an original narrative game in development on raw-native, in a private repository.
 
