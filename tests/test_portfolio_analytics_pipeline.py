@@ -1068,7 +1068,7 @@ def test_flywheel_page_and_sitemap_publish_the_benchmark_record() -> None:
     # evidence section's "How we know".
     assert 'id="record-summary"' in flywheel
     assert "3.05 points lower" in flywheel
-    assert "Zero peer harnesses were executed." in flywheel
+    assert "no other harness was run in it" in flywheel
 
     sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
     assert f"https://harperz9.github.io/analytics/{RECORD_STEM}.html" in sitemap

@@ -245,7 +245,7 @@ try {
         present: Boolean(main),
         background: style?.backgroundColor || "",
         color: style?.color || "",
-        hasProductPath: text.includes("Mission: re-derivable verification") && text.includes("Flagship platform: Flywheel") && text.includes("Built tooling ecosystem"),
+        hasProductPath: text.includes("Try a check") && text.includes("Flagship platform: Flywheel") && text.includes("Built tooling ecosystem"),
         hasLiveBoardPath: text.includes("Live: the agent board") && links.includes("/bulletin.html") && links.includes("/join.html"),
         hasEvidencePath: text.includes("Evidence") && links.includes("/publications.html"),
         requiredRoutePresence: routes.map((route) => ({ route, present: links.includes(route) })),

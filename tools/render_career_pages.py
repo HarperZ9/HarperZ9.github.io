@@ -182,7 +182,7 @@ def source_note(source: dict) -> str:
     return f'''<aside class="career-source-note">
 <p>Updated <time datetime="{source['reviewed']}">{source['reviewed']}</time>. All formats share the same reviewed content.</p>
 <p><a href="career/source-ledger.md">Source and date notes</a> · <a href="career/resume-source.json">Structured career source</a> · <a href="career/career-build-receipt.json">Build receipt</a></p>
-<details><summary>Work-history and evidence notes</summary>{dates}<p>Descriptions of public software are not claims of customer adoption, external certification, or universal safety. Private material is excluded.</p></details>
+<details><summary>Work-history and evidence notes</summary>{dates}</details>
 </aside>'''
 
 

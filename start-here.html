@@ -5,7 +5,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Start here | Zain Dana Harper</title>
-<meta name="description" content="A plain guide to the site: four ways in, one worked example of re-derivable, how to read the charts and what the site does not claim.">
+<meta name="description" content="A plain guide to the site: four ways in, one worked example and how to read the charts.">
 <link rel="canonical" href="https://harperz9.github.io/start-here.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
@@ -57,7 +57,7 @@
 
   <section aria-labelledby="in-short">
     <h2 id="in-short">In short</h2>
-    <p>This site holds the work of Zain Dana Harper. The work keeps returning to one question: when an AI system, or the company behind it, makes a claim, how can someone else check it? Pick the door below that fits what you came for.</p>
+    <p>This site holds the work of Zain Dana Harper: tools for checking what AI systems do, writing about AI incidents, and graphics work. Pick the door below that fits what you came for.</p>
   </section>
 
   <section aria-labelledby="doors-title">
@@ -70,12 +70,12 @@
       </div>
       <div class="door">
         <h3>If you follow AI policy</h3>
-        <p>The <a href="frontier-safety.html">Frontier Safety briefing</a> is a dated record of safety news. Each edition ties every claim to its source and says what that source cannot show.</p>
+        <p>The <a href="frontier-safety.html">Frontier Safety briefing</a> is a dated record of AI safety news, with each item linked to its source.</p>
         <p><a href="frontier-safety.html">Read the current briefing</a></p>
       </div>
       <div class="door">
         <h3>If you want to try the tools</h3>
-        <p><a href="flywheel.html">Flywheel</a> runs a task with any AI model and hands the result to a checker that anyone can rerun offline. Install it with one command.</p>
+        <p><a href="flywheel.html">Flywheel</a> runs a task with the AI model you choose and checks the answer. Install it with <code>pip install flywheel-verify</code>.</p>
         <p><a href="flywheel.html">See Flywheel</a></p>
       </div>
       <div class="door">
@@ -87,8 +87,8 @@
   </section>
 
   <section aria-labelledby="example-title">
-    <h2 id="example-title">What re-derivable means, in one example</h2>
-    <p>Say a company reports that its model passed 120 of 150 coding tasks. A <a href="glossary.html#re-derivable">re-derivable</a> report comes with the tasks, the model version, the test that graded each answer and a record of every result. You run the same test on your own computer. If you also get 120, the verdict is <a href="glossary.html#match">match</a>. If you get a different number, the verdict is <a href="glossary.html#drift">drift</a>, and the record shows the exact task where the results part ways. If the report leaves out something you need, such as the tasks themselves, the verdict is <a href="glossary.html#unverifiable">unverifiable</a>, and the missing piece is named.</p>
+    <h2 id="example-title">What a check looks like, in one example</h2>
+    <p>Say a company reports that its model passed 120 of 150 coding tasks. A <a href="glossary.html#re-derivable">checkable</a> report comes with the tasks, the model version, the test that graded each answer and a record of every result. You run the same test on your own computer. If you also get 120, the verdict is <a href="glossary.html#match">match</a>. If you get a different number, the verdict is <a href="glossary.html#drift">drift</a>, and the record shows the exact task where the results part ways. If the report leaves out something you need, such as the tasks themselves, the verdict is <a href="glossary.html#unverifiable">unverifiable</a>, and the missing piece is named.</p>
     <figure class="verdict-diagram" aria-labelledby="diagram-caption">
       <svg role="graphics-document" aria-roledescription="diagram" viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-labelledby="diagram-title diagram-desc">
         <title id="diagram-title">One claim, one rerun, three possible verdicts</title>
@@ -119,22 +119,17 @@
 
   <section aria-labelledby="charts-title">
     <h2 id="charts-title">How to read the charts and diagrams</h2>
-    <p>Each chart opens with one sentence that says what it shows, then a short line on how to read it. Labels sit on the chart itself, in plain words. Under each chart, a section called <a href="glossary.html#how-we-know">How we know</a> holds the sources, sample sizes, dates and limits. Open it when you want to check the work.</p>
+    <p>Each chart opens with one sentence that says what it shows, then a short line on how to read it. Labels sit on the chart itself, in plain words. Under each chart, a section called <a href="glossary.html#how-we-know">How we know</a> holds the sources, sample sizes and dates.</p>
   </section>
 
   <section aria-labelledby="ai-title">
     <h2 id="ai-title">How AI assistance is labeled</h2>
-    <p>Much of this site was written with <a href="glossary.html#ai-assisted">AI assistance</a>, and the pages say so where it applies. The prose is checked with Articulate, a writing checker built here, before it goes up. A clean check means the writing avoids known patterns of filler, hedging and stock phrasing. A clean check says nothing about whether a claim is true. The sources and the How we know sections carry that weight.</p>
-  </section>
-
-  <section aria-labelledby="claims-title">
-    <h2 id="claims-title">What this site does not claim</h2>
-    <p>The tools are built to serve people who evaluate AI systems. No pilot, contract or engagement with any AI lab is in place. Where a page reports a result, it also says what the result cannot show.</p>
+    <p>Much of this site was written with <a href="glossary.html#ai-assisted">AI assistance</a>, and the pages say so where it applies. The prose is checked with <a href="articulate.html">Articulate</a>, a writing checker built here, for filler, hedging and stock phrasing before it goes up.</p>
   </section>
 
   <section aria-labelledby="words-title">
     <h2 id="words-title">Words you will meet</h2>
-    <p>A short glossary explains the terms this site cannot avoid, such as receipt, verdict and witness.</p>
+    <p>A short glossary explains terms such as receipt, verdict and witness.</p>
     <p><a href="glossary.html">Open the glossary</a></p>
   </section>
 </article>

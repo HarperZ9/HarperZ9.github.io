@@ -133,14 +133,10 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     assert "service-desk-incident-env e2e --out ./incident-runs" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
     assert "Windows Server runner and a stub model" in release_section
-    assert "without driving screens" in release_section
-    assert "does not measure answer quality" in release_section
-    assert "consumer Windows 11, offline use or mobile devices" in release_section
-    assert "Index fell below its expected class without Git" in release_section
-    assert "Telos is excluded" in release_section
+    # 2026-10-23 plain-copy rewrite: setup needs stay; caveat lines were cut.
+    assert "Index needs Git" in release_section
+    assert "Telos is not in this build" in release_section
     assert "Known issues" in release_section
-    assert "dated correction to 1.0.4" in release_section
-    assert "did not run the installer again" in release_section
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
     assert "v0.3.10" not in source

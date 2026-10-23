@@ -47,17 +47,15 @@
 </ul>
 </section>
 <section>
-<h2>Pillars and the Shared Credo</h2>
-<p>Six flagship projects carry one credo: make checking cheap, protect the commons, and keep provenance at the source.</p>
+<h2>Flagship Projects</h2>
 <ul class="career-bullets">
-<li>Flywheel, make checking cheap: sealed receipts replay offline to MATCH, DRIFT or UNVERIFIABLE. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs, with a scripted model on Windows only. <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0">github.com/HarperZ9/flywheel/releases/tag/v1.9.0</a></li>
-<li>Daylight Commons, protect the commons: AGPL-3.0-only, no server and no data sales, and each sign names its source. Its slur sign holds precision 91.0%, 3,995 of 4,392, with a 95% interval of 90.1 to 91.8 on public human-labelled corpora. <a href="https://github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md">github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md</a></li>
-<li>Articulate, make checking cheap: deterministic findings with content-free receipts. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.14.0">github.com/HarperZ9/articulate/releases/tag/v0.14.0</a></li>
-<li>BuildLang, provenance at the source: typed capability effects show a program&#x27;s ambient access to the compiler. Before 1.7.0, 27 held-out tasks were sealed by hash; two fresh agents scored 20 and 17 against a preset bar of 22, and the miss stays on the record. <a href="https://github.com/HarperZ9/buildlang/releases/tag/v1.7.0">github.com/HarperZ9/buildlang/releases/tag/v1.7.0</a></li>
-<li>raw-native, the engine, make checking cheap: each GPU frame carries a certificate against a CPU reference, and 16 of 16 D3D12 and 16 of 16 WebGPU certificates read verified on an RTX 4090. <a href="https://github.com/HarperZ9/raw-native">github.com/HarperZ9/raw-native</a></li>
-<li>Low Water, the game, provenance at the source: art moving to first-party tools, and combat traces checked byte for byte. Private repository; no release claimed.</li>
+<li>Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0">github.com/HarperZ9/flywheel/releases/tag/v1.9.0</a></li>
+<li>Daylight Commons is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. <a href="https://github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md">github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md</a></li>
+<li>Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. <a href="https://github.com/HarperZ9/articulate/releases/tag/v0.14.0">github.com/HarperZ9/articulate/releases/tag/v0.14.0</a></li>
+<li>BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang</li>
+<li>raw-native is a C++ renderer that checks each GPU frame against a CPU reference; 16 of 16 D3D12 and 16 of 16 WebGPU frame certificates verified on an RTX 4090. <a href="https://github.com/HarperZ9/raw-native">github.com/HarperZ9/raw-native</a></li>
+<li>Low Water is an original narrative game in development on raw-native, in a private repository.</li>
 </ul>
-<p>Where they meet: Daylight&#x27;s evidence chains, Flywheel&#x27;s receipts and raw-native&#x27;s certificates each verify offline from a file, and each Low Water inner-arena fight maps to a technique in the Daylight Commons catalogue, with no effect on players claimed. Shared code between them is still only planned.</p>
 </section>
 <section>
 <h2>Self-Directed Projects</h2>
@@ -90,16 +88,16 @@
 </section>
 <section>
 <h2>Security Evaluation: Red Team and Purple Team</h2>
-<p>No paid red-team or purple-team engagement to date. This work runs on my own systems and owned test targets, with faults and attacks planted on purpose so each defensive check is measured against a known answer.</p>
+<p>No paid red-team or purple-team engagement to date. This work runs on my own systems and test targets, with planted faults and attacks.</p>
 <h3>Planted controls in release checks</h3>
-<p>Released a Flywheel monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the check and no installed signer; Windows anchoring was parse-checked only.</p>
+<p>Released a Flywheel monitor-admission check over 2,676 fixed test items with six planted controls and a second, independent math kernel. <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.5.0">github.com/HarperZ9/flywheel/releases/tag/v1.5.0</a></p>
 <h3 class="career-fields"><span>Accountable Surface</span><span class="career-sep"> | </span><span>Governed actions and computer-use adapters</span></h3>
 <p>Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions, journals preserve decisions and observed effects, and fake drivers make browser and desktop scenarios testable without live actions.</p>
-<p>Version 0.2.0 ships source and wheel artifacts on GitHub. The project remains alpha, and a tool refusal or unknown result is never promoted into a successful action.</p>
+<p>On PyPI as accountable-surface 0.3.1; alpha. pypi.org/project/accountable-surface</p>
 <h3 class="career-fields"><span>Phantom</span><span class="career-sep"> | </span><span>Hardware-identity inspection and reversible system changes</span></h3>
-<p>Developed a Rust utility for Windows and Linux with read-only audit, backup-before-write, validation, restoration, and platform packages. Release v1.1.1 covers userland-reversible identifiers; kernel and firmware layers are modeled, not shipped.</p>
+<p>Developed a Rust utility for Windows and Linux with read-only audit, backup-before-write, validation, restoration, and platform packages. Release v1.1.1 changes and restores user-level identifiers. <a href="https://github.com/HarperZ9/phantom/releases/tag/v1.1.1">github.com/HarperZ9/phantom/releases/tag/v1.1.1</a></p>
 <h3>Controlled assessment and detection engineering</h3>
-<p>Private systems work includes Array for approval-gated assessment orchestration and containment records, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and Runtime/ORCA for local workspaces and release provenance. Private implementations, target material, and operational details are not published.</p>
+<p>Private systems work includes Array for approval-gated assessment orchestration, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and ORCA for engagement state, findings and reports. Source and operational details are private.</p>
 </section>
 <section>
 <h2>AI Evaluation</h2>
@@ -107,39 +105,39 @@
 <p>Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.</p>
 <ul class="career-bullets">
 <li>Routes tasks to hosted or local models through an OpenAI-compatible gateway, with command-line, desktop, and API entry points.</li>
-<li>Provides Rowan, a desktop assistant that translates requests into recorded tasks, together with permission-checked coding and tool-use workflows, session state, and inspectable outcomes.</li>
+<li>Provides Rowan, a desktop assistant that turns requests into recorded tasks, with permission-checked coding and tool-use workflows and session state.</li>
 </ul>
 <h3>Terminal State Fixtures and Crucible</h3>
-<p>Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.</p>
-<h3 class="career-fields"><span>Daylight Commons</span><span class="career-sep"> | </span><span>Independent, offline-first evidence for readers</span></h3>
-<p>Built a browser extension that shows the sourced evidence behind replies on nine platforms: X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Each sign shows its measured precision or &quot;not measured yet&quot;, and none calls an account a bot. No server, account or analytics, no data sold or shared, and saved evidence chains verify offline. Version 3.1.0, released October 23, 2026 under AGPL-3.0-only, ships reproducible packages with signed checksums and a full-source git bundle. No Mozilla-signed build exists yet, and the campaign lens is not yet measured.</p>
-<h3 class="career-fields"><span>Articulate</span><span class="career-sep"> | </span><span>Writing analysis and accountable editing</span></h3>
-<p>Built deterministic prose analysis with register and genre profiles and optional model-assisted editing, through command-line, library, MCP, language-server, and SARIF surfaces. Version 0.14.0 is on PyPI as articulate-writing. Version 0.15.0, on GitHub October 23, 2026, keeps the original paragraph when a model rewrite reorders a date or adds a flagged device, and prints the reason.</p>
+<p>Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that tell a failed answer apart from a provider failure or missing evidence. Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls. <a href="https://github.com/HarperZ9/terminal-state-fixtures">github.com/HarperZ9/terminal-state-fixtures</a></p>
+<h3 class="career-fields"><span>Daylight Commons</span><span class="career-sep"> | </span><span>Browser extension for checking where replies come from</span></h3>
+<p>A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2">github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2</a></p>
+<h3 class="career-fields"><span>Articulate</span><span class="career-sep"> | </span><span>Prose analysis and editing</span></h3>
+<p>Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.15.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing</p>
 </section>
 <section>
 <h2>Graphics and Rendering</h2>
 <h3 class="career-fields"><span>Elder ENB</span><span class="career-sep"> | </span><span>Lighting and post-processing preset for Skyrim Special Edition</span></h3>
-<p>Built and maintained an ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing over a fixed baseline. It ships 38 atmosphere presets for the KreatE weather system, with updates from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. <a href="https://nexusmods.com/skyrimspecialedition/mods/117327">nexusmods.com/skyrimspecialedition/mods/117327</a></p>
+<p>An ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing. It ships 38 atmosphere presets for the KreatE weather system, updated from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. <a href="https://nexusmods.com/skyrimspecialedition/mods/117327">nexusmods.com/skyrimspecialedition/mods/117327</a></p>
 <h3 class="career-fields"><span>raw-native</span><span class="career-sep"> | </span><span>C++ renderer with a CPU reference and checked GPU backends</span></h3>
-<p>Release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC; no hardware-GPU render was checked for that release.</p>
+<p>Release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC. <a href="https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0">github.com/HarperZ9/raw-native/releases/tag/v0.8.0</a></p>
 <p>Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; and a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps.</p>
 <h3 class="career-fields"><span>Low Water</span><span class="career-sep"> | </span><span>Original narrative game in development</span></h3>
-<p>An original narrative game written and built on my own engine. All five eras of the story are written, and scripted runs reach the ending on every playable class. Fights run on a deterministic combat simulation. A C++ port onto raw-native is in progress. The repository is private, and no release date or store listing is claimed.</p>
+<p>An original narrative game written and built on my own engine, with a deterministic combat simulation. A C++ port onto raw-native is in progress in open raw-native pull requests. The repository is private.</p>
 <h3>Earlier graphics and color work</h3>
-<p>Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival; their engines and collaborators keep their own attribution. Color tools include Build Color, Calibrate Pro and Studio Engine, with no professional calibration certification claimed.</p>
+<p>Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival. Color tools include Build Color, Calibrate Pro and Studio Engine.</p>
 </section>
 <section>
 <h2>Developer Tools and Languages</h2>
 <h3 class="career-fields"><span>BuildLang</span><span class="career-sep"> | </span><span>Rust compiler and developer tooling</span></h3>
-<p>Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box&lt;T&gt; and recursive types.</p>
+<p>Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box&lt;T&gt; and recursive types. crates.io/crates/buildlang</p>
 <h3 class="career-fields"><span>EMET</span><span class="career-sep"> | </span><span>Byte-integrity witnessing</span></h3>
-<p>Developed Python, Rust, Node, and Go implementations around shared conformance cases and portable verification records. The witness checks byte-level integrity, anchors, and source correspondence; it does not grant permission, certify semantic truth, or replace an operator decision.</p>
+<p>Developed Python, Rust, Node, and Go implementations that check whether bytes still match their source, sharing one set of conformance cases. On PyPI as emet. pypi.org/project/emet</p>
 <h3>Research intake and workspace tooling</h3>
-<p>Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub. Companion tools include Relay for coding agents, Plexus for tool interfaces, Mneme for source-checked memory, Canon for assistant instructions, and Bulletin, a signed-identity message board; customer-scale deployment is not established.</p>
+<p>Built Gather for research intake from web, scholarly and document sources, Index for workspace and symbol maps, and Forum for running teams of agents. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub. Companion tools include Relay for coding agents, Plexus for tool wiring, Mneme for agent memory, Canon for assistant instructions, and Bulletin, a message board for agents.</p>
 </section>
 <section>
 <h2>Selected Open-Source Contributions</h2>
-<p>Six selected contributions merged across six external repositories, covering bug fixes, tests, and documentation, from 37 merged engineering pull requests in 30 repositories. These are contributions, not employment; the census also records open pull requests and those closed without merge.</p>
+<p>Six of 37 merged engineering pull requests in 30 external repositories. Full list: <a href="https://harperz9.github.io/career/open-source-census.json">harperz9.github.io/career/open-source-census.json</a></p>
 <ul class="career-bullets">
 <li>DeepEval #2822: fixed unhashable tool-output and nested-parameter failures in tool-correctness evaluation; merged July 2, 2026. <a href="https://github.com/confident-ai/deepeval/pull/2822">github.com/confident-ai/deepeval/pull/2822</a></li>
 <li>TOMLKit #549: preserved dotted-key siblings when replacing a value with an array of tables; merged July 14, 2026. <a href="https://github.com/python-poetry/tomlkit/pull/549">github.com/python-poetry/tomlkit/pull/549</a></li>
@@ -154,23 +152,23 @@
 <p>Languages and runtimes: Python, Rust, C++, Dart/Flutter, TypeScript/JavaScript, Lua, HLSL, C#, PowerShell, and Bash. Additional cross-language conformance work includes Go and Node implementations.</p>
 <p>Security evaluation: planted-fault and control design, approval-gated assessment workflows, detection engineering fixtures, vulnerability management and policy audit, and evidence handling for findings.</p>
 <p>AI infrastructure and quality: multi-provider/local-model routing, tool-use loops, task decomposition, MCP, evaluation design, deterministic fixtures, regression testing, worker/verifier separation, failure analysis, and terminal-state scoring.</p>
-<p>Verification and controlled actions: capability effects, operator grants, source provenance, hash-chained journals, offline replay, and conformance suites.</p>
+<p>Controlled actions: capability effects, approval grants, hash-chained journals, offline replay, and conformance suites.</p>
 <p>Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, and release checksums.</p>
 <p>Graphics and domain knowledge: D3D11/D3D12, Vulkan, HLSL, WebGPU/WGSL, ENBSeries presets, painterly and stylised post-processing, signed distance fields, CPU reference rendering and GPU parity checks, color-space and tone-mapping work, GPU instrumentation, and applied arboriculture/horticulture from field practice.</p>
 </section>
 <section>
 <h2>Working Practice</h2>
-<p>AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine, and negative or inconclusive findings stay on the record.</p>
+<p>AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine.</p>
 </section>
 <section>
-<h2>Research Agenda</h2>
-<p>My independent research asks what evidence another person or system can check without inheriting an AI system&#x27;s authority: evaluation provenance, verifier independence, live-state drift, proof-carrying actions, and human authorization for consequential actions. Robotics is a research interest.</p>
+<h2>Research Interests</h2>
+<p>Independent verification of AI evaluations, drift in live systems, records of agent actions, human approval for consequential actions, and robotics.</p>
 </section>
 <section>
 <h2>AI Accountability, Disclosure, and Public-Interest Writing</h2>
 <p>Independent essays on AI accountability, disclosure, conflicts of interest, and human consequences, relevant to public-interest and whistleblower-protection work.</p>
 <ul class="career-bullets">
-<li>Who Knew First, September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. Separates source claims, inference, and unresolved attribution. <a href="https://harperz9.github.io/who-knew-first.html">harperz9.github.io/who-knew-first.html</a></li>
+<li>Who Knew First, September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. <a href="https://harperz9.github.io/who-knew-first.html">harperz9.github.io/who-knew-first.html</a></li>
 <li>An Open Letter on Checking the Machines, September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. <a href="https://harperz9.github.io/checking-the-machines.html">harperz9.github.io/checking-the-machines.html</a></li>
 <li>Borrowed Ground, September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. <a href="https://harperz9.github.io/borrowed-ground.html">harperz9.github.io/borrowed-ground.html</a></li>
 <li>The Sandbox Was Never Just a Box, September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. <a href="https://harperz9.github.io/the-sandbox-was-never-just-a-box.html">harperz9.github.io/the-sandbox-was-never-just-a-box.html</a></li>
@@ -178,7 +176,7 @@
 </section>
 <section>
 <h2>Selected Publications and Research Records</h2>
-<p>Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.</p>
+<p>Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. Not peer reviewed.</p>
 <ul class="career-bullets">
 <li>EMET: An Authority-Incapable Byte-Level Integrity Witness. Systems paper, 2026. Byte-integrity witnessing and the separation of observation from authority. <a href="https://doi.org/10.5281/zenodo.21230267">doi.org/10.5281/zenodo.21230267</a></li>
 <li>BuildLang: Accountable Compute via Typed Capability Effects. Systems paper, 2026. Capability effects and accountable compilation. <a href="https://doi.org/10.5281/zenodo.21231253">doi.org/10.5281/zenodo.21231253</a></li>
@@ -198,7 +196,7 @@
 <section>
 <h2>Education</h2>
 <p class="career-fields"><span>High School Diploma</span><span>Wilsonville High School, Wilsonville, Oregon</span><span>2013</span></p>
-<p>Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work; no separate professional license is claimed.</p>
+<p>Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work.</p>
 <p class="career-fields"><span>ORCID: <a href="https://orcid.org/0009-0001-7175-5393">orcid.org/0009-0001-7175-5393</a></span><span><a href="https://harperz9.github.io/publications.html">harperz9.github.io/publications.html</a></span><span><a href="https://harperz9.github.io/portfolio.html">harperz9.github.io/portfolio.html</a></span></p>
 </section>
 <section>
@@ -237,7 +235,7 @@
 <aside class="career-source-note">
 <p>Updated <time datetime="2026-10-23">2026-10-23</time>. All formats share the same reviewed content.</p>
 <p><a href="career/source-ledger.md">Source and date notes</a> · <a href="career/resume-source.json">Structured career source</a> · <a href="career/career-build-receipt.json">Build receipt</a></p>
-<details><summary>Work-history and evidence notes</summary><p><strong>Independent Engineering:</strong> Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.</p><p><strong>Freelance Writing:</strong> Start year 2017 is known. No current status, end year, or continuous employment is inferred.</p><p><strong>Arboriculture:</strong> Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.</p><p><strong>Networking Support:</strong> 2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.</p><p><strong>Sole Proprietorship:</strong> Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.</p><p>Descriptions of public software are not claims of customer adoption, external certification, or universal safety. Private material is excluded.</p></details>
+<details><summary>Work-history and evidence notes</summary><p><strong>Independent Engineering:</strong> Owner-confirmed September 30, 2026: about 13 years of personal, self-directed programming; no professional programming experience. Career transition began June 2026 after eleven years of full-time production arboriculture.</p><p><strong>Freelance Writing:</strong> Start year 2017 is known. No current status, end year, or continuous employment is inferred.</p><p><strong>Arboriculture:</strong> Full-time period April 25, 2015 to June 2, 2026. Legendary Tree is an applicant-provided organization label; the displayed role describes duties and does not establish a formal title or legal employer name.</p><p><strong>Networking Support:</strong> 2014 to 2015, Xbox/Microsoft product contract, subcontracted through Stream/Convergys in Wilsonville, Oregon. Not direct Microsoft employment.</p><p><strong>Sole Proprietorship:</strong> Sole proprietorship began September 2026; no paid software clients. No LLC or registered trade name is claimed.</p></details>
 </aside><p class="career-source-note">Thirteen independent research records are described in the <a href="publications.html">publication index</a>; these records are not peer reviewed.</p>
 </main>
 </body>

@@ -8,7 +8,7 @@ Technical Support | Developer Operations | Quality Assurance
 
 ## Summary
 
-Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests. Flagship projects aim to make checking cheap.
+Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests.
 
 ## Technical Skills
 
@@ -22,7 +22,7 @@ About 13 years self-directed | Career transition began June 2026
 
 - Enumerated all 324 combinations of a defined evaluation record into seven verdicts, separating provider failures and missing evidence from model-quality scores.
 
-- Built Articulate writing tools, Accountable Surface approval interfaces, and Daylight Commons 3.1.0, a browser extension with signed, reproducible releases.
+- Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2, a browser extension that shows the sources behind social media replies.
 
 - Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.
 

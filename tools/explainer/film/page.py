@@ -277,8 +277,8 @@ def page() -> str:
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">explainers</span></div>
   <div class="mid">
-    <h1>Explainers. <span class="g">Every number has a source.</span></h1>
-    <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
+    <h1>Explainers. <span class="g">Short films on how AI works and how it gets checked.</span></h1>
+    <p class="lede">Each film teaches one idea through a concrete case, shows its sources on screen, and ends with recall questions.</p>
     <p class="lede">Three guides host them: <a class="inline" href="guides.html#tallow">Tallow</a>, <a class="inline" href="guides.html#pylon">Pylon</a> and <a class="inline" href="guides.html#rerun">Rerun</a>. <a class="inline" href="guides.html">Meet the guides</a>.</p>
   </div>
   {film_index()}

@@ -1020,6 +1020,19 @@
       "id": "synthesis-20261023",
       "read": "2026-10-23",
       "status": "Private working map of cross-project connections, read October 23, 2026. Only one row is cited: each Low Water inner-arena fight maps to an entry in the Daylight Commons technique catalogue (status building; no effect on players claimed). The other rows are proposed and are not claimed. The offline-verification overlap (Daylight evidence chains, Flywheel receipts, raw-native certificates) is stated from each project's public release, not from shared code."
+    },
+    {
+      "id": "daylight-commons-322",
+      "url": "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2",
+      "published": "2026-10-23T10:04:24Z",
+      "status": "GitHub release and README read October 23, 2026: latest release, nine platforms (X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok, Mastodon), AGPL-3.0 per the repository licence, runs in the browser with no account; install page harperz9.github.io/daylight-commons/install.html."
+    },
+    {
+      "id": "articulate-0151",
+      "url": "https://github.com/HarperZ9/articulate/releases/tag/v0.15.1",
+      "published": "2026-10-23T06:40:17Z",
+      "package": "https://pypi.org/project/articulate-writing/0.15.1/",
+      "status": "GitHub release and PyPI articulate-writing 0.15.1 (PyPI latest) checked October 23, 2026; surfaces (CLI, language server, SARIF) from the README; no external adoption claim."
     }
   ],
   "limits": [

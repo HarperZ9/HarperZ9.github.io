@@ -14,8 +14,8 @@ HOME_CSS = ROOT / "home" / "src" / "App.css"
 HOME_INDEX = ROOT / "home" / "index.html"
 SYSTEMS = ROOT / "system" / "systems.json"
 CANONICAL_META_DESCRIPTION = (
-    "Zain Dana Harper builds Flywheel and public tools for re-derivable AI evaluation, "
-    "with release evidence, limits, and pilot routes."
+    "Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, "
+    "with install commands, releases and source for each."
 )
 
 
@@ -57,8 +57,8 @@ def test_home_places_mission_and_flywheel_before_supporting_evidence() -> None:
     hero = section(source, "identity", "mission")
 
     assert "Zain Dana Harper" in hero
-    assert "Flywheel and public tools for re-derivable AI evaluation." in hero
-    assert "someone else can rerun on their own computer" in hero
+    assert "Flywheel and open-source tools for testing AI systems." in hero
+    assert "run a check on your own machine" in hero
     assert 'href="/start-here.html"' in hero
     assert '<a className="btn solid" href="/flywheel.html">Inspect Flywheel</a>' in hero
     # 18 October 2026: the guides' section with its films left the home page, by the author's
@@ -185,8 +185,7 @@ def test_home_uses_real_figures_with_units_and_limitations() -> None:
     assert "all 35 receipts verified" in source
     assert "Unit: recovered logged actions" in source
     assert "Categories overlap" in source
-    assert "What this does not prove" in source
-    assert "Capability families are navigation labels." in source
+    assert "What this does not prove" not in source
     assert "<table" in source
     assert "<caption>" in source
     assert '<th scope="row">' in source
@@ -218,7 +217,7 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
 
     for value in (
-        "<title>Zain Dana Harper | Re-derivable AI evaluation</title>",
+        "<title>Zain Dana Harper | Tools for testing AI systems</title>",
         f'<meta name="description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta property="og:description" content="{CANONICAL_META_DESCRIPTION}" />',
         f'<meta name="twitter:description" content="{CANONICAL_META_DESCRIPTION}" />',
@@ -226,9 +225,8 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
         assert value in head
 
     for value in (
-        "Flywheel and public tools for re-derivable AI evaluation, built by Zain Dana Harper.",
-        "Mission: re-derivable verification",
-        "Programmatic neutrality",
+        "Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.",
+        "Try a check",
         "Flagship platform: Flywheel",
         "Built tooling ecosystem",
         "Evidence board",
@@ -240,11 +238,11 @@ def test_home_metadata_and_noscript_follow_the_same_mission_funnel() -> None:
     ):
         assert value in fallback
 
-    assert fallback.index("Mission: re-derivable verification") < fallback.index("Flagship platform: Flywheel")
+    assert fallback.index("Try a check") < fallback.index("Flagship platform: Flywheel")
     assert fallback.index("Flagship platform: Flywheel") < fallback.index("Built tooling ecosystem")
     assert fallback.index("Built tooling ecosystem") < fallback.index("Evidence board")
     assert fallback.index("Evidence board") < fallback.index("Research, pilot, and support routes")
-    assert fallback.index("Mission: re-derivable verification") < fallback.index("Recent work")
+    assert fallback.index("Try a check") < fallback.index("Recent work")
     assert fallback.index("Recent work") < fallback.index("Flagship platform: Flywheel")
     assert "workshop behind Flywheel" not in fallback
 

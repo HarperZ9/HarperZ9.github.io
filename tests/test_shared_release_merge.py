@@ -157,7 +157,6 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert "40/40" in emet
     assert "https://pypi.org/project/emet/1.3.0/" in emet
     assert "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md" in emet
-    assert "regulatory assessment" in emet
     assert 'href="security-tools.json"' in emet
 
 
