@@ -11,7 +11,7 @@
     "style": "pixel",
     "open": {
       "seconds": 4.0,
-      "what": "Rerun on the pixel tidepool knocks on a shell: knock, knock, hollow. No words."
+      "what": "Rerun on the pixel tidepool knocks on a shell: knock, knock, hollow. The open is silent."
     },
     "close": {
       "seconds": 5.0,
@@ -93,7 +93,7 @@
         "ostromoukhov2001"
       ],
       "lines": [
-        "In the mid-1970s, Floyd and Steinberg passed each pixel's rounding error on to the neighbours not yet drawn.",
+        "In the mid-1970s, Floyd and Steinberg passed each pixel's rounding error on to the neighbours still to be drawn.",
         "Seven sixteenths go to the right. Three, five and one sixteenths go to the row below.",
         "The noise is fine enough that the eye blends it back into the colour that was meant."
       ]
@@ -106,7 +106,7 @@
         "rn-dither"
       ],
       "lines": [
-        "A third way uses a grid of thresholds with no clumps and no repeats you can see, built by Robert Ulichney's void-and-cluster method.",
+        "A third way uses a grid of thresholds spread out evenly, built by Robert Ulichney's void-and-cluster method.",
         "It reads as fine grain instead of a pattern."
       ]
     },
@@ -156,5 +156,5 @@
       }
     }
   ],
-  "length_note": "The film runs at the author's measured pace, about 3:54 with the host's open and close and the prediction pauses, not the 2:35 the first script assumed. Author decision, 2026-10-14: \"Keep the longer films.\" No lines are cut for length."
+  "length_note": "The film runs at the author's measured pace, about 3:54 with the host's open and close and the prediction pauses; the first script assumed 2:35. Author decision, 2026-10-14: \"Keep the longer films.\" Every line stays."
 }
