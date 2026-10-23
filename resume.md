@@ -13,7 +13,7 @@ https://harperz9.github.io/resume-support-operations.html
 [TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.txt)
 [MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.md)
 
-## AI Systems, Evaluation, and Python Developer Tools
+## AI and Security Evaluation, and Python Developer Tools
 
 https://harperz9.github.io/resume-evaluation-tooling.html
 

@@ -670,7 +670,7 @@ Published October 3, 2026. Includes project writing rules, domain profiles, writ
 
 ## October 23, 2026 release review
 
-Each entry was checked against its GitHub release page and, where named, the package registry on October 23, 2026 (UTC). The four targeted resumes keep their role focus and one-page layout. Low Water is a private repository and is not described. No customer, adoption, store-listing, revenue or employment claim is added.
+Each entry was checked against its GitHub release page and, where named, the package registry on October 23, 2026 (UTC). The four targeted resumes keep their role focus and one-page layout. Low Water is a private repository; the later CV rework below describes it without private detail. No customer, adoption, store-listing, revenue or employment claim is added.
 
 ### flywheel-190
 
@@ -705,3 +705,47 @@ Published October 14, 2026. Render backends are the CPU reference, D3D12 and Web
 ### suite-20261023
 
 Gather 2.4.0 (https://github.com/HarperZ9/gather/releases/tag/v2.4.0, https://pypi.org/project/gather-engine/2.4.0/), Crucible 1.6.0 (https://github.com/HarperZ9/crucible/releases/tag/v1.6.0, https://pypi.org/project/crucible-bench/1.6.0/), EMET 1.3.1 (https://github.com/HarperZ9/emet/releases/tag/v1.3.1, https://pypi.org/project/emet/1.3.1/) and Canon 0.7.0 (https://github.com/HarperZ9/canon/releases/tag/v0.7.0, GitHub only) were published October 23, 2026. Gather and Canon move future releases to AGPL-3.0-only. Crucible 1.6.0 and EMET 1.3.1 change documentation and metadata only.
+
+## October 23, 2026 CV and resume rework
+
+The CV now leads with a profile and a Selected Evidence list, then groups the record by the author's target work: security evaluation (red team and purple team), AI evaluation, graphics and rendering, and developer tools. Each figure below was read on October 23, 2026 (UTC).
+
+### elder-enb-nexus
+
+https://www.nexusmods.com/skyrimspecialedition/mods/117327
+
+Read from the mod page and the author's Nexus Mods profile: 996,649 total downloads, 176,359 unique downloads, 2,413 endorsements and 146,270 total views; version final-elder-9; original upload April 21, 2024; last updated February 20, 2026; created and uploaded by zaindanaharper. These are Nexus Mods' own counters and they change over time. Unique downloads count distinct downloading accounts, not active users, and endorsements are not a satisfaction survey. The GitHub repositories named elder-enb are separate later versions and are not the published preset.
+
+### daylight-commons-310
+
+https://github.com/HarperZ9/daylight-commons/releases/tag/v3.1.0
+
+Published October 23, 2026, under AGPL-3.0-only. The README lists nine platforms: X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. It runs with no server, account or analytics, and PRIVACY.md states that it never sells or shares data. Packages are reproducible (INSTALL.md) and the checksums are signed. Limits kept: no Mozilla-signed build, TikTok comments not checked live, and the campaign lens not yet labelled or measured.
+
+### daylight-commons-evaluation
+
+https://github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
+
+Slur sign precision 91.0% (3,995 of 4,392; Wilson 95% interval 90.1 to 91.8) on four public human-labelled corpora, test split. Other signs carry their own figures or say "not measured". Precision on these corpora does not show precision on a live feed.
+
+### articulate-0150
+
+https://github.com/HarperZ9/articulate/releases/tag/v0.15.0
+
+Published on GitHub October 23, 2026. PyPI served articulate-writing 0.14.0 when this was read, so 0.15.0 is cited as a GitHub release only.
+
+### raw-native-main-20261023
+
+https://github.com/HarperZ9/raw-native/tree/main/changelog.d
+
+Merged to main after v0.8.0 and not yet released: a Vulkan 1.3 render hardware interface whose 600 presented frames on lavapipe in CI match the offscreen and D3D12 WARP renders (2026-10-16-vulkan-raster.md); the painterly shader in the C++ core, equal to the JavaScript version on fifteen cases (2026-10-17-core-port-paint.md); a tilt-shift lens at about 0.86 ms a frame at 1080p on an RTX 4090, D3D12 median with run-to-run spread 0.80 to 1.08 ms against a 1.0 ms bound (2026-10-22-art-p23-tiltshift.md); and the first slice of the character asset toolchain (PR #217). The SDF kit with exact primitives is pull request #220, still open, and is not claimed.
+
+### low-water-private
+
+Private repository, described without spoilers or private detail. Five era scripts exist, scripted ending checks reached the ending on every class, and combat traces are checked byte for byte. The C++ port steps are open raw-native pull requests #218 and #219. No release date, store listing or player count is claimed.
+
+### census-20261023
+
+https://harperz9.github.io/career/open-source-census.json
+
+From `tools/pr_census.py`: 37 merged engineering pull requests in 30 external repositories (3 merged listings counted apart), 14 open and 17 closed without merge. The counts on the pages are plain text and are not census-stamped, so a census rerun must update the text with it.
