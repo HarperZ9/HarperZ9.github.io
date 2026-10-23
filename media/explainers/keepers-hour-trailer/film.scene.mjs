@@ -1,4 +1,4 @@
-// The Keeper's Hour trailer, Motion layer (84 s: 21 lamp sweeps). No narration: the words are the game's own lines
+// The Keeper's Hour trailer, Motion layer (84 s: 21 lamp sweeps). Every word on screen is one of the game's own lines
 // (film.json, from night.txt, CC BY 4.0), one card per shot, cut to the lamp: one sweep is
 // four seconds (kh_world.c). The game's frames are not drawn here; they come from the game's
 // fixed-step recorder and trailer.py lays this layer over them. In the footage sweeps this scene
