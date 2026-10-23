@@ -53,7 +53,7 @@ export function prepare(A, facts, c) {
       naive: T(A, "naive: render small, scale up", { size: 30, x: 1500, y: 300, atlas: "mono" }),
       dither: T(A, `${fact(ev, "dither_colours")} colours . ${fact(ev, "dither_mismatched")} mismatches`, { size: 38, x: 960, y: 262, atlas: "mono" }),
     },
-    tags: { tape: tag(A, "a depiction: no tape pass in the post stack"), pixel: tag(A, "a depiction of the method; the measurement is the library's"), dither: tag(A, "local run, not in CI"),
+    tags: { tape: tag(A, "drawn for the film; the tape pass is tested in the library"), pixel: tag(A, "a depiction of the method; the measurement is the library's"), dither: tag(A, "local run, not in CI"),
       paint: tag(A, `GPU within ${fact(ev, "paint_code")} step in 255 of the CPU, ${fact(ev, "paint_cases")} cases`), tapeN: tag(A, `GPU within ${fact(ev, "vhs_code")} step, ${fact(ev, "vhs_cases")} cases`, 150) },
     tabs: { paint: tab(A, ev, "rn-paint-parity"), tape: tab(A, ev, "rn-vhs-parity"), pixel: tab(A, ev, "rn-pixel"), dither: tab(A, ev, "rn-dither") },
   };

@@ -6,7 +6,7 @@
   "seed": 20261014,
   "voice": "author",
   "draft": true,
-  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration is not recorded and the 4K render has not run. The length stands at the author's measured pace, about 4:53 (author, 2026-10-14: \"Keep the longer films.\"); no lines are cut for length. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6, each with one number from its evidence source (rn-pr73, rn-pr74, rn-m3). The author left the three lines to the lead's recommendation (2026-10-14: \"the three draft lines, whatever you recommend.\"), and they are kept as written.",
+  "draft_note": "Scene code only. The timing is provisional (written from the script at the author's measured pace); the narration recording and the 4K render come next. The length stands at the author's measured pace, about 4:51 (author, 2026-10-14: \"Keep the longer films.\"); every line stays. The prediction pause is approved (2026-10-14): the question is spoken, then held 2.5 s. Segment 7 of the script was cut by the script's own rule: glTF models (#73), the retro 3D flags (#74) and M3 lighting had all merged with their checks passing, so their three lines moved into segment 6, each with one number from its evidence source (rn-pr73, rn-pr74, rn-m3). The author left the three lines to the lead's recommendation (2026-10-14: \"the three draft lines, whatever you recommend.\"), and they are kept as written.",
   "host": {
     "guide": "rerun",
     "home_style": "pixel",
@@ -83,7 +83,7 @@
         "rn-crt-parity"
       ],
       "lines": [
-        "Now the same box on an old television. raw-native does not paint scanlines on. It encodes the picture as a broadcast signal, decodes it the way a television did, and fires simulated electron beams at a phosphor mask.",
+        "Now the same box on an old television, made the long way. It encodes the picture as a broadcast signal, decodes it the way a television did, and fires simulated electron beams at a phosphor mask.",
         "Dot crawl and rainbow fringes appear because the decoder gets things wrong, the way a real one did.",
         "Across 9 tube settings, the GPU matches the slow CPU version within 1 step in 255."
       ]
@@ -121,8 +121,8 @@
         "As pixel art, the box stays still while the camera turns. In the library's test, under one pixel in ten thousand changed colour as the view moved, against up to 19 percent for simply rendering small and scaling up.",
         "And with an old sixteen-colour palette and dither, the GPU picks the same colour as the slow version for every one of 16,777,216 inputs.",
         "Models from other tools now load: ten glTF models render on the CPU and on the GPU, and each GPU frame is verified against the CPU.",
-        "Wobbling retro geometry is checked against a CPU twin: across 12 cases, no pixel away from an edge is covered by a different triangle.",
-        "And the box can now be fully lit. Over 55,270 test points, the clustered lights missed none that the full list found."
+        "Wobbling retro geometry is checked against a CPU twin: across 12 cases, every pixel away from an edge is covered by the same triangle in both.",
+        "And the box can now be fully lit. Over 55,270 test points, the clustered lights found every light the full list found."
       ],
       "sources_by_line": {
         "4": "rn-pr73",
@@ -135,7 +135,7 @@
       "layout": "close",
       "heading": "One thing to keep",
       "lines": [
-        "One thing to keep: a style is a claim, and every claim here comes with the test that could say no.",
+        "One thing to keep: a style is a claim, and every claim here comes with a test that can fail.",
         "The voice you heard is a synthesized version of mine. Every number on screen links to its source under the video."
       ]
     }
