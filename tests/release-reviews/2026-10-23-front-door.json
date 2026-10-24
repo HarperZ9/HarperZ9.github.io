@@ -1,9 +1,9 @@
 {
   "date": "2026-10-23",
-  "note": "The home page becomes the front door (author, 23 October 2026: 'make the front door open ended, yet streamlined; and artistic and immersive'): static markup with a small script, no React. The pair is index-DJqSPJZA.js and index-rwD7DiZf.css; index-Bg7UPow6.js and index-D11WloWt.css stay as retained history.",
+  "note": "The home page becomes the front door (author, 23 October 2026: 'make the front door open ended, yet streamlined; and artistic and immersive'): static markup with a small script, no React. The pair is index-DMq4QBIA.js and index-rwD7DiZf.css; index-Bg7UPow6.js and index-D11WloWt.css stay as retained history.",
   "paths": {
-    "assets/index-DJqSPJZA.js": "46895858bcf4452f7ba1af25a6d3a802f9573900b483d1e6cf96d719602ef87b",
+    "assets/index-DMq4QBIA.js": "1faa0f2d356e560581b771a4a0b5e5151e2575025afbd673bc768f0a8ec6a3df",
     "assets/index-rwD7DiZf.css": "40109ad58b4bafb764c83fe731c6424cb0ecbc63dbd124d9a75bc949c6d536cd",
-    "index.html": "d03b390fcc74e17d2e0cd9f58fbc4900153e560d4ce6a63c3728ae8f8b711b81"
+    "index.html": "869fe5e6cf854fe3e0c3193d46c9d8d14fdf15b53fc14bc11c91ea42c0515224"
   }
 }

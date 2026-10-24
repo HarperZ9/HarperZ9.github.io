@@ -158,6 +158,15 @@ access to the entire web archive."
   because the astrolabe scan fading in becomes the largest paint (the text paints by about 1.5 s);
   desktop LCP 0.6 s; 385 KiB on a phone. axe: 0 violations in 40 runs.
 
+## The one emblem
+
+Author, 2026-10-23, relayed: "the emblems do not have to recur everywhere; we want to use them
+thoughtfully, and artfully ~ telling subtle stories behind the scenes painted by our words, videos,
+and audio". One emblem from SYMBOLS.md is placed on the front door, in the sound only: the drone sits
+14 cents flat, the sonic form of the scale with a wedge. Intent: the instrument reads true and sits on
+something; a listener who turns Sound on hears it is slightly off without being told why, which is the
+phase map's point about checks. No favicon, loader, divider or hover note carries an emblem.
+
 ## Next steps (not shipped)
 
 - Playable demos from the coordinator's list not built here: Daylight "semantic rain" through

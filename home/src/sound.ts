@@ -23,11 +23,12 @@ export function createSound(): Sound {
     const lfo = ac.createOscillator(); lfo.frequency.value = 0.07;
     const lfoGain = ac.createGain(); lfoGain.gain.value = 420;
     lfo.connect(lfoGain).connect(filter.frequency); lfo.start();
-    voices = [0, 7, -5].map((cents) => {
+    // The whole drone sits 14 cents flat: the hum of a scale with a wedge under one pan.
+    voices = [-14, -7, -19].map((cents) => {
       const o = ac!.createOscillator();
-      o.type = cents ? "sawtooth" : "sine";
+      o.type = cents === -14 ? "sine" : "sawtooth";
       o.frequency.value = NOTES[0]; o.detune.value = cents;
-      const g = ac!.createGain(); g.gain.value = cents ? 0.12 : 0.5;
+      const g = ac!.createGain(); g.gain.value = cents === -14 ? 0.5 : 0.12;
       o.connect(g).connect(filter); o.start();
       return o;
     });
