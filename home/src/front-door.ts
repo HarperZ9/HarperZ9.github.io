@@ -57,6 +57,10 @@ function wake(panel: HTMLElement) {
   if (newest) void mountNewest(newest);
 }
 
+// Every layer that appears says what it is, in plain words.
+const DREAM = "Behind the dial: Peter Apian's dial for the moon's path, Astronomicum Caesareum, 1540.";
+const ECLIPSE = "Total solar eclipse, 21 August 2017. NASA photograph by Carla Thomas.";
+
 function mountToys(sound: ReturnType<typeof createSound>) {
   const toys = document.querySelector<HTMLElement>(".fd-toys");
   const button = toys?.querySelector<HTMLButtonElement>(".fd-sound");
@@ -66,6 +70,8 @@ function mountToys(sound: ReturnType<typeof createSound>) {
     button.setAttribute("aria-pressed", String(sound.on()));
   });
   toys.hidden = false;
+  const rules = document.querySelector<HTMLElement>(".fd-rules");
+  if (rules) rules.hidden = false;
 }
 
 export function mountFrontDoor() {
@@ -113,19 +119,21 @@ export function mountFrontDoor() {
     try {
       const status = document.querySelector<HTMLElement>(".fd-status");
       const collage = dressCollage(root);
+      const cap = document.querySelector<HTMLElement>(".fd-caption");
+      const caption = (text: string) => { if (cap) { cap.textContent = text; cap.hidden = !text; } };
       stage = mountStage(canvas, chooseForm(), links.length, {
         pick: (i) => select(i, "pointer"),
         mood: (m) => {
           if (m.dream) collage.wake("volvelle");
-          if (m.hold) collage.wake("eye");
           root.classList.toggle("fd-dream", m.dream);
+          caption(root.classList.contains("fd-eclipse") ? ECLIPSE : m.dream ? DREAM : "");
           root.classList.toggle("fd-hold", m.hold);
         },
         touched: (kind) => sound.touch(kind),
         secret: (on) => {
           collage.wake("eclipse");
-          collage.wake("eye");
           root.classList.toggle("fd-eclipse", on);
+          caption(on ? ECLIPSE : "");
           if (status) status.textContent = on ? "Eclipse. The form turns inside out." : "The eclipse passes.";
         },
       });

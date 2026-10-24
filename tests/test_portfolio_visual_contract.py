@@ -97,7 +97,7 @@ def test_media_in_the_panels_exists_and_describes_itself() -> None:
         for ref in re.findall(r"/(media/front-door/\S+) \d+w", tag):
             assert (ROOT / ref).is_file(), ref
     credits = read(ROOT / "media" / "front-door" / "CREDITS.md")
-    for name in ("astrolabe-met-1462", "volvelle-apianus-1540", "eye-1624", "eclipse-nasa-2017",
+    for name in ("astrolabe-met-1462", "volvelle-apianus-1540", "eclipse-nasa-2017",
                  "concrete-layers", "heavenly-boat"):
         assert name in credits, name
     for tag in re.findall(r"<img\b[^>]*>", src.replace(collage, "")):

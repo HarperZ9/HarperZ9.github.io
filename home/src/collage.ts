@@ -1,6 +1,6 @@
 // The collage behind the form: real scans from public domain and CC0 archives
 // (see media/front-door/CREDITS.md). The brass astrolabe loads after the page has
-// painted; the dragon wheel, the engraved eye and the eclipse load only when the
+// painted; the dragon wheel and the eclipse load only when the
 // visitor first reaches the state that shows them. Phones get the small cut.
 
 const wide = window.matchMedia("(min-width: 64rem)");
@@ -15,7 +15,7 @@ function load(img: HTMLImageElement) {
   img.src = url;
 }
 
-export type Collage = { wake(layer: "volvelle" | "eye" | "eclipse"): void };
+export type Collage = { wake(layer: "volvelle" | "eclipse"): void };
 
 export function dressCollage(root: HTMLElement): Collage {
   const layer = (name: string) => document.querySelector<HTMLImageElement>(`.fd-collage .fc-${name}`);

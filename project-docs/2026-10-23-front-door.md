@@ -137,7 +137,6 @@ access to the entire web archive."
   - Ostendorfer's dragon volvelle from the Astronomicum Caesareum, 1540 (Met, CC0): it turns slowly
     behind the form when the visitor leaves it alone; the page's blank margin is the paper the phase
     map is printed on.
-  - An engraved eye, 1624 (Deutsche Fotothek, public domain): it surfaces behind the eye on a hold.
   - NASA's 2017 diamond-ring eclipse (public domain): the hidden eclipse mode.
   - Heavenly Bodies, 1920 (Prelinger, public domain): a seven-second low-tide loop for Low Water.
   - Concrete Layers 02 (Poly Haven, CC0): the supergraphic bands, a deco sunrise under the form.
@@ -166,6 +165,23 @@ and audio". One emblem from SYMBOLS.md is placed on the front door, in the sound
 14 cents flat, the sonic form of the scale with a wedge. Intent: the instrument reads true and sits on
 something; a listener who turns Sound on hears it is slightly off without being told why, which is the
 phase map's point about checks. No favicon, loader, divider or hover note carries an emblem.
+
+## Grounding pass (CONTRASTS.md section F)
+
+Author, 2026-10-23, relayed: the work must not read as conspiratorial or occult, which "will
+dissuade readers from being moved, and allow mistrust or doubt over merit".
+
+- The eye at the centre of the dial is gone. The centre is now the astrolabe's own hub and pin.
+  The chosen moon no longer opens an eye, and the 1624 eye engraving is removed from the page and
+  the credits.
+- The rete's procedural glyphs are now plain numerals, 00 to 08, matching the facet list.
+- The eight-pointed star that idle time drew is removed. Idle time now shows Apian's dial, with a
+  visible caption naming it.
+- Every layer that appears says what it is in a visible caption (the 1540 dial; the 2017 eclipse,
+  with its date and photographer). The hidden mode is printed in a "How it plays" list under the
+  dial, so nothing reads as a hidden message.
+- The phase map, the supergraphic bands and the flat drone were checked against the same rule and
+  kept: each is data, a print texture or a sound, and none is presented as a sign.
 
 ## Next steps (not shipped)
 

@@ -1,9 +1,9 @@
 {
   "date": "2026-10-23",
-  "note": "The home page becomes the front door (author, 23 October 2026: 'make the front door open ended, yet streamlined; and artistic and immersive'): static markup with a small script, no React. The pair is index-DbmYyqqX.js and index-rwD7DiZf.css; index-Bg7UPow6.js and index-D11WloWt.css stay as retained history.",
+  "note": "The home page becomes the front door (author, 23 October 2026: 'make the front door open ended, yet streamlined; and artistic and immersive'): static markup with a small script, no React. The pair is index-5KPR-kvg.js and index-CFeTPxAW.css; index-Bg7UPow6.js and index-D11WloWt.css stay as retained history.",
   "paths": {
-    "assets/index-DbmYyqqX.js": "23ae56a50e1ef483a04cf3088ac440eddcb444b59bd27b2f2f318d0c5aca70a3",
-    "assets/index-rwD7DiZf.css": "40109ad58b4bafb764c83fe731c6424cb0ecbc63dbd124d9a75bc949c6d536cd",
-    "index.html": "f8380ba1acaa5f669a7c306b4acd1aff43614708e889bba278555fdb26e4a1a4"
+    "assets/index-5KPR-kvg.js": "609e3692ed041d3ac6a98293935c5ca1e66d9fed62f4eb53a4214305f113a802",
+    "assets/index-CFeTPxAW.css": "e20d6ca0066ba53aefeb64b072b1f091c0c2482e923d14b70c18c316edb103e1",
+    "index.html": "16426cdd0b2e7f9104f7614e828b20e294d8e85d4807354938971d64a725cc92"
   }
 }

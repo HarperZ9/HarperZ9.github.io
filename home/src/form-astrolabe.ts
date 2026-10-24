@@ -1,32 +1,19 @@
-// Variant C: the astrolabe. An orrery of eight bodies on their own rings,
-// a turning rete of glyphs, eccentric almucantar circles, and an eye at the
-// centre that follows the cursor. Each body is a facet. Hold it and the rings
-// come apart; leave it alone and a star draws itself and the eye half-closes.
-import { FLARE, TAU, alpha, field, wrap, type FormRenderer, type FormState } from "./form-shared";
+// Variant C: the astrolabe. An orrery of bodies on their own rings, a turning
+// rete numbered like the facet list, eccentric almucantar circles, and the
+// instrument's hub and pin at the centre. Each body is a facet. Hold it and the
+// rings come apart; leave it alone and the rings drift on their own.
+import { FLARE, TAU, alpha, wrap, type FormRenderer, type FormState } from "./form-shared";
 
 const phase: number[] = [];
 const bodies: Array<{ x: number; y: number; r: number }> = [];
 let lastT = 0;
 
-// A glyph per facet: strokes between points of a 3 by 3 grid, chosen by bits.
-const GLYPHS = [0x2e5, 0x1a5, 0x2c3, 0x0f6, 0x349, 0x1d2, 0x26b, 0x0b7, 0x35c];
-const PAIRS: Array<[number, number]> = [[0, 4], [4, 8], [2, 4], [4, 6], [0, 2], [6, 8], [1, 7], [3, 5], [0, 6], [2, 8]];
-
-function glyph(ctx: CanvasRenderingContext2D, x: number, y: number, g: number, a: number, code: number) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(a + Math.PI / 2);
-  ctx.beginPath();
-  PAIRS.forEach(([p, q], b) => {
-    if (!((code >> b) & 1)) return;
-    ctx.moveTo(((p % 3) - 1) * g, (Math.floor(p / 3) - 1) * g);
-    ctx.lineTo(((q % 3) - 1) * g, (Math.floor(q / 3) - 1) * g);
-  });
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(0, -g * 1.6, g * 0.18, 0, TAU);
-  ctx.stroke();
-  ctx.restore();
+// The rete is numbered like the facet list: 00, 01, 02 and on.
+function numeral(ctx: CanvasRenderingContext2D, x: number, y: number, h: number, i: number) {
+  ctx.font = `600 ${Math.round(h)}px "Hanken Grotesk", system-ui, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(String(i).padStart(2, "0"), x, y);
 }
 
 function ringRadius(i: number, R: number, s: FormState) {
@@ -49,34 +36,19 @@ function advance(s: FormState) {
   }
 }
 
-function drawEye(ctx: CanvasRenderingContext2D, c: number, size: number, s: FormState, ink: string) {
-  const e = size * 0.07;
-  const cycle = s.t % 5.3;
-  const blink = cycle < 0.16 ? Math.sin((cycle / 0.16) * Math.PI) : 0;
-  const open = Math.max(0.05, (1 - blink) * (1 - 0.65 * s.idle) * (1 - 0.5 * s.split));
-  ctx.beginPath();
-  ctx.moveTo(c - e, c);
-  ctx.quadraticCurveTo(c, c - e * open * 1.1, c + e, c);
-  ctx.quadraticCurveTo(c, c + e * open * 1.1, c - e, c);
+// The hub: the pin and wedge that hold an astrolabe's plates together.
+function drawHub(ctx: CanvasRenderingContext2D, c: number, size: number, s: FormState, ink: string) {
+  const e = size * 0.05, lw = Math.max(0.8, size / 600);
   ctx.strokeStyle = alpha(ink, 0.9);
-  ctx.lineWidth = Math.max(0.8, size / 600);
-  ctx.stroke();
+  ctx.lineWidth = lw;
+  for (const k of [1, 0.62, 0.3]) { ctx.beginPath(); ctx.arc(c, c, e * k, 0, TAU); ctx.stroke(); }
+  ctx.fillStyle = alpha(ink, 0.9);
+  ctx.beginPath(); ctx.arc(c, c, e * 0.18, 0, TAU); ctx.fill();
   ctx.save();
-  ctx.clip();
-  const px = c + s.px * e * 0.4, py = c + s.py * e * 0.25;
-  ctx.fillStyle = alpha(ink, 0.92);
-  ctx.beginPath(); ctx.arc(px, py, e * 0.36, 0, TAU); ctx.fill();
+  ctx.translate(c, c);
+  ctx.rotate(s.rot * 0.5);
+  ctx.fillRect(-e * 1.5, -e * 0.09, e * 3, e * 0.18);
   ctx.restore();
-  for (let k = 0; k < 24; k++) {
-    const a = (k / 24) * TAU;
-    const r1 = e * 1.25, r2 = e * (1.4 + 0.25 * Math.abs(field(a, 3, s.t * 0.5)));
-    ctx.beginPath();
-    ctx.moveTo(c + Math.cos(a) * r1, c + Math.sin(a) * r1);
-    ctx.lineTo(c + Math.cos(a) * r2, c + Math.sin(a) * r2);
-    ctx.strokeStyle = alpha(ink, 0.45);
-    ctx.lineWidth = Math.max(0.5, size / 1100);
-    ctx.stroke();
-  }
 }
 
 function drawFrame(ctx: CanvasRenderingContext2D, c: number, R: number, size: number, s: FormState, ink: string) {
@@ -114,24 +86,6 @@ function drawFrame(ctx: CanvasRenderingContext2D, c: number, R: number, size: nu
   }
 }
 
-function drawStar(ctx: CanvasRenderingContext2D, c: number, R: number, size: number, s: FormState, ink: string) {
-  // An eight-pointed star on the rete; idle time draws it in.
-  const pts = Array.from({ length: s.n }, (_, i) => {
-    const a = s.pointAngle + (i * TAU) / s.n + s.rot;
-    return [c + Math.cos(a) * R * 0.84, c + Math.sin(a) * R * 0.84];
-  });
-  ctx.beginPath();
-  for (let k = 0; k <= s.n; k++) {
-    const [x, y] = pts[(k * (s.n % 3 === 0 ? 4 : 3)) % s.n];
-    if (k === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-  }
-  const total = R * 0.84 * 2 * Math.sin(((s.n % 3 === 0 ? 4 : 3) * Math.PI) / s.n) * s.n;
-  ctx.setLineDash([total * (0.18 + 0.82 * s.idle), total]);
-  ctx.strokeStyle = alpha(ink, 0.12 + 0.35 * s.idle);
-  ctx.lineWidth = Math.max(0.5, size / 1000);
-  ctx.stroke();
-  ctx.setLineDash([]);
-}
 
 // Art-deco sunburst: stepped wedges fanning from the eye, alternating three lengths.
 function drawSunburst(ctx: CanvasRenderingContext2D, c: number, R: number, s: FormState, ink: string) {
@@ -193,15 +147,15 @@ export const astrolabe: FormRenderer = {
     drawSunburst(ctx, c, R, s, ink);
     drawMass(ctx, c, R, s, ink);
     drawFrame(ctx, c, R, size, s, ink);
-    drawStar(ctx, c, R, size, s, ink);
 
-    // The rete's glyphs, one per facet.
+    // The rete's numerals, one per facet.
     for (let i = 0; i < s.n; i++) {
       const a = s.pointAngle + (i * TAU) / s.n + s.rot;
       const on = i === s.sel || i === s.preview;
       ctx.strokeStyle = alpha(ink, on ? 0.95 : 0.4);
       ctx.lineWidth = on ? lw * 1.8 : lw * 1.2;
-      glyph(ctx, c + Math.cos(a) * R * 0.93, c + Math.sin(a) * R * 0.93, R * 0.028, a, GLYPHS[i % GLYPHS.length]);
+      ctx.fillStyle = alpha(ink, on ? 0.95 : 0.5);
+      numeral(ctx, c + Math.cos(a) * R * 0.93, c + Math.sin(a) * R * 0.93, R * 0.06, i);
     }
 
     // Orbits and bodies.
@@ -238,22 +192,12 @@ export const astrolabe: FormRenderer = {
       const pulse = Math.max(0, 1 - (s.t - s.selAt) / 1.2);
       ctx.beginPath(); ctx.moveTo(c, c); ctx.lineTo(b.x, b.y);
       ctx.strokeStyle = alpha(ink, 0.35 + 0.5 * pulse); ctx.lineWidth = lw * (1 + 3 * pulse); ctx.stroke();
-      // The chosen moon opens an eye of its own and looks back at the visitor.
-      const e = b.r * 0.85;
-      ctx.beginPath();
-      ctx.moveTo(b.x - e, b.y);
-      ctx.quadraticCurveTo(b.x, b.y - e * 0.9, b.x + e, b.y);
-      ctx.quadraticCurveTo(b.x, b.y + e * 0.9, b.x - e, b.y);
-      ctx.fillStyle = p.paper; ctx.fill();
-      ctx.strokeStyle = alpha(ink, 0.95); ctx.lineWidth = lw; ctx.stroke();
-      ctx.beginPath(); ctx.arc(b.x + s.px * e * 0.3, b.y + s.py * e * 0.2, e * 0.38, 0, TAU);
-      ctx.fillStyle = alpha(ink, 0.95); ctx.fill();
       FLARE.forEach((col, ci) => {
         ctx.beginPath();
         ctx.arc(b.x + (ci - 1) * size * 0.003, b.y, b.r * (2 + pulse * 2), 0, TAU);
         ctx.strokeStyle = col + (p.dark ? "0.8)" : "0.6)"); ctx.lineWidth = lw * 1.3; ctx.stroke();
       });
     }
-    drawEye(ctx, c, size, s, ink);
+    drawHub(ctx, c, size, s, ink);
   },
 };
