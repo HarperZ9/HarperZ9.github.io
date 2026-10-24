@@ -1,0 +1,279 @@
+/* The front door: one generated form, eight facets, one open panel.
+   Without JavaScript the same markup reads as a plain list of the work,
+   every panel open, every control hidden. */
+
+html:root body.fd{
+  margin:0;
+  font-family:var(--font-sans);
+  font-size:var(--t-body);
+  line-height:1.55;
+  background:var(--paper);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+.fd a{color:inherit;text-underline-offset:.22em;text-decoration-thickness:1px}
+.fd a:hover{text-decoration-thickness:2px}
+.fd :focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.fd .skip-link{position:absolute;left:-999px;top:0;z-index:10;padding:.6rem 1rem;background:var(--ink);color:var(--on-ink)}
+.fd .skip-link:focus{left:var(--gutter)}
+
+/* Header: five quiet routes. */
+.fd-top{display:flex;justify-content:flex-end;padding:1rem var(--gutter) 0}
+.fd-nav ul{display:flex;flex-wrap:wrap;gap:.25rem 1.4rem;margin:0;padding:0;list-style:none}
+.fd-nav a{display:inline-block;padding:.35rem 0;color:var(--soft);text-decoration:none;font-size:.95rem}
+.fd-nav a:hover,.fd-nav a:focus-visible{color:var(--ink);text-decoration:underline}
+
+/* The stage. Static order: intro, facets, panels. */
+.fd-stage{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:var(--s-6);
+  max-width:90rem;
+  margin:0 auto;
+  padding:var(--s-6) var(--gutter) var(--s-8);
+}
+.fd-intro{max-width:34rem}
+html:root .fd-name:not(#_){
+  margin:0 0 .6rem;
+  font-size:clamp(2.4rem,1.4rem + 3.6vw,4.4rem);
+  line-height:.98;
+  font-weight:780;
+  letter-spacing:-.035em;
+}
+.fd-line{margin:0;color:var(--soft);font-size:clamp(1.05rem,1rem + .3vw,1.25rem);line-height:1.45;max-width:30rem}
+
+.fd-orb{display:none}
+.fd-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.fd-list{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.fd-list li{border-bottom:1px solid var(--line)}
+.fd-list a{display:flex;gap:.9rem;align-items:baseline;padding:.6rem .1rem;text-decoration:none;font-size:1.08rem;font-weight:560}
+.fd-num{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);font-weight:400;min-width:1.4rem}
+
+.fd-panels{display:grid;gap:var(--s-7)}
+.fd-panel{max-width:38rem}
+html:root .fd-panel h2:not(#_){margin:0 0 .35rem;font-size:clamp(1.6rem,1.2rem + 1.2vw,2.3rem);line-height:1.05;font-weight:740;letter-spacing:-.025em}
+.fd-panel h2::before,.fd-panel h2::after{display:none!important}
+.fd-benefit{margin:0 0 1rem;font-size:1.12rem;line-height:1.45}
+.fd-quiet{color:var(--soft);margin:0 0 1rem}
+
+.fd-demo{margin:0 0 1rem;padding:1rem;border:1px solid var(--line);background:var(--inset)}
+.fd-demo figcaption{margin:0 0 .75rem;color:var(--soft);font-size:.95rem}
+.fd-demo img,.fd-demo video{display:block;width:100%;height:auto;max-height:44vh;object-fit:contain;background:var(--paper)}
+.fd-choices{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .8rem}
+.fd-choices button{
+  font:inherit;font-size:.9rem;cursor:pointer;
+  padding:.45rem .75rem;min-height:2.5rem;
+  color:var(--ink);background:var(--paper);
+  border:1px solid var(--line-strong);border-radius:var(--radius-control);
+}
+.fd-choices button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.fd-state + .fd-state{margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--line)}
+.fd-io{margin:.2rem 0;font-family:var(--font-mono);font-size:.88rem;overflow-wrap:anywhere}
+.fd-io span{color:var(--muted);margin-right:.5rem}
+.fd-prose{margin:0 0 .6rem;font-size:1.02rem}
+.fd-prose mark{background:none;color:inherit;text-decoration:underline wavy var(--drift);text-underline-offset:.25em;text-decoration-thickness:1.5px}
+.fd-code,.fd-out{margin:.4rem 0 0;padding:.6rem .75rem;font-family:var(--font-mono);font-size:.82rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper);border:1px solid var(--line)}
+.fd-out{color:var(--soft)}
+.fd-verdict{margin:.6rem 0 .2rem;font-weight:700;font-size:1rem}
+.fd-verdict::before{content:"";display:inline-block;width:.7rem;height:.7rem;margin-right:.5rem;border:2px solid currentColor;vertical-align:-.05rem}
+.fd-verdict[data-verdict="verified"]{color:var(--verified)}
+.fd-verdict[data-verdict="verified"]::before{background:currentColor}
+.fd-verdict[data-verdict="drift"]{color:var(--drift)}
+.fd-verdict[data-verdict="drift"]::before{transform:rotate(45deg)}
+.fd-verdict[data-verdict="unverifiable"]{color:var(--unverifiable)}
+.fd-verdict[data-verdict="unverifiable"]::before{border-radius:50%}
+.fd-note{margin:.8rem 0 0;font-size:.88rem;color:var(--soft)}
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
+.fd-note code,.fd-go code{font-family:var(--font-mono);font-size:.9em}
+
+.fd-wipe-frame{position:relative;max-width:26rem;aspect-ratio:1;margin:0 auto}
+.fd-wipe-frame img{position:absolute;inset:0;width:100%;height:100%;max-height:none}
+.fd-wipe-control{display:flex;gap:.6rem;align-items:center;margin:.7rem auto 0;max-width:26rem;font-size:.9rem;color:var(--soft)}
+.fd-wipe-control input{flex:1;accent-color:var(--ink);min-height:2.5rem}
+
+.fd-newest{margin:0 0 1rem;padding:0 0 0 1.1rem}
+.fd-newest li{margin:.25rem 0}
+.fd-go{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;align-items:center;margin:0}
+.fd-try{display:inline-block;padding:.6rem 1rem;background:var(--ink);color:var(--on-ink)!important;text-decoration:none!important;font-weight:620}
+.fd-try:hover{background:var(--soft)}
+
+.fd-foot{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;padding:var(--s-5) var(--gutter) var(--s-6);max-width:90rem;margin:0 auto;font-size:.92rem;color:var(--soft);border-top:1px solid var(--line)}
+
+/* No-JS panels: every panel open, the demo shows each state in turn. */
+html:not(.fd-live) .fd-panel{padding-top:var(--s-5);border-top:1px solid var(--line)}
+html:not(.fd-live) .fd-wipe-frame{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;aspect-ratio:auto;max-width:none}
+html:not(.fd-live) .fd-wipe-frame img{position:static;height:auto}
+
+/* Live: the form, the facet index and one open panel. */
+html.fd-live .fd-orb{display:block;width:min(100%,34rem);margin:0 auto;position:relative}
+html.fd-live .fd-form{display:block;position:relative;width:100%;aspect-ratio:1;touch-action:pan-y}
+.fd-toys{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.4rem 1rem;margin-top:.4rem;font-size:.88rem;color:var(--soft)}
+.fd-toys[hidden],.fd-choices[hidden],.fd-wipe-control[hidden]{display:none}
+.fd-sound{font:inherit;cursor:pointer;padding:.35rem .8rem;min-height:2.5rem;background:transparent;color:var(--ink);border:1px solid var(--line-strong);border-radius:999px}
+.fd-sound[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.fd-sound::before{content:"";display:inline-block;width:.5rem;height:.5rem;margin-right:.45rem;border-radius:50%;border:1px solid currentColor}
+.fd-sound[aria-pressed="true"]::before{background:currentColor}
+html.fd-live .fd-canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+html.fd-live .fd-canvas:active{cursor:grabbing}
+html.fd-live .fd-form::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,transparent 0 3px,color-mix(in srgb,var(--paper) 45%,transparent) 3px 4px);
+  mix-blend-mode:normal;
+}
+html.fd-live .fd-panel[hidden]{display:none}
+/* Before the script wakes, the live layout shows only the panel it will open. */
+html.fd-live:not(.fd-ready) .fd-panels:not(:has(.fd-panel:target)) .fd-panel:not(:first-child),
+html.fd-live:not(.fd-ready) .fd-panels:has(.fd-panel:target) .fd-panel:not(:target){display:none}
+html.fd-live:not(.fd-ready) .fd-choices,html.fd-live:not(.fd-ready) .fd-state:not(:first-child){display:none}
+html.fd-live .fd-panel:focus{outline:none}
+html.fd-live .fd-state[hidden]{display:none}
+html.fd-live .fd-state + .fd-state{margin-top:0;padding-top:0;border-top:0}
+html.fd-live .fd-list a[aria-selected="true"]{color:var(--ink)}
+html.fd-live .fd-list a[aria-selected="true"] .fd-num{color:var(--ink)}
+html.fd-live .fd-list a[aria-selected="true"]::after{content:"";flex:1;align-self:center;height:1px;background:var(--ink);margin-left:.4rem}
+html.fd-live .fd-list a{color:var(--soft)}
+html.fd-live .fd-list a:hover{color:var(--ink)}
+html.fd-live .fd-panel{position:relative;animation:fd-scan .6s cubic-bezier(.2,.7,.2,1)}
+html.fd-live .fd-panel::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(to bottom,var(--ink) 0 1px,transparent 1px 4px);animation:fd-veil .6s steps(6,end)}
+html.fd-live .fd-panel .fd-demo{animation:fd-tilt .7s cubic-bezier(.2,.8,.2,1.2)}
+@keyframes fd-scan{from{clip-path:inset(0 0 100% 0);transform:skewX(-2deg)}60%{transform:skewX(.6deg)}to{clip-path:inset(0 0 0 0);transform:none}}
+@keyframes fd-veil{from{opacity:.35}to{opacity:0}}
+@keyframes fd-tilt{from{transform:translateX(-.6rem) rotate(-.8deg);filter:contrast(1.6)}to{transform:none;filter:none}}
+html.fd-eclipse body.fd .fd-name{letter-spacing:.02em;transition:letter-spacing .8s}
+
+@media (max-width:63.99rem){
+  html.fd-live .fd-stage{gap:var(--s-5);padding-top:var(--s-4)}
+  html.fd-live .fd-orb{width:min(100%,24rem)}
+  html.fd-live .fd-list{display:grid;grid-template-columns:1fr 1fr;column-gap:1rem;border-top:0}
+  html.fd-live .fd-list li{border-bottom:1px solid var(--line)}
+  html.fd-live .fd-list a{font-size:.98rem;padding:.55rem 0;min-height:2.75rem;align-items:center}
+  html.fd-live .fd-list a[aria-selected="true"]::after{display:none}
+  html.fd-live .fd-list a[aria-selected="true"]{text-decoration:underline;text-decoration-thickness:2px}
+}
+
+@media (min-width:64rem){
+  html.fd-live .fd-stage{
+    grid-template-columns:minmax(15rem,19rem) minmax(0,1fr) minmax(21rem,27rem);
+    grid-template-rows:auto 1fr;
+    grid-template-areas:"intro form panel" "facets form panel";
+    column-gap:clamp(1.5rem,3vw,3.5rem);
+    row-gap:var(--s-6);
+    min-height:calc(100svh - 4rem);
+    align-items:start;
+  }
+  html.fd-live .fd-intro{grid-area:intro}
+  html.fd-live .fd-facets{grid-area:facets}
+  html.fd-live .fd-orb{grid-area:form;width:min(100%,calc(100svh - 9rem),46rem);align-self:center}
+  html.fd-live .fd-panels{grid-area:panel;align-self:center}
+  /* The stage already shows the open panel; a deep link should not scroll past the name. */
+  html.fd-live .fd-panel{scroll-margin-top:100vh}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html.fd-live .fd-panel,html.fd-live .fd-panel::after,html.fd-live .fd-panel .fd-demo{animation:none}
+}
+@media (forced-colors:active){
+  html.fd-live .fd-form::after{display:none}
+}
+@media print{
+  .fd-form,.fd-choices,.fd-wipe-control{display:none!important}
+  .fd-panel[hidden],.fd-state[hidden]{display:block!important}
+}
+
+/* Supergraphic: environmental bands at room scale, stepped like a deco
+   frieze, sweeping in from the lower left behind the whole entrance. Ink at
+   low strength so every word stays on a calm ground. */
+.fd-stage{position:relative;isolation:isolate}
+.fd-stage::before{
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  top:-6rem;left:50%;width:100vw;height:calc(100% + 6rem);transform:translateX(-50%);
+  --band:color-mix(in srgb,var(--ink) 7%,transparent);
+  background:
+    radial-gradient(circle at 46% 150%,
+      transparent 0 30vmax,var(--band) 30vmax 36vmax,transparent 36vmax 38.5vmax,
+      var(--band) 38.5vmax 42vmax,transparent 42vmax 44vmax,
+      var(--band) 44vmax 45.5vmax,transparent 45.5vmax 47vmax,
+      var(--band) 47vmax 47.6vmax,transparent 47.6vmax);
+}
+@media (forced-colors:active){.fd-stage::before{display:none}}
+@media print{.fd-stage::before{display:none}}
+
+/* The phase map. Saturated fields stay inside the figure; the stamps use a serif only
+   because the figure is art. */
+.pm-map{max-width:23rem;margin:0 auto}
+.pm-map svg{display:block;width:100%;height:auto}
+.pm-map[hidden],.pm-list[hidden]{display:none}
+.pm-stamp{font-family:"Times New Roman",Times,Georgia,serif;font-weight:700;fill:#151515}
+.pm-axis{font-family:"Times New Roman",Times,Georgia,serif;font-size:18px;fill:var(--ink)}
+.pm-grid{stroke:#151515;stroke-width:1.5}
+.pm-edge{stroke:#151515;stroke-width:2.5}
+.pm-r{cursor:pointer;transition:filter .15s}
+.pm-r:hover,.pm-r.on{filter:brightness(1.12) saturate(1.1)}
+.pm-r:focus{outline:none}
+.pm-r:focus-visible rect{stroke:#151515;stroke-width:6}
+.pm-r[data-k="here"].on rect{fill:#ffffff}
+.pm-dot{cursor:pointer}
+.pm-dot circle{fill:#151515;transition:r .15s}
+.pm-dot:hover circle,.pm-dot:focus-visible circle{r:9}
+.pm-dot:focus{outline:none}
+.pm-dot:focus-visible circle{stroke:#e0177e;stroke-width:3}
+.pm-traveller{fill:#ffffff;stroke:#151515;stroke-width:2;pointer-events:none}
+.pm-detail:empty{display:none}
+.pm-detail{margin-top:.8rem;padding-top:.7rem;border-top:3px solid var(--ink)}
+.pm-k{margin:0 0 .3rem;font-weight:780;font-size:1.15rem;text-transform:uppercase;letter-spacing:.02em}
+.pm-q{margin:0 0 .4rem;padding-left:.8rem;border-left:3px solid var(--ink);font-family:var(--font-mono);font-size:.88rem;overflow-wrap:anywhere}
+.pm-src{margin:0;font-size:.9rem;color:var(--soft)}
+.pm-cap{margin:.8rem 0 0!important;font-size:.82rem!important}
+.pm-list{margin:0}
+.pm-list dt{font-weight:700;margin-top:.6rem}
+.pm-list dd{margin:.15rem 0 0;color:var(--soft)}
+
+/* Local print treatment for the phase map, used until the mediums library ships. */
+.medium-local .pm-fields{filter:url(#pm-print)}
+.pm-misreg{display:none}
+.medium-local .pm-misreg{display:inline;transform:translate(2.4px,1.6px)}
+.medium-local .pm-misreg .pm-stamp{fill:#e0177e;opacity:.55}
+.medium-local .pm-misreg .pm-axis{display:none}
+.medium-local .pm-map{position:relative}
+.medium-local .pm-map::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E")}
+.pm-ask{margin:0 0 .5rem;font-size:1.05rem;font-weight:620}
+@media (forced-colors:active){.medium-local .pm-fields{filter:none}.medium-local .pm-map::after,.pm-misreg{display:none}}
+
+/* The collage: archive scans under the line-work. Text never sits on them. */
+html.fd-live .fd-collage{position:absolute;inset:0;pointer-events:none}
+html.fd-live .fd-canvas{position:relative;z-index:1}
+.fd-collage img{z-index:0;position:absolute;left:8%;top:8%;width:84%;height:84%;object-fit:contain;opacity:0;transition:opacity 1.4s ease}
+.fd-dressed .fc-astro{opacity:.4;filter:grayscale(1) contrast(1.5) brightness(1.08);mix-blend-mode:multiply}
+.fd-collage .fc-volvelle{left:16%;top:16%;width:68%;height:68%}
+.fd-dressed.fd-dream .fc-volvelle{opacity:.62;mix-blend-mode:multiply;animation:fd-turn 160s linear infinite}
+.fd-collage .fc-eye{left:35%;top:35%;width:30%;height:30%;object-fit:cover;object-position:50% 30%;border-radius:50%}
+.fd-dressed.fd-hold .fc-eye,.fd-dressed.fd-eclipse .fc-eye{opacity:.75;filter:contrast(1.3);mix-blend-mode:multiply}
+.fd-collage .fc-eclipse{z-index:2;left:2%;top:2%;width:96%;height:96%;border-radius:50%}
+.fd-dressed.fd-eclipse .fc-eclipse{opacity:.95;mix-blend-mode:screen}
+@keyframes fd-turn{to{transform:rotate(360deg)}}
+@media (prefers-color-scheme:dark){
+  html:root:not([data-theme="light"]).fd-dressed .fc-astro{opacity:.32;filter:grayscale(1) invert(1) contrast(1.5) brightness(.85);mix-blend-mode:screen}
+  html:root:not([data-theme="light"]).fd-dressed.fd-dream .fc-volvelle{mix-blend-mode:normal;opacity:.5}
+  html:root:not([data-theme="light"]).fd-dressed.fd-eclipse .fc-eclipse{filter:invert(1);mix-blend-mode:multiply}
+  html:root:not([data-theme="light"]).fd-dressed.fd-hold .fc-eye,html:root:not([data-theme="light"]).fd-dressed.fd-eclipse .fc-eye{filter:invert(1) contrast(1.3);mix-blend-mode:screen}
+}
+html[data-theme="dark"].fd-dressed .fc-astro{opacity:.32;filter:grayscale(1) invert(1) contrast(1.5) brightness(.85);mix-blend-mode:screen}
+html[data-theme="dark"].fd-dressed.fd-dream .fc-volvelle{mix-blend-mode:normal;opacity:.5}
+html[data-theme="dark"].fd-dressed.fd-eclipse .fc-eclipse{filter:invert(1);mix-blend-mode:multiply}
+/* Raw concrete in the supergraphic bands, once the scans have loaded. */
+.fd-dressed .fd-stage::before{
+  background:url("/media/front-door/concrete-layers-512.webp") center/420px repeat;opacity:.38;
+  -webkit-mask-image:radial-gradient(circle at 46% 150%,transparent 0 30vmax,#000 30vmax 36vmax,transparent 36vmax 38.5vmax,#000 38.5vmax 42vmax,transparent 42vmax 44vmax,#000 44vmax 45.5vmax,transparent 45.5vmax 47vmax,#000 47vmax 47.6vmax,transparent 47.6vmax);
+  mask-image:radial-gradient(circle at 46% 150%,transparent 0 30vmax,#000 30vmax 36vmax,transparent 36vmax 38.5vmax,#000 38.5vmax 42vmax,transparent 42vmax 44vmax,#000 44vmax 45.5vmax,transparent 45.5vmax 47vmax,#000 47vmax 47.6vmax,transparent 47.6vmax);
+}
+/* The phase map is printed on 1540 paper. */
+.fd-dressed .medium-local .pm-map::after{background:url("/media/front-door/paper-apianus-1540-1200.webp") 0 0/100% 34% repeat-y;opacity:.55;mix-blend-mode:multiply}
+.fd-loop{background:#000}
+.fd-credits{flex-basis:100%;font-size:.85rem}
+.fd-credits summary{cursor:pointer}
+.fd-credits ul{margin:.5rem 0 0;padding-left:1.1rem;line-height:1.5}
+@media (prefers-reduced-motion:reduce){.fd-dressed.fd-dream .fc-volvelle{animation:none}.fd-collage img{transition:none}}
+@media (forced-colors:active){.fd-collage{display:none}}

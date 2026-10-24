@@ -30,7 +30,7 @@ Reference material:
 - private inspiration references stay outside the public repository
 - procedural field loader: `system/generative-field.js`
 - procedural engine source: `system/hero-gl.js`
-- canonical home source: `home/src/` in this repository
+- canonical home source: `home/index.html` and `home/src/` in this repository
 - shared public cascades: `system/system.css`, `system/doc.css` and the
   reading, report, demo and instrument editorial stylesheets in `system/`
 - Telos V2 is reference material, not the publication or deployment authority
@@ -92,7 +92,8 @@ attribution, legends, and genuine process diagrams.
 
 Every shipped page should either:
 
-- use the React home shell,
+- be the front door (`home/`, static markup that `home/src/` enhances; see
+  `project-docs/2026-10-23-front-door.md`),
 - use `system/system.css` plus `system/nav.js`, or
 - use `system/doc.css` plus `system/nav.js` for document pages.
 

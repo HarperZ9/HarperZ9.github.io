@@ -402,35 +402,18 @@ def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> 
 
 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
-    src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    brand = src.index('<h1 className="hero-title">Zain Dana Harper</h1>')
-    mission = src.index("Flywheel and open-source tools for testing AI systems.")
-    audience = src.index("developers who test AI systems")
-    hiring = src.index("Hiring, contracting, and collaboration")
-    hiring_route = src.index('href: "/hire.html#technical-operations-path"')
-    assert brand < mission < audience
-    assert hiring_route < hiring
-
-    main = re.search(r'<main id="main">(?P<body>.*?)</main>', src, re.S)
-    assert main
-    order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
-    # 25 September 2026: Recent work sits between the mission and Flywheel.
-    # 12 October 2026: the guides who host the films lead, right after the name (author direction).
-    # 18 October 2026: the guides' section left the home page (author: the explainer videos must
-    # not take over the site).
-    assert order[:8] == [
-        "IdentityHero",
-        "Flagships",
-        "RecentWork",
-        "FeaturedFlywheel",
-        "ProductSelection",
-        "EvidenceBoard",
-        "ResearchPilotRoutes",
-        "CapabilityOverview",
-    ]
-    assert order.index("Flagships") < order.index("FeaturedFlywheel")
-    assert order.index("FeaturedFlywheel") < order.index("ProductSelection")
-    assert order.index("ProductSelection") < order.index("ResearchPilotRoutes")
+    # 2026-10-23 front door: the name, one line, then the work. The hiring route is one of the
+    # five top routes and has its own facet with the CV and resume.
+    src = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    brand = src.index('<h1 class="fd-name">Zain Dana Harper</h1>')
+    line = src.index('<p class="fd-line">')
+    facets = src.index('<nav class="fd-facets"')
+    assert brand < line < facets
+    nav = src.split('<nav class="fd-nav"', 1)[1].split("</nav>", 1)[0]
+    assert '<a href="/hire.html">Work with me</a>' in nav
+    work = src.split('<section class="fd-panel" id="work"', 1)[1].split("</section>", 1)[0]
+    for href in ("/hire.html", "/cv.html", "/resume.html"):
+        assert f'href="{href}"' in work, href
 
 
 def test_resume_keeps_projects_inside_zentropy_experience() -> None:

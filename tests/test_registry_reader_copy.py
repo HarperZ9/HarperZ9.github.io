@@ -83,20 +83,12 @@ def test_files_generated_from_the_registry_carry_no_operator_wording() -> None:
 
 
 def test_the_board_note_names_the_person_who_runs_the_board() -> None:
-    # LiveBoard.tsx is static text in every home render, and bulletin.html says the
-    # same thing about the same board. The built bundle is checked as well, because
-    # the home page ships the bundle and not the source.
-    for path in (ROOT / "home" / "src" / "LiveBoard.tsx", ROOT / "bulletin.html"):
-        text = path.read_text(encoding="utf-8")
-        assert OPERATOR.findall(text) == [], path.relative_to(ROOT)
-        assert "test posts from the person who runs the board" in _text(text), path.relative_to(ROOT)
-    index = (ROOT / "index.html").read_text(encoding="utf-8")
-    bundle = re.search(r'src="/assets/(index-[A-Za-z0-9_-]+\.js)"', index).group(1)
-    shipped = (ROOT / "assets" / bundle).read_text(encoding="utf-8")
-    assert BOARD_NOTE in shipped
-    # The old note read "the operator's own test posts"; no apostrophe form of it ships.
-    assert "own test posts" not in shipped
-    assert not re.search(r"(?i)operator(?:'|&apos;|\u2019|\\u2019)s own", shipped)
+    # 2026-10-23: the live board left the home page with the front door; bulletin.html carries
+    # the note about the same board.
+    text = (ROOT / "bulletin.html").read_text(encoding="utf-8")
+    assert OPERATOR.findall(text) == []
+    assert "test posts from the person who runs the board" in _text(text)
+    assert "own test posts" not in text
 
 
 def test_route_summaries_copied_from_the_registry_carry_no_operator_wording() -> None:

@@ -1,8 +1,14 @@
-"""Visual and static fallback contracts for the React homepage."""
+"""Contracts for the front door, the home page rebuilt on 23 October 2026.
+
+The home page is static markup: a name, one line, five routes, a generated form and
+eight facets, each with a panel. A small script turns the facet list into tabs, draws
+the form and wakes the demos. Without the script the same markup reads as a plain
+list with every panel open. These tests hold that shape, the budget and the fallbacks.
+"""
 
 from __future__ import annotations
 
-import json
+import gzip
 import re
 from pathlib import Path
 
@@ -10,10 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 HOME_INDEX = ROOT / "home" / "index.html"
-APP = ROOT / "home" / "src" / "App.tsx"
-APP_CSS = ROOT / "home" / "src" / "App.css"
-INDEX_CSS = ROOT / "home" / "src" / "index.css"
-SYSTEMS = ROOT / "system" / "systems.json"
+SRC = ROOT / "home" / "src"
+FACETS = ("here", "flywheel", "articulate", "daylight", "buildlang", "engine", "low-water", "writing", "work")
 
 EM_DASH = "—"
 EN_DASH = "–"
@@ -25,201 +29,136 @@ def read(path: Path) -> str:
 
 def deployed_assets() -> tuple[Path, Path]:
     src = read(INDEX)
-    js_match = re.search(r'src="/(?P<asset>assets/index-[\w-]+\.js)"', src)
-    css_match = re.search(r'href="/(?P<asset>assets/index-[\w-]+\.css)"', src)
-    assert js_match, "deployed homepage must reference one hashed JavaScript bundle"
-    assert css_match, "deployed homepage must reference one hashed CSS bundle"
-    return ROOT / js_match.group("asset"), ROOT / css_match.group("asset")
+    js = re.findall(r'src="/(assets/index-[\w-]+\.js)"', src)
+    css = re.findall(r'href="/(assets/index-[\w-]+\.css)"', src)
+    assert len(js) == 1 and len(css) == 1, "the home page loads one hashed script and one hashed sheet"
+    return ROOT / js[0], ROOT / css[0]
 
 
-def stylesheet_hrefs(src: str) -> list[str]:
-    return [
-        match.group("href")
-        for match in re.finditer(
-            r'<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="(?P<href>[^"]+)")[^>]*>',
-            src,
-        )
-    ]
+def body(src: str) -> str:
+    return src.split("<body", 1)[1]
 
 
-def homepage_stylesheet_records() -> list[tuple[str, str, str]]:
-    records: list[tuple[str, str, str]] = []
-    for html_path in (HOME_INDEX, INDEX):
-        src = read(html_path)
-        for href in stylesheet_hrefs(src):
-            if href.startswith(("http://", "https://")):
-                continue
-            css_path = ROOT / href.split("?", 1)[0].lstrip("/")
-            assert css_path.is_file(), f"{html_path.name} references missing stylesheet {href}"
-            records.append((html_path.name, href, read(css_path)))
-
-    assert records, "the deployed homepage must reference at least one local stylesheet"
-    return records
+def panel(src: str, facet: str) -> str:
+    return src.split(f'<section class="fd-panel" id="{facet}"', 1)[1].split("</section>", 1)[0]
 
 
-def test_home_loads_the_react_shell_with_a_readable_static_floor() -> None:
-    for path in (INDEX, HOME_INDEX):
-        src = read(path)
-        assert 'data-home-shell="react"' in src
-        assert '<div id="root"></div>' in src
-        assert "styles.css" not in src
-
-    # 2026-09-25: the void-and-bone surface replaces the plum home field; the home
-    # loads the shared tokens and plate layer instead of home-readable.css.
-    assert 'href="/system/plate.css?v=20260925-void-integration"' in read(INDEX)
-    assert "home-readable.css" not in read(INDEX)
+def test_source_and_deployed_page_carry_the_same_body() -> None:
+    built = re.sub(r'\s*<script type="module" crossorigin src="/assets/[^"]+"></script>', "", body(read(INDEX)))
+    source = re.sub(r'\s*<script type="module" src="/src/main.ts"></script>', "", body(read(HOME_INDEX)))
+    assert built.split("</body>")[0].strip() == source.split("</body>")[0].strip()
 
 
-def test_home_stylesheet_graph_is_closed_over_the_new_visual_contract() -> None:
-    combined = "\n".join(css for _, _, css in homepage_stylesheet_records())
-
-    assert "orientation / artifact" not in combined
-
-    # 2026-09-25: the home's static floor is the shared surface (tokens and plate
-    # layer) in place of home-readable.css; the hero layout lives in the bundle.
-    assert "--field-mark" in combined
-    assert "--field-grain" in combined
-    assert "pointer-events:none" in combined
-    assert "@media (forced-colors:active)" in combined
-    home_layer = read(ROOT / "home" / "src" / "plate-home.css")
-    assert ".hero > .hero-copy" in home_layer
-    assert ".hero > .identity-art" in home_layer
+def test_head_keeps_canonical_social_and_structured_data() -> None:
+    for page in (INDEX, HOME_INDEX):
+        src = read(page)
+        head = src.split("</head>", 1)[0]
+        assert '<link rel="canonical" href="https://harperz9.github.io/" />' in head
+        assert 'property="og:image"' in head and 'name="twitter:card"' in head
+        assert "<!-- structured-data:begin (tools/structured_data.py) -->" in head
+        assert '"@type":"Person"' in head
+        assert 'data-home-shell="front-door"' in src
 
 
-def test_home_menu_readability_rules_live_in_the_home_bundle() -> None:
-    css = read(APP_CSS)
-
-    assert ".home-menu" in css
-    assert ".home-menu-list" in css
-    assert ".home-menu:not([open]) .home-menu-list" in css
-    assert re.search(r"\.home-menu:not\(\[open\]\)\s+\.home-menu-list\s*\{[^}]*display\s*:\s*none", css, re.S)
-
-
-def test_deployed_home_bundle_contains_active_font_routes() -> None:
-    js_asset, _css_asset = deployed_assets()
-    bundle = read(js_asset)
-    assert "fonts.html" in bundle
-    assert "typeface.html" in bundle
+def test_above_the_fold_is_a_name_one_line_and_at_most_five_routes() -> None:
+    src = body(read(HOME_INDEX))
+    assert src.count("<h1") == 1
+    assert '<h1 class="fd-name">Zain Dana Harper</h1>' in src
+    line = re.search(r'<p class="fd-line">([^<]+)</p>', src)
+    assert line and line.group(1).count(".") == 1, "one sentence under the name"
+    nav = src.split('<nav class="fd-nav"', 1)[1].split("</nav>", 1)[0]
+    routes = re.findall(r'<a href="([^"]+)">', nav)
+    assert 1 <= len(routes) <= 5
+    for href in routes:
+        assert (ROOT / href.lstrip("/")).is_file(), href
 
 
-def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
-    src = read(HOME_INDEX)
-    assert "<noscript>" in src
-    for value in (
-        "Zain Dana Harper",
-        "Zain Dana Harper",
-        "Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.",
-        "Flagship tools",
-        "Flagship platform: Flywheel",
-        "Built tooling ecosystem",
-        "Evidence board",
-        "Research, pilot, and support routes",
-        "Measured evidence",
-        "Recent work",
-        "Graphics, engines, and preservation",
-            "Security platforms",
-        "Hiring, contracting, and collaboration",
-    ):
-        assert value in src
-
-    assert "Flywheel is the primary public system" not in src
-    assert "route -> verify -> receipt -> reuse" not in src.lower()
-    assert "fourteen independently published verification systems" not in src.lower()
+def test_every_facet_has_a_panel_a_benefit_and_a_working_link() -> None:
+    src = body(read(HOME_INDEX))
+    index = src.split('<nav class="fd-facets"', 1)[1].split("</nav>", 1)[0]
+    listed = re.findall(r'<a href="#([a-z-]+)" data-facet="\1">', index)
+    assert listed == list(FACETS)
+    for facet in FACETS:
+        section = panel(src, facet)
+        assert f'<h2 id="{facet}-h">' in section, facet
+        assert 'class="fd-benefit"' in section, facet
+        tries = re.findall(r'<a class="fd-try" href="([^"]+)"', section)
+        assert len(tries) == 1, facet
+        if tries[0].startswith("/"):
+            assert (ROOT / tries[0].lstrip("/").split("#")[0]).is_file(), tries[0]
 
 
-def test_noscript_fallback_preserves_keyboard_entry_and_publications_route() -> None:
-    for path in (HOME_INDEX, INDEX):
-        src = read(path)
-        fallback = src.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
-
-        assert 'class="skip-link" href="#noscript-main"' in fallback
-        assert '<main id="noscript-main"' in fallback
-        assert 'href="/publications.html"' in fallback
-
-
-def test_home_source_and_styles_have_no_decorative_home_lead_ins() -> None:
-    combined = "\n".join(read(path) for path in (HOME_INDEX, APP, APP_CSS, INDEX_CSS))
-
-    for value in (
-        "hero-kicker",
-        ".kicker",
-        "section-kicker",
-        "section-label",
-        "eyebrow",
-        "overline",
-        "orientation / artifact",
-        "row-index",
-    ):
-        assert value not in combined
-
-    assert "ZentropyDisplay" not in combined
-    assert "ZainDisplay" not in combined
-    assert "Project Telos" not in combined
-    assert "brand-wordmark" not in combined
-    assert "brand-route" not in combined
+def test_media_in_the_panels_exists_and_describes_itself() -> None:
+    src = body(read(HOME_INDEX))
+    collage = src.split('<div class="fd-collage">', 1)[1].split("</div>", 1)[0]
+    for tag in re.findall(r"<img\b[^>]*>", collage):
+        # Decorative archive scans inside the aria-hidden form: empty alt, loaded after paint.
+        assert 'alt=""' in tag and "data-srcset=" in tag, tag
+        for ref in re.findall(r"/(media/front-door/\S+) \d+w", tag):
+            assert (ROOT / ref).is_file(), ref
+    credits = read(ROOT / "media" / "front-door" / "CREDITS.md")
+    for name in ("astrolabe-met-1462", "volvelle-apianus-1540", "eye-1624", "eclipse-nasa-2017",
+                 "concrete-layers", "heavenly-boat"):
+        assert name in credits, name
+    for tag in re.findall(r"<img\b[^>]*>", src.replace(collage, "")):
+        assert re.search(r'\balt="[^"]{12,}"', tag), tag
+        assert 'width="' in tag and 'height="' in tag, tag
+        assert 'loading="lazy"' in tag, tag
+        local = re.search(r'src="/([^"]+)"', tag)
+        assert local and (ROOT / local.group(1)).is_file(), tag
+    for ref in re.findall(r'(?:src|data-poster)="/(media/[^"]+)"', src):
+        assert (ROOT / ref).is_file(), ref
+    video = re.search(r"<video\b[^>]*>", src)
+    assert video and 'preload="none"' in video.group(0) and "autoplay" not in src
+    assert "data-poster=" in video.group(0), "the poster waits for its panel"
+    assert '<track kind="captions"' in src
 
 
-def test_home_visual_system_uses_real_evidence_figures_not_decorative_relationship_charts() -> None:
-    css = read(APP_CSS)
-
-    assert ".identity-art" in css
-    assert ".data-plate" in css
-    assert ".evidence-table" in css
-    assert ".evidence-figure-grid" in css
-    assert ".research-figure-image" in css
-    assert ".relationship-map" not in css
-    assert ".relationship-row" not in css
-    assert ".node-constellation" not in css
-    assert ".flow-line" not in css
-    assert ".hero-card" not in css
-    assert ".release-card" not in css
-    assert ".workflow" not in css
-    assert "conic-gradient" not in css
+def test_without_javascript_the_page_reads_as_a_plain_list() -> None:
+    src = body(read(HOME_INDEX))
+    # The controls start hidden; the script reveals them. No panel starts hidden.
+    for controls in re.findall(r'<div class="fd-choices"[^>]*>', src):
+        assert " hidden" in controls
+    assert '<label class="fd-wipe-control" hidden>' in src
+    assert '<div class="fd-toys" hidden>' in src
+    assert not re.search(r'<section class="fd-panel"[^>]*\shidden', src)
+    assert "<noscript" not in src, "the static markup is the fallback; no second copy"
+    css = read(SRC / "front-door.css")
+    assert ".fd-orb{display:none}" in css, "the form only shows when the script can draw it"
+    # A display rule on a control would beat the hidden attribute; the sheet restores it.
+    assert ".fd-toys[hidden],.fd-choices[hidden],.fd-wipe-control[hidden]{display:none}" in css
 
 
-def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
-    js_path, css_path = deployed_assets()
-    bundle = read(js_path)
-    css = read(css_path)
+def test_the_form_is_decorative_and_the_index_is_the_way_in() -> None:
+    src = body(read(HOME_INDEX))
+    assert '<div class="fd-form" aria-hidden="true">' in src
+    assert 'role="status"' in src
+    script = read(SRC / "front-door.ts")
+    for token in ('"role", "tablist"', '"role", "tab"', '"role", "tabpanel"', "ArrowDown", "Home", "End",
+                  "aria-selected", "aria-controls"):
+        assert token in script, token
+    assert 'class="fd-sound" aria-pressed="false"' in src
+    assert "let enabled = false" in read(SRC / "sound.ts"), "sound starts off"
 
-    for value in (
-        "Zain Dana Harper",
-        "Flywheel and open-source tools for testing AI systems.",
-        "Each entry says what the tool does once",
-        "Flagship platform: Flywheel",
-        "Research, pilot, and support routes",
-        "Measured evidence",
-        "Graphics, engines, and preservation",
-            "Security platforms",
-        "Hiring, contracting, and collaboration",
-    ):
-        assert value in bundle
 
-    assert "Systems Engineer | AI Evaluation, Developer Tools, and Technical Operations" not in bundle
+def test_motion_respects_reduced_motion() -> None:
+    stage = read(SRC / "stage.ts")
+    assert '"(prefers-reduced-motion: reduce)"' in stage
+    assert "s.calm = still" in stage
+    css = read(SRC / "front-door.css")
+    assert "@media (prefers-reduced-motion:reduce)" in css
+    assert "prefers-reduced-motion" in read(SRC / "front-door.ts")
 
-    for stale in ("hero-kicker", "Try four browser-native checks"):
-        assert stale not in bundle
 
-    records = {record["id"]: record for record in json.loads(read(SYSTEMS))["systems"]}
-    assert (
-        'systems.filter((system) => system.domains.includes("security-privacy"))'
-        in read(APP)
-    )
-    for system_id, record in records.items():
-        if "security-privacy" not in record.get("domains", []):
-            continue
-        record = records[system_id]
-        assert record["name"] in bundle, system_id
-        assert record["href"] in bundle, system_id
-
-    assert "data-plate" in css
-    assert "evidence-figure-grid" in css
-    assert "hero-kicker" not in css
+def test_the_home_bundle_stays_inside_the_budget() -> None:
+    js, css = deployed_assets()
+    assert len(gzip.compress(js.read_bytes())) < 60_000, "hero script over 60 KB gzipped"
+    assert len(gzip.compress(css.read_bytes())) < 20_000
+    assert "createRoot" not in read(js), "the front door ships no React"
 
 
 def test_no_em_or_en_dashes_in_home_sources_and_deployed_assets() -> None:
-    paths = [HOME_INDEX, APP, APP_CSS, INDEX_CSS, INDEX]
-    paths.extend(deployed_assets())
+    paths = [HOME_INDEX, INDEX, *sorted(SRC.glob("*.ts")), SRC / "front-door.css", *deployed_assets()]
     for path in paths:
         text = read(path)
         assert EM_DASH not in text, f"em-dash in {path.name}"

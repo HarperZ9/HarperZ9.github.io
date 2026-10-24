@@ -154,16 +154,13 @@ def test_required_live_routes_and_assets_exist() -> None:
 
     home = _text("index.html")
     assert "<title>Zain Dana Harper | Tools for testing AI systems</title>" in home
-    assert "Flywheel and open-source tools for testing AI systems" in home
-    assert "Inspect Flywheel" in home
-    assert "Flagship platform: Flywheel" in home
-    assert "Built tooling ecosystem" in home
-    assert "Evidence board" in home
-    assert "Research, pilot, and support routes" in home
-    assert "Measured evidence" in home
-    assert "Recovered-actions dataset" in home
-    assert "Motive-label dataset" in home
-    assert "Recent work" in home
+    # 2026-10-23 front door: the home page is one generated form and eight facets. The old
+    # section headings (evidence board, measured evidence, recent work) left the home page;
+    # their pages stay at their own addresses and are one click away through the facets.
+    for facet in ("Flywheel", "Articulate", "Daylight Commons", "BuildLang", "The engine",
+                  "Low Water", "Essays and films", "Work and CV"):
+        assert facet in home, facet
+    assert "Try Flywheel" in home
     assert "Hire or collaborate" in home
 
     for asset in _asset_paths(home):

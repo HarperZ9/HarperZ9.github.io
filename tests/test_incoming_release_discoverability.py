@@ -336,14 +336,8 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     assert "Service Desk Incident Environment 0.1.0" in home_registry
     assert "Flywheel v1.1.0" in home_registry
 
-    for relative in ("home/index.html", "index.html"):
-        fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
-        fallback = fallback.split("</section>", 1)[0]
-        release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
-        # 2026-10-23-plain-copy: the no-script fallback links the current release, 1.9.0.
-        assert release_link and release_link.group(1) == "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
-        install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
-        assert install and install.group(1) == flywheel["entryCommand"]
+    # 2026-10-23: the home page no longer carries a no-script Flywheel section; flywheel.html holds
+    # the release links and install command, and the front door links to it.
 
     for source in (payload, page, catalog, home_projection, home_registry):
         assert "clean-machine installation passed" not in source

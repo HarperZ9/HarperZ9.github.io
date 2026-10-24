@@ -211,7 +211,7 @@ def _has_ident_rule(sheet: str) -> bool:
 
 
 def test_the_ident_rule_never_lets_a_name_push_the_page_sideways() -> None:
-    for sheet in ("system/system.css", "system/doc.css", "system/figure.css", "home/src/App.css"):
+    for sheet in ("system/system.css", "system/doc.css", "system/figure.css", "home/src/front-door.css"):
         assert IDENT_RULE in (ROOT / sheet).read_text(encoding="utf-8"), sheet
     # code inside a marked span takes no extra leading (a 3 px taller line otherwise)
     assert ".ident > code{line-height:1}" in (ROOT / "system" / "system.css").read_text(encoding="utf-8")
@@ -219,20 +219,17 @@ def test_the_ident_rule_never_lets_a_name_push_the_page_sideways() -> None:
     # nowrap only where the table already scrolls inside its own box
     assert "@media screen { .figure-table-wrap .ident{white-space:nowrap} }" in figure
     assert re.search(r"\.figure-table-wrap \{[^}]*overflow-x: auto;", figure)
-    for sheet in ("system/system.css", "system/doc.css", "home/src/App.css"):
+    for sheet in ("system/system.css", "system/doc.css", "home/src/front-door.css"):
         assert ".ident{white-space:nowrap}" not in (ROOT / sheet).read_text(encoding="utf-8")
 
 
-def test_the_home_renders_registry_text_through_idents() -> None:
-    app = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    for expression in ("evidence.label", "evidence.summary", "system.releaseState", "system.purpose",
-                       "FLYWHEEL.entryCommand", "route.summary"):
-        assert f"<Idents text={{{expression}}} />" in app, expression
-    helper = (ROOT / "home" / "src" / "Idents.tsx").read_text(encoding="utf-8")
-    assert "new RegExp(IDENT_SOURCE" in helper and 'className="ident"' in helper
+def test_the_home_marks_package_names_in_its_static_markup() -> None:
+    # 2026-10-23: the front door is static markup enhanced by a small script, so names are
+    # marked in the HTML itself rather than through the retired React Idents helper.
+    for page in ("home/index.html", "index.html"):
+        html = (ROOT / page).read_text(encoding="utf-8")
+        assert '<span class="ident" translate="no">articulate-writing</span>' in html, page
     index = (ROOT / "index.html").read_text(encoding="utf-8")
-    bundle = re.search(r'src="/assets/(index-[A-Za-z0-9_-]+\.js)"', index).group(1)
     css = re.search(r'href="/assets/(index-[A-Za-z0-9_-]+\.css)"', index).group(1)
-    assert "GHSA(?:-[0-9a-z]{4}){3}" in (ROOT / "assets" / bundle).read_text(encoding="utf-8")
     styles = (ROOT / "assets" / css).read_text(encoding="utf-8")
     assert ".ident{" in styles and "display:inline-block" in styles and "max-width:100%" in styles

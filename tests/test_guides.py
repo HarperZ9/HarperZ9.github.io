@@ -54,9 +54,10 @@ def test_draft_films_have_a_host_a_title_and_a_draft_scene() -> None:
 def test_guides_reach_home_writing_and_studio() -> None:
     # 18 October 2026, the author: the explainer videos must not take over the site. The guides'
     # section left the home page; the films live in Night School and on their lesson pages.
-    assert "<Guides />" not in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert 'href="/night-school.html"' in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert "/system/guides.css" in PAGES["index.html"]
+    # 23 October 2026: the front door links Night School from its essays and films facet and
+    # no longer loads the guides stylesheet.
+    assert "gd-host" not in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
+    assert 'href="/night-school.html"' in (ROOT / "home" / "index.html").read_text(encoding="utf-8")
     assert 'guides.html#tallow' in PAGES["publications.html"]
     assert 'href="guides.html"' in PAGES["studio.html"]
     assert "https://harperz9.github.io/guides.html" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")

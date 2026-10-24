@@ -74,22 +74,12 @@ def test_featured_project_pages_use_their_canonical_plain_language_purpose() -> 
         assert f'<meta name="description" content="{html.escape(record["purpose"], quote=True)}">' in page
 
 
-def test_home_noscript_fallback_uses_the_canonical_plain_language_purposes() -> None:
+def test_home_front_door_links_each_pillar_to_its_own_page() -> None:
+    # 2026-10-23: the front door replaced the no-script product list. Each tool's canonical
+    # purpose now lives on its own page (checked above); the home page links to that page.
     template = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
-    fallback = template.split("<noscript>", 1)[1].split("</noscript>", 1)[0]
-
-    for slug in (
-        "flywheel", "gather", "crucible", "index", "forum", "emet",
-        "relay", "mneme", "plexus", "proof-surface", "accountable-surface",
-    ):
-        record = _registry_record(slug)
-        canonical = re.findall(
-            rf'<(?:p|span)[^>]+data-canonical-purpose="{re.escape(slug)}"[^>]*>(.*?)</(?:p|span)>',
-            fallback,
-            re.DOTALL,
-        )
-        assert len(canonical) == 1, slug
-        assert html.unescape(re.sub(r"<[^>]+>", "", canonical[0])).strip() == record["purpose"]
+    for href in ("/flywheel.html", "/articulate.html", "/buildlang.html", "/raw.html", "/catalog.html"):
+        assert f'href="{href}"' in template, href
 
 
 def test_featured_og_route_summaries_use_the_canonical_plain_language_purpose() -> None:
@@ -131,7 +121,7 @@ def test_truth_enb_copy_names_the_actual_skyrim_graphics_project() -> None:
 def test_public_copy_does_not_replace_security_capability_with_generic_boundary_prose() -> None:
     public_copy = "\n".join(
         path.read_text(encoding="utf-8", errors="replace")
-        for path in (ROOT / "home" / "src" / "App.tsx", ROOT / "security.html", ROOT / "private-practice.html")
+        for path in (ROOT / "home" / "index.html", ROOT / "security.html", ROOT / "private-practice.html")
     )
     assert "Authorized security, kept bounded" not in public_copy
     assert "The public surface contains sanitized tests, schemas, detectors" not in public_copy
@@ -140,7 +130,7 @@ def test_public_copy_does_not_replace_security_capability_with_generic_boundary_
 def test_private_security_projects_keep_one_distinct_definition_on_their_own_page() -> None:
     practice = (ROOT / "private-practice.html").read_text(encoding="utf-8")
     security = (ROOT / "security.html").read_text(encoding="utf-8")
-    homepage = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
+    homepage = (ROOT / "home" / "index.html").read_text(encoding="utf-8")
     registry = json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
     records = {record["id"]: record for record in registry["systems"]}
 
@@ -170,8 +160,10 @@ def test_private_security_projects_keep_one_distinct_definition_on_their_own_pag
     for project in ("Array", "Seed", "Sofer", "Isomorph", "Bounds", "Kun", "ORCA", "Gate"):
         assert project in security
 
-    assert 'href="/private-practice.html"' in homepage
-    assert "Private systems are used only with written authorization" in homepage
+    # 2026-10-23: the front door no longer lists security platforms; the Tools route leads to the
+    # catalog and security.html, which carry the private-practice route and boundary.
+    assert 'href="/catalog.html"' in homepage
+    assert 'href="private-practice.html"' in security or 'href="/private-practice.html"' in security
 
 
 def test_private_security_projects_are_distinct_registry_records() -> None:
@@ -324,7 +316,7 @@ def test_public_copy_has_no_false_universal_flywheel_hierarchy() -> None:
         ROOT / "engine-revival.html",
         ROOT / "brender-archival.html",
         ROOT / "security.html",
-        ROOT / "home" / "src" / "App.tsx",
+        ROOT / "home" / "index.html",
     ]
     public_copy = "\n".join(path.read_text(encoding="utf-8") for path in pages)
     forbidden = (
