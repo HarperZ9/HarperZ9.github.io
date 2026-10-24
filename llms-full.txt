@@ -1,0 +1,203 @@
+# Zain Dana Harper: tools in plain terms
+
+> Ten tools by Zain Dana Harper, each as a short record: what it does, who it is
+> for, how to try it, what it does not do, its current version and licence, and
+> where to read more. Versions are current as of 2026-10-23. The short index is
+> https://harperz9.github.io/llms.txt and the full product registry, with dated
+> evidence for each claim, is https://harperz9.github.io/system/systems.json.
+
+Every tool below runs on your own computer. None needs an account with the
+author. Source for each is on GitHub under https://github.com/HarperZ9.
+
+## Flywheel
+
+Version 1.9.0. Licence FSL-1.1-MIT. Python 3.11 or newer, no third-party
+runtime dependencies.
+
+- What it does: runs AI tasks on any hosted or local model behind one
+  OpenAI-compatible endpoint on your machine, checks the values in an answer
+  against the source that decides them (a tax table, a formulary, a court
+  calendar, a script you supply), and records every step on a hash-chained
+  ledger that can be checked again later, offline.
+- Who it is for: developers and teams who use AI agents or model output and
+  need to show which parts of an answer were checked, and against what.
+- Try it: `python -m pip install flywheel-verify` then `flywheel gate`.
+  `flywheel code` runs a coding agent in your terminal.
+- What it does not do: it does not decide that an answer is true beyond the
+  sources you give it. It reports which fields agree, which disagree, and which
+  nothing could confirm. By default the coding agent asks before it writes or
+  runs anything.
+- Links: https://harperz9.github.io/flywheel.html ,
+  https://github.com/HarperZ9/flywheel , https://pypi.org/project/flywheel-verify/ ,
+  docs https://harperz9.github.io/flywheel/docs/
+
+## Articulate
+
+Version 0.16.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
+
+- What it does: checks prose on your computer and names each writing pattern it
+  finds and the line it sits on: stacked hedges, marketing words, corporate
+  verbs, contrast framing, rule-of-three lists, em dashes. A profile for each
+  kind of writing (procedure, commit, readme, research, essay, narrative)
+  decides which findings block.
+- Who it is for: anyone who writes documentation, READMEs, release notes,
+  essays or commit messages and wants a style check in a terminal, an editor
+  (LSP), CI (SARIF) or an AI agent (MCP).
+- Try it: `python -m pip install articulate-writing` then
+  `articulate check README.md --profile readme --gate`.
+- What it does not do: it is a style checker, not an authorship detector. On
+  183 texts of known origin it flagged all 84 AI texts and 57 of 75 human texts
+  (76%, 95% interval 65% to 84%). It needs no model, account or API key.
+- Links: https://harperz9.github.io/articulate.html ,
+  https://github.com/HarperZ9/articulate , https://pypi.org/project/articulate-writing/
+
+## Daylight Commons
+
+Version 3.5.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
+Brave and Firefox 128 or later, plus a command line for saved threads.
+
+- What it does: rest the pointer on a reply on X, YouTube, Reddit, Facebook,
+  Instagram, Bluesky, Threads, TikTok or a Mastodon server you turn it on for,
+  and a window shows where the platform places the account, signs of
+  coordination, how the account posts, how the reply argues, and whether a
+  fact-checker has reviewed the claim.
+- Who it is for: people who read replies and comment threads and want to know
+  who is talking before they weigh what is said.
+- Try it: download the release for your browser from
+  https://github.com/HarperZ9/daylight-commons/releases/latest and load it
+  unpacked; the install page is https://harperz9.github.io/daylight-commons/install.html .
+  The command line runs as `node bin/radar.mjs analyze saved-thread.html`.
+- What it does not do: it shows signs and their sources; a sign of coordination
+  is evidence to weigh, not a verdict on a person. Firefox removes the
+  temporary add-on on restart until a signed build is published.
+- Links: https://harperz9.github.io/daylight-commons/install.html ,
+  https://github.com/HarperZ9/daylight-commons
+
+## EMET
+
+Version 1.3.1. Licence MPL-2.0 for 1.3.1 and earlier; AGPL-3.0-only from the
+next release. Python 3.8 or newer, no dependencies. Ports in Rust, Node.js and Go.
+
+- What it does: checks whether a file still matches the SHA-256 you recorded
+  for it and answers MATCH, DRIFT or UNVERIFIABLE. It seals a verdict into a
+  small JSON receipt that anyone can check on their own machine.
+- Who it is for: anyone who has to show that a document, dataset or prompt a
+  model, a reviewer or a pipeline read is the same one that was approved.
+- Try it: `python -m pip install emet`, then `emet anchor report.md` and
+  `emet verify report.md`.
+- What it does not do: it compares bytes. It does not judge whether the content
+  of a matching file is correct. With no recorded hash it answers UNVERIFIABLE
+  and exits 2 rather than guessing.
+- Links: https://harperz9.github.io/emet.html , https://github.com/HarperZ9/emet ,
+  https://pypi.org/project/emet/
+
+## BuildLang
+
+Version 1.10.0. Licence AGPL-3.0-only. Written in Rust.
+
+- What it does: a compiled language where a function's type lists its side
+  effects, such as file, network and C access, so a call that reads a file
+  without declaring it fails to compile. It builds native binaries through C
+  and emits HLSL and GLSL shaders; SPIR-V, LLVM IR, WebAssembly and other
+  backends are experimental.
+- Who it is for: systems and graphics programmers who want the compiler to show
+  what a piece of code is allowed to touch.
+- Try it: `cargo install buildlang`, then `buildc doctor`.
+- What it does not do: the experimental backends are not production paths; the
+  C backend is.
+- Links: https://harperz9.github.io/buildlang.html ,
+  https://github.com/HarperZ9/buildlang , https://crates.io/crates/buildlang
+
+## raw-native
+
+Version 0.8.0. Licence FSL-1.1-MIT. C++23; Windows, Linux and WebAssembly, with
+optional D3D12 and WebGPU builds.
+
+- What it does: renders a 3D scene on the CPU and computes ambient occlusion two
+  ways, with the screen-space shortcut real-time engines use and by ray
+  tracing, then writes both images, a per-pixel error map and a JSON
+  certificate with a verdict: verified inside the tolerance, refuted outside.
+- Who it is for: graphics developers who need a reference to test an occlusion,
+  shading or colour implementation against, or renders that come out the same
+  on every machine.
+- Try it: build from https://github.com/HarperZ9/raw-native and run
+  `raw_native_cli --out ./out`.
+- What it does not do: the default view comes back refuted (RMSE 0.135 against
+  a tolerance of 0.12); the record keeps that result.
+- Links: https://harperz9.github.io/raw.html , https://github.com/HarperZ9/raw-native
+
+## Telos
+
+Version 0.9.0. Licence FSL-1.1-MIT. Node.js 20 or newer, no npm dependencies.
+
+- What it does: a local MCP server and command line for AI agents. It lets an
+  agent read web pages and public APIs, triage a failed GitHub Actions run,
+  check an HTML page for accessibility and size problems, and drive a browser
+  or Windows apps after you grant access. Gated actions go to a hash-chained log.
+- Who it is for: people running agents in MCP hosts such as Claude Code, Codex
+  or the OpenAI Agents SDK who want those agents to act with a record.
+- Try it: `npx -y project-telos-mcp` in an MCP host config. A `tools/list` call
+  against 0.9.0 returns 50 tools.
+- What it does not do: nothing that controls a browser or app runs until you
+  issue a grant. Install it as `project-telos-mcp`; the npm name `telos`
+  belongs to an unrelated package.
+- Links: https://github.com/HarperZ9/telos , https://www.npmjs.com/package/project-telos-mcp
+
+## learn
+
+Version 2.3.0. Fair Source licence. Node.js 20 or newer, no dependencies.
+
+- What it does: a study planner for the terminal and for agents over MCP. You
+  list your objectives and record each practice attempt; it tells you what is
+  due for review, which mistakes keep coming back, what order to practise in,
+  and whether you have reached mastery.
+- Who it is for: anyone studying for a course, an exam or a certification who is
+  comfortable in a terminal, and developers who want an agent to plan study
+  sessions.
+- Try it: `npx -y @harperz9/learn@2.3.0 tutor plan mysession --topic "derivatives" --objectives "power-rule,chain-rule"`.
+- What it does not do: it never answers a graded question. Its course engine
+  stops at every graded step for you to do yourself.
+- Links: https://harperz9.github.io/learn.html , https://github.com/HarperZ9/learn ,
+  https://www.npmjs.com/package/@harperz9/learn
+
+## open-archives
+
+Version 0.1.0, not yet released. Licence AGPL-3.0-only. Python 3.11 or newer,
+standard library only; media work uses ffmpeg.
+
+- What it does: searches free archives and museum collections with one query,
+  from archive.org and Wikimedia Commons to the Met and NASA, downloads the
+  items you pick, and cuts clips, audio loops and textures from them. Every
+  item carries its licence class and rights basis.
+- Who it is for: filmmakers, game and design makers who need period reference
+  images, b-roll, sound and textures they can ship.
+- Try it: `git clone https://github.com/HarperZ9/open-archives`, then
+  `python -m openarchives search "cotton mill" --media image --from 1837 --to 1955`.
+- What it does not do: it records the rights basis it finds; a licence you hold
+  or a fair-use call is yours to record with `rights`.
+- Links: https://github.com/HarperZ9/open-archives
+
+## discover
+
+Version 0.1.2. Licence AGPL-3.0-only. Python 3.11 or newer, standard library only.
+
+- What it does: before a release, checks that people can find a project: a
+  README that opens with what it does and a command to run, GitHub description
+  and topics, package keywords, CITATION.cff, page titles and descriptions,
+  JSON-LD, sitemap, robots access for search crawlers, llms.txt, and video
+  chapters and hashtags. It scores the result, lists fixes, and with `--gate`
+  fails CI.
+- Who it is for: maintainers who ship open-source tools, sites or videos and
+  want them found by the people they serve.
+- Try it: `python -m pip install "git+https://github.com/HarperZ9/discover@v0.1.2"`
+  then `discover repo . --gate`.
+- What it does not do: it checks form, not merit, and claims no ranking effect.
+  Its video check fails engagement bait.
+- Links: https://github.com/HarperZ9/discover
+
+## Author
+
+Zain Dana Harper. Site https://harperz9.github.io/ , GitHub
+https://github.com/HarperZ9 , ORCID https://orcid.org/0009-0001-7175-5393 ,
+YouTube https://www.youtube.com/@zaindanaharper . Papers carry Zenodo DOIs,
+listed in https://harperz9.github.io/llms.txt .

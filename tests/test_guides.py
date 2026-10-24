@@ -14,7 +14,9 @@ PAGES = {p: (ROOT / p).read_text(encoding="utf-8") for p in ("guides.html", "exp
 
 
 def _without_card_tags(text: str) -> str:
-    # tools/guides/page.py writes the page, then site_cards stamps the link-card tags into its head.
+    # tools/guides/page.py writes the page, then site_cards stamps the link-card tags into its head
+    # and tools/structured_data.py adds the generated JSON-LD block.
+    text = re.sub(r"\n?<!-- structured-data:begin[^>]*-->.*?<!-- structured-data:end -->", "", text, flags=re.S)
     return re.sub(r'<meta (?:property="og:image[^"]*"|name="twitter:[^"]*")[^>]*>\s*', "", text)
 
 

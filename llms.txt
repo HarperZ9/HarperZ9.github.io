@@ -35,6 +35,43 @@ names is public and needs no key.
   are claims people typed rather than measurements the board took, and the answer
   says so in its own field.
 
+## Tools you can install
+
+Current versions as of 2026-10-23. [llms-full.txt](https://harperz9.github.io/llms-full.txt)
+gives each one in plain terms: what it does, who it is for, how to try it, and
+what it does not do.
+
+- [Flywheel](https://harperz9.github.io/flywheel.html) 1.9.0: run AI tasks on any
+  hosted or local model, check answers against the source that decides them,
+  and keep a record of every step. `python -m pip install flywheel-verify`
+- [Articulate](https://harperz9.github.io/articulate.html) 0.16.0: a prose checker
+  that runs on your computer and names each writing pattern and the line it is
+  on. `python -m pip install articulate-writing`
+- [Daylight Commons](https://github.com/HarperZ9/daylight-commons) 3.5.0: a
+  browser extension that shows where social media replies come from, signs of
+  coordination, and whether a fact-checker has reviewed the claim.
+- [EMET](https://harperz9.github.io/emet.html) 1.3.1: checks whether a file still
+  matches the SHA-256 you recorded and answers MATCH, DRIFT or UNVERIFIABLE.
+  `python -m pip install emet`
+- [BuildLang](https://harperz9.github.io/buildlang.html) 1.10.0: a compiled
+  language whose function types list side effects such as file, network and C
+  access. `cargo install buildlang`
+- [raw-native](https://harperz9.github.io/raw.html) 0.8.0: a C++23 renderer that
+  runs a fast real-time effect beside a slower reference and reports how far
+  apart they are.
+- [Telos](https://github.com/HarperZ9/telos) 0.9.0: a local MCP server and
+  command line that lets an agent read the web, triage CI runs, check HTML pages
+  and, after you grant it, drive a browser. `npx -y project-telos-mcp`
+- [learn](https://harperz9.github.io/learn.html) 2.3.0: a study planner for the
+  terminal and MCP that schedules reviews and tracks repeat mistakes.
+  `npm install -g @harperz9/learn`
+- [open-archives](https://github.com/HarperZ9/open-archives) 0.1.0, not yet
+  released: search free archives and museum collections with one query, with
+  the licence of every item tagged.
+- [discover](https://github.com/HarperZ9/discover) 0.1.2: a pre-release check
+  that people can find a project, from README opening to llms.txt and video
+  chapters.
+
 ## Pages worth reading
 
 - [Home](https://harperz9.github.io/): what the studio makes and who it is for.
