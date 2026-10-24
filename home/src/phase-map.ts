@@ -60,8 +60,10 @@ function wave(a: number, b: number, fixed: number, horiz: boolean) {
   return d;
 }
 
-function stamp(parent: Element, text: string, x: number, y: number, size: number, rot = 0) {
+function stamp(parent: Element, text: string, x: number, y: number, size: number, rot = 0, region = "") {
   const t = el("text", { class: "pm-stamp", x, y, "font-size": size, "text-anchor": "middle", "dominant-baseline": "middle" }, parent);
+  // A halo in the region's own colour keeps the grid lines from cutting through the letters.
+  if (region) { t.setAttribute("stroke", REGIONS[region].fill); t.setAttribute("stroke-width", "6"); t.setAttribute("paint-order", "stroke"); }
   if (rot) t.setAttribute("transform", `rotate(${rot} ${x} ${y})`);
   t.textContent = text;
 }
@@ -101,16 +103,17 @@ function drawFields(svg: SVGSVGElement, onPick: (k: string) => void) {
 
 function drawLabels(svg: SVGSVGElement) {
   const L = el("g", { "pointer-events": "none", class: "pm-labels" }, svg);
-  stamp(L, "SAYS NOTHING", px(0.5), py(2.6), 44, -90);
-  stamp(L, "TRUST ME", px(3.1), py(0.5), 52);
-  stamp(L, "TOO", px(1.5), py(2.55), 40);
-  stamp(L, "SIMPLE", px(1.95), py(1.5), 40);
+  stamp(L, "SAYS NOTHING", px(0.5), py(2.6), 44, -90, "nothing");
+  stamp(L, "TRUST ME", px(3.1), py(0.5), 52, 0, "trust");
+  stamp(L, "TOO", px(1.5), py(2.5), 38, 0, "simple");
+  stamp(L, "SIMPLE", px(2), py(1.5), 36, 0, "simple");
   stamp(L, "We are here", px(3.5), py(1.82), 15);
-  stamp(L, "HYPE", px(4.5), py(1.5), 30);
+  stamp(L, "HYPE", px(4.5), py(1.5), 30, 0, "hype");
   stamp(L, "Specialists", px(1.5), py(3.62), 17);
   stamp(L, "only", px(1.5), py(3.36), 17);
-  stamp(L, "NOBODY READS IT", px(1.5), py(4.5), 13, -90);
-  stamp(L, "TOO COSTLY", px(3.65), py(3.75), 40);
+  stamp(L, "NOBODY", px(1.5), py(4.66), 19, 0, "unread");
+  stamp(L, "READS IT", px(1.5), py(4.38), 19, 0, "unread");
+  stamp(L, "TOO COSTLY", px(3.65), py(3.5), 40, 0, "costly");
   for (let i = 0; i <= 5; i++) {
     el("text", { class: "pm-axis", x: px(i), y: py(0) + 26, "text-anchor": "middle" }, L).textContent = String(i);
     el("text", { class: "pm-axis", x: px(0) - 16, y: py(i) + 6, "text-anchor": "middle" }, L).textContent = String(i);
@@ -184,9 +187,9 @@ export function mountPhaseMap(panel: HTMLElement, pillars: string[], open: (i: n
     touch();
   };
   groups = drawFields(svg, show);
+  travellers(svg, panel);
   drawLabels(svg);
   drawDwellers(svg, pillars, open);
-  travellers(svg, panel);
   void dress(host, ROOMS[0]);
   if (list) list.hidden = true;
   host.hidden = false;
