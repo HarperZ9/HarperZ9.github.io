@@ -801,7 +801,7 @@ def test_public_routes_reserve_micro_labels_for_semantic_context() -> None:
         assert not re.search(r'class="[^"]*\beyebrow\b', source), path
 
     home_art = read("system/home-art.js")
-    home_css = read("home/src/App.css")
+    home_css = read("home/src/front-door.css")
     assert "home-menu-label" not in home_art
     assert ".home-menu-label" not in home_css
 

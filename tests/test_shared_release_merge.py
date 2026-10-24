@@ -107,8 +107,9 @@ def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> 
     assert f'./routes.js?v={FRESH_STAMP}' in nav
     assert f'./nav.js?v={NAV_CACHE_STAMP}' in home_art
     assert f'./routes.js?v={FRESH_STAMP}' in home_art
-    assert f'/system/home-art" + ".js?v={FRESH_STAMP}' in home_template
-    assert f'/system/home-art.js?v={FRESH_STAMP}' in bundle
+    # 2026-10-23: the front door no longer loads home-art.js; it carries its own small script.
+    assert "/system/home-art" not in home_template
+    assert "home-art" not in bundle
 
 
 def test_sitemap_keeps_legacy_routes_and_adds_capability_publication_routes() -> None:

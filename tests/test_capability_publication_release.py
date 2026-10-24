@@ -257,7 +257,15 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # so the bundle is index-DnlLsL1T.js with the same sheet. index-mxSUkjU6.js stays as retained history.
     # 2026-10-23-plain-copy: the home copy is rewritten in plain language, so the bundle is index-Bg7UPow6.js with the
     # same sheet. index-DnlLsL1T.js stays as retained history.
-    current_js = "index-Bg7UPow6.js"
+    # 2026-10-23-front-door: the home page becomes the front door (the author, 23 October 2026), static markup
+    # with a small script and no React, so the pair is index-5KPR-kvg.js and index-CFeTPxAW.css. index-Bg7UPow6.js and
+    # index-D11WloWt.css stay as retained history.
+    current_js = "index-5KPR-kvg.js"
+    previous_front_door_pair = ("index-Bg7UPow6.js", "index-D11WloWt.css")
+    for superseded_front_door in previous_front_door_pair:
+        assert superseded_front_door not in source
+        assert (ROOT / "assets" / superseded_front_door).is_file()
+        assert f"assets/{superseded_front_door}" in RELEASE_PATHS
     previous_plain_copy_js = "index-DnlLsL1T.js"
     assert previous_plain_copy_js not in source
     assert (ROOT / "assets" / previous_plain_copy_js).is_file()
@@ -416,7 +424,7 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
     # 2026-10-23-plain-copy: the flagship section adds styles, so the sheet is index-D11WloWt.css. index-Se2ioCLN.css stays as history.
-    current_css = "index-D11WloWt.css"
+    current_css = "index-CFeTPxAW.css"
     previous_plain_copy_css = "index-Se2ioCLN.css"
     assert previous_plain_copy_css not in source
     assert (ROOT / "assets" / previous_plain_copy_css).is_file()
