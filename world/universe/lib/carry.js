@@ -11,8 +11,9 @@
 //     flow(x, y) -> [vx, vy]        normalised current at a viewport point, or null
 //     clocks: [fromClock, toClock]  the two elements' timing laws, combined as a weighted timing layer
 //   c.stats() -> { mean, sd, n, t }  the weights' mean and spatial spread on the last frame (the front check)
+//   c.record(key) -> { mid, landed }  the transparency record: per-property clarity of the source in the view
 // A weight depends only on t (flip times are computed once per transfer), so walking back carries the element back.
-import { growFront, weightAt, spread, timing, recombine } from "./ticks.mjs";
+import { growFront, weightAt, spread, timing, recombine, clarity } from "./ticks.mjs";
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const mix = (a, b, k) => a + (b - a) * k;
@@ -25,6 +26,7 @@ export const FORMS = Object.freeze({
   stroke: { size: 11.0, aspect: 5.0, round: 1, follow: 1 },
   grain:  { size: 4.0, aspect: 1.0, round: 1, follow: 0 },
   glyph:  { size: 10.0, aspect: 4.0, round: 0.6, follow: 0.25 },
+  ring:   { size: 9.0, aspect: 2.2, round: 1, follow: 0.6 },
 });
 
 // The element as a grid of ticks: each cell's colour and ink (dark, opaque pixels count as ink).
@@ -47,11 +49,16 @@ function curl(x, y, s) {
 
 // One grid of ticks per transfer. The front (growFront, seeded on the edge nearest the next place, thick ink
 // holding out) sets when each tick's weight shifts; position, form, colour and ink all follow that tick's weight.
-export function carrier(canvas, { cols = 72, rows = 45, width = 0.3, span = 0.6 } = {}) {
+// width: how long one tick takes to flip, in transfer time. 0.15 with the fitted front (ticks.mjs FRONT_FIT): the bloom
+// packs many flips early, and a narrower flip keeps them a front (peak spread 0.33 against 0.25 at 0.3) while the
+// steepest change stays under the cut limit (7.9 against 10).
+export function carrier(canvas, { cols = 72, rows = 45, width = 0.15, span = 0.6 } = {}) {
   let key = null, T = null, landed = false, pourAt = 0, last = { mean: 0, sd: 0, n: 0, t: 0 };
+  const records = new Map();  // the transparency record per transfer: what of the source survived, mid-way and landed
   return {
     reset() { key = null; T = null; },
     stats() { return last; },
+    record(k) { return records.get(k) || null; },
     draw(t, { key: k, from, to, fromForm = "drop", toForm = "drop", flow = null, px = 1, medium = null, clocks = null }) {
       const x = canvas.getContext("2d", { colorSpace: "display-p3" }); x.clearRect(0, 0, canvas.width, canvas.height);
       if (t <= 0 || t >= 1 || !from?.canvas || !to?.canvas) {
@@ -86,6 +93,9 @@ export function carrier(canvas, { cols = 72, rows = 45, width = 0.3, span = 0.6 
       }
       x.globalAlpha = 1;
       last = { ...spread(tau, tt, { mask: T.mask, width }), t };
+      const rec = records.get(key) || {};  // clarity per property (ticks.mjs clarity): once mid-way, once on landing
+      for (const [name, at] of [["mid", 0.5], ["landed", 0.97]]) if (!rec[name] && last.mean >= at) rec[name] = clarity(T.A, T.B, T.mask, Float32Array.from(tau, (_, q) => weightAt(tau, q, tt, width)));
+      records.set(key, rec);
       // the element moves the water as it goes (a few pushes a second), and leaves ink where it lands
       const now = performance.now();
       if (medium && now - pourAt > 180) {

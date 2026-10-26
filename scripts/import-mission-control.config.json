@@ -28,7 +28,8 @@
     "2026-10-24-feed-test-28": "feed-28",
     "2026-10-24-feed-test-30": "feed-30",
     "2026-10-24-feed-test-32": "feed-32",
-    "2026-10-24-homage": "homage"
+    "2026-10-24-homage": "homage",
+    "2026-10-26-creation-engine": "creation"
   },
   "entries": [
     "2026-10-23-universe/proto/path.html",
@@ -254,6 +255,12 @@
       "find": "<tr><th scope=\"col\"></th>",
       "replace": "<tr><td></td>",
       "why": "axe empty-table-header: the corner cell is not a header"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }",
+      "replace": "  @font-face { font-family: \"Hanken Grotesk\"; src: url(\"fonts/hanken-grotesk.woff2\") format(\"woff2\"); font-weight: 100 900; font-display: swap; }\n  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }",
+      "why": "the page preloaded Hanken Grotesk but never declared it, so the preload went unused and the text fell to a system face"
     }
   ]
 }

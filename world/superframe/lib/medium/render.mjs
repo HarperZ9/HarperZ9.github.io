@@ -18,6 +18,7 @@ import { drawWisps } from './wisps.mjs';
 import { drawMotes } from './motes.mjs';
 import { drawItems } from './ticks.mjs';
 import { viewport, hexLin, caustics, waterLight, fog, mirrorBand, lensOver, lensCaustic } from './optics.mjs';
+import { filmSpectral, meniscusSpectral, lensOverSpectral } from './specoptics.mjs';
 import { sediment, bedTopLight } from './bed.mjs';
 import { inkAt } from './inkbloom.mjs';
 import { spectralSplats } from './finebuf.mjs';
@@ -58,7 +59,7 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
       const hpx = (ny - 0.5 - gy) * vp.cy;
       bedOut.layer = null; c = sediment(m, px, hpx, ci, sand, ny * vp.cy, grainPx, m.pigS ? bedOut : null).map(v => v * bedTopLight((gy - bedTop) * vp.cy, grainPx));
       // the floor catches the caustic network sharpest, and the pool of light the lens focuses
-      const net = 0.8 + 0.7 * Wt.c * Wt.c * (0.35 + 0.65 * Wt.fade) + lensCaustic(m, gx, gy);
+      const net = 1 + (0.7 * Wt.c * Wt.c * (0.35 + 0.65 * Wt.fade) - 0.2) * Math.min(1, look.shafts / 0.55) + lensCaustic(m, gx, gy);   // no shafts, no network
       c = c.map(v => v * Math.max(0.2, net) / Math.max(0.3, Wt.shaft));
     } else {
       const k0 = 1.6, ix = (bilerp(IOR, nx, ny, gx + 1, gy) - bilerp(IOR, nx, ny, gx - 1, gy)) * 900 * k0, iy = (bilerp(IOR, nx, ny, gx, gy + 1) - bilerp(IOR, nx, ny, gx, gy - 1)) * 900 * k0;
@@ -92,7 +93,7 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
     if (withInk) {
       if (!m.sedS) out = out.map((v, k) => v * Math.exp(-3 * 0.8 * Math.max(0, bilerp(m.sed[k], nx, ny, gx, gy))));
       const oil = bilerp(m.oil, nx, ny, gx, gy);
-      if (oil > 0.02) { const fl = filmLinear(260 + 500 * clamp(oil, 0, 1)), a = clamp(oil * 1.5, 0, 0.6); out = out.map((v, k) => v * (1 - a) + fl[k] * a * 0.9); }
+      if (oil > 0.02) { const fl = filmSpectral(260 + 500 * clamp(oil, 0, 1), illuminant), a = clamp(oil * 1.5, 0, 0.6); out = out.map((v, k) => v * (1 - a) + fl[k] * a * 0.9); }
     }
     return out;
   }
@@ -100,13 +101,13 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
     const [gx, gy] = vp.g(x, y), o = 4 * (y * W + x);
     let c = scene(gx, gy);
-    const lens = lensOver(m, c, gx, gy, vp, (X, Y) => scene(X, Y, false), look);
+    const lens = SPEC ? lensOverSpectral(m, c, gx, gy, vp, (X, Y) => scene(X, Y, false), look, illuminant, hexLin) : lensOver(m, c, gx, gy, vp, (X, Y) => scene(X, Y, false), look);
     if (lens) c = lens;
     d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 1;
   }
   m.extraS = null;
   drawMotes(m, R, vp);
-  drawItems(m, R, vp);
+  drawItems(m, R, vp, illuminant);
   // tiles are lit and fogged where they are, like anything else in the water
   drawTesserae(m, R, hexLin(look.grout), (albedo, gx, gy, hexColour) => {
     const Wt = waterLight(m, C, look, gx, gy, surfAt(gx));
@@ -118,7 +119,18 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
   }, vp);
   drawWisps(m, R, soot, vp);
   mirrorBand(m, R, look, vp);
-  surfaceMarks(m, R, vp);
+  surfaceMarks(m, R, vp, m.pigS ? illuminant : null);
+  // an aperture (look.aperture): the medium seen through an oval in a dark ground (after Fleischmann's oval and the
+  // canon's aperture motif); the rim is antialiased, and the ground carries a faint vertical brushed texture
+  if (look.aperture) {
+    const A = look.aperture, G = hexLin(A.ground ?? '#141414'), px = 1.2;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const dx = (x + 0.5 - A.cx * W) / (A.rx * W), dy = (y + 0.5 - A.cy * H) / (A.ry * H), r = Math.hypot(dx, dy), edge = (r - 1) * Math.min(A.rx * W, A.ry * H) / px;
+      const out = clamp(edge + 0.5, 0, 1); if (out <= 0) continue;
+      const o = 4 * (y * W + x), tex = 1 + 0.06 * Math.sin(x * 0.9 + Math.sin(y * 0.013) * 3) * Math.sin(y * 0.05);
+      for (let k = 0; k < 3; k++) d[o + k] = d[o + k] * (1 - out) + G[k] * tex * out;
+    }
+  }
   if (grain > 0) { const g = grainField(W, H, { sd: grain, clump: 2.3, dither: 0, seed }); for (let i = 0; i < W * H; i++) for (let k = 0; k < 3; k++) { const s = d[4 * i + k] <= 0.0031308 ? 12.92 * d[4 * i + k] : 1.055 * d[4 * i + k] ** (1 / 2.4) - 0.055, t = clamp(s + g[i] / 255, 0, 1); d[4 * i + k] = t <= 0.04045 ? t / 12.92 : ((t + 0.055) / 1.055) ** 2.4; } }
   return R;
 }
@@ -135,13 +147,14 @@ function pigmentThrough(m, c, gx, gy, share = 1, illum = 'D65') {
     out = c.map((v, k) => v * Math.max(0, F[k]) * Math.exp(-3 * share * 0.8 * Math.max(0, bilerp(m.sed[k], nx, ny, gx, gy))));
   } else out = c.map((v, k) => v * Math.exp(-3 * share * Math.max(0, bilerp(m.pig[k], nx, ny, gx, gy) + 0.8 * bilerp(m.sed[k], nx, ny, gx, gy) + ink.coarse * bilerp(m.pigT[k], nx, ny, gx, gy) + ink.a[k])));
   const oil = bilerp(m.oil, nx, ny, gx, gy);
-  if (oil > 0.02) { const f = filmLinear(260 + 500 * clamp(oil, 0, 1)); const a = clamp(oil * 1.5, 0, 0.6) * share; out = out.map((v, k) => v * (1 - a) + f[k] * a * 0.9); }
+  if (oil > 0.02) { const f = m.pigS ? filmSpectral(260 + 500 * clamp(oil, 0, 1), illum) : filmLinear(260 + 500 * clamp(oil, 0, 1)); const a = clamp(oil * 1.5, 0, 0.6) * share; out = out.map((v, k) => v * (1 - a) + f[k] * a * 0.9); }
   return out;
 }
 
 // the meniscus line, oil film colour on the surface, foam and bubbles, drawn at output resolution
-function surfaceMarks(m, R, vp) {
-  const { nx } = m, d = R.data, W = R.w, H = R.h, cell = vp.cy;
+// illum: a spectral tank's light, so the meniscus and the film are seen as spectra (specoptics.mjs); null keeps RGB
+function surfaceMarks(m, R, vp, illum = null) {
+  const { nx } = m, d = R.data, W = R.w, H = R.h, cell = vp.cy, men = illum ? meniscusSpectral(illum) : [0.97, 0.97, 0.97], film_ = t => (illum ? filmSpectral(t, illum) : filmLinear(t));
   for (let x = 0; x < W; x++) {
     const gx = vp.g(x, 0)[0], ci = clamp(Math.floor(gx), 0, nx - 2), t = clamp(gx - ci, 0, 1), ys = vp.p(0, m.surfaceY(ci) * (1 - t) + m.surfaceY(ci + 1) * t - 0.5)[1];
     const film = m.film[ci] * (1 - t) + m.film[ci + 1] * t;
@@ -151,9 +164,9 @@ function surfaceMarks(m, R, vp) {
     for (let dy = -2 * lw; dy <= Math.max(2, band); dy++) {
       const y = Math.round(ys + dy); if (y < 0 || y >= H) continue;
       const o = 4 * (y * W + x);
-      if (dy < 1.5 * lw) { const w = dy < 0 ? 0.35 : 0.7; for (let k = 0; k < 3; k++) d[o + k] = d[o + k] * (1 - w) + 0.97 * w; continue; }
+      if (dy < 1.5 * lw) { const w = dy < 0 ? 0.35 : 0.7; for (let k = 0; k < 3; k++) d[o + k] = d[o + k] * (1 - w) + men[k] * w; continue; }
       const cellv = Math.sin(x * 0.11 + Math.sin(y * 0.23 + x * 0.013) * 3) * Math.sin(y * 0.19 - x * 0.05);
-      const thick = 200 + 600 * clamp(film / 3 + 0.25 * cellv, 0, 1), fc = filmLinear(thick), w = 0.55 * clamp(1 - (dy - 1.5) / Math.max(1, band), 0, 1) * (cellv > -0.6 ? 1 : 0.2);
+      const thick = 200 + 600 * clamp(film / 3 + 0.25 * cellv, 0, 1), fc = film_(thick), w = 0.55 * clamp(1 - (dy - 1.5) / Math.max(1, band), 0, 1) * (cellv > -0.6 ? 1 : 0.2);
       for (let k = 0; k < 3; k++) d[o + k] = d[o + k] * (1 - w) + fc[k] * w;
     }
   }

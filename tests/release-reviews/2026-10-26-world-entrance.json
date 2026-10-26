@@ -1,11 +1,11 @@
 {
   "date": "2026-10-26",
-  "note": "The home became the world's entrance (scripts/build-world-home.mjs); the React home moved to workshop.html; sitemap.xml, the route registry and the site index gained the World family; the publication receipt re-pins the sitemap. Recorded by the site-integration agent on the draft PR; the author reviews the screenshot gallery before merge.",
+  "note": "The home became the world's entrance (scripts/build-world-home.mjs); the React home moved to workshop.html; sitemap.xml, the route registry and the site index gained the World family; the publication receipt re-pins the sitemap. Recorded by the site-integration agent; the author's go to publish, relayed verbatim on 2026-10-26: also push and publish the work we have completed up to this point with the projects.",
   "paths": {
-    "index.html": "6c1d45c87547739e77b70cf82b1338c4e2376f8529ed55d9092d5945ec04db1b",
+    "index.html": "f09868f5aa738a470f6ab4516faa9a33cd9b5bca2fe2cca1eb7de53cd4f26562",
     "publications/build.json": "2b4ab6261bb7e3b855f6ffd36ab34f3cc2ddeae8aa2f7eb402b0555280aae3e8",
-    "site-index.html": "b1e1e278bf9bdabcd12a6e482502be13c40aec970f04dad4eba1dc598016ebdc",
+    "site-index.html": "8fede926cc38143c637aa11fff57d742c081b60c53531a509d693fee6a9e23f4",
     "sitemap.xml": "5e53a0e60d6273a1c946ad9c5f958e272960a510d61c27bf9dab283417443459",
-    "system/routes.js": "a0d862a1cffaabf1c43a20f7c1168add1ce153c4048d3e3e6ea945c893da9298"
+    "system/routes.js": "47538aef8b102abbb3e5c5e4ae136a3d9bc78a7b8d6be945ab8338fcf53cb070"
   }
 }

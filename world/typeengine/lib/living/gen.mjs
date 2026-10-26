@@ -1,4 +1,4 @@
-// lib/living/gen.mjs: living type's moves as creation-engine generators (2026-10-26-creation-engine, BLEED section 16),
+// lib/living/gen.mjs: living type's moves as creation-engine generators (creation, BLEED section 16),
 // built with that engine's own defineGen and makeLayer (read-only imports), so its bookkeeping, timing warp and settle
 // test apply unchanged:
 //   living.reveal   one surface carried away to show what lies beneath (the shared reveal: a translation under a word,
@@ -8,8 +8,8 @@
 // fields.vel the flow (cells per step, so other layers can ride it). layer.state.frame() renders the pixels now.
 // Time is the law's own: a move takes law.seconds of its physics; step(dt) advances it, optionally warped by a
 // timing layer (the Hum v4 grid is one such layer a place may choose).
-import { defineGen } from '../../../2026-10-26-creation-engine/lib/core/gen.mjs';
-import { makeLayer } from '../../../2026-10-26-creation-engine/lib/core/layer.mjs';
+import { defineGen } from '../../../creation/lib/core/gen.mjs';
+import { makeLayer } from '../../../creation/lib/core/layer.mjs';
 import { createReveal } from './reveal.mjs';
 import { createLiving } from './index.mjs';
 import { fieldsAt } from './compose.mjs';

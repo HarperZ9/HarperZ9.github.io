@@ -29,11 +29,31 @@ export const CLOCKS = Object.freeze({
   drying: (a) => a * a * a,
   ratio: (a) => Math.log1p(9 * a) / Math.log(10),
 });
-export function clockOf(c) { return typeof c === "function" ? c : CLOCKS[c] || CLOCKS.even; }
+// A clock may be a name, a function, or a weighted mix of clocks ({ even: 0.3, hum: 0.7 }): a timing layer with
+// weights. Extra clocks (such as the theme's, built by humClock) are passed in by the page.
+export function clockOf(c, extra = {}) {
+  if (typeof c === "function") return c;
+  if (c && typeof c === "object") {
+    const parts = Object.entries(c).map(([k, w]) => [clockOf(k, extra), w]), sum = parts.reduce((a, [, w]) => a + w, 0) || 1;
+    return (a) => parts.reduce((acc, [f, w]) => acc + w * f(a), 0) / sum;
+  }
+  return extra[c] || CLOCKS[c] || CLOCKS.even;
+}
+// The sound theme's own clock (Hum v4): progress follows the kicks of two bars of "the cell" (bars 16 and 17), so a
+// place that keeps time with the theme moves on its kicks and holds between them. hits: hum4-theme-hits.json.
+export function humClock(hum, { fromBar = 16, bars = 2 } = {}) {
+  const bar = (60 / hum.bpm) * 4, t0 = fromBar * bar, span = bars * bar;
+  const kicks = hum.hits.filter((h) => h.name.startsWith("kick") && h.t >= t0 && h.t < t0 + span).map((h) => [(h.t - t0) / span, h.vel]);
+  const total = kicks.reduce((a, [, v]) => a + v, 0) || 1;
+  // each kick's share arrives over a short attack (ramp, a sixteenth of the two bars), so the clock steps on the kicks
+  // without a jump: a stepped clock would cut a transfer at every kick
+  const ramp = 1 / 32;
+  return (a) => { let m = 0; for (const [u, v] of kicks) m += v * Math.min(1, Math.max(0, (a - u) / ramp)); return a >= 1 ? 1 : Math.min(1, m / total); };
+}
 
 // The whole grammar at one approach. `reduced` shows the finished, uncovered state with the sheets settled.
-export function grammar(approach, { reduced = false, steps = 6, clock = "even" } = {}) {
-  const a = reduced ? 1 : onBeat(clockOf(clock)(clamp(approach)), steps);
+export function grammar(approach, { reduced = false, steps = 6, clock = "even", clocks = {} } = {}) {
+  const a = reduced ? 1 : onBeat(clockOf(clock, clocks)(clamp(approach)), steps);
   return {
     approach: a,
     unroll: a,                                  // 0 wound, 1 laid flat

@@ -28,7 +28,7 @@ export function tankAdditives(words = 'flow', { ink = '#251f4a', halo = '#4f86c6
 }
 
 export function tank(words = 'flow', { seed = 'tank', nx = 192, ny = 108, bedRelief = 0.55, ...opts } = {}) {
-  const m = new Medium({ nx, ny, seed: `${seed}/${words}`, bedRelief });
+  const m = new Medium({ nx, ny, seed: `${seed}/${words}`, bedRelief, spectral: !!opts.spectral });
   for (const a of tankAdditives(words, opts)) m.add(...a);
   return m;
 }

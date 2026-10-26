@@ -35,7 +35,7 @@ void main() {
     vec2 X = (F.xy + 0.5) * uCell - 0.5, v = (F1.xy - F0.xy) * uCell;
     if (uMode < 1.5) {
       vec3 a = vec3(0.), b = vec3(0.);
-      for (int q = 0; q < 3; q++) { vec2 s = (X - v * float(q) * 0.25 + 0.5) / uSize; a += texture(uA, s).rgb / 3.; b += texture(uB, s).rgb / 3.; }
+      for (int q = 0; q < 3; q++) { vec2 s = X - v * float(q) * 0.5 + 0.5; a += lv(uA, uLevelsA, uLevelA, s) / 3.; b += lv(uB, uLevelsB, uLevelB, s) / 3.; }
       float e = (F.z - 0.5) / 0.16;
       c = e <= -1. ? a : e >= 1. ? b : (uDark > 0.5 ? max(a, b) : uSame > 0.5 ? min(a, b) : a * b / max(uPaper, vec3(1e-4)));
     } else {
@@ -71,6 +71,8 @@ export function createLivingGL(canvas) {
     /** part: { kind, w, h, a (sRGB8), b (sRGB8), fields (Uint16 half floats, nx x ny*keys RGBA), nx, ny, keys, sx, sy, paper, dark } */
     move(i, part) { moves.set(i, { ...part, ta: img(part.a, part.w, part.h * (part.levelsA ?? 1)), tb: img(part.b, part.w, part.h * (part.levelsB ?? 1)), tf: tex(2, part.nx, part.ny * part.keys, gl.RGBA16F, gl.RGBA, gl.HALF_FLOAT, part.fields), a: null, b: null, fields: null }); },
     has: (kind, i) => (kind === 'stop' ? stops : moves).has(i),
+    /** Forget every stop and move (a new scheme repaints them); textures are freed. */
+    reset() { for (const v of stops.values()) gl.deleteTexture(v.t); for (const v of moves.values()) { gl.deleteTexture(v.ta); gl.deleteTexture(v.tb); gl.deleteTexture(v.tf); } stops.clear(); moves.clear(); },
     draw({ i, p = 0, t = 0, mode = 'stop', seed = 1, breath = null, breath2 = null, level = 0, levelA = 0, levelB = 0 }) {
       gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform2f(U('uSize'), canvas.width, canvas.height); gl.uniform1f(U('uT'), t); gl.uniform1f(U('uSeed'), seed);
       if (mode === 'stop') {

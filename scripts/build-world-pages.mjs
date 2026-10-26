@@ -14,7 +14,8 @@ const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
 const json = (p) => JSON.parse(read(p));
 const titleOf = (p) => { try { const m = read(p).match(/<title>([^<]*)<\/title>/); return m ? m[1].replace(/\s*\|\s*Zain Dana Harper$/, "").trim() : null; } catch { return null; } };
-const list = (items) => `<ul class="floor-list">${items.map(([href, t]) => `<li><a href="${esc(href)}">${esc(t)}</a></li>`).join("")}</ul>`;
+const caps = (t) => (/^[A-Z0-9 ]{3,}$/.test(t) ? ' class="caps"' : "");
+const list = (items) => `<ul class="floor-list">${items.map(([href, t]) => `<li><a href="${esc(href)}"${caps(t)}>${esc(t)}</a></li>`).join("")}</ul>`;
 const section = (id, title, items) => items.length ? `<section aria-labelledby="f-${id}"><h2 id="f-${id}">${esc(title)}</h2>${list(items)}</section>` : "";
 const write = (p, html) => { writeFileSync(path.join(site, p), html); return p; };
 

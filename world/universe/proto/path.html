@@ -9,7 +9,7 @@
 <link rel="canonical" href="https://harperz9.github.io/world/universe/proto/path.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The road | Zain Dana Harper">
-<meta property="og:description" content="A winding road through the work, district by district, down through the strata: water and fluids first.">
+<meta property="og:description" content="A winding road through the work, seven districts down through the strata: water, light, type, mosaic, sound, tools and investigations.">
 <meta property="og:url" content="https://harperz9.github.io/world/universe/proto/path.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/world--universe--proto--path.jpg?v=51c284a10cde">
 <meta property="og:image:width" content="1200">
@@ -18,17 +18,16 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--universe--proto--path.jpg?v=51c284a10cde">
 <meta name="twitter:image:alt" content="The road, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
-<meta name="description" content="A winding road through the work, district by district, down through the strata: water and fluids first.">
+<meta name="description" content="A winding road through the work, seven districts down through the strata: water, light, type, mosaic, sound, tools and investigations.">
 <link rel="preload" href="../../ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../ui/shell/shell.css?v=world-7025cc6515">
-<link rel="stylesheet" href="u.css?v=world-7025cc6515">
-<link rel="stylesheet" href="path.css?v=world-7025cc6515">
-<script type="module" src="../../ui/shell/shell.js?v=world-7025cc6515"></script>
-<script type="module" src="../../alive/alive.js?v=world-7025cc6515"></script>
-<script type="module" src="../../ui/directions/common/flow/ground.js?v=world-7025cc6515"></script>
-<script type="module" src="path.js?v=world-7025cc6515"></script>
+<link rel="stylesheet" href="../../ui/shell/shell.css?v=world-a891bf139a">
+<link rel="stylesheet" href="u.css?v=world-a891bf139a">
+<link rel="stylesheet" href="path.css?v=world-a891bf139a">
+<script type="module" src="../../ui/shell/shell.js?v=world-a891bf139a"></script>
+<script type="module" src="../../alive/alive.js?v=world-a891bf139a"></script>
+<script type="module" src="path.js?v=world-a891bf139a"></script>
 </head>
-<body class="path d-water">
+<body class="path">
 <header class="o-hand" aria-label="Site">
   <a class="skip" href="floor.html">Index</a>
   <a class="o-home" href="../../ui/directions/cs-max/index.html">Zain Dana Harper</a>
@@ -65,7 +64,8 @@
   <h1 class="sr-only">The road</h1>
   <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
 
-  <section class="stop" id="s-ink" data-stop="ink" data-medium="thin" aria-labelledby="h-ink">
+  <div class="district" role="region" aria-label="Water and fluids district" data-district="water">
+  <section class="stop" id="s-ink" data-stop="ink" data-district="water" data-medium="thin" aria-labelledby="h-ink" style="--d-ink:#1f3d5c;--d-wall:#e6ebe8;--d-accent:#3b7f8f">
     <div class="stop-in">
       <div class="sheets" role="group" aria-label="Ink, in four sheets">
         <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
@@ -74,67 +74,79 @@
           <h2 id="h-ink" tabindex="-1">Ink</h2>
           <p>A drop lands and soaks outward; its ring grows as the square root of time.</p>
         </div>
-        <canvas class="sheet" data-sheet="annotation" aria-label="Counts" role="img"></canvas>
+        <canvas class="sheet" data-sheet="annotation" aria-label="A dye spreads with radius growing as the square root of time (r ~ t^0.5); a moving front grows linearly." role="img"></canvas>
       </div>
-      <button type="button" class="lift" aria-pressed="false">Lift</button>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
     </div>
   </section>
-
-  <section class="stop" id="s-ink-in-water" data-stop="ink-in-water" data-medium="thin" aria-labelledby="h-iiw">
+  <section class="stop" id="s-ink-in-water" data-stop="ink-in-water" data-district="water" data-medium="thin" aria-labelledby="h-ink-in-water" style="--d-ink:#1f3d5c;--d-wall:#e6ebe8;--d-accent:#3b7f8f">
     <div class="stop-in">
       <div class="sheets" role="group" aria-label="Ink in water, in four sheets">
         <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
         <canvas class="sheet" data-sheet="motion" aria-label="Marbled paper seen through moving water, uncovered tile by tile" role="img"></canvas>
         <div class="sheet content" data-sheet="content">
-          <h2 id="h-iiw" tabindex="-1">Ink in water</h2>
+          <h2 id="h-ink-in-water" tabindex="-1">Ink in water</h2>
           <p>Ink floated on water keeps every turn of the current; marbled paper is that water, lifted off.</p>
         </div>
-        <canvas class="sheet" data-sheet="annotation" aria-label="Tile sizes" role="img"></canvas>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Tesserae are laid in courses (andamento) that follow the form&#x27;s contour, so the flow of the tiles describes the shape." role="img"></canvas>
       </div>
-      <button type="button" class="lift" aria-pressed="false">Lift</button>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
     </div>
   </section>
-
-  <section class="stop" id="s-layers" data-stop="layers" data-medium="thin" aria-labelledby="h-layers">
+  <section class="stop" id="s-layers" data-stop="layers" data-district="water" data-medium="thin" aria-labelledby="h-layers" style="--d-ink:#1f3d5c;--d-wall:#e6ebe8;--d-accent:#3b7f8f">
     <div class="stop-in">
       <div class="sheets" role="group" aria-label="Layers of water, in four sheets">
-        <canvas class="sheet" data-sheet="ground" aria-label="The page's own water, as it stands now" role="img"></canvas>
+        <canvas class="sheet" data-sheet="ground" aria-label="The page&#x27;s own water, as it stands now" role="img"></canvas>
         <canvas class="sheet" data-sheet="motion" aria-label="Its current" role="img"></canvas>
         <div class="sheet content" data-sheet="content">
           <h2 id="h-layers" tabindex="-1">Layers of water</h2>
           <p>Ground, current, picture and count, printed one over another; lift them to see each one.</p>
-          <img class="plate" src="../../exhibit/assets/img/cyanotype-s.webp" width="583" height="786" alt="Anna Atkins's cyanotype of algae: pale water plants on Prussian blue.">
+          <img class="plate" src="../../exhibit/assets/img/cyanotype-s.webp" width="475" height="640" alt="Anna Atkins&#x27;s cyanotype of algae: pale water plants on Prussian blue.">
         </div>
-        <canvas class="sheet" data-sheet="annotation" aria-label="Measures of the water" role="img"></canvas>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Overlapping transparent inks multiply their transmissions; real inks absorb outside their band, so the ideal multiply misses hue." role="img"></canvas>
       </div>
-      <button type="button" class="lift" aria-pressed="false">Lift</button>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
     </div>
   </section>
-
-  <section class="stop" id="s-tide-line" data-stop="tide-line" data-medium="thin" aria-labelledby="h-tide">
+  <section class="stop" id="s-tide-line" data-stop="tide-line" data-district="water" data-medium="thin" aria-labelledby="h-tide-line" style="--d-ink:#1f3d5c;--d-wall:#e6ebe8;--d-accent:#3b7f8f">
     <div class="stop-in">
       <div class="sheets" role="group" aria-label="Tide line, in four sheets">
-        <canvas class="sheet" data-sheet="ground" aria-label="Five stepping stones: water, pigment, sediment, bleed and absorbency" role="img"></canvas>
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the tide-line bridge: sedimentation, bleed, water, pigment, absorbency" role="img"></canvas>
         <canvas class="sheet" data-sheet="motion" aria-label="A drop of pigment drying, its colour carried out to the rim" role="img"></canvas>
         <div class="sheet content" data-sheet="content">
-          <h2 id="h-tide" tabindex="-1">Tide line</h2>
-          <p>Where a liquid stops, it leaves its edge behind: a soak stain's rim, a bloom's border, the wrack on a beach.</p>
+          <h2 id="h-tide-line" tabindex="-1">Tide line</h2>
+          <p>Where a liquid stops, it leaves its edge behind: a soak stain&#x27;s rim, a bloom&#x27;s border, the wrack on a beach.</p>
         </div>
-        <canvas class="sheet" data-sheet="annotation" aria-label="Pigment across the drop, centre to rim" role="img"></canvas>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Evaporating liquid carries suspended pigment to the drying edge and leaves it there as a rim." role="img"></canvas>
       </div>
-      <button type="button" class="lift" aria-pressed="false">Lift</button>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
     </div>
   </section>
-
-  <section class="stop" id="s-palimpsest" data-stop="palimpsest" data-medium="viscous" aria-labelledby="h-pal">
+  <section class="stop" id="s-palimpsest" data-stop="palimpsest" data-district="water" data-medium="thin" aria-labelledby="h-palimpsest" style="--d-ink:#1f3d5c;--d-wall:#e6ebe8;--d-accent:#3b7f8f">
     <div class="stop-in">
       <div class="sheets" role="group" aria-label="Palimpsest, in four sheets">
         <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
         <canvas class="sheet" data-sheet="motion" aria-label="The Archimedes leaf, uncovered tile by tile" role="img"></canvas>
         <div class="sheet content" data-sheet="content">
-          <h2 id="h-pal" tabindex="-1">Palimpsest</h2>
+          <h2 id="h-palimpsest" tabindex="-1">Palimpsest</h2>
           <p>Water washed the first text off the leaf; the trace stayed under the new one.</p>
-          <nav class="branches" aria-label="Ways on">
+          <nav class="branches" aria-label="Ways on from Palimpsest">
             <a href="place.html?n=palimpsest&amp;from=layers">Enter</a>
             <a href="place.html?n=listen&amp;from=palimpsest">Sound</a>
             <a href="floor.html#b-tile">Tile</a>
@@ -144,11 +156,574 @@
             <a href="floor.html">Index</a>
           </nav>
         </div>
-        <canvas class="sheet" data-sheet="annotation" aria-label="Counts" role="img"></canvas>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Perceived change follows the ratio, not the difference: each added transparent layer reads as a smaller step, so a fifth layer barely reads darker (Albers, Interaction of Color, plate XX-1)." role="img"></canvas>
       </div>
-      <button type="button" class="lift" aria-pressed="false">Lift</button>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
     </div>
   </section>
+  </div>
+  <div class="district" role="region" aria-label="Glass and light district" data-district="glass">
+  <section class="stop" id="s-light" data-stop="light" data-district="glass" data-medium="thin" aria-labelledby="h-light" style="--d-ink:#2a1d10;--d-wall:#f1e9dc;--d-accent:#c98a2a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Light, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Voyager 1&#x27;s Pale Blue Dot: a band of scattered sunlight with Earth a single pale point inside it. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-light" tabindex="-1">Light</h2>
+          <p>Earth from six billion kilometres: less than one pixel, caught in a scattered sunbeam inside the camera.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Light through a medium falls off exponentially with depth, red first in water." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-refraction" data-stop="refraction" data-district="glass" data-medium="thin" aria-labelledby="h-refraction" style="--d-ink:#2a1d10;--d-wall:#f1e9dc;--d-accent:#c98a2a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Refraction, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Refraction, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-refraction" tabindex="-1">Refraction</h2>
+          <p>Light bends where it enters water; from below, the whole sky squeezes into a circle about 97 degrees across.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Light bends at an interface by the ratio of refractive indices; from under water the sky shows as a window of half-angle 48.6 degrees." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-thin-film" data-stop="thin-film" data-district="glass" data-medium="thin" aria-labelledby="h-thin-film" style="--d-ink:#2a1d10;--d-wall:#f1e9dc;--d-accent:#c98a2a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Thin film, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Thin film, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-thin-film" tabindex="-1">Thin film</h2>
+          <p>A soap film a few hundred nanometres thick reflects the colours that meet in step at its thickness; as it drains, the colours walk.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="A thin layer reflects colours that interfere constructively at its thickness; the hue walks with thickness and angle." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-window" data-stop="window" data-district="glass" data-medium="thin" aria-labelledby="h-window" style="--d-ink:#2a1d10;--d-wall:#f1e9dc;--d-accent:#c98a2a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Window, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the window bridge: aperture eye, refraction, framing, light" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The Five-hundred-metre Aperture Spherical Telescope in China: a dish filling a valley. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-window" tabindex="-1">Window</h2>
+          <p>An opening that frames and bends what is seen: the eye, a telescope&#x27;s dish, a frame within a frame.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-glint" data-stop="glint" data-district="glass" data-medium="thin" aria-labelledby="h-glint" style="--d-ink:#2a1d10;--d-wall:#f1e9dc;--d-accent:#c98a2a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Glint, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Glint, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-glint" tabindex="-1">Glint</h2>
+          <p>Each flash on the water is one small facet tilted just right between the sun and the eye.</p>
+          <nav class="branches" aria-label="Ways on from Glint">
+            <a href="place.html?n=afterimage">Afterimage</a>
+            <a href="place.html?n=ebbinghaus">Ebbinghaus</a>
+            <a href="place.html?n=mirror">Mirror</a>
+            <a href="floor.html#b-glint">Glint</a>
+            <a href="index.html">The map</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="district" role="region" aria-label="Type and lettering district" data-district="type">
+  <section class="stop" id="s-type" data-stop="type" data-district="type" data-medium="water" aria-labelledby="h-type" style="--d-ink:#1a1712;--d-wall:#ece6da;--d-accent:#8f3a19">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Type, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A Letraset sheet of dry-transfer letters in rows of sizes. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-type" tabindex="-1">Type</h2>
+          <p>Rub-down letters on a carrier sheet: one face in many sizes, hierarchy from weight and size alone.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Two type families only, one grotesk and one mono; hierarchy from weight and size." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-engraving" data-stop="engraving" data-district="type" data-medium="water" aria-labelledby="h-engraving" style="--d-ink:#1a1712;--d-wall:#ece6da;--d-accent:#8f3a19">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Engraving, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="An etching of Justice: a woman with a sword and a balance. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-engraving" tabindex="-1">Engraving</h2>
+          <p>In intaglio the tone is the lines: more and wider cuts make it darker, and there is no flat fill to lean on.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="In intaglio, tone comes from line density and width under a raking light, never from flat fill; the edge exists where cuts end." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-erosion" data-stop="erosion" data-district="type" data-medium="water" aria-labelledby="h-erosion" style="--d-ink:#1a1712;--d-wall:#ece6da;--d-accent:#8f3a19">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Erosion, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Erosion, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-erosion" tabindex="-1">Erosion</h2>
+          <p>Wear a letter evenly and its hairlines go first; wear it by its own stroke width and the thin parts survive.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Erosion should follow local stroke width so thin parts of a letter survive." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-stroke" data-stop="stroke" data-district="type" data-medium="water" aria-labelledby="h-stroke" style="--d-ink:#1a1712;--d-wall:#ece6da;--d-accent:#8f3a19">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Stroke, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the stroke bridge: path stroke, advection, viscosity, line hatching, type" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Stroke, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-stroke" tabindex="-1">Stroke</h2>
+          <p>One continuous mark carried by a hand or a flow: a brush spiral, a burin cut, a line of thick paint that holds its ridges.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="A yield-stress paint flows only where pushed past its yield value and holds ridges elsewhere." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-grain" data-stop="grain" data-district="type" data-medium="water" aria-labelledby="h-grain" style="--d-ink:#1a1712;--d-wall:#ece6da;--d-accent:#8f3a19">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Grain, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A broadside ballad: worn black-letter type and a woodcut on rag paper. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-grain" tabindex="-1">Grain</h2>
+          <p>Paper tooth, a worn sort, an uneven inking: the small noise of a medium is part of what it says.</p>
+          <nav class="branches" aria-label="Ways on from Grain">
+            <a href="place.html?n=letter">Letter</a>
+            <a href="place.html?n=scripture">Scripture</a>
+            <a href="floor.html#b-grain">Grain</a>
+            <a href="floor.html#b-stroke">Stroke</a>
+            <a href="index.html">The map</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Physical imperfection (ink spread, paper grain, registration error) makes motion feel alive." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="district" role="region" aria-label="Mosaic and tile district" data-district="mosaic">
+  <section class="stop" id="s-mosaic" data-stop="mosaic" data-district="mosaic" data-medium="water" aria-labelledby="h-mosaic" style="--d-ink:#151314;--d-wall:#e8e3d9;--d-accent:#c8322b">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Mosaic, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="NASA&#x27;s Blue Marble: the whole Earth, clouds over the western hemisphere. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-mosaic" tabindex="-1">Mosaic</h2>
+          <p>Tesserae laid in courses that follow the form: the flow of the tiles draws the shape before the colour does.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Tesserae are laid in courses (andamento) that follow the form&#x27;s contour, so the flow of the tiles describes the shape." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-halftone" data-stop="halftone" data-district="mosaic" data-medium="water" aria-labelledby="h-halftone" style="--d-ink:#151314;--d-wall:#e8e3d9;--d-accent:#c8322b">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Halftone, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Halftone, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-halftone" tabindex="-1">Halftone</h2>
+          <p>Tone from dots of one ink: bigger dots read darker, and a slipped second screen leaves the moirÃ© that says it was printed.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Physical imperfection (ink spread, paper grain, registration error) makes motion feel alive." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-tile" data-stop="tile" data-district="mosaic" data-medium="water" aria-labelledby="h-tile" style="--d-ink:#151314;--d-wall:#e8e3d9;--d-accent:#c8322b">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Tile, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the tile bridge: mosaic, tessellation, glyph cell, grid, reading order" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A worn clay floor of square tiles. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-tile" tabindex="-1">Tile</h2>
+          <p>The unit that carries one piece of the whole: a ribbon tile, a tessera, a glyph cell, one beat of a story.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Tesserae are laid in courses (andamento) that follow the form&#x27;s contour, so the flow of the tiles describes the shape." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-joint" data-stop="joint" data-district="mosaic" data-medium="water" aria-labelledby="h-joint" style="--d-ink:#151314;--d-wall:#e8e3d9;--d-accent:#c8322b">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Joint, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the joint bridge: decomposition measure, argument structure, tessellation, collage recut" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Joint, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-joint" tabindex="-1">Joint</h2>
+          <p>The cut between parts lets a whole be taken apart and rebuilt: a grout line, a seam, the turn between premises in an argument.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Break every reference into parts and recombine them into our own system; never copy piecewise." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-grid" data-stop="grid" data-district="mosaic" data-medium="water" aria-labelledby="h-grid" style="--d-ink:#151314;--d-wall:#e8e3d9;--d-accent:#c8322b">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Grid, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Grid, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-grid" tabindex="-1">Grid</h2>
+          <p>A grid holds every cell equal until one mark turns hot; then the eye goes there first.</p>
+          <nav class="branches" aria-label="Ways on from Grid">
+            <a href="place.html?n=labels">Labels</a>
+            <a href="place.html?n=lossy">Lossy</a>
+            <a href="place.html?n=static">Static</a>
+            <a href="floor.html#b-joint">Joint</a>
+            <a href="index.html">The map</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="One hot mark per view; colour is verdict-only in UI." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="district" role="region" aria-label="Sound district" data-district="sound">
+  <section class="stop" id="s-sound" data-stop="sound" data-district="sound" data-medium="thin" aria-labelledby="h-sound" style="--d-ink:#24151c;--d-wall:#efe5df;--d-accent:#a33a5a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Sound, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="An early Berliner gramophone with its horn. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-sound" tabindex="-1">Sound</h2>
+          <p>Berliner&#x27;s gramophone cut sound as a groove in a flat disc; a room&#x27;s echo is the sound still arriving after it stops.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The room is a dark 1 to 2 s space with one wide return; harmony low-passed under about 1 kHz with slow attacks; drums carry the only brightness." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-resonance" data-stop="resonance" data-district="sound" data-medium="thin" aria-labelledby="h-resonance" style="--d-ink:#24151c;--d-wall:#efe5df;--d-accent:#a33a5a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Resonance, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Resonance, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-resonance" tabindex="-1">Resonance</h2>
+          <p>Sand on a bowed plate gathers on the lines that stay still; each pitch draws its own figure.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="A shape sets its resonances, but the resonances do not always fix the shape (Kac 1966; Gordon, Webb and Wolpert 1992)." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-ducking" data-stop="ducking" data-district="sound" data-medium="thin" aria-labelledby="h-ducking" style="--d-ink:#24151c;--d-wall:#efe5df;--d-accent:#a33a5a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="The pad ducks, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The pad ducks, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-ducking" tabindex="-1">The pad ducks</h2>
+          <p>Two bars of the theme: the pad dips under every kick, so the two never cover each other.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The pad dips about 6 dB under each kick (5.9 dB on 92% of kicks in Stolie): separation by ducking." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-ring" data-stop="ring" data-district="sound" data-medium="thin" aria-labelledby="h-ring" style="--d-ink:#24151c;--d-wall:#efe5df;--d-accent:#a33a5a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Ring, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the ring bridge: ring orbit, wave form, resonance pitch, aperture eye" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Ring, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-ring" tabindex="-1">Ring</h2>
+          <p>A closed loop that spreads or holds: a ripple, a drum&#x27;s nodal circle, an iris, a halo.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Keep the third thin or absent; the minor colour comes from a fifth plus a flat sixth." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-cycle" data-stop="cycle" data-district="sound" data-medium="thin" aria-labelledby="h-cycle" style="--d-ink:#24151c;--d-wall:#efe5df;--d-accent:#a33a5a">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="The cycle, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The cycle, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-cycle" tabindex="-1">The cycle</h2>
+          <p>The theme turns on the flat sixth: the tonic, then the sixth over the same low note, again and again.</p>
+          <nav class="branches" aria-label="Ways on from The cycle">
+            <a href="place.html?n=listen">Listen</a>
+            <a href="place.html?n=groove">Groove</a>
+            <a href="place.html?n=lullaby">Lullaby</a>
+            <a href="place.html?n=anempathetic">Anempathetic</a>
+            <a href="floor.html#b-ring">Ring</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Make the flat sixth (bVI, or b6 over the pedal) the main colour move; lead cells repeat one colour tone (5, b6 or 9)." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="district" role="region" aria-label="Tools district" data-district="tools">
+  <section class="stop" id="s-ticker" data-stop="ticker" data-district="tools" data-medium="viscous" aria-labelledby="h-ticker" style="--d-ink:#16130f;--d-wall:#e8e3d9;--d-accent:#0a6b61">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Ticker, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="An engraving of Edison&#x27;s stock ticker under its glass dome. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-ticker" tabindex="-1">Ticker</h2>
+          <p>Edison&#x27;s ticker printed prices on paper tape as they arrived: data as a ribbon, read in order.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-telegraph" data-stop="telegraph" data-district="tools" data-medium="viscous" aria-labelledby="h-telegraph" style="--d-ink:#16130f;--d-wall:#e8e3d9;--d-accent:#0a6b61">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Telegraph, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A telegraph operator at a key. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-telegraph" tabindex="-1">Telegraph</h2>
+          <p>A key, a code and a wire: every message cut into marks and spaces before it could travel.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-grid-of-time" data-stop="grid-of-time" data-district="tools" data-medium="viscous" aria-labelledby="h-grid-of-time" style="--d-ink:#16130f;--d-wall:#e8e3d9;--d-accent:#0a6b61">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Grid of time, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the grid-of-time bridge: time as material, tessellation, held frames timing, reading order" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Grid of time, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-grid-of-time" tabindex="-1">Grid of time</h2>
+          <p>Time laid out as cells: a contact sheet, a timed study, a fixed half hour that makes the work finish.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Fix the time (a 30-minute lock) so the study gets finished; the time becomes part of the work (&#x27;Done in mm:ss&#x27;)." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-switchboard" data-stop="switchboard" data-district="tools" data-medium="viscous" aria-labelledby="h-switchboard" style="--d-ink:#16130f;--d-wall:#e8e3d9;--d-accent:#0a6b61">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Switchboard, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Ethel Wakefield at a Western Union switchboard. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-switchboard" tabindex="-1">Switchboard</h2>
+          <p>An operator joins any line to any other by hand; the tools here do that work for checks, words, sources and code.</p>
+          <nav class="branches" aria-label="Ways on from Switchboard">
+            <a href="place.html?n=flywheel">Flywheel</a>
+            <a href="place.html?n=articulate">Articulate</a>
+            <a href="place.html?n=daylight">Daylight</a>
+            <a href="place.html?n=buildlang">BuildLang</a>
+            <a href="place.html?n=raw">raw-native</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Break every reference into parts and recombine them into our own system; never copy piecewise." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="district" role="region" aria-label="Investigations district" data-district="investigations">
+  <section class="stop" id="s-redaction" data-stop="redaction" data-district="investigations" data-medium="viscous" aria-labelledby="h-redaction" style="--d-ink:#16130f;--d-wall:#e4e0d8;--d-accent:#4e4d85">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Redaction, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A typed government page with lines blacked out. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-redaction" tabindex="-1">Redaction</h2>
+          <p>A redacted page shows exactly where something was taken out; the black bar is a record too.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-argument" data-stop="argument" data-district="investigations" data-medium="viscous" aria-labelledby="h-argument" style="--d-ink:#16130f;--d-wall:#e4e0d8;--d-accent:#4e4d85">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Argument, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Argument, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-argument" tabindex="-1">Argument</h2>
+          <p>Split a claim into premises, presuppositions and a conclusion, and every &#x27;so&#x27; and &#x27;but&#x27; becomes a turn you can check.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Split an argument into premises, presuppositions and conclusions; read conjunctions as turns or continuations; mark the movements (chain, list, turn) so the whole can be rebuilt. The same decomposition the art studies use, applied to text." role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-thread" data-stop="thread" data-district="investigations" data-medium="viscous" aria-labelledby="h-thread" style="--d-ink:#16130f;--d-wall:#e4e0d8;--d-accent:#4e4d85">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Thread, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Stepping stones of the thread bridge: weaving stitching, network graph, line hatching, ribbon" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Thread, drawn as it works" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-thread" tabindex="-1">Thread</h2>
+          <p>A line that joins: a sewing thread, a network edge, a rope strand; here, every bridge in the world drawn between its places.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  <section class="stop" id="s-weighing" data-stop="weighing" data-district="investigations" data-medium="viscous" aria-labelledby="h-weighing" style="--d-ink:#16130f;--d-wall:#e4e0d8;--d-accent:#4e4d85">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="The weighing, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The weighing of the heart from the Papyrus of Hunefer. Uncovered tile by tile." role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-weighing" tabindex="-1">The weighing</h2>
+          <p>In the Papyrus of Hunefer the heart is weighed against a feather and a scribe writes the result down: a check, with a record.</p>
+          <nav class="branches" aria-label="Ways on from The weighing">
+            <a href="place.html?n=who-knew-first">Who knew first</a>
+            <a href="place.html?n=no-receipt-no-accept">No receipt, no accept</a>
+            <a href="place.html?n=witnessing-spine">The witnessing spine</a>
+            <a href="index.html">The map</a>
+            <a href="floor.html">Index</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="The stop&#x27;s own steps" role="img"></canvas>
+      </div>
+      <div class="stop-tools">
+        <canvas class="record" role="img" aria-label="Nothing carried here yet"></canvas>
+        <button type="button" class="listen" aria-pressed="false">Listen</button>
+        <button type="button" class="lift" aria-pressed="false">Lift</button>
+      </div>
+    </div>
+  </section>
+  </div>
 </main>
 </body>
 </html>

@@ -38,7 +38,9 @@ const CHARCOAL = (ca = true, mode = 'lenia') => ({
   look: t => { const g = 0.55 + 0.9 * hash(t.id) ** 2; return { paint: [0.06 * g, 0.052 * g, 0.045 * g, 0.95] }; },   // matte, warm black, granular
 });
 const IRON = { name: 'iron', look: t => ({ paint: mix(lin('#2a2726'), lin('#3a3633'), hash(t.id)).concat([1]) }) };
-const forgeLook = p => { const K = 780 + 1900 * p; return { paint: [0.05, 0.03, 0.02, 1], emit: blackbody(K) }; };
+const LAMBDA16 = [400, 420, 440, 460, 480, 500, 520, 540, 560, 580, 600, 620, 640, 660, 680, 700], planckN = (l, K) => { const x = l * 1e-9; return 1 / (x ** 5 * (Math.exp(1.4387769e-2 / (x * K)) - 1)); };
+// the glow as light: blackbody colour and, for a spectral tank, the blackbody spectrum itself (same brightness law)
+const forgeLook = p => { const K = 780 + 1900 * p, lum = Math.min(4, (K / 1500) ** 4) * 0.55; return { paint: [0.05, 0.03, 0.02, 1], emit: blackbody(K), emitS: LAMBDA16.map(l => lum * planckN(l, K) / planckN(560, K)) }; };
 // a leaf's layers: carotenoid yellow underneath; anthocyanin red over it, breaking down as p rises; a little brown
 // as the cells dry. Red -> orange -> yellow by reveal, lightness rising only slightly (reflected, not emitted)
 const leafLook = p => { const car = lin('#e2b23a'), ant = lin('#a8231d'), a = Math.max(0, 1 - p * 1.15), base = mix(car, lin('#c98a2a'), 0.25 * (1 - p)); return { paint: mix(base, ant, a).concat([0.96]) }; };

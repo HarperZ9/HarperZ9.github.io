@@ -5,7 +5,7 @@
 // once (a cut), and never two levels blended (a crossfade).
 //   stop.animate = { param: 'lines', from: 4, to: 8, timing: { curves: [{ curve: 'heartbeat', weight: 1, params }] } }
 //   or timing: a creation-engine timing layer (its state.progress is read as it is)
-import { CURVES } from '../../../2026-10-26-creation-engine/lib/gen/timing.mjs';
+import { CURVES } from '../../../creation/lib/gen/timing.mjs';
 
 export const SPREAD = 0.9;  // how far apart in level two places on the patch field can be (in levels)
 

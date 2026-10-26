@@ -1,5 +1,5 @@
 {
- "importedAt": "2026-10-26T03:48:03.473Z",
+ "importedAt": "2026-10-26T05:21:30.649Z",
  "source": "mission-control workspace (local, not under version control)",
  "folders": {
   "2026-10-23-universe": "universe",
@@ -28,7 +28,8 @@
   "2026-10-24-feed-test-28": "feed-28",
   "2026-10-24-feed-test-30": "feed-30",
   "2026-10-24-feed-test-32": "feed-32",
-  "2026-10-24-homage": "homage"
+  "2026-10-24-homage": "homage",
+  "2026-10-26-creation-engine": "creation"
  },
  "held": {
   "2026-10-23-phase-design/emet.html": "Hebrew needs a reader before publication (CONSENSUS Q11)",
@@ -57,9 +58,6 @@
   "2026-10-23-ui-direction/directions/c-exhibit/%23n": "not found",
   "2026-10-23-ui-direction/shell/%23f": "not found",
   "2026-10-23-ui-direction/shell/%23n": "not found",
-  "2026-10-26-creation-engine/lib/core/gen.mjs": "outside the published folders",
-  "2026-10-26-creation-engine/lib/core/layer.mjs": "outside the published folders",
-  "2026-10-26-creation-engine/lib/gen/timing.mjs": "outside the published folders",
   "livestill.js": "outside the published folders",
   "loop.js": "outside the published folders"
  },
@@ -4156,7 +4154,7 @@
    "path": "world/exhibit/index.html",
    "source": "2026-10-23-phase-design/index.html",
    "folder": "2026-10-23-phase-design",
-   "bytes": 13384,
+   "bytes": 13530,
    "sourceSha256": "e701b4729a5ba18f9510bfcd05121dddbd9e9bb516afed87451f20acff108784"
   },
   {
@@ -5962,22 +5960,22 @@
    "path": "world/superframe/lib/medium/additives.mjs",
    "source": "2026-10-23-superframe/lib/medium/additives.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 20741,
-   "sourceSha256": "35c98d80cb6ef7f730df1e21f11728c7e34e414eba25639b4f549c577865d47e"
+   "bytes": 21870,
+   "sourceSha256": "d8db30f9290b475a211f1d0f9bbbc7e375d5d772214528b0a5f60f74b657d077"
   },
   {
    "path": "world/superframe/lib/medium/artscenes.mjs",
    "source": "2026-10-23-superframe/lib/medium/artscenes.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 5063,
-   "sourceSha256": "df2e6ab5dae7a85de535d5f13b0ba2947ee4028ec6c41c11717a74f863bdd501"
+   "bytes": 10623,
+   "sourceSha256": "9cd39e232dad9f5ff1ff0583dbe8047dbf48d6bbf8c3db6a288333447c43ed0e"
   },
   {
    "path": "world/superframe/lib/medium/bed.mjs",
    "source": "2026-10-23-superframe/lib/medium/bed.mjs",
    "folder": "2026-10-23-superframe",
    "bytes": 2439,
-   "sourceSha256": "de07b5e6e9af8f9966ae171199c9e86a0bdb7b2cbfb7666fd1ec5f99de5a23d3"
+   "sourceSha256": "d207977543806f8cd1a1a65c28b847e126d85d4a58ada22a5c0b2979aaf6bbc4"
   },
   {
    "path": "world/superframe/lib/medium/finebuf.mjs",
@@ -5985,6 +5983,34 @@
    "folder": "2026-10-23-superframe",
    "bytes": 2299,
    "sourceSha256": "4c565122ec56a2700fee8d2c95007aca5a27c04173e5918a29379627f30b23e7"
+  },
+  {
+   "path": "world/superframe/lib/medium/gpu/display.js",
+   "source": "2026-10-23-superframe/lib/medium/gpu/display.js",
+   "folder": "2026-10-23-superframe",
+   "bytes": 11242,
+   "sourceSha256": "df10527112479c54c4cbbdef2c39ef564d7ac336a037fd4242167262d8493046"
+  },
+  {
+   "path": "world/superframe/lib/medium/gpu/medium.js",
+   "source": "2026-10-23-superframe/lib/medium/gpu/medium.js",
+   "folder": "2026-10-23-superframe",
+   "bytes": 25676,
+   "sourceSha256": "47df264128b69565cd3ceb10b08c86853efe3c137481c49f308f5609cf6e444d"
+  },
+  {
+   "path": "world/superframe/lib/medium/gpu/pigment.js",
+   "source": "2026-10-23-superframe/lib/medium/gpu/pigment.js",
+   "folder": "2026-10-23-superframe",
+   "bytes": 4997,
+   "sourceSha256": "1130a1dd843eef601f1e2981bc27b782191bad12ff74790e0223920f8b0bd363"
+  },
+  {
+   "path": "world/superframe/lib/medium/gpu/shaders.js",
+   "source": "2026-10-23-superframe/lib/medium/gpu/shaders.js",
+   "folder": "2026-10-23-superframe",
+   "bytes": 5942,
+   "sourceSha256": "00c44c49c8b97340aa6474df21e9defd09b0570d44cef88e285dde3cb8b8c797"
   },
   {
    "path": "world/superframe/lib/medium/grid.mjs",
@@ -5997,22 +6023,22 @@
    "path": "world/superframe/lib/medium/index.mjs",
    "source": "2026-10-23-superframe/lib/medium/index.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 1210,
-   "sourceSha256": "19f58baac8013814b132c48f3f2f142358c15790a7d8625d25927a5eec70b8d4"
+   "bytes": 1228,
+   "sourceSha256": "dbe707dcabb1a7f0dab58525d0f87586ca69de560cf176fb622284c55066a55b"
   },
   {
    "path": "world/superframe/lib/medium/inkbloom.mjs",
    "source": "2026-10-23-superframe/lib/medium/inkbloom.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 5795,
-   "sourceSha256": "87f6e07bac3ccc281f5a03adbc9cf951ec71c356e4325ed6851625c72268cb06"
+   "bytes": 6044,
+   "sourceSha256": "b7e2270dd5403ce9de0ddc03647e49816c1592c3f1d4bc439c735705b3512b81"
   },
   {
    "path": "world/superframe/lib/medium/loops.mjs",
    "source": "2026-10-23-superframe/lib/medium/loops.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 10247,
-   "sourceSha256": "19f9966c7d5a3db25825ca6f657b50f7fbe8a175ec76bf9dc47c0d0941e509dd"
+   "bytes": 10796,
+   "sourceSha256": "bc180c3affc17bd4c54afeba7d91c39a3742f2a9a5a4e58b622ed8c5438ffa4c"
   },
   {
    "path": "world/superframe/lib/medium/medium.mjs",
@@ -6060,15 +6086,15 @@
    "path": "world/superframe/lib/medium/render.mjs",
    "source": "2026-10-23-superframe/lib/medium/render.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 13149,
-   "sourceSha256": "372a64e18caa53fa9bbab6291582b1d9d67151cd3deb74ec9edd0622355f6ec0"
+   "bytes": 14613,
+   "sourceSha256": "bfdc5a89ab437f44f8b31ed42502f4af83a55b3fb678aed47cab1f9db94c19d2"
   },
   {
    "path": "world/superframe/lib/medium/scenes.mjs",
    "source": "2026-10-23-superframe/lib/medium/scenes.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 3302,
-   "sourceSha256": "f6e00cac70504bd8c22ee1cb1b20e3f19da0fd3fd7c1e6b3b3826454cee534a6"
+   "bytes": 3282,
+   "sourceSha256": "ca6f47dd067f8e97ee6df33504a0de17bfebddf3f3c2d8ecb75e68bf2d642af9"
   },
   {
    "path": "world/superframe/lib/medium/sheets.mjs",
@@ -6076,6 +6102,13 @@
    "folder": "2026-10-23-superframe",
    "bytes": 2581,
    "sourceSha256": "692280e1399f43d2dbf3c04f4e172856bfc0c6766a6a8abafcca56a47c9173f4"
+  },
+  {
+   "path": "world/superframe/lib/medium/specoptics.mjs",
+   "source": "2026-10-23-superframe/lib/medium/specoptics.mjs",
+   "folder": "2026-10-23-superframe",
+   "bytes": 4410,
+   "sourceSha256": "45e5d85590a14f4fc7e92c52b3ae41516563184a8794ee281e0080574ac99f9d"
   },
   {
    "path": "world/superframe/lib/medium/spectral.mjs",
@@ -6095,8 +6128,8 @@
    "path": "world/superframe/lib/medium/ticks.mjs",
    "source": "2026-10-23-superframe/lib/medium/ticks.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 9073,
-   "sourceSha256": "2d741242a6b922b4553510f1fba7473831c221d718441958f5d4b0aed5c84f6a"
+   "bytes": 12266,
+   "sourceSha256": "766cbe2a31d8f8d96ba358e2691c9cb95d5e0de6897f5e90b27fd687830f179b"
   },
   {
    "path": "world/superframe/lib/medium/timing.mjs",
@@ -6104,6 +6137,13 @@
    "folder": "2026-10-23-superframe",
    "bytes": 1909,
    "sourceSha256": "77ef2906fb54c28732f4a6af3e7bd486da7310536226abe1014146c3527a2776"
+  },
+  {
+   "path": "world/superframe/lib/medium/topview.mjs",
+   "source": "2026-10-23-superframe/lib/medium/topview.mjs",
+   "folder": "2026-10-23-superframe",
+   "bytes": 353,
+   "sourceSha256": "68cbb8fa875f502ee3ca5a8a16b7132299ff6a076eb0f6dbe27de8fe2d8e2121"
   },
   {
    "path": "world/superframe/lib/medium/view.mjs",
@@ -6879,7 +6919,7 @@
    "path": "world/typeengine/lib/living/axes.mjs",
    "source": "2026-10-23-typeengine/lib/living/axes.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 3128,
+   "bytes": 3110,
    "sourceSha256": "066443de12e049f0446a4da2c466f9f404aa284b585a276810eec06709020b0b"
   },
   {
@@ -6900,7 +6940,7 @@
    "path": "world/typeengine/lib/living/gen.mjs",
    "source": "2026-10-23-typeengine/lib/living/gen.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 3795,
+   "bytes": 3741,
    "sourceSha256": "4027dc66624761cac77030a65646e097a837038309ede4c206cf824af30d5d57"
   },
   {
@@ -6914,8 +6954,8 @@
    "path": "world/typeengine/lib/living/index.mjs",
    "source": "2026-10-23-typeengine/lib/living/index.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 10146,
-   "sourceSha256": "130f48a5c2d9a55b2d3e8dd28ae5385a30fbb3bc9ea77f29c2b290aaf6b38ea1"
+   "bytes": 10263,
+   "sourceSha256": "35b49e243b8dc8a38fc9a14bb4a1b7cc9829ee8127266d894db5a2e11c3d8a4a"
   },
   {
    "path": "world/typeengine/lib/living/night.mjs",
@@ -7061,8 +7101,8 @@
    "path": "world/typeengine/living/index.html",
    "source": "2026-10-23-typeengine/living/index.html",
    "folder": "2026-10-23-typeengine",
-   "bytes": 2032,
-   "sourceSha256": "4f541662b795ebcc730f47f749ef6eac1ae5c0b72a2178b5c5abcef4e20fbfd9"
+   "bytes": 2156,
+   "sourceSha256": "fe31831474d09464aa451126e7577ccd766f4605f3ca18595e3497bad309c826"
   },
   {
    "path": "world/typeengine/living/living.css",
@@ -7075,8 +7115,8 @@
    "path": "world/typeengine/living/living.mjs",
    "source": "2026-10-23-typeengine/living/living.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 5681,
-   "sourceSha256": "975d56c0564ec5c8f67907fd0db087c316025b383bb7ab607d64c39a83ae39e2"
+   "bytes": 7466,
+   "sourceSha256": "58f9d8b053c9203a2ab0a990db4d4685feeeefbb3bf09fcf891c148ad5bfbe42"
   },
   {
    "path": "world/typeengine/living/passages.mjs",
@@ -7166,15 +7206,15 @@
    "path": "world/typeengine/web/living-gl.mjs",
    "source": "2026-10-23-typeengine/web/living-gl.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 8069,
-   "sourceSha256": "df70d0a15a4fd0510286f4591d1c6ee29404698ddae9fb560a0e6d58fc8e0a02"
+   "bytes": 8378,
+   "sourceSha256": "6733622cf4624426c83a7834e097d7ce5b1b6c5e7ec32454926188287bbfe6c5"
   },
   {
    "path": "world/typeengine/web/living-worker.mjs",
    "source": "2026-10-23-typeengine/web/living-worker.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 4296,
-   "sourceSha256": "5b8f8be49d9ac95e35ac90030f2f28e22320b1c8cf6c17d57c1398bc254bff7b"
+   "bytes": 4347,
+   "sourceSha256": "6762e90caa8f20f08d20f47e991416a401413336bc3ce62f75574938df9bfe8d"
   },
   {
    "path": "world/typeengine/web/shaders.mjs",
@@ -7765,11 +7805,18 @@
    "sourceSha256": "2e1bcaa82d6960ccd6b714d17b10d97db957990f40b9ee163cab0bb4333faf73"
   },
   {
+   "path": "world/ui/directions/common/flow/engine.js",
+   "source": "2026-10-23-ui-direction/directions/common/flow/engine.js",
+   "folder": "2026-10-23-ui-direction",
+   "bytes": 810,
+   "sourceSha256": "fd3ff69853c23c888892d0025b3195d8610cd3154274ba71248133cfa52f540e"
+  },
+  {
    "path": "world/ui/directions/common/flow/ground.js",
    "source": "2026-10-23-ui-direction/directions/common/flow/ground.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 10270,
-   "sourceSha256": "f6a01ab075d342e2f420e7aab3e44e1cad4df0f10a910100ad8a49b7269d69de"
+   "bytes": 10145,
+   "sourceSha256": "6012f9cd19985687d10df608a05d9c1089781f3a3d320a7e70c711082c83067c"
   },
   {
    "path": "world/ui/directions/common/flow/medium.js",
@@ -8181,8 +8228,8 @@
    "path": "world/ui/shell/organic/data/elements.json",
    "source": "2026-10-23-ui-direction/shell/organic/data/elements.json",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 179778,
-   "sourceSha256": "5f60bdcc5eac2bdcdec7096d9981cab6cc0dc47d3561c0af6ebf7b9aaef40cf8"
+   "bytes": 679481,
+   "sourceSha256": "b97a9b371f643f5a501ec17e9cd8cd2d737a8dbcb2f685d826b9e384ec07a9b7"
   },
   {
    "path": "world/ui/shell/organic/data/swatches.json",
@@ -8202,8 +8249,8 @@
    "path": "world/ui/shell/organic/elements.js",
    "source": "2026-10-23-ui-direction/shell/organic/elements.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 6415,
-   "sourceSha256": "9be36df579c6b6eb32d2a71b6fa10a5f7926e9ebd02c1726812a3d3af8179d5f"
+   "bytes": 9691,
+   "sourceSha256": "e9b0a5efde08ec561568c52870a7a8588a2de22b4a8803131f19eabc9e6a7071"
   },
   {
    "path": "world/ui/shell/organic/organic-gen.js",
@@ -8230,8 +8277,8 @@
    "path": "world/ui/shell/organic/parts.css",
    "source": "2026-10-23-ui-direction/shell/organic/parts.css",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 7758,
-   "sourceSha256": "52a5eca995ec967074a02803f2af66b4a50afbf501abe79dd2e19c6381a1628d"
+   "bytes": 9814,
+   "sourceSha256": "a9f9a98ead96a8d9b3ff6fe27edb7c98fdd8f0a1cbbf953912f2daa8857e377c"
   },
   {
    "path": "world/ui/shell/organic/parts.html",
@@ -8314,8 +8361,8 @@
    "path": "world/universe/lib/carry.js",
    "source": "2026-10-23-universe/lib/carry.js",
    "folder": "2026-10-23-universe",
-   "bytes": 8141,
-   "sourceSha256": "05096e3d5e075ccac45880ec22f9404dba9d93b82505dae029c19c0d2f3bf351"
+   "bytes": 9140,
+   "sourceSha256": "ec82af51e8b03616cabbef07d2462e171f9ac11b11302f0e871d8f1b10b8939c"
   },
   {
    "path": "world/universe/lib/data.js",
@@ -8325,11 +8372,25 @@
    "sourceSha256": "b038c7e1c9c4eff24f2d826b919abf3df2e452a2ceb08d57be2c106922912dd2"
   },
   {
+   "path": "world/universe/lib/districts.mjs",
+   "source": "2026-10-23-universe/lib/districts.mjs",
+   "folder": "2026-10-23-universe",
+   "bytes": 16594,
+   "sourceSha256": "523e406d7ac7299ab5e33c9b3a065f0b1074bc9f97fca243195a89363e917052"
+  },
+  {
    "path": "world/universe/lib/ground-draw.js",
    "source": "2026-10-23-universe/lib/ground-draw.js",
    "folder": "2026-10-23-universe",
    "bytes": 6287,
    "sourceSha256": "1e7126fda8e2cb068c2ab36def54b9d5a9d94e3230ac76001a73b50027ce1c71"
+  },
+  {
+   "path": "world/universe/lib/ground-start.js",
+   "source": "2026-10-23-universe/lib/ground-start.js",
+   "folder": "2026-10-23-universe",
+   "bytes": 3167,
+   "sourceSha256": "b92d656fa043058a8170434e82958d6f3fc915073045b23ec4f808ad02da84af"
   },
   {
    "path": "world/universe/lib/ground-worker.js",
@@ -8344,6 +8405,27 @@
    "folder": "2026-10-23-universe",
    "bytes": 4157,
    "sourceSha256": "0b39149f4c102d21a05bac888810d23f114be94ce6f972b4771560eb49906ce9"
+  },
+  {
+   "path": "world/universe/lib/laws-draw.js",
+   "source": "2026-10-23-universe/lib/laws-draw.js",
+   "folder": "2026-10-23-universe",
+   "bytes": 11838,
+   "sourceSha256": "42cf75e03d02ec10accba9ec9d57bbc7515b1f2db6e42f319cf9039118c9ad6f"
+  },
+  {
+   "path": "world/universe/lib/laws-draw2.js",
+   "source": "2026-10-23-universe/lib/laws-draw2.js",
+   "folder": "2026-10-23-universe",
+   "bytes": 7502,
+   "sourceSha256": "d3131865f26341cef212616d2e485a8fed65bbe2a49988baac68dbfeb278595c"
+  },
+  {
+   "path": "world/universe/lib/listen.js",
+   "source": "2026-10-23-universe/lib/listen.js",
+   "folder": "2026-10-23-universe",
+   "bytes": 3019,
+   "sourceSha256": "4566a16b8fa5672f43c333720ce0b28b3ec77ee05b8210fcd1885e820979b318"
   },
   {
    "path": "world/universe/lib/materials.js",
@@ -8384,8 +8466,8 @@
    "path": "world/universe/lib/road.mjs",
    "source": "2026-10-23-universe/lib/road.mjs",
    "folder": "2026-10-23-universe",
-   "bytes": 5756,
-   "sourceSha256": "0e8117c205f3bd5f2bc123de9ad3a145b7a75d0ab48e883eb5bf82940ce68abe"
+   "bytes": 3312,
+   "sourceSha256": "1b0421f346b3f1c6d6989a37dd36320a19e0e41e64d4d7d4d4318de94fbd7c46"
   },
   {
    "path": "world/universe/lib/room.js",
@@ -8419,8 +8501,8 @@
    "path": "world/universe/lib/stop.mjs",
    "source": "2026-10-23-universe/lib/stop.mjs",
    "folder": "2026-10-23-universe",
-   "bytes": 6019,
-   "sourceSha256": "d81a3c0acf50801406b82384da7307824ec06c924b71cb46ab480ef25cb809ec"
+   "bytes": 7478,
+   "sourceSha256": "c67bde3c7d5da1af142d7e2c1070960a3181b32d0f640708519456bffe5d3018"
   },
   {
    "path": "world/universe/lib/strata.js",
@@ -8433,8 +8515,8 @@
    "path": "world/universe/lib/ticks.mjs",
    "source": "2026-10-23-universe/lib/ticks.mjs",
    "folder": "2026-10-23-universe",
-   "bytes": 5487,
-   "sourceSha256": "84f0fd8668dfed77ff35d1e431023e0b35feadb1a54f358b7e42dfef5476b956"
+   "bytes": 9893,
+   "sourceSha256": "92b44df8c8f72525aa099e2714ab2ef39ec6d7ef76ed5af7c8e68bac53ae7abc"
   },
   {
    "path": "world/universe/lib/walk.js",
@@ -8468,8 +8550,8 @@
    "path": "world/universe/proto/floor.html",
    "source": "2026-10-23-universe/proto/floor.html",
    "folder": "2026-10-23-universe",
-   "bytes": 57068,
-   "sourceSha256": "d268adaed62777ea9b0e888b2c32f4ad7a659b082d0c001d9b10268f349e5856"
+   "bytes": 62654,
+   "sourceSha256": "b39e6f434627ee3a8be54b2a070bcf868c0f1527f7bc065a644f306f87323cba"
   },
   {
    "path": "world/universe/proto/here.js",
@@ -8493,25 +8575,32 @@
    "sourceSha256": "0da6c56d3b0a6c6ea5c72e01dad7d44f02a293558dad50f8f099d55e643d7659"
   },
   {
+   "path": "world/universe/proto/path-stops.js",
+   "source": "2026-10-23-universe/proto/path-stops.js",
+   "folder": "2026-10-23-universe",
+   "bytes": 9541,
+   "sourceSha256": "178e10c55b56f404ad0bd7078b2a876679e8826052af448090cc725fe2a48905"
+  },
+  {
    "path": "world/universe/proto/path.css",
    "source": "2026-10-23-universe/proto/path.css",
    "folder": "2026-10-23-universe",
-   "bytes": 4522,
-   "sourceSha256": "ae7fa23f8f506478bbf7b9cf1a52e9916c156faa36c83c26dc2fe4be5ca55359"
+   "bytes": 4871,
+   "sourceSha256": "2a7baa44dc3510a136d548c5c3e161b6497456a24317fda95df7403368bc5eea"
   },
   {
    "path": "world/universe/proto/path.html",
    "source": "2026-10-23-universe/proto/path.html",
    "folder": "2026-10-23-universe",
-   "bytes": 10049,
-   "sourceSha256": "da3e51cb8b7a5119443df190d30aa653992fea8ff05c50996d651674edfc3c20"
+   "bytes": 52260,
+   "sourceSha256": "e84ed54a39f65fbd4e0f9611c8c0faa032ad0c0605ee7e5d60ae8fd625651931"
   },
   {
    "path": "world/universe/proto/path.js",
    "source": "2026-10-23-universe/proto/path.js",
    "folder": "2026-10-23-universe",
-   "bytes": 16637,
-   "sourceSha256": "8fc027432073ad3408ab96e65a035984bcf96124a40a33709a2d51929ebdcede"
+   "bytes": 12733,
+   "sourceSha256": "5af453aac4a8e9d5148d8addb10294ce6a1613e98d36c07f9d2beb4a1526e9cf"
   },
   {
    "path": "world/universe/proto/place.html",
@@ -10397,21 +10486,63 @@
    "sourceSha256": "4add35ef68a32d797cf1d33739869d22de855ba8a3862fc6c29ce26c8a34e781"
   },
   {
+   "path": "world/library/lib/rules_bridges.json",
+   "source": "2026-10-25-reference-library/lib/rules_bridges.json",
+   "folder": "2026-10-25-reference-library",
+   "bytes": 30561,
+   "sourceSha256": "9556dc3115731851b18bd150e1ecbf1cddab827a7d98d4cb88528c7eb29bbb0b"
+  },
+  {
+   "path": "world/library/measures/language-laws.json",
+   "source": "2026-10-25-reference-library/measures/language-laws.json",
+   "folder": "2026-10-25-reference-library",
+   "bytes": 992,
+   "sourceSha256": "4a96b20588512947196bea1f2d50cdaa78ab485438e4442151451c14f7a2e8fb"
+  },
+  {
    "path": "world/library/palettes.json",
    "source": "2026-10-25-reference-library/palettes.json",
    "folder": "2026-10-25-reference-library",
-   "bytes": 567493,
-   "sourceSha256": "96c3c2f375f6a84aeb829b970d42cf954a18e78c69f14c4f7d2c9933f3c6cc1d"
+   "bytes": 1047504,
+   "sourceSha256": "f25e48eb8f4ec255725a9042f99d9f6177f8e924448c29a178e139e924a62ef8"
   },
   {
    "path": "world/library/world.json",
    "source": "2026-10-25-reference-library/world.json",
    "folder": "2026-10-25-reference-library",
-   "bytes": 405847,
-   "sourceSha256": "46feca86f70e9efb5d7b15e93bf5e2e23207b9370f4ed24ee94b3b540ee7d2e1"
+   "bytes": 3695805,
+   "sourceSha256": "6284d920d51a8f7355b22640008ee35892b34ee75e4c66be2620a505cdb67aeb"
+  },
+  {
+   "path": "world/creation/lib/core/gen.mjs",
+   "source": "2026-10-26-creation-engine/lib/core/gen.mjs",
+   "folder": "2026-10-26-creation-engine",
+   "bytes": 3736,
+   "sourceSha256": "e3659d052c02a9ea76edc8d31bfd03028e687b90ab2036efaf7d0323aefb786a"
+  },
+  {
+   "path": "world/creation/lib/core/layer.mjs",
+   "source": "2026-10-26-creation-engine/lib/core/layer.mjs",
+   "folder": "2026-10-26-creation-engine",
+   "bytes": 7384,
+   "sourceSha256": "fe1c74ea1579e12b44c4d171a20953f852f6b65b2be42a500db8407d46ccbbaa"
+  },
+  {
+   "path": "world/creation/lib/core/ticks.mjs",
+   "source": "2026-10-26-creation-engine/lib/core/ticks.mjs",
+   "folder": "2026-10-26-creation-engine",
+   "bytes": 11175,
+   "sourceSha256": "e9db2b104a14682d77bc32f93bb8ea0babb1c08014c0ba4dbebc2857be1c81c8"
+  },
+  {
+   "path": "world/creation/lib/gen/timing.mjs",
+   "source": "2026-10-26-creation-engine/lib/gen/timing.mjs",
+   "folder": "2026-10-26-creation-engine",
+   "bytes": 4627,
+   "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-7025cc6515",
+ "assetRevision": "world-a891bf139a",
  "assetRevisionScope": [
   "world/",
   "studies/",

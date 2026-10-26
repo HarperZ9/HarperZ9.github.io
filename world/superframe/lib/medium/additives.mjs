@@ -63,7 +63,10 @@ export const KINDS = {
       prepareBloom(det, absorb(e.props.halo ?? e.props.color ?? '#5d7fb8'), m.details.length + 7);
       m.details.push(det);
     },
-    apply(m, e, _, dt) { const a = absorb(e.props.color ?? '#1d2a3a'), L = cells(m, e.where), r = rate(e, dt); for (let c = 0; c < 3; c++) pour(m.pig[c], L, a[c] * r); if (m.pigS) { const A = specOf(e); for (let b = 0; b < 16; b++) pour(m.pigS[b], L, A[b] * r); } setSpread(m, e, L, r); },
+    apply(m, e, _, dt) { const a = absorb(e.props.color ?? '#1d2a3a'), L = cells(m, e.where), r = rate(e, dt); for (let c = 0; c < 3; c++) pour(m.pig[c], L, a[c] * r); if (m.pigS) { const A = specOf(e); for (let b = 0; b < 16; b++) pour(m.pigS[b], L, A[b] * r); }
+      // props.grain: part of the ink is particulate and settles, so the bed takes the ink's colour in strata
+      if (e.props.grain) { for (let c = 0; c < 3; c++) pour(m.sed[c], L, a[c] * r * e.props.grain); if (m.sedS) { const A = specOf(e); for (let b = 0; b < 16; b++) pour(m.sedS[b], L, A[b] * r * e.props.grain); } }
+      setSpread(m, e, L, r); },
   },
   text: {
     where: region,
@@ -143,6 +146,9 @@ export const KINDS = {
   // a ripple: an impulse on the surface (amount = height in cells, props.r = width as a fraction of the tank), shared
   // with the UI's top-down view so both views know the kind
   ripple: { where: region, apply(m, e) { const cx = (e.where.x ?? 0.5) * m.nx, r = Math.max(1, (e.props.r ?? e.where.r ?? 0.03) * m.nx); for (let i = 0; i < m.nx; i++) { const d = (i - cx) / r; m.hv[i] -= e.amount * Math.exp(-d * d); } } },
+  // strata: a bed already laid by earlier settling, set once: props.layers = [{ color, t (cells), wave }], bottom up;
+  // each stratum's thickness swells along the floor (a seeded wave), and its colour is kept as RGB and as a spectrum
+  strata: { apply(m, e) { const ph = m.rng() * 6.283; for (const [n, S] of (e.props.layers ?? []).entries()) { const a = absorb(S.color), A = m.pigS ? absorbanceOf(S.color) : null; for (let i = 0; i < m.nx; i++) { const t = S.t * (1 + (S.wave ?? 0.35) * Math.sin(i / m.nx * 6.283 * (1.2 + n * 0.37) + ph + n)), k = t / 6 / (a[0] + a[1] + a[2]); m.layers[i].push({ t, rgb: a.map(v => (3 * v) / (a[0] + a[1] + a[2])), spec: A ? (() => { const s3 = A.reduce((x, v) => x + v, 0) / 16; return A.map(v => v / s3); })() : null }); m.bed[i] += t; void k; } } } },
   // a current: water in the region is drawn toward a speed and heading (props.angle, radians, 0 = rightward),
   // as a channel, a jet or a platform's push would draw it; amount is the speed in cells per frame
   current: { where: region, apply(m, e, _, dt) { const a = e.props.angle ?? 0, tu = e.amount * Math.cos(a), tv = e.amount * Math.sin(a), k = Math.min(1, dt * (e.props.grip ?? 3)); for (const [c, f] of cells(m, e.where)) { if (!m.phase[c] || m.solid[c]) continue; m.u[c] += (tu - m.u[c]) * k * f; m.v[c] += (tv - m.v[c]) * k * f; } } },

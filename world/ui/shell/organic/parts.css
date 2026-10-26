@@ -92,3 +92,28 @@ html.plain .el-canvas{display:none}
 /* the table is rendered from data after load: hold its room so nothing below it moves (CLS) */
 #elements:empty{min-height:150vh}
 #swatches:empty{min-height:100vh}
+
+/* element cells under their ground's vellum; it lifts on hover and focus */
+.el::after{content:"";position:absolute;inset:0;background:var(--wall);opacity:calc(var(--veil,0) * .3);pointer-events:none;transition:opacity .45s cubic-bezier(.15,.7,.25,1)}
+.el:hover::after,.el:focus-visible::after,.el.on::after{opacity:0}
+@media (prefers-reduced-motion:reduce){.el::after{transition:none}}
+.el-ground{margin:0;display:flex;gap:8px;align-items:center;font:600 var(--fs-2)/1.3 var(--face-text);text-transform:lowercase}
+.el-kind{font-weight:400;color:var(--soft)}
+.g-dot{width:11px;height:11px;border:1.5px solid var(--ink);flex:none}.g-dot.g-grounded{background:var(--ink)}.g-dot.g-partial{background:linear-gradient(transparent 50%,var(--ink) 50%)}.g-dot.g-thought{border-style:dashed}
+.el-tabs{display:flex;flex-wrap:wrap;gap:4px}
+.el-tab{font:600 var(--fs-2)/1 var(--face-text);color:var(--ink);background:none;border:1px solid var(--line);padding:9px 11px;min-height:40px;cursor:pointer;text-transform:capitalize}
+.el-tab[aria-selected="true"]{border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--drift)}
+.el-pane{font-size:var(--fs-2);line-height:1.5}
+.el-pane p{margin:0 0 8px}
+.el-laws{margin:0;padding-left:20px;display:grid;gap:8px}
+.el-laws b{text-transform:capitalize}
+.el-w{display:inline-block;margin-left:6px;font-family:var(--face-utility,"Conso",monospace);font-size:var(--fs-1)}
+.el-w.u{color:var(--soft);border:1px dashed var(--soft);padding:0 4px}
+.el-w.m{border:1px solid var(--ink);padding:0 4px}
+.el-rule{display:block;color:var(--soft);font-size:var(--fs-1);line-height:1.45}
+.el-more{color:var(--soft);font-size:var(--fs-1)}
+.el-props{border-collapse:collapse;width:100%;font-size:var(--fs-1)}
+.el-props th,.el-props td{text-align:left;padding:4px 6px 4px 0;border-bottom:1px solid var(--line);font-weight:400;vertical-align:top}
+.el-props thead th{color:var(--soft)}
+.el-props td{font-family:var(--face-utility,"Conso",monospace);white-space:nowrap}
+.el-card{max-height:calc(100vh - 380px);overflow:auto}

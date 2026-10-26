@@ -61,8 +61,10 @@ export function inkAt(m, gx, gy) {
       if (!d.B1) { for (let c = 0; c < 3; c++) a[c] += d.a[c] * core * d.amount * w; if (aS && d.aS) for (let b = 0; b < 16; b++) aS[b] += d.aS[b] * core * d.amount * w; continue; }
       const g = 1 - Math.exp(-age / 1.4), soft = bilerp(d.B1, MW, MH, sx, sy), wide = bilerp(d.B2, MW, MH, sx, sy) * (1 - g) + bilerp(d.B3, MW, MH, sx, sy) * g, fib = bilerp(d.N, MW, MH, sx, sy);
       // the core softens toward its feathered edge as it ages; the fibrous edge and the pale halo grow outward
-      const coreV = core * (1 - 0.45 * g) + soft * 0.45 * g, edge = clamp(soft - core, 0, 1) * (0.4 + 1.4 * fib) * g;
-      const halo = wide * (0.3 + 1.3 * fib) * g * (1 - 0.8 * core);
+      // the bloom fades out toward the edges of the word's mask box, so its edge never shows as a straight line
+      const win = clamp(Math.min(Math.min(sx, MW - 1 - sx) / (0.1 * MW), Math.min(sy, MH - 1 - sy) / (0.18 * MH)), 0, 1);
+      const coreV = core * (1 - 0.45 * g) + soft * 0.45 * g, edge = clamp(soft - core, 0, 1) * (0.4 + 1.4 * fib) * g * win;
+      const halo = wide * (0.3 + 1.3 * fib) * g * (1 - 0.8 * core) * win;
       for (let c = 0; c < 3; c++) a[c] += d.amount * w * (d.a[c] * (1.25 * coreV + 0.8 * edge) + d.halo[c] * 1.4 * halo);
       if (aS && d.aS) for (let b = 0; b < 16; b++) aS[b] += d.amount * w * (d.aS[b] * (1.25 * coreV + 0.8 * edge) + (d.haloS ?? d.aS)[b] * 1.4 * halo);
     } else {

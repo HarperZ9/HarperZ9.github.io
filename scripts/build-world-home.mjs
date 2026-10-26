@@ -38,6 +38,8 @@ function roadParts() {
   return { hand, menu, canvases, stops, bodyClass };
 }
 
+// a name set in capitals (EMET) gets the tracking capitals need
+const caps = (t) => (/^[A-Z0-9 ]{3,}$/.test(t) ? ' class="caps"' : "");
 function lawsOf(ids, rules) {
   const list = ids.map((id) => rules.get(id)).filter(Boolean);
   return list.length ? `<ul class="laws">${list.map((r) => `<li>${esc(r.statement)}</li>`).join("")}</ul>` : "";
@@ -57,16 +59,16 @@ function lead(pl) {
 }
 function bazaar(rules) {
   return PLACES.map((pl, i) => `
-  <section class="place" id="p-${pl.id}" data-place="${pl.id}" data-form="${pl.form}" data-medium="${pl.medium}" aria-labelledby="h-${pl.id}">
+  <article class="place" id="p-${pl.id}" data-place="${pl.id}" data-form="${pl.form}" data-medium="${pl.medium}" aria-labelledby="hp-${pl.id}">
     <div class="place-in">
       <figure class="lead-box">${lead(pl)}</figure>
       <div class="place-words">
-        <h2 id="h-${pl.id}" data-living="${pl.living.join(" ")}">${esc(pl.title)}</h2>
+        <h2 id="hp-${pl.id}" data-living="${pl.living.join(" ")}">${esc(pl.title)}</h2>
         ${lawsOf(pl.laws, rules)}
-        <nav class="ways" aria-label="${esc(pl.title)}">${pl.ways.map(([href, t]) => `<a href="${href}">${esc(t)}</a>`).join("")}</nav>
+        <nav class="ways" aria-label="${esc(pl.title)}">${pl.ways.map(([href, t]) => `<a href="${href}"${caps(t)}>${esc(t)}</a>`).join("")}</nav>
       </div>
     </div>
-  </section>`).join("\n");
+  </article>`).join("\n");
 }
 
 function build() {

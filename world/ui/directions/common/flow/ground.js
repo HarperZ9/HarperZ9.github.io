@@ -3,7 +3,7 @@
 // typing sends a ripple, and a passage held in view leaves sediment beside it.
 // Sections declare their viscosity with data-medium="thin|water|viscous". Plain view hides the medium;
 // reduced motion shows one settled still. ?view=mosaic or ?view=ink|warmth|current|sediment shows a reading.
-import { createMedium } from "./medium.js";
+import { createMedium } from "./engine.js";
 
 const VISC = { thin: 0.5, water: 0.9, viscous: 3.2 };
 const root = document.documentElement;

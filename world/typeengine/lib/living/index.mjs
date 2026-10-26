@@ -59,7 +59,7 @@ export function createLiving({ w, h, stops, family = PLAIN, seed = 1, fill = 0.8
   // a state may draw the same word in another cut of the family (Burin, Divisumma): same size, re-centred
   const recut = (text) => (cut, extra) => { const k = `${text}|${cut}|${JSON.stringify(extra)}`; if (!Gs.has(k)) Gs.set(k, glyphContext(face({ ...skel, cut, extra: { ...(skel.extra ?? {}), ...extra } }), text, w, h, { size: G(text).size })); return Gs.get(k); };
   const paint = (text, st, paper, params = {}) => {
-    const k = `${text}|${st}|${paper ?? ''}|${JSON.stringify(params)}`; if (!imgs.has(k) && baked[`${text}|${st}`]) imgs.set(k, baked[`${text}|${st}`]);
+    const k = `${text}|${st}|${paper ?? ''}|${JSON.stringify(params)}`; if (!imgs.has(k) && baked[`${text}|${st}`]) { const B = baked[`${text}|${st}`]; imgs.set(k, scheme === 'night' ? toNight(B, { paper: linear('#ebe5d8'), law: state(st).night ?? 'negative' }) : B); }
     if (!imgs.has(k)) { const C = context(G(text), { seed, paper }); C.recut = recut(text); const day = state(st).paint(C, params); imgs.set(k, scheme === 'night' ? toNight(day, { paper: C.paper, law: state(st).night ?? 'negative' }) : day); }
     return imgs.get(k);
   };

@@ -7,3 +7,6 @@ body.parts-body main { max-width: 1360px; }
 .acc-specimen { font-family: "Accession Display", var(--face-display) !important; }
 .acc-list { list-style: none; padding: 0; columns: 2 14em; }
 .acc-list li { font-size: var(--fs-4); line-height: 1.5; }
+.floor h1 { font: 800 clamp(36px, 7vw, var(--fs-6))/1.02 var(--face-display); letter-spacing: -.03em; margin: 0 0 24px; }
+.tool p, .tool li { max-width: 70ch; }
+.caps { letter-spacing: .06em; }

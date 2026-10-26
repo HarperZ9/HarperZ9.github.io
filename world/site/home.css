@@ -7,7 +7,7 @@
 .arrival-art .lead { width: min(1280px, 100%); height: auto; max-height: 86vh; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); }
 .arrival h1 { position: relative; margin: 0; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.035em; color: var(--ink); max-width: 14ch; }
 .arrival-ways, .ways, .colophon nav { position: relative; display: flex; flex-wrap: wrap; gap: 8px; }
-.arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; color: var(--ink); background: color-mix(in srgb, var(--wall) 86%, transparent); border: 1.5px solid var(--ink); text-decoration: none; font: 600 var(--fs-2)/1 var(--face-text); }
+.arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); text-decoration: none; font: 600 var(--fs-2)/1 var(--face-text); }
 .arrival-ways a:first-child { background: var(--ink); color: var(--wall); }
 .arrival-ways a:focus-visible, .ways a:focus-visible, .colophon a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
@@ -16,7 +16,7 @@
 body.past-road .road, body.past-road .strata, body.past-road .carry { opacity: 0; }
 .crossing { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
 .place-in { position: relative; z-index: 2; }
-.place-words h2, .laws li, .ways a { background: color-mix(in srgb, var(--wall) 88%, transparent); }
+.place-words h2, .laws li, .ways a { background: var(--wall); }
 html.plain .crossing, html.plain .uncover { display: none; }
 
 /* the places: motion first, then the place's name, its laws and the ways in */
@@ -32,7 +32,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .place-words { display: grid; gap: 18px; align-content: start; }
 .place-words h2 { margin: 0; font: 800 var(--fs-6)/1.02 var(--face-display); letter-spacing: -.035em; color: var(--ink); text-wrap: balance; }
 .laws { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 52ch; }
-.laws li { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); padding-left: 14px; border-left: 2px solid currentColor; background: color-mix(in srgb, var(--wall) 80%, transparent); }
+.laws li { font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); padding: 2px 8px 2px 14px; border-left: 2px solid currentColor; background: var(--wall); }
 
 /* the sound place: the press is the theme, the line is its live waveform */
 .lead.hum { aspect-ratio: 16 / 9; display: grid; place-items: center; border: 1.5px solid var(--ink); background: color-mix(in srgb, var(--wall) 70%, transparent); }
@@ -58,3 +58,9 @@ html.plain .crossing, html.plain .uncover { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .road, .strata, .carry, .lead-box .uncover, .living-paint { transition: none; } }
 @media (forced-colors: active) { .crossing, .uncover, .living-paint { display: none; } .living-on { color: CanvasText !important; } }
+/* the lit-sheet choice for living type in dark mode; hidden in light mode */
+.o-hand .o-sheet { min-height: 44px; padding: 0 12px; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--wall); color: var(--ink); font: 600 var(--fs-1)/1 var(--face-text); cursor: pointer; }
+.o-hand .o-sheet[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+.o-hand .o-sheet:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.o-hand .o-sheet[hidden] { display: none; }
+.caps { letter-spacing: .06em; }

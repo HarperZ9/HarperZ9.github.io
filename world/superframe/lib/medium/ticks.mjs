@@ -15,80 +15,90 @@
 //
 // Element: { name, law: { radius, threshold, softness, rate, mode, drive: { thin, travel, speed, contact, heat },
 //            seed }, look(tick, progress) -> { absorb?: [3], paint?: [r, g, b, a], emit?: [3] }, timing?: [layers] }
+// The tick model itself (the field of ticks, the automaton, the weight transfer and the measures) is the creation
+// engine's core module, creation/lib/core/ticks.mjs, the one tick model for every caller (switched
+// 2026-10-26). What stays here is what only the medium knows: where a tick is placed (an item's shape), how it moves
+// (the water's velocity, an item's sink, the surface and the bed), and the medium fields an element's drive reads
+// (heat from m.T, contact with the bed, a named tracer), folded into the one drive grid the core samples.
 import { bilerp, clamp } from './grid.mjs';
 import { progress as timed } from './timing.mjs';
+import { rgbToSpectrum, spectrumRGB, toXYZ, toLinearRGB, ks as ksOf, fromKS } from './spectral.mjs';
+import { stepTicks, measureTicks } from '../../../creation/lib/core/ticks.mjs';
+
+// The core keeps ticks in typed arrays at cell-centre coordinates (x + 0.5); an item's ticks are views over them,
+// so looks, tests and tools still read t.x, t.y, t.h, t.w[e] and t.clock[e], and writes go through to the core.
+function tickView(T, i) {
+  const E = T.E;
+  return { id: i, get x() { return T.x[i] - 0.5; }, set x(v) { T.x[i] = v + 0.5; }, get y() { return T.y[i] - 0.5; }, set y(v) { T.y[i] = v + 0.5; },
+    get h() { return T.th[i]; }, get travel() { return T.travel[i]; }, set travel(v) { T.travel[i] = v; }, get speed() { return T.speed[i]; }, set speed(v) { T.speed[i] = v; },
+    w: T.W.subarray(i * E, i * E + E), clock: T.clock.subarray(i * E, i * E + E), born: T.born };
+}
 
 // sample a shape (inside(x, y) in grid cells -> 0..1 thickness) as ticks on a jittered lattice
 export function placeItem(m, { inside, box, spacing = 0.4, elements, start = 0, name = 'item', still = false }) {
-  const [x0, y0, x1, y1] = box, ticks = [];
+  const [x0, y0, x1, y1] = box, xs = [], ys = [], hs = [];
   for (let y = y0; y < y1; y += spacing) for (let x = x0; x < x1; x += spacing) {
     const jx = x + (m.rng() - 0.5) * spacing * 0.8, jy = y + (m.rng() - 0.5) * spacing * 0.8, h = inside(jx, jy);
-    if (h > 0.02) ticks.push({ x: jx, y: jy, h, w: elements.map((_, i) => (i === start ? 1 : 0)), born: m.time, travel: 0, clock: elements.map(() => 0), id: ticks.length });
+    if (h > 0.02) { xs.push(jx + 0.5); ys.push(jy + 0.5); hs.push(h); }
   }
-  const item = { name, ticks, elements, spacing, still, history: [] };
+  const n = xs.length, E = elements.length, W = new Float32Array(n * E);
+  for (let i = 0; i < n; i++) W[i * E + start] = 1;
+  const T = { w: m.nx, h: m.ny, n, E, elements, x: Float32Array.from(xs), y: Float32Array.from(ys), th: Float32Array.from(hs), W, travel: new Float32Array(n), speed: new Float32Array(n), born: m.time, time: 0, clock: new Float32Array(n * E), spacing };
+  const item = { name, T, ticks: Array.from({ length: n }, (_, i) => tickView(T, i)), elements, spacing, still, history: [] };
   (m.items ??= []).push(item);
   return item;
 }
 
-// neighbour lookup: a hash grid of tick indices
-function grid(ticks, cell) {
-  const G = new Map(), key = (i, j) => i * 73856093 ^ j * 19349663;
-  ticks.forEach((t, k) => { const g = key(Math.floor(t.x / cell), Math.floor(t.y / cell)); if (!G.has(g)) G.set(g, []); G.get(g).push(k); });
-  return (x, y, f) => { const i = Math.floor(x / cell), j = Math.floor(y / cell); for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) { const L = G.get(key(i + a, j + b)); if (L) for (const k of L) f(k); } };
+// the medium's fields an element's drive reads, as one grid in 0..1 for the core's drive slot: heat (m.T), contact
+// with the bed (within 1.5 cells of the floor under the column) and a named tracer, each by its coefficient; the
+// core multiplies the grid by the coefficients' sum, so the sum it adds equals the medium's own
+function driveGrid(m, D) {
+  const cH = D.heat ?? 0, cC = D.contact ?? 0, tr = D.tracer && m.tracers?.[D.tracer.name] ? D.tracer : null, cT = tr ? tr.gain : 0, S = cH + cC + cT;
+  if (S <= 0) return { S: 0, g: null };
+  const { nx, ny } = m, g = new Float32Array(nx * ny);
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+    const k = j * nx + i, floor = ny - m.bed[i] - 0.5;
+    g[k] = (cH * clamp(m.T[k], 0, 1) + cC * (floor - j < 1.5 ? 1 : 0) + (tr ? cT * Math.min(1, m.tracers[tr.name].f[k] / (tr.scale ?? 1)) : 0)) / S;
+  }
+  return { S, g };
 }
 
-// one step for every item: move, then let each element's law grow its weight across the ticks
+// one step for every item: move in the medium, then let the core grow each element's weight by its law
 export function stepItems(m, dt) {
   for (const it of m.items ?? []) {
-    const s = dt * 30;
-    if (!it.still) for (const t of it.ticks) {
-      const u1 = bilerp(m.u, m.nx, m.ny, t.x, t.y), v1 = bilerp(m.v, m.nx, m.ny, t.x, t.y), mx = t.x + 0.5 * s * u1, my = t.y + 0.5 * s * v1;
-      const ux = bilerp(m.u, m.nx, m.ny, mx, my), vy = bilerp(m.v, m.nx, m.ny, mx, my), sink = it.sink ?? 0;
-      t.x = clamp(t.x + s * ux, 0, m.nx - 1); t.y = clamp(t.y + s * vy + sink * dt, m.surfaceY(clamp(Math.round(t.x), 0, m.nx - 1)) + 0.3, m.ny - 1);
-      t.speed = Math.hypot(ux, vy); t.travel += t.speed * s;
+    const T = it.T, s = dt * 30, sink = it.sink ?? 0;
+    if (!it.still) for (let i = 0; i < T.n; i++) {
+      const x = T.x[i] - 0.5, y = T.y[i] - 0.5;
+      const u1 = bilerp(m.u, m.nx, m.ny, x, y), v1 = bilerp(m.v, m.nx, m.ny, x, y), mx = x + 0.5 * s * u1, my = y + 0.5 * s * v1;
+      const ux = bilerp(m.u, m.nx, m.ny, mx, my), vy = bilerp(m.v, m.nx, m.ny, mx, my);
+      const nxp = clamp(x + s * ux, 0, m.nx - 1);
+      T.x[i] = nxp + 0.5; T.y[i] = clamp(y + s * vy + sink * dt, m.surfaceY(clamp(Math.round(nxp), 0, m.nx - 1)) + 0.3, m.ny - 1) + 0.5;
+      T.speed[i] = Math.hypot(ux, vy); T.travel[i] += T.speed[i] * s;
     }
-    for (let e = 0; e < it.elements.length; e++) { const E = it.elements[e]; if (E.law && e > 0) grow(m, it, e, E.law, dt); }
-    for (const t of it.ticks) for (let e = 0; e < it.elements.length; e++) if (t.w[e] > 0.01) t.clock[e] += dt;
+    // each lawful element is grown by the core with its own drive grid; the clocks and the item's time advance once
+    const scratch = new Float32Array(T.n * T.E);
+    for (let e = 1; e < T.E; e++) {
+      const L = it.elements[e].law; if (!L) continue;
+      const D = L.drive ?? {}, { S, g } = driveGrid(m, D);
+      const law = { ...L, drive: { ...D, contact: 0, tracer: undefined, heat: S } };
+      const Te = Object.create(T); Te.elements = it.elements.map((E0, q) => (q === e ? { ...E0, law } : { name: E0.name })); Te.clock = scratch; Te.time = T.time;
+      stepTicks(Te, dt, { still: true, drive: g });
+    }
+    for (let i = 0; i < T.n * T.E; i++) if (T.W[i] > 0.01) T.clock[i] += dt;
+    T.time += dt;
   }
 }
 
-function grow(m, it, e, L, dt) {
-  const R = L.radius ?? 1.2, near = grid(it.ticks, R), next = new Float32Array(it.ticks.length), D = L.drive ?? {};
-  for (const t of it.ticks) {
-    // the neighbourhood: a smooth kernel (a ring is allowed: inner/outer), weighted sum of neighbours in element e
-    let S = 0, K = 0;
-    near(t.x, t.y, k => { const o = it.ticks[k], d = Math.hypot(o.x - t.x, o.y - t.y) / R; if (d > 1 || o === t) return; const kw = L.ring ? Math.exp(-(((d - 0.5) / 0.15) ** 2)) : 1 - d * d; S += kw * o.w[e]; K += kw; });
-    S = K > 0 && L.neighbours !== false ? S / K : 0;                                 // neighbours: false runs without the automaton
-    const i = clamp(Math.round(t.x), 0, m.nx - 1), floor = m.ny - m.bed[i] - 0.5, heat = bilerp(m.T, m.nx, m.ny, t.x, t.y);
-    const drive = (D.thin ?? 0) * (1 - t.h) + (D.travel ?? 0) * Math.min(1, t.travel / (D.travelScale ?? 40)) + (D.speed ?? 0) * Math.min(1, (t.speed ?? 0) / 0.5) + (D.contact ?? 0) * (floor - t.y < 1.5 ? 1 : 0) + (D.heat ?? 0) * clamp(heat, 0, 1) + (D.age ?? 0) * Math.min(1, (m.time - t.born) / (D.ageScale ?? 6)) + (D.tracer && m.tracers[D.tracer.name] ? D.tracer.gain * Math.min(1, bilerp(m.tracers[D.tracer.name].f, m.nx, m.ny, t.x, t.y) / (D.tracer.scale ?? 1)) : 0);
-    const x = S + drive - (L.threshold ?? 0.5), rate = (L.rate ?? 1) * dt;
-    let w = t.w[e];
-    if (L.mode === 'global') w = clamp(w + rate, 0, 1);                              // the control: one slider for every tick (a crossfade)
-    else if ((L.mode ?? 'lenia') === 'life') { if (x > 0) w = 1; }                  // a binary flip, held once made
-    else w = clamp(w + rate * Math.tanh(x / (L.softness ?? 0.08)), 0, 1);         // a smooth growth toward or away
-    next[t.id] = w;
-  }
-  // the weight a tick gains in e is taken from the elements before it, in order (the vector stays a partition of 1)
-  for (const t of it.ticks) {
-    const gain = next[t.id] - t.w[e]; if (Math.abs(gain) < 1e-7) continue;
-    t.w[e] = next[t.id];
-    let take = gain;
-    for (let f = e - 1; f >= 0 && take > 0; f--) { const q = Math.min(t.w[f], take); t.w[f] -= q; take -= q; }
-    if (gain < 0) t.w[e - 1] -= gain;
-  }
-}
-
-// the item's state as numbers (BLEED section 13's check): per element, the mean weight, the spread of weights across
-// the ticks (a crossfade has none), the share of ticks mid-change (the front), the front's centroid, and the change
+// the item's state as numbers (BLEED section 13's check), from the core: per element, the mean weight, the spread of
+// weights across the ticks (a crossfade has none), the share mid-change (the front), its centroid, and the change
 export function measure(it, e = 1, prev = null) {
-  const n = it.ticks.length; let s = 0, s2 = 0, front = 0, fx = 0, fy = 0, dsum = 0;
-  for (const t of it.ticks) { const w = t.w[e]; s += w; s2 += w * w; if (w > 0.15 && w < 0.85) { front++; fx += t.x; fy += t.y; } if (prev) dsum += Math.abs(w - (prev[t.id] ?? w)); }
-  const mean = s / n, spread = Math.sqrt(Math.max(0, s2 / n - mean * mean));
-  return { mean, spread, front: front / n, frontAt: front ? [fx / front, fy / front] : null, change: prev ? dsum / n : 0, snapshot: Float32Array.from(it.ticks, t => t.w[e]) };
+  const r = measureTicks(it.T, e, prev);
+  if (r.frontAt) r.frontAt = [r.frontAt[0] - 0.5, r.frontAt[1] - 0.5];
+  return r;
 }
 
 // draw every item: each tick lays every element's look, scaled by its weight in that element, as a soft splat
-export function drawItems(m, R, vp) {
+export function drawItems(m, R, vp, illuminant = 'D65') {
   if (!(m.items ?? []).length) return;
   const { w: W, h: H } = R, d = R.data, A = new Float32Array(W * H * 3), P = new Float32Array(W * H * 4), E = new Float32Array(W * H * 3);
   let any = false;
@@ -103,6 +113,7 @@ export function drawItems(m, R, vp) {
         const k = norm * Math.exp(-q) * t.h, i = y * W + x;
         for (const [w, L] of looks) {
           if (L.absorb && !m.pigS) for (let c = 0; c < 3; c++) A[3 * i + c] += L.absorb[c] * w * k;   // a spectral tank has these in the scene
+          if (m.pigS) continue;                                                      // a spectral tank paints and glows below
           if (L.paint) { const a = L.paint[3] * w * k; for (let c = 0; c < 3; c++) P[4 * i + c] += L.paint[c] * a; P[4 * i + 3] += a; }
           if (L.emit) for (let c = 0; c < 3; c++) E[3 * i + c] += L.emit[c] * w * k;
         }
@@ -110,8 +121,53 @@ export function drawItems(m, R, vp) {
     }
   }
   if (!any) return;
+  if (m.pigS) drawItemsSpectral(m, R, vp, illuminant);
+  if (m.pigS) return;
   for (let i = 0; i < W * H; i++) {
     const a = 1 - Math.exp(-4 * P[4 * i + 3]), pa = P[4 * i + 3] > 1e-6 ? a / P[4 * i + 3] : 0;    // paint covers like a layer of pigment: dense where ticks overlap
     for (let c = 0; c < 3; c++) { let v = d[4 * i + c] * Math.exp(-3 * A[3 * i + c]); v = v * (1 - a) + P[4 * i + c] * pa; d[4 * i + c] = v + E[3 * i + c]; }
+  }
+}
+
+// A spectral tank's opaque paint and glow on ticks. Paint mixes as pigment: each tick adds its reflectance's
+// Kubelka-Munk K/S, weighted by its coverage, and the pixel shows the mixture's reflectance under the light; glow adds
+// an emission spectrum (a forge's blackbody). Done in stripes of rows to keep the 16-band buffers small at 4K.
+function drawItemsSpectral(m, R, vp, illuminant) {
+  const { w: W, h: H } = R, d = R.data, SH = 64, spec = new Map(), specOf = (key, rgb) => spec.get(key) ?? spec.set(key, rgbToSpectrum(rgb).map(v => Math.min(0.999, Math.max(0.001, v)))).get(key);
+  const flat = new Array(16).fill(1), splats = [];
+  for (const it of m.items) {
+    const r = it.spacing * 1.7 * vp.cx, norm = (it.spacing * vp.cx) ** 2 / (Math.PI * r * r);
+    for (const t of it.ticks) it.elements.forEach((E0, e) => {
+      if (t.w[e] <= 0.002) return;
+      const L = E0.look(t, E0.timing ? timed(E0.timing, t.clock[e]) : 1, m); if (!L.paint && !L.emit && !L.emitS && !L.paintS) return;
+      const [cx, cy] = vp.p(t.x, t.y), w = t.w[e] * t.h * norm;
+      const ks = L.paintS || L.paint ? ksOf(L.paintS ?? specOf(L.paint.slice(0, 3).map(v => v.toFixed(3)).join(), L.paint)) : null;
+      const em = L.emitS ?? (L.emit ? rgbToSpectrum(L.emit) : null);
+      splats.push({ cx, cy, r, w, a: (L.paint?.[3] ?? 1), ks, em });
+    });
+  }
+  for (let y0 = 0; y0 < H; y0 += SH) {
+    const rows = Math.min(SH, H - y0), KS = new Float32Array(16 * W * rows), CV = new Float32Array(W * rows), EM = new Float32Array(16 * W * rows); let any = false;
+    for (const s of splats) {
+      const E = s.r * 2.1; if (s.cy + E < y0 || s.cy - E > y0 + rows) continue;
+      for (let y = Math.max(y0, Math.floor(s.cy - E)); y <= Math.min(y0 + rows - 1, Math.ceil(s.cy + E)); y++) for (let x = Math.max(0, Math.floor(s.cx - E)); x <= Math.min(W - 1, Math.ceil(s.cx + E)); x++) {
+        const q = ((x + 0.5 - s.cx) ** 2 + (y + 0.5 - s.cy) ** 2) / (s.r * s.r); if (q > 4.4) continue;
+        const k = s.w * Math.exp(-q), i = (y - y0) * W + x; any = true;
+        if (s.ks) { const c = k * s.a; CV[i] += c; for (let b = 0; b < 16; b++) KS[b * W * rows + i] += s.ks[b] * c; }
+        if (s.em) for (let b = 0; b < 16; b++) EM[b * W * rows + i] += s.em[b] * k;
+      }
+    }
+    if (!any) continue;
+    const Rb = new Array(16), Eb = new Array(16);
+    for (let i = 0; i < W * rows; i++) {
+      const o = 4 * ((y0 * W) + i);
+      if (CV[i] > 1e-5) {
+        for (let b = 0; b < 16; b++) Rb[b] = KS[b * W * rows + i] / CV[i];
+        const c = spectrumRGB(fromKS(Rb), illuminant), a = 1 - Math.exp(-4 * CV[i]);
+        for (let k = 0; k < 3; k++) d[o + k] = d[o + k] * (1 - a) + c[k] * a;
+      }
+      let e = 0; for (let b = 0; b < 16; b++) { Eb[b] = EM[b * W * rows + i]; e += Eb[b]; }
+      if (e > 1e-6) { const c = toLinearRGB(toXYZ(Eb, flat), illuminant); for (let k = 0; k < 3; k++) d[o + k] += Math.max(0, c[k]); }
+    }
   }
 }

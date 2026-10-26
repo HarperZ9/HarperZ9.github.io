@@ -12,6 +12,6 @@ Medium.prototype.view = function (opts) { return view(this, opts); };
 Medium.prototype.render = function (W, H, opts) { return render(this, W, H, opts); };
 Medium.prototype.core = function (x, y) { return core(this, x, y); };
 
-import { ART, artTank } from './artscenes.mjs';
-export { ART, artTank };
+import { ART, artTank, fitView } from './artscenes.mjs';
+export { ART, artTank, fitView };
 export { Medium, DT, LAWS, KINDS, absorb, render, LOOK, view, stack, exploded, core, mosaicView, exportSheets, SHEETS, PLANES, printSheets, sheetLaw, composite, SHEET_LAWS, WEBER, DENSITY_W, TRAP, tank, tankAdditives, still, loop, additivesFromPort };
