@@ -137,6 +137,18 @@
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Windows, macOS, Linux",
       "category": "DeveloperApplication"
+    },
+    {
+      "name": "Superframe",
+      "repo": "superframe",
+      "version": "0.1.0",
+      "registry": "github",
+      "package": "HarperZ9/superframe",
+      "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",
+      "license": "https://spdx.org/licenses/FSL-1.1-MIT.html",
+      "os": "Node.js 22 or later",
+      "category": "DesignApplication",
+      "page": "superframe.html"
     }
   ]
 }

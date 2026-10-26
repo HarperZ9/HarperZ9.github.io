@@ -5940,6 +5940,41 @@
     "t": 0
    }
   },
+  "superframe.jpg": {
+   "backend": "node-25.2.1-superframe-js",
+   "content_sha256": "b51d8564fbb4e524887242c900468d1cff64832ac8a30228fc1fd59956c9b6e7",
+   "does_not_prove": [
+    "It does not show the card's numbers are right; the graph's edge widths are the study's correlations, which the engine's tests check, not this receipt.",
+    "It does not show the JPEG bytes are the same from another encoder; the recipe and seed are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "superframe.jpg": "bfb741eeb22092f47265938d15b5bebe0dcb16354cbf18c2e3cc681803e8b93a"
+   },
+   "producer": {
+    "name": "harperz9.superframe-plate",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "4be4ccd08e9503aa42323eb5388d8328663ae04fccb7aa34b1d250f86fe43285",
+   "reconcile": null,
+   "scene_sha256": "5bb023acac19e6d6d36cdea5e09ae97e7865a7804e1b25a916d9bf33cfde7144",
+   "schema": "superstack.receipt/1",
+   "seed": "readoption-2026-10-26",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1246129141,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "support-has-more-than-one-record.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "c8b9177132e6a446a44e3470512b5b9d6db9370dfb6abad2d4b709f46fd35125",
