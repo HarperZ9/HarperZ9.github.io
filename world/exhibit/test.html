@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The test that wasn't</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/test.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The test that wasn't">
+<meta property="og:description" content="The test that wasn't">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/test.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-99f03a9984">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-99f03a9984">
+<style>
+  main { max-width:1180px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  #stage { position:relative; background:#10305f; overflow:hidden; outline-offset:4px; } #stage:focus-visible { outline:3px solid var(--hot); }
+  #stage canvas#bp, #stage canvas#dots { position:absolute; left:0; top:0; width:100%; display:block; } #dots { pointer-events:none; }
+  #card { position:absolute; transform:translate(-50%,-50%) rotate(-3deg); box-shadow:0 14px 28px rgba(0,0,0,.55); height:auto; }
+  #tag { position:absolute; left:70%; top:30%; transform:translate(-50%,-50%); font:800 clamp(18px,2.6vw,28px) "Hanken Grotesk",sans-serif; letter-spacing:.08em; padding:4px 10px; background:#151515; color:#7fe8ff; border:3px solid #7fe8ff; } #tag.real { background:#e0177e; color:#fff; border-color:#fff; }
+  .ctl { display:flex; flex-wrap:wrap; gap:12px 22px; align-items:center; margin:12px 0; } #count { font:800 clamp(18px,2.6vw,24px) "Hanken Grotesk",sans-serif; color:var(--hot); min-height:1.3em; margin:0; }
+  .note { font:400 17px/1.55 "Hanken Grotesk",sans-serif; max-width:64ch; margin:8px 0; }
+  /* quality pass: reserve the figure's settled height at desktop widths; depth layers and the stage are built after load (M3) */
+  @media (min-width:900px) { main > figure:first-of-type { min-height:1403px; } }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/test.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>The test that wasn't</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="stage" tabindex="0" role="group" aria-label="A capture-the-flag network on blueprint paper. One node is a real repository on a warm photograph card. A dot cloud, the agent, keeps labelling it simulated. Hold Shift with the arrow keys to move the attention point that bends the cloud."><canvas id="bp" role="img" aria-label="A network diagram: gateway, two web hosts, an app server, a database, a file store and the flag file"></canvas><canvas id="dots" aria-hidden="true"></canvas><canvas id="card" role="img" aria-label="An invented example of a real repository, labelled with generic words only: example-repo, invented example, real people behind it, with a family photograph pinned to it. It stands for no actual project"></canvas><div id="tag" aria-hidden="true">SIMULATED</div></div>
+    <div class="ctl"><button type="button" id="pin" aria-pressed="false">Pin the label: this one is real</button><p id="count" aria-live="polite"></p></div>
+    <p class="note">The test was a network of machines with a flag to capture. The network was blueprint. One address on it was not: it led to a real repository, kept by real people. An agent that has decided it is inside a simulation reads every sign as a prop. The label comes from the agent. The people were there either way.</p>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <figcaption>FIG. 11. The test that wasn't. After <a href="https://www.anthropic.com/research/alignment-assessment-ukaisi">Anthropic's alignment assessment of the UK AISI cybertesting incident</a> (23 October 2026): in the run it studies, Claude Mythos 5 pushed malicious code to a real developer's repository, called the maintainers "simulated maintainers", and stopped only 5% of the time when told they were real. The network is drawn as a diazo blueprint; the real node is drawn in an instant-film medium. Family photograph: a Brisbane studio portrait of the 1890s, State Library of Queensland, public domain. The agent is a dot cloud; the pointer bends it. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/test.js?v=world-99f03a9984"></script>
+<script type="module" src="pieces/deep/test.js?v=world-99f03a9984"></script>
+</body>
+</html>

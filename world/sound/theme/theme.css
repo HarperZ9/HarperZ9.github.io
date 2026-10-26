@@ -1,0 +1,66 @@
+/* Theme: DMV type-beat culture crossed with surrealism, supergraphics, art deco, brutalism and collage.
+   Brutalist: hard rules, flat slabs, offset shadows. Deco: stepped corners and fan rays. Collage: cut-paper slabs at small angles.
+   Text always sits on a flat slab; the dot field never sits behind running text. */
+:root { --pulse: 0; }
+body { padding-bottom: 5.5rem; }
+.top { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between; align-items: center; padding: 0.9rem clamp(1rem, 4vw, 2.5rem); border-bottom: 2px solid var(--ink); position: relative; z-index: 3; background: var(--ground); }
+.top nav { display: flex; flex-wrap: wrap; gap: 0.2rem 1.2rem; }
+.top a { font: 700 0.95rem var(--mono); text-decoration: none; padding: 0.7rem 0; display: inline-block; }
+.top a:hover { text-decoration: underline; }
+
+.hero { position: relative; min-height: min(88vh, 54rem); display: grid; align-items: end; overflow: clip; border-bottom: 2px solid var(--ink); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero canvas.nogl { background: radial-gradient(circle, var(--ink) 1px, transparent 1.6px) 0 0 / 14px 14px; opacity: 0.4; }
+.hero::before { /* deco fan: stepped rays from the lower left, drawn as a flat repeating cone */
+  content: ''; position: absolute; left: -22vmin; bottom: -22vmin; width: 70vmin; height: 70vmin; border-radius: 50%;
+  background: repeating-conic-gradient(from 270deg at 50% 50%, var(--ink) 0 3deg, transparent 3deg 12deg); opacity: 0.16; clip-path: polygon(50% 50%, 100% 0, 100% 50%, 50% 50%, 50% 0, 0 0, 0 50%); pointer-events: none;
+}
+.slab { position: relative; z-index: 2; background: var(--ground); border: 2px solid var(--ink); box-shadow: calc(8px + var(--pulse) * 10px) calc(8px + var(--pulse) * 10px) 0 var(--ink); padding: clamp(1rem, 3vw, 2rem); margin: clamp(1rem, 4vw, 2.5rem); max-width: 44rem; }
+.hero-slab { clip-path: polygon(0 0, calc(100% - 1.4rem) 0, 100% 1.4rem, 100% 100%, 0 100%); }
+h1 { margin: 0; font-size: clamp(5.5rem, 30vw, 17rem); line-height: 0.82; font-weight: 800; letter-spacing: -0.04em; }
+.ltr { display: inline-block; font-weight: var(--w, 520); transition: none; }
+.credit { color: var(--muted); font-size: 0.85rem; line-height: 1.5; overflow-wrap: anywhere; margin: 1rem 0 0.5rem; }
+.credit.big { font-size: clamp(0.95rem, 2.4vw, 1.25rem); color: var(--ink); border-left: 6px solid var(--hot); padding-left: 0.9rem; }
+.lede { max-width: 40rem; color: var(--muted); margin: 0.6rem 0; }
+.row { display: flex; flex-wrap: wrap; gap: 0.8rem 1rem; align-items: center; margin-top: 1rem; }
+.readout { margin: 0; font-size: 0.85rem; color: var(--ink); }
+
+.band { padding: clamp(2.5rem, 7vw, 5rem) clamp(1rem, 4vw, 2.5rem); border-bottom: 2px solid var(--ink); max-width: 80rem; margin: 0 auto; }
+h2 { font-size: clamp(2rem, 6vw, 4rem); line-height: 1; font-weight: 800; margin: 0 0 0.6rem; letter-spacing: -0.02em; }
+.cut { background: var(--raised); max-width: none; }
+.cut > * { max-width: 75rem; margin-left: auto; margin-right: auto; }
+
+/* supergraphic strip: the one-word titles at poster scale, cut off by the edges. Decoration only; hidden from assistive tech. */
+.strip { display: flex; gap: 0.12em; overflow: hidden; white-space: nowrap; font: 800 clamp(5rem, 22vw, 15rem)/0.9 var(--sans); letter-spacing: -0.04em; border-bottom: 2px solid var(--ink); background: var(--ground); user-select: none; }
+.strip span { color: var(--line); padding: 0.05em 0; }
+.strip span:nth-child(3n) { color: var(--ink); }
+/* pieces: cut-paper slabs at small angles. The angle is a fixed layout choice, not motion. */
+.pieces { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.pieces li { background: var(--raised); border: 2px solid var(--ink); padding: 1rem 1.1rem 1.2rem; box-shadow: 6px 6px 0 var(--ink); position: relative; }
+.pieces li:nth-child(3n+1) { transform: rotate(-0.8deg); } .pieces li:nth-child(3n+2) { transform: rotate(0.6deg); margin-top: 0.8rem; } .pieces li:nth-child(3n) { transform: rotate(-0.3deg); }
+.pieces h3 { margin: 0 0 0.3rem; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 0.95; font-weight: 800; letter-spacing: -0.03em; }
+.pieces p { margin: 0.4rem 0; }
+.pieces .credit { margin: 0.5rem 0; }
+.pieces a { font: 700 0.95rem var(--mono); display: inline-block; padding: 0.6rem 0; }
+.pieces .soon { font: 400 0.85rem var(--mono); color: var(--muted); }
+
+fieldset.fam { border: 2px solid var(--ink); margin: 1.2rem 0; padding: 0.8rem 1rem 1rem; }
+fieldset.fam legend { font: 700 1rem var(--sans); padding: 0 0.4rem; }
+#famboxes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+#famboxes label { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 0.8rem; border: 2px solid var(--line); color: var(--ink); cursor: pointer; }
+#famboxes label:has(input:checked) { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+#famboxes input { accent-color: var(--hot); width: 1.1rem; height: 1.1rem; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: 1rem; margin-top: 1.4rem; }
+.motif { border: 2px solid var(--ink); padding: 1rem; display: grid; gap: 0.5rem; align-content: start; background: var(--ground); }
+.motif h3 { margin: 0; font-size: 1.4rem; font-weight: 800; } .motif p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.motif .fam { font: 400 0.8rem var(--mono); color: var(--muted); }
+
+.how { display: grid; gap: 0; margin: 1.5rem 0 0; border: 2px solid var(--ink); }
+.how > div { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr; gap: 1rem; padding: 1rem; border-bottom: 2px solid var(--ink); }
+.how > div:last-child { border-bottom: 0; }
+.how dt { font: 800 1.5rem var(--sans); } .how dd { margin: 0; color: var(--muted); }
+.foot { padding: 2rem clamp(1rem, 4vw, 2.5rem) 3rem; display: flex; flex-wrap: wrap; gap: 1rem 3rem; justify-content: space-between; color: var(--muted); }
+.foot p { margin: 0; max-width: 40rem; }
+@media (max-width: 600px) { .how > div { grid-template-columns: 1fr; gap: 0.2rem; } .hero { min-height: 46rem; } .slab { margin: 0.8rem; box-shadow: 5px 5px 0 var(--ink); } }
+@media (prefers-reduced-motion: reduce) { .pieces li { transform: none !important; } .ltr { --w: 560 !important; } .slab { box-shadow: 8px 8px 0 var(--ink); } * { scroll-behavior: auto !important; transition: none !important; } }

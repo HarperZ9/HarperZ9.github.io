@@ -1,0 +1,141 @@
+/* Direction B: Setback. Art deco collage.
+   A central axis; frames that step in like the 1916 zoning envelope; hairline sunbursts in a brass
+   material line; archival plates cut and layered as collage. Brass is a material, never a verdict. */
+:root{
+  color-scheme:light;
+  --paper:#ebe5d8;--paper-2:#e0d8c6;--ink:#16130f;--soft:#4f483d;--brass:#8a6a35;--brass-hair:rgba(138,106,53,.55);--on-ink:#ebe5d8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#0c0b10;--paper-2:#15141b;--ink:#ece5d6;--soft:#b9b1a2;--brass:#c9a46a;--brass-hair:rgba(201,164,106,.45);--on-ink:#0c0b10}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#0c0b10;--paper-2:#15141b;--ink:#ece5d6;--soft:#b9b1a2;--brass:#c9a46a;--brass-hair:rgba(201,164,106,.45);--on-ink:#0c0b10}
+
+body{background:var(--paper);color:var(--ink);font:400 18px/1.55 var(--sans)}
+a{color:inherit;text-decoration-color:var(--brass);text-decoration-thickness:1px;text-underline-offset:4px}
+a:hover{text-decoration-thickness:2px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+
+/* bar: symmetric, name on the axis */
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--brass)}
+.bar nav ul{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0;list-style:none;font:500 15px var(--sans)}
+.bar nav a{text-decoration:none}
+.bar .home{font:300 22px/1 var(--sans);letter-spacing:.02em;text-decoration:none;text-align:center}
+.ctl{display:flex;justify-content:flex-end;gap:6px}
+.ctl button{font:500 14px/1 var(--sans);color:var(--ink);background:transparent;border:1px solid var(--brass);padding:9px 12px;min-height:40px;cursor:pointer;box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px var(--brass-hair)}
+.ctl button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* the tower: a stepped envelope holding the drawing, rays behind */
+.tower{position:relative;overflow-x:clip;overflow-y:visible;margin:0 -16px;display:grid;place-items:center;padding:84px 16px 0;text-align:center}
+.rays{position:absolute;inset:0 -16px auto;height:min(92vh,900px);z-index:0;pointer-events:none;
+  background:repeating-conic-gradient(from -90deg at 50% 78%,var(--brass-hair) 0 .35deg,transparent .35deg 4.5deg);
+  -webkit-mask:radial-gradient(circle at 50% 78%,#000 0 30%,transparent 72%);mask:radial-gradient(circle at 50% 78%,#000 0 30%,transparent 72%)}
+.tower h1{position:relative;z-index:2;margin:0;font:850 clamp(52px,11vw,190px)/.86 var(--sans);letter-spacing:-.05em;max-width:7.5ch}
+/* engraved letterforms: burin hatching clipped to the glyphs, with an inline cut */
+.engraved{color:transparent;background:repeating-linear-gradient(-38deg,var(--ink) 0 1.6px,transparent 1.6px 4.2px);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:1.2px var(--ink)}
+html.plain .engraved{color:var(--ink);background:none;-webkit-text-stroke:0}
+@media (forced-colors:active){.engraved{color:CanvasText;background:none;-webkit-text-stroke:0}}
+.arc{position:absolute;z-index:1;left:50%;top:-22px;width:min(1100px,96vw);translate:-50% 0;pointer-events:none;overflow:visible}
+.arc text{font:500 14px var(--mono);fill:var(--brass);letter-spacing:.14em}
+@media (max-width:760px){.arc{display:none}}
+.envelope{position:relative;z-index:1;width:min(560px,82vw);aspect-ratio:4/5;margin:-3vw auto 0;background:var(--paper-2);
+  clip-path:polygon(38% 0,62% 0,62% 8%,72% 8%,72% 20%,84% 20%,84% 36%,100% 36%,100% 100%,0 100%,0 36%,16% 36%,16% 20%,28% 20%,28% 8%,38% 8%)}
+.envelope img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.15) sepia(.35)}
+:root[data-theme="dark"] .envelope img{filter:grayscale(1) invert(1) contrast(1.2) sepia(.4)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .envelope img{filter:grayscale(1) invert(1) contrast(1.2) sepia(.4)}}
+html.ready .envelope{animation:rise var(--dur-scene) var(--ease-engrave) both}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.line{position:relative;z-index:2;max-width:34ch;margin:28px auto 0;font:400 clamp(19px,1.7vw,24px)/1.4 var(--sans)}
+.line .an{display:block;font-weight:700;margin-bottom:.4em}
+
+/* the torn strip: an ornament band cut across the axis */
+.strip{position:relative;z-index:3;justify-self:stretch;height:120px;margin:-70px -16px 0;transform:rotate(-2.5deg);box-shadow:0 18px 30px -18px rgba(0,0,0,.6);background:center/cover no-repeat;filter:grayscale(1) contrast(1.1);
+  clip-path:polygon(0 18%,6% 8%,13% 20%,22% 6%,31% 16%,40% 4%,52% 18%,61% 7%,70% 19%,79% 5%,88% 17%,100% 9%,100% 86%,91% 96%,80% 84%,69% 97%,58% 85%,47% 95%,36% 83%,24% 96%,13% 85%,0 94%)}
+.credit,figcaption{font:400 13px/1.35 var(--sans);color:var(--soft);margin-top:8px}
+/* the plaque: captions struck into brass, letterpress light and shadow */
+.plaque-cap{display:inline-block;margin:14px auto 0;padding:8px 18px;max-width:62ch;font:500 13px/1.45 var(--mono);color:var(--paper);background:linear-gradient(180deg,color-mix(in srgb,var(--brass) 92%,#fff),var(--brass));border:1px solid color-mix(in srgb,var(--brass) 70%,#000);text-shadow:0 1px 0 rgba(255,255,255,.25),0 -1px 0 rgba(0,0,0,.35);color:#1d160b}
+
+/* the record: the sound control is a 1901 disc that turns while sound plays */
+.disc{display:inline-flex;align-items:center;gap:12px;font:500 15px var(--sans);color:var(--ink);background:none;border:0;padding:4px;cursor:pointer;min-height:44px}
+.disc img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 50%;border:1px solid var(--brass)}
+.sound-on .disc img{animation:spin 1.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.sound-on .disc img{animation:none}html.ready .envelope{animation:none}}
+
+/* the directory board */
+.board{position:relative;margin:96px auto 0;max-width:980px;padding:44px clamp(16px,4vw,56px) 40px;border:1px solid var(--brass);outline:1px solid var(--brass);outline-offset:6px}
+.board h2{margin:0 0 28px;text-align:center;font:300 clamp(30px,3.4vw,48px)/1 var(--sans);letter-spacing:-.02em}
+.board ul{list-style:none;margin:0;padding:0;columns:2;column-gap:56px}
+.board li{break-inside:avoid;margin:0 0 22px}
+.board a{display:block;text-decoration:none}
+.board .t{display:flex;align-items:baseline;gap:10px;font:700 clamp(22px,2.2vw,30px)/1.1 var(--sans);letter-spacing:-.02em}
+.board .t::after{content:"";flex:1;border-bottom:2px dotted var(--brass);transform:translateY(-6px)}
+.board .d{display:block;margin-top:4px;font-size:16px;line-height:1.4;color:var(--soft)}
+.board a:hover .t,.board a:focus-visible .t{color:var(--brass)}
+
+.foot{margin-top:96px;border-top:1px solid var(--brass);padding:20px 0 40px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;font-size:15px;text-align:center}
+.foot details{flex-basis:100%}
+.foot summary{cursor:pointer;font-weight:600}
+.foot ul{list-style:none;padding:0;margin:8px auto 0;max-width:80ch;font-size:14px;color:var(--soft)}
+
+@media (max-width:760px){
+  body{font-size:17px}
+  .bar{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .bar nav ul{justify-content:center}
+  .ctl{justify-content:center}
+  .board ul{columns:1}
+  .strip{height:80px;margin-top:-40px}
+}
+
+/* collage: a 1901 disc slid behind the tower, half in shadow */
+.platter{position:absolute;z-index:0;left:max(2%,calc(50% - 560px));top:min(46vw,520px);width:min(30vw,340px);aspect-ratio:1;border-radius:50%;overflow:hidden;transform:rotate(-14deg);box-shadow:0 30px 60px -20px rgba(0,0,0,.55)}
+.platter img{width:100%;height:100%;object-fit:cover;filter:grayscale(.6) contrast(1.1)}
+@media (max-width:760px){.platter{width:42vw;top:62vw;left:-8vw}}
+/* ---------- project page ---------- */
+.arch{position:relative;text-align:center;padding:48px 0 0;overflow-x:clip}
+.arch h1{position:relative;z-index:2;font:250 clamp(38px,6.4vw,104px)/.98 var(--sans);letter-spacing:-.04em;margin:0 auto;max-width:15ch}
+.arch h1 b{font-weight:800}
+.arch .lede{max-width:40ch;margin:24px auto 0;font-size:clamp(18px,1.6vw,22px)}
+.niche{position:relative;width:min(420px,78vw);margin:40px auto 0;aspect-ratio:3/4;background:var(--paper-2);
+  clip-path:polygon(30% 0,70% 0,70% 6%,82% 6%,82% 14%,92% 14%,92% 24%,100% 24%,100% 100%,0 100%,0 24%,8% 24%,8% 14%,18% 14%,18% 6%,30% 6%)}
+.niche img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.3) contrast(1.05)}
+.room{max-width:880px;margin:88px auto 0;text-align:center}
+.room > h2{font:250 clamp(30px,3.6vw,52px)/1 var(--sans);letter-spacing:-.03em;margin:0 0 6px}
+.room > h2::after{content:"";display:block;width:120px;height:9px;margin:16px auto 24px;border-top:1px solid var(--brass);border-bottom:1px solid var(--brass)}
+.room p{max-width:60ch;margin:0 auto 14px}
+.room blockquote{margin:0 auto 18px;max-width:30ch;font:600 clamp(24px,2.6vw,36px)/1.15 var(--sans);letter-spacing:-.02em}
+sup a{font:500 .7em var(--mono);text-decoration:none;color:var(--brass)}
+/* the lift: three doors, the chosen one opens */
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 18px}
+.doors button{position:relative;font:600 16px/1.25 var(--sans);color:var(--ink);background:var(--paper-2);border:1px solid var(--brass);min-height:96px;padding:16px 12px;cursor:pointer;overflow:hidden}
+.doors button::before,.doors button::after{content:"";position:absolute;top:0;bottom:0;width:50%;background:var(--paper-2);border:1px solid var(--brass-hair);transition:transform var(--dur-slow) var(--ease-standard);z-index:0}
+.doors button::before{left:0}.doors button::after{right:0}
+.doors button span{position:relative;z-index:1}
+.doors button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.doors button[aria-pressed="true"]::before{transform:translateX(-100%)}
+.doors button[aria-pressed="true"]::after{transform:translateX(100%)}
+.state{border:1px solid var(--brass);outline:1px solid var(--brass);outline-offset:5px;padding:24px;margin:8px 6px}
+.state .io{font:400 17px/1.4 var(--mono);overflow-wrap:anywhere}
+.state [data-verdict]{font-size:clamp(26px,3vw,40px);font-weight:300;letter-spacing:-.02em;margin:8px 0}
+.note{font-size:14px;color:var(--soft)}
+/* the stair: five setbacks climbing to the check */
+.stair{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:8px;text-align:left;counter-reset:s}
+.stair li{counter-increment:s;border:1px solid var(--brass);border-bottom-width:4px;padding:14px 12px;background:var(--paper)}
+.stair li:nth-child(1){min-height:150px}.stair li:nth-child(2){min-height:290px;background:var(--ink);color:var(--paper)}.stair li:nth-child(3){min-height:230px}.stair li:nth-child(4){min-height:190px}.stair li:nth-child(5){min-height:250px}
+.stair li::before{content:counter(s);display:block;font:200 48px/1 var(--sans);color:var(--brass)}
+.stair b{display:block;margin:6px 0 4px}
+.stair span{font-size:15px;line-height:1.35}
+.mirror{display:grid;grid-template-columns:1fr 1px 1fr;gap:28px;text-align:center}
+.mirror .axis{background:var(--brass)}
+.mirror h3{font:300 26px/1.1 var(--sans);margin:0 0 8px}
+.mirror p{font-size:17px}
+.hold{grid-column:1 / -1;border-top:1px solid var(--brass);padding-top:18px;margin:0}
+.plaque{display:inline-block;text-align:left;border:1px solid var(--brass);outline:1px solid var(--brass);outline-offset:5px;padding:22px 26px;background:var(--paper-2)}
+.plaque pre{margin:0 0 12px;font:400 clamp(17px,2vw,24px)/1.45 var(--mono)}
+.plaque button{font:600 14px var(--sans);background:var(--ink);color:var(--paper);border:0;padding:10px 16px;min-height:44px;cursor:pointer}
+.fns{text-align:left;font-size:14px;color:var(--soft);max-width:70ch;margin:0 auto}
+@media (max-width:760px){
+  .doors{grid-template-columns:1fr}
+  .doors button{min-height:64px}
+  .stair{grid-template-columns:1fr}
+  .stair li{min-height:0!important}
+  .mirror{grid-template-columns:1fr}
+  .mirror .axis{height:1px;width:120px;margin:0 auto}
+}

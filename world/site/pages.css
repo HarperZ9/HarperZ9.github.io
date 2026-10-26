@@ -1,0 +1,9 @@
+/* pages.css: the world's plain pages (floor, parts, Accession, credits) on top of studies/studies.css. */
+.floor section { margin: 0 0 40px; }
+.floor-list { list-style: none; padding: 0; margin: 0; columns: 2 18em; column-gap: 32px; }
+.floor-list li { break-inside: avoid; margin: 0 0 6px; font: 400 var(--fs-3)/1.45 var(--face-text); }
+body.parts-body main { max-width: 1360px; }
+.parts-page h1 { font: 800 clamp(36px, 7vw, var(--fs-6))/1.02 var(--face-display); letter-spacing: -.03em; margin: 0 0 24px; }
+.acc-specimen { font-family: "Accession Display", var(--face-display) !important; }
+.acc-list { list-style: none; padding: 0; columns: 2 14em; }
+.acc-list li { font-size: var(--fs-4); line-height: 1.5; }

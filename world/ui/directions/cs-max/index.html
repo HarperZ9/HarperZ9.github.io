@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" data-alive-grain="off" data-type="stock" data-lettering="../../../lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Zain Dana Harper | Second tour, max</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/directions/cs-max/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zain Dana Harper | Second tour, max">
+<meta property="og:description" content="Direction CS-max: the exhibit with the slab's layers, taken further. Front door prototype.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/directions/cs-max/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Direction CS-max: the exhibit with the slab's layers, taken further. Front door prototype.">
+<link rel="preload" href="../../fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../common/base.css?v=world-99f03a9984">
+<link rel="stylesheet" href="../c-exhibit/exhibit.css?v=world-99f03a9984">
+<link rel="stylesheet" href="max.css?v=world-99f03a9984">
+<script type="module" src="../common/base.js?v=world-99f03a9984"></script>
+<style>
+  .hero{min-height:0}
+  .hero .name{grid-column:1 / -1;margin:clamp(8px,3vw,40px) 0 0 -.05em;font:900 var(--fs-hero)/.82 var(--face-display);letter-spacing:-.06em}
+  .hero .name span{display:block}
+  .hero .name span + span{margin-left:14vw}
+  .hero .goya{grid-column:9 / span 3;margin-top:clamp(24px,4vw,64px);rotate:1.5deg}
+  .hero .wall{grid-column:1 / span 6;margin-top:clamp(16px,4vw,56px);position:relative;z-index:1}
+  .hero .wall .an{max-width:20ch;margin:0 0 18px}
+  .hero .cut{--cut-top:clamp(420px,36vw,560px);--cut-left:68%;--cut-w:36%;--cut-h:clamp(300px,32vw,460px)}
+  .hero .cut canvas.ht{opacity:.85}
+  .hero .super{right:-2vw;bottom:-4vw;--super-size:min(26vw,440px)}
+  .rooms .cut.second{--cut-top:260px;--cut-left:-10%;--cut-w:60%;--cut-h:640px;--cut-poly:polygon(0 0,82% 0,100% 100%,0 100%)}
+  .rooms .super{left:-1vw;top:-2vw;--super-size:min(24vw,400px)}
+  .rooms-h{grid-column:1 / -1;margin:0;position:relative;z-index:1;font-size:var(--fs-hero)}
+  .rooms-intro{grid-column:8 / span 5;align-self:end;margin:0;max-width:46ch;position:relative;z-index:1}
+  .salon{position:relative;z-index:1}
+  /* the ground is a living medium: rooms let it through; the canvas sits under everything */
+  .medium-ground{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;image-rendering:auto}
+  html.medium-on .room{background:transparent}
+  html.medium-on .gridded > .room-in::before{display:none}
+  /* open water: a band of bare ground the page leaves for the medium, under the hero and beside the claim */
+  .hero .open-water{grid-column:7 / span 2;min-height:clamp(200px,22vw,340px);margin-top:clamp(24px,4vw,64px);align-self:start}
+  .hero{padding-bottom:clamp(96px,12vw,200px)}
+  @media (max-width:860px){
+    .hero .name span + span{margin-left:8vw}
+    .hero .goya{position:relative;right:auto;top:auto;width:min(220px,60%);margin:16px 0 0 auto;grid-column:1 / -1}
+    .hero .wall,.rooms-h,.rooms-intro{grid-column:1 / -1}
+    .hero .open-water{grid-column:1 / -1;min-height:clamp(140px,40vw,220px);margin-top:8px}
+    .hero .cut{--cut-top:26vw;--cut-left:22%;--cut-w:90%;--cut-h:44vw}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#rooms">Skip to the work</a>
+<header class="o-hand" aria-label="Site">
+  <a class="o-home" href="../../directions/cs-max/index.html">Zain Dana Harper</a>
+  <a data-o="band" href="../../../universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-sound aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="../../assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="../../directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="../../directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/site-index.html">Plain index</a> <a href="../../../universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+
+<main>
+  <section class="room gridded hero" aria-labelledby="name" data-medium="thin">
+    <div class="cut pour" data-art><img decoding="async" data-halftone="5" data-halftone-invert data-halftone-y=".35" src="../../assets/goya-nobody-1600.webp" width="1600" height="2355" alt=""></div>
+        <div class="room-in">
+      <span class="reg tl" aria-hidden="true" data-art></span>
+      <h1 class="name inverts" id="name" data-display="torn" data-opt-under="../../assets/deep-field-1600.webp"><span>Zain Dana</span><span>Harper</span></h1>
+      <div class="wall">
+        <p class="an">Open tools that check AI answers, prose and the posts around you. The engine, game and films are built beside them.</p>
+      </div>
+      <div class="open-water" data-medium-spring aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="frieze" data-art aria-hidden="true" data-alive="livestill" data-parallax="0.01">
+    <img decoding="async" data-drift="-0.12" data-axis="x" src="../../assets/muybridge-758-1600.webp" width="1600" height="1200" alt="">
+  </div>
+
+  <section class="room gridded rooms" id="rooms" aria-labelledby="rooms-h" data-medium="viscous">
+        <div class="room-in">
+            <h2 class="rooms-h knock" id="rooms-h" style="--plate:url(../../assets/ferriss-zoning-1922-1600.webp);--plate-pos:50% 30%">The rooms</h2>
+      <ul class="salon">
+        <li style="--w:7">
+          <div class="specimen cropped" style="--h:340px"><p class="big" aria-label="Answer: 42. Record: 41.">42<span style="opacity:.28"> / 41</span></p><span class="stamp over">Fail, held</span></div>
+          <div class="label"><h3 data-vt="flywheel"><a class="slabhover" href="flywheel.html">Flywheel</a></h3><p>Catch a wrong answer before your team acts on it.</p>
+            <details class="tour"><summary>Show me</summary><div class="answer"><pre>tests_passed: 42, source: the test record</pre><p data-verdict="drift">Fail, held</p><p>The record says 41. <a href="flywheel.html">Run the three checks</a>.</p></div></details></div>
+        </li>
+        <li style="--w:5;--drop:80px">
+          <div class="specimen cropped" style="--h:300px"><p class="prose"><span data-sev="medium">It is important to note that</span> <span class="clean">this release</span> <span data-sev="high">really</span> <span class="clean">represents a significant step forward.</span></p></div>
+          <div class="label"><h3><a class="slabhover" href="/articulate.html">Articulate</a></h3><p>Find the filler in your writing, line by line.</p></div>
+        </li>
+        <li style="--w:4">
+          <div class="specimen cropped" style="--h:240px"><p class="mid">state-owned,<br>Russia</p><span class="tag" style="position:absolute;right:10%;bottom:12%;rotate:6deg">Wikidata</span></div>
+          <div class="label"><h3><a class="slabhover" href="https://github.com/HarperZ9/daylight-commons">Daylight Commons</a></h3><p>See who is behind a reply before you believe it.</p></div>
+        </li>
+        <li style="--w:4;--drop:48px">
+          <div class="specimen cropped" style="--h:240px"><p class="tt">load_config touches FileSystem
+and never said so</p></div>
+          <div class="label"><h3><a class="slabhover" href="/buildlang.html">BuildLang</a></h3><p>Know what a program can touch before it runs.</p></div>
+        </li>
+        <li style="--w:4">
+          <div class="specimen cropped" style="--h:240px"><p class="big" data-fs="48">0.135</p><span class="stamp" style="--stamp:var(--ink);position:absolute;bottom:14%;rotate:-4deg">over 0.12</span></div>
+          <div class="label"><h3><a class="slabhover" href="/raw.html">raw-native</a></h3><p>Lights each frame twice and tells you how far the fast one drifted.</p></div>
+        </li>
+        <li style="--w:6">
+          <div class="specimen cropped" style="--h:220px"><p class="mid" data-display="chladni" data-modes="2,5" data-cell="44" data-fs="96">Low Water</p></div>
+          <div class="label"><h3><a class="slabhover" href="/raw.html">Low Water</a></h3><p>A narrative game painted and played on raw-native.</p></div>
+        </li>
+        <li style="--w:6;--drop:64px">
+          <div class="specimen cropped" style="--h:220px"><p class="mid" id="films" data-display="spectrogram" data-fs="96">Films</p></div>
+          <div class="label"><h3><a class="slabhover" href="/publications.html">Essays and films</a></h3><p>Investigations and short films on how claims get checked, and who checks them.</p>
+            <button type="button" class="stamp-btn" data-play-letter="films" hidden>Play the word</button></div>
+        </li>
+        <li style="--w:12">
+          <div class="label"><h3><a class="slabhover" href="/hire.html">Work and CV</a></h3><p>Support and QA, evaluation tooling and field work.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <details>
+    <summary>Archive credits</summary>
+    <ul>
+      <li>Francisco Goya, <cite>Nobody knows himself</cite>, 1797 to 1799. Art Institute of Chicago, CC0. <a href="https://www.artic.edu/artworks/123767">Source</a></li>
+      <li>HMSO Store, Sighthill, Edinburgh, 1950. Public domain. <a href="https://commons.wikimedia.org/wiki/File:HMSO_Store,_Sighthill,_Edinburgh_1950.jpg">Source</a></li>
+      <li>Hugh Ferriss, zoning study, 1922. Public domain. Eadweard Muybridge, plate 758, 1887, CC0. Columbia disc record, 1901, public domain.</li>
+      <li>"The rooms" is cut from the Leavenworth fingerprint card, the 1900 Manhattan district map, the Hubble Deep Field and the Ferriss study. All public domain; sources in CREDITS.md.</li>
+    </ul>
+  </details>
+  <a href="flywheel.html">Flywheel</a>
+  <a href="exhibit.html">A room</a>
+  <a href="../../decisions.html">Decisions for the author</a>
+</footer>
+<script>/* trial switch for picking the masthead material by eye: ?t=raked|torn|light */(function(){var t=new URLSearchParams(location.search).get("t");if(t)document.getElementById("name").dataset.display=t;})();</script>
+<script type="module" src="../../../alive/alive.js?v=world-99f03a9984"></script>
+<script type="module" src="../common/flow/ground.js?v=world-99f03a9984"></script>
+</body>
+</html>

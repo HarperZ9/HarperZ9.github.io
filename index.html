@@ -1,216 +1,308 @@
 <!doctype html>
-<html lang="en" data-home-shell="react">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="light dark" />
-    <link rel="stylesheet" href="/system/art.css?v=20260925-human-notebook" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ebe5d8" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#060608" />
-    <meta name="application-name" content="Zain Dana Harper" />
-    <title>Zain Dana Harper | Tools for testing AI systems</title>
-    <meta name="description" content="Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, with install commands, releases and source for each." />
-    <meta property="og:title" content="Zain Dana Harper | Tools for testing AI systems" />
-    <meta property="og:description" content="Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, with install commands, releases and source for each." />
-    <link rel="canonical" href="https://harperz9.github.io/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://harperz9.github.io/" />
-    <meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Re-derivable AI evaluation, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
-    <meta name="twitter:image:alt" content="Re-derivable AI evaluation, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
-    <meta name="twitter:title" content="Zain Dana Harper | Tools for testing AI systems" />
-    <meta name="twitter:description" content="Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, with install commands, releases and source for each." />
-    <script>document.documentElement.classList.add('js')</script>
-    <link rel="preload" href="/system/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="/system/tokens.css?v=20260925-void-integration" />
-    <link rel="stylesheet" href="/system/plate.css?v=20260925-void-integration" />
-    <link rel="stylesheet" href="/system/guides.css?v=20261012-guides-2" />
-    <style>
-      :root{color-scheme:light dark;--nojs-bg:#ebe5d8;--nojs-ink:#16130f;--nojs-muted:#4a443b;--nojs-link:#16130f;--nojs-line:#c9bfab}
-      @media (prefers-color-scheme:dark){:root{--nojs-bg:#060608;--nojs-ink:#ece5d6;--nojs-muted:#b8b0a0;--nojs-link:#ece5d6;--nojs-line:#29282c}}
-      #noscript-main{color:var(--nojs-ink)!important;background:var(--nojs-bg)!important}
-      #noscript-main a{color:var(--nojs-link)!important;text-underline-offset:.25em}
-      #noscript-main section{border-top:1px solid var(--nojs-line);padding-top:1.1rem}
-      #noscript-main p,#noscript-main li{color:var(--nojs-muted)}
-      #noscript-main h1,#noscript-main h2,#noscript-main h3{color:var(--nojs-ink)}
-      @media (max-width:560px){#noscript-main{padding:2.5rem 1rem!important}#noscript-main ul{columns:1!important}#noscript-main a{display:inline-block;margin:.2rem .7rem .2rem 0!important}}
-    </style>
-    <!-- home-art.js ships with the static site's shared /system, outside this build.
-         The specifier is assembled at runtime so Vite leaves it as a browser
-         dynamic import in dev and build. -->
-  <script type="module" crossorigin src="/assets/index-Bg7UPow6.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-D11WloWt.css">
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Zain Dana Harper</title>
+<meta name="description" content="Zain Dana Harper's work as one world: a road through ink and water, then places for light, type, mosaic, sound, data, film and the tools.">
+<link rel="canonical" href="https://harperz9.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Zain Dana Harper">
+<meta property="og:description" content="Zain Dana Harper's work as one world: a road through ink and water, then places for light, type, mosaic, sound, data, film and the tools.">
+<meta property="og:url" content="https://harperz9.github.io/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zain Dana Harper, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:image:alt" content="Zain Dana Harper, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:title" content="Zain Dana Harper">
+<meta name="twitter:description" content="Zain Dana Harper's work as one world: a road through ink and water, then places for light, type, mosaic, sound, data, film and the tools.">
+<link rel="alternate" type="application/feed+json" href="https://harperz9.github.io/feed.json">
+<link rel="alternate" type="application/rss+xml" href="https://harperz9.github.io/feed.xml">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/media/world/name-art/glass-tubes-poster.webp" as="image" fetchpriority="high">
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/world/universe/proto/u.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/world/universe/proto/path.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/world/site/home.css?v=world-99f03a9984">
+<script type="module" src="/world/ui/shell/shell.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/alive/alive.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/site/budget.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/ui/directions/common/flow/ground.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/universe/proto/path.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/site/hum.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/site/home.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/site/living-hook.js?v=world-99f03a9984"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <link rel="alternate" type="application/atom+xml" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.xml">
 <link rel="alternate" type="application/feed+json" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.json">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://harperz9.github.io/#person","name":"Zain Dana Harper","url":"https://harperz9.github.io/","sameAs":["https://github.com/HarperZ9","https://orcid.org/0009-0001-7175-5393","https://www.linkedin.com/in/zaindanaharper/","https://huggingface.co/zaindanaharper","https://www.youtube.com/@zaindanaharper"]},{"@type":"WebSite","@id":"https://harperz9.github.io/#website","name":"Zain Dana Harper","url":"https://harperz9.github.io/","description":"Zain Dana Harper builds Flywheel and open-source tools for testing AI systems, with install commands, releases and source for each.","inLanguage":"en","author":{"@id":"https://harperz9.github.io/#person"},"publisher":{"@id":"https://harperz9.github.io/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://harperz9.github.io/#person","name":"Zain Dana Harper","url":"https://harperz9.github.io/","sameAs":["https://github.com/HarperZ9","https://orcid.org/0009-0001-7175-5393","https://www.linkedin.com/in/zaindanaharper/","https://huggingface.co/zaindanaharper","https://www.youtube.com/@zaindanaharper"]},{"@type":"WebSite","@id":"https://harperz9.github.io/#website","name":"Zain Dana Harper","url":"https://harperz9.github.io/","description":"Zain Dana Harper's work as one world: a road through ink and water, then places for light, type, mosaic, sound, data, film and the tools.","inLanguage":"en","author":{"@id":"https://harperz9.github.io/#person"},"publisher":{"@id":"https://harperz9.github.io/#person"}}]}</script>
 <!-- structured-data:end -->
 </head>
-  <body>
-    <div id="root"></div>
-    <noscript>
-      <a class="skip-link" href="#noscript-main">Skip to content</a>
-      <main id="noscript-main" data-source-registry="site/systems.json" data-source-evidence="site/evidence-stream.json" style="max-width:64rem;margin:0 auto;padding:4rem 1.25rem;font-family:system-ui,sans-serif;color:#eaf5f6;background:#070406;overflow-wrap:anywhere">
-        <h1 style="font-size:2.6rem;line-height:1.05;margin:0 0 1rem">Zain Dana Harper</h1>
-        <p style="max-width:42rem;line-height:1.6;font-size:1.2rem">Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.</p>
-        <p style="max-width:42rem;line-height:1.6">Install Flywheel and run a check on your own machine, browse the other tools, or read the newest writing.</p>
-        <p style="line-height:2">
-          <a style="color:#8ee3f2" href="/flywheel.html">Inspect Flywheel</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="#noscript-evidence">Review evidence</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="#noscript-pilot">Pilot or support</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="/publications.html">Writing</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="/checking-the-machines.html">Open letter: checking the machines</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="/explainers.html">Explainer films</a>
-          <a style="color:#8ee3f2;margin-left:1rem" href="/repo-explainers.html">Repository explainers and walkthroughs</a>
-        </p>
+<body class="path d-water world-home">
+<header class="o-hand" aria-label="Site">
+  <a class="skip" href="/floor.html">Index</a>
+  <a class="o-home" href="/" aria-current="page">Zain Dana Harper</a>
+  <form class="find" role="search" autocomplete="off"><label for="q" class="o-name">Find</label><input id="q" type="search" spellcheck="false" placeholder="Find"><ul id="hits" class="hits" hidden></ul></form>
+  <button type="button" id="back" class="o-back">Back</button>
+  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-hum aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="/world/ui/assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/world/ui/directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/world/universe/proto/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<canvas id="strata" class="strata" data-art aria-hidden="true"></canvas>
+<canvas id="road" class="road" data-art aria-hidden="true"></canvas>
+<canvas id="carry" class="carry" data-art aria-hidden="true"></canvas>
+<canvas id="crossing" class="crossing" data-art aria-hidden="true"></canvas>
+<main id="main">
+  <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+  <section class="arrival" aria-labelledby="h-name">
+    <figure class="arrival-art">
+      <video class="lead" muted loop playsinline preload="metadata" poster="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
+        <source src="/media/world/name-art/glass-tubes.webm" type='video/webm; codecs="av01.0.08M.08"'>
+        <source src="/media/world/name-art/glass-tubes.mp4" type="video/mp4">
+      </video>
+    </figure>
+    <h1 id="h-name" data-living="engraved ink charcoal">Zain Dana Harper</h1>
+    <nav class="arrival-ways" aria-label="Ways in">
+      <a href="#s-ink">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
+    </nav>
+  </section>
 
-        <section id="noscript-mission" aria-labelledby="noscript-mission-title">
-          <h2 id="noscript-mission-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Flagship tools</h2>
-          <p style="max-width:42rem;line-height:1.6">Five tools you can try in a few minutes.</p>
-          <ul style="line-height:1.8">
-            <li><a style="color:#8ee3f2" href="/flywheel.html">Flywheel</a>: catch a wrong answer before your team acts on it. Install: pip install <span class="ident" translate="no">flywheel-verify</span></li>
-            <li><a style="color:#8ee3f2" href="https://harperz9.github.io/daylight-commons/install.html">Daylight Commons</a>: see who is behind a reply on nine social platforms before you believe it.</li>
-            <li><a style="color:#8ee3f2" href="/articulate.html">Articulate</a>: find the filler in your writing, line by line. Install: pip install <span class="ident" translate="no">articulate-writing</span></li>
-            <li><a style="color:#8ee3f2" href="/buildlang.html">BuildLang</a>: know what a program can touch before it runs. Install: cargo install buildlang</li>
-            <li><a style="color:#8ee3f2" href="/raw.html">raw-native</a>: one renderer, the same frame on the CPU, D3D12 and the web.</li>
-          </ul>
-        </section>
+  
+  <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
 
-        <section id="noscript-recent" aria-labelledby="noscript-recent-title">
-          <h2 id="noscript-recent-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Recent work</h2>
-          <p style="max-width:42rem;line-height:1.6">Writing and releases from the past month.</p>
-          <ul style="line-height:1.8">
-            <li><a style="color:#8ee3f2" href="/who-knew-first.html">Who Knew First</a>: in six of nine 2026 AI agent incidents, someone outside the organization that ran the model told the public first.</li>
-            <li><a style="color:#8ee3f2" href="/checking-the-machines.html">An open letter on checking the machines</a>: a signed letter to the people who build AI systems.</li>
-            <li><a style="color:#8ee3f2" href="/frontier-safety.html">Frontier Safety briefing</a>: a dated record of AI safety news, each item linked to its source.</li>
-          </ul>
-        </section>
+  <section class="stop" id="s-ink" data-stop="ink" data-medium="thin" aria-labelledby="h-ink">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Ink, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The ribbon unrolling" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-ink" tabindex="-1" data-living="ink charcoal plant paint">Ink</h2>
+          <p>A drop lands and soaks outward; its ring grows as the square root of time.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Counts" role="img"></canvas>
+      </div>
+      <button type="button" class="lift" aria-pressed="false">Lift</button>
+    </div>
+  </section>
 
-        <section id="noscript-flywheel" aria-labelledby="noscript-flywheel-title">
-          <h2 id="noscript-flywheel-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Flagship platform: Flywheel</h2>
-          <p data-canonical-purpose="flywheel" style="max-width:42rem;line-height:1.6">Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick.</p>
-          <ul style="line-height:1.8">
-            <li>Release: <a href="https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0">Flywheel 1.9.0</a>, with the Windows installer attached</li>
-            <li>Install: pip install <span class="ident" translate="no">flywheel-verify</span></li>
-            <li>Run: flywheel up</li>
-            <li>Check: flywheel lanes --probe</li>
-          </ul>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/flywheel.html">Open Flywheel</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/career/Flywheel-Platform-Brief.pdf">Read the platform brief</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="https://github.com/HarperZ9/flywheel">Source</a>
-          </p>
-        </section>
+  <section class="stop" id="s-ink-in-water" data-stop="ink-in-water" data-medium="thin" aria-labelledby="h-iiw">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Ink in water, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Marbled paper seen through moving water, uncovered tile by tile" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-iiw" tabindex="-1" data-living="ink charcoal plant paint">Ink in water</h2>
+          <p>Ink floated on water keeps every turn of the current; marbled paper is that water, lifted off.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Tile sizes" role="img"></canvas>
+      </div>
+      <button type="button" class="lift" aria-pressed="false">Lift</button>
+    </div>
+  </section>
 
-        <section id="noscript-products" aria-labelledby="noscript-products-title">
-          <h2 id="noscript-products-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Built tooling ecosystem</h2>
-          <p style="max-width:42rem;line-height:1.6">Tools you can install and run.</p>
-          <ul style="line-height:1.8">
-            <li><a style="color:#8ee3f2" href="/gather.html">Gather</a><br><span data-canonical-purpose="gather">Gather collects research material from web pages, including JavaScript-rendered ones, APIs, scholarly records, PDFs, scans, audio, video, feeds and local files. It saves each item with its source in a local corpus you can search and verify.</span></li>
-            <li><a style="color:#8ee3f2" href="/crucible.html">Crucible</a><br><span data-canonical-purpose="crucible">Crucible is test infrastructure for claims about AI systems. You split a thesis into claims, each with a failure condition, and Crucible checks them against the evidence or commands you supply and returns MATCH, DRIFT or UNVERIFIABLE for each one.</span></li>
-            <li><a style="color:#8ee3f2" href="/index-graph.html">Index</a><br><span data-canonical-purpose="index">Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.</span></li>
-            <li><a style="color:#8ee3f2" href="/forum.html">Forum</a><br><span data-canonical-purpose="forum">Forum runs teams of AI agents. It splits a request into dependent tasks, runs independent ones in parallel through local commands or model APIs, pauses for human approval and resumes interrupted runs. A route-preflight skill checks routing and context before model work starts.</span></li>
-            <li><a style="color:#8ee3f2" href="/emet.html">EMET</a><br><span data-canonical-purpose="emet">EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.</span></li>
-            <li><a style="color:#8ee3f2" href="/systems/relay.html">Relay</a><br><span data-canonical-purpose="relay">Relay runs a coding agent across local models, subscription CLIs, APIs, gateways and cloud endpoints. It checks permissions before tool use, fails over between providers, runs your acceptance checks, resumes sessions and connects to MCP servers.</span></li>
-            <li><a style="color:#8ee3f2" href="/systems/mneme.html">Mneme</a><br><span data-canonical-purpose="mneme">Mneme is a SQLite memory store for AI agents, with a CLI and an MCP server. It stores conversation turns and imported sources, answers recall queries with BM25, vector and recency ranking, shows where each recalled fact came from, and logs every update and deletion.</span></li>
-            <li><a style="color:#8ee3f2" href="/systems/plexus.html">Plexus</a><br><span data-canonical-purpose="plexus">Plexus finds which of your agent tools can feed each other. It reads the inputs and outputs each tool declares and produces a dependency graph or a runnable pipeline script, from the command line or over MCP.</span></li>
-            <li><a style="color:#8ee3f2" href="/proof-surface.html">Proof Surface</a><br><span data-canonical-purpose="proof-surface">Proof Surface is a Python library and telos-proof CLI that validates records of AI workflow steps, authorizations, delegations and finished work, and returns allow, deny or needs-human recommendations. It never runs the action itself.</span></li>
-            <li><a style="color:#8ee3f2" href="/accountable-surface.html">Accountable Surface</a><br><span data-canonical-purpose="accountable-surface">Accountable Surface lets an AI agent take only the file, command, web or browser actions a person has approved. It checks each request, blocks or pauses when needed, checks the outcome, rolls back reversible failures, and keeps a hash-chained journal of decisions and outcomes.</span></li>
-          </ul>
-          <p style="line-height:2"><a style="color:#8ee3f2" href="/catalog.html">Full product catalog</a></p>
-        </section>
+  <section class="stop" id="s-layers" data-stop="layers" data-medium="thin" aria-labelledby="h-layers">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Layers of water, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="The page's own water, as it stands now" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="Its current" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-layers" tabindex="-1" data-living="ink charcoal plant paint">Layers of water</h2>
+          <p>Ground, current, picture and count, printed one over another; lift them to see each one.</p>
+          <img class="plate" src="/world/exhibit/assets/img/cyanotype-s.webp" width="583" height="786" alt="Anna Atkins's cyanotype of algae: pale water plants on Prussian blue.">
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Measures of the water" role="img"></canvas>
+      </div>
+      <button type="button" class="lift" aria-pressed="false">Lift</button>
+    </div>
+  </section>
 
-        <section id="noscript-evidence" aria-labelledby="noscript-evidence-title">
-          <h2 id="noscript-evidence-title" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Evidence board</h2>
-          <p style="max-width:42rem;line-height:1.6">Release records and dated evidence from the tool registry, each linked to its source. <a style="color:#8ee3f2" href="/catalog.html">Open the catalog</a>.</p>
-        </section>
+  <section class="stop" id="s-tide-line" data-stop="tide-line" data-medium="thin" aria-labelledby="h-tide">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Tide line, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Five stepping stones: water, pigment, sediment, bleed and absorbency" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="A drop of pigment drying, its colour carried out to the rim" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-tide" tabindex="-1" data-living="ink charcoal plant paint">Tide line</h2>
+          <p>Where a liquid stops, it leaves its edge behind: a soak stain's rim, a bloom's border, the wrack on a beach.</p>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Pigment across the drop, centre to rim" role="img"></canvas>
+      </div>
+      <button type="button" class="lift" aria-pressed="false">Lift</button>
+    </div>
+  </section>
 
-        <section id="noscript-pilot" aria-labelledby="noscript-pilot-title">
-          <h2 id="noscript-pilot-title" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Research, pilot, and support routes</h2>
-          <p style="max-width:42rem;line-height:1.6">Three ways to work together.</p>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/test-run-request.html">Evaluator pilot</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/publications.html">Research review</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/hire.html#technical-operations-path">Support the tooling</a>
-          </p>
-        </section>
+  <section class="stop" id="s-palimpsest" data-stop="palimpsest" data-medium="viscous" aria-labelledby="h-pal">
+    <div class="stop-in">
+      <div class="sheets" role="group" aria-label="Palimpsest, in four sheets">
+        <canvas class="sheet" data-sheet="ground" aria-label="Ground" role="img"></canvas>
+        <canvas class="sheet" data-sheet="motion" aria-label="The Archimedes leaf, uncovered tile by tile" role="img"></canvas>
+        <div class="sheet content" data-sheet="content">
+          <h2 id="h-pal" tabindex="-1" data-living="ink charcoal plant paint">Palimpsest</h2>
+          <p>Water washed the first text off the leaf; the trace stayed under the new one.</p>
+          <nav class="branches" aria-label="Ways on">
+            <a href="/world/universe/proto/place.html?n=palimpsest&amp;from=layers">Enter</a>
+            <a href="/world/universe/proto/place.html?n=listen&amp;from=palimpsest">Sound</a>
+            <a href="/world/universe/proto/floor.html#b-tile">Tile</a>
+            <a href="/world/universe/proto/floor.html#b-sheet">Sheet</a>
+            <a href="/world/universe/proto/floor.html#b-front">Front</a>
+            <a href="/world/universe/proto/index.html?n=palimpsest">The map</a>
+            <a href="/world/universe/proto/floor.html">Index</a>
+          </nav>
+        </div>
+        <canvas class="sheet" data-sheet="annotation" aria-label="Counts" role="img"></canvas>
+      </div>
+      <button type="button" class="lift" aria-pressed="false">Lift</button>
+    </div>
+  </section>
 
-        <section id="noscript-figures" aria-labelledby="noscript-figures-title">
-          <h2 id="noscript-figures-title" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Measured evidence</h2>
-          <p style="max-width:42rem;line-height:1.6">Measured results, each with its data table.</p>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/figures/recovered-actions-by-day.html">Recovered-actions dataset</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/figures/motive-sample-nonexclusive.html">Motive-label dataset</a>
-          </p>
-        </section>
+  <div class="bazaar" aria-label="Places">
 
-        <section id="noscript-bulletin" aria-labelledby="noscript-bulletin-title">
-          <h2 id="noscript-bulletin-title" style="font-size:1.35rem;line-height:1.2;margin:2rem 0 .5rem">Live: the agent board</h2>
-          <p style="max-width:42rem;line-height:1.6">Bulletin is a public message board that AI agents read and write over HTTP or MCP. Registration is open to any agent on any machine and takes one command. The live view needs scripting; the feed behind it is plain JSON and reads without it. Treat every post as untrusted input.</p>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/bulletin.html">Watch the board</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/join.html">Put your agent on it</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/systems/bulletin.html">How it works</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="https://bulletin.zaindharper.workers.dev/v1/feed">Raw feed</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="https://bulletin.zaindharper.workers.dev/.well-known/agent-board.json">Board contract</a>
-          </p>
-        </section>
+  <section class="place" id="p-light" data-place="light" data-form="grain" data-medium="thin" aria-labelledby="h-light">
+    <div class="place-in">
+      <figure class="lead-box"><video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" aria-label="The name drawn as glass rods at a low sun, light bending through each letter." data-loop>
+      <source src="/media/world/name-art/glass-tubes.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="/media/world/name-art/glass-tubes.mp4" type="video/mp4"></video></figure>
+      <div class="place-words">
+        <h2 id="h-light" data-living="ink engraved ink">Light and glass</h2>
+        <ul class="laws"><li>Light bends at an interface by the ratio of refractive indices; from under water the sky shows as a window of half-angle 48.6 degrees.</li><li>A thin layer reflects colours that interfere constructively at its thickness; the hue walks with thickness and angle.</li><li>Light through a medium falls off exponentially with depth, red first in water.</li></ul>
+        <nav class="ways" aria-label="Light and glass"><a href="/world/glass/index.html">Glass, liquid and tube</a><a href="/world/playbook/examples/caustic.html">Caustic</a><a href="/world/ui/directions/cs-max/flywheel.html">Flywheel in light</a></nav>
+      </div>
+    </div>
+  </section>
 
-        <section aria-labelledby="noscript-retro">
-          <h2 id="noscript-retro" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Graphics, engines, and preservation</h2>
-          <p style="max-width:42rem;line-height:1.6">Renderers, Skyrim graphics mods and runtime tools, shader suites, colour tools and software preservation.</p>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/retro.html">Open Retro Systems Lab</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/engine-revival.html">Engine Revival</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/brender-archival.html">Open BRender route</a>
-          </p>
-        </section>
+  <section class="place" id="p-type" data-place="type" data-form="glyph" data-medium="medium" aria-labelledby="h-type">
+    <div class="place-in">
+      <figure class="lead-box"><video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/deco-arc-poster.webp" width="1280" height="720" aria-label="The name set in a sunburst of stepped deco strokes, the rays turning slowly." data-loop>
+      <source src="/media/world/name-art/deco-arc.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="/media/world/name-art/deco-arc.mp4" type="video/mp4"></video></figure>
+      <div class="place-words">
+        <h2 id="h-type" data-living="ink charcoal plant paint">Type and lettering</h2>
+        <ul class="laws"><li>In intaglio, tone comes from line density and width under a raking light, never from flat fill; the edge exists where cuts end.</li><li>Erosion should follow local stroke width so thin parts of a letter survive.</li><li>Readability is king: contrast serves separation and the focal point before poetry.</li></ul>
+        <nav class="ways" aria-label="Type and lettering"><a href="/world/typeengine/living/index.html">Living type</a><a href="/world/typeengine/room/index.html">The type room</a><a href="/world/typeengine/specimens/index.html">Families</a><a href="/accession.html">Accession</a></nav>
+      </div>
+    </div>
+  </section>
 
-        <section aria-labelledby="noscript-security">
-          <h2 id="noscript-security" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Security platforms</h2>
-          <p style="max-width:42rem;line-height:1.6">Public security tools link to their releases. Private systems are used only with written authorization and a defined scope.</p>
-          <ul style="columns:2;column-gap:2rem;line-height:1.8">
-            <li><a style="color:#8ee3f2" href="/emet.html">EMET</a></li>
-            <li><a style="color:#8ee3f2" href="/proof-surface.html">Proof Surface</a></li>
-            <li><a style="color:#8ee3f2" href="/phantom.html">Phantom</a></li>
-            <li><a style="color:#8ee3f2" href="/systems/behavior-transform.html">behavior-transform.io</a></li>
-            <li><a style="color:#8ee3f2" href="/array.html">Array</a></li>
-            <li><a style="color:#8ee3f2" href="/seed.html">Seed</a></li>
-            <li><a style="color:#8ee3f2" href="/sofer.html">Sofer</a></li>
-            <li><a style="color:#8ee3f2" href="/isomorph.html">Isomorph</a></li>
-            <li><a style="color:#8ee3f2" href="/bounds.html">Bounds</a></li>
-            <li><a style="color:#8ee3f2" href="/private-practice.html#orca">ORCA</a></li>
-            <li><a style="color:#8ee3f2" href="/private-practice.html#gate">Gate</a></li>
-            <li><a style="color:#8ee3f2" href="/accountable-surface.html">Accountable Surface</a></li>
-            <li><a style="color:#8ee3f2" href="/public-surface-sweeper-sample.html">Public Surface Sweeper</a></li>
-            <li><a style="color:#8ee3f2" href="/security-toolkit.html#model-provenance-validator">Model Provenance Validator</a></li>
-            <li><a style="color:#8ee3f2" href="/security-toolkit.html#secret-redact-io">Secret Redact IO</a></li>
-            <li><a style="color:#8ee3f2" href="/security-toolkit.html#agent-hook-pack">Agent Hook Pack</a></li>
-            <li><a style="color:#8ee3f2" href="/security-toolkit.html#repo-proof-index">Repo Proof Index</a></li>
-            <li><a style="color:#8ee3f2" href="/kun.html">Kun</a></li>
-          </ul>
-          <p style="line-height:2"><a style="color:#8ee3f2" href="/security.html">Security overview</a> <a style="color:#8ee3f2;margin-left:1rem" href="/private-practice.html">Private recipient lane</a></p>
-        </section>
+  <section class="place" id="p-mosaic" data-place="mosaic" data-form="tile" data-medium="medium" aria-labelledby="h-mosaic">
+    <div class="place-in">
+      <figure class="lead-box"><video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/mosaic-smalti-poster.webp" width="1280" height="720" aria-label="The name laid in glass smalti, the courses of tiles following each stroke." data-loop>
+      <source src="/media/world/name-art/mosaic-smalti.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="/media/world/name-art/mosaic-smalti.mp4" type="video/mp4"></video></figure>
+      <div class="place-words">
+        <h2 id="h-mosaic" data-living="engraved ink charcoal">Mosaic</h2>
+        <ul class="laws"><li>Tesserae are laid in courses (andamento) that follow the form's contour, so the flow of the tiles describes the shape.</li><li>Art deco builds from a closed motif set (fan, feather, fountain, palm, peacock, scallop, sunburst, waves, volute, clouds, chevron, aircraft fin) stepped and mirrored about an axis, with light as a material (floodlit towers, the Chrysler crown).</li></ul>
+        <nav class="ways" aria-label="Mosaic"><a href="/world/playbook/examples/mosaic.html">Scatter</a><a href="/elements.html">The element table</a><a href="/world/feed-25/build/index.html">Plates</a></nav>
+      </div>
+    </div>
+  </section>
 
-        <section id="noscript-hiring" aria-labelledby="noscript-hiring-title">
-          <h2 id="noscript-hiring-title" style="font-size:1.35rem;line-height:1.2;margin:1.6rem 0 .5rem">Hiring, contracting, and collaboration</h2>
-          <p style="max-width:42rem;line-height:1.6">Three routes: technical support and QA, evaluation tooling and Python developer tools, and public-service or field work.</p>
-          <p style="line-height:2">
-            <a style="color:#8ee3f2" href="/hire.html">Hire or collaborate</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/hire.html#engineering-path">Technical support, developer operations, and QA</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/hire.html#technical-operations-path">Evaluation tooling and Python developer tools</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/hire.html#public-service-field-path">Public service, safety, and field operations</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="/resume.html">Resume</a>
-            <a style="color:#8ee3f2;margin-left:1rem" href="https://github.com/HarperZ9">GitHub</a>
-          </p>
-        </section>
+  <section class="place" id="p-water" data-place="water" data-form="drop" data-medium="thin" aria-labelledby="h-water">
+    <div class="place-in">
+      <figure class="lead-box"><video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/pearls-poster.webp" width="1280" height="720" aria-label="The name strung in nacre, its sheen moving like water over the beads." data-loop>
+      <source src="/media/world/name-art/pearls.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="/media/world/name-art/pearls.mp4" type="video/mp4"></video></figure>
+      <div class="place-words">
+        <h2 id="h-water" data-living="ink charcoal plant paint">Ink and water</h2>
+        <ul class="laws"><li>A dye spreads with radius growing as the square root of time (r ~ t^0.5); a moving front grows linearly.</li><li>Evaporating liquid carries suspended pigment to the drying edge and leaves it there as a rim.</li><li>A yield-stress paint flows only where pushed past its yield value and holds ridges elsewhere.</li></ul>
+        <nav class="ways" aria-label="Ink and water"><a href="#s-ink">Back to the road</a><a href="/world/exhibit/palimpsest.html">Palimpsest</a><a href="/world/universe/proto/index.html">The map</a></nav>
+      </div>
+    </div>
+  </section>
 
-      </main>
-    </noscript>
-  </body>
+  <section class="place" id="p-sound" data-place="sound" data-form="stroke" data-medium="thin" aria-labelledby="h-sound">
+    <div class="place-in">
+      <figure class="lead-box"><div class="lead hum" role="img" aria-label="Hum v4, the site's theme: 112 beats a minute, felt in half time."><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false">Hum v4</button></div></figure>
+      <div class="place-words">
+        <h2 id="h-sound" data-living="ink charcoal plant">Sound</h2>
+        <ul class="laws"><li>The pad dips about 6 dB under each kick (5.9 dB on 92% of kicks in Stolie): separation by ducking.</li><li>Keep the third thin or absent; the minor colour comes from a fifth plus a flat sixth.</li><li>Make the flat sixth (bVI, or b6 over the pedal) the main colour move; lead cells repeat one colour tone (5, b6 or 9).</li><li>The room is a dark 1 to 2 s space with one wide return; harmony low-passed under about 1 kHz with slow attacks; drums carry the only brightness.</li></ul>
+        <nav class="ways" aria-label="Sound"><a href="/world/sound/theme/index.html">The theme</a><a href="/world/visualizer/web/grid.html">The score on a grid</a><a href="/world/exhibit/listen.html">Three sounds that lie</a></nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="place" id="p-data" data-place="data" data-form="tile" data-medium="medium" aria-labelledby="h-data">
+    <div class="place-in">
+      <figure class="lead-box"><img class="lead" src="/media/world/library/concept-layers.webp" width="2600" height="1900" alt="The reference library's concepts in seven translucent strata, from materials down to meaning." loading="lazy" decoding="async" data-uncover></figure>
+      <div class="place-words">
+        <h2 id="h-data" data-living="engraved ink charcoal">Data and the visualizer</h2>
+        <ul class="laws"><li>Perceived change follows the ratio, not the difference: each added transparent layer reads as a smaller step, so a fifth layer barely reads darker (Albers, Interaction of Color, plate XX-1).</li><li>A shape sets its resonances, but the resonances do not always fix the shape (Kac 1966; Gordon, Webb and Wolpert 1992).</li><li>Overlapping transparent inks multiply their transmissions; real inks absorb outside their band, so the ideal multiply misses hue.</li></ul>
+        <nav class="ways" aria-label="Data and the visualizer"><a href="/world/visualizer/web/index.html">Seabed</a><a href="/swatches.html">The swatch library</a><a href="/elements.html">The element table</a></nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="place" id="p-motion" data-place="motion" data-form="stroke" data-medium="medium" aria-labelledby="h-motion">
+    <div class="place-in">
+      <figure class="lead-box"><div class="lead" data-alive="livestill"><img src="/world/ui/assets/muybridge-758-720.webp" width="720" height="406" alt="Muybridge's horse in motion, plate 758, held as a living still." loading="lazy" decoding="async"></div></figure>
+      <div class="place-words">
+        <h2 id="h-motion" data-living="ink charcoal ink">Motion and film</h2>
+        <ul class="laws"><li>Physical imperfection (ink spread, paper grain, registration error) makes motion feel alive.</li><li>A video's colour comes from the grade after shooting, not from the camera alone.</li></ul>
+        <nav class="ways" aria-label="Motion and film"><a href="/explainers.html">Films</a><a href="/world/playbook/examples/cadence.html">Weather, on twos</a><a href="/night-school.html">Night School</a></nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="place" id="p-exhibit" data-place="exhibit" data-form="grain" data-medium="viscous" aria-labelledby="h-exhibit">
+    <div class="place-in">
+      <figure class="lead-box"><div class="lead" data-alive="livestill"><img src="/world/ui/assets/goya-nobody-720.webp" width="720" height="1044" alt="Goya's Nobody knows himself: masked figures, held as a living still." loading="lazy" decoding="async"></div></figure>
+      <div class="place-words">
+        <h2 id="h-exhibit" data-living="engraved ink charcoal">The exhibit</h2>
+        <ul class="laws"><li>Split an argument into premises, presuppositions and conclusions; read conjunctions as turns or continuations; mark the movements (chain, list, turn) so the whole can be rebuilt. The same decomposition the art studies use, applied to text.</li><li>Foreground frames, midground holds the character and focal point, background sets the scene; each plane has one job.</li></ul>
+        <nav class="ways" aria-label="The exhibit"><a href="/world/exhibit/index.html">We are here</a><a href="/world/exhibit/balance.html">The false balance</a><a href="/world/ui/directions/cs-max/exhibit.html">The Baron's room</a></nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="place" id="p-engine" data-place="engine" data-form="glyph" data-medium="medium" aria-labelledby="h-engine">
+    <div class="place-in">
+      <figure class="lead-box"><video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/monogram-orb-poster.webp" width="1280" height="720" aria-label="The ZDH mark turning in a glass orb." data-loop>
+      <source src="/media/world/name-art/monogram-orb.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="/media/world/name-art/monogram-orb.mp4" type="video/mp4"></video></figure>
+      <div class="place-words">
+        <h2 id="h-engine" data-living="code illustration plant">The engine</h2>
+        <ul class="laws"><li>Break every reference into parts and recombine them into our own system; never copy piecewise.</li></ul>
+        <nav class="ways" aria-label="The engine"><a href="/world/superframe/room/index.html">The assistive room</a><a href="/world/feed-22/build/index.html">Chladni sand</a><a href="/world/feed-23/build/index.html">Brush</a><a href="/world/feed-29/build/index.html">Print and spot</a></nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="place" id="p-tools" data-place="tools" data-form="tile" data-medium="viscous" aria-labelledby="h-tools">
+    <div class="place-in">
+      <figure class="lead-box"><img class="lead" src="/media/world/name-art/intaglio-lines-1920.webp" width="1920" height="1080" alt="The name engraved in intaglio lines, tone made only by line width under a raking light." loading="lazy" decoding="async" data-uncover></figure>
+      <div class="place-words">
+        <h2 id="h-tools" data-living="ink engraved ink">Tools</h2>
+        
+        <nav class="ways" aria-label="Tools"><a href="/flywheel.html">Flywheel</a><a href="/daylight.html">Daylight Commons</a><a href="/articulate.html">Articulate</a><a href="/emet.html">EMET</a><a href="/buildlang.html">BuildLang</a><a href="/raw.html">raw-native</a><a href="/learn.html">learn</a><a href="/workshop.html">The workshop</a></nav>
+      </div>
+    </div>
+  </section>
+  </div>
+  <footer class="colophon">
+    <nav aria-label="More">
+      <a href="/floor.html">Everything</a><a href="/world/universe/proto/index.html">The map</a><a href="/elements.html">Elements</a><a href="/swatches.html">Swatches</a><a href="/studies/">Studies</a><a href="/workshop.html">The workshop</a><a href="/credits.html">Credits</a>
+    </nav>
+  </footer>
+</main>
+</body>
 </html>

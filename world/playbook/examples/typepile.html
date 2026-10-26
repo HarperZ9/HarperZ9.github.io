@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marry Ideas</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/typepile.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Marry Ideas">
+<meta property="og:description" content="Marry Ideas">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/typepile.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="piece.css?v=world-99f03a9984">
+<style>
+  #words{position:absolute;inset:0;contain:layout style;margin:0;max-width:none;z-index:2;font-weight:600;line-height:1;color:var(--ground);white-space:nowrap;font-size:19px;letter-spacing:0}
+  #words span{position:absolute;left:0;top:0;opacity:0;transform-origin:0 0;text-align:center;overflow:hidden}
+  #words span.dot{font-size:13px;font-weight:700}
+  #words span.hot{color:#fff;font-weight:700}
+  #words span::selection{background:var(--ink);color:var(--ground)}
+  @media (max-width:700px){.stage{height:150svh}}
+  .credit{position:absolute;right:16px;bottom:12px;padding:0;z-index:3}
+</style>
+</head>
+<body>
+<main class="stage">
+  <canvas id="ground" aria-hidden="true"></canvas>
+  <canvas id="pile" aria-hidden="true"></canvas>
+  <h1 class="sr">Marry Ideas</h1>
+  <p id="words" lang="en"></p>
+  <p class="credit">Zain Dana Harper, 23 October 2026</p>
+</main>
+<script type="module" src="typepile.page.js?v=world-99f03a9984"></script>
+</body>
+</html>

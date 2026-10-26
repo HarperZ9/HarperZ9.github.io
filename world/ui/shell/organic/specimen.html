@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-alive-grain="off" data-type="stock" data-lettering="../../../lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Organic components</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/shell/organic/specimen.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Organic components">
+<meta property="og:description" content="Every organic UI component of the shell, in three materials.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/shell/organic/specimen.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Every organic UI component of the shell, in three materials.">
+<link rel="stylesheet" href="../shell.css?v=world-99f03a9984">
+<script type="module" src="../shell.js?v=world-99f03a9984"></script>
+<style>
+  .mats{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .mat{padding:28px 22px 32px;background:var(--m-ground);color:var(--m-ink);display:flex;flex-direction:column;gap:22px}
+  .mat h2{margin:0;font:800 var(--fs-5)/1.05 var(--face-display);letter-spacing:-.02em}
+  .mat p{margin:0;font-size:var(--fs-3);line-height:1.55}
+  .mat [data-o="panel"] p{max-width:40ch}
+  .tile{height:120px}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .linky{color:inherit}
+  @media (max-width:860px){.mats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the components</a>
+<header class="o-hand" aria-label="Site">
+  <a class="o-home" href="../../directions/cs-max/index.html">Zain Dana Harper</a>
+  <a data-o="band" href="../../../universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-sound aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="../../assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="../../directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="../../directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/site-index.html">Plain index</a> <a href="../../../universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main">
+  <section class="room" aria-labelledby="t">
+    <div class="room-in">
+      <div class="walltext" style="grid-column:1 / span 8">
+        <h1 id="t">Organic components</h1>
+      </div>
+      <div class="mats">
+        <section class="mat" data-material="torn-paper" aria-labelledby="m1">
+          <span data-o="mark"></span>
+          <h2 id="m1">Torn paper</h2>
+          <div data-o="panel" data-brush="sponge" data-o-ripple><p>Brush-painted, torn.</p></div>
+          <hr data-o="rule">
+          <div class="row"><button type="button" data-o="switch" role="switch" aria-checked="false">Develop</button></div>
+          <label class="o-range-label">Rope <span><input type="range" data-o="range" min="0" max="100" value="40" aria-label="Rope, torn paper"></span></label>
+          <p><a class="linky slabhover" href="#m1" data-receipt="material: torn-paper|edge: torn|ground: brush engine">Receipt</a></p>
+          <div class="tile" data-o-node="compose.noise" data-o="ripple" role="img" aria-label="A fractal noise plate from the super-framework, with water on it"></div>
+        </section>
+        <section class="mat" data-material="ink-brush" aria-labelledby="m2">
+          <span data-o="mark"></span>
+          <h2 id="m2">Ink brush</h2>
+          <div data-o="panel" data-edge="blot" data-o-ripple><p>Blotted ink.</p></div>
+          <hr data-o="rule">
+          <div class="row"><button type="button" data-o="switch" role="switch" aria-checked="true">Develop</button></div>
+          <label class="o-range-label">Rope <span><input type="range" data-o="range" min="0" max="100" value="70" aria-label="Rope, ink brush"></span></label>
+          <p><a class="linky slabhover" href="#m2">Halftone sweep</a></p>
+          <div class="tile" data-o-node="field.fbm" role="img" aria-label="A value-noise terrain from the super-framework"></div>
+        </section>
+        <section class="mat" data-material="rope" aria-labelledby="m3">
+          <span data-o="mark"></span>
+          <h2 id="m3">Rope</h2>
+          <div data-o="panel" data-edge="sand"><p>Settled sand.</p></div>
+          <hr data-o="rule">
+          <div class="row"><button type="button" data-o="switch" role="switch" aria-checked="false">Develop</button></div>
+          <label class="o-range-label">Rope <span><input type="range" data-o="range" min="0" max="100" value="20" aria-label="Rope, rope material"></span></label>
+          <p class="o-word" data-display="glyphcell" style="font:900 var(--fs-6)/1 var(--face-display)">Loading</p>
+          <div class="tile" data-o-node="compose.chladni" role="img" aria-label="A Chladni sheet from the super-framework"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot"><a href="../template.html">The shell</a> <a href="../ADOPT.md">ADOPT.md</a></footer>
+<script type="module" src="../../../alive/alive.js?v=world-99f03a9984"></script>
+</body>
+</html>

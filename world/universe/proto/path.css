@@ -1,0 +1,50 @@
+/* The road: one forward walk. The road canvas and the flow ground sit under the page; each stop is a section
+   whose stage stays in view while the visitor walks through it. Sheets overprint (multiply), except the
+   content sheet, which stays on top at full ink so reading never sits under colour. */
+html, body { font-synthesis: none; font-kerning: normal; }
+body.path { background: transparent; }
+.medium-ground { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; }
+.strata { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; mix-blend-mode: multiply; }
+:root[data-theme="dark"] .strata { mix-blend-mode: screen; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .strata { mix-blend-mode: screen; } }
+.carry { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 3; pointer-events: none; }
+.road { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; mix-blend-mode: multiply; opacity: .8; }
+:root[data-theme="dark"] .road { mix-blend-mode: screen; opacity: .45; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .road { mix-blend-mode: screen; opacity: .45; } }
+
+/* water district: a cool temperature, from the road's district record */
+body.d-water { --d-ink: #1f3d5c; --d-wall: #e6ebe8; --d-accent: #3b7f8f; }
+
+.stop { position: relative; height: 190vh; }
+.stop-in { position: sticky; top: 0; height: 100vh; display: grid; place-content: center; grid-template-columns: min(880px, 100%); justify-items: end; gap: 12px; padding: 96px 16px 32px; }
+.stop-in > .sheets { justify-self: center; }
+.sheets { position: relative; width: 100%; aspect-ratio: 16 / 10; max-height: calc(100vh - 170px); }
+.sheet { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform .758s cubic-bezier(.33,1,.68,1) .224s; }
+canvas.sheet { display: block; mix-blend-mode: multiply; }
+:root[data-theme="dark"] canvas.sheet { mix-blend-mode: screen; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) canvas.sheet { mix-blend-mode: screen; } }
+.sheet.content { display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; padding: clamp(16px, 3vw, 32px); z-index: 2; pointer-events: none; }
+.sheet.content > * { pointer-events: auto; }
+.sheet.content h2 { margin: 0; align-self: flex-start; font: 800 var(--fs-6)/1.05 var(--face-display); letter-spacing: -.04em; color: var(--ink); text-wrap: balance; background: color-mix(in srgb, var(--wall) 88%, transparent); padding: 4px 10px 6px; }
+.sheet.content p { margin: 0; max-width: 46ch; font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); background: color-mix(in srgb, var(--wall) 82%, transparent); padding: 6px 10px; text-wrap: pretty; }
+.sheet.content .plate { position: absolute; right: clamp(16px, 3vw, 32px); top: clamp(16px, 3vw, 32px); width: 30%; height: auto; mix-blend-mode: multiply; opacity: .92; }
+.lift { position: relative; min-height: 44px; padding: 0 14px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1px solid var(--ink); border-radius: 0; cursor: pointer; }
+.lift[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+.stop.lifted .sheet { transition-delay: 0s; }
+
+.branches { display: flex; flex-wrap: wrap; gap: 8px; }
+.branches a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--ink); color: var(--ink); background: var(--wall); text-decoration: none; font: 700 var(--fs-2)/1 var(--face-text); }
+.branches a:first-child { background: var(--ink); color: var(--wall); }
+.branches a:hover, .branches a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+h2:focus { outline: none; }
+h2:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+@media (max-width: 860px) {
+  .stop-in { padding: 24px 12px 96px; }
+  .sheets { aspect-ratio: 3 / 4; max-height: calc(100vh - 160px); }
+  .sheet.content .plate { width: 40%; }
+}
+@media (prefers-reduced-motion: reduce) { .sheet { transition: none; } }
+html.plain .road, html.plain .strata, html.plain .carry, html.plain canvas.sheet { display: none; }
+@media (forced-colors: active) { .road, .strata, .carry { display: none; } .sheets { border: 1px solid CanvasText; } }
+.sr-only { color: #16130f; background: #ffffff; }  /* clipped, but its contrast still reads true to checkers */

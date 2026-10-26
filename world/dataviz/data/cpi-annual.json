@@ -1,0 +1,680 @@
+{
+"series": "CPIAUCNS",
+"title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (1982-84=100), not seasonally adjusted",
+"method": "annual average of 12 monthly values; inflation = change in annual average; cents_left = 100 x CPI(1913)/CPI(year)",
+"raw_sha256": "cfab9b9be4a5d4f06253c4dcc3f7e0b28b1d58837e710dd7cb1fd54a49e7ad7c",
+"rows": [
+{
+"year": 1913,
+"cpi": 9.883,
+"inflation_pct": null,
+"cents_left": 100.0
+},
+{
+"year": 1914,
+"cpi": 10.017,
+"inflation_pct": 1.35,
+"cents_left": 98.67
+},
+{
+"year": 1915,
+"cpi": 10.108,
+"inflation_pct": 0.92,
+"cents_left": 97.77
+},
+{
+"year": 1916,
+"cpi": 10.883,
+"inflation_pct": 7.67,
+"cents_left": 90.81
+},
+{
+"year": 1917,
+"cpi": 12.825,
+"inflation_pct": 17.84,
+"cents_left": 77.06
+},
+{
+"year": 1918,
+"cpi": 15.042,
+"inflation_pct": 17.28,
+"cents_left": 65.71
+},
+{
+"year": 1919,
+"cpi": 17.333,
+"inflation_pct": 15.24,
+"cents_left": 57.02
+},
+{
+"year": 1920,
+"cpi": 20.042,
+"inflation_pct": 15.63,
+"cents_left": 49.31
+},
+{
+"year": 1921,
+"cpi": 17.85,
+"inflation_pct": -10.94,
+"cents_left": 55.37
+},
+{
+"year": 1922,
+"cpi": 16.75,
+"inflation_pct": -6.16,
+"cents_left": 59.0
+},
+{
+"year": 1923,
+"cpi": 17.05,
+"inflation_pct": 1.79,
+"cents_left": 57.97
+},
+{
+"year": 1924,
+"cpi": 17.125,
+"inflation_pct": 0.44,
+"cents_left": 57.71
+},
+{
+"year": 1925,
+"cpi": 17.542,
+"inflation_pct": 2.43,
+"cents_left": 56.34
+},
+{
+"year": 1926,
+"cpi": 17.7,
+"inflation_pct": 0.9,
+"cents_left": 55.84
+},
+{
+"year": 1927,
+"cpi": 17.358,
+"inflation_pct": -1.93,
+"cents_left": 56.94
+},
+{
+"year": 1928,
+"cpi": 17.158,
+"inflation_pct": -1.15,
+"cents_left": 57.6
+},
+{
+"year": 1929,
+"cpi": 17.158,
+"inflation_pct": 0.0,
+"cents_left": 57.6
+},
+{
+"year": 1930,
+"cpi": 16.7,
+"inflation_pct": -2.67,
+"cents_left": 59.18
+},
+{
+"year": 1931,
+"cpi": 15.208,
+"inflation_pct": -8.93,
+"cents_left": 64.99
+},
+{
+"year": 1932,
+"cpi": 13.642,
+"inflation_pct": -10.3,
+"cents_left": 72.45
+},
+{
+"year": 1933,
+"cpi": 12.933,
+"inflation_pct": -5.19,
+"cents_left": 76.42
+},
+{
+"year": 1934,
+"cpi": 13.383,
+"inflation_pct": 3.48,
+"cents_left": 73.85
+},
+{
+"year": 1935,
+"cpi": 13.725,
+"inflation_pct": 2.55,
+"cents_left": 72.01
+},
+{
+"year": 1936,
+"cpi": 13.867,
+"inflation_pct": 1.03,
+"cents_left": 71.27
+},
+{
+"year": 1937,
+"cpi": 14.383,
+"inflation_pct": 3.73,
+"cents_left": 68.71
+},
+{
+"year": 1938,
+"cpi": 14.092,
+"inflation_pct": -2.03,
+"cents_left": 70.14
+},
+{
+"year": 1939,
+"cpi": 13.908,
+"inflation_pct": -1.3,
+"cents_left": 71.06
+},
+{
+"year": 1940,
+"cpi": 14.008,
+"inflation_pct": 0.72,
+"cents_left": 70.55
+},
+{
+"year": 1941,
+"cpi": 14.725,
+"inflation_pct": 5.12,
+"cents_left": 67.12
+},
+{
+"year": 1942,
+"cpi": 16.333,
+"inflation_pct": 10.92,
+"cents_left": 60.51
+},
+{
+"year": 1943,
+"cpi": 17.308,
+"inflation_pct": 5.97,
+"cents_left": 57.1
+},
+{
+"year": 1944,
+"cpi": 17.592,
+"inflation_pct": 1.64,
+"cents_left": 56.18
+},
+{
+"year": 1945,
+"cpi": 17.992,
+"inflation_pct": 2.27,
+"cents_left": 54.93
+},
+{
+"year": 1946,
+"cpi": 19.517,
+"inflation_pct": 8.48,
+"cents_left": 50.64
+},
+{
+"year": 1947,
+"cpi": 22.325,
+"inflation_pct": 14.39,
+"cents_left": 44.27
+},
+{
+"year": 1948,
+"cpi": 24.042,
+"inflation_pct": 7.69,
+"cents_left": 41.11
+},
+{
+"year": 1949,
+"cpi": 23.808,
+"inflation_pct": -0.97,
+"cents_left": 41.51
+},
+{
+"year": 1950,
+"cpi": 24.067,
+"inflation_pct": 1.09,
+"cents_left": 41.07
+},
+{
+"year": 1951,
+"cpi": 25.958,
+"inflation_pct": 7.86,
+"cents_left": 38.07
+},
+{
+"year": 1952,
+"cpi": 26.55,
+"inflation_pct": 2.28,
+"cents_left": 37.23
+},
+{
+"year": 1953,
+"cpi": 26.767,
+"inflation_pct": 0.82,
+"cents_left": 36.92
+},
+{
+"year": 1954,
+"cpi": 26.85,
+"inflation_pct": 0.31,
+"cents_left": 36.81
+},
+{
+"year": 1955,
+"cpi": 26.775,
+"inflation_pct": -0.28,
+"cents_left": 36.91
+},
+{
+"year": 1956,
+"cpi": 27.183,
+"inflation_pct": 1.53,
+"cents_left": 36.36
+},
+{
+"year": 1957,
+"cpi": 28.092,
+"inflation_pct": 3.34,
+"cents_left": 35.18
+},
+{
+"year": 1958,
+"cpi": 28.858,
+"inflation_pct": 2.73,
+"cents_left": 34.25
+},
+{
+"year": 1959,
+"cpi": 29.15,
+"inflation_pct": 1.01,
+"cents_left": 33.91
+},
+{
+"year": 1960,
+"cpi": 29.575,
+"inflation_pct": 1.46,
+"cents_left": 33.42
+},
+{
+"year": 1961,
+"cpi": 29.892,
+"inflation_pct": 1.07,
+"cents_left": 33.06
+},
+{
+"year": 1962,
+"cpi": 30.25,
+"inflation_pct": 1.2,
+"cents_left": 32.67
+},
+{
+"year": 1963,
+"cpi": 30.625,
+"inflation_pct": 1.24,
+"cents_left": 32.27
+},
+{
+"year": 1964,
+"cpi": 31.017,
+"inflation_pct": 1.28,
+"cents_left": 31.86
+},
+{
+"year": 1965,
+"cpi": 31.508,
+"inflation_pct": 1.59,
+"cents_left": 31.37
+},
+{
+"year": 1966,
+"cpi": 32.458,
+"inflation_pct": 3.02,
+"cents_left": 30.45
+},
+{
+"year": 1967,
+"cpi": 33.358,
+"inflation_pct": 2.77,
+"cents_left": 29.63
+},
+{
+"year": 1968,
+"cpi": 34.783,
+"inflation_pct": 4.27,
+"cents_left": 28.41
+},
+{
+"year": 1969,
+"cpi": 36.683,
+"inflation_pct": 5.46,
+"cents_left": 26.94
+},
+{
+"year": 1970,
+"cpi": 38.825,
+"inflation_pct": 5.84,
+"cents_left": 25.46
+},
+{
+"year": 1971,
+"cpi": 40.492,
+"inflation_pct": 4.29,
+"cents_left": 24.41
+},
+{
+"year": 1972,
+"cpi": 41.817,
+"inflation_pct": 3.27,
+"cents_left": 23.63
+},
+{
+"year": 1973,
+"cpi": 44.4,
+"inflation_pct": 6.18,
+"cents_left": 22.26
+},
+{
+"year": 1974,
+"cpi": 49.308,
+"inflation_pct": 11.05,
+"cents_left": 20.04
+},
+{
+"year": 1975,
+"cpi": 53.817,
+"inflation_pct": 9.14,
+"cents_left": 18.36
+},
+{
+"year": 1976,
+"cpi": 56.908,
+"inflation_pct": 5.74,
+"cents_left": 17.37
+},
+{
+"year": 1977,
+"cpi": 60.608,
+"inflation_pct": 6.5,
+"cents_left": 16.31
+},
+{
+"year": 1978,
+"cpi": 65.233,
+"inflation_pct": 7.63,
+"cents_left": 15.15
+},
+{
+"year": 1979,
+"cpi": 72.575,
+"inflation_pct": 11.25,
+"cents_left": 13.62
+},
+{
+"year": 1980,
+"cpi": 82.408,
+"inflation_pct": 13.55,
+"cents_left": 11.99
+},
+{
+"year": 1981,
+"cpi": 90.925,
+"inflation_pct": 10.33,
+"cents_left": 10.87
+},
+{
+"year": 1982,
+"cpi": 96.5,
+"inflation_pct": 6.13,
+"cents_left": 10.24
+},
+{
+"year": 1983,
+"cpi": 99.6,
+"inflation_pct": 3.21,
+"cents_left": 9.92
+},
+{
+"year": 1984,
+"cpi": 103.883,
+"inflation_pct": 4.3,
+"cents_left": 9.51
+},
+{
+"year": 1985,
+"cpi": 107.567,
+"inflation_pct": 3.55,
+"cents_left": 9.19
+},
+{
+"year": 1986,
+"cpi": 109.608,
+"inflation_pct": 1.9,
+"cents_left": 9.02
+},
+{
+"year": 1987,
+"cpi": 113.625,
+"inflation_pct": 3.66,
+"cents_left": 8.7
+},
+{
+"year": 1988,
+"cpi": 118.258,
+"inflation_pct": 4.08,
+"cents_left": 8.36
+},
+{
+"year": 1989,
+"cpi": 123.967,
+"inflation_pct": 4.83,
+"cents_left": 7.97
+},
+{
+"year": 1990,
+"cpi": 130.658,
+"inflation_pct": 5.4,
+"cents_left": 7.56
+},
+{
+"year": 1991,
+"cpi": 136.192,
+"inflation_pct": 4.23,
+"cents_left": 7.26
+},
+{
+"year": 1992,
+"cpi": 140.317,
+"inflation_pct": 3.03,
+"cents_left": 7.04
+},
+{
+"year": 1993,
+"cpi": 144.458,
+"inflation_pct": 2.95,
+"cents_left": 6.84
+},
+{
+"year": 1994,
+"cpi": 148.225,
+"inflation_pct": 2.61,
+"cents_left": 6.67
+},
+{
+"year": 1995,
+"cpi": 152.383,
+"inflation_pct": 2.81,
+"cents_left": 6.49
+},
+{
+"year": 1996,
+"cpi": 156.85,
+"inflation_pct": 2.93,
+"cents_left": 6.3
+},
+{
+"year": 1997,
+"cpi": 160.517,
+"inflation_pct": 2.34,
+"cents_left": 6.16
+},
+{
+"year": 1998,
+"cpi": 163.008,
+"inflation_pct": 1.55,
+"cents_left": 6.06
+},
+{
+"year": 1999,
+"cpi": 166.575,
+"inflation_pct": 2.19,
+"cents_left": 5.93
+},
+{
+"year": 2000,
+"cpi": 172.2,
+"inflation_pct": 3.38,
+"cents_left": 5.74
+},
+{
+"year": 2001,
+"cpi": 177.067,
+"inflation_pct": 2.83,
+"cents_left": 5.58
+},
+{
+"year": 2002,
+"cpi": 179.875,
+"inflation_pct": 1.59,
+"cents_left": 5.49
+},
+{
+"year": 2003,
+"cpi": 183.958,
+"inflation_pct": 2.27,
+"cents_left": 5.37
+},
+{
+"year": 2004,
+"cpi": 188.883,
+"inflation_pct": 2.68,
+"cents_left": 5.23
+},
+{
+"year": 2005,
+"cpi": 195.292,
+"inflation_pct": 3.39,
+"cents_left": 5.06
+},
+{
+"year": 2006,
+"cpi": 201.592,
+"inflation_pct": 3.23,
+"cents_left": 4.9
+},
+{
+"year": 2007,
+"cpi": 207.342,
+"inflation_pct": 2.85,
+"cents_left": 4.77
+},
+{
+"year": 2008,
+"cpi": 215.303,
+"inflation_pct": 3.84,
+"cents_left": 4.59
+},
+{
+"year": 2009,
+"cpi": 214.537,
+"inflation_pct": -0.36,
+"cents_left": 4.61
+},
+{
+"year": 2010,
+"cpi": 218.056,
+"inflation_pct": 1.64,
+"cents_left": 4.53
+},
+{
+"year": 2011,
+"cpi": 224.939,
+"inflation_pct": 3.16,
+"cents_left": 4.39
+},
+{
+"year": 2012,
+"cpi": 229.594,
+"inflation_pct": 2.07,
+"cents_left": 4.3
+},
+{
+"year": 2013,
+"cpi": 232.957,
+"inflation_pct": 1.46,
+"cents_left": 4.24
+},
+{
+"year": 2014,
+"cpi": 236.736,
+"inflation_pct": 1.62,
+"cents_left": 4.17
+},
+{
+"year": 2015,
+"cpi": 237.017,
+"inflation_pct": 0.12,
+"cents_left": 4.17
+},
+{
+"year": 2016,
+"cpi": 240.007,
+"inflation_pct": 1.26,
+"cents_left": 4.12
+},
+{
+"year": 2017,
+"cpi": 245.12,
+"inflation_pct": 2.13,
+"cents_left": 4.03
+},
+{
+"year": 2018,
+"cpi": 251.107,
+"inflation_pct": 2.44,
+"cents_left": 3.94
+},
+{
+"year": 2019,
+"cpi": 255.657,
+"inflation_pct": 1.81,
+"cents_left": 3.87
+},
+{
+"year": 2020,
+"cpi": 258.811,
+"inflation_pct": 1.23,
+"cents_left": 3.82
+},
+{
+"year": 2021,
+"cpi": 270.97,
+"inflation_pct": 4.7,
+"cents_left": 3.65
+},
+{
+"year": 2022,
+"cpi": 292.655,
+"inflation_pct": 8.0,
+"cents_left": 3.38
+},
+{
+"year": 2023,
+"cpi": 304.702,
+"inflation_pct": 4.12,
+"cents_left": 3.24
+},
+{
+"year": 2024,
+"cpi": 313.689,
+"inflation_pct": 2.95,
+"cents_left": 3.15
+}
+]
+}

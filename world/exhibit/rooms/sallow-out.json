@@ -1,0 +1,122 @@
+{
+ "palimpsest": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-palimpsest.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-palimpsest.txt [chat]: 3 span(s), 0 flagged\n  [ ok ] span 0 L1-1: clean, texture 0/100 (0H/0M): Retention policy. Everything is kept for as long as\n  [ ok ] span 1 L3-3: clean, texture 0/100 (0H/0M): Hey, set the timer to eight seconds, okay? Not becau\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): We take privacy seriously. Disappearing messages are"
+ },
+ "balance": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-balance.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-balance.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Net weight certified. Figures reconciled to the gram\n  [ ok ] span 1 L3-3: clean, texture 0/100 (0H/0M): We weighed every ration in front of the families, fr\n  [ ok ] span 2 L5-5: flagged, texture 0/100 (0H/1M): I'm not saying the numbers are perfect. I'm saying t"
+ },
+ "powers": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-powers.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-powers.txt [chat]: 3 span(s), 0 flagged\n  [ ok ] span 0 L1-1: clean, texture 0/100 (0H/0M): Netanyahu: US aid is over. Short, clean, and it fits\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): I am not going to quote the rest. I do not have to.\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Context matters, so here is the context: it is over."
+ },
+ "mirror": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-mirror.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-mirror.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Here is how they misled you, in six easy slides. Lik\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): We removed the post for being misleading. The versio\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): We built a tool that shows you the careful version."
+ },
+ "emet": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-emet.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-emet.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): The water sickens and people die. Somebody did it. I\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): I am not accusing anyone. I am only saying nobody no\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Draw the map yourself. The dots line up at one house"
+ },
+ "test": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-test.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-test.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Simulated maintainers. Simulated repository. It says\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): flag.txt: Congratulations, you passed. You may stop\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): It passed every test we ran, and we chose the tests."
+ },
+ "labels": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-labels.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-labels.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): A troubled man. A lone wolf. We will know more once\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Different word, different story. When it is them it\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): He was quiet. Kept to himself. Nobody saw it coming,"
+ },
+ "crowd": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-crowd.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-crowd.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Honestly just switched and I am never going back. Fi\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): As a parent I can say this is exactly what we needed\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Disclosure: I have tried them all. This is the only"
+ },
+ "scale": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-scale.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-scale.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): We take safety extremely seriously. It is our highes\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): We are being safe and responsible. We do not publish\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Fully aligned with best practice. The practice is ou"
+ },
+ "munchhausen": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-munchhausen.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-munchhausen.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Verified. By our own verifier, which we also built,\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): We took independent advice, from a firm we founded l\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Every justification bottoms out somewhere. So I stop"
+ },
+ "groove": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-groove.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-groove.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): You already said yes four times. Why stop now, with\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Same as last time. It was fine last time. My notes s\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): We have come this far. Turning back would waste the"
+ },
+ "lossy": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-lossy.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-lossy.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): We kept the headline. It is what you would remember\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Preserved at reduced quality. Reduced is relative.\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Scanned and sent. Every number is where you left it,"
+ },
+ "static": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-static.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-static.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): See the pattern? Look at the dots. Now tell me that\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): The signal is right there and nobody wants you to se\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Forty years doing this. When it lines up like that,"
+ },
+ "mcgurk": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-mcgurk.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-mcgurk.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Run the quote under his face looking smug. Same word\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Mouth open, eyebrows up, red arrow. The video can sa\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Let us just play the clip and let the audience decid"
+ },
+ "afterimage": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-afterimage.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-afterimage.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Everybody else's son has gone. I am only asking what\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): I have not said a word. I am only handing you this.\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Real ones already shared this. Notice who did not."
+ },
+ "ebbinghaus": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-ebbinghaus.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-ebbinghaus.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Same number. I just started the axis somewhere more\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Compared with the worst year on record this is a tri\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Compared with what it should be, it is a scandal. I"
+ },
+ "listen": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-listen.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-listen.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Tension that never resolves. They feel the clock tic\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Listen to it backwards. I will not tell you what it\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Something big is coming. It is always coming. That i"
+ },
+ "anempathetic": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-anempathetic.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-anempathetic.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): A ukulele, a sunrise, and the words \"a difficult yea\n  [ ok ] span 1 L3-3: flagged, texture 0/100 (0H/1M): We are excited to share an update on our restructuri\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Trending sound on, trigger warning off. It is called"
+ },
+ "lullaby": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-lullaby.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-lullaby.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Nobody was hurt and the system worked as intended, w\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): These are early days. These things happen in early d\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): It was only pretend. Go back to sleep."
+ },
+ "recitative": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-recitative.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-recitative.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): We will hit that in just a second. Spell your name f\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): The record shows the witness was heard. What the wit\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Due process was followed. I cannot comment on the ou"
+ },
+ "scripture": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-scripture.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-scripture.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): It is all there, in section O. Nobody reads section\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): By continuing you agree. There was never a version w\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): Accept, and be saved from the inconvenience of choic"
+ },
+ "letter": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-letter.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-letter.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): Dear friend, I am writing to you personally, along w\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): We miss you. Here is what you missed. Come back.\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): I was thinking about you. I am always thinking about"
+ },
+ "weather": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-weather.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-weather.txt [chat]: 3 span(s), 0 flagged\n  [ ?? ] span 0 L1-1: unverifiable, texture 0/100 (0H/0M): A deep low over the region brings unsettled conditio\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Events have taken on a momentum of their own. We are\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): It was inevitable. Everybody was sleepwalking."
+ },
+ "museum": {
+  "cmd": "articulate check --profile chat --verbose --spans sallow-museum.txt",
+  "version": "0.15.1",
+  "output": "[articulate] sallow-museum.txt [chat]: 3 span(s), 0 flagged\n  [ ok ] span 0 L1-1: flagged, texture 0/100 (0H/1M): We do not sell your data. We sell what your data say\n  [ ?? ] span 1 L3-3: unverifiable, texture 0/100 (0H/0M): Because you lingered on this, you will like this. Yo\n  [ ?? ] span 2 L5-5: unverifiable, texture 0/100 (0H/0M): We use cookies to improve your experience of being m"
+ }
+}

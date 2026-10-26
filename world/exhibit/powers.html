@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Powers of Ten, for a Lie</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/powers.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Powers of Ten, for a Lie">
+<meta property="og:description" content="Powers of Ten, for a Lie">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/powers.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-99f03a9984">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-99f03a9984">
+<style>
+  .track { height:calc(62svh * 11 + 100svh); position:relative; }
+  .stage { position:sticky; top:0; height:100svh; display:grid; grid-template-rows:auto minmax(0,1fr) auto; padding:12px 16px; gap:10px; max-width:1100px; margin:0 auto; }
+  h1 { font-size:clamp(22px,4.4vw,38px); }
+  .art { min-height:0; display:flex; gap:20px; align-items:stretch; outline-offset:4px; }
+  .art:focus-visible { outline:3px solid var(--hot); }
+  .read { flex:0 0 clamp(170px,22vw,260px); display:flex; flex-direction:column; justify-content:center; gap:6px; }
+  .read b { font-weight:800; font-size:clamp(44px,7vw,84px); line-height:.95; letter-spacing:-.03em; }
+  .read b sup { font-size:.55em; }
+  .read span { font-weight:600; font-size:clamp(16px,2vw,20px); line-height:1.25; color:var(--muted); }
+  #cvwrap { position:relative; flex:1; min-width:0; min-height:0; display:grid; place-items:center; }
+  #cvwrap canvas { grid-area:1/1; display:block; border-radius:22px; }
+  #dots { pointer-events:none; }
+  .bar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .dots { display:flex; gap:5px; flex:1 1 140px; }
+  .dots i { flex:1; height:6px; background:var(--muted); opacity:.35; }
+  .dots i.on { background:var(--hot); opacity:1; }
+  figcaption { font-size:16px; line-height:1.4; max-width:90ch; }
+  @media (max-width:700px) { .art { flex-direction:column-reverse; gap:8px; } .read { flex:0 0 auto; flex-direction:row; align-items:baseline; gap:12px; } .read b { font-size:40px; } .read span { font-size:16px; } figcaption { font-size:16px; } }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/powers.html</code>.</p>');</script>
+<div class="track" id="track">
+  <div class="stage">
+    <div class="top"><h1>Powers of Ten, for a Lie</h1><a class="back" href="index.html">We are here</a></div>
+    <div class="art" id="art" tabindex="0" role="group" aria-label="Zoom by factors of ten. Scroll, or press the arrow keys, to step through the scales. Hold Shift with the arrow keys to move the attention point that bends the dots.">
+      <div id="cvwrap"><canvas id="z" aria-hidden="true"></canvas><canvas id="dots" aria-hidden="true"></canvas></div>
+      <div class="read" id="read" aria-hidden="true"><b id="exp">10<sup>0</sup></b><span id="nm">one post</span></div>
+    </div>
+    <div>
+      <div class="bar"><button type="button" id="prev">Out</button><div class="dots" id="dotsbar" aria-hidden="true"></div><button type="button" id="next">In</button></div>
+      <p class="sr" id="live" aria-live="polite"></p>
+      <figcaption>FIG. 3. Powers of Ten, for a Lie. After Charles and Ray Eames, Powers of Ten (1977), in structure only. Quote: Benjamin Netanyahu on Channel 10 with Roy Katz, 23 Oct 2026, "it's over, only a question of time", reported by <a href="https://www.ynet.co.il/economy/article/ry6wxet3gx">Ynet</a>; reposted as "is over". Material: Chronicling-era front pages and trade papers, wanted posters and broadsides, telegraph operators, the New York Stock Exchange ticker room, NASA Blue Marble and Black Marble. <a href="credits.html">Credits</a>.</figcaption>
+    </div>
+  </div>
+</div>
+<noscript><p style="padding:16px">This piece needs JavaScript to draw the zoom.</p></noscript>
+<script type="module" src="pieces/powers.js?v=world-99f03a9984"></script>
+<script type="module" src="pieces/deep/powers.js?v=world-99f03a9984"></script>
+</body>
+</html>

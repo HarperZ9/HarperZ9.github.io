@@ -1,0 +1,21 @@
+{
+ "schema": "typeengine.family/1",
+ "id": "current-1",
+ "name": "Current 1",
+ "ground": "#ebe5d8",
+ "skeleton": {
+  "source": "accession", "style": "display", "weight": 640,
+  "modifiers": [
+   { "kind": "width-series", "feed": "data.series", "target": "wd", "range": [0.86, 1.18], "levels": 5 },
+   { "kind": "flow", "amp": 34, "scale": 560, "seed": 30 },
+   { "kind": "swash", "amount": 0.5, "length": 2.6, "turns": 0.62, "ball": 0.55, "perGlyph": 1 }
+  ]
+ },
+ "bindings": { "fill": { "material": "ink", "params": { "color": "#16130f" } } },
+ "inputs": { "data.series": { "values": [1.6, 3.2, 2.1, 1.5, 0.1, 2.3, 3.0, 1.6, 2.1, 1.2, 4.7, 8.0, 4.1, 2.9], "label": "US CPI inflation, December to December", "unit": "%" } },
+ "axes": [
+  { "tag": "wght", "name": "Weight", "min": 400, "max": 860, "default": 640, "target": "skeleton.weight" },
+  { "tag": "FLOW", "name": "Flow", "min": 0, "max": 70, "default": 34, "target": "skeleton.modifiers.1.amp" }
+ ],
+ "recipe": { "made": "by hand, 2026-10-24, to answer the coordinator's critique: a family whose material changes the skeleton" }
+}

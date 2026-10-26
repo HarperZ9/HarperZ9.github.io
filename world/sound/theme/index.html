@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hum: a site theme with a beat</title>
+<link rel="canonical" href="https://harperz9.github.io/world/sound/theme/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hum: a site theme with a beat">
+<meta property="og:description" content="A theme for the site that carries its own sound. An original beat, a dot field that pulses with the 808, type that answers the hats, and a title system. Sound is off until you turn it on.">
+<meta property="og:url" content="https://harperz9.github.io/world/sound/theme/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/world--sound--theme.jpg?v=869b56cafcf7">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Hum: a site theme with a beat, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--sound--theme.jpg?v=869b56cafcf7">
+<meta name="twitter:image:alt" content="Hum: a site theme with a beat, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="description" content="A theme for the site that carries its own sound. An original beat, a dot field that pulses with the 808, type that answers the hats, and a title system. Sound is off until you turn it on.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../base.css?v=world-99f03a9984">
+<link rel="stylesheet" href="theme.css?v=world-99f03a9984">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="back" href="/">Back to the site</a>
+  <nav aria-label="Theme sections"><a href="#pieces">Pieces</a><a href="#titles">Titles</a><a href="#families">Sounds</a><a href="../sound.html">The engine</a></nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="slab hero-slab">
+      <h1 id="hero-title" aria-label="Hum"><span class="ltr" aria-hidden="true">H</span><span class="ltr" aria-hidden="true">u</span><span class="ltr" aria-hidden="true">m</span></h1>
+      <p class="credit mono" id="hero-credit"></p>
+      <p class="lede">A beat that lives in the page. The dots swell with the 808, the letters lean on the hats, and the whole thing stays silent until you say so.</p>
+      <div class="row">
+        <button type="button" id="beatbtn">Turn sound on to hear it</button>
+        <button type="button" id="wanderbtn" aria-pressed="false">Wander</button>
+        <p class="mono readout" id="readout" aria-live="off">Beat is off.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true"><span>Hum</span><span>Pan</span><span>Twin</span><span>Scrape</span><span>Tenfold</span><span>Alias</span><span>Dial</span><span>Lossy</span></div>
+
+  <section class="band" id="pieces" aria-labelledby="h-pieces">
+    <h2 id="h-pieces">Pieces</h2>
+    <p class="lede">Every piece gets one word and a credit line that names what it is about. Built pieces link out. The rest are sounds that exist and exhibits still to make.</p>
+    <ol class="pieces" id="piecelist"></ol>
+  </section>
+
+  <section class="band cut" id="titles" aria-labelledby="h-titles">
+    <h2 id="h-titles">The title system</h2>
+    <p class="lede">The channel we studied names a beat with the artists whose sound it wears, then one word. We keep the shape and turn it around. The line names the families the piece is about, then says what it is: an original type piece. The word is short and concrete.</p>
+    <fieldset class="fam"><legend>Pick what the piece is about</legend><div id="famboxes"></div></fieldset>
+    <div class="row"><button type="button" id="namebtn">Name a piece</button></div>
+    <p class="credit mono big" id="named" role="status">Pick one or two families, then name a piece.</p>
+  </section>
+
+  <section class="band" id="families" aria-labelledby="h-fam">
+    <h2 id="h-fam">One sound for each idea</h2>
+    <p class="lede">Each family in the map has a sound, and the inner signal has five more. They are modules in the engine. Turn sound on, then press one.</p>
+    <div class="grid" id="motifgrid"></div>
+  </section>
+
+  <section class="band" aria-labelledby="h-how">
+    <h2 id="h-how">How it listens</h2>
+    <dl class="how">
+      <div><dt>808</dt><dd>Sends a ring through the dot field. The harder the drive, the further the dots move.</dd></div>
+      <div><dt>Hi-hats</dt><dd>Each hat sets one letter of the title heavy, then lets it go. A roll runs across the letters.</dd></div>
+      <div><dt>Tape dropout</dt><dd>The field fades with the record. In the last bars it does not come back.</dd></div>
+      <div><dt>Reduced motion</dt><dd>The field and the type hold still. The beat still plays if you ask for it, and the readout counts the bars in words.</dd></div>
+    </dl>
+  </section>
+</main>
+<footer class="foot"><p>Hum is made from synthesis only, in our own engine. Archival sound appears in <a href="../sound.html">the engine demo</a>, with its credits.</p><p><a href="#top">Back to the top</a></p></footer>
+<div id="bar"></div>
+<script type="module" src="theme.js?v=world-99f03a9984"></script>
+</body>
+</html>

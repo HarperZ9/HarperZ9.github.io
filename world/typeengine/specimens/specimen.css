@@ -1,0 +1,19 @@
+/* specimens/specimen.css: one family per page, on the shell. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero{grid-column:1 / -1;position:relative}
+.hero canvas{width:100%;height:auto;display:block}
+.hero-name{position:absolute;inset:0;margin:0;opacity:0;font-size:1px;line-height:1}
+.ladder{min-height:420px}.axis-line{min-height:60px}
+.plain .hero-name{position:static;opacity:1;font:800 var(--fs-6,64px)/1 var(--face-display)}
+.ladder{grid-column:1 / -1;display:grid;gap:clamp(10px,2vw,24px);overflow-wrap:anywhere}
+.ladder p{margin:0;line-height:1.02;font-kerning:normal;font-synthesis:none;letter-spacing:-.01em}
+.axis-line{grid-column:1 / -1;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.axis-line p{margin:0;font-size:clamp(28px,4vw,56px);line-height:1;font-synthesis:none}
+.live{grid-column:1 / -1}
+.live canvas{width:100%;height:auto;display:block}
+.listen-row{grid-column:1 / -1;margin:0}
+[hidden]{display:none!important}
+.ladder p{outline:none}.ladder p:focus-visible{box-shadow:inset 0 -2px 0 currentColor}
+.wave{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer;min-height:44px}
+.wave canvas{display:block;width:100%;height:auto}
+.wave:focus-visible{outline:3px solid var(--ink);outline-offset:4px}

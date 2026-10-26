@@ -45,13 +45,14 @@
     {
       "name": "Daylight Commons",
       "repo": "daylight-commons",
-      "version": "3.5.0",
+      "version": "3.6.2",
       "registry": "github",
       "package": "HarperZ9/daylight-commons",
       "downloadUrl": "https://github.com/HarperZ9/daylight-commons/releases/latest",
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Chrome, Edge, Brave, Firefox",
-      "category": "BrowserApplication"
+      "category": "BrowserApplication",
+      "page": "daylight.html"
     },
     {
       "name": "EMET",

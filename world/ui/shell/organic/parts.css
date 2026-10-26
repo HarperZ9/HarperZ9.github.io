@@ -1,0 +1,94 @@
+/* parts.css: the design's own parts as site content: the swatch library and the element table.
+   Quiet by rule: ink on the wall, the measured colours only inside chips, one hot mark (the active element). */
+
+/* ---------- swatches ---------- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:40px 32px}
+.sw-set h3{margin:0 0 14px;font:800 var(--fs-4)/1.1 var(--face-display);letter-spacing:-.01em}
+.sw-row{display:flex;flex-wrap:wrap;gap:10px}
+.sw{display:grid;grid-template-columns:auto;gap:4px;min-width:64px;padding:0 0 4px;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer;font:500 var(--fs-1)/1.25 var(--face-utility, var(--face-text))}
+.sw-ink{display:block;width:64px;height:64px;background:var(--sw);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent)}
+.sw-hex{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.sw-name{color:var(--soft)}
+.sw-ink{position:relative}
+.sw:hover .sw-ink{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 14%,transparent),0 0 0 3px color-mix(in srgb,var(--sw) 28%,transparent),0 0 10px 4px color-mix(in srgb,var(--sw) 22%,transparent)}
+.sw.copied .sw-ink::after{content:"";position:absolute;inset:0;border:2px solid var(--sw);opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .sw .sw-ink{transition:box-shadow 420ms cubic-bezier(.15,.7,.25,1)}       /* the ink bleeds a little past its edge */
+  .sw.copied .sw-ink::after{animation:sw-drop 900ms cubic-bezier(.15,.7,.25,1)}  /* a copy drops a ring that spreads and dries */
+}
+@keyframes sw-drop{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(1.5)}}
+.sw:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.sw.copied .sw-hex{text-decoration:underline;text-decoration-color:var(--drift);text-decoration-thickness:2px;text-underline-offset:3px}
+.sw-src{display:inline-block;margin-top:12px;font:400 var(--fs-1)/1.3 var(--face-utility, var(--face-text));color:var(--soft)}
+.sw-nest{position:relative}
+.sw-nest .sw-ink{width:84px;height:84px}
+.sw-centre{position:absolute;left:24px;top:34px;width:36px;height:36px;background:var(--c);pointer-events:none}
+.sw-over{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
+.sw-over li{display:grid;grid-template-columns:104px auto auto 1fr;align-items:start;gap:12px}
+.sw-over .sw-ink{width:40px;height:40px}
+.sw-stack{position:relative;width:92px;height:56px;flex:none;padding:6px;box-sizing:content-box;background:var(--paper)} /* the inks sit on the measured paper */
+.sw-stack i{position:absolute;top:6px;width:56px;height:56px;border-radius:50%;mix-blend-mode:multiply}
+.sw-stack i:first-child{left:6px;background:var(--a)}
+.sw-stack i:nth-child(2){left:42px;background:var(--b)}
+.sw-stack b{position:absolute;left:42px;top:6px;width:20px;height:56px;background:var(--m);clip-path:ellipse(50% 46% at 50% 50%)}
+.sw-de{align-self:center;letter-spacing:.04em;font:500 var(--fs-1)/1 var(--face-utility, var(--face-text));color:var(--soft);font-variant-numeric:tabular-nums}
+.sw-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+
+/* ---------- element table ---------- */
+.elements{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:36px;align-items:start}
+.el-well{grid-column:2;grid-row:1;position:sticky;top:96px;display:grid;gap:14px}
+.el-canvas{display:block;width:100%;aspect-ratio:4 / 3;background:var(--wall-2)}
+.el-blocks{grid-column:1;grid-row:1;display:grid;gap:28px}
+.el-block h2{margin:0 0 8px;font:700 var(--fs-2)/1 var(--face-text);letter-spacing:.04em;text-transform:lowercase;color:var(--soft);
+  padding-left:10px;border-left:3px solid var(--sheet)}
+.el-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:4px}
+.el{position:relative;display:grid;grid-template-rows:auto 1fr auto;min-height:84px;padding:6px 7px 7px;border:1px solid var(--line);background:none;color:var(--ink);text-align:left;cursor:pointer;
+  font:400 var(--fs-1)/1.15 var(--face-text);transition:background-color var(--dur-quick) var(--ease-standard)}
+.el-n{font-size:var(--fs-1);color:var(--soft);font-variant-numeric:tabular-nums}
+.el-sym{font:800 26px/1 var(--face-display);letter-spacing:-.02em}
+.el-name{font-size:var(--fs-1);line-height:1.3;color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}  /* one line; the full name is in the button's label and the card */
+.el-chip{position:absolute;z-index:1;right:6px;top:7px;width:9px;height:9px;background:var(--c)}
+.el:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.el:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+/* selection is ink moving across the cell: it bleeds in from where the pointer entered, then dries out slowly */
+@property --bleed{syntax:'<percentage>';inherits:false;initial-value:0%}
+.el::before{content:"";position:absolute;inset:-1px;background:var(--ink);pointer-events:none;--bleed:0%;
+  -webkit-mask:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 calc(var(--bleed) - 14%),transparent var(--bleed));
+  mask:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 calc(var(--bleed) - 14%),transparent var(--bleed))}
+.el > :not(.el-chip){position:relative}
+.el.on::before{--bleed:170%}
+.el.on{color:var(--wall);border-color:var(--ink)}
+@media (prefers-reduced-motion:no-preference){
+  .el::before{transition:--bleed 1100ms cubic-bezier(.5,0,.75,0)}             /* drying: slow to start, then gone */
+  .el.on::before{transition:--bleed 520ms cubic-bezier(.15,.7,.25,1)}          /* bleeding: fast, then settling */
+  .el{transition:color 280ms 760ms var(--ease-standard),border-color 900ms 300ms var(--ease-standard)}   /* the type turns back once the ink has dried off it */
+  .el.on{transition:color 220ms 90ms var(--ease-standard),border-color 400ms var(--ease-standard)}
+}
+.el.on .el-n,.el.on .el-name{color:color-mix(in srgb,var(--wall) 78%,transparent)}
+.el.on::after{content:"";position:absolute;left:-1px;right:-1px;bottom:-1px;height:3px;background:var(--drift)}  /* the one hot mark */
+.el-card{display:grid;gap:12px}
+.el-big{margin:0;display:flex;align-items:baseline;gap:12px;font:600 var(--fs-4)/1.1 var(--face-text)}
+.el-big .el-sym{font-size:var(--fs-6)}
+.el-links,.el-refs{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.el-to{font:500 var(--fs-1)/1 var(--face-text);color:var(--ink);background:none;border:1px solid var(--line);padding:8px 10px;min-height:32px;cursor:pointer}
+.el-to:hover{border-color:var(--ink)}
+.el-refs{flex-direction:column;gap:10px}
+.el-refs li{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:start}
+.el-refs img,.el-nothumb{display:block;width:56px;height:56px;object-fit:cover;background:var(--wall-2)}
+.el-refs a{font:500 var(--fs-2)/1.35 var(--face-text);color:var(--ink)}
+.el-by{display:block;font:400 var(--fs-1)/1.35 var(--face-text);color:var(--soft)}
+@media (max-width:520px){.sw-over li{grid-template-columns:104px auto auto}.sw-de{grid-column:1 / -1}}
+@media (max-width:860px){
+  .elements{grid-template-columns:1fr}
+  .el-well{grid-column:1;grid-row:1;position:sticky;top:0;z-index:3;background:var(--wall);padding:8px 0 10px;grid-template-columns:140px 1fr;gap:12px;align-items:start}
+  .el-canvas{aspect-ratio:1}
+  .el-big .el-sym{font-size:var(--fs-6)}
+  .el-refs{display:none}
+  .el-blocks{grid-row:2}
+  .el-cells{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}
+}
+html.plain .el-canvas{display:none}
+
+/* the table is rendered from data after load: hold its room so nothing below it moves (CLS) */
+#elements:empty{min-height:150vh}
+#swatches:empty{min-height:100vh}

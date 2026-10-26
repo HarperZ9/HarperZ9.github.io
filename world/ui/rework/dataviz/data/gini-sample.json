@@ -1,0 +1,537 @@
+{
+"indicator": "SI.POV.GINI",
+"title": "Gini index (World Bank estimate), World Development Indicators",
+"raw_sha256": "ff284dac0d2b322516464b71f82659ad7a992e4b9bd2b836035eb811bdad0681",
+"countries_meta_sha256": "c9acf3932785191a649cbc04c3056af4cf64a236e5c3b49d49be25ddb0440bce",
+"lastupdated": "2026-10-08",
+"method": "countries only (aggregates removed); mean = unweighted mean of countries reporting in that year",
+"yearly": [
+{
+"year": 1990,
+"n": 23,
+"mean": 39.13
+},
+{
+"year": 1991,
+"n": 23,
+"mean": 40.8
+},
+{
+"year": 1992,
+"n": 41,
+"mean": 39.01
+},
+{
+"year": 1993,
+"n": 36,
+"mean": 39.79
+},
+{
+"year": 1994,
+"n": 31,
+"mean": 42.88
+},
+{
+"year": 1995,
+"n": 47,
+"mean": 38.05
+},
+{
+"year": 1996,
+"n": 43,
+"mean": 40.54
+},
+{
+"year": 1997,
+"n": 36,
+"mean": 41.5
+},
+{
+"year": 1998,
+"n": 54,
+"mean": 41.08
+},
+{
+"year": 1999,
+"n": 45,
+"mean": 40.44
+},
+{
+"year": 2000,
+"n": 57,
+"mean": 39.58
+},
+{
+"year": 2001,
+"n": 48,
+"mean": 40.79
+},
+{
+"year": 2002,
+"n": 69,
+"mean": 39.72
+},
+{
+"year": 2003,
+"n": 70,
+"mean": 38.49
+},
+{
+"year": 2004,
+"n": 76,
+"mean": 37.5
+},
+{
+"year": 2005,
+"n": 81,
+"mean": 38.78
+},
+{
+"year": 2006,
+"n": 82,
+"mean": 37.69
+},
+{
+"year": 2007,
+"n": 72,
+"mean": 36.28
+},
+{
+"year": 2008,
+"n": 79,
+"mean": 37.32
+},
+{
+"year": 2009,
+"n": 83,
+"mean": 37.16
+},
+{
+"year": 2010,
+"n": 86,
+"mean": 36.23
+},
+{
+"year": 2011,
+"n": 82,
+"mean": 35.96
+},
+{
+"year": 2012,
+"n": 87,
+"mean": 36.23
+},
+{
+"year": 2013,
+"n": 77,
+"mean": 36.39
+},
+{
+"year": 2014,
+"n": 84,
+"mean": 36.37
+},
+{
+"year": 2015,
+"n": 87,
+"mean": 36.66
+},
+{
+"year": 2016,
+"n": 83,
+"mean": 35.91
+},
+{
+"year": 2017,
+"n": 78,
+"mean": 35.58
+},
+{
+"year": 2018,
+"n": 93,
+"mean": 35.79
+},
+{
+"year": 2019,
+"n": 78,
+"mean": 35.02
+},
+{
+"year": 2020,
+"n": 70,
+"mean": 34.94
+},
+{
+"year": 2021,
+"n": 81,
+"mean": 35.1
+},
+{
+"year": 2022,
+"n": 73,
+"mean": 35.44
+},
+{
+"year": 2023,
+"n": 60,
+"mean": 35.05
+},
+{
+"year": 2024,
+"n": 26,
+"mean": 39.16
+}
+],
+"y2023": {
+"ARG": 42.4,
+"ARM": 27.2,
+"AUT": 31.2,
+"BEL": 26.8,
+"BGR": 39.5,
+"BOL": 42.1,
+"BRA": 51.5,
+"CHE": 33.5,
+"COL": 54.6,
+"CRI": 46.7,
+"CYP": 31.8,
+"CZE": 25.7,
+"DNK": 29.9,
+"DOM": 38.4,
+"ECU": 44.6,
+"ESP": 33.4,
+"EST": 30.7,
+"FIN": 27.4,
+"FRA": 31.8,
+"GEO": 34.8,
+"GRC": 33.4,
+"GTM": 45.2,
+"HND": 46.8,
+"HRV": 30.1,
+"IDN": 36.1,
+"IND": 23,
+"IRL": 29,
+"IRN": 35.9,
+"IRQ": 29.8,
+"ITA": 34.3,
+"KGZ": 27.2,
+"KIR": 24.7,
+"LTU": 36,
+"LUX": 33.6,
+"LVA": 34,
+"MDA": 26.8,
+"MLT": 31.8,
+"NOR": 26.5,
+"PAN": 48.9,
+"PER": 40.7,
+"PHL": 39.3,
+"POL": 28.5,
+"PRT": 33.9,
+"PRY": 44.2,
+"PSE": 36.4,
+"ROU": 29.8,
+"RUS": 33,
+"RWA": 39.4,
+"SLV": 39.8,
+"SRB": 32.8,
+"SVK": 23.8,
+"SVN": 24.7,
+"SWE": 29.3,
+"THA": 33.5,
+"TJK": 38,
+"TUR": 43.7,
+"UGA": 38.2,
+"URY": 40.9,
+"USA": 41.8,
+"UZB": 34.5
+},
+"y2024": {
+"ARG": 42.4,
+"ARM": 27.4,
+"BOL": 40.9,
+"BRA": 50.3,
+"CHL": 43,
+"COL": 54.4,
+"COM": 30.3,
+"CRI": 45.8,
+"DOM": 39,
+"ECU": 45.2,
+"GEO": 33.9,
+"HND": 45.7,
+"IDN": 34.9,
+"KGZ": 27.5,
+"LAO": 34.7,
+"MDA": 26.8,
+"MEX": 42.6,
+"PAK": 33.5,
+"PAN": 49.7,
+"PER": 40.1,
+"PRY": 44.2,
+"THA": 33.3,
+"TJK": 36.1,
+"URY": 40,
+"USA": 41.8,
+"UZB": 34.6
+},
+"countries": {
+"ARG": {
+"name": "Argentina",
+"region": "Latin America & Caribbean"
+},
+"ARM": {
+"name": "Armenia",
+"region": "Europe & Central Asia"
+},
+"AUT": {
+"name": "Austria",
+"region": "Europe & Central Asia"
+},
+"BEL": {
+"name": "Belgium",
+"region": "Europe & Central Asia"
+},
+"BOL": {
+"name": "Bolivia",
+"region": "Latin America & Caribbean"
+},
+"BRA": {
+"name": "Brazil",
+"region": "Latin America & Caribbean"
+},
+"BGR": {
+"name": "Bulgaria",
+"region": "Europe & Central Asia"
+},
+"COL": {
+"name": "Colombia",
+"region": "Latin America & Caribbean"
+},
+"CRI": {
+"name": "Costa Rica",
+"region": "Latin America & Caribbean"
+},
+"HRV": {
+"name": "Croatia",
+"region": "Europe & Central Asia"
+},
+"CYP": {
+"name": "Cyprus",
+"region": "Europe & Central Asia"
+},
+"CZE": {
+"name": "Czechia",
+"region": "Europe & Central Asia"
+},
+"DNK": {
+"name": "Denmark",
+"region": "Europe & Central Asia"
+},
+"DOM": {
+"name": "Dominican Republic",
+"region": "Latin America & Caribbean"
+},
+"ECU": {
+"name": "Ecuador",
+"region": "Latin America & Caribbean"
+},
+"SLV": {
+"name": "El Salvador",
+"region": "Latin America & Caribbean"
+},
+"EST": {
+"name": "Estonia",
+"region": "Europe & Central Asia"
+},
+"FIN": {
+"name": "Finland",
+"region": "Europe & Central Asia"
+},
+"FRA": {
+"name": "France",
+"region": "Europe & Central Asia"
+},
+"GEO": {
+"name": "Georgia",
+"region": "Europe & Central Asia"
+},
+"GRC": {
+"name": "Greece",
+"region": "Europe & Central Asia"
+},
+"GTM": {
+"name": "Guatemala",
+"region": "Latin America & Caribbean"
+},
+"HND": {
+"name": "Honduras",
+"region": "Latin America & Caribbean"
+},
+"IND": {
+"name": "India",
+"region": "South Asia"
+},
+"IDN": {
+"name": "Indonesia",
+"region": "East Asia & Pacific"
+},
+"IRN": {
+"name": "Iran, Islamic Rep.",
+"region": "Middle East, North Africa, Afghanistan & Pakistan"
+},
+"IRQ": {
+"name": "Iraq",
+"region": "Middle East, North Africa, Afghanistan & Pakistan"
+},
+"IRL": {
+"name": "Ireland",
+"region": "Europe & Central Asia"
+},
+"ITA": {
+"name": "Italy",
+"region": "Europe & Central Asia"
+},
+"KIR": {
+"name": "Kiribati",
+"region": "East Asia & Pacific"
+},
+"KGZ": {
+"name": "Kyrgyz Republic",
+"region": "Europe & Central Asia"
+},
+"LVA": {
+"name": "Latvia",
+"region": "Europe & Central Asia"
+},
+"LTU": {
+"name": "Lithuania",
+"region": "Europe & Central Asia"
+},
+"LUX": {
+"name": "Luxembourg",
+"region": "Europe & Central Asia"
+},
+"MLT": {
+"name": "Malta",
+"region": "Middle East, North Africa, Afghanistan & Pakistan"
+},
+"MDA": {
+"name": "Moldova",
+"region": "Europe & Central Asia"
+},
+"NOR": {
+"name": "Norway",
+"region": "Europe & Central Asia"
+},
+"PAN": {
+"name": "Panama",
+"region": "Latin America & Caribbean"
+},
+"PRY": {
+"name": "Paraguay",
+"region": "Latin America & Caribbean"
+},
+"PER": {
+"name": "Peru",
+"region": "Latin America & Caribbean"
+},
+"PHL": {
+"name": "Philippines",
+"region": "East Asia & Pacific"
+},
+"POL": {
+"name": "Poland",
+"region": "Europe & Central Asia"
+},
+"PRT": {
+"name": "Portugal",
+"region": "Europe & Central Asia"
+},
+"ROU": {
+"name": "Romania",
+"region": "Europe & Central Asia"
+},
+"RUS": {
+"name": "Russian Federation",
+"region": "Europe & Central Asia"
+},
+"RWA": {
+"name": "Rwanda",
+"region": "Sub-Saharan Africa"
+},
+"SRB": {
+"name": "Serbia",
+"region": "Europe & Central Asia"
+},
+"SVK": {
+"name": "Slovak Republic",
+"region": "Europe & Central Asia"
+},
+"SVN": {
+"name": "Slovenia",
+"region": "Europe & Central Asia"
+},
+"ESP": {
+"name": "Spain",
+"region": "Europe & Central Asia"
+},
+"SWE": {
+"name": "Sweden",
+"region": "Europe & Central Asia"
+},
+"CHE": {
+"name": "Switzerland",
+"region": "Europe & Central Asia"
+},
+"TJK": {
+"name": "Tajikistan",
+"region": "Europe & Central Asia"
+},
+"THA": {
+"name": "Thailand",
+"region": "East Asia & Pacific"
+},
+"TUR": {
+"name": "Turkiye",
+"region": "Europe & Central Asia"
+},
+"UGA": {
+"name": "Uganda",
+"region": "Sub-Saharan Africa"
+},
+"USA": {
+"name": "United States",
+"region": "North America"
+},
+"URY": {
+"name": "Uruguay",
+"region": "Latin America & Caribbean"
+},
+"UZB": {
+"name": "Uzbekistan",
+"region": "Europe & Central Asia"
+},
+"PSE": {
+"name": "West Bank and Gaza",
+"region": "Middle East, North Africa, Afghanistan & Pakistan"
+},
+"CHL": {
+"name": "Chile",
+"region": "Latin America & Caribbean"
+},
+"COM": {
+"name": "Comoros",
+"region": "Sub-Saharan Africa"
+},
+"LAO": {
+"name": "Lao PDR",
+"region": "East Asia & Pacific"
+},
+"MEX": {
+"name": "Mexico",
+"region": "Latin America & Caribbean"
+},
+"PAK": {
+"name": "Pakistan",
+"region": "Middle East, North Africa, Afghanistan & Pakistan"
+}
+}
+}

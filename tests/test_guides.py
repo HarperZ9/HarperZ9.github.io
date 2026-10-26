@@ -10,9 +10,10 @@ from tools.guides import data, page
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / "media" / "guides"
 HOME = (ROOT / "home" / "src" / "Guides.tsx").read_text(encoding="utf-8")
-PAGES = {p: (ROOT / p).read_text(encoding="utf-8") for p in ("guides.html", "explainers.html", "publications.html", "index.html", "studio.html")}
+PAGES = {p: (ROOT / p).read_text(encoding="utf-8") for p in ("guides.html", "explainers.html", "publications.html", "workshop.html", "studio.html")}
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _without_card_tags(text: str) -> str:
     # tools/guides/page.py writes the page, then site_cards stamps the link-card tags into its head
     # and tools/structured_data.py adds the generated JSON-LD block.
@@ -58,7 +59,7 @@ def test_guides_reach_home_writing_and_studio() -> None:
     # section left the home page; the films live in Night School and on their lesson pages.
     assert "<Guides />" not in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     assert 'href="/night-school.html"' in (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert "/system/guides.css" in PAGES["index.html"]
+    assert "/system/guides.css" in PAGES["workshop.html"]
     assert 'guides.html#tallow' in PAGES["publications.html"]
     assert 'href="guides.html"' in PAGES["studio.html"]
     assert "https://harperz9.github.io/guides.html" in (ROOT / "sitemap.xml").read_text(encoding="utf-8")

@@ -1,0 +1,189 @@
+{
+ "encodedAt": "2026-10-26T01:47:11.864Z",
+ "files": [
+  {
+   "path": "media/world/name-art/intaglio-lines-1920.webp",
+   "bytes": 386854
+  },
+  {
+   "path": "media/world/name-art/intaglio-lines-1920.avif",
+   "bytes": 220228
+  },
+  {
+   "path": "media/world/name-art/intaglio-lines-960.webp",
+   "bytes": 97006
+  },
+  {
+   "path": "media/world/name-art/intaglio-lines-960.avif",
+   "bytes": 52470
+  },
+  {
+   "path": "media/world/name-art/glass-tubes-1920.webp",
+   "bytes": 108374
+  },
+  {
+   "path": "media/world/name-art/glass-tubes-1920.avif",
+   "bytes": 71376
+  },
+  {
+   "path": "media/world/name-art/glass-tubes-960.webp",
+   "bytes": 34728
+  },
+  {
+   "path": "media/world/name-art/glass-tubes-960.avif",
+   "bytes": 26033
+  },
+  {
+   "path": "media/world/name-art/deco-arc-1920.webp",
+   "bytes": 132594
+  },
+  {
+   "path": "media/world/name-art/deco-arc-1920.avif",
+   "bytes": 82161
+  },
+  {
+   "path": "media/world/name-art/deco-arc-960.webp",
+   "bytes": 55500
+  },
+  {
+   "path": "media/world/name-art/deco-arc-960.avif",
+   "bytes": 38080
+  },
+  {
+   "path": "media/world/name-art/pearls-1920.webp",
+   "bytes": 131478
+  },
+  {
+   "path": "media/world/name-art/pearls-1920.avif",
+   "bytes": 193712
+  },
+  {
+   "path": "media/world/name-art/pearls-960.webp",
+   "bytes": 45666
+  },
+  {
+   "path": "media/world/name-art/pearls-960.avif",
+   "bytes": 65671
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti-1920.webp",
+   "bytes": 468020
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti-1920.avif",
+   "bytes": 555205
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti-960.webp",
+   "bytes": 161448
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti-960.avif",
+   "bytes": 200196
+  },
+  {
+   "path": "media/world/name-art/monogram-orb-1920.webp",
+   "bytes": 151976
+  },
+  {
+   "path": "media/world/name-art/monogram-orb-1920.avif",
+   "bytes": 88266
+  },
+  {
+   "path": "media/world/name-art/monogram-orb-960.webp",
+   "bytes": 36176
+  },
+  {
+   "path": "media/world/name-art/monogram-orb-960.avif",
+   "bytes": 19990
+  },
+  {
+   "path": "media/world/name-art/glass-tubes.webm",
+   "bytes": 1193713
+  },
+  {
+   "path": "media/world/name-art/glass-tubes.mp4",
+   "bytes": 295933
+  },
+  {
+   "path": "media/world/name-art/glass-tubes-poster.webp",
+   "bytes": 47580
+  },
+  {
+   "path": "media/world/name-art/deco-arc.webm",
+   "bytes": 1327518
+  },
+  {
+   "path": "media/world/name-art/deco-arc.mp4",
+   "bytes": 317035
+  },
+  {
+   "path": "media/world/name-art/deco-arc-poster.webp",
+   "bytes": 67994
+  },
+  {
+   "path": "media/world/name-art/pearls.webm",
+   "bytes": 2223571
+  },
+  {
+   "path": "media/world/name-art/pearls.mp4",
+   "bytes": 269894
+  },
+  {
+   "path": "media/world/name-art/pearls-poster.webp",
+   "bytes": 64100
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti.webm",
+   "bytes": 4272633
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti.mp4",
+   "bytes": 1195163
+  },
+  {
+   "path": "media/world/name-art/mosaic-smalti-poster.webp",
+   "bytes": 245994
+  },
+  {
+   "path": "media/world/name-art/monogram-orb.webm",
+   "bytes": 1123658
+  },
+  {
+   "path": "media/world/name-art/monogram-orb.mp4",
+   "bytes": 191203
+  },
+  {
+   "path": "media/world/name-art/monogram-orb-poster.webp",
+   "bytes": 56662
+  },
+  {
+   "path": "media/world/sound/hum4-theme.opus",
+   "bytes": 2316433
+  },
+  {
+   "path": "media/world/sound/hum4-theme-hits.json",
+   "bytes": 60922
+  },
+  {
+   "path": "media/world/sound/hum4-theme.m4a",
+   "bytes": 1759606
+  },
+  {
+   "path": "media/world/sound/hum4-calm.opus",
+   "bytes": 719602
+  },
+  {
+   "path": "media/world/sound/hum4-calm-hits.json",
+   "bytes": 1162
+  },
+  {
+   "path": "media/world/sound/hum4-calm.m4a",
+   "bytes": 558664
+  },
+  {
+   "path": "media/world/library/concept-layers.webp",
+   "bytes": 56668
+  }
+ ]
+}

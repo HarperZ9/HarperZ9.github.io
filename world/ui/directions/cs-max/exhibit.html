@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" data-alive-grain="off" data-type="stock" data-lettering="../../../lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>The Baron's Room | Second tour, max</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/directions/cs-max/exhibit.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Baron's Room | Second tour, max">
+<meta property="og:description" content="Direction CS-max: one exhibit room. The Münchhausen trilemma, hung as three objects and the way out.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/directions/cs-max/exhibit.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Direction CS-max: one exhibit room. The Münchhausen trilemma, hung as three objects and the way out.">
+<link rel="preload" href="../../fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../common/base.css?v=world-99f03a9984">
+<link rel="stylesheet" href="../c-exhibit/exhibit.css?v=world-99f03a9984">
+<link rel="stylesheet" href="max.css?v=world-99f03a9984">
+<script type="module" src="../common/base.js?v=world-99f03a9984"></script>
+<style>
+  .door{min-height:min(92vh,900px)}
+  .door .cut{--cut-top:0px;--cut-left:30%;--cut-w:80%;--cut-h:100%;--cut-poly:polygon(30% 0,100% 0,100% 100%,0 100%)}
+  .door h1{grid-column:1 / -1;margin:clamp(56px,6.5vw,96px) 0 0;font:400 var(--fs-hero)/.86 var(--face-carved);letter-spacing:-.02em;max-width:11ch}
+  .door .wall{grid-column:1 / span 5;margin-top:28px;position:relative;z-index:1;background:var(--wall);padding:18px 18px 6px 0}
+  .door .wall .an{margin:0 0 14px}
+  .door .super{right:-2vw;bottom:-2vw;--super-size:min(20vw,340px)}
+  .horns{grid-column:1 / -1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px}
+  .horns > li:nth-child(2){margin-top:72px}
+  .horns svg{width:100%;height:auto;max-height:240px}
+  .horns svg text{font:400 13px var(--face-utility);fill:var(--ink)}
+  .receipts{position:relative;width:100%;height:230px}
+  .receipts span{position:absolute;left:calc(var(--i) * 7%);top:calc(var(--i) * 40px);width:76%;padding:7px 10px 12px;background:#f4f0e6;color:#1d1a15;font:400 13px/1.4 var(--face-utility);box-shadow:0 8px 14px -10px rgba(0,0,0,.5);
+    clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),94% 100%,88% calc(100% - 5px),82% 100%,76% calc(100% - 5px),70% 100%,64% calc(100% - 5px),58% 100%,52% calc(100% - 5px),46% 100%,40% calc(100% - 5px),34% 100%,28% calc(100% - 5px),22% 100%,16% calc(100% - 5px),10% 100%,4% calc(100% - 5px),0 100%)}
+  .decree{font-size:var(--fs-6)!important;letter-spacing:-.02em;rotate:-7deg}
+  .way{grid-column:1 / -1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:24px}
+  .way h2{grid-column:1 / span 6;margin:24px 0 0;font:400 var(--fs-7)/.9 var(--face-carved);letter-spacing:-.01em}
+  .way .reading{grid-column:6 / -1}
+  .door .cut canvas.ht{opacity:.15}
+  @media (max-width:860px){
+    .door .wall,.way h2,.way .reading{grid-column:1 / -1}
+    .horns{grid-template-columns:1fr}.horns > li:nth-child(2){margin-top:0}
+    .door{padding-bottom:200px}.door .cut{--cut-left:0%;--cut-w:110%;--cut-top:calc(100% - 170px);--cut-h:150px;--cut-poly:polygon(0 30%,100% 0,100% 100%,0 100%)}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the room</a>
+<header class="o-hand" aria-label="Site">
+  <a class="o-home" href="../../directions/cs-max/index.html">Zain Dana Harper</a>
+  <a data-o="band" href="../../../universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-sound aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="../../assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="../../directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="../../directions/cs-max/exhibit.html" aria-current="page"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/site-index.html">Plain index</a> <a href="../../../universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+
+<main id="main">
+  <section class="room gridded door" aria-labelledby="t">
+    <div class="cut pour" data-art><img decoding="async" data-halftone="8" src="../../assets/munchausen-dore-1600.webp" width="1600" height="2130" alt=""></div>
+        <div class="room-in">
+      <span class="reg tl" aria-hidden="true" data-art></span>
+      <h1 id="t" class="inverts" data-vt="baron">Pulled out by his own hair</h1>
+      <div class="wall">
+        <p>In Raspe's tales the baron hauls himself and his horse out of a swamp by his own hair.<sup><a href="#n1" id="r1" aria-label="Note 1">1</a></sup> Philosophy kept the image for a problem with no easy floor: ask why a claim holds, then ask again, and you end in one of three places. They hang in this room.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="room gridded" aria-labelledby="horns-h">
+    <div class="room-in">
+      <h2 id="horns-h" class="walltext" style="grid-column:1 / -1;margin:0" data-h="room">The three horns</h2>
+      <ol class="horns">
+        <li>
+          <div class="specimen cropped" style="--h:300px">
+            <svg viewBox="0 0 300 220" role="img" aria-label="A loop: the checker points to the answer and the answer points back to the checker."><defs><path id="loop" d="M150 30 a80 80 0 1 1 -0.1 0"/><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
+              <use href="#loop" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#ah)"/><text aria-hidden="true"><textPath href="#loop" startOffset="6%">the answer is right because the checker says so, and the checker is right because</textPath></text></svg>
+          </div>
+          <div class="label"><h3>The circle</h3><p>The reason leans on the thing it was meant to prove. A model grading its own answer lives here.</p></div>
+        </li>
+        <li>
+          <div class="specimen cropped" style="--h:300px"><div class="receipts" aria-label="Four receipts, each certifying the one above it, with no last receipt.">
+            <span style="--i:0">RECEIPT 1: the answer is right</span><span style="--i:1">RECEIPT 2: receipt 1 is right</span><span style="--i:2">RECEIPT 3: receipt 2 is right</span><span style="--i:3">RECEIPT 4: receipt 3 is right ...</span></div></div>
+          <div class="label"><h3>The regress</h3><p>Every check needs a check. The paper never runs out, and nothing is ever settled.</p></div>
+        </li>
+        <li>
+          <div class="specimen cropped" style="--h:300px"><span class="stamp decree" style="--stamp:var(--ink)">Accepted</span></div>
+          <div class="label"><h3>The decree</h3><p>Someone stops the questions by authority. The stamp is real; the reason behind it is not on the page.</p></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="room gridded" aria-labelledby="way-h">
+    <div class="room-in">
+      <div class="way">
+        <h2 id="way-h">Stand on the record</h2>
+        <div class="reading">
+          <p>Albert's own answer was to keep every result open to criticism, never to finish the proof.<sup><a href="#n2" id="r2" aria-label="Note 2">2</a></sup> That is the floor Flywheel builds on. The check sits outside the model, against <a href="flywheel.html#demo-h">a record the model did not write</a>, and anyone can run it again.</p>
+          <p>It does not escape the trilemma. It makes the stopping point visible and re-runnable, which is the most a check can honestly offer.</p>
+          <details class="tour"><summary>Show me</summary><div class="answer"><p>Three answers against one record, and what the checker decided: <a href="flywheel.html">the Flywheel room</a>.</p></div></details>
+        </div>
+      </div>
+      <ol class="notes" style="grid-column:1 / span 9;margin-top:24px">
+        <li id="n1"><b>1.</b> Rudolf Erich Raspe, <cite>Baron Munchausen's Narrative of his Marvellous Travels and Campaigns in Russia</cite>, 1785. The slab behind the title is Gustave Doré's 1862 bust of the baron, public domain. <a href="#r1">Back to the text</a></li>
+        <li id="n2"><b>2.</b> Hans Albert, <cite>Treatise on Critical Reason</cite>, 1968, which names the trilemma and argues for critical testing in its place. <a href="#r2">Back to the text</a></li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer class="foot">
+  <details><summary>Credits</summary><ul><li>Gustave Doré, bust of the baron, 1862, for Raspe's tales. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Dore-munchausen-illustration.jpg">Source</a></li><li>Titles set in Mint Carved, a face from our own type-forge.</li></ul></details>
+  <a href="./">Home</a><a href="flywheel.html">Flywheel</a><a href="../../decisions.html">Decisions for the author</a>
+</footer>
+<script type="module" src="../../../alive/alive.js?v=world-99f03a9984"></script>
+</body>
+</html>

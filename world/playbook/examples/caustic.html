@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caustic</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/caustic.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Caustic">
+<meta property="og:description" content="Caustic">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/caustic.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="piece.css?v=world-99f03a9984">
+<style>
+  .stage{background:#0f0f0e;cursor:crosshair;touch-action:pan-y}
+  .stage:focus-visible{outline:3px solid var(--hot);outline-offset:-3px}
+  .legend{position:absolute;right:16px;bottom:24px;z-index:2;margin:0;letter-spacing:.08em;color:var(--ink);text-shadow:0 0 10px #0f0f0e}
+  @media (max-width:600px){.legend{right:auto;left:16px;bottom:auto;top:18px}}
+  .title{position:absolute;left:16px;bottom:18px;z-index:2;text-shadow:0 0 18px #0f0f0e,0 0 2px #0f0f0e}
+</style>
+</head>
+<body>
+<main>
+  <section class="stage" id="stage" tabindex="0" aria-labelledby="t" aria-describedby="d">
+    <canvas id="cv" aria-hidden="true"></canvas>
+    <h1 class="title" id="t">Caustic</h1>
+    <p class="legend mono" id="legend">DENSE FLINT &nbsp;ND 1.755 &nbsp;V 27.6</p>
+    <p class="sr" id="d">Light falls through a moving surface of dense flint glass and gathers on the floor in bright lines, each edge split into colour. Pointer or arrow keys tilt the light.</p>
+  </section>
+</main>
+<script type="module" src="caustic.js?v=world-99f03a9984"></script>
+</body>
+</html>

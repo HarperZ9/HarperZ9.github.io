@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Piers Cowburn, liquid cities from Google Earth data | Zain Dana Harper</title>
+<meta name="description" content="Renders of London (Westminster and the Thames) and Shibuya in which streets and buildings bend along smooth curves, as if the city were a liquid surface.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://harperz9.github.io/studies/st-pierscowburn-2113996522211971104.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="Piers Cowburn, liquid cities from Google Earth data | Zain Dana Harper">
+<meta property="og:description" content="Renders of London (Westminster and the Thames) and Shibuya in which streets and buildings bend along smooth curves, as if the city were a liquid surface.">
+<meta property="og:url" content="https://harperz9.github.io/studies/st-pierscowburn-2113996522211971104.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Piers Cowburn, liquid cities from Google Earth data | Zain Dana Harper">
+<meta name="twitter:description" content="Renders of London (Westminster and the Thames) and Shibuya in which streets and buildings bend along smooth curves, as if the city were a liquid surface.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/studies/studies.css?v=world-99f03a9984">
+<script type="module" src="/world/ui/shell/shell.js?v=world-99f03a9984"></script>
+</head>
+<body class="reading">
+<header class="o-hand" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/daylight.html"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="st">
+<header class="st-head"><p class="st-lane">research</p><h1>Piers Cowburn, liquid cities from Google Earth data</h1><p class="st-credit">Post by <a href="https://x.com/pierscowburn/status/2113996522211971104">Piers Cowburn (@pierscowburn)</a>, 2026-10-24</p></header>
+<h2 id="s-1">What it is, and who made it</h2>
+<p>Renders of London (Westminster and the Thames) and Shibuya in which streets and buildings bend along smooth curves, as if the city were a liquid surface. Three stills and a 24 s clip.</p>
+<h2 id="s-2">Parts, layer by layer</h2>
+<ul><li><strong>Source layer:</strong> Google Earth photogrammetry meshes with baked facade textures (O, from the post).</li><li><strong>Deformation field:</strong> smooth, large-scale; rows of buildings follow it like streamlines (O). In the clip the camera drifts with mean speed 0.092 widths per second, coherence 0.41 (M).</li><li><strong>Texture:</strong> where the field shears, facade pixels stretch into streaks (O). Measured stretch share (structure-tensor coherence over 0.6) 0.16 to 0.29 across the stills (M).</li><li><strong>Bend:</strong> 3.5 to 4.1 degrees per 1% of width (M); controls 2.7 to 6.6 (hand-drawn shelves, Bayer ribbons, Elettrosumma blocks, Moran canyon). The measure does not separate this work: a reported null.</li><li><strong>Light:</strong> photoreal daylight render; shadows follow the bent geometry (O).</li></ul>
+<h2 id="s-3">The framework behind it</h2>
+<p>Advection applied to solid geometry: positions move through a velocity field while topology is kept. The look comes from two rules: deform vertices smoothly, and do not resample textures, so they stretch where the field stretches.</p>
+<h2 id="s-4">The same idea in distant fields</h2>
+<ul><li>Geology: folded strata; rock flows over long times and the layers record the strain.</li><li>Glaciology: flow bands in glaciers.</li><li>Cartography: cartograms and fisheye maps bend a city for a reason (population, attention).</li><li>Film: the city-folding scene in Inception (from memory, a reference to check, not this work's source).</li></ul>
+<h2 id="s-5">Dual edge</h2>
+<p>Bending a real city is a strong image of instability. Used on a news surface it could imply damage that did not happen. The data has a licence (Google Earth terms) that limits reuse; our version should use open map data.</p>
+<h2 id="measured">Measured</h2><div class="st-measures"><section class="st-measure" aria-label="clip 1"><h3>clip 1</h3><dl><dt>Dominant wavelength</dt><dd>0.013</dd><dt>Edge softness</dt><dd>0.83</dd></dl></section><section class="st-measure" aria-label="image 1"><h3>Image 1</h3><ul class="st-chips"><li><span class="st-chip" style="--c:#94887e" aria-hidden="true"></span>#94887e <span class="st-share">22%</span></li><li><span class="st-chip" style="--c:#686261" aria-hidden="true"></span>#686261 <span class="st-share">22%</span></li><li><span class="st-chip" style="--c:#49474a" aria-hidden="true"></span>#49474a <span class="st-share">19%</span></li><li><span class="st-chip" style="--c:#2e2d34" aria-hidden="true"></span>#2e2d34 <span class="st-share">15%</span></li><li><span class="st-chip" style="--c:#d1ba9e" aria-hidden="true"></span>#d1ba9e <span class="st-share">14%</span></li><li><span class="st-chip" style="--c:#121119" aria-hidden="true"></span>#121119 <span class="st-share">8%</span></li></ul><dl><dt>Mean saturation</dt><dd>0.214</dd><dt>Contrast</dt><dd>0.868</dd><dt>Edge density</dt><dd>0.187</dd><dt>Dominant wavelength</dt><dd>0.0206</dd><dt>Edge softness</dt><dd>3.21</dd></dl></section><section class="st-measure" aria-label="image 2"><h3>Image 2</h3><ul class="st-chips"><li><span class="st-chip" style="--c:#676164" aria-hidden="true"></span>#676164 <span class="st-share">23%</span></li><li><span class="st-chip" style="--c:#938882" aria-hidden="true"></span>#938882 <span class="st-share">22%</span></li><li><span class="st-chip" style="--c:#47454b" aria-hidden="true"></span>#47454b <span class="st-share">19%</span></li><li><span class="st-chip" style="--c:#ccbca8" aria-hidden="true"></span>#ccbca8 <span class="st-share">13%</span></li><li><span class="st-chip" style="--c:#2d2c33" aria-hidden="true"></span>#2d2c33 <span class="st-share">13%</span></li><li><span class="st-chip" style="--c:#12121a" aria-hidden="true"></span>#12121a <span class="st-share">9%</span></li></ul><dl><dt>Mean saturation</dt><dd>0.184</dd><dt>Contrast</dt><dd>0.874</dd><dt>Edge density</dt><dd>0.198</dd><dt>Dominant wavelength</dt><dd>0.0165</dd><dt>Edge softness</dt><dd>3</dd></dl></section><section class="st-measure" aria-label="image 3"><h3>Image 3</h3><ul class="st-chips"><li><span class="st-chip" style="--c:#282723" aria-hidden="true"></span>#282723 <span class="st-share">25%</span></li><li><span class="st-chip" style="--c:#736751" aria-hidden="true"></span>#736751 <span class="st-share">21%</span></li><li><span class="st-chip" style="--c:#988771" aria-hidden="true"></span>#988771 <span class="st-share">20%</span></li><li><span class="st-chip" style="--c:#c6b297" aria-hidden="true"></span>#c6b297 <span class="st-share">12%</span></li><li><span class="st-chip" style="--c:#59513f" aria-hidden="true"></span>#59513f <span class="st-share">12%</span></li><li><span class="st-chip" style="--c:#463f2c" aria-hidden="true"></span>#463f2c <span class="st-share">10%</span></li></ul><dl><dt>Mean saturation</dt><dd>0.249</dd><dt>Contrast</dt><dd>0.759</dd><dt>Edge density</dt><dd>0.14</dd><dt>Dominant wavelength</dt><dd>0.0174</dd><dt>Edge softness</dt><dd>4.02</dd></dl></section></div>
+<h2 id="concepts">Concepts</h2>
+<ul class="st-concepts"><li>advection</li><li>attention</li><li>block cube</li><li>checking as craft</li><li>city architecture</li><li>code</li><li>data</li><li>field</li><li>glitch datamosh</li><li>grain texture</li><li>layering</li><li>light</li><li>light direction</li><li>line hatching</li><li>network graph</li><li>noise as signal</li><li>ribbon</li><li>scale crop</li><li>stone sand</li><li>stratification</li><li>tessellation</li><li>time as material</li><li>turbulence</li><li>viscosity</li><li>water</li></ul>
+<p class="st-back"><a href="/studies/">All studies</a></p>
+</article>
+</main>
+</body>
+</html>

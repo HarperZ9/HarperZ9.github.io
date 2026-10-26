@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- Rework of dataviz/dollar.html inside the shell. Same data, same scripts, same ids. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>What a Dollar Keeps</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/rework/dataviz/dollar.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="What a Dollar Keeps">
+<meta property="og:description" content="US consumer prices from 1913 to 2024 drawn as a thinning ribbed sheet: what a 1913 dollar still buys, and each year's inflation.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/rework/dataviz/dollar.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="US consumer prices from 1913 to 2024 drawn as a thinning ribbed sheet: what a 1913 dollar still buys, and each year's inflation.">
+<link rel="preload" href="../../shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../shell/shell.css?v=world-99f03a9984">
+<link rel="stylesheet" href="dataviz.css?v=world-99f03a9984">
+<script type="module" src="../../shell/shell.js?v=world-99f03a9984"></script>
+<script type="module" src="dollar.js?v=world-99f03a9984"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the piece</a>
+<header class="rail">
+  <a class="home" href="/">Zain Dana Harper</a>
+  <nav aria-label="Pieces"><ul>
+    <li><a href="dollar.html" aria-current="page">What a dollar keeps</a></li>
+    <li><a href="room.html">The room changed</a></li>
+  </ul></nav>
+  <div class="console">
+    <button type="button" data-plain-toggle aria-pressed="false">Plain view</button>
+    <button type="button" data-theme-toggle>Dark</button>
+    <button type="button" id="listen" aria-pressed="false">Listen</button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="room" aria-labelledby="t">
+    <div class="room-in">
+      <p class="runhead"><span>Data as art, piece 1</span><span>US consumer prices, 1913 to 2024</span></p>
+      <div class="mast">
+        <h1 id="t" data-display="series" data-series="data/cpi-annual.json" data-series-path="rows" data-series-value="cents_left" data-step="7">What a dollar keeps</h1>
+        <span class="stamp" id="giant" aria-hidden="true" data-art>?¢</span>
+      </div>
+      <div class="mast-side">
+        <p class="card" data-art style="--r:1.5deg">The title is the data. Read it in order: each column of dots is one year, 1913 at the first letter and 2024 at the last. A dot's area is what a 1913 dollar still buys that year.</p>
+      </div>
+      <p class="deck">A dollar in 1913 bought a basket of things. Every year since, prices moved. Here is the dollar as a sheet that thins as it buys less, rippling with each year's inflation.</p>
+    </div>
+  </section>
+
+  <section class="room" aria-labelledby="q">
+    <div class="room-in">
+      <p class="runhead"><span>Guess first</span><span>Then look</span></p>
+      <div class="vitrine" style="grid-column:1 / -1">
+        <div class="guess" id="guess">
+          <h2 id="q">Of that 1913 dollar, how many cents buy the same basket in 2024?</h2>
+          <div class="act">
+            <input type="range" min="0" max="100" value="50" data-unit="¢" aria-label="Your guess in cents">
+            <output aria-live="polite">50¢</output>
+            <button type="button" class="btn solid">Reveal</button>
+          </div>
+          <p class="said" id="said" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-label="The sheet">
+    <div class="room-in">
+      <p class="runhead"><span>The sheet</span><span>One rib per year</span></p>
+      <figure class="stage">
+        <div class="canvas-frame" data-art><canvas id="sheet" tabindex="0" role="img" aria-label="Loading the data."></canvas></div>
+        <div class="plain-only" id="plain"></div>
+        <figcaption class="how">
+          <p><b>One rib is one year.</b> 1913 sits at the start, 2024 at the end. Point at a rib, or focus the sheet and use the arrow keys, to read that year below. Listen plays one note per year from 1914: higher is more inflation, and a soft bell first sounds the pitch of zero.</p>
+          <p><b>Thickness is what the 1913 dollar still buys.</b> Read it on the ruler at the end of the sheet: the full span is 100 cents, then 50 and 10.</p>
+          <p><b>Rise and fall is that year's inflation.</b> Above the dashed line prices rose, below it they fell; ticks every 10 percent. The colour follows the thickness, like a soap film thinning toward black. It adds nothing the thickness does not say.</p>
+        </figcaption>
+      </figure>
+      <section class="readout" aria-live="polite" aria-atomic="true">
+        <div class="yr" id="yr">2024</div>
+        <dl>
+          <dt>A 1913 dollar buys</dt><dd id="r-cents">-</dd>
+          <dt>Inflation that year</dt><dd id="r-infl">-</dd>
+          <dt>Price index (1982 to 84 = 100)</dt><dd id="r-cpi">-</dd>
+        </dl>
+      </section>
+    </div>
+  </section>
+
+  <section class="room" aria-labelledby="ts">
+    <div class="room-in">
+      <p class="runhead"><span>The decades</span><span>Weight is the data</span></p>
+      <div class="typeset">
+        <h2 id="ts" class="raked" style="font:900 clamp(34px,4vw,64px)/.95 var(--sans);letter-spacing:-.04em;margin:0 0 20px">The decades, set in what the dollar kept</h2>
+        <p class="words" id="words"></p>
+        <div class="key" id="key" aria-label="Weight key: the same word at five weights and the cents each stands for"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-labelledby="e">
+    <div class="room-in">
+      <p class="runhead"><span>The reading wall</span><span>Both edges</span></p>
+      <div class="reading">
+        <div class="edge-h"><span class="stamp" style="--stamp:var(--ink)">Both edges</span><h2 id="e">The deflator is a rope</h2></div>
+        <p>Drawn in nominal terms, a century of prices looks like a cliff, and that picture has sold gold, crypto and fear for decades. The same index, used honestly, is what turns a 1950 wage into today's money, so a pension, a contract or a history book can compare like with like. It can pull a comparison out of the pit, or hang it.<sup><a href="#n1" id="r1" aria-label="Note 1">1</a></sup></p>
+      </div>
+      <ol class="notes" style="grid-column:9 / span 4">
+        <li id="n1"><b>1.</b> What a single family paid is a different number. The index tracks an urban basket that changes over time, and your basket is not the average one. <a href="#r1">Back to the text</a></li>
+      </ol>
+      <div id="receipt" hidden></div>
+      <details class="tour" style="grid-column:1 / -1"><summary>Every year, as numbers</summary><div class="answer"><div class="tablewrap" id="table"></div></div></details>
+    </div>
+  </section>
+</main>
+<footer class="foot">Data as art, piece 1. Data from the US Bureau of Labor Statistics through FRED. Code and words: Zain Dana Harper, 2026.</footer>
+</body>
+</html>

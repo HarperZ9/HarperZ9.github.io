@@ -1,0 +1,172 @@
+/* The universe: one stage, the shell's rail, and type that changes with the region a place lives in.
+   Sizes come from the shell's scale (--fs-1 .. --fs-7) so a page stays within eight steps. */
+html, body { font-synthesis: none; font-kerning: normal; font-optical-sizing: auto; }
+body.universe { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.rail .home, .rail ul, .console button, .find { font-size: var(--fs-2); }
+.rail { gap: 8px 18px; }
+main { position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+main:has(> #card:not([hidden])), html.opening main { grid-template-columns: minmax(0, 1fr) 400px; }
+.stage { position: relative; min-height: 0; overflow: hidden; touch-action: none; cursor: grab; }
+.stage:active { cursor: grabbing; }
+.stage canvas { position: absolute; inset: 0; display: block; }
+p, li { text-wrap: pretty; } h1, h2, h3 { text-wrap: balance; }
+
+/* region names: the largest words on the map, each in its region's own type */
+.rwords { position: absolute; inset: 0; pointer-events: none; color: color-mix(in srgb, var(--ink) 30%, transparent); }
+.rword { position: absolute; left: 0; top: 0; margin: 0; white-space: nowrap; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.04em;
+  color: inherit; font-size: var(--fs-6); opacity: 1; transition: opacity var(--dur-slow) var(--ease-standard); }
+
+/* region type systems */
+.r-grid { font-family: var(--face-text); font-weight: 700; letter-spacing: -.02em; }
+.r-deco { font-family: var(--face-deco); text-transform: uppercase; letter-spacing: .08em; font-weight: 400; }
+.r-brut { font-family: var(--face-display); text-transform: uppercase; letter-spacing: .04em; font-weight: 900; }
+.r-surreal { font-family: var(--face-display); font-style: italic; font-weight: 600; letter-spacing: -.02em; }
+.r-print { font-family: var(--face-text); font-weight: 400; letter-spacing: 0; }
+.r-glitch { font-family: var(--face-utility); font-weight: 400; letter-spacing: 0; }
+.r-archive { font-family: var(--face-utility); font-weight: 400; letter-spacing: 0; }
+.rword.r-deco, .rword.r-brut { letter-spacing: .06em; }
+.rword.r-glitch, .rword.r-archive { letter-spacing: 0; font-weight: 400; }
+
+/* places: a hit area over each mark; the name appears when the depth allows */
+.nodes { position: absolute; inset: 0; pointer-events: none; }
+.node { position: absolute; left: 0; top: 0; pointer-events: auto; margin: 0; padding: 0; border: 0; background: none; color: var(--ink);
+  width: 24px; height: 24px; translate: -12px -12px; cursor: pointer; font-size: var(--fs-1); line-height: 1.2; }
+.node .t { position: absolute; left: 18px; top: 3px; white-space: nowrap; max-width: 22ch; overflow: hidden; text-overflow: ellipsis;
+  padding: 1px 5px; background: var(--wall); opacity: 0; transition: opacity var(--dur-base) var(--ease-standard); }
+.node.named .t, .node:focus-visible .t { opacity: 1; }
+.node.k-place .t { font-size: var(--fs-2); }
+.node.r-deco .t { line-height: 1.6; padding-top: 0; }
+.node:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.node.is-here .t { background: #fff; color: #16130f; outline: 1.5px solid #16130f; }
+
+/* we are here */
+.here { width: 96px; height: 60px; padding: 0; border: 1px solid var(--ink); background: var(--wall); cursor: pointer; margin-left: auto; }
+.here-map { display: block; width: 100%; height: 100%; }
+.here-r { fill: var(--ink); opacity: .07; }
+.here-n { fill: var(--ink); opacity: .5; }
+.here-trail { fill: none; stroke: var(--ink); stroke-width: 1; stroke-dasharray: 2 3; }
+.here-cell { fill: #fff; fill-opacity: .55; stroke: #16130f; stroke-width: 1.5; }
+
+/* the card: the place's own words and its threads, on card stock */
+.pcard { min-height: 0; overflow: auto; background: var(--card); color: #16130f; padding: 28px 26px 22px; border-left: 1px solid var(--line); }
+.pcard h2 { margin: 0 0 12px; font-size: var(--fs-5); line-height: 1.05; }
+.pcard h2.r-grid, .pcard h2.r-print, .pcard h2.r-surreal { letter-spacing: -.03em; }
+.pcard .blurb { margin: 0 0 14px; font: 400 var(--fs-3)/1.5 var(--face-text); max-width: 60ch; }
+.pcard .enter { display: inline-block; margin: 0 0 14px; padding: 9px 16px; border: 1.5px solid #16130f; color: #16130f; text-decoration: none; font: 700 var(--fs-2)/1 var(--face-text); }
+.pcard .enter:hover, .pcard .enter:focus-visible { background: #16130f; color: var(--card); }
+.threads { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(22,19,15,.25); }
+.threads li { border-bottom: 1px solid rgba(22,19,15,.12); }
+.threads button, .hits button { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 2px 12px; width: 100%; padding: 8px 0; text-align: left;
+  background: none; border: 0; color: inherit; font: 400 var(--fs-2)/1.35 var(--face-text); cursor: pointer; }
+.threads button:hover .to, .threads button:focus-visible .to { text-decoration: underline; }
+.threads .via { grid-column: 2; font-size: var(--fs-1); font-style: italic; }
+.threads .to { grid-column: 2; }
+.threads button > :first-child:not(canvas) { grid-column: 2; }
+.swatch { grid-row: span 2; }
+
+/* find */
+.find { position: relative; display: flex; align-items: center; gap: 8px; }
+.find input { width: 14ch; font: 400 var(--fs-2)/1 var(--face-text); padding: 8px 10px; border: 1px solid var(--ink); background: var(--wall); color: var(--ink); border-radius: 0; }
+.hits { position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; width: min(380px, 90vw); max-height: 60vh; overflow: auto; margin: 0; padding: 6px 12px;
+  list-style: none; background: var(--card); color: #16130f; box-shadow: 0 24px 40px -24px var(--shadow); }
+.hits button { grid-template-columns: 44px 1fr; }
+.hits button:not(:has(canvas)) { grid-template-columns: 1fr; }
+
+.plain-only { display: none; }
+html.plain .stage { display: none; }
+html.plain .plain-only { display: block; padding: 16px; font-size: var(--fs-4); }
+
+@media (max-width: 860px) {
+  .rail { padding: 10px 16px; }
+  .find input { width: 9ch; }
+  main:has(> #card:not([hidden])) { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
+  .pcard { max-height: 46dvh; border-left: 0; border-top: 1px solid var(--line); padding: 18px 16px; }
+  .rword { font-size: var(--fs-5); }
+}
+@media (prefers-reduced-motion: reduce) { .rword, .node .t { transition: none; } }
+/* the minted deco face sits high in its em box: give it room so it never rides over the line above */
+.threads .r-deco, .hits .r-deco, .onward .r-deco { line-height: 1.7; padding-top: .25em; }
+.pcard h2.r-deco, .sheet h1.r-deco { line-height: 1.3; padding-top: .15em; }
+.node.r-deco .t { overflow: visible; }
+.console button, .console a { white-space: nowrap; }
+:root { --lamp-pool: rgba(255,250,238,.6); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --lamp-pool: rgba(236,229,214,.07); } }
+:root[data-theme="dark"] { --lamp-pool: rgba(236,229,214,.07); }
+.node.is-here .t { left: 30px; }
+@media (max-width: 860px) { main:has(> #card:not([hidden])) ~ * {} body:has(#card:not([hidden])) .rail .here { display: none; } }
+
+/* ---- layering: the focused window comes forward, one step away stays, the rest folds back ---- */
+/* timing is revealOut, measured: 0.224 s delay, cubic ease-out over 0.758 s (techniques/lib/timing.js) */
+.node.feat { width: calc(2 * var(--a, 60px)); height: calc(2 * var(--a, 60px)); translate: -50% -50%; border-radius: 50%; }
+.node.feat .t { left: 50%; top: calc(100% + 10px); translate: -50% 0; max-width: 28ch; font-size: var(--fs-3); padding: 2px 8px; background: none;
+  transition: opacity .758s cubic-bezier(.33,1,.68,1) .224s, filter .758s cubic-bezier(.33,1,.68,1) .224s; }
+.node.feat[data-layer="near"] .t { opacity: .62; }
+.node.feat[data-layer="back"] .t { opacity: 0; filter: blur(3px); }
+.node.feat[data-layer="back"] { pointer-events: none; }
+.node.feat.is-here .t { background: #fff; color: #16130f; outline: 1.5px solid #16130f; left: 50%; }
+.node.feat:focus-visible { outline-offset: 6px; }
+
+/* ---- the room: the place's page, clipped to its window until the window is the stage ---- */
+.room-layer { position: absolute; inset: 0; z-index: 4; background: var(--wall); clip-path: circle(0 at 50% 50%); opacity: 0; }
+.room-layer .room-frame { width: 100%; height: 100%; border: 0; display: block; background: var(--wall); }
+.room-layer .room-seam { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.room-layer .sheet { max-width: 68ch; margin: clamp(16px, 8vh, 96px) auto; padding: clamp(20px, 4vw, 48px); background: var(--card); color: #16130f; }
+.room-layer .sheet h2 { margin: 0 0 20px; font-size: var(--fs-6); line-height: 1.05; }
+.room-layer .sheet p { font: 400 var(--fs-3)/1.6 var(--face-text); max-width: 64ch; }
+.room-layer .sheet .code { font: 400 var(--fs-2)/1.5 var(--face-utility); background: #16130f; color: #ece5d6; padding: 12px 14px; overflow-x: auto; }
+.room-layer .sheet .enter { display: inline-block; padding: 10px 18px; border: 1.5px solid #16130f; color: #16130f; text-decoration: none; font: 700 var(--fs-2)/1 var(--face-text); }
+main.inside .nodes, main.inside #art { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .node.feat .t { transition: opacity .2s linear; }
+  .room-layer { transition: opacity .2s linear; }
+}
+
+/* ---- the survey band in the rail: one tile per place, the visitor's tile white ---- */
+.here { width: 158px; height: 50px; flex: none; box-sizing: border-box; padding: 4px 6px; border: 1px solid var(--ink); background: var(--wall); }
+.here-band { display: block; height: 100%; width: auto; }
+.here-tile.on { stroke: #16130f; stroke-width: 1; }
+.here-tick { fill: var(--ink); }
+.here-num { font: 400 12px var(--face-utility); fill: var(--ink); }
+.rail .home { font-size: var(--fs-3); }
+.sr-only { line-height: 1; }
+.rword.r-deco, .rword.r-brut { letter-spacing: 0; }
+.room-layer.standby { visibility: hidden; clip-path: circle(0 at 50% 50%); }
+.node.r-brut .t, .node.r-deco .t { letter-spacing: .06em; }
+.here-bar { fill: var(--ink); }
+
+/* forced colours: the windows are canvas art the system palette cannot reach, so the structure is drawn in CSS too */
+@media (forced-colors: active) {
+  .node.feat { border: 2px solid CanvasText; background: Canvas; }
+  .node.feat .t { opacity: 1 !important; filter: none !important; color: CanvasText; }
+  .node.feat.is-here { border-width: 4px; }
+  .node.feat[data-layer="back"] { border-style: dotted; }
+  .here { forced-color-adjust: none; }
+}
+
+/* ---- the hand (the shell's one navigation system) on universe pages ---- */
+.place-stage { position: relative; min-height: 0; overflow: hidden; }
+.pcard { padding-top: 88px; }  /* the hand floats at the top right on desktop; the card starts below it */
+.o-hand .find { display: flex; align-items: center; }
+.o-hand .find input { width: 12ch; min-height: 44px; font: 400 var(--fs-2)/1 var(--face-text); padding: 0 10px; border: 1px solid var(--ink); background: var(--wall); color: var(--ink); border-radius: 0; }
+.o-hand .hits { top: calc(100% + 8px); right: 0; left: auto; }
+.o-back { min-height: 44px; padding: 0 12px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1px solid var(--ink); border-radius: 0; cursor: pointer; }
+.o-back:hover, .o-back:focus-visible { background: var(--ink); color: var(--wall); }
+@media (max-width: 860px) {
+  .pcard { padding-top: 18px; }
+  .o-hand .find input { width: 8ch; }
+  .o-hand .hits { top: auto; bottom: calc(100% + 8px); }
+}
+.o-hand .skip { position: fixed; top: -80px; left: 12px; }
+.o-hand .skip:focus { top: 12px; }
+@media (max-width: 860px) {
+  /* narrow screens: names wrap under their window instead of running into the next one */
+  .node.feat .t { white-space: normal; max-width: 13ch; text-align: center; font-size: var(--fs-2); line-height: 1.2; overflow: visible; }
+}
+@media (max-width: 860px) {
+  /* one emphasis on a phone: in focus, only the focused place is named on the map; the card names the rest */
+  .node.feat[data-layer="near"] .t { opacity: 0; }
+}
+@media (max-width: 600px) {
+  /* the hand is one row at the bottom of a phone: Find gives way to the band and the controls; the index is in the menu */
+  .o-hand .find { display: none; }
+}

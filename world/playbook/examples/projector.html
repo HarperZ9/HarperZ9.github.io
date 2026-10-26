@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setback</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/projector.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Setback">
+<meta property="og:description" content="Setback">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/projector.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../exhibit/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="piece.css?v=world-99f03a9984">
+<style>
+  .stage{background:#141412}
+  .labels{position:absolute;inset:0;pointer-events:none}
+  .labels span{position:absolute;left:0;top:0;white-space:nowrap;font-family:"Conso",ui-monospace,monospace;font-size:13px;line-height:1;letter-spacing:.06em;color:var(--ink);will-change:transform}
+  .labels span.hot{color:#ff4fa3}
+  .title{position:absolute;left:16px;bottom:88px;z-index:2}
+  .line{position:absolute;left:16px;bottom:22px;z-index:2;margin:0;font-size:17px;line-height:1.45;max-width:min(52ch,calc(100vw - 32px));color:var(--ink);min-height:2.9em;display:flex;align-items:flex-end}
+  .steps{position:absolute;right:16px;top:12px;z-index:3;display:flex;gap:2px}
+  .steps button{font:500 13px/1 "Conso",ui-monospace,monospace;letter-spacing:.04em;color:var(--muted);background:transparent;border:0;border-bottom:2px solid var(--line);min-width:44px;min-height:44px;cursor:pointer;padding:0 6px}
+  .steps button[aria-current="step"]{color:var(--ink);border-bottom-color:var(--hot)}
+  .steps button:hover{color:var(--ink)}
+  @media (max-width:600px){.steps{left:16px;right:auto;top:auto;bottom:14px}.title{bottom:150px}.line{bottom:72px}}
+</style>
+</head>
+<body>
+<main>
+  <section class="stage" id="stage" aria-labelledby="t">
+    <canvas id="cv" aria-hidden="true"></canvas>
+    <div class="labels" id="labels"></div>
+    <h1 class="title" id="t">Setback</h1>
+    <p class="line" id="line" aria-live="polite"></p>
+    <nav class="steps" id="steps" aria-label="Steps"></nav>
+  </section>
+  <p class="credit">Envelope from the 1916 New York Zoning Resolution, in the form Hugh Ferriss drew in 1922. Heights are modelled, not surveyed.</p>
+</main>
+<script type="module" src="projector.js?v=world-99f03a9984"></script>
+</body>
+</html>

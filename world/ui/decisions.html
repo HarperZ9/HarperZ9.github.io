@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Decisions for the author</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/decisions.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Decisions for the author">
+<meta property="og:description" content="The rules this direction bends, each option drawn, with a recommendation.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/decisions.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="The rules this direction bends, each option drawn, with a recommendation.">
+<link rel="preload" href="shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="shell/shell.css?v=world-99f03a9984">
+<script type="module" src="shell/shell.js?v=world-99f03a9984"></script>
+<style>
+  @font-face{font-family:"Mint Deco";src:url("fonts/mint-deco.ttf") format("truetype");font-display:swap}
+  @font-face{font-family:"Mint Carved";src:url("fonts/mint-carved.ttf") format("truetype");font-display:swap}
+  .opts{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  .opt{border-top:2px solid var(--ink);padding-top:12px}
+  .opt h3{margin:0 0 4px;font:800 26px/1.05 var(--sans);letter-spacing:-.02em}
+  .opt .rec{display:inline-block;margin-left:8px;vertical-align:4px}
+  .opt .specimen{min-height:230px;margin:10px 0 12px}
+  .opt p{font-size:16px;margin:0 0 8px}
+  .rule{grid-column:1 / span 8}
+  .rule blockquote{margin:0 0 12px;font:400 15px/1.5 var(--mono);color:var(--soft);border-left:2px solid var(--line);padding-left:12px}
+  .hatch{color:transparent;background:repeating-linear-gradient(-38deg,var(--ink) 0 1.5px,transparent 1.5px 4px);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:1px var(--ink)}
+  .thin{font-weight:100}.fat{font-weight:900}
+  .chip{display:inline-block;padding:4px 10px;border:1px solid currentColor;font:600 14px var(--sans);margin:2px}
+  .wash{background:linear-gradient(90deg,#c0392b,#e67e22,#2980b9);color:#fff;border:0}
+  .sys{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+  html.plain .hatch{color:var(--ink);background:none;-webkit-text-stroke:0}
+  @media (max-width:860px){.opts,.sys{grid-template-columns:1fr}.rule{grid-column:1 / -1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the decisions</a>
+<header class="rail">
+  <a class="home" href="index.html">UI direction, 23 October</a>
+  <nav aria-label="Directions"><ul>
+    <li><a href="directions/a-slab/">A, Slab</a></li>
+    <li><a href="directions/b-setback/">B, Setback</a></li>
+    <li><a href="directions/c-exhibit/">C, Second tour</a></li>
+    <li><a href="directions/cs-max/">CS-max</a></li>
+    <li><a href="shell/template.html">The shell</a></li>
+  </ul></nav>
+  <div class="console">
+    <button type="button" data-plain-toggle aria-pressed="false">Plain view</button>
+    <button type="button" data-theme-toggle>Dark</button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="room" aria-labelledby="t">
+    <div class="room-in">
+      <p class="runhead"><span>Decisions for the author</span><span>One resolved, two open with working defaults</span></p>
+      <div class="walltext" style="grid-column:1 / span 8">
+        <h1 id="t" data-display="scraps" data-plates="assets/fingerprint-card-720.webp,assets/district-map-1900-720.webp,assets/ferriss-zoning-1922-720.webp,assets/deep-field-720.webp">Your call</h1>
+        <p class="an">The direction pushed on three of the site's rules. The type rule is resolved; the other two are drawn three ways, and the recommended option is the working default in the build.</p>
+        <p>Nothing here changes the live site. The recommended options are what the shell already does; switching to another option is a small CSS change.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Type: resolved -->
+  <section class="room" aria-labelledby="d1">
+    <div class="room-in">
+      <p class="runhead"><span>Resolved by the author, 23 October</span><span>Typography</span></p>
+      <div class="rule"><h2 id="d1" style="font:900 clamp(40px,5vw,80px)/.92 var(--sans);letter-spacing:-.045em;margin:0 0 16px">Two faces only: retired</h2>
+        <blockquote>The author: "Hanken and Conso is not a set in stone rule, we can meander creatively, and all design ideas can be synthesized into unique presentations and novel ideas and material assets." And: "the usage of basic fonts can now be shifted to use our own custom typography".</blockquote>
+        <p>Each room may synthesise its own type from any of our faces and materials, as long as reading stays legible and accessible. Pages read three tokens (text, display, utility) from one file; the house family from the typeface session replaces the stock faces with one switch. The exhibit room's title is already set in Mint Carved, minted in our own type-forge.</p></div>
+    </div>
+  </section>
+
+  <!-- 2. Verdict-only colour -->
+  <section class="room" aria-labelledby="d2">
+    <div class="room-in">
+      <p class="runhead"><span>Decision 2</span><span>Colour</span></p>
+      <div class="rule"><h2 id="d2" style="font:900 clamp(40px,5vw,80px)/.92 var(--sans);letter-spacing:-.045em;margin:0 0 16px">Verdict-only colour</h2>
+        <blockquote>Workspace canon: "verdict-only (verified / drift / unverifiable + ink)... The spectrum lives only in generative art, never in UI." DESIGN-RULES 3: "restrained accents... text or shape as well as color for verdicts."</blockquote></div>
+      <div class="opts">
+        <div class="opt">
+          <h3>Keep</h3>
+          <div class="specimen"><p style="margin:0"><span class="chip">Plain view</span> <span class="chip">Show me</span><br><span data-verdict="verified">Pass</span> &nbsp; <span data-verdict="drift">Fail</span> &nbsp; <span data-verdict="unverifiable">Unverifiable</span></p></div>
+          <p>Chrome is ink on the ground. The three verdict colours are the only hues outside the art, each with a shape and a word.</p>
+        </div>
+        <div class="opt">
+          <h3>Bend <span class="stamp rec" style="--stamp:var(--verified)">Working default</span></h3>
+          <div class="specimen"><p style="margin:0"><span class="tag">Show me</span> &nbsp; <span class="card" style="display:inline-block;--r:-2deg;padding:6px 12px 4px 22px">Card stock, 1930</span></p></div>
+          <p>One material colour per direction, used as a surface and never as meaning: buff card stock in the exhibit, brass in Setback, concrete in Slab. Verdicts keep their hue, shape and word. No text is coloured by it.</p>
+        </div>
+        <div class="opt">
+          <h3>Replace</h3>
+          <div class="specimen"><p style="margin:0"><span class="chip wash">Plain view</span> <span class="chip" style="color:#2980b9">Show me</span> <span class="chip" style="color:#c0392b">Rooms</span></p></div>
+          <p>A palette per room, taken from its art. Livelier, and the colours start to read as signals: is the red room a warning? It breaks the verdict colours' meaning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. One hot mark -->
+  <section class="room" aria-labelledby="d3">
+    <div class="room-in">
+      <p class="runhead"><span>Decision 3</span><span>Emphasis</span></p>
+      <div class="rule"><h2 id="d3" style="font:900 clamp(40px,5vw,80px)/.92 var(--sans);letter-spacing:-.045em;margin:0 0 16px">One hot mark per view</h2>
+        <blockquote>Workspace canon: "one hot mark per view." The site's tokens: "--hot: the one hot mark per view names no verdict."</blockquote></div>
+      <div class="opts">
+        <div class="opt">
+          <h3>Keep <span class="stamp rec" style="--stamp:var(--verified)">Working default</span></h3>
+          <div class="specimen"><p class="big" style="font-size:clamp(56px,6vw,96px)">42</p><span class="stamp over">Fail, held</span></div>
+          <p>One stamp, slab or verdict per screen. Art inside a frame does not count, as the canon already says the spectrum lives in the art. Rooms are spaced so two hot marks never share a 1440 by 900 view.</p>
+        </div>
+        <div class="opt">
+          <h3>Bend</h3>
+          <div class="specimen"><p style="margin:0"><span class="stamp" style="rotate:-6deg">Fail</span> &nbsp; <span class="stamp" style="--stamp:var(--verified);rotate:4deg">Pass</span></p></div>
+          <p>One hot mark per room, even when two rooms share a screen. Easier to lay out; on a phone, two stamps can meet.</p>
+        </div>
+        <div class="opt">
+          <h3>Replace</h3>
+          <div class="specimen" style="background:repeating-linear-gradient(90deg,var(--drift) 0 40px,var(--ink) 40px 80px)"><p class="big" style="color:var(--wall);font-size:clamp(56px,6vw,96px)">ALL</p></div>
+          <p>No limit: supergraphic fields of colour anywhere. Strong posters, and nothing is hot when everything is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lettering systems -->
+  <section class="room" aria-labelledby="d4">
+    <div class="room-in">
+      <p class="runhead"><span>Lettering from material</span><span>Lettering from non-type material</span></p>
+      <div class="rule"><h2 id="d4" style="font:900 clamp(40px,5vw,80px)/.92 var(--sans);letter-spacing:-.045em;margin:0 0 16px">Letters made of other things</h2>
+        <p>The shell's own four. The lettering library (a separate session) builds the full set; the shell's display slots take its output.</p></div>
+      <div class="sys">
+        <div class="opt"><div class="specimen" style="--h:180px"><p class="mid" data-display="scraps" data-plates="assets/fingerprint-card-720.webp,assets/district-map-1900-720.webp,assets/deep-field-720.webp" style="font-size:64px;font-weight:900">Record</p></div><h3>Scraps</h3><p>Each letter cut from a cleared plate: fingerprint card, 1900 census map, Hubble Deep Field.</p></div>
+        <div class="opt"><div class="specimen" style="--h:180px"><p class="mid" data-display="dots" data-src="assets/hmso-store-1950-720.webp" data-step="5" style="font-size:64px;font-weight:900">Record</p></div><h3>Data dots</h3><p>Dot radius is a luminance sample of a 1950 photograph. The samples rebuild the photograph.</p></div>
+        <div class="opt"><div class="specimen" style="--h:180px"><p class="mid" data-display="chladni" data-modes="3,5" data-cell="40" style="font-size:64px;font-weight:900">Record</p></div><h3>Chladni</h3><p>Nodal lines of a square plate driven at mode (3, 5), where sand would gather.</p></div>
+        <div class="opt"><div class="specimen" style="--h:180px"><p class="mid" id="spec" data-display="spectrogram" style="font-size:64px;font-weight:900">Record</p></div><h3>Sound</h3><p>The picture is the synthesis input: one sine per row, gated by column.</p><button type="button" class="tag" data-play-letter="spec" hidden>Play the word</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" aria-labelledby="d5">
+    <div class="room-in">
+      <p class="runhead"><span>Smaller calls</span><span>Flagged, not decided</span></p>
+      <div class="reading">
+        <h2 id="d5" style="font:900 clamp(36px,4vw,64px)/.95 var(--sans);letter-spacing:-.04em;margin:0 0 18px">Smaller calls, working defaults in place</h2>
+        <p><b>Framed archival plates (default: use them).</b> DESIGN-RULES 5 says inspiration images are never copied and the core style never depends on bitmap backgrounds. The later author decision (V5, 23 October) asks for real archival material, cleared by receipt. The directions use cleared public-domain and CC0 plates as framed objects and lettering material, never as the site's background. DESIGN-RULES 5 needs a line saying so.</p>
+        <p><b>The frieze (default: keep).</b> The exhibit's frieze drifts against the scroll. DESIGN-RULES 7 wants motion that explains a change. The drift is small, stops under reduced motion and in plain view, and could go if you read it as ambient.</p>
+        <p><b>Running heads (default: keep).</b> DESIGN-RULES 4 bans repeated tiny tracked uppercase labels. The running heads are mixed case, one per room, and name the room; they are a reader's map, not an eyebrow. Say if they read as eyebrows to you.</p>
+      <p><b>Provenance on the page (resolved by the author).</b> Hashes, "matches the pinned hash" badges and receipt tables are gone from art, story and exhibit pages; one quiet credit line or a credits link stays. Provenance shows only where verification is the subject (Flywheel, Daylight, case files), and there it is built into the story.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <details><summary>Archive credits</summary><ul>
+    <li>Plates from CREDITS.md in this folder: Doré 1862, the Leavenworth fingerprint card, the 1900 Manhattan district map, the Hubble Deep Field 1996, Ferriss 1922, HMSO Store 1950. All public domain or CC0, each with its receipt.</li>
+  </ul></details>
+  <a href="DIRECTION.md">DIRECTION.md</a>
+</footer>
+</body>
+</html>

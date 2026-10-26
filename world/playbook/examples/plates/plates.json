@@ -1,0 +1,93 @@
+[
+ {
+  "file": "wikimedia_commons-Cloud-cover-analysis-m.jpg",
+  "title": "Cloud cover analysis made from mosaic of three photographs taken from astabilized camera in the nose cone of an Atlas rocket fired from Cape Canaveral (2268-44)",
+  "year": 1959,
+  "source": "wikimedia_commons",
+  "landing": "https://commons.wikimedia.org/wiki/File:Cloud_cover_analysis_made_from_mosaic_of_three_photographs_taken_from_astabilized_camera_in_the_nose_cone_of_an_Atlas_rocket_fired_from_Cape_Canaveral_(2268-44).jpg",
+  "licence": "pd",
+  "creator": "NOAA",
+  "receipt": "run-20261024-004525-playbook-mosaic-clouds.json",
+  "sha256": "a2a4833c1ac9740640d0bd4db55ab57b51e7645061e9c7a5be475d6f85e63a56",
+  "w": 1200,
+  "h": 832
+ },
+ {
+  "file": "wikimedia_commons-Cumulus-cloud-formatio.jpg",
+  "title": "Cumulus cloud formation over West Atlantic Ocean north of South America (s62-06613)",
+  "year": 1962,
+  "source": "wikimedia_commons",
+  "landing": "https://commons.wikimedia.org/wiki/File:Cumulus_cloud_formation_over_West_Atlantic_Ocean_north_of_South_America_(s62-06613).jpg",
+  "licence": "pd",
+  "creator": "NASA Johnson Space Center / 1996-98 AccuSoft Inc., All right",
+  "receipt": "run-20261024-004525-playbook-mosaic-clouds.json",
+  "sha256": "5f2e9e37b2cb04cfb267d26852390ff9406869654a1d488bb8520b99fa10caf9",
+  "w": 1200,
+  "h": 1200
+ },
+ {
+  "file": "nasa-s62-06021.jpg",
+  "title": "View of clouds over Indian Ocean taken by Astronaut John Glenn during MA-6",
+  "year": 1962,
+  "source": "nasa",
+  "landing": "https://images.nasa.gov/details/s62-06021",
+  "licence": "pd",
+  "creator": "JSC",
+  "receipt": "run-20261024-004525-playbook-mosaic-clouds.json",
+  "sha256": "cd2b900a3bc7a5b3d6044a23dc47e350f7ccbca8ad2b8163d95c99b8a93fe054",
+  "w": 1200,
+  "h": 781
+ },
+ {
+  "file": "nasa-as08-16-2588.jpg",
+  "title": "Both sides of the Atlantic Ocean are visible from Apollo 8 spacecraft",
+  "year": 1968,
+  "source": "nasa",
+  "landing": "https://images.nasa.gov/details/as08-16-2588",
+  "licence": "pd",
+  "creator": "JSC",
+  "receipt": "run-20261024-004525-playbook-mosaic-clouds.json",
+  "sha256": "22a0e33c5961b65e7cd8d54c002fafcd4d310451e68e0036237418aa861ff26e",
+  "w": 1200,
+  "h": 1196
+ },
+ {
+  "file": "met-834598.jpg",
+  "title": "Scattering Seed, from \"Le Magasin Pittoresque\"",
+  "year": 1857,
+  "source": "met",
+  "landing": "https://www.metmuseum.org/art/collection/search/834598",
+  "licence": "cc0",
+  "creator": "Charles Jacque",
+  "receipt": "run-20261024-004600-playbook-mosaic-flora.json",
+  "sha256": "4a933928f993d5765b31b1e8ac804f13bff13bc7340069e5817ba1884205827c",
+  "w": 1200,
+  "h": 895
+ },
+ {
+  "file": "met-395105.jpg",
+  "title": "Hyacinths, from \"The Temple of Flora, or Garden of Nature\"",
+  "year": 1801,
+  "source": "met",
+  "landing": "https://www.metmuseum.org/art/collection/search/395105",
+  "licence": "cc0",
+  "creator": "Thomas Warner",
+  "receipt": "run-20261024-004600-playbook-mosaic-flora.json",
+  "sha256": "8a01a6f9355948da23084a816cfb5aa86cb3569e6fd3070e1cedfdf2b8b4dc7f",
+  "w": 960,
+  "h": 1200
+ },
+ {
+  "file": "met-395106.jpg",
+  "title": "The Blue Egyptian Water Lily, from \"The Temple of Flora, or Garden of Nature\"",
+  "year": 1804,
+  "source": "met",
+  "landing": "https://www.metmuseum.org/art/collection/search/395106",
+  "licence": "cc0",
+  "creator": "Joseph Constantine Stadler",
+  "receipt": "run-20261024-004600-playbook-mosaic-flora.json",
+  "sha256": "e1cf625cbd35f284c768cc8483056a6d6481151d79769bfd8836a67164fba27b",
+  "w": 956,
+  "h": 1200
+ }
+]

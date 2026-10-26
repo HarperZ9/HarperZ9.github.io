@@ -1,0 +1,145 @@
+/* Direction A: Slab. Brutalist supergraphic.
+   Poured type, an exposed twelve-column grid, one black slab cut on a diagonal (the hot mark),
+   archival photographs printed as halftone into the concrete. */
+:root{
+  color-scheme:light;
+  --paper:#e3e0d9;--paper-2:#d6d2c9;--ink:#16130f;--soft:#4a443b;--line:rgba(22,19,15,.09);--on-ink:#e3e0d9;
+  --photo:grayscale(1) contrast(1.35) brightness(1.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#0b0b0c;--paper-2:#151517;--ink:#ece5d6;--soft:#b8b0a0;--line:rgba(236,229,214,.07);--on-ink:#0b0b0c;--photo:grayscale(1) invert(1) contrast(1.25) brightness(.9)}}
+:root[data-theme="dark"]{color-scheme:dark;--paper:#0b0b0c;--paper-2:#151517;--ink:#ece5d6;--soft:#b8b0a0;--line:rgba(236,229,214,.07);--on-ink:#0b0b0c;--photo:grayscale(1) invert(1) contrast(1.25) brightness(.9)}
+
+body{background:var(--paper);color:var(--ink);font:400 18px/1.5 var(--sans)}
+/* the exposed grid: twelve columns drawn on the ground */
+.wrap{position:relative;isolation:isolate;padding:0 16px;background:var(--paper) repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px calc((100% - 32px)/12)) 16px 0/100% 100%}
+a{color:inherit;text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* bar */
+.bar{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:3px solid var(--ink)}
+.bar .home{font:800 19px/1 var(--sans);text-decoration:none;letter-spacing:-.01em}
+.bar nav ul{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0;list-style:none;font:600 16px var(--sans)}
+.bar nav a{text-decoration:none}
+.bar nav a:hover{text-decoration:underline}
+.ctl{display:flex;gap:0}
+.ctl button{font:600 14px/1 var(--sans);background:transparent;color:var(--ink);border:2px solid var(--ink);margin-left:-2px;padding:9px 12px;min-height:40px;cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
+.ctl button:hover{background:var(--paper-2)}
+.ctl button[aria-pressed="true"]:hover{background:var(--ink)}
+
+/* the pour: a name bigger than the page, cut by the slab */
+.pour{position:relative;padding:4vw 0 0;min-height:calc(16vw + min(64vw,760px) + 90px)}
+/* The name is set in near-white with a difference blend, so it reads as ink on the paper
+   and as paper where it crosses the slab, in both themes. */
+.pour h1{position:relative;z-index:3;margin:0 0 0 -.06em;font:900 clamp(64px,19vw,330px)/.8 var(--sans);letter-spacing:-.06em;white-space:nowrap;color:#f9f6ef;mix-blend-mode:difference}
+html.plain .pour h1{color:var(--ink);mix-blend-mode:normal}
+.pour h1 span{display:block}
+.pour h1 span:nth-child(2){margin-left:24vw}
+.pour h1 span:nth-child(3){margin-left:6vw}
+.slab{position:absolute;z-index:2;right:-16px;top:16vw;width:66vw;height:min(64vw,760px);background:var(--ink);
+  clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);overflow:hidden}
+.slab img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:.4}
+.slab canvas.ht{color:var(--on-ink);opacity:.5}
+.slab .cut{z-index:2;position:absolute;left:auto;right:5%;bottom:5%;width:min(30ch,40%);color:var(--on-ink);background:var(--ink);padding:18px 20px 8px;font:500 clamp(18px,1.6vw,24px)/1.3 var(--sans);max-width:30ch}
+.slab .cut p{margin:0 0 .6em}
+.slab .cut .an{font-weight:800;font-size:1.25em;letter-spacing:-.01em;line-height:1.1}
+.cap{position:absolute;z-index:3;right:0;bottom:16px;font:400 13px/1.3 var(--sans);color:var(--soft)}
+html.ready .slab{animation:pour var(--dur-scene) var(--ease-engrave) both}
+@keyframes pour{from{clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%)}to{clip-path:polygon(18% 0,100% 0,100% 100%,0 100%)}}
+
+/* the index: each route poured at room scale, offset column by column */
+.index{list-style:none;margin:72px 0 0;padding:0;border-top:3px solid var(--ink)}
+.index li{border-bottom:3px solid var(--ink)}
+.index a{display:grid;grid-template-columns:repeat(12,1fr);gap:0 16px;align-items:end;padding:18px 0 14px;text-decoration:none;position:relative;overflow:hidden}
+.index .t{grid-column:var(--c,1) / span 8;font:850 clamp(40px,8.4vw,150px)/.86 var(--sans);letter-spacing:-.05em;transition:transform var(--dur-base) var(--ease-standard)}
+.index .d{grid-column:9 / span 4;font:500 17px/1.35 var(--sans);max-width:34ch;padding-bottom:.4em}
+.index a:hover,.index a:focus-visible{background:var(--ink);color:var(--paper)}
+.index a:hover .t,.index a:focus-visible .t{transform:translateX(2vw)}
+.index a:focus-visible{outline-offset:-6px;outline-color:var(--paper)}
+
+/* plates of printed photograph */
+.plate{position:relative;background:var(--paper-2);overflow:hidden}
+.plate img{width:100%;height:100%;object-fit:cover;filter:var(--photo)}
+.plate.dots img{-webkit-mask:radial-gradient(circle,#000 46%,transparent 48%) 0 0/4px 4px;mask:radial-gradient(circle,#000 46%,transparent 48%) 0 0/4px 4px}
+figcaption,.credit{font:400 13px/1.35 var(--sans);color:var(--soft);margin-top:6px}
+
+.foot{border-top:3px solid var(--ink);margin-top:96px;padding:18px 0 40px;display:flex;flex-wrap:wrap;gap:12px 24px;font:500 15px var(--sans)}
+.foot details{flex-basis:100%}
+.foot summary{cursor:pointer;font-weight:700}
+.foot ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--soft);max-width:90ch}
+
+@media (max-width:760px){
+  body{font-size:17px}
+  .pour{min-height:0;padding-bottom:24px}
+  .pour h1{font-size:23vw}
+  .pour h1 span:nth-child(2){margin-left:12vw}
+  .slab{position:relative;top:auto;right:auto;margin:-10vw -16px 0 -16px;width:auto;height:auto;min-height:480px;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%)}
+  .slab .cut{position:relative;left:auto;right:auto;bottom:auto;margin:170px 16px 40px;padding:16px;font-size:18px}
+  .cap{position:static;display:block;margin-top:8px}
+  .index .t{grid-column:1 / -1;font-size:15vw}
+  .index .d{grid-column:1 / -1;padding-top:8px}
+  html.ready .slab{animation:none}
+}
+@media (prefers-reduced-motion:reduce){html.ready .slab{animation:none}}
+
+/* ---------- project page ---------- */
+.head{position:relative;isolation:isolate;overflow:hidden;margin:0 -16px;padding:6vw 16px 4vw;min-height:min(80vh,820px)}
+.num{position:absolute;right:-2vw;top:2vw;margin:0;z-index:-1;font:900 clamp(220px,min(52vw,96vh),900px)/.8 var(--sans);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:2px var(--ink);opacity:.9;user-select:none}
+.head h1{font:850 clamp(40px,7.2vw,124px)/.9 var(--sans);letter-spacing:-.045em;margin:0;max-width:11ch}
+.head .lede{font:500 clamp(19px,1.6vw,24px)/1.35 var(--sans);max-width:36ch;margin:32px 0 0}
+.band{border-top:3px solid var(--ink);padding:28px 0 48px;display:grid;grid-template-columns:repeat(12,1fr);gap:24px 16px}
+.band > h2{grid-column:1 / span 4;font:850 clamp(30px,3.6vw,56px)/.95 var(--sans);letter-spacing:-.035em;margin:0}
+.band > .body{grid-column:5 / -1}
+.body p{max-width:62ch;margin:0 0 14px}
+.baron{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px;align-items:end}
+.baron .plate{aspect-ratio:3/4;color:var(--ink)}
+.baron .plate canvas.ht{color:var(--ink)}
+.baron blockquote{margin:0;font:800 clamp(24px,2.6vw,40px)/1.08 var(--sans);letter-spacing:-.02em}
+sup a{font:600 .7em var(--mono);text-decoration:none;padding:0 2px;border:1px solid var(--ink)}
+.choices{display:flex;flex-wrap:wrap;gap:0;margin:0 0 18px}
+.choices button{font:700 16px/1.2 var(--sans);text-align:left;background:var(--paper);color:var(--ink);border:3px solid var(--ink);margin:0 -3px -3px 0;padding:14px 16px;min-height:52px;cursor:pointer;flex:1 1 200px}
+.choices button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.state{border:3px solid var(--ink);padding:20px}
+.state .io{font:400 17px/1.4 var(--mono);margin:0 0 10px;overflow-wrap:anywhere}
+.state [data-verdict]{font-size:clamp(28px,4vw,60px);font-weight:900;letter-spacing:-.03em;margin:4px 0 10px;line-height:1}
+.state [data-verdict]::before{width:.6em;height:.6em}
+.note{font-size:14px;color:var(--soft)}
+.loop{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);border:3px solid var(--ink)}
+.loop li{padding:16px 14px 18px;border-right:3px solid var(--ink);counter-increment:s}
+.loop li:last-child{border-right:0}
+.loop li::before{content:counter(s);display:block;font:900 64px/.9 var(--sans);letter-spacing:-.05em;margin-bottom:10px}
+.loop li.key{background:var(--ink);color:var(--paper)}
+.loop b{display:block;font-size:19px;margin-bottom:4px}
+.loop span{font-size:15px;line-height:1.35}
+.edges{display:grid;grid-template-columns:1fr 1fr;border:3px solid var(--ink)}
+.edges > div{padding:18px}
+.edges > div + div{border-left:3px solid var(--ink)}
+.edges h3{font:850 26px/1 var(--sans);letter-spacing:-.02em;margin:0 0 8px}
+.edges .hold{grid-column:1 / -1;border-left:0;border-top:3px solid var(--ink);background:var(--paper-2)}
+.cmd{background:var(--ink);color:var(--paper);padding:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.cmd pre{margin:0;font:400 clamp(17px,2vw,26px)/1.4 var(--mono);white-space:pre-wrap}
+.cmd button{font:700 15px var(--sans);background:var(--paper);color:var(--ink);border:0;padding:10px 16px;min-height:44px;cursor:pointer}
+.fns{font-size:14px;color:var(--soft);padding-left:20px;max-width:80ch}
+@media (max-width:760px){
+  .head{min-height:0;padding-top:12vw}
+  .num{font-size:70vw;top:0;opacity:.35}
+  .head .lede{margin-left:0}
+  .band > h2,.band > .body{grid-column:1 / -1}
+  .baron{grid-template-columns:1fr}
+  .loop{grid-template-columns:1fr}
+  .loop li{border-right:0;border-bottom:3px solid var(--ink)}
+  .loop li:last-child{border-bottom:0}
+  .edges{grid-template-columns:1fr}
+  .edges > div + div{border-left:0;border-top:3px solid var(--ink)}
+}
+
+/* ---------- type as material ---------- */
+/* stamped caption: Conso in a double rule, off true, misregistered */
+.cap,.note[data-art]{font:400 13px/1.35 var(--mono);color:var(--ink);border:3px double var(--ink);padding:6px 10px;rotate:-1.5deg;text-shadow:1.5px 1px 0 color-mix(in srgb,var(--ink) 30%,transparent);max-width:44ch;background:var(--paper)}
+/* overprinted slab labels: the description printed on its own ink bar */
+.index .d{justify-self:start;background:var(--ink);color:var(--paper);padding:4px 10px;line-height:1.5;-webkit-box-decoration-break:clone;box-decoration-break:clone;display:inline;font-size:16px}
+.index a:hover .d,.index a:focus-visible .d{background:var(--paper);color:var(--ink)}
+.index li > a > .d{max-width:none}
+/* a vertical running head, set as supergraphic beside the index */
+.vhead{position:absolute;left:-4px;top:88px;writing-mode:vertical-rl;rotate:180deg;font:900 clamp(40px,6vw,96px)/.8 var(--sans);letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--ink);pointer-events:none}
+.index-wrap{position:relative;padding-left:clamp(0px,7vw,110px)}
+@media (max-width:760px){.vhead{display:none}.index-wrap{padding-left:0}}

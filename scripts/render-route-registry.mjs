@@ -392,7 +392,12 @@ function familyForSystem(system) {
   return "Systems";
 }
 
+// 26 October 2026: the world's pages (the home's road and places, the plain index, the element table, the swatch
+// library, Accession, credits and the imported live pieces under world/) form their own family.
+const WORLD_PAGES = /^(world\/|(floor|elements|swatches|accession|credits|workshop)\.html$)/;
+
 function familyForHref(href, metadata) {
+  if (WORLD_PAGES.test(href)) return "World";
   if (metadata?.family) return metadata.family;
   const existing = findRouteByHref(href);
   if (existing) return existing.family.label;
@@ -414,6 +419,7 @@ function familyForHref(href, metadata) {
 }
 
 function reconcilePublicRoutes() {
+  if (!registry.families.some((family) => family.label === "World")) registry.families.push({ label: "World", hubHref: "floor.html", routes: [] });
   systems.prefixes = [...new Set([...(systems.prefixes || []), "systems/", "demos/"])];
   research.prefixes = [...new Set([...(research.prefixes || []), "research-", "figures/", "analytics/"])]
     .filter((prefix) => !["briefings/", "frontier-safety/"].includes(prefix));

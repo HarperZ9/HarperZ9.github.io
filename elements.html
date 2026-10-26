@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-type="stock" data-alive-grain="off" data-lettering="/world/lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>The element table | Zain Dana Harper</title>
+<meta name="description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
+<link rel="canonical" href="https://harperz9.github.io/elements.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="The element table | Zain Dana Harper">
+<meta property="og:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
+<meta property="og:url" content="https://harperz9.github.io/elements.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/elements.jpg?v=ade345dd7915">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The element table, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/elements.jpg?v=ade345dd7915">
+<meta name="twitter:image:alt" content="The element table, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:title" content="The element table | Zain Dana Harper">
+<meta name="twitter:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/studies/studies.css?v=world-99f03a9984">
+<script type="module" src="/world/ui/shell/shell.js?v=world-99f03a9984"></script>
+<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-99f03a9984">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-99f03a9984"></head>
+<body class="parts-body">
+<header class="o-hand" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/daylight.html"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="parts-page"><h1>Elements</h1><div class="parts" id="parts"></div></article>
+<script type="module">import { mountElements } from "/world/ui/shell/organic/elements.js";
+const data = await (await fetch("/world/ui/shell/organic/data/elements.json")).json();
+mountElements(document.getElementById("parts"), data, { assets: "/world/ui/shell/organic/" });</script>
+<script type="module" src="/world/alive/alive.js?v=world-99f03a9984"></script>
+</main>
+</body>
+</html>

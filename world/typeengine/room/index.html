@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Type room</title>
+<link rel="canonical" href="https://harperz9.github.io/world/typeengine/room/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Type room">
+<meta property="og:description" content="Type a word and set it in glass, a tube, paint, cloud, a data series or a sound.">
+<meta property="og:url" content="https://harperz9.github.io/world/typeengine/room/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/world--typeengine--room.jpg?v=a79ae8435442">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Type room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--typeengine--room.jpg?v=a79ae8435442">
+<meta name="twitter:image:alt" content="Type room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="description" content="Type a word and set it in glass, a tube, paint, cloud, a data series or a sound.">
+<link rel="preload" href="../../typeface/dist/variable/AccessionText[INKS,wght].woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../typeface/specimen/shell/shell.css?v=world-99f03a9984">
+<link rel="stylesheet" href="../../typeface/dist/accession.css?v=world-99f03a9984">
+<link rel="stylesheet" href="room.css?v=world-99f03a9984">
+<script type="module" src="../../typeface/specimen/shell/shell.js?v=world-99f03a9984"></script>
+<script type="module" src="room.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the room</a>
+<header class="rail">
+  <a class="home" href="/">Zain Dana Harper</a>
+  <nav aria-label="Primary"><ul>
+    <li><a href="/catalog.html">Tools</a></li>
+    <li><a href="/publications.html">Writing</a></li>
+    <li><a href="/explainers.html">Films</a></li>
+    <li><a href="/site-index.html">Index</a></li>
+  </ul></nav>
+  <div class="console">
+    <button type="button" data-plain-toggle aria-pressed="false">Plain view</button>
+    <button type="button" data-theme-toggle>Dark</button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="room type-room" aria-labelledby="room-h">
+    <h1 id="room-h" class="visually-hidden">Type room</h1>
+    <div class="room-in">
+      <div class="stage" data-stage>
+        <canvas id="stage" width="1200" height="400" aria-hidden="true" data-art></canvas>
+        <label class="word"><span class="visually-hidden">Word</span>
+          <input id="word" type="text" value="Accession" maxlength="24" spellcheck="false" autocomplete="off"></label>
+        <p class="refusal" role="status" aria-live="polite" id="status"></p>
+      </div>
+
+      <div class="shelf" role="group" aria-label="Families" id="families"></div>
+      <div class="shelf swatches" role="group" aria-label="Materials" id="materials"></div>
+      <div class="axes" role="group" aria-label="Axes" id="axes"></div>
+      <div class="proof" aria-label="Alphabet" role="img" id="proof-wrap"><canvas id="proof" width="1200" height="120" aria-hidden="true"></canvas></div>
+
+      <div class="exports" role="group" aria-label="Export">
+        <button type="button" class="stamp-btn" data-export="font">Font</button>
+        <button type="button" class="stamp-btn" data-export="png">PNG</button>
+        <button type="button" class="stamp-btn" data-export="svg">SVG</button>
+        <button type="button" class="stamp-btn" data-export="webm">WebM</button>
+        <button type="button" class="stamp-btn" data-export="recipe">Recipe</button>
+        <label class="stamp-btn open"><span>Open</span><input type="file" id="open" accept=".json,application/json" class="visually-hidden"></label>
+        <button type="button" class="disc-btn" id="listen" aria-pressed="false" hidden><canvas width="44" height="44" aria-hidden="true"></canvas><span class="visually-hidden">Listen</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
