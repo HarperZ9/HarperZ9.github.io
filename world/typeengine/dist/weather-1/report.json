@@ -1,0 +1,46 @@
+{
+ "family": "Weather 1",
+ "ground": "#9fb4c4",
+ "axes": [
+  "wght"
+ ],
+ "classes": {
+  "bindings": {
+   "fill": {
+    "material": "cloud",
+    "kind": "live",
+    "how": "lit volumes; no font technology holds them",
+    "live": [
+     "all"
+    ]
+   },
+   "stroke": {
+    "material": "brush",
+    "kind": "live",
+    "how": "painted dabs with grain and wet mixing; a font holds no paint. The skeleton under it is a real outline (the ink binding)",
+    "live": [
+     "all"
+    ]
+   }
+  },
+  "axes": [
+   {
+    "tag": "wght",
+    "target": "skeleton.weight",
+    "kind": "variable"
+   }
+  ]
+ },
+ "files": {
+  "variable": {
+   "ttf": 185620,
+   "woff2": 55528,
+   "name": "Weather1[wght]"
+  },
+  "cut": {
+   "ttf": 96920,
+   "woff2": 27684,
+   "name": "Weather1-Cut"
+  }
+ }
+}

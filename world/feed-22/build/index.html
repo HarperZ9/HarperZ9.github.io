@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Still Lines, Small Appetites</title>
+<link rel="canonical" href="https://harperz9.github.io/world/feed-22/build/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Still Lines, Small Appetites">
+<meta property="og:description" content="Two generators from feed set 22: a square plate solved for its real modes, with sand that carries letters, and a small closed ecosystem of swimmers and pellets.">
+<meta property="og:url" content="https://harperz9.github.io/world/feed-22/build/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Two generators from feed set 22: a square plate solved for its real modes, with sand that carries letters, and a small closed ecosystem of swimmers and pellets.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="demo.css?v=world-a891bf139a">
+</head>
+<body>
+<main>
+<header class="top"><span class="mark">Feed set 22</span><span class="mono">two generators, our own code</span></header>
+
+<section class="intro">
+  <h1><span>Still lines,</span><span>small appetites</span></h1>
+  <div class="lede">
+    <p>Sand on a vibrating plate collects where the plate stands still. Here each grain is a letter. In silence the grains spell a word; under sound they leave it for the plate's nodal lines, solved from the plate equation itself.</p>
+    <p>Below the plate, swimmers grow, turn round, sprout streamers and feed them, peck by peck, to the pellets that made them.</p>
+  </div>
+</section>
+
+<section class="room" id="plate-room" aria-labelledby="t1">
+  <div class="numeral" aria-hidden="true">1</div>
+  <h2 class="title" id="t1"><span class="no">01</span>Where the sand rests</h2>
+  <figure class="plate square">
+    <canvas id="plate" width="1800" height="1800" tabindex="0" aria-label="Square plate with letter grains. Use the controls to sound the plate or let it fall silent."></canvas>
+    <figcaption class="readout" id="plate-readout" aria-live="polite">solving the plate…</figcaption>
+  </figure>
+  <div class="panel" role="group" aria-labelledby="panel-h">
+    <p class="runhead"><span id="panel-h">Plate controls</span><span>square plate, Poisson 0.3</span></p>
+    <div class="dial">
+      <button id="prev" class="step" aria-label="Previous mode">‹</button>
+      <p class="modeno" aria-live="polite"><span class="k" id="mode-k">6</span><span class="unit">mode</span></p>
+      <button id="next" class="step" aria-label="Next mode">›</button>
+    </div>
+    <div class="acts">
+      <button id="sound" class="primary" aria-pressed="false">Sound the plate</button>
+      <button id="series">Play a data series</button>
+      <button id="export">Save a 4K still</button>
+    </div>
+    <fieldset class="picks">
+      <legend>Boundary</legend>
+      <label><input type="radio" name="edge" value="free" checked><span><b>Free edge</b> a real Chladni plate</span></label>
+      <label><input type="radio" name="edge" value="clamped"><span><b>Clamped edge</b> rim held still</span></label>
+      <label><input type="radio" name="edge" value="membrane"><span><b>Drum</b> what the reference clip draws</span></label>
+    </fieldset>
+    <div class="fields">
+      <label class="word">Word in silence <input id="word" value="finite" maxlength="10" spellcheck="false"></label>
+      <label class="check"><input type="checkbox" id="audio"> Hear the mode as one sine partial</label>
+    </div>
+    <p class="what" id="what">A free square plate, Poisson ratio 0.3, solved by Rayleigh-Ritz on a Legendre basis. The numbers are Leissa's frequency parameter, so you can check them against the published table.</p>
+    <figure class="card">
+      <figcaption>How to read it</figcaption>
+      <p>Each letter grain carries one character of a sentence by Spinoza (1674, Elwes translation): <q>between finite and infinite there is no comparison</q>. Zoom in on a nodal line and the line is that sentence, scattered through the sand.</p>
+    </figure>
+    <p id="series-key" class="key"></p>
+  </div>
+</section>
+
+<section class="room" id="life-room" aria-labelledby="t2">
+  <div class="numeral" aria-hidden="true">2</div>
+  <h2 class="title" id="t2"><span class="no">02</span>Small appetites</h2>
+  <figure class="plate wide">
+    <canvas id="life" width="1000" height="640" tabindex="0" aria-label="Ecosystem of swimmers and pellets. Click or press Enter to drop a pellet paid for out of the nutrient pool."></canvas>
+    <figcaption class="readout" id="life-readout" aria-live="off"></figcaption>
+  </figure>
+  <div class="label">
+    <p class="what">Swimmers feed on a dissolved pool and grow. At a set mass they turn round and grow two streamers. A grown swimmer that meets a pellet pecks it; every peck moves streamer into the pellet until the swimmer is taken in whole. Pellets leak back into the pool, bud new swimmers and divide.</p>
+    <p>Mass is conserved, so nothing here runs away. Click to drop food. It costs the pool what it gives the pellet: your attention feeds the colony and starves the water.</p>
+    <div class="controls"><button id="life-step">Step one second</button><button id="life-reset">Reset</button></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <p>Written from frame-by-frame study of reference clips; nothing from them is copied or shipped. Plate eigenvalues checked against Leissa, <i>Vibration of Plates</i> (1969), and an independent numpy solve. Data series: US CPI annual inflation from the data-as-art pilot.</p>
+</footer>
+<script type="module" src="demo.js?v=world-a891bf139a"></script>
+</main>
+</body>
+</html>

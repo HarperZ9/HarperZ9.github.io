@@ -1,0 +1,61 @@
+/* Feed set 24 demo: only what the shell does not already give. Two faces, ink on the wall,
+   art grounds inside frames only. */
+.plate-obj, .orb-obj, .ham-obj { grid-column: 6 / -1; }
+.plate-v, .orb-v, .ham-v { grid-column: 6 / -1; }
+.frame.dark { background: #050608; }
+canvas.art { display: block; width: 100%; height: auto; }
+#plate { aspect-ratio: 3 / 2; }
+#orb { aspect-ratio: 1 / 1; }
+#ham { aspect-ratio: 2 / 1; cursor: crosshair; }
+.frame.paper { background: #efe9de; }
+canvas.pix { image-rendering: pixelated; }
+
+.field-in { font: 400 17px/1.2 var(--mono); color: var(--ink); background: var(--wall); border: 1px solid var(--ink); border-radius: 0; padding: 10px 12px; min-height: 44px; width: min(100%, 16ch); margin: 0 0 14px; }
+.field-in:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.vitrine .io { white-space: pre-wrap; min-height: 1.45em; }
+pre.io { margin: 0 0 14px; }
+
+.ketline { font: 400 17px/1.7 var(--sans); max-width: none; overflow-wrap: anywhere; }
+.ketline .ket { font-weight: 600; white-space: nowrap; }
+.ketline .term { white-space: nowrap; }
+.ketline .op { margin: 0 .3em; }
+.ketline sup, .ketline sub { font-size: 13px; }
+.ketline .term { padding: 0 .15em; border-bottom: 3px solid var(--g); }
+.ketline .g0 { --g: #bfe3e8; }
+.ketline .g1 { --g: #f0a35c; }
+
+
+.quote { margin: 22px 0 0; padding: 0 0 0 16px; border-left: 2px solid var(--ink); }
+.quote p { font: 600 clamp(21px, 1.9vw, 28px)/1.25 var(--sans); letter-spacing: -.01em; margin: 0 0 6px; max-width: 24ch; }
+.quote footer { font: 400 13px/1.4 var(--mono); color: var(--soft); }
+
+.wordm { border-collapse: collapse; font: 400 15px/1 var(--mono); margin: 4px 0 8px; }
+.wordm th { font-weight: 400; color: var(--soft); padding: 6px 8px; }
+.wordm td { width: 2.2em; height: 2.2em; text-align: center; color: var(--ink);
+  background: color-mix(in srgb, var(--ink) calc(var(--h) * 34%), transparent); border: 1px solid var(--line); }
+
+.still-only { display: none; }
+@media (prefers-reduced-motion: reduce) { .still-only { display: flex; } button.still-only { display: inline-block; } }
+
+.foot .credit { font: 400 13px/1.5 var(--sans); color: var(--soft); margin: 0 0 8px; max-width: 72ch; }
+
+@media (max-width: 900px) {
+  .plate-obj, .orb-obj, .ham-obj, .plate-v, .orb-v, .ham-v { grid-column: 1 / -1; }
+}
+
+/* Page-level fits to QUALITY-SPEC T2, T5 and T8 over the shell's defaults: a six-step scale
+   (13, 15, 17, an, display, hero), a 45 to 80 character measure, and a skip link with real contrast. */
+.walltext p { font-size: 17px; line-height: 1.55; max-width: 60ch; }
+.walltext p.an { font-size: clamp(21px, 1.9vw, 28px); line-height: 1.25; max-width: 26ch; }
+.console button { font-size: 13px; }
+.skip { color: var(--on-ink); }
+html { font-synthesis: none; font-kerning: normal; font-optical-sizing: auto; }
+p { text-wrap: pretty; } h1, h2 { text-wrap: balance; }
+.save { font: 600 15px/1.2 var(--sans); color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 0; padding: 10px 16px; min-height: 44px; cursor: pointer; margin: 0 0 14px; }
+.save:hover, .save:focus-visible { border-color: var(--ink); }
+.save[disabled] { cursor: progress; opacity: .7; }
+.bits code { display: grid; grid-template-columns: 2ch 8ch auto; gap: 0 1ch; font: 400 17px/1.5 var(--mono); }
+.bits .k { color: var(--soft); }
+.bits b { font-weight: 400; background: var(--ink); color: var(--on-ink); }
+/* the hero carries the material lettering at full scale; room titles follow the shell scale (--fs-6) */
+.walltext h1 { font-size: clamp(60px, 9vw, 150px); line-height: .9; letter-spacing: -.04em; }

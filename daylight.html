@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="/studies/studies.css?v=world-a891bf139a">
 <script type="module" src="/world/ui/shell/shell.js?v=world-a891bf139a"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/daylight.html#application","name":"Daylight Commons","url":"https://harperz9.github.io/daylight.html","softwareVersion":"3.6.2","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/daylight-commons/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/daylight-commons"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/daylight.html#application","name":"Daylight Commons","url":"https://harperz9.github.io/daylight.html","softwareVersion":"3.8.0","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/daylight-commons/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/daylight-commons"}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="reading">
@@ -59,12 +59,12 @@
 <article class="tool">
 <h1>Daylight Commons</h1>
 <p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's Daylight Commons button.</p>
-<dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.6.2">3.6.2</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/daylight-commons">HarperZ9/daylight-commons</a></dd></dl>
+<dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.8.0">3.8.0</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/daylight-commons">HarperZ9/daylight-commons</a></dd></dl>
 
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>
 <ol>
-<li>Download <code>radar-chrome-3.6.2.zip</code> from <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.6.2">the 3.6.2 release</a> and unzip it.</li>
+<li>Download <code>radar-chrome-3.8.0.zip</code> from <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.8.0">the 3.8.0 release</a> and unzip it.</li>
 <li>Open <code>chrome://extensions</code> (Edge: <code>edge://extensions</code>) and turn on Developer mode.</li>
 <li>Choose Load unpacked and pick the unzipped folder.</li>
 <li>Pick your sites on the first-run page and press Start Daylight Commons.</li>
@@ -72,12 +72,12 @@
 <p>To update, replace the folder and press Reload. Settings carry over, and pages left open get the new buttons without a reload.</p>
 <h3>Firefox 128 or later</h3>
 <ol>
-<li>Download <code>radar-firefox-3.6.2.xpi</code> from the same release.</li>
+<li>Download <code>radar-firefox-3.8.0.xpi</code> from the same release.</li>
 <li>Open <code>about:debugging#/runtime/this-firefox</code>, choose Load Temporary Add-on and pick the file.</li>
 </ol>
 <p>Firefox removes temporary add-ons on restart until a signed build is published. The release files still carry the project's earlier name, Radar.</p>
 <h3>Command line</h3>
-<p>Unzip <code>radar-cli-3.6.2.zip</code> and run it with Node 22 or later on a saved thread or your own export:</p>
+<p>Unzip <code>radar-cli-3.8.0.zip</code> and run it with Node 22 or later on a saved thread or your own export:</p>
 <pre class="cmd" tabindex="0" aria-label="Command"><code>node bin/radar.mjs analyze saved-thread.html</code></pre>
 
 <h2 id="verify">Check the download</h2>
@@ -93,8 +93,9 @@
 <h2 id="privacy">What it sends and keeps</h2>
 <p>It reads what the site shows you and requests account details only from the site you are on. Other coverage and evidence lookups reach further, and only after you turn them on and click. Account details stay in your browser for 14 days and thread history for 60, both adjustable, and one control clears everything.</p>
 
-<h2 id="new">New in 3.6.2</h2>
-<p>Saves land in their folder again after an update. Pages that were already open when the extension updated now get the download parts loaded again, so their buttons work without a reload, and a page that still cannot reach the extension asks for one reload. An empty folder name in the settings now means the default, Daylight. <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.6.2">Release notes</a>.</p>
+<h2 id="new">New in 3.8.0</h2>
+<p>An argument lens, off by default, splits a post into its premises, assumptions and conclusions at the words that join them, in English, Portuguese, Spanish, French and Latin. Each sentence is named by type: a question, a quotation, a definition, an opinion, or a factual claim with or without a source. The window marks claims about what someone else knows or intends, and conclusions that bring in words their premises lack. A post that puts the people its sources name into an act none of those sources states is flagged as a reframing. The figures so far come from model labels on short sentences, not from people's annotations, and the release says so. <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.8.0">Release notes</a>.</p>
+<p>3.7.0 added evidence capture: right-click Capture as evidence saves the file, its note, a picture of the tab and a custody record, and <code>daylight capture verify</code> re-hashes everything and names any gap. <a href="https://github.com/HarperZ9/daylight-commons/releases/tag/v3.7.0">Release notes</a>.</p>
 </article>
 </main>
 </body>

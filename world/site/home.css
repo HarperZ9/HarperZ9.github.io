@@ -64,3 +64,8 @@ html.plain .crossing, html.plain .uncover { display: none; }
 .o-hand .o-sheet:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .o-hand .o-sheet[hidden] { display: none; }
 .caps { letter-spacing: .06em; }
+
+/* run-it-now commands under Tools; package names (span.ident) stay whole when the line has room */
+.try{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.45rem;font-size:.92rem}
+.try code{font-family:var(--mono,"Conso",ui-monospace,monospace);white-space:normal}
+.ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}

@@ -45,7 +45,7 @@
     {
       "name": "Daylight Commons",
       "repo": "daylight-commons",
-      "version": "3.6.2",
+      "version": "3.8.0",
       "registry": "github",
       "package": "HarperZ9/daylight-commons",
       "downloadUrl": "https://github.com/HarperZ9/daylight-commons/releases/latest",

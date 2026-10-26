@@ -53,7 +53,7 @@ Version 0.16.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
 
 ## Daylight Commons
 
-Version 3.6.2. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
+Version 3.8.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
 Brave and Firefox 128 or later, plus a command line for saved threads.
 
 - What it does: rest the pointer on a reply on X, YouTube, Reddit, Facebook,

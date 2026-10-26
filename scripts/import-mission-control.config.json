@@ -78,7 +78,7 @@
   ],
   "optional": [],
   "deny": [
-    "/node_modules/",
+    "/node_modules/", "/__pycache__/", "/.ruff_cache/", ".pyc",
     "/tests/",
     "/test/",
     "/shots/",

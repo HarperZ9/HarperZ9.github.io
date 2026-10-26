@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Weather and Ledgers</title>
+<link rel="canonical" href="https://harperz9.github.io/world/feed-23/build/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Weather and Ledgers">
+<meta property="og:description" content="A paint and cloud engine for skies, smoke and stars, and a ledger that writes data as printed prisms. Generators in our own code.">
+<meta property="og:url" content="https://harperz9.github.io/world/feed-23/build/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="A paint and cloud engine for skies, smoke and stars, and a ledger that writes data as printed prisms. Generators in our own code.">
+<link rel="preload" href="../../ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="demo.css?v=world-a891bf139a">
+<script type="module" src="demo.js?v=world-a891bf139a"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+<header class="rail">
+  <span class="mark">Weather and Ledgers</span>
+  <span class="mono">two generators, our own code</span>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="t0">
+    <div class="hero-word">
+      <h1 id="t0" class="cloudword"><span class="word">Cumulus</span></h1>
+      <p class="lede">A cloud and paint engine for weather. A cloud is a tree of lobes, lit by marching toward the light; brushes lay grain, wet paint and smudge over it. The letters above are a cloud grown along the skeleton of the word.</p>
+    </div>
+    <figure class="plate tall" data-art>
+      <canvas id="hero-plate" aria-label="A painted clearing in cumulus, lit from inside, with a dark four-point star cut out of the light."></canvas>
+      <figcaption class="card"><b>Star cloud</b>. Masses nested into lobes and curls, lit from the opening, with a silver lining, found edges toward the light and lost ones in the dark.</figcaption>
+    </figure>
+  </section>
+
+  <section class="room" aria-labelledby="t1">
+    <p class="runhead"><span>01</span><span>The brush</span></p>
+    <h2 id="t1" class="title">Paint the weather</h2>
+    <div class="studio">
+      <figure class="plate wide" data-art>
+        <canvas id="paint" tabindex="0" aria-label="Painting surface. Draw with a pen, a finger or a mouse. A pen's pressure and tilt shape the dab."></canvas>
+        <figcaption class="readout mono" id="readout" aria-live="polite">draw here</figcaption>
+        <div class="progress" id="progress" hidden><span></span></div>
+      </figure>
+      <div class="tools" role="group" aria-label="Brush tools">
+        <fieldset class="brushes"><legend class="mono">brush</legend><div id="brushes"></div></fieldset>
+        <fieldset class="inks"><legend class="mono">ink</legend><div id="inks"></div></fieldset>
+        <label class="size mono">size <input id="size" type="range" min="0.3" max="3" step="0.05" value="1"></label>
+        <div class="actions">
+          <button type="button" id="study-a">Paint the nocturne</button>
+          <button type="button" id="study-b">Paint the star cloud</button>
+          <button type="button" id="clear">Clear</button>
+          <button type="button" id="export" class="hot">Export 4K master, 16-bit</button>
+          <button type="button" id="export-view">Export 4K view, 8-bit</button>
+        </div>
+        <p class="note">The surface is float, in linear light, so glazes never band. Export re-paints every stroke at 2880 by 3840 px instead of enlarging the screen.</p>
+      </div>
+    </div>
+    <div class="styles" role="group" aria-label="One cloud description in four styles">
+      <figure><canvas data-style="volume" aria-label="The cloud as a lit volume"></canvas><figcaption class="mono">volume</figcaption></figure>
+      <figure><canvas data-style="wash" aria-label="The same cloud as a cream wash with a dark base band"></canvas><figcaption class="mono">wash</figcaption></figure>
+      <figure><canvas data-style="dither" aria-label="The same cloud dithered in two inks"></canvas><figcaption class="mono">dither</figcaption></figure>
+      <figure><canvas data-style="halftone" aria-label="The same cloud as a halftone screen"></canvas><figcaption class="mono">halftone</figcaption></figure>
+      <p class="note">One cloud file, four readings. The same description feeds the engine's raymarcher; the tests hold the outline to an IoU of 0.9 against a volumetric reference.</p>
+    </div>
+  </section>
+
+  <section class="room light" aria-labelledby="t2">
+    <p class="runhead"><span>02</span><span>The grid</span></p>
+    <h2 id="t2" class="title">Ledger</h2>
+    <div class="pair">
+      <figure class="plate square" data-art>
+        <canvas id="rods" aria-label="A ledger of 49 shot lengths written as prisms in two inks, one entry after another."></canvas>
+      </figure>
+      <div class="label">
+        <p>Each entry is one prism. Its length is the value, its direction the change: up and right when the series rose, down and right when it fell. Ink comes from the value's rank, side faces print as halftone, and the largest values carry a key ink set a little off register.</p>
+        <p>The series here is the 49 shot lengths of a brand film measured in this study, on a log scale, so the grid writes out that film's edit rhythm, entry by entry.</p>
+        <div class="actions"><button type="button" id="rods-play" aria-pressed="true">Pause</button></div>
+      </div>
+      <figure class="plate wordplate" data-art>
+        <canvas id="rods-word" aria-label="The word Tally, written as a ledger of its own column ink, confined to its letters."></canvas>
+        <figcaption class="card">The word tallies itself: its series is the ink in each of its own columns, and every prism stays inside its letters.</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><p>Studies after feed set 23. Engines, paintings and letters are generated here; no reference image or clip is used in them.</p></footer>
+</body>
+</html>
