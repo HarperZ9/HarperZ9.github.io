@@ -5,6 +5,7 @@ import { createLivingGL } from '../web/living-gl.mjs';
 import { PASSAGE_BAKES } from './bakes.mjs';
 
 import { PASSAGES } from './passages.mjs';
+import { progressAt, levelsOf } from '../lib/living/axes.mjs';
 export { PASSAGES };
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const main = document.getElementById('main'), say = document.getElementById('say');
@@ -52,15 +53,17 @@ function place(P, i) {
   if (i > 0 && st.text !== P.stops[i - 1].text) say.textContent = `${st.text}${st.note ? `, ${st.note}` : ''}`;
 }
 
+// the road position: the last stop holds for the last half-stop of scroll (otherwise it exists only at the bottom pixel)
 function frame(t) {
   for (const P of live.values()) {
     if (!P.g || !P.ready || !P.near) continue;
     const r = P.sec.getBoundingClientRect(), q = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
-    const n = P.stops.length, s = reduced ? Math.round(q * (n - 1)) : q * (n - 1), i = Math.min(n - 1, Math.floor(s)), local = s - i, lead = 0.35;
+    const n = P.stops.length, s = reduced ? Math.round(q * (n - 1)) : Math.min(n - 1, q * (n - 0.5)), i = Math.min(n - 1, Math.floor(s)), local = s - i, lead = 0.35;
     ask(P, 'stop', i); if (i + 1 < n) { ask(P, 'move', i); ask(P, 'stop', i + 1); }
     let drawn;
-    if (reduced || i === n - 1 || local <= lead) { drawn = P.g.draw({ i, mode: 'stop', t: reduced ? 0 : t }); place(P, i); }
-    else { const p = (local - lead) / (1 - lead); drawn = P.g.draw({ i, p, mode: 'move', t, breath: P.moves?.[i]?.breath, breath2: P.moves?.[i]?.breath2 }) || P.g.draw({ i, mode: 'stop', t }); place(P, p > 0.5 && P.stops[i + 1].text !== P.stops[i].text ? i + 1 : i); }
+    if (reduced || i === n - 1 || local <= lead) { const an = P.stops[i].animate; drawn = P.g.draw({ i, mode: 'stop', t: reduced ? 0 : t, level: an && !reduced ? progressAt(an, t) * (levelsOf(an).length - 1) : 0 }); place(P, i); }
+    else { const p = (local - lead) / (1 - lead); const lvAt = (k) => { const a = P.stops[k].animate; return a ? progressAt(a, t) * (levelsOf(a).length - 1) : 0; };
+      drawn = P.g.draw({ i, p, mode: 'move', t, breath: P.moves?.[i]?.breath, breath2: P.moves?.[i]?.breath2, levelA: lvAt(i), levelB: lvAt(i + 1) }) || P.g.draw({ i, mode: 'stop', t }); place(P, p > 0.5 && P.stops[i + 1].text !== P.stops[i].text ? i + 1 : i); }
     if (!drawn) P.g.draw({ i, mode: 'stop', t });
   }
 }

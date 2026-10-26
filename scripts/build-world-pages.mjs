@@ -66,7 +66,7 @@ ${section("site", "Pages, writing and tools", sitePages())}
 }
 
 function mountPage(file, title, description, heading, script) {
-  const body = `<article class="parts-page"><h1>${esc(heading)}</h1><div class="parts" id="parts"></div></article>
+  const body = `<article class="parts-page"><h1>${esc(heading)}</h1><h2 class="sr-only">${esc(title)}</h2><div class="parts" id="parts"></div></article>
 <script type="module">${script}</script>
 <script type="module" src="/world/alive/alive.js"></script>`;
   return write(file, page({ path: file, title, description, body, htmlAttrs: 'data-alive-grain="off" data-lettering="/world/lettering/lib/letter.mjs"', bodyClass: "parts-body",

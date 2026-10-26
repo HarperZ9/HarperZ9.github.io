@@ -122,4 +122,8 @@ function start() {
   if (v) setTimeout(() => m.view(v === "mosaic" ? { mosaic: true } : { layers: { solo: v } }), 1200);
 }
 
-if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
+// the site starts the water after the page has loaded and the main thread is idle, and on touch screens at the
+// visitor's first touch or scroll (world/site/budget.js sets window.__siteWhenVisited), so it never delays the first screen
+const go = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300));
+const later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(go) : go());
+if (document.readyState === "complete") later(); else addEventListener("load", later, { once: true });

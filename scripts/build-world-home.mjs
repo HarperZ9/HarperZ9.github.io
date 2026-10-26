@@ -42,11 +42,16 @@ function lawsOf(ids, rules) {
   const list = ids.map((id) => rules.get(id)).filter(Boolean);
   return list.length ? `<ul class="laws">${list.map((r) => `<li>${esc(r.statement)}</li>`).join("")}</ul>` : "";
 }
+// a loop's sources: the 640 px encodes on phones, the full ones elsewhere; AV1 in WebM first, H.264 for Safari
+export function sources(src) {
+  return `<source src="${src}-640.webm" type='video/webm; codecs="av01.0.04M.08"' media="(max-width: 860px)"><source src="${src}-640.mp4" type="video/mp4" media="(max-width: 860px)">` +
+    `<source src="${src}.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="${src}.mp4" type="video/mp4">`;
+}
 function lead(pl) {
   const L = pl.lead;
-  if (L.kind === "loop") return `<video class="lead" muted loop playsinline preload="none" poster="${L.src}-poster.webp" width="1280" height="720" aria-label="${esc(L.alt)}" data-loop>
-      <source src="${L.src}.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="${L.src}.mp4" type="video/mp4"></video>`;
-  if (L.kind === "hum") return `<div class="lead hum" role="img" aria-label="${esc(L.alt)}"><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false">Hum v4</button></div>`;
+  if (L.kind === "loop") return `<video class="lead" muted loop playsinline preload="none" data-poster="${L.src}" width="1280" height="720" aria-label="${esc(L.alt)}" data-loop>
+      ${sources(L.src)}</video>`;
+  if (L.kind === "hum") return `<div class="lead hum"><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false" aria-describedby="hum-what">Hum v4</button><span id="hum-what" class="sr-only">${esc(L.alt)}</span></div>`;
   if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
   return `<img class="lead" src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
 }
@@ -67,9 +72,9 @@ function bazaar(rules) {
 function build() {
   const r = roadParts(), world = JSON.parse(read("world/universe/proto/world.json"));
   const rules = new Map(world.rules.map((x) => [x.id, x]));
-  const html = read("site-src/world/home.html")
+  const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);

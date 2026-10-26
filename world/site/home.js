@@ -7,6 +7,15 @@ import { carrier, flowFrom } from "/world/universe/lib/carry.js";
 import { grammar } from "/world/universe/lib/stop.mjs";
 import { mosaicSource, drawMosaic } from "/world/universe/lib/path-render.js";
 import "/world/site/hum.js";
+import { Alive } from "/world/alive/alive.js";
+
+// the alive layer starts once the first screen has settled (the page opts out of its auto start); on touch screens
+// at the visitor's first touch or scroll (budget.js)
+const startAlive = () => new Alive().start().then((a) => { window.Alive = a; document.dispatchEvent(new CustomEvent("alive:ready", { detail: a })); })
+  .catch((e) => console.error("alive: start failed", e));
+const idle = (fn) => () => ("requestIdleCallback" in window ? requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 400));
+const afterLoad = () => (window.__siteWhenVisited ? window.__siteWhenVisited(idle(startAlive)) : idle(startAlive)());
+if (document.readyState === "complete") afterLoad(); else addEventListener("load", afterLoad, { once: true });
 
 const root = document.documentElement, reducedQ = matchMedia("(prefers-reduced-motion: reduce)");
 const still = () => reducedQ.matches || root.classList.contains("plain") || root.classList.contains("weak");
@@ -15,7 +24,11 @@ const places = [...document.querySelectorAll(".place")];
 
 // ---- loops: play only while in view, never under reduced motion; the poster is the still ----
 const loops = [...document.querySelectorAll("video[data-loop]")];
-const near = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting && e.target.preload === "none") e.target.preload = "auto"; }, { rootMargin: "100% 0px" });
+// a loop's poster and its file load only as it comes near; phones get the 640 px poster
+const near = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) {
+  const v = e.target; if (v.dataset.poster && !v.poster) v.poster = `${v.dataset.poster}-poster${innerWidth <= 860 ? "-640" : ""}.webp`;
+  if (v.preload === "none" && !still()) v.preload = "auto";
+} }, { rootMargin: "100% 0px" });
 const seen = new IntersectionObserver((es) => {
   for (const e of es) {
     const v = e.target;
@@ -25,6 +38,9 @@ const seen = new IntersectionObserver((es) => {
 }, { threshold: 0.25 });
 for (const v of loops) { near.observe(v); seen.observe(v); }
 reducedQ.addEventListener("change", () => { if (still()) for (const v of loops) v.pause(); });
+
+// the arrival opens on its small poster; wide screens swap in the full one once it has loaded
+for (const v of document.querySelectorAll("video[data-poster-full]")) if (innerWidth > 860) { const i = new Image(); i.onload = () => { v.poster = v.dataset.posterFull; }; i.src = v.dataset.posterFull; }
 
 // ---- past the road: the road's canvases step back once the places begin ----
 const bazaar = document.querySelector(".bazaar");

@@ -21,7 +21,7 @@ import { viewport, hexLin, caustics, waterLight, fog, mirrorBand, lensOver, lens
 import { sediment, bedTopLight } from './bed.mjs';
 import { inkAt } from './inkbloom.mjs';
 import { spectralSplats } from './finebuf.mjs';
-import { filterRGB, rgbToSpectrum, rgbCoefficientBands, spectrumRGB } from './spectral.mjs';
+import { filterRGB, rgbToSpectrum, rgbCoefficientBands, spectrumRGB, spectrumOf } from './spectral.mjs';
 
 export const LOOK = Object.freeze({
   air: '#e3d8c4', airLow: '#f4ecdd', wall: '#f3ead6', sand: '#e2cfa6', grout: '#4a463f', smoke: '#8a8279', sun: '#fff2d6', warm: '#e9d9a8',
@@ -48,13 +48,15 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
       const t = clamp(gy / Math.max(1, surf), 0, 1), mist = clamp(bilerp(m.mist, nx, ny, gx, gy), 0, 3), smoke = clamp(bilerp(m.smoke, nx, ny, gx, gy), 0, 4);
       let c = air.map((v, k) => v + (airLow[k] - v) * t * t);
       c = c.map(v => v + (1 - v) * (1 - Math.exp(-0.6 * mist)) * 0.8);
-      return c.map((v, k) => v * Math.exp(-0.25 * smoke) + soot[k] * (1 - Math.exp(-0.25 * smoke)) * 0.4);
+      c = c.map((v, k) => v * Math.exp(-0.25 * smoke) + soot[k] * (1 - Math.exp(-0.25 * smoke)) * 0.4);
+      // a spectral tank sees the air and its smoke through the same projection as the water, so the light change shows there too
+      return m.pigS ? spectrumRGB(rgbToSpectrum(c), illuminant) : c;
     }
     const Wt = waterLight(m, C, look, gx, gy, surf);
     let c;
     if (gy >= bedTop) {
       const hpx = (ny - 0.5 - gy) * vp.cy;
-      c = sediment(m, px, hpx, ci, sand, ny * vp.cy, grainPx).map(v => v * bedTopLight((gy - bedTop) * vp.cy, grainPx));
+      bedOut.layer = null; c = sediment(m, px, hpx, ci, sand, ny * vp.cy, grainPx, m.pigS ? bedOut : null).map(v => v * bedTopLight((gy - bedTop) * vp.cy, grainPx));
       // the floor catches the caustic network sharpest, and the pool of light the lens focuses
       const net = 0.8 + 0.7 * Wt.c * Wt.c * (0.35 + 0.65 * Wt.fade) + lensCaustic(m, gx, gy);
       c = c.map(v => v * Math.max(0.2, net) / Math.max(0.3, Wt.shaft));
@@ -62,7 +64,7 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
       const k0 = 1.6, ix = (bilerp(IOR, nx, ny, gx + 1, gy) - bilerp(IOR, nx, ny, gx - 1, gy)) * 900 * k0, iy = (bilerp(IOR, nx, ny, gx, gy + 1) - bilerp(IOR, nx, ny, gx, gy - 1)) * 900 * k0;
       c = wall.map((v, k) => v * (1 - 0.35 * clamp(bilerp(m.stain[k], nx, ny, gx + ix, gy + iy), 0, 1)));
     }
-    if (m.pigS) return sceneSpectral(c, gx, gy, Wt, withInk);
+    if (m.pigS) return sceneSpectral(c, gx, gy, Wt, withInk, gy >= bedTop ? bedOut.layer : null);
     // pigment sits in the water column: part of it behind the water the eye looks through (it takes the depth's
     // tint), part in front (it keeps its own colour), so ink reads as ink and still sinks into the blue
     if (!withInk) return fog(look, deep, sun, c, Wt);
@@ -74,9 +76,11 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
   // is projected to RGB once, so two inks that match as spectra keep matching through the fog (one projection, not two)
   m.extraS = m.pigS ? spectralSplats(m) : null;
   const SPEC = m.pigS ? { sun: rgbToSpectrum(sun), warm: rgbToSpectrum(look.warmLin), deep: rgbToSpectrum(deep), sigma: rgbCoefficientBands(look.sigma) } : null;
-  const bg = new Array(16), L = new Array(16);
-  function sceneSpectral(c, gx, gy, Wt, withInk) {
+  const bg = new Array(16), L = new Array(16), bedOut = { layer: null }, tileSpec = new Map();
+  function sceneSpectral(c, gx, gy, Wt, withInk, bedLayer = null) {
     rgbToSpectrum(c, bg);
+    // a settled layer's own spectrum tints the bed band by band (the same strength as the RGB bed, 0.75)
+    if (bedLayer) for (let b = 0; b < 16; b++) bg[b] *= Math.exp(-bedLayer.spec[b] * 0.75);
     const ink = withInk ? inkAt(m, gx, gy) : null, f = Wt.fade ** 1.5, sc = 0.6 + 0.4 * Wt.fade * (0.55 + 0.45 * Wt.c), dep = Wt.depth + look.thickness;
     for (let b = 0; b < 16; b++) {
       let A = 0;
@@ -104,7 +108,14 @@ export function render(m, W, H, { look: look0 = LOOK, grain = 2.4, seed = 7, vie
   drawMotes(m, R, vp);
   drawItems(m, R, vp);
   // tiles are lit and fogged where they are, like anything else in the water
-  drawTesserae(m, R, hexLin(look.grout), (albedo, gx, gy) => { const Wt = waterLight(m, C, look, gx, gy, surfAt(gx)); return fog(look, deep, sun, albedo, Wt); }, vp);
+  drawTesserae(m, R, hexLin(look.grout), (albedo, gx, gy, hexColour) => {
+    const Wt = waterLight(m, C, look, gx, gy, surfAt(gx));
+    if (!SPEC) return fog(look, deep, sun, albedo, Wt);
+    // a tile body in a spectral tank: its ink's reflectance spectrum, lit and fogged band by band, projected once
+    const Rf = hexColour ? (tileSpec.get(hexColour) ?? tileSpec.set(hexColour, spectrumOf(hexColour)).get(hexColour)) : rgbToSpectrum(albedo), f = Wt.fade ** 1.5, sc = 0.6 + 0.4 * Wt.fade * (0.55 + 0.45 * Wt.c), dep = Wt.depth + look.thickness, Lb = new Array(16);
+    for (let b = 0; b < 16; b++) { const Tw = Math.exp(-SPEC.sigma[b] * dep); Lb[b] = Rf[b] * Wt.shaft * SPEC.sun[b] * Tw + (SPEC.warm[b] * f + SPEC.deep[b] * (1 - f)) * (1 - Tw) * sc; }
+    return spectrumRGB(Lb, illuminant);
+  }, vp);
   drawWisps(m, R, soot, vp);
   mirrorBand(m, R, look, vp);
   surfaceMarks(m, R, vp);

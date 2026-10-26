@@ -17,12 +17,13 @@ export function createReveal({ top, under, w, h, law = 'pour', mask = null, seed
   const sim = simulate(law, { w, h, G, seed });
   return {
     sim, seconds: sim.seconds,
-    frame(p) {
+    frame(p, now = {}) {
+      const top_ = now.top ?? top, under_ = now.under ?? under; // a side that is moving on its own clock
       const F = fieldsAt(sim, p), { nx, ny, sx, sy } = sim, out = new Float32Array(w * h * 3), a = [0, 0, 0], u = [0, 0, 0];
       for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
         const gx = (x + 0.5) / sx - 0.5, gy = (y + 0.5) / sy - 0.5, X = (bilerp(F.px, nx, ny, gx, gy) + 0.5) * sx - 0.5, Y = (bilerp(F.py, nx, ny, gx, gy) + 0.5) * sy - 0.5;
         const R = bilerp(F.R, nx, ny, gx, gy), Wv = bilerp(F.W, nx, ny, gx, gy), o = (y * w + x) * 3;
-        sample(top, w, h, X, Y, a); sample(under, w, h, x, y, u);
+        sample(top_, w, h, X, Y, a); sample(under_, w, h, x, y, u);
         // the top is a film of paint over what lies beneath: carried by the water and thinned where it has passed
         // (R), so it hides the under layer until the wash opens it; the water darkens a little and catches a highlight
         // on its leading edge

@@ -101,7 +101,7 @@ export function drawTesserae(m, R, grout = lin('#4a463f'), shade = a => a, vp) {
     const y0 = Math.max(0, Math.floor(Math.min(...q.map(p => p[1])))), y1 = Math.min(H - 1, Math.ceil(Math.max(...q.map(p => p[1]))));
     const mask = t.digit ? digitMask(t.digit) : null, lum = 0.2126 * t.rgb[0] + 0.7152 * t.rgb[1] + 0.0722 * t.rgb[2], inkC = lum > 0.16 ? DARK : PAPER;
     // the light and the water at the tile's centre (a tile is small against the fog's scale)
-    const [gcx, gcy] = vp.g(cx - 0.5, cy - 0.5), body = shade(t.rgb, gcx, gcy), seamC = shade(grout, gcx, gcy), inkS = shade(inkC, gcx, gcy);
+    const [gcx, gcy] = vp.g(cx - 0.5, cy - 0.5), body = shade(t.rgb, gcx, gcy, t.hex), seamC = shade(grout, gcx, gcy), inkS = shade(inkC, gcx, gcy);
     const sc = 0.3 + 0.7 * t.b, pw = 2 + 14 * t.b ** 3, gj = clamp((t.b - 0.85) / 0.15, 0, 1);
     for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
       let cov = 0, joint = 0, ink = 0, lit = 0;

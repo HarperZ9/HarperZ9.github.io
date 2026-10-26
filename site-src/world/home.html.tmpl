@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-type="stock">
+<html lang="en" data-type="stock" data-alive-auto="off">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -24,13 +24,12 @@
 <link rel="alternate" type="application/feed+json" href="https://harperz9.github.io/feed.json">
 <link rel="alternate" type="application/rss+xml" href="https://harperz9.github.io/feed.xml">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/media/world/name-art/glass-tubes-poster.webp" as="image" fetchpriority="high">
+<link rel="preload" href="/media/world/name-art/glass-tubes-poster-640.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="/world/universe/proto/u.css">
 <link rel="stylesheet" href="/world/universe/proto/path.css">
 <link rel="stylesheet" href="/world/site/home.css">
 <script type="module" src="/world/ui/shell/shell.js"></script>
-<script type="module" src="/world/alive/alive.js"></script>
 <script type="module" src="/world/site/budget.js"></script>
 <script type="module" src="/world/ui/directions/common/flow/ground.js"></script>
 <script type="module" src="/world/universe/proto/path.js"></script>
@@ -47,9 +46,8 @@
   <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
   <section class="arrival" aria-labelledby="h-name">
     <figure class="arrival-art">
-      <video class="lead" muted loop playsinline preload="metadata" poster="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
-        <source src="/media/world/name-art/glass-tubes.webm" type='video/webm; codecs="av01.0.08M.08"'>
-        <source src="/media/world/name-art/glass-tubes.mp4" type="video/mp4">
+      <video class="lead" muted loop playsinline preload="metadata" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-poster-full="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
+        {{ARRIVAL_SOURCES}}
       </video>
     </figure>
     <h1 id="h-name" data-living="engraved ink charcoal">Zain Dana Harper</h1>

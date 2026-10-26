@@ -33,6 +33,7 @@ import { instance, faceOf } from '../program.mjs';
 import { glyphContext } from '../setline.mjs';
 import { face } from '../faces.mjs';
 import { toNight } from './night.mjs';
+import { levelsOf, progressAt, composeLevels } from './axes.mjs';
 import './states-cuts.mjs';
 
 export { STATES, registerState } from './states.mjs';
@@ -70,23 +71,29 @@ export function createLiving({ w, h, stops, family = PLAIN, seed = 1, fill = 0.8
     let m;
     if (changed) {
       const r = createReveal({ top: paint(a.text, a.state, null, a.params), under: paint(b.text, b.state, UNDER_PAPER, b.params), w, h, law, mask: G(a.text).coverage.data, seed: seed + i });
-      m = { kind: 'reveal', law, seconds: r.seconds, sim: r.sim, top: paint(a.text, a.state, null, a.params), under: paint(b.text, b.state, UNDER_PAPER, b.params), frame: (p) => r.frame(p) };
+      m = { kind: 'reveal', law, seconds: r.seconds, sim: r.sim, top: paint(a.text, a.state, null, a.params), under: paint(b.text, b.state, UNDER_PAPER, b.params), frame: (p, t = 0) => r.frame(p, { under: S[i + 1].animate ? livingStop(i + 1, t) : null, top: S[i].animate ? livingStop(i, t) : null }) };
     } else {
       const sim = simulate(law, { w, h, G: G(a.text), seed: seed + i }), A = paint(a.text, a.state, null, a.params), B = paint(b.text, b.state, null, b.params), paper = linear('#ebe5d8');
       const dk = dark(a.state) || dark(b.state);
-      m = { kind: 'change', law, seconds: sim.seconds, sim, A, B, paper, dark: dk, frame: (p) => composeChange(sim, A, B, w, h, p, { paper, dark: dk }) };
+      m = { kind: 'change', law, seconds: sim.seconds, sim, A, B, paper, dark: dk, frame: (p, t = 0) => composeChange(sim, S[i].animate ? livingStop(i, t) : A, S[i + 1].animate ? livingStop(i + 1, t) : B, w, h, p, { paper, dark: dk }) };
+      // a side whose cut's rule is moving is that stop's own frame at the same clock, so the move leaves and reaches
+      // exactly what the stops show (no seam at arrival)
     }
     moves.set(i, m); return m;
   }
   // the image a stop settles to (a revealed stop keeps the under-paper it was revealed on)
   const settled = (i) => paint(S[i].text, S[i].state, i > 0 && S[i - 1].text !== S[i].text ? UNDER_PAPER : null, S[i].params);
 
+  // a stop whose cut's rule moves (stop.animate): its levels, painted once, and the frame at clock t
+  const levels = (i) => { const a = S[i].animate; return levelsOf(a).map((v) => paint(S[i].text, S[i].state, null, { ...(S[i].params ?? {}), [a.param]: v })); };
+  const livingStop = (i, t) => { const a = S[i].animate, L = (lv[i] ??= levels(i)); return composeLevels(L, w, h, progressAt(a, t) * (L.length - 1)); };
+  const lv = [];
   function at(s, t = 0) {
     s = clamp(s, 0, S.length - 1); const i = Math.min(S.length - 1, Math.floor(s)), local = s - i;
-    if (reduced || i === S.length - 1 || local <= lead) return reduced ? settled(Math.round(s)) : breathe(settled(i), w, h, t, state(S[i].state).breath, seed);
+    if (reduced || i === S.length - 1 || local <= lead) { const k = reduced ? Math.round(s) : i; if (S[k].animate && !reduced) return livingStop(k, t); return reduced ? settled(k) : breathe(settled(k), w, h, t, state(S[k].state).breath, seed); }
     let p = (local - lead) / (1 - lead);
     if (hum) { const m = move(i), steps = Math.max(1, Math.round(m.seconds / HUM.sixteenth)); p = Math.floor(p * steps) / steps; }
-    return breathe(move(i).frame(p), w, h, t, state(S[i].state).breath, seed, state(S[i + 1].state).breath, p);
+    return breathe(move(i).frame(p, t), w, h, t, state(S[i].state).breath, seed, state(S[i + 1].state).breath, p);
   }
   return {
     stops: S, at,
@@ -99,6 +106,7 @@ export function createLiving({ w, h, stops, family = PLAIN, seed = 1, fill = 0.8
     /** The word's coverage (0..1, w*h), for a glyphs port or a hit area. */
     coverage(text) { return G(text).coverage.data; },
     layout(text) { const g = G(text); return { size: g.size, x: g.x, baseline: g.baseline, width: g.width }; },
+    levels, axis: (i, t) => (S[i].animate ? { u: progressAt(S[i].animate, t) * (levelsOf(S[i].animate).length - 1), K: levelsOf(S[i].animate).length } : null),
     settled, move, breath: (i) => state(S[i].state).breath, w, h, lead, hum, reduced, seed,
   };
 }

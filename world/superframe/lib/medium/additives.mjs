@@ -184,7 +184,7 @@ export const KINDS = {
         const k = j * nx + i, q = m.sed[0][k] + m.sed[1][k] + m.sed[2][k]; if (q < 1e-5 || !m.phase[k]) continue;
         const below = k + nx, speed = Math.hypot(m.u[k], m.v[k]);
         if (m.solid[below] === 1) {
-          if (speed < 0.35) { const d = 0.08 * (1 - speed / 0.35), rgb = [0, 1, 2].map(c => m.sed[c][k] * d); for (let c = 0; c < 3; c++) m.sed[c][k] -= rgb[c]; if (m.sedS) for (let b = 0; b < 16; b++) m.sedS[b][k] *= 1 - d; layer(m, i, rgb); }
+          if (speed < 0.35) { const d = 0.08 * (1 - speed / 0.35), rgb = [0, 1, 2].map(c => m.sed[c][k] * d); for (let c = 0; c < 3; c++) m.sed[c][k] -= rgb[c]; let spec = null; if (m.sedS) { spec = new Array(16); for (let b = 0; b < 16; b++) { spec[b] = m.sedS[b][k] * d; m.sedS[b][k] -= spec[b]; } } layer(m, i, rgb, spec); }
         } else if (m.solid[below] === 2) {
           // grains on the lens slide off its curved top toward the nearer rim, so they reach the bed instead of
           // resting on a lens-shaped shelf of grid cells (found at 200%: a blurred bar above the lens)
@@ -199,10 +199,13 @@ KINDS.tiles.settle = KINDS.sediment.settle;
 
 // a deposit joins the top layer of its column while that layer is thin, or starts a new one; a layer's pigment is a
 // normalised absorption profile (mean 1), so colour comes from what settled, not from how much
-export function layer(m, i, rgb) {
+export function layer(m, i, rgb, spec = null) {
   const sum = rgb[0] + rgb[1] + rgb[2]; if (sum <= 0) return;
   const t = sum * 6, prof = rgb.map(v => (3 * v) / sum), L = m.layers[i], top = L.at(-1);
-  if (top && top.t < 0.6) { const w = top.t / (top.t + t); top.rgb = top.rgb.map((v, c) => v * w + prof[c] * (1 - w)); top.t += t; }
-  else L.push({ t, rgb: prof });
+  // in a spectral tank a layer also keeps its deposits' absorbance spectrum, normalised the same way (mean 1 over the
+  // RGB profile's scale), so the bed's colour mixes as spectra
+  const sp = spec ? (() => { const s3 = spec.reduce((a, v) => a + v, 0) / 16; return s3 > 0 ? spec.map(v => v / s3) : null; })() : null;
+  if (top && top.t < 0.6) { const w = top.t / (top.t + t); top.rgb = top.rgb.map((v, c) => v * w + prof[c] * (1 - w)); if (sp) top.spec = top.spec ? top.spec.map((v, b) => v * w + sp[b] * (1 - w)) : sp; top.t += t; }
+  else L.push({ t, rgb: prof, spec: sp });
   m.bed[i] += t;
 }

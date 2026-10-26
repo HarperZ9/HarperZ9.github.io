@@ -113,11 +113,29 @@
     "/out/",
     "/frames/",
     ".ppm",
-    "kilon.woff2"
+    "kilon.woff2",
+    "2026-10-23-ui-direction/index.html",
+    "2026-10-23-ui-direction/decisions.html",
+    "2026-10-23-ui-direction/directions/a-slab/index.html",
+    "2026-10-23-ui-direction/directions/a-slab/flywheel.html",
+    "2026-10-23-ui-direction/directions/b-setback/index.html",
+    "2026-10-23-ui-direction/directions/b-setback/flywheel.html",
+    "2026-10-23-ui-direction/directions/c-exhibit/index.html",
+    "2026-10-23-ui-direction/directions/c-exhibit/flywheel.html",
+    "2026-10-23-substrate/lib/demo/index.html"
   ],
   "hold": {
     "2026-10-23-phase-design/emet.html": "Hebrew needs a reader before publication (CONSENSUS Q11)",
-    "2026-10-23-phase-design/wall.html": "its final line is a placeholder until the author sets one"
+    "2026-10-23-phase-design/wall.html": "its final line is a placeholder until the author sets one",
+    "2026-10-23-ui-direction/index.html": "the UI direction's working index: process material, not a place",
+    "2026-10-23-ui-direction/decisions.html": "the UI direction's decision sheet: process material",
+    "2026-10-23-ui-direction/directions/a-slab/index.html": "direction A, not chosen",
+    "2026-10-23-ui-direction/directions/a-slab/flywheel.html": "direction A, not chosen",
+    "2026-10-23-ui-direction/directions/b-setback/index.html": "direction B, not chosen",
+    "2026-10-23-ui-direction/directions/b-setback/flywheel.html": "direction B, not chosen",
+    "2026-10-23-ui-direction/directions/c-exhibit/index.html": "direction C as first drawn; the chosen CS-max pages carry it",
+    "2026-10-23-ui-direction/directions/c-exhibit/flywheel.html": "direction C as first drawn",
+    "2026-10-23-substrate/lib/demo/index.html": "a library's developer demo, not a place"
   },
   "maxBytes": 6000000,
   "allowOut": [
@@ -151,5 +169,91 @@
   },
   "retiredFaces": [
     "Kilon"
+  ],
+  "patches": [
+    {
+      "file": "2026-10-23-typeengine/living/index.html",
+      "find": "<main id=\"main\"></main>",
+      "replace": "<main id=\"main\"><h1 class=\"sr-only\">Living type</h1></main>",
+      "why": "axe page-has-heading-one: the page had no h1"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/index.html",
+      "find": "<input type=\"file\" id=\"file\" accept=\"audio/*\" class=\"vh\" tabindex=\"-1\">",
+      "replace": "<input type=\"file\" id=\"file\" accept=\"audio/*\" class=\"vh\" tabindex=\"-1\" aria-label=\"Your own sound\">",
+      "why": "axe label: the hidden file input had no name"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/grid.html",
+      "find": "<input type=\"file\" id=\"file\" accept=\".mid,.midi,audio/midi\" class=\"vh\" tabindex=\"-1\">",
+      "replace": "<input type=\"file\" id=\"file\" accept=\".mid,.midi,audio/midi\" class=\"vh\" tabindex=\"-1\" aria-label=\"Your own score\">",
+      "why": "axe label: the hidden file input had no name"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "<svg viewBox=\"0 0 620 600\" role=\"img\" aria-labelledby=\"figt\">",
+      "replace": "<svg viewBox=\"0 0 620 600\" role=\"group\" aria-labelledby=\"figt\">",
+      "why": "axe nested-interactive: the map holds links, so it is a group, not an image"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "  body { margin: 0;",
+      "replace": "  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }\n  body { margin: 0;",
+      "why": "axe color-contrast: the set-piece links kept the browser's link blue on the dark ground"
+    },
+    {
+      "file": "2026-10-23-sound/theme/theme.css",
+      "find": ".strip span { color: var(--line); padding: 0.05em 0; }",
+      "replace": ".strip span { color: color-mix(in srgb, var(--line) 45%, var(--ink)); padding: 0.05em 0; }",
+      "why": "axe color-contrast: the strip's pale words fell under 3:1 on the dark ground"
+    },
+    {
+      "file": "2026-10-23-ui-direction/directions/common/flow/ground.js",
+      "find": "if (document.readyState === \"loading\") document.addEventListener(\"DOMContentLoaded\", start); else start();",
+      "replace": "// the site starts the water after the page has loaded and the main thread is idle, and on touch screens at the\n// visitor's first touch or scroll (world/site/budget.js sets window.__siteWhenVisited), so it never delays the first screen\nconst go = () => (\"requestIdleCallback\" in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300));\nconst later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(go) : go());\nif (document.readyState === \"complete\") later(); else addEventListener(\"load\", later, { once: true });",
+      "why": "Lighthouse on a phone: the medium's set-up held the main thread for about 1.5 to 3 s while the first screen loaded"
+    },
+    {
+      "file": "2026-10-23-phase-design/groove.html",
+      "find": ".legend b { color:var(--hot); }",
+      "replace": ".legend b { color:var(--ink); text-decoration: underline 4px var(--hot); text-underline-offset: 3px; }",
+      "why": "axe color-contrast: the pink word under 4.5:1; the pink now marks it as an underline"
+    },
+    {
+      "file": "2026-10-23-phase-design/mirror.html",
+      "find": "<div id=\"stage\" role=\"img\"",
+      "replace": "<div id=\"stage\" role=\"group\"",
+      "why": "axe nested-interactive: the stage holds a focusable canvas"
+    },
+    {
+      "file": "2026-10-23-phase-design/powers.html",
+      "find": "<body>",
+      "replace": "<body>\n<main>",
+      "why": "axe region: the page had no main landmark"
+    },
+    {
+      "file": "2026-10-23-phase-design/powers.html",
+      "find": "</body>",
+      "replace": "</main>\n</body>",
+      "why": "axe region: closes the main landmark"
+    },
+    {
+      "file": "2026-10-23-feed-test-22/build/index.html",
+      "find": "<body>",
+      "replace": "<body>\n<main>",
+      "why": "axe landmark-one-main"
+    },
+    {
+      "file": "2026-10-23-feed-test-22/build/index.html",
+      "find": "</body>",
+      "replace": "</main>\n</body>",
+      "why": "axe landmark-one-main: closes it"
+    },
+    {
+      "file": "2026-10-23-feed-test-24/build/demo.js",
+      "find": "<tr><th scope=\"col\"></th>",
+      "replace": "<tr><td></td>",
+      "why": "axe empty-table-header: the corner cell is not a header"
+    }
   ]
 }

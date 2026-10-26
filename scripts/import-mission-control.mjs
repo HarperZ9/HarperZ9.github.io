@@ -104,11 +104,21 @@ function copyAll(files) {
     let buf = readFileSync(path.join(SRC, r));
     const sha = createHash("sha256").update(buf).digest("hex");
     if (TEXT.has(path.extname(r))) {
-      // links to held pieces inside the same folder (scripts resolve hrefs against the page, so match by name)
-      const held = Object.keys(cfg.hold || {}).filter((h) => topOf(h) === top).map((h) => path.posix.basename(h));
+      // the exact hrefs that point at a held piece from this file: relative to the file for a page, and for a script
+      // also relative to the held piece's own folder when the script sits under it (scripts resolve against the page)
+      const held = Object.keys(cfg.hold || {}).flatMap((h) => {
+        const out = [path.posix.relative(path.posix.dirname(r), h)];
+        if (/\.m?js$/.test(r) && r.startsWith(path.posix.dirname(h) + "/")) out.push(path.posix.basename(h));
+        return out;
+      });
       let text = rewriteText(buf.toString("utf8"), { folders: cfg.folders, houseType: cfg.houseType, file: r, retiredFaces: cfg.retiredFaces || [], held });
       const sub = `${short}/${r.slice(top.length + 1)}`;
       if (r.endsWith(".html") && /<title>/.test(text)) text = discoverySet(text, `world/${sub}`, cfg.descriptions?.[sub]);
+      // site-side fixes for findings in the pieces themselves (config "patches", each with its reason); a patch
+      // whose text is gone upstream is reported, so a fixed piece drops its patch instead of being patched twice
+      for (const pt of (cfg.patches || []).filter((x) => x.file === r)) {
+        if (text.includes(pt.find)) text = text.replace(pt.find, pt.replace); else console.warn(`import: patch for ${r} no longer applies (${pt.why})`);
+      }
       for (const l of findLocalPaths(text)) leaks.push(`${short}/${r.slice(top.length + 1)}: ${l}`);
       buf = Buffer.from(text, "utf8");
     }

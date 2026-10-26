@@ -32,7 +32,7 @@ h2 { font-size: clamp(2rem, 6vw, 4rem); line-height: 1; font-weight: 800; margin
 
 /* supergraphic strip: the one-word titles at poster scale, cut off by the edges. Decoration only; hidden from assistive tech. */
 .strip { display: flex; gap: 0.12em; overflow: hidden; white-space: nowrap; font: 800 clamp(5rem, 22vw, 15rem)/0.9 var(--sans); letter-spacing: -0.04em; border-bottom: 2px solid var(--ink); background: var(--ground); user-select: none; }
-.strip span { color: var(--line); padding: 0.05em 0; }
+.strip span { color: color-mix(in srgb, var(--line) 45%, var(--ink)); padding: 0.05em 0; }
 .strip span:nth-child(3n) { color: var(--ink); }
 /* pieces: cut-paper slabs at small angles. The angle is a fixed layout choice, not motion. */
 .pieces { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }

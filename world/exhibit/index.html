@@ -29,6 +29,7 @@
   }
   :root[data-theme="dark"] { --ground: #111111; --ink: #eee9df; --muted: #a39e94; --rule: #111111; }
   * { box-sizing: border-box; }
+  nav[aria-label="Set pieces"] a { color: var(--ink); }
   body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Hanken Grotesk", system-ui, sans-serif; }
   main { max-width: 1080px; margin: 0 auto; padding: 32px 16px 56px; display: grid; gap: 28px; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; }
   @media (max-width: 820px) { main { grid-template-columns: 1fr; } }
@@ -58,7 +59,7 @@
     <h1>We are here.</h1>
     <p class="lede">A claim can only live where checking it is cheap enough. Everywhere else on this map, claims die or mislead.</p>
     <figure style="margin:0">
-      <svg viewBox="0 0 620 600" role="img" aria-labelledby="figt">
+      <svg viewBox="0 0 620 600" role="group" aria-labelledby="figt">
         <title id="figt">Map of claims by how much they claim and what they cost to check</title>
         <defs>
           <clipPath id="world">

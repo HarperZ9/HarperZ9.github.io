@@ -22,7 +22,7 @@ export function moveMotes(m, dt, layer) {
     p.y += s * (bilerp(m.v, m.nx, m.ny, mx, my) + 0.3 * tv) + p.sink * dt + (m.rng() - 0.5) * 0.06;
     p.age += dt;
     const i = clamp(Math.round(p.x), 0, m.nx - 1), floor = m.ny - m.bed[i] - 0.5;
-    if (p.y >= floor) { layer(m, i, p.a.map(v => v * p.mass)); continue; }   // dried into the bed
+    if (p.y >= floor) { layer(m, i, p.a.map(v => v * p.mass), p.aS ? p.aS.map(v => v * p.mass) : null); continue; }   // dried into the bed
     if (p.x > -2 && p.x < m.nx + 1 && p.y > m.surfaceY(i)) keep.push(p);
   }
   m.motes = keep;

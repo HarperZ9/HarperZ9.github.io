@@ -5,3 +5,12 @@
 const n = navigator, root = document.documentElement;
 const weak = (n.deviceMemory && n.deviceMemory < 4) || (n.hardwareConcurrency && n.hardwareConcurrency <= 4) || n.connection?.saveData === true;
 if (weak || new URLSearchParams(location.search).get("weak") === "1") { root.dataset.ground = "off"; root.classList.add("weak"); }
+
+// Touch screens: the heavy layers (the flow ground, the alive layer) start at the visitor's first touch, scroll or
+// key, after the first screen is settled. Pointer screens start them when the page is idle after load.
+const coarse = matchMedia("(pointer: coarse)").matches;
+window.__siteWhenVisited = (fn) => {
+  if (!coarse) return fn();
+  const once = () => { for (const ev of ["pointerdown", "scroll", "keydown", "touchstart"]) removeEventListener(ev, once); fn(); };
+  for (const ev of ["pointerdown", "scroll", "keydown", "touchstart"]) addEventListener(ev, once, { passive: true });
+};

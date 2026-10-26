@@ -22,7 +22,7 @@ const FORCE = process.argv.includes("--force");
 function ffmpegPath() {
   if (process.env.FFMPEG) return process.env.FFMPEG;
   for (const py of ["py", "python"]) {
-    try { return execFileSync(py, ["-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"], { encoding: "utf8" }).trim(); } catch { /* try the next */ }
+    try { return execFileSync(py, ["-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim(); } catch { /* try the next */ }
   }
   return "ffmpeg";
 }
@@ -57,6 +57,10 @@ function nameArt(made) {
     made.push(copy(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}.webm`)));
     made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}.mp4`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
     made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster.webp`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "82"]));
+    // phones: a 640 px loop and poster, so the first screen does not wait on the 1080p file
+    made.push(ff(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}-640.webm`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libaom-av1", "-crf", "40", "-b:v", "0", "-cpu-used", "6", "-row-mt", "1", "-an"]));
+    made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}-640.mp4`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
+    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster-640.webp`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "80"]));
   }
 }
 

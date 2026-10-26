@@ -26,12 +26,19 @@ self.onmessage = async (ev) => {
   try {
     if (q.op === 'init') { const { createLiving } = await lib; const baked = {}; for (const b of q.bake ?? []) baked[`${b.text}|${b.state}`] = await bake(b.url, q.w, q.h); const L = createLiving({ w: q.w, h: q.h, stops: q.stops, seed: q.seed ?? 1, baked, size: q.size ?? null }); passages.set(q.id, L); self.postMessage({ id: q.id, op: 'init', stops: L.stops.map((s) => ({ ...s, layout: L.layout(s.text) })) }); return; }
     const L = passages.get(q.id), n = L.w * L.h;
-    if (q.op === 'stop') { const a = rgba(L.settled(q.i), n); self.postMessage({ id: q.id, op: 'stop', i: q.i, part: { w: L.w, h: L.h, rgba: a, breath: L.breath(q.i) } }, [a.buffer]); return; }
+    if (q.op === 'stop') {
+      // an animated cut sends all its levels stacked top to bottom; the page moves between them on its clock
+      const lv = L.stops[q.i].animate ? L.levels(q.i) : [L.settled(q.i)], a = new Uint8Array(n * 4 * lv.length);
+      lv.forEach((img, k) => a.set(rgba(img, n), k * n * 4));
+      self.postMessage({ id: q.id, op: 'stop', i: q.i, part: { w: L.w, h: L.h, rgba: a, levels: lv.length, breath: L.breath(q.i) } }, [a.buffer]); return;
+    }
     if (q.op === 'move') {
       const m = L.move(q.i), sim = m.sim, keys = sim.frames.length, cells = sim.nx * sim.ny, F = new Uint16Array(cells * keys * 4);
       sim.frames.forEach((fr, k) => { for (let c = 0; c < cells; c++) { const o = (k * cells + c) * 4; F[o] = half(fr.px[c]); F[o + 1] = half(fr.py[c]); F[o + 2] = half(fr.W[c]); F[o + 3] = half(fr.R[c]); } });
-      const a = rgba(m.kind === 'reveal' ? m.top : m.A, n), b = rgba(m.kind === 'reveal' ? m.under : m.B, n);
-      self.postMessage({ id: q.id, op: 'move', i: q.i, part: { kind: m.kind, law: m.law, seconds: m.seconds, w: L.w, h: L.h, a, b, fields: F, nx: sim.nx, ny: sim.ny, keys, sx: sim.sx, sy: sim.sy, paper: m.paper ?? [0.83, 0.79, 0.69], breath: L.breath(q.i), breath2: L.breath(q.i + 1), dark: !!m.dark, same: m.kind === 'change' && sameMaterial(m.A, m.B) } }, [a.buffer, b.buffer, F.buffer]);
+      // a side whose cut's rule moves sends its levels stacked, so the shader reads the same frame the stop shows
+      const side = (k, img) => { if (!L.stops[k].animate) return { px: rgba(img, n), levels: 1 }; const lv = L.levels(k), o = new Uint8Array(n * 4 * lv.length); lv.forEach((x, j) => o.set(rgba(x, n), j * n * 4)); return { px: o, levels: lv.length }; };
+      const sa = side(q.i, m.kind === 'reveal' ? m.top : m.A), sb = side(q.i + 1, m.kind === 'reveal' ? m.under : m.B), a = sa.px, b = sb.px;
+      self.postMessage({ id: q.id, op: 'move', i: q.i, part: { kind: m.kind, law: m.law, seconds: m.seconds, w: L.w, h: L.h, a, b, levelsA: sa.levels, levelsB: sb.levels, fields: F, nx: sim.nx, ny: sim.ny, keys, sx: sim.sx, sy: sim.sy, paper: m.paper ?? [0.83, 0.79, 0.69], breath: L.breath(q.i), breath2: L.breath(q.i + 1), dark: !!m.dark, same: m.kind === 'change' && sameMaterial(m.A, m.B) } }, [a.buffer, b.buffer, F.buffer]);
     }
   } catch (e) { console.error('[living-worker]', q.op, e); self.postMessage({ id: q.id, op: 'error', message: String(e?.stack ?? e) }); }
 };

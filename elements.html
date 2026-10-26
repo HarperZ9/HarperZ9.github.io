@@ -23,11 +23,11 @@
 <meta name="twitter:title" content="The element table | Zain Dana Harper">
 <meta name="twitter:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-99f03a9984">
-<link rel="stylesheet" href="/studies/studies.css?v=world-99f03a9984">
-<script type="module" src="/world/ui/shell/shell.js?v=world-99f03a9984"></script>
-<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-99f03a9984">
-<link rel="stylesheet" href="/world/site/pages.css?v=world-99f03a9984"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-7025cc6515">
+<link rel="stylesheet" href="/studies/studies.css?v=world-7025cc6515">
+<script type="module" src="/world/ui/shell/shell.js?v=world-7025cc6515"></script>
+<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-7025cc6515">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-7025cc6515"></head>
 <body class="parts-body">
 <header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
@@ -54,11 +54,11 @@
   <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
 </dialog>
 <main id="main" tabindex="-1">
-<article class="parts-page"><h1>Elements</h1><div class="parts" id="parts"></div></article>
+<article class="parts-page"><h1>Elements</h1><h2 class="sr-only">The element table</h2><div class="parts" id="parts"></div></article>
 <script type="module">import { mountElements } from "/world/ui/shell/organic/elements.js";
 const data = await (await fetch("/world/ui/shell/organic/data/elements.json")).json();
 mountElements(document.getElementById("parts"), data, { assets: "/world/ui/shell/organic/" });</script>
-<script type="module" src="/world/alive/alive.js?v=world-99f03a9984"></script>
+<script type="module" src="/world/alive/alive.js?v=world-7025cc6515"></script>
 </main>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
- "importedAt": "2026-10-26T03:09:26.516Z",
+ "importedAt": "2026-10-26T03:48:03.473Z",
  "source": "mission-control workspace (local, not under version control)",
  "folders": {
   "2026-10-23-universe": "universe",
@@ -32,7 +32,9 @@
  },
  "held": {
   "2026-10-23-phase-design/emet.html": "Hebrew needs a reader before publication (CONSENSUS Q11)",
-  "2026-10-23-phase-design/wall.html": "its final line is a placeholder until the author sets one"
+  "2026-10-23-phase-design/wall.html": "its final line is a placeholder until the author sets one",
+  "2026-10-23-substrate/lib/demo/index.html": "a library's developer demo, not a place",
+  "2026-10-23-ui-direction/decisions.html": "the UI direction's decision sheet: process material"
  },
  "accessionLicence": true,
  "thumbnailsWithheld": [],
@@ -57,6 +59,7 @@
   "2026-10-23-ui-direction/shell/%23n": "not found",
   "2026-10-26-creation-engine/lib/core/gen.mjs": "outside the published folders",
   "2026-10-26-creation-engine/lib/core/layer.mjs": "outside the published folders",
+  "2026-10-26-creation-engine/lib/gen/timing.mjs": "outside the published folders",
   "livestill.js": "outside the published folders",
   "loop.js": "outside the published folders"
  },
@@ -240,7 +243,7 @@
    "path": "world/feed-22/build/index.html",
    "source": "2026-10-23-feed-test-22/build/index.html",
    "folder": "2026-10-23-feed-test-22",
-   "bytes": 5848,
+   "bytes": 5863,
    "sourceSha256": "acf28b37fa28fac6c09b9aae88f514b8da8f53474c924a251d82924abaec5e97"
   },
   {
@@ -527,7 +530,7 @@
    "path": "world/feed-24/build/demo.js",
    "source": "2026-10-23-feed-test-24/build/demo.js",
    "folder": "2026-10-23-feed-test-24",
-   "bytes": 15531,
+   "bytes": 15519,
    "sourceSha256": "35f9ce2bca32d39368b4a241c4fcb332d6da46a4db9a4d0803ed97017809133c"
   },
   {
@@ -4146,14 +4149,14 @@
    "path": "world/exhibit/groove.html",
    "source": "2026-10-23-phase-design/groove.html",
    "folder": "2026-10-23-phase-design",
-   "bytes": 4738,
+   "bytes": 4809,
    "sourceSha256": "1f304f39631d9db774d55ea2e4388067f46f89be5a1d15d129928f45e2150b1b"
   },
   {
    "path": "world/exhibit/index.html",
    "source": "2026-10-23-phase-design/index.html",
    "folder": "2026-10-23-phase-design",
-   "bytes": 13326,
+   "bytes": 13384,
    "sourceSha256": "e701b4729a5ba18f9510bfcd05121dddbd9e9bb516afed87451f20acff108784"
   },
   {
@@ -4279,7 +4282,7 @@
    "path": "world/exhibit/mirror.html",
    "source": "2026-10-23-phase-design/mirror.html",
    "folder": "2026-10-23-phase-design",
-   "bytes": 4604,
+   "bytes": 4606,
    "sourceSha256": "db2c47dc5f248c4370b119152b1f53ae8afc5e91772ab8e20e0eb59c085e9a53"
   },
   {
@@ -4692,7 +4695,7 @@
    "path": "world/exhibit/powers.html",
    "source": "2026-10-23-phase-design/powers.html",
    "folder": "2026-10-23-phase-design",
-   "bytes": 4472,
+   "bytes": 4487,
    "sourceSha256": "201b7e170c9228c6515a196ed3f3b08aa2b2235d615c08c981416580a41ea457"
   },
   {
@@ -5476,7 +5479,7 @@
    "path": "world/sound/theme/theme.css",
    "source": "2026-10-23-sound/theme/theme.css",
    "folder": "2026-10-23-sound",
-   "bytes": 6590,
+   "bytes": 6626,
    "sourceSha256": "cc1de298fc3af706405a7b0853b5f94798ba8bfb0ff3e31bfc981492ed932309"
   },
   {
@@ -5674,13 +5677,6 @@
    "folder": "2026-10-23-substrate",
    "bytes": 34704,
    "sourceSha256": "e9201eddf1d41d0b62253295d869ce3cf65768f7102b797f02c7f8c876b4a9d5"
-  },
-  {
-   "path": "world/substrate/lib/demo/index.html",
-   "source": "2026-10-23-substrate/lib/demo/index.html",
-   "folder": "2026-10-23-substrate",
-   "bytes": 3675,
-   "sourceSha256": "ab8dd7f760b71e74c7ad18e0555e1c191f754627916161f220ff98c0f96f6b76"
   },
   {
    "path": "world/substrate/lib/demo/serve.mjs",
@@ -5966,8 +5962,8 @@
    "path": "world/superframe/lib/medium/additives.mjs",
    "source": "2026-10-23-superframe/lib/medium/additives.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 20228,
-   "sourceSha256": "dcf7b5560029fa3254c0e8199765597740011010a2bc38171401aaa7ea77d0ca"
+   "bytes": 20741,
+   "sourceSha256": "35c98d80cb6ef7f730df1e21f11728c7e34e414eba25639b4f549c577865d47e"
   },
   {
    "path": "world/superframe/lib/medium/artscenes.mjs",
@@ -5980,8 +5976,8 @@
    "path": "world/superframe/lib/medium/bed.mjs",
    "source": "2026-10-23-superframe/lib/medium/bed.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 2108,
-   "sourceSha256": "898181a502aeb311d265695f08e3ac8a7a77561ffdedb8c9c2ca0974660eef52"
+   "bytes": 2439,
+   "sourceSha256": "de07b5e6e9af8f9966ae171199c9e86a0bdb7b2cbfb7666fd1ec5f99de5a23d3"
   },
   {
    "path": "world/superframe/lib/medium/finebuf.mjs",
@@ -6036,8 +6032,8 @@
    "path": "world/superframe/lib/medium/motes.mjs",
    "source": "2026-10-23-superframe/lib/medium/motes.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 3244,
-   "sourceSha256": "1be3b69b7e9516c756a12729fabf1e7f92318f516880fa63996ec74ebea293db"
+   "bytes": 3285,
+   "sourceSha256": "d5b7a6463ec2c57ea309876f899a6507a8f45bf9bb58c03acfcaec8d198a7240"
   },
   {
    "path": "world/superframe/lib/medium/optics.mjs",
@@ -6064,8 +6060,8 @@
    "path": "world/superframe/lib/medium/render.mjs",
    "source": "2026-10-23-superframe/lib/medium/render.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 11947,
-   "sourceSha256": "771f6fe2a879704ddfc3d50223f06c75495d482dca61d6742217757617950a6c"
+   "bytes": 13149,
+   "sourceSha256": "372a64e18caa53fa9bbab6291582b1d9d67151cd3deb74ec9edd0622355f6ec0"
   },
   {
    "path": "world/superframe/lib/medium/scenes.mjs",
@@ -6092,8 +6088,8 @@
    "path": "world/superframe/lib/medium/tesserae.mjs",
    "source": "2026-10-23-superframe/lib/medium/tesserae.mjs",
    "folder": "2026-10-23-superframe",
-   "bytes": 10542,
-   "sourceSha256": "63081ddb2168c70667e00e6dd3addcdfb7b3838685c6a87ba181d57bc622b775"
+   "bytes": 10549,
+   "sourceSha256": "84597609b5029adb6eeb832601d388de8acf51d37b1d6ef14565932294482044"
   },
   {
    "path": "world/superframe/lib/medium/ticks.mjs",
@@ -6880,6 +6876,13 @@
    "sourceSha256": "a4eea6f9f381244568bbb3bda0c4babc2c89c41330b031ca7ec1d468bd16c705"
   },
   {
+   "path": "world/typeengine/lib/living/axes.mjs",
+   "source": "2026-10-23-typeengine/lib/living/axes.mjs",
+   "folder": "2026-10-23-typeengine",
+   "bytes": 3128,
+   "sourceSha256": "066443de12e049f0446a4da2c466f9f404aa284b585a276810eec06709020b0b"
+  },
+  {
    "path": "world/typeengine/lib/living/compose.mjs",
    "source": "2026-10-23-typeengine/lib/living/compose.mjs",
    "folder": "2026-10-23-typeengine",
@@ -6911,8 +6914,8 @@
    "path": "world/typeengine/lib/living/index.mjs",
    "source": "2026-10-23-typeengine/lib/living/index.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 9019,
-   "sourceSha256": "c43139f97b631daa0932fee09599d8423df668d89635cad806c7428d980fa384"
+   "bytes": 10146,
+   "sourceSha256": "130f48a5c2d9a55b2d3e8dd28ae5385a30fbb3bc9ea77f29c2b290aaf6b38ea1"
   },
   {
    "path": "world/typeengine/lib/living/night.mjs",
@@ -6932,8 +6935,8 @@
    "path": "world/typeengine/lib/living/reveal.mjs",
    "source": "2026-10-23-typeengine/lib/living/reveal.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 2510,
-   "sourceSha256": "47e77b3c11f5d76470b0f4598c06c5637850e584fd449c81a077b7cc34b1da1f"
+   "bytes": 2629,
+   "sourceSha256": "9ae06f72b1c540254ce1799e9d3f69b98b0ead4d34c47f2ae82473c7ec76f567"
   },
   {
    "path": "world/typeengine/lib/living/states-cuts.mjs",
@@ -7058,7 +7061,7 @@
    "path": "world/typeengine/living/index.html",
    "source": "2026-10-23-typeengine/living/index.html",
    "folder": "2026-10-23-typeengine",
-   "bytes": 1996,
+   "bytes": 2032,
    "sourceSha256": "4f541662b795ebcc730f47f749ef6eac1ae5c0b72a2178b5c5abcef4e20fbfd9"
   },
   {
@@ -7072,15 +7075,15 @@
    "path": "world/typeengine/living/living.mjs",
    "source": "2026-10-23-typeengine/living/living.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 5209,
-   "sourceSha256": "c9c4d8e5352d211eef5cfe113c4d63e61837cd4623dbb97f9e1394a629217d71"
+   "bytes": 5681,
+   "sourceSha256": "975d56c0564ec5c8f67907fd0db087c316025b383bb7ab607d64c39a83ae39e2"
   },
   {
    "path": "world/typeengine/living/passages.mjs",
    "source": "2026-10-23-typeengine/living/passages.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 1064,
-   "sourceSha256": "6007e56aa7694896e3f769e39424035789727a7277d3e1028ee3dcf9ab6410e3"
+   "bytes": 1187,
+   "sourceSha256": "ddd533b13a6d18b79ad943bc8813a60026de04c3674301f39df7053a371be764"
   },
   {
    "path": "world/typeengine/room/exports.mjs",
@@ -7163,15 +7166,15 @@
    "path": "world/typeengine/web/living-gl.mjs",
    "source": "2026-10-23-typeengine/web/living-gl.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 6684,
-   "sourceSha256": "3efd7695069bc35285c0fbf0ba454eafe0c54685da452091b3520c905038f6d6"
+   "bytes": 8069,
+   "sourceSha256": "df70d0a15a4fd0510286f4591d1c6ee29404698ddae9fb560a0e6d58fc8e0a02"
   },
   {
    "path": "world/typeengine/web/living-worker.mjs",
    "source": "2026-10-23-typeengine/web/living-worker.mjs",
    "folder": "2026-10-23-typeengine",
-   "bytes": 3570,
-   "sourceSha256": "a05605cd10d9a3d9498ac76eaf36aa4327b3f3cb6e0a3674e2eb8e7ab12cfb59"
+   "bytes": 4296,
+   "sourceSha256": "5b8f8be49d9ac95e35ac90030f2f28e22320b1c8cf6c17d57c1398bc254bff7b"
   },
   {
    "path": "world/typeengine/web/shaders.mjs",
@@ -7650,13 +7653,6 @@
    "sourceSha256": "628611ac8218edd4dde392f6d9e01664b9abc4dc4c5248cdce690ca3ae493286"
   },
   {
-   "path": "world/ui/assets/district-map-1900-720.webp",
-   "source": "2026-10-23-ui-direction/assets/district-map-1900-720.webp",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 64790,
-   "sourceSha256": "64839ced914b40552a912e290449ac314e9b71071e4a6f97a1897d7a2989ef34"
-  },
-  {
    "path": "world/ui/assets/ferriss-zoning-1922-1600.webp",
    "source": "2026-10-23-ui-direction/assets/ferriss-zoning-1922-1600.webp",
    "folder": "2026-10-23-ui-direction",
@@ -7741,53 +7737,11 @@
    "sourceSha256": "5bf4df1454048d23945a7fd885ace70db0a04fbc5608b84dee4bdfd34079259b"
   },
   {
-   "path": "world/ui/decisions.html",
-   "source": "2026-10-23-ui-direction/decisions.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 13492,
-   "sourceSha256": "abb98224b5c4751b2f355adb29dccfa70ab37cfa95e54f6240e776a6a37b90ce"
-  },
-  {
-   "path": "world/ui/directions/a-slab/flywheel.html",
-   "source": "2026-10-23-ui-direction/directions/a-slab/flywheel.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 7461,
-   "sourceSha256": "cbae4ca1a7f85d9e2d03d17212ec88f6719c0eec2b744cc7fa67a7c9c1f17085"
-  },
-  {
-   "path": "world/ui/directions/a-slab/slab.css",
-   "source": "2026-10-23-ui-direction/directions/a-slab/slab.css",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 11088,
-   "sourceSha256": "fdcf37e0e75f26d73b5aca2e1c89650f369b613ef01bc94a8467f448e2948990"
-  },
-  {
-   "path": "world/ui/directions/b-setback/flywheel.html",
-   "source": "2026-10-23-ui-direction/directions/b-setback/flywheel.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 7511,
-   "sourceSha256": "4a2eadb8e10d1bbc7c0e9c4513b2d58433e63101ecd45b01c938379ab0bcf23d"
-  },
-  {
-   "path": "world/ui/directions/b-setback/setback.css",
-   "source": "2026-10-23-ui-direction/directions/b-setback/setback.css",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 12155,
-   "sourceSha256": "a261d9eb55321f1438ffb0769e03609389f2443eb20b65c12f785676bfec518a"
-  },
-  {
    "path": "world/ui/directions/c-exhibit/exhibit.css",
    "source": "2026-10-23-ui-direction/directions/c-exhibit/exhibit.css",
    "folder": "2026-10-23-ui-direction",
    "bytes": 15914,
    "sourceSha256": "182e8b84fa577926170cd7e1c1e3f4b7d2a18876f3acc1dae1ca12ee2a441152"
-  },
-  {
-   "path": "world/ui/directions/c-exhibit/flywheel.html",
-   "source": "2026-10-23-ui-direction/directions/c-exhibit/flywheel.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 9723,
-   "sourceSha256": "afff12849c11381b075e44058bb93b75fff56a18293f703eb94d79daad5622a2"
   },
   {
    "path": "world/ui/directions/common/base.css",
@@ -7814,7 +7768,7 @@
    "path": "world/ui/directions/common/flow/ground.js",
    "source": "2026-10-23-ui-direction/directions/common/flow/ground.js",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 9826,
+   "bytes": 10270,
    "sourceSha256": "f6a01ab075d342e2f420e7aab3e44e1cad4df0f10a910100ad8a49b7269d69de"
   },
   {
@@ -7898,21 +7852,21 @@
    "path": "world/ui/directions/cs-max/exhibit.html",
    "source": "2026-10-23-ui-direction/directions/cs-max/exhibit.html",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 11266,
+   "bytes": 11207,
    "sourceSha256": "00b8aee3ea50ac86634e71b6c831d94b0784cb0f9fed3d35319e1f05949b6fae"
   },
   {
    "path": "world/ui/directions/cs-max/flywheel.html",
    "source": "2026-10-23-ui-direction/directions/cs-max/flywheel.html",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 12555,
+   "bytes": 12496,
    "sourceSha256": "5c46bb5363b521d4ebb7575495b0a204818cf57a7e668bf7cc0e29f5db123580"
   },
   {
    "path": "world/ui/directions/cs-max/index.html",
    "source": "2026-10-23-ui-direction/directions/cs-max/index.html",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 12455,
+   "bytes": 12396,
    "sourceSha256": "b3912e783b301b837dd4a48cb78dc4486c68592dcd83e18b680eeee1f31651aa"
   },
   {
@@ -8061,167 +8015,6 @@
    "folder": "2026-10-23-ui-direction",
    "bytes": 56364,
    "sourceSha256": "029a3523476ccdcf2798f4dbf4d15ade17a38877dd5eff63e5f8c73bb931f329"
-  },
-  {
-   "path": "world/ui/index.html",
-   "source": "2026-10-23-ui-direction/index.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 4883,
-   "sourceSha256": "db2447f3e83204b7211029f73d15ba65513610fc681befdd14be82d9c67f64bd"
-  },
-  {
-   "path": "world/ui/rework/dataviz/data/cpi-annual.json",
-   "source": "2026-10-23-ui-direction/rework/dataviz/data/cpi-annual.json",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 9658,
-   "sourceSha256": "4cddc419f30ca803007aa4cfb9aea44cc9cfb8b94097c0126ef68eecdab4ffb6"
-  },
-  {
-   "path": "world/ui/rework/dataviz/data/gini-sample.json",
-   "source": "2026-10-23-ui-direction/rework/dataviz/data/gini-sample.json",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 8046,
-   "sourceSha256": "4bd1bc6de552d329b470842a1ab050918af0f4c3f290a21b8dfde8d468bb43b0"
-  },
-  {
-   "path": "world/ui/rework/dataviz/dataviz.css",
-   "source": "2026-10-23-ui-direction/rework/dataviz/dataviz.css",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 5736,
-   "sourceSha256": "3316aa3cf5e135aabbdd040d9aef68ddc6671be3b198bcc4638308410af7269d"
-  },
-  {
-   "path": "world/ui/rework/dataviz/dollar.html",
-   "source": "2026-10-23-ui-direction/rework/dataviz/dollar.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 7243,
-   "sourceSha256": "dd5558ea03c3ef8f582f7e4a52542760da230420ef25c49cd8f22d3abfb3634e"
-  },
-  {
-   "path": "world/ui/rework/dataviz/dollar.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/dollar.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 8590,
-   "sourceSha256": "20f92b5d27f5010ded6381423359c55b7bd8a625f7233c671b304fed6ca07aeb"
-  },
-  {
-   "path": "world/ui/rework/dataviz/lib/guess.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/lib/guess.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 1647,
-   "sourceSha256": "36fce3fd9e914f5b5d80ce44c01c9bafa7bf0c4297259049adb5afd5b252b54d"
-  },
-  {
-   "path": "world/ui/rework/dataviz/lib/honesty.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/lib/honesty.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 6215,
-   "sourceSha256": "2a52584dbc354d5478f65d460439cdf56a7170c12840a16d7821c995b0232644"
-  },
-  {
-   "path": "world/ui/rework/dataviz/lib/sonify.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/lib/sonify.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 2144,
-   "sourceSha256": "b39d4e3988900cf4cd5dd3571326523cea68737a3686de9593d4e632b8cb9614"
-  },
-  {
-   "path": "world/ui/rework/dataviz/lib/stripefield.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/lib/stripefield.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 7145,
-   "sourceSha256": "e52e26c082d17c9423cfbb48e135edd0a74e6bbb0a5d88d56933c901624b796d"
-  },
-  {
-   "path": "world/ui/rework/dataviz/lib/typeset.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/lib/typeset.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 2079,
-   "sourceSha256": "ac9a7d5d18897945806fb0d6c369c91a776c3918fa3256e76a8289edd1a436ea"
-  },
-  {
-   "path": "world/ui/rework/dataviz/room.html",
-   "source": "2026-10-23-ui-direction/rework/dataviz/room.html",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 7829,
-   "sourceSha256": "ccc0abe88b9234ad789b8c2155bee40e621a6921ebb51a5585bb381ad12914e9"
-  },
-  {
-   "path": "world/ui/rework/dataviz/room.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/room.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 14792,
-   "sourceSha256": "824d67872cb716bd6578a1c15a9e067296872633cf3849241cbd0fa4d8414c28"
-  },
-  {
-   "path": "world/ui/rework/dataviz/sound/engine.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/sound/engine.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 3556,
-   "sourceSha256": "618ae30b63cdbc4e6ff4bd1b8a6d643fda9d08d44a7fdd4e35523f03042bf94b"
-  },
-  {
-   "path": "world/ui/rework/dataviz/sound/fx.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/sound/fx.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 9137,
-   "sourceSha256": "657000aed158ae015e307f1c31bca27e621b3dfc81fda180d780959f906b74a5"
-  },
-  {
-   "path": "world/ui/rework/dataviz/sound/limiter.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/sound/limiter.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 3954,
-   "sourceSha256": "83c5aaf84fcd20883b4abb9488bb166117f938534960153b686fb135e8832c52"
-  },
-  {
-   "path": "world/ui/rework/dataviz/sound/util.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/sound/util.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 3184,
-   "sourceSha256": "634f426455886b285d52d3404ee6259bb2def3bafe11eae329712ae53950bcfd"
-  },
-  {
-   "path": "world/ui/rework/dataviz/sound/voices.js",
-   "source": "2026-10-23-ui-direction/rework/dataviz/sound/voices.js",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 12136,
-   "sourceSha256": "653dbb697ca44860cae62800b934d689d06015ff3ac5ac381226310e337adc1d"
-  },
-  {
-   "path": "world/ui/rework/dataviz/substrate/motion.mjs",
-   "source": "2026-10-23-ui-direction/rework/dataviz/substrate/motion.mjs",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 11625,
-   "sourceSha256": "842af91e613f293407057e163fd4029415a499d95a7e968a6005e5aa50d6e0f6"
-  },
-  {
-   "path": "world/ui/rework/dataviz/substrate/provenance.mjs",
-   "source": "2026-10-23-ui-direction/rework/dataviz/substrate/provenance.mjs",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 8122,
-   "sourceSha256": "ad728df406144bdc9ec239a59d14eeb9cb79ad70f670150e7c0c552b2c51309e"
-  },
-  {
-   "path": "world/ui/rework/dataviz/substrate/thinfilm.mjs",
-   "source": "2026-10-23-ui-direction/rework/dataviz/substrate/thinfilm.mjs",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 3656,
-   "sourceSha256": "520c8da23d24106611d0844356aa2aec47f24078ccc53537008db9c370035487"
-  },
-  {
-   "path": "world/ui/rework/dataviz/substrate/vector.mjs",
-   "source": "2026-10-23-ui-direction/rework/dataviz/substrate/vector.mjs",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 9106,
-   "sourceSha256": "10fd538fc750bfc7223124b0678a5840f5d9466f481faa86a320afc553880be6"
-  },
-  {
-   "path": "world/ui/rework/dataviz/substrate/vendor/superstack.mjs",
-   "source": "2026-10-23-ui-direction/rework/dataviz/substrate/vendor/superstack.mjs",
-   "folder": "2026-10-23-ui-direction",
-   "bytes": 26932,
-   "sourceSha256": "b972095e4eadb007fb892e48027fe6d970328eb2256749e046b296f500208878"
   },
   {
    "path": "world/ui/shell/fonts/accession/accession.css",
@@ -10537,7 +10330,7 @@
    "path": "world/visualizer/web/grid.html",
    "source": "2026-10-24-visualizer/web/grid.html",
    "folder": "2026-10-24-visualizer",
-   "bytes": 3175,
+   "bytes": 3203,
    "sourceSha256": "26148987d047a18c356d5107fadfb36f38e273b4f66574ebe6af4e1c2ee9560b"
   },
   {
@@ -10551,7 +10344,7 @@
    "path": "world/visualizer/web/index.html",
    "source": "2026-10-24-visualizer/web/index.html",
    "folder": "2026-10-24-visualizer",
-   "bytes": 3116,
+   "bytes": 3144,
    "sourceSha256": "1a0af1d8bfcd0e4db33fa26d68c693a710406c2b34f65efda558c9d75f623e03"
   },
   {
@@ -10618,7 +10411,7 @@
    "sourceSha256": "46feca86f70e9efb5d7b15e93bf5e2e23207b9370f4ed24ee94b3b540ee7d2e1"
   }
  ],
- "assetRevision": "world-99f03a9984",
+ "assetRevision": "world-7025cc6515",
  "assetRevisionScope": [
   "world/",
   "studies/",
