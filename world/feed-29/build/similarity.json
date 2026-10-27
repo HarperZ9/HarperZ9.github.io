@@ -1,0 +1,708 @@
+{
+ "gate": "decompose dr.check (thresholds in dr/check.py)",
+ "pairs": [
+  {
+   "candidate": "capsules-c1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 36,
+   "ssim": 0.126,
+   "structure": 0.27,
+   "layout_de": 71.978,
+   "palette_de": 34.617
+  },
+  {
+   "candidate": "capsules-c1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.09,
+   "structure": 0.317,
+   "layout_de": 55.689,
+   "palette_de": 37.573
+  },
+  {
+   "candidate": "capsules-c1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.1,
+   "structure": 0.245,
+   "layout_de": 62.812,
+   "palette_de": 38.434
+  },
+  {
+   "candidate": "capsules-c1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 20,
+   "ssim": 0.047,
+   "structure": 0.182,
+   "layout_de": 77.239,
+   "palette_de": 69.413
+  },
+  {
+   "candidate": "capsules-c1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.105,
+   "structure": -0.16,
+   "layout_de": 51.49,
+   "palette_de": 33.258
+  },
+  {
+   "candidate": "capsules-c2.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.07,
+   "structure": 0.178,
+   "layout_de": 56.408,
+   "palette_de": 37.428
+  },
+  {
+   "candidate": "capsules-c2.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 36,
+   "ssim": 0.12,
+   "structure": 0.342,
+   "layout_de": 49.08,
+   "palette_de": 39.958
+  },
+  {
+   "candidate": "capsules-c2.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.102,
+   "structure": 0.2,
+   "layout_de": 61.72,
+   "palette_de": 50.2
+  },
+  {
+   "candidate": "capsules-c2.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.034,
+   "structure": 0.182,
+   "layout_de": 75.553,
+   "palette_de": 75.08
+  },
+  {
+   "candidate": "capsules-c2.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.063,
+   "structure": -0.04,
+   "layout_de": 52.018,
+   "palette_de": 31.481
+  },
+  {
+   "candidate": "metaballs-m1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 34,
+   "ssim": 0.123,
+   "structure": 0.306,
+   "layout_de": 70.55,
+   "palette_de": 34.953
+  },
+  {
+   "candidate": "metaballs-m1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.09,
+   "structure": 0.117,
+   "layout_de": 57.212,
+   "palette_de": 42.869
+  },
+  {
+   "candidate": "metaballs-m1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.137,
+   "structure": 0.231,
+   "layout_de": 59.429,
+   "palette_de": 34.734
+  },
+  {
+   "candidate": "metaballs-m1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.144,
+   "structure": 0.197,
+   "layout_de": 65.537,
+   "palette_de": 30.107
+  },
+  {
+   "candidate": "metaballs-m1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.097,
+   "structure": -0.003,
+   "layout_de": 51.665,
+   "palette_de": 33.698
+  },
+  {
+   "candidate": "spheres-s1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 38,
+   "ssim": 0.121,
+   "structure": 0.419,
+   "layout_de": 58.952,
+   "palette_de": 40.767
+  },
+  {
+   "candidate": "spheres-s1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 34,
+   "ssim": 0.054,
+   "structure": 0.224,
+   "layout_de": 51.979,
+   "palette_de": 35.203
+  },
+  {
+   "candidate": "spheres-s1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.09,
+   "structure": 0.166,
+   "layout_de": 57.883,
+   "palette_de": 34.664
+  },
+  {
+   "candidate": "spheres-s1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.05,
+   "structure": 0.135,
+   "layout_de": 72.921,
+   "palette_de": 60.117
+  },
+  {
+   "candidate": "spheres-s1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.093,
+   "structure": -0.09,
+   "layout_de": 51.91,
+   "palette_de": 25.185
+  },
+  {
+   "candidate": "spheres-s2.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.098,
+   "structure": 0.382,
+   "layout_de": 72.016,
+   "palette_de": 52.968
+  },
+  {
+   "candidate": "spheres-s2.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.018,
+   "structure": 0.197,
+   "layout_de": 49.227,
+   "palette_de": 21.92
+  },
+  {
+   "candidate": "spheres-s2.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 34,
+   "ssim": 0.03,
+   "structure": 0.165,
+   "layout_de": 47.354,
+   "palette_de": 31.017
+  },
+  {
+   "candidate": "spheres-s2.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.046,
+   "structure": 0.207,
+   "layout_de": 31.322,
+   "palette_de": 25.124
+  },
+  {
+   "candidate": "spheres-s2.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.049,
+   "structure": -0.13,
+   "layout_de": 32.12,
+   "palette_de": 23.498
+  },
+  {
+   "candidate": "steps-p1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.131,
+   "structure": 0.144,
+   "layout_de": 74.582,
+   "palette_de": 49.641
+  },
+  {
+   "candidate": "steps-p1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.057,
+   "structure": 0.327,
+   "layout_de": 59.507,
+   "palette_de": 26.908
+  },
+  {
+   "candidate": "steps-p1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.109,
+   "structure": 0.22,
+   "layout_de": 42.895,
+   "palette_de": 29.042
+  },
+  {
+   "candidate": "steps-p1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.155,
+   "structure": 0.526,
+   "layout_de": 19.692,
+   "palette_de": 10.578
+  },
+  {
+   "candidate": "steps-p1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.067,
+   "structure": -0.125,
+   "layout_de": 46.666,
+   "palette_de": 19.203
+  },
+  {
+   "candidate": "subdivide-d1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.154,
+   "structure": -0.147,
+   "layout_de": 53.26,
+   "palette_de": 31.019
+  },
+  {
+   "candidate": "subdivide-d1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.122,
+   "structure": -0.094,
+   "layout_de": 58.227,
+   "palette_de": 42.585
+  },
+  {
+   "candidate": "subdivide-d1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 16,
+   "ssim": 0.183,
+   "structure": 0.018,
+   "layout_de": 72.174,
+   "palette_de": 61.976
+  },
+  {
+   "candidate": "subdivide-d1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.073,
+   "structure": -0.137,
+   "layout_de": 82.836,
+   "palette_de": 78.343
+  },
+  {
+   "candidate": "subdivide-d1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 34,
+   "ssim": 0.097,
+   "structure": 0.175,
+   "layout_de": 33.519,
+   "palette_de": 23.697
+  },
+  {
+   "candidate": "wedges-w1.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.084,
+   "structure": 0.332,
+   "layout_de": 56.472,
+   "palette_de": 39.465
+  },
+  {
+   "candidate": "wedges-w1.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.082,
+   "structure": 0.167,
+   "layout_de": 52.919,
+   "palette_de": 42.563
+  },
+  {
+   "candidate": "wedges-w1.png",
+   "reference": "u19QwujjnOKok4_K.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.074,
+   "structure": 0.19,
+   "layout_de": 62.521,
+   "palette_de": 45.146
+  },
+  {
+   "candidate": "wedges-w1.png",
+   "reference": "AUCd5aTpGEgPTPDq.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.09,
+   "structure": 0.064,
+   "layout_de": 72.567,
+   "palette_de": 41.394
+  },
+  {
+   "candidate": "wedges-w1.png",
+   "reference": "c3eQ3kg9R6M2mkaN.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.09,
+   "structure": -0.164,
+   "layout_de": 52.899,
+   "palette_de": 31.619
+  },
+  {
+   "candidate": "pixel-valley-1920.png",
+   "reference": "Xeleph_-2113578407405436928.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.131,
+   "structure": 0.136,
+   "layout_de": 33.29,
+   "palette_de": 27.29
+  },
+  {
+   "candidate": "painting-valley-1920.png",
+   "reference": "Xeleph_-2113578407405436928.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.131,
+   "structure": 0.118,
+   "layout_de": 34.016,
+   "palette_de": 27.825
+  },
+  {
+   "candidate": "illusion-loop-1080.mp4",
+   "reference": "AkiyoshiKitaoka-2113846765250314240.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.022,
+   "structure": -0.179,
+   "layout_de": 76.228,
+   "palette_de": 32.208
+  },
+  {
+   "candidate": "illusion-ambiguous-1080.png",
+   "reference": "AkiyoshiKitaoka-2113846765250314240.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.032,
+   "structure": -0.144,
+   "layout_de": 75.547,
+   "palette_de": 37.894
+  },
+  {
+   "candidate": "timebands-loop-1280.mp4",
+   "reference": "RaminNasibov-2113881931188260864.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.168,
+   "structure": 0.081,
+   "layout_de": 22.361,
+   "palette_de": 14.381
+  },
+  {
+   "candidate": "timebands-1280.png",
+   "reference": "RaminNasibov-2113881931188260864.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.171,
+   "structure": 0.079,
+   "layout_de": 22.767,
+   "palette_de": 14.519
+  },
+  {
+   "candidate": "ink-marker-2f6bd8-2048.png",
+   "reference": "DehGz967oHBBCrYJ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.055,
+   "structure": 0.233,
+   "layout_de": 14.051,
+   "palette_de": 7.69
+  },
+  {
+   "candidate": "ink-marker-2f6bd8-2048.png",
+   "reference": "LN-XBwHTmcNXb0jr.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.093,
+   "structure": 0.15,
+   "layout_de": 10.159,
+   "palette_de": 5.31
+  },
+  {
+   "candidate": "ink-marker-d8402f-2048.png",
+   "reference": "DehGz967oHBBCrYJ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.055,
+   "structure": 0.232,
+   "layout_de": 13.938,
+   "palette_de": 7.302
+  },
+  {
+   "candidate": "ink-marker-d8402f-2048.png",
+   "reference": "LN-XBwHTmcNXb0jr.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 26,
+   "ssim": 0.093,
+   "structure": 0.15,
+   "layout_de": 10.104,
+   "palette_de": 5.264
+  },
+  {
+   "candidate": "ink-twotone-f2b230-2048.png",
+   "reference": "DehGz967oHBBCrYJ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 24,
+   "ssim": 0.06,
+   "structure": -0.047,
+   "layout_de": 29.92,
+   "palette_de": 13.521
+  },
+  {
+   "candidate": "ink-twotone-f2b230-2048.png",
+   "reference": "LN-XBwHTmcNXb0jr.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.034,
+   "structure": 0.04,
+   "layout_de": 37.439,
+   "palette_de": 16.945
+  },
+  {
+   "candidate": "letters-capsule-200pct.png",
+   "reference": "4QeJ0D8aGe-vI3-k.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 28,
+   "ssim": 0.049,
+   "structure": 0.286,
+   "layout_de": 62.663,
+   "palette_de": 43.084
+  },
+  {
+   "candidate": "letters-capsule-200pct.png",
+   "reference": "hcKyhDw4tcaBaFt0.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 22,
+   "ssim": 0.058,
+   "structure": 0.105,
+   "layout_de": 51.382,
+   "palette_de": 20.075
+  }
+ ],
+ "blocked": 0
+}

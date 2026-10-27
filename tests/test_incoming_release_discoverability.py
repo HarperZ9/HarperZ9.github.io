@@ -10,6 +10,7 @@ from ident_markup import without_idents
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
@@ -336,7 +337,7 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     assert "Service Desk Incident Environment 0.1.0" in home_registry
     assert "Flywheel v1.1.0" in home_registry
 
-    for relative in ("home/index.html", "index.html"):
+    for relative in ("home/index.html", "workshop.html"):
         fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)

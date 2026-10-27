@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scatter</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/mosaic.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scatter">
+<meta property="og:description" content="Scatter">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/mosaic.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../exhibit/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<style>
+  .stage canvas{background:var(--ground)}
+  .title{position:absolute;left:0;bottom:0;z-index:2;background:var(--ground);padding:14px 18px 12px 16px}
+  .back{background:var(--ground);padding:0 10px;top:0;left:0}
+  .credit ol{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:4px 18px}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">Builds</a>
+  <div class="stage" id="stage">
+    <canvas id="art" role="img" aria-label="A grid of tiles that re-cuts several times a second: photographs of weather seen from orbit, botanical plates and a sower's engraving, cropped and graded to two inks, between dot panels, contour lines, seed spirals, sand figures and columns of the sources' own dates."></canvas>
+    <h1 class="title">Scatter</h1>
+  </div>
+  <footer class="credit mono">
+    <ol id="credits"></ol>
+  </footer>
+</main>
+<script type="module" src="mosaic.page.js?v=world-a891bf139a"></script>
+</body>
+</html>

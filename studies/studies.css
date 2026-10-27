@@ -1,0 +1,54 @@
+/* Reading pages in the world's shell: studies, boards and tool pages. Colours and faces come from the shell's
+   tokens (--wall, --ink, --soft, --line, --face-text, --face-display, --face-utility, --fs-1 to --fs-7). */
+main { display: block; max-width: 74ch; margin: 0 auto; padding: 112px 16px 96px; }
+main:focus { outline: none; }
+.st h1, .bd h1, .tool h1 { font: 800 clamp(36px, 7vw, var(--fs-6))/1.02 var(--face-display); letter-spacing: -.03em; margin: 0 0 16px; text-wrap: balance; }
+.st h2, .bd h2, .tool h2 { font: 700 var(--fs-5)/1.15 var(--face-display); margin: 56px 0 12px; text-wrap: balance; }
+.st h3, .tool h3 { font: 700 var(--fs-3)/1.3 var(--face-text); margin: 28px 0 8px; }
+.st p, .st li, .bd p, .tool p, .tool li { font: 400 var(--fs-3)/1.6 var(--face-text); }
+.st p, .tool p { margin: 0 0 14px; }
+.st ul, .st ol, .tool ul, .tool ol { padding-left: 1.3em; margin: 0 0 16px; }
+.st li + li, .tool li + li { margin-top: 6px; }
+.st code, .tool code { font: 400 .9em/1 var(--face-utility); }
+a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+.st-lane, .bd-run, .st-by, .bd-medium, .st-share { font: 500 var(--fs-1)/1.4 var(--face-utility); color: var(--soft); }
+.st-lane { margin: 0 0 6px; text-transform: lowercase; }
+.st-credit { color: var(--soft); }
+.st-n { font-family: var(--face-utility); color: var(--soft); }
+.st-table { overflow-x: auto; margin: 0 0 18px; border-top: 1px solid var(--ink); }
+.st-table:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.st table { border-collapse: collapse; width: 100%; font: 400 var(--fs-2)/1.45 var(--face-text); }
+.st th, .st td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); }
+.st th { font-weight: 700; }
+.st-measures { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+.st-measure h3 { margin-top: 0; }
+.st-chips { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 4px; }
+.st-chips li { display: flex; align-items: center; gap: 8px; font: 400 var(--fs-2)/1.3 var(--face-utility); margin: 0; }
+.st-chip { width: 18px; height: 18px; flex: none; background: var(--c); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 30%, transparent); }
+.st-measure dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 0; font: 400 var(--fs-2)/1.4 var(--face-text); }
+.st-measure dt { color: var(--soft); }
+.st-measure dd { margin: 0; font-family: var(--face-utility); }
+.st-concepts { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.st .st-concepts li, .bd .st-concepts li { margin: 0; font: 400 var(--fs-2)/1.4 var(--face-text); }
+.st-list { list-style: none; padding: 0; }
+.st-list li { padding: 10px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.st-back { margin-top: 56px; }
+.bd-run { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ink); padding-bottom: 6px; margin: 0 0 24px; }
+.bd-keys { font: 400 var(--fs-4)/1.4 var(--face-text); margin: 0 0 6px; }
+.bd-plates { list-style: none; padding: 0; margin: 32px 0; display: grid; gap: 0; }
+.bd-plate { display: grid; grid-template-columns: 3.2em 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); }
+.bd-n { font: 800 var(--fs-5)/1 var(--face-display); }
+.bd-cap { font-weight: 600; margin: 0 0 4px; }
+.bd-medium { margin: 0 0 6px; }
+.bd-also { color: var(--soft); }
+.tool .cmd { overflow-x: auto; padding: 12px 14px; border: 1px solid var(--ink); font: 400 var(--fs-2)/1.55 var(--face-utility); white-space: pre; }
+.tool .facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font: 400 var(--fs-2)/1.45 var(--face-text); }
+.tool .facts dt { color: var(--soft); }
+.tool .facts dd { margin: 0; }
+@media (max-width: 860px) { main { padding: 32px 16px 120px; } }
+@media (forced-colors: active) { .st-chip { forced-color-adjust: none; } }
+.st p, .tool p, .bd p { max-width: none; }
+.st code, .tool code, .tool .cmd { letter-spacing: normal; }
+.o-hand .skip { position: fixed; top: -80px; left: 12px; }
+.o-hand .skip:focus { top: 12px; }

@@ -1,0 +1,56 @@
+{
+ "horse-in-motion": {
+  "title": "The Horse in Motion",
+  "creator": "Eadweard Muybridge",
+  "year": 1878,
+  "licence": "pd",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Horse_in_Motion.jpg",
+  "w": 1536,
+  "h": 952
+ },
+ "district-map": {
+  "title": "1900 Enumeration District Map, Manhattan, 13th Assembly District",
+  "creator": "unknown",
+  "year": 1900,
+  "licence": "pd",
+  "source": "https://commons.wikimedia.org/wiki/File:1900_Enumeration_District_Map_for_the_Manhattan,_New_York_13th_Assembly_District_-_NARA_-_5928265.jpg",
+  "w": 1299,
+  "h": 1600
+ },
+ "deep-field": {
+  "title": "The Hubble Deep Field",
+  "creator": "Robert Williams and the Hubble Deep Field Team (STScI), NASA",
+  "year": 1996,
+  "licence": "pd",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Hubble_Deep_Field_(opo9601a1).jpg",
+  "w": 1558,
+  "h": 1600
+ },
+ "concrete-facade": {
+  "title": "Continental Building Center, Philadelphia",
+  "creator": "KLOTZPLATE",
+  "year": 2025,
+  "licence": "cc0",
+  "source": "https://commons.wikimedia.org/wiki/File:CONTINENTAL_BUILDING_CENTER_PHILDELPHIA.jpg",
+  "w": 1062,
+  "h": 1600
+ },
+ "edison-catalog": {
+  "title": "Edison Phonographs Cylinder Types catalog",
+  "creator": "Edison Records, Library of Congress",
+  "year": 1913,
+  "licence": "pd",
+  "source": "https://commons.wikimedia.org/wiki/File:Edison_Phonographs_Cylinder_Types_catalog_1913-1914_5.jpg",
+  "w": 593,
+  "h": 949
+ },
+ "eiffel-heights": {
+  "title": "Hauteur comparee de la Tour Eiffel",
+  "creator": "A. Deroy",
+  "year": 1889,
+  "licence": "pd",
+  "source": "https://commons.wikimedia.org/wiki/File:Hauteur_compar%C3%A9e_de_la_Tour_Eiffel_et_des_principaux_monuments_du_monde.jpg",
+  "w": 1157,
+  "h": 1600
+ }
+}

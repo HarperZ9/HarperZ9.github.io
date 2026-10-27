@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Score</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/crossbus.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="One Score">
+<meta property="og:description" content="One Score">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/crossbus.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../exhibit/fonts/conso-medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<style>
+  .stage{background:#0b0a0c;touch-action:none}
+  #strip{top:auto!important;bottom:0;height:24%!important}
+  .word{position:absolute;left:var(--mod);bottom:calc(24% + 18px);margin:0;font-weight:800;font-size:clamp(44px,10svh,150px);line-height:.9;letter-spacing:-.045em;pointer-events:none;max-width:none}
+  .word span{display:inline-block}
+  .key{position:absolute;right:16px;top:16px;margin:0;padding:0;list-style:none;font:500 13px/1.45 "Conso",ui-monospace,monospace;color:var(--muted);text-align:right;max-width:min(46ch,calc(100% - 120px))}
+  .key li{text-wrap:balance}
+  .snd{position:absolute;z-index:3;left:96px;top:14px;font:600 16px/1 "Hanken Grotesk",sans-serif;color:var(--ink);background:transparent;border:2px solid var(--ink);padding:10px 14px;min-height:44px;cursor:pointer}
+  .snd[aria-pressed="true"]{background:var(--hot);border-color:var(--hot);color:#fff}
+  @media (max-width:700px){.word{left:16px}.key{left:16px;right:16px;top:64px;text-align:left;max-width:none}}
+</style>
+</head>
+<body>
+<main>
+  <section class="stage" id="stage" aria-labelledby="title">
+    <h1 class="sr" id="title">One Score</h1>
+    <a class="back" href="./">Builds</a>
+    <canvas id="plate" aria-hidden="true"></canvas>
+    <canvas id="marks" aria-hidden="true"></canvas>
+    <canvas id="strip" aria-hidden="true"></canvas>
+    <ul class="key" id="key"></ul>
+    <p class="word" id="word" aria-live="off"></p>
+    <button class="snd" id="snd" type="button" aria-pressed="false">Sound</button>
+  </section>
+  <p class="credit">Words from Ada Lovelace, Note A, 1843. Public domain.</p>
+</main>
+<script type="module" src="crossbus.js?v=world-a891bf139a"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a scale lies, in 7 steps</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/scale.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How a scale lies, in 7 steps">
+<meta property="og:description" content="How a scale lies, in 7 steps">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/scale.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1280px; margin:0 auto; padding:16px 12px 40px; }
+  .top { margin-bottom:12px; }
+  .stepper { position:relative; min-height:min(84vh,760px); overflow:hidden; background:#0d4f80; }
+  .st-back { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .st-card { position:absolute; right:4%; top:50%; transform:translateY(-50%) rotate(.5deg); width:min(460px,calc(100% - 24px)); background:#121214; color:#eee9df; border:2px solid #eee9df; padding:16px 18px 18px; box-shadow:0 26px 50px rgba(0,0,0,.6); }
+  .st-dia { position:relative; height:clamp(200px,28vh,260px); border:1px solid #3a3833; margin-bottom:12px; background:#0a0a0c; cursor:crosshair; }
+  .st-dia canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .st-dots { pointer-events:none; }
+  .st-head { display:flex; gap:12px; align-items:baseline; } .st-n { font:800 16px "Hanken Grotesk",sans-serif; letter-spacing:.08em; color:#e0177e; }
+  .st-t { font:800 clamp(22px,3vw,28px)/1.1 "Hanken Grotesk",sans-serif; margin:0; letter-spacing:-.01em; }
+  .st-p { font:400 17px/1.5 "Hanken Grotesk",sans-serif; margin:8px 0 14px; min-height:7.5em; }
+  .st-nav { display:flex; gap:10px; align-items:center; } .st-bar { display:flex; gap:4px; flex:1; } .st-bar i { flex:1; height:6px; background:#a39e94; opacity:.35; } .st-bar i.on { background:#e0177e; opacity:1; }
+  .st-card button { min-width:48px; font-size:20px; } .st-card button:disabled { opacity:.35; cursor:default; }
+  @media (max-width:760px) { .stepper { min-height:0; } .st-back { position:relative; height:46vh; } .st-card { position:relative; right:auto; top:auto; transform:none; margin:-80px 8px 8px auto; width:calc(100% - 16px); } .st-dia { height:210px; } }
+  /* quality pass: reserve the figure's settled height at desktop widths; depth layers and the stage are built after load (M3) */
+  @media (min-width:900px) { main > figure:first-of-type { min-height:1367px; } }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/scale.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>How a scale lies, in 7 steps</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="st"></div>
+    <figcaption>FIG. 5. How a scale lies, in 7 steps. The parts are the False Balance's: beam, pans, pivot, standard, wedge. Stepped-explainer format after Maxime Heckel's "Lighting That Feels Just Right". Move the pointer over the diagram, or hold Shift and use the arrow keys, to bend its dots. Backdrop collage from the archives: papyrus of Ani and Hunefer, an etching of Justice, the 1877 Bangalore famine, a New York bread line. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/scale.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/scale.js?v=world-a891bf139a"></script>
+</body>
+</html>

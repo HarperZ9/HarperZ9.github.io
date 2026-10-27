@@ -1,0 +1,225 @@
+/* CS-max: Second tour with Slab's layering, both taken further.
+   Layers, back to front: wall (grain, lamp) / exposed grid and cell grid / halftone slabs cut on a
+   diagonal / supergraphic dot-screen words / framed objects with crop marks / text, which inverts
+   where it crosses a slab / controls made of media. Text always stays on top and readable. */
+
+/* ---------- the room is one blend group on a solid wall ---------- */
+.room{isolation:isolate;background-color:var(--wall);overflow:clip}
+/* frames hang on a keyline; the old blurred, skewed cast shadow is gone */
+.cropped .frame::after{display:none}
+.cropped .frame{box-shadow:0 0 0 1px var(--line)}
+.specimen.cropped{box-shadow:inset 0 0 0 clamp(8px,1vw,14px) var(--wall-2),inset 0 0 0 calc(clamp(8px,1vw,14px) + 1px) var(--line),0 0 0 1px var(--line)}
+.room-in{z-index:auto}
+
+/* ---------- exposed grid: twelve columns, an 8 px cell grid, registration marks ---------- */
+.gridded > .room-in::before{content:"";position:absolute;inset:-24px 0;z-index:-1;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,var(--grid-col) 0 1px,transparent 1px calc((100% + 20px) / 12))}
+.reg{position:absolute;width:22px;height:22px;pointer-events:none;z-index:2;
+  background:linear-gradient(var(--ink),var(--ink)) 50% 0/1px 100% no-repeat,linear-gradient(var(--ink),var(--ink)) 0 50%/100% 1px no-repeat}
+.reg::after{content:"";position:absolute;inset:5px;border:1px solid var(--ink);border-radius:50%}
+.reg.tl{left:-11px;top:-35px}.reg.tr{right:-11px;top:-35px}.reg.bl{left:-11px;bottom:-35px}.reg.br{right:-11px;bottom:-35px}
+
+/* ---------- the slab: an ink field cut on a diagonal, a plate re-screened inside it ---------- */
+.cut{position:absolute;z-index:0;background:var(--slab-ink);overflow:hidden;pointer-events:none;
+  top:var(--cut-top,8%);left:var(--cut-left,38%);width:var(--cut-w,70%);height:var(--cut-h,78%);
+  clip-path:var(--cut-poly,polygon(18% 0,100% 0,100% 100%,0 100%))}
+.cut img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:.35}
+.cut canvas.ht{color:var(--slab-dot);opacity:.18}
+.cut.second{background:none}
+.cut.second canvas.ht{color:var(--ink);opacity:.09}
+html.ready .cut.pour{animation:pour var(--dur-scene) var(--ease-engrave) both}
+@keyframes pour{from{clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%)}to{clip-path:var(--cut-poly,polygon(18% 0,100% 0,100% 100%,0 100%))}}
+
+/* the name inverts where it crosses a slab: near-white under a difference blend reads as ink on the
+   wall and as wall on the slab, in both themes. Plain view and forced colours set it as ink. */
+.inverts{color:#f9f6ef;--letter-ink:#f9f6ef;mix-blend-mode:difference;position:relative;z-index:1}
+html.plain .inverts{color:var(--ink);mix-blend-mode:normal}
+/* lettered type is opaque material: no blend on the text, the negative layer does the inversion */
+.inverts.slot-on,.inverts.lt-host{mix-blend-mode:normal}
+.negative{position:absolute;z-index:2;background:#fff;mix-blend-mode:difference;pointer-events:none}
+html.plain .negative{display:none}
+@media (forced-colors:active){.negative{display:none}}
+@media (forced-colors:active){.inverts{mix-blend-mode:normal;color:CanvasText}}
+
+/* running heads ride above slabs on a wall-coloured strip */
+.gridded .runhead{position:relative;z-index:2}
+.gridded .runhead span{background:var(--wall);padding:0 4px}
+
+/* body copy never sits on a slab: a wall-coloured ground behind any reading block that could meet one */
+.gridded .wall,.gridded .lede,.gridded .walltext p{position:relative;z-index:1}
+
+/* ---------- supergraphic: a room-scale word set in a dot screen ---------- */
+.super{position:absolute;z-index:0;margin:0;pointer-events:none;user-select:none;white-space:nowrap;
+  font:900 var(--super-size,min(34vw,560px))/.78 var(--face-display);letter-spacing:-.07em;color:transparent;
+  background:radial-gradient(circle,var(--super-ink) 36%,transparent 39%) 0 0/var(--super-dot,7px) var(--super-dot,7px);-webkit-background-clip:text;background-clip:text}
+.super.carved{font-family:var(--face-carved);font-weight:400;letter-spacing:-.02em}
+html.plain .super{display:none}
+
+/* ---------- crop marks on every frame and specimen ---------- */
+.cropped{position:relative}
+.cropped::before{content:"";position:absolute;inset:-14px;pointer-events:none;z-index:2;
+  --m:linear-gradient(var(--ink),var(--ink));
+  background:var(--m) 0 13px/9px 1px no-repeat,var(--m) 13px 0/1px 9px no-repeat,
+    var(--m) 100% 13px/9px 1px no-repeat,var(--m) calc(100% - 13px) 0/1px 9px no-repeat,
+    var(--m) 0 calc(100% - 13px)/9px 1px no-repeat,var(--m) 13px 100%/1px 9px no-repeat,
+    var(--m) 100% calc(100% - 13px)/9px 1px no-repeat,var(--m) calc(100% - 13px) 100%/1px 9px no-repeat}
+
+/* ---------- controls made of media ---------- */
+/* navigation as index cards, tabs up, the current one pulled from the drawer */
+.cards-nav ul{display:flex;flex-wrap:wrap;gap:6px 4px;margin:0;padding:0;list-style:none}
+.cards-nav a{position:relative;display:block;padding:9px 12px 7px 16px;min-height:40px;background:var(--card);color:#2a2620;text-decoration:none;
+  font:400 14px/1.6 var(--face-utility);rotate:var(--r,-.8deg);box-shadow:0 6px 10px -8px var(--shadow);
+  background-image:linear-gradient(#c96a5a 0 0),repeating-linear-gradient(transparent 0 11px,rgba(70,110,150,.24) 11px 12px);background-size:1px 100%,100% 100%;background-position:9px 0,0 4px;background-repeat:no-repeat,repeat;
+  transition:translate var(--dur-base) var(--ease-standard)}
+.cards-nav li:nth-child(2n) a{--r:.9deg}
+.cards-nav a:hover,.cards-nav a:focus-visible{translate:0 -3px}
+.cards-nav a[aria-current="page"]{translate:0 -6px;box-shadow:0 12px 16px -10px var(--shadow);text-decoration:underline}
+
+/* stamps that are buttons: un-inked outline at rest, inked and off-register when pressed */
+.stamp-btn{font:800 14px/1 var(--face-display);color:var(--ink);background:transparent;border:3px double var(--ink);padding:9px 12px;min-height:40px;cursor:pointer;
+  rotate:var(--r,-2deg);transition:rotate var(--dur-quick) var(--ease-standard),background-color var(--dur-quick) var(--ease-standard)}
+.stamp-btn:hover{rotate:0deg}
+.stamp-btn[aria-pressed="true"],.stamp-btn.inked{background:var(--ink);color:var(--wall);box-shadow:2px 1px 0 color-mix(in srgb,var(--ink) 40%,transparent)}
+.stamp-btn:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+
+/* the lamp: a halftone disc that prints positive in light and negative in dark */
+.lamp-btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--face-text);color:var(--ink);background:none;border:0;padding:4px;min-height:40px;cursor:pointer}
+.lamp-btn::before{content:"";width:28px;height:28px;border-radius:50%;border:1px solid var(--ink);
+  background:radial-gradient(circle,var(--ink) 34%,transparent 37%) 0 0/4px 4px,linear-gradient(90deg,var(--wall) 50%,transparent 50%)}
+
+/* the record: the sound control turns only while sound plays */
+.disc-btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--face-text);color:var(--ink);background:none;border:0;padding:4px;min-height:40px;cursor:pointer}
+.disc-btn img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1px solid var(--ink)}
+.sound-on .disc-btn img{animation:spin 1.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* a halftone slab is the hover state: a diagonal dot band sweeps under the link */
+.slabhover{position:relative;isolation:isolate;text-decoration:none}
+.slabhover::after{content:"";position:absolute;z-index:-1;inset:-4px -10px;background:radial-gradient(circle,var(--ink) 38%,transparent 41%) 0 0/4px 4px;opacity:.35;
+  clip-path:polygon(0 0,0 0,0 100%,0 100%);transition:clip-path var(--dur-slow) var(--ease-standard)}
+.slabhover:hover::after,.slabhover:focus-visible::after{clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%)}
+
+/* receipts as tooltips: perforated till roll, typed */
+.receipt-tip{position:fixed;z-index:60;display:flex;flex-direction:column;gap:2px;padding:12px 14px 18px;background:#f4f0e6;color:#1d1a15;
+  font:400 12px/1.5 var(--face-utility);box-shadow:0 14px 26px -14px rgba(0,0,0,.6);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 6px),95% 100%,90% calc(100% - 6px),85% 100%,80% calc(100% - 6px),75% 100%,70% calc(100% - 6px),65% 100%,60% calc(100% - 6px),55% 100%,50% calc(100% - 6px),45% 100%,40% calc(100% - 6px),35% 100%,30% calc(100% - 6px),25% 100%,20% calc(100% - 6px),15% 100%,10% calc(100% - 6px),5% 100%,0 calc(100% - 6px))}
+.receipt-tip b{font-weight:400;text-transform:none;opacity:.6;margin-right:6px}
+.receipt-tip[hidden]{display:none}
+[data-receipt]{text-decoration-style:dotted}
+
+/* media controls inside the console drop the console's default box */
+.console .lamp-btn,.console .disc-btn{border:0;background:none;padding:4px}
+.console .disc-btn::before{content:none}
+.console .stamp-btn{border:3px double var(--ink);background:transparent}
+.console .stamp-btn[aria-pressed="true"]{background:var(--ink);color:var(--wall)}
+
+/* ---------- tokens for this direction ---------- */
+:root{--grid-col:rgba(22,19,15,.10);--grid-cell:rgba(22,19,15,.035);--slab-ink:#16130f;--slab-dot:#e8e3d9;--super-ink:rgba(22,19,15,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--grid-col:rgba(236,229,214,.08);--grid-cell:rgba(236,229,214,.03);--slab-ink:#ece5d6;--slab-dot:#0a0a0c;--super-ink:rgba(236,229,214,.13)}}
+:root[data-theme="dark"]{--grid-col:rgba(236,229,214,.08);--grid-cell:rgba(236,229,214,.03);--slab-ink:#ece5d6;--slab-dot:#0a0a0c;--super-ink:rgba(236,229,214,.13)}
+
+@media (prefers-reduced-motion:reduce){html.ready .cut.pour{animation:none}.sound-on .disc-btn img{animation:none}.slabhover::after{transition:none}}
+html.plain .cut,html.plain .reg,html.plain .gridded > .room-in::before,html.plain .cropped::before{display:none}
+@media print{.cut,.super,.reg,.receipt-tip{display:none!important}}
+
+/* narrow screens: a slab placed for desktop can reach the reading column; reading blocks then
+   sit on their own wall-coloured ground so text never prints over the screen */
+@media (max-width:860px){
+  .gridded .walltext,.gridded .wall,.gridded .lede,.gridded .reading,.gridded .deck{position:relative;z-index:1;background:var(--wall);box-shadow:0 0 0 8px var(--wall)}
+}
+
+
+/* ---------- the type scale, applied (QUALITY-SPEC T1 to T8) ----------
+   Every text role maps to one step of --fs-1 .. --fs-hero; leading and tracking follow the size band. */
+html{font-synthesis:none;font-kerning:normal;font-optical-sizing:auto}
+p,li,figcaption,dd{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance}
+body{font-size:var(--fs-3);line-height:1.55}
+.skip{font-size:var(--fs-2)}
+.rail .home{font-size:var(--fs-3)}
+.cards-nav a,.console button,.stamp-btn,.lamp-btn,.disc-btn,.picks button,.instruction button,.btn{font-size:var(--fs-2)}
+.runhead,.label .medium,.receipt-tip,.plate-seq li::before{font-size:var(--fs-1)}
+.card,.tag,.tour summary,.notes,.notes li,.how p,.answer,.answer pre,.answer code,.note,.foot,.foot ul,.plaque,.plate-seq span,.label p{font-size:var(--fs-2);line-height:1.5}
+.label p{font-size:var(--fs-3)}
+.card i,.card cite,.card em{font-style:normal;text-decoration:underline dotted}
+.walltext p,.wall p,.lede,.reading p,.rooms-intro,.pair p,.hold,.vitrine p,.edges p{font-size:var(--fs-3);line-height:1.6;max-width:27em}
+.reading p{font-size:var(--fs-4);line-height:1.55;max-width:24em}
+.notes li{max-width:28em}
+.an,.deck{font-size:var(--fs-5)!important;line-height:1.12!important;letter-spacing:-.02em!important;font-weight:700}
+.walltext .an{max-width:22ch}
+.tt,.specimen .tt,.io,.vitrine .io{font-size:var(--fs-3);line-height:1.5}
+.instruction,.instruction pre{font-size:var(--fs-4);line-height:1.45}
+.specimen .prose{font-size:var(--fs-4);line-height:1.4}
+.plate-seq b,.label h3,.pair h3,.edges h3{font-size:var(--fs-5);line-height:1.05;letter-spacing:-.02em}
+.plate-seq b{font-size:var(--fs-4);line-height:1.15}
+.walltext h1,.walltext h2,[data-h="room"],.specimen .mid,.vitrine [data-verdict],.state [data-verdict]{font-size:var(--fs-6);line-height:1;letter-spacing:-.035em;font-weight:900}
+[data-verdict]{font-size:var(--fs-3)}
+.vitrine [data-verdict]{font-weight:800}
+.specimen .big,[data-fs="96"]{font-size:var(--fs-7)!important;line-height:.9;letter-spacing:-.05em}
+[data-fs="48"]{font-size:var(--fs-6)!important;line-height:1;letter-spacing:-.04em}
+.stamp{font-size:var(--fs-4);letter-spacing:-.01em}
+.stamp.over{font-size:var(--fs-4)}
+.super.carved{letter-spacing:.04em}
+/* lettered type keeps an ink colour for the reader and the audit; the fill is what goes transparent */
+.lt-host.lt-on,.lettered-on,.slot-on{color:var(--ink)!important;-webkit-text-fill-color:transparent}
+html.plain .lt-host.lt-on,html.plain .lettered-on,html.plain .slot-on{-webkit-text-fill-color:currentColor}
+
+
+/* ---------- supergraphic ultramodern crossover: one strong move per page ----------
+   After the condensed display titles with footage knocked into the letters (video-craft study,
+   section 3) and 1960s environmental supergraphics: a title at room scale in Kilon with an archival
+   plate printed inside its letters, and one set of parallel bands that turns a corner between rooms.
+   The text stays real; plain view, forced colours and print show it as ink. */
+.knock{font-family:var(--face-super);font-weight:700;letter-spacing:-.01em;line-height:.82;color:var(--ink);
+  background:var(--plate) var(--plate-pos,50% 40%)/cover;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:contrast(1.25) grayscale(.35);-webkit-text-stroke:1.5px var(--ink);paint-order:stroke fill}
+:root[data-theme="dark"] .knock{filter:contrast(1.1) grayscale(.35) brightness(1.25)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .knock{filter:contrast(1.1) grayscale(.35) brightness(1.25)}}
+html.plain .knock{background:none;-webkit-text-fill-color:currentColor;filter:none}
+@media (forced-colors:active){.knock{background:none;-webkit-text-fill-color:CanvasText;filter:none}}
+@media print{.knock{background:none;-webkit-text-fill-color:#000}}
+
+.bands{display:block;width:100%;height:auto;margin:0;color:var(--ink)}
+.bands path{fill:none;stroke-linecap:butt}
+html.plain .bands{display:none}
+
+/* the claim span: an ink rule sweeps under the phrase the proof is about, once, on the measured reveal curve */
+.claim{background:linear-gradient(currentColor,currentColor) 0 100%/0 .14em no-repeat;padding-bottom:.06em}
+html.ready .claim{animation:sweep var(--dur-scene) var(--ease-engrave) .4s both}
+@keyframes sweep{to{background-size:100% .14em}}
+@media (prefers-reduced-motion:reduce){html.ready .claim{animation:none;background-size:100% .14em}}
+html.plain .claim{background-size:100% .14em;animation:none}
+
+/* ---------- depth and motion instead of clutter ----------
+   Moving between pages: cross-document View Transitions. Shared elements carry the same
+   view-transition-name on both pages (a project's title in the salon and its page masthead), so the
+   focused item travels and the rest recedes. Browsers without the API just navigate. Durations and
+   curves are the substrate tokens; under reduced motion it is a plain crossfade. */
+@view-transition{navigation:auto}
+::view-transition-group(*){animation-duration:var(--dur-scene);animation-timing-function:cubic-bezier(0.65,0,0.35,1)}
+::view-transition-old(root){animation:vt-recede var(--dur-slow) cubic-bezier(0.4,0,1,1) both}
+::view-transition-new(root){animation:vt-arrive var(--dur-scene) cubic-bezier(0,0,0.2,1) both}
+@keyframes vt-recede{to{opacity:0;transform:scale(.97);filter:blur(2px)}}
+@keyframes vt-arrive{from{opacity:0;transform:scale(1.02)}}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*){animation-duration:200ms}
+  ::view-transition-old(root){animation:vt-fade-out 200ms linear both}
+  ::view-transition-new(root){animation:vt-fade-in 200ms linear both}
+}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-fade-in{from{opacity:0}}
+[data-vt="flywheel"]{view-transition-name:flywheel}
+[data-vt="baron"]{view-transition-name:baron}
+
+/* focus forward, the rest recedes: in the salon, the frame under the pointer or keyboard comes forward */
+.salon:has(> li:hover, > li:focus-within) > li:not(:hover):not(:focus-within){opacity:.42;transform:scale(.985);filter:grayscale(.6)}
+.salon > li{transition:opacity var(--dur-slow) var(--ease-standard),transform var(--dur-slow) var(--ease-standard),filter var(--dur-slow) var(--ease-standard)}
+.salon > li:focus-within{opacity:1}
+
+/* secondary content in depth: notes sit back until their reference or the note itself is focused */
+.notes li{opacity:.55;transition:opacity var(--dur-base) var(--ease-standard)}
+.notes li:target,.notes li:hover,.notes li:focus-within,.reading:has(sup a:hover, sup a:focus) + .notes li{opacity:1}
+@media (prefers-reduced-motion:reduce){.salon > li,.notes li{transition:none}}
+html.plain .salon > li,html.plain .notes li{opacity:1!important;transform:none!important;filter:none!important}
+@media (max-width:860px){.room-in > [style*="grid-column"],.room-in > .reading,.room-in > .notes{grid-column:1 / -1 !important}}

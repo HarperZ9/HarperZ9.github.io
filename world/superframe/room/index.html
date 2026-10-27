@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make room</title>
+<link rel="canonical" href="https://harperz9.github.io/world/superframe/room/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Make room">
+<meta property="og:description" content="Make room: say what you want in words and the engine turns it into image and sound with its own nodes, in your browser.">
+<meta property="og:url" content="https://harperz9.github.io/world/superframe/room/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/world--superframe--room.jpg?v=688e461526a6">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Make room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--superframe--room.jpg?v=688e461526a6">
+<meta name="twitter:image:alt" content="Make room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="description" content="Make room: say what you want in words and the engine turns it into image and sound with its own nodes, in your browser.">
+<link rel="stylesheet" href="room.css?v=world-a891bf139a">
+<script type="module" src="room.js?v=world-a891bf139a"></script>
+</head>
+<body>
+<a class="skip" href="#make">Skip to make</a>
+<header class="bar">
+  <h1>Make room</h1>
+  <div class="tools" role="toolbar" aria-label="History and settings">
+    <button type="button" id="undo" class="big" aria-keyshortcuts="Control+Z">Undo</button>
+    <button type="button" id="redo" class="big" aria-keyshortcuts="Control+Y">Redo</button>
+    <label class="level" for="intensity">Calm to vivid <span id="intensity-value" aria-hidden="true">2</span>
+      <input type="range" id="intensity" min="1" max="5" step="1" value="2" aria-valuetext="2 of 5, calm">
+    </label>
+    <button type="button" id="settings-open" class="big" aria-expanded="false" aria-controls="settings">Settings</button>
+  </div>
+</header>
+
+<section id="settings" class="settings" hidden aria-label="Settings">
+  <label class="check"><input type="checkbox" id="opt-motion"> Allow moving pictures to play</label>
+  <label class="check"><input type="checkbox" id="opt-voice"> Voice input (your browser's speech service, which may send audio off this computer)</label>
+  <label class="check"><input type="checkbox" id="opt-large"> Larger text and buttons</label>
+</section>
+
+<main>
+  <section class="panel" aria-labelledby="in-title">
+    <h2 id="in-title">1. Say it</h2>
+    <div role="tablist" aria-label="Ways to give input" class="tabs">
+      <button role="tab" id="tab-type" aria-controls="pane-type" aria-selected="true" class="big">Type</button>
+      <button role="tab" id="tab-tiles" aria-controls="pane-tiles" aria-selected="false" tabindex="-1" class="big">Tiles</button>
+      <button role="tab" id="tab-numbers" aria-controls="pane-numbers" aria-selected="false" tabindex="-1" class="big">Numbers</button>
+      <button role="tab" id="tab-code" aria-controls="pane-code" aria-selected="false" tabindex="-1" class="big">Code</button>
+    </div>
+    <div role="tabpanel" id="pane-type" aria-labelledby="tab-type">
+      <label for="words" class="field-label">Words</label>
+      <textarea id="words" rows="3" maxlength="400" autocomplete="off" spellcheck="true"></textarea>
+      <button type="button" id="voice" class="big" hidden>Speak</button>
+    </div>
+    <div role="tabpanel" id="pane-tiles" aria-labelledby="tab-tiles" hidden>
+      <p class="sentence" id="tile-sentence" aria-live="polite" aria-label="Your words"></p>
+      <div id="tiles" class="tiles" role="group" aria-label="Word tiles"></div>
+      <div class="row">
+        <button type="button" id="tile-back" class="big">Remove last word</button>
+        <button type="button" id="tile-clear" class="big">Clear words</button>
+      </div>
+    </div>
+    <div role="tabpanel" id="pane-numbers" aria-labelledby="tab-numbers" hidden>
+      <label for="numbers" class="field-label">Numbers</label>
+      <input id="numbers" inputmode="decimal" autocomplete="off" maxlength="400">
+      <div id="keypad" class="keypad" role="group" aria-label="Number keys"></div>
+    </div>
+    <div role="tabpanel" id="pane-code" aria-labelledby="tab-code" hidden>
+      <label for="code" class="field-label">Code</label>
+      <textarea id="code" rows="6" maxlength="4000" autocomplete="off" spellcheck="false"></textarea>
+    </div>
+  </section>
+
+  <section class="panel" id="make" aria-labelledby="make-title" tabindex="-1">
+    <h2 id="make-title">2. Turn it into</h2>
+    <div class="choices" id="choices" role="group" aria-labelledby="make-title"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="out-title">
+    <h2 id="out-title">3. Keep it</h2>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div id="made" class="made" hidden>
+      <p class="source"><span id="source-label">Made from</span> <q id="source"></q></p>
+      <p id="stale" class="stale" hidden></p>
+      <button type="button" id="remake" class="big" hidden>Make again</button>
+    </div>
+    <figure id="result" class="result" hidden>
+      <img id="picture" alt="">
+      <figcaption id="caption"></figcaption>
+    </figure>
+    <div class="row" id="motion-controls" hidden>
+      <button type="button" id="prev" class="big">Previous</button>
+      <button type="button" id="play" class="big" aria-pressed="false">Play</button>
+      <button type="button" id="next" class="big">Next</button>
+    </div>
+    <div class="row" id="sound-controls" hidden>
+      <button type="button" id="sound" class="big" aria-pressed="false">Play sound</button>
+    </div>
+    <p id="out-text" class="out-text" hidden></p>
+    <div class="row" id="save-controls" hidden>
+      <button type="button" id="save-story" class="big">Save all as one page</button>
+      <button type="button" id="save-picture" class="big">Save picture</button>
+      <button type="button" id="save-sound" class="big">Save sound</button>
+      <button type="button" id="save-words" class="big">Save words</button>
+    </div>
+  </section>
+</main>
+</body>
+</html>

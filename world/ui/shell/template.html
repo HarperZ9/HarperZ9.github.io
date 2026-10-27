@@ -1,0 +1,161 @@
+<!doctype html>
+<!-- The shell template. Copy this file, keep the <head> lines, replace the rooms.
+     data-lettering is optional: point it at a module exporting letter(text, technique, opts). -->
+<html lang="en" data-alive-grain="off" data-type="stock" data-lettering="../../lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>The shell</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/shell/template.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The shell">
+<meta property="og:description" content="The page shell for demos: every component, on one page.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/shell/template.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="The page shell for demos: every component, on one page.">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="shell.css?v=world-a891bf139a">
+<script type="module" src="shell.js?v=world-a891bf139a"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+
+<!-- RAIL: name, the site's routes, the console (plain view, theme, sound). Keep all three buttons. -->
+<header class="o-hand" aria-label="Site">
+  <a class="o-home" href="../directions/cs-max/index.html">Zain Dana Harper</a>
+  <a data-o="band" href="../../universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-sound aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="../assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="../directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="../directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/site-index.html">Plain index</a> <a href="../../universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+
+<main id="main">
+  <!-- ROOM: one idea per room. A running head names the room; the wall text holds its title. -->
+  <!-- SLAB: an ink field cut on a diagonal with a plate re-screened in it; set --cut-* to place it.
+       Text marked .inverts flips where it crosses. SUPER: a room-scale dot-screen word. Both are data-art. -->
+  <section class="room gridded" aria-labelledby="t">
+    <div class="cut pour" data-art style="--cut-top:40px;--cut-left:56%;--cut-w:50%;--cut-h:520px"><img decoding="async" data-halftone="8" src="../assets/hmso-store-1950-1600.webp" width="1600" height="1180" alt=""></div>
+    <div class="room-in">
+      <span class="reg tl" aria-hidden="true" data-art></span>
+      <div class="walltext">
+        <!-- DISPLAY SLOT: data-display names a lettering technique. The text stays real. -->
+        <h1 id="t" data-display="chladni" data-modes="3,4" data-cell="60">The shell</h1>
+                <p>Demo pages go inside this shell: the substrate demo, the techniques specimen, the sound theme, the dataviz pilots. Each keeps its own art inside frames and takes the rail, the rooms, the labels and the second tour from here.</p>
+      </div>
+      <!-- OBJECT: archival or generated art, framed; the credit is an index card. Mark art with data-art. -->
+      <!-- LIVING PLATE: data-alive="livestill|wiggle|loop|framemosaic|gif" marks a slot for the alive layer; the still inside is the reduced-motion and no-JS state. -->
+      <figure class="object cropped" data-art data-alive="livestill" style="grid-column:8 / span 4">
+        <div class="frame reveal"><img decoding="async" src="../assets/goya-nobody-720.webp" width="720" height="1060" alt="Goya's etching of a masked couple at a party."></div>
+        <figcaption class="card"><b>Nobody knows himself</b>. Goya, 1797-99.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SALON: specimens are the tool's own output, framed. Label below; Show me opens the source. -->
+  <section class="room" aria-labelledby="salon-h">
+    <div class="room-in">
+      <h2 id="salon-h" class="walltext" style="grid-column:1 / -1;margin:0" data-h="room">Specimens</h2>
+      <ul class="salon">
+        <li style="--w:7">
+          <div class="specimen cropped" style="--h:300px"><p class="big" aria-label="Answer 42, record 41">42<span style="opacity:.28"> / 41</span></p><span class="stamp over">Fail, held</span></div>
+          <div class="label"><h3><a class="slabhover" href="#">A stamped verdict</a></h3><p>Stamps overprint the output in the verdict's own colour.</p>
+            <details class="tour"><summary>Show me</summary><div class="answer"><pre>tests_passed: 42, source: the test record</pre><p data-verdict="drift">Fail, held</p></div></details></div>
+        </li>
+        <li style="--w:5;--drop:72px">
+          <div class="specimen cropped" style="--h:260px"><p class="prose"><span data-sev="medium">It is important to note that</span> <span class="clean">this release</span> <span data-sev="high">really</span> <span class="clean">works.</span></p></div>
+          <div class="label"><h3><a href="#">Weight from data</a></h3><p>The variable weight axis carries the checker's severity.</p></div>
+        </li>
+        <li style="--w:6">
+          <div class="specimen cropped" style="--h:220px"><p class="mid" id="snd" data-display="spectrogram" data-fs="96">Listen</p></div>
+          <div class="label"><h3><a href="#">A word made of sound</a></h3><p>The picture is the synthesis input; the button plays it.</p>
+            <button type="button" class="stamp-btn" data-play-letter="snd" hidden>Play the word</button></div>
+        </li>
+        <li style="--w:6;--drop:40px">
+          <div class="specimen cropped" style="--h:220px"><p class="tt">$ shell --help
+rooms, labels, a second tour</p></div>
+          <div class="label"><h3><a href="#">Typewritten output</a></h3><p>Terminal text keeps the mono face and its line breaks.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- READING WALL: long text in one column, numbered notes in the margin. -->
+  <section class="room" aria-labelledby="read-h">
+    <div class="room-in">
+      <div class="reading">
+        <h2 id="read-h" class="raked" data-h="room" style="margin:0 0 24px">Long text</h2>
+        <p>Body copy stays in the text face at reading size, under 64 characters a line. Display lettering never carries body text. A <a href="#read-h" data-receipt="what: a receipt tooltip|use: only where verification is the subject">dotted link</a> prints a receipt on hover or focus; use it only where checking is the point.<sup><a href="#n1" id="r1" aria-label="Note 1">1</a></sup></p>
+      </div>
+      <ol class="notes"><li id="n1"><b>1.</b> Notes sit beside the text on wide screens and fall under it on phones. <a href="#r1">Back to the text</a></li></ol>
+    </div>
+  </section>
+
+  <!-- VITRINE: an interactive demo. Buttons with data-show, panels with data-state. No JS shows all. -->
+  <section class="room" aria-labelledby="demo-h">
+    <div class="room-in" data-demo>
+      <div class="walltext"><h2 id="demo-h">A demo case</h2></div>
+      <div class="vitrine">
+        <div class="picks" role="group" aria-label="Answers" data-choices>
+          <button type="button" data-show="0" aria-pressed="true">First</button>
+          <button type="button" data-show="1" aria-pressed="false">Second</button>
+        </div>
+        <div aria-live="polite">
+          <div data-state="0"><p class="io">value: 42</p><p data-verdict="drift">Fail, held</p></div>
+          <div data-state="1"><p class="io">value: 41</p><p data-verdict="verified">Pass, released</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEQUENCE: only for real sequences. --seq-plate puts one Muybridge frame behind each step. -->
+  <section class="room" aria-labelledby="seq-h">
+    <div class="room-in">
+      <div class="walltext"><h2 id="seq-h">Steps</h2></div>
+      <ol class="plate-seq" style="--seq-plate:url(../assets/muybridge-758-1600.webp)">
+        <li><b>Propose</b><span>The first step.</span></li><li class="key"><b>Check</b><span>The step that decides.</span></li><li><b>Record</b><span>The receipt.</span></li><li><b>Escalate</b><span>Named, not called.</span></li><li><b>Serve</b><span>Re-checked first.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- INSTRUCTION: the command a visitor copies. -->
+  <section class="room" aria-labelledby="go-h">
+    <div class="room-in">
+      <div class="walltext"><h2 id="go-h">Try it</h2></div>
+      <div class="instruction"><pre id="cmd">python -m http.server</pre><button type="button" data-copy="cmd" hidden>Copy</button></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <details><summary>Archive credits</summary><ul>
+    <li>Francisco Goya, <cite>Nobody knows himself</cite>, 1797 to 1799. Art Institute of Chicago, CC0. <a href="https://www.artic.edu/artworks/123767">Source</a></li>
+    <li>Eadweard Muybridge, <cite>Animal Locomotion</cite>, plate 758, 1887. Art Institute of Chicago, CC0. <a href="https://www.artic.edu/artworks/195560">Source</a></li>
+  </ul></details>
+  <a href="/">Home</a>
+  <a href="ADOPT.md">How to wrap a page</a>
+</footer>
+<script type="module" src="../../alive/alive.js?v=world-a891bf139a"></script>
+</body>
+</html>

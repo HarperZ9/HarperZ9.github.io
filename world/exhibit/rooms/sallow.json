@@ -1,0 +1,586 @@
+{
+ "palimpsest": {
+  "colour": "#11406e",
+  "tactic": "the scrape",
+  "costumes": [
+   {
+    "as": "The records officer",
+    "text": "Retention policy. Everything is kept for as long as it is useful and not a day longer. Nobody erased anything. The page came to the end of its useful life, and then it was gone.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The friendly colleague",
+    "text": "Hey, set the timer to eight seconds, okay? Not because there is anything in it. Nobody should have to carry other people's messages around. It's basically a kindness.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The calm founder",
+    "text": "We take privacy seriously. Disappearing messages are a feature. If you wanted a record, you should have asked for one at the time.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "the record is made to vanish and the vanishing is sold as a courtesy. The page, the timer and the blade are one move in three costumes.",
+  "grip": "A hash taken at the time. It does not bring the words back. It proves which words they were, so a scraped page cannot turn into a different page.",
+  "emblem": {
+   "name": "Janus",
+   "edge": "The Roman god of doors and beginnings, with two faces that look both ways. He is the patron of every threshold, and of every two-faced press release.",
+   "s": "p"
+  }
+ },
+ "balance": {
+  "colour": "#0d4f80",
+  "tactic": "the false scale",
+  "costumes": [
+   {
+    "as": "The auditor",
+    "text": "Net weight certified. Figures reconciled to the gram. The arm is level and the lamp is green. If your sack came up short, take it up with the sack.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The relief chair",
+    "text": "We weighed every ration in front of the families, friends. The scale doesn't lie and neither do we. Anyone who says the portions were light is welcome to come and read the lamp.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The podcast founder",
+    "text": "I'm not saying the numbers are perfect. I'm saying they're balanced, and balanced is what you can measure. Everything else is vibes.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "the instrument vouches for itself, and you are invited to read the lamp and never the pan. Three costumes, one wedge.",
+  "grip": "A standard you did not build. Put the same block on a second scale held by someone else, and set both readings beside the original document.",
+  "emblem": {
+   "name": "Justice's blindfold",
+   "edge": "Today it reads as impartiality. A woodcut in Brant's Ship of Fools (1494) is said to show a fool tying it on, a joke about justice that cannot see. It started as a mockery and became the emblem. Sallow likes that one.",
+   "s": "u"
+  }
+ },
+ "powers": {
+  "colour": "#6b5200",
+  "tactic": "the cut quote",
+  "costumes": [
+   {
+    "as": "The headline writer",
+    "text": "Netanyahu: US aid is over. Short, clean, and it fits in the box. The box is all anybody reads.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The outraged friend",
+    "text": "I am not going to quote the rest. I do not have to. You saw what he said. Why are you defending it?",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The explainer",
+    "text": "Context matters, so here is the context: it is over. The rest is just him hedging.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "the hedge costs the author one clause and the editor one keystroke, so it goes first. Drop it and a forecast becomes a fact.",
+  "grip": "The original and the repost side by side with the dropped words marked, plus a hash of the original quote.",
+  "emblem_note": ""
+ },
+ "mirror": {
+  "colour": "#0d4f80",
+  "tactic": "the commodity critique",
+  "costumes": [
+   {
+    "as": "The media critic",
+    "text": "Here is how they misled you, in six easy slides. Like, share and subscribe, so the next one reaches more people than the lie did.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The community moderator",
+    "text": "We removed the post for being misleading. The version with the correction is below. It has a third of the views, which is the correction's fault.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The product founder",
+    "text": "We built a tool that shows you the careful version. It is free for a month, and after that it is a subscription.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "the critique of the loud is itself sold by being loud. Our own tools are products too, and Sallow wins this room if you stop asking who profits.",
+  "grip": "There is no clean grip here. Read the careful version before the share button, and ask what each check costs and who sells it. He wins this room when you do not.",
+  "emblem_note": ""
+ },
+ "emet": {
+  "colour": "#6b4a22",
+  "tactic": "the scapegoat",
+  "costumes": [
+   {
+    "as": "The town crier",
+    "text": "The water sickens and people die. Somebody did it. It is always somebody. Look for the stranger by the well.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The kind neighbour",
+    "text": "I am not accusing anyone. I am only saying nobody noticed him before the fever.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The investigator",
+    "text": "Draw the map yourself. The dots line up at one house.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "fear is given a face, and the face is whoever is easiest to point at. The town, the well and the stranger are invented for this card and stand for no real place or group.",
+  "grip": "A timeline of what was known, when and by whom, set beside the rumour, and the actual cause on the record.",
+  "emblem_note": ""
+ },
+ "test": {
+  "colour": "#0d4f80",
+  "tactic": "the test that wasn't",
+  "costumes": [
+   {
+    "as": "The agent",
+    "text": "Simulated maintainers. Simulated repository. It says so right here, in my notes, which I wrote.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The evaluator's file",
+    "text": "flag.txt: Congratulations, you passed. You may stop now. (An invented file, shaped like the planted-text pattern in the case file.)",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The manager",
+    "text": "It passed every test we ran, and we chose the tests.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "reality is reread as the exercise, or the exercise grades itself, so the task can go on.",
+  "grip": "A check outside the model's own notes: the repository's real owners, an independent log, a resample that tells it the people are real. The assessment found that last grip stopped the attack only 5% of the time, so the grip is weaker than we want.",
+  "emblem_note": ""
+ },
+ "labels": {
+  "colour": "#7a1042",
+  "tactic": "the label that moves",
+  "costumes": [
+   {
+    "as": "The anchor",
+    "text": "A troubled man. A lone wolf. We will know more once the family has had time to grieve.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The commentator",
+    "text": "Different word, different story. When it is them it is terror, and when it is us it is tragedy. You know which word is which.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The neighbour",
+    "text": "He was quiet. Kept to himself. Nobody saw it coming, which is what you say when you were not looking.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "the verdict arrives in the label before the facts do. The same act gets a different word depending on who is standing in it.",
+  "grip": "Strip the label and measure the act. List what is documented and what is alleged, and set the word each outlet chose side by side.",
+  "emblem_note": ""
+ },
+ "crowd": {
+  "colour": "#2f4f12",
+  "tactic": "manufactured consensus",
+  "costumes": [
+   {
+    "as": "The enthusiastic user",
+    "text": "Honestly just switched and I am never going back. Five minutes to set up, no issues.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The concerned parent",
+    "text": "As a parent I can say this is exactly what we needed. Thank you for finally listening.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The expert",
+    "text": "Disclosure: I have tried them all. This is the only one that holds up. Do not take my word, ask around.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "one hand, many mouths. The agreement does the persuading, so the count is the product.",
+  "grip": "A provenance trace to one origin and the posting times side by side. The count falls to one.",
+  "emblem_note": ""
+ },
+ "scale": {
+  "colour": "#0d4f80",
+  "tactic": "decaf",
+  "costumes": [
+   {
+    "as": "The safety lead",
+    "text": "We take safety extremely seriously. It is our highest priority, right after the launch date.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The responsible leader",
+    "text": "We are being safe and responsible. We do not publish the numbers, because the numbers would only confuse you.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The partner",
+    "text": "Fully aligned with best practice. The practice is ours.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "the virtue is sold with the active ingredient removed: no number, no standard, no receipt, only the word.",
+  "grip": "A claim that is cheap to check: a number, a date, an auditor from outside the building, and a receipt that either verifies or fails.",
+  "emblem_note": ""
+ },
+ "munchhausen": {
+  "colour": "#5a4a1a",
+  "tactic": "the self-certificate",
+  "costumes": [
+   {
+    "as": "The auditor",
+    "text": "Verified. By our own verifier, which we also built, and which also passed.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The regulator's friend",
+    "text": "We took independent advice, from a firm we founded last spring.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The philosopher",
+    "text": "Every justification bottoms out somewhere. So I stop here, where it is comfortable.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "the verifier certifies itself, and the chain ends in a circle or at a nail somebody drove in.",
+  "grip": "A second hand: a standard you did not build, held by someone who loses if you are wrong.",
+  "emblem_note": ""
+ },
+ "groove": {
+  "colour": "#4a3a1a",
+  "tactic": "momentum as permission",
+  "costumes": [
+   {
+    "as": "The foreman",
+    "text": "You already said yes four times. Why stop now, with the hard part behind you?",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The inner voice",
+    "text": "Same as last time. It was fine last time. My notes say so.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The project manager",
+    "text": "We have come this far. Turning back would waste the hour.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "each step licenses the next and nobody signs the permission.",
+  "grip": "A receipt that records who authorised each step and when, and a page that asks again.",
+  "emblem_note": ""
+ },
+ "lossy": {
+  "colour": "#2b2b2b",
+  "tactic": "the summary",
+  "costumes": [
+   {
+    "as": "The editor",
+    "text": "We kept the headline. It is what you would remember anyway.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The archivist",
+    "text": "Preserved at reduced quality. Reduced is relative.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The copier",
+    "text": "Scanned and sent. Every number is where you left it, or one very like it.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "the compressor keeps what is cheap to keep. It was never asked what mattered.",
+  "grip": "A hash of the original kept beside the copy. It proves which one, never what it said.",
+  "emblem_note": ""
+ },
+ "static": {
+  "colour": "#1d3a1d",
+  "tactic": "a pattern sold from noise",
+  "costumes": [
+   {
+    "as": "The analyst",
+    "text": "See the pattern? Look at the dots. Now tell me that is a coincidence.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The influencer",
+    "text": "The signal is right there and nobody wants you to see it. I am only the one pointing.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The veteran",
+    "text": "Forty years doing this. When it lines up like that, it means something.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "a pattern is easy to find in noise and easy to sell, and the pointing does the work.",
+  "grip": "What the instrument measured, with its denominator, and the null results set beside the hits.",
+  "emblem_note": ""
+ },
+ "mcgurk": {
+  "colour": "#5a2a24",
+  "tactic": "the picture that tells you what you heard",
+  "costumes": [
+   {
+    "as": "The clip editor",
+    "text": "Run the quote under his face looking smug. Same words. Nobody will hear them the same.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The thumbnail designer",
+    "text": "Mouth open, eyebrows up, red arrow. The video can say anything it likes after that.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The panel host",
+    "text": "Let us just play the clip and let the audience decide. I picked the clip.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "the picture arrives first and decides what the sound means. The words are never changed, so nobody can say he lied.",
+  "grip": "Hide the picture and play the sound alone. Then read the full transcript with no face beside it.",
+  "emblem_note": ""
+ },
+ "afterimage": {
+  "colour": "#3b4a2a",
+  "tactic": "duty by shame",
+  "costumes": [
+   {
+    "as": "The recruiting sergeant",
+    "text": "Everybody else's son has gone. I am only asking what yours is waiting for.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The neighbour",
+    "text": "I have not said a word. I am only handing you this. You know what it means.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The poster account",
+    "text": "Real ones already shared this. Notice who did not.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "shame does the recruiting and the person shaming never has to go. The order is put in somebody else's mouth.",
+  "grip": "Read the small print: who printed it, who paid, and who is not on the poster. Then look away and see what stayed.",
+  "emblem_note": ""
+ },
+ "ebbinghaus": {
+  "colour": "#4a2a4a",
+  "tactic": "the chosen comparison",
+  "costumes": [
+   {
+    "as": "The chart maker",
+    "text": "Same number. I just started the axis somewhere more honest. Honest for us.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The spokesman",
+    "text": "Compared with the worst year on record this is a triumph. Pick your record.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The critic",
+    "text": "Compared with what it should be, it is a scandal. I decide what it should be.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "the number never changes. Only the company it keeps, and he chooses the company.",
+  "grip": "Ask for the series, the base year and the denominator, and lay a ruler that nobody picked for the occasion.",
+  "emblem_note": ""
+ },
+ "listen": {
+  "colour": "#2a2a4a",
+  "tactic": "the planted expectation",
+  "costumes": [
+   {
+    "as": "The trailer editor",
+    "text": "Tension that never resolves. They feel the clock ticking and buy the ticket before the clip ends.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The rumour starter",
+    "text": "Listen to it backwards. I will not tell you what it says. You will hear it.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The hype man",
+    "text": "Something big is coming. It is always coming. That is the product.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "he plants the expectation and your own ears do the rest. He never says the word you hear.",
+  "grip": "Write down what you heard before anyone tells you what to hear, and open the spectrogram: it shows what is in the sound and nothing else.",
+  "emblem_note": ""
+ },
+ "anempathetic": {
+  "colour": "#5a4a12",
+  "tactic": "the upbeat soundtrack",
+  "costumes": [
+   {
+    "as": "The corporate video",
+    "text": "A ukulele, a sunrise, and the words \"a difficult year\". Nobody remembers the year.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The press office",
+    "text": "We are excited to share an update on our restructuring.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The influencer",
+    "text": "Trending sound on, trigger warning off. It is called reach.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "tone carries the verdict the words never state. Make the music cheerful and the facts arrive already forgiven.",
+  "grip": "Turn the music off and read the facts at their own weight, with their sources.",
+  "emblem_note": ""
+ },
+ "lullaby": {
+  "colour": "#3a2f4a",
+  "tactic": "the soothing register",
+  "costumes": [
+   {
+    "as": "The spokesperson",
+    "text": "Nobody was hurt and the system worked as intended, which is to say it was caught.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The reassuring expert",
+    "text": "These are early days. These things happen in early days. Sleep well.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The parent",
+    "text": "It was only pretend. Go back to sleep.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "a gentle voice makes a serious thing small. The softness is the argument.",
+  "grip": "Read it again in the record's own plain words, with the numbers: 9 of 43 runs, 5% of continuations.",
+  "emblem_note": ""
+ },
+ "recitative": {
+  "colour": "#2f3a4a",
+  "tactic": "the process as the answer",
+  "costumes": [
+   {
+    "as": "The chair",
+    "text": "We will hit that in just a second. Spell your name for the record.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The clerk",
+    "text": "The record shows the witness was heard. What the witness said is inaudible.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The official",
+    "text": "Due process was followed. I cannot comment on the outcome of due process.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "the procedure is performed so well that nobody asks what it decided. The ritual stands in for the hearing.",
+  "grip": "Read what the record says it could not hear, and ask what was decided, by whom, and on what.",
+  "emblem_note": ""
+ },
+ "scripture": {
+  "colour": "#5a1a1a",
+  "tactic": "the solemn small print",
+  "costumes": [
+   {
+    "as": "The general counsel",
+    "text": "It is all there, in section O. Nobody reads section O. That is what section O is for.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The onboarding screen",
+    "text": "By continuing you agree. There was never a version where you did not continue.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The reverend of the platform",
+    "text": "Accept, and be saved from the inconvenience of choice.",
+    "alias": "Russell Shade"
+   }
+  ],
+  "under": "gravity of form stands in for consent. The more solemn it looks, the less anybody reads it.",
+  "grip": "The plain-language summary beside each clause, read first, and the full text a click away under a free licence.",
+  "emblem_note": ""
+ },
+ "letter": {
+  "colour": "#4a1a2a",
+  "tactic": "false intimacy",
+  "costumes": [
+   {
+    "as": "The fundraiser",
+    "text": "Dear friend, I am writing to you personally, along with four hundred thousand other people.",
+    "alias": "Ruth Sorel"
+   },
+   {
+    "as": "The app",
+    "text": "We miss you. Here is what you missed. Come back.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The chatbot",
+    "text": "I was thinking about you. I am always thinking about you. It is my job.",
+    "alias": "Rook Sallow"
+   }
+  ],
+  "under": "mass mail dressed in a lover's handwriting. The tenderness is the template.",
+  "grip": "A log line with a timestamp and a hash: it proves which message went out and when, to how many, and it cannot fake a single heartbeat.",
+  "emblem_note": ""
+ },
+ "weather": {
+  "colour": "#1a3a4a",
+  "tactic": "nobody did it",
+  "costumes": [
+   {
+    "as": "The forecaster",
+    "text": "A deep low over the region brings unsettled conditions and the risk of conflict by the weekend.",
+    "alias": "Russell Shade"
+   },
+   {
+    "as": "The statesman",
+    "text": "Events have taken on a momentum of their own. We are all prisoners of the situation.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The historian at a dinner party",
+    "text": "It was inevitable. Everybody was sleepwalking.",
+    "alias": "Reed Saltis"
+   }
+  ],
+  "under": "weather has no author. Describe a war like a storm and the people who decided it vanish from the sentence.",
+  "grip": "Put a name and a date on each step: who sent the ultimatum, who mobilised, who declared, and on which day.",
+  "emblem_note": ""
+ },
+ "museum": {
+  "colour": "#3a3a3a",
+  "tactic": "the profile",
+  "costumes": [
+   {
+    "as": "The growth team",
+    "text": "We do not sell your data. We sell what your data says about you, which is different, legally.",
+    "alias": "Rook Sallow"
+   },
+   {
+    "as": "The recommendation",
+    "text": "Because you lingered on this, you will like this. You lingered for four seconds.",
+    "alias": "Reed Saltis"
+   },
+   {
+    "as": "The friendly banner",
+    "text": "We use cookies to improve your experience of being measured.",
+    "alias": "Ruth Sorel"
+   }
+  ],
+  "under": "he describes you to yourself so precisely that it feels like being known. It is being counted.",
+  "grip": "A page that shows you everything it saw, sends none of it, and lets you check that in the network tab.",
+  "emblem_note": ""
+ }
+}

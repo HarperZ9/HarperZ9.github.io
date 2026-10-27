@@ -1,0 +1,279 @@
+{
+ "gate": "decompose dr.check (thresholds in dr/check.py)",
+ "pairs": [
+  {
+   "candidate": "strata-naturals-level1-1200.png",
+   "reference": "-noof-bVku335NFZ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.156,
+   "structure": 0.195,
+   "layout_de": 8.94,
+   "palette_de": 8.688
+  },
+  {
+   "candidate": "strata-naturals-level1-1200.png",
+   "reference": "9LOGLHrb--GAKFRH.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.191,
+   "structure": 0.161,
+   "layout_de": 7.97,
+   "palette_de": 7.119
+  },
+  {
+   "candidate": "strata-naturals-level1-1200.png",
+   "reference": "uuuEqFjad072GLCT.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.141,
+   "structure": 0.104,
+   "layout_de": 8.765,
+   "palette_de": 8.065
+  },
+  {
+   "candidate": "strata-naturals-level1-1200.png",
+   "reference": "vGxzllYvDiP8OK8R.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.149,
+   "structure": 0.091,
+   "layout_de": 8.056,
+   "palette_de": 8.996
+  },
+  {
+   "candidate": "strata-primes-weight3-1600.png",
+   "reference": "-noof-bVku335NFZ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.17,
+   "structure": 0.41,
+   "layout_de": 9.638,
+   "palette_de": 8.898
+  },
+  {
+   "candidate": "strata-primes-weight3-1600.png",
+   "reference": "9LOGLHrb--GAKFRH.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 16,
+   "ssim": 0.261,
+   "structure": 0.528,
+   "layout_de": 8.573,
+   "palette_de": 7.732
+  },
+  {
+   "candidate": "strata-primes-weight3-1600.png",
+   "reference": "uuuEqFjad072GLCT.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.127,
+   "structure": 0.419,
+   "layout_de": 9.399,
+   "palette_de": 8.443
+  },
+  {
+   "candidate": "strata-primes-weight3-1600.png",
+   "reference": "vGxzllYvDiP8OK8R.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.138,
+   "structure": 0.054,
+   "layout_de": 9.074,
+   "palette_de": 9.38
+  },
+  {
+   "candidate": "strata-semiprimes-jump2-1200.png",
+   "reference": "-noof-bVku335NFZ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.192,
+   "structure": 0.451,
+   "layout_de": 9.39,
+   "palette_de": 8.837
+  },
+  {
+   "candidate": "strata-semiprimes-jump2-1200.png",
+   "reference": "9LOGLHrb--GAKFRH.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 14,
+   "ssim": 0.218,
+   "structure": 0.557,
+   "layout_de": 8.413,
+   "palette_de": 7.617
+  },
+  {
+   "candidate": "strata-semiprimes-jump2-1200.png",
+   "reference": "uuuEqFjad072GLCT.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.15,
+   "structure": 0.444,
+   "layout_de": 9.123,
+   "palette_de": 7.883
+  },
+  {
+   "candidate": "strata-semiprimes-jump2-1200.png",
+   "reference": "vGxzllYvDiP8OK8R.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 30,
+   "ssim": 0.143,
+   "structure": 0.09,
+   "layout_de": 8.74,
+   "palette_de": 9.052
+  },
+  {
+   "candidate": "strata-squares-level1-1200.png",
+   "reference": "-noof-bVku335NFZ.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 14,
+   "ssim": 0.18,
+   "structure": 0.462,
+   "layout_de": 8.82,
+   "palette_de": 8.649
+  },
+  {
+   "candidate": "strata-squares-level1-1200.png",
+   "reference": "9LOGLHrb--GAKFRH.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 16,
+   "ssim": 0.185,
+   "structure": 0.387,
+   "layout_de": 7.99,
+   "palette_de": 7.474
+  },
+  {
+   "candidate": "strata-squares-level1-1200.png",
+   "reference": "uuuEqFjad072GLCT.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.119,
+   "structure": 0.25,
+   "layout_de": 8.801,
+   "palette_de": 8.144
+  },
+  {
+   "candidate": "strata-squares-level1-1200.png",
+   "reference": "vGxzllYvDiP8OK8R.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 36,
+   "ssim": 0.139,
+   "structure": -0.051,
+   "layout_de": 8.182,
+   "palette_de": 8.97
+  },
+  {
+   "candidate": "film-graded-1280.png",
+   "reference": "KEY-qRwyPFOC0UiRBvJ2.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.245,
+   "structure": 0.066,
+   "layout_de": 20.793,
+   "palette_de": 13.71
+  },
+  {
+   "candidate": "film-subtitle-1280.png",
+   "reference": "KEY-qRwyPFOC0UiRBvJ2.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 34,
+   "ssim": 0.236,
+   "structure": 0.065,
+   "layout_de": 20.907,
+   "palette_de": 13.79
+  },
+  {
+   "candidate": "film-subtitle-3s-1280.mp4",
+   "reference": "KEY-qRwyPFOC0UiRBvJ2.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.244,
+   "structure": 0.066,
+   "layout_de": 20.921,
+   "palette_de": 14.013
+  },
+  {
+   "candidate": "eqseq-lanes-1600.png",
+   "reference": "D5E6XTJZgD9bPS9W.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 32,
+   "ssim": 0.043,
+   "structure": 0.28,
+   "layout_de": 83.513,
+   "palette_de": 51.25
+  },
+  {
+   "candidate": "eqseq-grid-lanes-1280.mp4",
+   "reference": "D5E6XTJZgD9bPS9W.mp4",
+   "verdict": "PASS",
+   "why": [
+    "no measure finds a close match"
+   ],
+   "phash_hamming": 18,
+   "ssim": 0.035,
+   "structure": 0.066,
+   "layout_de": 84.008,
+   "palette_de": 54.906
+  }
+ ],
+ "blocked": 0
+}

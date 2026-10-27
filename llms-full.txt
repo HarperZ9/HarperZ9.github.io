@@ -53,7 +53,7 @@ Version 0.16.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
 
 ## Daylight Commons
 
-Version 3.5.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
+Version 3.8.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
 Brave and Firefox 128 or later, plus a command line for saved threads.
 
 - What it does: rest the pointer on a reply on X, YouTube, Reddit, Facebook,
@@ -70,8 +70,30 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 - What it does not do: it shows signs and their sources; a sign of coordination
   is evidence to weigh, not a verdict on a person. Firefox removes the
   temporary add-on on restart until a signed build is published.
-- Links: https://harperz9.github.io/daylight-commons/install.html ,
+- Links: https://harperz9.github.io/daylight.html ,
+  https://harperz9.github.io/daylight-commons/install.html ,
   https://github.com/HarperZ9/daylight-commons
+
+## Superframe
+
+Version 0.1.0. Licence FSL-1.1-MIT; fonts under the SIL Open Font License 1.1.
+Node 22 or later, no dependencies.
+
+- What it does: you describe a piece in plain words; the engine compiles the
+  words into a recipe of elements, each a law with weights, and renders it from
+  a seed as paint, living type, a line drawing, a material, a sound and a touch
+  pattern. Each render writes a study of its own parts: plain sentences and alt
+  text for people and screen readers, and structured data for software.
+- Who it is for: artists, designers and anyone who reads better through one
+  sense than another; left to right in a picture is time in its sound, and top
+  to bottom is pitch.
+- Try it: `git clone https://github.com/HarperZ9/superframe`, then
+  `npm run make -- "heavy rust coral upper left, fine teal frost on the right" out/first --seed first`.
+- What it does not do: elements do not act on one another yet, the intent
+  reader knows a small English vocabulary, and the type is the weakest
+  crossing. It is a creative tool and makes no claims about therapy.
+- Links: https://harperz9.github.io/superframe.html ,
+  https://github.com/HarperZ9/superframe
 
 ## EMET
 

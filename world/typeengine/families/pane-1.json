@@ -1,0 +1,91 @@
+{
+ "schema": "typeengine.family/1",
+ "id": "pane-1",
+ "name": "Pane 1",
+ "ground": "#cfcea6",
+ "skeleton": {
+  "source": "accession",
+  "style": "display",
+  "weight": 651,
+  "cut": null,
+  "extra": {
+   "n": 3.036,
+   "wd": 0.964
+  }
+ },
+ "bindings": {
+  "fill": {
+   "material": "glass",
+   "params": {
+    "glass": "crown",
+    "spread": 0.969,
+    "bevel": 0.047,
+    "thickness": 0.144,
+    "gap": 18,
+    "caustic": 0.207,
+    "rules": 1,
+    "tint": "#cfcea6",
+    "paper": "#505e54",
+    "film": 0
+   },
+   "feed": {
+    "surface.albedo": {
+     "material": "crt",
+     "params": {
+      "content": "source",
+      "phosphor": "#deb250",
+      "lines": 246,
+      "bloom": 0.534,
+      "snow": 0.037,
+      "mask": 0.335
+     }
+    }
+   }
+  }
+ },
+ "axes": [
+  {
+   "tag": "wght",
+   "name": "Weight",
+   "min": 600,
+   "max": 900,
+   "default": 651,
+   "target": "skeleton.weight"
+  },
+  {
+   "tag": "SQUR",
+   "name": "Squareness",
+   "min": 2.4,
+   "max": 3.6,
+   "default": 3.036,
+   "target": "skeleton.extra.n"
+  }
+ ],
+ "recipe": {
+  "brief": "pane",
+  "seed": 1,
+  "index": 5,
+  "seedRule": "xmur3-mulberry32/1",
+  "candidate": "pane-5",
+  "scores": {
+   "total": 0.8313,
+   "legibility": {
+    "accuracy": 0.935,
+    "margin": 0.149,
+    "misses": [
+     "g>q",
+     "i>I"
+    ],
+    "pairs": {
+     "I/l": 0.277,
+     "O/0": 0.256,
+     "rn/m": 0.726,
+     "cl/d": 0.533
+    },
+    "proxy": "template correlation against Accession Display 700, 24 x 24; not OCR"
+   },
+   "contrast": 6.87,
+   "novelty": 1
+  }
+ }
+}

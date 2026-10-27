@@ -46,6 +46,7 @@ PUBLIC_MARKERS = (
 )
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _text(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8")
 
@@ -112,7 +113,7 @@ def test_font_marketplace_files_are_part_of_the_reviewed_release_spine() -> None
 
 
 def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
-    source = _text("index.html")
+    source = _text("workshop.html")
     obsolete_js = "index-B_" + "tbCD5Q.js"
     obsolete_css = "index-D3" + "HRo6Wc.css"
     previous_js = "index-Dwp-qWEt.js"

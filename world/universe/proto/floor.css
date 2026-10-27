@@ -1,0 +1,27 @@
+/* The floor: the plain index. One column, reading size, every place a link. */
+html, body { font-synthesis: none; font-kerning: normal; }
+.floor { max-width: 64ch; margin: 0 auto; padding: 32px 16px 96px; }
+.floor h1 { font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.04em; margin: 0 0 24px; }
+.floor h2 { font: 800 var(--fs-5)/1.1 var(--face-display); letter-spacing: -.03em; margin: 48px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+.floor h2.r-deco, .floor h2.r-brut { text-transform: uppercase; letter-spacing: .06em; }
+.floor h2.r-glitch, .floor h2.r-archive { font-family: var(--face-utility); font-weight: 400; letter-spacing: 0; }
+.floor h2.r-surreal { font-style: italic; }
+.floor h3 { font: 700 var(--fs-3)/1.3 var(--face-text); margin: 20px 0 6px; }
+.floor ul { margin: 0; padding: 0 0 0 1.1em; }
+.floor li { font: 400 var(--fs-3)/1.55 var(--face-text); margin: 2px 0; text-wrap: pretty; }
+.floor .live { font-size: var(--fs-2); margin-left: .4em; }
+.fl-toc ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.fl-toc li { font-size: var(--fs-2); }
+.fl-threads .th { font-style: italic; }
+.floor .caps { letter-spacing: .05em; }
+.fl-keys dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0 0 24px; font: 400 var(--fs-3)/1.5 var(--face-text); }
+.fl-keys dt { font-family: var(--face-utility); }
+.fl-keys dd { margin: 0; }
+@media (max-width: 520px) { .fl-keys dl { grid-template-columns: 1fr; } .fl-keys dd { margin-bottom: 8px; } }
+.sheetpage .kicker { font: 400 var(--fs-2)/1.3 var(--face-utility); margin: 0 0 8px; }
+.sheetpage .lede { font: 400 var(--fs-4)/1.45 var(--face-text); max-width: 60ch; }
+.sheetpage .code { font: 400 var(--fs-2)/1.5 var(--face-utility); background: #16130f; color: #ece5d6; padding: 12px 14px; overflow-x: auto; }
+.sheetpage .ways { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 8px; }
+.sheetpage .enter { display: inline-block; padding: 10px 16px; border: 1.5px solid currentColor; text-decoration: none; font: 700 var(--fs-2)/1 var(--face-text); }
+.sheetpage .via { font-style: italic; font-size: var(--fs-2); }
+.sheetpage h1.r-deco, .sheetpage h1.r-brut { text-transform: uppercase; letter-spacing: .04em; }

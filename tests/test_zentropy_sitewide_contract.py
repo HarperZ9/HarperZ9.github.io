@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import posixpath
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -508,7 +509,20 @@ def expected_asset_revision(relative: Path, target: str) -> str:
     if not raw_asset_path.startswith("/"):
         asset_path = posixpath.normpath(posixpath.join(posixpath.dirname(relative.as_posix()), raw_asset_path))
 
+    world = WORLD_ASSET_REVISION()
+    if world and any(asset_path.startswith(scope) for scope in world[1]):
+        return world[0]
     return REVIEWED_ASSET_REVISIONS.get(asset_path, DEFAULT_ASSET_REVISION)
+
+
+# 26 October 2026: the world's pieces (world/, studies/, system/fonts/accession/) carry one revision, a hash of
+# the imported files and the site's world code, written to world/IMPORT.json by scripts/world-asset-revision.mjs.
+def WORLD_ASSET_REVISION() -> tuple[str, list[str]] | None:
+    path = ROOT / "world" / "IMPORT.json"
+    if not path.is_file():
+        return None
+    record = json.loads(path.read_text(encoding="utf-8"))
+    return (record["assetRevision"], record["assetRevisionScope"]) if record.get("assetRevision") else None
 
 
 def assert_reviewed_asset_revision(relative: Path, target: str) -> None:

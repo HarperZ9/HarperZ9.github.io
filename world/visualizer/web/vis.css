@@ -1,0 +1,71 @@
+/* vis.css: the instrument layer of the live page. Two faces (Accession Text and Mono), ink on the deep floor, one
+   hot mark (drawn on the canvas). Controls are the media: the title is the source switch, the figure is the play
+   button, the loudness line is the timeline, the spectrum's six bands are the drive gains. */
+:root {
+  --ink: #e6edf7; --ink-2: rgba(230, 237, 247, 0.74); --ink-3: rgba(230, 237, 247, 0.56); --amber: #ffb15c; --ground: #02040b;
+  --mg: clamp(16px, 4.6vh, 52px);
+  --mono: "Accession Mono", "Conso", ui-monospace, monospace;
+  --text: "Accession Text", "Hanken Grotesk", system-ui, sans-serif;
+  --display: "Accession Display", "Hanken Grotesk", system-ui, sans-serif;
+  font-synthesis: none; font-kerning: normal; font-optical-sizing: auto;
+}
+* { box-sizing: border-box; }
+button, input, select { font-size: 12px; }   /* no stray 13.33 px browser default in the type scale (T8) */
+html, body { margin: 0; height: 100%; background: var(--ground); color: var(--ink); }
+body { font: 15px/1.5 var(--text); overflow: hidden; }
+main { position: fixed; inset: 0; }
+#art, #ink { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+.corner { position: absolute; margin: 0; pointer-events: none; }
+.corner * { margin: 0; }
+.corner select, .corner input, .corner a, .corner button { pointer-events: auto; }
+.tl { left: var(--mg); top: var(--mg); max-width: 44ch; }
+.tr { right: var(--mg); top: var(--mg); text-align: right; font: 12px/1.6 var(--mono); letter-spacing: 0.04em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tr .value { font: 300 22px/1.3 var(--mono); letter-spacing: 0.04em; color: var(--ink); }
+.bl { left: var(--mg); bottom: var(--mg); max-width: 46ch; }
+.br { right: var(--mg); bottom: var(--mg); width: min(24vw, 460px); min-width: 220px; text-align: right; }
+
+h1 { font: 300 30px/1.05 var(--display); letter-spacing: -0.01em; }
+#source { font: inherit; color: var(--ink); background: transparent; border: 0; padding: 0; margin: 0; appearance: none; cursor: pointer; letter-spacing: inherit; max-width: 100%; }
+#source option { color: #0b1020; background: #e6edf7; font: 15px var(--text); }
+#source:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+.credit { font: 12px/1.6 var(--mono); letter-spacing: 0.05em; color: var(--ink-3); margin-top: 8px; white-space: pre-line; }
+
+.term { font: 12px/1.5 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+.def { font: 15px/1.5 var(--text); color: var(--ink-2); max-width: 44ch; text-wrap: pretty; margin-top: 4px; }
+.src { font: 12px/1.6 var(--mono); letter-spacing: 0.04em; color: var(--ink-3); margin-top: 2px; }
+
+#readout { font: 12px/1.6 var(--mono); letter-spacing: 0.04em; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.bands { position: relative; height: 8vh; min-height: 56px; margin-top: 6px; display: grid; grid-template-columns: repeat(6, 1fr); }
+.bands input { writing-mode: vertical-lr; direction: rtl; appearance: none; background: transparent; width: 100%; height: 100%; margin: 0; cursor: ns-resize; opacity: 0; }
+.bands input:focus-visible { opacity: 1; outline: 1px solid var(--ink); }
+#settings { display: inline-block; margin-top: 8px; font: 12px/1.6 var(--mono); letter-spacing: 0.04em; color: var(--ink-3); text-decoration: none; border-bottom: 1px solid rgba(230, 237, 247, 0.25); }
+#settings:hover, #settings:focus-visible { color: var(--ink); outline: none; border-bottom-color: var(--ink); }
+
+#play { position: absolute; border: 0; border-radius: 50%; background: transparent; cursor: pointer; padding: 0; }
+#play:focus-visible { outline: 1px solid var(--ink); outline-offset: 8px; }
+#seek { position: absolute; left: var(--mg); right: var(--mg); bottom: calc(var(--mg) * 0.35); height: 18px; margin: 0; appearance: none; background: transparent; cursor: pointer; opacity: 0; }
+#seek:focus-visible { opacity: 0.6; outline: 1px solid var(--ink); }
+
+@media (max-aspect-ratio: 6/5) {
+  .bl { right: var(--mg); max-width: none; bottom: calc(var(--mg) + 8vh + 72px); }
+  .br { left: var(--mg); width: auto; min-width: 0; }
+}
+@media (max-width: 700px) {
+  h1 { font-size: 28px; }
+  .bl { right: var(--mg); max-width: none; bottom: calc(var(--mg) + 120px); }
+  .br { left: var(--mg); width: auto; }
+  .tr .value { font-size: 22px; }
+  /* phone width: the measured values sit under the title instead of beside it */
+  .tr { left: var(--mg); right: auto; top: calc(var(--mg) + 96px); text-align: left; }
+}
+@media (forced-colors: active) {
+  #play, #settings, #source { forced-color-adjust: auto; }
+}
+
+/* explanations: always in the accessibility tree, on screen only when the info toggle is on */
+.about:not(.shown) { clip-path: inset(50%); opacity: 0; pointer-events: none; }   /* laid out at full measure, read by assistive technology, not seen */
+#info { position: absolute; left: calc(var(--mg) - 6px); bottom: calc(var(--mg) * 0.35 + 22px); width: 24px; height: 24px; padding: 0; border: 1px solid rgba(230, 237, 247, 0.28); border-radius: 50%;
+  background: transparent; color: var(--ink-3); font: 12px/22px var(--mono); text-align: center; cursor: pointer; }
+#info:hover, #info:focus-visible, #info[aria-expanded="true"] { color: var(--ink); border-color: var(--ink); outline: none; }

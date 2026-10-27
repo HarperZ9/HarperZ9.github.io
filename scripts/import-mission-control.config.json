@@ -1,0 +1,266 @@
+{
+  "comment": "What scripts/import-mission-control.mjs copies from the mission-control workspace into world/. Folders keep their layout; the dated folder name becomes the short name on the right, in paths and in every copied text file.",
+  "houseType": false,
+  "folders": {
+    "2026-10-23-universe": "universe",
+    "2026-10-23-ui-direction": "ui",
+    "2026-10-23-superframe": "superframe",
+    "2026-10-23-alive": "alive",
+    "2026-10-23-studio": "studio",
+    "2026-10-23-techniques": "techniques",
+    "2026-10-23-substrate": "substrate",
+    "2026-10-23-glass": "glass",
+    "2026-10-23-lettering": "lettering",
+    "2026-10-23-typeengine": "typeengine",
+    "2026-10-23-typeface": "typeface",
+    "2026-10-24-visualizer": "visualizer",
+    "2026-10-23-playbook-builds": "playbook",
+    "2026-10-23-phase-design": "exhibit",
+    "2026-10-23-sound": "sound",
+    "2026-10-23-dataviz-art": "dataviz",
+    "2026-10-24-name-art": "name-art",
+    "2026-10-25-reference-library": "library",
+    "2026-10-23-feed-test-22": "feed-22",
+    "2026-10-23-feed-test-23": "feed-23",
+    "2026-10-23-feed-test-24": "feed-24",
+    "2026-10-23-feed-test-25": "feed-25",
+    "2026-10-24-feed-test-29": "feed-29",
+    "2026-10-24-feed-test-28": "feed-28",
+    "2026-10-24-feed-test-30": "feed-30",
+    "2026-10-24-feed-test-32": "feed-32",
+    "2026-10-24-homage": "homage",
+    "2026-10-26-creation-engine": "creation"
+  },
+  "entries": [
+    "2026-10-23-universe/proto/path.html",
+    "2026-10-23-universe/proto/index.html",
+    "2026-10-23-universe/proto/floor.html",
+    "2026-10-23-universe/proto/place.html",
+    "2026-10-23-universe/proto/places/*.html",
+    "2026-10-23-universe/universe.json",
+    "2026-10-23-ui-direction/directions/cs-max/index.html",
+    "2026-10-23-ui-direction/directions/cs-max/flywheel.html",
+    "2026-10-23-ui-direction/directions/cs-max/exhibit.html",
+    "2026-10-23-ui-direction/shell/organic/parts.html",
+    "2026-10-23-ui-direction/shell/organic/data/elements.json",
+    "2026-10-23-ui-direction/shell/organic/data/swatches.json",
+    "2026-10-23-ui-direction/shell/organic/elements.js",
+    "2026-10-23-ui-direction/shell/organic/swatches.js",
+    "2026-10-23-superframe/room/index.html",
+    "2026-10-23-glass/index.html",
+    "2026-10-24-visualizer/web/index.html",
+    "2026-10-24-visualizer/web/grid.html",
+    "2026-10-23-typeengine/room/index.html",
+    "2026-10-23-typeengine/specimens/index.html",
+    "2026-10-23-playbook-builds/examples/*.html",
+    "2026-10-23-sound/theme/index.html",
+    "2026-10-23-feed-test-22/build/index.html",
+    "2026-10-23-feed-test-23/build/index.html",
+    "2026-10-23-feed-test-24/build/index.html",
+    "2026-10-23-feed-test-25/build/index.html",
+    "2026-10-24-feed-test-29/build/index.html",
+    "2026-10-23-universe/proto/here.js",
+    "2026-10-23-lettering/lib/houseface.mjs",
+    "2026-10-23-typeface/dist/lettering.json",
+    "2026-10-23-typeengine/families/*.json",
+    "2026-10-23-typeengine/web/living-gl.mjs",
+    "2026-10-23-typeengine/web/living-worker.mjs",
+    "2026-10-23-typeengine/living/index.html"
+  ],
+  "dirs": [
+    "2026-10-23-superframe/lib",
+    "2026-10-23-superframe/adapters",
+    "2026-10-23-universe/lib",
+    "2026-10-23-alive",
+    "2026-10-23-typeengine/dist",
+    "2026-10-23-typeengine/lib/living",
+    "2026-10-23-typeengine/living/baked"
+  ],
+  "optional": [],
+  "deny": [
+    "/node_modules/", "/__pycache__/", "/.ruff_cache/", ".pyc",
+    "/tests/",
+    "/test/",
+    "/shots/",
+    "/refs/",
+    "/references/",
+    "/_teardown/",
+    "/_work/",
+    "/inbox/",
+    "/study/",
+    "/descriptors/",
+    "/archive/",
+    "/audit/",
+    "/rec/",
+    "/proposals/",
+    "/renders/",
+    "/stems/",
+    "/listen/",
+    "/goldens/",
+    "/golden/",
+    "/actual/",
+    "/cli/",
+    "/explore/",
+    "/fonts-licensed/",
+    ".py",
+    ".sh",
+    ".log",
+    ".md",
+    "package.json",
+    "package-lock.json",
+    "2026-10-23-phase-design/emet.html",
+    "2026-10-23-phase-design/wall.html",
+    "/integrate/",
+    "/out/",
+    "/frames/",
+    ".ppm",
+    "kilon.woff2",
+    "2026-10-23-ui-direction/index.html",
+    "2026-10-23-ui-direction/decisions.html",
+    "2026-10-23-ui-direction/directions/a-slab/index.html",
+    "2026-10-23-ui-direction/directions/a-slab/flywheel.html",
+    "2026-10-23-ui-direction/directions/b-setback/index.html",
+    "2026-10-23-ui-direction/directions/b-setback/flywheel.html",
+    "2026-10-23-ui-direction/directions/c-exhibit/index.html",
+    "2026-10-23-ui-direction/directions/c-exhibit/flywheel.html",
+    "2026-10-23-substrate/lib/demo/index.html"
+  ],
+  "hold": {
+    "2026-10-23-phase-design/emet.html": "Hebrew needs a reader before publication (CONSENSUS Q11)",
+    "2026-10-23-phase-design/wall.html": "its final line is a placeholder until the author sets one",
+    "2026-10-23-ui-direction/index.html": "the UI direction's working index: process material, not a place",
+    "2026-10-23-ui-direction/decisions.html": "the UI direction's decision sheet: process material",
+    "2026-10-23-ui-direction/directions/a-slab/index.html": "direction A, not chosen",
+    "2026-10-23-ui-direction/directions/a-slab/flywheel.html": "direction A, not chosen",
+    "2026-10-23-ui-direction/directions/b-setback/index.html": "direction B, not chosen",
+    "2026-10-23-ui-direction/directions/b-setback/flywheel.html": "direction B, not chosen",
+    "2026-10-23-ui-direction/directions/c-exhibit/index.html": "direction C as first drawn; the chosen CS-max pages carry it",
+    "2026-10-23-ui-direction/directions/c-exhibit/flywheel.html": "direction C as first drawn",
+    "2026-10-23-substrate/lib/demo/index.html": "a library's developer demo, not a place"
+  },
+  "maxBytes": 6000000,
+  "allowOut": [
+    "2026-10-24-visualizer/",
+    "2026-10-23-glass/out/",
+    "2026-10-24-feed-test-29/build/out/previews/"
+  ],
+  "accession": {
+    "from": "2026-10-23-typeface/dist/release",
+    "to": "system/fonts/accession",
+    "licence": "OFL.txt"
+  },
+  "stemDirs": [
+    "2026-10-23-phase-design/assets/img",
+    "2026-10-23-phase-design/assets/img/dp",
+    "2026-10-23-techniques/assets",
+    "2026-10-23-ui-direction/assets",
+    "2026-10-23-phase-design/assets/audio",
+    "2026-10-23-phase-design/assets/film"
+  ],
+  "elements": {
+    "json": "2026-10-23-ui-direction/shell/organic/data/elements.json",
+    "thumbs": "2026-10-23-ui-direction/shell/organic"
+  },
+  "descriptions": {
+    "exhibit/index.html": "We Are Here: the exhibit's rooms, each one a perception trick shown and then revealed, built from public domain plates.",
+    "playbook/examples/index.html": "Builds: weather on twos, scatter mosaics, piled type, morphing clouds, caption lines, projectors and caustics, each live.",
+    "superframe/room/index.html": "Make room: say what you want in words and the engine turns it into image and sound with its own nodes, in your browser.",
+    "visualizer/web/grid.html": "Struck grid: the theme's score on framed cells; a struck cell fills with ink and empties from its centre in time.",
+    "visualizer/web/index.html": "Sounding: a seabed seen through moving water, with caustics and wavefronts struck by the music's onsets."
+  },
+  "retiredFaces": [
+    "Kilon"
+  ],
+  "patches": [
+    {
+      "file": "2026-10-23-typeengine/living/index.html",
+      "find": "<main id=\"main\"></main>",
+      "replace": "<main id=\"main\"><h1 class=\"sr-only\">Living type</h1></main>",
+      "why": "axe page-has-heading-one: the page had no h1"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/index.html",
+      "find": "<input type=\"file\" id=\"file\" accept=\"audio/*\" class=\"vh\" tabindex=\"-1\">",
+      "replace": "<input type=\"file\" id=\"file\" accept=\"audio/*\" class=\"vh\" tabindex=\"-1\" aria-label=\"Your own sound\">",
+      "why": "axe label: the hidden file input had no name"
+    },
+    {
+      "file": "2026-10-24-visualizer/web/grid.html",
+      "find": "<input type=\"file\" id=\"file\" accept=\".mid,.midi,audio/midi\" class=\"vh\" tabindex=\"-1\">",
+      "replace": "<input type=\"file\" id=\"file\" accept=\".mid,.midi,audio/midi\" class=\"vh\" tabindex=\"-1\" aria-label=\"Your own score\">",
+      "why": "axe label: the hidden file input had no name"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "<svg viewBox=\"0 0 620 600\" role=\"img\" aria-labelledby=\"figt\">",
+      "replace": "<svg viewBox=\"0 0 620 600\" role=\"group\" aria-labelledby=\"figt\">",
+      "why": "axe nested-interactive: the map holds links, so it is a group, not an image"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "  body { margin: 0;",
+      "replace": "  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }\n  body { margin: 0;",
+      "why": "axe color-contrast: the set-piece links kept the browser's link blue on the dark ground"
+    },
+    {
+      "file": "2026-10-23-sound/theme/theme.css",
+      "find": ".strip span { color: var(--line); padding: 0.05em 0; }",
+      "replace": ".strip span { color: color-mix(in srgb, var(--line) 45%, var(--ink)); padding: 0.05em 0; }",
+      "why": "axe color-contrast: the strip's pale words fell under 3:1 on the dark ground"
+    },
+    {
+      "file": "2026-10-23-ui-direction/directions/common/flow/ground.js",
+      "find": "if (document.readyState === \"loading\") document.addEventListener(\"DOMContentLoaded\", start); else start();",
+      "replace": "// the site starts the water after the page has loaded and the main thread is idle, and on touch screens at the\n// visitor's first touch or scroll (world/site/budget.js sets window.__siteWhenVisited), so it never delays the first screen\nconst go = () => (\"requestIdleCallback\" in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300));\nconst later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(go) : go());\nif (document.readyState === \"complete\") later(); else addEventListener(\"load\", later, { once: true });",
+      "why": "Lighthouse on a phone: the medium's set-up held the main thread for about 1.5 to 3 s while the first screen loaded"
+    },
+    {
+      "file": "2026-10-23-phase-design/groove.html",
+      "find": ".legend b { color:var(--hot); }",
+      "replace": ".legend b { color:var(--ink); text-decoration: underline 4px var(--hot); text-underline-offset: 3px; }",
+      "why": "axe color-contrast: the pink word under 4.5:1; the pink now marks it as an underline"
+    },
+    {
+      "file": "2026-10-23-phase-design/mirror.html",
+      "find": "<div id=\"stage\" role=\"img\"",
+      "replace": "<div id=\"stage\" role=\"group\"",
+      "why": "axe nested-interactive: the stage holds a focusable canvas"
+    },
+    {
+      "file": "2026-10-23-phase-design/powers.html",
+      "find": "<body>",
+      "replace": "<body>\n<main>",
+      "why": "axe region: the page had no main landmark"
+    },
+    {
+      "file": "2026-10-23-phase-design/powers.html",
+      "find": "</body>",
+      "replace": "</main>\n</body>",
+      "why": "axe region: closes the main landmark"
+    },
+    {
+      "file": "2026-10-23-feed-test-22/build/index.html",
+      "find": "<body>",
+      "replace": "<body>\n<main>",
+      "why": "axe landmark-one-main"
+    },
+    {
+      "file": "2026-10-23-feed-test-22/build/index.html",
+      "find": "</body>",
+      "replace": "</main>\n</body>",
+      "why": "axe landmark-one-main: closes it"
+    },
+    {
+      "file": "2026-10-23-feed-test-24/build/demo.js",
+      "find": "<tr><th scope=\"col\"></th>",
+      "replace": "<tr><td></td>",
+      "why": "axe empty-table-header: the corner cell is not a header"
+    },
+    {
+      "file": "2026-10-23-phase-design/index.html",
+      "find": "  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }",
+      "replace": "  @font-face { font-family: \"Hanken Grotesk\"; src: url(\"fonts/hanken-grotesk.woff2\") format(\"woff2\"); font-weight: 100 900; font-display: swap; }\n  nav[aria-label=\"Set pieces\"] a { color: var(--ink); }",
+      "why": "the page preloaded Hanken Grotesk but never declared it, so the preload went unused and the text fell to a system face"
+    }
+  ]
+}

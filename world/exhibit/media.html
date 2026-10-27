@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Mediums Wall</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/media.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Mediums Wall">
+<meta property="og:description" content="The Mediums Wall">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/media.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<style>
+  main { max-width:1280px; margin:0 auto; padding:20px 16px 56px; }
+  .lede { font-size:clamp(16px,2.2vw,19px); line-height:1.5; max-width:60ch; margin:14px 0 8px; }
+  .wall { display:grid; gap:26px 22px; grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr)); margin-top:26px; }
+  .card { background:#e9e3d4; color:#17150f; display:grid; grid-template-rows:auto 1fr; box-shadow:0 18px 30px rgba(0,0,0,.4); border-top:6px solid #17150f; }
+  .pair { display:grid; grid-template-columns:1fr 1.5fr; gap:2px; background:#17150f; }
+  .pair figure { margin:0; position:relative; background:#2a2823; aspect-ratio:3/4; overflow:hidden; }
+  .pair figure:last-child { aspect-ratio:auto; }
+  .pair img, .pair canvas { width:100%; height:100%; object-fit:cover; display:block; }
+  .pair .cap { position:absolute; left:0; bottom:0; right:0; padding:3px 7px; font:600 16px/1.3 "Hanken Grotesk",sans-serif; letter-spacing:.06em; text-transform:uppercase; background:rgba(17,17,17,.78); color:#eee9df; }
+  .none { display:grid; place-items:center; height:100%; padding:10px; text-align:center; font:italic 16px/1.4 "Hanken Grotesk",sans-serif; color:#c9c4b8; }
+  .label { padding:14px 16px 16px; }
+  .label h2 { font:800 22px/1.1 "Hanken Grotesk",sans-serif; margin:0 0 3px; letter-spacing:-.01em; }
+  .label .meta { font:italic 16px/1.4 "Hanken Grotesk",sans-serif; margin:0 0 10px; color:#4a463b; }
+  .label p { font:400 16px/1.55 "Hanken Grotesk",sans-serif; margin:0 0 10px; }
+  .label p.an { border-left:4px solid #e0177e; padding-left:10px; font-style:italic; }
+  .label dl { display:grid; grid-template-columns:auto 1fr; gap:4px 10px; margin:0; font:600 16px "Hanken Grotesk",sans-serif; align-items:center; }
+  .label dt { text-transform:uppercase; letter-spacing:.06em; color:#4a463b; }
+  .label input[type=range] { width:100%; accent-color:#e0177e; min-height:30px; }
+  .label .src { font:16px/1.4 "Hanken Grotesk",sans-serif; color:#4a463b; margin-top:8px; }
+  .label .src a { color:inherit; }
+  .engine { font-size:16px; color:var(--muted); margin-top:8px; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/media.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>The Mediums Wall</h1><a class="back" href="index.html">We are here</a></div>
+  <p class="lede">Seventeen ways a page, a print or a screen has carried a message, rebuilt in code. Each card shows a real object from the archives beside a live swatch you can push. Twelve swatches use the same 1915 photograph, so you can see what each medium does to it. The four screen mediums run on film loops from the Prelinger archive.</p>
+  <p class="engine" id="engine" aria-live="polite"></p>
+  <section class="wall" id="wall" aria-label="The seventeen mediums"></section>
+  <p class="foot"><a href="credits.html">Credits for every archive item</a><a href="balance.html">The False Balance</a><a href="palimpsest.html">Palimpsest</a><a href="powers.html">Powers of Ten, for a Lie</a><a href="mirror.html">Weigh it yourself</a></p>
+</main>
+<script type="module" src="pieces/media-wall.js?v=world-a891bf139a"></script>
+</body>
+</html>

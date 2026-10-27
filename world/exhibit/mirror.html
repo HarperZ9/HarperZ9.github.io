@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weigh it yourself</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/mirror.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Weigh it yourself">
+<meta property="og:description" content="Weigh it yourself">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/mirror.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1180px; margin:0 auto; padding:16px 12px 56px; }
+  .top { margin-bottom:12px; }
+  #stage { position:relative; background:#0d4f80; }
+  #stage canvas { width:100%; display:block; }
+  #dots { position:absolute; left:0; top:0; pointer-events:none; }
+  .panel { margin-top:18px; display:grid; gap:14px; max-width:980px; }
+  .panel h2 { font-weight:800; font-size:clamp(20px,3.4vw,30px); line-height:1.1; margin:0; letter-spacing:-.01em; }
+  .panel .count { font-size:16px; color:var(--muted); font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+  .panel p.lede { margin:0; font-size:17px; line-height:1.5; max-width:60ch; }
+  .opts { display:grid; gap:12px; grid-template-columns:1fr 1fr; }
+  @media (max-width:700px) { .opts { grid-template-columns:1fr; } }
+  button.opt { text-align:left; font:400 17px/1.45 "Hanken Grotesk",sans-serif; padding:14px 16px; min-height:96px; background:#e9e3d4; color:#17150f; border:3px solid #17150f; }
+  button.opt:hover { background:#fff; color:#17150f; }
+  button.opt:focus-visible { outline:3px solid var(--hot); outline-offset:3px; }
+  button.opt b { display:block; font:800 16px "Hanken Grotesk",sans-serif; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px; color:#4a463b; }
+  button.skip { justify-self:start; }
+  .src { font-size:16px; color:var(--muted); } .src a { color:inherit; }
+  .result { display:grid; gap:10px; }
+  .result ol { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+  .result li { border-left:6px solid var(--line); padding:6px 0 6px 14px; font-size:16px; line-height:1.45; }
+  .result li.loud { border-color:var(--hot); }
+  .result li strong { font-weight:800; }
+  .result li em { font-family:"Hanken Grotesk",sans-serif; }
+  .confess { margin-top:10px; padding:20px 22px; background:#e9e3d4; color:#17150f; border-top:8px solid var(--hot); max-width:760px; }
+  .confess p { margin:0; font:400 clamp(24px,4.4vw,40px)/1.15 "Hanken Grotesk",sans-serif; }
+  .confess small { display:block; margin-top:10px; font:600 16px "Hanken Grotesk",sans-serif; letter-spacing:.12em; text-transform:uppercase; color:#4a463b; }
+  .conclude { font:800 clamp(20px,3.2vw,28px)/1.15 "Hanken Grotesk",sans-serif; margin:6px 0 0; }
+  [hidden] { display:none !important; }
+  figcaption ol { margin:6px 0 0; padding-left:20px; } figcaption li { margin:2px 0; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/mirror.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Weigh it yourself</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="stage" role="group" aria-label="A brass and concrete scale with a paper slip placed on its left pan for each claim you would share. The arm stays level."><canvas id="cv"></canvas><canvas id="dots" aria-hidden="true"></canvas></div>
+    <section class="panel" id="panel" aria-live="polite"></section>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <figcaption>FIG. 4. Weigh it yourself. Six claims from this week's case files, each as the careful version and the louder one. Nothing you choose is stored or sent. The scale after Proverbs 11:1 and the weighing of the heart. Collage: broadsides, wanted posters and newspapers from the archives, <a href="credits.html">credited here</a>. Sources:
+      <ol id="sources"></ol></figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/mirror.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/mirror.js?v=world-a891bf139a"></script>
+</body>
+</html>

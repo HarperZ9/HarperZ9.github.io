@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / "index.html"
+INDEX = ROOT / "workshop.html"
 HOME_INDEX = ROOT / "home" / "index.html"
 APP = ROOT / "home" / "src" / "App.tsx"
 APP_CSS = ROOT / "home" / "src" / "App.css"
@@ -19,6 +19,7 @@ EM_DASH = "—"
 EN_DASH = "–"
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 

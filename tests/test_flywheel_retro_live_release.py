@@ -44,6 +44,7 @@ class _References(HTMLParser):
             self.images.append(values)
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _local_path(reference: str) -> Path | None:
     parsed = urlsplit(reference)
     if parsed.scheme or parsed.netloc or reference.startswith(("mailto:", "#")):
@@ -88,7 +89,7 @@ def test_product_and_retro_pillar_routes_resolve_with_reciprocal_navigation() ->
 
 
 def test_home_bundle_is_atomic_and_all_referenced_assets_exist() -> None:
-    source = (ROOT / "index.html").read_text(encoding="utf-8")
+    source = (ROOT / "workshop.html").read_text(encoding="utf-8")
     parser = _References()
     parser.feed(source)
 

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lossy</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/lossy.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lossy">
+<meta property="og:description" content="Lossy">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/lossy.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1180px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  .lede { font:400 18px/1.55 "Hanken Grotesk",sans-serif; max-width:62ch; margin:0 0 16px; }
+  .trio { display:grid; gap:14px; grid-template-columns:repeat(3,minmax(0,1fr)); }
+  @media (max-width:760px) { .trio { grid-template-columns:1fr; } }
+  .trio figure { margin:0; background:#1a1814; padding:10px; border:1px solid var(--line); } .trio canvas { width:100%; display:block; background:#000; }
+  .trio figcaption { margin:8px 0 0; font:600 16px "Hanken Grotesk",sans-serif; color:var(--ink); }
+  #heat { outline-offset:4px; } #heat:focus-visible { outline:3px solid var(--hot); }
+  .ctl { display:flex; flex-wrap:wrap; gap:14px 22px; align-items:center; margin:16px 0; } label { font:600 16px "Hanken Grotesk",sans-serif; display:flex; gap:10px; align-items:center; } input[type=range] { accent-color:var(--hot); width:170px; min-height:44px; }
+  #rep { font:400 19px/1.5 "Hanken Grotesk",sans-serif; max-width:66ch; margin:6px 0 14px; min-height:3em; } #rep b { color:var(--hot); }
+  .hash { font:500 16px/1.5 "Conso",ui-monospace,monospace; word-break:break-all; background:#0b0b0c; border:1px solid var(--line); padding:10px 12px; margin:4px 0; max-width:80ch; }
+  .hash small { display:block; font:600 16px "Hanken Grotesk",sans-serif; color:var(--muted); }
+  /* quality pass: reserve the figure's settled height at desktop widths; depth layers and the stage are built after load (M3) */
+  @media (min-width:900px) { main > figure:first-of-type { min-height:1575px; } }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/lossy.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Lossy</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <p class="lede">A studio portrait of a girl, made in Queensland in the 1890s. You choose how hard to squeeze it for a stranger. Nothing leaves this page: the compression runs in your browser.</p>
+    <div class="trio">
+      <figure><canvas id="a" role="img" aria-label="The original portrait"></canvas><figcaption>The portrait</figcaption></figure>
+      <figure><canvas id="b" role="img" aria-label="The portrait after repeated JPEG compression"></canvas><figcaption>After your saves</figcaption></figure>
+      <figure id="heat" tabindex="0" aria-label="A dot field of what was lost. Move the pointer, or hold Shift and use the arrow keys, to bend the dots."><canvas id="c" role="img" aria-label="Dots coloured by how much of each place was lost, blue for little, red and white for most"></canvas><figcaption>What was lost, as dots</figcaption></figure>
+    </div>
+    <div class="ctl">
+      <label>Quality for a stranger <input type="range" id="q" min="2" max="90" value="12"> <span id="qv">12</span></label>
+      <label>Saves <input type="range" id="n" min="1" max="60" value="24"> <span id="nv">24</span></label>
+      <button type="button" id="go">Save and share</button><button type="button" id="reset">Start again</button>
+    </div>
+    <p id="rep" aria-live="polite"></p><p class="sr" id="live" aria-live="polite"></p>
+    <div class="hash"><small>The hash of the original. It proves which photograph it was.</small><span id="h1"></span></div>
+    <div class="hash"><small>The hash of your copy. It proves nothing about what you can still see.</small><span id="h2"></span></div>
+    <figcaption>FIG. 7. Lossy. Portrait: "Studio portrait of a young girl, 1890s", State Library of Queensland, public domain, through Wikimedia Commons. JPEG generation loss is measured here in the page: edge energy kept in the 20 percent of blocks with the most detail against the flattest half. The hash is SHA-256 of the original pixels. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/lossy.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/lossy.js?v=world-a891bf139a"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>By his own hair</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/munchhausen.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="By his own hair">
+<meta property="og:description" content="By his own hair">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/munchhausen.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1100px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  #stage { position:relative; background:#0d4f80; touch-action:none; cursor:grab; } #stage:active { cursor:grabbing; }
+  #stage canvas { width:100%; display:block; } #dots { position:absolute; left:0; top:0; pointer-events:none; }
+  #pull { margin-top:12px; display:flex; flex-wrap:wrap; gap:6px 22px; align-items:baseline; padding:12px 14px; border:2px solid var(--ink); }
+  #pull:focus-visible { outline:3px solid var(--hot); outline-offset:3px; }
+  #pull b { font:800 clamp(22px,3vw,30px) "Hanken Grotesk",sans-serif; } #pull span { font:600 16px "Hanken Grotesk",sans-serif; color:var(--muted); }
+  .tri { display:grid; gap:12px; grid-template-columns:repeat(3,minmax(0,1fr)); margin:14px 0; } @media (max-width:760px) { .tri { grid-template-columns:1fr; } }
+  .tri div { background:#e9e3d4; color:#17150f; padding:12px 14px; border-top:6px solid var(--hot); } .tri h2 { font:800 18px "Hanken Grotesk",sans-serif; margin:0 0 4px; } .tri p { font:400 17px/1.5 "Hanken Grotesk",sans-serif; margin:0; }
+  #end { font:800 clamp(24px,4vw,38px)/1.15 "Hanken Grotesk",sans-serif; margin:18px 0 6px; max-width:30ch; } [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/munchhausen.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>By his own hair</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="stage" aria-label="Baron Munchhausen over a swamp of dots. Drag up to pull his hair, or use the pull control below."><canvas id="cv" role="img" aria-label="An engraving of the Baron hanging by his own hair above a swamp drawn as dots. The dots below him are empty."></canvas><canvas id="dots" aria-hidden="true"></canvas></div>
+    <div id="pull" tabindex="0" role="slider" aria-label="Pull the hair" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="Use the up and down arrow keys to pull. Shift with the arrow keys moves the attention point that bends the swamp."><b>Pulled <span id="pct" style="font:inherit;color:inherit">0%</span></b><span>Evidence holding him up: <span id="hold">0</span></span><span>Drag up, or press the up arrow.</span></div>
+    <div class="tri">
+      <div id="t1" hidden><h2>The circle</h2><p>He is held up by the thing he is trying to prove. A verifier that certifies itself passes every test it wrote.</p></div>
+      <div id="t2" hidden><h2>The regress</h2><p>So he asks for a second hand to hold the first. Then a third to hold the second. The chain has no end, and nobody pays to walk it.</p></div>
+      <div id="t3" hidden><h2>The stop</h2><p>Or he drives a nail into the sky and says, here, we stop asking. The nail is a decision, and somebody made it.</p></div>
+    </div>
+    <p id="end" hidden>Don't look at me like that. Mine reads TRUE too. Funny how everybody's does, huh?</p>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <figcaption>FIG. 9. By his own hair. The Munchhausen trilemma, after Hans Albert (1968) and the older trilemma of Agrippa: every attempt to justify a claim ends in a circle, an infinite regress, or an arbitrary stop. Plates: Theodor Hosemann's illustrations to the Baron Munchhausen tales (1840s) and a Gustave Dore bust, from Wikimedia Commons, public domain. The swamp is a dot field of heights; the point of attention pushes it open. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/munchhausen.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/munchhausen.js?v=world-a891bf139a"></script>
+</body>
+</html>

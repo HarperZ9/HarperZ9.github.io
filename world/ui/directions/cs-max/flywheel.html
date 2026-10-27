@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" data-alive-grain="off" data-type="stock" data-lettering="../../../lettering/lib/letter.mjs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Flywheel | Second tour, max</title>
+<link rel="canonical" href="https://harperz9.github.io/world/ui/directions/cs-max/flywheel.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Flywheel | Second tour, max">
+<meta property="og:description" content="Direction CS-max: the Flywheel project page prototype.">
+<meta property="og:url" content="https://harperz9.github.io/world/ui/directions/cs-max/flywheel.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Direction CS-max: the Flywheel project page prototype.">
+<link rel="preload" href="../../fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../common/base.css?v=world-a891bf139a">
+<link rel="stylesheet" href="../c-exhibit/exhibit.css?v=world-a891bf139a">
+<link rel="stylesheet" href="max.css?v=world-a891bf139a">
+<script type="module" src="../common/base.js?v=world-a891bf139a"></script>
+<style>
+  .head{min-height:0}
+  .head .cut{--cut-top:clamp(40px,4vw,70px);--cut-left:52%;--cut-w:50%;--cut-h:clamp(340px,30vw,460px);--cut-poly:polygon(22% 0,100% 0,100% 100%,0 100%)}
+  .head .cut canvas.ht{opacity:.85}
+  .word{grid-column:1 / -1;margin:0;position:relative;z-index:1;font:900 var(--fs-hero)/.8 var(--face-display);letter-spacing:-.06em}
+  .head h1{grid-column:1 / span 7;margin:clamp(12px,2vw,28px) 0 14px;font:800 var(--fs-6)/1.02 var(--face-display);letter-spacing:-.03em;max-width:19ch}
+  .head .lede{grid-column:1 / span 7;max-width:56ch;position:relative;z-index:1}
+  .bust{position:relative;z-index:1;grid-column:9 / span 4;grid-row:3 / span 3;margin:-4vw 0 0 auto;width:min(300px,100%);rotate:-1.5deg}
+  .head .super{right:-3vw;bottom:-3vw;--super-size:min(22vw,380px)}
+  .stamps{display:flex;flex-wrap:wrap;gap:14px;margin:0 0 20px}
+  .walltext .specimen-num{margin:0;font-size:calc(var(--fs-hero) * 1.4);line-height:.8;max-width:none}
+  .stamps .stamp-btn{padding:11px 14px;min-height:46px}
+  .stamps .stamp-btn:nth-child(2){--r:1.5deg}.stamps .stamp-btn:nth-child(3){--r:-1deg}
+  .hands .cut.second{--cut-top:0;--cut-left:52%;--cut-w:60%;--cut-h:100%;--cut-poly:polygon(20% 0,100% 0,100% 100%,0 100%)}
+  .hands .super{left:-1vw;bottom:-3vw;--super-size:min(15vw,260px)}
+  .loop .cut.second{--cut-top:-30px;--cut-left:40%;--cut-w:70%;--cut-h:520px}
+  @media (max-width:860px){
+    .head h1,.head .lede{grid-column:1 / -1}
+    .bust{grid-row:auto;width:min(240px,64%);margin:20px 0 0 auto;grid-column:1 / -1}
+    .head .cut{--cut-top:clamp(60px,15vw,80px);--cut-left:30%;--cut-w:80%;--cut-h:clamp(56px,17vw,80px)}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the page</a>
+<header class="o-hand" aria-label="Site">
+  <a class="o-home" href="../../directions/cs-max/index.html">Zain Dana Harper</a>
+  <a data-o="band" href="../../../universe/proto/index.html" aria-label="The map"></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
+  <button type="button" data-o="record" data-sound aria-pressed="false" hidden><span class="o-name">Sound</span><canvas aria-hidden="true"></canvas></button>
+  <button type="button" class="o-motion alive-btn" data-alive-toggle aria-pressed="true"><span class="o-name">Motion</span><img src="../../assets/muybridge-758-720.webp" alt="" width="720" height="540"></button>
+  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="../../directions/cs-max/flywheel.html" aria-current="page"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="https://github.com/HarperZ9/daylight-commons"><span class="o-word" data-display-on-open="glyphcell">Daylight</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="../../directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/site-index.html">Plain index</a> <a href="../../../universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+
+<main id="main">
+  <section class="room gridded head" aria-labelledby="t">
+    <div class="cut pour" data-art><img decoding="async" data-halftone="7" data-halftone-invert data-halftone-y=".2" src="../../assets/munchausen-dore-1600.webp" width="1600" height="2130" alt=""></div>
+        <div class="room-in">
+      <span class="reg tl" aria-hidden="true" data-art></span>
+      <p class="word inverts" aria-hidden="true" data-vt="flywheel">Flywheel</p>
+      <h1 id="t"><span class="sr-only">Flywheel: </span>Run any model, and check its answer before you rely on it.</h1>
+      <p class="lede">Flywheel runs AI tasks with the model you choose and checks each answer against the record it came from. A wrong answer is held before your team acts on it.</p>
+    </div>
+  </section>
+
+  <section class="room gridded" aria-labelledby="baron-h">
+    <div class="room-in">
+      <div class="reading" style="grid-column:1 / span 7">
+        <h2 data-vt="baron" id="baron-h" class="raked" data-h="room" style="margin:0 0 24px">The baron's trick</h2>
+        <p>The baron said he pulled himself out of the swamp by his own hair. A model that grades its own answer tells the same story, and it tells it with a straight face.</p>
+        <p>So Flywheel never lets the model accept itself. <span class="claim">A check outside the model</span>, a test run or a source comparison, decides. The model proposes; the <a href="#demo-h" data-receipt="record: the test run's own output|field: tests_passed|value: 41">record</a> disposes.<sup><a href="#n1" id="r1" aria-label="Note 1">1</a></sup></p>
+        <p><a href="exhibit.html" class="slabhover">The baron's room</a></p>
+      </div>
+      <ol class="notes" style="grid-column:8 / span 5">
+        <li id="n1"><b>1.</b> The regress has a name: the Münchhausen trilemma, from Hans Albert, <cite>Treatise on Critical Reason</cite>, 1968. Every justification ends in a circle, an endless regress or a stop by decree. <a href="#r1">Back to the text</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <svg class="bands" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" data-art>
+    <path d="M-10 30 H900 Q1010 30 1010 140 V230" stroke="currentColor" stroke-width="22"/>
+    <path d="M-10 70 H900 Q970 70 970 140 V230" stroke="currentColor" stroke-width="10" opacity=".55"/>
+    <path d="M-10 100 H900 Q940 100 940 140 V230" stroke="currentColor" stroke-width="4" opacity=".3"/>
+  </svg>
+
+  <section class="room gridded" aria-labelledby="demo-h">
+    <div class="room-in" data-demo>
+      <div class="walltext"><h2 id="demo-h">The record says 41</h2><p class="specimen-num knock" aria-hidden="true" style="--plate:url(../../assets/fingerprint-card-1600.webp);--plate-pos:40% 45%">41</p></div>
+      <div class="vitrine cropped">
+        <div class="stamps" role="group" aria-label="Answers" data-choices>
+          <button type="button" class="stamp-btn" data-show="0" aria-pressed="true">Says 42, names the record</button>
+          <button type="button" class="stamp-btn" data-show="1" aria-pressed="false">Says 41, names the record</button>
+          <button type="button" class="stamp-btn" data-show="2" aria-pressed="false">Says 41, names nothing</button>
+        </div>
+        <div aria-live="polite">
+          <div data-state="0"><p class="io">tests_passed: 42, source: the test record</p><p data-verdict="drift">Fail, held</p><p>The value disagrees with the record.</p></div>
+          <div data-state="1"><p class="io">tests_passed: 41, source: the test record</p><p data-verdict="verified">Pass, released</p><p>The value agrees with the record.</p></div>
+          <div data-state="2"><p class="io">tests_passed: 41, no source</p><p data-verdict="unverifiable">Unverifiable, held</p><p>The value agrees, and the answer does not say where it came from.</p></div>
+        </div>
+        <p><a class="slabhover" href="/flywheel.html#demo">Run the three checks</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="room gridded loop" aria-labelledby="loop-h">
+    <div class="room-in">
+      <div class="walltext"><h2 id="loop-h">How an answer gets accepted</h2></div>
+      <ol class="plate-seq" style="--seq-plate:url(../../assets/muybridge-758-1600.webp)">
+        <li><b>Model proposes</b><span>Cheap, replaceable, asked for more when needed.</span></li>
+        <li class="key"><b>Outside check</b><span>No learned model here. It accepts or rejects.</span></li>
+        <li><b>Receipt</b><span>Named by its own fingerprint; re-check it offline.</span></li>
+        <li><b>Stronger tier</b><span>Named when the budget runs out. You decide.</span></li>
+        <li><b>Proof cache</b><span>Re-checked before it is served again.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="room gridded hands" aria-labelledby="edges-h">
+        <div class="room-in">
+      <div class="walltext"><h2 id="edges-h">Same check, two hands</h2></div>
+      <div class="pair">
+        <div><h3>In yours</h3><p>A green tick you can take apart: the record, the check and the receipt.</p></div>
+        <div><h3>In the wrong ones</h3><p>A green tick that launders a false result.</p></div>
+        <p class="hold">What keeps it in yours: the check runs outside the model, the checker never certifies itself, and a corpus of known false answers tests the checker on every release.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="room gridded" aria-labelledby="install-h">
+    <div class="room-in">
+      <div class="walltext" style="grid-column:1 / span 6"><h2 id="install-h">Install it</h2>
+        <p>The core package needs only the Python standard library. Use hosted models with your keys, or run offline against local weights. <a class="slabhover" href="https://github.com/HarperZ9/flywheel">Source on GitHub</a>.</p></div>
+      <div class="instruction cropped"><pre id="cmd">pip install flywheel-verify
+flywheel up</pre><button type="button" data-copy="cmd" hidden>Copy</button></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <details>
+    <summary>Archive credits</summary>
+    <ul>
+      <li>Gustave Doré, illustration for <cite>The Adventures of Baron Munchausen</cite>, 1862. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Dore-munchausen-illustration.jpg">Source</a></li>
+      <li>Fingerprint card, U.S. Penitentiary, Leavenworth. Public domain. <a href="https://commons.wikimedia.org/wiki/File:Fingerprint_Card_of_Wilbur_Foshay_-_DPLA_-_255cd2a739b92835400d82639d74552a.jpg">Source</a></li>
+      <li>Eadweard Muybridge, <cite>Animal Locomotion</cite>, plate 758, 1887. Art Institute of Chicago, CC0. <a href="https://www.artic.edu/artworks/195560">Source</a></li>
+    </ul>
+  </details>
+  <a href="./">Home</a>
+  <a href="exhibit.html">A room</a>
+  
+</footer>
+<script type="module" src="../../../alive/alive.js?v=world-a891bf139a"></script>
+</body>
+</html>

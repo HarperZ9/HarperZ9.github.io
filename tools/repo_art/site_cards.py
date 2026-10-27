@@ -183,7 +183,7 @@ TAGS = re.compile(r'\s*<meta (?:property|name)="(?:og:image(?::[a-z]+)?|twitter:
 
 
 # Built pages whose head comes from a source file: stamp the source as well.
-SOURCES = {"index.html": "home/index.html"}
+SOURCES = {"workshop.html": "home/index.html"}  # the React build deploys to workshop.html since 2026-10-26
 
 
 def stamp(card: dict, path: Path | None = None) -> bool:

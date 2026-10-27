@@ -1,0 +1,3119 @@
+{
+ "builtBy": "scripts/build-studies.mjs",
+ "pages": [
+  {
+   "path": "studies/index.html",
+   "title": "Studies",
+   "description": "29 close readings of other people's work, measured and taken apart into layers, in design, research and journalism, with 6 boards.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-0xCharlota-2114385194484469972.html",
+   "title": "charlota, 'The Observing Mind': brand reference book for hermeneutic",
+   "description": "Two spreads of a brand reference book called \"The Observing Mind\", for a company named hermeneutic.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-100hyakunen-2114191348215721998.html",
+   "title": "100hyakunen, bookshop rooms drawn as a mosaic of marks",
+   "description": "100hyakunen, bookshop rooms drawn as a mosaic of marks. Two pen drawings of a person browsing in a room of bookshelves.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-4liocha_-2114086943776448820.html",
+   "title": "Aliocha's reading technique for dense philosophy",
+   "description": "This is a reading method for dense philosophical texts, shown on Thomas Aquinas, Summa Theologiae I, question 2, articles 1 to 3.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-IndieGameJoe-2114440382201414017.html",
+   "title": "Figure Drawing Garden (IndieGameJoe)",
+   "description": "A game for drawing practice: walk a garden of 3D-scanned sculptures and sketch them, with a dynamic lighting mode for shading practice and model packs.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-Jaenam97-2113978676488630393.html",
+   "title": "Jaenam97, Prismatic Clouds (GLSL)",
+   "description": "A 21 s shader: clouds trapped inside a rotating glass dodecahedron with a diffraction-grating surface, in a dark room under strip lights.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-MeditateColor-2114363098052366645.html",
+   "title": "Otto Piene, Red Eye Red (1977), with three colour studies",
+   "description": "The post has two layers of authorship: Otto Piene, Red Eye Red, 1977, serigraph.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-__causasui-2114487178013339720.html",
+   "title": "Simulacroom (cont.), causasui",
+   "description": "A 4.4 s clip that moves one figure through four media: a pixel figure, vertical text, barcode bars and glyphs, then a photograph of a person holding a clear.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-ai_animer-2114157422529179865.html",
+   "title": "ai_animer, sumi-e video",
+   "description": "A 15 s ink-wash (sumi-e) video: figures and a demon form burst into splashes and smoke-like trails, ending on an empty white field.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-aimikoda-2114167098284839305.html",
+   "title": "aimikoda, Grid Effect: Poster Grid, Style Infection, Temporal Mosaic",
+   "description": "Three versions of a grid effect on a 15 s video: a poster grid, a 'style infection' that spreads a look cell to cell, and a temporal mosaic where cells show.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-amberbladejones-2114453581625729120.html",
+   "title": "Amber Blade Jones, Eyecager Sketchbook tutorial zine",
+   "description": "Four zine pages on composition for illustration: colour temperature, neutral against dynamic framing, depth planes, and horizon and mass in vertical frames.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-anmeriu-2113955428329537764.html",
+   "title": "anmeriu, Water FX (hand-drawn)",
+   "description": "A 1.4 s hand-drawn effects animation: a foot strikes water and a crown splash and droplets rise and fall on a perspective grid.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-bbu-2114029114764267885.html",
+   "title": "Helen Frankenthaler, Water Shadows (1988)",
+   "description": "Acrylic washes on a pale ground: a turquoise field with dark round blots ringed at their edges and thin dark lines along the lower edge.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-cabralorenzo-2114082220566860026.html",
+   "title": "cabralorenzo, Ink Bloom interactive component",
+   "description": "A UI card component: as cards are swiped, the next image appears through a spreading ink-like mask.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-camillerouxart-2114123654489657598.html",
+   "title": "camillerouxart, 'Drop the pigment. Let it decide.' (JavaScript + GLSL)",
+   "description": "Four stills of a real-time pigment simulation: coloured rivulets branch, bead and ring across a gridded paper-coloured ground.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-gwamoleipstop-2114335911072965058.html",
+   "title": "gwamoleipstop, digital motion printed frame by frame",
+   "description": "Two clips of a motion poster made by printing each frame and re-shooting it, so ink spread, paper grain and small position errors become part of the motion.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-impression_ists-2114294768427581756.html",
+   "title": "Impressionism thread, with Van Gogh's The Starry Night",
+   "description": "A thread on the move from Impressionism to modern art; the images include The Starry Night.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-ito_asa_-2113823331007045912.html",
+   "title": "ito_asa, light on waves",
+   "description": "Four paintings of sun glitter on dark wavelets, built from stacked horizontal strokes.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-janjirasun-2114084960479084830.html",
+   "title": "janjirasun, semi-transparent pages over opaque ones",
+   "description": "Four photos of printed matter where translucent sheets lie over opaque ones: numbered colour bands, yellow vellum over pages, a translucent cover, large.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-jaskirat-2114193087253913639.html",
+   "title": "MS-Human-700: a body as 700 actuators acting through laws",
+   "description": "A full-body musculoskeletal model with 700 muscle-tendon units, 206 joints and 90 body segments.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-kinankin-2113849418441248895.html",
+   "title": "kinankin, waves on rocks",
+   "description": "kinankin, waves on rocks. A 21 s phone video of grey sea breaking on dark rocks.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-longtheriverrun-2114262230929961119.html",
+   "title": "Hsia Yu, Pink Noise (粉紅色噪音)",
+   "description": "Hsia Yu, Pink Noise (粉紅色噪音). Pink Noise is a book of poems by the Taiwanese poet Hsia Yu (夏宇).",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-mathelirium-2114312133747876204.html",
+   "title": "Can one hear the shape of a drum? (mathelirium)",
+   "description": "A 30 s visualisation of a round drum's vibration modes, with the post's history: Kac asked in 1966 whether the notes of a drum fix its shape; in 1992 two.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-pecelnya-2113954506459521451.html",
+   "title": "pecelnya, brush spiral in thick paint",
+   "description": "An 84 s close-up of a brush drawing a spiral into thick purple paint; the ridges stay where the brush leaves them.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-pierscowburn-2113996522211971104.html",
+   "title": "Piers Cowburn, liquid cities from Google Earth data",
+   "description": "Renders of London (Westminster and the Thames) and Shibuya in which streets and buildings bend along smooth curves, as if the city were a liquid surface.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-rileycx-2114368898057314577.html",
+   "title": "rileycx, early explorations: site design for a network product",
+   "description": "Three tall frames of a website design for a private-network product: a dark ground, flower photographs, a node-graph overlay with coordinate and IP-style.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-rronberishagrit-2114372645416280441.html",
+   "title": "Olivetti advertisements: overprint, tile field, code mosaic, mosaic as flow",
+   "description": "\"De A à Z\" (French): a giant A crossed by Z strokes in translucent inks.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-tropicalcamatte-2114073638378893328.html",
+   "title": "Rembrandt etchings (exhibition photographs)",
+   "description": "Four phone photos of framed Rembrandt etchings, one through a magnifying glass: deep blacks, light falling in shafts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-yaki_ceetake-2113956705373659559.html",
+   "title": "Kitada Aya, underwater paintings (Musashino Art University festival 2026)",
+   "description": "Four views of paintings hung on pegboard: looking up from under water toward the surface, in teal and deep green, with branches or figures crossing the.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/st-zhiwen_fan_-2113740144448557147.html",
+   "title": "zhiwen_fan_, one frame to an explorable world, restyled",
+   "description": "A 9 s clip: a garden photo becomes a walk-through, then a painted night street with wet reflections, from a single frame per the post.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/aperture-eye.html",
+   "title": "Aperture eye, a board",
+   "description": "A study board for aperture eye: 12 numbered plates from the reference library, each with its medium and concepts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/grain-texture-layering-saturation-hue.html",
+   "title": "Grain texture, layering, saturation hue, a board",
+   "description": "A study board for grain texture, layering, saturation hue: 6 numbered plates from the reference library, each with its medium and concepts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/network-graph-tessellation.html",
+   "title": "Network graph, tessellation, a board",
+   "description": "A study board for network graph, tessellation: 12 numbered plates from the reference library, each with its medium and concepts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/ring-orbit-aperture-eye.html",
+   "title": "Ring orbit, aperture eye, a board",
+   "description": "A study board for ring orbit, aperture eye: 3 numbered plates from the reference library, each with its medium and concepts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/st-0xcharlota-2114385194484469972.html",
+   "title": "charlota, 'The Observing Mind': brand reference book for hermeneutic, a board",
+   "description": "A study board for charlota, 'the observing mind': brand reference book for hermeneutic: 2 numbered plates from the reference library, each with its medium and c",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  },
+  {
+   "path": "studies/boards/st-music-theme-stolie.html",
+   "title": "st-music-theme-stolie, a board",
+   "description": "A study board for st-music-theme-stolie: 8 numbered plates from the reference library, each with its medium and concepts.",
+   "indexable": false,
+   "review": "the library records each study as private; publishing needs the author's clearance"
+  }
+ ],
+ "skipped": [
+  {
+   "id": "st-999999999sx-2114203081630216427",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-9uimoro-2113988856009912818",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Adam-Fuhrer-adamfuhrer-1707381367271498189",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Adomiori-2113616440016482346",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-AkiyoshiKitaoka-2113847775947587983",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-BarbaraBezina-2113936034945814718",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Be_myvu-2113818363067498648",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Bentega_art-2114107177489346928",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-BetterCallMedhi-2114369841423606219",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-BetterCallMedhi-2114511692407472588",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-BugNews-2114243057440665811",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-COPIC_Official-2113916908730814669",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Cosmos-Archive-cosmosarcive-2113698904374222974",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DRUGONDRAGON-2113610814964076788",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DRUGONDRAGON-2114328736434880956",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DailyClassicArt-2113972776608440495",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DailyClassicArt-2114125532853948773",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DesignReviewed-2114262359124398361",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DesignTwoday-2114317947418386562",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DlSPUTED-2114378172338950358",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-DocSciFi_1-2113335876797485542",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-E1VVYI-2114340538925343118",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Emil-Kendziorra-M-D-emilkendziorra-2113527069938221263",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-FJTKTMLOOM-2114357336429211774",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Ferdoropeza-2114368502924505144",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-FigsFromPlums-2114326112935219487",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Havenlust-2113633211502743913",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Hirokazu-Yokohara-Yokohara_h-2113611938337038512",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-HlSTORYmatters-2114086632089620592",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-HoracioAltuna-2113867178977992998",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-IOivm-2114280795473113299",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-IOivm-2114308831648076225",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-JakeThirteenth-2114356471693812004",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Keishiro-Ueki-KeishiroUeki-2113582953876041774",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Kubai087-2114350354720780333",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-LeoTollstoy-2113960101086408972",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-LlKkOArt-2114016566043869632",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Lovandfear-2113908284805849529",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-LucidSznnn-2114073079760707718",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MartaTimmer-2113471188601127248",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Maxime-Heckel-MaximeHeckel-2113634220685807735",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2094803540862751184",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113010183395840395",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113069006437671120",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113128714493911426",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113303798471147976",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113360493369000277",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113376597797671345",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113394717165572222",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113765660325196037",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113789934545125674",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113873874810974269",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2113936285803110871",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114049783782391880",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114178380954296580",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114240037185356095",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114270991220162798",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114346991920820309",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114414688025104621",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114512583122379221",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MeditateColor-2114529444165570561",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MenschOhneMusil-2114089090899644721",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-MenschOhneMusil-2114108392042275176",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Metagravity0-2113631222412738767",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Metagravity0-2113939807860625542",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Minotaur_Man-2114031993671365031",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Movideae-2114255370080465032",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Okazz-okazz_-2113643417486213453",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Piotr-Kamler-director-posted-by-Eternal-Family-eternalfamilytv-2113722720055615490",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Porukana_Art-2114126017074008565",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-QingQ77-2113884947450839334",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Raf0x00-1885652589586637007",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Raf0x00-2030243756662993087",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Raf0x00-2048000639855395090",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Raf0x00-2083515302525215144",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Raf0x00-2101271666441760942",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-RaminNasibov-2113881949752164412",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Read_Acted-2113486682519429564",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-SeekAfterBeauty-2114120939856138630",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Sehrhun_-2113833446670057952",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Sunderguilt-2114158534883512611",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-TatsuyaBot-2113843875823727012",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-TheMathFlow-2114309662162268466",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-VJ_keori-2114255468722053223",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-VladVexler-and-reply-authors-2113690031973941477",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Xeleph_-2113579246450831553",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-Yaduvam-2113990659652858159",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-__causasui-2113921235126247535",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2111476300871352521",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2111764033648931030",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2111902405738860636",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112152395392184391",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112265711934419408",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112504420835459086",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112626857170317638",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112880289596727471",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2112995293591654478",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2113259715476041863",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_mathverse_-2113921447059984475",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_sghr-2114237973386682853",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-_stc-2113652347083915343",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-acroqube-2114423284897042491",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-adamscochran-2114187064052744446",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-aicreataro-2114310143609565465",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-aidoga_lab-2114178232425775371",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-aka_nuc-2113910637978157456",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-amorvobiscum-2113935997604159876",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-annaxmalina-2114053558303969306",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-april_0034-2114001232754876827",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-aq_far-2114258659962454122",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-archaeologyart-2114099360174678424",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-artenpedia-2113638070742630533",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ashlee3dee-2113996224462238194",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-autohysteria-2113931552434598311",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ayushsoni_io-2114274505145413855",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-banziha_-2113891673109626894",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-bbu-2114026466505883820",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-benjaminbardou-2114477386288841180",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-bgw422-2113852235201597863",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-booterart-2111616036755931185",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-catosqice-2113836825852981409",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-cemhah-2113351732906307706",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-chrislakin-2114153194607796714",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-chronic_clinic_-2113632321266127248",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-codetaur-2114445120519262428",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-deadsyntax777-2114042239420633334",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-deltasauce-2113988267607515248",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-deraojobo-2113752336333951112",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-designbyaron-2114134051913453761",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-drippingeyes-2113665361434620299",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-dvkexbt-2114393133874311590",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-enigmatriz-2113996682891575369",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-enigmatriz-2114126207998738870",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-erwanrenders-2110397469804974501",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-erwanrenders-2113225738271007226",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-erwanrenders-2113346363220169000",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-erwanrenders-2113628366721147273",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-erwanrenders-2113802998355014077",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ex_mortal_-2113246498012250282",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ex_mortal_-2113251997705256995",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ex_mortal_-2113763135660114145",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-eyeonaxis-2114023107950420162",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-farnaz_dashti-2114045023297659153",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-furuyoru834194-2114331954296557814",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-gietzschean-2114319571024781545",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-gietzschean-2114412957287202832",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-grebenshi-2114109204625572069",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-gwamoleipstop-2113947038849147029",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-hildiebird-2113671128757723406",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-hisho_of_imy-2114270857254297701",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-hobothumb-2114117642164543672",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-hopemondayart-2114039407733100732",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-hothot_chicken-2113914425233355118",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ianneo_ai-2114198360408326320",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ianneo_ai-2114327400473608702",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-impression_ists-2113899706031948251",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-impression_ists-2114419865792725188",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-itsrapha83-2113994465962836057",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-jakubkrehel-2114379959263502712",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-jamesshedden-2114392737688461407",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-jerbosmans-2114029379646824717",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-keita5199916862-2113908794308915661",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-kiuzyx-2113766789616435608",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ktnt0054-2114321214080696333",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-kuroiro_9-2113858649500360843",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lammours-2113623793763758353",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lens-summa-i-q2-a2-obj1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-00c3c016fc5e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-024e23423505",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-03a1bfa348fd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-03d7f9230851",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0459e3987a1c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-051198fdbff9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-056771368653",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-06a3687fce00",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-06d48ecbf6c7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0767ddc408ef",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0885e22574e1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-089805a80f1d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-08d9bb16f7ef",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0a39d305ad9c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0aa47113c0eb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0ae555dc29b0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0c340b56975c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0d1251bb318f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-0e937107c7fe",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-10a68c4748f9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-11bdc0cab722",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-120de74aae28",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-12a6e2451f4d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-13e7eab24b76",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-14da02f209ca",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-153b11838661",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-16f9caf04799",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-171c9e6436fa",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1723092890c2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-176b70b9af68",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-17fbe0496c0f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-18839679cb22",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-18c971919646",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1a0ee863fd5a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1ac77c26330b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1b1a4a211205",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1b3bfbda029c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1c54b222dec4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1c6a081622f8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1e718035d267",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1f3f17d61f21",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1f61d2d28f89",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-1fee61f470bb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-20aa6906113c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-21a8e44dbb27",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-220ac79ddd12",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-226ae7ba04b6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-24b042934370",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2543b92a3551",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2616e4d4b33f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-267f9c2c032e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-27aa08feaea7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-284b6171d9b8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-285093a93c90",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2906e80d2adf",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2a13e20fd6f7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2aa37cee59ce",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2b0198ad5ff1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2c22c13ea3aa",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2cd71673003b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2cfe651ab3de",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2ddfbaacc54b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2e95d715b2b2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2ec4deaa2be6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-2f08352087ef",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-300065bb3c83",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-30af0003d843",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-30f70b0f5517",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-314de4c78109",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-31817800e1c6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-337e59fac6a0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-33ca09f29106",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-34c019510de7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-35541638410b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-367b93bab61f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-36c81df9d65c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-380af806845e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-38140a61fba4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-381b410a0114",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-382faebbe554",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-391f1442897a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-393fc47cc31d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3a4ac30626b6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3b2608af52dd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3b421bfd55a7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3ce328f94329",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3dac70de9890",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3de881222323",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3e42dbea2e1d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3ed5de23b542",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3f993687b0e5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-3f9be9604aff",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-40d2ebbe4daf",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-414c8180ad6d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-43908222c23f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-43d569aeccbc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-452799599e60",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-45d51468f9c4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4604249609c9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-460ac45bdc19",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-46c9062096a1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-489c4794ddda",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4910d3d0b2fa",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-495cb213f602",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-49e2709a2635",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4ae4fb0fb203",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4b1b5e2d503f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4c00b6f264ee",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4d0e262b24a6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4dbc982fbc8b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4e1d0f7c45ec",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4f04b40c0639",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-4f419f6def71",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-509a461fca46",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-50b9283e0a95",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-514f980b2142",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5248ead4bc76",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-54c4f861f7ff",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-54ddec33dcca",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-572bd6553d4a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-57d121685fb8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-58889f40a7e5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-58b7b377424f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-58b99dbcae7c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-599ffd817660",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-59c30c1d0125",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5a571766f9b4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5aa8a1ec48fe",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5adfafcf2996",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5b045be322aa",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5b196f02c9e2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5b77e3fde59c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5c268dae96d3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5c39ddb5e329",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5cc3c7c765e2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5cd7588d8e06",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5d64d2dfb541",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5e2e7fee914e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5ed7ccb3e967",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5edee01989f0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5fd2a863f9f2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-5ffe9cda9d78",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-60e5f2c71280",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6109011bce85",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-61596cad758f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-62fb0ddccdcc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-64072141b75f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6496cf95e382",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-64a800b34ab2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-64fd97bc22f4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-652374e162a4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-66abf61b5d5b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6750fc35d71b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-68231d681a1b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-68232cc84b4e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-682c661d738a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-689367163b80",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-699a6a618541",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-69d5a16ffdbf",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-69d6ca33bd74",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6a7a7b0b7d82",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6b5de92b7a72",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6bfe5a7a7b5f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6cc054be3e3e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6cc39d172c3c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6cc79522ad5b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6d541b4e7222",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6d6f0e8afec3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6d7343b48746",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6d77f4b3bdf1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-6fa8b6b9a476",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-700fd7044030",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-73215c82c61d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-732ae315eac5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7339ed802571",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-73a832dac076",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-745e35aeddad",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-74c776102ea5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-75633f3ccd93",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7591b29fff44",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-76d16ffacd98",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-782b8dddb9e1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7942290085cc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-79bf9c35f8e1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7a1a51e7d6f8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7b7c3dff6c3a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7bb45e6ec04c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7be602acf019",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7c5d812045bc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7d41124bba08",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7e0164502e95",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7e71a7dd8456",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7ec0a0fc4115",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7ee2d0fcf2ec",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-7fe5a6f6b5f5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-80aefe83e066",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-80f6095e87f1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8164d751a249",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-82ae5294da86",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-82b113cf7185",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-831538b45479",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-84bbbfc8895f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-84f8fbbda854",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-85be0d089d73",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-86551f7be5dc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-868401962972",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-86bf02965652",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-883ad83a3b94",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-894611e7971c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-89af1d6b58f4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-89cd18eda41c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8a3218a77b54",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8a6a4b054314",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8b94274febd1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8bfecb4a2f84",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8c3fb86d1d71",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8d238cd749d8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8da74c6b9840",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8e67ca86a395",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-8f878b2ba926",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-91892b0d40cf",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-91d7f73b08fb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-92d0a4610b53",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-93cd998425ea",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-94579fad03d5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-94cf59a7bbea",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-952204d425ae",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9659aa0a626c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-974256e83287",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-991fe2cf75f4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9a688ebdbf12",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9a7806a5ff94",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9a9224da4ccb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9b49da58483f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9ba7967a65bb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9bf930f8c04b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9c5b33854d65",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9c5df98ee6e4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-9fcd10f0d704",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a0387fa07349",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a0aee3721895",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a15686d76aad",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a268e4a0cd97",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a311a6d9a7ac",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a346d6dc5dc9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a3800617aac7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a40ebadca158",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a4253761d192",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a435220231a2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a5eec7fda680",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a5fd3fc693be",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a6b53b0f3f1f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a6d383a74c23",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a6f4c38a1c70",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a74cee81aa6b",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a7cb04a405bc",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a831e291ded0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a8eca4ce4fcb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-a9133da6a3c8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ab3ea300ccc5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-acc3ae00c2bd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-adb9058607af",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-af8258783d9a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-af92e0e6fed3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b1315f1ddbb1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b144b25adac7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b3deb074cb0c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b4ef0935e413",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b563044e6b9f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b5be5d84e24a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b64c30f7e815",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b65418a04825",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b6c46f8f3747",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-b881b0c57429",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ba265593d8b3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-bbe038f7c14c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-bc40a833d787",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-bee76441e171",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-bf0c6c9e97ef",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-bf971352aa5c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c002800b5003",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c17cdb866965",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c1889d80d0e8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c1a95cbdd119",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c35da25e9b85",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c385d38f2c38",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c3bf8b647907",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c41050e89812",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c57cb5dbc2ca",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c60ac9342dd1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c679682861bd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c6831e50ba40",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c77302ffe5a0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c7a1f63a3097",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c8a0cff45100",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c8ee292c25e8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c932be4a01e9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c9393b01e6fe",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c9a3f67d3ff9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-c9a9aa72f48c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ca52e4523681",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-caec8ba3af4d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-cb871a99e4cb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-cbb27d0f0e51",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-cbd37c41bda8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-cc5fcf565367",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-cda034100a97",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ce6e11edce49",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d0d4812b52b3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d326c4a08da7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d3a53fa0ebee",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d42571b3fdad",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d43dd1319a24",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d4f5f290de82",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d583598639db",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d5a5ad2a9aa4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d6f1ae9d2c37",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d8d1cf25bf40",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d95df4e2f9cd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d9e00bbf2ece",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-d9f2dd1c2665",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-dbcb24b362d7",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-dbf34d3fd1e1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-dd283b690a8d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-dd99a86cde99",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-de8bf4d2588f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-dfb3473c2635",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-archive-ch",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-archive-sh",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-archive-ta",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-archive-wi",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-crossover-",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-homage-bau",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-homage-cha",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-homage-kar",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-lowwater-v",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-aes",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-cor",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-eam",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-enb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-ide",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-lwg",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-memory-rev",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-render-olm",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e-upload-u10",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e0486a5385ae",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e10a3f0bbc46",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e1983984f74a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e21e30083f7a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e2e65d160eb2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e33ee99605c0",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e3475fa65644",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e3d63b792cff",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e48729e91d34",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e5128167e8d6",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e56b4f8bf142",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e625eb6503a9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e630228de77f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e72a85a01e93",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e88b5a2397e9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-e99b11780cdd",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ea14606285ea",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-eb5e550bc452",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ebaa177c60d5",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ec7cb9955596",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ed7025a6249e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ed96cee842b4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-edf18f0acc52",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ee40a0a3f045",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-eec3564441a8",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-eeeb9aefd395",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ef35d91eb017",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ef51794f341f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f01c74498cd3",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f050803684be",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f0689ed1901d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f0ad92771deb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f11f7c37ea84",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f16e3bf474b9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f1de8e78e6de",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f275c12d4c34",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-aila",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-asci",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-dore",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-glyp",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-goua",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-nand",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-pixe",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-post",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-star",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-wnk2",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f29-img-yuon",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f299e2f4f163",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f32-img-eism",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f35ee83aa0aa",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f36fc82b6fb1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f4aa2ad15c0c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f4f457d2fb9d",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f620c418525a",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f66c0c77358c",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f6c69029e44e",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f7b1b3d4721f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f86ea76a7828",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f9317b3fb086",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-f941502176cb",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fb0417ee8035",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fb569ad2a993",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fb8d2d7d5690",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fd6f83868a84",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fd7bbe194494",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-fe4eea2c7e83",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ff18ba857c2f",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ff2b1325f250",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-local-ff7a013ad9a9",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-love_kirby_-2111755051089977498",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-love_kirby_-2114171843259306413",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-luimortdibuja-2114041411339161851",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lunaaestt-2113852283800989865",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-luusssso-2114098881810305076",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-luusssso-2114504470323474828",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lxxeju-2113985836559851834",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lxxeju-2114386110310949002",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-lykaiiiii-2113637420730064929",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-madebyhc-2114416066554175682",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mangoddango-2113922947962503602",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mangoddango-2114231064323608927",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mangoddango-2114250611416064255",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mathelirium-2114386256431878568",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mathemetica-2113711051854184803",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mathemetica-2113834852567089418",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-mathemetica-2114365782683721787",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-matt_is_nice-2113605915459117242",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-memememeoww-2113882317857177694",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-monotykamary-2114416110925943079",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-monthrlant-2113575560538677516",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-muovata-2114089450514813237",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-murimuricom-2114347760367624638",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-baby-fifty-are-you-coming-back",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-bluswing-realize",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-bukem-atlantis",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-coltrane-turiya",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-frisell-coffaro",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-idris-piece-of-mind",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-jazzfunk-no1",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-jodyboof-flushed-away",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-kirillt-radiance",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-lateef-like-it-is",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-liquid-dnb-commons",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-sakamoto-20210310",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-sappheiros-fading",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-skino-nomad",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-theme-addiction",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-theme-stolie",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-theme-vaseline",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-music-tomisawa-godskin",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-negiwasa555-2113979346348318853",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nexgridco-2114144915802235331",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nickbakeddesign-2114426188571812063",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-no_hygiene-2113733154565738800",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nori__dezain-2113904805047660788",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-notjignes-2113958988949942538",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nrol_ling-2114396820356886915",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nucleo_art-2114011232894320890",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-nxt888-2113933637637030238",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-occult__culture-2114037978817540105",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ohnami_oshio-2113973211398549749",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ohnami_oshio-2114249722882093334",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-oic__camo-2113997362125488468",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-oliverhamrin-2114348813469327547",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-onetruelave-2113872773403566334",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-oops_all_paperclips-OA_paperclips-2113490423885025349",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-orangggge28-2114282004770668736",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-parianmarble-2113853190831558679",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pbltrr-2113612643776819583",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-peakstarwave-2114011056666530218",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ph_hinata-2114296148081172698",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-photonisdead-2114036213082718684",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pickover-2113761817810161749",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pickover-2114504463658762437",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pleovision-2113067504981442830",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pmamtraveller-2113708231205982607",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pmamtraveller-2114029029221077141",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-pmamtraveller-2114346156104794312",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-poetengineer__-2114406110291796420",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-policefala-2113810504305254435",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-postmodernadv-2113913280787779820",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ppmr_pyopimuran-2113948623411224715",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2104972884938830062",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2109624499339694278",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2111300626462146803",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2111469070486835430",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2112496755732631995",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2112503922904498475",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2113065096435909028",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2113240349623935296",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2113704239205666934",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-r0bp-2113730362027209118",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-reminiscinbby-2114060703082660221",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-rickyretouch-2113771986963030123",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-rickyretouch-2114138048619270164",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-russellgreenart-2114114075839877296",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ryanallen316-2113644507606466908",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ryepe49-2113987296731283616",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-sadoseja854000-2113902095594406034",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-sadoseja854000-2113902452391191013",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-scarecrowrpg-2114085523631579319",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-shaderism-2114348040576532943",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-shridharathi-2113255894423158914",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-sinusoidalsnail-2113436173087514808",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-sodiumdream-2114052026057326596",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-solisolsoli-2113872364534456707",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-solisolsoli-2113963968872223168",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-solisolsoli-2114371654931665246",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-solisolsoli-2114438847178416143",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-st_nomad-2113898323728089544",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-sybknwibu-2113869018033701040",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-talk-FkhU7i8hRK4",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-talk-bKLEHnbuzfo",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-talk-y0q1c10GGTE",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-tamabitokio-2113889942929838363",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-teortaxesTex-2113861989759950953",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-teortaxesTex-2114528464036589859",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-themathpulse-2113677438584787411",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-throwtowels-2114435151682003375",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-tracehoundpro-2113620662241624463",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-tugkanparilti-2113595632535703766",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-typingera-2113709392860438669",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-typingera-2113737224609030578",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-ventiquePxl-2114446205900243088",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-vikktorrrre-2114363795657163151",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-visualsx_-2114281792404623676",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-wanghanxu1-2114203291748098511",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-watchmeanimate-2113841619040387332",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-xreamie-2114044783299543264",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-xuejiye66-2113895094873203112",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-y_solanum-2113865582491922899",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yaki_ceetake-2113930107408834781",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yaki_ceetake-2114008481552637983",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yaki_ceetake-2114095888230654178",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yashisinghh-2114279547416015008",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yintionJ-2113845217132761537",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yk_funa-2114171130844254611",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yo4no2kasa-2114372318889959613",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yo_suke_ma2ura-2114381191071871091",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-yomsgr-2113848172237946971",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-zachlieberman-2114150202504544767",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-zachlieberman-2114484732637626715",
+   "why": "no written prose yet (empty template)"
+  },
+  {
+   "id": "st-zostaff-2113707768909611140",
+   "why": "no written prose yet (empty template)"
+  }
+ ]
+}

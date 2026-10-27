@@ -1,0 +1,254 @@
+{
+ "format": "organic.swatches/1",
+ "sets": [
+  {
+   "id": "house",
+   "title": "House",
+   "source": null,
+   "swatches": [
+    {
+     "hex": "#e8e3d9",
+     "name": "wall"
+    },
+    {
+     "hex": "#16130f",
+     "name": "ink"
+    },
+    {
+     "hex": "#4a443b",
+     "name": "soft"
+    },
+    {
+     "hex": "#c4baa6",
+     "name": "line"
+    },
+    {
+     "hex": "#0a0a0c",
+     "name": "night wall"
+    },
+    {
+     "hex": "#ece5d6",
+     "name": "night ink"
+    }
+   ]
+  },
+  {
+   "id": "olivetti",
+   "title": "Olivetti, De A a Z",
+   "source": {
+    "title": "Olivetti advertisements: overprint, tile field, code mosaic, mosaic as flow",
+    "url": "https://x.com/rronberishagrit/status/2114372645416280441"
+   },
+   "swatches": [
+    {
+     "hex": "#fcf7eb",
+     "name": "paper"
+    },
+    {
+     "hex": "#eb4324",
+     "name": "red"
+    },
+    {
+     "hex": "#04b2dd",
+     "name": "cyan"
+    },
+    {
+     "hex": "#fcc603",
+     "name": "yellow"
+    },
+    {
+     "hex": "#07ac3d",
+     "name": "green"
+    },
+    {
+     "hex": "#1a1b22",
+     "name": "black"
+    }
+   ],
+   "overlaps": [
+    {
+     "a": "#04b2dd",
+     "b": "#fcc603",
+     "pair": "cyan+yellow",
+     "measured": "#028e3f",
+     "multiply": "#048e03",
+     "de76": 21.2
+    },
+    {
+     "a": "#eb4324",
+     "b": "#fcc603",
+     "pair": "red+yellow",
+     "measured": "#c03314",
+     "multiply": "#eb3400",
+     "de76": 20.9
+    },
+    {
+     "a": "#07ac3d",
+     "b": "#04b2dd",
+     "pair": "green+cyan",
+     "measured": "#029642",
+     "multiply": "#007b39",
+     "de76": 13.7
+    },
+    {
+     "a": "#eb4324",
+     "b": "#1a1b22",
+     "pair": "red+black",
+     "measured": "#482a26",
+     "multiply": "#170201",
+     "de76": 20.6
+    },
+    {
+     "a": "#07ac3d",
+     "b": "#eb4324",
+     "pair": "green+red",
+     "measured": "#261b28",
+     "multiply": "#062c03",
+     "de76": 41.1
+    }
+   ]
+  },
+  {
+   "id": "piene",
+   "title": "Piene, Red Eye Red",
+   "source": {
+    "title": "Otto Piene, *Red Eye Red* (1977), with three colour studies",
+    "url": "https://x.com/MeditateColor/status/2114363098052366645"
+   },
+   "swatches": [
+    {
+     "hex": "#d24a2a",
+     "name": "red"
+    },
+    {
+     "hex": "#d25c22",
+     "name": "orange"
+    },
+    {
+     "hex": "#362e28",
+     "name": "dark"
+    }
+   ]
+  },
+  {
+   "id": "albers",
+   "title": "One centre, four grounds",
+   "source": {
+    "title": "Otto Piene, *Red Eye Red* (1977), with three colour studies",
+    "url": "https://x.com/MeditateColor/status/2114363098052366645"
+   },
+   "centre": "#d84830",
+   "swatches": [
+    {
+     "hex": "#e4783c",
+     "name": "lighter"
+    },
+    {
+     "hex": "#7e4030",
+     "name": "darker"
+    },
+    {
+     "hex": "#ef6c25",
+     "name": "warmer"
+    },
+    {
+     "hex": "#fe5120",
+     "name": "brighter"
+    }
+   ]
+  },
+  {
+   "id": "wada",
+   "title": "Twelve, after Wada",
+   "source": {
+    "title": "Otto Piene, *Red Eye Red* (1977), with three colour studies",
+    "url": "https://x.com/MeditateColor/status/2114363098052366645"
+   },
+   "swatches": [
+    {
+     "hex": "#fe5728",
+     "name": "1"
+    },
+    {
+     "hex": "#f0712c",
+     "name": "2"
+    },
+    {
+     "hex": "#43372c",
+     "name": "3"
+    },
+    {
+     "hex": "#e45a38",
+     "name": "4"
+    },
+    {
+     "hex": "#e17547",
+     "name": "5"
+    },
+    {
+     "hex": "#c14736",
+     "name": "6"
+    },
+    {
+     "hex": "#834737",
+     "name": "7"
+    },
+    {
+     "hex": "#c26521",
+     "name": "8"
+    },
+    {
+     "hex": "#e05638",
+     "name": "9"
+    },
+    {
+     "hex": "#e47c43",
+     "name": "10"
+    },
+    {
+     "hex": "#d94f38",
+     "name": "11"
+    },
+    {
+     "hex": "#e9562e",
+     "name": "12"
+    }
+   ]
+  },
+  {
+   "id": "sheets",
+   "title": "The seven sheets",
+   "source": null,
+   "swatches": [
+    {
+     "hex": "#3f6f99",
+     "name": "material"
+    },
+    {
+     "hex": "#c99a3b",
+     "name": "property"
+    },
+    {
+     "hex": "#b5523a",
+     "name": "process"
+    },
+    {
+     "hex": "#4f7f58",
+     "name": "form"
+    },
+    {
+     "hex": "#7a64a3",
+     "name": "composition"
+    },
+    {
+     "hex": "#2e2e2e",
+     "name": "rules"
+    },
+    {
+     "hex": "#d9732b",
+     "name": "meaning"
+    }
+   ]
+  }
+ ]
+}
