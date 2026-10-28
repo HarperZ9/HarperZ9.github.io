@@ -73,7 +73,14 @@ Old main's JS before load moves with how much of its idle boot lands before the 
 | GPU, contended, run 2 | 3712 | 2360 | 568 | 1276 | 468 | 760 | 640 | 572 |
 | GPU, contended, run 3 | 4000 | 748 | 600 | 2420 | 612 | 488 | 520 | 616 |
 
-The phone home's LCP rose: its arrival still is now the 1280 px poster (53 KB) where old main drew a 640 px one
+| SwiftShader, after the two fixes below | | 564 | | 572 | | 444 | | 484 |
+
+The first CI run of this branch failed the home at 1440 on LCP (2036 ms): the heading repainted when the world's
+display face arrived. The worlds' faces now load as `optional`, so a first visit keeps the face it painted with.
+The phone's largest paint had moved to the arrival video when it started, because the video's box was taller than
+the still's; the two boxes now match. The row above is after both.
+
+Before those fixes, the phone home's LCP rose: its arrival still is now the 1280 px poster (53 KB) where old main drew a 640 px one
 (14 KB) at 2x the size it was made for. The sharper picture costs about 300 to 400 ms on this link; one contended
 run read 2420 ms.
 
