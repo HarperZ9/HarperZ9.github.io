@@ -83,14 +83,21 @@ Error generating stack: `+e.message+`
           "href": "test-run-request.html",
           "primary": false,
           "summary": "A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unverifiable remainder matter.",
-          "searchText": "Send A Public Test Case Good examples Do not send Useful format What I will try to return Boundaries A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unverifiable remainder matter. Send A Public Test Case Send A Public Test Case A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unverifiable remainder matter."
+          "searchText": "Send A Public Test Case Good examples Do not send Useful format What I will try to return Boundaries Private workflows A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unverifiable remainder matter. Send A Public Test Case Send A Public Test Case A public request for small AI-assisted workflow examples where the claim, evidence, checks, and unverifiable remainder matter."
         },
         {
           "label": "Work with me",
           "href": "work-with-me.html",
           "summary": "AI evaluation review, harness integration, agent safety review and incident investigation, each with its scope and published examples.",
           "primary": false,
-          "searchText": "Work with me Services Evaluation design review Harness integration and scoring Agent safety and pre-audit review Incident review, from public records or commissioned Independence and conflicts review Recurring monitoring brief How prices are set Before you engage Work I do not take Case studies from published work Running an outside evaluation task through a second harness A fairness gate that failed and stopped a release Finding and disclosing a defect in my own verifier A cross-lab incident record from public sources References Contact AI evaluation review, harness integration, agent safety review and incident investigation, each with its scope and published examples. Work with me Zain Dana Harper | Work with me AI evaluation review, harness integration, agent safety review and incident investigation, each with its scope and published examples."
+          "searchText": "Work with me Services Flywheel verification pilot Evaluation design review Harness integration and scoring Agent safety and pre-audit review Incident review, from public records or commissioned Independence and conflicts review Recurring monitoring brief How prices are set Before you engage Work I do not take Case studies from published work Running an outside evaluation task through a second harness A fairness gate that failed and stopped a release Finding and disclosing a defect in my own verifier A cross-lab incident record from public sources References Contact AI evaluation review, harness integration, agent safety review and incident investigation, each with its scope and published examples. Work with me Zain Dana Harper | Work with me AI evaluation review, harness integration, agent safety review and incident investigation, each with its scope and published examples."
+        },
+        {
+          "label": "Flywheel verification pilot",
+          "href": "flywheel-pilot.html",
+          "summary": "A fixed-price pilot: Flywheel set up on your AI workflow, written checks, receipts anyone can recheck offline, and a findings report. Ten hours, $1,250.",
+          "primary": false,
+          "searchText": "Flywheel verification pilot What you get Flywheel set up on your workflow Written checks Receipts a stranger can recheck offline A findings report Time and price How it works What you provide What this pilot does not prove The record so far Request a pilot A fixed-price pilot: Flywheel set up on your AI workflow, written checks, receipts anyone can recheck offline, and a findings report. Ten hours, $1,250. Flywheel verification pilot Zain Dana Harper | Flywheel verification pilot A fixed-price pilot: Flywheel set up on your AI workflow, written checks, receipts anyone can recheck offline, and a findings report. Ten hours, $1,250."
         },
         {
           "label": "Independence policy",
