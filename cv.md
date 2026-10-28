@@ -22,7 +22,7 @@ Seeking red-team, purple-team and security-evaluation work, AI evaluation roles,
 
 - Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v1.9.0
 
-- Daylight Commons is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
+- CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
 - Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
 
@@ -102,9 +102,9 @@ Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as
 
 Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that tell a failed answer apart from a provider failure or missing evidence. Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls. github.com/HarperZ9/terminal-state-fixtures
 
-### Daylight Commons | Browser extension for checking where replies come from
+### CMMNS (formerly Daylight Commons) | Browser extension for checking where replies come from
 
-A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2
+A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.2.2
 
 ### Articulate | Prose analysis and editing
 

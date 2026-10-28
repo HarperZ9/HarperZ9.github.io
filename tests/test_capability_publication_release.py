@@ -258,7 +258,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # so the bundle is index-DnlLsL1T.js with the same sheet. index-mxSUkjU6.js stays as retained history.
     # 2026-10-23-plain-copy: the home copy is rewritten in plain language, so the bundle is index-Bg7UPow6.js with the
     # same sheet. index-DnlLsL1T.js stays as retained history.
-    current_js = "index-Bg7UPow6.js"
+    # 2026-10-28-cmmns-rename: Daylight Commons is renamed CMMNS, so the bundle is index-DhJE9vp_.js with the
+    # same sheet. index-Bg7UPow6.js stays as retained history.
+    current_js = "index-DhJE9vp_.js"
+    previous_cmmns_rename_js = "index-Bg7UPow6.js"
+    assert previous_cmmns_rename_js not in source
+    assert (ROOT / "assets" / previous_cmmns_rename_js).is_file()
+    assert f"assets/{previous_cmmns_rename_js}" in RELEASE_PATHS
     previous_plain_copy_js = "index-DnlLsL1T.js"
     assert previous_plain_copy_js not in source
     assert (ROOT / "assets" / previous_plain_copy_js).is_file()

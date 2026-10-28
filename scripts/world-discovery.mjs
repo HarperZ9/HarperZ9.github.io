@@ -12,7 +12,7 @@ const ORIGIN = "https://harperz9.github.io/";
 const read = (p) => readFileSync(path.join(site, p), "utf8");
 const exists = (p) => existsSync(path.join(site, p));
 
-const ROOT_PAGES = ["workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "daylight.html"];
+const ROOT_PAGES = ["workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html"];
 const LIVE = ["world/universe/proto/path.html", "world/universe/proto/index.html", "world/typeengine/living/index.html", "world/typeengine/room/index.html",
   "world/typeengine/specimens/index.html", "world/glass/index.html", "world/visualizer/web/index.html", "world/visualizer/web/grid.html",
   "world/sound/theme/index.html", "world/superframe/room/index.html", "world/exhibit/index.html", "world/playbook/examples/index.html"];

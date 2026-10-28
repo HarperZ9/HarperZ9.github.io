@@ -938,7 +938,7 @@
     },
     {
       "id": "daylight-commons-300",
-      "url": "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.0.0",
+      "url": "https://github.com/HarperZ9/cmmns/releases/tag/v3.0.0",
       "published": "2026-10-23T02:41:08Z",
       "status": "GitHub release, signed checksums and assets checked October 23, 2026; known limits preserved; no store listing, user count or adoption claim"
     },
@@ -983,13 +983,13 @@
     },
     {
       "id": "daylight-commons-310",
-      "url": "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.1.0",
+      "url": "https://github.com/HarperZ9/cmmns/releases/tag/v3.1.0",
       "published": "2026-10-23T04:37:15Z",
       "status": "GitHub release, signed SHA256SUMS and README read October 23, 2026: nine platforms (X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok, Mastodon), AGPL-3.0-only, no server, account or analytics, PRIVACY.md states it never sells or shares data; reproducible packages per INSTALL.md and docs/COMPLETION.md row I5. Limits kept: no Mozilla-signed build, TikTok comments not checked live, campaign lens not labelled or measured."
     },
     {
       "id": "daylight-commons-evaluation",
-      "url": "https://github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md",
+      "url": "https://github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md",
       "read": "2026-10-23",
       "status": "Slur sign precision 91.0% (3,995 of 4,392; Wilson 95% interval 90.1 to 91.8) on four public human-labelled corpora, test split. Other families and languages carry their own figures or 'not measured'; precision on the corpora is not precision on a live feed."
     },
@@ -1019,13 +1019,13 @@
     {
       "id": "synthesis-20261023",
       "read": "2026-10-23",
-      "status": "Private working map of cross-project connections, read October 23, 2026. Only one row is cited: each Low Water inner-arena fight maps to an entry in the Daylight Commons technique catalogue (status building; no effect on players claimed). The other rows are proposed and are not claimed. The offline-verification overlap (Daylight evidence chains, Flywheel receipts, raw-native certificates) is stated from each project's public release, not from shared code."
+      "status": "Private working map of cross-project connections, read October 23, 2026. Only one row is cited: each Low Water inner-arena fight maps to an entry in the CMMNS (formerly Daylight Commons) technique catalogue (status building; no effect on players claimed). The other rows are proposed and are not claimed. The offline-verification overlap (Daylight evidence chains, Flywheel receipts, raw-native certificates) is stated from each project's public release, not from shared code."
     },
     {
       "id": "daylight-commons-322",
-      "url": "https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2",
+      "url": "https://github.com/HarperZ9/cmmns/releases/tag/v3.2.2",
       "published": "2026-10-23T10:04:24Z",
-      "status": "GitHub release and README read October 23, 2026: latest release, nine platforms (X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok, Mastodon), AGPL-3.0 per the repository licence, runs in the browser with no account; install page harperz9.github.io/daylight-commons/install.html."
+      "status": "GitHub release and README read October 23, 2026: latest release, nine platforms (X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok, Mastodon), AGPL-3.0 per the repository licence, runs in the browser with no account; install page harperz9.github.io/cmmns/install.html."
     },
     {
       "id": "articulate-0151",

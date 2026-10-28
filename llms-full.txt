@@ -51,9 +51,10 @@ Version 0.16.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
 - Links: https://harperz9.github.io/articulate.html ,
   https://github.com/HarperZ9/articulate , https://pypi.org/project/articulate-writing/
 
-## Daylight Commons
+## CMMNS
 
-Version 3.8.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
+Formerly Daylight Commons, and Radar before that; spoken "commons".
+Version 3.9.0. Licence AGPL-3.0-only. A browser extension for Chrome, Edge,
 Brave and Firefox 128 or later, plus a command line for saved threads.
 
 - What it does: rest the pointer on a reply on X, YouTube, Reddit, Facebook,
@@ -64,15 +65,16 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 - Who it is for: people who read replies and comment threads and want to know
   who is talking before they weigh what is said.
 - Try it: download the release for your browser from
-  https://github.com/HarperZ9/daylight-commons/releases/latest and load it
-  unpacked; the install page is https://harperz9.github.io/daylight-commons/install.html .
-  The command line runs as `node bin/radar.mjs analyze saved-thread.html`.
+  https://github.com/HarperZ9/cmmns/releases/latest and load it
+  unpacked; the install page is https://harperz9.github.io/cmmns/install.html .
+  The command line runs as `cmmns analyze saved-thread.html` (or
+  `node bin/radar.mjs analyze saved-thread.html` from the unzipped release).
 - What it does not do: it shows signs and their sources; a sign of coordination
   is evidence to weigh, not a verdict on a person. Firefox removes the
   temporary add-on on restart until a signed build is published.
-- Links: https://harperz9.github.io/daylight.html ,
-  https://harperz9.github.io/daylight-commons/install.html ,
-  https://github.com/HarperZ9/daylight-commons
+- Links: https://harperz9.github.io/cmmns.html ,
+  https://harperz9.github.io/cmmns/install.html ,
+  https://github.com/HarperZ9/cmmns
 
 ## Superframe
 

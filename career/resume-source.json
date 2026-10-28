@@ -368,7 +368,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2, a browser extension that shows the sources behind social media replies.",
+          "text": "Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2 (now CMMNS), a browser extension that shows the sources behind social media replies.",
           "evidence": [
             "articulate-0151",
             "accountable-surface",
@@ -524,7 +524,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Daylight Commons 3.2.2, a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.",
+          "text": "Built Daylight Commons 3.2.2 (now CMMNS), a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.",
           "evidence": [
             "daylight-commons-322",
             "daylight-commons-evaluation"
@@ -874,7 +874,7 @@
         },
         {
           "kind": "li",
-          "text": "Daylight Commons is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md",
+          "text": "CMMNS (formerly Daylight Commons) is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md",
           "evidence": [
             "daylight-commons-322",
             "daylight-commons-evaluation"
@@ -1078,11 +1078,11 @@
         },
         {
           "kind": "h3",
-          "text": "Daylight Commons | Browser extension for checking where replies come from"
+          "text": "CMMNS (formerly Daylight Commons) | Browser extension for checking where replies come from"
         },
         {
           "kind": "p",
-          "text": "A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2",
+          "text": "A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/cmmns/releases/tag/v3.2.2",
           "evidence": [
             "daylight-commons-322"
           ]

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-28",
+  "note": "Reviewed 2026-10-28: Daylight Commons is renamed CMMNS. cmmns.html replaces daylight.html (now a redirect stub); the nav, route registry, site index, sitemap, llms files and the workshop build (assets/index-DhJE9vp_.js; index-Bg7UPow6.js kept as history) name CMMNS and link github.com/HarperZ9/cmmns and harperz9.github.io/cmmns/; career and resume lines say CMMNS (formerly Daylight Commons), with named past releases (3.2.2) kept under the name they shipped as; career PDF and DOCX rebuilt from the same sources.",
+  "paths": {
+    "assets/index-DhJE9vp_.js": "9211530ef9f3dbe2500559451e6a85b893657e914f1ba3842bd08659e5ab0c26",
+    "career/Zain-Dana-Harper-CV.docx": "1aca41b597891bc4345cd3bd9fbed2cb3c14044cb4e8bd878adbd99e67478ce7",
+    "career/Zain-Dana-Harper-CV.pdf": "e5c58b02a5602054dff64a7853d78f7adaf54b6b3f79aaa0a3ff9a953160d589",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "cd182492e435a7d11d34129565521a753c557f54e26d0a769f2de29b12b64aa3",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "cbbd61d4dce403f4755e23bfd21fe670f50493d809a11ddec4b1774e6c50a41d",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "b8ad91d86a2441d0b20f2a0514b9bef799d4cc50d9b61d73831d8bae7af2145c",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "c7615d5b9e0790cb724bf1727708c49106f146bfa1619cc813a6912becdecb2d",
+    "career/career-artifacts.json": "9fed6d7bad20511335f0a264bdb3e381c900d1c059ba11973bfdee336a33d01b",
+    "career/career-build-receipt.json": "6a78ccbab13c6f2d7b89409f1eaae88adbaa7688642b056bea1f011c1afbe66b",
+    "cv.html": "418ea331690024d7112884fccf89e7e18b119bb0a5c51322dc890ede609c3680",
+    "cv.md": "c692ec01ec4f6b6445d7e75b59b179a5c85338b43e143f1903988575bf86dcd5",
+    "hire.html": "6c7f4fdf4cf82190d3e6c5c292f7293ed5f8fcdcb29675a60ebeb1ae5e6fb1c8",
+    "index.html": "eca526de4ce293058ec8378d02fe035b80dd0d40088866e3f41b838b9effa5eb",
+    "publications/build.json": "d39c6507d2796787330b350999d0961e1b6b93f96f80a036e1daa1a430cdc378",
+    "resume-evaluation-tooling.html": "98b188756b670f8b5a4f867742ca7b6b0296229952ca1306a708abb51daa01e2",
+    "resume-support-operations.html": "556629749cc6c42c74448cc95d795e3b5489b8e3486e68fad06d340f5da00cc3",
+    "resume.html": "b905615ab741ad27d380e4d5bb04b5e792907f4ab0b73615b41c1561b1e195fb",
+    "site-index.html": "c385128c1e92dd79ec905a8393bb0cc9fc3a052a3bf57133cdf8a103d80a8d02",
+    "sitemap.xml": "bafee4ee694444e2e7b0e3d59f7f10ccd6bd93043c6e3c11ab87041ce736371c",
+    "system/routes.js": "9a62e9bd35973c5e25c73a39588233da6d415c539d35e47896e7a81260d0a93b"
+  }
+}

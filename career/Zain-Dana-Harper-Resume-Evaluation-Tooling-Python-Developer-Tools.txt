@@ -24,7 +24,7 @@ About 13 years self-directed | Career transition began June 2026
 
 - Built Articulate 0.15.1 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks and Phantom audit and restore.
 
-- Built Daylight Commons 3.2.2, a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.
+- Built Daylight Commons 3.2.2 (now CMMNS), a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.
 
 - Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.
 

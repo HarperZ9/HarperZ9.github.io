@@ -43,16 +43,16 @@
       "category": "DeveloperApplication"
     },
     {
-      "name": "Daylight Commons",
-      "repo": "daylight-commons",
-      "version": "3.8.0",
+      "name": "CMMNS",
+      "repo": "cmmns",
+      "version": "3.9.0",
       "registry": "github",
-      "package": "HarperZ9/daylight-commons",
-      "downloadUrl": "https://github.com/HarperZ9/daylight-commons/releases/latest",
+      "package": "HarperZ9/cmmns",
+      "downloadUrl": "https://github.com/HarperZ9/cmmns/releases/latest",
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Chrome, Edge, Brave, Firefox",
       "category": "BrowserApplication",
-      "page": "daylight.html"
+      "page": "cmmns.html"
     },
     {
       "name": "EMET",

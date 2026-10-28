@@ -1044,6 +1044,42 @@
     "t": 0
    }
   },
+  "cmmns.jpg": {
+   "backend": "chrome-156.0.8078.73-skia",
+   "content_sha256": "66e50fd43be7470230337232412eae9d884bae890c5c12088e0847593d6195b7",
+   "does_not_prove": [
+    "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
+    "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
+    "It does not show the artwork meets the brand rules; that is a human review against ART-DIRECTION.md."
+   ],
+   "media": {
+    "format": "rgb8",
+    "height": 630,
+    "kind": "image",
+    "transfer": "srgb",
+    "width": 1200
+   },
+   "outputs": {
+    "cmmns.jpg": "75e61c800e8650e9e97b9dd7729af13af081df72735c3d2938c541d3420a9ee6",
+    "cmmns.svg": "7f4dae2b48395828d0834eff38daaaa2094f1faafafac87b41bd39ae8317733e"
+   },
+   "producer": {
+    "name": "harperz9.repo-art",
+    "version": "0.1.0"
+   },
+   "receipt_sha256": "b32a1992d9cb4a35fb6267fe16a48035ad43f2233d65f9a75fbdb12e28580e92",
+   "reconcile": null,
+   "scene_sha256": "fd9d3cd37b9f9370e3581b0c8348564636f104304f4f7f726dfd98f23eb4c7d0",
+   "schema": "superstack.receipt/1",
+   "seed": "cmmns",
+   "seed_rule": "xmur3-mulberry32/1",
+   "seed_u32": 1259452638,
+   "time": {
+    "base": "flicks",
+    "per_second": 705600000,
+    "t": 0
+   }
+  },
   "coherence-membrane.jpg": {
    "backend": "chrome-154.0.8037.95-skia",
    "content_sha256": "aa62ff5d3603d6d1dd9aabfbde7790aacead3b38c7d3014c6129ae1e35f6fdff",
@@ -8208,8 +8244,8 @@
    }
   },
   "world--universe--proto--places--daylight.jpg": {
-   "backend": "chrome-155.0.8059.86-skia",
-   "content_sha256": "b37186376a3353362a8452661984c021c7543c116fec93dc6ce3a1ba624ff4bf",
+   "backend": "chrome-156.0.8078.73-skia",
+   "content_sha256": "db5133333251fbb2e2c421103f9b7923b6a28355298895fc5b977a1d24c3b09a",
    "does_not_prove": [
     "It does not show the figure's numbers come from a real run, except where the alt text quotes a README result.",
     "It does not show the PNG bytes are the same under another Chrome build; the SVG and the scene are the portable record.",
@@ -8223,16 +8259,16 @@
     "width": 1200
    },
    "outputs": {
-    "world--universe--proto--places--daylight.jpg": "f13ee205ba37344983683ad95aecde2349f6e976b17a11dc53cb006199a5e874",
-    "world--universe--proto--places--daylight.svg": "94a9d15aea302e80bc045d17d0a6c4e5a8b7a58ee6b89784bfcaa8075295334e"
+    "world--universe--proto--places--daylight.jpg": "a82226d9e3568de85cd7a15724281e9ac8e0a5524446d477e51eba9cdaa3db00",
+    "world--universe--proto--places--daylight.svg": "4ecf279c98d7cd9ee0abc9e7d4ea32912cd89aea1806cec564e6129257b19c66"
    },
    "producer": {
     "name": "harperz9.repo-art",
     "version": "0.1.0"
    },
-   "receipt_sha256": "f95e2a63086d3740991ea1bc4637b95ca23e08dc7497ef0dd28972932ccd6f92",
+   "receipt_sha256": "6e39d08f64c4ad8791d3ced2e89794e8864f8a6d63a8d27c30bfb432c4d55a35",
    "reconcile": null,
-   "scene_sha256": "18dcf0d22721dbf775f45346f2fec21b227993fd153317b34488ae8ffc0b560c",
+   "scene_sha256": "8422014bbf427688bb7cb774470c429715167143f70cd64336f504a9bdb2f18e",
    "schema": "superstack.receipt/1",
    "seed": "world--universe--proto--places--daylight",
    "seed_rule": "xmur3-mulberry32/1",
