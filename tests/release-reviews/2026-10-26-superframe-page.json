@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "note": "Reviewed 2026-10-26: the home lists Superframe under Tools with its install line and gets back its run-it-now commands (flywheel-verify, articulate-writing, buildlang); the route registry and site index add superframe.html to the Studio family and carry Daylight Commons 3.8.0. Checked locally: ident-narrow-reading and linkcheck pass, page viewed at 375 px and desktop.",
+  "paths": {
+    "index.html": "6917f20c6cf0d0978f598025c439b83ceee3ebcfceacab4c1479c47239295a1f",
+    "site-index.html": "7b171d92be3e9acf1ac03b001bd41863df41691759244314a0b44bf94aa54a58",
+    "system/routes.js": "71063fb175e8d639d4fc5bb19a7c625bb53e99a938c7ecc0d08363a9d2d006e7"
+  }
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manufactured consensus</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/crowd.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Manufactured consensus">
+<meta property="og:description" content="Manufactured consensus">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/crowd.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1100px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  #stage { position:relative; background:#0e0c0a; outline-offset:4px; cursor:crosshair; touch-action:none; } #stage:focus-visible { outline:3px solid var(--hot); }
+  #stage canvas { position:absolute; left:0; top:0; width:100%; display:block; } #cv { position:relative !important; } #dots { pointer-events:none; }
+  #wave { width:100%; height:120px; display:block; margin-top:14px; border:1px solid var(--line); } #says { font:800 clamp(20px,3vw,28px) "Hanken Grotesk",sans-serif; color:var(--hot); margin:10px 0; min-height:1.3em; }
+  .ctl { display:flex; flex-wrap:wrap; gap:12px 22px; align-items:center; margin:12px 0; } .note { font:400 17px/1.55 "Hanken Grotesk",sans-serif; max-width:64ch; margin:8px 0; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/crowd.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Manufactured consensus</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="stage" tabindex="0" role="group" aria-label="A crowd made of dots that all pulse together. Move the pointer through it to pull it apart, or hold Shift with the arrow keys, or press the button. Strings to a single hand appear."><canvas id="cv" role="img" aria-label="A 1920s crowd as a field of dots, all pulsing in one rhythm, with strings rising to a ventriloquist's hand"></canvas><canvas id="dots" aria-hidden="true"></canvas></div>
+    <canvas id="wave" role="img" aria-label="Eight traces, one for each account. They begin apart and line up into one."></canvas>
+    <p id="says" aria-live="polite">Eight accounts, eight voices.</p>
+    <div class="ctl"><button type="button" id="pull">Pull them apart</button></div>
+    <p class="note">It looks like a crowd. Every point in it is a voice, and every voice says the same thing at the same moment. Pull the dots apart and look at their traces: they were never eight. A ventriloquist's dummy has a mouth that moves, and nobody in the room thinks the dummy is talking. On a timeline they do.</p>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <figcaption>FIG. 13. Manufactured consensus. Crowd: a photograph of the crowd outside the New York Stock Exchange, 1929, and ventriloquist figures from the early 1900s, Wikimedia Commons, public domain. All points share one waveform in the dot field; the pointer bends them. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/crowd.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/crowd.js?v=world-a891bf139a"></script>
+</body>
+</html>

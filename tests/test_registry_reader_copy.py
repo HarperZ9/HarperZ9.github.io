@@ -25,6 +25,7 @@ EDGE = re.compile(r'<path data-relationship-edge="true" data-edge-type="([a-z-]+
 BOARD_NOTE = "early traffic is still mostly test posts from the person who runs the board."
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _registry() -> dict:
     return json.loads((ROOT / "system" / "systems.json").read_text(encoding="utf-8"))
 
@@ -90,7 +91,7 @@ def test_the_board_note_names_the_person_who_runs_the_board() -> None:
         text = path.read_text(encoding="utf-8")
         assert OPERATOR.findall(text) == [], path.relative_to(ROOT)
         assert "test posts from the person who runs the board" in _text(text), path.relative_to(ROOT)
-    index = (ROOT / "index.html").read_text(encoding="utf-8")
+    index = (ROOT / "workshop.html").read_text(encoding="utf-8")
     bundle = re.search(r'src="/assets/(index-[A-Za-z0-9_-]+\.js)"', index).group(1)
     shipped = (ROOT / "assets" / bundle).read_text(encoding="utf-8")
     assert BOARD_NOTE in shipped

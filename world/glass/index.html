@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glass</title>
+<link rel="canonical" href="https://harperz9.github.io/world/glass/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Glass">
+<meta property="og:description" content="Glass, water and signal as materials: a figure of glass before a test card, a word standing in the sea, and a live page under reeded glass.">
+<meta property="og:url" content="https://harperz9.github.io/world/glass/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/world--glass.jpg?v=50ddf375ad3c">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glass, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--glass.jpg?v=50ddf375ad3c">
+<meta name="twitter:image:alt" content="Glass, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="description" content="Glass, water and signal as materials: a figure of glass before a test card, a word standing in the sea, and a live page under reeded glass.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="demo.css?v=world-a891bf139a">
+</head>
+<body>
+<main>
+  <h1 class="vh">Glass</h1>
+  <section class="plate" data-plate="figure">
+    <h2 class="vh">Figure</h2>
+    <canvas role="img" aria-label="A standing glass figure with a ring for a head, in a dark room; one band of television colour bars passes behind it and turns over inside its body."></canvas>
+  </section>
+  <section class="plate" data-plate="chorus">
+    <h2 class="vh">Chorus</h2>
+    <canvas role="img" aria-label="The word Chorus in glass letters, standing in a calm sea at a low sun, its reflection broken by rings at its feet."></canvas>
+  </section>
+  <section class="plate" data-plate="vessel">
+    <h2 class="vh">Vessel</h2>
+    <canvas role="img" aria-label="A glass capsule inside a glass capsule on a warm grey ground; a band of halftone light crosses behind it, carrying a trace of US inflation since 1914 drawn as a television signal."></canvas>
+  </section>
+  <section class="plate" data-plate="pane">
+    <h2 class="vh">Pane</h2>
+    <canvas role="img" aria-label="A ring of light from a television tube, seen through a sheet of pebbled, frosted glass, all in one deep blue."></canvas>
+  </section>
+  <section class="plate" data-plate="ribbons">
+    <h2 class="vh">Ribbons</h2>
+    <canvas role="img" aria-label="Ribbons of poured glass swirling around one eye, over a dusk sea thrown out of focus, with the low sun the only warm light."></canvas>
+  </section>
+  <section class="plate live" data-plate="live">
+    <h2 class="vh">Live</h2>
+    <iframe title="The site's front page, in the new direction" tabindex="-1" scrolling="no"></iframe>
+    <div class="lens" aria-hidden="true"><canvas></canvas></div>
+  </section>
+</main>
+<svg class="defs" width="0" height="0" aria-hidden="true">
+  <filter id="reed" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feImage href="" x="0" y="0" width="1600" height="1000" preserveAspectRatio="none" result="map"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="48" xChannelSelector="R" yChannelSelector="G" result="dr"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="48" xChannelSelector="R" yChannelSelector="G" result="dg"/>
+    <feDisplacementMap in="SourceGraphic" in2="map" scale="48" xChannelSelector="R" yChannelSelector="G" result="db"/>
+    <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
+    <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+    <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+    <feBlend in="r" in2="g" mode="screen" result="rg"/>
+    <feBlend in="rg" in2="b" mode="screen"/>
+  </filter>
+  <clipPath id="archclip" clipPathUnits="userSpaceOnUse"><path d=""/></clipPath>
+</svg>
+<script type="module" src="demo.js?v=world-a891bf139a"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The skipping groove</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/groove.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The skipping groove">
+<meta property="og:description" content="The skipping groove">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/groove.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1100px; margin:0 auto; padding:16px 12px 40px; }
+  .top { margin-bottom:12px; }
+  .wrap { display:grid; gap:18px 28px; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); align-items:start; }
+  @media (max-width:860px) { .wrap { grid-template-columns:1fr; } }
+  #stage { position:relative; background:radial-gradient(circle at 50% 50%, #3a2a14, #14100a 70%); outline-offset:4px; }
+  #stage:focus-visible { outline:3px solid var(--hot); }
+  #stage canvas { position:absolute; left:0; top:0; width:100%; display:block; } #cv { position:relative !important; }
+  #dots { pointer-events:none; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 4px; align-items:center; }
+  #count { font:800 clamp(22px,3.4vw,30px)/1.1 "Hanken Grotesk",sans-serif; color:var(--hot); min-height:1.2em; margin:6px 0 0; }
+  .side h2 { font:800 clamp(20px,2.6vw,26px)/1.15 "Hanken Grotesk",sans-serif; margin:0 0 8px; }
+  .side p { font:400 17px/1.55 "Hanken Grotesk",sans-serif; margin:0 0 12px; max-width:52ch; }
+  #echo { width:100%; display:block; background:#0b0b0c; border:1px solid var(--line); }
+  .legend { font-size:16px; color:var(--muted); margin:6px 0 0; } .legend b { color:var(--ink); text-decoration: underline 4px var(--hot); text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/groove.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>The skipping groove</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div class="wrap">
+      <div>
+        <div id="stage" tabindex="0" role="group" aria-label="A 78 rpm record turning under a needle. The needle catches on a scratch and one bar repeats. Use the button to lift the needle. Hold Shift with the arrow keys to move the attention point that wakes the dots."><canvas id="cv" aria-hidden="true"></canvas><canvas id="dots" aria-hidden="true"></canvas></div>
+        <div class="controls"><button type="button" id="lift" aria-pressed="false">Lift the needle</button><button type="button" id="restart">Start the record again</button></div>
+        <p id="count" aria-hidden="true"></p><p class="sr" id="live" aria-live="polite"></p>
+      </div>
+      <div class="side">
+        <h2>Four copies of the same bar</h2>
+        <p>A copy loses detail every time: the quiet parts go first, then the middle, until the level has three steps. What it keeps, perfectly, is the shape of the injury. The bar that repeats stays a bar that repeats.</p>
+        <canvas id="echo" role="img" aria-label="Four waveform rows, the record and three copies of increasing loss. In each, the same bar appears three times in a row, highlighted."></canvas>
+        <p class="legend"><b>Pink</b> is the bar that will not let go. The needle lifts and drops, and the groove pulls it back.</p>
+        <p>If a loop is what carries you forward, ask whose hand set the groove. Momentum feels like permission, and the permission was cut into the disc before you arrived.</p>
+      </div>
+    </div>
+    <figcaption>FIG. 6. The skipping groove. The audio is a 1919 78 rpm side, "I might be your once-in-a-while", from the Library of Congress National Jukebox through the Internet Archive's Great 78 Project; the label is a Standard Talking Machine Co. disc label and the first gramophone disc, 1897, is a Berliner. The scratch and the repeat are our own. Fear extinction writes a new memory over the old one and does not erase it (Bouton 2004; Quirk and Mueller 2008). <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/groove.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/groove.js?v=world-a891bf139a"></script>
+</body>
+</html>

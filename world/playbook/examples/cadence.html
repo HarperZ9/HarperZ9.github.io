@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weather, on Twos</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/cadence.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Weather, on Twos">
+<meta property="og:description" content="Weather, on Twos">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/cadence.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../exhibit/fonts/conso-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<style>
+  :root{--paper:#efe8d8;--ink2:#15130f}
+  body{background:var(--ink2)}
+  .stage{height:calc(100svh - 96px);min-height:440px;background:var(--paper)}
+  #sheet{display:block;width:100%;height:96px}
+  .title{position:absolute;right:0;top:0;z-index:2;margin:0;background:var(--paper);color:var(--ink2);padding:10px 16px 12px 18px}
+  .back{background:var(--ink2);padding:0 10px;top:0;left:0}
+  .credit{background:var(--ink2)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./">Builds</a>
+  <div class="stage" id="stage">
+    <canvas id="art" role="img" aria-label="An engraving of cumulus cloud seen from orbit. The framing cuts to a new crop about once a second, the engraved lines boil twelve times a second, and the camera drifts smoothly in between."></canvas>
+    <h1 class="title">Weather, on Twos</h1>
+  </div>
+  <canvas id="sheet" role="img" aria-label="Exposure sheet of the three clocks with a moving playhead: the shot clock, twos at 24 frames a second, and ones at 60."></canvas>
+  <p class="credit mono"><a href="https://commons.wikimedia.org/wiki/File:Cumulus_cloud_formation_over_West_Atlantic_Ocean_north_of_South_America_(s62-06613).jpg">NASA, 1962</a></p>
+</main>
+<script type="module" src="cadence.page.js?v=world-a891bf139a"></script>
+</body>
+</html>

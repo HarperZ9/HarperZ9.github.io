@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Between stations</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/static.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Between stations">
+<meta property="og:description" content="Between stations">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/static.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:900px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  #stage { background:#000; outline-offset:4px; } #stage:focus-visible { outline:3px solid var(--hot); } #stage canvas { width:100%; display:block; }
+  #strip { position:relative; height:64px; margin:14px 0 4px; background:#0b0b0c; border:1px solid var(--line); cursor:ew-resize; touch-action:none; }
+  #strip i { position:absolute; top:0; bottom:0; width:1px; background:rgba(238,233,223,.18); } #strip i.maj { background:rgba(238,233,223,.45); }
+  #strip span { position:absolute; top:6px; font:600 16px "Hanken Grotesk",sans-serif; color:var(--muted); }
+  #f { width:100%; accent-color:var(--hot); min-height:44px; }
+  .row { display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin:6px 0; }
+  .meter { flex:0 0 160px; height:8px; background:#2a2823; } .meter b { display:block; height:100%; background:var(--hot); width:0; }
+  #say { font:400 clamp(19px,2.6vw,24px)/1.3 "Hanken Grotesk",sans-serif; margin:8px 0; min-height:1.4em; }
+  .note { font:400 17px/1.55 "Hanken Grotesk",sans-serif; max-width:62ch; margin:10px 0 0; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/static.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Between stations</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div id="stage" tabindex="0" role="group" aria-label="A field of dots, like radio static. Turn the dial with the slider, the left and right arrow keys, or by dragging the strip, and an almost-image gathers. Hold Shift with the arrow keys to move the attention point that bends the dots."><canvas id="cv" role="img" aria-label="Static that gathers into an image and slips away"></canvas></div>
+    <div id="strip" aria-hidden="true"></div>
+    <label class="sr" for="f">Dial</label><input type="range" id="f" min="0" max="1000" value="120" aria-label="Radio dial">
+    <div class="row"><div class="meter" aria-hidden="true"><b id="meter"></b></div><span id="say" aria-live="polite">Noise.</span></div>
+    <p class="note">The dial never stops on a station. Hold it where the picture is clearest and it drifts away. In 1977 a radio telescope called Big Ear recorded a strong narrow signal for 72 seconds and an astronomer wrote "Wow!" beside it; it was never heard again. The same year two probes left Earth with a gold disc and a needle, for whoever might have one.</p>
+    <figcaption>FIG. 8. Between stations. Images are NASA public domain: the Voyager Golden Record, "Pale Blue Dot" (Voyager 1, 1990), and the FAST radio telescope. The static is generated in code. The record's own audio has mixed rights, so it is evoked, never reused. The Wow! signal: Big Ear, Ohio State University, 15 August 1977 (details to be checked against the Big Ear printout before publication). <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script>(function(){var s=document.getElementById('strip'),h='';for(var i=0;i<=40;i++){h+='<i class="'+(i%5?'':'maj')+'" style="left:'+(i*2.5)+'%"></i>';}s.innerHTML=h+'<span style="left:2%">low</span><span style="right:2%">high</span>';})();</script>
+<script type="module" src="pieces/static.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/static.js?v=world-a891bf139a"></script>
+</body>
+</html>

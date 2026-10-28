@@ -1,0 +1,32 @@
+/* gallery.css: the survey sheets gallery on the shell. Layout only; type and colour come from shell.css. */
+.sheet-room .walltext { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 20px; align-items: end; }
+.sheet-room .walltext h1 { grid-column: 1 / span 7; margin: 0; }
+.sheet-room .walltext .an { grid-column: 8 / -1; max-width: 46ch; }
+.sheet-room .walltext > p:last-child { grid-column: 8 / -1; max-width: 62ch; }
+.sheet-room .hero { grid-column: 2 / -1; }
+.title-line { margin-top: 14px; font: 400 13px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--ink); }
+.title-line b { font-weight: 400; margin-right: 1.2ch; padding: 2px 6px; background: var(--ink); color: var(--wall); }
+.salon-title { grid-column: 1 / -1; margin: 0; font: 900 clamp(48px, 7vw, 120px)/.86 var(--sans); letter-spacing: -.05em; }
+.salon .object img, .hero img { display: block; aspect-ratio: 1; }
+.loop-room .walltext { grid-column: 1 / span 5; }
+.loop-room .walltext p { max-width: 52ch; }
+.loop-room .loop { grid-column: 6 / -1; }
+.loop video { display: block; width: 100%; height: auto; aspect-ratio: 1; background: #0f0e0f; }
+.live { grid-column: 5 / -1; display: grid; gap: 16px; }
+.live canvas { display: block; width: 100%; max-width: 760px; aspect-ratio: 1; height: auto; background: #d4cebe; }
+.live canvas[aria-busy="true"] { opacity: .82; transition: opacity var(--dur-base, .2s) var(--ease-enter, ease-out); }
+@media (max-width: 899px) {
+  .sheet-room .walltext, .sheet-room .walltext h1, .sheet-room .walltext .an, .sheet-room .walltext > p:last-child, .sheet-room .hero, .loop-room .walltext, .loop-room .loop, .live { grid-column: 1 / -1; position: static; }
+  .salon > li { grid-column: 1 / -1 !important; margin-top: 0 !important; }
+  .salon-title { line-height: 1; }
+}
+@media (max-width: 480px) {
+  /* a phone column holds 45 characters only at 15 px with the room's 16 px gutters */
+  .walltext p, .label p { font-size: 15px; letter-spacing: -.01em; text-wrap: wrap; }
+  .walltext p, .label, .label p, .loop-room .walltext p { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .live canvas[aria-busy="true"] { transition: none; } }
+
+/* credits list at full measure on phones (quality pass, T2: the list indent left 26 characters a line at 343 px) */
+.foot ul{padding-left:0;list-style:none;margin:.6em 0 0}
+.foot li{margin:.45em 0}

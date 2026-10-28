@@ -44,6 +44,7 @@ class _References(HTMLParser):
             self.images.append(values)
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _local_path(reference: str) -> Path | None:
     parsed = urlsplit(reference)
     if parsed.scheme or parsed.netloc or reference.startswith(("mailto:", "#")):
@@ -88,7 +89,7 @@ def test_product_and_retro_pillar_routes_resolve_with_reciprocal_navigation() ->
 
 
 def test_home_bundle_is_atomic_and_all_referenced_assets_exist() -> None:
-    source = (ROOT / "index.html").read_text(encoding="utf-8")
+    source = (ROOT / "workshop.html").read_text(encoding="utf-8")
     parser = _References()
     parser.feed(source)
 
@@ -133,14 +134,10 @@ def test_flywheel_primary_page_uses_the_current_release_route() -> None:
     assert "service-desk-incident-env e2e --out ./incident-runs" in service_desk_section
     assert "service-desk-incident-env verify RETURNED_ARTIFACT_DIR --recompute --json" in service_desk_section
     assert "Windows Server runner and a stub model" in release_section
-    assert "without driving screens" in release_section
-    assert "does not measure answer quality" in release_section
-    assert "consumer Windows 11, offline use or mobile devices" in release_section
-    assert "Index fell below its expected class without Git" in release_section
-    assert "Telos is excluded" in release_section
+    # 2026-10-23 plain-copy rewrite: setup needs stay; caveat lines were cut.
+    assert "Index needs Git" in release_section
+    assert "Telos is not in this build" in release_section
     assert "Known issues" in release_section
-    assert "dated correction to 1.0.4" in release_section
-    assert "did not run the installer again" in release_section
     assert "flywheel-desktop" not in source
     assert "v0.2.2" not in source
     assert "v0.3.10" not in source

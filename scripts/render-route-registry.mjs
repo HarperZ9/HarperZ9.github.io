@@ -392,7 +392,12 @@ function familyForSystem(system) {
   return "Systems";
 }
 
+// 26 October 2026: the world's pages (the home's road and places, the plain index, the element table, the swatch
+// library, Accession, credits and the imported live pieces under world/) form their own family.
+const WORLD_PAGES = /^(world\/|(floor|elements|swatches|accession|credits|workshop)\.html$)/;
+
 function familyForHref(href, metadata) {
+  if (WORLD_PAGES.test(href)) return "World";
   if (metadata?.family) return metadata.family;
   const existing = findRouteByHref(href);
   if (existing) return existing.family.label;
@@ -407,13 +412,14 @@ function familyForHref(href, metadata) {
   if (href.startsWith("security-") || href.includes("proof") || href.includes("receipt")) return "Security";
   if (/^(who-knew-first|who-knew-first-series|who-pays-the-referees|the-terms-for-telling|who-kept-the-books|the-maker-is-part-of-the-story|a-check-it-cannot-predict|why-i-do-this)\.html$/.test(href)) return "Who Knew First";
   if (/^(growth-needs-a-before|what-the-label-changes|the-second-hearing|availability-is-not-reach|no-receipt-no-accept|pick-the-lock-for-everyone|pick-the-lock-for-everyone-talk|models-propose-oracles-dispose|verified-is-not-trustworthy|conferred-existence-essay)\.html$/.test(href)) return "Writing";
-  if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw)\.html$/.test(href)) return "Studio";
+  if (/^(current-story|gaussian-splats|loom|retro|engine-revival|brender-archival|elder-enb|truth-enb|enb-runtime-core|skyrimbridge|raw|superframe)\.html$/.test(href)) return "Studio";
   if (/^(cv|resume|portfolio|cover-letter|person|test-run-request|hire|work-with-me|independence|income-ledger)\.html/.test(href)) return "Work";
   if (/^(fonts|typeface|type-forge)\.html$/.test(href)) return "Fonts";
   return metadata?.family || "Systems";
 }
 
 function reconcilePublicRoutes() {
+  if (!registry.families.some((family) => family.label === "World")) registry.families.push({ label: "World", hubHref: "floor.html", routes: [] });
   systems.prefixes = [...new Set([...(systems.prefixes || []), "systems/", "demos/"])];
   research.prefixes = [...new Set([...(research.prefixes || []), "research-", "figures/", "analytics/"])]
     .filter((prefix) => !["briefings/", "frontier-safety/"].includes(prefix));

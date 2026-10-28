@@ -213,11 +213,8 @@ class FlywheelOutputDemoTests(unittest.TestCase):
             "synthetic inputs",
             "one structured field",
             "not a screen recording",
-            # 2026-09-25: the limits sit in the demo's "How we know" under "Does not prove".
-            "does not prove",
-            "not a software release or general correctness",
+            # 2026-10-23: the demo details keep one plain note on its inputs (plain-copy rewrite).
             "no model or real ci run was used",
-            "does not establish source trust",
         ):
             self.assertIn(phrase, demo_text)
 

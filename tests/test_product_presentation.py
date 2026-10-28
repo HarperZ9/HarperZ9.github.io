@@ -134,8 +134,7 @@ def test_record_pages_keep_limits_visible_and_relationships_optional() -> None:
     assert '<dt>Access</dt><dd>install</dd>' in page
     assert "<dt>Release</dt><dd>0.3.1 on PyPI; latest GitHub release v0.2.0</dd>" in page
     assert "Accountable Surface v0.1.0" in page
-    assert "The v0.1.0 GitHub wheel was not a self-contained install." in page
-    assert "Real Windows native-application acceptance remains unverified" in page
+    assert "Windows desktop-app control has been tested only against a fake UI Automation driver." in page
     assert '<section class="mv" id="architecture-and-relationships"' in page
     assert '<details class="product-record-details" id="architecture-details">' in page
     assert "<summary>Architecture, dependencies, and relationship notes</summary>" in page

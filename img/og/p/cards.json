@@ -7,6 +7,10 @@
   "alt": "A witness should not become a ruler, by Zain Dana Harper. An eye drawn in fine lines, its iris a glowing ring around a bright core, above a thin horizon.",
   "image": "https://harperz9.github.io/img/og/p/a-witness-should-not-become-a-ruler.jpg?v=afc7835ef7a4"
  },
+ "accession.html": {
+  "alt": "Accession, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/accession.jpg?v=37dd7191200d"
+ },
  "accountable-engine.html": {
   "alt": "Accountable Engine, the standard, turned on the human too, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/accountable-engine.jpg?v=3191f7e0c382"
@@ -127,6 +131,10 @@
   "alt": "Cover Letter, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
   "image": "https://harperz9.github.io/img/og/p/cover-letter.jpg?v=e83a8a544168"
  },
+ "credits.html": {
+  "alt": "Credits, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/credits.jpg?v=fd0426261036"
+ },
  "crucible.html": {
   "alt": "Crucible, by Zain Dana Harper. Seven measured axes fan out from a bright core inside fine rings. One axis falls short of the dashed tolerance ring and is marked DRIFT; one has no measurement and is marked UNVERIFIABLE.",
   "image": "https://harperz9.github.io/img/og/p/crucible.jpg?v=583b9b579069"
@@ -138,6 +146,10 @@
  "cv.html": {
   "alt": "Full Curriculum Vitae, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
   "image": "https://harperz9.github.io/img/og/p/cv.jpg?v=c25995e3bf65"
+ },
+ "daylight.html": {
+  "alt": "Daylight Commons, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/daylight.jpg?v=286c6f3df18e"
  },
  "demo-crucible.html": {
   "alt": "Crucible demo: measure, refine, re-check, by Zain Dana Harper. Seven measured axes fan out from a bright core inside fine rings. One axis falls short of the dashed tolerance ring and is marked DRIFT; one has no measurement and is marked UNVERIFIABLE.",
@@ -175,6 +187,10 @@
   "alt": "Dossier, by Zain Dana Harper. A six-armed crystal of fine lines, like a snowflake, with a bright core at its center.",
   "image": "https://harperz9.github.io/img/og/p/dossier.jpg?v=104214a57e49"
  },
+ "elements.html": {
+  "alt": "The element table, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/elements.jpg?v=ade345dd7915"
+ },
  "emet-sample.html": {
   "alt": "Sample Proof-Surface Report - EMET, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/emet-sample.jpg?v=cc6c68b63e3e"
@@ -194,6 +210,10 @@
  "field-guide.html": {
   "alt": "Flywheel field guide, by Zain Dana Harper. A bright core inside a large ring of fine radial lines, like a wheel drawn with a plotter pen.",
   "image": "https://harperz9.github.io/img/og/p/field-guide.jpg?v=719cdd05a906"
+ },
+ "floor.html": {
+  "alt": "Everything, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/floor.jpg?v=871783817020"
  },
  "flywheel-pilot.html": {
   "alt": "Flywheel verification pilot, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
@@ -296,7 +316,7 @@
   "image": "https://harperz9.github.io/img/og/p/index-graph.jpg?v=9a515b898af0"
  },
  "index.html": {
-  "alt": "Re-derivable AI evaluation, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "alt": "Zain Dana Harper, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8"
  },
  "isomorph.html": {
@@ -312,7 +332,7 @@
   "image": "https://harperz9.github.io/img/og/p/kun.jpg?v=6127545b9911"
  },
  "learn.html": {
-  "alt": "learn, an accountable credential and study engine, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
+  "alt": "Learn: study planning and course logistics, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/learn.jpg?v=c003a209bf70"
  },
  "loom.html": {
@@ -643,9 +663,17 @@
   "alt": "The Studio, Live media instrument, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/studio.jpg?v=1cf3a49a2803"
  },
+ "superframe.html": {
+  "alt": "Superframe, by Zain Dana Harper. A fan of prints of one piece, as paint, type, lines and relief, beside a graph joining its seven elements to five media, and a strip of its sound drawn as a spectrogram.",
+  "image": "https://harperz9.github.io/img/og/p/superframe.jpg?v=bfb741eeb220"
+ },
  "support-has-more-than-one-record.html": {
   "alt": "Support Has More Than One Record, by Zain Dana Harper. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core.",
   "image": "https://harperz9.github.io/img/og/p/support-has-more-than-one-record.jpg?v=631d25a56b24"
+ },
+ "swatches.html": {
+  "alt": "The swatch library, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/swatches.jpg?v=8a080ee66f64"
  },
  "systems/behavior-transform.html": {
   "alt": "behavior-transform.io, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
@@ -770,5 +798,505 @@
  "work-with-me.html": {
   "alt": "Work with me, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
   "image": "https://harperz9.github.io/img/og/p/work-with-me.jpg?v=c37c01be03d1"
+ },
+ "workshop.html": {
+  "alt": "Tools for testing AI systems, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/workshop.jpg?v=129140a82c8d"
+ },
+ "world/exhibit/index.html": {
+  "alt": "We Are Here, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--exhibit.jpg?v=f593a7fc2172"
+ },
+ "world/glass/index.html": {
+  "alt": "Glass, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--glass.jpg?v=50ddf375ad3c"
+ },
+ "world/playbook/examples/index.html": {
+  "alt": "Builds, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--playbook--examples.jpg?v=8c1ccda4b305"
+ },
+ "world/sound/theme/index.html": {
+  "alt": "Hum: a site theme with a beat, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--sound--theme.jpg?v=869b56cafcf7"
+ },
+ "world/superframe/room/index.html": {
+  "alt": "Make room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--superframe--room.jpg?v=688e461526a6"
+ },
+ "world/typeengine/living/index.html": {
+  "alt": "Living type, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--typeengine--living.jpg?v=8d426c17b869"
+ },
+ "world/typeengine/room/index.html": {
+  "alt": "Type room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--typeengine--room.jpg?v=a79ae8435442"
+ },
+ "world/typeengine/specimens/index.html": {
+  "alt": "Specimen, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--typeengine--specimens.jpg?v=a656ee73bfbd"
+ },
+ "world/universe/proto/index.html": {
+  "alt": "The universe, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto.jpg?v=6dfc67ab3ba6"
+ },
+ "world/universe/proto/path.html": {
+  "alt": "The road, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--path.jpg?v=51c284a10cde"
+ },
+ "world/universe/proto/places/2026-08-26-openai-hugging-face-incident.html": {
+  "alt": "Five evidence lanes, one OpenAI and Hugging Face incident, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--2026-08-26-openai-hugging-face-incident.jpg?v=666ced88dfb3"
+ },
+ "world/universe/proto/places/a-check-it-cannot-predict.html": {
+  "alt": "A Check It Cannot Predict, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--a-check-it-cannot-predict.jpg?v=1f173a0e61da"
+ },
+ "world/universe/proto/places/a-witness-should-not-become-a-ruler.html": {
+  "alt": "A witness should not become a ruler, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--a-witness-should-not-become-a-ruler.jpg?v=92dd6f36f1e1"
+ },
+ "world/universe/proto/places/afterimage.html": {
+  "alt": "What you looked at stays, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--afterimage.jpg?v=d5105984cbf5"
+ },
+ "world/universe/proto/places/anempathetic.html": {
+  "alt": "Cheerful music, heavy facts, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--anempathetic.jpg?v=af0ad03306c6"
+ },
+ "world/universe/proto/places/articulate.html": {
+  "alt": "Articulate, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--articulate.jpg?v=8d993ee5bec2"
+ },
+ "world/universe/proto/places/availability-is-not-reach.html": {
+  "alt": "Availability Is Not Reach, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--availability-is-not-reach.jpg?v=0d6fe2e9b637"
+ },
+ "world/universe/proto/places/balance.html": {
+  "alt": "The False Balance, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--balance.jpg?v=19adc164bbf2"
+ },
+ "world/universe/proto/places/borrowed-ground.html": {
+  "alt": "Borrowed Ground, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--borrowed-ground.jpg?v=5d37d6fcf84b"
+ },
+ "world/universe/proto/places/brender-archival.html": {
+  "alt": "BRender archival, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--brender-archival.jpg?v=d31aaa2c194c"
+ },
+ "world/universe/proto/places/buildlang.html": {
+  "alt": "BuildLang, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--buildlang.jpg?v=690fb7147ca8"
+ },
+ "world/universe/proto/places/checking-the-machines.html": {
+  "alt": "An open letter on checking the machines, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--checking-the-machines.jpg?v=688c63a8c36d"
+ },
+ "world/universe/proto/places/conferred-existence-essay.html": {
+  "alt": "Conferred Existence, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--conferred-existence-essay.jpg?v=2a29b0b031d0"
+ },
+ "world/universe/proto/places/conferred-existence.html": {
+  "alt": "Conferred Existence: the full corpus, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--conferred-existence.jpg?v=8cad7857f86d"
+ },
+ "world/universe/proto/places/crowd.html": {
+  "alt": "Manufactured consensus, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--crowd.jpg?v=b3f9779726d7"
+ },
+ "world/universe/proto/places/csmax-baron.html": {
+  "alt": "The Baron&#x27;s Room, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--csmax-baron.jpg?v=e90ba2617dad"
+ },
+ "world/universe/proto/places/csmax-home.html": {
+  "alt": "Second tour, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--csmax-home.jpg?v=ba8da87c200e"
+ },
+ "world/universe/proto/places/current-story.html": {
+  "alt": "Current Story, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--current-story.jpg?v=1874cd005018"
+ },
+ "world/universe/proto/places/cv.html": {
+  "alt": "Curriculum vitae, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--cv.jpg?v=fde0ebc8002e"
+ },
+ "world/universe/proto/places/daylight.html": {
+  "alt": "Daylight Commons, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--daylight.jpg?v=f13ee205ba37"
+ },
+ "world/universe/proto/places/ebbinghaus.html": {
+  "alt": "The same circle, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--ebbinghaus.jpg?v=d6b2dbc3409c"
+ },
+ "world/universe/proto/places/emet-tool.html": {
+  "alt": "EMET, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--emet-tool.jpg?v=4188ed999f02"
+ },
+ "world/universe/proto/places/emet.html": {
+  "alt": "Emet, Met, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--emet.jpg?v=6643c3298885"
+ },
+ "world/universe/proto/places/engine-revival.html": {
+  "alt": "Engine Revival, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--engine-revival.jpg?v=26297464f328"
+ },
+ "world/universe/proto/places/film-a-passing-check-can-still-be-wro.html": {
+  "alt": "A passing check can still be wrong, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-a-passing-check-can-still-be-wro.jpg?v=98b48b147e76"
+ },
+ "world/universe/proto/places/film-checking-the-light.html": {
+  "alt": "Checking the light, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-checking-the-light.jpg?v=5436134c30ae"
+ },
+ "world/universe/proto/places/film-claiming-got-cheap-checking-did.html": {
+  "alt": "Claiming got cheap. Checking did not., by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-claiming-got-cheap-checking-did.jpg?v=26876c8d9886"
+ },
+ "world/universe/proto/places/film-flywheel-check-an-answer-against.html": {
+  "alt": "Flywheel: check an answer against its source, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-flywheel-check-an-answer-against.jpg?v=2a153f6fe62a"
+ },
+ "world/universe/proto/places/film-models-do-what-training-pays-for.html": {
+  "alt": "Models do what training pays for, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-models-do-what-training-pays-for.jpg?v=2b3525eceda9"
+ },
+ "world/universe/proto/places/film-raw-native-build-render-check.html": {
+  "alt": "raw-native: build, render, check, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-raw-native-build-render-check.jpg?v=035b03613f5e"
+ },
+ "world/universe/proto/places/film-re-derive-it-don-t-take-it-on-tr.html": {
+  "alt": "Re-derive it. Don&#x27;t take it on trust., by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-re-derive-it-don-t-take-it-on-tr.jpg?v=bf6d78671413"
+ },
+ "world/universe/proto/places/film-what-a-model-s-written-reasoning.html": {
+  "alt": "What a model&#x27;s written reasoning can and cannot show, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-what-a-model-s-written-reasoning.jpg?v=b0591952b74d"
+ },
+ "world/universe/proto/places/film-which-source-decides.html": {
+  "alt": "Which source decides, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--film-which-source-decides.jpg?v=d6aefd904e33"
+ },
+ "world/universe/proto/places/flywheel.html": {
+  "alt": "Flywheel, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--flywheel.jpg?v=841c6d7bf0b4"
+ },
+ "world/universe/proto/places/front-door.html": {
+  "alt": "The front door (held), by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--front-door.jpg?v=afc871ee558f"
+ },
+ "world/universe/proto/places/frontier-safety-openai-hugging-face-incident.html": {
+  "alt": "The OpenAI and Hugging Face incident: an essay, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--frontier-safety-openai-hugging-face-incident.jpg?v=de3fdbf3ae04"
+ },
+ "world/universe/proto/places/frontier-safety.html": {
+  "alt": "Frontier Safety briefing, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--frontier-safety.jpg?v=b030471c9fc5"
+ },
+ "world/universe/proto/places/gallery.html": {
+  "alt": "Gallery, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--gallery.jpg?v=3842a6543f64"
+ },
+ "world/universe/proto/places/groove.html": {
+  "alt": "The skipping groove, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--groove.jpg?v=8c4203c4a636"
+ },
+ "world/universe/proto/places/growth-needs-a-before.html": {
+  "alt": "Growth Needs a Before, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--growth-needs-a-before.jpg?v=cacb410350ac"
+ },
+ "world/universe/proto/places/hire.html": {
+  "alt": "Hire, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--hire.jpg?v=2d2028a66289"
+ },
+ "world/universe/proto/places/labels.html": {
+  "alt": "Four labels, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--labels.jpg?v=e794c6c012bd"
+ },
+ "world/universe/proto/places/learn.html": {
+  "alt": "learn, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--learn.jpg?v=64580279f05e"
+ },
+ "world/universe/proto/places/letter.html": {
+  "alt": "The letter, and the log, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--letter.jpg?v=adabdc9d05e0"
+ },
+ "world/universe/proto/places/listen.html": {
+  "alt": "Three sounds that lie, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--listen.jpg?v=e9ba447b8543"
+ },
+ "world/universe/proto/places/lossy.html": {
+  "alt": "Lossy, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--lossy.jpg?v=e5db953209dd"
+ },
+ "world/universe/proto/places/low-water.html": {
+  "alt": "Low Water, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--low-water.jpg?v=4775729bcb4f"
+ },
+ "world/universe/proto/places/ltj-bukem-the-man-behind-the-atmosphere.html": {
+  "alt": "LTJ Bukem: The Man Behind the Atmosphere, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--ltj-bukem-the-man-behind-the-atmosphere.jpg?v=6a85a298ddee"
+ },
+ "world/universe/proto/places/lullaby.html": {
+  "alt": "A bedtime story, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--lullaby.jpg?v=43039121278e"
+ },
+ "world/universe/proto/places/mcgurk.html": {
+  "alt": "The eye overrules the ear, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--mcgurk.jpg?v=603498aaaab7"
+ },
+ "world/universe/proto/places/mirror.html": {
+  "alt": "Weigh it yourself, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--mirror.jpg?v=04e6a94af295"
+ },
+ "world/universe/proto/places/models-propose-oracles-dispose.html": {
+  "alt": "Models Propose, Oracles Dispose, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--models-propose-oracles-dispose.jpg?v=ce55f370bb2f"
+ },
+ "world/universe/proto/places/munchhausen.html": {
+  "alt": "By his own hair, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--munchhausen.jpg?v=1aeb3b27bf5d"
+ },
+ "world/universe/proto/places/museum.html": {
+  "alt": "Visitor, 21st century, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--museum.jpg?v=ccd874434e85"
+ },
+ "world/universe/proto/places/no-receipt-no-accept.html": {
+  "alt": "No Receipt, No Accept, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--no-receipt-no-accept.jpg?v=062d597f70ee"
+ },
+ "world/universe/proto/places/obj-bread-line-bowery.html": {
+  "alt": "Bowery bread line LCCN2014683026, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-bread-line-bowery.jpg?v=acb25b64e28e"
+ },
+ "world/universe/proto/places/obj-broadside-ballad.html": {
+  "alt": "Broadside ballad entitled &#x27;A Huy and Cry After Sir John Barlycorn&#x27;, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-broadside-ballad.jpg?v=5a324fba2b53"
+ },
+ "world/universe/proto/places/obj-concrete-layers.html": {
+  "alt": "Concrete Layers 02, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-concrete-layers.jpg?v=2cf941fa721a"
+ },
+ "world/universe/proto/places/obj-concrete-worn.html": {
+  "alt": "Concrete Floor Worn 001, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-concrete-worn.jpg?v=b53e541ecbbd"
+ },
+ "world/universe/proto/places/obj-famine-bangalore.html": {
+  "alt": "Famine in India Natives Waiting for Relief in Bangalore, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-famine-bangalore.jpg?v=6136cb98bb37"
+ },
+ "world/universe/proto/places/obj-gods-word.html": {
+  "alt": "The weight of Gods word against mans traditions, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-gods-word.jpg?v=94b984061aa2"
+ },
+ "world/universe/proto/places/obj-heart-ani.html": {
+  "alt": "BD Weighing of the Heart, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-heart-ani.jpg?v=49f11e142974"
+ },
+ "world/universe/proto/places/obj-heart-hunefer.html": {
+  "alt": "Papyrus of Hunefer, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-heart-hunefer.jpg?v=24e9029fe971"
+ },
+ "world/universe/proto/places/obj-hessian.html": {
+  "alt": "Hessian 230, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-hessian.jpg?v=e4ba1d1ffb42"
+ },
+ "world/universe/proto/places/obj-hohenzollerns.html": {
+  "alt": "The Hohenzollerns in America newspaper ad, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-hohenzollerns.jpg?v=b7fcf4474d47"
+ },
+ "world/universe/proto/places/obj-justice-etching.html": {
+  "alt": "A woman with a sword and a balance; representing justice. Etching, 16--., by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-justice-etching.jpg?v=13f29baf165b"
+ },
+ "world/universe/proto/places/obj-munchausen-dore.html": {
+  "alt": "Dore-munchausen-illustration. Gustave Doré, 1862, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-munchausen-dore.jpg?v=559edefcd10a"
+ },
+ "world/universe/proto/places/obj-muybridge-758.html": {
+  "alt": "Animal Locomotion, Plate 758. Eadweard Muybridge, 1887, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-muybridge-758.jpg?v=a7557f5f142b"
+ },
+ "world/universe/proto/places/obj-neratja.html": {
+  "alt": "Neratja front page, October 26, 1918, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-neratja.jpg?v=4ccedbe36b57"
+ },
+ "world/universe/proto/places/obj-newspad-vaudeville.html": {
+  "alt": "Vaudeville show billing in Kansas newspaper, 1908, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-newspad-vaudeville.jpg?v=aaa5889eef22"
+ },
+ "world/universe/proto/places/obj-preanger.html": {
+  "alt": "Front Page of DE PREANGER-BODE Nov 4 1918, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-preanger.jpg?v=414fb4d462b8"
+ },
+ "world/universe/proto/places/obj-rust-metal.html": {
+  "alt": "Rusty Metal 04, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-rust-metal.jpg?v=bd7c06119a91"
+ },
+ "world/universe/proto/places/obj-telegrapher.html": {
+  "alt": "Ham telegraph operator, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-telegrapher.jpg?v=b55aead26c57"
+ },
+ "world/universe/proto/places/obj-vrije-woord.html": {
+  "alt": "Front page of Het Vrije Woord Nov 16 1918, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-vrije-woord.jpg?v=6bd9a92b3514"
+ },
+ "world/universe/proto/places/obj-wanted-booth.html": {
+  "alt": "John Wilkes Booth wanted poster new, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-wanted-booth.jpg?v=b598b5ff3940"
+ },
+ "world/universe/proto/places/obj-wanted-mcdonald.html": {
+  "alt": "Wanted poster for William McDonald, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-wanted-mcdonald.jpg?v=0092bdf797d9"
+ },
+ "world/universe/proto/places/obj-wanted-stephens.html": {
+  "alt": "James Stephens wanted poster, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-wanted-stephens.jpg?v=7fdf0e5cb1c7"
+ },
+ "world/universe/proto/places/obj-wilnaer.html": {
+  "alt": "Front page of newspaper Wilnaer Zeitung with Lithuanian Vytis (Waykimas), published on 12 April 1918, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--obj-wilnaer.jpg?v=7d620ae333ab"
+ },
+ "world/universe/proto/places/open-archives.html": {
+  "alt": "open-archives, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--open-archives.jpg?v=5aa0c66b9b79"
+ },
+ "world/universe/proto/places/palimpsest.html": {
+  "alt": "Palimpsest, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--palimpsest.jpg?v=cf4b91b715c7"
+ },
+ "world/universe/proto/places/pick-the-lock-for-everyone.html": {
+  "alt": "Pick the Lock for Everyone, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--pick-the-lock-for-everyone.jpg?v=65ea28257cf3"
+ },
+ "world/universe/proto/places/powers.html": {
+  "alt": "Powers of Ten, for a Lie, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--powers.jpg?v=8430864c8328"
+ },
+ "world/universe/proto/places/raw.html": {
+  "alt": "raw-native, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--raw.jpg?v=03f565426899"
+ },
+ "world/universe/proto/places/recitative.html": {
+  "alt": "Bureaucracy, sung, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--recitative.jpg?v=50260c3c3cc5"
+ },
+ "world/universe/proto/places/resume.html": {
+  "alt": "Resume, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--resume.jpg?v=36ee5d9b792a"
+ },
+ "world/universe/proto/places/scale.html": {
+  "alt": "How a scale lies, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--scale.jpg?v=6725f718c16d"
+ },
+ "world/universe/proto/places/scripture.html": {
+  "alt": "The terms, illuminated, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--scripture.jpg?v=c2e67f6ad594"
+ },
+ "world/universe/proto/places/static.html": {
+  "alt": "Between stations, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--static.jpg?v=c5f865674dbf"
+ },
+ "world/universe/proto/places/studio.html": {
+  "alt": "Studio, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--studio.jpg?v=956b2a1f032e"
+ },
+ "world/universe/proto/places/support-has-more-than-one-record.html": {
+  "alt": "Support Has More Than One Record, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--support-has-more-than-one-record.jpg?v=eadb1cfc7fb7"
+ },
+ "world/universe/proto/places/test.html": {
+  "alt": "The test that wasn&#x27;t, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--test.jpg?v=273cd4b4b39e"
+ },
+ "world/universe/proto/places/the-maker-is-part-of-the-story.html": {
+  "alt": "The Maker Is Part of the Story, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-maker-is-part-of-the-story.jpg?v=d7d01d798ffa"
+ },
+ "world/universe/proto/places/the-number-has-a-vintage.html": {
+  "alt": "The Number Has a Vintage, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-number-has-a-vintage.jpg?v=cb69930e9a0c"
+ },
+ "world/universe/proto/places/the-sandbox-was-never-just-a-box.html": {
+  "alt": "The Sandbox Was Never Just a Box, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-sandbox-was-never-just-a-box.jpg?v=74c12bb73c66"
+ },
+ "world/universe/proto/places/the-scene-the-song-did-not-tell-you.html": {
+  "alt": "The Scene the Song Did Not Tell You, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-scene-the-song-did-not-tell-you.jpg?v=ddf3d544d85c"
+ },
+ "world/universe/proto/places/the-second-hearing.html": {
+  "alt": "The Second Hearing, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-second-hearing.jpg?v=d193ce8df208"
+ },
+ "world/universe/proto/places/the-summary-is-not-the-record.html": {
+  "alt": "The Summary Is Not the Record, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-summary-is-not-the-record.jpg?v=1063b816e605"
+ },
+ "world/universe/proto/places/the-terms-for-telling.html": {
+  "alt": "The Terms for Telling, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-terms-for-telling.jpg?v=8ba2fa8034f5"
+ },
+ "world/universe/proto/places/the-timestamp-is-not-the-order.html": {
+  "alt": "The Timestamp Is Not the Order, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--the-timestamp-is-not-the-order.jpg?v=5b7b9110b785"
+ },
+ "world/universe/proto/places/verified-is-not-trustworthy.html": {
+  "alt": "Verified Is Not Trustworthy, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--verified-is-not-trustworthy.jpg?v=cdd109d5b1aa"
+ },
+ "world/universe/proto/places/we-are-here.html": {
+  "alt": "We Are Here, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--we-are-here.jpg?v=ac7ae3c25788"
+ },
+ "world/universe/proto/places/weather.html": {
+  "alt": "Forecast for a war, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--weather.jpg?v=c9dc42e3b577"
+ },
+ "world/universe/proto/places/what-the-formula-counts.html": {
+  "alt": "What the Formula Counts, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--what-the-formula-counts.jpg?v=1fca9c61f7a9"
+ },
+ "world/universe/proto/places/what-the-label-changes.html": {
+  "alt": "What the Label Changes, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--what-the-label-changes.jpg?v=34cb5393b572"
+ },
+ "world/universe/proto/places/who-kept-the-books.html": {
+  "alt": "Who Kept the Books, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--who-kept-the-books.jpg?v=1d498f1736ff"
+ },
+ "world/universe/proto/places/who-knew-first-series.html": {
+  "alt": "Who Knew First, and what it opened, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--who-knew-first-series.jpg?v=559390e241d3"
+ },
+ "world/universe/proto/places/who-knew-first.html": {
+  "alt": "Who Knew First, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--who-knew-first.jpg?v=f97ceac9e3d1"
+ },
+ "world/universe/proto/places/who-pays-the-referees.html": {
+  "alt": "Who Pays the Referees, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--who-pays-the-referees.jpg?v=6de96c9febd1"
+ },
+ "world/universe/proto/places/why-i-do-this.html": {
+  "alt": "A Bullshitter Knows a Bullshitter, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--why-i-do-this.jpg?v=e89b6a472a26"
+ },
+ "world/universe/proto/places/why.html": {
+  "alt": "Why it&#x27;s built this way, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--why.jpg?v=fb512865fb08"
+ },
+ "world/universe/proto/places/witnessing-spine.html": {
+  "alt": "The Witnessing Spine, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--witnessing-spine.jpg?v=54fd3a124e96"
+ },
+ "world/universe/proto/places/work-with-me.html": {
+  "alt": "Work with me, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--work-with-me.jpg?v=cd17c9516cbe"
+ },
+ "world/visualizer/web/grid.html": {
+  "alt": "Struck Grid, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--visualizer--web--grid.jpg?v=f55292f99fbb"
+ },
+ "world/visualizer/web/index.html": {
+  "alt": "Sounding, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--visualizer--web.jpg?v=8c26bd6002f4"
  }
 }

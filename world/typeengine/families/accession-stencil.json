@@ -1,0 +1,7 @@
+{
+ "schema": "typeengine.family/1", "id": "accession-stencil", "name": "Accession Stencil", "ground": "#ebe5d8",
+ "skeleton": { "source": "accession", "style": "display", "weight": 700, "cut": "stencil" },
+ "bindings": { "fill": { "material": "ink", "params": { "color": "#15130f" } } },
+ "axes": [ { "tag": "wght", "name": "Weight", "min": 300, "max": 900, "default": 700, "target": "skeleton.weight" } ],
+ "recipe": { "from": "typeface build/specs/stencil.json, restated as a program", "check": "tests/test_emit.py compares every glyph with dist/variable/AccessionStencil[wght].ttf" }
+}

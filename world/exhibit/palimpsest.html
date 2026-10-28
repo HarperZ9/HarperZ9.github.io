@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palimpsest</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/palimpsest.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Palimpsest">
+<meta property="og:description" content="Palimpsest">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/palimpsest.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1100px; margin:0 auto; padding:16px 12px 40px; }
+  .top { margin-bottom:12px; }
+  .desk { position:relative; padding:clamp(18px,5vw,64px) clamp(8px,14vw,200px); overflow:hidden; isolation:isolate;
+    background:
+      radial-gradient(circle at 88% 10%, #ffe93a 0 7%, #e3262b 7% 14%, #e0177e 14% 21%, #6a1b9a 21% 28%, #1aa3e0 28% 35%, transparent 35%),
+      repeating-linear-gradient(115deg, #0d2c4f 0 26px, #11406e 26px 52px); }
+  #deskc { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+  .sheet { position:relative; z-index:2; width:min(100%,640px); aspect-ratio:3/4; margin:0 auto; touch-action:none; cursor:none; }
+  .sheet:focus-visible { outline:3px solid var(--hot); outline-offset:6px; }
+  .sheet canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  #gl { filter:drop-shadow(0 18px 18px rgba(0,0,0,.6)); }
+  #fx { pointer-events:none; }
+  #lamp { position:absolute; width:64px; height:64px; margin:-32px 0 0 -32px; pointer-events:none; }
+  .mon { position:relative; z-index:3; width:min(240px,64%); margin:0 auto 18px; background:#111; border:8px solid #1b1b1d; border-radius:18px; box-shadow:0 14px 24px rgba(0,0,0,.6), inset 0 0 0 2px #46433b; }
+  .mon canvas { width:100%; aspect-ratio:4/3; display:block; border-radius:8px; }
+  .mon span { display:block; text-align:center; font:600 16px "Hanken Grotesk",sans-serif; letter-spacing:.14em; color:#a39e94; padding:3px 0 1px; text-transform:uppercase; }
+  @media (min-width:1000px) { .mon { position:absolute; left:24px; top:26px; width:230px; margin:0; transform:rotate(-3deg); } }
+  .controls { display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; margin:14px 0 4px; }
+  label { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:600; }
+  input[type=range] { width:160px; accent-color:var(--hot); min-height:44px; }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/palimpsest.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Palimpsest</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <div class="desk">
+      <canvas id="deskc" aria-hidden="true"></canvas>
+      <div class="mon" aria-hidden="true"><canvas id="mon" width="480" height="360"></canvas><span>Wire, 1956</span></div>
+      <div class="sheet" id="sheet" tabindex="0" role="application" aria-label="Vellum page under a movable light. Drag the lamp, or use the arrow keys. Shift with an arrow moves it farther.">
+        <canvas id="gl"></canvas>
+        <canvas id="fx"></canvas>
+        <svg id="lamp" viewBox="-32 -32 64 64" aria-hidden="true"></svg>
+      </div>
+    </div>
+    <div class="controls">
+      <label>Light height <input type="range" id="zr" min="0" max="100" value="40" aria-label="Light height, low is raking"></label>
+      <button type="button" id="send">Send a message</button>
+      <button type="button" id="reset">Reset light</button>
+    </div>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <p class="sr" id="engine"></p>
+    <figcaption>FIG. 2. Palimpsest. Vellum scraped and written over, lit from the side. Extinction learning writes a new memory beside the old one and does not erase it: Bouton, Learning &amp; Memory 11:485-494 (2004); Quirk and Mueller, Neuropsychopharmacology 33:56-72 (2008). On the desk: Cajal's Purkinje cell drawing, a redacted CIA release, a telegraphers' trade paper, an engraving of Edison's stock ticker, and teletype film from Prelinger Archives. The vellum grain comes from a scan of a medieval palimpsest. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/palimpsest.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/palimpsest.js?v=world-a891bf139a"></script>
+</body>
+</html>

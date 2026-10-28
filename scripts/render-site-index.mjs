@@ -29,6 +29,7 @@ const escape = value => String(value).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[c]));
 const pillars = [
+  ['World', 'world', 'The world', 'index.html', 'Walk the road through ink and water, then the places for light, type, mosaic, sound, data, film and the tools.'],
   ['Systems', 'flywheel', 'Flywheel and tools', 'flywheel.html', 'Start with the central engine, then explore its workflows and independently useful tools.'],
   ['Security', 'security', 'Safety, verification and privacy', 'security.html', 'Inspect controls, evidence boundaries and security projects.'],
   ['Research', 'research', 'Research', 'research.html', 'Read research notes, papers and evaluation work.'],

@@ -46,6 +46,7 @@ PUBLIC_MARKERS = (
 )
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _text(path: str) -> str:
     return (ROOT / path).read_text(encoding="utf-8")
 
@@ -112,7 +113,7 @@ def test_font_marketplace_files_are_part_of_the_reviewed_release_spine() -> None
 
 
 def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
-    source = _text("index.html")
+    source = _text("workshop.html")
     obsolete_js = "index-B_" + "tbCD5Q.js"
     obsolete_css = "index-D3" + "HRo6Wc.css"
     previous_js = "index-Dwp-qWEt.js"
@@ -255,7 +256,13 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     # same sheet. index-T9NjSt7K.js stays as retained history.
     # 2026-10-18-night-school-narrated-home: the guides section and its films leave the home page (the author, 18 October 2026),
     # so the bundle is index-DnlLsL1T.js with the same sheet. index-mxSUkjU6.js stays as retained history.
-    current_js = "index-DnlLsL1T.js"
+    # 2026-10-23-plain-copy: the home copy is rewritten in plain language, so the bundle is index-Bg7UPow6.js with the
+    # same sheet. index-DnlLsL1T.js stays as retained history.
+    current_js = "index-Bg7UPow6.js"
+    previous_plain_copy_js = "index-DnlLsL1T.js"
+    assert previous_plain_copy_js not in source
+    assert (ROOT / "assets" / previous_plain_copy_js).is_file()
+    assert f"assets/{previous_plain_copy_js}" in RELEASE_PATHS
     previous_night_school_narrated_home_js = "index-mxSUkjU6.js"
     assert previous_night_school_narrated_home_js not in source
     assert (ROOT / "assets" / previous_night_school_narrated_home_js).is_file()
@@ -409,7 +416,12 @@ def test_home_uses_only_the_reviewed_atomic_bundle_pair() -> None:
     previous_void_plates_js = "index-DYDJA8vR.js"
     assert previous_void_plates_js not in source
     assert (ROOT / "assets" / previous_void_plates_js).is_file()
-    current_css = "index-Se2ioCLN.css"
+    # 2026-10-23-plain-copy: the flagship section adds styles, so the sheet is index-D11WloWt.css. index-Se2ioCLN.css stays as history.
+    current_css = "index-D11WloWt.css"
+    previous_plain_copy_css = "index-Se2ioCLN.css"
+    assert previous_plain_copy_css not in source
+    assert (ROOT / "assets" / previous_plain_copy_css).is_file()
+    assert f"assets/{previous_plain_copy_css}" in RELEASE_PATHS
     previous_copy_pass_css = "index-DPe17JSn.css"
     assert previous_copy_pass_css not in source
     assert (ROOT / "assets" / previous_copy_pass_css).is_file()

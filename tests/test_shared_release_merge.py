@@ -14,6 +14,7 @@ FRESH_STAMP = "20260925-void-plates"
 NAV_CACHE_STAMP = "20260909-pillar-navigation"
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
@@ -96,7 +97,7 @@ def test_font_marketplace_cache_stamp_covers_the_sitewide_navigation_chain() -> 
     routes = read("system/routes.js")
     home_routes = read("home/src/site-routes.ts")
     renderer = read("scripts/render-route-registry.mjs")
-    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("index.html"))
+    bundle_match = re.search(r'src="/(assets/index-[^"]+\.js)"', read("workshop.html"))
     assert bundle_match, "built home page does not reference its JavaScript bundle"
     bundle = read(bundle_match.group(1))
     assert f'export const ROUTE_CACHE_STAMP = "{FRESH_STAMP}"' in routes
@@ -157,7 +158,6 @@ def test_security_surfaces_keep_deep_detail_and_add_machine_readable_maturity() 
     assert "40/40" in emet
     assert "https://pypi.org/project/emet/1.3.0/" in emet
     assert "https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md" in emet
-    assert "regulatory assessment" in emet
     assert 'href="security-tools.json"' in emet
 
 

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four labels</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/labels.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Four labels">
+<meta property="og:description" content="Four labels">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/labels.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<link rel="stylesheet" href="pieces/deep/depth.css?v=world-a891bf139a">
+<style>
+  main { max-width:1200px; margin:0 auto; padding:16px 12px 40px; } .top { margin-bottom:12px; }
+  .act { font:800 clamp(24px,4.4vw,44px)/1.1 "Hanken Grotesk",sans-serif; max-width:24ch; margin:6px 0 4px; } .sub { font:400 18px/1.5 "Hanken Grotesk",sans-serif; max-width:62ch; margin:0 0 18px; }
+  #grid { display:grid; gap:16px; grid-template-columns:repeat(4,minmax(0,1fr)); } @media (max-width:980px) { #grid { grid-template-columns:repeat(2,minmax(0,1fr)); } } @media (max-width:560px) { #grid { grid-template-columns:1fr; } }
+  .card { margin:0; padding:0; border:0; background:#e9e3d4; color:#17150f; display:grid; } .art { position:relative; } .art canvas { width:100%; display:block; }
+  .mark { display:none; position:absolute; left:50%; top:46%; margin-left:-42%; width:84%; text-align:center; font:900 clamp(18px,2vw,24px) "Hanken Grotesk",sans-serif; letter-spacing:.06em; color:#b01d22; border:5px solid #b01d22; padding:4px 0; background:rgba(239,230,207,.55); mix-blend-mode:multiply; }
+  .who { font:600 17px/1.4 "Hanken Grotesk",sans-serif; margin:10px 12px 8px; min-height:2.8em; } .opts { display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:0 10px 12px; }
+  .opts button { font:800 16px "Hanken Grotesk",sans-serif; color:#17150f; border:2px solid #17150f; min-height:44px; padding:6px 4px; } .opts button[aria-checked="true"] { background:#b01d22; border-color:#b01d22; color:#fff; }
+  #result { margin-top:20px; max-width:70ch; } #result h2 { font:800 clamp(24px,3.6vw,34px)/1.15 "Hanken Grotesk",sans-serif; margin:0 0 10px; } #result li { font:400 18px/1.5 "Hanken Grotesk",sans-serif; margin:4px 0; } #result li b { color:var(--hot); }
+  #tally { font:800 clamp(20px,3vw,28px)/1.25 "Hanken Grotesk",sans-serif; margin:14px 0; } [hidden] { display:none !important; }
+  /* quality pass: reserve the figure's settled height at desktop widths; depth layers and the stage are built after load (M3) */
+  @media (min-width:900px) { main > figure:first-of-type { min-height:1377px; } }
+</style>
+</head>
+<body>
+<script>if (location.protocol === 'file:') document.write('<p class="need-http">This page loads ES modules, so it needs a local server. From this folder run <code>python -m http.server 8765</code> and open <code>http://localhost:8765/labels.html</code>.</p>');</script>
+<main>
+  <div class="top"><h1>Four labels</h1><a class="back" href="index.html">We are here</a></div>
+  <figure style="margin:0">
+    <p class="act">A person kills strangers in a public place.</p>
+    <p class="sub">One act, four people. Each card says one thing that was true of the person. Before you see what any page printed, stamp each one with the word you would use. Nothing you pick is stored or sent.</p>
+    <div id="grid"></div>
+    <section id="result" hidden aria-live="polite"><h2 tabindex="-1"></h2><ol id="lines" style="padding-left:20px"></ol><p id="tally"></p></section>
+    <p class="sr" id="live" aria-live="polite"></p>
+    <figcaption>FIG. 12. Four labels. The silhouettes are abstract and the act is described, not shown. Backdrops are front pages of 1918 newspapers from Wikimedia Commons, public domain, run through a newsprint medium. The stamp words are the ones that recur in news coverage of attacks, set here as a choice you make before you see how any outlet chose. <a href="credits.html">Credits</a>.</figcaption>
+  </figure>
+</main>
+<script type="module" src="pieces/labels.js?v=world-a891bf139a"></script>
+<script type="module" src="pieces/deep/labels.js?v=world-a891bf139a"></script>
+</body>
+</html>

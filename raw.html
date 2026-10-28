@@ -49,7 +49,7 @@
 @media (max-width:760px){.rn-live{grid-template-columns:minmax(0,1fr)}}
 </style>
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/raw.html#software","name":"RAW","description":"RAW is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.","url":"https://harperz9.github.io/raw.html","codeRepository":"https://github.com/HarperZ9/raw-native","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"RAW","item":"https://harperz9.github.io/raw.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/raw.html#software","name":"RAW","description":"RAW is a dependency-free C++23 renderer that draws a scene on the CPU, checks its fast screen-space ambient occlusion against a ray-traced reference, and writes a JSON certificate saying whether the shortcut held.","url":"https://harperz9.github.io/raw.html","codeRepository":"https://github.com/HarperZ9/raw-native","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"RAW","item":"https://harperz9.github.io/raw.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/raw.html#application","name":"raw-native","url":"https://harperz9.github.io/raw.html","softwareVersion":"0.8.0","applicationCategory":"MultimediaApplication","operatingSystem":"Windows, Linux, WebAssembly","downloadUrl":"https://github.com/HarperZ9/raw-native/releases/latest","license":"https://github.com/HarperZ9/raw-native/blob/main/LICENSE","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/raw-native"}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="inner-clean">
@@ -189,9 +189,9 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 </section>
 
 <section class="mv" id="certificate" aria-labelledby="cert-h">
-  <h2 id="cert-h" class="reveal">What the certificate is for.</h2>
-  <p class="body-text reveal">A rendered frame usually asks you to trust it. A certificate gives you a claim, a verdict, the oracle that judged it and the evidence the verdict rests on. The verdict is one of three words: <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null, never as a pass.</p>
-  <p class="body-text reveal">You can check one two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, on my machine and on GitHub&rsquo;s build runners. Memory gets the same treatment. The renderer measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
+  <h2 id="cert-h" class="reveal">The certificate</h2>
+  <p class="body-text reveal">A certificate is a JSON file with a claim, a verdict, the oracle that judged it and the numbers behind the verdict. The verdict is <b>verified</b>, <b>refuted</b> or <b>unverifiable</b>. A channel with no data is written as null.</p>
+  <p class="body-text reveal">You can check one in two ways. From 0.3.0 the run writes its ambient occlusion as 32-bit floats beside a coverage mask, and <code translate="no">raw_native_cli verify</code> recomputes the error from those files alone. Or run the same command yourself, because the output is deterministic: the default frame and its certificate hash the same with MSVC 19.50 on Windows, with GCC 13.3 on Ubuntu and from the WebAssembly build, locally and on GitHub&rsquo;s build runners. The renderer also measures exactly how many bytes the frame needs, renders again inside that budget, and refuses any allocation past it. A second certificate records whether the budget held.</p>
   <p class="body-text reveal">The same scene gives different verdicts from different cameras:</p>
   <div class="rn-wrap reveal">
     <table class="rn-table">
@@ -209,14 +209,14 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 </section>
 
 <section class="mv" id="limits" aria-labelledby="limits-h">
-  <h2 id="limits-h" class="reveal">Where it stands.</h2>
+  <h2 id="limits-h" class="reveal">Scope and speed</h2>
   <ul class="rn-limits reveal">
     <li>There is one built-in test scene and no model loader yet.</li>
-    <li>The ray-traced reference uses 64 samples per pixel from a fixed per-pixel hash. It is a repeatable estimate and shows visible grain.</li>
+    <li>The ray-traced reference uses 64 samples per pixel, so it shows visible grain.</li>
     <li>The screen-space method is a simple one, which is why most views come back refuted.</li>
     <li>The default tolerance is 0.12 RMSE. <code translate="no">--tolerance</code> changes it, and the certificate records the value used.</li>
     <li>A full render with the ray-traced reference takes about 0.26 seconds at 256 by 256 and 1 second at 512 by 512 on one thread of an Intel Core i7-13700KF, natively or in WebAssembly. Times on this page depend on your machine.</li>
-    <li>On an NVIDIA RTX 4090 in Chrome, the GPU draws a 512 by 512 frame with every channel in about 14 milliseconds, and all 16 GPU certificates in the release evidence say verified. The CPU reference that checks each GPU frame still takes its full time, so a GPU render on this page is not faster end to end. One GPU, one driver and one browser have been measured.</li>
+    <li>On an NVIDIA RTX 4090 in Chrome, the GPU draws a 512 by 512 frame with every channel in about 14 milliseconds, and all 16 GPU certificates in the release evidence say verified. The CPU reference that checks each GPU frame still takes its full time, so a GPU render on this page is not faster end to end.</li>
     <li>Without WebGPU this page runs the single-threaded CPU build. The threaded WebAssembly build ran about eight times faster on the same machine, but browsers allow it only on pages sent with cross-origin isolation headers, and GitHub Pages cannot send them.</li>
     <li>Matching hashes were checked on x86-64 with two compilers and the WebAssembly build. Other processors and compilers are untested.</li>
   </ul>
@@ -242,7 +242,7 @@ ctest --test-dir build -C Release --output-on-failure</pre>
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">One frame, two ways of lighting it, and a written verdict on whether the fast one held.</p>
+  <p class="seal">One frame, lit two ways, with a verdict on whether the fast way held.</p>
 </footer>
 
 <script src="system/reveal.js?v=20260902-creative-chassis" defer></script>

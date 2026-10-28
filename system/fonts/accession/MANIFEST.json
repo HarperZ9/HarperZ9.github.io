@@ -1,0 +1,1082 @@
+{
+ "family": "Accession",
+ "licence": {
+  "name": "SIL Open Font License 1.1",
+  "file": "OFL.txt",
+  "url": "https://openfontlicense.org",
+  "copyright": "Copyright 2026 Zain Dana Harper",
+  "reserved_font_names": []
+ },
+ "fonts": [
+  {
+   "file": "cuts/AccessionEngraved.ttf",
+   "bytes": 199796,
+   "sha256": "db46d5c3d5f3ecf98bc62c4e29b6f702c452c64d8de289201d2da918d1e1ead2",
+   "family": "Accession Engraved",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5242,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "cuts/AccessionLit.ttf",
+   "bytes": 214560,
+   "sha256": "9e7ca6ab232cf5544f55912c8cf3ab6022eddcf5d5bf9d7a801b6bb6f3b44835",
+   "family": "Accession Lit",
+   "style": "Regular",
+   "glyphs": 966,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": 1,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5326,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "cuts/AccessionScreen.ttf",
+   "bytes": 3173916,
+   "sha256": "5951bb9e0e516a51104cb05adb0998d7499c26aa63449399b0d4419c1a437e7f",
+   "family": "Accession Screen",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5242,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "cuts/AccessionTray.ttf",
+   "bytes": 103540,
+   "sha256": "036dad83c0c321124c6a203d8b5d1ec8796d2fdc11fe22f0decdc90acac50674",
+   "family": "Accession Tray",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": 1,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5643,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "cuts/AccessionTwoInk.ttf",
+   "bytes": 118576,
+   "sha256": "21a4c84d19a18f752999c92ee1033a37a1f59ea24a32621d7bd69ac94ae927cb",
+   "family": "Accession Two Ink",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": 1,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5643,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "cuts/AccessionWorn.ttf",
+   "bytes": 126624,
+   "sha256": "a273dc6158a42f864f77f66c55decc44227fdbb1ce3001591ed2d6fffcb032fd",
+   "family": "Accession Worn",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5643,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Black.ttf",
+   "bytes": 125260,
+   "sha256": "c92363f5fa30f24d4406ee9353db1144bd944bca90e5a0c8d9638bc14bf7b900",
+   "family": "Accession Display",
+   "style": "Black",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5242,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Bold.ttf",
+   "bytes": 122800,
+   "sha256": "ccfc2f389c57890c533635b55b4c01530b9a6450ec1d544326c882b21e22efe1",
+   "family": "Accession Display",
+   "style": "Bold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5326,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-ExtraBold.ttf",
+   "bytes": 122992,
+   "sha256": "3f3b0755fb6e139e3c55f396d4f264bf762e91e4c12447a4b8b934e592fab7d1",
+   "family": "Accession Display",
+   "style": "ExtraBold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5643,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Light.ttf",
+   "bytes": 114696,
+   "sha256": "37ec9219b0e07a00bf211c9af0b487e04561ad7fe89b865ff28ec9b6261bf897",
+   "family": "Accession Display",
+   "style": "Light",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4857,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Medium.ttf",
+   "bytes": 118940,
+   "sha256": "867473787b0a74037a803fc6a32a06eb432abe28b65f1e1e4b4ad5a9857d71b5",
+   "family": "Accession Display",
+   "style": "Medium",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5642,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Regular.ttf",
+   "bytes": 115264,
+   "sha256": "93f883a3e1985c28df03c04914abac341c7adaa13043356b9773e4b5bc4e4317",
+   "family": "Accession Display",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5648,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionDisplay-Semibold.ttf",
+   "bytes": 121084,
+   "sha256": "2c3c49142c7cb25688b3e54113ba48c06d842ab8aa25949384dbc0db7e2088bb",
+   "family": "Accession Display",
+   "style": "Semibold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5648,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionMono-Bold.ttf",
+   "bytes": 101160,
+   "sha256": "e220729af2af74d605b1bf47cdbd72bc57edaada793c8e87bfd2c92b5690b9d6",
+   "family": "Accession Mono",
+   "style": "Bold",
+   "glyphs": 543,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": false
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionMono-Light.ttf",
+   "bytes": 92680,
+   "sha256": "ce1825cf315ab34d0599df03f72d4c61a233b96310041ff7c343fdc4c873ef15",
+   "family": "Accession Mono",
+   "style": "Light",
+   "glyphs": 543,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": false
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionMono-Medium.ttf",
+   "bytes": 94912,
+   "sha256": "70b568b6dfac2ba1aae8433f37571a3b193e5becef09af4cba2585b0ef60caec",
+   "family": "Accession Mono",
+   "style": "Medium",
+   "glyphs": 543,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": false
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionMono-Regular.ttf",
+   "bytes": 93484,
+   "sha256": "6b37e8cba4b7edc848db28a88be1c268107ec0252c75023c08fe3f00d3951515",
+   "family": "Accession Mono",
+   "style": "Regular",
+   "glyphs": 543,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": false
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Bold.ttf",
+   "bytes": 122544,
+   "sha256": "7c9dccd6c9ec4fe46de90eb1b4359c49fd27a8ae013bf291102b1d3bd1395061",
+   "family": "Accession Text",
+   "style": "Bold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3967,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-BoldItalic.ttf",
+   "bytes": 123316,
+   "sha256": "f9338fd6c6b733e6dc8a5c17d46d7762a23df9931b650e4bb11df39141b050da",
+   "family": "Accession Text",
+   "style": "Bold Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4982,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-ExtraBold.ttf",
+   "bytes": 125660,
+   "sha256": "d325b53f283d899d793685888011cfce0b9d5147691ce8b33d927adfd4144e38",
+   "family": "Accession Text",
+   "style": "ExtraBold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3466,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-ExtraBoldItalic.ttf",
+   "bytes": 129892,
+   "sha256": "0c8a7320a4e8d33ebea0fc71f1ac2ecdfd33fdfb0e06ae5b405a05ac9efb50b8",
+   "family": "Accession Text",
+   "style": "ExtraBold Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4324,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Italic.ttf",
+   "bytes": 121320,
+   "sha256": "58a9cceca8a7cf2261ccd863d062203041025d91fa8e493ffc2eec6cf4f931e0",
+   "family": "Accession Text",
+   "style": "Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4009,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Light.ttf",
+   "bytes": 117588,
+   "sha256": "6b8e80e85c17cb49a6e1f2af2db62fb221b3f4ee5c7d15037c37bb58a44e9a67",
+   "family": "Accession Text",
+   "style": "Light",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3047,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-LightItalic.ttf",
+   "bytes": 117880,
+   "sha256": "c073dea98f3c579261cee5334d9051b61020851ed8e363c76b69d1303117adb4",
+   "family": "Accession Text",
+   "style": "Light Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3968,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Medium.ttf",
+   "bytes": 120504,
+   "sha256": "6d1e3a33e5220db529dec3e71e01bab89fc3d6ac073c4944ba8c6a0d681c226f",
+   "family": "Accession Text",
+   "style": "Medium",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3967,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-MediumItalic.ttf",
+   "bytes": 120856,
+   "sha256": "e1e6a6b62a1a1026a99f8a1b02b93d5299df1897237c233ebc7b38b5efbc7de1",
+   "family": "Accession Text",
+   "style": "Medium Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4979,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Regular.ttf",
+   "bytes": 120588,
+   "sha256": "5641d63df94261aad7ef25dd07a3721115ad07776c7c23616193cd034d11dfde",
+   "family": "Accession Text",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3101,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-Semibold.ttf",
+   "bytes": 122456,
+   "sha256": "6f09e3a1b77fabeda472016cb36c1cf6567c22a96294b4b58355950ff7e0554b",
+   "family": "Accession Text",
+   "style": "Semibold",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3965,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "static/AccessionText-SemiboldItalic.ttf",
+   "bytes": 123936,
+   "sha256": "be7a708cb2b9083c473616eac90bfd9724600d1eb68588fb52857fa4ed3de147",
+   "family": "Accession Text",
+   "style": "Semibold Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": null,
+   "colr": null,
+   "hinted": true,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4975,
+    "largest_pull": -70
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionBurin[LINE,wght].ttf",
+   "bytes": 1264764,
+   "sha256": "7f5ccb97abe4a20c9c7cc45b2a82dffc065fce77cb34ff70d484007845c5e534",
+   "family": "Accession Burin",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     500.0,
+     500.0,
+     900.0
+    ],
+    "LINE": [
+     4.0,
+     8.0,
+     8.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5247,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionCarved[wght].ttf",
+   "bytes": 203452,
+   "sha256": "63f0b7432c5e5548cb64cdba8378134444f36bccd9824613e462bc2a6d610ac5",
+   "family": "Accession Carved",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     700.0,
+     900.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5550,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionDisplay[wght].ttf",
+   "bytes": 206720,
+   "sha256": "048f66f33b784e65e17534d91106319d864cc7ce199f831d4839f0199e3c8d90",
+   "family": "Accession Display",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     700.0,
+     900.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5326,
+    "largest_pull": -130
+   },
+   "problems": [],
+   "latin_languages_hyperglot": {
+    "base": 343,
+    "base,auxiliary": 328
+   }
+  },
+  {
+   "file": "variable/AccessionDivisumma[TURN,wght].ttf",
+   "bytes": 235264,
+   "sha256": "2d4207e503628684a755a8d7116fca8636b6395dcf46f224d0a4807255715618",
+   "family": "Accession Divisumma",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     400.0,
+     500.0,
+     650.0
+    ],
+    "TURN": [
+     0.0,
+     50.0,
+     100.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5589,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionMaterial[INKS,WEAR,wght].ttf",
+   "bytes": 340204,
+   "sha256": "9edb30daf93ed92514ba4d58e1c225ede9aa026be1950b0f3eda223d762b795c",
+   "family": "Accession Material",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     700.0,
+     900.0
+    ],
+    "INKS": [
+     0.0,
+     0.0,
+     100.0
+    ],
+    "WEAR": [
+     0.0,
+     0.0,
+     100.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5326,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionMono[wght].ttf",
+   "bytes": 140952,
+   "sha256": "fdf0f13d63869d4484ac841d5b42bab77c91fa524235d3b8f74bf8cbbddf6dbc",
+   "family": "Accession Mono",
+   "style": "Regular",
+   "glyphs": 543,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     400.0,
+     700.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": false
+   },
+   "problems": [],
+   "latin_languages_hyperglot": {
+    "base": 343,
+    "base,auxiliary": 328
+   }
+  },
+  {
+   "file": "variable/AccessionSlab[wght].ttf",
+   "bytes": 211676,
+   "sha256": "4cd66bc4f1e55670832c3a22fe9677937abd4bfb4a60a8815ab854a2aaa63ed0",
+   "family": "Accession Slab",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     700.0,
+     900.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5346,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionStencil[wght].ttf",
+   "bytes": 207100,
+   "sha256": "c7540d24d1752dfd1552531686465ffdcac2ab21c90825d756ff985382a068cc",
+   "family": "Accession Stencil",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     700.0,
+     900.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 5392,
+    "largest_pull": -130
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionSuper[wght].ttf",
+   "bytes": 155972,
+   "sha256": "d9af1a98835c44c71cab2415a087db41f64f02f7d0b64c642c3cd5ffb5880080",
+   "family": "Accession Super",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     600.0,
+     900.0,
+     900.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3895,
+    "largest_pull": -144
+   },
+   "problems": []
+  },
+  {
+   "file": "variable/AccessionText-Italic[INKS,wght].ttf",
+   "bytes": 247968,
+   "sha256": "205dc921ecd7f8f83b7b7298b1b0b11c8432b1c8c71c7716605b9dec3bc4474a",
+   "family": "Accession Text",
+   "style": "Italic",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     400.0,
+     800.0
+    ],
+    "INKS": [
+     0.0,
+     0.0,
+     100.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 4009,
+    "largest_pull": -70
+   },
+   "problems": [],
+   "latin_languages_hyperglot": {
+    "base": 343,
+    "base,auxiliary": 328
+   }
+  },
+  {
+   "file": "variable/AccessionText[INKS,wght].ttf",
+   "bytes": 233900,
+   "sha256": "3c875771e495175a866d6a98171200d2ac503b7da7a272a28d2dca5a173f095e",
+   "family": "Accession Text",
+   "style": "Regular",
+   "glyphs": 545,
+   "codepoints": 457,
+   "blocks": {
+    "Basic Latin": 1.0,
+    "Latin-1 Supplement": 1.0,
+    "Latin Extended-A": 1.0
+   },
+   "axes": {
+    "wght": [
+     300.0,
+     400.0,
+     800.0
+    ],
+    "INKS": [
+     0.0,
+     0.0,
+     100.0
+    ]
+   },
+   "colr": null,
+   "hinted": false,
+   "kerning": {
+    "kern": true,
+    "class_pairs": 3101,
+    "largest_pull": -70
+   },
+   "problems": [],
+   "latin_languages_hyperglot": {
+    "base": 343,
+    "base,auxiliary": 328
+   }
+  }
+ ],
+ "woff2_bytes": {
+  "cuts/AccessionEngraved.woff2": 61756,
+  "cuts/AccessionLit.woff2": 65860,
+  "cuts/AccessionScreen.woff2": 246980,
+  "cuts/AccessionTray.woff2": 35540,
+  "cuts/AccessionTwoInk.woff2": 39028,
+  "cuts/AccessionWorn.woff2": 50900,
+  "static/AccessionDisplay-Black.woff2": 42804,
+  "static/AccessionDisplay-Bold.woff2": 41448,
+  "static/AccessionDisplay-ExtraBold.woff2": 43368,
+  "static/AccessionDisplay-Light.woff2": 39352,
+  "static/AccessionDisplay-Medium.woff2": 42152,
+  "static/AccessionDisplay-Regular.woff2": 41064,
+  "static/AccessionDisplay-Semibold.woff2": 43144,
+  "static/AccessionMono-Bold.woff2": 32212,
+  "static/AccessionMono-Light.woff2": 29732,
+  "static/AccessionMono-Medium.woff2": 30976,
+  "static/AccessionMono-Regular.woff2": 30456,
+  "static/AccessionText-Bold.woff2": 40608,
+  "static/AccessionText-BoldItalic.woff2": 42640,
+  "static/AccessionText-ExtraBold.woff2": 39308,
+  "static/AccessionText-ExtraBoldItalic.woff2": 42356,
+  "static/AccessionText-Italic.woff2": 39184,
+  "static/AccessionText-Light.woff2": 36784,
+  "static/AccessionText-LightItalic.woff2": 37592,
+  "static/AccessionText-Medium.woff2": 39332,
+  "static/AccessionText-MediumItalic.woff2": 41848,
+  "static/AccessionText-Regular.woff2": 37064,
+  "static/AccessionText-Semibold.woff2": 39948,
+  "static/AccessionText-SemiboldItalic.woff2": 42524,
+  "variable/AccessionBurin[LINE,wght].woff2": 376236,
+  "variable/AccessionCarved[wght].woff2": 76996,
+  "variable/AccessionDisplay[wght].woff2": 77672,
+  "variable/AccessionDivisumma[TURN,wght].woff2": 89896,
+  "variable/AccessionMaterial[INKS,WEAR,wght].woff2": 136648,
+  "variable/AccessionMono[wght].woff2": 45752,
+  "variable/AccessionSlab[wght].woff2": 81580,
+  "variable/AccessionStencil[wght].woff2": 79100,
+  "variable/AccessionSuper[wght].woff2": 52932,
+  "variable/AccessionText-Italic[INKS,wght].woff2": 85820,
+  "variable/AccessionText[INKS,wght].woff2": 75152
+ },
+ "summary": {
+  "ttf": 40,
+  "woff2": 40,
+  "failures": [],
+  "missing_woff2": []
+ }
+}

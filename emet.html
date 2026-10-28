@@ -5,12 +5,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EMET v1.3.0, external witness for AI-assisted work</title>
-<meta name="description" content="EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.">
+<meta name="description" content="EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.">
 <link rel="canonical" href="https://harperz9.github.io/emet.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="EMET v1.3.0">
-<meta property="og:description" content="EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.">
+<meta property="og:description" content="EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.">
 <meta property="og:url" content="https://harperz9.github.io/emet.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/emet.jpg?v=09a2f67dbab5">
 <meta property="og:image:width" content="1200">
@@ -20,11 +20,11 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/emet.jpg?v=09a2f67dbab5">
 <meta name="twitter:image:alt" content="EMET v1.3.0, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.">
 <meta name="twitter:title" content="EMET v1.3.0">
-<meta name="twitter:description" content="EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.">
+<meta name="twitter:description" content="EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/emet.html#software","name":"EMET","description":"EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.","url":"https://harperz9.github.io/emet.html","codeRepository":"https://github.com/HarperZ9/emet","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"EMET","item":"https://harperz9.github.io/emet.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/emet.html#software","name":"EMET","description":"EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.","url":"https://harperz9.github.io/emet.html","codeRepository":"https://github.com/HarperZ9/emet","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"EMET","item":"https://harperz9.github.io/emet.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/emet.html#application","name":"EMET","url":"https://harperz9.github.io/emet.html","softwareVersion":"1.3.1","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://pypi.org/project/emet/","license":"https://spdx.org/licenses/MPL-2.0.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/emet","installUrl":"https://pypi.org/project/emet/"}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="inner-clean">
@@ -35,14 +35,13 @@
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">EMET</span> &middot; external witness</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">EMET</span> &middot; byte checks</span></div>
   <div class="mid">
-    <h1>If an agent touched it, you should be able to <span class="g">check what it did.</span></h1>
-    <p class="lede" data-canonical-purpose="emet">EMET verifies whether bytes reaching a model, reviewer, or pipeline still match their claimed source. It anchors and compares content, neutralizes embedded authority, audits drift, and mints portable closed-verdict receipts across four implementations.</p>
+    <h1>Check that a file is still the file you saved.</h1>
+    <p class="lede" data-canonical-purpose="emet">EMET checks whether the bytes that reach a model, reviewer or pipeline still match their source. It anchors content, compares it later, neutralizes instructions embedded in it, and writes a verdict file that its Python, Rust, Node and Go implementations all read the same way.</p>
     <p class="body-text"><a href="repo-explainers/emet.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
-    <p class="close">A witness isn&rsquo;t a judge. All it does is say what it compared. Whether to trust the result is yours, not the tool&rsquo;s.</p>
   </div>
-  <div class="seal"><span translate="no">emet</span>, Hebrew for truth &middot; 1.3.0 on PyPI &middot; 48-vector reference suite &middot; four implementations with declared capability coverage</div>
+  <div class="seal"><span translate="no">emet</span> &middot; 1.3.0 on PyPI &middot; Python, Rust, Node and Go</div>
 </div>
 
 <main id="main">
@@ -51,46 +50,41 @@
   <canvas data-specimen="emet-plate-01" data-specimen-layers="pixel-sort-ruin" aria-hidden="true"></canvas>
   <figcaption>
     <span class="plate-no">Plate 01</span>
-    <span class="plate-caption">A structure dissolving into sorted runs: what drift looks like before the witness names it.</span>
+    <span class="plate-caption">A structure dissolving into sorted runs of pixels.</span>
   </figcaption>
 </figure>
 
-<!-- ─── WHAT IT IS ─────────────────────────────────────────────── -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">It works out the fingerprint itself.</h2>
-  <p class="body-text reveal">An AI model is always handling files: one it edits, a prompt it&rsquo;s given, a view it shows you and calls a true copy of the original. <span translate="no">EMET</span> opens those files directly and works out the fingerprint again from scratch, using SHA-256 (a standard, widely trusted recipe for turning any file into one short, unique fingerprint). Then it compares that to the fingerprint it saved before. The answer comes only from running the same recipe over the same file, never from the system telling you it&rsquo;s fine. It stands <em>outside</em> the thing it&rsquo;s checking.</p>
-  <em class="close reveal">Knowing where a file came from is one thing. It still doesn&rsquo;t tell you whether the copy the model is looking at right now is unchanged. That&rsquo;s the gap this closes.</em>
+  <h2 id="what-h" class="reveal">Try it</h2>
+  <pre class="artifact" translate="no"><span class="pr">$ python -m pip install emet==1.3.0</span>
+<span class="pr">$ emet selftest</span></pre>
+  <p class="body-text reveal">EMET saves a SHA-256 fingerprint of a file, a prompt or a view, then later reads the bytes again and compares. Use it before a model, a reviewer or a pipeline reads content that should not have changed.</p>
 </section>
 
-<!-- ─── THE VERDICTS ───────────────────────────────────────────── -->
 <section class="mv" id="verdicts" aria-labelledby="verdicts-h">
-  <h2 id="verdicts-h" class="reveal">Three answers. None of them <em>trusted</em>.</h2>
-  <p class="body-text reveal">There are exactly three answers it can give (MATCH, DRIFT, UNVERIFIABLE), and there will only ever be three. That&rsquo;s not a promise written in a comment somewhere; the code is shaped so a fourth answer simply has nowhere to come from. It can never tell you to trust something, because it was never given any trust to hand out.</p>
-  <div class="index reveal-children" role="list" aria-label="The closed verdict lattice">
+  <h2 id="verdicts-h" class="reveal">Three answers</h2>
+  <div class="index reveal-children" role="list" aria-label="EMET verdicts">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term" translate="no">MATCH</span>
-      <span class="index-gloss">the file&rsquo;s fingerprint still matches the one saved earlier &middot; it means nothing has moved, not that the file is good</span>
+      <span class="index-gloss">the bytes still match the saved fingerprint</span>
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term" translate="no">DRIFT</span>
-      <span class="index-gloss">the file, or the view shown to you, no longer matches its saved fingerprint &middot; it just reports that something changed, and doesn&rsquo;t decide whose fault that is</span>
+      <span class="index-gloss">the bytes, or the view shown to you, no longer match</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
       <span class="index-term" translate="no">UNVERIFIABLE</span>
-      <span class="index-gloss">it couldn&rsquo;t read the file, or had no saved fingerprint to compare against &middot; so it says &ldquo;I can&rsquo;t tell&rdquo; out loud, with a clear reason. It never guesses, and never just crashes</span>
+      <span class="index-gloss">the file could not be read or there was no saved fingerprint, with the reason</span>
     </div>
   </div>
-  <em class="close reveal">If there&rsquo;s no DRIFT, the answer is either MATCH or UNVERIFIABLE. There is no path through the code that turns &ldquo;no drift&rdquo; into &ldquo;trust it.&rdquo;</em>
 </section>
 
-<!-- ─── PROOF ──────────────────────────────────────────────────── -->
 <section class="proof" id="proof" aria-labelledby="proof-h">
   <div class="proof-head">
-    <h2 id="proof-h" class="reveal">Don&rsquo;t take the answer on my word. <em>Watch it flip.</em></h2>
-    <p class="body-text reveal">A single character is enough to change everything. Check a file, add one character to it, then ask again. The same core rules have implementations in Python, Rust, Node.js, and Go, with capability-specific conformance coverage stated below.</p>
+    <h2 id="proof-h" class="reveal">Change one byte and the answer changes</h2>
   </div>
   <div class="exhibit reveal">
-    <div class="exhibit-tag"><span class="ord">Live</span> <span class="what">the verdict depends on the bytes, nothing else</span></div>
+    <div class="exhibit-tag"><span class="ord">Live</span> <span class="what">one appended byte</span></div>
     <pre class="artifact" translate="no"><span class="pr">$ python membrane.py verify demo_sample.txt</span>
 <span class="ok">MATCH</span>  demo_sample.txt   want=d02206abca2a…  got=d02206abca2a…   (exit 0)
 
@@ -98,20 +92,24 @@
 <span class="pr">$ python membrane.py verify demo_sample.txt</span>
 <span class="bad">DRIFT</span>  demo_sample.txt   want=d02206abca2a…  got=b072d611645e…   (exit 1)
 
-<span class="cmt"># one spec, four separate language implementations, CI on every push</span>
+<span class="cmt"># one spec, four language implementations, CI on every push</span>
 membrane.py        &rarr;  <span class="ok">CONFORMANCE 48/48 vectors pass</span>
 impl/rust/emet     &rarr;  <span class="ok">CONFORMANCE 40/40 supported vectors pass</span>
 impl/js/emet.js    &rarr;  <span class="ok">CONFORMANCE 40/40 supported vectors pass</span>
 impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 core vectors pass</span></pre>
-    <p class="artifact-cap">Change a single character in the file and the answer drops from <b translate="no">MATCH</b> to <b translate="no">DRIFT</b>. It reads the file itself, not anyone who promises it&rsquo;s fine.</p>
-    <p class="artifact-note">The shared suite contains 48 vectors: 35 core, 5 receipt, 4 rebind, and 4 evaluation-receipt cases. Python covers all 48; Rust and Node cover 40 with rebind and evaluation-receipt skipped by declared capability; Go covers the 35 core vectors. <em>Honest limit:</em> I wrote all four versions myself, so this demonstrates same-author cross-language agreement, not independent reproduction. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)">See a sample proof-surface report →</a></p>
+    <p class="artifact-note">The shared suite has 48 vectors: 35 core, 5 receipt, 4 rebind and 4 evaluation-receipt cases. Python runs all 48, Rust and Node run 40, and Go runs the 35 core vectors. <a href="emet-sample.html" style="color:var(--bone);text-decoration:none;border-bottom:1px solid rgba(58,43,214,.45)">See a sample report →</a></p>
   </div>
 </section>
 
-<section class="mv" id="limits" aria-labelledby="limits-h">
-  <h2 id="limits-h">Limitations kept visible.</h2>
-  <p class="body-text">The conformance implementations are same author, so they prove that the rules are clear enough to implement in several languages. They do not prove independent authorship, semantic quality, model quality, or third-party adoption.</p>
-  <p class="body-text">Its closed verdict records byte agreement, drift, or inability to verify. A human or downstream process still decides what that result means.</p>
+<section class="mv" id="release-evidence" aria-labelledby="release-evidence-h">
+  <h2 id="release-evidence-h" class="reveal">EMET v1.3.0 release</h2>
+  <p class="body-text reveal"><a href="https://github.com/HarperZ9/emet/releases/tag/v1.3.0" rel="noopener">v1.3.0 on GitHub</a> and <a href="https://pypi.org/project/emet/1.3.0/" rel="noopener">emet 1.3.0 on PyPI</a>. PyPI serves the wheel and source archive.</p>
+  <div class="index reveal-children" role="list" aria-label="EMET release files">
+    <div class="index-row" role="listitem"><span class="index-term">Release</span><span class="index-gloss">tag v1.3.0, source commit b37da003951866ece403fb08fe3d028d00c39f4f</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">PyPI</span><span class="index-gloss">wheel SHA-256 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; source archive SHA-256 b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">Protocol</span><span class="index-gloss"><a href="https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md" rel="noopener">Flywheel review protocol</a>, run from source checkouts</span></div>
+  </div>
+  <p class="body-text reveal">Machine-readable status: <a href="security-tools.json">security-tools.json</a>.</p>
   <div class="channels">
     <span class="g">PyPI</span>: <a href="https://pypi.org/project/emet/" rel="noopener" translate="no">emet</a>
     &nbsp;&middot;&nbsp;
@@ -123,25 +121,10 @@ impl/go/emet       &rarr;  <span class="ok">CONFORMANCE 35/35 core vectors pass<
   </div>
 </section>
 
-<section class="mv" id="release-evidence" aria-labelledby="release-evidence-h">
-  <h2 id="release-evidence-h" class="reveal">EMET v1.3.0 release evidence.</h2>
-  <p class="body-text reveal">The current public release is <a href="https://github.com/HarperZ9/emet/releases/tag/v1.3.0" rel="noopener">v1.3.0 on GitHub</a> and <a href="https://pypi.org/project/emet/1.3.0/" rel="noopener">emet 1.3.0 on PyPI</a>. The GitHub release is public, not draft, and not prerelease; no release assets are attached there. PyPI serves the wheel and source archive.</p>
-  <div class="index reveal-children" role="list" aria-label="EMET release evidence">
-    <div class="index-row" role="listitem"><span class="index-term">Release</span><span class="index-gloss">GitHub tag v1.3.0 uses annotated tag object 6fa3985cb02dfc84e77f7e3c5872bc988304b18d and peels to source commit b37da003951866ece403fb08fe3d028d00c39f4f</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">PyPI</span><span class="index-gloss">wheel SHA-256 1a2bea4f9a7cdab07bc6b883f8487673bf985f793d125ce18a4cf86d66044a09; source archive SHA-256 b28d6763db1d8db0f376cb6f33dffa3e6e649c65d9843483dd395f71e3f36d02</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">Protocol</span><span class="index-gloss"><a href="https://github.com/HarperZ9/emet/blob/v1.3.0/docs/FLYWHEEL-REVIEW-PROTOCOL.md" rel="noopener">Pinned Flywheel review protocol</a>, a development compatibility exercise that requires source checkouts</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">Python</span><span class="index-gloss">48/48 conformance cases in the current reference path</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">Rust</span><span class="index-gloss">40/40 conformance cases</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">Node</span><span class="index-gloss">40/40 conformance cases</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">Go</span><span class="index-gloss">35/35 core conformance cases</span></div>
-  </div>
-  <p class="body-text reveal">These same-author implementations demonstrate rule clarity, not independent authorship, semantic quality, regulatory assessment, model assessment, policy endorsement, or third-party adoption. The machine-readable maturity record is <a href="security-tools.json">security-tools.json</a>.</p>
-</section>
-
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal">A witness is not an authority. It re-derives the bytes itself and reports MATCH, DRIFT, or UNVERIFIABLE, never <b translate="no">trusted</b>. Run it yourself and check.</p>
+  <p class="seal"><span translate="no">EMET</span> &middot; byte checks &middot; <a href="https://github.com/HarperZ9/emet">source</a></p>
 </footer>
 
 <script src="system/reveal.js?v=20260902-creative-chassis" defer></script>

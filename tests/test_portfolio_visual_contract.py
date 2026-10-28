@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / "index.html"
+INDEX = ROOT / "workshop.html"
 HOME_INDEX = ROOT / "home" / "index.html"
 APP = ROOT / "home" / "src" / "App.tsx"
 APP_CSS = ROOT / "home" / "src" / "App.css"
@@ -19,6 +19,7 @@ EM_DASH = "—"
 EN_DASH = "–"
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
@@ -108,8 +109,8 @@ def test_noscript_fallback_is_a_complete_identity_first_front_door() -> None:
     for value in (
         "Zain Dana Harper",
         "Zain Dana Harper",
-        "Flywheel and public tools for re-derivable AI evaluation, built by Zain Dana Harper.",
-        "Mission: re-derivable verification",
+        "Flywheel and open-source tools for testing AI systems, built by Zain Dana Harper.",
+        "Flagship tools",
         "Flagship platform: Flywheel",
         "Built tooling ecosystem",
         "Evidence board",
@@ -184,7 +185,7 @@ def test_deployed_bundle_matches_the_new_front_door_after_build() -> None:
 
     for value in (
         "Zain Dana Harper",
-        "Flywheel and public tools for re-derivable AI evaluation.",
+        "Flywheel and open-source tools for testing AI systems.",
         "Each entry says what the tool does once",
         "Flagship platform: Flywheel",
         "Research, pilot, and support routes",

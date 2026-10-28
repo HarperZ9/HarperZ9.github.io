@@ -37,9 +37,8 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">phantom</span> &middot; hardware-identity privacy</span></div>
   <div class="mid">
-    <h1>The identity your machine gives away, <span class="g">on your terms.</span></h1>
+    <h1>See and change the hardware IDs your computer exposes.</h1>
     <p class="lede" data-canonical-purpose="phantom">Phantom helps you inspect and, when authorized, change the hardware identifiers a computer exposes. It works on owned or expressly authorized Windows and Linux systems, saves a backup before changes, and can restore the original values.</p>
-    <p class="close">You own the machine. You decide what it says about itself.</p>
   </div>
   <div class="seal"><span translate="no">phantom</span> &middot; v1.1.1 &middot; Windows + Linux &middot; proprietary &middot; Free / Pro / Enterprise &middot; <span translate="no">phantom audit</span></div>
 </div>
@@ -48,15 +47,14 @@
 
 <!-- THE WEDGE -->
 <section class="mv" id="why" aria-labelledby="why-h">
-  <h2 id="why-h" class="reveal">Your hardware is a permanent tracking number. Until you change it.</h2>
-  <p class="body-text reveal">Motherboard serials, disk serials, MAC addresses, GPU device IDs, TPM module IDs, and the machine IDs Windows and Linux keep, are all readable by ordinary software, and most of them survive a clean reinstall. Together they are a device fingerprint that follows the machine for its whole life, built without asking you. <span translate="no">Phantom</span> puts that fingerprint under your control, on a machine you own or are authorized to test.</p>
-  <p class="pull reveal">Audit first. Change deliberately. Reverse completely.</p>
+  <h2 id="why-h" class="reveal">What it covers</h2>
+  <p class="body-text reveal">Motherboard serials, disk serials, MAC addresses, GPU device IDs, TPM module IDs, and the machine IDs Windows and Linux keep, are all readable by ordinary software, and most of them survive a clean reinstall. Together they identify the machine. Phantom reads them, replaces them with a consistent profile, and restores the originals when you are done.</p>
 </section>
 
 <!-- SCHEMATIC -->
 <section class="mv" id="loop" aria-labelledby="loop-h">
-  <h2 id="loop-h" class="reveal">Nothing is written until the originals are saved.</h2>
-  <p class="body-text reveal">Read what the machine reveals. Generate one internally consistent identity from a seed. Apply it after the originals are backed up, never before: the registry on Windows, the machine-id, hostname, and MAC on Linux. Validate that every source now reads consistently. Revert restores the exact originals from that backup, and so does uninstall, so you are never left with a changed identity and no way back.</p>
+  <h2 id="loop-h" class="reveal">Audit, apply, revert</h2>
+  <p class="body-text reveal">Read what the machine reveals. Generate one internally consistent identity from a seed. Apply it after the originals are backed up, never before: the registry on Windows, the machine-id, hostname, and MAC on Linux. Validate that every source now reads consistently. Revert restores the exact originals from that backup, and so does uninstall.</p>
   <figure class="ph-fig reveal">
     <svg viewBox="0 0 880 560" xmlns="http://www.w3.org/2000/svg" font-family="Hanken Grotesk, ui-sans-serif, system-ui, sans-serif" role="img" aria-label="The Phantom loop: audit reads the machine, generate builds one consistent identity from a seed, apply writes the userland identifiers after saving the originals to a backup, validate confirms every source reads consistently, and revert or uninstall restores the exact originals from that backup.">
       <style>
@@ -118,11 +116,9 @@
       <rect class="card" x="40" y="440" width="800" height="72" rx="14" stroke="var(--verified)"/>
       <text class="cap" x="62" y="468" fill="var(--verified)">5 &#183; REVERT OR UNINSTALL</text>
       <text class="t" x="62" y="490">Restore the exact originals from the backup. Uninstall does this for you before it removes the files.</text>
-      <text class="s" x="62" y="506">You are never left with a changed identity and no tool to undo it.</text>
       <path class="restore" d="M720,372 C720,410 420,410 300,440" marker-end="url(#fa)"/>
       <text class="okt" x="470" y="404">RESTORE</text>
 
-      <text class="s" x="40" y="540">The backup is the whole guarantee. A change you cannot undo is not privacy, it is damage; Phantom writes the undo before it writes the change.</text>
     </svg>
     <figcaption>Schematic &middot; back up before you write, restore exactly on the way out</figcaption>
   </figure>
@@ -130,15 +126,15 @@
 
 <!-- FOUR BLURBS -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">Four things it does, and does carefully.</h2>
+  <h2 id="what-h" class="reveal">What it does</h2>
   <div class="index reveal-children" role="list" aria-label="What Phantom does">
     <div class="index-row" role="listitem" style="--i:0">
       <span class="index-term">See your exposure</span>
-      <span class="index-gloss"><span translate="no">phantom audit</span> reads and reports every hardware identifier software can see on the machine, across SMBIOS, disk, network, GPU, TPM, display, boot, and the OS identity store: the Windows registry, or the Linux machine-id and hostname. It changes nothing, so you run it first to see where you start.</span>
+      <span class="index-gloss"><span translate="no">phantom audit</span> reads and reports every hardware identifier software can see on the machine, across SMBIOS, disk, network, GPU, TPM, display, boot, and the OS identity store: the Windows registry, or the Linux machine-id and hostname. It changes nothing.</span>
     </div>
     <div class="index-row" role="listitem" style="--i:1">
       <span class="index-term">A consistent identity, from a seed</span>
-      <span class="index-gloss">Generation builds a realistic profile that holds together: disk serials match their vendor's format, MACs use real manufacturer prefixes. One seed reproduces the same identity every time, so a profile is repeatable, not random noise.</span>
+      <span class="index-gloss">Generation builds a realistic profile that holds together: disk serials match their vendor's format, MACs use real manufacturer prefixes. One seed reproduces the same identity every time.</span>
     </div>
     <div class="index-row" role="listitem" style="--i:2">
       <span class="index-term">Spoof what matters most</span>
@@ -146,34 +142,14 @@
     </div>
     <div class="index-row" role="listitem" style="--i:3">
       <span class="index-term">Reverse it completely</span>
-      <span class="index-gloss">Every original value is backed up before the first write. Revert restores them exactly, and uninstall reverts before it removes anything, so leaving Phantom returns the machine to precisely the identity it had before.</span>
+      <span class="index-gloss">Every original value is backed up before the first write. Revert restores them exactly, and uninstall reverts before it removes anything.</span>
     </div>
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section class="mv" id="compare" aria-labelledby="compare-h">
-  <h2 id="compare-h" class="reveal">How it compares.</h2>
-  <div class="cmp-wrap reveal">
-    <table class="cmp">
-      <thead><tr><th></th><th>Edit the registry by hand</th><th>A random spoofer script</th><th class="phcol">Phantom</th></tr></thead>
-      <tbody>
-        <tr><td>Audits what actually leaks first</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Internally consistent identity</td><td class="n">No</td><td>Rarely</td><td class="y">Yes</td></tr>
-        <tr><td>Backs up originals before writing</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Restores the exact originals</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Reverts automatically on uninstall</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>Reapplies across reboots</td><td class="n">No</td><td class="n">No</td><td class="y">Yes (Pro)</td></tr>
-        <tr><td>Validates the result</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-        <tr><td>One seed reproduces the identity</td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
-      </tbody>
-    </table>
   </div>
 </section>
 
 <!-- RUN IT NOW -->
 <section class="mv" id="run" aria-labelledby="run-h">
-  <h2 id="run-h" class="reveal">Run it now.</h2>
+  <h2 id="run-h" class="reveal">Install and run it</h2>
   <p class="body-text reveal">Everything is on the <a href="https://github.com/HarperZ9/phantom/releases">releases page</a> with a published <span translate="no">SHA256SUMS.txt</span>. Verify the file you got before you install it, because the Windows installer is not code-signed yet.</p>
   <div class="run reveal"><span class="c">windows</span> download <span translate="no">PhantomSetup-v1.1.1.msi</span> <span class="c">&middot;</span> certutil -hashfile PhantomSetup-v1.1.1.msi SHA256</div>
   <div class="run reveal"><span class="c">linux</span> sudo apt-get install ./phantom_1.1.1-1_amd64.deb <span class="c">&middot;</span> or the .rpm, or the tarball's install.sh</div>
@@ -182,16 +158,12 @@
   <p class="body-text reveal">Applying changes machine-wide identifiers, so run it from an <b>elevated</b> terminal on Windows, with <span translate="no">sudo</span> on Linux. <span translate="no">Phantom</span> runs in Free tier immediately, which covers Layer-2 spoofing and up to two profiles.</p>
   <div class="run reveal"><span class="c">apply</span> phantom profile generate my-profile <span class="c">&middot;</span> phantom apply my-profile</div>
   <div class="run reveal"><span class="c">undo</span> phantom validate my-profile <span class="c">&middot;</span> phantom revert</div>
-  <div class="null reveal">
-    <h3>The honest caveat.</h3>
-    <p class="body-text">The MSI is not code-signed yet, so Windows SmartScreen warns on first run. The published hash is the substitute: it proves the file you hold is the file the pipeline built. Signing is planned; until then the checksum does the signature's job, checked by you instead of trusted by default.</p>
-  </div>
 </section>
 
 <!-- TIERS -->
 <section class="mv" id="tiers" aria-labelledby="tiers-h">
-  <h2 id="tiers-h" class="reveal">Tiers.</h2>
-  <p class="body-text reveal">Free is a real tier, not a trial: Layer-2 registry spoofing and two profiles, with no time limit. Pro and Enterprise raise the profile limit, add the background service that reapplies your identity across reboots, and unlock the deeper layers as they ship.</p>
+  <h2 id="tiers-h" class="reveal">Tiers</h2>
+  <p class="body-text reveal">Free covers Layer-2 registry spoofing and two profiles, with no time limit. Pro and Enterprise raise the profile limit, add the background service that reapplies your identity across reboots, and unlock the deeper layers as they ship.</p>
   <div class="bt-wrap reveal">
     <table class="bt">
       <thead><tr><th>Tier</th><th>Layers</th><th>Profiles</th><th>Background service</th></tr></thead>
@@ -202,12 +174,12 @@
       </tbody>
     </table>
   </div>
-  <p class="body-text reveal">Keys are HMAC-signed and bound to one machine's hardware fingerprint, so a key issued for your machine is worthless on any other. <span translate="no">phantom license request</span> prints the fingerprint and build details your licensing contact needs; they issue a key bound to it.</p>
+  <p class="body-text reveal">Keys are HMAC-signed and bound to one machine's hardware fingerprint,. <span translate="no">phantom license request</span> prints the fingerprint and build details your licensing contact needs; they issue a key bound to it.</p>
 </section>
 
 <!-- SPEC -->
 <section class="mv" id="spec" aria-labelledby="spec-h">
-  <h2 id="spec-h" class="reveal">Spec, at a glance.</h2>
+  <h2 id="spec-h" class="reveal">Specifications</h2>
   <dl class="kv2 reveal">
     <dt>Platform</dt><dd>Windows 10 22H2 or Windows 11 23H2 and newer; Linux with systemd. x86-64.</dd>
     <dt>Install</dt><dd>Windows: an MSI, not code-signed yet. Linux: a <span translate="no">.deb</span>, an <span translate="no">.rpm</span>, or a portable tarball. Elevation on Windows, root on Linux for apply and revert.</dd>
@@ -221,20 +193,11 @@
   </dl>
 </section>
 
-<!-- VISION -->
-<section class="mv" id="vision" aria-labelledby="vision-h">
-  <h2 id="vision-h" class="reveal">The change and the undo, shipped together.</h2>
-  <p class="body-text reveal"><span translate="no">Phantom</span> treats hardware identity the way the rest of this workshop treats a result: something you can inspect, reproduce from a seed, and reverse without residue. The backup is the receipt. A spoof you cannot cleanly undo is not control, so the undo is written before the change, every time.</p>
-  <p class="body-text reveal">The 1.1 line ships the Layer-2 path on Windows and Linux, verified end to end on v1.1.0. Layer 1 reaches disk, network, GPU, TPM, and display through a kernel driver; Layer 0 reaches SMBIOS and boot identifiers through UEFI firmware. Both are modeled now so today's profiles stay consistent when those layers arrive. The profile you generate is already the whole identity; the deeper layers only widen where it is written.</p>
-  <p class="seal-line reveal"><span class="g">Run it</span>: <span translate="no">github.com/HarperZ9/phantom</span> &middot; <a href="overview.html">the engine room</a> &middot; <a href="index.html">the workshop</a></p>
-</section>
-
-<!-- STATE OF THE WORK -->
+<!-- RELEASE -->
 <section class="mv" id="state" aria-labelledby="state-h">
-  <h2 id="state-h" class="reveal">State of the work, August 2026.</h2>
-  <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.1 is the current release, on Windows and Linux. Compared with v1.1.0, it adds a getting-started guide and the first slice of a local boundary gateway. On v1.1.0 the Layer-2 path was verified end to end on fresh VMs of both: audit, generate, apply, validate, a clean uninstall that returns the machine to its original identity, and reboot persistence. On Linux that last one was proven through an actual power-cycle, where the service brought a spoofed MAC back after a reboot.</p>
-  <p class="body-text reveal">It is honest about its edges. Layer 2 only for now, with Layers 1 and 0 modeled but not shipped. The Layer 1 kernel driver now compiles under CI and two of its security defects are fixed, but it is unsigned and not yet functional end to end. The Windows installer is not code-signed yet, so SmartScreen warns until a certificate is in place. Intended for machines you own or are expressly authorized to test, not for evading fraud controls or misrepresenting a device you do not control.</p>
-  <p class="body-text reveal">The shared public maturity record, verification entry point, and authorization boundary are also available in <a href="security-tools.json">security-tools.json</a>.</p>
+  <h2 id="state-h" class="reveal">Current release</h2>
+  <p class="body-text reveal"><span translate="no">Phantom</span> v1.1.1 is the current release, on Windows and Linux. It adds a getting-started guide and the first part of a local boundary gateway to v1.1.0, where the Layer-2 path was tested end to end on fresh Windows and Linux VMs, including a reboot that brought a spoofed MAC back through the service. Layers 1 and 0 modeled but not shipped: the kernel driver and firmware paths are not usable yet.</p>
+  <p class="body-text reveal">Use Phantom only on machines you own or are expressly authorized to test, never to evade fraud controls or misrepresent a device you do not control. Maturity and verification details: <a href="security-tools.json">security-tools.json</a>. Source and releases: <a href="https://github.com/HarperZ9/phantom/releases" translate="no">github.com/HarperZ9/phantom</a>.</p>
 </section>
 
 </main>

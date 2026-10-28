@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-10-07",
+  "reviewed": "2026-10-23",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -334,7 +334,7 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed software builder transitioning from eleven years of full-time arboriculture. Turns reported failures into reproducible tests and usable fixes; combines released personal projects with technical support and customer-facing field operations."
+          "text": "Self-directed software builder after eleven years of full-time arboriculture; turns reported failures into reproducible tests."
         },
         {
           "kind": "h2",
@@ -353,7 +353,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Flywheel, a Python/Flutter AI workstation with Rowan orchestration, model routing, permission-checked tools, and a Windows installer with a bundled engine.",
+          "text": "Built Flywheel, a Python/Flutter AI workstation on PyPI, Homebrew, Scoop and a Windows installer, with permission-checked tools.",
           "evidence": [
             "flywheel"
           ]
@@ -368,10 +368,18 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate writing tools and Accountable Surface approval and verification interfaces; supplied inspectable reports and action records for troubleshooting and review.",
+          "text": "Built Articulate, a prose checker on PyPI; Accountable Surface approval interfaces; and Daylight Commons 3.2.2, a browser extension that shows the sources behind social media replies.",
           "evidence": [
-            "articulate",
-            "accountable-surface"
+            "articulate-0151",
+            "accountable-surface",
+            "daylight-commons-322"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Released and updated Elder ENB, a Skyrim lighting preset: 996,649 downloads on Nexus Mods, 2024 to 2026.",
+          "evidence": [
+            "elder-enb-nexus"
           ]
         },
         {
@@ -389,7 +397,7 @@
         },
         {
           "kind": "h2",
-          "text": "Selected Open-Source Contributions: 6 Merged"
+          "text": "Open-Source Contributions: 37 Merged in 30 Repositories"
         },
         {
           "kind": "li",
@@ -455,14 +463,14 @@
       "id": "evaluation-python-tools",
       "route": "resume-evaluation-tooling.html",
       "stem": "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools",
-      "title": "AI Systems, Evaluation, and Python Developer Tools",
+      "title": "AI and Security Evaluation, and Python Developer Tools",
       "blocks": [
         {
           "ref": "resume-identity"
         },
         {
           "kind": "subtitle",
-          "text": "AI Systems Engineering | Evaluation | Python Developer Tools"
+          "text": "AI Evaluation | Security Evaluation | Python Developer Tools"
         },
         {
           "kind": "h2",
@@ -470,7 +478,10 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed software builder transitioning from arboriculture into AI evaluation and Python tooling, with maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors."
+          "text": "Self-directed builder moving from arboriculture into AI and security evaluation.",
+          "evidence": [
+            "flywheel-190"
+          ]
         },
         {
           "kind": "h2",
@@ -478,7 +489,7 @@
         },
         {
           "kind": "p",
-          "text": "Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, MCP, APIs, deterministic testing, typed capabilities, approval gates, offline verification."
+          "text": "Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, planted-fault and control design, red-team and purple-team test cases, MCP, APIs, deterministic testing, offline verification."
         },
         {
           "kind": "h2",
@@ -489,23 +500,23 @@
         },
         {
           "kind": "li",
-          "text": "Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.",
+          "text": "Shipped Flywheel 1.9.0 on PyPI, a Python/Flutter AI workstation with model routing and a Windows installer; its behavior-check caught 20 of 20 planted changes with 0 of 50 false alarms.",
           "evidence": [
             "flywheel"
           ]
         },
         {
           "kind": "li",
-          "text": "Built 324 exhaustive terminal-state fixtures and 337 synthetic component cases with 5,058 frozen expectations, distinguishing failed outputs from valid results within defined schemas.",
+          "text": "Built test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that separate failed outputs from provider failures.",
           "evidence": [
             "terminal-state-fixtures"
           ]
         },
         {
           "kind": "li",
-          "text": "Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.",
+          "text": "Built Articulate 0.15.1 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks and Phantom audit and restore.",
           "evidence": [
-            "articulate",
+            "articulate-0151",
             "accountable-surface",
             "buildlang",
             "phantom"
@@ -513,9 +524,24 @@
         },
         {
           "kind": "li",
-          "text": "Executed a pinned METR count_odds check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.",
+          "text": "Built Daylight Commons 3.2.2, a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.",
+          "evidence": [
+            "daylight-commons-322",
+            "daylight-commons-evaluation"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.",
           "evidence": [
             "metr-interop-controls"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Maintained Elder ENB, a Skyrim lighting preset: 996,649 downloads and 2,413 endorsements on Nexus Mods.",
+          "evidence": [
+            "elder-enb-nexus"
           ]
         },
         {
@@ -533,25 +559,25 @@
         },
         {
           "kind": "h2",
-          "text": "Selected Open-Source Contributions: 6 Merged"
+          "text": "Open-Source Contributions: 37 Merged in 30 Repositories"
         },
         {
           "kind": "li",
-          "text": "DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters; added regression tests to protect evaluation reliability. Merged.",
+          "text": "DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters, with regression tests. Merged.",
           "evidence": [
             "deepeval"
           ]
         },
         {
           "kind": "li",
-          "text": "TOMLKit #549: preserved sibling keys during dotted-key replacement, preventing silent configuration data loss on round trips. Merged.",
+          "text": "TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.",
           "evidence": [
             "tomlkit"
           ]
         },
         {
           "kind": "li",
-          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400, with regression coverage. Merged.",
+          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.",
           "evidence": [
             "datasette"
           ]
@@ -562,7 +588,7 @@
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: security, AI governance, and developer tools. Full record: harperz9.github.io/cv.html.",
+          "text": "Qualys Certified Specialist: six certifications, including VMDR, EDR and Policy Audit. Microsoft Applied Skills: four security credentials (95% assessment). Cisco Ethical Hacker. Full record: harperz9.github.io/cv.html.",
           "evidence": [
             "ms-ai-security",
             "ms-entra",
@@ -795,7 +821,7 @@
         },
         {
           "kind": "subtitle",
-          "text": "Curriculum Vitae | Systems Engineering, AI Infrastructure, and Field Operations"
+          "text": "Curriculum Vitae | Security Evaluation, AI Evaluation, Graphics, and Developer Tools"
         },
         {
           "kind": "h2",
@@ -803,19 +829,84 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed software builder and technical writer with about 13 years of personal programming. Builds AI workstations, evaluation tools, language tooling, and graphics systems. Began a career transition in June 2026 after eleven years of full-time production arboriculture; no professional programming experience.",
+          "text": "Self-directed software builder who writes tools that test AI systems and the software around them, and graphics work that people install. Elder ENB, a lighting preset for Skyrim Special Edition, has 996,649 downloads on Nexus Mods. About 13 years of personal programming. Career transition began June 2026 after eleven years of full-time production arboriculture; no professional programming experience.",
           "evidence": [
             "history",
-            "flywheel",
-            "buildlang",
-            "emet"
+            "elder-enb-nexus",
+            "flywheel-190"
           ]
         },
         {
           "kind": "p",
-          "text": "Open to technical and nontechnical AI governance and evaluation roles. Willing to relocate to London; available for regular travel to San Francisco.",
+          "text": "Seeking red-team, purple-team and security-evaluation work, AI evaluation roles, and graphics engineering. Willing to relocate to London; available for regular travel to San Francisco.",
           "evidence": [
             "career-availability"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Selected Evidence"
+        },
+        {
+          "kind": "li",
+          "text": "Elder ENB: 996,649 total downloads, 176,359 unique downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026. First uploaded April 21, 2024; last updated February 20, 2026, at version final-elder-9. nexusmods.com/skyrimspecialedition/mods/117327",
+          "evidence": [
+            "elder-enb-nexus"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Open source: 37 merged engineering pull requests in 30 external repositories, with 17 closed without merge and 14 open, counted from the GitHub API on October 23, 2026. harperz9.github.io/career/open-source-census.json",
+          "evidence": [
+            "census-20261023"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Flagship Projects"
+        },
+        {
+          "kind": "li",
+          "text": "Flywheel runs AI tasks with the model you choose and checks each answer against a task contract. In 1.9.0, behavior-check flagged 20 of 20 planted behavior changes and 0 of 50 unchanged pairs. github.com/HarperZ9/flywheel/releases/tag/v1.9.0",
+          "evidence": [
+            "flywheel-190"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Daylight Commons is a browser extension that shows the sources behind replies on nine social platforms. Its slur sign has 91.0% precision, 3,995 of 4,392, on public human-labelled corpora. github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md",
+          "evidence": [
+            "daylight-commons-322",
+            "daylight-commons-evaluation"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0",
+          "evidence": [
+            "articulate-0140"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang",
+          "evidence": [
+            "buildlang",
+            "buildlang-180"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. In release 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Low Water is an original narrative game in development on raw-native, in a private repository.",
+          "evidence": [
+            "low-water-private"
           ]
         },
         {
@@ -836,7 +927,7 @@
         },
         {
           "kind": "li",
-          "text": "Develop model-agnostic workflows, evaluation harnesses, controlled-action interfaces, and source-linked records that can be checked without relying on a model to approve its own answer.",
+          "text": "Develop model-agnostic workflows, evaluation harnesses, and controlled-action interfaces whose records can be checked without a model approving its own answer.",
           "evidence": [
             "flywheel",
             "accountable-surface",
@@ -844,16 +935,7 @@
           ]
         },
         {
-          "kind": "li",
-          "text": "Contribute focused fixes, regression tests, and documentation to externally maintained projects, responding to maintainer review and preserving the scope of each accepted change.",
-          "evidence": [
-            "flp",
-            "hflow",
-            "voxwire",
-            "deepeval",
-            "tomlkit",
-            "datasette"
-          ]
+          "ref": "engineering-origin"
         },
         {
           "ref": "writer"
@@ -891,60 +973,25 @@
         },
         {
           "kind": "h2",
-          "text": "Programming Background"
-        },
-        {
-          "ref": "engineering-origin"
-        },
-        {
-          "kind": "h2",
-          "text": "AI Platform and Agent Systems"
-        },
-        {
-          "kind": "h3",
-          "text": "Flywheel | Model-agnostic AI workstation and coding harness"
+          "text": "Security Evaluation: Red Team and Purple Team"
         },
         {
           "kind": "p",
-          "text": "Primary owned platform. Flywheel v1.5.0, released October 4, 2026, includes a Windows installer with a bundled engine. The source repository contains the Python runtime, Flutter desktop client, and browser fallback.",
+          "text": "No paid red-team or purple-team engagement to date. This work runs on my own systems and test targets, with planted faults and attacks.",
           "evidence": [
-            "flywheel",
-            "flywheel-150"
+            "public-security-descriptions"
           ]
         },
         {
-          "kind": "li",
-          "text": "Routes tasks to hosted or local models through an OpenAI-compatible gateway; keeps model selection separate from the task record and exposes command-line, desktop, and API entry points.",
-          "evidence": [
-            "flywheel"
-          ]
+          "kind": "h3",
+          "text": "Planted controls in release checks"
         },
         {
-          "kind": "li",
-          "text": "Provides Rowan, a desktop assistant that translates requests into recorded tasks, together with permission-checked coding and tool-use workflows, session state, and inspectable outcomes.",
+          "kind": "p",
+          "text": "Released a Flywheel monitor-admission check over 2,676 fixed test items with six planted controls and a second, independent math kernel. github.com/HarperZ9/flywheel/releases/tag/v1.5.0",
           "evidence": [
-            "flywheel"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Composes research intake, workspace indexing, verification, orchestration, memory, authoring, and other tools through registered lanes and published interfaces. Bundled components and installable companions have distinct packaging requirements.",
-          "evidence": [
-            "flywheel"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Produces sealed, re-derivable receipts and offline MATCH, DRIFT, or UNVERIFIABLE outcomes. A reproducible receipt establishes the bounded check it records, not universal model accuracy or safety.",
-          "evidence": [
-            "flywheel"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Released a monitor-admission check over 2,676 frozen items with six planted controls, a second independent math kernel, and signer-head anchoring. Release evidence reports no real monitor tested through the admission check and no installed signer; Windows anchoring was parse-checked only.",
-          "evidence": [
-            "flywheel-150"
+            "flywheel-150",
+            "flywheel-190"
           ]
         },
         {
@@ -953,38 +1000,206 @@
         },
         {
           "kind": "p",
-          "text": "Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions; persisted journals preserve decisions and observed effects. Reversible adapters include restoration paths. Fake drivers make browser and desktop scenarios testable without uncontrolled live actions.",
+          "text": "Built operator-granted action interfaces for filesystem, command, API, browser, and Windows UI Automation work. Actions carry explicit scope and postconditions, journals preserve decisions and observed effects, and fake drivers make browser and desktop scenarios testable without live actions.",
           "evidence": [
             "accountable-surface"
           ]
         },
         {
           "kind": "p",
-          "text": "The v0.2.0 release provides source and wheel artifacts on GitHub. The project remains alpha; browser integrations are optional and a tool refusal or unknown result is not promoted into a successful action.",
+          "text": "On PyPI as accountable-surface 0.3.1; alpha. pypi.org/project/accountable-surface",
           "evidence": [
             "accountable-surface"
           ]
         },
         {
           "kind": "h3",
-          "text": "Articulate | Writing analysis and accountable editing"
+          "text": "Phantom | Hardware-identity inspection and reversible system changes"
         },
         {
           "kind": "p",
-          "text": "Built deterministic prose analysis with profiles for register and genre, mode settings, and optional model-assisted editing. Includes command-line, library, MCP, language-server, and SARIF surfaces; math-span protection preserves formulas during supported editing flows. Content-free audit receipts record checks without retaining the underlying prose. Version 0.9.0, released October 3, 2026, adds project-specific writing rules, domain profiles, writing-process records, and reports of guarded edits. Detector rules retain the published v0.5.2 fingerprint.",
+          "text": "Developed a Rust utility for Windows and Linux with read-only audit, backup-before-write, validation, restoration, and platform packages. Release v1.1.1 changes and restores user-level identifiers. github.com/HarperZ9/phantom/releases/tag/v1.1.1",
           "evidence": [
-            "articulate",
-            "articulate-090"
+            "phantom"
           ]
         },
         {
           "kind": "h3",
-          "text": "Agent tools, memory, and coordination"
+          "text": "Controlled assessment and detection engineering"
         },
         {
           "kind": "p",
-          "text": "Relay supplies model-agnostic coding-agent tooling; Plexus connects tool interfaces; Mneme retains memories with source checks; Canon consolidates assistant instructions and context. Bulletin provides a signed-identity public message board. These systems contribute distinct capabilities to the larger platform. Customer-scale deployment is not established.",
+          "text": "Private systems work includes Array for approval-gated assessment orchestration, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and ORCA for engagement state, findings and reports. Source and operational details are private.",
           "evidence": [
+            "public-security-descriptions"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "AI Evaluation"
+        },
+        {
+          "kind": "h3",
+          "text": "Flywheel | Model-agnostic AI workstation and coding harness"
+        },
+        {
+          "kind": "p",
+          "text": "Primary owned platform. Flywheel 1.9.0, released October 15, 2026, is on PyPI as flywheel-verify, installs through Homebrew or Scoop, and ships a Windows installer with a bundled engine.",
+          "evidence": [
+            "flywheel",
+            "flywheel-190"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Routes tasks to hosted or local models through an OpenAI-compatible gateway, with command-line, desktop, and API entry points.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Provides Rowan, a desktop assistant that turns requests into recorded tasks, with permission-checked coding and tool-use workflows and session state.",
+          "evidence": [
+            "flywheel"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Terminal State Fixtures and Crucible"
+        },
+        {
+          "kind": "p",
+          "text": "Test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that tell a failed answer apart from a provider failure or missing evidence. Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls. github.com/HarperZ9/terminal-state-fixtures",
+          "evidence": [
+            "terminal-state-fixtures",
+            "metr-interop-controls"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Daylight Commons | Browser extension for checking where replies come from"
+        },
+        {
+          "kind": "p",
+          "text": "A browser extension that shows the sources behind replies on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. Runs locally with no account. Open source (AGPL-3.0). Version 3.2.2, released October 23, 2026. github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2",
+          "evidence": [
+            "daylight-commons-322"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Articulate | Prose analysis and editing"
+        },
+        {
+          "kind": "p",
+          "text": "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.15.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing",
+          "evidence": [
+            "articulate-0151"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Graphics and Rendering"
+        },
+        {
+          "kind": "h3",
+          "text": "Elder ENB | Lighting and post-processing preset for Skyrim Special Edition"
+        },
+        {
+          "kind": "p",
+          "text": "An ENBSeries preset with a layered design: weather presets set the atmosphere, and stackable overlays adjust style, lighting, effects and post-processing. It ships 38 atmosphere presets for the KreatE weather system, updated from April 2024 to February 2026. ENBSeries and the required mods belong to their authors. nexusmods.com/skyrimspecialedition/mods/117327",
+          "evidence": [
+            "elder-enb-nexus"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "raw-native | C++ renderer with a CPU reference and checked GPU backends"
+        },
+        {
+          "kind": "p",
+          "text": "Release 0.8.0, October 14, 2026, renders on a CPU reference and through D3D12 and WebGPU, and passed 60 of 60 tests with MSVC and GCC. github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Merged since 0.8.0 and not yet released: a Vulkan 1.3 backend whose 600 presented frames on lavapipe match the offscreen and D3D12 WARP renders hash for hash; the painterly shader ported to the C++ core, equal to the JavaScript version across fifteen cases; a tilt-shift lens that repaints out-of-focus areas with coarser brushwork and no blur, about 0.86 ms a frame at 1080p on an RTX 4090; and a character asset toolchain that turns brush strokes into signed distance fields, game meshes, UV atlases and baked maps.",
+          "evidence": [
+            "raw-native-main-20261023"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Low Water | Original narrative game in development"
+        },
+        {
+          "kind": "p",
+          "text": "An original narrative game written and built on my own engine, with a deterministic combat simulation. A C++ port onto raw-native is in progress in open raw-native pull requests. The repository is private.",
+          "evidence": [
+            "low-water-private"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Earlier graphics and color work"
+        },
+        {
+          "kind": "p",
+          "text": "Earlier HLSL and C++ modding covered post-processing, Direct3D 11 integration, shader debugging and GPU traces, with public projects SkyrimBridge, ENB Runtime Core, Brender Archival and Engine Revival. Color tools include Build Color, Calibrate Pro and Studio Engine.",
+          "evidence": [
+            "skyrimbridge",
+            "enb-runtime-core",
+            "brender-archival",
+            "engine-revival",
+            "build-color",
+            "calibrate-pro",
+            "studio-engine"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Developer Tools and Languages"
+        },
+        {
+          "kind": "h3",
+          "text": "BuildLang | Rust compiler and developer tooling"
+        },
+        {
+          "kind": "p",
+          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. crates.io/crates/buildlang",
+          "evidence": [
+            "buildlang",
+            "buildlang-170",
+            "buildlang-180"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "EMET | Byte-integrity witnessing"
+        },
+        {
+          "kind": "p",
+          "text": "Developed Python, Rust, Node, and Go implementations that check whether bytes still match their source, sharing one set of conformance cases. On PyPI as emet. pypi.org/project/emet",
+          "evidence": [
+            "emet",
+            "suite-20261023"
+          ]
+        },
+        {
+          "kind": "h3",
+          "text": "Research intake and workspace tooling"
+        },
+        {
+          "kind": "p",
+          "text": "Built Gather for research intake from web, scholarly and document sources, Index for workspace and symbol maps, and Forum for running teams of agents. On October 23, 2026, Gather 2.4.0, Crucible 1.6.0, and EMET 1.3.1 shipped to PyPI and Canon 0.7.0 to GitHub. Companion tools include Relay for coding agents, Plexus for tool wiring, Mneme for agent memory, Canon for assistant instructions, and Bulletin, a message board for agents.",
+          "evidence": [
+            "gather",
+            "index",
+            "forum",
+            "suite-20261023",
             "relay",
             "plexus",
             "mneme",
@@ -994,115 +1209,13 @@
         },
         {
           "kind": "h2",
-          "text": "Evaluation, Systems, and Security Engineering"
-        },
-        {
-          "kind": "h3",
-          "text": "Terminal State Fixtures and Crucible"
-        },
-        {
-          "kind": "p",
-          "text": "Built 324 exhaustive terminal-state fixtures and five synthetic component-evaluation families with 337 cases and 5,058 frozen expectations. Defined controls separate failed outputs, provider failures, and missing evidence from valid results. Executed a pinned METR count_odds interoperability check with three deterministic controls, preserving logs and score provenance through the Inspect-to-Flywheel handoff.",
-          "evidence": [
-            "terminal-state-fixtures",
-            "metr-interop-controls"
-          ]
-        },
-        {
-          "kind": "h3",
-          "text": "EMET | Byte-integrity witnessing"
-        },
-        {
-          "kind": "p",
-          "text": "Developed Python, Rust, Node, and Go implementations around shared conformance cases and portable verification records. The witness checks byte-level integrity, anchors, and source correspondence; it does not grant permission, certify semantic truth, or replace an operator decision. Cross-language checking makes implementation differences visible.",
-          "evidence": [
-            "emet"
-          ]
-        },
-        {
-          "kind": "h3",
-          "text": "BuildLang | Rust compiler and developer tooling"
-        },
-        {
-          "kind": "p",
-          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. The compiler makes categories of ambient access visible to its type and build machinery. Experimental backends and linear-type work remain distinguished from the supported path.",
-          "evidence": [
-            "buildlang"
-          ]
-        },
-        {
-          "kind": "h3",
-          "text": "Phantom | Hardware-identity inspection and reversible system changes"
-        },
-        {
-          "kind": "p",
-          "text": "Developed a Rust-based Windows and Linux utility with deterministic profiles, read-only audit, backup-before-write behavior, validation, restoration, and platform packages. The released v1.1.1 scope is userland-reversible identifiers. Kernel and firmware layers are modeled, not shipped.",
-          "evidence": [
-            "phantom"
-          ]
-        },
-        {
-          "kind": "h3",
-          "text": "Controlled assessment and operator tooling"
-        },
-        {
-          "kind": "p",
-          "text": "Private systems work includes Array for approval-gated assessment orchestration and containment records, Lab/Seed for controlled-lab fixtures and detection-engineering workflows, and Runtime/ORCA for local workspaces, reports, bundles, and release provenance. Public descriptions cover architecture and safe interfaces; private implementations, target material, and operational details are not published here.",
-          "evidence": [
-            "public-security-descriptions"
-          ]
-        },
-        {
-          "kind": "h3",
-          "text": "Research intake and workspace tooling"
-        },
-        {
-          "kind": "p",
-          "text": "Built Gather for source-carrying research intake, Index for workspace and symbol maps, and Forum for model orchestration with recorded decisions. These tools make source selection, handoffs, and task context inspectable across a multi-repository product.",
-          "evidence": [
-            "gather",
-            "index",
-            "forum"
-          ]
-        },
-        {
-          "kind": "h2",
-          "text": "Graphics, Color, and Runtime Work"
-        },
-        {
-          "kind": "p",
-          "text": "Developed HLSL and C++ graphics and game-modding work spanning post-processing, Direct3D 11 integration, shader debugging, GPU traces, and shared-memory interfaces. Related public projects include Elder ENB, SkyrimBridge, ENB Runtime Core, Brender Archival, and Engine Revival. Existing engines and collaborators retain their own attribution.",
-          "evidence": [
-            "elder-enb",
-            "skyrimbridge",
-            "enb-runtime-core",
-            "brender-archival",
-            "engine-revival"
-          ]
-        },
-        {
-          "kind": "p",
-          "text": "Color and creative-tool work includes Build Color, Calibrate Pro, Studio Engine, and browser-based studio/print surfaces: perceptual color spaces, color difference, HDR/tone-mapping tools, display characterization, and generative visual systems. These are engineering projects, not claims of professional calibration certification.",
-          "evidence": [
-            "build-color",
-            "calibrate-pro",
-            "studio-engine"
-          ]
-        },
-        {
-          "kind": "h2",
           "text": "Selected Open-Source Contributions"
         },
         {
           "kind": "p",
-          "text": "Six selected contributions merged across six external repositories, covering bug fixes, tests, and documentation. These are contributions, not employment; the broader record tracks merged, open, and closed without merge outcomes.",
+          "text": "Six of 37 merged engineering pull requests in 30 external repositories. Full list: harperz9.github.io/career/open-source-census.json",
           "evidence": [
-            "flp",
-            "hflow",
-            "voxwire",
-            "deepeval",
-            "tomlkit",
-            "datasette"
+            "census-20261023"
           ]
         },
         {
@@ -1162,6 +1275,15 @@
         },
         {
           "kind": "p",
+          "text": "Security evaluation: planted-fault and control design, approval-gated assessment workflows, detection engineering fixtures, vulnerability management and policy audit, and evidence handling for findings.",
+          "evidence": [
+            "public-security-descriptions",
+            "qualys-vmdr",
+            "qualys-policy-audit"
+          ]
+        },
+        {
+          "kind": "p",
           "text": "AI infrastructure and quality: multi-provider/local-model routing, tool-use loops, task decomposition, MCP, evaluation design, deterministic fixtures, regression testing, worker/verifier separation, failure analysis, and terminal-state scoring.",
           "evidence": [
             "flywheel",
@@ -1171,7 +1293,7 @@
         },
         {
           "kind": "p",
-          "text": "Verification and controlled actions: capability effects, operator grants, action envelopes, source provenance, hash-chained journals, offline replay, scoped postconditions, conformance suites, and release evidence.",
+          "text": "Controlled actions: capability effects, approval grants, hash-chained journals, offline replay, and conformance suites.",
           "evidence": [
             "buildlang",
             "accountable-surface",
@@ -1180,7 +1302,7 @@
         },
         {
           "kind": "p",
-          "text": "Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, static websites, release documentation, and checksums.",
+          "text": "Software delivery: Git/GitHub, GitHub Actions, Python packaging, command-line design, Windows/Linux installers, CMake, test automation, and release checksums.",
           "evidence": [
             "flywheel",
             "phantom",
@@ -1190,10 +1312,11 @@
         },
         {
           "kind": "p",
-          "text": "Graphics and domain knowledge: D3D11/HLSL, shader and runtime debugging, color-space and tone-mapping work, GPU instrumentation, shared-memory interfaces, and applied arboriculture/horticulture from field practice.",
+          "text": "Graphics and domain knowledge: D3D11/D3D12, Vulkan, HLSL, WebGPU/WGSL, ENBSeries presets, painterly and stylised post-processing, signed distance fields, CPU reference rendering and GPU parity checks, color-space and tone-mapping work, GPU instrumentation, and applied arboriculture/horticulture from field practice.",
           "evidence": [
             "history",
-            "elder-enb",
+            "elder-enb-nexus",
+            "raw-native-main-20261023",
             "build-color"
           ]
         },
@@ -1203,7 +1326,7 @@
         },
         {
           "kind": "p",
-          "text": "AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine. Public examples separate observed results from interpretation and retain negative or inconclusive findings. A completed run alone does not establish success.",
+          "text": "AI-assisted development is part of the workflow. Architecture, integration, source review, test design, release decisions, and responsibility for the submitted work remain mine.",
           "evidence": [
             "history",
             "flywheel",
@@ -1213,11 +1336,11 @@
         },
         {
           "kind": "h2",
-          "text": "Research Agenda"
+          "text": "Research Interests"
         },
         {
           "kind": "p",
-          "text": "My independent research examines evidence that another person or system can check without inheriting an AI system's authority. Work includes evaluation provenance and verifier independence; live-state drift; proof-carrying actions; memory, uncertainty, and behavior; and human authorization for consequential actions. Robotics is a research interest.",
+          "text": "Independent verification of AI evaluations, drift in live systems, records of agent actions, human approval for consequential actions, and robotics.",
           "evidence": [
             "history"
           ]
@@ -1235,45 +1358,29 @@
           ]
         },
         {
-          "kind": "h3",
-          "text": "Who Knew First"
-        },
-        {
-          "kind": "p",
-          "text": "September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. Separates source claims, inference, and unresolved attribution. harperz9.github.io/who-knew-first.html",
+          "kind": "li",
+          "text": "Who Knew First, September 2026. Directed and published an AI-assisted investigation comparing disclosure timelines, evidence access, institutional incentives, and evaluator conflicts across nine reported AI-agent incidents. harperz9.github.io/who-knew-first.html",
           "evidence": [
             "who-knew-first"
           ]
         },
         {
-          "kind": "h3",
-          "text": "An Open Letter on Checking the Machines"
-        },
-        {
-          "kind": "p",
-          "text": "September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. harperz9.github.io/checking-the-machines.html",
+          "kind": "li",
+          "text": "An Open Letter on Checking the Machines, September 2026. Proposed contestable AI decisions, repeatable evidence checks, and accountable responses to objections. harperz9.github.io/checking-the-machines.html",
           "evidence": [
             "checking-the-machines"
           ]
         },
         {
-          "kind": "h3",
-          "text": "Borrowed Ground"
-        },
-        {
-          "kind": "p",
-          "text": "September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html",
+          "kind": "li",
+          "text": "Borrowed Ground, September 2026. Philosophical essay connecting human interdependence to responsibility, privacy, participation, and the limits of technical evidence as authority over people. Substantial AI assistance disclosed. harperz9.github.io/borrowed-ground.html",
           "evidence": [
             "borrowed-ground"
           ]
         },
         {
-          "kind": "h3",
-          "text": "The Sandbox Was Never Just a Box"
-        },
-        {
-          "kind": "p",
-          "text": "September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html",
+          "kind": "li",
+          "text": "The Sandbox Was Never Just a Box, September 2026. Compared public security reports to examine shared-service exposure and the independence of logs, monitors, and scorers in AI-agent evaluation. harperz9.github.io/the-sandbox-was-never-just-a-box.html",
           "evidence": [
             "sandbox-essay"
           ]
@@ -1284,7 +1391,7 @@
         },
         {
           "kind": "p",
-          "text": "Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. These records are not peer reviewed. An archived philosophical manuscript is not an awarded academic degree.",
+          "text": "Independent systems papers, preprints, research notes, philosophy papers, a working paper, and archived manuscripts with DOI records. Not peer reviewed.",
           "evidence": [
             "publications"
           ]
@@ -1385,18 +1492,14 @@
         },
         {
           "kind": "p",
-          "text": "Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work; no separate professional license is claimed.",
+          "text": "Self-directed study in systems programming, compilers, graphics, color science, AI evaluation, epistemics, and philosophy of mind. Practical arboriculture and plant-science knowledge comes from field work.",
           "evidence": [
             "history"
           ]
         },
         {
           "kind": "p",
-          "text": "ORCID: 0009-0001-7175-5393 | orcid.org/0009-0001-7175-5393"
-        },
-        {
-          "kind": "p",
-          "text": "Publications: harperz9.github.io/publications.html | Portfolio: harperz9.github.io/portfolio.html"
+          "text": "ORCID: orcid.org/0009-0001-7175-5393 | harperz9.github.io/publications.html | harperz9.github.io/portfolio.html"
         },
         {
           "kind": "h2",
@@ -1456,7 +1559,7 @@
         },
         {
           "kind": "p",
-          "text": "SC-100: Design security solutions for applications and data. Completed four module assessments and the architecture case study.",
+          "text": "SC-100: Design security solutions for applications and data. Four module assessments and the case study.",
           "evidence": [
             "sc100-apps-data"
           ]
@@ -1531,14 +1634,14 @@
         },
         {
           "kind": "p",
-          "text": "Cisco Networking Academy: Ethical Hacker | Intermediate course certificate and learning badge, 2026-09-30; 100% knowledge exam. Assessed scoping, reporting, vulnerability assessment, and security concepts.",
+          "text": "Cisco Networking Academy: Ethical Hacker | Course certificate and learning badge, 2026-09-30; 100% knowledge exam.",
           "evidence": [
             "cisco-ethical-hacker"
           ]
         },
         {
           "kind": "p",
-          "text": "Google skill badges, completed 2026-09-30: Google DeepMind: Train A Small Language Model (Advanced; 100/100, four coding checkpoints); Use Agent Skills with Multi-Agent Systems (Intermediate course/Advanced challenge; 100/100, six checkpoints). Scope: tokenization, n-grams, data preparation, and agent orchestration. Multi-agent lab: five Cloud Run services deployed; model-access policy blocked local and cloud generation.",
+          "text": "Google skill badges, completed 2026-09-30: Google DeepMind: Train A Small Language Model (Advanced; 100/100, four coding checkpoints); Use Agent Skills with Multi-Agent Systems (Intermediate course/Advanced challenge; 100/100, six checkpoints). Multi-agent lab: five Cloud Run services deployed; model-access policy blocked local and cloud generation.",
           "evidence": [
             "google-deepmind-slm",
             "google-multi-agent"
@@ -1546,7 +1649,7 @@
         },
         {
           "kind": "p",
-          "text": "Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge). Both courses Intermediate. Lab work: SQL features, logistic regression, later-window evaluation, and predictions.",
+          "text": "Google BigQuery skill badges, issued 2026-10-01: Perform Predictive Data Analysis in BigQuery (100/100, seven checkpoints; Advanced challenge); Create ML Models with BigQuery ML (100/100, four checkpoints; Intermediate challenge).",
           "evidence": [
             "google-bigquery-predictive",
             "google-bigquery-ml-models"
@@ -1554,7 +1657,7 @@
         },
         {
           "kind": "p",
-          "text": "Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation (Intermediate); Google Security Operations - Deep Dive (Advanced; 96% knowledge assessment). Topics: model-evaluation methods, YARA-L, SIEM processing/enrichment, and SOAR.",
+          "text": "Google course-completion badges, completed 2026-09-30: Machine Learning Operations (MLOps) with Agent Platform: Model Evaluation (Intermediate); Google Security Operations - Deep Dive (Advanced; 96% knowledge assessment).",
           "evidence": [
             "google-mlops-model-evaluation",
             "google-secops-deep-dive"
@@ -1572,7 +1675,7 @@
         },
         {
           "kind": "p",
-          "text": "UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%. Assessed human rights, fairness, risk controls, incident reporting, and sustainability.",
+          "text": "UNESCO: Global MOOC on the Ethics of AI | Intermediate course certificate, 2026-09-30; 100%.",
           "evidence": [
             "unesco-ai-ethics"
           ]

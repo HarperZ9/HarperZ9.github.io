@@ -1,6 +1,6 @@
 # Zain Dana Harper: Resumes
 
-Updated 2026-10-07.
+Updated 2026-10-23.
 
 Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
@@ -13,7 +13,7 @@ https://harperz9.github.io/resume-support-operations.html
 [TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.txt)
 [MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.md)
 
-## AI Systems, Evaluation, and Python Developer Tools
+## AI and Security Evaluation, and Python Developer Tools
 
 https://harperz9.github.io/resume-evaluation-tooling.html
 

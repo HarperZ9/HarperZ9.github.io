@@ -159,8 +159,8 @@ def test_private_security_projects_keep_one_distinct_definition_on_their_own_pag
         assert record["purpose"] not in html.unescape(practice)
 
     shared_definitions = {
-        "orca": ("engagement state", "portable bundles", "release provenance"),
-        "gate": ("release-check subsystem", "hashed JSON receipts", "blocks advancement"),
+        "orca": ("engagement state", "portable bundles", "produces reports"),
+        "gate": ("release-check subsystem", "verification-command results", "blocks advancement"),
     }
     for slug, phrases in shared_definitions.items():
         assert f'id="{slug}"' in practice
@@ -171,7 +171,7 @@ def test_private_security_projects_keep_one_distinct_definition_on_their_own_pag
         assert project in security
 
     assert 'href="/private-practice.html"' in homepage
-    assert "No private repository, operational method, target detail" in homepage
+    assert "Private systems are used only with written authorization" in homepage
 
 
 def test_private_security_projects_are_distinct_registry_records() -> None:

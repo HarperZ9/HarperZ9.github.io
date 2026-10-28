@@ -1,0 +1,52 @@
+/* room.css: calm ground, ink, one accent; large targets (56 px, 72 px with "Larger"); a thick focus ring that never
+   hides; no motion unless the person allows it. */
+:root {
+  --ground: #f3efe6; --panel: #fbf9f4; --ink: #15130f; --mute: #4a463f; --line: #b9b0a0; --accent: #1d5c52; --focus: #0b57d0;
+  --target: 56px; --text: 1.125rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ground: #121316; --panel: #1b1d22; --ink: #ece7dc; --mute: #b7b0a3; --line: #4a4f58; --accent: #7fc4b4; --focus: #8ab4ff; color-scheme: dark; }
+}
+:root.large { --target: 72px; --text: 1.375rem; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: var(--text)/1.5 "Hanken Grotesk", system-ui, sans-serif; }
+h1 { font-size: 1.6rem; margin: 0; }
+h2 { font-size: 1.3rem; margin: 0 0 12px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--ground); padding: 12px 16px; }
+.skip:focus { left: 8px; }
+.bar { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 2px solid var(--line); }
+.tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+main { display: grid; gap: 16px; padding: 16px; max-width: 1200px; margin: 0 auto; grid-template-columns: 1fr; }
+@media (min-width: 1000px) { main { grid-template-columns: 1fr 1fr; } main > :last-child { grid-column: 1 / -1; } }
+.panel { background: var(--panel); border: 2px solid var(--line); border-radius: 6px; padding: 16px; }
+button, .big { min-height: var(--target); min-width: var(--target); padding: 10px 18px; font: inherit; font-weight: 600; color: var(--ink); background: var(--ground); border: 2px solid var(--ink); border-radius: 6px; cursor: pointer; }
+button[aria-selected="true"], button[aria-pressed="true"] { background: var(--ink); color: var(--ground); }
+button:disabled { opacity: 0.55; cursor: not-allowed; }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+textarea, input[inputmode] { width: 100%; font: inherit; color: var(--ink); background: var(--ground); border: 2px solid var(--ink); border-radius: 6px; padding: 12px; min-height: var(--target); }
+.field-label { display: block; font-weight: 600; margin: 4px 0 8px; }
+.tabs, .row, .choices { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+.choices button { flex: 1 1 200px; min-height: calc(var(--target) * 1.4); font-size: 1.15em; }
+.tiles { display: grid; grid-template-columns: repeat(6, minmax(var(--target), 1fr)); gap: 8px; }
+.tiles button { min-height: calc(var(--target) * 1.2); padding: 6px; }
+.keypad { display: grid; grid-template-columns: repeat(6, minmax(var(--target), 1fr)); gap: 8px; margin-top: 12px; }
+.sentence { min-height: var(--target); font-size: 1.4em; border-bottom: 2px solid var(--line); margin: 0 0 12px; padding: 6px 0; }
+.level { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.level input { width: 180px; height: var(--target); accent-color: var(--accent); }
+.settings { display: grid; gap: 12px; padding: 16px; border-bottom: 2px solid var(--line); }
+.check { display: flex; gap: 12px; align-items: center; min-height: var(--target); }
+.check input { width: 32px; height: 32px; accent-color: var(--accent); }
+.result { margin: 0; }
+.result img { display: block; width: 100%; max-width: 960px; height: auto; border: 2px solid var(--line); border-radius: 4px; }
+.result figcaption { font-size: 1.5em; font-weight: 600; margin-top: 10px; min-height: 1.5em; }
+.out-text { font-size: 1.2em; max-width: 70ch; }
+.status { min-height: 1.5em; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+@media (forced-colors: active) { button[aria-selected="true"], button[aria-pressed="true"] { border-width: 4px; } }
+.made { display: grid; gap: 8px; margin: 0 0 12px; }
+.source { margin: 0; font-size: 1.1em; }
+.source q { font-weight: 700; }
+.stale { margin: 0; padding: 8px 12px; border-left: 6px solid var(--mute); background: var(--ground); font-weight: 600; }
+.made .big { justify-self: start; }

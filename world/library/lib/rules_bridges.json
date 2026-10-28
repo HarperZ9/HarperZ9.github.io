@@ -1,0 +1,1089 @@
+{
+ "format": "refdb.rulesbridges/1",
+ "note": "Agent-written (Claude Opus 5.5, 2026-10-26). Rules are first-class concepts on the 'rules' sheet: each names its kind, the concepts it governs, where it was stated, and aliases used to find further evidence. Bridges ('connecting elements') name the specific shared element that joins concepts across mediums. Evidence counts are measured by matching; the rule and bridge statements are the agent's reading of the cited sources.",
+ "rules": [
+  {
+   "id": "rule-depth-planes-have-jobs",
+   "kind": "composition",
+   "statement": "Foreground frames, midground holds the character and focal point, background sets the scene; each plane has one job.",
+   "governs": [
+    "depth-planes",
+    "layering",
+    "focal-point"
+   ],
+   "source": "Eyecager Sketchbook zine (studies/st-amberbladejones-2114453581625729120)",
+   "aliases": [
+    "midground",
+    "each plane has a job",
+    "framing layer",
+    "traditional set ?up"
+   ]
+  },
+  {
+   "id": "rule-horizon-not-halfway",
+   "kind": "composition",
+   "statement": "Horizon placement and mass size make or break a vertical frame; a 50/50 split is a hard sell and equal masses feel the same.",
+   "governs": [
+    "horizon",
+    "scale-crop"
+   ],
+   "source": "Eyecager Sketchbook zine",
+   "aliases": [
+    "50/50",
+    "horizon line",
+    "horizon placement",
+    "place the horizon"
+   ]
+  },
+  {
+   "id": "rule-temperature-macro-micro",
+   "kind": "composition",
+   "statement": "Pattern colour temperature at the macro level (cool sky, warm ground) and alternate it at the micro level; put red in foliage shadows.",
+   "governs": [
+    "colour-temperature",
+    "contrast",
+    "plant"
+   ],
+   "source": "Eyecager Sketchbook zine, crediting a Ghibli background painter; measured shadow a* +6.2 against lit green -4.9",
+   "aliases": [
+    "colou?r temperature",
+    "red in the shadows",
+    "pink-warm",
+    "macro level"
+   ]
+  },
+  {
+   "id": "rule-neutral-vs-dynamic",
+   "kind": "composition",
+   "statement": "Neutral pose, camera and background connect to a character; dynamic ones build tension; mixing them carelessly causes dissonance.",
+   "governs": [
+    "body",
+    "projection-depth",
+    "reading-order"
+   ],
+   "source": "Eyecager Sketchbook zine",
+   "aliases": [
+    "neutral pose",
+    "dynamic pose",
+    "neutral camera",
+    "exaggerated focal"
+   ]
+  },
+  {
+   "id": "rule-readability-is-king",
+   "kind": "craft",
+   "statement": "Readability is king: contrast serves separation and the focal point before poetry.",
+   "governs": [
+    "contrast",
+    "type",
+    "reading-order"
+   ],
+   "source": "Eyecager Sketchbook zine ('Readability is King'); lettering PROGRESS readability passes",
+   "aliases": [
+    "readab",
+    "legib",
+    "readability is king"
+   ]
+  },
+  {
+   "id": "rule-one-hot-mark",
+   "kind": "canon",
+   "statement": "One hot mark per view; colour is verdict-only in UI.",
+   "governs": [
+    "focal-point",
+    "saturation-hue",
+    "contrast"
+   ],
+   "source": "design canon (CLAUDE.md, DESIGN-VOICE-CANON); matched by rileycx's single orange (0.4% to 28% of a view)",
+   "aliases": [
+    "hot mark",
+    "one orange",
+    "verdict-only",
+    "one accent"
+   ]
+  },
+  {
+   "id": "rule-no-helper-text",
+   "kind": "canon",
+   "statement": "No taglines, helper text or secondary labels; if a screen needs them, redesign it.",
+   "governs": [
+    "reading-order",
+    "type",
+    "negative-space"
+   ],
+   "source": "Synthesis-and-Design-Framework.md",
+   "aliases": [
+    "helper text",
+    "tagline",
+    "secondary label",
+    "eyebrow"
+   ]
+  },
+  {
+   "id": "rule-two-type-families",
+   "kind": "canon",
+   "statement": "Two type families only, one grotesk and one mono; hierarchy from weight and size.",
+   "governs": [
+    "type",
+    "scale-crop"
+   ],
+   "source": "design canon (Hanken Grotesk + Conso)",
+   "aliases": [
+    "two type families",
+    "two faces only",
+    "hanken",
+    "conso\b"
+   ]
+  },
+  {
+   "id": "rule-recombine-not-copy",
+   "kind": "canon",
+   "statement": "Break every reference into parts and recombine them into our own system; never copy piecewise.",
+   "governs": [
+    "decomposition-measure",
+    "transformation",
+    "collage-recut"
+   ],
+   "source": "Synthesis-and-Design-Framework.md",
+   "aliases": [
+    "recombin",
+    "never copy",
+    "piecewise",
+    "clean-?room",
+    "literal copy",
+    "resynthes"
+   ]
+  },
+  {
+   "id": "rule-andamento-follows-form",
+   "kind": "craft",
+   "statement": "Tesserae are laid in courses (andamento) that follow the form's contour, so the flow of the tiles describes the shape.",
+   "governs": [
+    "mosaic",
+    "tessellation",
+    "advection",
+    "path-stroke"
+   ],
+   "source": "name-art/lib/mosaic/andamento.mjs header; Byzantine mosaic practice",
+   "aliases": [
+    "andamento",
+    "courses follow",
+    "follow the contour",
+    "opus vermiculatum"
+   ]
+  },
+  {
+   "id": "rule-erosion-follows-stroke-width",
+   "kind": "craft",
+   "statement": "Erosion should follow local stroke width so thin parts of a letter survive.",
+   "governs": [
+    "erosion",
+    "type",
+    "glyph-cell"
+   ],
+   "source": "name-art/README.md and DECISIONS.md (the r collapses otherwise)",
+   "aliases": [
+    "stroke width",
+    "local stroke width"
+   ]
+  },
+  {
+   "id": "rule-burin-tone-by-line",
+   "kind": "craft",
+   "statement": "In intaglio, tone comes from line density and width under a raking light, never from flat fill; the edge exists where cuts end.",
+   "governs": [
+    "engraving-carving",
+    "line-hatching",
+    "contrast"
+   ],
+   "source": "name-art 16-intaglio-lines; techniques/lib/burin.js",
+   "aliases": [
+    "intaglio",
+    "burin",
+    "line density",
+    "raking light"
+   ]
+  },
+  {
+   "id": "rule-time-boxed-practice",
+   "kind": "craft",
+   "statement": "Fix the time (a 30-minute lock) so the study gets finished; the time becomes part of the work ('Done in mm:ss').",
+   "governs": [
+    "time-as-material",
+    "practice-learning"
+   ],
+   "source": "30desk.art via @love-kirby and @Ramon_N90",
+   "aliases": [
+    "30desk",
+    "done in \\d",
+    "30 ?-?minute lock",
+    "time-?box"
+   ]
+  },
+  {
+   "id": "rule-imperfection-alive",
+   "kind": "craft",
+   "statement": "Physical imperfection (ink spread, paper grain, registration error) makes motion feel alive.",
+   "governs": [
+    "error-as-texture",
+    "grain-texture",
+    "bleed",
+    "overprint"
+   ],
+   "source": "gwamoleipstop printed motion (post text); Divisumma 26's '13345'",
+   "aliases": [
+    "imperfect",
+    "misregist",
+    "13345",
+    "feel alive",
+    "ink spread"
+   ]
+  },
+  {
+   "id": "law-diffusion",
+   "kind": "physical",
+   "statement": "A dye spreads with radius growing as the square root of time (r ~ t^0.5); a moving front grows linearly.",
+   "governs": [
+    "diffusion",
+    "bleed",
+    "water",
+    "ink"
+   ],
+   "source": "physics; measured spread exponents 0.15 to 0.40 in this batch (refdb/flowmeasure.py)",
+   "aliases": [
+    "diffusion",
+    "spread exponent",
+    "square root of time",
+    "random walk"
+   ]
+  },
+  {
+   "id": "law-coffee-ring",
+   "kind": "physical",
+   "statement": "Evaporating liquid carries suspended pigment to the drying edge and leaves it there as a rim.",
+   "governs": [
+    "sedimentation",
+    "absorbency",
+    "pigment"
+   ],
+   "source": "physics; Frankenthaler's blot rims; pigment-rivulet tide lines",
+   "aliases": [
+    "coffee ring",
+    "tide line",
+    "drying edge",
+    "rims?\b at",
+    "darker rim"
+   ]
+  },
+  {
+   "id": "law-overprint-absorption",
+   "kind": "physical",
+   "statement": "Overlapping transparent inks multiply their transmissions; real inks absorb outside their band, so the ideal multiply misses hue.",
+   "governs": [
+    "overprint",
+    "opacity",
+    "layering"
+   ],
+   "source": "Olivetti 'De A à Z' test: multiply ΔE 14 to 21, opaque ΔE 70 to 92 (lib/tools/overprint_test.py)",
+   "aliases": [
+    "overprint",
+    "multiply model",
+    "subtractive",
+    "transparent ink"
+   ]
+  },
+  {
+   "id": "law-beer-absorption",
+   "kind": "physical",
+   "statement": "Light through a medium falls off exponentially with depth, red first in water.",
+   "governs": [
+    "opacity",
+    "water",
+    "light",
+    "depth-planes"
+   ],
+   "source": "physics; Kitada Aya's underwater paintings; cloud2d.js Beer march",
+   "aliases": [
+    "beer",
+    "absorption",
+    "red first",
+    "depth absorption",
+    "attenuat"
+   ]
+  },
+  {
+   "id": "law-snell",
+   "kind": "physical",
+   "statement": "Light bends at an interface by the ratio of refractive indices; from under water the sky shows as a window of half-angle 48.6 degrees.",
+   "governs": [
+    "refraction",
+    "water",
+    "glass",
+    "light"
+   ],
+   "source": "physics; Kitada Aya study",
+   "aliases": [
+    "snell",
+    "refractive index",
+    "index of refraction",
+    "48\\.6"
+   ]
+  },
+  {
+   "id": "law-kac-drum",
+   "kind": "physical",
+   "statement": "A shape sets its resonances, but the resonances do not always fix the shape (Kac 1966; Gordon, Webb and Wolpert 1992).",
+   "governs": [
+    "resonance-pitch",
+    "sound",
+    "sound-as-shape",
+    "field"
+   ],
+   "source": "mathelirium study (from memory, high confidence)",
+   "aliases": [
+    "hear the shape",
+    "isospectral",
+    "eigenmode",
+    "eigenvalue",
+    "chladni"
+   ]
+  },
+  {
+   "id": "law-thin-film",
+   "kind": "physical",
+   "statement": "A thin layer reflects colours that interfere constructively at its thickness; the hue walks with thickness and angle.",
+   "governs": [
+    "iridescence",
+    "light",
+    "glass"
+   ],
+   "source": "physics; feed set 20 light-leak study; Begonia pavonina",
+   "aliases": [
+    "thin-?film",
+    "interference colou?r",
+    "newton"
+   ]
+  },
+  {
+   "id": "law-yield-stress",
+   "kind": "physical",
+   "statement": "A yield-stress paint flows only where pushed past its yield value and holds ridges elsewhere.",
+   "governs": [
+    "viscosity",
+    "pigment",
+    "path-stroke"
+   ],
+   "source": "pecelnya brush spiral (coherence 0.82)",
+   "aliases": [
+    "yield stress",
+    "impasto",
+    "ridges hold",
+    "bingham"
+   ]
+  },
+  {
+   "id": "music-third-thin",
+   "kind": "music",
+   "statement": "Keep the third thin or absent; the minor colour comes from a fifth plus a flat sixth.",
+   "governs": [
+    "sound",
+    "resonance-pitch",
+    "calm-contemplation"
+   ],
+   "source": "2026-10-23-music-archive/THEME-BRIEF.md",
+   "aliases": [
+    "third thin",
+    "no third",
+    "third (left out|absent)",
+    "without a third"
+   ]
+  },
+  {
+   "id": "music-b6-colour",
+   "kind": "music",
+   "statement": "Make the flat sixth (bVI, or b6 over the pedal) the main colour move; lead cells repeat one colour tone (5, b6 or 9).",
+   "governs": [
+    "sound",
+    "repetition-rhythm-visual",
+    "saturation-hue"
+   ],
+   "source": "THEME-BRIEF.md",
+   "aliases": [
+    "\bb6\b",
+    "flat sixth",
+    "bvi\b"
+   ]
+  },
+  {
+   "id": "music-pad-ducks-kick",
+   "kind": "music",
+   "statement": "The pad dips about 6 dB under each kick (5.9 dB on 92% of kicks in Stolie): separation by ducking.",
+   "governs": [
+    "sound",
+    "tempo-rhythm",
+    "layering",
+    "contrast"
+   ],
+   "source": "THEME-BRIEF.md",
+   "aliases": [
+    "under each kick",
+    "sidechain",
+    "ducking",
+    "pad dips"
+   ]
+  },
+  {
+   "id": "music-dark-room",
+   "kind": "music",
+   "statement": "The room is a dark 1 to 2 s space with one wide return; harmony low-passed under about 1 kHz with slow attacks; drums carry the only brightness.",
+   "governs": [
+    "sound",
+    "bleed",
+    "contrast",
+    "calm-contemplation"
+   ],
+   "source": "THEME-BRIEF.md",
+   "aliases": [
+    "dark 1 to 2 s",
+    "low-?pass",
+    "slow attack",
+    "one wide return"
+   ]
+  },
+  {
+   "id": "law-weber-fechner",
+   "kind": "physical",
+   "statement": "Perceived change follows the ratio, not the difference: each added transparent layer reads as a smaller step, so a fifth layer barely reads darker (Albers, Interaction of Color, plate XX-1).",
+   "governs": [
+    "layering",
+    "opacity",
+    "overprint",
+    "contrast"
+   ],
+   "source": "Albers, Interaction of Color, plate XX-1 (BugNews save 2026-10-25). One shared measurement, measures/albers-xx1.json (lib/tools/albers_xx1.py: superframe sheet boxes, 8 px edge exclusion, median sRGB to CIE Lab D65; fits on unclipped depths 1 to 4): L* steps [-10.62, -2.99, -0.8, -0.09], dE steps [71.05, 5.9, 1.52, 1.0] (the first uses clipped paper), L* fits ln(depth) better than depth (rmse 0.454 vs 0.744)",
+   "aliases": [
+    "weber",
+    "fechner",
+    "weber-fechner",
+    "just noticeable",
+    "interaction of colou?r"
+   ]
+  },
+  {
+   "id": "rule-colour-grade-in-post",
+   "kind": "craft",
+   "statement": "A video's colour comes from the grade after shooting, not from the camera alone.",
+   "governs": [
+    "colour-grade",
+    "saturation-hue",
+    "colour-temperature",
+    "film-stock"
+   ],
+   "source": "mangoddango save, 2026-10-25 (Korean post: colour is not just good shooting, post-correction matters)",
+   "aliases": [
+    "후보정",
+    "colou?r grad",
+    "post-?correction",
+    "in post"
+   ]
+  },
+  {
+   "id": "rule-argument-movements",
+   "kind": "craft",
+   "statement": "Split an argument into premises, presuppositions and conclusions; read conjunctions as turns or continuations; mark the movements (chain, list, turn) so the whole can be rebuilt. The same decomposition the art studies use, applied to text.",
+   "governs": [
+    "argument-structure",
+    "decomposition-measure",
+    "reading-order",
+    "type"
+   ],
+   "source": "Aliocha (@4liocha_), studies/st-4liocha_-2114086943776448820; lens probe: 7 of 7 breaks start at a connective in the Latin",
+   "aliases": [
+    "premise",
+    "presupposi",
+    "pressupost",
+    "conjunç",
+    "movimento",
+    "argument movement"
+   ]
+  },
+  {
+   "id": "rule-deco-motif-set",
+   "kind": "craft",
+   "statement": "Art deco builds from a closed motif set (fan, feather, fountain, palm, peacock, scallop, sunburst, waves, volute, clouds, chevron, aircraft fin) stepped and mirrored about an axis, with light as a material (floodlit towers, the Chrysler crown).",
+   "governs": [
+    "deco-motif",
+    "symmetry",
+    "repetition-rhythm-visual",
+    "light-direction",
+    "type"
+   ],
+   "source": "gietzschean threads, 2026-10-26 (motif list and examples: O'Keeffe's Radiator Building, the Chrysler crown, a Persian lacquered fan); feeds name-art's deco and the type engine",
+   "aliases": [
+    "art deco",
+    "sunburst",
+    "chevron",
+    "volute",
+    "jazz age"
+   ]
+  },
+  {
+   "id": "law-zipf",
+   "kind": "language",
+   "statement": "Word frequency falls with rank: f(r) ~ r^-s, s close to 1 in natural language.",
+   "governs": [
+    "type",
+    "reading-order",
+    "repetition-rhythm-visual"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "zipf",
+    "word frequency",
+    "rank-frequency"
+   ],
+   "shown_in": [
+    "measures/language-laws.json"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "law-heaps",
+   "kind": "language",
+   "statement": "Vocabulary grows with text length as V(n) ~ K n^b, b between 0.4 and 0.7 in natural language.",
+   "governs": [
+    "type",
+    "archive-memory"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "heaps",
+    "vocabulary growth",
+    "type-token"
+   ],
+   "shown_in": [
+    "measures/language-laws.json"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "law-meter",
+   "kind": "language",
+   "statement": "Stressed and unstressed syllables fall on a repeating grid (iamb, trochee, dactyl); the line has a beat.",
+   "governs": [
+    "tempo-rhythm",
+    "type",
+    "repetition-rhythm-visual"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "meter",
+    "metre",
+    "iamb",
+    "trochee",
+    "dactyl",
+    "pentameter"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "law-rhyme",
+   "kind": "language",
+   "statement": "Line ends repeat a vowel and coda sound in a scheme (aabb, abab); the ear links the lines.",
+   "governs": [
+    "sound",
+    "repetition-rhythm-visual",
+    "tempo-rhythm"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "rhyme",
+    "rhyming",
+    "rhyme scheme"
+   ],
+   "shown_in": [
+    "st-music-baby-fifty-are-you-coming-back",
+    "st-music-skino-nomad",
+    "st-music-jodyboof-flushed-away"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "law-prosody",
+   "kind": "language",
+   "statement": "Pitch, loudness, length and pause shape a spoken phrase; the contour carries stress, question and feeling.",
+   "governs": [
+    "sound",
+    "tempo-rhythm",
+    "resonance-pitch"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "prosody",
+    "intonation",
+    "stress pattern",
+    "cadence of speech"
+   ],
+   "shown_in": [
+    "st-music-baby-fifty-are-you-coming-back",
+    "st-music-skino-nomad",
+    "st-music-jodyboof-flushed-away"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "law-syntax",
+   "kind": "language",
+   "statement": "Words combine by rules into nested phrases; order and agreement set who did what.",
+   "governs": [
+    "argument-structure",
+    "reading-order",
+    "type"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "syntax",
+    "grammar",
+    "sentence structure"
+   ],
+   "shown_in": [
+    "st-4liocha_-2114086943776448820",
+    "st-lens-summa-i-q2-a2-obj1"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-metaphor",
+   "kind": "literary-device",
+   "statement": "One thing is spoken of as another; the reader carries properties across (a mapping between domains).",
+   "governs": [
+    "translation-as-depth",
+    "argument-structure",
+    "identity-name"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "metaphor",
+    "metaphorical",
+    "figurative"
+   ],
+   "shown_in": [
+    "st-talk-bKLEHnbuzfo",
+    "st-talk-y0q1c10GGTE",
+    "st-talk-FkhU7i8hRK4",
+    "st-longtheriverrun-2114262230929961119"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-simile",
+   "kind": "literary-device",
+   "statement": "An explicit comparison with like or as; the likeness is stated, not implied.",
+   "governs": [
+    "translation-as-depth",
+    "argument-structure"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "simile"
+   ],
+   "shown_in": [
+    "st-talk-y0q1c10GGTE",
+    "st-talk-FkhU7i8hRK4"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-alliteration",
+   "kind": "literary-device",
+   "statement": "Neighbouring words repeat an initial consonant; the repeat binds them in the ear.",
+   "governs": [
+    "sound",
+    "repetition-rhythm-visual"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "alliteration",
+    "alliterative"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-assonance",
+   "kind": "literary-device",
+   "statement": "Neighbouring words repeat a vowel sound without full rhyme.",
+   "governs": [
+    "sound",
+    "resonance-pitch"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "assonance"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-anaphora",
+   "kind": "literary-device",
+   "statement": "Successive clauses begin with the same words; the repeat builds weight.",
+   "governs": [
+    "repetition-rhythm-visual",
+    "argument-structure"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "anaphora",
+    "repeated opening"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-parallelism",
+   "kind": "literary-device",
+   "statement": "Clauses share one grammatical shape, so their contents line up for comparison.",
+   "governs": [
+    "symmetry",
+    "repetition-rhythm-visual",
+    "argument-structure"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "parallelism",
+    "parallel structure"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-chiasmus",
+   "kind": "literary-device",
+   "statement": "A phrase repeats its terms in reverse order (AB BA): a mirror isomer in language.",
+   "governs": [
+    "symmetry",
+    "reading-order"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "chiasmus",
+    "chiastic"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-antithesis",
+   "kind": "literary-device",
+   "statement": "Opposed ideas are set in balanced phrases so each sharpens the other.",
+   "governs": [
+    "contrast",
+    "argument-structure",
+    "symmetry"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "antithesis",
+    "antithetical"
+   ],
+   "shown_in": [
+    "st-4liocha_-2114086943776448820"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-ellipsis",
+   "kind": "literary-device",
+   "statement": "Words the reader can supply are left out; the gap is part of the meaning.",
+   "governs": [
+    "negative-space",
+    "reading-order"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "ellipsis",
+    "elided"
+   ],
+   "shown_in": [
+    "st-longtheriverrun-2114262230929961119"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-irony",
+   "kind": "literary-device",
+   "statement": "The stated meaning and the meant one differ; context is the light change that splits them.",
+   "governs": [
+    "witness-transparency",
+    "argument-structure",
+    "contrast"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "irony",
+    "ironic",
+    "sarcasm",
+    "sarcastic"
+   ],
+   "shown_in": [
+    "st-chrislakin-2114153194607796714"
+   ],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  },
+  {
+   "id": "device-rule-of-three",
+   "kind": "literary-device",
+   "statement": "Three items in a series read as complete; the third lands the pattern.",
+   "governs": [
+    "repetition-rhythm-visual",
+    "reading-order"
+   ],
+   "source": "CORE.md 'Language and speech' (2026-10-26); linguistics and rhetoric, standard definitions",
+   "aliases": [
+    "rule of three",
+    "triad",
+    "tricolon"
+   ],
+   "shown_in": [],
+   "shown_in_label": "inferred: the study shows the device or law; it does not measure its weight unless stated"
+  }
+ ],
+ "bridges": [
+  {
+   "id": "tide-line",
+   "joins": [
+    "sedimentation",
+    "bleed",
+    "water",
+    "pigment",
+    "absorbency"
+   ],
+   "statement": "The dark edge left where a liquid stops: a soak-stain rim, an ink bloom's edge, a beach's wrack line, sediment in the medium.",
+   "aliases": [
+    "tide line",
+    "rim\\b",
+    "rims\\b",
+    "edge band",
+    "coffee ring",
+    "wrack",
+    "drying edge",
+    "foam line"
+   ]
+  },
+  {
+   "id": "tile",
+   "joins": [
+    "mosaic",
+    "tessellation",
+    "glyph-cell",
+    "grid",
+    "reading-order"
+   ],
+   "statement": "The unit that carries one piece of the whole: Olivetti's blocks and ribbon tiles, Byzantine tesserae, Martens' glyph cells, a story beat in a sequence.",
+   "aliases": [
+    "tile",
+    "tesser",
+    "cell\\b",
+    "cells\\b",
+    "block\\b",
+    "blocks\\b"
+   ]
+  },
+  {
+   "id": "sheet",
+   "joins": [
+    "layering",
+    "opacity",
+    "overprint",
+    "plane-sheet",
+    "depth-planes"
+   ],
+   "statement": "A translucent layer: Pink Noise's acetate, an overprint ink, a depth plane, a sound layer under a kick.",
+   "aliases": [
+    "sheet",
+    "acetate",
+    "vellum",
+    "layer\\b",
+    "layers\\b",
+    "plane\\b",
+    "planes\\b"
+   ]
+  },
+  {
+   "id": "stroke",
+   "joins": [
+    "path-stroke",
+    "advection",
+    "viscosity",
+    "line-hatching",
+    "type"
+   ],
+   "statement": "One continuous mark carried by a hand or a flow: a brush spiral, a burin cut, a one-stroke dragon, a letter's skeleton.",
+   "aliases": [
+    "stroke",
+    "brushstroke",
+    "one stroke",
+    "gesture",
+    "cut\\b"
+   ]
+  },
+  {
+   "id": "grain",
+   "joins": [
+    "grain-texture",
+    "error-as-texture",
+    "noise-as-signal",
+    "film-stock",
+    "paper"
+   ],
+   "statement": "The small random texture of a medium: paper tooth, film grain, pigment granulation, the noise floor.",
+   "aliases": [
+    "grain",
+    "granul",
+    "tooth",
+    "noise"
+   ]
+  },
+  {
+   "id": "glint",
+   "joins": [
+    "gloss-reflectance",
+    "light",
+    "water",
+    "wave-form"
+   ],
+   "statement": "A single bright reflection from a tilted facet: sun glitter on waves, a highlight on glass, a specular dot.",
+   "aliases": [
+    "glint",
+    "glitter",
+    "specular",
+    "highlight",
+    "sparkle"
+   ]
+  },
+  {
+   "id": "ring",
+   "joins": [
+    "ring-orbit",
+    "wave-form",
+    "resonance-pitch",
+    "aperture-eye"
+   ],
+   "statement": "A closed loop that spreads or holds: a ripple, a drum's nodal circle, an iris, a halo.",
+   "aliases": [
+    "ring\\b",
+    "rings\\b",
+    "ripple",
+    "halo",
+    "iris",
+    "concentric"
+   ]
+  },
+  {
+   "id": "thread",
+   "joins": [
+    "weaving-stitching",
+    "network-graph",
+    "line-hatching",
+    "ribbon"
+   ],
+   "statement": "A line that joins: a sewing thread, a network edge, a rope strand, a ribbon.",
+   "aliases": [
+    "thread",
+    "strand",
+    "rope",
+    "wire",
+    "edge\\b",
+    "ribbon"
+   ]
+  },
+  {
+   "id": "window",
+   "joins": [
+    "aperture-eye",
+    "refraction",
+    "framing",
+    "light"
+   ],
+   "statement": "An opening that frames and bends what is seen: Snell's window, the eye, a frame within a frame, a grey rectangle in a flower.",
+   "aliases": [
+    "window",
+    "aperture",
+    "frame within",
+    "porthole"
+   ]
+  },
+  {
+   "id": "drop",
+   "joins": [
+    "diffusion",
+    "surface-tension",
+    "water",
+    "ink",
+    "pigment"
+   ],
+   "statement": "A unit of liquid added to a medium: a pigment drop, an ink drop in water, a raindrop, a kick that ducks the pad.",
+   "aliases": [
+    "drop\\b",
+    "drops\\b",
+    "droplet",
+    "raindrop",
+    "splash"
+   ]
+  },
+  {
+   "id": "front",
+   "joins": [
+    "advection",
+    "diffusion",
+    "erosion",
+    "transformation"
+   ],
+   "statement": "The moving edge between two states: an ink-bloom reveal, a style infection across a grid, a wave front, a burn line.",
+   "aliases": [
+    "front\\b",
+    "edge\\b",
+    "reveal",
+    "infection",
+    "wipe"
+   ]
+  },
+  {
+   "id": "grid-of-time",
+   "joins": [
+    "time-as-material",
+    "tessellation",
+    "held-frames-timing",
+    "reading-order"
+   ],
+   "statement": "Time laid out as cells: a contact sheet, a temporal mosaic, a 30desk wall of timed studies, numbered steps.",
+   "aliases": [
+    "temporal mosaic",
+    "contact sheet",
+    "done in",
+    "storyboard",
+    "frames\\b"
+   ]
+  },
+  {
+   "id": "joint",
+   "joins": [
+    "decomposition-measure",
+    "argument-structure",
+    "tessellation",
+    "collage-recut"
+   ],
+   "statement": "The cut between parts that lets a whole be taken apart and rebuilt: an I-beam mark between premises, a grout line between tesserae, a cut in a recut film, a seam in a parts tree.",
+   "aliases": [
+    "joint",
+    "seam",
+    "grout",
+    "cut between",
+    "i-beam",
+    "boundary between"
+   ]
+  }
+ ]
+}

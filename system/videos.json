@@ -1,0 +1,310 @@
+{
+  "videos": [
+    {
+      "page": "demo-crucible.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/crucible/crucible-workflow-short-30s.mp4",
+      "name": "Crucible demo: 30-second proof",
+      "description": "Thirty-second silent Crucible workflow with on-screen measurements and verdicts",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/crucible/crucible-workflow-short-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT30S"
+    },
+    {
+      "page": "demo-crucible.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/crucible/crucible-workflow-full-94s.mp4",
+      "name": "Crucible demo: full 94-second workflow",
+      "description": "Full silent Crucible workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/crucible/crucible-workflow-full-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT94S"
+    },
+    {
+      "page": "demo-forum.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/forum/forum-demo-short.mp4",
+      "name": "Forum demo: 27-second proof",
+      "description": "Twenty-seven-second silent Forum workflow with on-screen routing, plan, results, ledger, and verification",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/forum/forum-demo-short-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT27S"
+    },
+    {
+      "page": "demo-forum.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/forum/forum-demo-full.mp4",
+      "name": "Forum demo: full 105-second workflow",
+      "description": "Full silent Forum workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/forum/forum-demo-full-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT105S"
+    },
+    {
+      "page": "demo-gather.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/gather/gather-workflow-short.mp4",
+      "name": "Gather demo: 29-second proof",
+      "description": "Twenty-nine-second silent Gather workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/gather/gather-workflow-short-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT29S"
+    },
+    {
+      "page": "demo-gather.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/gather/gather-workflow-full.mp4",
+      "name": "Gather demo: full 116-second workflow",
+      "description": "Full silent Gather workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/gather/gather-workflow-full-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT116S"
+    },
+    {
+      "page": "demo-index.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/index/index-verified-workspace-short-30s.mp4",
+      "name": "Index demo: 30-second proof",
+      "description": "Thirty-second silent Index workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/index/index-demo-poster.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT30S"
+    },
+    {
+      "page": "demo-index.html",
+      "contentUrl": "https://harperz9.github.io/media/demos/index/index-verified-workspace-full-118s.mp4",
+      "name": "Index demo: full 118-second workflow",
+      "description": "Full silent Index workflow with on-screen commands and results",
+      "thumbnailUrl": "https://harperz9.github.io/media/demos/index/workbench-map-1920x1080.png",
+      "uploadDate": "2026-07-12",
+      "duration": "PT118S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/checking-cost/checking-cost.mp4",
+      "name": "Claiming got cheap. Checking did not.",
+      "description": "Claiming got cheap. Checking did not. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/checking-cost/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT177S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/passing-check/passing-check.mp4",
+      "name": "A passing check can still be wrong",
+      "description": "A passing check can still be wrong. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/passing-check/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT144S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/rederive/rederive.mp4",
+      "name": "Re-derive it. Don't take it on trust.",
+      "description": "Re-derive it. Don't take it on trust. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/rederive/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT125S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/incentives/incentives.mp4",
+      "name": "Models do what training pays for",
+      "description": "Models do what training pays for. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/incentives/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT120S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/visible-reasoning/visible-reasoning.mp4",
+      "name": "What a model's written reasoning can and cannot show",
+      "description": "What a model's written reasoning can and cannot show. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/visible-reasoning/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT109S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/releases/flywheel/v1.5.1/first-check/first-check-540p.mp4",
+      "name": "Flywheel: check an answer against its source",
+      "description": "Flywheel: check an answer against its source. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/releases/flywheel/v1.5.1/first-check/poster.jpg",
+      "uploadDate": "2026-10-14",
+      "duration": "PT28S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/releases/flywheel/v1.5.1/which-source/which-source-540p.mp4",
+      "name": "Which source decides",
+      "description": "Which source decides. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/releases/flywheel/v1.5.1/which-source/poster.jpg",
+      "uploadDate": "2026-10-14",
+      "duration": "PT56S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/releases/raw-native/v0.6.0/ao-check/ao-check-1080p.mp4",
+      "name": "Checking the light",
+      "description": "Checking the light. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/releases/raw-native/v0.6.0/ao-check/poster.jpg",
+      "uploadDate": "2026-10-09",
+      "duration": "PT53S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/releases/raw-native/v0.6.0/first-run/first-run-1080p.mp4",
+      "name": "raw-native: build, render, check",
+      "description": "raw-native: build, render, check. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/releases/raw-native/v0.6.0/first-run/poster.jpg",
+      "uploadDate": "2026-10-09",
+      "duration": "PT38S"
+    },
+    {
+      "page": "flywheel.html",
+      "contentUrl": "https://harperz9.github.io/media/flywheel-output-check-20260905/short.mp4",
+      "name": "Check one number against its record",
+      "description": "Flywheel checks a synthetic summary, 36 seconds",
+      "thumbnailUrl": "https://harperz9.github.io/media/flywheel-output-check-20260905/poster.png",
+      "uploadDate": "2026-09-05",
+      "duration": "PT36S"
+    },
+    {
+      "page": "flywheel.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/receipt-loop/receipt-loop.mp4",
+      "name": "Walk the loop yourself",
+      "description": "From a proposed answer to a kept receipt, a 65-second explainer",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/receipt-loop/poster.png",
+      "uploadDate": "2026-10-03",
+      "duration": "PT65S"
+    },
+    {
+      "page": "guides.html",
+      "contentUrl": "https://harperz9.github.io/media/guides/tallow/intro.mp4",
+      "name": "Meet the guide: Tallow, the night clerk",
+      "description": "Tallow, the night clerk, one of the three guides on this site, introduced in a short film.",
+      "thumbnailUrl": "https://harperz9.github.io/media/guides/tallow/intro.jpg",
+      "uploadDate": "2026-10-11",
+      "duration": "PT26S"
+    },
+    {
+      "page": "guides.html",
+      "contentUrl": "https://harperz9.github.io/media/guides/pylon/intro.mp4",
+      "name": "Meet the guide: Pylon, the claims inspector",
+      "description": "Pylon, the claims inspector, one of the three guides on this site, introduced in a short film.",
+      "thumbnailUrl": "https://harperz9.github.io/media/guides/pylon/intro.jpg",
+      "uploadDate": "2026-10-11",
+      "duration": "PT26S"
+    },
+    {
+      "page": "guides.html",
+      "contentUrl": "https://harperz9.github.io/media/guides/rerun/intro.mp4",
+      "name": "Meet the guide: Rerun, the hermit crab",
+      "description": "Rerun, the hermit crab, one of the three guides on this site, introduced in a short film.",
+      "thumbnailUrl": "https://harperz9.github.io/media/guides/rerun/intro.jpg",
+      "uploadDate": "2026-10-11",
+      "duration": "PT20S"
+    },
+    {
+      "page": "night-school-attention.html",
+      "contentUrl": "https://harperz9.github.io/media/school/attention/narrated.mp4",
+      "name": "Night School: Attention: how a language model decides what matters",
+      "description": "A narrated film with captions. Attention: how a language model decides what matters.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/attention/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT308S"
+    },
+    {
+      "page": "night-school-attention.html",
+      "contentUrl": "https://harperz9.github.io/media/school/attention/offers/explainer-kit/attention-explainer.mp4",
+      "name": "Night School: A circuit, switched off",
+      "description": "A 73-second narrated film: a small model's attention moves each character forward, then finds the earlier copy and reads what came next; switching heads off removes the effect",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/attention/offers/explainer-kit/still-52.jpg",
+      "uploadDate": "2026-10-16",
+      "duration": "PT73S"
+    },
+    {
+      "page": "night-school-backprop.html",
+      "contentUrl": "https://harperz9.github.io/media/school/backprop/narrated.mp4",
+      "name": "Night School: Backpropagation: blame, passed backwards",
+      "description": "A narrated film with captions. Backpropagation: blame, passed backwards.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/backprop/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT230S"
+    },
+    {
+      "page": "night-school-embeddings.html",
+      "contentUrl": "https://harperz9.github.io/media/school/embeddings/narrated.mp4",
+      "name": "Night School: Embeddings: every token gets coordinates",
+      "description": "A narrated film with captions. Embeddings: every token gets coordinates.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/embeddings/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT173S"
+    },
+    {
+      "page": "night-school-gradients.html",
+      "contentUrl": "https://harperz9.github.io/media/school/gradients/narrated.mp4",
+      "name": "Night School: Gradients: which way is downhill",
+      "description": "A narrated film with captions. Gradients: which way is downhill.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/gradients/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT273S"
+    },
+    {
+      "page": "night-school-heldout.html",
+      "contentUrl": "https://harperz9.github.io/media/school/heldout/narrated.mp4",
+      "name": "Night School: The held-out set: learning, or remembering?",
+      "description": "A narrated film with captions. The held-out set: learning, or remembering?.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/heldout/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT247S"
+    },
+    {
+      "page": "night-school-matrices.html",
+      "contentUrl": "https://harperz9.github.io/media/school/matrices/narrated.mp4",
+      "name": "Night School: Matrices move space",
+      "description": "A narrated film with captions. Matrices move space.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/matrices/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT269S"
+    },
+    {
+      "page": "night-school-optimisers.html",
+      "contentUrl": "https://harperz9.github.io/media/school/optimisers/narrated.mp4",
+      "name": "Night School: Optimisers: momentum, Adam and the step size",
+      "description": "A narrated film with captions. Optimisers: momentum, Adam and the step size.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/optimisers/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT270S"
+    },
+    {
+      "page": "night-school-tokens.html",
+      "contentUrl": "https://harperz9.github.io/media/school/tokens/narrated.mp4",
+      "name": "Night School: Tokens: cutting text into crates",
+      "description": "A narrated film with captions. Tokens: cutting text into crates.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/tokens/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT231S"
+    },
+    {
+      "page": "night-school-vectors.html",
+      "contentUrl": "https://harperz9.github.io/media/school/vectors/narrated.mp4",
+      "name": "Night School: Vectors: a list of numbers is a place",
+      "description": "A narrated film with captions. Vectors: a list of numbers is a place.",
+      "thumbnailUrl": "https://harperz9.github.io/media/school/vectors/narrated-poster.jpg",
+      "uploadDate": "2026-10-18",
+      "duration": "PT290S"
+    },
+    {
+      "page": "no-receipt-no-accept.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/cost-to-verify/cost-to-verify.mp4",
+      "name": "The cost to verify",
+      "description": "The cost to verify, a 42-second explainer",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/cost-to-verify/poster.png",
+      "uploadDate": "2026-10-03",
+      "duration": "PT42S"
+    },
+    {
+      "page": "no-receipt-no-accept.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/receipt-is-not-a-verdict/receipt-is-not-a-verdict.mp4",
+      "name": "A receipt is not a verdict",
+      "description": "A receipt is not a verdict, a 43-second explainer",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/receipt-is-not-a-verdict/poster.png",
+      "uploadDate": "2026-10-03",
+      "duration": "PT43S"
+    }
+  ]
+}

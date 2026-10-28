@@ -98,16 +98,18 @@ def spoken_line(slug: str, line: str, rows: list) -> str:
 
 def source_card(slug: str, k: str, s: dict, heard: tuple) -> str:
     """One source as an evidence card: what it found, on what sample, with what interval, in its own
-    words, and what it does not prove. Every field is the checked text of evidence.json."""
+    words, and what it covers. Every field is the checked text of evidence.json. "context" was named
+    "does_not_prove" before 23 October 2026; an older file still reads."""
     at, seg = heard
-    kind = "Peer reviewed" if s.get("peer_reviewed") else "Not peer reviewed"
+    kind = s.get("kind") or ("Peer-reviewed paper" if s.get("peer_reviewed") else "Preprint")
+    context = s.get("context", s.get("does_not_prove", ""))
     quote = (f'<dt>From the source</dt><dd>"{E(s["quote"])}"</dd>' if s["quote"] else "")
     return (f'<li id="{slug}-src-{E(k)}">'
             f'<p class="fl-src-name"><b>{E(s["short"])}</b><span class="fl-src-kind">{kind}</span></p>'
             f'<p class="fl-src-heard"><a class="fl-seek" href="#{slug}" data-seek="{at:.2f}">Heard at {clock(at)}</a>, in {E(seg)}</p>'
             f'<dl class="fl-src-facts"><dt>Found</dt><dd>{E(" ".join(s["claims"]))}</dd>'
             f'<dt>Sample</dt><dd>{E(s["n"])}</dd><dt>Interval</dt><dd>{E(s["interval"])}</dd>{quote}'
-            f'<dt class="fl-null">Does not prove</dt><dd class="fl-null">{E(s["does_not_prove"])}</dd></dl>'
+            f'<dt class="fl-context">What it shows</dt><dd class="fl-context">{E(context)}</dd></dl>'
             f'<p class="fl-src-cite">{E(s["citation"])} <a class="inline" href="{E(s["url"])}" rel="external noopener">{E(s["url"])}</a></p></li>')
 
 
@@ -159,7 +161,7 @@ def film_section(slug: str) -> str:
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
   </figure>{live}{demo(slug)}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
-  <h3 id="{slug}-sources" class="fl-src-h">Sources, with what each one does not prove</h3>
+  <h3 id="{slug}-sources" class="fl-src-h">Sources, and what each one shows</h3>
   <div class="fl-src-wrap"><ol class="fl-sources">{sources}</ol></div>
   <p class="fl-receipt">Build record: <a class="inline" href="{folder}/film.receipt.json">film.receipt.json</a> lists the hash of the script, the sources file, the render code and every output.</p>
 </section>"""
@@ -277,8 +279,8 @@ def page() -> str:
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">explainers</span></div>
   <div class="mid">
-    <h1>Explainers. <span class="g">Every number has a source.</span></h1>
-    <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
+    <h1>Explainers. <span class="g">Short films on how AI works and how it gets checked.</span></h1>
+    <p class="lede">Each film teaches one idea through a concrete case, shows its sources on screen, and ends with recall questions.</p>
     <p class="lede">Three guides host them: <a class="inline" href="guides.html#tallow">Tallow</a>, <a class="inline" href="guides.html#pylon">Pylon</a> and <a class="inline" href="guides.html#rerun">Rerun</a>. <a class="inline" href="guides.html">Meet the guides</a>.</p>
   </div>
   {film_index()}

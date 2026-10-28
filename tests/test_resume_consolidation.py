@@ -61,7 +61,7 @@ def test_all_submission_formats_share_reading_order_and_complete_content():
 
 def test_evaluation_metrics_are_coverage_not_financial_or_performance_claims():
     text = (ROOT / 'career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt').read_text()
-    assert all(value in text for value in ('324', '337', '5,058'))
+    assert all(value in text for value in ('324', '337'))
     # Issuer assessment scores are distinct from unsubstantiated performance/ROI claims.
     performance_text = text.replace('95% assessment', 'credential assessment')
     assert not re.search(r'\$\s*\d|\d+\s*%|guaranteed|revenue generated', performance_text, re.I)
@@ -232,11 +232,10 @@ def test_public_interest_work_retains_its_evidence_limits():
 
 def test_quantified_outcomes_keep_their_scope_and_reference_types():
     cv = (ROOT / 'career/Zain-Dana-Harper-CV.txt').read_text()
-    assert '337 cases and 5,058 frozen expectations' in cv
-    assert 'synthetic component-evaluation families' in cv
-    assert 'count_odds interoperability check with three deterministic controls' in cv
+    assert '324 terminal-state fixtures and 337 component cases' in cv
+    assert 'count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls' in cv
     assert 'HTTP 500 or incorrect HTTP 200 to HTTP 400' in cv
-    assert 'Six selected contributions merged across six external repositories' in cv
+    assert 'Six of 37 merged engineering pull requests in 30 external repositories' in cv
     references = (ROOT / 'career/standards-reference.md').read_text(encoding='utf-8')
     rows = [line for line in references.splitlines() if line.startswith('| [')]
     assert len(rows) == 25

@@ -20,7 +20,7 @@ IDENT_RULE = ".ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;
 HAND_PAGES = (
     "security.html", "gather.html", "forum.html", "crucible.html", "chorus.html", "toolkit.html",
     "proof-surface.html", "index-graph.html", "articulate.html", "flywheel.html",
-    "security-toolkit.html", "index.html", "provenance-sensorium.html",
+    "security-toolkit.html", "workshop.html", "provenance-sensorium.html",
 )
 # Prose pages that use a package-shaped word as an English compound ("a small
 # proof-surface test case") stay out of the pass, so the word is never styled as
@@ -33,6 +33,7 @@ CODE_BACKED_MAPS = ("system-capability-map", "security-capability-map", "verific
 NOWRAP_PARENTS = {"built-stat"}
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def _ident_source() -> str:
     module = (ROOT / "home" / "src" / "system-registry.ts").read_text(encoding="utf-8")
     return json.loads(re.search(r"export const IDENT_SOURCE = (\".*\");", module).group(1))
@@ -230,7 +231,7 @@ def test_the_home_renders_registry_text_through_idents() -> None:
         assert f"<Idents text={{{expression}}} />" in app, expression
     helper = (ROOT / "home" / "src" / "Idents.tsx").read_text(encoding="utf-8")
     assert "new RegExp(IDENT_SOURCE" in helper and 'className="ident"' in helper
-    index = (ROOT / "index.html").read_text(encoding="utf-8")
+    index = (ROOT / "workshop.html").read_text(encoding="utf-8")
     bundle = re.search(r'src="/assets/(index-[A-Za-z0-9_-]+\.js)"', index).group(1)
     css = re.search(r'href="/assets/(index-[A-Za-z0-9_-]+\.css)"', index).group(1)
     assert "GHSA(?:-[0-9a-z]{4}){3}" in (ROOT / "assets" / bundle).read_text(encoding="utf-8")

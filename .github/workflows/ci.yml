@@ -21,6 +21,13 @@ jobs:
           node-version: "24"
       - name: Install test dependencies
         run: python -m pip install pytest==8.4.2 PyYAML==6.0.2 numpy==2.4.5 -r requirements-career-docs.txt -r requirements-font-preview.txt
+      # Titles, descriptions, canonical URLs, social cards, JSON-LD, sitemap,
+      # robots and llms files, checked by HarperZ9/discover against discover.json.
+      - name: Discoverability gate
+        run: |
+          python -m pip install --quiet "git+https://github.com/HarperZ9/discover@v0.1.2"
+          discover site . --gate
+          python tools/video_registry.py --check
       - name: Python content contracts
         run: python -m pytest
       - name: Navigation and font catalog contracts

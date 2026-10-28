@@ -1,0 +1,101 @@
+@font-face{font-family:"Hanken Grotesk";src:url("../../ui/shell/fonts/hanken-grotesk.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Conso";src:url("../../ui/shell/fonts/conso-regular.woff2") format("woff2");font-weight:400;font-display:swap}
+
+/* Night ground, bone ink, one hot mark per view (the export button). The paintings carry the colour. */
+:root{
+  --ground:#0b0c11; --ink:#ebe6da; --ink-2:#c3bfb4; --muted:#8a877f; --line:rgba(235,230,218,.14);
+  --paper:#ebe6da; --paper-ink:#16181e; --hot:#ff6a2b;
+  --sans:"Hanken Grotesk",system-ui,sans-serif; --mono:"Conso",ui-monospace,monospace;
+  --gut:clamp(16px,3.4vw,56px); color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#0b0c11}}
+:root[data-theme="dark"]{--ground:#0b0c11}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}
+/* Type scale (spec T8): 13, 15, 17, 22, display, hero. Kerning, optical sizing and wrap per T7; no synthesis (T6). */
+:root{--s13:.8125rem;--s15:.9375rem;--s17:1.0625rem;--s22:1.375rem}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:var(--s17);line-height:1.6;overflow-x:clip;font-synthesis:none;font-kerning:normal;font-optical-sizing:auto}
+p,figcaption{text-wrap:pretty}h1,h2{text-wrap:balance}
+.mono{font-family:var(--mono)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--hot);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:var(--gut);top:.5rem;background:var(--ink);color:var(--ground);padding:.3rem .6rem}
+
+.rail{display:flex;justify-content:space-between;gap:1rem;padding:1rem var(--gut);font-size:var(--s13);color:var(--muted);border-bottom:1px solid var(--line)}
+.rail .mark{font-weight:700;color:var(--ink)}
+
+/* Hero: the painted word on the left, the tall plate on the right, overlapping the column line */
+.hero{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(12px,2vw,28px);padding:clamp(1.5rem,5vw,4.5rem) var(--gut) 0;align-items:end}
+.hero-word{grid-column:1/8;padding-bottom:clamp(1rem,4vw,3rem);position:relative;z-index:1}
+.cloudword{font-size:clamp(3.4rem,12.4vw,13rem);line-height:.82;font-weight:860;letter-spacing:-.055em;margin-left:-.04em}
+.lede{max-width:50ch;margin-top:clamp(1rem,3vw,2rem);color:var(--ink-2);font-size:var(--s22);line-height:1.45}
+.plate{position:relative;background:#06070a;box-shadow:0 50px 100px -60px rgba(0,0,0,.95)}
+.plate canvas{display:block;width:100%;height:auto}
+.plate.tall{grid-column:8/13;aspect-ratio:3/4;margin-left:clamp(-6rem,-6vw,-1rem)}
+.plate.tall canvas{height:100%}
+.card{position:absolute;left:0;bottom:-1px;transform:translateY(100%);max-width:48ch;padding:.55rem .7rem;font-size:var(--s15);line-height:1.5;color:var(--ink-2);background:var(--ground);border-left:2px solid var(--line)}
+.card b{color:var(--ink);font-weight:650}
+
+.room{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:clamp(12px,2vw,28px);padding:clamp(5rem,10vw,9rem) var(--gut) clamp(3rem,6vw,5rem)}
+.runhead{grid-column:1/-1;display:flex;gap:1.2rem;font-family:var(--mono);font-size:var(--s13);color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem}
+.title{grid-column:1/-1;font-size:clamp(2.4rem,7vw,6.5rem);line-height:.96;font-weight:820;letter-spacing:-.045em;margin:.8rem 0 clamp(1.2rem,3vw,2.2rem)}
+
+.studio{grid-column:1/-1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:inherit;gap:clamp(12px,2vw,28px)}
+.plate.wide{grid-column:1/8;aspect-ratio:3/4;cursor:crosshair}
+.plate.wide canvas{height:100%;touch-action:none}
+.readout{position:absolute;left:0;right:0;bottom:0;padding:.5rem .75rem;font-size:var(--s13);color:#cfcabd;background:linear-gradient(transparent,rgba(4,5,8,.85));pointer-events:none}
+.progress{position:absolute;left:0;right:0;top:0;height:3px;background:rgba(255,255,255,.08)}
+.progress span{display:block;height:100%;width:0;background:var(--ink)}
+.tools{grid-column:8/13;display:flex;flex-direction:column;gap:1.1rem;font-size:var(--s15)}
+fieldset{border:0}
+legend{font-size:var(--s13);color:var(--muted);margin-bottom:.4rem}
+.brushes div{display:flex;flex-wrap:wrap;gap:.3rem}
+.brushes button{border:1px solid var(--line);background:none;padding:.22rem .55rem;border-radius:2px;font-size:var(--s15);cursor:pointer}
+.brushes button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.inks div{display:flex;gap:.35rem;flex-wrap:wrap}
+.inks button{width:1.7rem;height:1.7rem;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.inks button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--ground) inset}
+.size{display:flex;align-items:center;gap:.6rem;font-size:var(--s13);color:var(--muted)}
+.size input{flex:1;accent-color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:.4rem}
+.actions button{border:1px solid var(--line);background:none;padding:.4rem .7rem;cursor:pointer;border-radius:2px;font-size:var(--s15)}
+.actions button:hover{border-color:var(--ink)}
+.actions button.hot{border-color:var(--hot);color:var(--hot)}
+.actions button:disabled{opacity:.45;cursor:progress}
+.note{font-size:var(--s15);color:var(--muted);max-width:48ch}
+
+/* Room 2 sits on paper: the grid's own ground */
+.room.light{background:var(--paper);color:var(--paper-ink);--line:rgba(22,24,30,.18);--muted:#5d5a52}
+.room.light .actions button{border-color:var(--line)}
+.room.light .actions button:hover{border-color:var(--paper-ink)}
+.room.light .plate{background:var(--paper);box-shadow:none}
+.pair{grid-column:1/-1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(12px,2vw,28px);align-items:start}
+.plate.square{grid-column:1/8;aspect-ratio:1}
+.plate.square canvas{height:100%}
+.pair .label{grid-column:8/13;display:flex;flex-direction:column;gap:1rem;max-width:58ch;padding-top:.3rem}
+.plate.wordplate{grid-column:2/-1;margin:clamp(2.5rem,6vw,5rem) 0 clamp(5rem,9vw,7rem);aspect-ratio:3/1}
+.plate.wordplate canvas{height:100%}
+.room.light .card{background:var(--paper);color:#3e3c36;border-left-color:var(--line)}
+.room.light .card b{color:var(--paper-ink)}
+
+.styles{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.6vw,22px);margin-top:clamp(2.5rem,6vw,4.5rem)}
+.styles figure{display:flex;flex-direction:column;gap:.4rem}
+.styles canvas{display:block;width:100%;aspect-ratio:1;height:auto;background:#06070a}
+.styles figcaption{font-size:var(--s13);color:var(--muted)}
+.styles .note{grid-column:1/-1}
+.grain-overlay{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:soft-light;opacity:.5;pointer-events:none}
+.foot{padding:2.5rem var(--gut) 3rem;font-size:var(--s13);color:var(--muted)}
+
+@media (max-width:820px){
+  .hero-word,.plate.tall,.plate.wide,.tools,.plate.square,.pair .label,.plate.wordplate{grid-column:1/-1}
+  .cloudword{font-size:clamp(3.4rem,21vw,10rem)}
+  .lede{font-size:var(--s17)}
+  .plate.tall{margin:2rem 0 4.5rem;max-width:520px}
+  .tools{margin-top:.5rem}
+  .styles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plate.wordplate{aspect-ratio:2/1;margin-bottom:3rem}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+/* Once painted, the h1's text is read by screen readers and the visible word is the (decorative) painting */
+.cloudword.lettered .word{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (forced-colors:active){.cloudword.lettered .word{position:static;width:auto;height:auto;clip-path:none}.cloudword canvas{display:none}}

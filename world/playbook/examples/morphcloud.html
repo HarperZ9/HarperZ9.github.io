@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rest</title>
+<link rel="canonical" href="https://harperz9.github.io/world/playbook/examples/morphcloud.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rest">
+<meta property="og:description" content="Rest">
+<meta property="og:url" content="https://harperz9.github.io/world/playbook/examples/morphcloud.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg?v=2b51e5fb7bb8">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="../../exhibit/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="piece.css?v=world-a891bf139a">
+<style>
+  .stage .word{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-size:clamp(120px,27vw,380px);font-weight:900;letter-spacing:-.05em;line-height:.9;color:transparent;-webkit-text-fill-color:transparent;margin:0;white-space:nowrap;z-index:2}
+    .stage #label{position:absolute;left:calc(var(--mod) * .5);bottom:calc(var(--mod) * .42);color:var(--muted);margin:0;z-index:2;max-width:none}
+  #dots{z-index:1}
+  @media (forced-colors:active){.stage .word{color:CanvasText;-webkit-text-fill-color:CanvasText}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <canvas id="ground" aria-hidden="true"></canvas>
+  <canvas id="dots" role="img" aria-label="A cloud of points steps from a sunflower spiral to the nodal lines of a vibrating plate, to a hydrogen 3d orbital, and comes to rest as the word Rest."></canvas>
+  <h1 class="sr">Rest</h1>
+  <span id="word" class="word" aria-hidden="true">Rest</span>
+  <p id="label" class="mono"></p>
+</main>
+<script type="module" src="morphcloud.page.js?v=world-a891bf139a"></script>
+</body>
+</html>

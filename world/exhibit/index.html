@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>We Are Here</title>
+<link rel="canonical" href="https://harperz9.github.io/world/exhibit/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="We Are Here">
+<meta property="og:description" content="We Are Here: the exhibit's rooms, each one a perception trick shown and then revealed, built from public domain plates.">
+<meta property="og:url" content="https://harperz9.github.io/world/exhibit/">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/world--exhibit.jpg?v=f593a7fc2172">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="We Are Here, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://harperz9.github.io/img/og/p/world--exhibit.jpg?v=f593a7fc2172">
+<meta name="twitter:image:alt" content="We Are Here, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun&#x27;s reflection breaks into short bars on the grid below.">
+<meta name="description" content="We Are Here: the exhibit's rooms, each one a perception trick shown and then revealed, built from public domain plates.">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  :root {
+    --ground: #f2efe7; --ink: #151515; --muted: #5d5a54; --rule: #151515;
+    --magenta: #e0177e; --cyan: #1aa3e0; --green: #1f9a4c; --yellow: #ffe93a; --red: #e3262b; --white: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ground: #111111; --ink: #eee9df; --muted: #a39e94; --rule: #111111; }
+  }
+  :root[data-theme="dark"] { --ground: #111111; --ink: #eee9df; --muted: #a39e94; --rule: #111111; }
+  * { box-sizing: border-box; }
+  @font-face { font-family: "Hanken Grotesk"; src: url("fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  nav[aria-label="Set pieces"] a { color: var(--ink); }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Hanken Grotesk", system-ui, sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 32px 16px 56px; display: grid; gap: 28px; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 820px) { main { grid-template-columns: 1fr; } }
+  h1 { font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: .95; letter-spacing: -.02em; margin: 0 0 12px; }
+  .lede { font-size: 18px; line-height: 1.45; margin: 0 0 20px; max-width: 34ch; }
+  svg { width: 100%; height: auto; display: block; }
+  .stamp { font-family: "Hanken Grotesk",sans-serif; font-weight: 700; fill: var(--rule); pointer-events: none; }
+  .axis { font-family: "Hanken Grotesk",sans-serif; fill: var(--ink); font-size: 18px; }
+  .r { cursor: pointer; transition: filter .15s; }
+  .r:hover, .r:focus { filter: brightness(1.12) saturate(1.1); outline: none; }
+  .r.on { filter: brightness(1.18); }
+  .here-dot { fill: var(--rule); }
+  figcaption { font-family: "Hanken Grotesk",sans-serif; font-size: 16px; line-height: 1.45; color: var(--muted); margin-top: 10px; }
+  .panel { border-top: 3px solid var(--ink); padding-top: 14px; min-height: 260px; }
+  .panel .k { font-family: "Hanken Grotesk",sans-serif; font-weight: 700; font-size: 26px; text-transform: uppercase; margin: 0 0 6px; }
+  .panel .what { font-size: 18px; line-height: 1.45; margin: 0 0 14px; }
+  .panel blockquote { margin: 0; padding-left: 14px; border-left: 3px solid var(--ink); font-size: 16px; line-height: 1.45; }
+  .panel .src { font-size: 16px; color: var(--muted); margin-top: 8px; }
+  .hint { font-size: 16px; color: var(--muted); }
+  ul.dwellers { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 8px; }
+  ul.dwellers a { color: var(--ink); font-weight: 600; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <h1>We are here.</h1>
+    <p class="lede">A claim can only live where checking it is cheap enough. Everywhere else on this map, claims die or mislead.</p>
+    <figure style="margin:0">
+      <svg viewBox="0 0 620 600" role="group" aria-labelledby="figt">
+        <title id="figt">Map of claims by how much they claim and what they cost to check</title>
+        <defs>
+          <clipPath id="world">
+            <path id="worldpath" d=""/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#world)" id="fields"></g>
+        <g id="grid" clip-path="url(#world)"></g>
+        <g id="labels"></g>
+        <text class="axis" x="345" y="590" text-anchor="middle">How much it claims</text>
+        <text class="axis" x="22" y="270" text-anchor="middle" transform="rotate(-90 22 270)">What it costs to check</text>
+        <g id="ticks"></g>
+      </svg>
+      <figcaption>FIG. 1. Where a claim can live. Claims that cost more to check than they are worth drift into hype or go unread. After Tegmark, "On the dimensionality of spacetime", arXiv gr-qc/9702052 (1997), Fig. 1.</figcaption>
+    </figure>
+  </section>
+  <section class="panel" aria-live="polite" id="panel">
+    <p class="k">Pick a region</p>
+    <p class="what">Each field is a kind of claim. Tap one to see what lives there this week.</p>
+    <p class="hint">The white cell is where our tools live.</p>
+  </section>
+</main>
+<nav aria-label="Set pieces" style="max-width:1080px;margin:0 auto;padding:0 16px 40px;font-size:16px"><p style="margin:0 0 6px;font-weight:800">Set pieces</p><p style="margin:0;display:flex;gap:6px 18px;flex-wrap:wrap"><a href="balance.html">The False Balance</a><a href="scale.html">How a scale lies</a><a href="palimpsest.html">Palimpsest</a><a href="powers.html">Powers of Ten, for a Lie</a><a href="mirror.html">Weigh it yourself</a><a href="munchhausen.html">By his own hair</a><a href="test.html">The test that wasn't</a><a href="labels.html">Four labels</a><a href="crowd.html">Manufactured consensus</a><a href="groove.html">The skipping groove</a><a href="lossy.html">Lossy</a><a href="static.html">Between stations</a><a href="media.html">The Mediums Wall</a><a href="credits.html">Credits</a></p><p style="margin:14px 0 6px;font-weight:800">Perception lies, a corridor</p><p style="margin:0;display:flex;gap:6px 18px;flex-wrap:wrap"><a href="mcgurk.html">The eye overrules the ear</a><a href="afterimage.html">What you looked at stays</a><a href="ebbinghaus.html">The same circle</a><a href="listen.html">Three sounds that lie</a></p><p style="margin:14px 0 6px;font-weight:800">The contrast wing</p><p style="margin:0;display:flex;gap:6px 18px;flex-wrap:wrap"><a href="anempathetic.html">Cheerful music, heavy facts</a><a href="lullaby.html">A bedtime story</a><a href="recitative.html">Bureaucracy, sung</a><a href="scripture.html">The terms, illuminated</a><a href="letter.html">The letter, and the log</a><a href="weather.html">Forecast for a war</a><a href="museum.html">Visitor, 21st century</a></p></nav>
+<script>
+(() => {
+  const C = 100, X0 = 70, Y0 = 20; // cell size, left margin, top margin
+  const px = x => X0 + x * C, py = y => Y0 + (5 - y) * C;
+  // Wavy world edge: straight bottom and left, wavy top and right (the map runs on).
+  const wave = (a, b, fixed, horiz) => {
+    let d = "", n = 10, amp = 9;
+    for (let i = 1; i <= n; i++) {
+      const t0 = a + (b - a) * (i - 0.5) / n, t1 = a + (b - a) * i / n, o = (i % 2 ? amp : -amp);
+      d += horiz ? ` Q ${t0} ${fixed + o} ${t1} ${fixed}` : ` Q ${fixed + o} ${t0} ${fixed} ${t1}`;
+    }
+    return d;
+  };
+  const right = px(5), top = py(5), bottom = py(0), left = px(0);
+  document.getElementById("worldpath").setAttribute("d",
+    `M ${left} ${bottom} L ${right} ${bottom}` + wave(bottom, top, right, false) + wave(right, left, top, true) + " Z");
+
+  const R = {
+    nothing: { k: "Says nothing", c: "--magenta", what: "No claim, so nothing to check. Engagement bait, vibes, the reply that is only a GIF.",
+      q: "“Well said.”", src: "A reply under Hillel's thread. His answer: “Bad bot.”" },
+    trust: { k: "Trust me", c: "--magenta", what: "A claim with no record behind it. Checking it costs nothing because there is nothing to check against.",
+      q: "“This accusation is also false.”", src: "Greenblatt on OpenAI's accusation, and OpenAI's accusation as reported. Both sides, no record yet. Feed set 15." },
+    simple: { k: "Too simple", c: "--red", what: "True and cheap to check, but small. Useful, and easy to oversell.",
+      q: "No crashes, for 239 entry points.", src: "Anthropic and Theorem, 22 Oct 2026. A real result, and a narrow one." },
+    here: { k: "We are here", c: "--white", what: "A large claim you can check in a minute. The source rides with the claim, and the check is one command.",
+      q: "Daylight reads a 500-reply thread in 48 ms, and the release verifies itself.", src: "Daylight Commons 3.5.0, signed release." },
+    hype: { k: "Hype", c: "--cyan", what: "Claims more than its proof carries. It looks cheap to check because nobody checks it.",
+      q: "“prove bug-freeness of the entire software stack … for ~$100m”", src: "A Theorem co-founder on the paper's author list. The paper has no cost estimate." },
+    costly: { k: "Too costly", c: "--green", what: "Checkable in principle, too expensive in practice. Most readers stop here and trust the headline.",
+      q: "180 million lines of Rocq.", src: "Hillel Wayne's read of the paper and its appendix." },
+    special: { k: "Specialists only", c: "--yellow", what: "Cheap if you read the language. Everyone else is locked out.",
+      q: "“It can't prove things about arguments with slash characters.”", src: "LPS SCOPE.md, found by Hillel, not by the post." },
+    unread: { k: "Nobody reads it", c: "--cyan", what: "Small claim, huge appendix. It's true, and nobody gets to it.",
+      q: "The expert review appendix.", src: "Linked once, in a thread, by one reader." },
+  };
+  // Fields in cell units [x0, y0, x1, y1]; extended past 5 so the wavy clip trims them.
+  const F = [
+    ["nothing", 0, 0, 1, 5.3], ["trust", 1, 0, 5.3, 1],
+    ["simple", 1, 1, 3, 2], ["simple", 1, 2, 2, 3],
+    ["here", 3, 1, 4, 2], ["hype", 4, 1, 5.3, 2],
+    ["special", 1, 3, 2, 4], ["unread", 1, 4, 2, 5.3],
+    ["costly", 2, 2, 5.3, 5.3],
+  ];
+  const NS = "http://www.w3.org/2000/svg", el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  const fields = document.getElementById("fields"), css = getComputedStyle(document.documentElement);
+  const groups = {};
+  for (const [k, x0, y0, x1, y1] of F) {
+    const g = groups[k] || (groups[k] = el("g", { class: "r", "data-k": k, tabindex: "0", role: "button", "aria-label": R[k].k }, fields));
+    el("rect", { x: px(x0), y: py(y1), width: (x1 - x0) * C, height: (y1 - y0) * C, fill: `var(${R[k].c})` }, g);
+  }
+  const grid = document.getElementById("grid");
+  for (let i = 1; i < 6; i++) {
+    el("line", { x1: px(i), y1: py(0), x2: px(i), y2: py(5.3), stroke: "#151515", "stroke-width": 1.5 }, grid);
+    el("line", { x1: px(0), y1: py(i), x2: px(5.3), y2: py(i), stroke: "#151515", "stroke-width": 1.5 }, grid);
+  }
+  el("path", { d: document.getElementById("worldpath").getAttribute("d"), fill: "none", stroke: "#151515", "stroke-width": 2.5 }, grid);
+  const L = document.getElementById("labels");
+  const stamp = (txt, x, y, size, rot) => {
+    const t = el("text", { class: "stamp", x, y, "font-size": size, "text-anchor": "middle", "dominant-baseline": "middle" }, L);
+    if (rot) t.setAttribute("transform", `rotate(${rot} ${x} ${y})`);
+    t.textContent = txt; return t;
+  };
+  stamp("SAYS NOTHING", px(0.5), py(2.6), 44, -90);
+  stamp("TRUST ME", px(3.1), py(0.5), 52);
+  stamp("TOO", px(1.5), py(2.55), 40); stamp("SIMPLE", px(1.95), py(1.5), 40);
+  stamp("We are", px(3.5), py(1.65), 22); stamp("here", px(3.5), py(1.33), 22);
+  stamp("HYPE", px(4.5), py(1.5), 30);
+  stamp("Specialists", px(1.5), py(3.62), 17); stamp("only", px(1.5), py(3.36), 17);
+  stamp("NOBODY READS IT", px(1.5), py(4.5), 13, -90);
+  stamp("TOO COSTLY", px(3.65), py(3.75), 40);
+  stamp("(180M lines)", px(3.65), py(3.3), 26);
+  const T = document.getElementById("ticks");
+  for (let i = 0; i <= 5; i++) {
+    el("text", { class: "axis", x: px(i), y: py(0) + 26, "text-anchor": "middle" }, T).textContent = i;
+    el("text", { class: "axis", x: px(0) - 16, y: py(i) + 6, "text-anchor": "middle" }, T).textContent = i;
+  }
+
+  const panel = document.getElementById("panel");
+  const show = k => {
+    const r = R[k];
+    document.querySelectorAll(".r").forEach(g => g.classList.toggle("on", g.dataset.k === k));
+    panel.innerHTML = "";
+    const add = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = text; panel.appendChild(e); return e; };
+    add("p", "k", r.k); add("p", "what", r.what); add("blockquote", "", r.q); add("p", "src", r.src);
+    if (k === "here") {
+      const ul = document.createElement("ul"); ul.className = "dwellers";
+      for (const [n, u] of [["Daylight Commons", "https://github.com/HarperZ9/daylight-commons"], ["Flywheel", "https://github.com/HarperZ9/flywheel"], ["Articulate", "https://github.com/HarperZ9/articulate"]]) {
+        const li = document.createElement("li"), a = document.createElement("a"); a.href = u; a.textContent = n; li.appendChild(a); ul.appendChild(li);
+      }
+      panel.appendChild(ul);
+    }
+  };
+  fields.addEventListener("click", e => { const g = e.target.closest(".r"); if (g) show(g.dataset.k); });
+  fields.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("r")) { e.preventDefault(); show(e.target.dataset.k); } });
+})();
+</script>
+</body>
+</html>

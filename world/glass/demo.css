@@ -1,0 +1,14 @@
+:root { --ground: #060607; --ink: #e9e6df; --gutter: clamp(16px, 4vw, 64px); }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); }
+body { font-family: "Hanken Grotesk", system-ui, sans-serif; }
+main { display: grid; gap: clamp(48px, 12vh, 160px); padding: clamp(48px, 10vh, 120px) var(--gutter); max-width: 1680px; margin: 0 auto; }
+.plate { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: var(--ground); }
+.plate canvas { display: block; width: 100%; height: 100%; }
+.live iframe { position: absolute; left: 0; top: 0; width: 1600px; height: 1000px; border: 0; transform-origin: 0 0; pointer-events: none; background: var(--ground); }
+.lens { position: absolute; inset: 0; clip-path: url(#archclip); backdrop-filter: url(#reed); -webkit-backdrop-filter: url(#reed); pointer-events: none; }
+.lens canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (prefers-reduced-motion: no-preference) { .lens { animation: drift 38s ease-in-out infinite alternate; } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(6%); } }
+.defs { position: absolute; width: 0; height: 0; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -1,0 +1,83 @@
+/* The depth layer. Two faces: Hanken Grotesk for the interface, the serif only for the wall (as the figure captions do). */
+.depth { margin:34px 0 10px; padding-top:20px; border-top:2px solid var(--line); font-family:"Hanken Grotesk",system-ui,sans-serif; }
+.depth h2 { font-size:clamp(20px,3vw,26px); margin:0 0 6px; font-weight:800; letter-spacing:-.01em; }
+.depth h3 { font-size:18px; margin:0 0 8px; }
+.depth h4 { font-size:16px; margin:18px 0 6px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-weight:600; }
+.dp-lede, .dp-marks, .dp-threads p { color:var(--muted); font-size:16px; line-height:1.5; margin:6px 0; max-width:74ch; }
+.dp-layers { list-style:none; padding:0; margin:12px 0; display:grid; gap:8px; }
+.dp-layer { display:block; padding:10px 14px; border-left:4px solid var(--line); font-size:16px; line-height:1.5; max-width:80ch; }
+.dp-layer[data-state=found] { border-left-color:var(--hot); }
+.dp-layer b { display:block; font-weight:600; }
+.dp-layer[data-state=hidden] b { color:var(--muted); }
+.dp-layer span { color:var(--ink); }
+.dp-layer[data-state=hidden] > span { color:var(--muted); }
+.dp-hint { min-height:44px; padding:6px 12px; font-size:16px; border-width:1px; }
+.dp-hinttext { color:var(--ink); }
+.dp-marks span[data-got=true] { color:var(--ink); }
+.dp-mhint { font-size:16px; margin:6px 0 10px; max-width:74ch; color:var(--muted); }
+.dp-mhint summary { cursor:pointer; min-height:44px; display:flex; align-items:center; }
+.dp-mhint li { margin:6px 0; line-height:1.5; }
+.dp-bar { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; }
+.dp-quiet { border-color:var(--line); color:var(--muted); }
+.dp-wall { background:#181715; border:1px solid var(--line); padding:20px clamp(14px,3vw,30px); margin:10px 0 18px; max-width:76ch; font-family:"Hanken Grotesk",sans-serif; }
+.dp-wall h3 { font-family:"Hanken Grotesk",sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:.14em; color:var(--muted); font-weight:600; }
+.dp-wall p { font-size:18px; line-height:1.6; margin:0 0 14px; }
+.dp-wall sup a { color:var(--hot); font-family:"Hanken Grotesk",sans-serif; font-weight:600; padding:0 2px; text-decoration:none; }
+.dp-ac { transition:color .4s; }
+.depth[data-solved=true] .dp-ac { color:#ffe93a; font-weight:700; }
+.dp-notes { font-family:"Hanken Grotesk",sans-serif; font-size:16px; line-height:1.5; color:var(--muted); padding-left:22px; }
+.dp-notes li { margin:5px 0; } .dp-notes a { color:var(--ink); word-break:break-all; }
+.dp-s { font-style:normal; font-size:16px; padding:0 6px; border:1px solid var(--line); white-space:nowrap; }
+.dp-s-v { color:#8fd18f; border-color:#3a5a3a; } .dp-s-p { color:#e8d9b0; border-color:#5a5033; } .dp-s-u { color:#e07a7a; border-color:#6a3a3a; }
+.dp-riddle { margin:18px 0; max-width:74ch; border:1px solid var(--line); padding:0 16px; }
+.dp-riddle summary { cursor:pointer; min-height:48px; display:flex; align-items:center; font-weight:600; font-size:16px; }
+.dp-q { font-family:"Hanken Grotesk",sans-serif; font-size:18px; line-height:1.6; margin:4px 0 12px; }
+.dp-form { display:flex; flex-wrap:wrap; gap:10px; align-items:end; margin:8px 0; }
+.dp-form label { display:grid; gap:4px; font-size:16px; font-weight:600; }
+.dp-form input { font:inherit; min-height:44px; padding:6px 10px; background:#0c0c0c; color:var(--ink); border:2px solid var(--ink); width:min(280px,70vw); }
+.dp-rout { min-height:1.5em; margin:6px 0; font-size:16px; } .dp-rnote { color:var(--muted); font-size:16px; margin:6px 0 14px; }
+.dp-key { letter-spacing:.14em; color:#ffe93a; }
+.dp-threads { margin:18px 0 6px; font-size:16px; } .dp-threads::before { content:'Next door:'; color:var(--muted); display:block; margin-bottom:2px; } .dp-threads ul { list-style:none; padding:0; margin:8px 0; display:grid; gap:2px; grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr)); }
+.dp-threads li { padding:10px 12px; border-top:1px solid var(--line); font-size:16px; line-height:1.4; } .dp-threads li span { display:block; color:var(--muted); }
+.dp-threads a { color:var(--ink); text-underline-offset:3px; }
+/* tags over the art */
+.dp-tags { position:absolute; inset:0; pointer-events:none; z-index:30; }
+.dp-tag { position:absolute; width:44px; height:44px; margin:-22px 0 0 -22px; padding:0; border:0; background:transparent; pointer-events:auto; cursor:pointer; min-height:44px; }
+.dp-tag span { display:grid; place-items:center; width:26px; height:26px; margin:9px; border-radius:50%; background:#c9a24a; color:#151515; font:700 15px "Hanken Grotesk",sans-serif; border:2px solid #151515; box-shadow:0 0 0 2px rgba(201,162,74,.5); opacity:.82; transition:transform .15s, opacity .15s; }
+.dp-tag:hover span, .dp-tag:focus-visible span, .dp-tag[aria-expanded=true] span { opacity:1; transform:scale(1.18); }
+.dp-tag:hover { background:transparent; }
+:root[data-dp-refs=off] .dp-tag { display:none; }
+@media (prefers-reduced-motion: no-preference) { .dp-tag { animation:dpin .5s both; } @keyframes dpin { from { opacity:0; transform:scale(.4); } } }
+.dp-card { position:absolute; left:var(--tx); top:var(--ty); width:min(360px,86%); max-height:70%; overflow:auto; pointer-events:auto; background:#171614; color:var(--ink); border:2px solid #c9a24a; padding:14px 16px 12px; font-size:16px; line-height:1.5; box-shadow:0 12px 30px rgba(0,0,0,.65); z-index:5; }
+.dp-card[data-side=right] { transform:translate(24px,-14px); } .dp-card[data-side=left] { transform:translate(calc(-100% - 24px),-14px); }
+.dp-card[data-vert=up] { top:auto; bottom:calc(100% - var(--ty)); transform:translate(24px,14px); } .dp-card[data-vert=up][data-side=left] { transform:translate(calc(-100% - 24px),14px); }
+.dp-card h3 { font-size:18px; margin:2px 0 6px; } .dp-card p { margin:6px 0; }
+.dp-kind { color:var(--muted); text-transform:uppercase; letter-spacing:.12em; font-size:16px; margin:0; }
+.dp-x { float:right; min-height:44px; padding:4px 10px; font-size:16px; border-width:1px; }
+.dp-card blockquote { margin:10px 0; padding:2px 0 2px 12px; border-left:3px solid var(--hot); font-family:"Hanken Grotesk",sans-serif; font-style:italic; }
+.dp-card cite { display:block; font-style:normal; font-family:"Hanken Grotesk",sans-serif; color:var(--muted); margin-top:4px; }
+.dp-card a { color:var(--ink); } .dp-src { list-style:none; padding:0; margin:8px 0 0; font-size:16px; } .dp-src li { margin:5px 0; } .dp-also { color:var(--muted); font-size:16px; }
+.dp-plate { margin:8px 0; } .dp-plate img { max-width:100%; height:auto; display:block; image-rendering:auto; border:1px solid var(--line); } .dp-plate figcaption { font-size:16px; }
+.dp-bitout { display:block; margin-top:8px; font:16px ui-monospace,Consolas,monospace; color:#ffe93a; word-break:break-word; }
+@media (max-width:640px) { .dp-card { position:fixed; left:8px; right:8px; bottom:8px; top:auto; width:auto; max-height:62vh; transform:none !important; } }
+/* settling dots and caption */
+.dp-settle { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:20; }
+.dp-numcap { position:absolute; left:50%; bottom:10px; transform:translateX(-50%); margin:0; padding:6px 12px; background:rgba(17,17,17,.88); border:1px solid #ffe93a; font:16px "Hanken Grotesk",sans-serif; z-index:21; width:min(92%,520px); text-align:center; pointer-events:none; }
+.dp-numcap b { color:#ffe93a; margin-right:8px; }
+
+/* Sallow says: the shapeshifter, in the room's own colour. The text stays legible; only the figure hides. */
+.sallow { --sc:#0d4f80; position:relative; margin:18px 0; max-width:76ch; padding:18px clamp(14px,3vw,26px) 16px; background:color-mix(in srgb, var(--sc) 55%, #0b0b0b); border:1px solid color-mix(in srgb, var(--sc) 70%, #fff); overflow:hidden; }
+.sallow h3 { margin:0 0 6px; font-size:18px; } .sl-meta { color:#d9d4c8; font-size:16px; line-height:1.5; margin:4px 0 10px; max-width:64ch; }
+.sl-fig { position:absolute; right:14px; top:10px; width:64px; color:color-mix(in srgb, var(--sc) 55%, #0b0b0b); filter:brightness(1.06); transition:color .5s, filter .5s; pointer-events:none; }
+.sallow:has(.sl-hold[aria-expanded=true]) .sl-fig { color:#e8d9b0; filter:none; }
+.sl-line { margin:10px 0; padding:2px 0 2px 12px; border-left:3px solid #e8d9b0; font-family:"Hanken Grotesk",sans-serif; font-size:18px; line-height:1.55; }
+.sl-as { display:block; font:600 16px "Hanken Grotesk",sans-serif; letter-spacing:.1em; text-transform:uppercase; color:#d9d4c8; margin-bottom:2px; }
+.sl-under, .sl-grip, .sl-emb { font-size:16px; line-height:1.5; margin:10px 0; } .sl-as2 { font-size:16px; color:#d9d4c8; margin:12px 0 0; }
+.sl-cmd { font:16px ui-monospace,Consolas,monospace; margin:12px 0 4px; color:#e8d9b0; word-break:break-word; } .sl-out { margin:0; padding:10px 12px; background:#0b0b0b; border:1px solid #3a3833; font:15px/1.45 ui-monospace,Consolas,monospace; white-space:pre-wrap; word-break:break-word; color:#eee9df; }
+.sl-note { color:#d9d4c8; font-size:16px; margin:6px 0; }
+.sl-grey { margin:14px 0; } .sl-strip { position:relative; height:84px; background:linear-gradient(90deg,#1c1c1c,#e2e2e2); border:1px solid #3a3833; }
+.sl-a, .sl-b { position:absolute; top:22px; width:40px; height:40px; background:#808080; font:600 16px "Hanken Grotesk",sans-serif; color:#808080; display:grid; place-items:center; font-style:normal; z-index:2; } .sl-a { left:6%; } .sl-b { right:6%; }
+.sl-bridge { position:absolute; top:22px; left:6%; height:40px; width:0; background:#808080; z-index:1; max-width:88%; }
+.sl-grey label { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:600; margin-top:8px; } .sl-grey input { width:min(320px,70vw); min-height:44px; accent-color:var(--hot); }
+@media (prefers-reduced-motion: reduce) { .sl-fig { transition:none; } }
+.sl-as i { text-transform:none; letter-spacing:0; font-style:italic; color:#e8d9b0; } .sl-init { margin:10px 0; font-size:16px; } .sl-init summary { cursor:pointer; min-height:44px; display:flex; align-items:center; } .dp-box { font-size:16px !important; font-family:'Hanken Grotesk',sans-serif !important; color:var(--muted); line-height:1.5 !important; }
