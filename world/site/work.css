@@ -1,0 +1,125 @@
+/* work.css: the astrolabe after the arrival. The list is the way in for keys and readers; the dial is the same
+   choice for the pointer; the open panel shows one real output. The dial's face is a dark field in both schemes,
+   lit by one source that sits over the open pillar (the value plan: most of the field below L* 25, white only on
+   the light). Without scripts every panel reads in order under its own heading. */
+
+.work {
+  --w-mono: "Conso", ui-monospace, monospace; --field: #0d0b12; --field-ink: rgba(226, 218, 202, .86); --field-faint: rgba(214, 205, 188, .2); --lamp: #ffd9a0;
+  position: relative; z-index: 6; isolation: isolate; background: var(--wall); color: var(--ink);
+  display: grid; grid-template-columns: minmax(200px, 260px) minmax(340px, 1fr) minmax(340px, 540px);
+  grid-template-areas: "list dial panel"; gap: clamp(20px, 3vw, 48px); align-items: start;
+  padding: clamp(48px, 9vh, 96px) clamp(16px, 4vw, 56px); min-height: 100vh;
+}
+.w-list { grid-area: list; align-self: center; }
+.w-list ol { margin: 0; padding: 0; list-style: none; display: grid; }
+.w-list a {
+  display: flex; align-items: baseline; gap: 14px; min-height: 44px; padding: 10px 2px; color: var(--ink); text-decoration: none;
+  border-bottom: 1px solid var(--line); font: 600 var(--fs-3, 1.0625rem)/1.2 var(--face-text);
+}
+.w-list li:first-child a { border-top: 1px solid var(--line); }
+.w-num { font: 400 .8em/1 var(--w-mono); color: var(--soft); min-width: 2ch; }
+.w-list a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.w-list a[aria-selected="true"], .w-list a[aria-current="true"] { box-shadow: inset 3px 0 0 var(--ink); padding-left: 12px; }
+.w-list a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* the dial: built by work.js; the face is a dark field, the engraving is the 1462 astrolabe through a two-ink
+   ordered dither that turns with the rete (the cell stays on the plate, not on the screen) */
+.w-dial { grid-area: dial; position: relative; width: 100%; max-width: 640px; aspect-ratio: 1; justify-self: center; align-self: center; touch-action: none; cursor: grab; }
+.w-dial:active { cursor: grabbing; }
+.w-dial > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+.w-dial > .w-face, .w-dial > .w-engraving, .w-dial > .w-light { inset: auto; left: 9%; top: 9%; width: 82%; height: 82%; }
+.w-face { border-radius: 50%; background: var(--field); box-shadow: 0 0 0 1px var(--line); }
+.w-engraving { border-radius: 50%; image-rendering: pixelated; opacity: .9; }
+.w-light { border-radius: 50%; pointer-events: none; mix-blend-mode: screen;
+  background: radial-gradient(circle at var(--lx, 50%) var(--ly, 50%), color-mix(in srgb, var(--lamp) 70%, transparent) 0, color-mix(in srgb, var(--lamp) 22%, transparent) 9%, transparent 26%); }
+.w-svg { overflow: visible; }
+.w-svg .limb { fill: var(--ink); }
+.w-svg .numeral { fill: var(--field-ink); font: 400 28px/1 var(--w-mono); text-anchor: middle; dominant-baseline: central; }
+.w-svg .numeral.on { fill: var(--lamp); font-weight: 700; }
+.w-svg .rete circle.orbit { fill: none; stroke: var(--field-faint); stroke-width: 1.2; }
+.w-svg .moon { fill: #24202b; stroke: var(--field-ink); stroke-width: 2; cursor: pointer; }
+.w-svg .moon.on { fill: var(--lamp); stroke: var(--lamp); }
+.w-svg .hub { fill: var(--field); stroke: var(--field-ink); stroke-width: 2; cursor: pointer; }
+.w-svg .hub.on { fill: var(--lamp); stroke: var(--lamp); }
+.w-svg .index { stroke: var(--lamp); stroke-width: 2; opacity: .8; }
+.w-svg .echo { pointer-events: none; mix-blend-mode: screen; }
+
+/* panels */
+.w-panels { grid-area: panel; align-self: center; min-width: 0; }
+.w-panel { display: grid; gap: 14px; padding: 0 0 32px; }
+.w-panel + .w-panel { border-top: 1px solid var(--line); padding-top: 32px; }
+.work.w-live .w-panel + .w-panel { border-top: 0; padding-top: 0; }
+.work.w-live .w-panel:not(.open) { display: none; }
+.w-panel h2 { margin: 0; font: 800 var(--fs-5, 2rem)/1.04 var(--face-display); letter-spacing: -.03em; text-wrap: balance; }
+.w-panel h2:focus { outline: none; }
+.w-panel h2:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.w-demo { margin: 0; display: grid; gap: 12px; }
+.w-demo figcaption, .w-note, .w-io { margin: 0; font: 400 var(--fs-2, .95rem)/1.5 var(--face-text); color: var(--ink); }
+.w-io span { font: 600 .82em/1 var(--w-mono); color: var(--soft); margin-right: .6em; }
+.w-demo img, .w-demo video { display: block; width: 100%; height: auto; background: var(--wall-2); }
+.w-demo img[width="600"] { max-width: 360px; }
+.w-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.w-choices[hidden] { display: none; }
+.w-choices button { min-height: 44px; padding: 0 14px; border: 1.5px solid var(--ink); background: var(--wall); color: var(--ink); font: 600 var(--fs-2, .95rem)/1 var(--face-text); cursor: pointer; }
+.w-choices button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+.w-choices button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.w-states { display: grid; gap: 14px; }
+.w-state { display: grid; gap: 10px; }
+.work.w-live .w-state:not(.on) { display: none; }
+.work:not(.w-live) .w-state + .w-state { border-top: 1px dashed var(--line); padding-top: 12px; }
+.w-verdict { margin: 0; font: 700 var(--fs-3, 1.0625rem)/1.3 var(--face-text); padding-left: 12px; border-left: 4px solid currentColor; }
+.w-verdict[data-verdict="verified"] { color: var(--verified); }
+.w-verdict[data-verdict="drift"] { color: var(--drift); }
+.w-verdict[data-verdict="unverifiable"] { color: var(--unverifiable); }
+.w-prose { margin: 0; font: 400 var(--fs-3, 1.0625rem)/1.55 var(--face-text); }
+.w-prose mark { background: color-mix(in srgb, var(--drift) 22%, transparent); color: inherit; padding: 0 .1em; }
+.w-code, .w-out { margin: 0; padding: 12px 14px; overflow-x: auto; font: 400 .9rem/1.5 var(--w-mono); background: var(--wall-2); color: var(--ink); white-space: pre; }
+.w-out { border-left: 2px solid var(--line); }
+.w-strip { margin: 0; padding: 0; list-style: none; display: flex; height: 40px; border: 1px solid var(--line); }
+.w-strip li { position: relative; flex: var(--s) 1 0; min-width: 3px; background: var(--c); }
+.w-strip li code, .w-strip li span:not(.w-chip) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.w-strip li:nth-child(-n+3) code { position: static; width: auto; height: auto; clip-path: none; display: block; padding: 4px 6px; font: 400 .78rem/1 var(--w-mono); color: #0d0b12; }
+.w-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.w-tiles { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.w-tiles li { display: grid; gap: 4px; font: 400 .85rem/1.3 var(--face-text); }
+.w-tiles img { image-rendering: pixelated; }
+.w-wipe-frame { position: relative; max-width: 420px; }
+.w-wipe-top { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--split, 50%)); }
+.w-wipe-control { display: flex; align-items: center; gap: 10px; font: 600 var(--fs-2, .95rem)/1 var(--face-text); min-height: 44px; }
+.w-wipe-control[hidden] { display: none; }
+.w-wipe-control input { flex: 1; max-width: 300px; accent-color: var(--ink); }
+.w-held { position: relative; }
+.w-held-b { position: absolute; inset: 0; opacity: 0; }
+.w-held.b .w-held-b { opacity: 1; }
+.w-list-plain { margin: 0; padding: 0 0 0 1.1em; display: grid; gap: 8px; font: 400 var(--fs-3, 1.0625rem)/1.4 var(--face-text); }
+.w-list-plain a, .w-note a, .w-go a { color: var(--ink); text-underline-offset: .18em; }
+.w-go { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font: 600 var(--fs-2, .95rem)/1.2 var(--face-text); }
+.w-go a { min-height: 44px; display: inline-flex; align-items: center; }
+.w-go .w-try { padding: 0 16px; background: var(--ink); color: var(--wall); text-decoration: none; }
+.w-go a:focus-visible, .w-list-plain a:focus-visible, .w-note a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.ident { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+
+@media (max-width: 1100px) {
+  .work { grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); grid-template-areas: "list dial" "panel panel"; }
+}
+@media (max-width: 860px) {
+  .work { grid-template-columns: minmax(0, 1fr); grid-template-areas: "dial" "list" "panel"; padding: 40px 16px 56px; min-height: auto; gap: 24px; }
+  .w-dial { max-width: min(92vw, 440px); }
+  .w-list ol { grid-template-columns: 1fr 1fr; column-gap: 16px; }
+  .w-list li:nth-child(2) a { border-top: 1px solid var(--line); }
+  .w-pair { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .w-svg .echo { display: none; } }
+@media (forced-colors: active) {
+  .w-engraving, .w-light, .w-svg .echo { display: none; }
+  .w-face { background: Canvas; box-shadow: 0 0 0 1px CanvasText; }
+  .w-list a[aria-selected="true"] { outline: 2px solid Highlight; }
+}
+html.plain .w-engraving, html.plain .w-light { display: none; }
+
+
+/* without scripts: no dial, the list on the left, every panel in reading order beside it */
+.work:not(.w-live) { grid-template-columns: minmax(200px, 260px) minmax(0, 760px); grid-template-areas: "list panel"; }
+.work:not(.w-live) .w-dial { display: none; }
+.work:not(.w-live) .w-list { align-self: start; position: sticky; top: 112px; }
+@media (max-width: 860px) { .work:not(.w-live) { grid-template-columns: minmax(0, 1fr); grid-template-areas: "list" "panel"; } .work:not(.w-live) .w-list { position: static; } }
