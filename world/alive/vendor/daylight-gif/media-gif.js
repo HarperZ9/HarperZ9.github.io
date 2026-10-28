@@ -1,5 +1,5 @@
-// Copied unmodified below this header from Daylight Commons (provenance-badges, branch feat/media-toolkit,
-// commit 37b80eef14ca1f13e888749f0049437e2b647966, src/core/media-gif.js). Same author; licence FSL-1.1-MIT.
+// Copied unmodified below this header from CMMNS, formerly Daylight Commons (HarperZ9/cmmns, branch feat/media-toolkit,
+// commit 37b80eef14ca1f13e888749f0049437e2b647966, src/core/media-gif.js). Same author; licence AGPL-3.0-only, as in the source.
 // Used read-only by the alive layer's gif.js for decoding. Fix bugs upstream, then copy again.
 // Decodes GIF87a and GIF89a files into fully composited RGBA frames: global and local colour
 // tables, interlacing, transparency and delays from the Graphic Control Extension, disposal
