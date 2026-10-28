@@ -1,7 +1,8 @@
 // work.mjs: the astrolabe after the arrival. Its hub is the study that distills one picture; its eight moons are
 // the pillars, and each pillar's panel opens in place on a real output: a study plate, a Flywheel verdict, an
 // Articulate before and after, three Daylight Commons captures, a BuildLang check, the engine's frames, a film.
-// Every panel is plain HTML first: without scripts they read top to bottom, each under its own heading.
+// The two videos use root-relative paths without a leading slash (index.html sits at the root), the form
+// tools/video_registry.py reads. Every panel is plain HTML first: without scripts they read top to bottom, each under its own heading.
 // world/site/work.js turns them into one panel at a time, chosen from the list or the dial, with deep links (/#w-engine).
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -112,7 +113,7 @@ export const PILLARS = [
   {
     id: "low-water", title: "Low Water",
     html: `<figure class="w-demo">
-        <video class="w-loop" muted loop playsinline controls preload="none" width="480" height="360" poster="/media/front-door/heavenly-boat-poster.jpg"><source src="/media/front-door/heavenly-boat-480.mp4" type="video/mp4"></video>
+        <video class="w-loop" muted loop playsinline controls preload="none" width="480" height="360" poster="media/front-door/heavenly-boat-poster.jpg"><source src="media/front-door/heavenly-boat-480.mp4" type="video/mp4"></video>
         <figcaption>Low tide, from the film Heavenly Bodies (1920). Public domain, Prelinger Archives.</figcaption>
       </figure>
       <p class="w-io">A narrative game in development, painted and played on the raw-native engine.</p>
@@ -121,7 +122,7 @@ export const PILLARS = [
   {
     id: "writing", title: "Essays and films",
     html: `<figure class="w-demo">
-        <video controls preload="none" playsinline width="1920" height="1080" poster="/media/explainers/checking-cost/poster.jpg"><source src="/media/explainers/checking-cost/checking-cost.mp4" type="video/mp4"><track kind="captions" src="/media/explainers/checking-cost/checking-cost.vtt" srclang="en" label="English"></video>
+        <video controls preload="none" playsinline width="1920" height="1080" poster="media/explainers/checking-cost/poster.jpg"><source src="media/explainers/checking-cost/checking-cost.mp4" type="video/mp4"><track kind="captions" src="media/explainers/checking-cost/checking-cost.vtt" srclang="en" label="English"></video>
         <figcaption>Claiming got cheap. Checking did not. A film, with captions.</figcaption>
       </figure>
       <ul class="w-list-plain">

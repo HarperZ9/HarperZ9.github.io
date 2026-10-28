@@ -199,6 +199,24 @@
       "duration": "PT20S"
     },
     {
+      "page": "index.html",
+      "contentUrl": "https://harperz9.github.io/media/front-door/heavenly-boat-480.mp4",
+      "name": "Low tide, from Heavenly Bodies (1920)",
+      "description": "Low tide, from the film Heavenly Bodies (1920). Public domain, Prelinger Archives.",
+      "thumbnailUrl": "https://harperz9.github.io/media/front-door/heavenly-boat-poster.jpg",
+      "uploadDate": "2026-10-28",
+      "duration": "PT7S"
+    },
+    {
+      "page": "explainers.html",
+      "contentUrl": "https://harperz9.github.io/media/explainers/checking-cost/checking-cost.mp4",
+      "name": "Claiming got cheap. Checking did not.",
+      "description": "Claiming got cheap. Checking did not. An explainer film by Zain Dana Harper.",
+      "thumbnailUrl": "https://harperz9.github.io/media/explainers/checking-cost/poster.jpg",
+      "uploadDate": "2026-10-08",
+      "duration": "PT177S"
+    },
+    {
       "page": "night-school-attention.html",
       "contentUrl": "https://harperz9.github.io/media/school/attention/narrated.mp4",
       "name": "Night School: Attention: how a language model decides what matters",
