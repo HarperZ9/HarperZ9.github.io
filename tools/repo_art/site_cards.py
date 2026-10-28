@@ -103,7 +103,7 @@ ART_RULES = [  # (pattern on the slug, kind, art key); the first match wins
     (r"^briefings", "Briefing", "cover-briefing-openai-hugging-face-incident"),
     (r"^research", "Paper", "pillar-research"),
     (r"^(who-knew-first|who-pays|the-terms-for-telling|who-kept-the-books|the-maker-is-part-of-the-story|a-check-it-cannot-predict)", "Investigation", "pillar-who-knew-first"),
-    (r"^(cv|resume|hire|dossier|person|work-with-me|cover-letter|independence|income-ledger|start-here|career)",
+    (r"^(cv|resume|hire|dossier|person|work-with-me|flywheel-pilot|cover-letter|independence|income-ledger|start-here|career)",
      "Page", "cover-resume"),
     (r"^(typeface|fonts|type-forge)", "Page", "pillar-fonts"),
     (r"^(security|private-practice|phantom|secret|isomorph|kun|bounds|seed|sofer|array|orca|gate)", "Tool",
