@@ -639,15 +639,16 @@ Error generating stack: `+e.message+`
         },
         {
           "label": "CMMNS",
-          "href": "daylight.html",
-          "summary": "CMMNS is a browser extension that shows where social media replies come from: place, coordination, posting, language and fact-checks.",
-          "primary": false
+          "href": "cmmns.html",
+          "summary": "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.",
+          "primary": false,
+          "searchText": "CMMNS Version Browsers Licence Source Install Chrome, Edge or Brave Firefox 128 or later Command line Check the download What the window shows Place Account Posting Coordination Language Sources Fact-checked claims Media Save, convert and keep media What it sends and keeps New in 3.9.0 CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks. CMMNS CMMNS CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks."
         },
         {
           "label": "CMMNS",
           "href": "cmmns.html",
-          "summary": "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language and fact-checks.",
-          "searchText": "CMMNS Version Browsers Licence Source Install Chrome, Edge or Brave Firefox 128 or later Command line Check the download What the window shows Place Account Posting Coordination Language Sources Fact-checked claims Media Save, convert and keep media What it sends and keeps New in 3.9.0 CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language and fact-checks. CMMNS CMMNS CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language and fact-checks."
+          "summary": "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.",
+          "primary": false
         }
       ],
       "prefixes": [

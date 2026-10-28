@@ -1,8 +1,7 @@
 {
   "date": "2026-10-28",
-  "note": "Reviewed 2026-10-28: Daylight Commons is renamed CMMNS. cmmns.html replaces daylight.html (now a redirect stub); the nav, route registry, site index, sitemap, llms files and the workshop build (assets/index-DhJE9vp_.js; index-Bg7UPow6.js kept as history) name CMMNS and link github.com/HarperZ9/cmmns and harperz9.github.io/cmmns/; career and resume lines say CMMNS (formerly Daylight Commons), with named past releases (3.2.2) kept under the name they shipped as; career PDF and DOCX rebuilt from the same sources.",
+  "note": "Reviewed 2026-10-28: Daylight Commons is renamed CMMNS. cmmns.html replaces daylight.html (now a redirect stub); the nav, route registry, site index, sitemap, llms files and the workshop build (index-Bg7UPow6.js kept as history) name CMMNS and link github.com/HarperZ9/cmmns and harperz9.github.io/cmmns/; career and resume lines say CMMNS (formerly Daylight Commons), with named past releases (3.2.2) kept under the name they shipped as; career PDF and DOCX rebuilt from the same sources.",
   "paths": {
-    "assets/index-DhJE9vp_.js": "9211530ef9f3dbe2500559451e6a85b893657e914f1ba3842bd08659e5ab0c26",
     "career/Zain-Dana-Harper-CV.docx": "1aca41b597891bc4345cd3bd9fbed2cb3c14044cb4e8bd878adbd99e67478ce7",
     "career/Zain-Dana-Harper-CV.pdf": "e5c58b02a5602054dff64a7853d78f7adaf54b6b3f79aaa0a3ff9a953160d589",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "cd182492e435a7d11d34129565521a753c557f54e26d0a769f2de29b12b64aa3",
