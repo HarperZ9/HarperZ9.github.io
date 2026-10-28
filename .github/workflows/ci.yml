@@ -90,6 +90,26 @@ jobs:
           sleep 2
           SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-original-preview.cjs
           SITE_BASE_URL=http://127.0.0.1:8802 BROWSER_CHANNEL=chrome node tests/font-marketplace-reading.cjs
+      # The performance budget (project-docs/PERFORMANCE-BUDGET.md): the home and the road page at 1440x900 and
+      # 390x844 under a 4x CPU slowdown. Canvases, offscreen and hidden-tab work, LCP, CLS, first-view JS and media
+      # resolution are enforced here; frame times need a GPU, so on this runner they are reported, not enforced.
+      - name: Performance budget
+        if: ${{ !cancelled() }}
+        run: |
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+          npm install --no-save playwright@1.62.1
+          python tests/lib/serve.py 8811 &
+          server_pid=$!
+          trap "kill $server_pid" EXIT
+          sleep 2
+          PERF_WATCH=0 SITE_BASE_URL=http://127.0.0.1:8811 BROWSER_CHANNEL=chrome node tests/perf-budget.cjs --out perf-out
+      - name: Performance budget report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: perf-budget
+          path: perf-out/perf-report.json
+          if-no-files-found: ignore
       # Night School: the film and the lab mount on a press, play, train and report numbers,
       # at desktop and phone widths, on the Canvas 2D path (no WebGPU canvas on the runner).
       - name: Night School in a browser

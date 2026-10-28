@@ -10,6 +10,7 @@
 //     from / to: { canvas, rect }   each element's picture (read once per key) and its live box on screen
 //     flow(x, y) -> [vx, vy]        normalised current at a viewport point, or null
 //     clocks: [fromClock, toClock]  the two elements' timing laws, combined as a weighted timing layer
+//   c.prepare(key, fromCanvas, toCanvas)   // build that transfer's grid now, in an idle moment
 //   c.stats() -> { mean, sd, n, t }  the weights' mean and spatial spread on the last frame (the front check)
 //   c.record(key) -> { mid, landed }  the transparency record: per-property clarity of the source in the view
 // A weight depends only on t (flip times are computed once per transfer), so walking back carries the element back.
@@ -55,8 +56,18 @@ function curl(x, y, s) {
 export function carrier(canvas, { cols = 72, rows = 45, width = 0.15, span = 0.6 } = {}) {
   let key = null, T = null, landed = false, pourAt = 0, last = { mean: 0, sd: 0, n: 0, t: 0 };
   const records = new Map();  // the transparency record per transfer: what of the source survived, mid-way and landed
+  const ready = new Map();    // grids built ahead of their transfer (prepare), so the first frame of a walk is light
+  function grid(fromCanvas, toCanvas) {  // one grid per pair: the element as it was when it lifted off, and where it will land
+    const A = cells(fromCanvas, cols, rows), B = cells(toCanvas, cols, rows);
+    const mask = Uint8Array.from(A.ink, (v) => (v > 0.1 ? 1 : 0));  // the ticks are the leaving element's ink
+    let best = -1e9, seedAt = null;  // the front starts from the element's own ink nearest the road (low, then left)
+    for (let k2 = 0; k2 < mask.length; k2++) if (mask[k2]) { const i = k2 % cols, j = (k2 / cols) | 0, v = j - 0.3 * i; if (v > best) { best = v; seedAt = [i, j]; } }
+    return { A, B, mask, front: growFront(cols, rows, { ink: A.ink, seedAt, seed: 17, span }) };
+  }
   return {
-    reset() { key = null; T = null; },
+    reset() { key = null; T = null; ready.clear(); },
+    // build a transfer's grid ahead of time (an idle moment before the walker reaches it); the same numbers as a cold start
+    prepare(k, fromCanvas, toCanvas) { if (k !== key && !ready.has(k)) { if (ready.size > 3) ready.clear(); ready.set(k, grid(fromCanvas, toCanvas)); } },
     stats() { return last; },
     record(k) { return records.get(k) || null; },
     draw(t, { key: k, from, to, fromForm = "drop", toForm = "drop", flow = null, px = 1, medium = null, clocks = null }) {
@@ -64,13 +75,7 @@ export function carrier(canvas, { cols = 72, rows = 45, width = 0.15, span = 0.6
       if (t <= 0 || t >= 1 || !from?.canvas || !to?.canvas) {
         if (t >= 1) landed = true; if (t <= 0) landed = false; last = { mean: t >= 1 ? 1 : 0, sd: 0, n: 0, t }; return;
       }
-      if (k !== key) {  // one grid per pair: the element as it was when it lifted off, and where it will land
-        key = k; landed = false; const A = cells(from.canvas, cols, rows), B = cells(to.canvas, cols, rows);
-        const mask = Uint8Array.from(A.ink, (v) => (v > 0.1 ? 1 : 0));  // the ticks are the leaving element's ink
-        let best = -1e9, seedAt = null;  // the front starts from the element's own ink nearest the road (low, then left)
-        for (let k2 = 0; k2 < mask.length; k2++) if (mask[k2]) { const i = k2 % cols, j = (k2 / cols) | 0, v = j - 0.3 * i; if (v > best) { best = v; seedAt = [i, j]; } }
-        T = { A, B, mask, front: growFront(cols, rows, { ink: A.ink, seedAt, seed: 17, span }) };
-      }
+      if (k !== key) { key = k; landed = false; T = ready.get(k) || grid(from.canvas, to.canvas); ready.delete(k); }
       const tt = clocks ? timing(t, clocks, [1, 1]) : t;  // the timing layer: both elements' clocks, weighted
       const F0 = FORMS[fromForm] || FORMS.drop, F1 = FORMS[toForm] || FORMS.drop, poured = [], tau = T.front.tau;
       const cw = from.rect.width / cols, ch = from.rect.height / rows, dw = to.rect.width / cols, dh = to.rect.height / rows;

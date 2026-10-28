@@ -1,0 +1,4 @@
+/* the one stage: every drawn layer of the road and the places composites here (world/site/stage.js) */
+#stage { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+html.plain #stage { display: none; }
+@media (forced-colors: active) { #stage { display: none; } }

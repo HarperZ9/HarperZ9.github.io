@@ -4,7 +4,10 @@
 /* the arrival: the name drawn in glass, the real words over it */
 .arrival { position: relative; min-height: 100vh; display: grid; grid-template-rows: 1fr auto auto; align-items: end; padding: 96px clamp(16px, 4vw, 56px) 48px; gap: 18px; }
 .arrival-art { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; pointer-events: none; }
-.arrival-art .lead { width: min(1280px, 100%); height: auto; max-height: 86vh; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); }
+.arrival-art .lead, .arrival-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 45%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 80% 75% at 50% 45%, #000 62%, transparent 100%); }
+.arrival-art video.lead { opacity: 0; transition: opacity .6s ease; }
+.arrival-art video.lead.on { opacity: 1; }
+
 .arrival h1 { position: relative; margin: 0; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.035em; color: var(--ink); max-width: 14ch; }
 .arrival-ways, .ways, .colophon nav { position: relative; display: flex; flex-wrap: wrap; gap: 8px; }
 .arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); text-decoration: none; font: 600 var(--fs-2)/1 var(--face-text); }
@@ -52,6 +55,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 
 @media (max-width: 860px) {
   .arrival { padding: 24px 16px 112px; min-height: 92vh; }
+  .arrival-art .lead, .arrival-still { object-fit: contain; object-position: 50% 38%; }
   .place { min-height: auto; padding: 8vh 16px; }
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: 1fr; }
   .place:nth-child(even) .lead-box { order: 0; }

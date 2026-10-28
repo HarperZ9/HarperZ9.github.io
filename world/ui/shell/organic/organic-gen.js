@@ -69,7 +69,12 @@ async function brushPanels(els) {
 }
 
 // ---- the menu ground: sand thrown onto a plate settles into its nodal lines when the menu opens.
-async function sandMenu(dlg) {
+// The plate, its canvas and the Chladni module arrive on the first open, so a closed menu costs the page nothing.
+function sandMenu(dlg) {
+  const first = async () => { if (!dlg.open) return; dlg.removeEventListener("toggle", first); try { await sandPlate(dlg); } catch (e) { console.warn("organic: sand menu failed; plain menu kept", e); } };
+  dlg.addEventListener("toggle", first);
+}
+async function sandPlate(dlg) {
   const C = await load("feed-22/build/chladni.js");
   const cv = canvasIn(dlg, "o-sand"), g = cv.getContext("2d", { colorSpace: "display-p3" });
   let field = null, sand = null, off = null;
@@ -79,14 +84,16 @@ async function sandMenu(dlg) {
     for (let i = 0; i < sand.n; i++) { const x = (sand.x[i] + 1) / 2 * w, y = (sand.y[i] + 1) / 2 * h; g.globalAlpha = 0.35 + 0.5 * sand.tone[i]; g.fillRect(x, y, s * sand.size[i] * 1.4, s * sand.size[i] * 1.4); }
     g.globalAlpha = 1;
   };
-  dlg.addEventListener("toggle", () => {
+  const open = () => {
     if (!dlg.open) { off?.(); off = null; return; }
     const r = dlg.getBoundingClientRect(); cv.width = Math.round(r.width * DPR()); cv.height = Math.round(r.height * DPR());
     field = C.membraneAmplitude(3, 5, 40, 96); sand = new C.Sand(2600, { seed: 9 });
     if (still()) { for (let i = 0; i < 260; i++) sand.step(field); draw(); return; }
     let n = 0;
     off = clock(() => { for (let k = 0; k < 3; k++) sand.step(field); draw(); if (++n > 120) { off?.(); off = null; } });
-  });
+  };
+  dlg.addEventListener("toggle", open);
+  open();
 }
 
 // ---- switch: the "on" state develops like a print in the tray (H and D density over time).

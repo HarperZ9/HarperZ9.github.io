@@ -192,5 +192,9 @@ export async function initOrganic() {
   document.querySelectorAll('[data-o="band"]').forEach((h) => band(h).catch((e) => console.warn("organic: survey band not loaded; the map link stays", e)));
   each('[data-o="record"]', record);
   each('[data-o="switch"]', (b) => b.addEventListener("click", () => b.setAttribute("aria-checked", String(b.getAttribute("aria-checked") !== "true"))));
+  // the generators (brushed panels, the sand plate, node grounds) dress controls rather than carry content: they load
+  // at the visitor's first act, so their modules never compete with the first screen
+  const ACTS = ["pointermove", "pointerdown", "scroll", "wheel", "keydown", "touchstart"];
+  await new Promise((go) => { const once = () => { for (const ev of ACTS) removeEventListener(ev, once); go(); }; for (const ev of ACTS) addEventListener(ev, once, { passive: true }); });
   await initGenerators();
 }

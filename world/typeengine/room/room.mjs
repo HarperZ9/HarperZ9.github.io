@@ -69,17 +69,26 @@ function setFamily(f, { text, loc } = {}) {
 }
 function keep() { store.set('typeengine.session.v1', JSON.stringify(session(S.family, S.text, S.loc))); }
 
-// Materials: each swatch is the letter drawn in that material. Fill materials replace the fill; layer materials toggle.
+// A thumbnail is drawn once, so it ships as a picture: painted on a canvas that never joins the page, then kept as an
+// image. Twenty-six live canvases on this page became twenty-six images (the site's performance budget allows three).
+// A thumbnail is drawn once, so it ships as a picture: the engine's raster becomes an image, with no canvas at all.
+// The image holds its place (its size known up front) before the picture arrives, so nothing shifts.
+function stillInto(button, w, h, family, text, opt = {}) {
+  const img = new Image(w, h); img.alt = ''; img.decoding = 'async'; button.append(img);
+  return blob(renderWord(family, text, w, h, opt).raster).then((url) => { img.src = url; });
+}
+
+// Materials: each swatch is the letter drawn in that material, at twice its 64 px slot. Families draw at twice 320 by 84. Fill materials replace the fill; layer materials toggle.
 async function buildSwatches() {
   const box = $('materials'), probe = { schema: 'typeengine.family/1', id: 'swatch', name: 'Swatch', skeleton: { source: 'accession', style: 'display', weight: 800 },
     inputs: { 'data.series': { values: [3, 6, 2, 8, 5, 9, 4] }, 'sound.pcm': { source: 'phrase' } } };
   for (const m of MATERIALS.values()) {
     if (SWATCH_SKIP.has(m.id)) continue;
-    const b = document.createElement('button'), c = document.createElement('canvas');
+    const b = document.createElement('button');
     b.type = 'button'; b.dataset.material = m.id; b.setAttribute('aria-label', m.title); b.setAttribute('aria-pressed', 'false');
-    c.width = c.height = 96; b.append(c); box.append(b);
+    box.append(b);
     const slot = LAYER_SLOT[m.id] ?? 'fill', fam = { ...probe, bindings: slot === 'fill' ? { fill: { material: m.id } } : { fill: { material: 'ink', params: { color: '#8f877a' } }, [slot]: { material: m.id } } };
-    idle(() => paintInto(c, fam, 'a', { size: 78, t: 0.6 }).catch((e) => console.error(`[room] swatch ${m.id}:`, e)));
+    idle(() => stillInto(b, 192, 192, fam, 'a', { size: 156, t: 0.6 }).catch((e) => console.error(`[room] swatch ${m.id}:`, e)));
     b.addEventListener('click', () => {
       const f = structuredClone(S.family); f.id = f.id.replace(/(-mix)?$/, '-mix');
       if (slot === 'fill') f.bindings.fill = { material: m.id };
@@ -135,10 +144,10 @@ async function buildFamilies() {
   S.families = list;
   const box = $('families');
   for (const f of list) {
-    const b = document.createElement('button'), c = document.createElement('canvas'); b.type = 'button'; b.dataset.id = f.id; b.setAttribute('aria-label', f.name); b.setAttribute('aria-pressed', 'false');
-    c.width = 320; c.height = 84; b.append(c); box.append(b);
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.id = f.id; b.setAttribute('aria-label', f.name); b.setAttribute('aria-pressed', 'false');
+    box.append(b);
     b.addEventListener('click', () => setFamily(structuredClone(f)));
-    idle(() => paintInto(c, f, f.name.split(' ')[0], { fill: 0.86 }).catch((e) => console.error(`[room] family ${f.id}:`, e)));
+    idle(() => stillInto(b, 640, 168, f, f.name.split(' ')[0], { fill: 0.86 }).catch((e) => console.error(`[room] family ${f.id}:`, e)));
   }
   return list;
 }
