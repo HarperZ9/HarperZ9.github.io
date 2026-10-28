@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "note": "Reviewed 2026-10-28: the CMMNS rename merged with main after the Flywheel pilot page (#480) and the redirect stubs (#485). The route registry, site index, sitemap pins, publication build and the workshop build (assets/index-1ZvZUOFB.js) are regenerated with CMMNS and cmmns.html.",
+  "paths": {
+    "assets/index-1ZvZUOFB.js": "6dcf443f691bd5bff002f3d595e3e7f30b25a473a2a4a154805ac50af3a3a93a",
+    "publications/build.json": "36f7a6124d29a0af206ff56e35aa4232f1633a790eb0d7d6e44775739f06f3ba",
+    "site-index.html": "ad2e1b4aceef732e65fbcbb461bd3f55f0baf51ac1132009ebfc1a1ceed704e7",
+    "sitemap.xml": "8898b0940faeccb949a81df1aebdeff9625c041df609e3d7f90d1e0da7345659",
+    "system/routes.js": "8bf13f60865ee0cb69d314c73de00f281d046fc611a2eba146cfa86d9e49bc74"
+  }
+}

@@ -107,6 +107,9 @@ what it does not do.
 - [Hire or collaborate](https://harperz9.github.io/hire.html): the routes in.
 - [Work with me](https://harperz9.github.io/work-with-me.html): evaluation and
   investigation services, scoped quotes, limits and case studies from published work.
+- [Flywheel verification pilot](https://harperz9.github.io/flywheel-pilot.html): a
+  fixed-price pilot, ten hours for $1,250, with written checks, offline-recheckable
+  receipts and a findings report.
 - [Independence policy](https://harperz9.github.io/independence.html): funding,
   disclosed interests, model use, conflicts and corrections.
 - [Income ledger](https://harperz9.github.io/income-ledger.html): all income

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-23",
+  "note": "The Flywheel verification pilot page joins the site: fixed price $1,250 for a 10-hour timebox, from the rate card's pilot shape (8 to 10 hours capped at $1,000 to $1,250). It joins the Work routes, the sitemap, llms.txt, the site index and its own link card; Work with me gains a pilot card and a pricing line, and the test-run request page links it. The route registry literal in the home bundle is replaced with the regenerated one, without a rebuild, since home/node_modules is not installed in this checkout.",
+  "paths": {
+    "assets/index-DnlLsL1T.js": "9e78aa9fffa9a652b09e5a3162c3a0d319bcbda8792f7aa95a7d575f10fc6021",
+    "publications/build.json": "b6d0b9ab1d77981cf7a8bae82a786338ff389acb5e84ca89a3d4030ca8847492",
+    "site-index.html": "d770abdcee8558dbfa126076792d29baabec12cdb092cdeb06d5921c8cec5d86",
+    "sitemap.xml": "ef67f25d6875f973a49091bc34170460522ebc95abfec2bddd27568ccb63b371",
+    "system/routes.js": "4e890f2d7b181f2015bffc5805479b4acdbbd9fb637a7531662b09289f33d1e4",
+    "work-with-me.html": "11b8071bbaf3ec402e8b00606d90623ac031a8d7cdfcef37e1e899325f776713"
+  }
+}

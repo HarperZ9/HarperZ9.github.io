@@ -1,8 +1,7 @@
 {
   "date": "2026-10-28",
-  "note": "Reviewed 2026-10-28: the route registry entry for CMMNS points at cmmns.html (it still named daylight.html), so the site index and the workshop build follow (assets/index-KTOjuTlB.js replaces index-DhJE9vp_.js, which never shipped).",
+  "note": "Reviewed 2026-10-28: the route registry entry for CMMNS points at cmmns.html (it still named daylight.html), so the site index and the workshop build follow.",
   "paths": {
-    "assets/index-KTOjuTlB.js": "9abc377360896054ffded709f06e3886d19e3ccc7b394f5e1cc86c48e150c479",
     "site-index.html": "288992e3a6cf975b04db3e9d2839e85bb352c1dee5fe47f36f1b56746b77d022",
     "system/routes.js": "4bc20b243d261d81b57d7cd19d7d9249f8bdeed079f7da91e238c21b80e2713f"
   }
