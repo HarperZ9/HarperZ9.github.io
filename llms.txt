@@ -78,7 +78,7 @@ what it does not do.
 - [raw-native](https://harperz9.github.io/raw.html) 0.8.0: a C++23 renderer that
   runs a fast real-time effect beside a slower reference and reports how far
   apart they are.
-- [Superframe](https://harperz9.github.io/superframe.html) 0.1.0: describe a
+- [Superframe](https://harperz9.github.io/superframe.html) 0.2.0: describe a
   piece in words and render it from a seed as paint, living type, line,
   material, sound and touch, with a study of its parts for every reader.
   `git clone https://github.com/HarperZ9/superframe`

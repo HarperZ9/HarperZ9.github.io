@@ -78,8 +78,8 @@ Brave and Firefox 128 or later, plus a command line for saved threads.
 
 ## Superframe
 
-Version 0.1.0. Licence FSL-1.1-MIT; fonts under the SIL Open Font License 1.1.
-Node 22 or later, no dependencies.
+Version 0.2.0. Licence FSL-1.1-MIT; fonts under the SIL Open Font License 1.1.
+Node 24 or later, no dependencies.
 
 - What it does: you describe a piece in plain words; the engine compiles the
   words into a recipe of elements, each a law with weights, and renders it from
