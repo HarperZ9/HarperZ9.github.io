@@ -55,7 +55,7 @@ html.plain .crossing, html.plain .uncover { display: none; }
 
 @media (max-width: 860px) {
   .arrival { padding: 24px 16px 112px; min-height: 92vh; }
-  .arrival-art .lead, .arrival-still { object-fit: contain; object-position: 50% 38%; }
+  .arrival-art .lead, .arrival-still { inset: auto 0; top: 16%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
   .place { min-height: auto; padding: 8vh 16px; }
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: 1fr; }
   .place:nth-child(even) .lead-box { order: 0; }

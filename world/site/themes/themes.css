@@ -1,13 +1,15 @@
 /* themes.css: each world's tokens, two characters each. registry.js names the worlds; <html data-world> picks one,
    and the lamp (data-theme, or the system's scheme) picks the character. Every motif here is static paint: a switch
    recalculates style once and costs no frames. Heavy theme media goes in the theme's slots, loaded on first show.
-   Ink on wall holds 7:1 or better in every character; accents carry art and large type, never body text. */
+   Ink on wall holds 7:1 or better in every character; accents carry art and large type, never body text. The
+   worlds' faces load as optional: a first visit keeps the still face it painted with (no swap, no shift, no late
+   largest paint), and the face shows from the next page on, once cached. */
 
-@font-face{font-family:"Accession Burin";src:url("/system/fonts/accession/variable/AccessionBurin[LINE,wght].woff2") format("woff2");font-weight:500 900;font-display:swap}
-@font-face{font-family:"Accession Super";src:url("/system/fonts/accession/variable/AccessionSuper[wght].woff2") format("woff2");font-weight:600 900;font-display:swap}
-@font-face{font-family:"Accession Text";src:url("/system/fonts/accession/variable/AccessionText[INKS,wght].woff2") format("woff2");font-weight:300 800;font-display:swap}
-@font-face{font-family:"Accession Mono";src:url("/system/fonts/accession/variable/AccessionMono[wght].woff2") format("woff2");font-weight:300 700;font-display:swap}
-@font-face{font-family:"Accession Divisumma";src:url("/system/fonts/accession/variable/AccessionDivisumma[TURN,wght].woff2") format("woff2");font-weight:400 650;font-display:swap}
+@font-face{font-family:"Accession Burin";src:url("/system/fonts/accession/variable/AccessionBurin[LINE,wght].woff2") format("woff2");font-weight:500 900;font-display:optional}
+@font-face{font-family:"Accession Super";src:url("/system/fonts/accession/variable/AccessionSuper[wght].woff2") format("woff2");font-weight:600 900;font-display:optional}
+@font-face{font-family:"Accession Text";src:url("/system/fonts/accession/variable/AccessionText[INKS,wght].woff2") format("woff2");font-weight:300 800;font-display:optional}
+@font-face{font-family:"Accession Mono";src:url("/system/fonts/accession/variable/AccessionMono[wght].woff2") format("woff2");font-weight:300 700;font-display:optional}
+@font-face{font-family:"Accession Divisumma";src:url("/system/fonts/accession/variable/AccessionDivisumma[TURN,wght].woff2") format("woff2");font-weight:400 650;font-display:optional}
 
 /* ---- Night garden: dusk after rain (light), streetlight (dark) ---- */
 :root[data-world="night-garden"]{
