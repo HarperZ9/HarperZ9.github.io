@@ -34,7 +34,7 @@
   background: radial-gradient(circle at var(--lx, 50%) var(--ly, 50%), color-mix(in srgb, var(--lamp) 70%, transparent) 0, color-mix(in srgb, var(--lamp) 22%, transparent) 9%, transparent 26%); }
 .w-svg { overflow: visible; }
 .w-svg .limb { fill: var(--ink); }
-.w-svg .numeral { fill: var(--field-ink); font: 400 22px/1 var(--w-mono); text-anchor: middle; dominant-baseline: central; }
+.w-svg .numeral { fill: var(--field-ink); font: 400 28px/1 var(--w-mono); text-anchor: middle; dominant-baseline: central; }
 .w-svg .numeral.on { fill: var(--lamp); font-weight: 700; }
 .w-svg .rete circle.orbit { fill: none; stroke: var(--field-faint); stroke-width: 1.2; }
 .w-svg .moon { fill: #24202b; stroke: var(--field-ink); stroke-width: 2; cursor: pointer; }
