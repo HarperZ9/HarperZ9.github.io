@@ -1,0 +1,57 @@
+{
+  "about": "The site's performance budget. project-docs/PERFORMANCE-BUDGET.md explains each number; tests/perf-budget.cjs enforces them.",
+  "profile": {
+    "cpuSlowdown": 4,
+    "network": {
+      "rttMs": 40,
+      "downKbps": 10000,
+      "upKbps": 5000
+    },
+    "viewports": [
+      {
+        "name": "desktop-1440",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      {
+        "name": "phone-390",
+        "width": 390,
+        "height": 844,
+        "dpr": 3,
+        "mobile": true
+      }
+    ]
+  },
+  "phases": {
+    "settleMs": 3000,
+    "idleMs": 3000,
+    "scrollMs": 6000,
+    "watchMs": 2000
+  },
+  "limits": {
+    "idleP95Ms": 16.7,
+    "scrollP95Ms": 16.7,
+    "liveCanvases": 3,
+    "domCanvases": 3,
+    "offscreenDraws": 0,
+    "hiddenDraws": 0,
+    "lcpMs": 1500,
+    "cls": 0.05,
+    "firstViewJsKB": 150
+  },
+  "media": {
+    "dprCap": 2,
+    "tolerance": 0.98,
+    "fullBleedMin": 1920,
+    "minCheckedWidth": 200
+  },
+  "pages": [
+    "/index.html",
+    "/world/universe/proto/path.html"
+  ],
+  "watch": [
+    "/world/typeengine/room/index.html",
+    "/gallery.html"
+  ]
+}

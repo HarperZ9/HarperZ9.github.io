@@ -172,6 +172,7 @@ export function createMedium(canvas, opts = {}) {
         if (!gl.getParameter(timer.GPU_DISJOINT_EXT)) st.gpuMs.push(gl.getQueryParameter(q, gl.QUERY_RESULT) / 1e6); gl.deleteQuery(q); if (st.gpuMs.length > 240) st.gpuMs.shift(); budget(); }, 16);
     }
     st.cpuMs.push(performance.now() - t0); if (st.cpuMs.length > 240) st.cpuMs.shift(); st.frames++;
+    if (!timer) budgetByGaps();
     if (performance.now() - lastAdd > IDLE_MS || document.hidden) { st.running = false; last = 0; return; } // settled: hold the still
     raf = requestAnimationFrame(frame);
   }
@@ -187,6 +188,19 @@ export function createMedium(canvas, opts = {}) {
     over = p25 > 3 && gap > 18 ? over + 1 : 0;
     if (over >= 2 && Math.min(devicePixelRatio || 1, 2.5) * quality * 0.75 >= 1) {
       over = 0; quality *= 0.75; st.quality = quality;
+      const sc = Math.min(devicePixelRatio || 1, 2.5) * quality; W = canvas.width = Math.round(VW() * sc); H = canvas.height = Math.round(VH() * sc);
+    }
+  }
+  // Without a GPU timer (software rendering, Safari, some phones) the only reading is the page's own frame gaps. When the
+  // median gap of 60 frames runs over 20 ms twice running, the backing steps down by a quarter, here as far as half a
+  // CSS pixel: the water is soft and reads the same, and a software-rendered page keeps its frames.
+  let slow = 0, gapSeen = 0;
+  function budgetByGaps() {
+    if (++gapSeen < 60) return; gapSeen = 0;
+    const gap = st.gaps.slice(-60).sort((x, y) => x - y)[30] || 0;
+    slow = gap > 20 ? slow + 1 : 0;
+    if (slow >= 2 && Math.min(devicePixelRatio || 1, 2.5) * quality * 0.75 >= 0.5) {
+      slow = 0; quality *= 0.75; st.quality = quality;
       const sc = Math.min(devicePixelRatio || 1, 2.5) * quality; W = canvas.width = Math.round(VW() * sc); H = canvas.height = Math.round(VH() * sc);
     }
   }

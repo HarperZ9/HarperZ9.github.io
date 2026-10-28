@@ -35,3 +35,4 @@ CLAUDE.local.md
 # The world imports modules that live in build/ and dist/ folders (world/IMPORT.json lists them); they ship.
 !world/**/build/
 !world/**/dist/
+perf-out/

@@ -4,7 +4,7 @@
 //   node scripts/import-media.mjs [--src WORKSHOP]   (or MISSION_CONTROL=WORKSHOP) [--force]
 //
 // Name-art finals: 1920 and 960 px WebP and AVIF from the 1920 master. Loops: the WebM (AV1) as delivered,
-// an H.264 MP4 re-encoded at 1280 px for Safari, and a WebP poster. The theme: Hum v4 and its calm loop as the
+// 1280 and 1920 px AV1 WebM with H.264 MP4 fallbacks for Safari, and WebP posters at both widths. The theme: Hum v4 and its calm loop as the
 // sound folder's own Opus streams, plus AAC in MP4 for browsers without Opus. Each output is skipped when it is
 // newer than its source, so a re-run only redoes what changed; --force redoes everything.
 // ffmpeg comes from $FFMPEG, or from the imageio-ffmpeg package, or from PATH.
@@ -54,13 +54,15 @@ function nameArt(made) {
     }
   }
   for (const n of LOOPS) {
-    made.push(copy(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}.webm`)));
-    made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}.mp4`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster.webp`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "82"]));
-    // phones: a 640 px loop and poster, so the first screen does not wait on the 1080p file
-    made.push(ff(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}-640.webm`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libaom-av1", "-crf", "40", "-b:v", "0", "-cpu-used", "6", "-row-mt", "1", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}.mp4`), path.join(OUT, "name-art", `${n}-640.mp4`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libx264", "-crf", "28", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
-    made.push(ff(path.join(dir, "loops", `${n}-poster.png`), path.join(OUT, "name-art", `${n}-poster-640.webp`), ["-vf", "scale=640:-2:flags=lanczos", "-c:v", "libwebp", "-quality", "80"]));
+    // each loop at the two widths its slots need (world/site/loops.js picks by device pixels): the 1920 px AV1
+    // master and a 1280 px AV1 encode, each with an H.264 fallback for Safari, all from the 1920 px H.264 master
+    // (21 Mb/s), and a WebP poster at each width from the poster PNG. No 640 px files: a phone at 2x needs 780 px.
+    const src = path.join(dir, "loops", `${n}.mp4`), poster = path.join(dir, "loops", `${n}-poster.png`);
+    made.push(copy(path.join(dir, "loops", `${n}.webm`), path.join(OUT, "name-art", `${n}-1920.webm`)));
+    made.push(ff(src, path.join(OUT, "name-art", `${n}-1920.mp4`), ["-c:v", "libx264", "-crf", "20", "-preset", "slow", "-profile:v", "high", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
+    made.push(ff(src, path.join(OUT, "name-art", `${n}-1280.webm`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libaom-av1", "-crf", "32", "-b:v", "0", "-cpu-used", "5", "-row-mt", "1", "-pix_fmt", "yuv420p10le", "-an"]));
+    made.push(ff(src, path.join(OUT, "name-art", `${n}-1280.mp4`), ["-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "21", "-preset", "slow", "-profile:v", "high", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"]));
+    for (const w of [1920, 1280]) made.push(ff(poster, path.join(OUT, "name-art", `${n}-poster-${w}.webp`), ["-vf", `scale=${w}:-2:flags=lanczos`, "-c:v", "libwebp", "-quality", "84"]));
   }
 }
 

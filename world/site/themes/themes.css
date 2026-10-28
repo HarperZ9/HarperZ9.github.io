@@ -1,0 +1,78 @@
+/* themes.css: each world's tokens, two characters each. registry.js names the worlds; <html data-world> picks one,
+   and the lamp (data-theme, or the system's scheme) picks the character. Every motif here is static paint: a switch
+   recalculates style once and costs no frames. Heavy theme media goes in the theme's slots, loaded on first show.
+   Ink on wall holds 7:1 or better in every character; accents carry art and large type, never body text. The
+   worlds' faces load as optional: a first visit keeps the still face it painted with (no swap, no shift, no late
+   largest paint), and the face shows from the next page on, once cached. */
+
+@font-face{font-family:"Accession Burin";src:url("/system/fonts/accession/variable/AccessionBurin[LINE,wght].woff2") format("woff2");font-weight:500 900;font-display:optional}
+@font-face{font-family:"Accession Super";src:url("/system/fonts/accession/variable/AccessionSuper[wght].woff2") format("woff2");font-weight:600 900;font-display:optional}
+@font-face{font-family:"Accession Text";src:url("/system/fonts/accession/variable/AccessionText[INKS,wght].woff2") format("woff2");font-weight:300 800;font-display:optional}
+@font-face{font-family:"Accession Mono";src:url("/system/fonts/accession/variable/AccessionMono[wght].woff2") format("woff2");font-weight:300 700;font-display:optional}
+@font-face{font-family:"Accession Divisumma";src:url("/system/fonts/accession/variable/AccessionDivisumma[TURN,wght].woff2") format("woff2");font-weight:400 650;font-display:optional}
+
+/* ---- Night garden: dusk after rain (light), streetlight (dark) ---- */
+:root[data-world="night-garden"]{
+  --wall:#e6e1cf;--wall-2:#d8d2bc;--ink:#18231c;--soft:#3e4a40;--line:#b7b29b;--on-ink:#e6e1cf;
+  --accent:#c9721c;--accent-2:#3d7a5e;--glow:rgba(255,176,72,.22);
+  --face-display:"Accession Burin","Hanken Grotesk",system-ui,sans-serif;--world-motif:var(--motif-rain);
+}
+:root[data-world="night-garden"][data-theme="dark"]{
+  --wall:#0b1012;--wall-2:#141b1e;--ink:#f1e3c3;--soft:#c9b993;--line:#2a3335;--on-ink:#0b1012;
+  --accent:#ffb347;--accent-2:#66b08f;--glow:rgba(255,170,60,.28);
+}
+@media (prefers-color-scheme:dark){:root[data-world="night-garden"]:not([data-theme="light"]){
+  --wall:#0b1012;--wall-2:#141b1e;--ink:#f1e3c3;--soft:#c9b993;--line:#2a3335;--on-ink:#0b1012;
+  --accent:#ffb347;--accent-2:#66b08f;--glow:rgba(255,170,60,.28);
+}}
+
+/* ---- Newsprint: morning edition (light), underground press (dark) ---- */
+:root[data-world="newsprint"]{
+  --wall:#f1ead6;--wall-2:#e6dcc1;--ink:#121110;--soft:#3b3833;--line:#bfb59a;--on-ink:#f1ead6;
+  --accent:#d9231b;--accent-2:#1f4ed6;--glow:transparent;
+  --face-display:"Accession Super","Hanken Grotesk",system-ui,sans-serif;--face-text:"Accession Text","Hanken Grotesk",system-ui,sans-serif;
+  --world-motif:var(--motif-halftone);
+}
+:root[data-world="newsprint"][data-theme="dark"]{
+  --wall:#191613;--wall-2:#24201b;--ink:#f6eed6;--soft:#d2c7a8;--line:#3a342c;--on-ink:#191613;
+  --accent:#ff4a3c;--accent-2:#ffd21f;
+}
+@media (prefers-color-scheme:dark){:root[data-world="newsprint"]:not([data-theme="light"]){
+  --wall:#191613;--wall-2:#24201b;--ink:#f6eed6;--soft:#d2c7a8;--line:#3a342c;--on-ink:#191613;
+  --accent:#ff4a3c;--accent-2:#ffd21f;
+}}
+
+/* ---- Instrument: bench (light), scope (dark) ---- */
+:root[data-world="instrument"]{
+  --wall:#edf0f2;--wall-2:#dfe4e8;--ink:#0d1822;--soft:#36434f;--line:#b4bec7;--on-ink:#edf0f2;
+  --accent:#2350f0;--accent-2:#ff6a13;--glow:transparent;
+  --face-display:"Accession Divisumma","Hanken Grotesk",system-ui,sans-serif;--face-utility:"Accession Mono",Conso,ui-monospace,monospace;
+  --world-motif:var(--motif-grid);
+}
+:root[data-world="instrument"][data-theme="dark"]{
+  --wall:#04070a;--wall-2:#0b1117;--ink:#d6f2ff;--soft:#93b4c4;--line:#1b2731;--on-ink:#04070a;
+  --accent:#38cfff;--accent-2:#c4ff3a;
+}
+@media (prefers-color-scheme:dark){:root[data-world="instrument"]:not([data-theme="light"]){
+  --wall:#04070a;--wall-2:#0b1117;--ink:#d6f2ff;--soft:#93b4c4;--line:#1b2731;--on-ink:#04070a;
+  --accent:#38cfff;--accent-2:#c4ff3a;
+}}
+
+/* ---- the motifs: static paint behind everything ---- */
+:root{
+  --motif-rain:radial-gradient(120% 60% at 70% -10%,var(--glow),transparent 60%),repeating-linear-gradient(104deg,transparent 0 22px,color-mix(in srgb,var(--ink) 5%,transparent) 22px 23px);
+  --motif-halftone:radial-gradient(color-mix(in srgb,var(--ink) 13%,transparent) 1.1px,transparent 1.6px) 0 0/6px 6px,radial-gradient(color-mix(in srgb,var(--accent) 10%,transparent) 1.1px,transparent 1.6px) 3px 3px/6px 6px;
+  --motif-grid:linear-gradient(color-mix(in srgb,var(--accent) 9%,transparent) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,color-mix(in srgb,var(--accent) 9%,transparent) 1px,transparent 1px) 0 0/24px 24px;
+}
+body.world-home::before{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;background:var(--world-motif,none)}
+html{transition:background-color var(--dur-slow,320ms) ease}
+
+/* ---- the worlds in the hand ---- */
+.o-worlds{display:flex;gap:4px;align-items:center}
+.o-worlds button{font:600 13px/1 var(--face-text,var(--sans));color:var(--ink);background:transparent;border:1.5px solid var(--ink);border-radius:999px;padding:8px 12px;min-height:36px;cursor:pointer}
+.o-worlds button[aria-pressed="true"]{background:var(--ink);color:var(--wall)}
+.o-worlds button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:860px){.o-worlds button{padding:7px 9px;font-size:12px}}
+@media (forced-colors:active){body.world-home::before{display:none}}
+/* phones: the worlds keep one line each, and the lit-sheet choice (dark mode living type) leaves the bar */
+@media (max-width:860px){.o-worlds button{white-space:nowrap}.o-hand .o-sheet{display:none}}

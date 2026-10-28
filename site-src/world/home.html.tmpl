@@ -24,32 +24,37 @@
 <link rel="alternate" type="application/feed+json" href="https://harperz9.github.io/feed.json">
 <link rel="alternate" type="application/rss+xml" href="https://harperz9.github.io/feed.xml">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/media/world/name-art/glass-tubes-poster-640.webp" as="image" fetchpriority="high">
+<script>
+/* the world for this visit, before the first paint (the same order as world/site/themes/registry.js pickWorld) */
+(function(){var r=document.documentElement,w=null,ids=["night-garden","newsprint","instrument"];
+try{w=localStorage.getItem("world-theme")}catch(e){}
+if(ids.indexOf(w)<0){w=new URLSearchParams(location.search).get("world")}
+if(ids.indexOf(w)<0){var h=new Date().getHours();if(h>=19||h<6)w="night-garden";else{var n=0;try{n=+localStorage.getItem("world-visits")||0}catch(e){}w=ids[n%3]}}
+r.dataset.world=w})();
+</script>
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="/world/universe/proto/u.css">
 <link rel="stylesheet" href="/world/universe/proto/path.css">
 <link rel="stylesheet" href="/world/site/home.css">
-<script type="module" src="/world/ui/shell/shell.js"></script>
+<link rel="stylesheet" href="/world/site/stage.css">
+<link rel="stylesheet" href="/world/site/themes/themes.css">
 <script type="module" src="/world/site/budget.js"></script>
-<script type="module" src="/world/ui/directions/common/flow/ground.js"></script>
-<script type="module" src="/world/universe/proto/path.js"></script>
-<script type="module" src="/world/site/hum.js"></script>
-<script type="module" src="/world/site/home.js"></script>
-<script type="module" src="/world/site/living-hook.js"></script>
+<script type="module" src="/world/ui/shell/shell.js"></script>
+<script type="module" src="/world/site/themes/switch.js"></script>
+<script type="module" src="/world/site/boot.js"></script>
 </head>
 <body class="{{BODY_CLASS}} world-home">
 {{HAND}}
 {{MENU}}
 {{CANVASES}}
-<canvas id="crossing" class="crossing" data-art aria-hidden="true"></canvas>
 <main id="main">
   <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
   <section class="arrival" aria-labelledby="h-name">
     <figure class="arrival-art">
-      <video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-poster-full="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
-        {{ARRIVAL_SOURCES}}
-      </video>
+      <img class="arrival-still" sizes="100vw" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
+      <video class="lead" muted loop playsinline preload="none" data-src="/media/world/name-art/glass-tubes" data-sizes="{{LOOP_SIZES}}" width="1920" height="1080" data-loop data-eager aria-hidden="true"></video>
     </figure>
+    <script>/* the arrival follows the world picked in the head */(function(){var a={"night-garden":"glass-tubes","newsprint":"deco-arc","instrument":"monogram-orb"}[document.documentElement.dataset.world]||"glass-tubes",b="/media/world/name-art/"+a,i=document.querySelector(".arrival-still"),v=document.querySelector(".arrival video");v.dataset.src=b;i.srcset=b+"-poster-1280.webp 1280w, "+b+"-poster-1920.webp 1920w";i.src=b+"-poster-1280.webp"})();</script>
     <h1 id="h-name" data-living="engraved ink charcoal">Zain Dana Harper</h1>
     <nav class="arrival-ways" aria-label="Ways in">
       <a href="#s-ink">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>

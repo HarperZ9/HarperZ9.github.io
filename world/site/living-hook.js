@@ -7,14 +7,15 @@
 //   Plain view, weak devices, no WebGL2, a state the engine refuses at this size   the still face, no canvas
 //   dark mode        the night ground; a viewer may keep the lit sheet ("Lit sheet" in the hand, remembered as
 //                    localStorage["living-sheet"], hidden in light mode)
-// At most LIVE headings hold a GL context at once; a heading that leaves the screen hands its context back.
+// At most LIVE headings hold a GL context at once (one on the home: with the water and the stage it makes the
+// budget's three live canvases); a heading that leaves the screen hands its context back.
 const root = document.documentElement, reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const off = () => root.classList.contains("plain") || root.classList.contains("weak");
 const SHEET_KEY = "living-sheet";
 const remember = { get: () => { try { return localStorage.getItem(SHEET_KEY); } catch { return null; } }, set: (v) => { try { localStorage.setItem(SHEET_KEY, v); } catch { /* private mode: the choice lasts for this page */ } } };
 const isDark = () => { const t = root.dataset.theme; return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
 const schemeNow = () => (isDark() && remember.get() !== "lit" ? "night" : "day");
-const LIVE = 3, heads = [...document.querySelectorAll("[data-living]")];
+const LIVE = 1, heads = [...document.querySelectorAll("[data-living]")];
 if (heads.length && "OffscreenCanvas" in window && document.createElement("canvas").getContext("webgl2")) boot();
 
 function sheetControl(onChange) {
@@ -69,10 +70,14 @@ async function boot() {
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", rescheme);
   rescheme();
   const ask = (p, op, i) => { const k = `${p.id}/${op}/${i}`; if (pending.has(k) || p.g.has?.(op, i)) return; pending.add(k); worker.postMessage({ id: p.id, op, i, gen: p.gen }); };
+  // a heading claims its context after it has held the middle of the view for a moment, so a fast scroll past
+  // thirty headings builds no GL contexts at all; it hands the context back as it leaves the middle
+  const DWELL = 350, waits = new Map();
   const io = new IntersectionObserver((es) => { for (const e of es) {
-    const p = P.get(e.target);
-    if (e.isIntersecting && !p && e.target.dataset.living && !off()) claim(e.target); else if (!e.isIntersecting && p) release(p);
-  } }, { rootMargin: "30% 0px" });
+    const el = e.target, p = P.get(el);
+    if (e.isIntersecting && !p && el.dataset.living && !off()) waits.set(el, setTimeout(() => { waits.delete(el); if (!P.get(el)) claim(el); }, DWELL));
+    else if (!e.isIntersecting) { clearTimeout(waits.get(el)); waits.delete(el); if (p) release(p); }
+  } }, { rootMargin: "-20% 0px -20% 0px" });
   for (const h of heads) io.observe(h);
   const t0 = performance.now(), lvl = (p, k, t) => { const a = p.stops[k].animate; return a && !reduced() ? progressAt(a, t) * (levelsOf(a).length - 1) : 0; };
   function frame() {

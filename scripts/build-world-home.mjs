@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { stageSheets, stageHand, stageRoadPage } from "./stage-road.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -26,16 +27,22 @@ function roadParts() {
   hand = hand.replace(/<a class="skip" href="[^"]*">/, '<a class="skip" href="/floor.html">')
     .replace(/<a class="o-home" href="[^"]*">/, '<a class="o-home" href="/" aria-current="page">')
     .replace(/data-o="record" data-sound/, 'data-o="record" data-hum');
+  hand = stageHand(hand);  // the strip of stop squares goes; the worlds take its place (themes/switch.js)
   const menu = absolute(pick(p, /<dialog id="o-menu"[\s\S]*?<\/dialog>/, "the menu"))
     .replace(/<p class="o-menu-foot">/, '<p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> ');
-  const canvases = (p.match(/<canvas id="[^"]+" class="[^"]+" data-art aria-hidden="true"><\/canvas>/g) || []).join("\n");
+  // the road's own full-view canvases (road, strata, carry) fold into the one stage (world/site/stage.js)
+  const canvases = '<canvas id="stage" aria-hidden="true"></canvas>';
   const main = pick(p, /<main id="main">[\s\S]*?<\/main>/, "the road");
-  // the road's stops, each heading given the living-type hook (Hanken underneath until the engine paints it)
+  // the road's stops keep their still headings: living type on all 33 built and dropped a GL context per heading
+  // while walking (the arrival and the places keep it)
   const stops = absolute(main.replace(/^<main id="main">/, "").replace(/<\/main>$/, "")
     .replace(/<h1 class="sr-only">[^<]*<\/h1>/, "")
-    .replace(/<h2 id="([^"]+)" tabindex="-1">/g, '<h2 id="$1" tabindex="-1" data-living="ink charcoal plant paint">'));
+    );
+  const staged = stageSheets(stops);  // each sheet a box with an offscreen surface behind it; the records cut
   const bodyClass = (p.match(/<body class="([^"]+)"/) || [, "path"])[1];
-  return { hand, menu, canvases, stops, bodyClass };
+  // the standalone road page walks the same road on the stage
+  writeFileSync(path.join(site, "world/universe/proto/path.html"), stageRoadPage(p));
+  return { hand, menu, canvases, stops: staged, bodyClass };
 }
 
 // a name set in capitals (EMET) gets the tracking capitals need
@@ -44,17 +51,14 @@ function lawsOf(ids, rules) {
   const list = ids.map((id) => rules.get(id)).filter(Boolean);
   return list.length ? `<ul class="laws">${list.map((r) => `<li>${esc(r.statement)}</li>`).join("")}</ul>` : "";
 }
-// a loop's sources: the 640 px encodes on phones, the full ones elsewhere; AV1 in WebM first, H.264 for Safari
-export function sources(src) {
-  return `<source src="${src}-640.webm" type='video/webm; codecs="av01.0.04M.08"' media="(max-width: 860px)"><source src="${src}-640.mp4" type="video/mp4" media="(max-width: 860px)">` +
-    `<source src="${src}.webm" type='video/webm; codecs="av01.0.08M.08"'><source src="${src}.mp4" type="video/mp4">`;
-}
+// a loop's sources are filled by world/site/loops.js from the device pixels its slot needs (1280 or 1920 px, AV1 in
+// WebM first, H.264 in MP4 for Safari); the markup carries the base path and the sizes on offer
+export const LOOP_SIZES = "1280 1920";
 function lead(pl) {
   const L = pl.lead;
-  if (L.kind === "loop") return `<video class="lead" muted loop playsinline preload="none" data-poster="${L.src}" width="1280" height="720" aria-label="${esc(L.alt)}" data-loop>
-      ${sources(L.src)}</video>`;
-  if (L.kind === "hum") return `<div class="lead hum"><canvas class="hum-wave" aria-hidden="true"></canvas><button type="button" class="hum-press" data-hum aria-pressed="false" aria-describedby="hum-what">Hum v4</button><span id="hum-what" class="sr-only">${esc(L.alt)}</span></div>`;
-  if (L.kind === "living") return `<div class="lead" data-alive="livestill"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
+  if (L.kind === "loop") return `<video class="lead" muted loop playsinline preload="none" data-src="${L.src}" data-sizes="${LOOP_SIZES}" width="1920" height="1080" aria-label="${esc(L.alt)}" data-loop></video>`;
+  if (L.kind === "hum") return `<div class="lead hum"><div class="hum-wave" aria-hidden="true"></div><button type="button" class="hum-press" data-hum aria-pressed="false" aria-describedby="hum-what">Hum v4</button><span id="hum-what" class="sr-only">${esc(L.alt)}</span></div>`;
+  if (L.kind === "living") return `<div class="lead" data-slot="render"><img src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async"></div>`;
   return `<img class="lead" src="${L.src}" width="${L.w}" height="${L.h}" alt="${esc(L.alt)}" loading="lazy" decoding="async" data-uncover>`;
 }
 function bazaar(rules) {
@@ -76,7 +80,7 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace(/\{\{LOOP_SIZES\}\}/g, LOOP_SIZES);
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
