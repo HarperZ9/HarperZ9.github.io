@@ -76,7 +76,7 @@ stage.add(surfaceLayer("carry", 3, carrySurf, { on: onRoad }));
 let flowFn = null, lastCarry = "";
 const records = window.__transfers = {};
 function elementOf(sec) {  // the stop's element as one picture: its drawn sheets and its plate, overprinted
-  const box = sec.querySelector(".sheets"), o = new OffscreenCanvas(Math.max(1, box.offsetWidth), Math.max(1, box.offsetHeight)), x = o.getContext("2d", { willReadFrequently: true });
+  const box = sec.querySelector(".sheets"), o = new OffscreenCanvas(Math.max(1, box.offsetWidth), Math.max(1, box.offsetHeight)), x = o.getContext("2d");
   x.globalCompositeOperation = "multiply";
   for (const el of sec.__canvasSheets) if (el.__surf && (el.dataset.sheet !== "ground" || el.__stones)) x.drawImage(el.__surf, el.offsetLeft, el.offsetTop, el.offsetWidth, el.offsetHeight);
   for (const img of sec.querySelectorAll("img.plate")) if (img.complete && img.naturalWidth) { const r = img.getBoundingClientRect(), b = box.getBoundingClientRect(); x.drawImage(img, r.left - b.left, r.top - b.top, r.width, r.height); }

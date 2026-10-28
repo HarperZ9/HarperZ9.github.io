@@ -72,3 +72,5 @@ html{transition:background-color var(--dur-slow,320ms) ease}
 .o-worlds button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:860px){.o-worlds button{padding:7px 9px;font-size:12px}}
 @media (forced-colors:active){body.world-home::before{display:none}}
+/* phones: the worlds keep one line each, and the lit-sheet choice (dark mode living type) leaves the bar */
+@media (max-width:860px){.o-worlds button{white-space:nowrap}.o-hand .o-sheet{display:none}}

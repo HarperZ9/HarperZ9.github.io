@@ -42,12 +42,16 @@ async function scrollThrough(page, ms) {
   }
 }
 
+// the trace's own reading of the scroll: main-thread tasks on the page's renderer (CrRendererMain), the long ones
+// (over 50 ms) and their blocking time past 50 ms, and the frames the compositor reported dropped
 function traceStats(file) {
   try {
-    const t = JSON.parse(fs.readFileSync(file, 'utf8')); const ev = t.traceEvents || t;
-    const main = ev.filter((e) => e.name === 'RunTask' && e.dur);
-    const long = main.filter((e) => e.dur > 50000);
-    return { tasks: main.length, longTasks: long.length, blockingMs: Math.round(long.reduce((a, e) => a + (e.dur / 1000 - 50), 0)) };
+    const t = JSON.parse(fs.readFileSync(file, 'utf8')), ev = t.traceEvents || t;
+    const mains = new Set(ev.filter((e) => e.ph === 'M' && e.name === 'thread_name' && e.args?.name === 'CrRendererMain').map((e) => `${e.pid}:${e.tid}`));
+    const tasks = ev.filter((e) => /(^|::)RunTask$/.test(e.name) && e.dur && mains.has(`${e.pid}:${e.tid}`));
+    const long = tasks.filter((e) => e.dur > 50000);
+    return { tasks: tasks.length, longTasks: long.length, blockingMs: Math.round(long.reduce((a, e) => a + (e.dur / 1000 - 50), 0)),
+      droppedFrames: ev.filter((e) => e.name === 'DroppedFrame').length, frames: ev.filter((e) => e.name === 'PipelineReporter' && e.ph === 'b').length };
   } catch (e) { console.warn('trace: unreadable', file, e.message); return null; }
 }
 

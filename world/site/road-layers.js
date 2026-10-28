@@ -11,7 +11,7 @@ const ease = (a, b, k) => a + (b - a) * k;
 export function surface(el) {
   const p = stage.px(), w = Math.max(1, Math.round(el.offsetWidth * p)), h = Math.max(1, Math.round(el.offsetHeight * p));
   let s = el.__surf;
-  if (!s) { s = el.__surf = new OffscreenCanvas(w, h); el.__ctx = s.getContext("2d", { willReadFrequently: true }); }  // CPU-backed: the transfer reads it back without a GPU stall
+  if (!s) { s = el.__surf = new OffscreenCanvas(w, h); el.__ctx = s.getContext("2d"); }
   if (s.width !== w || s.height !== h) { s.width = w; s.height = h; el.__dirty = true; }
   return { w, h, cw: el.offsetWidth, ch: el.offsetHeight, x: el.__ctx };
 }
