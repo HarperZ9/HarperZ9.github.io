@@ -216,7 +216,7 @@ def router_body(source: dict, *, hire: bool) -> str:
         out[4] = out[4].replace('</header>', f'<p>{escape(availability["roles"])} {escape(availability["travel"])}</p><p>Sole proprietor since September 2026; no paid software clients.</p></header>')
     cards = [
         ('support-operations-qa', 'engineering-path', 'Support, developer operations, and software quality', 'Technical support and self-directed developer tools: reproducible troubleshooting, accepted tests and documentation for Free Law Project, Hebbian Robotics, and Voxwire, software delivery, and customer communication.'),
-        ('evaluation-python-tools', 'technical-operations-path', 'AI and security evaluation, and Python tooling', 'Flywheel, Daylight Commons, release checks scored against planted faults, and verification tools, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
+        ('evaluation-python-tools', 'technical-operations-path', 'AI and security evaluation, and Python tooling', 'Flywheel, CMMNS (formerly Daylight Commons), release checks scored against planted faults, and verification tools, alongside accepted fixes in DeepEval, TOMLKit, and Datasette.'),
         ('grounds', 'public-service-field-path', 'Arboriculture, field operations, and estimating', 'Eleven years of ground-based tree-care operations, site assessment, estimates, scheduling, client education, and safety coordination. A public-operations variant is also available.'),
     ]
     for key, anchor, title, description in cards:

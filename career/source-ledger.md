@@ -686,7 +686,7 @@ Published October 23, 2026. Markdown structure is masked before the detector rul
 
 ### daylight-commons-300
 
-https://github.com/HarperZ9/daylight-commons/releases/tag/v3.0.0
+https://github.com/HarperZ9/cmmns/releases/tag/v3.0.0
 
 Published October 23, 2026, as the first release under the Daylight Commons name (formerly Radar) and under AGPL-3.0 for code. Known limits from the release: no Mozilla-signed build, most signs unmeasured, no measured precision for the campaign lens, and private vulnerability reporting not yet enabled. A valid release signature does not show the code is safe.
 
@@ -718,13 +718,13 @@ Read from the mod page and the author's Nexus Mods profile: 996,649 total downlo
 
 ### daylight-commons-310
 
-https://github.com/HarperZ9/daylight-commons/releases/tag/v3.1.0
+https://github.com/HarperZ9/cmmns/releases/tag/v3.1.0
 
 Published October 23, 2026, under AGPL-3.0-only. The README lists nine platforms: X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and Mastodon. It runs with no server, account or analytics, and PRIVACY.md states that it never sells or shares data. Packages are reproducible (INSTALL.md) and the checksums are signed. Limits kept: no Mozilla-signed build, TikTok comments not checked live, and the campaign lens not yet labelled or measured.
 
 ### daylight-commons-evaluation
 
-https://github.com/HarperZ9/daylight-commons/blob/main/project-docs/EVALUATION.md
+https://github.com/HarperZ9/cmmns/blob/main/project-docs/EVALUATION.md
 
 Slur sign precision 91.0% (3,995 of 4,392; Wilson 95% interval 90.1 to 91.8) on four public human-labelled corpora, test split. Other signs carry their own figures or say "not measured". Precision on these corpora does not show precision on a live feed.
 
@@ -752,13 +752,13 @@ From `tools/pr_census.py`: 37 merged engineering pull requests in 30 external re
 
 ### synthesis-20261023
 
-The CV presents six flagships (Flywheel, Daylight Commons, Articulate, BuildLang, raw-native and Low Water) as pillars of one credo: make checking cheap, protect the commons, and keep provenance at the source. The credo is the author's stated aim; each pillar line cites a public figure from the entries above. The connections come from a private working map read October 23, 2026. Only one of its rows is cited: each Low Water inner-arena fight maps to an entry in the Daylight Commons technique catalogue (status building), and no effect on players is claimed. The offline-verification overlap between Daylight evidence chains, Flywheel receipts and raw-native certificates is stated from each public release. Shared code between the projects is planned and not claimed.
+The CV presents six flagships (Flywheel, CMMNS (formerly Daylight Commons), Articulate, BuildLang, raw-native and Low Water) as pillars of one credo: make checking cheap, protect the commons, and keep provenance at the source. The credo is the author's stated aim; each pillar line cites a public figure from the entries above. The connections come from a private working map read October 23, 2026. Only one of its rows is cited: each Low Water inner-arena fight maps to an entry in the CMMNS technique catalogue (status building), and no effect on players is claimed. The offline-verification overlap between Daylight evidence chains, Flywheel receipts and raw-native certificates is stated from each public release. Shared code between the projects is planned and not claimed.
 
 ### daylight-commons-322
 
-https://github.com/HarperZ9/daylight-commons/releases/tag/v3.2.2
+https://github.com/HarperZ9/cmmns/releases/tag/v3.2.2
 
-Latest release, published October 23, 2026. A browser extension for nine platforms, AGPL-3.0, no account. Install page: https://harperz9.github.io/daylight-commons/install.html
+Latest release, published October 23, 2026. A browser extension for nine platforms, AGPL-3.0, no account. Install page: https://harperz9.github.io/cmmns/install.html
 
 ### articulate-0151
 

@@ -43,16 +43,16 @@
       "category": "DeveloperApplication"
     },
     {
-      "name": "Daylight Commons",
-      "repo": "daylight-commons",
-      "version": "3.8.0",
+      "name": "CMMNS",
+      "repo": "cmmns",
+      "version": "3.9.0",
       "registry": "github",
-      "package": "HarperZ9/daylight-commons",
-      "downloadUrl": "https://github.com/HarperZ9/daylight-commons/releases/latest",
+      "package": "HarperZ9/cmmns",
+      "downloadUrl": "https://github.com/HarperZ9/cmmns/releases/latest",
       "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
       "os": "Chrome, Edge, Brave, Firefox",
       "category": "BrowserApplication",
-      "page": "daylight.html"
+      "page": "cmmns.html"
     },
     {
       "name": "EMET",
@@ -141,12 +141,12 @@
     {
       "name": "Superframe",
       "repo": "superframe",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "registry": "github",
       "package": "HarperZ9/superframe",
       "downloadUrl": "https://github.com/HarperZ9/superframe/releases/latest",
       "license": "https://spdx.org/licenses/FSL-1.1-MIT.html",
-      "os": "Node.js 22 or later",
+      "os": "Node.js 24 or later",
       "category": "DesignApplication",
       "page": "superframe.html"
     }

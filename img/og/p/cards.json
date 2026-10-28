@@ -115,6 +115,10 @@
   "alt": "Chorus, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/chorus.jpg?v=d82cdc65fea9"
  },
+ "cmmns.html": {
+  "alt": "CMMNS, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/cmmns.jpg?v=75e61c800e86"
+ },
  "coherence-membrane.html": {
   "alt": "Coherence Membrane, the read-gate, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/coherence-membrane.jpg?v=5ac9b86205a8"
@@ -146,10 +150,6 @@
  "cv.html": {
   "alt": "Full Curriculum Vitae, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
   "image": "https://harperz9.github.io/img/og/p/cv.jpg?v=c25995e3bf65"
- },
- "daylight.html": {
-  "alt": "Daylight Commons, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
-  "image": "https://harperz9.github.io/img/og/p/daylight.jpg?v=286c6f3df18e"
  },
  "demo-crucible.html": {
   "alt": "Crucible demo: measure, refine, re-check, by Zain Dana Harper. Seven measured axes fan out from a bright core inside fine rings. One axis falls short of the dashed tolerance ring and is marked DRIFT; one has no measurement and is marked UNVERIFIABLE.",
@@ -663,10 +663,6 @@
   "alt": "The Studio, Live media instrument, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/studio.jpg?v=1cf3a49a2803"
  },
- "superframe.html": {
-  "alt": "Superframe, by Zain Dana Harper. A fan of prints of one piece, as paint, type, lines and relief, beside a graph joining its seven elements to five media, and a strip of its sound drawn as a spectrogram.",
-  "image": "https://harperz9.github.io/img/og/p/superframe.jpg?v=bfb741eeb220"
- },
  "support-has-more-than-one-record.html": {
   "alt": "Support Has More Than One Record, by Zain Dana Harper. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core.",
   "image": "https://harperz9.github.io/img/og/p/support-has-more-than-one-record.jpg?v=631d25a56b24"
@@ -920,8 +916,8 @@
   "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--cv.jpg?v=fde0ebc8002e"
  },
  "world/universe/proto/places/daylight.html": {
-  "alt": "Daylight Commons, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
-  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--daylight.jpg?v=f13ee205ba37"
+  "alt": "CMMNS, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/world--universe--proto--places--daylight.jpg?v=a82226d9e356"
  },
  "world/universe/proto/places/ebbinghaus.html": {
   "alt": "The same circle, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",

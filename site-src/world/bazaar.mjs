@@ -67,6 +67,6 @@ export const PLACES = [
     id: "tools", title: "Tools", form: "tile", medium: "viscous", living: ["ink", "engraved", "ink"],
     lead: { kind: "image", src: "/media/world/name-art/intaglio-lines-1920.webp", w: 1920, h: 1080, alt: "The name engraved in intaglio lines, tone made only by line width under a raking light." },
     laws: [],
-    ways: [["/flywheel.html", "Flywheel"], ["/daylight.html", "Daylight Commons"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/raw.html", "raw-native"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
+    ways: [["/flywheel.html", "Flywheel"], ["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/raw.html", "raw-native"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
   },
 ];

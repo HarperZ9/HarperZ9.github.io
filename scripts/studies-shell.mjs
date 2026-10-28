@@ -10,7 +10,7 @@ const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still fa
 const PLACES = [
   ["/world/ui/directions/cs-max/flywheel.html", "light", "Flywheel"],
   ["/articulate.html", "engraved", "Articulate"],
-  ["/daylight.html", "glyphcell", "Daylight"],
+  ["/cmmns.html", "glyphcell", "CMMNS"],
   ["/buildlang.html", "glyphcell", "BuildLang"],
   ["/raw.html", "nightlights", "raw-native"],
   ["/explainers.html", "sound", "Films"],
