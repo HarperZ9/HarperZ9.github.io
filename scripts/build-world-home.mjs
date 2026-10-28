@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 // Build index.html, the world's entrance: the arrival, the universe's road (taken from the imported
 // world/universe/proto/path.html, so the road agent's new stops arrive with the next import), then the bazaar of
-// places from site-src/world/bazaar.mjs. Run after scripts/import-mission-control.mjs.
+// places from site-src/world/bazaar.mjs. After the arrival comes the astrolabe (site-src/world/work.mjs): the pillars,
+// each opening in place on a real output. Run after scripts/import-mission-control.mjs.
 //
 //   node scripts/build-world-home.mjs
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { workSection } from "../site-src/world/work.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -76,7 +78,7 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{WORK}}", workSection()).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
