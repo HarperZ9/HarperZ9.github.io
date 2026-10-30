@@ -13,6 +13,7 @@ uniform sampler2D uGlyph, uSim;
 uniform vec2 uGlyphTexel; uniform float uRod;  // rod radius in glyph texels
 uniform vec4 uCam;      // camera height (m), glass plane distance (m), focal length, horizon height on screen
 uniform vec3 uLampDir;  // unit vector toward the lamp
+uniform vec3 uShore[4]; // far shore lamps (same SPD), weaker and smaller, so the whole sea carries glints
 uniform vec4 uLampSize; // angular radius, disc power, glow power, haze g
 uniform vec4 uFill;     // direction toward the fill light (moon or high sky, behind the viewer), power
 uniform float uLam[N], uNg[N], uNw[N], uAw[N], uAg[N], uSL[N], uSZ[N], uSH[N];
@@ -43,11 +44,13 @@ float lampTerm(vec3 d) {
   float c = dot(d, uLampDir), ang = acos(clamp(c, -1.0, 1.0));
   float disc = smoothstep(uLampSize.x * 1.2, uLampSize.x * 0.8, ang) * uLampSize.y;
   float g = uLampSize.w, hg = (1.0 - g * g) / pow(1.0 + g * g - 2.0 * g * c, 1.5);
-  return disc + uLampSize.z * hg * 0.0005;
+  float shore = 0.0;
+  for (int k = 0; k < 4; k++) shore += smoothstep(uLampSize.x * 0.7, uLampSize.x * 0.35, acos(clamp(dot(d, uShore[k]), -1.0, 1.0)));
+  return disc + uLampSize.z * hg * 0.0005 + shore * uLampSize.y * 0.12;
 }
 float sky(vec3 d, int i) {
   float e = max(d.y, 0.0);
-  return uSH[i] * exp(-e / 0.07) * 0.55 + uSZ[i] * (0.18 + 0.82 * (1.0 - exp(-e / 0.3))) * 0.35 + uSL[i] * lampTerm(d);
+  return uSH[i] * exp(-e / 0.12) * 0.55 + uSZ[i] * (0.18 + 0.82 * (1.0 - exp(-e / 0.3))) * 0.35 + uSL[i] * lampTerm(d);
 }
 struct Geo { float water; vec3 d; vec3 r; float cosi; float depth; float caus; float gcaus; float glyphRefl; float glint; float rim; };
 Geo geo(vec2 uv, bool front) {
@@ -64,7 +67,9 @@ Geo geo(vec2 uv, bool front) {
   float lap = (hx + hxm + hz + hzm - 4.0 * h0) / (e * e) * uWave.y;
   g.caus = clamp(1.0 / max(0.25, 1.0 + g.depth * 0.25 * lap * fade), 0.25, 4.0);
   vec3 hv = normalize(uLampDir - g.d);
-  g.glint = ggx(max(dot(nrm, hv), 0.0), 0.06 + 0.02 * P.z / 20.0);
+  float rough = 0.06 + 0.02 * P.z / 20.0;
+  g.glint = ggx(max(dot(nrm, hv), 0.0), rough);
+  for (int k = 0; k < 4; k++) g.glint += 0.12 * ggx(max(dot(nrm, normalize(uShore[k] - g.d)), 0.0), rough);
   if (front && P.z < uCam.y) {
     if (g.r.z > 1e-3) { vec3 Q = P + g.r * (uCam.y - P.z) / g.r.z; if (Q.y > 0.0) { vec2 q = uvOf(Q); vec4 gl = glyph(q);
       g.glyphRefl = gl.g; g.rim = 1.0 - glyphNormal(q).z; } }

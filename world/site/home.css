@@ -8,7 +8,7 @@
 /* the live render (world/site/hero): the same frame and mask as the loop it replaces; the loop's poster stays
    underneath until the first frame is drawn, and returns in Plain view */
 .arrival-art > * { grid-area: 1 / 1; }
-.arrival-art .hero-physical { max-width: 100%; max-height: 86vh; opacity: 0; transition: opacity .6s ease; -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
+.arrival-art .hero-physical { image-rendering: auto; max-width: 100%; max-height: 86vh; opacity: 0; transition: opacity .6s ease; -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
 .arrival-art.gl-on .hero-physical { opacity: 1; }
 .arrival-art.gl-on .lead { visibility: hidden; transition: visibility 0s .7s; }
 html.plain .arrival-art .hero-physical { display: none; }

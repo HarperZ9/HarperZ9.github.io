@@ -17,7 +17,7 @@ const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const plain = () => root.classList.contains("plain");
 const isDark = () => { const t = root.dataset.theme; return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; };
 const TIERS = [{ scale: 2, N: 8 }, { scale: 1.5, N: 8 }, { scale: 1, N: 8 }, { scale: 1.5, N: 3 }, { scale: 1, N: 3 }, { scale: 0.6, N: 3 }];
-const CAM = { h: 1.0, zg: 12, f: 1.6, s0: 0.42 }, SIMN = 256;
+const CAM = { h: 1.0, zg: 12, f: 1.6, s0: 0.42 }, SIMN = 256, DOWN = new Float32Array([0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0]);
 const stat = (window.__hero = { state: "boot", tier: null, N: null, scale: null, frameMs: null, gpuMs: null, ladder: [] });
 
 function fallback(why) {
@@ -31,8 +31,8 @@ function lightsFor(N, dark) {
   const lamp = dark ? (q === "filament" ? "filament" : "sodium") : (q === "filament" ? "filament" : "sun");
   const norm = (a) => { const Y = a.reduce((s, v, i) => s + v * L.W[i][1], 0); return a.map((v) => v / Y); };
   const rayleigh = (S) => norm(S.map((v, i) => v * (L.lambda[i] / 550) ** -4));
-  const zen = dark ? rayleigh(L.S.moon).map((v) => v * 0.05) : rayleigh(L.S.daylight);
-  const hor = dark ? L.S.sodium.map((v) => v * 0.16) : L.S.sun;
+  const zen = dark ? rayleigh(L.S.moon).map((v) => v * 0.14) : rayleigh(L.S.daylight);
+  const hor = dark ? L.S.sodium.map((v) => v * 0.22) : L.S.sun;
   return { lamp, L, SL: L.S[lamp], SZ: zen, SH: hor, M: SPECTRA.lights[lamp].to_srgb,
     size: dark ? [0.006, 700, 5, 0.86] : [0.007, 700, 12, 0.8], exposure: dark ? 1.25 : 0.8,
     fill: dark ? [-0.45, 0.55, -0.7, 2.5] : [-0.45, 0.6, -0.66, 1.2] };
@@ -51,7 +51,7 @@ async function boot() {
   const sceneProg = (N) => (progs[N] ||= program(gl, VS, sceneFS(N)));
   const sim = program(gl, VS, SIM), bright = program(gl, VS, BRIGHT), blur = program(gl, VS, BLUR), comp = program(gl, VS, COMPOSITE);
   const simT = [0, 1].map(() => target(gl, SIMN, SIMN, { internal: gl.RG16F, format: gl.RG, wrap: gl.REPEAT }));
-  let simI = 0, glyphTex = null, glyph = null, targets = null, light = null, lampDir = [0, 0, 1], cw = 0, ch = 0;
+  let simI = 0, glyphTex = null, glyph = null, targets = null, light = null, lampDir = [0, 0, 1], shore = new Float32Array(12), cw = 0, ch = 0;
   const face = getComputedStyle(document.getElementById("h-name")).fontFamily || "sans-serif";
   await document.fonts?.ready;
 
@@ -65,6 +65,7 @@ async function boot() {
     glyphTex = texture(gl, gw, gh, { internal: gl.RG16F, format: gl.RG, data: glyph.data });
     glyph.texel = [1 / gw, 1 / gh];
     const ly = CAM.s0 + 0.018, d = [(glyph.lampX - 0.5) * (cw / ch), ly - CAM.s0, CAM.f], n = Math.hypot(...d); lampDir = d.map((v) => v / n);
+    [0.12, 0.3, 0.78, 0.93].forEach((x, k) => { const s = [(x - 0.5) * (cw / ch), 0.004 + 0.003 * (k % 2), CAM.f], m = Math.hypot(...s); shore.set(s.map((v) => v / m), k * 3); });
     resize();
   }
   function resize() {
@@ -91,7 +92,7 @@ async function boot() {
     pass(P, hdr, (u) => {
       gl.uniform2f(u("uRes"), hdr.w, hdr.h); gl.uniform1f(u("uTime"), t); gl.uniform1f(u("uAspect"), cw / ch); gl.uniform1f(u("uExposure"), Lt.exposure);
       bind(u, "uGlyph", glyphTex, 0); bind(u, "uSim", simT[simI].tex, 1); gl.uniform2fv(u("uGlyphTexel"), glyph.texel); gl.uniform1f(u("uRod"), glyph.rod);
-      gl.uniform4f(u("uCam"), CAM.h, CAM.zg, CAM.f, CAM.s0); gl.uniform3fv(u("uLampDir"), lampDir); gl.uniform4fv(u("uLampSize"), Lt.size); { const f = Lt.fill, n = Math.hypot(f[0], f[1], f[2]); gl.uniform4f(u("uFill"), f[0] / n, f[1] / n, f[2] / n, f[3]); }
+      gl.uniform4f(u("uCam"), CAM.h, CAM.zg, CAM.f, CAM.s0); gl.uniform3fv(u("uLampDir"), lampDir); gl.uniform3fv(u("uShore[0]"), isDark() ? shore : DOWN);   // shore lamps are lit at night only gl.uniform4fv(u("uLampSize"), Lt.size); { const f = Lt.fill, n = Math.hypot(f[0], f[1], f[2]); gl.uniform4f(u("uFill"), f[0] / n, f[1] / n, f[2] / n, f[3]); }
       for (const [n, a] of [["uLam", Lt.L.lambda], ["uNg", Lt.L.n_bk7], ["uNw", Lt.L.n_water], ["uAw", Lt.L.alpha_water], ["uAg", Lt.L.alpha_bk7], ["uSL", Lt.SL], ["uSZ", Lt.SZ], ["uSH", Lt.SH]]) gl.uniform1fv(u(n + "[0]"), a);
       gl.uniform3fv(u("uW[0]"), Lt.L.W.flat()); gl.uniformMatrix3fv(u("uToRGB"), true, Lt.M.flat());
       gl.uniform4f(u("uWave"), 24, 0.9, 0.012, 0.32); gl.uniform1f(u("uNight"), isDark() ? 1 : 0);

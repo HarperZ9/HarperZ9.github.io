@@ -14,7 +14,7 @@ WebGL2 render in `world/site/hero/`, built from the materials library's measured
 | `scene.js` | sky, wave-equation water with Gerstner swell, caustics on the sea floor and from the glass onto the water, glyph reflection in the water, the glass name; integrated per bin to XYZ | |
 | `post.js` | wave equation (256 x 256), soft-knee bloom, red-first halation, raw film chain crosstalk, Colour Core log-stop curve per channel, sRGB, dither | catalogue: `raw-halation`, `elder-cfx-film-halation`, `raw-film-emulation`, `elder-color-core-log-tonemap` |
 | `glyphs.js` | the name in the page's display face, exact EDT, round rod section | |
-| `hero.js` | lamp: high-pressure sodium at night, a low sun by day, `?lamp=filament` for a 2700 K filament; the Lamp control switches them; pointer drops into the water | `mc-seattle-spd` |
+| `hero.js` | lamp: high-pressure sodium at night, with four smaller sodium lamps on the far shore so glints cover the whole sea, a low sun by day, `?lamp=filament` for a 2700 K filament; the Lamp control switches them; pointer drops into the water | `mc-seattle-spd` |
 
 Fallbacks: Plain view shows the old poster; reduced motion draws one still frame; no WebGL2 or no float
 targets plays the old loop. The ladder steps down on measured time (rAF median over 60 frames above 18.5 ms, or
@@ -27,7 +27,7 @@ Phones start at 3 bins.
 |---|---|---|
 | Hero bytes on a desktop load (local server, uncompressed bodies) | 1,255,503 | 49,413 |
 | Whole home page bytes in the first 8 s | 3,779,800 | 2,574,605 |
-| GPU time a frame, 1920 x 1080, 8 bins, RTX 4090 (timer query) | n/a | 0.10 ms |
+| GPU time a frame, 1920 x 1080, 8 bins, RTX 4090 (timer query) | n/a | 0.10 ms (0.22 ms with the shore lamps) |
 | GPU time a frame, phone 585 x 440, 3 bins, RTX 4090 | n/a | 0.06 ms |
 | Frame time with vsync, RTX 4090 | n/a | 16.7 ms (60 fps, display bound) |
 | SwiftShader (CPU GL), the ladder | n/a | 8 bins at 1x: 490 to 830 ms GPU; steps to 3 bins, then lower scale, then a still |
@@ -116,3 +116,15 @@ claim of beating it is made. Unreal was not installed (its licence and size make
   Recording that review is the author's step (`python -m tools.release_reviews record ...`).
 - No iGPU fps measurement; no hosted measurement.
 - The showcase page is not linked from anywhere until hosting is chosen.
+
+## 6. Review of the first screenshots (30 October 2026)
+
+Three defects were reported on the first desktop dark capture. Diagnosis by hiding the hero layer:
+
+- Blocky patches and a stair-stepped diagonal line: the page's own road layers (`strata`, `road`, the mosaic
+  uncover), present on main too and drawn with intended pixel blocks. The hero canvas was at tier 1, scale 1,
+  1280 x 720 for 1280 x 720 CSS px, with no ladder step. Not the ladder, not the hero shader. Left as they are.
+- Muddy water outside the glare: the hero shader. Fixed by four smaller far-shore sodium lamps with their own
+  glitter paths, a stronger moonlit zenith (0.05 to 0.14) and a wider horizon glow (falloff 0.07 to 0.12).
+- The hero canvas scales with `image-rendering: auto` (bilinear), so a reduced ladder tier softens rather than
+  blocks.
