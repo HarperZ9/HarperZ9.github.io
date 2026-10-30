@@ -1,0 +1,10 @@
+/* showcase.css: the render viewers. Each frame keeps the picture's 16:9 shape; tiles sit absolutely inside it. */
+.showcase { max-width: 1400px; margin: 0 auto; padding: 96px clamp(16px, 4vw, 56px) 64px; }
+.showcase > p { max-width: 68ch; }
+.render { margin: 48px 0 0; }
+.dz-frame { position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; background: #0d0e10; touch-action: none; cursor: grab; }
+.dz-frame:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.dz-layer, .dz-layer img { position: absolute; }
+.dz-layer { inset: 0; }
+.dz-layer img { user-select: none; image-rendering: auto; z-index: 1; }
+.render figcaption { margin-top: 10px; max-width: 80ch; }

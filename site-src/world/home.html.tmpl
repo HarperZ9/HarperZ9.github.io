@@ -36,6 +36,7 @@
 <script type="module" src="/world/site/hum.js"></script>
 <script type="module" src="/world/site/home.js"></script>
 <script type="module" src="/world/site/living-hook.js"></script>
+<script type="module" src="/world/site/hero/hero.js"></script>
 </head>
 <body class="{{BODY_CLASS}} world-home">
 {{HAND}}
@@ -46,7 +47,7 @@
   <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
   <section class="arrival" aria-labelledby="h-name">
     <figure class="arrival-art">
-      <video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-poster-full="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
+      <video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-hero-poster="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" aria-hidden="true">
         {{ARRIVAL_SOURCES}}
       </video>
     </figure>

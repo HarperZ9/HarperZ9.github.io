@@ -5,6 +5,14 @@
 .arrival { position: relative; min-height: 100vh; display: grid; grid-template-rows: 1fr auto auto; align-items: end; padding: 96px clamp(16px, 4vw, 56px) 48px; gap: 18px; }
 .arrival-art { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; pointer-events: none; }
 .arrival-art .lead { width: min(1280px, 100%); height: auto; max-height: 86vh; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 58%, transparent 100%); }
+/* the live render (world/site/hero): the same frame and mask as the loop it replaces; the loop's poster stays
+   underneath until the first frame is drawn, and returns in Plain view */
+.arrival-art > * { grid-area: 1 / 1; }
+.arrival-art .hero-physical { max-width: 100%; max-height: 86vh; opacity: 0; transition: opacity .6s ease; -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); }
+.arrival-art.gl-on .hero-physical { opacity: 1; }
+.arrival-art.gl-on .lead { visibility: hidden; transition: visibility 0s .7s; }
+html.plain .arrival-art .hero-physical { display: none; }
+html.plain .arrival-art .lead { visibility: visible; }
 .arrival h1 { position: relative; margin: 0; font: 800 var(--fs-6)/1 var(--face-display); letter-spacing: -.035em; color: var(--ink); max-width: 14ch; }
 .arrival-ways, .ways, .colophon nav { position: relative; display: flex; flex-wrap: wrap; gap: 8px; }
 .arrival-ways a, .ways a, .colophon a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); text-decoration: none; font: 600 var(--fs-2)/1 var(--face-text); }
