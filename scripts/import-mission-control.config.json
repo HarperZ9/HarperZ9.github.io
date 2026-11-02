@@ -274,14 +274,38 @@
     {
       "file": "2026-10-23-ui-direction/shell/organic/organic.css",
       "find": "[data-o=\"band\"] svg{display:block;height:40px;width:auto}",
-      "replace": "[data-o=\"band\"] svg{display:block;height:40px;width:auto;max-width:100%}\n[data-o=\"band\"]{min-width:0;flex:0 1 auto}\n.o-hand>:not([data-o=\"band\"]){flex-shrink:0}\n@media (max-width:600px){[data-o=\"band\"]{display:none}}",
-      "why": "phone reflow: the road's 34-tile band ran past the right edge of the hand at 390 px; it now shrinks to the room the hand has; the hand's other controls keep their size; under 600 px the band gives way (the menu holds the map), since a sliver was too small to press"
+      "replace": "[data-o=\"band\"] svg{display:block;height:40px;width:auto;max-width:100%}\n[data-o=\"band\"]{min-width:0;flex:0 1 auto}\n.o-hand>:not([data-o=\"band\"]){flex-shrink:0}\n[data-o=\"band\"]{display:none}",
+      "why": "phone reflow: the road's 34-tile band ran past the right edge of the hand at 390 px; it now shrinks to the room the hand has; the hand's other controls keep their size; under 600 px the band gives way (the menu holds the map), since a sliver was too small to press; on 2026-11-02 the author ruled out the tile strip itself (\"pills and squares and containers\"), so the band leaves the hand at every width; the menu holds the map"
     },
     {
       "file": "2026-10-23-universe/proto/path.js",
       "find": "startGround();\n",
       "replace": "// the ground starts after the page has loaded and the main thread is idle (on touch screens at the first touch or scroll,\n// world/site/budget.js), once per page, and never on a device the budget stepped down\n{ const go = () => { if (!window.__medium && root.dataset.ground !== \"off\") startGround(); };\n  const idle = () => (\"requestIdleCallback\" in window ? requestIdleCallback(go, { timeout: 1500 }) : setTimeout(go, 300));\n  const later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(idle) : idle());\n  if (document.readyState === \"complete\") later(); else addEventListener(\"load\", later, { once: true }); }\n",
       "why": "performance: the road started its GPU ground during load, a 2 s main-thread task on the mobile profile; it now starts when the page is idle, after the first touch on phones"
+    },
+    {
+      "file": "2026-10-23-ui-direction/shell/organic/organic.css",
+      "find": "  padding:4px;background:color-mix(in srgb,var(--wall,#e8e3d9) 95%,transparent);border-radius:30px 26px 32px 28px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}",
+      "replace": "  padding:4px;background:none;border-radius:0;box-shadow:none}\n.o-hand .o-home,.o-hand button,.o-hand a{text-shadow:0 0 10px var(--wall,#e8e3d9),0 0 3px var(--wall,#e8e3d9)}\n.o-hand [data-o=\"lamp\"],.o-hand [data-o=\"record\"],.o-hand .o-motion{box-shadow:none}\n.o-hand .o-motion{border-radius:2px;width:56px}",
+      "why": "the author, 2026-11-02: \"there's not really supposed to be heroes and panels and pills and squares and containers\"; the hand loses its pill and its controls their rings, and keeps contrast with a halo of the ground"
+    },
+    {
+      "file": "2026-10-23-universe/proto/u.css",
+      "find": ".o-hand .find input { width: 12ch; min-height: 44px; font: 400 var(--fs-2)/1 var(--face-text); padding: 0 10px; border: 1px solid var(--ink); background: var(--wall); color: var(--ink); border-radius: 0; }",
+      "replace": ".o-hand .find input { width: 12ch; min-height: 44px; font: 400 var(--fs-2)/1 var(--face-text); padding: 0 2px; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--ink); border-radius: 0; }",
+      "why": "the author, 2026-11-02, on containers: Find is its words and a line, with no box"
+    },
+    {
+      "file": "2026-10-23-universe/proto/u.css",
+      "find": ".o-back { min-height: 44px; padding: 0 12px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1px solid var(--ink); border-radius: 0; cursor: pointer; }\n.o-back:hover, .o-back:focus-visible { background: var(--ink); color: var(--wall); }",
+      "replace": ".o-back { min-height: 44px; padding: 0 8px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: none; border: 0; border-radius: 0; cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .3em; }\n.o-back:hover, .o-back:focus-visible { text-decoration-color: currentColor; }",
+      "why": "the author, 2026-11-02, on containers: Back is its word, underlined on hover and focus"
+    },
+    {
+      "file": "2026-10-23-ui-direction/shell/organic/organic.css",
+      "find": "  .o-hand{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:10px;left:10px;justify-content:space-between}\n  body:has(.o-hand){padding-bottom:84px}",
+      "replace": "  .o-hand{top:max(6px,env(safe-area-inset-top));right:10px;left:10px;justify-content:space-between}\n  body:has(.o-hand){padding-top:8px}",
+      "why": "the author, 2026-11-02, on containers: with no bar behind it, the phone hand sits at the top edge in the page's own margin, where it covers no text, and steps away while the visitor reads down (world/site/hand-scroll.js)"
     }
   ]
 }

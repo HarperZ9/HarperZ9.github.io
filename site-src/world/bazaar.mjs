@@ -11,9 +11,9 @@
 export const PLACES = [
   {
     id: "light", title: "Light and glass", form: "grain", medium: "thin", living: ["ink", "engraved", "ink"],
-    lead: { kind: "loop", src: "/media/world/name-art/glass-tubes", alt: "The name drawn as glass rods at a low sun, light bending through each letter." },
+    lead: { kind: "image", src: "/media/world/glass-water/close-1920.webp", w: 1920, h: 1080, alt: "Glass letters spelling light, standing in calm water at a low sun; the horizon bends through them." },
     laws: ["law-snell", "law-thin-film", "law-beer-absorption"],
-    ways: [["/world/glass/index.html", "Glass, liquid and tube"], ["/world/playbook/examples/caustic.html", "Caustic"], ["/world/ui/directions/cs-max/flywheel.html", "Flywheel in light"]],
+    ways: [["/glass-water.html", "Glass and water, live"], ["/world/glass/index.html", "Glass, liquid and tube"], ["/world/playbook/examples/caustic.html", "Caustic"], ["/world/ui/directions/cs-max/flywheel.html", "Flywheel in light"]],
   },
   {
     id: "type", title: "Type and lettering", form: "glyph", medium: "medium", living: ["ink", "charcoal", "plant", "paint"],

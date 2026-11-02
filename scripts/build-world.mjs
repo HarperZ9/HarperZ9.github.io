@@ -25,7 +25,7 @@ const WORLD_STAMP = `
 import sys
 sys.path.insert(0, ".")
 from tools.repo_art.site_cards import plan, stamp, write_manifest, SOURCES, ROOT
-own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html")
+own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html", "glass-water.html")
 cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/")) or c["rel"] in own]
 print(sum(stamp(c) for c in cards), "of", len(cards), "world pages stamped")
 for c in cards:
@@ -38,6 +38,7 @@ if (!args.includes("--no-media")) node("import-media.mjs", pass);
 node("build-studies.mjs", pass);
 node("build-cmmns.mjs");
 node("build-experiments.mjs");
+node("build-glass-water.mjs");
 node("build-world-home.mjs");
 node("build-world-pages.mjs");
 node("world-asset-revision.mjs");

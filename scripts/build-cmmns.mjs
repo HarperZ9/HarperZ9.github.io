@@ -30,6 +30,7 @@ const signs = [
 ];
 
 const body = `<article class="tool">
+<p class="mark-line">THE COMMONS (THECMMNS)</p>
 <h1>CMMNS</h1>
 <p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
 <p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>

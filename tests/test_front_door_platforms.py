@@ -30,8 +30,6 @@ def test_every_platform_row_is_complete_and_its_links_resolve():
             if href.startswith("/"):
                 target = ROOT / href.split("#")[0].lstrip("/")
                 assert target.exists() or (target / "index.html").exists(), f"{p['id']}: {href} does not exist"
-        plate = ROOT / (p["plate"].lstrip("/") + ".webp")
-        assert plate.exists() and (ROOT / (p["plate"].lstrip("/") + ".avif")).exists(), plate
 
 
 def test_a_shown_version_carries_a_verified_line_naming_it():

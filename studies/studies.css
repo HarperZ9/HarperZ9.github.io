@@ -99,3 +99,5 @@ a:hover { text-decoration-thickness: 2px; }
 .ct-part[data-id="unchecked"] { color: var(--soft); }
 .ct-report { margin: 14px 0; }
 .ct-spec { white-space: nowrap; font-family: var(--face-utility); }
+/* a platform's display name and mark, over its page title */
+.mark-line { margin: 0 0 6px !important; font: 500 var(--fs-1)/1.4 var(--face-utility) !important; letter-spacing: .08em; color: var(--soft); }

@@ -7,13 +7,12 @@ if (hand) {
   let last = scrollY, away = false;
   // it moves by its top or bottom offset, never a transform: a transform would make the hand the containing block of
   // its fixed children (the skip link would then show while the hand is away)
-  const style = () => { hand.style.transition = reduced.matches ? "none" : "top .28s cubic-bezier(.2,0,0,1), bottom .28s cubic-bezier(.2,0,0,1)"; };
+  const style = () => { hand.style.transition = reduced.matches ? "none" : "top .28s cubic-bezier(.2,0,0,1)"; };
   const set = (v) => {
     if (v === away) return;
     away = v;
     const h = hand.offsetHeight + 32;
-    hand.style.top = v && !phone.matches ? `${-h}px` : "";
-    hand.style.bottom = v && phone.matches ? `${-h}px` : "";
+    hand.style.top = v ? `${-h}px` : "";
     hand.toggleAttribute("data-away", v);
   };
   style(); reduced.addEventListener("change", style);

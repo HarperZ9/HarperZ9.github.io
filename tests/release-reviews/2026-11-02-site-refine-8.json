@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-02",
+  "note": "Pass 6, the reset: one field with no boxed UI, glass and water as its own live place, platform marks, design rules cut to intent and limits.",
+  "paths": {
+    "index.html": "bb386ab2ab0daab4797e3fa5875a7f8938bc4b8a22fcd455921c1dcb1d0cb720",
+    "publications/build.json": "8f1d010c16a6b3cacd0f4cce7eaf90a9ffec4ab2127a25f7f5ec82cb3257a037",
+    "site-index.html": "4378c190cb81ca2a0bc8c6233a28ad46f20356b9a841125213661a528dec634e",
+    "sitemap.xml": "a415fb3d15f99d75d400feabbf267d7f7a4b897d27dde239f99efcf15388a73c",
+    "system/routes.js": "a447fa174a46a4f79e88a05bc7a468ff01d07fddfd11239eb7e7b3fdc865687b"
+  }
+}

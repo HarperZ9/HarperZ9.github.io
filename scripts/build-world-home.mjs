@@ -38,7 +38,8 @@ function roadParts() {
   // the road's stops, each heading given the living-type hook (Hanken underneath until the engine paints it)
   const stops = absolute(main.replace(/^<main id="main">/, "").replace(/<\/main>$/, "")
     .replace(/<h1 class="sr-only">[^<]*<\/h1>/, "")
-    .replace(/<h2 id="([^"]+)" tabindex="-1">/g, '<h2 id="$1" tabindex="-1" data-living="ink charcoal plant paint">')
+    // living type stays off the home for now: its engine paints a paper sheet behind each heading, a box the
+    // author ruled out on 2026-11-02; it returns once the type engine can paint on a clear ground
     // the road's plates sit far below the first screen: they load as the visitor nears them
     .replace(/<img class="plate" (?![^>]*loading=)/g, '<img class="plate" loading="lazy" decoding="async" '));
   const bodyClass = (p.match(/<body class="([^"]+)"/) || [, "path"])[1];
@@ -70,7 +71,7 @@ function bazaar(rules) {
     <div class="place-in">
       <figure class="lead-box">${lead(pl)}</figure>
       <div class="place-words">
-        <h2 id="hp-${pl.id}" data-living="${pl.living.join(" ")}">${esc(pl.title)}</h2>
+        <h2 id="hp-${pl.id}">${esc(pl.title)}</h2>
         ${lawsOf(pl.laws, rules)}
         <nav class="ways" aria-label="${esc(pl.title)}">${pl.ways.map(([href, t]) => `<a href="${href}"${caps(t)}>${esc(t)}</a>`).join("")}</nav>
       </div>
@@ -88,9 +89,8 @@ function platforms() {
     const ways = [`<a class="pf-go" href="${p.see[0]}">${esc(p.see[1])}</a>`, `<a href="${p.more[0]}">${esc(p.more[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
     return `
     <li class="pf" id="pf-${p.id}">
-      <picture class="pf-plate"><source srcset="${p.plate}.avif" type="image/avif"><img src="${p.plate}.webp" width="480" height="504" alt="${esc(p.alt)}" loading="lazy" decoding="async"></picture>
       <div class="pf-words">
-        <h3 id="hpf-${p.id}"><span class="pf-name">${esc(p.name)}</span><span class="pf-product">${esc(p.product)}${ver}</span></h3>
+        <h3 id="hpf-${p.id}"><span class="pf-name">${esc(p.name)}</span>${p.mark ? `<span class="pf-mark">${esc(p.mark)}</span>` : ""}<span class="pf-product">${esc(p.product)}${ver}</span></h3>
         <p class="pf-what">${esc(p.what)}</p>
         ${run}
         <nav class="pf-ways" aria-labelledby="hpf-${p.id}">${ways}</nav>

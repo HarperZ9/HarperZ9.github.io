@@ -78,7 +78,10 @@ html.ready dialog[data-o="menu"][open]{animation:o-menu-in var(--dur-slow) var(-
 
 /* ---------- the hand: live controls that come to hand, no permanent bar ---------- */
 .o-hand{position:fixed;z-index:40;right:clamp(10px,2vw,24px);top:clamp(10px,2vw,24px);display:flex;gap:6px;align-items:center;
-  padding:4px;background:color-mix(in srgb,var(--wall,#e8e3d9) 95%,transparent);border-radius:30px 26px 32px 28px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}
+  padding:4px;background:none;border-radius:0;box-shadow:none}
+.o-hand .o-home,.o-hand button,.o-hand a{text-shadow:0 0 10px var(--wall,#e8e3d9),0 0 3px var(--wall,#e8e3d9)}
+.o-hand [data-o="lamp"],.o-hand [data-o="record"],.o-hand .o-motion{box-shadow:none}
+.o-hand .o-motion{border-radius:2px;width:56px}
 .o-hand .o-home{font:800 var(--fs-2,15px)/1 var(--face-text,sans-serif);color:var(--ink);text-decoration:none;padding:0 12px 0 10px}
 .o-hand .o-name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;font-size:var(--fs-1)}
 
@@ -113,8 +116,8 @@ html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;
 
 /* on phones the hand sits at the bottom edge, in the thumb's reach, clear of every title */
 @media (max-width:860px){
-  .o-hand{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:10px;left:10px;justify-content:space-between}
-  body:has(.o-hand){padding-bottom:84px}
+  .o-hand{top:max(6px,env(safe-area-inset-top));right:10px;left:10px;justify-content:space-between}
+  body:has(.o-hand){padding-top:8px}
 }
 
 /* the survey band: the universe's "we are here", carried in the hand; the link names it for readers */
@@ -122,7 +125,7 @@ html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;
 [data-o="band"] svg{display:block;height:40px;width:auto;max-width:100%}
 [data-o="band"]{min-width:0;flex:0 1 auto}
 .o-hand>:not([data-o="band"]){flex-shrink:0}
-@media (max-width:600px){[data-o="band"]{display:none}}
+[data-o="band"]{display:none}
 [data-o="band"] .here-num{font:400 12px var(--face-utility,monospace);fill:var(--ink)}
 [data-o="band"] .here-tick,[data-o="band"] .here-bar{fill:var(--ink)}
 [data-o="band"] .here-tile{cursor:pointer}
