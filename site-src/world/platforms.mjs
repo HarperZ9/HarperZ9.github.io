@@ -51,7 +51,7 @@ export const PLATFORMS = [
   },
   {
     id: "research", name: "RESEARCH", mark: "RSRCH", product: "Essays and papers",
-    what: "Essays, papers and dated briefings on how AI work gets checked and who pays for the checking, and the experiments behind them, each written down before it ran.",
+    what: "The study of mechanisms, interactions, relationships and patterns across nature, technology, humanity and the hypothetical, in physical and digital space, in every state. Essays, papers and dated briefings, and the experiments behind them, each written down before it ran.",
     see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"],
   },
 ];

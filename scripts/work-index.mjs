@@ -29,6 +29,8 @@ const MEDIA = {
     { film: "droste", alt: "A study spiralling into a Droste tiling." },
   ],
 };
+// the author approved this purpose for RESEARCH on 2026-11-02 ("yes, all of these concepts")
+const PURPOSE = { RSRCH: "The study of mechanisms, interactions, relationships and patterns across nature, technology, humanity and the hypothetical, in physical and digital space, in every state." };
 const LENS_NOTE = { "lens-room": "No still yet." };
 
 function media(id) {
@@ -61,7 +63,8 @@ export function workIndex() {
     });
     if (!rows.length) return "";
     const mark = k === k.toUpperCase() && !["unassigned", "past"].includes(k) ? ` <span class="wi-mark">${esc(k)}</span>` : "";
-    return `<section class="wi-plat" id="${esc(k.toLowerCase())}" aria-labelledby="h-${esc(k.toLowerCase())}"><h2 id="h-${esc(k.toLowerCase())}">${esc(name)}${mark}</h2><ol class="wi-list">${rows.map(row).join("\n")}</ol></section>`;
+    const purpose = PURPOSE[k] ? `<p class="wi-purpose">${esc(PURPOSE[k])}</p>` : "";
+    return `<section class="wi-plat" id="${esc(k.toLowerCase())}" aria-labelledby="h-${esc(k.toLowerCase())}"><h2 id="h-${esc(k.toLowerCase())}">${esc(name)}${mark}</h2>${purpose}<ol class="wi-list">${rows.map(row).join("\n")}</ol></section>`;
   }).join("\n");
   // a film's poster loads only as its row nears the screen
   const lazy = `<script type="module">const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.poster = e.target.dataset.poster; io.unobserve(e.target); } }, { rootMargin: "60% 0px" });

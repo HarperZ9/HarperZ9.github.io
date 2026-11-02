@@ -33,3 +33,4 @@ body.parts-body main { max-width: 1360px; }
 .wi-media li:has(img[src*="material-gallery"]) img { object-fit: cover; }
 .wi-rule { margin: 72px 0 0; font: 800 var(--fs-5)/1.1 var(--face-display); }
 .wi-row:target { padding-left: 14px; border-left: 3px solid var(--ink); }
+.wi-purpose { margin: 0 0 8px !important; max-width: 62ch; font-size: var(--fs-3) !important; }
