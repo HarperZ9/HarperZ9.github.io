@@ -306,6 +306,12 @@
       "find": "  .o-hand{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:10px;left:10px;justify-content:space-between}\n  body:has(.o-hand){padding-bottom:84px}",
       "replace": "  .o-hand{top:max(6px,env(safe-area-inset-top));right:10px;left:10px;justify-content:space-between}\n  body:has(.o-hand){padding-top:8px}",
       "why": "the author, 2026-11-02, on containers: with no bar behind it, the phone hand sits at the top edge in the page's own margin, where it covers no text, and steps away while the visitor reads down (world/site/hand-scroll.js)"
+    },
+    {
+      "file": "2026-10-23-universe/lib/path-render.js",
+      "find": "      if (Math.abs(z - next) < 0.025) { c.globalAlpha = 0.9; c.fillStyle = d.accent; c.fillRect(cx - half * W * 0.5, y - 1, half * W, 2); }\n",
+      "replace": "",
+      "why": "the next-stop marker drew a flat accent bar across the road, which crossed the home's first screen and the text of the work section; reviewed 2026-11-02 as stray geometry and removed"
     }
   ]
 }

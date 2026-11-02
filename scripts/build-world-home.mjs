@@ -26,7 +26,12 @@ function roadParts() {
   let hand = absolute(pick(p, /<header class="o-hand"[\s\S]*?<\/header>/, "the hand"));
   hand = hand.replace(/<a class="skip" href="[^"]*">/, '<a class="skip" href="/floor.html">')
     .replace(/<a class="o-home" href="[^"]*">/, '<a class="o-home" href="/" aria-current="page">')
-    .replace(/data-o="record" data-sound/, 'data-o="record" data-hum');
+    .replace(/data-o="record" data-sound/, 'data-o="record" data-hum')
+    // the home's hand keeps what has a job there: the menu, the lamp (light or dark), motion and plain view.
+    // Find and Back serve the map and its places; the sound control repeats the press in the Sound place.
+    .replace(/\s*<form class="find"[\s\S]*?<\/form>/, "")
+    .replace(/\s*<button type="button" id="back"[^>]*>[\s\S]*?<\/button>/, "")
+    .replace(/\s*<button type="button" data-o="record"[\s\S]*?<\/button>/, "");
   // the menu names each platform's own page on this site, and the CV, beside the road's places
   const menu = absolute(pick(p, /<dialog id="o-menu"[\s\S]*?<\/dialog>/, "the menu"))
     .replace('href="https://github.com/HarperZ9/cmmns"', 'href="/cmmns.html"')
