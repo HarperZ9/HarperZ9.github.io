@@ -239,7 +239,7 @@ if __name__ == "__main__":
     ap.add_argument("--apply", action="store_true", help="also write the CV group from the inventory")
     a = ap.parse_args()
     data = build()
-    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print(f"{len(data['repositories'])} repositories, {len(data['packages'])} packages, "
           f"{len(data['papers'])} papers, {len(data['site'])} site pages -> {OUT.relative_to(ROOT)}")
     if a.apply:

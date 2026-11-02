@@ -67,7 +67,7 @@ def main() -> int:
         finally:
             ir.unlink()
         r["source"] = {"path": "career/resume-source.json", "document": doc["id"],
-                       "sha256": __import__("hashlib").sha256(SOURCE.read_bytes()).hexdigest()}
+                       "sha256": __import__("hashlib").sha256(SOURCE.read_bytes().replace(b"\r\n", b"\n")).hexdigest()}
         r["outputs"] = {k: v for k, v in r["outputs"].items() if k.endswith(".pdf")}
         (OUT / f"{doc['stem']}.layout.json").unlink(missing_ok=True)
         (OUT / f"{doc['stem']}.buildtex.json").write_text(json.dumps(r, indent=1, ensure_ascii=False) + "\n",

@@ -292,7 +292,7 @@ Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: N
 
 Every public release, package, paper, essay, briefing and packet, read from GitHub, PyPI, npm, crates.io, Zenodo and the live site on November 2, 2026. Private and unreleased work is not listed. Machine-readable copy: harperz9.github.io/career/published-work.json
 
-### Papers, preprints and corpora | 16 works
+### Papers, preprints, corpora and data | 16 records
 
 - Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds, and the Limits of Authentication. Preprint, June 20, 2026. doi.org/10.5281/zenodo.20773724
 

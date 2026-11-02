@@ -34,7 +34,7 @@ def fonts(reader: PdfReader) -> dict[str, bool]:
 
 
 def test_every_document_has_a_designed_pdf_that_passes_its_own_checks() -> None:
-    source_sha = hashlib.sha256((ROOT / "career" / "resume-source.json").read_bytes()).hexdigest()
+    source_sha = hashlib.sha256((ROOT / "career" / "resume-source.json").read_bytes().replace(b"\r\n", b"\n")).hexdigest()
     for doc in SOURCE["documents"]:
         receipt = json.loads((DESIGNED / f"{doc['stem']}.buildtex.json").read_text(encoding="utf-8"))
         pdf = DESIGNED / f"{doc['stem']}.pdf"

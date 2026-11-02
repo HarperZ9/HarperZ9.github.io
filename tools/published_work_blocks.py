@@ -33,7 +33,7 @@ def blocks(data: dict) -> list[dict]:
         b("p", f"Every public release, package, paper, essay, briefing and packet, read from GitHub, PyPI, npm, "
                f"crates.io, Zenodo and the live site on {when(data['read'])}. Private and unreleased work is not "
                f"listed. Machine-readable copy: harperz9.github.io/career/published-work.json"),
-        b("h3", f"Papers, preprints and corpora | {len(data['papers'])} works"),
+        b("h3", f"Papers, preprints, corpora and data | {len(data['papers'])} records"),
     ]
     for p in data["papers"]:
         dates = when(p["first"]) if p["first"] == p["latest"] else \
@@ -76,5 +76,5 @@ def apply(data: dict, source: pathlib.Path) -> None:
     cv = next(d for d in src["documents"] if d["route"] == "cv.html")
     if {"ref": GROUP} not in cv["blocks"]:
         cv["blocks"].append({"ref": GROUP})
-    source.write_text(json.dumps(src, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    source.write_text(json.dumps(src, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {len(src['groups'][GROUP])} blocks to the {GROUP} group")
