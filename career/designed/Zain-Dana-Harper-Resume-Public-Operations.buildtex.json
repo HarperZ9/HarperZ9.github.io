@@ -3,17 +3,17 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "public-operations",
-  "sha256": "e9b45f302063e2e4236c3c5d84fae559bbc24239dce43edabf920f70cd5c05d0"
+  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
  },
- "ir_sha256": "33d2f5b666a7400667a278ada20afd3c51af5b3d8ae7075f952db6ebf2242dd5",
- "theme": "press",
+ "ir_sha256": "bacbe345fcc8b1f76b2d1913914ef6230b093e7a5232d77b3e40aeeae29763b8",
+ "theme": "press-resume",
  "overrides": [
-  "base.size=9.6",
-  "base.leading=13.0",
+  "base.size=10.0",
+  "base.leading=13.4",
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "c21c532b775c4c039f01888d612c943087b582474ac2fdc1e8db97495eba2e12"
+  "Zain-Dana-Harper-Resume-Public-Operations.pdf": "267563e781cde6f3356cf0ff4c9ecaf499be68387cdb102ab090784b81d5afb2"
  },
  "facts": {
   "pages": 1,
@@ -23,19 +23,19 @@
   "missing_glyphs": [],
   "fonts": [
    {
-    "name": "ANEOKE+HankenGrotesk-Regular",
-    "embedded": true
-   },
-   {
     "name": "BJEJEB+AccessionDisplay-Master",
     "embedded": true
    },
    {
-    "name": "DBCALL+HankenGrotesk-Regular",
+    "name": "DBNKMH+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "HFKGFJ+HankenGrotesk-Regular",
+    "name": "GJLEJI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "HPNAAK+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,11 +43,11 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 227877
+  "pdf_bytes": 220777
  },
  "failed": [],
  "notes": [
-  "press: relief 1275x312 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+  "press: relief 1275x294 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
  ],
  "external_programs": []
 }

@@ -1,8 +1,7 @@
-"""Turn career/published-work.json into the CV's "Published Work" group.
+"""Turn career/published-work.json into the blocks of the published-work page.
 
-The group is plain career blocks (h2, h3, p, li), so the HTML page, the
-text and Markdown exports, the ReportLab PDF and DOCX, and the BuildLang
-typeset PDF all read the same lines in the same order.
+render_career_pages.py renders them as published-work.html. The resumes and
+the CV link that page and do not carry the inventory themselves.
 """
 from __future__ import annotations
 
@@ -68,13 +67,3 @@ def blocks(data: dict) -> list[dict]:
     for m in data["mods"]:
         out.append(b("li", f"{m['title']} on {m['site']}, first uploaded {when(m['first'])}. {bare(m['url'])}"))
     return out
-
-
-def apply(data: dict, source: pathlib.Path) -> None:
-    src = json.loads(source.read_text(encoding="utf-8"))
-    src["groups"][GROUP] = blocks(data)
-    cv = next(d for d in src["documents"] if d["route"] == "cv.html")
-    if {"ref": GROUP} not in cv["blocks"]:
-        cv["blocks"].append({"ref": GROUP})
-    source.write_text(json.dumps(src, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
-    print(f"wrote {len(src['groups'][GROUP])} blocks to the {GROUP} group")

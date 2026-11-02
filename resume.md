@@ -2,7 +2,7 @@
 
 Updated 2026-11-02.
 
-Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
+Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.
 
 ## Technical Support, Developer Operations, and QA
 
@@ -21,6 +21,15 @@ https://harperz9.github.io/resume-evaluation-tooling.html
 [DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx)
 [TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.txt)
 [MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.md)
+
+## Graphics, Rendering, and Developer Tools
+
+https://harperz9.github.io/resume-graphics-developer-tools.html
+
+[PDF](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf)
+[DOCX](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx)
+[TXT](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.txt)
+[MD](https://harperz9.github.io/career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.md)
 
 ## Arboriculture, Field Operations, and Estimating
 

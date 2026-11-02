@@ -2,7 +2,7 @@
 
 The ATS files (PDF, DOCX, text, Markdown) come from build_career_artifacts.py.
 This script reads the same reviewed source, career/resume-source.json, writes
-each document as buildlang.doc/v0, and sets it with the BuildTeX `press` theme:
+each document as buildlang.doc/v0, and sets it with the BuildTeX `press-resume` theme:
 the name blind-debossed and the aperture blind-embossed with a foil core,
 lit on a paper ground, with the full text layer kept for search and copy.
 
@@ -24,14 +24,14 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "career" / "resume-source.json"
 OUT = ROOT / "career" / "designed"
-FIT = [(9.6, 13.0), (9.3, 12.4), (9.0, 12.0)]  # body size and leading in points, theme size first
+FIT = [(10.0, 13.4), (10.0, 12.8), (10.0, 12.4)]  # body 10 pt minimum (MARKET-GUIDANCE); only leading tightens
 sys.path.insert(0, str(ROOT / "tools"))
 from render_career_pages import expand  # noqa: E402
 
 
 def ir_text(title: str, blocks: list[dict]) -> str:
     clean = lambda s: " ".join(s.replace("{", "{{").replace("}", "}}").split())
-    lines = ["#buildlang.doc/v0", f"meta\ttitle\t{clean(title)}", "meta\tauthor\tZain Dana Harper", "theme\tpress"]
+    lines = ["#buildlang.doc/v0", f"meta\ttitle\t{clean(title)}", "meta\tauthor\tZain Dana Harper", "theme\tpress-resume"]
     for b in blocks:
         lines.append("block\tpagebreak\t" if b["kind"] == "pagebreak" else f"block\t{b['kind']}\t{clean(b['text'])}")
     return "\n".join(lines) + "\n"
@@ -63,7 +63,7 @@ def main() -> int:
                 # Inked deboss, stated here rather than left to the theme default: the name must keep
                 # WCAG AA contrast (tests/test_career_designed.py measures it on the rendered page).
                 sets = [f"base.size={size}", f"base.leading={lead}", "emboss.deboss_finish=inked"]
-                r = build(str(ir), str(OUT / doc["stem"]), "press", sets, html=False)
+                r = build(str(ir), str(OUT / doc["stem"]), "press-resume", sets, html=False)
                 if r["facts"]["pages"] <= (doc.get("page_target") or 99):
                     break
         finally:

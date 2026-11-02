@@ -11,8 +11,8 @@ Sources, each read directly:
 
 Nothing unpublished is listed: private repositories, drafts, forks and unreleased work stay out.
 
-    python tools/published_work_inventory.py            # refresh career/published-work.json
-    python tools/published_work_inventory.py --apply    # refresh, then write the CV group
+    python tools/published_work_inventory.py    # refresh career/published-work.json
+    python tools/render_career_pages.py         # then render published-work.html from it
 """
 from __future__ import annotations
 
@@ -236,12 +236,8 @@ def build() -> dict:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--apply", action="store_true", help="also write the CV group from the inventory")
     a = ap.parse_args()
     data = build()
     OUT.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print(f"{len(data['repositories'])} repositories, {len(data['packages'])} packages, "
           f"{len(data['papers'])} papers, {len(data['site'])} site pages -> {OUT.relative_to(ROOT)}")
-    if a.apply:
-        from published_work_blocks import apply
-        apply(data, SOURCE)

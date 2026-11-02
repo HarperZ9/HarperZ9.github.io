@@ -28,7 +28,7 @@
       },
       {
         "kind": "p",
-        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html"
       }
     ],
     "engineer": [
@@ -217,7 +217,7 @@
       },
       {
         "kind": "contact",
-        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html"
       }
     ],
     "resume-engineer": [
@@ -311,660 +311,6 @@
         "evidence": [
           "history"
         ]
-      }
-    ],
-    "published-work": [
-      {
-        "kind": "h2",
-        "text": "Published Work"
-      },
-      {
-        "kind": "p",
-        "text": "Every public release, package, paper, essay, briefing and packet, read from GitHub, PyPI, npm, crates.io, Zenodo and the live site on November 2, 2026. Private and unreleased work is not listed. Machine-readable copy: harperz9.github.io/career/published-work.json"
-      },
-      {
-        "kind": "h3",
-        "text": "Papers, preprints, corpora and data | 16 records"
-      },
-      {
-        "kind": "li",
-        "text": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds, and the Limits of Authentication. Preprint, June 20, 2026. doi.org/10.5281/zenodo.20773724"
-      },
-      {
-        "kind": "li",
-        "text": "The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector Technology and a Cross-Sector Convergence on Verifiable Trust. Preprint, June 20, 2026. doi.org/10.5281/zenodo.20778927"
-      },
-      {
-        "kind": "li",
-        "text": "BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable Receipts. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22767839"
-      },
-      {
-        "kind": "li",
-        "text": "EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted Work. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768169"
-      },
-      {
-        "kind": "li",
-        "text": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768231"
-      },
-      {
-        "kind": "li",
-        "text": "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768261"
-      },
-      {
-        "kind": "li",
-        "text": "The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768344"
-      },
-      {
-        "kind": "li",
-        "text": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768308"
-      },
-      {
-        "kind": "li",
-        "text": "Flywheel confirmatory anchor: signed tree head. Dataset, August 28, 2026. doi.org/10.5281/zenodo.22148403"
-      },
-      {
-        "kind": "li",
-        "text": "Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Preprint, September 15, 2026. doi.org/10.5281/zenodo.22768398"
-      },
-      {
-        "kind": "li",
-        "text": "Self-Given Is Not Self-Grounding. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126458"
-      },
-      {
-        "kind": "li",
-        "text": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126117"
-      },
-      {
-        "kind": "li",
-        "text": "The Seam That Holds While It Is Crossed. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126357"
-      },
-      {
-        "kind": "li",
-        "text": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds. Paper on the site, October 3, 2026. harperz9.github.io/papers/conferred-existence-paper.pdf"
-      },
-      {
-        "kind": "li",
-        "text": "The Conservation of Faithfulness. Preprint, October 3, 2026. doi.org/10.5281/zenodo.23126484"
-      },
-      {
-        "kind": "li",
-        "text": "Witness and Verification Under Bounded Rationality. Paper on the site, October 3, 2026. harperz9.github.io/papers/witness-and-verification.pdf"
-      },
-      {
-        "kind": "h3",
-        "text": "Software releases | 302 releases in 57 repositories"
-      },
-      {
-        "kind": "li",
-        "text": "cmmns: 18 releases from v1.0.0, October 21, 2026, to v3.9.1, October 28, 2026. github.com/HarperZ9/cmmns/releases"
-      },
-      {
-        "kind": "li",
-        "text": "superframe: 2 releases from v0.1.0, October 26, 2026, to v0.2.0, October 28, 2026. github.com/HarperZ9/superframe/releases"
-      },
-      {
-        "kind": "li",
-        "text": "articulate: 24 releases from v0.1.0, September 18, 2026, to v0.17.0, October 26, 2026. github.com/HarperZ9/articulate/releases"
-      },
-      {
-        "kind": "li",
-        "text": "buildlang: 11 releases from v1.0.0, March 30, 2026, to v1.10.0, October 23, 2026. github.com/HarperZ9/buildlang/releases"
-      },
-      {
-        "kind": "li",
-        "text": "emet: 5 releases from v1.0.0, July 1, 2026, to v1.3.1, October 23, 2026. github.com/HarperZ9/emet/releases"
-      },
-      {
-        "kind": "li",
-        "text": "gather: 14 releases from v1.5.0, June 25, 2026, to v2.4.0, October 23, 2026. github.com/HarperZ9/gather/releases"
-      },
-      {
-        "kind": "li",
-        "text": "crucible: 6 releases from v1.1.0, July 1, 2026, to v1.6.0, October 23, 2026. github.com/HarperZ9/crucible/releases"
-      },
-      {
-        "kind": "li",
-        "text": "canon: 8 releases from v0.1.0, September 7, 2026, to v0.7.0, October 23, 2026. github.com/HarperZ9/canon/releases"
-      },
-      {
-        "kind": "li",
-        "text": "discover: 3 releases from v0.1.0, October 23, 2026, to v0.1.2, October 23, 2026. github.com/HarperZ9/discover/releases"
-      },
-      {
-        "kind": "li",
-        "text": "engine-revival: 12 releases from v0.1.0, August 27, 2026, to v0.12.0, October 18, 2026. github.com/HarperZ9/engine-revival/releases"
-      },
-      {
-        "kind": "li",
-        "text": "brender-archival: 18 releases from v0.1.1, August 27, 2026, to brview-v0.4.0, October 17, 2026. github.com/HarperZ9/brender-archival/releases"
-      },
-      {
-        "kind": "li",
-        "text": "flywheel: 34 releases from v0.3.3, August 4, 2026, to v1.9.0, October 15, 2026. github.com/HarperZ9/flywheel/releases"
-      },
-      {
-        "kind": "li",
-        "text": "raw-native: 8 releases from v0.2.0, October 3, 2026, to v0.8.0, October 14, 2026. github.com/HarperZ9/raw-native/releases"
-      },
-      {
-        "kind": "li",
-        "text": "calibrate-pro: 4 releases from v1.0.0, March 31, 2026, to v2.0.1, October 4, 2026. github.com/HarperZ9/calibrate-pro/releases"
-      },
-      {
-        "kind": "li",
-        "text": "HarperZ9.github.io: films-2026-10-04, October 4, 2026. github.com/HarperZ9/HarperZ9.github.io/releases"
-      },
-      {
-        "kind": "li",
-        "text": "signal-kernels: v1.1.0, October 4, 2026. github.com/HarperZ9/signal-kernels/releases"
-      },
-      {
-        "kind": "li",
-        "text": "gpu-trace-validator: 2 releases from v0.1.0, June 13, 2026, to v0.2.0, October 4, 2026. github.com/HarperZ9/gpu-trace-validator/releases"
-      },
-      {
-        "kind": "li",
-        "text": "coherence-membrane: v0.2.0, October 4, 2026. github.com/HarperZ9/coherence-membrane/releases"
-      },
-      {
-        "kind": "li",
-        "text": "studio-engine: v0.3.0, October 4, 2026. github.com/HarperZ9/studio-engine/releases"
-      },
-      {
-        "kind": "li",
-        "text": "reconcile: v0.2.0, October 4, 2026. github.com/HarperZ9/reconcile/releases"
-      },
-      {
-        "kind": "li",
-        "text": "superstack: 2 releases from v0.1.0, October 4, 2026, to v0.2.0, October 4, 2026. github.com/HarperZ9/superstack/releases"
-      },
-      {
-        "kind": "li",
-        "text": "index: 14 releases from v0.1.0, June 13, 2026, to v2.16.0, October 3, 2026. github.com/HarperZ9/index/releases"
-      },
-      {
-        "kind": "li",
-        "text": "forum: 19 releases from v1.0.0, June 25, 2026, to v1.17.0, October 3, 2026. github.com/HarperZ9/forum/releases"
-      },
-      {
-        "kind": "li",
-        "text": "telos: 12 releases from v0.1.0, June 29, 2026, to v0.9.0, October 3, 2026. github.com/HarperZ9/telos/releases"
-      },
-      {
-        "kind": "li",
-        "text": "learn: 4 releases from v2.0.0, September 27, 2026, to v2.3.0, October 3, 2026. github.com/HarperZ9/learn/releases"
-      },
-      {
-        "kind": "li",
-        "text": "mneme: 8 releases from v0.1.0, July 7, 2026, to v0.7.0, October 3, 2026. github.com/HarperZ9/mneme/releases"
-      },
-      {
-        "kind": "li",
-        "text": "plexus: 4 releases from v0.2.0, September 10, 2026, to v0.4.0, October 3, 2026. github.com/HarperZ9/plexus/releases"
-      },
-      {
-        "kind": "li",
-        "text": "relay: 9 releases from v0.2.0, September 8, 2026, to v0.7.0, October 3, 2026. github.com/HarperZ9/relay/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-finance: 2 releases from v1.0.0, June 16, 2026, to v1.0.1, September 18, 2026. github.com/HarperZ9/build-finance/releases"
-      },
-      {
-        "kind": "li",
-        "text": "context-curator-lite: 2 releases from v0.1.0, June 13, 2026, to v0.2.0, September 18, 2026. github.com/HarperZ9/context-curator-lite/releases"
-      },
-      {
-        "kind": "li",
-        "text": "accountable-surface: 2 releases from v0.1.0, September 14, 2026, to v0.2.0, September 18, 2026. github.com/HarperZ9/accountable-surface/releases"
-      },
-      {
-        "kind": "li",
-        "text": "bulletin: 4 releases from v0.3.1, September 7, 2026, to v0.5.0, September 14, 2026. github.com/HarperZ9/bulletin/releases"
-      },
-      {
-        "kind": "li",
-        "text": "repo-proof-index: 3 releases from v0.1.0, June 12, 2026, to v0.2.0, September 13, 2026. github.com/HarperZ9/repo-proof-index/releases"
-      },
-      {
-        "kind": "li",
-        "text": "phantom: 6 releases from v1.0.0-rc1, August 21, 2026, to v1.1.1, September 10, 2026. github.com/HarperZ9/phantom/releases"
-      },
-      {
-        "kind": "li",
-        "text": "public-surface-sweeper: 3 releases from v0.1.0, June 12, 2026, to v0.1.3, September 7, 2026. github.com/HarperZ9/public-surface-sweeper/releases"
-      },
-      {
-        "kind": "li",
-        "text": "chorus: 2 releases from v0.2.0, September 7, 2026, to v0.3.0, September 7, 2026. github.com/HarperZ9/chorus/releases"
-      },
-      {
-        "kind": "li",
-        "text": "truth-enb: v1.0.0-rc.1, August 15, 2026; prereleases only. github.com/HarperZ9/truth-enb/releases"
-      },
-      {
-        "kind": "li",
-        "text": "skyrimbridge: v3.0.0-rc.1, August 15, 2026; prereleases only. github.com/HarperZ9/skyrimbridge/releases"
-      },
-      {
-        "kind": "li",
-        "text": "elder-enb: 5 releases from v1.0.0-rc.1, August 15, 2026, to v1.0.0-rc.5, August 15, 2026; prereleases only. github.com/HarperZ9/elder-enb/releases"
-      },
-      {
-        "kind": "li",
-        "text": "elder-weathers: v1.0.0, August 15, 2026; prereleases only. github.com/HarperZ9/elder-weathers/releases"
-      },
-      {
-        "kind": "li",
-        "text": "flywheel-desktop: 2 releases from v0.2.1, July 29, 2026, to v0.2.2, July 29, 2026; archived. github.com/HarperZ9/flywheel-desktop/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-ui: 2 releases from v1.0.0, June 16, 2026, to v2.0.0, July 11, 2026. github.com/HarperZ9/build-ui/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-oracle: v1.0.0, June 16, 2026. github.com/HarperZ9/build-oracle/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-engine: v1.0.0, June 16, 2026. github.com/HarperZ9/build-engine/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-ecosystem: v1.0.0, June 16, 2026. github.com/HarperZ9/build-ecosystem/releases"
-      },
-      {
-        "kind": "li",
-        "text": "provenance-sensorium: v0.1.0, June 16, 2026; archived. github.com/HarperZ9/provenance-sensorium/releases"
-      },
-      {
-        "kind": "li",
-        "text": "agent-audit: 2 releases from v0.1.0, June 16, 2026, to v0.1.1, June 16, 2026; archived. github.com/HarperZ9/agent-audit/releases"
-      },
-      {
-        "kind": "li",
-        "text": "release-surface-scanner: v0.1.0, June 16, 2026; archived. github.com/HarperZ9/release-surface-scanner/releases"
-      },
-      {
-        "kind": "li",
-        "text": "secret-redact-io: v0.1.0, June 16, 2026. github.com/HarperZ9/secret-redact-io/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-color: 2 releases from v1.0.0, March 31, 2026, to v1.0.1, June 14, 2026. github.com/HarperZ9/build-color/releases"
-      },
-      {
-        "kind": "li",
-        "text": "buildlang-tmLanguage: v0.1.0, June 14, 2026. github.com/HarperZ9/buildlang-tmLanguage/releases"
-      },
-      {
-        "kind": "li",
-        "text": "buildlang-vscode: v0.1.0, June 14, 2026. github.com/HarperZ9/buildlang-vscode/releases"
-      },
-      {
-        "kind": "li",
-        "text": "agent-routing-kit: v0.1.0, June 14, 2026. github.com/HarperZ9/agent-routing-kit/releases"
-      },
-      {
-        "kind": "li",
-        "text": "model-provenance-validator: 2 releases from v0.1.0, June 12, 2026, to v0.1.1, June 14, 2026. github.com/HarperZ9/model-provenance-validator/releases"
-      },
-      {
-        "kind": "li",
-        "text": "workflow-harness-lite: v0.1.0, June 14, 2026. github.com/HarperZ9/workflow-harness-lite/releases"
-      },
-      {
-        "kind": "li",
-        "text": "agent-hook-pack: v0.1.0, June 13, 2026. github.com/HarperZ9/agent-hook-pack/releases"
-      },
-      {
-        "kind": "li",
-        "text": "build-universe: 3 releases from v1.0.0, March 31, 2026, to v1.0.2, June 12, 2026. github.com/HarperZ9/build-universe/releases"
-      },
-      {
-        "kind": "h3",
-        "text": "Packages | 26 on PyPI, npm and crates.io"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI accountable-surface 0.3.1: first published September 23, 2026, this version September 23, 2026. pypi.org/project/accountable-surface"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI articulate-writing 0.16.0: first published September 18, 2026, this version October 23, 2026. pypi.org/project/articulate-writing"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI build-color 1.0.2: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-color"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI build-engine 1.0.1: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-engine"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI build-oracle 1.0.1: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-oracle"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI build-ui 2.0.0: first published July 1, 2026, this version July 11, 2026. pypi.org/project/build-ui"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI calibrate-pro 2.0.1: first published July 12, 2026, this version October 4, 2026. pypi.org/project/calibrate-pro"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI chorus-discourse 0.3.2: first published September 22, 2026, this version October 23, 2026. pypi.org/project/chorus-discourse"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI coherence-membrane 0.2.0: first published September 22, 2026, this version October 4, 2026. pypi.org/project/coherence-membrane"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI crucible-bench 1.6.0: first published July 1, 2026, this version October 23, 2026. pypi.org/project/crucible-bench"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI emet 1.3.1: first published July 1, 2026, this version October 23, 2026. pypi.org/project/emet"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI flywheel-canon 0.7.0: first published September 22, 2026, this version October 23, 2026. pypi.org/project/flywheel-canon"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI flywheel-mneme 0.7.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/flywheel-mneme"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI flywheel-relay 0.7.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/flywheel-relay"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI flywheel-verify 1.9.0: first published August 3, 2026, this version October 15, 2026. pypi.org/project/flywheel-verify"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI forum-engine 1.17.0: first published June 25, 2026, this version October 3, 2026. pypi.org/project/forum-engine"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI gather-engine 2.4.0: first published June 25, 2026, this version October 23, 2026. pypi.org/project/gather-engine"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI index-graph 2.16.0: first published June 24, 2026, this version October 3, 2026. pypi.org/project/index-graph"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI model-provenance-validator 0.1.1: first published June 14, 2026, this version June 14, 2026. pypi.org/project/model-provenance-validator"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI plexus-mesh 0.4.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/plexus-mesh"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI proof-surface 0.1.0: first published June 18, 2026, this version June 18, 2026. pypi.org/project/proof-surface"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI public-surface-sweeper 0.1.3: first published June 14, 2026, this version September 7, 2026. pypi.org/project/public-surface-sweeper"
-      },
-      {
-        "kind": "li",
-        "text": "PyPI repo-proof-index 0.2.0: first published June 14, 2026, this version September 13, 2026. pypi.org/project/repo-proof-index"
-      },
-      {
-        "kind": "li",
-        "text": "crates.io buildlang 1.10.0: first published June 30, 2026, this version October 23, 2026. crates.io/crates/buildlang"
-      },
-      {
-        "kind": "li",
-        "text": "npm @harperz9/learn 2.3.0: first published July 1, 2026, this version October 3, 2026. npmjs.com/package/@harperz9/learn"
-      },
-      {
-        "kind": "li",
-        "text": "npm project-telos-mcp 0.9.0: first published September 27, 2026, this version October 3, 2026. npmjs.com/package/project-telos-mcp"
-      },
-      {
-        "kind": "h3",
-        "text": "Public repositories without a release | 26"
-      },
-      {
-        "kind": "p",
-        "text": "raw (April 12, 2026); wol-pi (April 12, 2026); anomaly-kernels (June 12, 2026); consulting-template-kit (June 16, 2026); proof-surface (June 17, 2026); proof-surface-report (June 17, 2026); behavior-transform.io (June 18, 2026); accountable-engine (June 20, 2026); senses-and-sensibility (June 20, 2026); witnessing-spine (June 20, 2026); faithful-transpile (June 23, 2026); local-model (July 9, 2026, archived); enb-runtime-core (July 15, 2026); enb-validation-lab (July 16, 2026); maqam (July 19, 2026); vllm-ci-forum-receipt (July 21, 2026); crewai-kickoff-replay-receipt (July 25, 2026); workspace (August 3, 2026); terminal-state-fixtures (August 21, 2026); valibot-1518-repro (August 25, 2026); flywheel-receipt-demo (September 19, 2026); flywheel-evidence-task (October 2, 2026); prereg-ledger (October 3, 2026); bootloops-second-checker (October 3, 2026); seal-watch (October 4, 2026); open-archives (October 23, 2026). github.com/HarperZ9"
-      },
-      {
-        "kind": "h3",
-        "text": "Essays, letters and investigations | 32"
-      },
-      {
-        "kind": "li",
-        "text": "Conferred Existence, June 20, 2026. harperz9.github.io/conferred-existence-essay.html"
-      },
-      {
-        "kind": "li",
-        "text": "Verified Is Not Trustworthy, June 20, 2026. harperz9.github.io/verified-is-not-trustworthy.html"
-      },
-      {
-        "kind": "li",
-        "text": "Why it's built this way: the longer argument, June 22, 2026. harperz9.github.io/why.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Summary Is Not The Record, July 8, 2026. harperz9.github.io/the-summary-is-not-the-record.html"
-      },
-      {
-        "kind": "li",
-        "text": "Pick the Lock for Everyone, July 22, 2026. harperz9.github.io/pick-the-lock-for-everyone.html"
-      },
-      {
-        "kind": "li",
-        "text": "Pick the Lock for Everyone, July 22, 2026. harperz9.github.io/pick-the-lock-for-everyone-talk.html"
-      },
-      {
-        "kind": "li",
-        "text": "Current Story, July 23, 2026. harperz9.github.io/current-story.html"
-      },
-      {
-        "kind": "li",
-        "text": "No Receipt, No Accept, July 28, 2026. harperz9.github.io/no-receipt-no-accept.html"
-      },
-      {
-        "kind": "li",
-        "text": "Models Propose, Oracles Dispose, July 29, 2026. harperz9.github.io/models-propose-oracles-dispose.html"
-      },
-      {
-        "kind": "li",
-        "text": "Frontier Safety: OpenAI / Hugging Face Incident, August 28, 2026. harperz9.github.io/frontier-safety-openai-hugging-face-incident.html"
-      },
-      {
-        "kind": "li",
-        "text": "Availability Is Not Reach, September 1, 2026. harperz9.github.io/availability-is-not-reach.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Second Hearing, September 1, 2026. harperz9.github.io/the-second-hearing.html"
-      },
-      {
-        "kind": "li",
-        "text": "What the Label Changes, September 2, 2026. harperz9.github.io/what-the-label-changes.html"
-      },
-      {
-        "kind": "li",
-        "text": "Growth Needs a Before, September 5, 2026. harperz9.github.io/growth-needs-a-before.html"
-      },
-      {
-        "kind": "li",
-        "text": "A witness should not become a ruler, September 9, 2026. harperz9.github.io/a-witness-should-not-become-a-ruler.html"
-      },
-      {
-        "kind": "li",
-        "text": "LTJ Bukem: The Man Behind the Atmosphere, September 9, 2026. harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html"
-      },
-      {
-        "kind": "li",
-        "text": "Borrowed Ground, September 10, 2026. harperz9.github.io/borrowed-ground.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Sandbox Was Never Just a Box, September 10, 2026. harperz9.github.io/the-sandbox-was-never-just-a-box.html"
-      },
-      {
-        "kind": "li",
-        "text": "An open letter on checking the machines, September 19, 2026. harperz9.github.io/checking-the-machines.html"
-      },
-      {
-        "kind": "li",
-        "text": "Who Knew First, September 25, 2026. harperz9.github.io/who-knew-first.html"
-      },
-      {
-        "kind": "li",
-        "text": "Support Has More Than One Record, September 28, 2026. harperz9.github.io/support-has-more-than-one-record.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Scene the Song Did Not Tell You, September 28, 2026. harperz9.github.io/the-scene-the-song-did-not-tell-you.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Timestamp Is Not the Order, September 28, 2026. harperz9.github.io/the-timestamp-is-not-the-order.html"
-      },
-      {
-        "kind": "li",
-        "text": "What the Formula Counts, September 28, 2026. harperz9.github.io/what-the-formula-counts.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Number Has a Vintage, October 1, 2026. harperz9.github.io/the-number-has-a-vintage.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Terms for Telling, October 1, 2026. harperz9.github.io/the-terms-for-telling.html"
-      },
-      {
-        "kind": "li",
-        "text": "Who Pays the Referees, October 1, 2026. harperz9.github.io/who-pays-the-referees.html"
-      },
-      {
-        "kind": "li",
-        "text": "A Bullshitter Knows a Bullshitter, October 2, 2026. harperz9.github.io/why-i-do-this.html"
-      },
-      {
-        "kind": "li",
-        "text": "Who Knew First, and what it opened, October 2, 2026. harperz9.github.io/who-knew-first-series.html"
-      },
-      {
-        "kind": "li",
-        "text": "A Check It Cannot Predict, October 8, 2026. harperz9.github.io/a-check-it-cannot-predict.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Maker Is Part of the Story, October 8, 2026. harperz9.github.io/the-maker-is-part-of-the-story.html"
-      },
-      {
-        "kind": "li",
-        "text": "Who Kept the Books, October 8, 2026. harperz9.github.io/who-kept-the-books.html"
-      },
-      {
-        "kind": "h3",
-        "text": "Research notes | 17"
-      },
-      {
-        "kind": "li",
-        "text": "C3: a thermodynamic SDE recovers a matrix inverse, June 30, 2026. harperz9.github.io/research-c3-thermodynamic.html"
-      },
-      {
-        "kind": "li",
-        "text": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds, June 30, 2026. harperz9.github.io/research-conferred-existence.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Conservation of Faithfulness, June 30, 2026. harperz9.github.io/research-conservation-of-faithfulness.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Discovery Forge, June 30, 2026. harperz9.github.io/research-discovery-forge.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Learning Forge, June 30, 2026. harperz9.github.io/research-learning-forge.html"
-      },
-      {
-        "kind": "li",
-        "text": "Witness and Verification Under Bounded Rationality, June 30, 2026. harperz9.github.io/research-witness-and-verification.html"
-      },
-      {
-        "kind": "li",
-        "text": "Biology Network Intelligence for Hyphal Context Protocols, July 2, 2026. harperz9.github.io/research-biology-network-intelligence.html"
-      },
-      {
-        "kind": "li",
-        "text": "Causal Research Workbench, July 2, 2026. harperz9.github.io/research-causal-workbench.html"
-      },
-      {
-        "kind": "li",
-        "text": "Embodied Sim-to-Real Proof Packets, July 2, 2026. harperz9.github.io/research-embodied-sim2real.html"
-      },
-      {
-        "kind": "li",
-        "text": "Formal Replay Preflight for PDE Packets, July 2, 2026. harperz9.github.io/research-formal-replay-preflight.html"
-      },
-      {
-        "kind": "li",
-        "text": "Hyphal Context Benchmark for Receipt Routing, July 2, 2026. harperz9.github.io/research-hyphal-context-benchmark.html"
-      },
-      {
-        "kind": "li",
-        "text": "Proof-Carrying Research Loops, July 2, 2026. harperz9.github.io/research-proof-carrying-research-loops.html"
-      },
-      {
-        "kind": "li",
-        "text": "Quantum Error-Correction Proof Packets, July 2, 2026. harperz9.github.io/research-quantum-error-correction.html"
-      },
-      {
-        "kind": "li",
-        "text": "TI Morse Field Scope Integration, July 2, 2026. harperz9.github.io/research-ti-morse-field-intake.html"
-      },
-      {
-        "kind": "li",
-        "text": "Self-Given Is Not Self-Grounding, September 15, 2026. harperz9.github.io/research-self-given.html"
-      },
-      {
-        "kind": "li",
-        "text": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate, September 15, 2026. harperz9.github.io/research-arity-gap.html"
-      },
-      {
-        "kind": "li",
-        "text": "The Seam That Holds While It Is Crossed, September 15, 2026. harperz9.github.io/research-forcing-argument.html"
-      },
-      {
-        "kind": "h3",
-        "text": "Reviewer packets | 1"
-      },
-      {
-        "kind": "li",
-        "text": "METR count_odds reviewer packet, September 13, 2026. harperz9.github.io/metr-count-odds-reviewer-packet.html"
-      },
-      {
-        "kind": "h3",
-        "text": "Frontier Safety briefing | 7 archived editions"
-      },
-      {
-        "kind": "p",
-        "text": "Editions of August 24, 2026; August 25, 2026; August 27, 2026; September 9, 2026; September 16, 2026; September 23, 2026; September 30, 2026. harperz9.github.io/frontier-safety.html"
-      },
-      {
-        "kind": "h3",
-        "text": "Mods"
-      },
-      {
-        "kind": "li",
-        "text": "Elder ENB on Nexus Mods, first uploaded April 21, 2024. nexusmods.com/skyrimspecialedition/mods/117327"
       }
     ]
   },
@@ -1281,6 +627,159 @@
         }
       ],
       "page_target": 1
+    },
+    {
+      "id": "graphics-developer-tools",
+      "route": "resume-graphics-developer-tools.html",
+      "stem": "Zain-Dana-Harper-Resume-Graphics-Developer-Tools",
+      "title": "Graphics, Rendering, and Developer Tools",
+      "page_target": 1,
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Graphics and Rendering | Developer Tools | Languages"
+        },
+        {
+          "kind": "h2",
+          "text": "Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Self-directed graphics and tools programmer moving from eleven years of arboriculture; the career change began June 2026, with no professional programming role yet. Builds renderers, shader presets and compilers that check each fast path against a reference.",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Technical Skills"
+        },
+        {
+          "kind": "p",
+          "text": "C++23, Rust, Python, HLSL, WGSL, TypeScript; D3D11, D3D12, Vulkan, WebGPU; CPU reference rendering and GPU parity checks; color science (Oklab, CAM16, ICC profiles); compilers, type inference, language servers; CMake, GitHub Actions, pytest."
+        },
+        {
+          "kind": "h2",
+          "text": "Self-Directed Projects"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built raw-native, a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, and its default renders were byte-identical across Windows, D3D12, Linux and WebAssembly builds.",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Added a Vulkan 1.3 backend to raw-native, merged and not yet released, whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash.",
+          "evidence": [
+            "raw-native-main-20261023"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.",
+          "evidence": [
+            "elder-enb-nexus"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Developed BuildLang, a Rust compiler with typed capability effects, type inference, C and shader output and a language server; version 1.10.0 is on crates.io.",
+          "evidence": [
+            "buildlang"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux in Brender Archival, and built Calibrate Pro (ICC profiles, 3D LUTs, DDC/CI) and Build Color (Oklab, CAM16, Delta E), both on PyPI.",
+          "evidence": [
+            "brender-archival",
+            "calibrate-pro",
+            "build-color"
+          ]
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Employment"
+        },
+        {
+          "ref": "resume-field-value"
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Open-Source Contributions: 37 Merged in 30 Repositories"
+        },
+        {
+          "kind": "li",
+          "text": "TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.",
+          "evidence": [
+            "tomlkit"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.",
+          "evidence": [
+            "datasette"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Credentials, Training, and Education"
+        },
+        {
+          "kind": "p",
+          "text": "Security, AI and cloud credentials from Qualys, Microsoft, Cisco and Google are listed in the full record: harperz9.github.io/cv.html.",
+          "evidence": [
+            "ms-ai-security",
+            "ms-entra",
+            "ms-storage",
+            "lfd121",
+            "sc100-apps-data",
+            "sc100-mcra-mcsb",
+            "bluedot-agi-strategy",
+            "anthropic-mcp-advanced",
+            "qualys-policy-audit",
+            "qualys-car",
+            "qualys-vmdr",
+            "claude-code-in-action",
+            "building-claude-api",
+            "qualys-kcs",
+            "qualys-totalcloud",
+            "qualys-edr",
+            "google-deepmind-slm",
+            "unesco-ai-ethics",
+            "google-multi-agent",
+            "cisco-ethical-hacker",
+            "ms-devops-security",
+            "google-mlops-model-evaluation",
+            "claude-amazon-bedrock",
+            "google-bigquery-predictive",
+            "google-bigquery-ml-models",
+            "google-secops-deep-dive"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
+          "evidence": [
+            "history"
+          ]
+        }
+      ]
     },
     {
       "id": "grounds",
@@ -2373,12 +1872,9 @@
             "qualys-totalcloud",
             "qualys-edr"
           ]
-        },
-        {
-          "ref": "published-work"
         }
       ],
-      "page_target": 11
+      "page_target": 6
     }
   ],
   "impact_policy": {

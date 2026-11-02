@@ -1,0 +1,53 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "career/resume-source.json",
+  "document": "graphics-developer-tools",
+  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
+ },
+ "ir_sha256": "59b33f1dc1a62c2ce82e57c5685b3bc3d4b4f4b211c06447a9b8fd687d0787ad",
+ "theme": "press-resume",
+ "overrides": [
+  "base.size=10.0",
+  "base.leading=12.8",
+  "emboss.deboss_finish=inked"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "67abac3cd18a69cfd070ad142afd48a96420abad80c0cf0d1bbb8c8f88c65404"
+ },
+ "facts": {
+  "pages": 1,
+  "pages_layout": 1,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "HPNAAK+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "LPCMKA+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "OKBDAD+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 229070
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x294 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}

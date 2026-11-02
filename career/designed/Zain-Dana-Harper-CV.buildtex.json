@@ -3,39 +3,39 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "page:cv",
-  "sha256": "e9b45f302063e2e4236c3c5d84fae559bbc24239dce43edabf920f70cd5c05d0"
+  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
  },
- "ir_sha256": "78f7394f32ff3ff1313806940ff61db2f897ad81267d65920a32ff023d2802a1",
- "theme": "press",
+ "ir_sha256": "a233702f89b91cfedc1ec391e9a8e5ec13a55403e6bdccc1e8888a0949e667cc",
+ "theme": "press-resume",
  "overrides": [
-  "base.size=9.6",
-  "base.leading=13.0",
+  "base.size=10.0",
+  "base.leading=13.4",
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-CV.pdf": "79f2a30e3aa63f8da9e669dffabb81a24fa69454881b61fb874f32819f071817"
+  "Zain-Dana-Harper-CV.pdf": "7e64be163c64e4294adbd37328057556041cff5d42de2761fb4a018a95605a0c"
  },
  "facts": {
-  "pages": 11,
-  "pages_layout": 11,
+  "pages": 6,
+  "pages_layout": 6,
   "overfull": [],
   "underfull": 0,
   "missing_glyphs": [],
   "fonts": [
    {
+    "name": "BANFBE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
     "name": "BJEJEB+AccessionDisplay-Master",
     "embedded": true
    },
    {
-    "name": "FHKKHI+HankenGrotesk-Regular",
+    "name": "FFGEHC+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "GCFKGE+HankenGrotesk-Regular",
-    "embedded": true
-   },
-   {
-    "name": "NFMOJI+HankenGrotesk-Regular",
+    "name": "LPFHOF+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,11 +43,11 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 327372
+  "pdf_bytes": 274350
  },
  "failed": [],
  "notes": [
-  "press: relief 1275x312 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+  "press: relief 1275x296 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
  ],
  "external_programs": []
 }

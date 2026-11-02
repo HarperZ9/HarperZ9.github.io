@@ -28,6 +28,7 @@ RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf",
 )
 RETIRED_LEGACY_PDFS = (
     "career/Zain-Dana-Harper-Resume.pdf",
@@ -37,6 +38,7 @@ RETIRED_LEGACY_PDFS = (
 STATUS_BOUNDARY_DOCS = (
     "resume-support-operations.html",
     "resume-evaluation-tooling.html",
+    "resume-graphics-developer-tools.html",
     "resume-public-operations.html",
     "resume-grounds.html",
     "cv.html",

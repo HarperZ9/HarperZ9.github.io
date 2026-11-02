@@ -279,9 +279,22 @@ def render(source: dict) -> dict[str, str]:
         outputs[f'career/{stem}.md'] = plain(blocks, markdown=True)
         if route == 'cv.html':
             outputs['cv.md'] = plain(blocks, markdown=True)
+    inventory = ROOT / 'career' / 'published-work.json'
+    if inventory.is_file():
+        # The full published-work inventory has its own page; the resumes and CV link to it.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('published_work_blocks', ROOT / 'tools' / 'published_work_blocks.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        inventory_blocks = module.blocks
+        rows = inventory_blocks(json.loads(inventory.read_text(encoding='utf-8')))
+        page = [{'kind': 'h1', 'text': 'Published work'}] + [dict(r, kind='h2') if r['kind'] == 'h3' else r for r in rows[1:]]
+        outputs['published-work.html'] = shell('published-work.html', 'Zain Dana Harper | Published work',
+            'Every public release, package, paper, essay, briefing and packet by Zain Dana Harper, with dates and links.',
+            '<article class="sheet doc-rail">\n' + blocks_html(page) + '\n</article>\n')
     for route, hire in [('hire.html', True), ('resume.html', False)]:
         outputs[route] = shell(route, 'Zain Dana Harper | ' + ('Hire' if hire else 'Resumes'), 'Current resumes for systems engineering, developer operations, and field operations, plus a full CV.', router_body(source, hire=hire), hire=hire)
-    lines = ['# Zain Dana Harper: Resumes', '', 'Updated ' + source['reviewed'] + '.', '', 'Three primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.', '']
+    lines = ['# Zain Dana Harper: Resumes', '', 'Updated ' + source['reviewed'] + '.', '', 'Four primary families: support/developer operations/QA; AI systems/evaluation/Python tooling; graphics, rendering and developer tools; arboriculture/field operations/estimating. Each targeted resume is one page. A public-operations variant and full CV are also available.', '']
     for doc in source['documents']:
         lines += ['## ' + doc['title'], '', 'https://harperz9.github.io/' + doc['route'], '']
         lines += [f'[{suffix.upper()}](https://harperz9.github.io/career/{doc["stem"]}.{suffix})' for suffix in ('pdf', 'docx', 'txt', 'md')]

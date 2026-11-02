@@ -25,6 +25,8 @@ OUTPUT_NAMES = (
     "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx",
     "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
     "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx",
+    "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf",
+    "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.docx",
     "Zain-Dana-Harper-Resume-Public-Operations.pdf",
     "Zain-Dana-Harper-Resume-Public-Operations.docx",
     "Zain-Dana-Harper-Resume-Grounds.pdf",
@@ -134,7 +136,7 @@ def test_generated_formats_are_parseable_one_page_and_status_bounded(tmp_path: P
     for path in output.iterdir():
         if path.suffix == ".pdf":
             reader = PdfReader(path)
-            assert len(reader.pages) == (11 if path.stem.endswith("-CV") else 1), path.name
+            assert len(reader.pages) == (6 if path.stem.endswith("-CV") else 1), path.name
         text = _artifact_text(path)
         assert len(text.split()) >= 250, path.name
         for value in ("Stream/Convergys", "2014 to 2015", "Legendary Tree",
@@ -152,8 +154,8 @@ def test_generated_pdfs_render_visible_content_inside_letter_page(tmp_path: Path
     assert proc.returncode == 0, proc.stdout + proc.stderr
     for path in sorted(output.glob("*.pdf")):
         document = fitz.open(path)
-        # 2 November 2026: the CV adds the complete published-work inventory and runs to eleven pages.
-        assert document.page_count == (11 if path.stem.endswith("-CV") else 1)
+        # 2 November 2026: the published-work inventory moved to its own page; the CV runs to six pages.
+        assert document.page_count == (6 if path.stem.endswith("-CV") else 1)
         for page in document:
             assert round(page.rect.width) == 612 and round(page.rect.height) == 792
             blocks = [b for b in page.get_text("blocks") if b[4].strip()]
@@ -313,7 +315,7 @@ def test_receipt_binds_artifact_and_extraction_hashes_without_local_paths(
             "typing_extensions",
         )
     }
-    assert len(receipt["artifacts"]) == 10
+    assert len(receipt["artifacts"]) == 12
     by_name = {Path(row["path"]).name: row for row in receipt["artifacts"]}
     assert sorted(by_name) == sorted(OUTPUT_NAMES)
     for name in OUTPUT_NAMES:
@@ -373,7 +375,7 @@ def test_release_manifest_replaces_only_generated_artifact_rows(
         row for row in after["artifacts"] if row["path"] not in generated_paths
     ]
     assert unaffected_after == unaffected_before
-    assert len(after["artifacts"]) == len(before["artifacts"]) == 14
+    assert len(after["artifacts"]) == len(before["artifacts"]) == 16
     by_path = {row["path"]: row for row in after["artifacts"]}
     for receipt_row in receipt["artifacts"]:
         expected = {key: value for key, value in receipt_row.items() if key != "source"}

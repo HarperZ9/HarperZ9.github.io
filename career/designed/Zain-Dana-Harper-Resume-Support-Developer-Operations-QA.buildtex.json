@@ -3,17 +3,17 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "e9b45f302063e2e4236c3c5d84fae559bbc24239dce43edabf920f70cd5c05d0"
+  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
  },
- "ir_sha256": "cc03c63571e692bae24ff8b8d9cd3cb61eb9d3df8ba01dbfc042b72a4a85e8f5",
- "theme": "press",
+ "ir_sha256": "4e8b38dcfc3ad2c1538d872c82e95db381df50145af4a72919774a5952ba36ac",
+ "theme": "press-resume",
  "overrides": [
-  "base.size=9.3",
-  "base.leading=12.4",
+  "base.size=10.0",
+  "base.leading=12.8",
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "773f959083db131db784fdae10f9a425b11cdec9dfc84c2717b0eb948f04f888"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "1f778c7c52e7605f664dac2b28ebb94ff59dd03eb1ab76e14232156527e9b196"
  },
  "facts": {
   "pages": 1,
@@ -27,15 +27,15 @@
     "embedded": true
    },
    {
-    "name": "HIOFMC+HankenGrotesk-Regular",
+    "name": "CCIDKG+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "IKKJDB+HankenGrotesk-Regular",
+    "name": "HPNAAK+HankenGrotesk-Regular",
     "embedded": true
    },
    {
-    "name": "MPGAON+HankenGrotesk-Regular",
+    "name": "LOIAEF+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,11 +43,11 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 235387
+  "pdf_bytes": 228299
  },
  "failed": [],
  "notes": [
-  "press: relief 1275x312 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+  "press: relief 1275x294 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
  ],
  "external_programs": []
 }
