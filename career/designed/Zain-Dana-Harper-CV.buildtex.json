@@ -9,7 +9,8 @@
  "theme": "press",
  "overrides": [
   "base.size=9.6",
-  "base.leading=13.0"
+  "base.leading=13.0",
+  "emboss.deboss_finish=inked"
  ],
  "outputs": {
   "Zain-Dana-Harper-CV.pdf": "79f2a30e3aa63f8da9e669dffabb81a24fa69454881b61fb874f32819f071817"

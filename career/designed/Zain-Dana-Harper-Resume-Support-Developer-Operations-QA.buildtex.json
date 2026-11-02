@@ -9,7 +9,8 @@
  "theme": "press",
  "overrides": [
   "base.size=9.3",
-  "base.leading=12.4"
+  "base.leading=12.4",
+  "emboss.deboss_finish=inked"
  ],
  "outputs": {
   "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "773f959083db131db784fdae10f9a425b11cdec9dfc84c2717b0eb948f04f888"

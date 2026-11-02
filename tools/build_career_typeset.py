@@ -60,7 +60,9 @@ def main() -> int:
         try:
             # A one-page resume steps the body size down until it fits; the CV keeps the theme size.
             for size, lead in FIT if doc.get("page_target") == 1 else FIT[:1]:
-                sets = [f"base.size={size}", f"base.leading={lead}"]
+                # Inked deboss, stated here rather than left to the theme default: the name must keep
+                # WCAG AA contrast (tests/test_career_designed.py measures it on the rendered page).
+                sets = [f"base.size={size}", f"base.leading={lead}", "emboss.deboss_finish=inked"]
                 r = build(str(ir), str(OUT / doc["stem"]), "press", sets, html=False)
                 if r["facts"]["pages"] <= (doc.get("page_target") or 99):
                     break

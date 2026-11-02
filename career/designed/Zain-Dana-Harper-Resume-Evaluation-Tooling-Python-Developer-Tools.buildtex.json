@@ -9,7 +9,8 @@
  "theme": "press",
  "overrides": [
   "base.size=9.6",
-  "base.leading=13.0"
+  "base.leading=13.0",
+  "emboss.deboss_finish=inked"
  ],
  "outputs": {
   "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "ea37f27880a4c900e63379d04f47d6fa08de0c7a367dee8fe303a3088b97eaaa"

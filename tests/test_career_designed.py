@@ -11,6 +11,7 @@ import json
 import re
 from pathlib import Path
 
+import fitz  # PyMuPDF, pinned in requirements-career-docs.txt
 from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,3 +80,43 @@ def test_inventory_lists_only_published_sources() -> None:
         assert (ROOT / page["url"].removeprefix("https://harperz9.github.io/")).is_file(), page
     for repo in INVENTORY["repositories"]:
         assert repo["url"] == f"https://github.com/HarperZ9/{repo['name']}"
+
+
+NAME = "Zain Dana Harper"
+AA = 4.5  # WCAG 2.x AA minimum for body-size text; the name is large, so this is the stricter bar
+
+
+def _linear(v: int) -> float:
+    c = v / 255
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
+
+def name_contrast(page: "fitz.Page") -> float:
+    """Contrast ratio of the rendered name against its ground, read from pixels, not from the PDF colours.
+
+    Renders the name's box at 200 dpi; the ink is the 5th-percentile luminance, the ground the
+    75th percentile, so a relief-only (blind) name, whose darkest pixels are bevel shadow, scores low.
+    """
+    box = page.search_for(NAME)[0]
+    pix = page.get_pixmap(dpi=200, clip=box)
+    s, n = pix.samples, pix.n
+    lum = sorted(0.2126 * _linear(s[i]) + 0.7152 * _linear(s[i + 1]) + 0.0722 * _linear(s[i + 2])
+                 for i in range(0, len(s), n))
+    ink, ground = lum[len(lum) // 20], lum[len(lum) * 3 // 4]
+    return (ground + 0.05) / (ink + 0.05)
+
+
+def test_the_name_meets_wcag_aa_contrast_on_every_designed_pdf() -> None:
+    for doc in SOURCE["documents"]:
+        page = fitz.open(DESIGNED / f"{doc['stem']}.pdf")[0]
+        ratio = name_contrast(page)
+        assert ratio >= AA, f"{doc['stem']}: name contrast {ratio:.2f}:1 is below {AA}:1"
+
+
+def test_the_contrast_check_fails_a_faint_name() -> None:
+    """Planted control: a name in a pale tint on the paper colour must fail the same measurement."""
+    doc = fitz.open()
+    page = doc.new_page(width=612, height=792)
+    page.draw_rect(page.rect, color=None, fill=(0xF6 / 255, 0xF1 / 255, 0xE3 / 255))
+    page.insert_text((54, 100), NAME, fontsize=30, color=(0xC8 / 255, 0xC0 / 255, 0xAE / 255))
+    assert name_contrast(page) < AA
