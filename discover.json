@@ -45,7 +45,7 @@
     {
       "name": "CMMNS",
       "repo": "cmmns",
-      "version": "3.9.0",
+      "version": "3.9.1",
       "registry": "github",
       "package": "HarperZ9/cmmns",
       "downloadUrl": "https://github.com/HarperZ9/cmmns/releases/latest",

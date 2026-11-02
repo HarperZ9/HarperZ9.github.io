@@ -26,17 +26,16 @@
 <link rel="alternate" type="application/rss+xml" href="https://harperz9.github.io/feed.xml">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/media/world/name-art/glass-tubes-poster-640.webp" as="image" fetchpriority="high">
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-83d7e41433">
-<link rel="stylesheet" href="/world/universe/proto/u.css?v=world-83d7e41433">
-<link rel="stylesheet" href="/world/universe/proto/path.css?v=world-83d7e41433">
-<link rel="stylesheet" href="/world/site/home.css?v=world-83d7e41433">
-<script type="module" src="/world/ui/shell/shell.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/site/budget.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/ui/directions/common/flow/ground.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/universe/proto/path.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/site/hum.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/site/home.js?v=world-83d7e41433"></script>
-<script type="module" src="/world/site/living-hook.js?v=world-83d7e41433"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-0aa7a353ca">
+<link rel="stylesheet" href="/world/universe/proto/u.css?v=world-0aa7a353ca">
+<link rel="stylesheet" href="/world/universe/proto/path.css?v=world-0aa7a353ca">
+<link rel="stylesheet" href="/world/site/home.css?v=world-0aa7a353ca">
+<script type="module" src="/world/ui/shell/shell.js?v=world-0aa7a353ca"></script>
+<script type="module" src="/world/site/budget.js?v=world-0aa7a353ca"></script>
+<script type="module" src="/world/universe/proto/path.js?v=world-0aa7a353ca"></script>
+<script type="module" src="/world/site/hum.js?v=world-0aa7a353ca"></script>
+<script type="module" src="/world/site/home.js?v=world-0aa7a353ca"></script>
+<script type="module" src="/world/site/living-hook.js?v=world-0aa7a353ca"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <link rel="alternate" type="application/atom+xml" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.xml">
 <link rel="alternate" type="application/feed+json" title="Zain Dana Harper publications" href="https://harperz9.github.io/feed.json">
@@ -61,14 +60,17 @@
     <ul class="o-places">
       <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
       <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
-      <li><a href="https://github.com/HarperZ9/cmmns"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
       <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/superframe.html"><span class="o-word" data-display-on-open="glyphcell">Superframe</span></a></li>
+      <li><a href="/research.html"><span class="o-word" data-display-on-open="swarm">Research</span></a></li>
       <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
       <li><a href="/raw.html"><span class="o-word" data-display-on-open="chladni">Low Water</span></a></li>
       <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
       <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
       <li><a href="/world/ui/directions/cs-max/exhibit.html"><span class="o-word" data-display-on-open="rope">The baron</span></a></li>
       <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>
     </ul>
   </nav>
   <p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> <a href="/world/universe/proto/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
@@ -78,7 +80,6 @@
 <canvas id="carry" class="carry" data-art aria-hidden="true"></canvas>
 <canvas id="crossing" class="crossing" data-art aria-hidden="true"></canvas>
 <main id="main">
-  <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
   <section class="arrival" aria-labelledby="h-name">
     <figure class="arrival-art">
       <video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-poster-full="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
@@ -86,9 +87,75 @@
       </video>
     </figure>
     <h1 id="h-name" data-living="engraved ink charcoal">Zain Dana Harper</h1>
+    <p class="arrival-lede">I build tools that check AI work against its sources, and an engine that renders one idea in every medium.</p>
     <nav class="arrival-ways" aria-label="Ways in">
-      <a href="#s-ink">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
+      <a href="#work">The work</a><a href="#s-ink">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
     </nav>
+  </section>
+  <section class="platforms" id="work" aria-labelledby="h-work" data-medium="viscous">
+    <h2 id="h-work">The work</h2>
+    <ol class="pf-list">
+    <li class="pf" id="pf-flywheel">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/flywheel-480.avif" type="image/avif"><img src="/media/world/platforms/flywheel-480.webp" width="480" height="504" alt="A ring of fine lines around a warm point of light." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-flywheel"><span class="pf-name">THE FLYWHEEL</span><span class="pf-product">Flywheel <span class="pf-ver">1.9.0</span></span></h3>
+        <p class="pf-what">Run any model, hosted or local, and check its answer against the source that decides it before the answer reaches your team. Every step is kept as a receipt you can recheck offline.</p>
+        <p class="pf-run"><code>pip install flywheel-verify</code>, then <code>flywheel up</code></p>
+        <nav class="pf-ways" aria-labelledby="hpf-flywheel"><a class="pf-go" href="/demo-flywheel.html">Watch a check, a tamper and a refusal</a><a href="/flywheel.html">Flywheel</a><a href="https://github.com/HarperZ9/flywheel">Source</a></nav>
+        <p class="pf-verified"><b>Verified</b> 2 November 2026: version 1.9.0 is the latest GitHub release of HarperZ9/flywheel (15 October 2026) and the current PyPI version of flywheel-verify.</p>
+      </div>
+    </li>
+    <li class="pf" id="pf-commons">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/cmmns-480.avif" type="image/avif"><img src="/media/world/platforms/cmmns-480.webp" width="480" height="504" alt="A ring of light standing over a grid horizon." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-commons"><span class="pf-name">THE COMMONS</span><span class="pf-product">CMMNS <span class="pf-ver">3.9.1</span></span></h3>
+        <p class="pf-what">A browser extension that shows where a reply comes from, signs of coordination, how it argues, and whether a fact-checker has reviewed the claim. It runs in your browser on X, YouTube, Reddit, Bluesky and more.</p>
+        <p class="pf-run">Download cmmns-chrome-3.9.1.zip, then Load unpacked</p>
+        <nav class="pf-ways" aria-labelledby="hpf-commons"><a class="pf-go" href="/daylight-commons/how-it-works.html">How each sign is read</a><a href="/cmmns.html">CMMNS</a><a href="https://github.com/HarperZ9/cmmns">Source</a></nav>
+        <p class="pf-verified"><b>Verified</b> 2 November 2026: version 3.9.1 and its download names match the latest GitHub release of HarperZ9/cmmns (28 October 2026).</p>
+      </div>
+    </li>
+    <li class="pf" id="pf-playground">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/superframe-480.avif" type="image/avif"><img src="/media/world/platforms/superframe-480.webp" width="480" height="504" alt="Rust coral, an indigo ink stain and a teal frost star on bone paper, painted by Superframe." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-playground"><span class="pf-name">THE PLAYGROUND</span><span class="pf-product">Superframe <span class="pf-ver">0.2.0</span></span></h3>
+        <p class="pf-what">Describe a piece in plain words and get it back from one seed as paint, living type, lines, carved material, sound and touch. The same words and seed give the same files, byte for byte.</p>
+        <p class="pf-run"><code>git clone https://github.com/HarperZ9/superframe</code>, then <code>npm run make</code> <span class="pf-note">(Node 24 or later)</span></p>
+        <nav class="pf-ways" aria-labelledby="hpf-playground"><a class="pf-go" href="/superframe.html">One recipe in every medium</a><a href="/world/superframe/room/index.html">The assistive room</a><a href="https://github.com/HarperZ9/superframe">Source</a></nav>
+        <p class="pf-verified"><b>Verified</b> 2 November 2026: version 0.2.0 is the latest GitHub release of HarperZ9/superframe (28 October 2026); the plate is its paint readout from the Superframe page.</p>
+      </div>
+    </li>
+    <li class="pf" id="pf-articulate">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/articulate-480.avif" type="image/avif"><img src="/media/world/platforms/articulate-480.webp" width="480" height="504" alt="Lines of dashes flowing around a lit circle." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-articulate"><span class="pf-name">ARTICULATE</span><span class="pf-product">Articulate <span class="pf-ver">0.17.0</span></span></h3>
+        <p class="pf-what">Checks prose on your own computer and names each writing pattern with the line it is on. Modes for docs, commits, essays and fiction, in a terminal, an editor or code review.</p>
+        <p class="pf-run"><code>pip install articulate-writing</code>, then <code>articulate check notes.md</code></p>
+        <nav class="pf-ways" aria-labelledby="hpf-articulate"><a class="pf-go" href="/repo-explainers/articulate.html">How it works, animated</a><a href="/articulate.html">Articulate</a><a href="https://github.com/HarperZ9/articulate">Source</a></nav>
+        <p class="pf-verified"><b>Verified</b> 2 November 2026: version 0.17.0 is the latest GitHub release of HarperZ9/articulate (26 October 2026); PyPI serves 0.16.0 of articulate-writing (23 October 2026).</p>
+      </div>
+    </li>
+    <li class="pf" id="pf-buildlang">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/buildlang-480.avif" type="image/avif"><img src="/media/world/platforms/buildlang-480.webp" width="480" height="504" alt="A chip with its pins fanned out as routed traces." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-buildlang"><span class="pf-name">BUILDLANG</span><span class="pf-product">BuildLang <span class="pf-ver">1.10.0</span></span></h3>
+        <p class="pf-what">A compiled language where a function's type lists what it may touch, such as files, the network or C. It builds native binaries through C and emits HLSL and GLSL shaders.</p>
+        <p class="pf-run"><code>cargo install buildlang --version 1.10.0 --locked</code></p>
+        <nav class="pf-ways" aria-labelledby="hpf-buildlang"><a class="pf-go" href="/buildlang.html">Real compiler output</a><a href="/buildlang/">The language guide</a><a href="https://github.com/HarperZ9/buildlang">Source</a></nav>
+        <p class="pf-verified"><b>Verified</b> 2 November 2026: version 1.10.0 is the latest GitHub release of HarperZ9/buildlang (23 October 2026) and the current crates.io version.</p>
+      </div>
+    </li>
+    <li class="pf" id="pf-research">
+      <picture class="pf-plate"><source srcset="/media/world/platforms/research-480.avif" type="image/avif"><img src="/media/world/platforms/research-480.webp" width="480" height="504" alt="Flow lines bending around a sphere of dots." loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-research"><span class="pf-name">RESEARCH</span><span class="pf-product">Essays and papers</span></h3>
+        <p class="pf-what">Essays, papers and dated briefings on how AI work gets checked and who pays for the checking. New readers can start with Who Knew First.</p>
+        
+        <nav class="pf-ways" aria-labelledby="hpf-research"><a class="pf-go" href="/research.html">Start with the research</a><a href="/publications.html">Every publication</a></nav>
+        
+      </div>
+    </li>
+    </ol>
   </section>
 
   
@@ -139,7 +206,7 @@
         <div class="sheet content" data-sheet="content">
           <h2 id="h-layers" tabindex="-1" data-living="ink charcoal plant paint">Layers of water</h2>
           <p>Ground, current, picture and count, printed one over another; lift them to see each one.</p>
-          <img class="plate" src="/world/exhibit/assets/img/cyanotype-s.webp" width="475" height="640" alt="Anna Atkins&#x27;s cyanotype of algae: pale water plants on Prussian blue.">
+          <img class="plate" loading="lazy" decoding="async" src="/world/exhibit/assets/img/cyanotype-s.webp" width="475" height="640" alt="Anna Atkins&#x27;s cyanotype of algae: pale water plants on Prussian blue.">
         </div>
         <canvas class="sheet" data-sheet="annotation" aria-label="Overlapping transparent inks multiply their transmissions; real inks absorb outside their band, so the ideal multiply misses hue." role="img"></canvas>
       </div>
@@ -867,13 +934,7 @@
       <div class="place-words">
         <h2 id="hp-tools" data-living="ink engraved ink">Tools</h2>
         
-        <nav class="ways" aria-label="Tools"><a href="/flywheel.html">Flywheel</a><a href="/cmmns.html">CMMNS</a><a href="/articulate.html">Articulate</a><a href="/emet.html" class="caps">EMET</a><a href="/buildlang.html">BuildLang</a><a href="/raw.html">raw-native</a><a href="/superframe.html">Superframe</a><a href="/learn.html">learn</a><a href="/workshop.html">The workshop</a></nav>
-        <ul class="try" aria-label="Try them">
-          <li>Flywheel: <code>pip install <span class="ident" translate="no">flywheel-verify</span></code>, then <code>flywheel up</code></li>
-          <li>Articulate: <code>pip install <span class="ident" translate="no">articulate-writing</span></code></li>
-          <li>BuildLang: <code>cargo install <span class="ident" translate="no">buildlang</span></code></li>
-          <li>Superframe: <code>git clone https://github.com/HarperZ9/<span class="ident" translate="no">superframe</span></code>, then <code>npm run make</code></li>
-        </ul>
+        <nav class="ways" aria-label="Tools"><a href="/flywheel.html">Flywheel</a><a href="/cmmns.html" class="caps">CMMNS</a><a href="/articulate.html">Articulate</a><a href="/emet.html" class="caps">EMET</a><a href="/buildlang.html">BuildLang</a><a href="/superframe.html">Superframe</a><a href="/raw.html">raw-native</a><a href="/learn.html">learn</a><a href="/workshop.html">The workshop</a></nav>
       </div>
     </div>
   </article>

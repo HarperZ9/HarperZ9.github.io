@@ -88,7 +88,9 @@ function accession() {
 <h2>Use it</h2><p><a href="/system/fonts/accession/accession.css">accession.css</a> declares every face with paths relative to its folder; <a href="/system/fonts/accession/OFL.txt">OFL.txt</a> is the licence, and <a href="/system/fonts/accession/MANIFEST.json">MANIFEST.json</a> lists every file with its size, coverage and SHA-256.</p>
 </article>`;
   return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body,
-    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/accession.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
+    // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
+    // the full faces stay one link away in accession.css
+    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function credits() {

@@ -5,7 +5,7 @@
 //   node scripts/build-cmmns.mjs && python tools/structured_data.py
 //
 // The version, licence and download come from the CMMNS record in discover.json, so a release bump is one
-// edit there and a re-run. The copy follows the project's own README and release notes (v3.9.0, read
+// edit there and a re-run. The copy follows the project's own README and release notes (v3.9.1, read
 // 2026-10-28). tools/structured_data.py then writes the SoftwareApplication block from the same record.
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -68,7 +68,9 @@ const body = `<article class="tool">
 <p>It reads what the site shows you and requests account details only from the site you are on. Other coverage and evidence lookups reach further, and only after you turn them on and click. Account details stay in your browser for 14 days and thread history for 60, both adjustable, and one control clears everything.</p>
 
 <h2 id="new">New in ${esc(v)}</h2>
-<p>The new name. Everything saved before, every case and every signed bundle still reads and verifies. New installs save into Downloads/CMMNS, and an install from before keeps Downloads/Daylight. The command line answers to <code>cmmns</code>, and <code>daylight</code> still works. Release files are named <code>cmmns-*</code>. <a href="${rel}">Release notes</a>.</p>
+<p>The Download control leaves with the pointer, and it now shows on X and Instagram pictures that sit under a clear layer: 10 of 10 tries on each path in the release's timing test, against 0 of 10 before. A gallery saves four files at a time, so the last file reaches the browser after 452 ms instead of 1,173 ms. A download the browser stopped now reads "Not saved" with the browser's reason. <a href="${rel}">Release notes</a>.</p>
+<p>Since 3.9.0 the extension carries the new name. Everything saved before, every case and every signed bundle still reads and verifies. New installs save into Downloads/CMMNS, and an install from before keeps Downloads/Daylight. The command line answers to <code>cmmns</code>, and <code>daylight</code> still works.</p>
+<p class="verified"><b>Verified</b> 2 November 2026: the version, the date and the download names against the GitHub release <code>v${esc(v)}</code> (HarperZ9/cmmns, published 28 October 2026); the timings are the release notes' own measurements and were not rerun for this page.</p>
 </article>`;
 
 const description = "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.";

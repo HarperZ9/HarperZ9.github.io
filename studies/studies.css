@@ -52,3 +52,6 @@ a:hover { text-decoration-thickness: 2px; }
 .st code, .tool code, .tool .cmd { letter-spacing: normal; }
 .o-hand .skip { position: fixed; top: -80px; left: 12px; }
 .o-hand .skip:focus { top: 12px; }
+/* the Verified line on a publication: what was checked, by what, with what result */
+.verified { margin: 28px 0 0; padding: 10px 0 0 14px; border-left: 2px solid var(--ink); font: 400 var(--fs-2)/1.5 var(--face-text) !important; color: var(--ink); }
+.verified b { font-weight: 700; margin-right: .35em; }

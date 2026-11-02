@@ -119,7 +119,9 @@ html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;
 
 /* the survey band: the universe's "we are here", carried in the hand; the link names it for readers */
 [data-o="band"]{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;color:var(--ink);text-decoration:none}
-[data-o="band"] svg{display:block;height:40px;width:auto}
+[data-o="band"] svg{display:block;height:40px;width:auto;max-width:100%}
+[data-o="band"]{min-width:0;flex:0 1 auto}
+.o-hand>:not([data-o="band"]){flex-shrink:0}
 [data-o="band"] .here-num{font:400 12px var(--face-utility,monospace);fill:var(--ink)}
 [data-o="band"] .here-tick,[data-o="band"] .here-bar{fill:var(--ink)}
 [data-o="band"] .here-tile{cursor:pointer}

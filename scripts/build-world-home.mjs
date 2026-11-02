@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { PLATFORMS, CHECKED } from "../site-src/world/platforms.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -26,14 +27,20 @@ function roadParts() {
   hand = hand.replace(/<a class="skip" href="[^"]*">/, '<a class="skip" href="/floor.html">')
     .replace(/<a class="o-home" href="[^"]*">/, '<a class="o-home" href="/" aria-current="page">')
     .replace(/data-o="record" data-sound/, 'data-o="record" data-hum');
+  // the menu names each platform's own page on this site, and the CV, beside the road's places
   const menu = absolute(pick(p, /<dialog id="o-menu"[\s\S]*?<\/dialog>/, "the menu"))
+    .replace('href="https://github.com/HarperZ9/cmmns"', 'href="/cmmns.html"')
+    .replace(/(<li><a href="\/buildlang\.html">[\s\S]*?<\/li>)/, '$1\n      <li><a href="/superframe.html"><span class="o-word" data-display-on-open="glyphcell">Superframe</span></a></li>\n      <li><a href="/research.html"><span class="o-word" data-display-on-open="swarm">Research</span></a></li>')
+    .replace(/(<li><a href="\/hire\.html">[\s\S]*?<\/li>)/, '$1\n      <li><a href="/cv.html"><span class="o-word" data-display-on-open="rope">CV</span></a></li>')
     .replace(/<p class="o-menu-foot">/, '<p class="o-menu-foot"><a href="/elements.html">Elements</a> <a href="/swatches.html">Swatches</a> <a href="/studies/">Studies</a> ');
   const canvases = (p.match(/<canvas id="[^"]+" class="[^"]+" data-art aria-hidden="true"><\/canvas>/g) || []).join("\n");
   const main = pick(p, /<main id="main">[\s\S]*?<\/main>/, "the road");
   // the road's stops, each heading given the living-type hook (Hanken underneath until the engine paints it)
   const stops = absolute(main.replace(/^<main id="main">/, "").replace(/<\/main>$/, "")
     .replace(/<h1 class="sr-only">[^<]*<\/h1>/, "")
-    .replace(/<h2 id="([^"]+)" tabindex="-1">/g, '<h2 id="$1" tabindex="-1" data-living="ink charcoal plant paint">'));
+    .replace(/<h2 id="([^"]+)" tabindex="-1">/g, '<h2 id="$1" tabindex="-1" data-living="ink charcoal plant paint">')
+    // the road's plates sit far below the first screen: they load as the visitor nears them
+    .replace(/<img class="plate" (?![^>]*loading=)/g, '<img class="plate" loading="lazy" decoding="async" '));
   const bodyClass = (p.match(/<body class="([^"]+)"/) || [, "path"])[1];
   return { hand, menu, canvases, stops, bodyClass };
 }
@@ -71,12 +78,37 @@ function bazaar(rules) {
   </article>`).join("\n");
 }
 
+// the front door's index of the work: each platform, what it does, where to see it, how to run it, its source
+function platforms() {
+  const rows = PLATFORMS.map((p) => {
+    const run = p.run ? `<p class="pf-run">${p.runIsProse ? esc(p.run) : `<code>${esc(p.run)}</code>`}${p.then ? `, then <code>${esc(p.then)}</code>` : ""}${p.note ? ` <span class="pf-note">(${esc(p.note)})</span>` : ""}</p>` : "";
+    const ver = p.version ? ` <span class="pf-ver">${esc(p.version)}</span>` : "";
+    const ways = [`<a class="pf-go" href="${p.see[0]}">${esc(p.see[1])}</a>`, `<a href="${p.more[0]}">${esc(p.more[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
+    return `
+    <li class="pf" id="pf-${p.id}">
+      <picture class="pf-plate"><source srcset="${p.plate}.avif" type="image/avif"><img src="${p.plate}.webp" width="480" height="504" alt="${esc(p.alt)}" loading="lazy" decoding="async"></picture>
+      <div class="pf-words">
+        <h3 id="hpf-${p.id}"><span class="pf-name">${esc(p.name)}</span><span class="pf-product">${esc(p.product)}${ver}</span></h3>
+        <p class="pf-what">${esc(p.what)}</p>
+        ${run}
+        <nav class="pf-ways" aria-labelledby="hpf-${p.id}">${ways}</nav>
+        ${p.verified ? `<p class="pf-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(p.verified)}</p>` : ""}
+      </div>
+    </li>`;
+  }).join("");
+  return `<section class="platforms" id="work" aria-labelledby="h-work" data-medium="viscous">
+    <h2 id="h-work">The work</h2>
+    <ol class="pf-list">${rows}
+    </ol>
+  </section>`;
+}
+
 function build() {
   const r = roadParts(), world = JSON.parse(read("world/universe/proto/world.json"));
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{PLATFORMS}}", platforms()).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
