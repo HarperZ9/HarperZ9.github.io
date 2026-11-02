@@ -3,6 +3,7 @@
 // shell's hand (the universe's navigation, with every link root-absolute) and the page's own <main>.
 import { esc } from "./studies-markdown.mjs";
 
+import { backdrop as fieldBackdrop } from "./field-backdrop.mjs";
 export const ORIGIN = "https://harperz9.github.io";
 const CARD = `${ORIGIN}/img/og/p/home.jpg`;
 const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still face; Accession and its families are materials a page adds
@@ -39,7 +40,7 @@ ${PLACES.map(([href, tech, name]) => `      <li><a href="${href}"><span class="o
 }
 
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
-export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading" }) {
+export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true }) {
   const url = `${ORIGIN}/${path.replace(/index\.html$/, "")}`, full = `${title} | Zain Dana Harper`;
   return `<!doctype html>
 <html lang="en" data-type="stock"${htmlAttrs ? " " + htmlAttrs : ""}>
@@ -62,11 +63,13 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <meta name="twitter:description" content="${esc(description)}">
 <link rel="preload" href="${TEXT_FACE}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
+<link rel="stylesheet" href="/world/site/field.css">
 <link rel="stylesheet" href="${css}">
 <script type="module" src="/world/ui/shell/shell.js"></script>
 <script type="module" src="/world/site/hand-scroll.js"></script>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>
 <body class="${bodyClass}">
+${backdrop ? fieldBackdrop() : ""}
 ${hand()}
 <main id="main" tabindex="-1">
 ${body}

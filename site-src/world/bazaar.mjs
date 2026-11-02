@@ -31,7 +31,7 @@ export const PLACES = [
     id: "water", title: "Ink and water", form: "drop", medium: "thin", living: ["ink", "charcoal", "plant", "paint"],
     lead: { kind: "loop", src: "/media/world/name-art/pearls", alt: "The name strung in nacre, its sheen moving like water over the beads." },
     laws: ["law-diffusion", "law-coffee-ring", "law-yield-stress"],
-    ways: [["#s-ink", "Back to the road"], ["/world/exhibit/palimpsest.html", "Palimpsest"], ["/world/universe/proto/index.html", "The map"]],
+    ways: [["/world/universe/proto/path.html", "The road"], ["/world/exhibit/palimpsest.html", "Palimpsest"], ["/world/universe/proto/index.html", "The map"]],
   },
   {
     id: "sound", title: "Sound", form: "stroke", medium: "thin", living: ["ink", "charcoal", "plant"],

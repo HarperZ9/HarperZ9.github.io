@@ -1,8 +1,3 @@
-/* the halo that keeps text readable over the moving field: the page's own ground, in either scheme (the road can
-   tint --wall per district, so the halo takes the scheme's ground, not the district's) */
-:root { --halo: #e8e3d9; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --halo: #0a0a0c; } }
-:root[data-theme="dark"] { --halo: #0a0a0c; }
 /* home.css: the world's entrance and its places. Layout and type come from the shell (shell.css: --ink, --wall,
    the type scale and the faces); this file places the arrival, the bazaar and the colophon on the page's water. */
 
@@ -119,3 +114,10 @@ html.plain .crossing, html.plain .uncover { display: none; }
 html.plain 
 /* the road's 34-tile survey band is clutter in the hand; the menu holds the map */
 .world-home .o-hand [data-o="band"] { display: none; }
+
+/* over the field the words of every place sit in the left column, where the field's wash holds them readable;
+   the place's own lead sits to their right */
+@media (min-width: 861px) {
+  .place-in, .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .place .lead-box, .place:nth-child(even) .lead-box { order: 2; }
+}

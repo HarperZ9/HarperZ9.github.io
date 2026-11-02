@@ -10,11 +10,10 @@
 .xf-mark:focus-visible circle { stroke: var(--ink); stroke-width: 2; stroke-opacity: .5; }
 .xf-mark.xf-off circle { fill-opacity: .12; }
 .xf figcaption { font: 400 var(--fs-1)/1.4 var(--face-text); color: var(--soft); margin-top: 6px; }
-.xp-filter { display: flex; flex-wrap: wrap; gap: 6px; margin: 20px 0 6px; }
-.xp-filter button { min-height: 44px; padding: 0 12px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); border-radius: 0; cursor: pointer; }
+.xp-filter { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 20px 0 6px; }
+.xp-filter button { min-height: 44px; padding: 0 2px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: none; border: 0; cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .35em; }
 .xp-filter button span { font: 400 var(--fs-1)/1 var(--face-utility); color: var(--soft); margin-left: 4px; }
-.xp-filter button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
-.xp-filter button[aria-pressed="true"] span { color: inherit; }
+.xp-filter button[aria-pressed="true"], .xp-filter button:hover { text-decoration-color: currentColor; }
 .xp-filter button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .xp-count { font-size: var(--fs-2) !important; color: var(--soft); }
 .xp-stream { list-style: none; padding: 0 !important; margin: 0; }
@@ -29,7 +28,7 @@
 .xc-nums dt { color: var(--soft); }
 .xc-nums dd { margin: 0; overflow-wrap: anywhere; }
 .xc-verdict { margin: 0 0 8px !important; }
-.xc-tag { display: inline-block; margin-right: 6px; padding: 1px 7px; font: 600 var(--fs-1)/1.5 var(--face-text); border: 1.5px solid var(--ink); }
+.xc-tag { display: inline-block; margin-right: 6px; font: 700 var(--fs-1)/1.5 var(--face-text); letter-spacing: .04em; text-transform: uppercase; }
 .xc-limits, .xc-lock { font-size: var(--fs-2) !important; margin: 0 0 8px !important; }
 .xc-limits b { margin-right: .35em; }
 .xc-lock code { overflow-wrap: anywhere; }

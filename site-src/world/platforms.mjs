@@ -1,8 +1,8 @@
 // platforms.mjs: the front door's index of the work, built into index.html by scripts/build-world-home.mjs.
 // Each platform: what it does for the visitor, where to see it work, how to run it now, and its source.
 // Display names (the author, 2026-10-29: "THE COMMONS (THECMMNS) | THE PLAYGROUND (THEPLYGRND) THE FLYWHEEL
-// (THEFLYWHEEL)" and, 2026-11-02, "ARTICULATE (ARTIQL8)") are names on the page only, each shown with its mark; no
-// repo, package or path changes with them. BuildLang and Research have no mark from the author, so none is shown.
+// (THEFLYWHEEL)" and, 2026-11-02, "ARTICULATE (ARTIQL8)", and "BLDLNG and RSRCH works.") are names on the page only, each shown with its mark;
+// no repo, package or path changes with them.
 //
 // Every version and date below was read on the day in `checked` from the source named in `verified`. When a release
 // ships, update the row and the date together; tests/test_front_door_platforms.py checks the shape and the voice.
@@ -42,7 +42,7 @@ export const PLATFORMS = [
     verified: "version 0.17.0 is the latest GitHub release of HarperZ9/articulate (26 October 2026); PyPI serves 0.16.0 of articulate-writing (23 October 2026).",
   },
   {
-    id: "buildlang", name: "BUILDLANG", product: "BuildLang", version: "1.10.0",
+    id: "buildlang", name: "BUILDLANG", mark: "BLDLNG", product: "BuildLang", version: "1.10.0",
     what: "A compiled language where a function's type lists what it may touch, such as files, the network or C. It builds native binaries through C and emits HLSL and GLSL shaders.",
     see: ["/buildlang.html", "Real compiler output"], more: ["/buildlang/", "The language guide"],
     run: "cargo install buildlang --version 1.10.0 --locked",
@@ -50,7 +50,7 @@ export const PLATFORMS = [
     verified: "version 1.10.0 is the latest GitHub release of HarperZ9/buildlang (23 October 2026) and the current crates.io version.",
   },
   {
-    id: "research", name: "RESEARCH", product: "Essays and papers",
+    id: "research", name: "RESEARCH", mark: "RSRCH", product: "Essays and papers",
     what: "Essays, papers and dated briefings on how AI work gets checked and who pays for the checking, and the experiments behind them, each written down before it ran.",
     see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"],
   },

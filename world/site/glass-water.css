@@ -2,8 +2,8 @@
 .gw-body { --ink: #f4efe6; --wall: #0d1a24; --soft: #d9d2c4; background: #0d1a24; }
 .gw-body main { max-width: none; padding: 0; }
 .gw { position: relative; min-height: 100svh; }
-.gw-field { position: fixed; inset: 0; width: 100vw; height: 100svh; display: block; background: #0d1a24; }
-.gw-words { position: relative; z-index: 1; min-height: 100svh; box-sizing: border-box; display: grid; align-content: end; gap: 10px; padding: 0 clamp(16px, 5vw, 64px) clamp(28px, 7vh, 72px); max-width: 64ch; color: #f4efe6; }
+.gw-field { position: fixed; inset: 0; width: 100vw; height: 100svh; display: block; background: #0d1a24 var(--gw-plate, none) center / cover no-repeat; }
+.gw-words { position: relative; z-index: 2; min-height: 100svh; box-sizing: border-box; display: grid; align-content: end; gap: 10px; padding: 0 clamp(16px, 5vw, 64px) clamp(28px, 7vh, 72px); max-width: 64ch; color: #f4efe6; }
 .gw-words h1 { margin: 0; font: 800 clamp(30px, 4.6vw, 64px)/1 var(--face-display); letter-spacing: -.02em; }
 .gw-words h1, .gw-say, .gw-how, .gw-spaces button { text-shadow: 0 0 18px rgba(4, 10, 16, .85), 0 0 3px rgba(4, 10, 16, .9); }
 .gw-say { margin: 0; font: 400 var(--fs-3)/1.5 var(--face-text); min-height: 3em; }
@@ -12,6 +12,10 @@
 .gw-spaces button { min-height: 44px; padding: 0; border: 0; background: none; color: inherit; font: 600 var(--fs-2)/1 var(--face-text); cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .35em; transition: text-decoration-color .2s ease; }
 .gw-spaces button[aria-pressed="true"], .gw-spaces button:hover { text-decoration-color: currentColor; }
 .gw-spaces button:focus-visible { outline: 2px solid #f4efe6; outline-offset: 4px; }
-.gw-still .gw-field { background: #0d1a24 url("/media/world/glass-water/close-1920.webp") center / cover no-repeat; }
 @media (prefers-reduced-motion: reduce) { .gw-spaces button { transition: none; } }
 @media (forced-colors: active) { .gw-words h1, .gw-say, .gw-how, .gw-spaces button { text-shadow: none; } }
+/* the field yields under the words: a soft wash of deep water from the lower left, no edge (contrast measured on the
+   rendered pixels, PASSES.md pass 8) */
+.gw::before { content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 75% 70% at 0% 100%, rgba(5, 11, 18, .9) 0%, rgba(5, 11, 18, .78) 45%, rgba(5, 11, 18, 0) 100%); }
+@media (max-width: 860px) { .gw::before { background: linear-gradient(180deg, rgba(5, 11, 18, 0) 30%, rgba(5, 11, 18, .82) 58%, rgba(5, 11, 18, .9) 100%); } }

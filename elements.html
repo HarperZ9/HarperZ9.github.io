@@ -23,13 +23,28 @@
 <meta name="twitter:title" content="The element table | Zain Dana Harper">
 <meta name="twitter:description" content="The world's concepts as an element table: each element runs live in its own medium, with its measured colour, bridges and references.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-36ea80a04f">
-<link rel="stylesheet" href="/studies/studies.css?v=world-36ea80a04f">
-<script type="module" src="/world/ui/shell/shell.js?v=world-36ea80a04f"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-36ea80a04f"></script>
-<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-36ea80a04f">
-<link rel="stylesheet" href="/world/site/pages.css?v=world-36ea80a04f"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-97f3ecf2fd">
+<link rel="stylesheet" href="/world/site/field.css?v=world-97f3ecf2fd">
+<link rel="stylesheet" href="/studies/studies.css?v=world-97f3ecf2fd">
+<script type="module" src="/world/ui/shell/shell.js?v=world-97f3ecf2fd"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-97f3ecf2fd"></script>
+<link rel="stylesheet" href="/world/ui/shell/organic/parts.css?v=world-97f3ecf2fd">
+<link rel="stylesheet" href="/world/site/pages.css?v=world-97f3ecf2fd"></head>
 <body class="parts-body">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source media="(orientation: portrait)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source media="(orientation: portrait)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+  <picture class="gw-night">
+    <source media="(orientation: portrait)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source media="(orientation: portrait)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-night-1920.webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw" width="1920" height="1080" alt="" decoding="async" loading="lazy">
+  </picture>
+</div>
 <header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
@@ -59,7 +74,7 @@
 <script type="module">import { mountElements } from "/world/ui/shell/organic/elements.js";
 const data = await (await fetch("/world/ui/shell/organic/data/elements.json")).json();
 mountElements(document.getElementById("parts"), data, { assets: "/world/ui/shell/organic/" });</script>
-<script type="module" src="/world/alive/alive.js?v=world-36ea80a04f"></script>
+<script type="module" src="/world/alive/alive.js?v=world-97f3ecf2fd"></script>
 </main>
 </body>
 </html>

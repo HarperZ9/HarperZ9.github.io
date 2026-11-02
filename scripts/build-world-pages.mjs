@@ -21,7 +21,7 @@ const write = (p, html) => { writeFileSync(path.join(site, p), html); return p; 
 
 function roadStops() {
   const p = read("world/universe/proto/path.html");
-  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/#${m[1]}`, m[2]]);
+  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/world/universe/proto/path.html#${m[1]}`, m[2]]);
 }
 function mapPlaces() {
   const u = json("world/universe/universe.json"), statics = new Set(readdirSync(path.join(site, "world/universe/proto/places")));

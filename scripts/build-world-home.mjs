@@ -9,6 +9,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
 import { PLATFORMS, CHECKED } from "../site-src/world/platforms.mjs";
+import { backdrop } from "./field-backdrop.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -115,10 +116,10 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{PLATFORMS}}", platforms()).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{BAZAAR}}", bazaar(rules)).replace("{{PLATFORMS}}", platforms()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
-  console.log(`home: index.html with ${(r.stops.match(/class="stop"/g) || []).length} road stops and ${PLACES.length} places`);
+  console.log(`home: index.html with the glass-and-water field and ${PLACES.length} places`);
 }
 build();

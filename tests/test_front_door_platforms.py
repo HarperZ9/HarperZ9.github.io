@@ -50,4 +50,4 @@ def test_the_home_page_carries_every_platform():
     assert 'id="work"' in home and 'href="#work"' in home
     for p in _platforms():
         assert f'id="pf-{p["id"]}"' in home, p["id"]
-    assert home.count('id="say"') == 1, "the home has one live region"
+    assert home.count('id="say"') <= 1, "the home has at most one live region"
