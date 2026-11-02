@@ -85,7 +85,7 @@ for _page, _target in {
     # site-index.html stays (the navigation search reads it); overview.html and catalog.html stay: they carry each product's Verified line and limits, which the index does
     # not; portfolio.html is a career document; workshop.html carries the React app; fonts.html the font previews
     "demonstrations.html": "/floor.html",
-    "guide.html": "/floor.html", "tour.html": "/floor.html",
+    "tour.html": "/floor.html",
     "toolkit.html": "/floor.html#theflywheel", "build-products.html": "/floor.html#bldlng",
 }.items():
     STUBS[_page] = {"target": _target, "note": _INDEX, "title": "Moved to the index of the work", "link": "Open the index", "fragments": {}, "keep_hash": "#" not in _target}
