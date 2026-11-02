@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
 import { esc } from "./studies-markdown.mjs";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { workIndex } from "./work-index.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -54,7 +55,11 @@ function studyPages() {
 }
 
 function floor() {
+  const wi = workIndex();
   const body = `<article class="floor"><h1>Everything</h1>
+<p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. The places and pages of the site follow.</p>
+${wi.html}
+<h2 class="wi-rule">The site</h2>
 ${section("road", "The road", roadStops())}
 ${section("places", "The places", PLACES.map((p) => [`/#p-${p.id}`, p.title]))}
 ${section("parts", "Parts", [["/elements.html", "The element table"], ["/swatches.html", "The swatch library"], ["/accession.html", "Accession"], ["/world/universe/proto/index.html", "The map"], ["/credits.html", "Credits"]])}
@@ -63,7 +68,7 @@ ${section("map", "Every place on the map", mapPlaces())}
 ${section("studies", "Studies", studyPages())}
 ${section("site", "Pages, writing and tools", sitePages())}
 </article>`;
-  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "Every page in Zain Dana Harper's world as a plain list of links: the road, the places, live pieces, writing, studies and tools.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
+  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "All of the work, current and past, by platform: The Flywheel, The Commons, The Playground, Articulate, BuildLang and Research, then every page of the site.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function mountPage(file, title, description, heading, script) {

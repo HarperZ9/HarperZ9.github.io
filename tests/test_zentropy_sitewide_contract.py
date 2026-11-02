@@ -994,8 +994,8 @@ def test_current_zentropy_assets_are_shipped() -> None:
 
 
 def test_representative_pages_keep_route_art_metadata() -> None:
+    # typeface.html retired to a redirect into accession.html on 2026-11-02
     pages = (
-        "typeface.html",
         "overview.html",
         "catalog.html",
         "research.html",

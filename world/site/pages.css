@@ -10,3 +10,26 @@ body.parts-body main { max-width: 1360px; }
 .floor h1 { font: 800 clamp(36px, 7vw, var(--fs-6))/1.02 var(--face-display); letter-spacing: -.03em; margin: 0 0 24px; }
 .tool p, .tool li { max-width: 70ch; }
 .caps { letter-spacing: .06em; }
+/* the index of the work in floor.html: rows of words in the field, lead media lazy and full width on phones */
+.floor { max-width: 82ch; }
+.wi-lead { font-size: var(--fs-3) !important; }
+.wi-jump { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 18px 0 8px; }
+.wi-jump a { display: inline-flex; align-items: center; min-height: 44px; font: 600 var(--fs-2)/1 var(--face-text); }
+.wi-plat { margin: 48px 0 0; }
+.wi-plat h2 { margin: 0 0 6px; font: 800 var(--fs-5)/1.1 var(--face-display); letter-spacing: -.01em; scroll-margin-top: 96px; }
+.wi-mark { font: 400 var(--fs-1)/1 var(--face-utility); letter-spacing: .08em; color: var(--soft); margin-left: 8px; }
+.wi-list { list-style: none; padding: 0 !important; margin: 0; }
+.wi-row { padding: 14px 0; margin: 0 !important; content-visibility: auto; contain-intrinsic-size: auto 96px; }
+.wi-head { margin: 0 0 2px !important; display: flex; flex-wrap: wrap; gap: 2px 12px; align-items: baseline; }
+.wi-head b { font: 700 var(--fs-3)/1.3 var(--face-text); }
+.wi-status { font: 400 var(--fs-1)/1.3 var(--face-utility); color: var(--soft); }
+.wi-sum { margin: 0 0 4px !important; font-size: var(--fs-2) !important; }
+.wi-sum em { font-style: normal; font-weight: 700; }
+.wi-links { margin: 0 !important; display: flex; flex-wrap: wrap; gap: 0 18px; }
+.wi-links a { display: inline-flex; align-items: center; min-height: 44px; font: 600 var(--fs-2)/1 var(--face-text); }
+.wi-media { list-style: none; padding: 0 !important; margin: 10px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.wi-media li { margin: 0 !important; }
+.wi-media img, .wi-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #0c1620; }
+.wi-media li:has(img[src*="material-gallery"]) img { object-fit: cover; }
+.wi-rule { margin: 72px 0 0; font: 800 var(--fs-5)/1.1 var(--face-display); }
+.wi-row:target { padding-left: 14px; border-left: 3px solid var(--ink); }

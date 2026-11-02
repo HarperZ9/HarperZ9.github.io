@@ -9,17 +9,14 @@
 .gw-backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #0d1a24; }
 .gw-backdrop picture, .gw-backdrop img, .gw-backdrop canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .gw-backdrop img { object-fit: cover; }
-.gw-backdrop .gw-night { display: none; }
 .gw-backdrop canvas { opacity: 0; transition: opacity .9s var(--ease-standard, ease); }
 .gw-backdrop.live canvas { opacity: 1; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .gw-backdrop .gw-night { display: block; } }
-:root[data-theme="dark"] .gw-backdrop .gw-night { display: block; }
 html.plain .gw-backdrop canvas { display: none; }
 main#main, body > footer { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
 
 /* reading pages: the field is the rendered plate only; their words keep AA contrast through the halo */
-.reading main :is(h1, h2, h3, p, li, dt, dd, figcaption, label, td, th, a, q, b, code, span) { text-shadow: 0 0 10px var(--halo), 0 0 3px var(--halo), 0 0 1px var(--halo), 0 0 18px var(--halo); }
+.reading main :is(h1, h2, h3, p, dt, dd, figcaption, label, td, th, q, code) { text-shadow: 0 0 8px var(--halo); }
 
 /* pages over the field read in light ink in both schemes: the field's sea and night sky are dark, and a soft wash of
    the field's own deep water (a gradient, no edge) holds the words at AA contrast over its brightest pixels; the
