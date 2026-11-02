@@ -81,7 +81,9 @@ function bazaar(rules) {
 // the front door's index of the work: each platform, what it does, where to see it, how to run it, its source
 function platforms() {
   const rows = PLATFORMS.map((p) => {
-    const run = p.run ? `<p class="pf-run">${p.runIsProse ? esc(p.run) : `<code>${esc(p.run)}</code>`}${p.then ? `, then <code>${esc(p.then)}</code>` : ""}${p.note ? ` <span class="pf-note">(${esc(p.note)})</span>` : ""}</p>` : "";
+    // package and file names stay whole on narrow screens (scripts/ident-tokens.mjs, tests/ident-narrow-reading.cjs)
+    const ident = (t) => esc(t).replace(/(^|[\s(])([a-z0-9]+(?:-[a-z0-9.]+)+)(?=$|[\s),])/g, '$1<span class="ident" translate="no">$2</span>');
+    const run = p.run ? `<p class="pf-run">${p.runIsProse ? ident(p.run) : `<code>${ident(p.run)}</code>`}${p.then ? `, then <code>${ident(p.then)}</code>` : ""}${p.note ? ` <span class="pf-note">(${esc(p.note)})</span>` : ""}</p>` : "";
     const ver = p.version ? ` <span class="pf-ver">${esc(p.version)}</span>` : "";
     const ways = [`<a class="pf-go" href="${p.see[0]}">${esc(p.see[1])}</a>`, `<a href="${p.more[0]}">${esc(p.more[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
     return `

@@ -1,0 +1,7 @@
+{
+  "date": "2026-11-02",
+  "note": "The front door's run commands mark package and file names as ident tokens, so they stay whole on narrow screens.",
+  "paths": {
+    "index.html": "ef844217de0c50628770a8e047deb792cc6db5383f1e1c27471e8a4159495182"
+  }
+}
