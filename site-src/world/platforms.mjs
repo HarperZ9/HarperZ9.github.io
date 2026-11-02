@@ -34,12 +34,12 @@ export const PLATFORMS = [
     verified: "version 0.2.0 is the latest GitHub release of HarperZ9/superframe (28 October 2026).",
   },
   {
-    id: "articulate", name: "ARTICULATE", mark: "ARTIQL8", product: "Articulate", version: "0.17.0",
+    id: "articulate", name: "ARTICULATE", mark: "ARTIQL8", product: "Articulate", version: "0.17.1",
     what: "Checks prose on your own computer and names each writing pattern with the line it is on. Modes for docs, commits, essays and fiction, in a terminal, an editor or code review.",
     see: ["/repo-explainers/articulate.html", "How it works, animated"], more: ["/articulate.html", "Articulate"],
     run: "pip install articulate-writing", then: "articulate check notes.md",
     repo: "https://github.com/HarperZ9/articulate",
-    verified: "version 0.17.0 is the latest GitHub release of HarperZ9/articulate (26 October 2026); PyPI serves 0.16.0 of articulate-writing (23 October 2026).",
+    verified: "version 0.17.1 is the latest GitHub release of HarperZ9/articulate and the current PyPI version of articulate-writing (both 2 November 2026).",
   },
   {
     id: "buildlang", name: "BUILDLANG", mark: "BLDLNG", product: "BuildLang", version: "1.10.0",

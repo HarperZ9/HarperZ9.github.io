@@ -63,7 +63,7 @@ what it does not do.
 - [Flywheel](https://harperz9.github.io/flywheel.html) 1.9.0: run AI tasks on any
   hosted or local model, check answers against the source that decides them,
   and keep a record of every step. `python -m pip install flywheel-verify`
-- [Articulate](https://harperz9.github.io/articulate.html) 0.16.0: a prose checker
+- [Articulate](https://harperz9.github.io/articulate.html) 0.17.1: a prose checker
   that runs on your computer and names each writing pattern and the line it is
   on. `python -m pip install articulate-writing`
 - [CMMNS](https://harperz9.github.io/cmmns.html) 3.9.1 (formerly Daylight Commons): a

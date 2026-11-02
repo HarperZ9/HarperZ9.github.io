@@ -33,7 +33,7 @@
       "name": "Articulate",
       "repo": "articulate",
       "page": "articulate.html",
-      "version": "0.16.0",
+      "version": "0.17.1",
       "registry": "pypi",
       "package": "articulate-writing",
       "downloadUrl": "https://pypi.org/project/articulate-writing/",

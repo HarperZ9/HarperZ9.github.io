@@ -33,7 +33,7 @@ runtime dependencies.
 
 ## Articulate
 
-Version 0.16.0. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
+Version 0.17.1. Licence FSL-1.1-MIT. Python 3.9 or newer, standard library only.
 
 - What it does: checks prose on your computer and names each writing pattern it
   finds and the line it sits on: stacked hedges, marketing words, corporate
