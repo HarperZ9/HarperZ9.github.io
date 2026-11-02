@@ -55,8 +55,8 @@ export const PLATFORMS = [
   },
   {
     id: "research", name: "RESEARCH", product: "Essays and papers",
-    what: "Essays, papers and dated briefings on how AI work gets checked and who pays for the checking. New readers can start with Who Knew First.",
-    see: ["/research.html", "Start with the research"], more: ["/publications.html", "Every publication"],
+    what: "Essays, papers and dated briefings on how AI work gets checked and who pays for the checking, and the experiments behind them, each written down before it ran.",
+    see: ["/experiments/", "Every experiment, nulls included"], more: ["/research.html", "Papers and essays"],
     plate: "/media/world/platforms/research-480", alt: "Flow lines bending around a sphere of dots.",
   },
 ];

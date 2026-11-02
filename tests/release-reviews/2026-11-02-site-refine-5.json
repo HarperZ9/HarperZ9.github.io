@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-02",
+  "note": "Experiments: a living index of the studies the publication register clears (tier D, no hold, open data, numbers checked against the ledger), linked from the front door's research row.",
+  "paths": {
+    "index.html": "d74d9904dfe531890f5d4d5e63b6c329a19b6ba07a073d8126a6788f113b5309",
+    "publications/build.json": "72993c704054b3fe294aa794d69e1ebab92ade49a59937fe17d9a378821f31ba",
+    "site-index.html": "cd408faadebff8925955a7bbb8b57753395a2471ba116fc83771c26b9b6daaef",
+    "sitemap.xml": "6ecb2de83bbcf261ee5ad664d51f7f07953b6e8426f9f0775a68a029ef48e5c5",
+    "system/routes.js": "879c7d1c85691b3ddd3380480b3474f804d1855f351ef0475a15e10fd23e1cb5"
+  }
+}
