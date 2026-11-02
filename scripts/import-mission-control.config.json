@@ -274,8 +274,8 @@
     {
       "file": "2026-10-23-ui-direction/shell/organic/organic.css",
       "find": "[data-o=\"band\"] svg{display:block;height:40px;width:auto}",
-      "replace": "[data-o=\"band\"] svg{display:block;height:40px;width:auto;max-width:100%}\n[data-o=\"band\"]{min-width:0;flex:0 1 auto}\n.o-hand>:not([data-o=\"band\"]){flex-shrink:0}",
-      "why": "phone reflow: the road's 34-tile band ran past the right edge of the hand at 390 px; it now shrinks to the room the hand has; the hand's other controls keep their size"
+      "replace": "[data-o=\"band\"] svg{display:block;height:40px;width:auto;max-width:100%}\n[data-o=\"band\"]{min-width:0;flex:0 1 auto}\n.o-hand>:not([data-o=\"band\"]){flex-shrink:0}\n@media (max-width:600px){[data-o=\"band\"]{display:none}}",
+      "why": "phone reflow: the road's 34-tile band ran past the right edge of the hand at 390 px; it now shrinks to the room the hand has; the hand's other controls keep their size; under 600 px the band gives way (the menu holds the map), since a sliver was too small to press"
     },
     {
       "file": "2026-10-23-universe/proto/path.js",

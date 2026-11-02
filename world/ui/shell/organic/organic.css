@@ -122,6 +122,7 @@ html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;
 [data-o="band"] svg{display:block;height:40px;width:auto;max-width:100%}
 [data-o="band"]{min-width:0;flex:0 1 auto}
 .o-hand>:not([data-o="band"]){flex-shrink:0}
+@media (max-width:600px){[data-o="band"]{display:none}}
 [data-o="band"] .here-num{font:400 12px var(--face-utility,monospace);fill:var(--ink)}
 [data-o="band"] .here-tick,[data-o="band"] .here-bar{fill:var(--ink)}
 [data-o="band"] .here-tile{cursor:pointer}

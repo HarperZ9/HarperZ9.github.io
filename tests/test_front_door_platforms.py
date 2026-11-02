@@ -28,7 +28,7 @@ def test_every_platform_row_is_complete_and_its_links_resolve():
         assert p["name"] and p["what"] and p["see"] and p["more"], p["id"]
         for href in (p["see"][0], p["more"][0]):
             if href.startswith("/"):
-                target = ROOT / href.lstrip("/")
+                target = ROOT / href.split("#")[0].lstrip("/")
                 assert target.exists() or (target / "index.html").exists(), f"{p['id']}: {href} does not exist"
         plate = ROOT / (p["plate"].lstrip("/") + ".webp")
         assert plate.exists() and (ROOT / (p["plate"].lstrip("/") + ".avif")).exists(), plate

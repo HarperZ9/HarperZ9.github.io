@@ -55,3 +55,41 @@ a:hover { text-decoration-thickness: 2px; }
 /* the Verified line on a publication: what was checked, by what, with what result */
 .verified { margin: 28px 0 0; padding: 10px 0 0 14px; border-left: 2px solid var(--ink); font: 400 var(--fs-2)/1.5 var(--face-text) !important; color: var(--ink); }
 .verified b { font-weight: 700; margin-right: .35em; }
+
+/* THE COMMONS, tried on the visitor's own words (system/commons-try.js) */
+.ct { margin: 40px 0 8px; padding: 24px 0 8px; border-top: 2px solid var(--ink); }
+.ct h2 { margin-top: 0; }
+.ct-label-for { display: block; font: 600 var(--fs-2)/1.4 var(--face-text); margin: 16px 0 6px; }
+.ct textarea { box-sizing: border-box; width: 100%; min-height: 8em; padding: 12px; font: 400 var(--fs-3)/1.5 var(--face-text); color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); border-radius: 0; resize: vertical; }
+.ct textarea:focus-visible, .ct button:focus-visible, .ct input:focus-visible, .ct-item:focus { outline: 3px solid var(--ink); outline-offset: 3px; }
+.ct-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 10px 0 0; }
+.ct button { min-height: 44px; padding: 0 16px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: var(--wall); border: 1.5px solid var(--ink); border-radius: 0; cursor: pointer; }
+.ct .ct-go { background: var(--ink); color: var(--wall); }
+.ct-hint { font: 400 var(--fs-1)/1.4 var(--face-text); color: var(--soft); }
+.ct-out:empty, .ct-file-out:empty { display: none; }
+.ct-out, .ct-file-out { margin: 20px 0 0; }
+.ct-read { padding: 14px 16px; font: 400 var(--fs-3)/1.7 var(--face-text); background: var(--wall-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.ct-mark { color: inherit; background: linear-gradient(color-mix(in srgb, #d79e35 55%, transparent), color-mix(in srgb, #d79e35 55%, transparent)) no-repeat 0 100% / 100% 100%; padding: 1px 0; cursor: pointer; }
+.ct-held { text-decoration: underline dotted 2px; text-underline-offset: .25em; text-decoration-color: var(--soft); }
+.ct-mark::after, .ct-held::after { content: attr(data-n); font: 600 .62em/1 var(--face-utility); vertical-align: super; margin-left: 2px; color: var(--soft); }
+/* latent to active: the marks draw left to right when a reading lands, in the reading direction */
+.ct-out.ct-on .ct-mark { animation: ct-draw .42s cubic-bezier(.2, 0, 0, 1) both; }
+@keyframes ct-draw { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+.ct-h { display: flex; align-items: baseline; gap: 10px; }
+.ct-count { font: 400 var(--fs-1)/1 var(--face-utility); padding: 2px 6px; border: 1px solid var(--line); }
+.ct-list { list-style: none; padding: 0 !important; margin: 0 0 12px; }
+.ct-item { padding: 12px 0; border-top: 1px solid var(--line); margin: 0 !important; }
+.ct-label { margin: 0 0 6px !important; font: 700 var(--fs-3)/1.35 var(--face-text) !important; }
+.ct-n { display: inline-block; min-width: 2.2em; font: 600 var(--fs-1)/1 var(--face-utility); color: var(--soft); }
+.ct-level { font: 400 var(--fs-1)/1 var(--face-utility); color: var(--soft); margin-left: 6px; }
+.ct-how { display: grid; grid-template-columns: minmax(8em, 12em) 1fr; gap: 4px 16px; margin: 0; font: 400 var(--fs-2)/1.5 var(--face-text); }
+.ct-how dt { color: var(--soft); }
+.ct-how dd { margin: 0; }
+.ct-note, .ct-limit, .ct-empty, .ct-source { font-size: var(--fs-2) !important; color: var(--soft); }
+.ct-file { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font: 600 var(--fs-2)/1.3 var(--face-text); }
+.ct-badge { display: block; padding: 10px 12px; border: 1.5px solid var(--ink); overflow-wrap: anywhere; }
+.ct-badge-dot { display: inline-block; vertical-align: -1px; margin-right: 8px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--ink); }
+.ct-badge[data-state="valid"] .ct-badge-dot { background: var(--ink); }
+@media (max-width: 600px) { .ct-how { grid-template-columns: 1fr; } .ct-how dd { margin-bottom: 6px; } }
+@media (prefers-reduced-motion: reduce) { .ct-out.ct-on .ct-mark { animation: none; } }
+@media (forced-colors: active) { .ct-mark { background: Highlight; color: HighlightText; } }

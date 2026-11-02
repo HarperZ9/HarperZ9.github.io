@@ -20,7 +20,7 @@ export const PLATFORMS = [
   {
     id: "commons", name: "THE COMMONS", product: "CMMNS", version: "3.9.1",
     what: "A browser extension that shows where a reply comes from, signs of coordination, how it argues, and whether a fact-checker has reviewed the claim. It runs in your browser on X, YouTube, Reddit, Bluesky and more.",
-    see: ["/daylight-commons/how-it-works.html", "How each sign is read"], more: ["/cmmns.html", "CMMNS"],
+    see: ["/cmmns.html#try", "Try it on your own words"], more: ["/daylight-commons/how-it-works.html", "How each sign is read"],
     run: "Download cmmns-chrome-3.9.1.zip, then Load unpacked", runIsProse: true,
     repo: "https://github.com/HarperZ9/cmmns",
     verified: "version 3.9.1 and its download names match the latest GitHub release of HarperZ9/cmmns (28 October 2026).",

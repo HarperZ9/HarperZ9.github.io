@@ -23,9 +23,9 @@
 <meta name="twitter:title" content="CMMNS | Zain Dana Harper">
 <meta name="twitter:description" content="CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-0aa7a353ca">
-<link rel="stylesheet" href="/studies/studies.css?v=world-0aa7a353ca">
-<script type="module" src="/world/ui/shell/shell.js?v=world-0aa7a353ca"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-b913d8e53b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-b913d8e53b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-b913d8e53b"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/cmmns.html#application","name":"CMMNS","url":"https://harperz9.github.io/cmmns.html","softwareVersion":"3.9.1","applicationCategory":"BrowserApplication","operatingSystem":"Chrome, Edge, Brave, Firefox","downloadUrl":"https://github.com/HarperZ9/cmmns/releases/latest","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/cmmns"}]}</script>
 <!-- structured-data:end -->
@@ -61,6 +61,21 @@
 <p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
 <p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1">3.9.1</a></dd><dt>Browsers</dt><dd>Chrome, Edge, Brave, Firefox</dd><dt>Licence</dt><dd><a href="https://spdx.org/licenses/AGPL-3.0-only.html">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="https://github.com/HarperZ9/cmmns">HarperZ9/cmmns</a></dd></dl>
+
+<section id="try" class="ct" data-commons-try aria-labelledby="h-try">
+<h2 id="h-try">Try it on your own words</h2>
+<p>Paste a post or a passage and CMMNS reads its wording here, in this browser. Each finding is marked in your text and explained beside it: what it shows, how it was reached and what it does not show. Nothing you paste or pick is sent anywhere.</p>
+<label class="ct-label-for" for="ct-text">Text to read</label>
+<textarea id="ct-text" rows="5" spellcheck="false" placeholder="Paste a post, a reply or a paragraph"></textarea>
+<div class="ct-actions"><button type="button" class="ct-go">Read it</button><button type="button" class="ct-sample">Use a sample</button><span class="ct-hint">Ctrl and Enter also reads it.</span></div>
+<div class="ct-out" aria-live="polite"></div>
+<h3 class="ct-h">A file's provenance</h3>
+<p>Pick a picture or a video and CMMNS reads its Content Credentials (C2PA) and its IPTC and XMP metadata from the bytes on your device.</p>
+<label class="ct-file"><span>Choose a file</span> <input id="ct-file" type="file" accept="image/*,video/*"></label>
+<div class="ct-file-out" aria-live="polite"></div>
+<p class="ct-source">This panel runs the unmodified CMMNS 3.9.1 core (<a href="https://github.com/HarperZ9/cmmns/tree/v3.9.1/src/core">source</a>, AGPL-3.0-only), loaded only once you start.</p>
+</section>
+<script type="module" src="/world/site/commons-try.js?v=world-b913d8e53b"></script>
 
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>

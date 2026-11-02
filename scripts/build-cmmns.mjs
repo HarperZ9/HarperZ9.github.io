@@ -35,6 +35,21 @@ const body = `<article class="tool">
 <p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="${rel}">${esc(v)}</a></dd><dt>Browsers</dt><dd>${esc(tool.os)}</dd><dt>Licence</dt><dd><a href="${esc(tool.license)}">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="${repo}">HarperZ9/cmmns</a></dd></dl>
 
+<section id="try" class="ct" data-commons-try aria-labelledby="h-try">
+<h2 id="h-try">Try it on your own words</h2>
+<p>Paste a post or a passage and CMMNS reads its wording here, in this browser. Each finding is marked in your text and explained beside it: what it shows, how it was reached and what it does not show. Nothing you paste or pick is sent anywhere.</p>
+<label class="ct-label-for" for="ct-text">Text to read</label>
+<textarea id="ct-text" rows="5" spellcheck="false" placeholder="Paste a post, a reply or a paragraph"></textarea>
+<div class="ct-actions"><button type="button" class="ct-go">Read it</button><button type="button" class="ct-sample">Use a sample</button><span class="ct-hint">Ctrl and Enter also reads it.</span></div>
+<div class="ct-out" aria-live="polite"></div>
+<h3 class="ct-h">A file's provenance</h3>
+<p>Pick a picture or a video and CMMNS reads its Content Credentials (C2PA) and its IPTC and XMP metadata from the bytes on your device.</p>
+<label class="ct-file"><span>Choose a file</span> <input id="ct-file" type="file" accept="image/*,video/*"></label>
+<div class="ct-file-out" aria-live="polite"></div>
+<p class="ct-source">This panel runs the unmodified CMMNS ${esc(v)} core (<a href="${repo}/tree/v${esc(v)}/src/core">source</a>, AGPL-3.0-only), loaded only once you start.</p>
+</section>
+<script type="module" src="/world/site/commons-try.js"></script>
+
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>
 <ol>
