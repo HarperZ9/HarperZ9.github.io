@@ -202,7 +202,7 @@ Microsoft: Secure AI solutions in the cloud (Applied Skills credential).
 
 Credential ID: ED8852810C3B3FBC. Assessment score: 87%.
 
-https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/ed8852810c3b3fbc
 
 ### ms-entra
 
@@ -210,7 +210,7 @@ Microsoft: Get started with identities and access using Microsoft Entra (Applied
 
 Credential ID: 3D93C65204CB43EE. Assessment score: 100%.
 
-https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/3d93c65204cb43ee
 
 ### ms-storage
 
@@ -218,7 +218,7 @@ Microsoft: Secure storage for Azure Files and Azure Blob Storage (Applied Skills
 
 Credential ID: 4117A3B4196233D2. Assessment score: 86%.
 
-https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/4117a3b4196233d2
 
 ### lfel1012
 
@@ -596,7 +596,7 @@ Assessed knowledge covers penetration-test scoping/reporting, vulnerability asse
 
 Microsoft Applied Skills: Implement security through a pipeline using Azure DevOps. Intermediate credential earned September 30, 2026 with a 95% assessment result. The issuer record names Zain Dana Harper and reports Active / Online Verifiable. Credential identifier: B6385A86C4A25301.
 
-https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops
+https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/b6385a86c4a25301
 
 Assessed configuration work covers restricted agent pools and YAML bindings, secure-file authorization and approval checks, managed identities and federated service connections, scoped Key Vault permissions, repository/pipeline separation, and parameterized deployment templates. Service-connection verification and sample-pipeline validation did not establish a successful deployment. The grade records the provider's assessment outcome; no production deployment or Expert certification is claimed.
 

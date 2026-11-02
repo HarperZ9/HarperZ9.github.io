@@ -28,8 +28,6 @@ About 13 years self-directed | Career transition began June 2026
 
 - Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.
 
-- Maintained Elder ENB, a Skyrim lighting preset: 996,649 downloads and 2,413 endorsements on Nexus Mods.
-
 ### Freelance Technical Writer | Independent projects | Began 2017
 
 - Wrote implementation guides, API documentation, and release notes for developers and customers.
@@ -52,12 +50,14 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters, with regression tests. Merged.
 
-- TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.
+## Certifications and Education
 
-- Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.
+- Google DeepMind: Train A Small Language Model, assessed skill badge, 100/100 | Google Skills | September 2026
 
-## Credentials, Training, and Education
+- Microsoft Applied Skills, four credentials, including Secure AI solutions in the cloud and Azure DevOps pipeline security (95% assessment) | Microsoft | September 2026
 
-Qualys Certified Specialist: six certifications, including VMDR, EDR and Policy Audit. Microsoft Applied Skills: four security credentials (95% assessment). Cisco Ethical Hacker. Full record: harperz9.github.io/cv.html.
+- Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026
+
+Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html
 
 High School Diploma | Wilsonville High School, Oregon | 2013

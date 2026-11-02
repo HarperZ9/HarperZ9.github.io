@@ -3,7 +3,7 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "page:cv",
-  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
  },
  "ir_sha256": "a233702f89b91cfedc1ec391e9a8e5ec13a55403e6bdccc1e8888a0949e667cc",
  "theme": "press-resume",

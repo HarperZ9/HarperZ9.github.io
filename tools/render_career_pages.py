@@ -33,7 +33,7 @@ def expand(blocks: list[dict], groups: dict, stack: tuple[str, ...] = ()) -> lis
 
 
 def linkify(text: str) -> str:
-    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/|nexusmods\.com/)[^\s|]*'
+    pattern = r'(?:https?://)?(?:github\.com/|harperz9\.github\.io(?:/|\b)|linkedin\.com/|orcid\.org/|doi\.org/|nexusmods\.com/|learn\.microsoft\.com/|academy\.claude\.com/|credly\.com/|coursera\.org/|trainingportal\.linuxfoundation\.org/|qualys\.com/|skills\.google/|bluedot\.org/)[^\s|]*'
     parts, previous = [], 0
     for match in re.finditer(pattern, text):
         end = match.end()
@@ -289,6 +289,9 @@ def render(source: dict) -> dict[str, str]:
         inventory_blocks = module.blocks
         rows = inventory_blocks(json.loads(inventory.read_text(encoding='utf-8')))
         page = [{'kind': 'h1', 'text': 'Published work'}] + [dict(r, kind='h2') if r['kind'] == 'h3' else r for r in rows[1:]]
+        credentials = ROOT / 'career' / 'credentials.json'
+        if credentials.is_file():
+            page += module.credential_blocks(json.loads(credentials.read_text(encoding='utf-8')))
         outputs['published-work.html'] = shell('published-work.html', 'Zain Dana Harper | Published work',
             'Every public release, package, paper, essay, briefing and packet by Zain Dana Harper, with dates and links.',
             '<article class="sheet doc-rail">\n' + blocks_html(page) + '\n</article>\n')

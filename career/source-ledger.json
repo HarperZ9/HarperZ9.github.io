@@ -199,7 +199,7 @@
     {
       "id": "ms-ai-security",
       "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/ed8852810c3b3fbc",
       "provider": "Microsoft",
       "title": "Secure AI solutions in the cloud",
       "earned": "2026-09-29",
@@ -209,7 +209,7 @@
     {
       "id": "ms-entra",
       "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/3d93c65204cb43ee",
       "provider": "Microsoft",
       "title": "Get started with identities and access using Microsoft Entra",
       "earned": "2026-09-29",
@@ -219,7 +219,7 @@
     {
       "id": "ms-storage",
       "status": "Applied Skills credential; completed record verified in authenticated provider interface during September 2026 coursework session; does not establish professional experience",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/4117a3b4196233d2",
       "provider": "Microsoft",
       "title": "Secure storage for Azure Files and Azure Blob Storage",
       "earned": "2026-09-29",
@@ -774,7 +774,7 @@
       "earned": "2026-09-30",
       "score_percent": 95,
       "credential_id": "B6385A86C4A25301",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/b6385a86c4a25301",
       "assessment_result": "95%; Applied Skills credential earned",
       "verification_status": "Active; online verifiable",
       "assessed_skills": [

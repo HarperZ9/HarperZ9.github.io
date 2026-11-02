@@ -50,10 +50,14 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Hebbian Robotics #157: added schema-drift coverage that flags mismatches between queryable episode columns and reserved names before incompatible changes go unnoticed. Merged.
 
-- Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching persisted audio and JSONL records to emitted events. Merged.
+## Certifications and Education
 
-## Credentials, Training, and Education
+- Google Cloud skill badges: BigQuery predictive analysis; BigQuery ML models | Google | October 2026
 
-Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Cisco Ethical Hacker course certificate. Coursework: Google SecOps; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.
+- Microsoft Applied Skills, four credentials, including Azure DevOps pipeline security (95% assessment) and Microsoft Entra identities and access | Microsoft | September 2026
+
+- Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026
+
+Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html
 
 High School Diploma | Wilsonville High School, Oregon | 2013

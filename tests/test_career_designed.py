@@ -131,3 +131,17 @@ def test_controls_fail(tmp_path: Path) -> None:
     assert checks.decorations_clear_of_body(behind, "Summary") != []
     a = checks.tokens(faint, "pymupdf")
     assert checks.first_difference(a, a[1:] + a[:1]) != ""
+
+
+def test_every_credential_is_on_the_published_work_page_with_its_result() -> None:
+    creds = json.loads((ROOT / "career" / "credentials.json").read_text(encoding="utf-8"))
+    source_ids = {c["id"] for c in SOURCE["credentials"]}
+    assert {c["id"] for c in creds["credentials"]} == source_ids
+    assert creds["total"] == len(source_ids) == sum(creds["counts"].values())
+    page = (ROOT / "published-work.html").read_text(encoding="utf-8")
+    assert f"Certifications and credentials | {creds['total']}" in page
+    for c in creds["credentials"]:
+        assert c["result"] in {"verified", "link dead", "no public record"}, c["id"]
+        assert c["title"].replace("&", "&amp;") in page, c["id"]
+        if c["result"] == "verified":
+            assert c["verification_url"] and c["method"], c["id"]

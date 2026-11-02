@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "support-operations-qa",
-  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
  },
- "ir_sha256": "4e8b38dcfc3ad2c1538d872c82e95db381df50145af4a72919774a5952ba36ac",
+ "ir_sha256": "59fdf4920f00f8f75a4ed322d7e1fb5cca28b840df38b4c4c98c7e61232ece60",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "1f778c7c52e7605f664dac2b28ebb94ff59dd03eb1ab76e14232156527e9b196"
+  "Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "356664afb3f714fdf3444b33d27766d169b5cb78c29cda41181d9c6478f91880"
  },
  "facts": {
   "pages": 1,
@@ -23,19 +23,19 @@
   "missing_glyphs": [],
   "fonts": [
    {
+    "name": "BFGKHN+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
     "name": "BJEJEB+AccessionDisplay-Master",
     "embedded": true
    },
    {
-    "name": "CCIDKG+HankenGrotesk-Regular",
+    "name": "EMMDHD+HankenGrotesk-Regular",
     "embedded": true
    },
    {
     "name": "HPNAAK+HankenGrotesk-Regular",
-    "embedded": true
-   },
-   {
-    "name": "LOIAEF+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,7 +43,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 228299
+  "pdf_bytes": 228152
  },
  "failed": [],
  "notes": [

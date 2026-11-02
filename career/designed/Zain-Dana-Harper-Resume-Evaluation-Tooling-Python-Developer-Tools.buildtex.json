@@ -3,17 +3,17 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "evaluation-python-tools",
-  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
  },
- "ir_sha256": "746e012f3cb4bf2da5955b48470f7826957d78d7b4e32d96c116c31fb3175f8e",
+ "ir_sha256": "ff2c5bc05ef5d799672f1f115a1513c18813131f2b12ec4b171711767f07d57d",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
-  "base.leading=13.4",
+  "base.leading=12.8",
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "d913e660c7d7315be7f11d470ef5bbed553304e8bc02c6b784d4032cf061eab1"
+  "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "b7c931353f7acad9d4af7442a7895d83f9b3533e1dae8c41241b8a247c00279f"
  },
  "facts": {
   "pages": 1,
@@ -27,7 +27,7 @@
     "embedded": true
    },
    {
-    "name": "FBCEGF+HankenGrotesk-Regular",
+    "name": "BJFOEO+HankenGrotesk-Regular",
     "embedded": true
    },
    {
@@ -35,7 +35,7 @@
     "embedded": true
    },
    {
-    "name": "PAOILL+HankenGrotesk-Regular",
+    "name": "MLMMDF+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,7 +43,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 226816
+  "pdf_bytes": 226952
  },
  "failed": [],
  "notes": [

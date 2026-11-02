@@ -52,8 +52,8 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.
 
-## Credentials, Training, and Education
+## Certifications and Education
 
-Security, AI and cloud credentials from Qualys, Microsoft, Cisco and Google are listed in the full record: harperz9.github.io/cv.html.
+Security and cloud certifications from Qualys, Microsoft Applied Skills and Google Cloud, none specific to graphics; all 42 credentials, with verification links: harperz9.github.io/published-work.html
 
 High School Diploma | Wilsonville High School, Oregon | 2013

@@ -3,9 +3,9 @@
  "source": {
   "path": "career/resume-source.json",
   "document": "graphics-developer-tools",
-  "sha256": "d13136f4d95cb5631818e4e063e023a00b3a6e03c13d453a4aeaf6c6047117bc"
+  "sha256": "9859e3bbbe9a483ba0cba41a14d942248944a64498558ef4f47ed6af5c3c251f"
  },
- "ir_sha256": "59b33f1dc1a62c2ce82e57c5685b3bc3d4b4f4b211c06447a9b8fd687d0787ad",
+ "ir_sha256": "cc5ff3bf3cfc4c3eb6038e165aa0b5b6eb5d33825e991cce917bd56866db6272",
  "theme": "press-resume",
  "overrides": [
   "base.size=10.0",
@@ -13,7 +13,7 @@
   "emboss.deboss_finish=inked"
  ],
  "outputs": {
-  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "67abac3cd18a69cfd070ad142afd48a96420abad80c0cf0d1bbb8c8f88c65404"
+  "Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf": "24ad7a588da9158c476f241a0e14fe65a2a49a216c921686b26d3d2cc02f4c1c"
  },
  "facts": {
   "pages": 1,
@@ -35,7 +35,7 @@
     "embedded": true
    },
    {
-    "name": "OKBDAD+HankenGrotesk-Regular",
+    "name": "ONKNMC+HankenGrotesk-Regular",
     "embedded": true
    }
   ],
@@ -43,7 +43,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 229070
+  "pdf_bytes": 229183
  },
  "failed": [],
  "notes": [

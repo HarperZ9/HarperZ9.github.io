@@ -67,3 +67,18 @@ def blocks(data: dict) -> list[dict]:
     for m in data["mods"]:
         out.append(b("li", f"{m['title']} on {m['site']}, first uploaded {when(m['first'])}. {bare(m['url'])}"))
     return out
+
+
+def credential_blocks(data: dict) -> list[dict]:
+    """The credentials section of the published-work page, from career/credentials.json."""
+    rows = data["credentials"]
+    verified = data["counts"].get("verified", 0)
+    out = [{"kind": "h2", "text": f"Certifications and credentials | {data['total']}"},
+           {"kind": "p", "text": f"Every credential on the career pages, newest first. {verified} of {data['total']} were "
+                                 f"checked as verified on the issuer's public page on {when(data['checked'])}; the rest "
+                                 f"are marked where the issuer offers no public record or the listed link is dead."}]
+    for r in rows:
+        date = when(r["date"]) if len(r["date"]) == 10 else r["date"]
+        link = bare(r["verification_url"]) if r["verification_url"] else "no link"
+        out.append({"kind": "li", "text": f"{r['title']} | {r['issuer']} | {r['kind']} | {date} | {r['result']}: {link}"})
+    return out

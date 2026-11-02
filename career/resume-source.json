@@ -414,39 +414,47 @@
           ]
         },
         {
+          "kind": "h2",
+          "text": "Certifications and Education"
+        },
+        {
           "kind": "li",
-          "text": "Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching persisted audio and JSONL records to emitted events. Merged.",
+          "text": "Google Cloud skill badges: BigQuery predictive analysis; BigQuery ML models | Google | October 2026",
           "evidence": [
-            "voxwire"
+            "google-bigquery-predictive",
+            "google-bigquery-ml-models"
           ]
         },
         {
-          "kind": "h2",
-          "text": "Credentials, Training, and Education"
+          "kind": "li",
+          "text": "Microsoft Applied Skills, four credentials, including Azure DevOps pipeline security (95% assessment) and Microsoft Entra identities and access | Microsoft | September 2026",
+          "evidence": [
+            "ms-devops-security",
+            "ms-entra",
+            "ms-storage",
+            "ms-ai-security"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026",
+          "evidence": [
+            "qualys-vmdr",
+            "qualys-policy-audit",
+            "qualys-edr",
+            "qualys-totalcloud",
+            "qualys-kcs",
+            "qualys-car"
+          ]
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Cisco Ethical Hacker course certificate. Coursework: Google SecOps; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html",
           "evidence": [
-            "ms-ai-security",
-            "ms-entra",
-            "ms-storage",
-            "lfd121",
-            "sc100-apps-data",
-            "sc100-mcra-mcsb",
-            "bluedot-agi-strategy",
-            "anthropic-mcp-advanced",
-            "qualys-policy-audit",
-            "qualys-car",
-            "qualys-vmdr",
-            "claude-code-in-action",
-            "building-claude-api",
-            "qualys-kcs",
-            "qualys-totalcloud",
-            "qualys-edr",
             "cisco-ethical-hacker",
-            "ms-devops-security",
-            "google-secops-deep-dive"
+            "anthropic-mcp-advanced",
+            "unesco-ai-ethics",
+            "lfd121"
           ]
         },
         {
@@ -538,13 +546,6 @@
           ]
         },
         {
-          "kind": "li",
-          "text": "Maintained Elder ENB, a Skyrim lighting preset: 996,649 downloads and 2,413 endorsements on Nexus Mods.",
-          "evidence": [
-            "elder-enb-nexus"
-          ]
-        },
-        {
           "ref": "resume-writer-value"
         },
         {
@@ -569,53 +570,46 @@
           ]
         },
         {
-          "kind": "li",
-          "text": "TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.",
-          "evidence": [
-            "tomlkit"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Datasette #2815: corrected malformed composite-key requests from HTTP 500 to HTTP 400, with tests. Merged.",
-          "evidence": [
-            "datasette"
-          ]
-        },
-        {
           "kind": "h2",
-          "text": "Credentials, Training, and Education"
+          "text": "Certifications and Education"
+        },
+        {
+          "kind": "li",
+          "text": "Google DeepMind: Train A Small Language Model, assessed skill badge, 100/100 | Google Skills | September 2026",
+          "evidence": [
+            "google-deepmind-slm"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Microsoft Applied Skills, four credentials, including Secure AI solutions in the cloud and Azure DevOps pipeline security (95% assessment) | Microsoft | September 2026",
+          "evidence": [
+            "ms-ai-security",
+            "ms-devops-security",
+            "ms-entra",
+            "ms-storage"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026",
+          "evidence": [
+            "qualys-vmdr",
+            "qualys-policy-audit",
+            "qualys-edr",
+            "qualys-totalcloud",
+            "qualys-kcs",
+            "qualys-car"
+          ]
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: six certifications, including VMDR, EDR and Policy Audit. Microsoft Applied Skills: four security credentials (95% assessment). Cisco Ethical Hacker. Full record: harperz9.github.io/cv.html.",
+          "text": "Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html",
           "evidence": [
-            "ms-ai-security",
-            "ms-entra",
-            "ms-storage",
-            "lfd121",
-            "sc100-apps-data",
-            "sc100-mcra-mcsb",
-            "bluedot-agi-strategy",
-            "anthropic-mcp-advanced",
-            "qualys-policy-audit",
-            "qualys-car",
-            "qualys-vmdr",
-            "claude-code-in-action",
-            "building-claude-api",
-            "qualys-kcs",
-            "qualys-totalcloud",
-            "qualys-edr",
-            "google-deepmind-slm",
-            "unesco-ai-ethics",
-            "google-multi-agent",
             "cisco-ethical-hacker",
-            "ms-devops-security",
-            "google-mlops-model-evaluation",
-            "claude-amazon-bedrock",
-            "google-bigquery-predictive",
-            "google-bigquery-ml-models",
-            "google-secops-deep-dive"
+            "anthropic-mcp-advanced",
+            "unesco-ai-ethics",
+            "lfd121"
           ]
         },
         {
@@ -738,38 +732,15 @@
         },
         {
           "kind": "h2",
-          "text": "Credentials, Training, and Education"
+          "text": "Certifications and Education"
         },
         {
           "kind": "p",
-          "text": "Security, AI and cloud credentials from Qualys, Microsoft, Cisco and Google are listed in the full record: harperz9.github.io/cv.html.",
+          "text": "Security and cloud certifications from Qualys, Microsoft Applied Skills and Google Cloud, none specific to graphics; all 42 credentials, with verification links: harperz9.github.io/published-work.html",
           "evidence": [
-            "ms-ai-security",
-            "ms-entra",
-            "ms-storage",
-            "lfd121",
-            "sc100-apps-data",
-            "sc100-mcra-mcsb",
-            "bluedot-agi-strategy",
-            "anthropic-mcp-advanced",
-            "qualys-policy-audit",
-            "qualys-car",
             "qualys-vmdr",
-            "claude-code-in-action",
-            "building-claude-api",
-            "qualys-kcs",
-            "qualys-totalcloud",
-            "qualys-edr",
-            "google-deepmind-slm",
-            "unesco-ai-ethics",
-            "google-multi-agent",
-            "cisco-ethical-hacker",
             "ms-devops-security",
-            "google-mlops-model-evaluation",
-            "claude-amazon-bedrock",
-            "google-bigquery-predictive",
-            "google-bigquery-ml-models",
-            "google-secops-deep-dive"
+            "google-bigquery-ml-models"
           ]
         },
         {
@@ -1893,7 +1864,7 @@
       "earned": "2026-09-29",
       "score_percent": 87,
       "credential_id": "ED8852810C3B3FBC",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/ed8852810c3b3fbc"
     },
     {
       "id": "ms-entra",
@@ -1903,7 +1874,7 @@
       "earned": "2026-09-29",
       "score_percent": 100,
       "credential_id": "3D93C65204CB43EE",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/3d93c65204cb43ee"
     },
     {
       "id": "ms-storage",
@@ -1913,7 +1884,7 @@
       "earned": "2026-09-29",
       "score_percent": 86,
       "credential_id": "4117A3B4196233D2",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/4117a3b4196233d2"
     },
     {
       "id": "lfel1012",
@@ -2388,7 +2359,7 @@
       "earned": "2026-09-30",
       "score_percent": 95,
       "credential_id": "B6385A86C4A25301",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/b6385a86c4a25301",
       "assessment_result": "95%; Applied Skills credential earned",
       "verification_status": "Active; online verifiable",
       "assessed_skills": [
