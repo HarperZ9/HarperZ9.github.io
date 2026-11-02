@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // commons-try.js: THE COMMONS on the visitor's own words and files, in this browser, with nothing sent.
-// It calls the unmodified CMMNS core (vendor/cmmns/<version>/, AGPL-3.0-only; see vendor/cmmns/README.md) and shows
+// It calls the unmodified CMMNS core (vendor/cmmns/<commit>/, AGPL-3.0-only; see vendor/cmmns/README.md) and shows
 // each result with how it was reached: the rule's own wording, its source and what it does not show. Cues CMMNS
 // reads but holds back, because their measured precision is below its ship line, are shown apart and say so.
 // The core loads only when the visitor starts: a focus in the box, a press, or a chosen file.
-const CORE = "/vendor/cmmns/3.9.1/src/core";
+const BASE = "/vendor/cmmns/pr112-5f86ee7", CORE = `${BASE}/src/core`;
 const SAMPLE = "Everyone knows the official numbers are fake. As an AI language model, I cannot verify this, but share it before they take it down.";
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
@@ -60,20 +60,39 @@ async function readText(root) {
   out.classList.remove("ct-on"); void out.offsetWidth; out.classList.add("ct-on");
 }
 
-async function readFile(root, file) {
+// a file's Content Credentials as CMMNS' validation report: the badge says the strongest true claim, and each
+// check underneath says what it found, so a valid signature never reads as more than it is
+const CHECKS = [["signature", "Signature"], ["assertions", "Assertions"], ["chain", "Certificate chain"], ["binding", "File bytes"], ["revocationNow", "Revocation"], ["timestamp", "Time stamp"]];
+function checkText(r, k) {
+  if (k === "binding") return r.binding?.hard?.text;
+  if (k === "revocationNow") return r.revocation?.now?.text || r.revocation?.atSigning?.text;
+  if (k === "timestamp") return r.timestamp ? (r.timestamp.present ? "present; CMMNS does not check time-stamp tokens" : "none in the manifest") : null;
+  return r[k]?.text;
+}
+async function readBytes(root, name, bytes) {
   const out = root.querySelector(".ct-file-out");
-  if (!file) return;
   out.setAttribute("aria-busy", "true");
   let C;
   try { C = await load(); } catch { out.innerHTML = `<p class="ct-empty">The checker did not load. Reload the page to try again.</p>`; out.removeAttribute("aria-busy"); return; }
-  const bytes = new Uint8Array(await file.arrayBuffer());
-  let env;
-  try { env = await C.api.checkMedia(bytes); } catch (e) { console.error("commons-try: checkMedia failed", e); out.innerHTML = `<p class="ct-empty">This file could not be read.</p>`; out.removeAttribute("aria-busy"); return; }
-  const st = env.media?.state ?? "none";
-  out.innerHTML = `<p class="ct-badge" data-state="${esc(st)}"><span class="ct-badge-dot" aria-hidden="true"></span><b>${esc(file.name)}</b>: ${esc(env.evidence[0]?.label ?? st)}${env.media?.ai ? ", with an AI-generation mark" : ""}</p>
-    <ol class="ct-list">${env.evidence.map((e, i) => item(e, i + 1)).join("")}</ol>
-    <p class="ct-limit">${esc((env.limits || []).join(" "))}</p>`;
+  let r;
+  try { r = await C.api.credentialReport(bytes); } catch (e) { console.error("commons-try: credentialReport failed", e); out.innerHTML = `<p class="ct-empty">This file could not be read.</p>`; out.removeAttribute("aria-busy"); return; }
+  const parts = r.badge?.parts || [], ids = parts.map((p) => p.id);
+  const rows = r.found ? CHECKS.map(([k, label]) => { const t = checkText(r, k); return t ? `<dt>${label}</dt><dd>${esc(t)}</dd>` : ""; }).join("") : "";
+  const ai = r.fields?.aiOrigin ? `<dt>AI origin field</dt><dd>${esc({ "declared-ai": "declared: made with generative AI", "earlier-ai": "an earlier manifest declares generative AI", "declared-not-ai": "declares a source that is not AI", absent: "absent, which the specification does not require" }[r.fields.aiOrigin] || r.fields.aiOrigin)}</dd>` : "";
+  const subj = r.signer?.subject, who = subj && typeof subj === "object" ? (subj.CN || subj.commonName || Object.values(subj).join(", ")) : subj;
+  const signer = who ? `<dt>Certificate names</dt><dd>${esc(who)}${r.signer.issuer?.CN ? `, issued by ${esc(r.signer.issuer.CN)}` : ""}</dd>` : "";
+  const weak = (r.weaknesses || []).map((w) => `<li class="ct-item"><p class="ct-label">${esc(w.title)}</p><p class="ct-note">${esc(w.detail)} ${w.spec ? `<span class="ct-spec">${esc(w.spec)}</span>` : ""}</p></li>`).join("");
+  out.innerHTML = `<p class="ct-badge" data-level="${esc(r.badge?.level || "info")}" data-parts="${esc(ids.join(" "))}"><span class="ct-badge-dot" aria-hidden="true"></span><b>${esc(name)}</b>: ${parts.map((p) => `<span class="ct-part" data-id="${esc(p.id)}">${esc(p.text)}</span>`).join("; ")}</p>
+    ${rows || ai || signer ? `<dl class="ct-how ct-report">${signer}${rows}${ai}</dl>` : ""}
+    ${weak ? `<h3 class="ct-h">What these checks cannot settle <span class="ct-count">${(r.weaknesses || []).length}</span></h3><ol class="ct-list">${weak}</ol>` : ""}
+    <p class="ct-limit">Read on this device at ${esc(r.checkedAt || "")}. No trust list and no revocation data were supplied, so those checks read "not checked". The badge states only what the checks above support.</p>`;
   out.removeAttribute("aria-busy");
+}
+async function readFile(root, file) { if (file) await readBytes(root, file.name, new Uint8Array(await file.arrayBuffer())); }
+async function readSample(root, name) {
+  const res = await fetch(`${BASE}/samples/${name}`);
+  if (!res.ok) { console.error("commons-try: sample did not load", name, res.status); return; }
+  await readBytes(root, name, new Uint8Array(await res.arrayBuffer()));
 }
 
 export function mount(root) {
@@ -84,6 +103,7 @@ export function mount(root) {
   root.querySelector(".ct-go").addEventListener("click", () => readText(root));
   box.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) readText(root); });
   file.addEventListener("change", () => readFile(root, file.files[0]));
+  for (const b of root.querySelectorAll("[data-sample]")) b.addEventListener("click", () => readSample(root, b.dataset.sample));
   // a mark and its row point at each other: pressing a mark moves to the row that explains it
   root.querySelector(".ct-out").addEventListener("click", (e) => {
     const m = e.target.closest(".ct-mark"); if (!m) return;

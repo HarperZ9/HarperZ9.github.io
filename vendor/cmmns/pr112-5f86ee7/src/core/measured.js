@@ -6,6 +6,10 @@
 //   { precision, low, high, n, split: "test", recall?, side?, date?, source? }
 //   precision, low, high: 0 to 1 (low and high are the 95% interval); n: badges checked.
 //   range: [lowest, highest] precision across corpora with at least 20 hits, or null.
+//   basis: { corpus, label }: the one test set every figure in the row comes from.
+//   catch: { against: "matched" | "hostile", hits, of, measured, dprime, dCI, c, cCI }: how many of
+//   the labelled posts the sign found, and its signal detection figures (scripts/eval/sdt.mjs) on
+//   that same test set. measured is false under the 20-hit rule.
 // MEASURED_DETAIL holds every family (weak ones too), the side comparison and the SYNTHETIC
 // duplicate and mismatch pilots, which are not human-labelled and get no row in MEASURED.
 
@@ -27,10 +31,10 @@ export const MEASURED_PERSUASION = {
 };
 // persuasion:end
 export const MEASURED = {
-  "dehumanise": {"precision":0.925,"low":0.801,"high":0.974,"n":40,"split":"test","recall":0.002,"range":[0.9,0.9],"date":"2026-10-23","source":"Measuring Hate Speech, HateXplain and Civil Comments, pooled; see project-docs/EVALUATION.md"},
-  "violence": {"precision":0.875,"low":0.79,"high":0.929,"n":88,"split":"test","recall":0.021,"range":[0.967,0.967],"date":"2026-10-23","source":"Measuring Hate Speech, HateXplain and Civil Comments, pooled; see project-docs/EVALUATION.md"},
-  "slur": {"precision":0.91,"low":0.901,"high":0.918,"n":4393,"split":"test","recall":null,"range":[0.34,0.953],"date":"2026-10-23","source":"Measuring Hate Speech, HateXplain and Civil Comments, pooled; see project-docs/EVALUATION.md"},
-  "stereotype": {"precision":0.842,"low":0.764,"high":0.898,"n":114,"split":"test","recall":0.007,"range":[0.773,0.925],"date":"2026-10-23","source":"Measuring Hate Speech, HateXplain and Civil Comments, pooled; see project-docs/EVALUATION.md"},
+  "dehumanise": {"precision":0.6,"low":0.387,"high":0.781,"n":20,"split":"test","recall":0.002,"basis":{"corpus":"Measuring Hate Speech","label":"its own dehumanising label"},"catch":{"against":"matched","hits":12,"of":5046,"measured":true,"dprime":0.44,"dCI":[0.15,0.75],"c":3.03,"cCI":[2.93,3.21]},"date":"2026-10-23","source":"Measuring Hate Speech, held-out test split; see project-docs/EVALUATION.md"},
+  "violence": {"precision":0.639,"low":0.514,"high":0.748,"n":61,"split":"test","recall":0.021,"basis":{"corpus":"Measuring Hate Speech","label":"its own violence label"},"catch":{"against":"matched","hits":39,"of":1819,"measured":true,"dprime":1,"dCI":[0.82,1.2],"c":2.52,"cCI":[2.44,2.63]},"date":"2026-10-23","source":"Measuring Hate Speech, held-out test split; see project-docs/EVALUATION.md"},
+  "slur": {"precision":0.953,"low":0.94,"high":0.964,"n":1139,"split":"test","recall":0.088,"basis":{"corpus":"Measuring Hate Speech","label":"general hostility"},"catch":{"against":"hostile","hits":1086,"of":12295,"measured":true,"dprime":1.1,"dCI":[1.01,1.21],"c":1.9,"cCI":[1.86,1.96]},"date":"2026-10-23","source":"Measuring Hate Speech, held-out test split; see project-docs/EVALUATION.md"},
+  "stereotype": {"precision":0.725,"low":0.619,"high":0.811,"n":80,"split":"test","recall":0.007,"basis":{"corpus":"Measuring Hate Speech","label":"its own stereotype label"},"catch":{"against":"matched","hits":58,"of":8368,"measured":true,"dprime":0.43,"dCI":[0.28,0.61],"c":2.67,"cCI":[2.6,2.76]},"date":"2026-10-23","source":"Measuring Hate Speech, held-out test split; see project-docs/EVALUATION.md"},
 };
 
 export const MEASURED_DETAIL = {
@@ -58,4 +62,4 @@ export const MEASURED_DETAIL = {
  },
 };
 
-export const MEASURED_DOES_NOT_PROVE = "Measured on public research corpora (Reddit, Twitter, Gab, YouTube and news comments), and it can differ on this site and other topics. Precision says how often a marker sat on text the annotators judged hostile to a group.";
+export const MEASURED_DOES_NOT_PROVE = "Measured on public research corpora (Reddit, Twitter, Gab, YouTube and news comments), and it can differ on this site and other topics. Each figure in the window comes from one test set, named beside it: precision says how often the sign sat on text the annotators gave that label.";

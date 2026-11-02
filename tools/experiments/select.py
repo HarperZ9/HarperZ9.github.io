@@ -206,7 +206,7 @@ def main() -> None:
     out = {"built": dt.date.today().isoformat(), "rule": "register tier D, no hold, open data, every number found in the study's ledger entry",
            "domains": [{"id": d, "label": lbl} for d, lbl, _ in DOMAINS], "cards": sorted(cards, key=lambda c: -c["n"])}
     (SITE / "experiments").mkdir(exist_ok=True)
-    (SITE / "experiments/experiments.json").write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    (SITE / "experiments/experiments.json").write_bytes((json.dumps(out, indent=1, ensure_ascii=False) + "\n").encode("utf-8"))
     lines = ["# Experiments held back from the site", "", f"Built {out['built']} by tools/experiments/select.py. The public rule: {out['rule']}.",
              f"Shown: {len(cards)}. Held: {len(held)}. Each held study is listed with the first rule it failed; the author decides.", "",
              "| Finding | Tier | Title | Held because |", "|---|---|---|---|"]

@@ -6,6 +6,7 @@
 //   analyzeThread({ site, root, replies })   evidence about a thread
 //   analyzeText(text)                        evidence about one piece of text
 //   checkMedia(bytes)                        Content Credentials and AI metadata of a file
+//   credentialReport(bytes, opts)            the C2PA validation report, one field per check
 //   siteInfo(domain)                         what CMMNS' tables hold about a site
 //   useData({ sites, owners, state, claims, claimParts })   load the tables (optional)
 //
@@ -16,11 +17,12 @@ import { postEvidence } from "./api-post.js";
 import { threadItems, flagsOf } from "./api-thread.js";
 import { siteEvidence, siteSummary, cleanDomain } from "./api-site.js";
 import { mediaReading } from "./api-media.js";
+import { c2paReport } from "./c2pa-report.js";
 import { useData, claimIndex, dataLoaded } from "./api-data.js";
 import { REPORT_DOES_NOT_PROVE } from "./report.js";
 import { THREAD_LIMIT, TEXT_LIMIT } from "./api-words.js";
 
-export const API_VERSION = "2.0.0";
+export const API_VERSION = "2.1.0";
 export const EVIDENCE_SCHEMA = "urn:radar:evidence:v2";
 export { useData, dataLoaded };
 
@@ -89,6 +91,12 @@ export function analyzeThread(input, opts = {}) {
 export async function checkMedia(bytes) {
   const M = await mediaReading(bytes);
   return envelope("media", { media: { state: M.state, ai: M.ai, format: M.format }, evidence: number(M.items), limits: ["CMMNS read this file on this device. Credentials and metadata describe how the file says it was made."] });
+}
+
+// bytes: the whole file. opts: { now, trustAnchors, crls, ocsp } (DER bytes; CMMNS fetches nothing).
+// Resolves to the validation report, schema cmmns.c2pa-report/1 (project-docs/C2PA-REPORT.md).
+export async function credentialReport(bytes, opts = {}) {
+  return c2paReport(bytes, opts);
 }
 
 // domain: "example.com" or a URL. Returns the evidence envelope, or null for an empty domain.

@@ -42,11 +42,11 @@ const body = `<article class="tool">
 <textarea id="ct-text" rows="5" spellcheck="false" placeholder="Paste a post, a reply or a paragraph"></textarea>
 <div class="ct-actions"><button type="button" class="ct-go">Read it</button><button type="button" class="ct-sample">Use a sample</button><span class="ct-hint">Ctrl and Enter also reads it.</span></div>
 <div class="ct-out" aria-live="polite"></div>
-<h3 class="ct-h">A file's provenance</h3>
-<p>Pick a picture or a video and CMMNS reads its Content Credentials (C2PA) and its IPTC and XMP metadata from the bytes on your device.</p>
-<label class="ct-file"><span>Choose a file</span> <input id="ct-file" type="file" accept="image/*,video/*"></label>
+<h3 class="ct-h">A file's Content Credentials</h3>
+<p>Pick a picture or a video and CMMNS checks its Content Credentials (C2PA) from the bytes on your device: the signature, the certificate, the file bytes, the AI-origin field, and what none of those checks can settle. Most files online carry none, because platforms strip them on upload; the two samples carry test credentials.</p>
+<div class="ct-actions"><label class="ct-file"><span>Choose a file</span> <input id="ct-file" type="file" accept="image/*,video/*"></label><button type="button" data-sample="complete.jpg">Sample: signed, AI declared</button><button type="button" data-sample="ai-stripped.jpg">Sample: AI field removed</button></div>
 <div class="ct-file-out" aria-live="polite"></div>
-<p class="ct-source">This panel runs the unmodified CMMNS ${esc(v)} core (<a href="${repo}/tree/v${esc(v)}/src/core">source</a>, AGPL-3.0-only), loaded only once you start.</p>
+<p class="ct-source">This panel runs the unmodified CMMNS core at commit 5f86ee7 (<a href="${repo}/tree/5f86ee789c35a65d3043b4eb81ac0393ca751711/src/core">source</a>, AGPL-3.0-only): the ${esc(v)} release plus the validation report from <a href="${repo}/pull/112">pull request 112</a>. It loads only once you start.</p>
 </section>
 <script type="module" src="/world/site/commons-try.js"></script>
 

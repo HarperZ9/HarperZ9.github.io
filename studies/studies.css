@@ -93,3 +93,9 @@ a:hover { text-decoration-thickness: 2px; }
 @media (max-width: 600px) { .ct-how { grid-template-columns: 1fr; } .ct-how dd { margin-bottom: 6px; } }
 @media (prefers-reduced-motion: reduce) { .ct-out.ct-on .ct-mark { animation: none; } }
 @media (forced-colors: active) { .ct-mark { background: Highlight; color: HighlightText; } }
+.ct-badge[data-level="warn"] .ct-badge-dot { background: color-mix(in srgb, #d79e35 80%, var(--ink)); }
+.ct-badge[data-level="flag"] { border-width: 3px; }
+.ct-badge[data-level="flag"] .ct-badge-dot { background: var(--ink); }
+.ct-part[data-id="unchecked"] { color: var(--soft); }
+.ct-report { margin: 14px 0; }
+.ct-spec { white-space: nowrap; font-family: var(--face-utility); }

@@ -82,3 +82,6 @@ export function readCertificate(der) {
   out.selfIssued = JSON.stringify(out.subject) === JSON.stringify(out.issuer);
   return out;
 }
+
+// The readers above, for the validation report's chain and revocation checks (src/core/c2pa-pki.js).
+export const DER = Object.freeze({ tlv, kids, oid, name, time });

@@ -25,6 +25,7 @@ export function credentialRows(r) {
   if (!r) return [];
   if (r.error) return [["Content Credentials", r.error]];
   const rows = [], state = credentialState(r);
+  if (r.report && r.report.found && r.report.badge) rows.push(["What CMMNS can say", r.report.badge.text]);
   if (state === "none") rows.push(["Content Credentials", NO_CREDENTIALS]);
   else if (state === "remote") rows.push(["Content Credentials", `the file points to credentials stored online at ${host(r.remote)}, which CMMNS leaves unfetched.`]);
   else if (r.broken) rows.push(["Content Credentials", `found, but ${r.broken}`]);
