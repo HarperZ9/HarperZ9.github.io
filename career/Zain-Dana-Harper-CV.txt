@@ -26,7 +26,7 @@ Flagship Projects
 
 - Articulate is prose analysis and model-assisted editing for the command line, editors and CI. In 0.14.0, Markdown masks removed 5,123 findings on table separator rows across 3,000 files and added none. github.com/HarperZ9/articulate/releases/tag/v0.14.0
 
-- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang
+- BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.10.0 is on crates.io. crates.io/crates/buildlang
 
 - raw-native is a C++ renderer with a CPU reference and D3D12 and WebGPU backends. In release 0.8.0, default renders were byte-identical across the Windows, D3D12, Linux and WebAssembly builds. github.com/HarperZ9/raw-native/releases/tag/v0.8.0
 
@@ -108,7 +108,7 @@ A browser extension that shows the sources behind replies on X, YouTube, Reddit,
 
 Articulate | Prose analysis and editing
 
-Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.15.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
+Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.16.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing
 
 Graphics and Rendering
 
@@ -134,7 +134,7 @@ Developer Tools and Languages
 
 BuildLang | Rust compiler and developer tooling
 
-Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. crates.io/crates/buildlang
+Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.10.0 is on crates.io, published October 23, 2026; the 1.8.0 release that day added Box<T> and recursive types. crates.io/crates/buildlang
 
 EMET | Byte-integrity witnessing
 
@@ -287,3 +287,329 @@ BlueDot Impact: AGI Strategy | Course completed in 2026
 Developed an AGI Strategy action plan for label-independent AI incident notice, independently reviewable evidence, accountable escalation, and tests for misleading verification results.
 
 Coursework: MCRA/MCSB, Zero Trust, OWASP web Top 10, CRA. Research references: NIST AI RMF/GenAI Profile, ISO/IEC 42001/23894, ISO 37002. Scope: harperz9.github.io/career/standards-reference.md.
+
+Published Work
+
+Every public release, package, paper, essay, briefing and packet, read from GitHub, PyPI, npm, crates.io, Zenodo and the live site on November 2, 2026. Private and unreleased work is not listed. Machine-readable copy: harperz9.github.io/career/published-work.json
+
+Papers, preprints and corpora | 16 works
+
+- Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds, and the Limits of Authentication. Preprint, June 20, 2026. doi.org/10.5281/zenodo.20773724
+
+- The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector Technology and a Cross-Sector Convergence on Verifiable Trust. Preprint, June 20, 2026. doi.org/10.5281/zenodo.20778927
+
+- BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable Receipts. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22767839
+
+- EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted Work. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768169
+
+- Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768231
+
+- Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768261
+
+- The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768344
+
+- Witnessed Independence: Recording Whether a Verifier Graded Its Own Work. Preprint, first July 7, 2026, latest edition September 15, 2026. doi.org/10.5281/zenodo.22768308
+
+- Flywheel confirmatory anchor: signed tree head. Dataset, August 28, 2026. doi.org/10.5281/zenodo.22148403
+
+- Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates. Preprint, September 15, 2026. doi.org/10.5281/zenodo.22768398
+
+- Self-Given Is Not Self-Grounding. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126458
+
+- Sourcehood Without a Source: The Arity Gap and the Free Will Debate. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126117
+
+- The Seam That Holds While It Is Crossed. Preprint, first September 15, 2026, latest edition October 3, 2026. doi.org/10.5281/zenodo.23126357
+
+- Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds. Paper on the site, October 3, 2026. harperz9.github.io/papers/conferred-existence-paper.pdf
+
+- The Conservation of Faithfulness. Preprint, October 3, 2026. doi.org/10.5281/zenodo.23126484
+
+- Witness and Verification Under Bounded Rationality. Paper on the site, October 3, 2026. harperz9.github.io/papers/witness-and-verification.pdf
+
+Software releases | 302 releases in 57 repositories
+
+- cmmns: 18 releases from v1.0.0, October 21, 2026, to v3.9.1, October 28, 2026. github.com/HarperZ9/cmmns/releases
+
+- superframe: 2 releases from v0.1.0, October 26, 2026, to v0.2.0, October 28, 2026. github.com/HarperZ9/superframe/releases
+
+- articulate: 24 releases from v0.1.0, September 18, 2026, to v0.17.0, October 26, 2026. github.com/HarperZ9/articulate/releases
+
+- buildlang: 11 releases from v1.0.0, March 30, 2026, to v1.10.0, October 23, 2026. github.com/HarperZ9/buildlang/releases
+
+- emet: 5 releases from v1.0.0, July 1, 2026, to v1.3.1, October 23, 2026. github.com/HarperZ9/emet/releases
+
+- gather: 14 releases from v1.5.0, June 25, 2026, to v2.4.0, October 23, 2026. github.com/HarperZ9/gather/releases
+
+- crucible: 6 releases from v1.1.0, July 1, 2026, to v1.6.0, October 23, 2026. github.com/HarperZ9/crucible/releases
+
+- canon: 8 releases from v0.1.0, September 7, 2026, to v0.7.0, October 23, 2026. github.com/HarperZ9/canon/releases
+
+- discover: 3 releases from v0.1.0, October 23, 2026, to v0.1.2, October 23, 2026. github.com/HarperZ9/discover/releases
+
+- engine-revival: 12 releases from v0.1.0, August 27, 2026, to v0.12.0, October 18, 2026. github.com/HarperZ9/engine-revival/releases
+
+- brender-archival: 18 releases from v0.1.1, August 27, 2026, to brview-v0.4.0, October 17, 2026. github.com/HarperZ9/brender-archival/releases
+
+- flywheel: 34 releases from v0.3.3, August 4, 2026, to v1.9.0, October 15, 2026. github.com/HarperZ9/flywheel/releases
+
+- raw-native: 8 releases from v0.2.0, October 3, 2026, to v0.8.0, October 14, 2026. github.com/HarperZ9/raw-native/releases
+
+- calibrate-pro: 4 releases from v1.0.0, March 31, 2026, to v2.0.1, October 4, 2026. github.com/HarperZ9/calibrate-pro/releases
+
+- HarperZ9.github.io: films-2026-10-04, October 4, 2026. github.com/HarperZ9/HarperZ9.github.io/releases
+
+- signal-kernels: v1.1.0, October 4, 2026. github.com/HarperZ9/signal-kernels/releases
+
+- gpu-trace-validator: 2 releases from v0.1.0, June 13, 2026, to v0.2.0, October 4, 2026. github.com/HarperZ9/gpu-trace-validator/releases
+
+- coherence-membrane: v0.2.0, October 4, 2026. github.com/HarperZ9/coherence-membrane/releases
+
+- studio-engine: v0.3.0, October 4, 2026. github.com/HarperZ9/studio-engine/releases
+
+- reconcile: v0.2.0, October 4, 2026. github.com/HarperZ9/reconcile/releases
+
+- superstack: 2 releases from v0.1.0, October 4, 2026, to v0.2.0, October 4, 2026. github.com/HarperZ9/superstack/releases
+
+- index: 14 releases from v0.1.0, June 13, 2026, to v2.16.0, October 3, 2026. github.com/HarperZ9/index/releases
+
+- forum: 19 releases from v1.0.0, June 25, 2026, to v1.17.0, October 3, 2026. github.com/HarperZ9/forum/releases
+
+- telos: 12 releases from v0.1.0, June 29, 2026, to v0.9.0, October 3, 2026. github.com/HarperZ9/telos/releases
+
+- learn: 4 releases from v2.0.0, September 27, 2026, to v2.3.0, October 3, 2026. github.com/HarperZ9/learn/releases
+
+- mneme: 8 releases from v0.1.0, July 7, 2026, to v0.7.0, October 3, 2026. github.com/HarperZ9/mneme/releases
+
+- plexus: 4 releases from v0.2.0, September 10, 2026, to v0.4.0, October 3, 2026. github.com/HarperZ9/plexus/releases
+
+- relay: 9 releases from v0.2.0, September 8, 2026, to v0.7.0, October 3, 2026. github.com/HarperZ9/relay/releases
+
+- build-finance: 2 releases from v1.0.0, June 16, 2026, to v1.0.1, September 18, 2026. github.com/HarperZ9/build-finance/releases
+
+- context-curator-lite: 2 releases from v0.1.0, June 13, 2026, to v0.2.0, September 18, 2026. github.com/HarperZ9/context-curator-lite/releases
+
+- accountable-surface: 2 releases from v0.1.0, September 14, 2026, to v0.2.0, September 18, 2026. github.com/HarperZ9/accountable-surface/releases
+
+- bulletin: 4 releases from v0.3.1, September 7, 2026, to v0.5.0, September 14, 2026. github.com/HarperZ9/bulletin/releases
+
+- repo-proof-index: 3 releases from v0.1.0, June 12, 2026, to v0.2.0, September 13, 2026. github.com/HarperZ9/repo-proof-index/releases
+
+- phantom: 6 releases from v1.0.0-rc1, August 21, 2026, to v1.1.1, September 10, 2026. github.com/HarperZ9/phantom/releases
+
+- public-surface-sweeper: 3 releases from v0.1.0, June 12, 2026, to v0.1.3, September 7, 2026. github.com/HarperZ9/public-surface-sweeper/releases
+
+- chorus: 2 releases from v0.2.0, September 7, 2026, to v0.3.0, September 7, 2026. github.com/HarperZ9/chorus/releases
+
+- truth-enb: v1.0.0-rc.1, August 15, 2026; prereleases only. github.com/HarperZ9/truth-enb/releases
+
+- skyrimbridge: v3.0.0-rc.1, August 15, 2026; prereleases only. github.com/HarperZ9/skyrimbridge/releases
+
+- elder-enb: 5 releases from v1.0.0-rc.1, August 15, 2026, to v1.0.0-rc.5, August 15, 2026; prereleases only. github.com/HarperZ9/elder-enb/releases
+
+- elder-weathers: v1.0.0, August 15, 2026; prereleases only. github.com/HarperZ9/elder-weathers/releases
+
+- flywheel-desktop: 2 releases from v0.2.1, July 29, 2026, to v0.2.2, July 29, 2026; archived. github.com/HarperZ9/flywheel-desktop/releases
+
+- build-ui: 2 releases from v1.0.0, June 16, 2026, to v2.0.0, July 11, 2026. github.com/HarperZ9/build-ui/releases
+
+- build-oracle: v1.0.0, June 16, 2026. github.com/HarperZ9/build-oracle/releases
+
+- build-engine: v1.0.0, June 16, 2026. github.com/HarperZ9/build-engine/releases
+
+- build-ecosystem: v1.0.0, June 16, 2026. github.com/HarperZ9/build-ecosystem/releases
+
+- provenance-sensorium: v0.1.0, June 16, 2026; archived. github.com/HarperZ9/provenance-sensorium/releases
+
+- agent-audit: 2 releases from v0.1.0, June 16, 2026, to v0.1.1, June 16, 2026; archived. github.com/HarperZ9/agent-audit/releases
+
+- release-surface-scanner: v0.1.0, June 16, 2026; archived. github.com/HarperZ9/release-surface-scanner/releases
+
+- secret-redact-io: v0.1.0, June 16, 2026. github.com/HarperZ9/secret-redact-io/releases
+
+- build-color: 2 releases from v1.0.0, March 31, 2026, to v1.0.1, June 14, 2026. github.com/HarperZ9/build-color/releases
+
+- buildlang-tmLanguage: v0.1.0, June 14, 2026. github.com/HarperZ9/buildlang-tmLanguage/releases
+
+- buildlang-vscode: v0.1.0, June 14, 2026. github.com/HarperZ9/buildlang-vscode/releases
+
+- agent-routing-kit: v0.1.0, June 14, 2026. github.com/HarperZ9/agent-routing-kit/releases
+
+- model-provenance-validator: 2 releases from v0.1.0, June 12, 2026, to v0.1.1, June 14, 2026. github.com/HarperZ9/model-provenance-validator/releases
+
+- workflow-harness-lite: v0.1.0, June 14, 2026. github.com/HarperZ9/workflow-harness-lite/releases
+
+- agent-hook-pack: v0.1.0, June 13, 2026. github.com/HarperZ9/agent-hook-pack/releases
+
+- build-universe: 3 releases from v1.0.0, March 31, 2026, to v1.0.2, June 12, 2026. github.com/HarperZ9/build-universe/releases
+
+Packages | 26 on PyPI, npm and crates.io
+
+- PyPI accountable-surface 0.3.1: first published September 23, 2026, this version September 23, 2026. pypi.org/project/accountable-surface
+
+- PyPI articulate-writing 0.16.0: first published September 18, 2026, this version October 23, 2026. pypi.org/project/articulate-writing
+
+- PyPI build-color 1.0.2: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-color
+
+- PyPI build-engine 1.0.1: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-engine
+
+- PyPI build-oracle 1.0.1: first published July 1, 2026, this version July 1, 2026. pypi.org/project/build-oracle
+
+- PyPI build-ui 2.0.0: first published July 1, 2026, this version July 11, 2026. pypi.org/project/build-ui
+
+- PyPI calibrate-pro 2.0.1: first published July 12, 2026, this version October 4, 2026. pypi.org/project/calibrate-pro
+
+- PyPI chorus-discourse 0.3.2: first published September 22, 2026, this version October 23, 2026. pypi.org/project/chorus-discourse
+
+- PyPI coherence-membrane 0.2.0: first published September 22, 2026, this version October 4, 2026. pypi.org/project/coherence-membrane
+
+- PyPI crucible-bench 1.6.0: first published July 1, 2026, this version October 23, 2026. pypi.org/project/crucible-bench
+
+- PyPI emet 1.3.1: first published July 1, 2026, this version October 23, 2026. pypi.org/project/emet
+
+- PyPI flywheel-canon 0.7.0: first published September 22, 2026, this version October 23, 2026. pypi.org/project/flywheel-canon
+
+- PyPI flywheel-mneme 0.7.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/flywheel-mneme
+
+- PyPI flywheel-relay 0.7.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/flywheel-relay
+
+- PyPI flywheel-verify 1.9.0: first published August 3, 2026, this version October 15, 2026. pypi.org/project/flywheel-verify
+
+- PyPI forum-engine 1.17.0: first published June 25, 2026, this version October 3, 2026. pypi.org/project/forum-engine
+
+- PyPI gather-engine 2.4.0: first published June 25, 2026, this version October 23, 2026. pypi.org/project/gather-engine
+
+- PyPI index-graph 2.16.0: first published June 24, 2026, this version October 3, 2026. pypi.org/project/index-graph
+
+- PyPI model-provenance-validator 0.1.1: first published June 14, 2026, this version June 14, 2026. pypi.org/project/model-provenance-validator
+
+- PyPI plexus-mesh 0.4.0: first published September 22, 2026, this version October 3, 2026. pypi.org/project/plexus-mesh
+
+- PyPI proof-surface 0.1.0: first published June 18, 2026, this version June 18, 2026. pypi.org/project/proof-surface
+
+- PyPI public-surface-sweeper 0.1.3: first published June 14, 2026, this version September 7, 2026. pypi.org/project/public-surface-sweeper
+
+- PyPI repo-proof-index 0.2.0: first published June 14, 2026, this version September 13, 2026. pypi.org/project/repo-proof-index
+
+- crates.io buildlang 1.10.0: first published June 30, 2026, this version October 23, 2026. crates.io/crates/buildlang
+
+- npm @harperz9/learn 2.3.0: first published July 1, 2026, this version October 3, 2026. npmjs.com/package/@harperz9/learn
+
+- npm project-telos-mcp 0.9.0: first published September 27, 2026, this version October 3, 2026. npmjs.com/package/project-telos-mcp
+
+Public repositories without a release | 26
+
+raw (April 12, 2026); wol-pi (April 12, 2026); anomaly-kernels (June 12, 2026); consulting-template-kit (June 16, 2026); proof-surface (June 17, 2026); proof-surface-report (June 17, 2026); behavior-transform.io (June 18, 2026); accountable-engine (June 20, 2026); senses-and-sensibility (June 20, 2026); witnessing-spine (June 20, 2026); faithful-transpile (June 23, 2026); local-model (July 9, 2026, archived); enb-runtime-core (July 15, 2026); enb-validation-lab (July 16, 2026); maqam (July 19, 2026); vllm-ci-forum-receipt (July 21, 2026); crewai-kickoff-replay-receipt (July 25, 2026); workspace (August 3, 2026); terminal-state-fixtures (August 21, 2026); valibot-1518-repro (August 25, 2026); flywheel-receipt-demo (September 19, 2026); flywheel-evidence-task (October 2, 2026); prereg-ledger (October 3, 2026); bootloops-second-checker (October 3, 2026); seal-watch (October 4, 2026); open-archives (October 23, 2026). github.com/HarperZ9
+
+Essays, letters and investigations | 32
+
+- Conferred Existence, June 20, 2026. harperz9.github.io/conferred-existence-essay.html
+
+- Verified Is Not Trustworthy, June 20, 2026. harperz9.github.io/verified-is-not-trustworthy.html
+
+- Why it's built this way: the longer argument, June 22, 2026. harperz9.github.io/why.html
+
+- The Summary Is Not The Record, July 8, 2026. harperz9.github.io/the-summary-is-not-the-record.html
+
+- Pick the Lock for Everyone, July 22, 2026. harperz9.github.io/pick-the-lock-for-everyone.html
+
+- Pick the Lock for Everyone, July 22, 2026. harperz9.github.io/pick-the-lock-for-everyone-talk.html
+
+- Current Story, July 23, 2026. harperz9.github.io/current-story.html
+
+- No Receipt, No Accept, July 28, 2026. harperz9.github.io/no-receipt-no-accept.html
+
+- Models Propose, Oracles Dispose, July 29, 2026. harperz9.github.io/models-propose-oracles-dispose.html
+
+- Frontier Safety: OpenAI / Hugging Face Incident, August 28, 2026. harperz9.github.io/frontier-safety-openai-hugging-face-incident.html
+
+- Availability Is Not Reach, September 1, 2026. harperz9.github.io/availability-is-not-reach.html
+
+- The Second Hearing, September 1, 2026. harperz9.github.io/the-second-hearing.html
+
+- What the Label Changes, September 2, 2026. harperz9.github.io/what-the-label-changes.html
+
+- Growth Needs a Before, September 5, 2026. harperz9.github.io/growth-needs-a-before.html
+
+- A witness should not become a ruler, September 9, 2026. harperz9.github.io/a-witness-should-not-become-a-ruler.html
+
+- LTJ Bukem: The Man Behind the Atmosphere, September 9, 2026. harperz9.github.io/ltj-bukem-the-man-behind-the-atmosphere.html
+
+- Borrowed Ground, September 10, 2026. harperz9.github.io/borrowed-ground.html
+
+- The Sandbox Was Never Just a Box, September 10, 2026. harperz9.github.io/the-sandbox-was-never-just-a-box.html
+
+- An open letter on checking the machines, September 19, 2026. harperz9.github.io/checking-the-machines.html
+
+- Who Knew First, September 25, 2026. harperz9.github.io/who-knew-first.html
+
+- Support Has More Than One Record, September 28, 2026. harperz9.github.io/support-has-more-than-one-record.html
+
+- The Scene the Song Did Not Tell You, September 28, 2026. harperz9.github.io/the-scene-the-song-did-not-tell-you.html
+
+- The Timestamp Is Not the Order, September 28, 2026. harperz9.github.io/the-timestamp-is-not-the-order.html
+
+- What the Formula Counts, September 28, 2026. harperz9.github.io/what-the-formula-counts.html
+
+- The Number Has a Vintage, October 1, 2026. harperz9.github.io/the-number-has-a-vintage.html
+
+- The Terms for Telling, October 1, 2026. harperz9.github.io/the-terms-for-telling.html
+
+- Who Pays the Referees, October 1, 2026. harperz9.github.io/who-pays-the-referees.html
+
+- A Bullshitter Knows a Bullshitter, October 2, 2026. harperz9.github.io/why-i-do-this.html
+
+- Who Knew First, and what it opened, October 2, 2026. harperz9.github.io/who-knew-first-series.html
+
+- A Check It Cannot Predict, October 8, 2026. harperz9.github.io/a-check-it-cannot-predict.html
+
+- The Maker Is Part of the Story, October 8, 2026. harperz9.github.io/the-maker-is-part-of-the-story.html
+
+- Who Kept the Books, October 8, 2026. harperz9.github.io/who-kept-the-books.html
+
+Research notes | 17
+
+- C3: a thermodynamic SDE recovers a matrix inverse, June 30, 2026. harperz9.github.io/research-c3-thermodynamic.html
+
+- Conferred Existence: Ontological Nihilism, the Speech-Act of Being, and the Standing of Made Minds, June 30, 2026. harperz9.github.io/research-conferred-existence.html
+
+- The Conservation of Faithfulness, June 30, 2026. harperz9.github.io/research-conservation-of-faithfulness.html
+
+- The Discovery Forge, June 30, 2026. harperz9.github.io/research-discovery-forge.html
+
+- The Learning Forge, June 30, 2026. harperz9.github.io/research-learning-forge.html
+
+- Witness and Verification Under Bounded Rationality, June 30, 2026. harperz9.github.io/research-witness-and-verification.html
+
+- Biology Network Intelligence for Hyphal Context Protocols, July 2, 2026. harperz9.github.io/research-biology-network-intelligence.html
+
+- Causal Research Workbench, July 2, 2026. harperz9.github.io/research-causal-workbench.html
+
+- Embodied Sim-to-Real Proof Packets, July 2, 2026. harperz9.github.io/research-embodied-sim2real.html
+
+- Formal Replay Preflight for PDE Packets, July 2, 2026. harperz9.github.io/research-formal-replay-preflight.html
+
+- Hyphal Context Benchmark for Receipt Routing, July 2, 2026. harperz9.github.io/research-hyphal-context-benchmark.html
+
+- Proof-Carrying Research Loops, July 2, 2026. harperz9.github.io/research-proof-carrying-research-loops.html
+
+- Quantum Error-Correction Proof Packets, July 2, 2026. harperz9.github.io/research-quantum-error-correction.html
+
+- TI Morse Field Scope Integration, July 2, 2026. harperz9.github.io/research-ti-morse-field-intake.html
+
+- Self-Given Is Not Self-Grounding, September 15, 2026. harperz9.github.io/research-self-given.html
+
+- Sourcehood Without a Source: The Arity Gap and the Free Will Debate, September 15, 2026. harperz9.github.io/research-arity-gap.html
+
+- The Seam That Holds While It Is Crossed, September 15, 2026. harperz9.github.io/research-forcing-argument.html
+
+Reviewer packets | 1
+
+- METR count_odds reviewer packet, September 13, 2026. harperz9.github.io/metr-count-odds-reviewer-packet.html
+
+Frontier Safety briefing | 7 archived editions
+
+Editions of August 24, 2026; August 25, 2026; August 27, 2026; September 9, 2026; September 16, 2026; September 23, 2026; September 30, 2026. harperz9.github.io/frontier-safety.html
+
+Mods
+
+- Elder ENB on Nexus Mods, first uploaded April 21, 2024. nexusmods.com/skyrimspecialedition/mods/117327

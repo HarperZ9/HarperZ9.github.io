@@ -22,7 +22,7 @@ About 13 years self-directed | Career transition began June 2026
 
 - Built test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that separate failed outputs from provider failures.
 
-- Built Articulate 0.15.1 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks and Phantom audit and restore.
+- Built Articulate 0.16.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.10.0 capability checks and Phantom audit and restore.
 
 - Built Daylight Commons 3.2.2 (now CMMNS), a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.
 

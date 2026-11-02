@@ -1,0 +1,52 @@
+{
+ "schema": "buildlang.buildtex-receipt/v0",
+ "source": {
+  "path": "career/resume-source.json",
+  "document": "page:cv",
+  "sha256": "dbd85e06669646cebd144e85fda7cb9935f604a01527e1a910bef2bde7cbd743"
+ },
+ "ir_sha256": "0b48368d55525a855834b593bcd4631b277f609f28ed6531752902a603495d89",
+ "theme": "press",
+ "overrides": [
+  "base.size=9.6",
+  "base.leading=13.0"
+ ],
+ "outputs": {
+  "Zain-Dana-Harper-CV.pdf": "f259cc8d3bf61d51e407b3a36a7244e39e5a81beec941f6349d60f6f97d70b38"
+ },
+ "facts": {
+  "pages": 11,
+  "pages_layout": 11,
+  "overfull": [],
+  "underfull": 0,
+  "missing_glyphs": [],
+  "fonts": [
+   {
+    "name": "BJEJEB+AccessionDisplay-Master",
+    "embedded": true
+   },
+   {
+    "name": "FHKKHI+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "GCFKGE+HankenGrotesk-Regular",
+    "embedded": true
+   },
+   {
+    "name": "NFMOJI+HankenGrotesk-Regular",
+    "embedded": true
+   }
+  ],
+  "images": 1,
+  "blind_text_runs": 0,
+  "reading_order": true,
+  "blocks_missing_from_text": [],
+  "pdf_bytes": 327353
+ },
+ "failed": [],
+ "notes": [
+  "press: relief 1275x312 px at 150 dpi; 0 blind line(s); foil colour source: fallback constant"
+ ],
+ "external_programs": []
+}
