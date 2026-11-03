@@ -39,7 +39,7 @@ export function here(host, u, { onWhole, onPick, owner = "page", tiles = null } 
       const on = t.n.id === id;
       t.r.setAttribute("fill", on ? "#ffffff" : t.fill); t.r.classList.toggle("on", on);
       const l = links.find((k) => k.a === t.n.id || k.b === t.n.id);
-      t.num.textContent = custom ? (on ? "" : String(t.n.num)) : l ? String(l.threads.length + l.edges.length) : "";
+      t.num.textContent = custom ? (on || !t.n.num ? "" : String(t.n.num)) : l ? String(l.threads.length + l.edges.length) : "";
     }
   };
   const ctrl = {

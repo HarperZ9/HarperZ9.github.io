@@ -33,7 +33,7 @@
       "name": "Articulate",
       "repo": "articulate",
       "page": "articulate.html",
-      "version": "0.16.0",
+      "version": "0.17.1",
       "registry": "pypi",
       "package": "articulate-writing",
       "downloadUrl": "https://pypi.org/project/articulate-writing/",
@@ -45,7 +45,7 @@
     {
       "name": "CMMNS",
       "repo": "cmmns",
-      "version": "3.9.0",
+      "version": "3.9.1",
       "registry": "github",
       "package": "HarperZ9/cmmns",
       "downloadUrl": "https://github.com/HarperZ9/cmmns/releases/latest",

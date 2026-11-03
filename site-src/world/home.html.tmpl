@@ -24,38 +24,31 @@
 <link rel="alternate" type="application/feed+json" href="https://harperz9.github.io/feed.json">
 <link rel="alternate" type="application/rss+xml" href="https://harperz9.github.io/feed.xml">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/media/world/name-art/glass-tubes-poster-640.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="/world/universe/proto/u.css">
-<link rel="stylesheet" href="/world/universe/proto/path.css">
+<link rel="stylesheet" href="/world/site/field.css">
 <link rel="stylesheet" href="/world/site/home.css">
 <script type="module" src="/world/ui/shell/shell.js"></script>
 <script type="module" src="/world/site/budget.js"></script>
-<script type="module" src="/world/ui/directions/common/flow/ground.js"></script>
-<script type="module" src="/world/universe/proto/path.js"></script>
 <script type="module" src="/world/site/hum.js"></script>
 <script type="module" src="/world/site/home.js"></script>
-<script type="module" src="/world/site/living-hook.js"></script>
+<script type="module" src="/world/site/home-field.js"></script>
+<script type="module" src="/world/site/hand-scroll.js"></script>
 </head>
 <body class="{{BODY_CLASS}} world-home">
 {{HAND}}
 {{MENU}}
-{{CANVASES}}
+{{BACKDROP}}
 <canvas id="crossing" class="crossing" data-art aria-hidden="true"></canvas>
 <main id="main">
-  <p id="say" class="sr-only" aria-live="polite" aria-atomic="true"></p>
   <section class="arrival" aria-labelledby="h-name">
-    <figure class="arrival-art">
-      <video class="lead" muted loop playsinline preload="none" poster="/media/world/name-art/glass-tubes-poster-640.webp" data-poster-full="/media/world/name-art/glass-tubes-poster.webp" width="1280" height="720" data-loop data-eager aria-hidden="true">
-        {{ARRIVAL_SOURCES}}
-      </video>
-    </figure>
-    <h1 id="h-name" data-living="engraved ink charcoal">Zain Dana Harper</h1>
+    <h1 id="h-name">Zain Dana Harper</h1>
+    <p class="arrival-lede">I build tools that check AI work against its sources, and an engine that renders one idea in every medium.</p>
     <nav class="arrival-ways" aria-label="Ways in">
-      <a href="#s-ink">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
+      <a href="#work">The work</a><a href="/world/universe/proto/path.html">The road</a><a href="#p-light">The places</a><a href="/floor.html">Everything</a>
     </nav>
   </section>
-{{ROAD}}
+  {{PLATFORMS}}
   <div class="bazaar" aria-label="Places">
 {{BAZAAR}}
   </div>

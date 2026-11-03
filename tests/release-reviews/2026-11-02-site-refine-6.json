@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-02",
+  "note": "THE COMMONS panel reads files with the C2PA validation report (cmmns PR 112); experiments data written with LF.",
+  "paths": {
+    "index.html": "50ea8a8f59056c40721ac413df3bacc221dcb9fe303e33479aeeba1595690b72",
+    "site-index.html": "e2209a4305283558ce1f42ea2b4356df418a5cd6d65d8d00e38bed67eac6625e",
+    "system/routes.js": "1afaf0e3ed50042ed1a3cd01eb93ab76472badd71ac6332570e3de5d5dda4bdb"
+  }
+}

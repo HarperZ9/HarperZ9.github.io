@@ -27,12 +27,17 @@ const loops = [...document.querySelectorAll("video[data-loop]")];
 // a loop's poster and its file load only as it comes near; phones get the 640 px poster
 const near = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) {
   const v = e.target; if (v.dataset.poster && !v.poster) v.poster = `${v.dataset.poster}-poster${innerWidth <= 860 ? "-640" : ""}.webp`;
-  if (v.preload === "none" && !still()) v.preload = "auto";
+  if (v.preload === "none" && !still()) { if (v.dataset.eager !== undefined && !loaded) return; v.preload = "auto"; }
 } }, { rootMargin: "100% 0px" });
+// the arrival's loop (data-eager) waits for the page to load and the main thread to idle: its poster is the first screen
+let loaded = false;
+const arrival = () => { loaded = true; for (const v of loops) if (v.dataset.eager !== undefined) { near.unobserve(v); near.observe(v); seen.unobserve(v); seen.observe(v); } };
+const afterIdle = () => ("requestIdleCallback" in window ? requestIdleCallback(arrival, { timeout: 2500 }) : setTimeout(arrival, 600));
+if (document.readyState === "complete") afterIdle(); else addEventListener("load", afterIdle, { once: true });
 const seen = new IntersectionObserver((es) => {
   for (const e of es) {
     const v = e.target;
-    if (e.isIntersecting && !still()) v.play().catch((err) => { if (err.name !== "AbortError") console.info("loop stays on its poster:", err.message); });
+    if (e.isIntersecting && !still() && (loaded || v.dataset.eager === undefined)) v.play().catch((err) => { if (err.name !== "AbortError") console.info("loop stays on its poster:", err.message); });
     else v.pause();
   }
 }, { threshold: 0.25 });

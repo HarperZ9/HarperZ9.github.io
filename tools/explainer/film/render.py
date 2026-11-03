@@ -157,9 +157,12 @@ def build(folder: Path, narration: Path, use_plate: bool = True) -> dict:
     plate = Plate(figures.W, figures.H, film["seed"]) if use_plate else None
     chain, poster = encode(ffmpeg, film, evidence, timing, total, wav, folder / f"{slug}.mp4", plate)
     poster.save(folder / "poster.jpg", quality=88)
+    # the page shows WebP: 1280 px for the player, 640 px for the index thumbnail (the JPEG stays for social cards)
+    for w, name in ((1280, "poster.webp"), (640, "poster-640.webp")):
+        poster.convert("RGB").resize((w, round(poster.height * w / poster.width))).save(folder / name, "WEBP", quality=80, method=6)
     write_captions(folder, slug, timing)
     (folder / "timing.json").write_text(json.dumps(timing, indent=1) + "\n", encoding="utf-8", newline="\n")
-    outs = [f"{slug}.mp4", f"{slug}.vtt", f"{slug}.srt", "poster.jpg", "timing.json"]
+    outs = [f"{slug}.mp4", f"{slug}.vtt", f"{slug}.srt", "poster.jpg", "poster.webp", "poster-640.webp", "timing.json"]
     version = subprocess.run([ffmpeg, "-version"], capture_output=True, text=True).stdout.splitlines()[0]
     nar = json.loads((narration / "narration.json").read_text(encoding="utf-8"))
     return {

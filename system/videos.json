@@ -154,6 +154,51 @@
       "duration": "PT38S"
     },
     {
+      "page": "floor.html",
+      "contentUrl": "https://harperz9.github.io/media/work/retro-room-dolly-1080.mp4",
+      "name": "raw-native: a dolly through the retro room",
+      "description": "The camera dollies through the brick room",
+      "thumbnailUrl": "https://harperz9.github.io/media/work/retro-room-dolly-poster.webp",
+      "duration": "PT10S",
+      "uploadDate": "2026-10-28"
+    },
+    {
+      "page": "floor.html",
+      "contentUrl": "https://harperz9.github.io/media/work/threads-bloom-1080.mp4",
+      "name": "raw-native: threads bloom",
+      "description": "A field of threads blooming into a cellular flower",
+      "thumbnailUrl": "https://harperz9.github.io/media/work/threads-bloom-poster.webp",
+      "duration": "PT10S",
+      "uploadDate": "2026-10-28"
+    },
+    {
+      "page": "floor.html",
+      "contentUrl": "https://harperz9.github.io/media/work/one-step-1080.mp4",
+      "name": "One Step",
+      "description": "One Step: a sphere of points where each new position draws lines to all that came before it",
+      "thumbnailUrl": "https://harperz9.github.io/media/work/one-step-poster.webp",
+      "duration": "PT108S",
+      "uploadDate": "2026-10-04"
+    },
+    {
+      "page": "floor.html",
+      "contentUrl": "https://harperz9.github.io/media/work/cathedral-1080.mp4",
+      "name": "One Step study: cathedral",
+      "description": "A study flying down a Menger-sponge nave",
+      "thumbnailUrl": "https://harperz9.github.io/media/work/cathedral-poster.webp",
+      "duration": "PT40S",
+      "uploadDate": "2026-10-04"
+    },
+    {
+      "page": "floor.html",
+      "contentUrl": "https://harperz9.github.io/media/work/droste-1080.mp4",
+      "name": "One Step study: Droste",
+      "description": "A study spiralling into a Droste tiling",
+      "thumbnailUrl": "https://harperz9.github.io/media/work/droste-poster.webp",
+      "duration": "PT40S",
+      "uploadDate": "2026-10-04"
+    },
+    {
       "page": "flywheel.html",
       "contentUrl": "https://harperz9.github.io/media/flywheel-output-check-20260905/short.mp4",
       "name": "Check one number against its record",

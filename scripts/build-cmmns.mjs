@@ -5,7 +5,7 @@
 //   node scripts/build-cmmns.mjs && python tools/structured_data.py
 //
 // The version, licence and download come from the CMMNS record in discover.json, so a release bump is one
-// edit there and a re-run. The copy follows the project's own README and release notes (v3.9.0, read
+// edit there and a re-run. The copy follows the project's own README and release notes (v3.9.1, read
 // 2026-10-28). tools/structured_data.py then writes the SoftwareApplication block from the same record.
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -30,10 +30,26 @@ const signs = [
 ];
 
 const body = `<article class="tool">
+<p class="mark-line">THE COMMONS (THECMMNS)</p>
 <h1>CMMNS</h1>
 <p>Rest the pointer on a reply and a window opens beside it: where the account is placed, signs of coordination, how it posts, how the reply argues, and whether a fact-checker has reviewed the claim. It works on X, YouTube, Reddit, Facebook, Instagram, Bluesky, Threads, TikTok and any Mastodon server you turn it on for. On a phone, tap the post's CMMNS button.</p>
 <p>CMMNS, spoken "commons", was formerly Daylight Commons, and Radar before that. An install from before the rename updates in place and keeps its settings, its saves and its save folder.</p>
 <dl class="facts"><dt>Version</dt><dd><a href="${rel}">${esc(v)}</a></dd><dt>Browsers</dt><dd>${esc(tool.os)}</dd><dt>Licence</dt><dd><a href="${esc(tool.license)}">AGPL-3.0</a></dd><dt>Source</dt><dd><a href="${repo}">HarperZ9/cmmns</a></dd></dl>
+
+<section id="try" class="ct" data-commons-try aria-labelledby="h-try">
+<h2 id="h-try">Try it on your own words</h2>
+<p>Paste a post or a passage and CMMNS reads its wording here, in this browser. Each finding is marked in your text and explained beside it: what it shows, how it was reached and what it does not show. Nothing you paste or pick is sent anywhere.</p>
+<label class="ct-label-for" for="ct-text">Text to read</label>
+<textarea id="ct-text" rows="5" spellcheck="false" placeholder="Paste a post, a reply or a paragraph"></textarea>
+<div class="ct-actions"><button type="button" class="ct-go">Read it</button><button type="button" class="ct-sample">Use a sample</button><span class="ct-hint">Ctrl and Enter also reads it.</span></div>
+<div class="ct-out" aria-live="polite"></div>
+<h3 class="ct-h">A file's Content Credentials</h3>
+<p>Pick a picture or a video and CMMNS checks its Content Credentials (C2PA) from the bytes on your device: the signature, the certificate, the file bytes, the AI-origin field, and what none of those checks can settle. Most files online carry none, because platforms strip them on upload; the two samples carry test credentials.</p>
+<div class="ct-actions"><label class="ct-file"><span>Choose a file</span> <input id="ct-file" type="file" accept="image/*,video/*"></label><button type="button" data-sample="complete.jpg">Sample: signed, AI declared</button><button type="button" data-sample="ai-stripped.jpg">Sample: AI field removed</button></div>
+<div class="ct-file-out" aria-live="polite"></div>
+<p class="ct-source">This panel runs the unmodified CMMNS core at commit 5f86ee7 (<a href="${repo}/tree/5f86ee789c35a65d3043b4eb81ac0393ca751711/src/core">source</a>, AGPL-3.0-only): the ${esc(v)} release plus the validation report from <a href="${repo}/pull/112">pull request 112</a>. It loads only once you start.</p>
+</section>
+<script type="module" src="/world/site/commons-try.js"></script>
 
 <h2 id="install">Install</h2>
 <h3>Chrome, Edge or Brave</h3>
@@ -68,7 +84,9 @@ const body = `<article class="tool">
 <p>It reads what the site shows you and requests account details only from the site you are on. Other coverage and evidence lookups reach further, and only after you turn them on and click. Account details stay in your browser for 14 days and thread history for 60, both adjustable, and one control clears everything.</p>
 
 <h2 id="new">New in ${esc(v)}</h2>
-<p>The new name. Everything saved before, every case and every signed bundle still reads and verifies. New installs save into Downloads/CMMNS, and an install from before keeps Downloads/Daylight. The command line answers to <code>cmmns</code>, and <code>daylight</code> still works. Release files are named <code>cmmns-*</code>. <a href="${rel}">Release notes</a>.</p>
+<p>The Download control leaves with the pointer, and it now shows on X and Instagram pictures that sit under a clear layer: 10 of 10 tries on each path in the release's timing test, against 0 of 10 before. A gallery saves four files at a time, so the last file reaches the browser after 452 ms instead of 1,173 ms. A download the browser stopped now reads "Not saved" with the browser's reason. <a href="${rel}">Release notes</a>.</p>
+<p>Since 3.9.0 the extension carries the new name. Everything saved before, every case and every signed bundle still reads and verifies. New installs save into Downloads/CMMNS, and an install from before keeps Downloads/Daylight. The command line answers to <code>cmmns</code>, and <code>daylight</code> still works.</p>
+<p class="verified"><b>Verified</b> 2 November 2026: the version, the date and the download names against the GitHub release <code>v${esc(v)}</code> (HarperZ9/cmmns, published 28 October 2026); the timings are the release notes' own measurements and were not rerun for this page.</p>
 </article>`;
 
 const description = "CMMNS (formerly Daylight Commons) is a browser extension that shows where social media replies come from: place, coordination, posting, language, fact-checks.";
