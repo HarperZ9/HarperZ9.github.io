@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
 import { esc } from "./studies-markdown.mjs";
 import { PLACES } from "../site-src/world/bazaar.mjs";
+import { workIndex } from "./work-index.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -21,7 +22,7 @@ const write = (p, html) => { writeFileSync(path.join(site, p), html); return p; 
 
 function roadStops() {
   const p = read("world/universe/proto/path.html");
-  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/#${m[1]}`, m[2]]);
+  return [...p.matchAll(/<section class="stop" id="([^"]+)"[\s\S]*?<h2 id="[^"]+"[^>]*>([^<]+)<\/h2>/g)].map((m) => [`/world/universe/proto/path.html#${m[1]}`, m[2]]);
 }
 function mapPlaces() {
   const u = json("world/universe/universe.json"), statics = new Set(readdirSync(path.join(site, "world/universe/proto/places")));
@@ -54,7 +55,12 @@ function studyPages() {
 }
 
 function floor() {
+  const wi = workIndex();
+  write(wi.restPath, wi.rest);
   const body = `<article class="floor"><h1>Everything</h1>
+<p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. The places and pages of the site follow.</p>
+${wi.html}
+<h2 class="wi-rule">The site</h2>
 ${section("road", "The road", roadStops())}
 ${section("places", "The places", PLACES.map((p) => [`/#p-${p.id}`, p.title]))}
 ${section("parts", "Parts", [["/elements.html", "The element table"], ["/swatches.html", "The swatch library"], ["/accession.html", "Accession"], ["/world/universe/proto/index.html", "The map"], ["/credits.html", "Credits"]])}
@@ -63,7 +69,7 @@ ${section("map", "Every place on the map", mapPlaces())}
 ${section("studies", "Studies", studyPages())}
 ${section("site", "Pages, writing and tools", sitePages())}
 </article>`;
-  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "Every page in Zain Dana Harper's world as a plain list of links: the road, the places, live pieces, writing, studies and tools.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
+  return write("floor.html", page({ path: "floor.html", title: "Everything", description: "All of the work, current and past, by platform: The Flywheel, The Commons, The Playground, Articulate, BuildLang and Research, then every page of the site.", body, extraHead: '<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function mountPage(file, title, description, heading, script) {
@@ -88,7 +94,9 @@ function accession() {
 <h2>Use it</h2><p><a href="/system/fonts/accession/accession.css">accession.css</a> declares every face with paths relative to its folder; <a href="/system/fonts/accession/OFL.txt">OFL.txt</a> is the licence, and <a href="/system/fonts/accession/MANIFEST.json">MANIFEST.json</a> lists every file with its size, coverage and SHA-256.</p>
 </article>`;
   return write("accession.html", page({ path: "accession.html", title: "Accession", description: "Accession, a type family drawn in code, under the SIL Open Font License 1.1: Text, Display, Mono, Super and the technique cuts.", body,
-    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/accession.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
+    // the specimen loads letter subsets of each face (system/fonts/accession/specimen/, about 225 KB against 1.5 MB);
+    // the full faces stay one link away in accession.css
+    extraHead: '<link rel="stylesheet" href="/system/fonts/accession/specimen/specimen.css">\n<link rel="stylesheet" href="/world/site/pages.css">' }));
 }
 
 function credits() {

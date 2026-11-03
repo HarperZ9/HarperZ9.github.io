@@ -3,6 +3,8 @@
 // shell's hand (the universe's navigation, with every link root-absolute) and the page's own <main>.
 import { esc } from "./studies-markdown.mjs";
 
+import { backdrop as fieldBackdrop } from "./field-backdrop.mjs";
+import { labelHand } from "./hand-labels.mjs";
 export const ORIGIN = "https://harperz9.github.io";
 const CARD = `${ORIGIN}/img/og/p/home.jpg`;
 const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still face; Accession and its families are materials a page adds
@@ -20,7 +22,7 @@ const PLACES = [
 ];
 
 function hand() {
-  return `<header class="o-hand" aria-label="Site">
+  return labelHand(`<header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
   <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
@@ -35,11 +37,11 @@ ${PLACES.map(([href, tech, name]) => `      <li><a href="${href}"><span class="o
     </ul>
   </nav>
   <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
-</dialog>`;
+</dialog>`);
 }
 
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
-export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading" }) {
+export function page({ path, title, description, body, robots = "", extraHead = "", jsonld = null, css = "/studies/studies.css", htmlAttrs = "", bodyClass = "reading", backdrop = true }) {
   const url = `${ORIGIN}/${path.replace(/index\.html$/, "")}`, full = `${title} | Zain Dana Harper`;
   return `<!doctype html>
 <html lang="en" data-type="stock"${htmlAttrs ? " " + htmlAttrs : ""}>
@@ -64,8 +66,10 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="${css}">
 <script type="module" src="/world/ui/shell/shell.js"></script>
+<script type="module" src="/world/site/hand-scroll.js"></script>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>
 <body class="${bodyClass}">
+${backdrop ? fieldBackdrop() : ""}
 ${hand()}
 <main id="main" tabindex="-1">
 ${body}

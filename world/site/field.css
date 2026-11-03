@@ -1,0 +1,44 @@
+/* the halo that keeps text readable over the moving field: the page's own ground, in either scheme (the road can
+   tint --wall per district, so the halo takes the scheme's ground, not the district's) */
+:root { --halo: #e8e3d9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --halo: #0a0a0c; } }
+:root[data-theme="dark"] { --halo: #0a0a0c; }
+
+/* the field: glass and water behind the whole page; a rendered plate first, the live render over it where the
+   device can carry it (world/site/home-field.js); night in the dark scheme */
+.gw-backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #0d1a24; }
+.gw-backdrop picture, .gw-backdrop img, .gw-backdrop canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.gw-backdrop img { object-fit: cover; }
+.gw-backdrop canvas { opacity: 0; transition: opacity .9s var(--ease-standard, ease); }
+.gw-backdrop.live canvas { opacity: 1; }
+html.plain .gw-backdrop canvas { display: none; }
+main#main, body > footer { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
+
+/* reading pages: the field is the rendered plate only; their words keep AA contrast through the halo */
+
+/* pages over the field read in light ink in both schemes: the field's sea and night sky are dark, and a soft wash of
+   the field's own deep water (a gradient, no edge) holds the words at AA contrast over its brightest pixels; the
+   measurement is in PASSES.md, pass 8 */
+body:has(.gw-backdrop) { --ink: #f4efe6; --soft: #e3ddd0; --wall: #0c1620; --wall-2: #13212d; --line: rgba(244, 239, 230, .34); --on-ink: #0c1620; --halo: #07101a; color-scheme: dark; background: #0c1620; color: var(--ink); }
+.gw-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 16, 26, .78) 0%, rgba(7, 16, 26, .62) 42%, rgba(7, 16, 26, .18) 70%, rgba(7, 16, 26, .06) 100%); }
+body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% at 50% 50%, rgba(7, 16, 26, .8) 0%, rgba(7, 16, 26, .7) 55%, rgba(7, 16, 26, .45) 100%); }
+@media (max-width: 860px) { .gw-backdrop::after { background: linear-gradient(180deg, rgba(7, 16, 26, .66) 0%, rgba(7, 16, 26, .8) 45%, rgba(7, 16, 26, .88) 100%); } }
+/* on phones the hand sits at the top edge; a reading page's first words start below it */
+@media (max-width: 860px) { body.reading main { padding-top: 96px !important; } }
+/* magnetic links (world/site/magnet.js): the held link leans toward the pointer and its underline takes full weight */
+:is(.wi-links, .wi-jump, .floor-list) a { display: inline-block; } /* the hand's links are flex items already */
+a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
+/* the drawn platform marks (scripts/crossover-marks.mjs): glass lit from behind, its light carried as alpha */
+.xo-mark, .xo-mark img { display: block; width: 112px; height: 112px; }
+.xo-mark { margin: 0 0 4px -10px; }
+/* the hand says what each control does: a word under each form, which is also its accessible name
+   (scripts/hand-labels.mjs). The forms stay; nothing is boxed. */
+.o-hand.o-said { padding-bottom: 22px; gap: 14px; }
+.o-hand.o-said > :is(a[data-o], button), .o-hand.o-said .o-cell { position: relative; }
+.o-hand.o-said .o-cell { display: inline-flex; }
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { position: absolute; top: calc(50% + 27px); left: 50%; translate: -50% 0; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap;
+  font: 600 11px/1.1 var(--face-text); letter-spacing: .05em; color: var(--ink); pointer-events: none; }
+/* every label hangs a fixed distance below its control's centre, and the hand centres its controls on one line, so
+   the labels share one baseline whatever height a form takes (the fold is 52 px, the rest 44, and a form may grow) */
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { text-shadow: 0 0 8px var(--wall, #0c1620), 0 0 3px var(--wall, #0c1620), 0 0 1px var(--wall, #0c1620); }

@@ -1,0 +1,41 @@
+/* experiments: the field of studies and the stream of cards (scripts/build-experiments.mjs) */
+.xp { max-width: 78ch; }
+.xf { margin: 28px 0 8px; }
+.xf svg { display: block; width: 100%; height: auto; overflow: visible; }
+.xf-lab { font: 500 11px var(--face-text); fill: var(--soft); }
+.xf-rule { stroke: var(--line); stroke-width: 1; }
+.xf-mark circle { fill: var(--ink); fill-opacity: .72; transition: r .2s var(--ease-standard, ease), fill-opacity .2s ease; }
+.xf-mark:hover circle, .xf-mark:focus-visible circle { r: 7; fill-opacity: 1; }
+.xf-mark:focus-visible { outline: none; }
+.xf-mark:focus-visible circle { stroke: var(--ink); stroke-width: 2; stroke-opacity: .5; }
+.xf-mark.xf-off circle { fill-opacity: .12; }
+.xf figcaption { font: 400 var(--fs-1)/1.4 var(--face-text); color: var(--soft); margin-top: 6px; }
+.xp-filter { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 20px 0 6px; }
+.xp-filter button { min-height: 44px; padding: 0 2px; font: 600 var(--fs-2)/1 var(--face-text); color: var(--ink); background: none; border: 0; cursor: pointer; text-decoration: underline transparent 2px; text-underline-offset: .35em; }
+.xp-filter button span { font: 400 var(--fs-1)/1 var(--face-utility); color: var(--soft); margin-left: 4px; }
+.xp-filter button[aria-pressed="true"], .xp-filter button:hover { text-decoration-color: currentColor; }
+.xp-filter button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.xp-count { font-size: var(--fs-2) !important; color: var(--soft); }
+.xp-stream { list-style: none; padding: 0 !important; margin: 0; }
+.xc { padding: 26px 0 22px; border-top: 1px solid var(--line); margin: 0 !important; content-visibility: auto; contain-intrinsic-size: auto 420px; scroll-margin-top: 96px; }
+.xc[hidden] { display: none; }
+.xc:target { padding-left: 14px; border-left: 3px solid var(--ink); }
+.xc-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px !important; font: 500 var(--fs-1)/1.4 var(--face-text) !important; color: var(--soft); }
+.xc-n { font-family: var(--face-utility); color: var(--ink); }
+.tool .xc-title { margin: 0 0 10px; font: 700 var(--fs-4)/1.25 var(--face-display); letter-spacing: -.01em; }
+.xc-finding { margin: 0 0 12px !important; }
+.xc-nums { display: grid; grid-template-columns: minmax(9em, 13em) 1fr; gap: 6px 18px; margin: 0 0 12px; font: 400 var(--fs-2)/1.5 var(--face-text); }
+.xc-nums dt { color: var(--soft); }
+.xc-nums dd { margin: 0; overflow-wrap: anywhere; }
+.xc-verdict { margin: 0 0 8px !important; }
+.xc-tag { display: inline-block; margin-right: 6px; font: 700 var(--fs-1)/1.5 var(--face-text); letter-spacing: .04em; text-transform: uppercase; }
+.xc-limits, .xc-lock { font-size: var(--fs-2) !important; margin: 0 0 8px !important; }
+.xc-limits b { margin-right: .35em; }
+.xc-lock code { overflow-wrap: anywhere; }
+@media (max-width: 600px) { .xc-nums { grid-template-columns: 1fr; } .xc-nums dd { margin-bottom: 6px; } .xf-lab { font-size: 13px; } }
+@media (prefers-reduced-motion: reduce) { .xf-mark circle { transition: none; } }
+@media (forced-colors: active) { .xf-mark circle { fill: CanvasText; } }
+/* on a phone the field keeps a readable label size and scrolls sideways inside its own box */
+.xf-scroll { overflow-x: auto; }
+.xf-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+@media (max-width: 600px) { .xf svg { width: 760px; max-width: none; } .xf-lab { font-size: 12px; } }

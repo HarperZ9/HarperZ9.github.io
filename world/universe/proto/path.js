@@ -24,7 +24,12 @@ const isDark = () => root.dataset.theme === "dark" || (!root.dataset.theme && ma
 const getJSON = async (u) => (await fetch(u)).json();
 // the ground: the one medium engine's GPU top view (superframe lib/medium/topview.mjs), started before anything reads it
 if (document.readyState === "loading") await new Promise((r) => document.addEventListener("DOMContentLoaded", r, { once: true }));
-startGround();
+// the ground starts after the page has loaded and the main thread is idle (on touch screens at the first touch or scroll,
+// world/site/budget.js), once per page, and never on a device the budget stepped down
+{ const go = () => { if (!window.__medium && root.dataset.ground !== "off") startGround(); };
+  const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(go, { timeout: 1500 }) : setTimeout(go, 300));
+  const later = () => (window.__siteWhenVisited ? window.__siteWhenVisited(idle) : idle());
+  if (document.readyState === "complete") later(); else addEventListener("load", later, { once: true }); }
 
 // the world (reference library, slimmed) and the sound theme's score (Hum v4), for the places that keep its time
 let world = null, hum = null;

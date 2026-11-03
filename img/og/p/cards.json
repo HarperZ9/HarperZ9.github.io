@@ -87,10 +87,6 @@
   "alt": "Build Color: a color-science workbench, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/build-color.jpg?v=6aefa5df715d"
  },
- "build-products.html": {
-  "alt": "The Build products: source-visible tools with explicit maturity, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
-  "image": "https://harperz9.github.io/img/og/p/build-products.jpg?v=b10059b90dd4"
- },
  "buildlang.html": {
   "alt": "BuildLang: a typed-effects language, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/buildlang.jpg?v=6d950350a55e"
@@ -175,10 +171,6 @@
   "alt": "Index demo: verified workspace atlas, by Zain Dana Harper. Rings of small nodes, repositories, modules and symbols, linked by fine lines around a bright core. One dashed edge between two modules is crossed out and marked REFUTED.",
   "image": "https://harperz9.github.io/img/og/p/demo-index.jpg?v=33977b2c52d3"
  },
- "demonstrations.html": {
-  "alt": "Recorded workflows, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
-  "image": "https://harperz9.github.io/img/og/p/demonstrations.jpg?v=cf6d3c576c7b"
- },
  "demos/crucible-cleanroom/index.html": {
   "alt": "Crucible Cleanroom Verdict Packet Demo, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
   "image": "https://harperz9.github.io/img/og/p/demos--crucible-cleanroom.jpg?v=87f1c3464891"
@@ -202,6 +194,10 @@
  "engine-revival.html": {
   "alt": "Engine Revival, Retro Systems Lab, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/engine-revival.jpg?v=c90ed5b0f5fe"
+ },
+ "experiments/index.html": {
+  "alt": "Experiments, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/experiments.jpg?v=44d9321885b3"
  },
  "explainers.html": {
   "alt": "Explainers, films that show their sources, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
@@ -282,6 +278,10 @@
  "gaussian-splats.html": {
   "alt": "Gaussian Splat Lab, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/gaussian-splats.jpg?v=3f1259b21a61"
+ },
+ "glass-water.html": {
+  "alt": "Glass and water, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/glass-water.jpg?v=0e481463097a"
  },
  "glossary.html": {
   "alt": "Glossary, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
@@ -655,13 +655,13 @@
   "alt": "Sofer, private-line orchestration, by Zain Dana Harper. An iris shutter drawn in fine hatched blades, closed down to a small hole with a bright core showing through it, inside a ringed housing.",
   "image": "https://harperz9.github.io/img/og/p/sofer.jpg?v=c85a2f424027"
  },
- "start-here.html": {
-  "alt": "Start here, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
-  "image": "https://harperz9.github.io/img/og/p/start-here.jpg?v=73fcbdd58e49"
- },
  "studio.html": {
   "alt": "The Studio, Live media instrument, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
   "image": "https://harperz9.github.io/img/og/p/studio.jpg?v=1cf3a49a2803"
+ },
+ "superframe.html": {
+  "alt": "Superframe, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
+  "image": "https://harperz9.github.io/img/og/p/superframe.jpg?v=bfb741eeb220"
  },
  "support-has-more-than-one-record.html": {
   "alt": "Support Has More Than One Record, by Zain Dana Harper. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core.",
@@ -735,21 +735,9 @@
   "alt": "The Timestamp Is Not the Order, by Zain Dana Harper. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core.",
   "image": "https://harperz9.github.io/img/og/p/the-timestamp-is-not-the-order.jpg?v=d7ad647a7553"
  },
- "toolkit.html": {
-  "alt": "The release toolkit: the shipping discipline, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",
-  "image": "https://harperz9.github.io/img/og/p/toolkit.jpg?v=349c920ba1d7"
- },
- "tour.html": {
-  "alt": "The Tour: watch the workshop work, by Zain Dana Harper. A bright core inside a ring that breaks into offset slices, like a glitching signal.",
-  "image": "https://harperz9.github.io/img/og/p/tour.jpg?v=a3500ce6c759"
- },
  "type-forge.html": {
   "alt": "Type forge, by Zain Dana Harper. A bright core inside a thick tilted ring, like a letter O drawn in fine lines.",
   "image": "https://harperz9.github.io/img/og/p/type-forge.jpg?v=158f13372b17"
- },
- "typeface.html": {
-  "alt": "Typography, by Zain Dana Harper. A bright core inside a thick tilted ring, like a letter O drawn in fine lines.",
-  "image": "https://harperz9.github.io/img/og/p/typeface.jpg?v=ce6a1297ccf1"
  },
  "verified-is-not-trustworthy.html": {
   "alt": "Verified Is Not Trustworthy, by Zain Dana Harper. A fan of ruled sheets drawn in fine lines, the top sheet lit by a bright core.",
@@ -790,10 +778,6 @@
  "witnessing-spine.html": {
   "alt": "The Witnessing Spine, by Zain Dana Harper. A square chip at the center with its pins fanned out on all four sides as thin routed traces, each ending in a small pad, and a bright core inside the chip.",
   "image": "https://harperz9.github.io/img/og/p/witnessing-spine.jpg?v=35c9f5867776"
- },
- "work-with-me.html": {
-  "alt": "Work with me, by Zain Dana Harper. A contour map drawn in fine lines, with a dotted route climbing from the lower left across the hills to a bright core at the highest summit.",
-  "image": "https://harperz9.github.io/img/og/p/work-with-me.jpg?v=c37c01be03d1"
  },
  "workshop.html": {
   "alt": "Tools for testing AI systems, by Zain Dana Harper. A sun drawn in fine lines sits on the horizon over a perspective grid. Two thin towers stand in the haze, and the sun's reflection breaks into short bars on the grid below.",

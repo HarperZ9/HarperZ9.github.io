@@ -11,9 +11,9 @@
 export const PLACES = [
   {
     id: "light", title: "Light and glass", form: "grain", medium: "thin", living: ["ink", "engraved", "ink"],
-    lead: { kind: "loop", src: "/media/world/name-art/glass-tubes", alt: "The name drawn as glass rods at a low sun, light bending through each letter." },
+    lead: { kind: "image", src: "/media/world/glass-water/close-1920.webp", w: 1920, h: 1080, alt: "Glass letters spelling light, standing in calm water at a low sun; the horizon bends through them." },
     laws: ["law-snell", "law-thin-film", "law-beer-absorption"],
-    ways: [["/world/glass/index.html", "Glass, liquid and tube"], ["/world/playbook/examples/caustic.html", "Caustic"], ["/world/ui/directions/cs-max/flywheel.html", "Flywheel in light"]],
+    ways: [["/glass-water.html", "Glass and water, live"], ["/world/glass/index.html", "Glass, liquid and tube"], ["/world/playbook/examples/caustic.html", "Caustic"], ["/world/ui/directions/cs-max/flywheel.html", "Flywheel in light"]],
   },
   {
     id: "type", title: "Type and lettering", form: "glyph", medium: "medium", living: ["ink", "charcoal", "plant", "paint"],
@@ -31,7 +31,7 @@ export const PLACES = [
     id: "water", title: "Ink and water", form: "drop", medium: "thin", living: ["ink", "charcoal", "plant", "paint"],
     lead: { kind: "loop", src: "/media/world/name-art/pearls", alt: "The name strung in nacre, its sheen moving like water over the beads." },
     laws: ["law-diffusion", "law-coffee-ring", "law-yield-stress"],
-    ways: [["#s-ink", "Back to the road"], ["/world/exhibit/palimpsest.html", "Palimpsest"], ["/world/universe/proto/index.html", "The map"]],
+    ways: [["/world/universe/proto/path.html", "The road"], ["/world/exhibit/palimpsest.html", "Palimpsest"], ["/world/universe/proto/index.html", "The map"]],
   },
   {
     id: "sound", title: "Sound", form: "stroke", medium: "thin", living: ["ink", "charcoal", "plant"],
@@ -67,6 +67,6 @@ export const PLACES = [
     id: "tools", title: "Tools", form: "tile", medium: "viscous", living: ["ink", "engraved", "ink"],
     lead: { kind: "image", src: "/media/world/name-art/intaglio-lines-1920.webp", w: 1920, h: 1080, alt: "The name engraved in intaglio lines, tone made only by line width under a raking light." },
     laws: [],
-    ways: [["/flywheel.html", "Flywheel"], ["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/raw.html", "raw-native"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
+    ways: [["/flywheel.html", "Flywheel"], ["/cmmns.html", "CMMNS"], ["/articulate.html", "Articulate"], ["/emet.html", "EMET"], ["/buildlang.html", "BuildLang"], ["/superframe.html", "Superframe"], ["/raw.html", "raw-native"], ["/learn.html", "learn"], ["/workshop.html", "The workshop"]],
   },
 ];

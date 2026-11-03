@@ -155,7 +155,7 @@ def film_section(slug: str) -> str:
   <h2 id="{slug}-h">{E(f["title"])}</h2>
   {host(slug)}
   <figure class="film" data-film="{slug}" data-folder="{folder}">
-    <video controls preload="metadata" playsinline width="1920" height="1080" poster="{folder}/poster.jpg" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
+    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.webp" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
     {heads}
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
@@ -176,7 +176,7 @@ def film_index() -> str:
         f = x["film"]
         used = {k for s in f["segments"] for k in s.get("sources", [])}
         chapters = len(f["segments"]) - 1
-        items.append(f'<li><a href="#{slug}"><img src="media/explainers/{slug}/poster.jpg" alt="" width="320" height="180" loading="lazy" decoding="async">'
+        items.append(f'<li><a href="#{slug}"><img src="media/explainers/{slug}/poster-640.webp" alt="" width="320" height="180" loading="lazy" decoding="async">'
                      f'<span class="fl-ix-n">{n:02d}</span><span class="fl-ix-t">{E(f["title"])}</span>'
                      f'<span class="fl-ix-m">{clock(x["receipt"]["seconds"])}, {chapters} chapters, {len(used)} sources</span></a></li>')
     return f'<nav class="fl-index" aria-label="The films"><ol>{"".join(items)}</ol></nav>'
@@ -228,7 +228,7 @@ def release_section() -> str:
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>
-    <video controls preload="none" playsinline width="{vw}" height="{vh}" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
+    <video controls preload="none" playsinline width="{vw}" height="{vh}" poster="{folder}/poster.webp"><source src="{folder}/{video}" type="video/mp4">{track}</video>
     <figcaption>{clock(m["duration"])}. Rendered by the <a class="inline" href="https://github.com/HarperZ9/{repo}/releases/tag/{tag}">{E(repo)} {E(tag)}</a> release from values read at its commit {E(m["commit"][:7])}: <a class="inline" href="{folder}/facts.json">facts.json</a>. {voice} <a class="inline" href="{folder}/index.html">Open it live</a> to scrub it frame by frame in your browser.</figcaption>
   </figure>""")
     return f"""

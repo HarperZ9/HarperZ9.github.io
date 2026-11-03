@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://harperz9.github.io/</loc></url>
-  <url><loc>https://harperz9.github.io/catalog.html</loc></url>
   <url><loc>https://harperz9.github.io/bulletin.html</loc></url>
   <url><loc>https://harperz9.github.io/join.html</loc></url>
   <url><loc>https://harperz9.github.io/field-guide.html</loc></url>
   <url><loc>https://harperz9.github.io/studio.html</loc></url>
   <url><loc>https://harperz9.github.io/flywheel.html</loc></url>
-  <url><loc>https://harperz9.github.io/demonstrations.html</loc></url>
   <url><loc>https://harperz9.github.io/index-graph.html</loc></url>
   <url><loc>https://harperz9.github.io/canon.html</loc></url>
   <url><loc>https://harperz9.github.io/demo-index.html</loc></url>
@@ -54,13 +52,7 @@
   <url><loc>https://harperz9.github.io/night-school-editdistance.html</loc></url>
   <url><loc>https://harperz9.github.io/night-school-coast.html</loc></url>
   <url><loc>https://harperz9.github.io/night-school-mmbu.html</loc></url>
-  <url><loc>https://harperz9.github.io/repo-explainers.html</loc></url>
-  <url><loc>https://harperz9.github.io/guide.html</loc></url>
-  <url><loc>https://harperz9.github.io/overview.html</loc></url>
-  <url><loc>https://harperz9.github.io/tour.html</loc></url>
   <url><loc>https://harperz9.github.io/gallery.html</loc></url>
-  <url><loc>https://harperz9.github.io/typeface.html</loc></url>
-  <url><loc>https://harperz9.github.io/fonts.html</loc></url>
   <url><loc>https://harperz9.github.io/type-forge.html</loc></url>
   <url><loc>https://harperz9.github.io/research.html</loc></url>
   <url><loc>https://harperz9.github.io/research-proof-carrying-research-loops.html</loc></url>
@@ -96,11 +88,9 @@
   <url><loc>https://harperz9.github.io/why.html</loc></url>
   <url><loc>https://harperz9.github.io/cv.html</loc></url>
   <url><loc>https://harperz9.github.io/resume.html</loc></url>
-  <url><loc>https://harperz9.github.io/work-with-me.html</loc></url>
   <url><loc>https://harperz9.github.io/flywheel-pilot.html</loc></url>
   <url><loc>https://harperz9.github.io/independence.html</loc></url>
   <url><loc>https://harperz9.github.io/income-ledger.html</loc></url>
-  <url><loc>https://harperz9.github.io/portfolio.html</loc></url>
   <url><loc>https://harperz9.github.io/cover-letter.html</loc></url>
   <url><loc>https://harperz9.github.io/person.html</loc></url>
   <url><loc>https://harperz9.github.io/security-toolkit.html</loc></url>
@@ -118,8 +108,6 @@
   <url><loc>https://harperz9.github.io/buildlang.html</loc></url>
   <url><loc>https://harperz9.github.io/raw.html</loc></url>
   <url><loc>https://harperz9.github.io/build-color.html</loc></url>
-  <url><loc>https://harperz9.github.io/build-products.html</loc></url>
-  <url><loc>https://harperz9.github.io/toolkit.html</loc></url>
   <url><loc>https://harperz9.github.io/provenance-sensorium.html</loc></url>
   <url><loc>https://harperz9.github.io/orca.html</loc></url>
   <url><loc>https://harperz9.github.io/aleph.html</loc></url>
@@ -204,8 +192,6 @@
   <url><loc>https://harperz9.github.io/the-maker-is-part-of-the-story.html</loc></url>
   <url><loc>https://harperz9.github.io/a-check-it-cannot-predict.html</loc></url>
   <url><loc>https://harperz9.github.io/why-i-do-this.html</loc></url>
-  <url><loc>https://harperz9.github.io/site-index.html</loc></url>
-  <url><loc>https://harperz9.github.io/start-here.html</loc></url>
   <url><loc>https://harperz9.github.io/glossary.html</loc></url>
   <url><loc>https://harperz9.github.io/articulate.html</loc></url>
   <url><loc>https://harperz9.github.io/hire.html</loc></url>
@@ -223,6 +209,9 @@
   <url><loc>https://harperz9.github.io/accession.html</loc></url>
   <url><loc>https://harperz9.github.io/credits.html</loc></url>
   <url><loc>https://harperz9.github.io/cmmns.html</loc></url>
+  <url><loc>https://harperz9.github.io/superframe.html</loc></url>
+  <url><loc>https://harperz9.github.io/experiments/</loc></url>
+  <url><loc>https://harperz9.github.io/glass-water.html</loc></url>
   <url><loc>https://harperz9.github.io/world/universe/proto/path.html</loc></url>
   <url><loc>https://harperz9.github.io/world/universe/proto/index.html</loc></url>
   <url><loc>https://harperz9.github.io/world/typeengine/living/index.html</loc></url>
@@ -348,4 +337,11 @@
   <url><loc>https://harperz9.github.io/world/universe/proto/places/witnessing-spine.html</loc></url>
   <url><loc>https://harperz9.github.io/world/universe/proto/places/work-with-me.html</loc></url>
   <!-- world:end -->
+  <url><loc>https://harperz9.github.io/overview.html</loc></url>
+  <url><loc>https://harperz9.github.io/catalog.html</loc></url>
+  <url><loc>https://harperz9.github.io/portfolio.html</loc></url>
+  <url><loc>https://harperz9.github.io/fonts.html</loc></url>
+  <url><loc>https://harperz9.github.io/repo-explainers.html</loc></url>
+  <url><loc>https://harperz9.github.io/site-index.html</loc></url>
+  <url><loc>https://harperz9.github.io/guide.html</loc></url>
 </urlset>
