@@ -27,10 +27,31 @@ body.parts-body main { max-width: 1360px; }
 .wi-sum em { font-style: normal; font-weight: 700; }
 .wi-links { margin: 0 !important; display: flex; flex-wrap: wrap; gap: 0 18px; }
 .wi-links a { display: inline-flex; align-items: center; min-height: 44px; font: 600 var(--fs-2)/1 var(--face-text); }
-.wi-media { list-style: none; padding: 0 !important; margin: 10px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 10px; }
-.wi-media li { margin: 0 !important; }
-.wi-media img, .wi-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: #0c1620; }
-.wi-media li:has(img[src*="material-gallery"]) img { object-fit: cover; }
+/* the lead media: no tiles, no boxes. Each piece floats in the field at its own size and height, its edges feathered
+   into the water, and the row runs wider than the text so the pieces read as a drift, not a grid. */
+.wi-media { list-style: none; padding: 0 !important; margin: 18px 0 28px; width: 100%; display: flex; flex-wrap: wrap; gap: 26px 3%; }
+.wi-media li { margin: 0 !important; position: relative; }
+/* a rhythm aligned to the text column: one piece across, then two side by side */
+.wi-drift { flex: 0 0 auto; width: 48.5%; }
+.wi-drift:nth-child(3n + 1) { width: 100%; }
+.wi-media img, .wi-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: none; }
+.wi-cap { display: block; margin: 8px 0 0; font: 500 var(--fs-1)/1.3 var(--face-text); color: var(--soft); }
+.wi-film video { cursor: pointer; }
+/* the play form: a drawn triangle on the film, a word under it like the hand's, nothing boxed */
+.wi-play { position: absolute; left: 50%; top: calc(50% - 14px); translate: -50% -50%; display: grid; justify-items: center; gap: 6px; min-width: 64px; min-height: 64px; padding: 6px; border: 0; background: none; color: var(--card, #f6f1e4); cursor: pointer; }
+.wi-play-form { width: 0; height: 0; border-style: solid; border-width: 15px 0 15px 26px; border-color: transparent transparent transparent currentColor; filter: drop-shadow(0 0 10px rgba(6, 12, 18, .75)) drop-shadow(0 0 2px rgba(6, 12, 18, .9)); transition: transform .2s cubic-bezier(.2, 0, 0, 1), opacity .2s; }
+.wi-play-word { font: 600 11px/1.1 var(--face-text); letter-spacing: .05em; color: #f6f1e4; text-shadow: 0 0 8px #0c1620, 0 0 3px #0c1620, 0 0 1px #0c1620; }
+.wi-play:hover .wi-play-form, .wi-play:focus-visible .wi-play-form { transform: scale(1.12); }
+.wi-play:focus-visible { outline: 2px solid #f6f1e4; outline-offset: 4px; border-radius: 4px; }
+/* while a film plays the form steps back to two bars at the corner, and comes forward on hover or focus */
+.wi-film[data-on] .wi-play { left: auto; top: auto; right: 3%; bottom: 40px; translate: none; opacity: .55; }
+.wi-film[data-on] .wi-play:is(:hover, :focus-visible) { opacity: 1; }
+.wi-film[data-on] .wi-play-form { width: 14px; height: 20px; border: 0; border-left: 5px solid currentColor; border-right: 5px solid currentColor; box-sizing: border-box; }
+/* how far the film has run: a hairline under it, fading at both ends like the film */
+.wi-play-time { position: absolute; left: 0; right: 0; bottom: 28px; height: 2px; transform-origin: left; transform: scaleX(var(--t, 0)); background: #f6f1e4; opacity: 0; box-shadow: 0 0 6px #0c1620; }
+.wi-film[data-on] .wi-play-time { opacity: .6; }
+@media (max-width: 860px) { .wi-media { gap: 20px 0; } .wi-drift, .wi-drift:nth-child(n) { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .wi-play-form { transition: none; } }
 .wi-rule { margin: 72px 0 0; font: 800 var(--fs-5)/1.1 var(--face-display); }
 .wi-row:target { padding-left: 14px; border-left: 3px solid var(--ink); }
 .wi-purpose { margin: 0 0 8px !important; max-width: 62ch; font-size: var(--fs-3) !important; }

@@ -22,6 +22,21 @@ export async function flywheel() {
   return { groups, shapes };
 }
 
+// a proposal for the joint review: the same hash-placed chain left open at one slot, where the newest record is
+// arriving to hook onto the last, so the wheel reads as appended to rather than as a closed ring
+export async function flywheelOpen() {
+  const enc = new TextEncoder();
+  let h = new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode("THEFLYWHEEL")));
+  const N = 14, groups = [{ ink: "sand", edge: 7, z: 1 }, { ink: "straw", edge: 7, z: 1 }, { ink: "land", edge: 7, z: 1 }], shapes = [];
+  for (let i = 0; i < N; i++) {
+    h = new Uint8Array(await crypto.subtle.digest("SHA-256", new Uint8Array([...h, i])));
+    const last = i === N - 1, a = (i / N) * TAU - Math.PI / 2 + (h[0] / 255 - 0.5) * 0.08, R = (last ? 430 : 330) + (h[1] / 255 - 0.5) * 18;
+    const c = [Math.cos(a) * R, Math.sin(a) * R], t = [-Math.sin(a), Math.cos(a)], L = 88;
+    shapes.push({ t: "link", g: last ? 2 : i % 2, a: [c[0] - t[0] * L, c[1] - t[1] * L], b: [c[0] + t[0] * L, c[1] + t[1] * L], r: 44, w: 15 });
+  }
+  return { groups, shapes };
+}
+
 // THECMMNS: overlapping inks. Five sources lay their ink over one shared ground; the common ground is where all
 // of them cross, and its colour is what the five transmit together.
 export function commons() {

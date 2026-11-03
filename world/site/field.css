@@ -37,7 +37,8 @@ a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
 .o-hand.o-said { padding-bottom: 22px; gap: 14px; }
 .o-hand.o-said > :is(a[data-o], button), .o-hand.o-said .o-cell { position: relative; }
 .o-hand.o-said .o-cell { display: inline-flex; }
-.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { position: absolute; top: calc(100% + 5px); left: 50%; translate: -50% 0; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap;
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { position: absolute; top: calc(50% + 27px); left: 50%; translate: -50% 0; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap;
   font: 600 11px/1.1 var(--face-text); letter-spacing: .05em; color: var(--ink); pointer-events: none; }
-.o-hand.o-said > button[data-o="fold"] .o-name { top: calc(100% + 1px); } /* the fold is 52 px tall, the rest 44: one baseline */
+/* every label hangs a fixed distance below its control's centre, and the hand centres its controls on one line, so
+   the labels share one baseline whatever height a form takes (the fold is 52 px, the rest 44, and a form may grow) */
 .o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { text-shadow: 0 0 8px var(--wall, #0c1620), 0 0 3px var(--wall, #0c1620), 0 0 1px var(--wall, #0c1620); }

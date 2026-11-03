@@ -4,6 +4,7 @@
 <script type="module">
 import { createGlass } from "../../world/site/crossover/glass.js";
 import * as S from "../../world/site/crossover/scenes.js";
+import { toolMark } from "../../world/site/crossover/tool-marks.js";
 const q = new URLSearchParams(location.search), W = +q.get("w") || 1920, H = +q.get("h") || 1080, n = +q.get("n") || 4;
 const c = document.getElementById("c"); c.width = W; c.height = H;
 async function build(name) {
@@ -12,8 +13,10 @@ async function build(name) {
   if (name === "cleavage") return { ...S.cleavage(), span: 1900 };
   if (name === "parity") return { ...S.parity(), span: 2000 };
   if (name === "mie") return { ...S.mieField(), span: 2000 };
+  if (name === "mark-flywheel-open") return { lift: 10, ...(await S.flywheelOpen()), span: 1200 };
   if (name === "mark-michel") return { lift: 10, ...S.michelMark(), span: 1200 };
   if (name === "mark-cleavage") return { lift: 10, ...S.cleavageMark(), span: 1200 };
+  if (name.startsWith("tool:")) return { lift: 8, ...(await toolMark(name.slice(5))), span: 1150 };
   if (name.startsWith("mark:")) return { lift: 10, ...(await S.MARKS[name.slice(5)]()), span: 1200, square: true };
   if (name === "marks") { // all six, placed on one ground
     const names = Object.keys(S.MARKS), groups = [], shapes = [];

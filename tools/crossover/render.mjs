@@ -43,7 +43,7 @@ async function still(query, file) {
 
 try {
   mkdirSync(OUT, { recursive: true });
-  if (has("--stills") || !has("--marks")) {
+  if (has("--stills") || (!has("--marks") && !has("--tools"))) {
     for (const [q, n] of [["scene=overprint&lighting=reflect&n=16", "overprint-day"], ["scene=mie&lighting=backlit&n=8", "mie-night"],
       ["scene=mie&lighting=reflect&n=8", "mie-day"], ["scene=marks&lighting=reflect&n=16", "marks-day"], ["scene=marks&lighting=backlit&n=16", "marks-night"],
       ["scene=michel&lighting=backlit&n=8", "michel-levy"], ["scene=cleavage&lighting=reflect&n=16", "cleavage"]])
@@ -52,11 +52,22 @@ try {
     for (const n of ["overprint-day", "mie-night"]) // the two shown on glass-water.html
       execFileSync("python", ["-I", path.join(ROOT, "tools/crossover/encode_plate.py"), path.join(OUT, `${n}.png`), path.join(plates, n)], { stdio: "inherit" });
   }
+  if (has("--tools")) { // every tool's mark: 384 px masters, then one sprite sheet for the index (encode_tools.py)
+    const { TOOLS } = await import(pathToFileURL(path.join(ROOT, "world/site/crossover/tool-marks.js")).href);
+    const only = args.includes("--only") ? args[args.indexOf("--only") + 1].split(",") : null;
+    const dir = path.join(OUT, "tools"); mkdirSync(dir, { recursive: true });
+    for (const id of Object.keys(TOOLS)) if (!only || only.includes(id))
+      await still(`scene=tool:${id}&lighting=backlit&ground=black&n=12&w=384&h=384`, path.join(dir, `${id}.png`));
+  }
   if (has("--marks")) {
     const dest = path.join(ROOT, "media/world/marks"); mkdirSync(dest, { recursive: true });
+    // THECMMNS carries the Michel-Levy granules and THEPLYGRND the cleavage stage (author, 2026-11-03: ml-A, cl-A)
+    const SCENE = { THECMMNS: "mark-michel", THEPLYGRND: "mark-cleavage" };
+    const only = args.includes("--only") ? args[args.indexOf("--only") + 1].split(",") : null;
     for (const m of ["THEFLYWHEEL", "THECMMNS", "THEPLYGRND", "ARTIQL8", "BLDLNG", "RSRCH"]) {
+      if (only && !only.includes(m)) continue;
       const master = path.join(OUT, `${m}-night.png`);
-      await still(`scene=mark:${m}&lighting=backlit&ground=black&n=16&w=720&h=720`, master);
+      await still(`scene=${SCENE[m] || `mark:${m}`}&lighting=backlit&ground=black&n=16&w=720&h=720`, master);
       execFileSync("python", ["-I", path.join(ROOT, "tools/crossover/encode_mark.py"), master, path.join(dest, m.toLowerCase())], { stdio: "inherit" });
     }
   }

@@ -5,8 +5,8 @@ import { esc } from "./studies-markdown.mjs";
 
 export const MARK_ALT = {
   THEFLYWHEEL: "Drawn mark: fourteen links closing into a wheel, each placed by the hash of the one before it.",
-  THECMMNS: "Drawn mark: five inks laid over one ground; where all five cross is their common colour.",
-  THEPLYGRND: "Drawn mark: two liquids, the drops of each merging, green where one passes over the other.",
+  THECMMNS: "Drawn mark: three granules between crossed polarisers, each coloured by its own structure, the colour fading as its order falls.",
+  THEPLYGRND: "Drawn mark: a cell at its four-cell stage, one form cut twice through its centre into four.",
   ARTIQL8: "Drawn mark: a typewriter's fan of typebars, with the bars for A, R, T, I, Q, L and 8 struck.",
   BLDLNG: "Drawn mark: a call stack of blocks narrowing as it rises, each holding only what the block below allows.",
   RSRCH: "Drawn mark: arrows branching in two, some ending in a stop bar where a line of inquiry came back null.",

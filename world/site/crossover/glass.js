@@ -7,8 +7,10 @@
 // Inks and paper come from tables.js, recovered from a measured Olivetti print (tools/crossover/).
 // Lighting "reflect" is ink on paper (day); "backlit" is the same glass lit from behind in a dark wall (night).
 import { XYZ, XYZ_TO_RGB, PAPER, INKS, F0, MIE } from "./tables.js";
+import { KEYS, keySpectrum } from "./keyboard.js";
 
-const INK_NAMES = ["red", "cyan", "yellow", "green", "black", "clear", "oil"];
+// the measured inks, then the colour keyboard's keys, each a mix of measured inks (keyboard.js)
+const INK_NAMES = ["red", "cyan", "yellow", "green", "black", "clear", "oil", ...Object.keys(KEYS)];
 const TYPES = { disc: 0, ring: 1, bar: 2, box: 3, pie: 4, lobe: 5, mask: 6, link: 7 };
 const MAXG = 24;
 
@@ -228,7 +230,7 @@ export async function createGlass(canvas, { base = new URL(".", import.meta.url)
   gl.useProgram(prog);
   const inks = new Float32Array(INK_NAMES.length * 16);
   INK_NAMES.forEach((k, i) => {
-    const a = k === "clear" ? new Array(16).fill(0.02) : k === "oil" ? new Array(16).fill(0.0) : INKS[k];
+    const a = k === "clear" ? new Array(16).fill(0.02) : k === "oil" ? new Array(16).fill(0.0) : KEYS[k] ? keySpectrum(k) : INKS[k];
     a.forEach((v, b) => { inks[i * 16 + b] = v; });
   });
   gl.uniform4fv(U(prog, "uInk"), inks);

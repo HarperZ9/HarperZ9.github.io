@@ -7,6 +7,19 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { esc } from "./studies-markdown.mjs";
 import { markImg } from "./crossover-marks.mjs";
+import { TOOLS } from "../world/site/crossover/tool-marks.js";
+
+// each tool's drawn mark, a cell of one sprite (media/world/marks/tools.*, from tools/crossover/encode_tools.py, ten
+// cells to a row in TOOLS order); decoration beside a row whose words already say what the tool does
+const TOOL_IDS = Object.keys(TOOLS), TM_COLS = 10, TM_ROWS = Math.ceil(TOOL_IDS.length / TM_COLS);
+// held from the page after pass 13's blind pairwise (won Commons 7-6, lost or tied elsewhere); the joint review decides
+const SHOW_TOOL_MARKS = false;
+function toolMark(id) {
+  if (!SHOW_TOOL_MARKS) return "";
+  const n = TOOL_IDS.indexOf(id); if (n < 0) return "";
+  const x = (n % TM_COLS) / (TM_COLS - 1) * 100, y = Math.floor(n / TM_COLS) / Math.max(TM_ROWS - 1, 1) * 100;
+  return `<span class="wi-tm" aria-hidden="true" style="--tx:${+x.toFixed(3)}%;--ty:${+y.toFixed(3)}%"></span>`;
+}
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const PLATFORMS = [
@@ -17,17 +30,17 @@ const STATE = { released: "released", "release candidate": "release candidate", 
 // the lead media: stills from the raw-native engine and films from their 4K masters, web encodes in media/work/
 const MEDIA = {
   "engine-showcase": [
-    { still: "raw-hall-nave-v2", alt: "A long hall of fluted columns and arches under hanging lamps, path-traced in raw-native." },
-    { still: "material-gallery", alt: "Seven rows of spheres, each row one material from gold to frosted glass, under one sky." },
-    { still: "retro-room-pathtraced", alt: "A brick room with tiled floor, square pillars and a figure under a ceiling light, path-traced." },
-    { film: "retro-room-dolly", alt: "The camera dollies through the brick room." },
-    { still: "threads-dome", alt: "Copper threads arcing into a dome on black." },
-    { film: "threads-bloom", alt: "A field of threads blooming into a cellular flower." },
+    { still: "raw-hall-nave-v2", cap: "Colonnade, path-traced", alt: "A long hall of fluted columns and arches under hanging lamps, path-traced in raw-native." },
+    { still: "material-gallery", cap: "Material gallery", alt: "Seven rows of spheres, each row one material from gold to frosted glass, under one sky." },
+    { still: "retro-room-pathtraced", cap: "Retro room, path-traced", alt: "A brick room with tiled floor, square pillars and a figure under a ceiling light, path-traced." },
+    { film: "retro-room-dolly", cap: "Retro room, a dolly (film)", alt: "The camera dollies through the brick room." },
+    { still: "threads-dome", cap: "Threads dome", alt: "Copper threads arcing into a dome on black." },
+    { film: "threads-bloom", cap: "Threads bloom (film)", alt: "A field of threads blooming into a cellular flower." },
   ],
   "one-step-films": [
-    { film: "one-step", alt: "One Step: a sphere of points where each new position draws lines to all that came before it.", sound: true },
-    { film: "cathedral", alt: "A study flying down a Menger-sponge nave." },
-    { film: "droste", alt: "A study spiralling into a Droste tiling." },
+    { film: "one-step", cap: "One Step (film, with sound)", alt: "One Step: a sphere of points where each new position draws lines to all that came before it.", sound: true },
+    { film: "cathedral", cap: "Cathedral study (film)", alt: "A study flying down a Menger-sponge nave." },
+    { film: "droste", cap: "Droste study (film)", alt: "A study spiralling into a Droste tiling." },
   ],
 };
 // the author approved this purpose for RESEARCH on 2026-11-02 ("yes, all of these concepts")
@@ -36,9 +49,11 @@ const LENS_NOTE = { "lens-room": "No still yet." };
 
 function media(id) {
   const m = MEDIA[id]; if (!m) return "";
-  return `<ul class="wi-media">${m.map((x) => x.still
-    ? `<li><picture><source type="image/avif" srcset="media/work/${x.still}-960.avif 960w, media/work/${x.still}-1920.avif 1920w" sizes="(max-width: 860px) 92vw, 30vw"><img src="media/work/${x.still}-960.webp" srcset="media/work/${x.still}-960.webp 960w, media/work/${x.still}-1920.webp 1920w" sizes="(max-width: 860px) 92vw, 30vw" width="960" height="540" alt="${esc(x.alt)}" loading="lazy" decoding="async"></picture></li>`
-    : `<li><video controls${x.sound ? "" : " muted"} playsinline preload="none" data-poster="media/work/${x.film}-poster-960.webp" width="1920" height="1080" aria-label="${esc(x.alt)}"><source src="media/work/${x.film}-1080.mp4" type="video/mp4"></video></li>`).join("")}</ul>`;
+  // no tiles: each piece floats in the field with feathered edges, at its own size and height, so the row reads as
+  // things seen through water rather than a grid of boxes. A film shows its poster and one quiet form that plays it.
+  return `<ul class="wi-media" role="list">${m.map((x) => x.still
+    ? `<li class="wi-drift"><picture><source type="image/avif" srcset="media/work/${x.still}-960.avif 960w, media/work/${x.still}-1920.avif 1920w" sizes="(max-width: 860px) 92vw, 60vw"><img src="media/work/${x.still}-960.webp" srcset="media/work/${x.still}-960.webp 960w, media/work/${x.still}-1920.webp 1920w" sizes="(max-width: 860px) 92vw, 60vw" width="960" height="540" alt="${esc(x.alt)}" loading="lazy" decoding="async"></picture><span class="wi-cap">${esc(x.cap)}</span></li>`
+    : `<li class="wi-drift wi-film"><video${x.sound ? "" : " muted"} playsinline preload="none" data-poster="media/work/${x.film}-poster-960.webp" width="1920" height="1080" aria-label="${esc(x.alt)}"><source src="media/work/${x.film}-1080.mp4" type="video/mp4"></video><button type="button" class="wi-play" aria-label="Play the film: ${esc(x.alt)}${x.sound ? " With sound." : ""}" data-alt="${esc(x.alt)}"><span class="wi-play-form" aria-hidden="true"></span><span class="wi-play-word" aria-hidden="true">Play</span></button><span class="wi-play-time" aria-hidden="true"></span><span class="wi-cap">${esc(x.cap)}</span></li>`).join("")}</ul>`;
 }
 // a page's destination, following a redirect stub to its target; null when the file is not in the site
 function resolve(p) {
@@ -78,7 +93,7 @@ function row(r) {
   const links = [...pages, r.repo ? [r.repo, "Source"] : null, r.release ? [r.release, "Release"] : null,
     ...(r.packages || []).slice(0, 1).map((p) => [p.url, p.registry])].filter(Boolean);
   return `<li class="wi-row" id="w-${esc(r.id)}" data-state="${esc(r.state || "")}">
-  <p class="wi-head"><b>${esc(r.name)}</b> <span class="wi-status">${esc(status)}</span></p>
+  <p class="wi-head">${toolMark(r.id)}<b>${esc(r.name)}</b> <span class="wi-status">${esc(status)}</span></p>
   ${r.summary ? `<p class="wi-sum">${esc(r.summary)}${r.note ? ` <em>${esc(r.note)}</em>` : ""}${LENS_NOTE[r.id] ? ` ${esc(LENS_NOTE[r.id])}` : ""}</p>` : ""}
   ${media(r.id)}
   ${links.length ? `<p class="wi-links">${links.map(([h, t]) => `<a href="${esc(h)}">${esc(t)}</a>`).join("")}</p>` : ""}
@@ -131,9 +146,19 @@ export function workIndex() {
   // a second after load, so the fetch never sits in front of the first screen's paint; a scroll starts it sooner
   addEventListener("load", function () { setTimeout(function () { if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1500 }); else go(); }, 1000); });
 })();</script>`;
-  // a film's poster loads only as its row nears the screen
+  // a film's poster loads only as its row nears the screen; the play form starts and pauses it, and names what it does
   const lazy = `<script type="module">const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.poster = e.target.dataset.poster; io.unobserve(e.target); } }, { rootMargin: "60% 0px" });
-const watch = () => { for (const v of document.querySelectorAll("video[data-poster]:not([poster])")) io.observe(v); };
+const say = (v) => { const li = v.closest(".wi-film"), b = li.querySelector(".wi-play"), on = !v.paused && !v.ended;
+  li.toggleAttribute("data-on", on); b.setAttribute("aria-label", (on ? "Pause the film: " : "Play the film: ") + b.dataset.alt);
+  b.querySelector(".wi-play-word").textContent = on ? "Pause" : v.ended ? "Again" : "Play"; };
+const tick = (v) => { const t = v.closest(".wi-film").querySelector(".wi-play-time"); if (v.duration) t.style.setProperty("--t", (v.currentTime / v.duration).toFixed(4)); };
+const wire = (v) => { if (v.dataset.wired) return; v.dataset.wired = "1";
+  for (const ev of ["play", "pause", "ended"]) v.addEventListener(ev, () => say(v));
+  v.addEventListener("timeupdate", () => tick(v));
+  v.addEventListener("error", () => console.error("work index: a film did not load", v.currentSrc || v.dataset.poster));
+  const go = () => { if (v.paused || v.ended) v.play().catch((e) => console.error("work index: the film did not play", e)); else v.pause(); };
+  v.closest(".wi-film").querySelector(".wi-play").addEventListener("click", go); v.addEventListener("click", go); };
+const watch = () => { for (const v of document.querySelectorAll("video[data-poster]:not([poster])")) io.observe(v); for (const v of document.querySelectorAll(".wi-film video")) wire(v); };
 watch(); document.addEventListener("wi:ready", watch);</script>`;
   return { html: lazy + `<nav class="wi-jump" aria-label="Platforms">${PLATFORMS.map(([k, n]) => `<a href="#${k.toLowerCase()}">${esc(n)}</a>`).join("")}</nav>
 ${head}
