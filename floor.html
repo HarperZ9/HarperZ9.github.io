@@ -23,11 +23,11 @@
 <meta name="twitter:title" content="Everything | Zain Dana Harper">
 <meta name="twitter:description" content="All of the work, current and past, by platform: The Flywheel, The Commons, The Playground, Articulate, BuildLang and Research, then every page of the site.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-c1896b2afd">
-<link rel="stylesheet" href="/studies/studies.css?v=world-c1896b2afd">
-<script type="module" src="/world/ui/shell/shell.js?v=world-c1896b2afd"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-c1896b2afd"></script>
-<link rel="stylesheet" href="/world/site/pages.css?v=world-c1896b2afd">
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-47110fc08b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-47110fc08b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-47110fc08b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-47110fc08b"></script>
+<link rel="stylesheet" href="/world/site/pages.css?v=world-47110fc08b">
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoObject","@id":"https://harperz9.github.io/media/work/retro-room-dolly-1080.mp4#video","name":"raw-native: a dolly through the retro room","description":"The camera dollies through the brick room","contentUrl":"https://harperz9.github.io/media/work/retro-room-dolly-1080.mp4","uploadDate":"2026-10-28","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/work/retro-room-dolly-poster.webp","duration":"PT10S"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/work/threads-bloom-1080.mp4#video","name":"raw-native: threads bloom","description":"A field of threads blooming into a cellular flower","contentUrl":"https://harperz9.github.io/media/work/threads-bloom-1080.mp4","uploadDate":"2026-10-28","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/work/threads-bloom-poster.webp","duration":"PT10S"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/work/one-step-1080.mp4#video","name":"One Step","description":"One Step: a sphere of points where each new position draws lines to all that came before it","contentUrl":"https://harperz9.github.io/media/work/one-step-1080.mp4","uploadDate":"2026-10-04","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/work/one-step-poster.webp","duration":"PT108S"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/work/cathedral-1080.mp4#video","name":"One Step study: cathedral","description":"A study flying down a Menger-sponge nave","contentUrl":"https://harperz9.github.io/media/work/cathedral-1080.mp4","uploadDate":"2026-10-04","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/work/cathedral-poster.webp","duration":"PT40S"},{"@type":"VideoObject","@id":"https://harperz9.github.io/media/work/droste-1080.mp4#video","name":"One Step study: Droste","description":"A study spiralling into a Droste tiling","contentUrl":"https://harperz9.github.io/media/work/droste-1080.mp4","uploadDate":"2026-10-04","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"thumbnailUrl":"https://harperz9.github.io/media/work/droste-poster.webp","duration":"PT40S"}]}</script>
 <!-- structured-data:end -->
@@ -50,13 +50,13 @@
 function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
 p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
 new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
-<header class="o-hand" aria-label="Site">
+<header class="o-hand o-said" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
-  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
-  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
-  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
-  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
 </header>
 <dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">

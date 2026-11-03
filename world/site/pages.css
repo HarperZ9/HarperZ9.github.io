@@ -15,7 +15,7 @@ body.parts-body main { max-width: 1360px; }
 .wi-lead { font-size: var(--fs-3) !important; }
 .wi-jump { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 18px 0 8px; }
 .wi-jump a { display: inline-flex; align-items: center; min-height: 44px; font: 600 var(--fs-2)/1 var(--face-text); }
-.wi-plat { margin: 48px 0 0; }
+.wi-plat { margin: 48px 0 0; scroll-margin-top: 96px; }
 .wi-plat h2 { margin: 0 0 6px; font: 800 var(--fs-5)/1.1 var(--face-display); letter-spacing: -.01em; scroll-margin-top: 96px; }
 .wi-mark { font: 500 var(--fs-1)/1 var(--face-text); letter-spacing: .08em; color: var(--soft); margin-left: 8px; }
 .wi-list { list-style: none; padding: 0 !important; margin: 0; }

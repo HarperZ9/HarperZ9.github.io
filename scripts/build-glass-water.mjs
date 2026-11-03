@@ -17,7 +17,7 @@ const PLATES = [
   ["mie-night", "Rows of glowing shapes on black, each the scattering pattern of a water droplet: round on the left, pushing forward and splitting into petals on the right.",
     "Scattering lobes. Water droplets lit from the left, each drawn as the pattern of light it scatters by angle, from Lorenz-Mie theory, on a log scale over four decades. Small drops scatter almost evenly and draw a circle; as they grow the light pushes forward and the pattern splits into petals. Each wavelength draws its own outline, so the colour at an edge is one drop seen across the spectrum."],
 ];
-// the plates load only as the reader nears them (a narrow margin, so a phone's first screen never fetches them);
+// the plates load only as the reader scrolls toward them;
 // without scripts, the noscript copy loads as usual
 const pic = (n, alt, lazy) => {
   const set = (ext) => [1280, 1920, 3840].map((w) => `/media/world/crossover/${n}-${w}.${ext} ${w}w`).join(", ");
@@ -29,7 +29,8 @@ const plates = () => `<div class="gw-plates">${PLATES.map(([n, alt, cap]) => `<f
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.unobserve(e.target);
     e.target.querySelectorAll("[data-srcset]").forEach(function (s) { s.srcset = s.dataset.srcset; });
     var i = e.target.querySelector("img[data-src]"); if (i) i.src = i.dataset.src; }); }, { rootMargin: "300px 0px" });
-  document.querySelectorAll(".gw-plate").forEach(function (f) { io.observe(f); });
+  // watching starts at the reader's first scroll, so a first screen never pays for the plates below it
+  addEventListener("scroll", function () { document.querySelectorAll(".gw-plate").forEach(function (f) { io.observe(f); }); }, { once: true, passive: true });
 })();</script>`;
 const SPACES = [["close", "Close to the glass"], ["low-sun", "Low sun"], ["noon", "Noon, from above"], ["night", "Night"]];
 const body = `<section class="gw" data-glass-water aria-labelledby="gw-h">

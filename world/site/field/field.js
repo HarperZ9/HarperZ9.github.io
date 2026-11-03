@@ -11,11 +11,12 @@ const D = Math.PI / 180;
 export const SPACES = {
   "low-sun": { label: "Low sun", word: "Zain Dana Harper", light: { el: 2.2, az: 0 }, wind: 5, cam: { h: 2.2, pitch: 1.0, yaw: 0 }, glass: { z: 90, cap: 6.5, thick: 1.6 }, expo: 9 },
   "close": { label: "Close to the glass", word: "light", light: { el: 11, az: 24 }, wind: 4, cam: { h: 1.2, pitch: 2.5, yaw: 0 }, glass: { z: 22, cap: 4.2, thick: 1.4 }, expo: 7 },
-  // the field behind the home and the reading pages: the word stands right of the text column
-  "field-day": { label: "Behind the pages, day", word: "light", light: { el: 11, az: 30 }, wind: 4, cam: { h: 1.4, pitch: 2.2, yaw: 0 }, glass: { x: 9, z: 30, cap: 3.6, thick: 1.3 }, expo: 7 },
-  "field-night": { label: "Behind the pages, night", word: "glass", light: { el: 9, az: 24 }, moon: { phase: 38 }, wind: 4, cam: { h: 2.5, pitch: 3.2, yaw: 0, focal: 2.2 }, glass: { x: 38, z: 160, cap: 8, thick: 2.6 }, expo: 34 },
-  "field-day-tall": { label: "Behind the pages, day, tall", word: "light", light: { el: 11, az: 14 }, wind: 4, cam: { h: 1.4, pitch: 2.2, yaw: 0 }, glass: { x: 2.2, z: 30, cap: 3.0, thick: 1.3 }, expo: 7 },
-  "field-night-tall": { label: "Behind the pages, night, tall", word: "glass", light: { el: 9, az: 8 }, moon: { phase: 38 }, wind: 4, cam: { h: 2.5, pitch: 3.2, yaw: 0, focal: 2.2 }, glass: { x: 9, z: 160, cap: 7, thick: 2.6 }, expo: 34 },
+  // the field behind the home and the reading pages carries no word: glass lettering stays where it means something
+  // (the author, 2026-11-03, on the word "light" here: "I think it is decoration without meaning")
+  "field-day": { label: "Behind the pages, day", word: "", light: { el: 11, az: 30 }, wind: 4, cam: { h: 1.4, pitch: 2.2, yaw: 0 }, glass: { x: 9, z: 30, cap: 3.6, thick: 1.3 }, expo: 7 },
+  "field-night": { label: "Behind the pages, night", word: "", light: { el: 9, az: 24 }, moon: { phase: 38 }, wind: 4, cam: { h: 2.5, pitch: 3.2, yaw: 0, focal: 2.2 }, glass: { x: 38, z: 160, cap: 8, thick: 2.6 }, expo: 34 },
+  "field-day-tall": { label: "Behind the pages, day, tall", word: "", light: { el: 11, az: 14 }, wind: 4, cam: { h: 1.4, pitch: 2.2, yaw: 0 }, glass: { x: 2.2, z: 30, cap: 3.0, thick: 1.3 }, expo: 7 },
+  "field-night-tall": { label: "Behind the pages, night, tall", word: "", light: { el: 9, az: 8 }, moon: { phase: 38 }, wind: 4, cam: { h: 2.5, pitch: 3.2, yaw: 0, focal: 2.2 }, glass: { x: 9, z: 160, cap: 7, thick: 2.6 }, expo: 34 },
   "noon": { label: "Noon, from above", word: "water", light: { el: 58, az: 40 }, wind: 7, cam: { h: 28, pitch: -24, yaw: 0 }, glass: { z: 95, cap: 9, thick: 2.2 }, expo: 5.5 },
   "night": { label: "Night", word: "glass", light: { el: 9, az: -6 }, moon: { phase: 38 }, wind: 4, cam: { h: 2.5, pitch: 3.2, yaw: 0, focal: 4.2 }, glass: { z: 260, cap: 9, thick: 3 }, expo: 34 },
 };
@@ -76,7 +77,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   }
   const glyphTex = gl.createTexture(); let glyphNow = null, glyphMeta = null;
   function setWord(word) {
-    if (word === glyphNow) return; glyphNow = word; glyphMeta = glyphField(word);
+    if (word === glyphNow) return; glyphNow = word; glyphMeta = glyphField(word || " ");
     gl.bindTexture(gl.TEXTURE_2D, glyphTex); gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, glyphMeta.w, glyphMeta.h, 0, gl.RED, gl.FLOAT, glyphMeta.data);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -111,7 +112,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       gl.uniform1f(u.uPitch, s.cam.pitch * D); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
       gl.uniform1f(u.uGX, s.glass.x ?? 0); gl.uniform1f(u.uGZ, s.glass.z); gl.uniform1f(u.uGH, s.glass.cap); gl.uniform1f(u.uGT, s.glass.thick); gl.uniform1f(u.uGR, Math.min(0.35, s.glass.thick * 0.3));
-      gl.uniform1f(u.uGBase, glyphMeta.baseV); gl.uniform1f(u.uGCap, glyphMeta.capV); gl.uniform1f(u.uHasGlyph, 1); gl.uniform1f(u.uFoam, Math.min(1, 3.84e-6 * Math.pow(s.wind, 3.41) * 100));
+      gl.uniform1f(u.uGBase, glyphMeta.baseV); gl.uniform1f(u.uGCap, glyphMeta.capV); gl.uniform1f(u.uHasGlyph, glyphNow ? 1 : 0); gl.uniform1f(u.uFoam, Math.min(1, 3.84e-6 * Math.pow(s.wind, 3.41) * 100));
     });
     gl.disable(gl.BLEND);
     draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); });

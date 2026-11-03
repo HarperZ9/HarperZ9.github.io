@@ -159,3 +159,15 @@ export function cleavage() {
   });
   return { groups, shapes };
 }
+
+// candidate marks for the joint review (the author accepted both looks on 2026-11-03; places not chosen yet)
+export function michelMark() { // three granules at falling order: colour from structure, fading to the plate
+  const groups = [0, 1, 2].map((i) => ({ ink: "clear", edge: 10, retard: [520, 300, 90][i], z: 0.8 }));
+  const shapes = [{ t: "disc", g: 0, c: [-150, -90], r: 230 }, { t: "disc", g: 1, c: [190, 40], r: 170 }, { t: "disc", g: 2, c: [-60, 270], r: 120 }];
+  return { groups, shapes };
+}
+export function cleavageMark() { // the four-cell stage: one cell cut twice through its centre
+  const inks = ["cyan", "yellow", "red", "green"], groups = inks.map((ink) => ({ ink, edge: 8 })), shapes = [];
+  for (let k = 0; k < 4; k++) { const a = (k + 0.5) * Math.PI / 2; shapes.push({ t: "pie", g: k, c: [Math.cos(a) * 26, Math.sin(a) * 26], r: 330, ang: a - Math.PI / 2, ap: Math.PI / 4 }); }
+  return { groups, shapes };
+}

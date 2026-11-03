@@ -23,11 +23,11 @@
 <meta name="twitter:title" content="Experiments | Zain Dana Harper">
 <meta name="twitter:description" content="90 preregistered studies that came back null or refuted their own forecast, each with its numbers, verdict, limits and what was checked.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-c1896b2afd">
-<link rel="stylesheet" href="/studies/studies.css?v=world-c1896b2afd">
-<script type="module" src="/world/ui/shell/shell.js?v=world-c1896b2afd"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-c1896b2afd"></script>
-<link rel="stylesheet" href="/world/site/experiments.css?v=world-c1896b2afd"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-47110fc08b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-47110fc08b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-47110fc08b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-47110fc08b"></script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-47110fc08b"></head>
 <body class="reading">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -46,13 +46,13 @@
 function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
 p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
 new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
-<header class="o-hand" aria-label="Site">
+<header class="o-hand o-said" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
-  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
-  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
-  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
-  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
 </header>
 <dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">
@@ -980,7 +980,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   <p class="verified"><b>Verified</b> 2 November 2026: all 21 numbers on this card appear in the study's own ledger entry (checked by the site's build, <code>tools/experiments/select.py</code>). The study was scored by code, self-graded. No outside reviewer has read it.</p>
 </li></ol>
 </article>
-<script type="module" src="/world/site/experiments.js?v=world-c1896b2afd"></script>
+<script type="module" src="/world/site/experiments.js?v=world-47110fc08b"></script>
 </main>
 </body>
 </html>

@@ -312,6 +312,12 @@
       "find": "      if (Math.abs(z - next) < 0.025) { c.globalAlpha = 0.9; c.fillStyle = d.accent; c.fillRect(cx - half * W * 0.5, y - 1, half * W, 2); }\n",
       "replace": "",
       "why": "the next-stop marker drew a flat accent bar across the road, which crossed the home's first screen and the text of the work section; reviewed 2026-11-02 as stray geometry and removed"
+    },
+    {
+      "file": "2026-10-23-ui-direction/shell/organic/organic.js",
+      "find": "    btn.querySelector(\".o-name\").textContent = dark ? \"Lamp on\" : \"Lamp off\";",
+      "replace": "    btn.querySelector(\".o-name\").textContent = \"Day\"; // a toggle: pressed in daylight, its name says what it sets",
+      "why": "the author, 2026-11-03, on the hand's icons: \"I can't really tell what each one does either\"; the lamp's name is the word under it"
     }
   ]
 }

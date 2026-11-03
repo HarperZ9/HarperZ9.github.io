@@ -23,20 +23,20 @@
 <meta name="twitter:title" content="Glass and water | Zain Dana Harper">
 <meta name="twitter:description" content="Glass lettering over live water in four spaces, rendered in the browser: close to the glass, a low sun, noon from above, and night.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-c1896b2afd">
-<link rel="stylesheet" href="/studies/studies.css?v=world-c1896b2afd">
-<script type="module" src="/world/ui/shell/shell.js?v=world-c1896b2afd"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-c1896b2afd"></script>
-<link rel="stylesheet" href="/world/site/glass-water.css?v=world-c1896b2afd"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-47110fc08b">
+<link rel="stylesheet" href="/studies/studies.css?v=world-47110fc08b">
+<script type="module" src="/world/ui/shell/shell.js?v=world-47110fc08b"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-47110fc08b"></script>
+<link rel="stylesheet" href="/world/site/glass-water.css?v=world-47110fc08b"></head>
 <body class="gw-body">
 
-<header class="o-hand" aria-label="Site">
+<header class="o-hand o-said" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
-  <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
-  <button type="button" data-o="fold" aria-controls="o-menu" aria-expanded="false" hidden><span class="o-name">Menu (M)</span><i></i><i></i><i></i></button>
-  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Lamp</span></button>
-  <button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain view</span></button>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
 </header>
 <dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
   <nav aria-label="Places">
@@ -69,9 +69,10 @@
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.unobserve(e.target);
     e.target.querySelectorAll("[data-srcset]").forEach(function (s) { s.srcset = s.dataset.srcset; });
     var i = e.target.querySelector("img[data-src]"); if (i) i.src = i.dataset.src; }); }, { rootMargin: "300px 0px" });
-  document.querySelectorAll(".gw-plate").forEach(function (f) { io.observe(f); });
+  // watching starts at the reader's first scroll, so a first screen never pays for the plates below it
+  addEventListener("scroll", function () { document.querySelectorAll(".gw-plate").forEach(function (f) { io.observe(f); }); }, { once: true, passive: true });
 })();</script>
-<script type="module" src="/world/site/glass-water.js?v=world-c1896b2afd"></script>
+<script type="module" src="/world/site/glass-water.js?v=world-47110fc08b"></script>
 </main>
 </body>
 </html>

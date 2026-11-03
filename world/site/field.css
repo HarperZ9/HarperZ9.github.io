@@ -27,8 +27,17 @@ body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% 
 /* on phones the hand sits at the top edge; a reading page's first words start below it */
 @media (max-width: 860px) { body.reading main { padding-top: 96px !important; } }
 /* magnetic links (world/site/magnet.js): the held link leans toward the pointer and its underline takes full weight */
-:is(.wi-links, .wi-jump, .floor-list) a, header.o-hand a { display: inline-block; }
+:is(.wi-links, .wi-jump, .floor-list) a { display: inline-block; } /* the hand's links are flex items already */
 a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
 /* the drawn platform marks (scripts/crossover-marks.mjs): glass lit from behind, its light carried as alpha */
 .xo-mark, .xo-mark img { display: block; width: 112px; height: 112px; }
 .xo-mark { margin: 0 0 4px -10px; }
+/* the hand says what each control does: a word under each form, which is also its accessible name
+   (scripts/hand-labels.mjs). The forms stay; nothing is boxed. */
+.o-hand.o-said { padding-bottom: 22px; gap: 14px; }
+.o-hand.o-said > :is(a[data-o], button), .o-hand.o-said .o-cell { position: relative; }
+.o-hand.o-said .o-cell { display: inline-flex; }
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { position: absolute; top: calc(100% + 5px); left: 50%; translate: -50% 0; width: auto; height: auto; overflow: visible; clip-path: none; white-space: nowrap;
+  font: 600 11px/1.1 var(--face-text); letter-spacing: .05em; color: var(--ink); pointer-events: none; }
+.o-hand.o-said > button[data-o="fold"] .o-name { top: calc(100% + 1px); } /* the fold is 52 px tall, the rest 44: one baseline */
+.o-hand.o-said > :is(a[data-o], button) .o-name, .o-hand.o-said .o-under { text-shadow: 0 0 8px var(--wall, #0c1620), 0 0 3px var(--wall, #0c1620), 0 0 1px var(--wall, #0c1620); }

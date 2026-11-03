@@ -9,6 +9,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { PLACES } from "../site-src/world/bazaar.mjs";
 import { PLATFORMS, CHECKED } from "../site-src/world/platforms.mjs";
+import { labelHand } from "./hand-labels.mjs";
 import { backdrop } from "./field-backdrop.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -33,6 +34,7 @@ function roadParts() {
     .replace(/\s*<form class="find"[\s\S]*?<\/form>/, "")
     .replace(/\s*<button type="button" id="back"[^>]*>[\s\S]*?<\/button>/, "")
     .replace(/\s*<button type="button" data-o="record"[\s\S]*?<\/button>/, "");
+  hand = labelHand(hand);
   // the menu names each platform's own page on this site, and the CV, beside the road's places
   const menu = absolute(pick(p, /<dialog id="o-menu"[\s\S]*?<\/dialog>/, "the menu"))
     .replace('href="https://github.com/HarperZ9/cmmns"', 'href="/cmmns.html"')

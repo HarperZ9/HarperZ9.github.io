@@ -4,6 +4,7 @@
 import { esc } from "./studies-markdown.mjs";
 
 import { backdrop as fieldBackdrop } from "./field-backdrop.mjs";
+import { labelHand } from "./hand-labels.mjs";
 export const ORIGIN = "https://harperz9.github.io";
 const CARD = `${ORIGIN}/img/og/p/home.jpg`;
 const TEXT_FACE = "/world/ui/shell/fonts/hanken-grotesk.woff2";  // the still face; Accession and its families are materials a page adds
@@ -21,7 +22,7 @@ const PLACES = [
 ];
 
 function hand() {
-  return `<header class="o-hand" aria-label="Site">
+  return labelHand(`<header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
   <a data-o="band" href="/world/universe/proto/index.html" aria-label="The map"></a>
@@ -36,7 +37,7 @@ ${PLACES.map(([href, tech, name]) => `      <li><a href="${href}"><span class="o
     </ul>
   </nav>
   <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
-</dialog>`;
+</dialog>`);
 }
 
 // page({ path, title, description, body, robots, extraHead, jsonld }) -> the whole document
