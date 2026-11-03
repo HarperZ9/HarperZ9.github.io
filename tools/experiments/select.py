@@ -36,6 +36,9 @@ NUM = re.compile(r"(?<![\w.])[-+]?\d[\d,]*\.?\d*")
 FILEREF = re.compile(r"[\w./-]*\d{4}-\d\d-\d\d-[\w.-]+/?[\w./-]*|\b[\w./-]+\.(?:md|json|jsonl|txt|py|csv|png|lock)\b")
 LOCAL = re.compile(r"[A-Za-z]:[\\/]|/Users/|\\\\")
 
+QUIET_FIELDS = {"models", "model architecture", "machine learning", "pruning", "ai-interpretability", "agents", "tokenizers", "memory"}
+QUIET_FOLDERS = re.compile(r"architectures|model-interface|model-organism|adapt-check|checked-valve|reference-transform|inside-out-build|world-model|leap|hierarch|recall|weight|epigenet|microsystem|nested|network-optics|neuron-steer|kernel-sweep", re.I)
+
 # the sixteen domains of the 2026-11-02 domain map, with the register field words folded into each
 DOMAINS = [
     ("method", "Method and statistics", r"method|statistic|metascience|forecast|verification|reproduc|psychometric|causal|replication|evaluation"),
@@ -145,6 +148,12 @@ def main() -> None:
         title = ledger.get(f, (row["title"], ""))[0]
         def hold(reason):
             held.append((f, row["tier"], title, reason))
+        # the author, 2026-11-03: "We want to remain quiet" on the model-architecture line (memory studies, leap
+        # architecture, hierarchy and recall, weight reading, model epigenetics, microsystem kernels, nested worlds,
+        # the optics of a network); none of it goes on the site
+        if QUIET_FIELDS.intersection(f.lower() for f in row.get("fields") or []) or QUIET_FOLDERS.search(json.dumps(row.get("evidence"))):
+            hold("model-architecture line, kept off the site (author, 2026-11-03)")
+            continue
         if row["tier"] != "D":
             hold({"A": "tier A", "B": "tier B: real signal with a next step, not cleared for publication", "C": "tier C: internal", "E": "tier E: not reliable as it stands"}.get(row["tier"], "no tier"))
             continue
