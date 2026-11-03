@@ -6,6 +6,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { esc } from "./studies-markdown.mjs";
+import { markImg } from "./crossover-marks.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const PLATFORMS = [
@@ -99,7 +100,7 @@ export function workIndex() {
     const id = k.toLowerCase();
     const mark = k === k.toUpperCase() && !["unassigned", "past"].includes(k) ? ` <span class="wi-mark">${esc(k)}</span>` : "";
     const purpose = PURPOSE[k] ? `<p class="wi-purpose">${esc(PURPOSE[k])}</p>` : "";
-    const open = `<section class="wi-plat" id="${esc(id)}" aria-labelledby="h-${esc(id)}"><h2 id="h-${esc(id)}">${esc(name)}${mark}</h2>${purpose}<ol class="wi-list"`;
+    const open = `<section class="wi-plat" id="${esc(id)}" aria-labelledby="h-${esc(id)}">${markImg(k)}<h2 id="h-${esc(id)}">${esc(name)}${mark}</h2>${purpose}<ol class="wi-list"`;
     if (!firstDone) {
       firstDone = true;
       head = `${open} id="wi-first">${rows.slice(0, FIRST).map(row).join("\n")}</ol></section>`;

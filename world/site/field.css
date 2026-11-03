@@ -26,3 +26,9 @@ body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% 
 @media (max-width: 860px) { .gw-backdrop::after { background: linear-gradient(180deg, rgba(7, 16, 26, .66) 0%, rgba(7, 16, 26, .8) 45%, rgba(7, 16, 26, .88) 100%); } }
 /* on phones the hand sits at the top edge; a reading page's first words start below it */
 @media (max-width: 860px) { body.reading main { padding-top: 96px !important; } }
+/* magnetic links (world/site/magnet.js): the held link leans toward the pointer and its underline takes full weight */
+:is(.wi-links, .wi-jump, .floor-list) a, header.o-hand a { display: inline-block; }
+a[data-held] { text-decoration-thickness: 2px; text-underline-offset: .2em; }
+/* the drawn platform marks (scripts/crossover-marks.mjs): glass lit from behind, its light carried as alpha */
+.xo-mark, .xo-mark img { display: block; width: 112px; height: 112px; }
+.xo-mark { margin: 0 0 4px -10px; }

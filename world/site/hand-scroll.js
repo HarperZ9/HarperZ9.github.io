@@ -24,3 +24,8 @@ if (hand) {
   hand.addEventListener("focusin", () => set(false));
   phone.addEventListener("change", () => { if (away) { away = false; set(true); } });
 }
+// magnetic links for a mouse, loaded when the page is idle; touch screens never fetch it
+if (matchMedia("(pointer: fine)").matches) {
+  const load = () => import("./magnet.js").catch((e) => console.error("magnet links did not load", e));
+  addEventListener("load", () => ("requestIdleCallback" in window ? requestIdleCallback(load, { timeout: 2000 }) : setTimeout(load, 800)));
+}

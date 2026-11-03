@@ -19,3 +19,8 @@
 .gw::before { content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background: radial-gradient(ellipse 75% 70% at 0% 100%, rgba(5, 11, 18, .9) 0%, rgba(5, 11, 18, .78) 45%, rgba(5, 11, 18, 0) 100%); }
 @media (max-width: 860px) { .gw::before { background: linear-gradient(180deg, rgba(5, 11, 18, 0) 30%, rgba(5, 11, 18, .82) 58%, rgba(5, 11, 18, .9) 100%); } }
+/* the crossover plates below the live field: the water deepens into them, each still full width, its words beneath */
+.gw-plates { position: relative; z-index: 2; background: linear-gradient(180deg, rgba(13, 26, 36, 0), #0d1a24 160px); padding: 160px 0 64px; }
+.gw-plate { margin: 0 0 72px; }
+.gw-plate img { display: block; width: 100%; height: auto; }
+.gw-plate figcaption { max-width: 64ch; margin: 18px clamp(16px, 5vw, 64px) 0; font: 400 var(--fs-2)/1.55 var(--face-text); color: #f4efe6; }

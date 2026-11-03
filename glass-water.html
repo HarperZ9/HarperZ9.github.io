@@ -23,11 +23,11 @@
 <meta name="twitter:title" content="Glass and water | Zain Dana Harper">
 <meta name="twitter:description" content="Glass lettering over live water in four spaces, rendered in the browser: close to the glass, a low sun, noon from above, and night.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6c23bb6f17">
-<link rel="stylesheet" href="/studies/studies.css?v=world-6c23bb6f17">
-<script type="module" src="/world/ui/shell/shell.js?v=world-6c23bb6f17"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-6c23bb6f17"></script>
-<link rel="stylesheet" href="/world/site/glass-water.css?v=world-6c23bb6f17"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-c1896b2afd">
+<link rel="stylesheet" href="/studies/studies.css?v=world-c1896b2afd">
+<script type="module" src="/world/ui/shell/shell.js?v=world-c1896b2afd"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-c1896b2afd"></script>
+<link rel="stylesheet" href="/world/site/glass-water.css?v=world-c1896b2afd"></head>
 <body class="gw-body">
 
 <header class="o-hand" aria-label="Site">
@@ -64,7 +64,14 @@
 <p class="gw-how">Rendered live in your browser from measured physics: a sky that scatters sunlight through air, haze and ozone, a sea built from a measured wave spectrum, and letters of optical glass that bend blue light more than red. With reduced motion each space is one still.</p>
 </div>
 </section>
-<script type="module" src="/world/site/glass-water.js?v=world-6c23bb6f17"></script>
+<div class="gw-plates"><figure class="gw-plate"><picture><source type="image/avif" data-srcset="/media/world/crossover/overprint-day-1280.avif 1280w, /media/world/crossover/overprint-day-1920.avif 1920w, /media/world/crossover/overprint-day-3840.avif 3840w" sizes="100vw"><img data-src="/media/world/crossover/overprint-day-1920.webp" data-srcset="/media/world/crossover/overprint-day-1280.webp 1280w, /media/world/crossover/overprint-day-1920.webp 1920w, /media/world/crossover/overprint-day-3840.webp 3840w" sizes="100vw" width="3840" height="2160" alt="Five inks of an Olivetti print laid down as sheets of tinted glass: a red quarter disc, a cyan wedge, a yellow disc, a green bar and a black bar crossing on warm paper, with a clear lens carrying a soap film over the black." decoding="async"></picture><noscript><picture><source type="image/avif" srcset="/media/world/crossover/overprint-day-1280.avif 1280w, /media/world/crossover/overprint-day-1920.avif 1920w, /media/world/crossover/overprint-day-3840.avif 3840w" sizes="100vw"><img src="/media/world/crossover/overprint-day-1920.webp" srcset="/media/world/crossover/overprint-day-1280.webp 1280w, /media/world/crossover/overprint-day-1920.webp 1920w, /media/world/crossover/overprint-day-3840.webp 3840w" sizes="100vw" width="3840" height="2160" alt="Five inks of an Olivetti print laid down as sheets of tinted glass: a red quarter disc, a cyan wedge, a yellow disc, a green bar and a black bar crossing on warm paper, with a clear lens carrying a soap film over the black." decoding="async" loading="lazy"></picture></noscript><figcaption>Overprint glass. The five inks of an Olivetti print, each recovered as a spectrum and laid down as a thin sheet of tinted glass. Where two sheets cross, light passes through both, so the mixed colour is computed wavelength by wavelength. Against five overlaps measured on the print the computed colours miss by 13 CIEDE2000 on average, against 15 for a plain multiply; green over red misses most, by 29. The sheets bend what lies beneath at their rims and cast coloured shadows, and the clear lens carries a soap film draining under gravity, its bands in Newton's order.</figcaption></figure><figure class="gw-plate"><picture><source type="image/avif" data-srcset="/media/world/crossover/mie-night-1280.avif 1280w, /media/world/crossover/mie-night-1920.avif 1920w, /media/world/crossover/mie-night-3840.avif 3840w" sizes="100vw"><img data-src="/media/world/crossover/mie-night-1920.webp" data-srcset="/media/world/crossover/mie-night-1280.webp 1280w, /media/world/crossover/mie-night-1920.webp 1920w, /media/world/crossover/mie-night-3840.webp 3840w" sizes="100vw" width="3840" height="2160" alt="Rows of glowing shapes on black, each the scattering pattern of a water droplet: round on the left, pushing forward and splitting into petals on the right." decoding="async"></picture><noscript><picture><source type="image/avif" srcset="/media/world/crossover/mie-night-1280.avif 1280w, /media/world/crossover/mie-night-1920.avif 1920w, /media/world/crossover/mie-night-3840.avif 3840w" sizes="100vw"><img src="/media/world/crossover/mie-night-1920.webp" srcset="/media/world/crossover/mie-night-1280.webp 1280w, /media/world/crossover/mie-night-1920.webp 1920w, /media/world/crossover/mie-night-3840.webp 3840w" sizes="100vw" width="3840" height="2160" alt="Rows of glowing shapes on black, each the scattering pattern of a water droplet: round on the left, pushing forward and splitting into petals on the right." decoding="async" loading="lazy"></picture></noscript><figcaption>Scattering lobes. Water droplets lit from the left, each drawn as the pattern of light it scatters by angle, from Lorenz-Mie theory, on a log scale over four decades. Small drops scatter almost evenly and draw a circle; as they grow the light pushes forward and the pattern splits into petals. Each wavelength draws its own outline, so the colour at an edge is one drop seen across the spectrum.</figcaption></figure></div>
+<script>(function () {
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.unobserve(e.target);
+    e.target.querySelectorAll("[data-srcset]").forEach(function (s) { s.srcset = s.dataset.srcset; });
+    var i = e.target.querySelector("img[data-src]"); if (i) i.src = i.dataset.src; }); }, { rootMargin: "300px 0px" });
+  document.querySelectorAll(".gw-plate").forEach(function (f) { io.observe(f); });
+})();</script>
+<script type="module" src="/world/site/glass-water.js?v=world-c1896b2afd"></script>
 </main>
 </body>
 </html>
