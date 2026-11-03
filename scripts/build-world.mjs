@@ -36,6 +36,7 @@ write_manifest(plan())
 node("import-mission-control.mjs", pass);
 if (!args.includes("--no-media")) node("import-media.mjs", pass);
 node("build-studies.mjs", pass);
+node("sync-field-css.mjs");
 node("build-cmmns.mjs");
 node("build-experiments.mjs");
 node("build-glass-water.mjs");

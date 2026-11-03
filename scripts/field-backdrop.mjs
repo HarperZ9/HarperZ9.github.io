@@ -6,9 +6,9 @@
 const M = "/media/world/glass-water";
 const set = (name, ext, ws) => ws.map((w) => `${M}/${name}-${w}.${ext} ${w}w`).join(", ");
 const SWAP = `<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
-function s(){var t=r.dataset.theme,d=t?t==="dark":q.matches,p=document.querySelector(".gw-backdrop picture");if(!p)return;
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
 p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
-new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});q.addEventListener("change",s);s();})();</script>`;
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>`;
 export function backdrop({ priority = "low", live = false } = {}) {
   const src = (scheme, portrait, ext) => {
     const m = portrait ? "(orientation: portrait)" : "";

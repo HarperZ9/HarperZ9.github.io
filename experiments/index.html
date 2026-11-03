@@ -23,12 +23,11 @@
 <meta name="twitter:title" content="Experiments | Zain Dana Harper">
 <meta name="twitter:description" content="90 preregistered studies that came back null or refuted their own forecast, each with its numbers, verdict, limits and what was checked.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-0c1661fe58">
-<link rel="stylesheet" href="/world/site/field.css?v=world-0c1661fe58">
-<link rel="stylesheet" href="/studies/studies.css?v=world-0c1661fe58">
-<script type="module" src="/world/ui/shell/shell.js?v=world-0c1661fe58"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-0c1661fe58"></script>
-<link rel="stylesheet" href="/world/site/experiments.css?v=world-0c1661fe58"></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-6c23bb6f17">
+<link rel="stylesheet" href="/studies/studies.css?v=world-6c23bb6f17">
+<script type="module" src="/world/ui/shell/shell.js?v=world-6c23bb6f17"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-6c23bb6f17"></script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-6c23bb6f17"></head>
 <body class="reading">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -44,9 +43,9 @@
   </picture>
 </div>
 <script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
-function s(){var t=r.dataset.theme,d=t?t==="dark":q.matches,p=document.querySelector(".gw-backdrop picture");if(!p)return;
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
 p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
-new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});q.addEventListener("change",s);s();})();</script>
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
 <header class="o-hand" aria-label="Site">
   <a class="skip" href="#main">Skip to the page</a>
   <a class="o-home" href="/">Zain Dana Harper</a>
@@ -981,7 +980,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
   <p class="verified"><b>Verified</b> 2 November 2026: all 21 numbers on this card appear in the study's own ledger entry (checked by the site's build, <code>tools/experiments/select.py</code>). The study was scored by code, self-graded. No outside reviewer has read it.</p>
 </li></ol>
 </article>
-<script type="module" src="/world/site/experiments.js?v=world-0c1661fe58"></script>
+<script type="module" src="/world/site/experiments.js?v=world-6c23bb6f17"></script>
 </main>
 </body>
 </html>

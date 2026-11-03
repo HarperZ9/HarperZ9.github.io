@@ -56,6 +56,7 @@ function studyPages() {
 
 function floor() {
   const wi = workIndex();
+  write(wi.restPath, wi.rest);
   const body = `<article class="floor"><h1>Everything</h1>
 <p class="wi-lead">All the work, current and past: ${wi.count} pieces by platform, newest first, each with its status as its release or registry records it. The places and pages of the site follow.</p>
 ${wi.html}

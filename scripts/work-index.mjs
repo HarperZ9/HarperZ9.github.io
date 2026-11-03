@@ -39,10 +39,42 @@ function media(id) {
     ? `<li><picture><source type="image/avif" srcset="media/work/${x.still}-960.avif 960w, media/work/${x.still}-1920.avif 1920w" sizes="(max-width: 860px) 92vw, 30vw"><img src="media/work/${x.still}-960.webp" srcset="media/work/${x.still}-960.webp 960w, media/work/${x.still}-1920.webp 1920w" sizes="(max-width: 860px) 92vw, 30vw" width="960" height="540" alt="${esc(x.alt)}" loading="lazy" decoding="async"></picture></li>`
     : `<li><video controls${x.sound ? "" : " muted"} playsinline preload="none" data-poster="media/work/${x.film}-poster-960.webp" width="1920" height="1080" aria-label="${esc(x.alt)}"><source src="media/work/${x.film}-1080.mp4" type="video/mp4"></video></li>`).join("")}</ul>`;
 }
+// a page's destination, following a redirect stub to its target; null when the file is not in the site
+function resolve(p) {
+  for (let hop = 0; hop < 4; hop++) {
+    const f = path.join(site, p); if (!existsSync(f)) return null;
+    const m = readFileSync(f, "utf8").match(/http-equiv="refresh" content="0; url=([^"]+)"/);
+    if (!m) return p === "floor.html" ? null : p;  // a link back to this index is no link
+    p = m[1].replace(/^\//, "").split("#")[0] || "index.html";
+  }
+  return null;
+}
+function pageLabel(p, i, many = false, first = null) {
+  if (p.startsWith("repo-explainers/")) return "Explainer";
+  if (/(^|\/)demo-/.test(p)) { const n = p.replace(/^.*demo-|\.html$/g, ""); return i === 0 && !many ? "Demo" : `${n.charAt(0).toUpperCase() + n.slice(1)} demo`; }
+  if (i === 0) return "Page";
+  const t = (readFileSync(path.join(site, p), "utf8").match(/<title>([^<]*)<\/title>/) || [, ""])[1]
+    .replace(/&middot;|&#x27;|&amp;/g, (e) => ({ "&middot;": "·", "&#x27;": "'", "&amp;": "&" }[e]))
+    .split(/\s[·|]\s|:\s/)[0].trim();
+  const file = p.replace(/(\/index)?\.html$/, "").split("/").pop().replace(/-/g, " ");
+  const short = (q) => (readFileSync(path.join(site, q), "utf8").match(/<title>([^<]*)<\/title>/) || [, ""])[1].split(/\s[·|&]|:\s/)[0].trim();
+  const clash = first && short(first).toLowerCase().startsWith(t.toLowerCase());
+  if (clash) { const full = (readFileSync(path.join(site, p), "utf8").match(/<title>([^<]*)<\/title>/) || [, ""])[1].split(/\s·\s/)[0], rest = full.split(/:\s/)[1]; if (rest && rest.length <= 40) return rest.trim(); }
+  return t && t.length <= 40 && !clash ? t : file.charAt(0).toUpperCase() + file.slice(1);
+}
 function row(r) {
   const when = r.date ? new Date(r.date + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }) : r.years || "";
   const status = [STATE[r.state] || r.state, r.version, when].filter(Boolean).join(", ");
-  const links = [...(r.pages || []).filter((p) => existsSync(path.join(site, p.replace(/^\//, "")))).slice(0, 2).map((p) => [`/${p.replace(/^\//, "")}`, /(^|\/)demo-/.test(p) ? "Demo" : "Page"]), r.repo ? [r.repo, "Source"] : null, r.release ? [r.release, "Release"] : null,
+  // each link is named by where it goes: the product page, its animated explainer, its demo, or the target's own
+  // short title; a redirect stub resolves to its target, and a link already listed is dropped
+  const seen = new Set(), targets = [];
+  for (const p0 of r.pages || []) {
+    const p = resolve(p0.replace(/^\//, "")); if (!p || seen.has(p)) continue; seen.add(p); targets.push(p);
+    if (targets.length === 2) break;
+  }
+  const many = targets.filter((p) => /(^|\/)demo-/.test(p)).length > 1;
+  const pages = targets.map((p, i) => [`/${p}`, pageLabel(p, i, many, i ? targets[0] : null)]);
+  const links = [...pages, r.repo ? [r.repo, "Source"] : null, r.release ? [r.release, "Release"] : null,
     ...(r.packages || []).slice(0, 1).map((p) => [p.url, p.registry])].filter(Boolean);
   return `<li class="wi-row" id="w-${esc(r.id)}" data-state="${esc(r.state || "")}">
   <p class="wi-head"><b>${esc(r.name)}</b> <span class="wi-status">${esc(status)}</span></p>
@@ -56,18 +88,53 @@ export function workIndex() {
   const by = new Map(PLATFORMS.map(([k]) => [k, []]));
   for (const r of data.entries) if (by.has(r.platform)) by.get(r.platform).push(r);
   const key = (r) => r.date || (r.years ? String(r.years).slice(-4) + "-00-00" : "0000");
-  const sections = PLATFORMS.map(([k, name]) => {
+  const FIRST = 3;  // rows in the first screen's HTML; the rest arrive from a template once the page is idle
+  let firstDone = false, head = "", more = "";
+  for (const [k, name] of PLATFORMS) {
     const rows = by.get(k).sort((a, b) => {
       const ea = ["archived", "retired"].includes(a.state), eb = ["archived", "retired"].includes(b.state);
       return ea !== eb ? (ea ? 1 : -1) : (MEDIA[b.id] ? 1 : 0) - (MEDIA[a.id] ? 1 : 0) || key(b).localeCompare(key(a));
     });
-    if (!rows.length) return "";
+    if (!rows.length) continue;
+    const id = k.toLowerCase();
     const mark = k === k.toUpperCase() && !["unassigned", "past"].includes(k) ? ` <span class="wi-mark">${esc(k)}</span>` : "";
     const purpose = PURPOSE[k] ? `<p class="wi-purpose">${esc(PURPOSE[k])}</p>` : "";
-    return `<section class="wi-plat" id="${esc(k.toLowerCase())}" aria-labelledby="h-${esc(k.toLowerCase())}"><h2 id="h-${esc(k.toLowerCase())}">${esc(name)}${mark}</h2>${purpose}<ol class="wi-list">${rows.map(row).join("\n")}</ol></section>`;
-  }).join("\n");
+    const open = `<section class="wi-plat" id="${esc(id)}" aria-labelledby="h-${esc(id)}"><h2 id="h-${esc(id)}">${esc(name)}${mark}</h2>${purpose}<ol class="wi-list"`;
+    if (!firstDone) {
+      firstDone = true;
+      head = `${open} id="wi-first">${rows.slice(0, FIRST).map(row).join("\n")}</ol></section>`;
+      more += `<ol id="wi-first-more">${rows.slice(FIRST).map(row).join("\n")}</ol>\n`;
+    } else more += `${open}>${rows.map(row).join("\n")}</ol></section>\n`;
+  }
+  // the rest of the index lives in its own fragment file, fetched once the page is idle, on the first scroll, or at
+  // once when a link or the address points into it; with scripts off, a link opens the fragment itself
+  const REST = "/world/site/floor-rows.htm";
+  const hydrate = `<div id="wi-rest"></div>
+<noscript><p class="wi-lead">With scripts off, this index shows its first rows. <a href="${REST}">The full index</a> opens as plain text.</p></noscript>
+<script>(function () {
+  var p = null;
+  function go(then) {
+    p = p || fetch("${REST}").then(function (r) { if (!r.ok) throw new Error("index rows: HTTP " + r.status); return r.text(); }).then(function (t) {
+      var d = document.createElement("template"); d.innerHTML = t;
+      var a = d.content.getElementById("wi-first-more"), b = document.getElementById("wi-rest");
+      document.getElementById("wi-first").append.apply(document.getElementById("wi-first"), [].slice.call(a.children)); a.remove();
+      b.replaceWith(d.content);
+      document.dispatchEvent(new Event("wi:ready"));
+    }).catch(function (e) { console.error("work index: the rest of the rows did not load", e); });
+    if (typeof then === "function") p.then(then);
+  }
+  function jump() { var t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
+  if (location.hash && !document.getElementById(location.hash.slice(1))) go(jump);
+  document.addEventListener("click", function (e) { var l = e.target.closest && e.target.closest('a[href^="#"]'); if (l && !document.getElementById(l.getAttribute("href").slice(1))) { e.preventDefault(); history.pushState(null, "", l.getAttribute("href")); go(jump); } }, true);
+  addEventListener("scroll", go, { once: true, passive: true });
+  // a second after load, so the fetch never sits in front of the first screen's paint; a scroll starts it sooner
+  addEventListener("load", function () { setTimeout(function () { if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1500 }); else go(); }, 1000); });
+})();</script>`;
   // a film's poster loads only as its row nears the screen
   const lazy = `<script type="module">const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.poster = e.target.dataset.poster; io.unobserve(e.target); } }, { rootMargin: "60% 0px" });
-for (const v of document.querySelectorAll("video[data-poster]")) io.observe(v);</script>`;
-  return { html: lazy + `<nav class="wi-jump" aria-label="Platforms">${PLATFORMS.map(([k, n]) => `<a href="#${k.toLowerCase()}">${esc(n)}</a>`).join("")}</nav>\n${sections}`, count: data.entries.filter((r) => by.has(r.platform)).length };
+const watch = () => { for (const v of document.querySelectorAll("video[data-poster]:not([poster])")) io.observe(v); };
+watch(); document.addEventListener("wi:ready", watch);</script>`;
+  return { html: lazy + `<nav class="wi-jump" aria-label="Platforms">${PLATFORMS.map(([k, n]) => `<a href="#${k.toLowerCase()}">${esc(n)}</a>`).join("")}</nav>
+${head}
+${hydrate}`, rest: `<!-- the rows of the index of the work below its first screen; floor.html loads this file -->\n${more}`, restPath: REST.slice(1), count:data.entries.filter((r) => by.has(r.platform)).length };
 }

@@ -16,14 +16,13 @@ main#main, body > footer { position: relative; z-index: 1; }
 @media (prefers-reduced-motion: reduce) { .gw-backdrop canvas { transition: none; } }
 
 /* reading pages: the field is the rendered plate only; their words keep AA contrast through the halo */
-.reading main :is(h1, h2, h3, p, dt, dd, figcaption, label, td, th, q, code) { text-shadow: 0 0 8px var(--halo); }
 
 /* pages over the field read in light ink in both schemes: the field's sea and night sky are dark, and a soft wash of
    the field's own deep water (a gradient, no edge) holds the words at AA contrast over its brightest pixels; the
    measurement is in PASSES.md, pass 8 */
-body:has(.gw-backdrop) { --ink: #f4efe6; --soft: #d6cfc2; --wall: #0c1620; --wall-2: #13212d; --line: rgba(244, 239, 230, .34); --on-ink: #0c1620; --halo: #07101a; color-scheme: dark; background: #0c1620; color: var(--ink); }
+body:has(.gw-backdrop) { --ink: #f4efe6; --soft: #e3ddd0; --wall: #0c1620; --wall-2: #13212d; --line: rgba(244, 239, 230, .34); --on-ink: #0c1620; --halo: #07101a; color-scheme: dark; background: #0c1620; color: var(--ink); }
 .gw-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 16, 26, .78) 0%, rgba(7, 16, 26, .62) 42%, rgba(7, 16, 26, .18) 70%, rgba(7, 16, 26, .06) 100%); }
 body.reading .gw-backdrop::after { background: radial-gradient(ellipse 70% 120% at 50% 50%, rgba(7, 16, 26, .8) 0%, rgba(7, 16, 26, .7) 55%, rgba(7, 16, 26, .45) 100%); }
-@media (max-width: 860px) { .gw-backdrop::after { background: linear-gradient(180deg, rgba(7, 16, 26, .55) 0%, rgba(7, 16, 26, .72) 45%, rgba(7, 16, 26, .82) 100%); } }
+@media (max-width: 860px) { .gw-backdrop::after { background: linear-gradient(180deg, rgba(7, 16, 26, .66) 0%, rgba(7, 16, 26, .8) 45%, rgba(7, 16, 26, .88) 100%); } }
 /* on phones the hand sits at the top edge; a reading page's first words start below it */
 @media (max-width: 860px) { body.reading main { padding-top: 96px !important; } }
