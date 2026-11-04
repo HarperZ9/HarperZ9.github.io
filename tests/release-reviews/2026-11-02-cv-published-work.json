@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-02",
+  "note": "Complete published-work inventory in the CV (GitHub, PyPI, npm, crates.io, Zenodo, live site, read 2026-11-02); BuildLang 1.10.0 and Articulate 0.16.0 facts; designed resumes and CV typeset by BuildLang BuildTeX with the press finish. Bytes recorded for the author's review in the pull request before merge.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "9cb5c21fcbb9d33e16308116dc7acfc1c2084279a437e0a45ab140cfeccd7216",
+    "career/Zain-Dana-Harper-CV.pdf": "e797cd9ca977a285967a542985341f71d2f050a8fc452458e64e90d57b0ec42b",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "676db055a9dd7fa447013c3f282aca0a3087b79bccfa1c91b5a8b43bbf236862",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "4f1d14061b1412974a759f13e195737430e604d4e5825d93e81aa70574a80836",
+    "career/career-artifacts.json": "d9cb2ebcfc0d3de55c0b697d16f0345c9e1c03f1e0974afbef9073feae2d6a50",
+    "career/career-build-receipt.json": "6170a7d63018c11361d0b7c22a15d50aec029a5facd48921b085d6aed05671a9",
+    "career/designed/Zain-Dana-Harper-CV.buildtex.json": "7078fd9e5d0833cd8d97b5121d1c3fd02958d463ea8f11146254419f76baf4ba",
+    "career/designed/Zain-Dana-Harper-CV.pdf": "f259cc8d3bf61d51e407b3a36a7244e39e5a81beec941f6349d60f6f97d70b38",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.buildtex.json": "37d7e55bc0d10a76f95e10b12119bf4895fc43a1722a81ec65a6622feb475462",
+    "career/designed/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "ea37f27880a4c900e63379d04f47d6fa08de0c7a367dee8fe303a3088b97eaaa",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.buildtex.json": "9740a021481458ba75e38e9d3187df13de3db188d8db17c8ff2e4c5fa05c9642",
+    "career/designed/Zain-Dana-Harper-Resume-Grounds.pdf": "6eb3b6882c83f5f5672792236ef5f70fd140746081cd146c815ddcfaa600121f",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.buildtex.json": "645d0480551e7f1c91665ec710b20ec25c5232a7d19846577e9ce8d9e81af559",
+    "career/designed/Zain-Dana-Harper-Resume-Public-Operations.pdf": "c21c532b775c4c039f01888d612c943087b582474ac2fdc1e8db97495eba2e12",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.buildtex.json": "b4905e121e7d03f4c276b73a180bd000d2b9581583edf93e425abcf61c5f877c",
+    "career/designed/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "773f959083db131db784fdae10f9a425b11cdec9dfc84c2717b0eb948f04f888",
+    "career/published-work.json": "b27b4f28837c414111bf4303bff1649a729f40d21284fb4d8debcbc4f14e5eb4",
+    "cv.html": "2c6c7379c6a50ca974e97d900368779fbf7e86a26967dac8d94fb29ae0f5aa10",
+    "cv.md": "86a7d2a3fafd7a371358b839c83cc40226bb145b5d5b8f18a54ab00cb823c68b",
+    "hire.html": "e41bb84c533d4257edbab990eeb24890b081a1aec1d9e92da82331c969dec70a",
+    "resume-evaluation-tooling.html": "ad775412ea806051c8a7a443ed287b524c262d9964412b304589e6f24a891037",
+    "resume-grounds.html": "f759baeffce62fdda6423bc27d7d0ca581dc15630d0b1aca3b706048099bf093",
+    "resume-public-operations.html": "4bfaf683594818d2702b94161649c2ad4568b91e1cdf2cf72160324c3dd96571",
+    "resume-support-operations.html": "b41d2e310b4bc2281110e2cd84fdebd9484bc779d9b09e8a46b91963ac085927",
+    "resume.html": "815941dae18214c43b576d7ebc192aeb14e14533a000161d3c7fdac6d1343d62",
+    "resume.md": "841a22af55574b0627deb8f27bc37033d852a51855db0ecae978fc9774d8601e"
+  }
+}

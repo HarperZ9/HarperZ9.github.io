@@ -1,6 +1,6 @@
 {
   "schema": "harperz9-career-source/v2",
-  "reviewed": "2026-10-23",
+  "reviewed": "2026-11-02",
   "identity": {
     "name": "Zain Dana Harper",
     "location": "Kent, Washington",
@@ -28,7 +28,7 @@
       },
       {
         "kind": "p",
-        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html"
       }
     ],
     "engineer": [
@@ -217,7 +217,7 @@
       },
       {
         "kind": "contact",
-        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9"
+        "text": "linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html"
       }
     ],
     "resume-engineer": [
@@ -414,39 +414,47 @@
           ]
         },
         {
+          "kind": "h2",
+          "text": "Certifications and Education"
+        },
+        {
           "kind": "li",
-          "text": "Voxwire #44: added offline regression coverage for a six-event degraded voice turn, matching persisted audio and JSONL records to emitted events. Merged.",
+          "text": "Google Cloud skill badges: BigQuery predictive analysis; BigQuery ML models | Google | October 2026",
           "evidence": [
-            "voxwire"
+            "google-bigquery-predictive",
+            "google-bigquery-ml-models"
           ]
         },
         {
-          "kind": "h2",
-          "text": "Credentials, Training, and Education"
+          "kind": "li",
+          "text": "Microsoft Applied Skills, four credentials, including Azure DevOps pipeline security (95% assessment) and Microsoft Entra identities and access | Microsoft | September 2026",
+          "evidence": [
+            "ms-devops-security",
+            "ms-entra",
+            "ms-storage",
+            "ms-ai-security"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026",
+          "evidence": [
+            "qualys-vmdr",
+            "qualys-policy-audit",
+            "qualys-edr",
+            "qualys-totalcloud",
+            "qualys-kcs",
+            "qualys-car"
+          ]
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: Policy Audit, Custom Assessment and Remediation, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: cloud AI security, Entra identity/access, Azure storage security, Azure DevOps pipeline security (95% assessment). Cisco Ethical Hacker course certificate. Coursework: Google SecOps; LFD121 secure software; advanced SC-100 security architecture; Claude API, Claude Code, advanced MCP; BlueDot AGI Strategy. Full record: harperz9.github.io/cv.html.",
+          "text": "Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html",
           "evidence": [
-            "ms-ai-security",
-            "ms-entra",
-            "ms-storage",
-            "lfd121",
-            "sc100-apps-data",
-            "sc100-mcra-mcsb",
-            "bluedot-agi-strategy",
-            "anthropic-mcp-advanced",
-            "qualys-policy-audit",
-            "qualys-car",
-            "qualys-vmdr",
-            "claude-code-in-action",
-            "building-claude-api",
-            "qualys-kcs",
-            "qualys-totalcloud",
-            "qualys-edr",
             "cisco-ethical-hacker",
-            "ms-devops-security",
-            "google-secops-deep-dive"
+            "anthropic-mcp-advanced",
+            "unesco-ai-ethics",
+            "lfd121"
           ]
         },
         {
@@ -514,7 +522,7 @@
         },
         {
           "kind": "li",
-          "text": "Built Articulate 0.15.1 writing analysis, Accountable Surface approval interfaces, BuildLang 1.8.0 capability checks and Phantom audit and restore.",
+          "text": "Built Articulate 0.16.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.10.0 capability checks and Phantom audit and restore.",
           "evidence": [
             "articulate-0151",
             "accountable-surface",
@@ -535,13 +543,6 @@
           "text": "Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.",
           "evidence": [
             "metr-interop-controls"
-          ]
-        },
-        {
-          "kind": "li",
-          "text": "Maintained Elder ENB, a Skyrim lighting preset: 996,649 downloads and 2,413 endorsements on Nexus Mods.",
-          "evidence": [
-            "elder-enb-nexus"
           ]
         },
         {
@@ -569,6 +570,153 @@
           ]
         },
         {
+          "kind": "h2",
+          "text": "Certifications and Education"
+        },
+        {
+          "kind": "li",
+          "text": "Google DeepMind: Train A Small Language Model, assessed skill badge, 100/100 | Google Skills | September 2026",
+          "evidence": [
+            "google-deepmind-slm"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Microsoft Applied Skills, four credentials, including Secure AI solutions in the cloud and Azure DevOps pipeline security (95% assessment) | Microsoft | September 2026",
+          "evidence": [
+            "ms-ai-security",
+            "ms-devops-security",
+            "ms-entra",
+            "ms-storage"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026",
+          "evidence": [
+            "qualys-vmdr",
+            "qualys-policy-audit",
+            "qualys-edr",
+            "qualys-totalcloud",
+            "qualys-kcs",
+            "qualys-car"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html",
+          "evidence": [
+            "cisco-ethical-hacker",
+            "anthropic-mcp-advanced",
+            "unesco-ai-ethics",
+            "lfd121"
+          ]
+        },
+        {
+          "kind": "p",
+          "text": "High School Diploma | Wilsonville High School, Oregon | 2013",
+          "evidence": [
+            "history"
+          ]
+        }
+      ],
+      "page_target": 1
+    },
+    {
+      "id": "graphics-developer-tools",
+      "route": "resume-graphics-developer-tools.html",
+      "stem": "Zain-Dana-Harper-Resume-Graphics-Developer-Tools",
+      "title": "Graphics, Rendering, and Developer Tools",
+      "page_target": 1,
+      "blocks": [
+        {
+          "ref": "resume-identity"
+        },
+        {
+          "kind": "subtitle",
+          "text": "Graphics and Rendering | Developer Tools | Languages"
+        },
+        {
+          "kind": "h2",
+          "text": "Summary"
+        },
+        {
+          "kind": "p",
+          "text": "Self-directed graphics and tools programmer moving from eleven years of arboriculture; the career change began June 2026, with no professional programming role yet. Builds renderers, shader presets and compilers that check each fast path against a reference.",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "h2",
+          "text": "Technical Skills"
+        },
+        {
+          "kind": "p",
+          "text": "C++23, Rust, Python, HLSL, WGSL, TypeScript; D3D11, D3D12, Vulkan, WebGPU; CPU reference rendering and GPU parity checks; color science (Oklab, CAM16, ICC profiles); compilers, type inference, language servers; CMake, GitHub Actions, pytest."
+        },
+        {
+          "kind": "h2",
+          "text": "Self-Directed Projects"
+        },
+        {
+          "ref": "resume-engineer"
+        },
+        {
+          "kind": "li",
+          "text": "Built raw-native, a C++23 renderer with a CPU reference beside D3D12 and WebGPU backends; release 0.8.0 passed 60 of 60 tests with MSVC and GCC, and its default renders were byte-identical across Windows, D3D12, Linux and WebAssembly builds.",
+          "evidence": [
+            "raw-native-080"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Added a Vulkan 1.3 backend to raw-native, merged and not yet released, whose 600 presented frames match the offscreen and D3D12 WARP renders hash for hash.",
+          "evidence": [
+            "raw-native-main-20261023"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Released Elder ENB, a lighting and post-processing preset for Skyrim Special Edition with 38 atmosphere presets: 996,649 downloads and 2,413 endorsements on Nexus Mods, read October 23, 2026.",
+          "evidence": [
+            "elder-enb-nexus"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Developed BuildLang, a Rust compiler with typed capability effects, type inference, C and shader output and a language server; version 1.10.0 is on crates.io.",
+          "evidence": [
+            "buildlang"
+          ]
+        },
+        {
+          "kind": "li",
+          "text": "Brought Argonaut's 1990s BRender engine to 64-bit Windows and Linux in Brender Archival, and built Calibrate Pro (ICC profiles, 3D LUTs, DDC/CI) and Build Color (Oklab, CAM16, Delta E), both on PyPI.",
+          "evidence": [
+            "brender-archival",
+            "calibrate-pro",
+            "build-color"
+          ]
+        },
+        {
+          "ref": "resume-writer-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Employment"
+        },
+        {
+          "ref": "resume-field-value"
+        },
+        {
+          "ref": "resume-support-value"
+        },
+        {
+          "kind": "h2",
+          "text": "Open-Source Contributions: 37 Merged in 30 Repositories"
+        },
+        {
           "kind": "li",
           "text": "TOMLKit #549: preserved sibling keys in dotted-key replacement, preventing silent configuration loss. Merged.",
           "evidence": [
@@ -584,38 +732,15 @@
         },
         {
           "kind": "h2",
-          "text": "Credentials, Training, and Education"
+          "text": "Certifications and Education"
         },
         {
           "kind": "p",
-          "text": "Qualys Certified Specialist: six certifications, including VMDR, EDR and Policy Audit. Microsoft Applied Skills: four security credentials (95% assessment). Cisco Ethical Hacker. Full record: harperz9.github.io/cv.html.",
+          "text": "Security and cloud certifications from Qualys, Microsoft Applied Skills and Google Cloud, none specific to graphics; all 42 credentials, with verification links: harperz9.github.io/published-work.html",
           "evidence": [
-            "ms-ai-security",
-            "ms-entra",
-            "ms-storage",
-            "lfd121",
-            "sc100-apps-data",
-            "sc100-mcra-mcsb",
-            "bluedot-agi-strategy",
-            "anthropic-mcp-advanced",
-            "qualys-policy-audit",
-            "qualys-car",
             "qualys-vmdr",
-            "claude-code-in-action",
-            "building-claude-api",
-            "qualys-kcs",
-            "qualys-totalcloud",
-            "qualys-edr",
-            "google-deepmind-slm",
-            "unesco-ai-ethics",
-            "google-multi-agent",
-            "cisco-ethical-hacker",
             "ms-devops-security",
-            "google-mlops-model-evaluation",
-            "claude-amazon-bedrock",
-            "google-bigquery-predictive",
-            "google-bigquery-ml-models",
-            "google-secops-deep-dive"
+            "google-bigquery-ml-models"
           ]
         },
         {
@@ -625,8 +750,7 @@
             "history"
           ]
         }
-      ],
-      "page_target": 1
+      ]
     },
     {
       "id": "grounds",
@@ -889,7 +1013,7 @@
         },
         {
           "kind": "li",
-          "text": "BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.8.0 is on crates.io. crates.io/crates/buildlang",
+          "text": "BuildLang is a systems language in which a program declares what it may touch, and the compiler checks it. Version 1.10.0 is on crates.io. crates.io/crates/buildlang",
           "evidence": [
             "buildlang",
             "buildlang-180"
@@ -1093,7 +1217,7 @@
         },
         {
           "kind": "p",
-          "text": "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.15.1 is on PyPI as articulate-writing. pypi.org/project/articulate-writing",
+          "text": "Prose analysis and model-assisted editing for the command line, editors and CI. It names each writing pattern it finds and the line it is on, in the terminal, in an editor through its language server, or as SARIF in code review. Version 0.16.0 is on PyPI as articulate-writing. pypi.org/project/articulate-writing",
           "evidence": [
             "articulate-0151"
           ]
@@ -1169,7 +1293,7 @@
         },
         {
           "kind": "p",
-          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.8.0, published to crates.io on October 23, 2026, adds Box<T> and recursive types. crates.io/crates/buildlang",
+          "text": "Developed a systems-language toolchain with typed capability effects, type inference, parser and intermediate-representation work, native C output, shader output, and language-server support. Version 1.10.0 is on crates.io, published October 23, 2026; the 1.8.0 release that day added Box<T> and recursive types. crates.io/crates/buildlang",
           "evidence": [
             "buildlang",
             "buildlang-170",
@@ -1721,7 +1845,7 @@
           ]
         }
       ],
-      "page_target": 5
+      "page_target": 6
     }
   ],
   "impact_policy": {
@@ -1740,7 +1864,7 @@
       "earned": "2026-09-29",
       "score_percent": 87,
       "credential_id": "ED8852810C3B3FBC",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-ai-solutions-in-the-cloud"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/ed8852810c3b3fbc"
     },
     {
       "id": "ms-entra",
@@ -1750,7 +1874,7 @@
       "earned": "2026-09-29",
       "score_percent": 100,
       "credential_id": "3D93C65204CB43EE",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/get-started-with-identities-and-access-using-microsoft-entra"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/3d93c65204cb43ee"
     },
     {
       "id": "ms-storage",
@@ -1760,7 +1884,7 @@
       "earned": "2026-09-29",
       "score_percent": 86,
       "credential_id": "4117A3B4196233D2",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/secure-storage-azure-files-azure-blob-storage"
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/4117a3b4196233d2"
     },
     {
       "id": "lfel1012",
@@ -2235,7 +2359,7 @@
       "earned": "2026-09-30",
       "score_percent": 95,
       "credential_id": "B6385A86C4A25301",
-      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/applied-skill/implement-security-through-pipeline-using-devops",
+      "url": "https://learn.microsoft.com/en-us/users/zainharper-0960/credentials/b6385a86c4a25301",
       "assessment_result": "95%; Applied Skills credential earned",
       "verification_status": "Active; online verifiable",
       "assessed_skills": [

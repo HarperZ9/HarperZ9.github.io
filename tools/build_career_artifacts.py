@@ -51,6 +51,11 @@ SPECS = (
         "evaluation-python-tools",
     ),
     ArtifactSpec(
+        "resume-graphics-developer-tools.html",
+        "Zain-Dana-Harper-Resume-Graphics-Developer-Tools",
+        "graphics-developer-tools",
+    ),
+    ArtifactSpec(
         "resume-public-operations.html",
         "Zain-Dana-Harper-Resume-Public-Operations",
         "public-operations",
