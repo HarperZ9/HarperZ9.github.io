@@ -7,6 +7,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -18,7 +19,10 @@ from urllib.request import Request, urlopen
 from xml.etree import ElementTree
 
 
-USER_AGENT = "HarperZ9-Frontier-Safety-Briefing/1.0 (+https://harperz9.github.io/frontier-safety.html)"
+# Outbound User-Agent carries no account name or address. Set RESEARCH_CONTACT in the
+# environment to add a contact; unset sends the generic string.
+_RESEARCH_CONTACT = os.environ.get("RESEARCH_CONTACT", "").strip()
+USER_AGENT = "research-fetch/1.0" + (f" (mailto:{_RESEARCH_CONTACT})" if _RESEARCH_CONTACT else "")
 MAX_BYTES = 3_000_000
 MAX_PDF_BYTES = 10_000_000
 MIN_NORMALIZED_CHARACTERS = 200
