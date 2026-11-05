@@ -39,3 +39,7 @@
 .xf-scroll { overflow-x: auto; }
 .xf-scroll:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 @media (max-width: 600px) { .xf svg { width: 760px; max-width: none; } .xf-lab { font-size: 12px; } }
+/* the lane marks (scripts/marks/lane-marks.mjs): flat inks with computed overlaps, beside the words that name the lane */
+.xc-lane { display: inline-block; vertical-align: -4px; margin-right: 3px; }
+.xc-lane + .xc-lane { margin-left: -1px; }
+.xp-filter .xp-lane { display: inline-block; vertical-align: -4px; margin-right: 6px; }

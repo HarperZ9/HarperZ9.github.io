@@ -27,6 +27,8 @@ rule ~ dynamic is."), with Hanken Grotesk and Conso as the still faces.
 - Living type: `world/typeengine/` (`web/living-gl.mjs`).
 - The alive layer (living stills, loops on one clock): `world/alive/`.
 - Glass and water, a place of its own: `world/site/glass-water.js`.
+- Drawn marks and colour studies: `scripts/marks/`, written by `scripts/build-marks.mjs` and placed by
+  `scripts/place-marks.mjs`. Every ink and overlap colour comes from `tools/crossover/icon_palette.py`.
 - Standalone tool pages: `system/kit/`.
 - Older pages: `system/generative-field.js` and `system/system.css`.
 
