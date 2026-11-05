@@ -28,7 +28,9 @@ rule ~ dynamic is."), with Hanken Grotesk and Conso as the still faces.
 - The alive layer (living stills, loops on one clock): `world/alive/`.
 - Glass and water, a place of its own: `world/site/glass-water.js`.
 - Drawn marks and colour studies: `scripts/marks/`, written by `scripts/build-marks.mjs` and placed by
-  `scripts/place-marks.mjs`. Every ink and overlap colour comes from `tools/crossover/icon_palette.py`.
+  `scripts/place-marks.mjs`. Every ink and overlap colour comes from `tools/crossover/icon_palette.py`; each
+  platform's ink comes from the shared hierarchy colour tokens, `world/site/crossover/colour-tokens.json`. Red and
+  traffic-light green stay with verdicts, and every category the colour marks is also told apart by its drawing.
 - Standalone tool pages: `system/kit/`.
 - Older pages: `system/generative-field.js` and `system/system.css`.
 

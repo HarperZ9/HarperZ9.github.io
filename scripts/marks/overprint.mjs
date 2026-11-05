@@ -11,6 +11,10 @@ import { fileURLToPath } from "node:url";
 const site = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 export const PAL = JSON.parse(readFileSync(path.join(site, "world/site/crossover/icon-palette.json"), "utf8"));
 const ORDER = Object.keys(PAL.ink);
+// platform inks (p-<platform> on paper, pd-<platform> on the dark field) come from the shared hierarchy colour tokens
+// through the same overprint model; a platform ink never crosses another platform ink
+const isPlat = (k) => /^pd?-/.test(k);
+export const platInk = (platform, dark) => `${dark ? "pd" : "p"}-${platform}`;
 const f = (n) => +n.toFixed(2);
 
 export function ink(k) {
@@ -56,11 +60,11 @@ export function lay(id, shapes) {
   shapes.forEach((s, j) => {
     out.push(withFill(s.el, ink(s.ink), s.attr || ""));
     if (!mixes(s)) return;
-    const under = shapes.slice(0, j).map((t, i) => [t, i]).filter(([t]) => mixes(t) && meets(t.el, s.el));
+    const under = shapes.slice(0, j).map((t, i) => [t, i]).filter(([t]) => mixes(t) && meets(t.el, s.el) && !(isPlat(t.ink) && isPlat(s.ink)));
     for (const [a, i] of under) out.push(`<g clip-path="${clip(i)}">${withFill(s.el, over(a.ink, s.ink))}</g>`);
     for (let p = 0; p < under.length; p++) for (let q = p + 1; q < under.length; q++) {
       const [a, i] = under[p], [b, k] = under[q];
-      if (!meets(a.el, b.el)) continue;
+      if (!meets(a.el, b.el) || isPlat(a.ink) && isPlat(b.ink)) continue;
       out.push(`<g clip-path="${clip(i)}"><g clip-path="${clip(k)}">${withFill(s.el, over(a.ink, b.ink, s.ink))}</g></g>`);
     }
   });

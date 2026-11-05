@@ -16,7 +16,12 @@ python tools/crossover/icon_palette.py [--out world/site/crossover/icon-palette.
 2. Overlap colours for every pair and triple of the seven keyboard keys and five inks, by the winning model.
 3. A Michel-Levy ramp: a birefringent grain between crossed polarisers transmits sin^2(pi G / lambda) at
    retardance G, under D65 with the CIE 1931 observer, every 10 nm of G from 0 to 1700 nm.
-4. A thin-film ramp: a free film of index 1.38 in air, reflectance by the Airy formula, under D65 with the
+4. Platform inks: the hierarchy colour tokens (world/site/crossover/colour-tokens.json, one file shared with the
+   internal colour system) give each platform an ink for paper and a lighter one for the dark field. Each enters the
+   same model as a sixth ink would: its smooth spectrum is recovered from its colour (Jakob and Hanika 2019) and its
+   two-pass transmittance is inverted from its own patch, so where a platform ink crosses a key the colour is computed
+   the same way as any other crossing. A platform ink never crosses another platform ink.
+5. A thin-film ramp: a free film of index 1.38 in air, reflectance by the Airy formula, under D65 with the
    CIE 1931 observer, every 10 nm from 0 to 1200 nm, head-on and at 45 degrees. These are the colours of the one
    iridescent ink a view may carry.
 Limit: the inks are recovered from a scan as smooth spectra (Jakob and Hanika 2019), so the race scores models on
@@ -41,6 +46,17 @@ KEYS = {  # world/site/crossover/keyboard.js, Le Corbusier's roles; weights are 
     "velvet": {"red": 0.5, "cyan": 0.38, "yellow": 0.08},
 }
 INKS5 = ["red", "cyan", "yellow", "green", "black"]
+TOKENS = Path(__file__).resolve().parents[2] / "world/site/crossover/colour-tokens.json"
+
+
+def platform_inks():
+    """{name: hex}: p-<platform> for paper, pd-<platform> for the dark field, from the shared colour tokens."""
+    tok = json.loads(TOKENS.read_text(encoding="utf-8"))
+    out = {}
+    for k, v in tok["platform"].items():
+        out[f"p-{k}"] = v["ink"]["hex"]
+        out[f"pd-{k}"] = v["dark"]["ink"]["hex"]
+    return tok["meta"], out
 
 
 def cy_paper(ks):
@@ -133,10 +149,28 @@ def main():
                 for k, w in films[n].items():
                     mix[k] = mix.get(k, 0) + w
             pal["over"]["+".join(combo)] = colour_of(winner, mix)
+    meta, plat = platform_inks()
+    pal["tokens"] = {"version": meta["version"], "date": meta["date"]}
+    pal["platform"] = {}
+    keys = list(films)
+    for name, hexc in plat.items():
+        om.S[name] = om.spectrum(hexc)
+        made = colour_of(winner, {name: 1.0})
+        pal["platform"][name] = {"token": hexc, "ink": made, "round_trip_dE00": round(om.scores(made, hexc)[1], 2)}
+        pal["ink"][name] = made
+        for k in keys:
+            mix = {name: 1.0, **films[k]}
+            pal["over"]["+".join(sorted([name, k], key=lambda n: (n.startswith("p"), n)))] = colour_of(winner, mix)
+        for a, b in itertools.combinations_with_replacement(keys, 2):
+            mix = {name: 1.0}
+            for n in (a, b):
+                for kk, w in films[n].items():
+                    mix[kk] = mix.get(kk, 0) + w
+            pal["over"][f"{a}+{b}+{name}"] = colour_of(winner, mix)
     pal["film"] = {"n": 1.38, "step_nm": 10, "head_on": [film_hex(d) for d in range(0, 1201, 10)],
                    "at_45": [film_hex(d, 45) for d in range(0, 1201, 10)]}
     pal["michel_levy"] = {"step_nm": 10, "ramp": [ml_hex(g) for g in range(0, 1701, 10)]}
-    Path(args.out).write_text(json.dumps(pal, indent=1))
+    Path(args.out).write_text(json.dumps(pal, indent=1), encoding="utf-8", newline=chr(10))
     for m, s in scores.items():
         print(f"{m:18s} mean {s['mean_dE00']:5.2f}  median {s['median_dE00']:5.2f}  " + "  ".join(f"{k} {v['dE00']}" for k, v in s["overlaps"].items()))
     print("winner:", winner, "->", args.out)

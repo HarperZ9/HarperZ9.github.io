@@ -6,7 +6,8 @@ const W = 1600, H = 900, GROUND = "#0d1a24", WORD = "#f4efe6", SOFT = "#c9c3b8";
 const FONT = "font-family=\"'Hanken Grotesk',system-ui,sans-serif\"";
 const t = (x, y, s, size = 22, extra = "") => `<text x="${x}" y="${y}" font-size="${size}"${/ fill=/.test(extra) ? "" : ` fill="${WORD}"`} ${FONT}${/class=/.test(extra) ? "" : ' class="p"'}${extra}>${s}</text>`;
 // at phone widths the plate's prose hides (the page's caption carries it) and its labels grow to stay legible
-const NARROW = "<style>@media (max-width:900px){.p{display:none}.l{font-size:40px}}</style>";
+// the race's pair names break onto two lines there (.l2), since five one-line names at that size would touch
+const NARROW = "<style>.l2{display:none}@media (max-width:900px){.p{display:none}.l{font-size:40px}.l1{display:none}.l2{display:inline}}</style>";
 const wrap = (body, label) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${label}">${NARROW}<rect width="${W}" height="${H}" fill="${GROUND}"/>${body}</svg>`;
 const INK_HEX = { red: "#eb4324", cyan: "#04b2dd", yellow: "#fcc603", green: "#07ac3d", black: "#1a1b22" };  // the scan's inks
 
@@ -22,14 +23,15 @@ function race() {
     out.push(`<defs>${lens}<clipPath id="${id}b"><circle cx="${cx + d / 2}" cy="${cy}" r="${r}"/></clipPath></defs>`);
     out.push(`<circle cx="${cx - d / 2}" cy="${cy}" r="${r}" fill="${INK_HEX[a]}"/><circle cx="${cx + d / 2}" cy="${cy}" r="${r}" fill="${INK_HEX[b]}"/>`);
     out.push(band(cy - r, r * 0.62, R.multiply.overlaps[k].hex), band(cy - r * 0.38, r * 0.76, MEASURED[k]), band(cy + r * 0.38, r * 0.62, R["clapper-yule"].overlaps[k].hex));
-    out.push(t(cx, 560, `${a} over ${b}`, 26, ' font-weight="700" text-anchor="middle" class="l"'));
-    out.push(t(cx, 610, `multiply, above: off by ${R.multiply.overlaps[k].dE00}`, 19, ' text-anchor="middle"'));
-    out.push(t(cx, 640, `Clapper-Yule, below: off by ${R["clapper-yule"].overlaps[k].dE00}`, 19, ' text-anchor="middle"'));
+    out.push(t(cx, 560, `${a} over ${b}`, 26, ' font-weight="700" text-anchor="middle" class="l l1"'));
+    out.push(t(cx, 560, `<tspan x="${cx}">${a} over</tspan><tspan x="${cx}" dy="1.15em">${b}</tspan>`, 40, ' font-weight="700" text-anchor="middle" class="l2"'));
+    out.push(t(cx, 610, `multiply, above: ${R.multiply.overlaps[k].dE00}`, 20, ' text-anchor="middle"'));
+    out.push(t(cx, 640, `Clapper-Yule, below: ${R["clapper-yule"].overlaps[k].dE00}`, 20, ' text-anchor="middle"'));
   });
   out.push(t(64, 96, "Where two inks cross: measured on the print, and predicted", 34, ' font-weight="700"'));
   out.push(t(64, 136, "Each lens: per-channel multiply above, the print's own colour in the middle, Clapper-Yule below.", 22));
   out.push(t(64, 760, `Median CIEDE2000 against the print: multiply ${R.multiply.median_dE00}, Beer-Lambert ${R.beer.median_dE00}, Clapper-Yule ${R["clapper-yule"].median_dE00}.`, 24));
-  out.push(t(64, 798, "Misses in CIEDE2000. Five overlaps; every model is fitted on single inks only. Green over red stays the worst.", 22, ` fill-opacity=".86"`));
+  out.push(t(64, 798, "Each number is the miss in CIEDE2000. Five overlaps; every model is fitted on single inks only. Green over red stays the worst.", 22, ` fill-opacity=".86"`));
   return wrap(out.join(""), "Five pairs of overlapping ink discs from an Olivetti print; in each overlap, a band of the measured colour sits between two predicted bands.");
 }
 const MEASURED = { "cyan+yellow": "#028e3f", "red+yellow": "#c03314", "green+cyan": "#029642", "red+black": "#482a26", "green+red": "#261b28" };
@@ -59,8 +61,8 @@ function weave() {
 // same film at 45 degrees, where every band shifts toward thinner colours. It plays once, from a quarter hour to
 // eight hours of drainage, and holds its last frame; with reduced motion it shows only the last frame.
 function drainage() {
-  const FR = 12, ST = 40, mu = 1e-3, rho = 1000, g = 9.81, X = 0.05;
-  const ts = Array.from({ length: FR }, (_, i) => 900 * Math.pow(30000 / 900, i / (FR - 1)));
+  const FR = 12, ST = 40, mu = 1e-3, rho = 1000, g = 9.81, X = 0.0125, T0 = 900, T1 = 6300;
+  const ts = Array.from({ length: FR }, (_, i) => T0 * Math.pow(T1 / T0, i / (FR - 1)));
   const us = Array.from({ length: ST }, (_, i) => (i / (ST - 1)) ** 2);
   const h = (u, tt) => 1e9 * Math.sqrt(mu * Math.max(u * X, 1e-6) / (rho * g * tt));
   const css = [], films = [];
@@ -79,7 +81,7 @@ function drainage() {
   out.push(t(64, 96, "A soap film draining", 34, ' font-weight="700"'));
   out.push(t(1290, 300, "Thickness at depth x:", 22), t(1290, 336, "h = sqrt(mu x / (rho g t))", 22, ` fill="${SOFT}"`));
   out.push(t(1290, 400, "Colour: the Airy reflectance", 22), t(1290, 436, "of a film of index 1.38,", 22, ` fill="${SOFT}"`), t(1290, 472, "CIE 1931 under D65.", 22, ` fill="${SOFT}"`));
-  out.push(t(1290, 536, "From 15 minutes to 8 hours,", 22), t(1290, 572, "played once in 16 seconds.", 22, ` fill="${SOFT}"`), t(1290, 636, "Thicker than 1200 nm is", 22), t(1290, 672, "drawn as 1200 nm.", 22, ` fill="${SOFT}"`));
+  out.push(t(1290, 536, "A film 12.5 mm tall,", 22), t(1290, 572, "from 15 min to 1 h 45 min,", 22, ` fill="${SOFT}"`), t(1290, 608, "played once in 16 seconds.", 22, ` fill="${SOFT}"`));
   return wrap(out.join(""), "Two arched soap films draining side by side, one seen head-on and one at 45 degrees; bands of interference colour slide down as each film thins from the top.");
 }
 
