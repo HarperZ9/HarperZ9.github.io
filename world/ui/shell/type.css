@@ -34,21 +34,26 @@
   --sans:var(--face-text);
   --mono:var(--face-utility);
 }
-:root[data-type="house"]{
-  /* the house family, working name Accession (typeface). Its family names live only here:
-     a rename is this block plus the forge rebuild. */
+:root:not([data-type="hanken"]){
+  /* the house family, Accession. Trial, 2026-11-05: on by default on every page, data-type="stock" included,
+     so the whole site reads in it at once; data-type="hanken" brings back the stock faces for a side by side.
+     Its family names live only here: a rename is this block plus the forge rebuild. */
   --house-text:"Accession Text";
   --house-display:"Accession Display";
   --house-mono:"Accession Mono";
   --house-super:"Accession Super";
   --face-text:var(--house-text),"Hanken Grotesk",system-ui,sans-serif;
-  --face-display:var(--house-display),"Hanken Grotesk",system-ui,sans-serif;
+  /* Accession Display is set tight for large sizes; below room-title size it crowds, so headings in the
+     running text take the text face at a heavy weight and only titles at 36 px and up take Display */
+  --face-display:var(--house-text),"Hanken Grotesk",system-ui,sans-serif;
+  --face-title:var(--house-display),"Hanken Grotesk",system-ui,sans-serif;
   --face-utility:var(--house-mono),"Conso",ui-monospace,monospace;
   --face-super:var(--house-super),"Hanken Grotesk",sans-serif;
 }
 /* Legibility results from the typeface session: text under 14 px stays on Hanken until the house 12 px
    master catches up; the house family has no italic, so nothing requests one. */
 :root{font-synthesis:none;font-kerning:normal}
+:root:not([data-type="hanken"]) h1{font-family:var(--face-title)}
 .tt,.runhead,.card,pre,code{font-variant-numeric:tabular-nums slashed-zero}
 
 @media (max-width:860px){:root{--fs-4:20px;--fs-5:26px;--fs-6:36px;--fs-7:60px;--fs-hero:clamp(64px,19vw,140px)}}
