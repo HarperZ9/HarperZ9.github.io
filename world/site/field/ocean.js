@@ -101,23 +101,36 @@ export const N_BK7 = { B: [1.03961212, 0.231792344, 1.01046945], C: [0.006000698
 // (Michell 1893), so k a <= pi / 7; the choppiness Q sharpens crests (Q = 1 would close them to a cusp) and grows
 // with wind; where crests fold, the surface Jacobian goes below zero and the wave breaks (foam and spray, scene).
 // Returns Float32Array of (kx, kz, a, phase) and the choppiness and the peak wavenumber.
-export function swellWaves({ U10, fetch, windAngle, n = 8, seed = 5 }) {
+// storm: true is a labelled stylisation for the near field of a storm. The waves keep the spectrum's total energy
+// (its significant wave height Hs = 4 sqrt(m0)) but it spans 1 to 12 times the peak wavenumber, with the energy
+// shared about equally, instead of falling as the spectrum's omega^-5, and steepness is capped at k a = 0.3 instead of the
+// Stokes limit. That moves energy into shorter, steeper waves than an open-ocean spectrum holds, so the waves near the
+// eye stand and break the way a storm reads from a small deck; the swell's statistics are not those of the spectrum.
+export function swellWaves({ U10, fetch, windAngle, n = 8, seed = 5, storm = false }) {
   const rand = rng(seed), wp = 22 * Math.pow((G * G) / (U10 * fetch), 1 / 3), kp = (wp * wp) / G, out = new Float32Array(n * 4);
   const spread = 4, norm = (Math.pow(2, 2 * spread - 1) * gammaRatio(spread)) / Math.PI;
   const nk = Math.ceil(n / 2), na = Math.ceil(n / nk);
   let i = 0;
+  const k0 = storm ? 1.0 * kp : 0.5 * kp, span = storm ? Math.log(12) : Math.log(5);
   for (let b = 0; b < nk && i < n; b++) for (let a = 0; a < na && i < n; a++, i++) {
-    const lk0 = Math.log(0.5 * kp) + (Math.log(5) * b) / nk, lk1 = lk0 + Math.log(5) / nk, k = Math.exp(lk0 + (lk1 - lk0) * rand());
+    const lk0 = Math.log(k0) + (span * b) / nk, lk1 = lk0 + span / nk, k = Math.exp(lk0 + (lk1 - lk0) * rand());
     const omega = Math.sqrt(G * k), domega = (G / (2 * omega)) * (Math.exp(lk1) - Math.exp(lk0));
     const dth = (100 * Math.PI) / 180 / na, th = -50 * Math.PI / 180 + dth * (a + rand());
     const d = Math.pow(Math.abs(Math.cos(th / 2)), 2 * spread) * norm;
-    const amp = Math.min(Math.sqrt(2 * jonswap(omega, { U10, fetch }) * domega * d * dth), Math.PI / 7 / k);
+    const amp = storm ? d : Math.min(Math.sqrt(2 * jonswap(omega, { U10, fetch }) * domega * d * dth), Math.PI / 7 / k);
     const dir = th + windAngle;
     out.set([k * Math.cos(dir), k * Math.sin(dir), amp, rand() * 2 * Math.PI], i * 4);
   }
   // choppiness (GPU Gems 1, ch. 1: displacement Q / (k n) per wave, so aligned crests give a Jacobian of 1 - Q): calm
   // seas are near sinusoidal; a gale's aligned crests fold, which is where it breaks
   const Q = Math.min(0.95, 0.35 + 0.04 * Math.max(0, U10 - 4));
+  if (storm) {
+    // scale to the spectrum's own Hs, then cap each wave's steepness at k a = 0.3
+    let m0 = 0; for (let w = 0.03; w < 6; w += 0.0015) m0 += jonswap(w, { U10, fetch }) * 0.0015;
+    let e = 0; for (let j = 0; j < n; j++) e += out[j * 4 + 2] ** 2 / 2;
+    const f = Math.sqrt(m0 / e);
+    for (let j = 0; j < n; j++) { const k = Math.hypot(out[j * 4], out[j * 4 + 1]); out[j * 4 + 2] = Math.min(out[j * 4 + 2] * f, 0.3 / k); }
+  }
   return { waves: out, Q, kp };
 }
 // height of the swell at (x, z), time t (crests where cos = 1, where the displacement bunches points together), with

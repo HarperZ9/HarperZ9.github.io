@@ -83,10 +83,11 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   }
   // the sea for a wind: U10 in m/s and the direction the waves run, radians from east toward north; open
   // ocean fetch, capped where the sea is fully developed (sky/weather.mjs)
-  function setWind(U10, angle = 0.35) {
-    if (Math.abs(U10 - windNow) < 0.05 && Math.abs(angle - angleNow) < 0.02) return; windNow = U10; angleNow = angle;
+  let nearNow = false;
+  function setWind(U10, angle = 0.35, near = false) {
+    if (Math.abs(U10 - windNow) < 0.05 && Math.abs(angle - angleNow) < 0.02 && near === nearNow) return; windNow = U10; angleNow = angle; nearNow = near;
     // the long waves near the peak are raised geometry (the swell); the cascades carry the shorter waves as slope
-    swell = swellWaves({ U10, fetch: effectiveFetch(U10), windAngle: angle });
+    swell = swellWaves({ U10, fetch: effectiveFetch(U10), windAngle: angle, storm: near });
     hmax = 0; for (let i = 0; i < 8; i++) hmax += swell.waves[i * 4 + 2];
     hmax *= 1.05;
     // the swell's height distribution (Gaussian, sigma = sqrt(sum a^2 / 2)) and the whitecap coverage the wind gives
@@ -116,10 +117,19 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   function frame({ t = clock, jitter = [0, 0], blendWeight = 1 } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
-    setWind(s.wind, s.windAngle); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
+    setWind(s.wind, s.windAngle, !!to.near); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
     const night = s.night > 0.5, el = s.light.el * D, az = s.light.az * D;
     // the eye rides the swell, as from a boat's deck: it rises and falls with the water under it, never below it
-    const bob = hmax > 0.01 ? swellHeight(swell, 0, 0, t) : 0, camY = Math.max(s.cam.h + 0.9 * bob, bob + 0.9);
+    const bob = hmax > 0.01 ? swellHeight(swell, 0, 0, t) : 0, camY = to.near ? bob + s.cam.h : Math.max(s.cam.h + 0.9 * bob, bob + 0.9);
+    // in the near field the deck pitches and rolls with the water's slope under it (damped to 60 percent, as a hull
+    // averages the surface over its length)
+    let dPitch = 0, roll = 0;
+    if (to.near && hmax > 0.01) {
+      const yw = s.cam.yaw * D, fx = Math.sin(yw), fz = Math.cos(yw), e = 3;
+      const along = (swellHeight(swell, fx * e, fz * e, t) - swellHeight(swell, -fx * e, -fz * e, t)) / (2 * e);
+      const across = (swellHeight(swell, fz * e, -fx * e, t) - swellHeight(swell, -fz * e, fx * e, t)) / (2 * e);
+      dPitch = Math.atan(along) * 0.6 / D; roll = Math.atan(across) * 0.6;
+    }
     const ladder = to.quality ?? 1;
     const L = [Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az)];
     // the light is normalised to unit illuminance; night differs by exposure and by the eye's blue shift (post)
@@ -134,13 +144,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       bind(0, T.trans.t, u.uTrans); bind(1, T.sky.t, u.uSky); T.waves.forEach((w, i) => bind(2 + i, w.t, u[`uW${i}`])); bind(5, glyphTex, u.uGlyph);
       gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
       gl.uniform3fv(u.uIor, IOR); gl.uniform3fv(u.uAbs, ABS); gl.uniform3f(u.uLightCol, lightCol, lightCol, lightCol); gl.uniform3f(u.uTiles, ...CASCADES.map((c) => c.tile));
-      gl.uniform1f(u.uPitch, s.cam.pitch * D); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
+      gl.uniform1f(u.uPitch, (s.cam.pitch + dPitch) * D); gl.uniform1f(u.uRoll, roll); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
       // a real sky turns its stars with sidereal time (latitude, local sidereal time, radians); x > 9 keeps them fixed
       // weather: clouds marched only when there are clouds and the device can afford it (quality ladder, sky.js)
       gl.uniform1f(u.uCloud, s.wx.cloud); gl.uniform1f(u.uStorm, s.wx.storm); gl.uniform1f(u.uRain, s.wx.rain); gl.uniform1f(u.uRainbow, s.wx.rainbow); gl.uniform1f(u.uHalo, s.wx.halo); gl.uniform1f(u.uHaze, s.wx.haze);
       gl.uniform1f(u.uFlash, flash); gl.uniform1i(u.uCloudSteps, s.wx.cloud > 0.01 ? (to.cloudSteps ?? 24) : 0);
-      gl.uniform4fv(u.uSwell, swell.waves); gl.uniform1f(u.uSwellQ, swell.Q); gl.uniform1f(u.uHmax, hmax); gl.uniform1f(u.uBreakH, breakH); gl.uniform1f(u.uSig, sigma); gl.uniform2fv(u.uWindDir, windDir);
+      gl.uniform4fv(u.uSwell, swell.waves); gl.uniform1f(u.uSwellQ, swell.Q); gl.uniform1f(u.uHmax, hmax); gl.uniform1f(u.uBreakH, breakH); gl.uniform1f(u.uSig, sigma); gl.uniform2fv(u.uWindDir, windDir); gl.uniform1f(u.uDrift, 0.03 * s.wind); gl.uniform1i(u.uSprayN, s.wind > 12 ? (ladder > 0.5 ? 20 : 6) : 0);
+      gl.uniform3fv(u.uBolt, bolt);
       gl.uniform1f(u.uSpray, Math.min(1, Math.max(0, (s.wind - 12) / 10))); gl.uniform1i(u.uMarch, ladder > 0.5 ? 72 : 28);
       gl.uniform2f(u.uSid, to.sid ? to.sid.lat * D : 10, to.sid ? to.sid.lst * D : 0);
       gl.uniform1f(u.uGX, s.glass.x ?? 0); gl.uniform1f(u.uGZ, s.glass.z); gl.uniform1f(u.uGH, s.glass.cap); gl.uniform1f(u.uGT, s.glass.thick); gl.uniform1f(u.uGR, Math.min(0.35, s.glass.thick * 0.3));
@@ -148,7 +159,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     });
     gl.disable(gl.BLEND);
     // where the light falls on the screen (the inverse of the scene's ray()), for rays and ghosts
-    const cp = Math.cos(s.cam.pitch * D), spt = Math.sin(s.cam.pitch * D), cy = Math.cos(s.cam.yaw * D), sy = Math.sin(s.cam.yaw * D);
+    const cp = Math.cos((s.cam.pitch + dPitch) * D), spt = Math.sin(s.cam.pitch * D), cy = Math.cos(s.cam.yaw * D), sy = Math.sin(s.cam.yaw * D);
     const f = [sy * cp, spt, cy * cp], rt = [cy, 0, -sy], up = [-sy * spt, cp, -cy * spt], dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
     const asp = canvas.width / canvas.height, zf = dot(L, f), sc = Math.max(1, 1.25 / asp) / s.cam.focal;
     const sun = zf > 0.05 ? [0.5 + dot(L, rt) / zf / (asp * sc), 0.5 + dot(L, up) / zf / sc] : [-9, -9];
@@ -157,13 +168,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       gl.uniform2f(u.uSunUV, sun[0], sun[1]); gl.uniform1f(u.uSunOn, onScreen ? 1 : 0); gl.uniform1f(u.uQuality, ladder);
       // rays need broken cloud and a low light; ghosts a clear line to it; mist blooms in haze; night halates
       gl.uniform1f(u.uRays, night ? 0.3 * s.wx.cloud : Math.min(1, s.wx.cloud * 1.6) * (1 - s.wx.storm) * Math.max(0.3, 1 - s.light.el / 40));
-      gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
+      gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0);
+      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
   }
 
   // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
   // a flash is three or four return strokes 40 to 80 ms apart, each falling off in a few tens of milliseconds (Uman,
   // "The Lightning Discharge", 1987); hold keeps one stroke lit, for a still
-  let flash = 0, strokes = [], held = 0;
+  let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
   let running = false, last = 0, visible = true;
   function loop(ts) {
@@ -185,6 +197,9 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       word = progress() < 0.5 ? word : to.word; from = now; to = next; t0 = performance.now(); dur = reduced ? 1 : ms; if (reduced) api.still();
     },
     lightning(strength = 1, { hold = false } = {}) {
+      const s0 = state();
+      // where the stroke stands: 2 to 9 km off, inside the frame's half of the sky, in km from the eye
+      const a = (s0.cam.yaw + (Math.random() - 0.5) * 30) * D, r = 2 + Math.random() * 7; bolt = [Math.sin(a) * r, 0.4, Math.cos(a) * r];
       if (hold) { held = strength; return; }
       const t0 = performance.now(), n = 3 + Math.floor(Math.random() * 2);
       for (let i = 0, t = t0; i < n; i++, t += 40 + Math.random() * 40) strokes.push({ t, s: strength * (i ? 0.6 + 0.4 * Math.random() : 1) });

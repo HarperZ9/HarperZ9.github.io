@@ -47,12 +47,16 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   // in a big sea the eye rides low on a small deck, a little over a metre plus a tenth of the wave height above the
   // water under it, so in a trough the next crests stand above the horizon; a gale is framed with a long lens, as storm
   // photographers frame it, which stacks the swells into walls
+  // a storm is framed at human scale: the eye 2.5 m over the water under it, riding, pitching and rolling with it
+  // (field.js), a normal lens, so the near waves and the crests a few tens of metres off fill the frame and hide the horizon
   const Hs = seaState(wx.wind).Hs; if (Hs > 1) cam.h = 1.3 + 0.12 * Hs;
-  if (wx.wind > 12) { cam.focal = 2.6; cam.pitch = Math.min(cam.pitch, 0.4); }
+  const near = wx.wind > 12;
+  if (near) { cam.h = 2.5; cam.focal = 1.5; cam.pitch = 1.5; }
   // the weather the scene draws: storms darken the cloud base; a rainbow needs rain, the Sun up and lower than
   // 42 degrees, and gaps in the cloud for sunlight; a 22 degree halo needs thin high cloud, which is likely (not
   // measured: cloud type is not in the data) at middling cover without rain
-  const storm = wx.thunder ? 1 : Math.max(0, (wx.cloud - 0.85) / 0.15) * 0.5;
+  // a gale's sky is a storm's sky too: heavy, low and towering (force 9 and up)
+  const storm = wx.thunder ? 1 : Math.max(Math.max(0, (wx.cloud - 0.85) / 0.15) * 0.5, wx.wind > 17 ? 0.7 : 0);
   const rainbow = day && sun.alt > 0 && sun.alt < 42 && wx.rain > 0 && wx.cloud < 0.9 ? Math.min(1, 0.4 + wx.rain / 3) * (1 - wx.cloud * 0.6) : 0;
   const halo = day && sun.alt > 8 && wx.rain === 0 && wx.cloud > 0.25 && wx.cloud < 0.6 ? 0.6 : 0;
   // daylight under cloud: the direct beam is cut by the cover (storms most), so expose for what is left
@@ -66,7 +70,7 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   const to = ((wx.windFrom + 180) * Math.PI) / 180, windAngle = Math.atan2(Math.cos(to), Math.sin(to));
   return {
     space: { light: { el, az }, cam, wind: wx.wind, windAngle, expo, night: day ? 0 : 1, phase: moon.phaseAngle, lightScale,
-      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo, haze: hazeExtinction(wx) }, cloudSteps: cloudSteps(), quality: quality(), sid: { lat, lst: localSidereal(date, lon) } },
+      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo, haze: hazeExtinction(wx) }, cloudSteps: near ? (quality() ? 48 : 16) : cloudSteps(), quality: quality(), near, sid: { lat, lst: localSidereal(date, lon) } },
     sun, moon, day, wx, sea: seaState(wx.wind),
   };
 }
@@ -122,7 +126,7 @@ export function mountSky({ button, getField, tall = () => innerHeight > innerWid
     const windNote = weatherWords(r);
     if (sound) sound.set({ wind: r.wx.wind, rain: r.wx.rain, Tp: r.sea.Tp, breaking: Math.min(1, Math.max(0, (r.wx.wind - 7) / 13)) });
     clearTimeout(boltTimer); if (r.wx.thunder) storm();
-    if (holdBolt && r.wx.thunder && field?.lightning) setTimeout(() => field.lightning(1, { hold: true }), 2500);
+    if (holdBolt && r.wx.thunder && field?.lightning) setTimeout(() => field.lightning(0.5, { hold: true }), 2500);
     status.textContent = words(r, place, windNote) + (field ? "" : " The live water is not available on this device, so the picture stays as it was.");
     button.setAttribute("aria-pressed", "true"); $("off").hidden = false;
   }
