@@ -101,11 +101,13 @@ vec3 stars(vec3 rd) {
 // lining, -0.3 back), with multiple scattering by Wrenninge's octaves (Wrenninge, Kulla and Lundqvist 2013,
 // "Oz: The Great and Volumetric", SIGGRAPH talks): each octave halves extinction and phase eccentricity. A storm adds
 // density at the base, so its underside goes dark.
+// value noise; the lattice is hashed modulo 289 per corner, so far samples keep the hash's precision and there is
+// no seam where the wrap falls
+float h3(vec3 c) { c = mod(c, 289.0); return hash(c.xy + c.z * 17.0); }
 float n3(vec3 p) {
   vec3 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
-  float a = hash(i.xy + i.z * 17.0), b = hash(i.xy + vec2(1, 0) + i.z * 17.0), c = hash(i.xy + vec2(0, 1) + i.z * 17.0), d = hash(i.xy + vec2(1, 1) + i.z * 17.0);
-  float e = hash(i.xy + (i.z + 1.0) * 17.0), g = hash(i.xy + vec2(1, 0) + (i.z + 1.0) * 17.0), h = hash(i.xy + vec2(0, 1) + (i.z + 1.0) * 17.0), k = hash(i.xy + vec2(1, 1) + (i.z + 1.0) * 17.0);
-  return mix(mix(mix(a, b, f.x), mix(c, d, f.x), f.y), mix(mix(e, g, f.x), mix(h, k, f.x), f.y), f.z);
+  return mix(mix(mix(h3(i), h3(i + vec3(1, 0, 0)), f.x), mix(h3(i + vec3(0, 1, 0)), h3(i + vec3(1, 1, 0)), f.x), f.y),
+             mix(mix(h3(i + vec3(0, 0, 1)), h3(i + vec3(1, 0, 1)), f.x), mix(h3(i + vec3(0, 1, 1)), h3(i + vec3(1, 1, 1)), f.x), f.y), f.z);
 }
 // the cloud layer, in km above the sea: fair-weather cumulus from 1.2 km; a storm's base drops to 0.7 km and its
 // towers reach 9 km (cumulonimbus tops sit near the tropopause, 9 to 12 km at mid latitudes)
@@ -204,19 +206,26 @@ vec3 bolt(vec3 rd) {
   vec2 g = uBolt.xz * 1000.0; float tg = dot(g, rd.xz) / max(dot(rd.xz, rd.xz), 1e-6);
   if (tg <= 0.0) return vec3(0.0);
   float y = uCam.y + rd.y * tg; if (y < 0.0 || y > cloudBase() * 1000.0) return vec3(0.0);
-  vec2 jag = (vec2(n3(vec3(y * 0.004, 1.0, 2.0)), n3(vec3(y * 0.004, 5.0, 7.0))) - 0.5) * 900.0 + (vec2(n3(vec3(y * 0.03, 3.0, 1.0)), n3(vec3(y * 0.03, 9.0, 4.0))) - 0.5) * 120.0;
+  vec2 jag = (vec2(n3(vec3(y * 0.006, 1.0, 2.0)), n3(vec3(y * 0.006, 5.0, 7.0))) - 0.5) * 120.0 + (vec2(n3(vec3(y * 0.05, 3.0, 1.0)), n3(vec3(y * 0.05, 9.0, 4.0))) - 0.5) * 25.0;
   float d = length(rd.xz * tg - (g + jag)) / tg;  // angular distance, radians
-  return vec3(0.75, 0.8, 1.0) * uFlash * (40.0 * exp(-pow(d / 0.0008, 2.0)) + 1.5 * exp(-d / 0.01));
+  // a branch leaves the channel two thirds of the way up and runs out sideways and down for a third of the height
+  float yb = 0.66 * cloudBase() * 1000.0, db = 1e9;
+  if (y < yb && y > yb * 0.45) { vec2 side = normalize(vec2(-g.y, g.x)), jb = side * (yb - y) * 0.5 + (vec2(n3(vec3(y * 0.02, 4.0, 8.0)), n3(vec3(y * 0.02, 2.0, 6.0))) - 0.5) * 140.0;
+    db = length(rd.xz * tg - (g + jag + jb)) / tg; }
+  float core = exp(-pow(d / 0.0015, 2.0)) + 0.6 * exp(-pow(db / 0.001, 2.0));
+  // the rain between dims it by Beer-Lambert over its distance
+  return vec3(0.78, 0.82, 1.0) * uFlash * (400.0 * core + 6.0 * exp(-min(d, db) / 0.006)) * exp(-uHaze * 0.25 * length(g) * 0.001);
 }
 vec3 skyEye(vec3 rd) {
   vec3 col = skyL(rd) * uLightCol + lightDisk(rd) + stars(rd);
   vec4 c = clouds(rd);
-  col += bolt(rd) * (0.4 + 0.6 * c.a);
+
   // the bow forms in the rain below the cloud base, so it stands in front of the clouds; the halo is in the cloud
   col = col * c.a + c.rgb + rainbow(rd) + halo(rd) * c.a;
   // rain and fog veil the sky too, most toward the horizon where the path through them is longest
   float veil = 1.0 - exp(-uHaze * 0.25 / max(rd.y, 0.05));
-  return mix(col, skyL(vec3(rd.x, 0.05, rd.z)) * uLightCol * (0.7 - 0.3 * uStorm), clamp(veil, 0.0, 0.95));
+  col = mix(col, skyL(vec3(rd.x, 0.05, rd.z)) * uLightCol * (0.7 - 0.3 * uStorm), clamp(veil, 0.0, 0.95));
+  return col + bolt(rd) * (0.35 + 0.65 * c.a);
 }
 // Fresnel reflectance of an unpolarised ray at a dielectric interface, exact (Born and Wolf)
 float fresnel(float ci, float n) {
@@ -293,11 +302,15 @@ bool seaMarch(vec3 ro, vec3 rd, out float tHit, out vec2 nearXZ, out float nearF
   float t = tA, tp = tA;
   for (int i = 1; i <= 96; i++) {
     if (i > uMarch) break;
-    vec3 q = ro + rd * t; float f = q.y - swellH(q.xz);
+    vec3 q = ro + rd * t;
+    // the crest curls: above the breaking height the surface leans downwind in proportion to the height, so the face
+    // goes past vertical and the lip overhangs (a stylised plunge; the water's motion is not simulated)
+    vec2 lean = uWindDir * clamp((q.y - uBreakH) / max(uSig, 0.1), 0.0, 2.0) * uSig * 0.8 * uSpray;
+    float f = q.y - swellH(q.xz - lean);
     if (f < nearF && f > 0.0) { nearF = f; nearXZ = q.xz; }
     if (f < 0.0) {
       float a = tp, b = t;
-      for (int j = 0; j < 5; j++) { float m = 0.5 * (a + b); vec3 qm = ro + rd * m; if (qm.y - swellH(qm.xz) < 0.0) b = m; else a = m; }
+      for (int j = 0; j < 5; j++) { float m = 0.5 * (a + b); vec3 qm = ro + rd * m; vec2 lm = uWindDir * clamp((qm.y - uBreakH) / max(uSig, 0.1), 0.0, 2.0) * uSig * 0.8 * uSpray; if (qm.y - swellH(qm.xz - lm) < 0.0) b = m; else a = m; }
       tHit = b; return true;
     }
     tp = t; float u = float(i) / float(uMarch); t = tA + (tB - tA) * u * u;
@@ -517,7 +530,7 @@ void main() {
       // a ray that grazes a breaking crest passes through its spray
       if (uSpray > 0.0 && nearF < 2.5) { float b = smoothstep(uBreakH, uBreakH + 0.5 * uSig, swellH(nearXZ)) * uSpray * exp(-nearF);
         vec3 Ed = uLightCol * (lightT() * max(uL.y, 0.0) + skyL(vec3(0.0, 1.0, 0.0)) * PI); col = mix(col, 0.9 * Ed / PI, b * 0.6); }
-      col = col * spr.a + spr.rgb;
+      col = col * spr.a + spr.rgb + bolt(rd) * (1.0 - spr.a) * 0.6;
     }
   }
   // half floats end at 65504; the sun's disk is brighter than that before exposure, and the display clips it anyway
@@ -538,16 +551,27 @@ vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.05
 void main() {
   // rain on the lens: drops are small water lenses that show the scene flipped and shrunk inside them; they land,
   // hold a few seconds and are replaced, more of them in harder rain
-  vec2 uv = v; float rim = 0.0;
+  vec2 uv = v; float dropK = 0.0; vec2 dropD = vec2(0.0), dropUV = vec2(0.0);
   if (uLensRain > 0.0) {
     vec2 g = v * vec2(uRes.x / uRes.y, 1.0) * 9.0, c = floor(g), f = fract(g) - 0.5;
     float h = hash(c), life = fract(uT * 0.15 + h * 7.0), r = 0.08 + 0.18 * hash(c + 4.2);
     vec2 o = (vec2(hash(c + 1.3), hash(c + 2.7)) - 0.5) * 0.5, d = f - o;
     float on = step(1.0 - uLensRain * 0.55, h) * step(life, 0.85);
     float k = 1.0 - dot(d, d) / (r * r);
-    if (on > 0.0 && k > 0.0) { uv = v - d / 9.0 * 1.2 * sqrt(k); rim = smoothstep(0.25, 0.0, k) * 0.25; }
+    if (on > 0.0 && k > 0.0) { dropK = k; dropD = d / r; dropUV = d / 9.0 / vec2(uRes.x / uRes.y, 1.0); }
   }
-  vec3 hdr = texture(uImg, uv).rgb * (1.0 - rim);
+  vec3 hdr = texture(uImg, uv).rgb;
+  // a drop on the lens is a small water lens: it shows the scene behind it upside down and shrunk (a wide view through
+  // its centre), out of focus because it sits on the glass; its edge is soft, with a thin dark meniscus and a highlight
+  // on the side toward the light
+  if (dropK > 0.0) {
+    vec2 cen = v - dropUV, look = cen - dropUV * 6.0; vec3 seen = vec3(0.0);
+    for (int i = 0; i < 6; i++) { float an = float(i) * 1.0472; seen += texture(uImg, clamp(look + vec2(cos(an), sin(an)) * 0.006, vec2(0.001), vec2(0.999))).rgb; }
+    seen /= 6.0;
+    float a = smoothstep(0.0, 0.18, dropK), edge = smoothstep(0.22, 0.04, dropK) * smoothstep(0.0, 0.04, dropK);
+    float hi = smoothstep(0.35, 0.95, dot(normalize(dropD + 1e-4), vec2(-0.55, 0.83))) * smoothstep(0.5, 0.15, dropK) * smoothstep(0.0, 0.08, dropK);
+    hdr = mix(hdr, seen * 0.92, a) * (1.0 - 0.3 * edge) + hi * (0.4 + lum(seen) * 0.6);
+  }
   vec2 asp = vec2(uRes.y / uRes.x, 1.0);
   // bloom and halation: light scattered in the lens, and at night in the film's base, which glows red round bright
   // points; mist and rain scatter it wider. A golden-angle disk of 16 taps (8 on a phone) over what exceeds white

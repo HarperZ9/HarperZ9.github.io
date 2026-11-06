@@ -199,7 +199,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     lightning(strength = 1, { hold = false } = {}) {
       const s0 = state();
       // where the stroke stands: 2 to 9 km off, inside the frame's half of the sky, in km from the eye
-      const a = (s0.cam.yaw + (Math.random() - 0.5) * 30) * D, r = 2 + Math.random() * 7; bolt = [Math.sin(a) * r, 0.4, Math.cos(a) * r];
+      const a = (s0.cam.yaw + (Math.random() - 0.5) * 24) * D, r = 1.5 + Math.random() * 3; bolt = [Math.sin(a) * r, 0.4, Math.cos(a) * r];
       if (hold) { held = strength; return; }
       const t0 = performance.now(), n = 3 + Math.floor(Math.random() * 2);
       for (let i = 0, t = t0; i < n; i++, t += 40 + Math.random() * 40) strokes.push({ t, s: strength * (i ? 0.6 + 0.4 * Math.random() : 1) });
