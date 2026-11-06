@@ -128,7 +128,9 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       const yw = s.cam.yaw * D, fx = Math.sin(yw), fz = Math.cos(yw), e = 3;
       const along = (swellHeight(swell, fx * e, fz * e, t) - swellHeight(swell, -fx * e, -fz * e, t)) / (2 * e);
       const across = (swellHeight(swell, fz * e, -fx * e, t) - swellHeight(swell, -fz * e, fx * e, t)) / (2 * e);
-      dPitch = Math.atan(along) * 0.6 / D; roll = Math.atan(across) * 0.6;
+      // a still (reduced motion) keeps a fifth of the motion: a calm frame, the deck nearly level
+      const k = reduced ? 0.12 : 0.6;
+      dPitch = Math.atan(along) * k / D; roll = Math.atan(across) * k;
     }
     const ladder = to.quality ?? 1;
     const L = [Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az)];
@@ -162,6 +164,9 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     const cp = Math.cos((s.cam.pitch + dPitch) * D), spt = Math.sin(s.cam.pitch * D), cy = Math.cos(s.cam.yaw * D), sy = Math.sin(s.cam.yaw * D);
     const f = [sy * cp, spt, cy * cp], rt = [cy, 0, -sy], up = [-sy * spt, cp, -cy * spt], dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
     const asp = canvas.width / canvas.height, zf = dot(L, f), sc = Math.max(1, 1.25 / asp) / s.cam.focal;
+    // the lightning channel's two ends on the screen: where it leaves the cloud base and where it meets the sea
+    const proj = (P) => { const n = Math.hypot(P[0], P[1], P[2]), q = [P[0] / n, P[1] / n, P[2] / n], z = dot(q, f); return z > 0.05 ? [0.5 + dot(q, rt) / z / (asp * sc), 0.5 + dot(q, up) / z / sc] : [-9, -9]; };
+    const boltTop = proj([bolt[0] * 1000, 700 - camY, bolt[2] * 1000]), boltBot = proj([bolt[0] * 1000, -camY, bolt[2] * 1000]);
     const sun = zf > 0.05 ? [0.5 + dot(L, rt) / zf / (asp * sc), 0.5 + dot(L, up) / zf / sc] : [-9, -9];
     const onScreen = zf > 0.05 && sun[0] > -0.1 && sun[0] < 1.1 && sun[1] > -0.1 && sun[1] < 1.1 && L[1] > -0.01;
     draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg);
@@ -169,7 +174,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       // rays need broken cloud and a low light; ghosts a clear line to it; mist blooms in haze; night halates
       gl.uniform1f(u.uRays, night ? 0.3 * s.wx.cloud : Math.min(1, s.wx.cloud * 1.6) * (1 - s.wx.storm) * Math.max(0.3, 1 - s.light.el / 40));
       gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0);
-      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
+      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform4f(u.uBoltS, boltTop[0], boltTop[1], boltBot[0], boltBot[1]); gl.uniform1f(u.uFlashP, flash); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
   }
 
   // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
@@ -199,7 +204,8 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     lightning(strength = 1, { hold = false } = {}) {
       const s0 = state();
       // where the stroke stands: 2 to 9 km off, inside the frame's half of the sky, in km from the eye
-      const a = (s0.cam.yaw + (Math.random() - 0.5) * 24) * D, r = 1.5 + Math.random() * 3; bolt = [Math.sin(a) * r, 0.4, Math.cos(a) * r];
+      // a held stroke (a still made on purpose) stands just right of centre, 2.5 km off
+      const a = (s0.cam.yaw + (hold ? 10 : (Math.random() - 0.5) * 24)) * D, r = hold ? 2.5 : 1.5 + Math.random() * 3; bolt = [Math.sin(a) * r, 0.4, Math.cos(a) * r];
       if (hold) { held = strength; return; }
       const t0 = performance.now(), n = 3 + Math.floor(Math.random() * 2);
       for (let i = 0, t = t0; i < n; i++, t += 40 + Math.random() * 40) strokes.push({ t, s: strength * (i ? 0.6 + 0.4 * Math.random() : 1) });

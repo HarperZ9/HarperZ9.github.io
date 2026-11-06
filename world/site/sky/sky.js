@@ -22,7 +22,7 @@ const bearing = (az) => POINTS[Math.round((((az % 360) + 360) % 360) / 22.5) % 1
 export const quality = () => (matchMedia("(pointer: coarse)").matches ? 0 : 1);
 export const cloudSteps = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? 32 : matchMedia("(pointer: coarse)").matches ? 10 : 24);
 
-export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx = null } = {}) {
+export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx = null, heldBolt = false } = {}) {
   wx = wx || estimatedWeather(date, lat, lon);
   const sun = sunPosition(date, lat, lon), moon = moonPosition(date, lat, lon);
   const day = sun.alt > -5;
@@ -52,6 +52,8 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   const Hs = seaState(wx.wind).Hs; if (Hs > 1) cam.h = 1.3 + 0.12 * Hs;
   const near = wx.wind > 12;
   if (near) { cam.h = 2.5; cam.focal = 1.5; cam.pitch = 1.5; }
+  // a held lightning still looks a little higher, so the channel stands in open sky above the swell
+  if (near && heldBolt) cam.pitch = 8;
   // the weather the scene draws: storms darken the cloud base; a rainbow needs rain, the Sun up and lower than
   // 42 degrees, and gaps in the cloud for sunlight; a 22 degree halo needs thin high cloud, which is likely (not
   // measured: cloud type is not in the data) at middling cover without rain
@@ -118,7 +120,7 @@ export function mountSky({ button, getField, tall = () => innerHeight > innerWid
     if (!place) return;
     const now = when || place.at || new Date();
     const wx = planted ? { ...PLANTED[planted], source: "planted" } : realWx;
-    const r = skySpace(now, place, { heading, tall: tall(), wx });
+    const r = skySpace(now, place, { heading, tall: tall(), wx, heldBolt: holdBolt });
     last = r;
     root.dataset.theme = r.day ? "light" : "dark"; // the page's light follows the sky while Sky is on; not saved
     field = field || (await getField());

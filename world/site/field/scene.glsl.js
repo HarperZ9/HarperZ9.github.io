@@ -338,7 +338,11 @@ vec4 sprayVol(vec3 ro, vec3 rd, float tMax) {
     float tex = smoothstep(0.35, 0.8, n3(m * 0.6) * 0.7 + n3(m * 2.1) * 0.3);
     float dens = uSpray * (brk * exp(-above / 1.6) * 0.9 + sheet * 0.7 + 0.12 * exp(-above / 0.7)) * tex;
     // droplets: sparse points in 0.25 m cells, flickering on the fast clock
-    vec3 cid = floor(m * 4.0); float drop = step(0.985, hash(cid.xz + cid.y * 7.3 + floor(uT * 12.0))) * (brk + sheet) * uSpray;
+    // a droplet is a point at a random place in its cell, not the cell: near the eye a whole cell spans a large part of
+    // the screen and drew as a pale rectangle (found 2026-11-06 in the lightning frame)
+    vec3 cid = floor(m * 4.0), off = vec3(hash(cid.xz + 1.3), hash(cid.yz + 2.9), hash(cid.xy + 5.1)) - 0.5;
+    float drop = step(0.985, hash(cid.xz + cid.y * 7.3 + floor(uT * 12.0))) * (brk + sheet) * uSpray
+               * smoothstep(0.06, 0.0, length(fract(m * 4.0) - 0.5 - off * 0.6)) * smoothstep(1.0, 3.0, t);
     float sig = dens * 0.35, st = exp(-sig * dt);
     S += T * ((1.0 - st) * 0.9 * Ed / PI * (0.6 + 0.4 * ph) + drop * 0.6 * Ed / PI * min(1.0, 20.0 / t));
     T *= st;
@@ -370,10 +374,38 @@ vec3 glassSeen(vec3 p, vec3 rd) {
   vec3 n = glyphN(p); float Fr = fresnel(clamp(dot(-rd, n), 0.0, 1.0), uIor.g);
   return sky(reflect(rd, n)) * Fr + (1.0 - Fr) * sky(rd) * exp(-uAbs * uGT);
 }
+// how much of the sunlight a point near the sea gets past the clouds: the cloud density where the sun's ray through the
+// point crosses the cloud base, as a transmittance (the shadow that cuts light shafts in the haze)
+float cloudShadow(vec3 pKm) {
+  if (uCloudSteps <= 0 || uL.y <= 0.02) return 1.0;
+  vec3 b = pKm + uL * ((cloudBase() + 0.3 - pKm.y) / uL.y);
+  return exp(-cloudD(b) * 40.0 * 0.6);
+}
 vec3 aerial(vec3 col, float distM, vec3 rd) {
   // rain and fog add their own extinction (uHaze per km, from visibility by Koschmieder's law; sky/weather.mjs)
   vec3 T = exp(-(extinctionAt(0.0) + vec3(uHaze)) * distM * 0.001);
-  return col * T + skyL(normalize(vec3(rd.x, 0.02, rd.z))) * uLightCol * (1.0 - T);
+  vec3 res = col * T + skyL(normalize(vec3(rd.x, 0.02, rd.z))) * uLightCol * (1.0 - T);
+  // sea mist (sky/fog.mjs): three thin layers over the water, carried downwind; each adds its own Beer-Lambert extinction
+  // over the part of the path inside it, and takes the sky's light
+  if (uHaze + uSpray > 0.0) {
+    float tau = 0.0;
+    for (int k = 0; k < 3; k++) {
+      float H = k == 0 ? 2.0 : k == 1 ? 6.0 : 15.0, sc = k == 0 ? 0.08 : k == 1 ? 0.03 : 0.012;
+      float inside = rd.y < 0.0 ? min(distM, H / max(-rd.y, 1e-3)) : min(distM, max(0.0, H - uCam.y) / max(rd.y, 1e-3));
+      vec2 at = (uCam.xz + rd.xz * min(distM, 300.0)) - uWindDir * uT * (2.0 + float(k) * 1.5);
+      tau += (0.004 + 0.01 * uSpray) * (1.0 + uHaze) / H * inside * smoothstep(0.3, 0.75, n3(vec3(at * sc, float(k) * 7.0)));
+    }
+    float Tm = exp(-tau);
+    res = res * Tm + skyL(vec3(0.0, 1.0, 0.0)) * uLightCol * PI * 0.35 * (1.0 - Tm);
+  }
+  // long-range fog with light shafts: single scattering of sunlight in the haze, the closed form in sky/fog.mjs,
+  // times the fraction of four points along the path the clouds leave in sun
+  if (uHaze > 0.0 && uL.y > 0.0) {
+    float d = distM * 0.001, bt = uHaze, lit = 0.0;
+    for (int k = 0; k < 4; k++) lit += cloudShadow(vec3(0.0, uCam.y * 0.001, 0.0) + rd * d * (float(k) + 0.5) / 4.0);
+    res += uLightCol * lightT() * hgp(dot(rd, uL), 0.6) * 0.9 * (1.0 - exp(-bt * d)) * lit / 4.0;
+  }
+  return res;
 }
 // GLSL has no recursion, so the sea comes twice: sea0 mirrors the sky only (used from inside the glass), sea1
 // also mirrors the glass letters (used for the eye's own rays)
@@ -541,11 +573,13 @@ void main() {
 export const POST_FRAG = `#version 300 es
 precision highp float;
 uniform sampler2D uImg; uniform float uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
+uniform vec4 uBoltS; uniform float uFlashP;
 uniform vec2 uSunUV; uniform float uSunOn, uRays, uGhost, uBloom, uHalation, uQuality, uRainP, uTilt;
 float lum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
 vec3 hdrAt(vec2 p) { return texture(uImg, clamp(p, vec2(0.001), vec2(0.999))).rgb; }
 in vec2 v; out vec4 o;
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+float pn(float x, float k) { float i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f); return mix(hash(vec2(i, k)), hash(vec2(i + 1.0, k)), f); }
 vec3 aces(vec3 x) { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0); }
 vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, c)); }
 void main() {
@@ -579,9 +613,26 @@ void main() {
     int N = uQuality > 0.5 ? 16 : 12; vec3 acc = vec3(0.0);
     for (int i = 0; i < 16; i++) { if (i >= N) break;
       float r = sqrt((float(i) + hash(gl_FragCoord.xy + float(i))) / float(N)) * (0.02 + 0.03 * uBloom), an = float(i) * 2.39996 + 6.2832 * hash(gl_FragCoord.yx);
-      vec3 c = hdrAt(uv + vec2(cos(an), sin(an)) * r * asp); float l = lum(c); acc += c * max(l - 1.0, 0.0) / max(l, 1e-4); }
+      vec2 o = vec2(cos(an), sin(an)) * r;
+      // mechanical vignetting (cat's-eye bokeh): off axis, the barrel's rear opening cuts the disk with a copy of it
+      // shifted toward the centre, by more the farther from the axis
+      vec2 off = (uv - 0.5) * vec2(uRes.x / uRes.y, 1.0) * 0.06; if (length(o + off) > 0.05) continue;
+      vec3 c = hdrAt(uv + o * asp); float l = lum(c); acc += c * max(l - 1.0, 0.0) / max(l, 1e-4); }
     acc /= float(N);
     hdr += acc * uBloom * 0.8 + lum(acc) * vec3(1.0, 0.32, 0.16) * uHalation * 0.9;
+  }
+  // the lightning channel, drawn on the screen between its two projected ends (field.js): a jagged line, its kinks from
+  // two octaves of noise along it, with a branch; a bright core and a glow, in front of the rain. The world-space
+  // channel in the scene lights the cloud; this is the part the eye resolves
+  if (uFlashP > 0.05 && uBoltS.x > -5.0 && uBoltS.z > -5.0) {
+    vec2 A = uBoltS.xy, B = uBoltS.zw, ar = vec2(uRes.x / uRes.y, 1.0), ab = (B - A) * ar, pa = (uv - A) * ar;
+    float L = length(ab), tt = clamp(dot(pa, ab) / (L * L), 0.0, 1.0); vec2 nrm = vec2(-ab.y, ab.x) / L;
+    float jag = (pn(tt * 9.0, 1.0 * 7.0 + 3.0) - 0.5) * 0.09 * L + (pn(tt * 41.0, 5.0 * 7.0 + 2.0) - 0.5) * 0.025 * L;
+    float d = length(pa - ab * tt - nrm * jag);
+    float tb = clamp((tt - 0.35) / 0.3, 0.0, 1.0), jb = jag + tb * 0.18 * L + (pn(tt * 33.0, 8.0 * 7.0 + 1.0) - 0.5) * 0.02 * L;
+    float db = tt > 0.35 && tt < 0.65 ? length(pa - ab * tt - nrm * jb) : 1.0;
+    float core = exp(-pow(d / 0.0012, 2.0)) + 0.55 * exp(-pow(db / 0.0008, 2.0));
+    hdr += vec3(0.82, 0.86, 1.0) * uFlashP * (60.0 * core + 1.2 * exp(-min(d, db) / 0.01));
   }
   // rain falling between the eye and the scene: four layers at increasing depth (two on a phone); nearer drops are
   // larger, faster across the frame and blurred; each streak is the motion blur of a drop in a 1/60 s exposure,
