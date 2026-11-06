@@ -13,12 +13,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { page } from "./studies-shell.mjs";
 import { esc } from "./studies-markdown.mjs";
+import { LANE_MARKS } from "./marks/lane-marks.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const data = JSON.parse(readFileSync(path.join(site, "experiments/experiments.json"), "utf8"));
 const cards = data.cards, domains = data.domains.filter((d) => cards.some((c) => c.domains.includes(d.id)));
 const LABELS = { denominator: "Sample", interval: "Result", controls: "Controls", forecast_vs_outcome: "Forecast against outcome", known_answer: "Known answer" };
 const DATE = new Date(data.built + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+// each lane's drawn mark (scripts/marks/lane-marks.mjs), one view of a single sprite written by
+// scripts/build-marks.mjs, so every lane costs one request; the label beside it carries the meaning, so the mark has empty alt text
+const lane = (id, cls, size) => LANE_MARKS[id] ? `<img class="${cls}" src="/media/world/icons/lanes.svg#${id}" width="${size}" height="${size}" alt="" loading="lazy" decoding="async">` : "";
 
 // the field: x is the finding's place in the ledger (time), y its first domain; each mark links to its card
 function field() {
@@ -30,7 +35,7 @@ function field() {
     const i = domains.findIndex((x) => x.id === d);
     return `<a href="#${c.id.toLowerCase()}" class="xf-mark" data-domains="${d}"${k ? ' tabindex="-1" aria-hidden="true"' : ""}><circle cx="${x(c.n).toFixed(1)}" cy="${top + i * rowH + 11}" r="4.5"><title>${esc(c.id)}: ${esc(c.title)}</title></circle></a>`;
   }).join("")).join("");
-  return `<figure class="xf"><div class="xf-scroll" tabindex="0" role="region" aria-label="The field of studies"><svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Every study on this page, placed by when it ran (left to right) and by its domain; each mark links to its card">${rows}${marks}</svg></div>
+  return `<figure class="xf"><div class="xf-scroll" tabindex="0" role="region" aria-label="The field of studies"><svg viewBox="-56 0 ${W + 56} ${H}" role="group" aria-label="Every study on this page, placed by when it ran (left to right) and by its domain; each mark links to its card">${rows}${marks}</svg></div>
 <figcaption>Each mark is one study, earliest on the left. Choose a mark to go to its card.</figcaption></figure>`;
 }
 
@@ -40,7 +45,7 @@ function card(c) {
   const verified = `<b>Verified</b> ${DATE}: all ${c.checked_numbers} numbers on this card appear in the study's own ledger entry (checked by the site's build, <code>tools/experiments/select.py</code>).${scorer ? ` The study was scored by ${scorer}.` : ""} No outside reviewer has read it.`;
   const domainNames = c.domains.map((d) => domains.find((x) => x.id === d)?.label).filter(Boolean).join(", ");
   return `<li class="xc" id="${c.id.toLowerCase()}" data-domains="${c.domains.join(" ")}">
-  <p class="xc-meta"><span class="xc-n">${esc(c.id)}</span> <span>${esc(domainNames)}</span>${c.rung ? ` <span>${esc(c.rung)}</span>` : ""}</p>
+  <p class="xc-meta"><span class="xc-n">${esc(c.id)}</span> <span class="xc-lanes">${c.domains.map((d) => lane(d, "xc-lane", 18)).join("")}${esc(domainNames)}</span>${c.rung ? ` <span>${esc(c.rung)}</span>` : ""}</p>
   <h2 class="xc-title">${esc(c.title)}</h2>
   ${c.finding !== c.title ? `<p class="xc-finding">${esc(c.finding)}</p>` : ""}
   ${nums ? `<dl class="xc-nums">${nums}</dl>` : ""}
@@ -56,7 +61,7 @@ const body = `<article class="tool xp">
 <p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} studies have cleared review so far, newest first, and more join as they clear. Every study cleared so far came back null or went against its own forecast, and each card says which.</p>
 <p>Each card keeps its number in our findings ledger (F667 is the 667th finding). It gives the finding, the numbers behind it, the forecast against the outcome where the study made one, the verdict, the limits, and a Verified line saying what was checked.</p>
 ${field()}
-<div class="xp-filter" role="group" aria-label="Show one domain"><button type="button" data-domain="" aria-pressed="true">All <span>${cards.length}</span></button>${domains.map((d) => `<button type="button" data-domain="${d.id}" aria-pressed="false">${esc(d.label)} <span>${cards.filter((c) => c.domains.includes(d.id)).length}</span></button>`).join("")}</div>
+<div class="xp-filter" role="group" aria-label="Show one domain"><button type="button" data-domain="" aria-pressed="true">All <span>${cards.length}</span></button>${domains.map((d) => `<button type="button" data-domain="${d.id}" aria-pressed="false">${lane(d.id, "xp-lane", 20)}${esc(d.label)} <span>${cards.filter((c) => c.domains.includes(d.id)).length}</span></button>`).join("")}</div>
 <p class="xp-count" aria-live="polite">${cards.length} studies shown.</p>
 <ol class="xp-stream">${cards.map(card).join("\n")}</ol>
 </article>
