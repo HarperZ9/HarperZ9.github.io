@@ -93,3 +93,44 @@ export function sellmeier(lambdaNm, { B, C }) {
 }
 // SCHOTT N-BK7, from the maker's data sheet (also refractiveindex.info, SCHOTT optical glass catalogue)
 export const N_BK7 = { B: [1.03961212, 0.231792344, 1.01046945], C: [0.00600069867, 0.0200179144, 103.560653] };
+
+// The swell: the long, high waves near the spectrum's peak, as a few Gerstner (trochoidal) waves the scene ray-marches
+// as raised geometry (Gerstner 1802; Fournier and Reeves 1986, "A simple model of ocean waves", SIGGRAPH). n waves
+// span 0.5 to 2.5 times the peak wavenumber and +-50 degrees of the wind; each takes its share of the JONSWAP energy,
+// a = sqrt(2 S(omega) d omega D(theta) d theta). A wave is no steeper than a Stokes wave can stand, H / L = 1/7
+// (Michell 1893), so k a <= pi / 7; the choppiness Q sharpens crests (Q = 1 would close them to a cusp) and grows
+// with wind; where crests fold, the surface Jacobian goes below zero and the wave breaks (foam and spray, scene).
+// Returns Float32Array of (kx, kz, a, phase) and the choppiness and the peak wavenumber.
+export function swellWaves({ U10, fetch, windAngle, n = 8, seed = 5 }) {
+  const rand = rng(seed), wp = 22 * Math.pow((G * G) / (U10 * fetch), 1 / 3), kp = (wp * wp) / G, out = new Float32Array(n * 4);
+  const spread = 4, norm = (Math.pow(2, 2 * spread - 1) * gammaRatio(spread)) / Math.PI;
+  const nk = Math.ceil(n / 2), na = Math.ceil(n / nk);
+  let i = 0;
+  for (let b = 0; b < nk && i < n; b++) for (let a = 0; a < na && i < n; a++, i++) {
+    const lk0 = Math.log(0.5 * kp) + (Math.log(5) * b) / nk, lk1 = lk0 + Math.log(5) / nk, k = Math.exp(lk0 + (lk1 - lk0) * rand());
+    const omega = Math.sqrt(G * k), domega = (G / (2 * omega)) * (Math.exp(lk1) - Math.exp(lk0));
+    const dth = (100 * Math.PI) / 180 / na, th = -50 * Math.PI / 180 + dth * (a + rand());
+    const d = Math.pow(Math.abs(Math.cos(th / 2)), 2 * spread) * norm;
+    const amp = Math.min(Math.sqrt(2 * jonswap(omega, { U10, fetch }) * domega * d * dth), Math.PI / 7 / k);
+    const dir = th + windAngle;
+    out.set([k * Math.cos(dir), k * Math.sin(dir), amp, rand() * 2 * Math.PI], i * 4);
+  }
+  // choppiness (GPU Gems 1, ch. 1: displacement Q / (k n) per wave, so aligned crests give a Jacobian of 1 - Q): calm
+  // seas are near sinusoidal; a gale's aligned crests fold, which is where it breaks
+  const Q = Math.min(0.95, 0.35 + 0.04 * Math.max(0, U10 - 4));
+  return { waves: out, Q, kp };
+}
+// height of the swell at (x, z), time t (crests where cos = 1, where the displacement bunches points together), with
+// two fixed-point steps that undoes the Gerstner horizontal displacement;
+// the same sum the shader marches, so the camera can ride the same sea
+export function swellHeight({ waves, Q }, x, z, t) {
+  const n = waves.length / 4; let px = x, pz = z;
+  for (let it = 0; it < 2; it++) {
+    let dx = 0, dz = 0;
+    for (let i = 0; i < n; i++) { const kx = waves[i * 4], kz = waves[i * 4 + 1], a = waves[i * 4 + 2], k = Math.hypot(kx, kz), th = kx * px + kz * pz - Math.sqrt(G * k) * t + waves[i * 4 + 3], q = Q / (k * n);
+      dx -= (q * kx / k) * Math.sin(th); dz -= (q * kz / k) * Math.sin(th); }
+    px = x - dx; pz = z - dz;
+  }
+  let h = 0; for (let i = 0; i < n; i++) { const kx = waves[i * 4], kz = waves[i * 4 + 1], k = Math.hypot(kx, kz); h += waves[i * 4 + 2] * Math.cos(kx * px + kz * pz - Math.sqrt(G * k) * t + waves[i * 4 + 3]); }
+  return h;
+}

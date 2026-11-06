@@ -19,6 +19,7 @@ const bearing = (az) => POINTS[Math.round((((az % 360) + 360) % 360) / 22.5) % 1
 
 // the field's parameters for a place, an instant and a facing direction (degrees from north; null faces the light)
 // quality ladder: cloud march steps by device; a phone gets fewer, a still frame (reduced motion) can afford more
+export const quality = () => (matchMedia("(pointer: coarse)").matches ? 0 : 1);
 export const cloudSteps = () => (matchMedia("(prefers-reduced-motion: reduce)").matches ? 32 : matchMedia("(pointer: coarse)").matches ? 10 : 24);
 
 export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx = null } = {}) {
@@ -42,6 +43,12 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   // stands in the narrower night framing (half height about 13 degrees)
   const lift = day ? clamp((el - 15) * 0.1, 0, 4) : clamp(el * 0.6 - 3.2, 0, 11);
   const cam = day ? { h: 1.4, pitch: 2.2 + lift, yaw, focal: 1.35 } : { h: 2.5, pitch: 3.2 + lift, yaw, focal: 2.2 };
+  // in a big sea the eye stands on a deck a few metres up, so the waves stand around it rather than over it
+  // in a big sea the eye rides low on a small deck, a little over a metre plus a tenth of the wave height above the
+  // water under it, so in a trough the next crests stand above the horizon; a gale is framed with a long lens, as storm
+  // photographers frame it, which stacks the swells into walls
+  const Hs = seaState(wx.wind).Hs; if (Hs > 1) cam.h = 1.3 + 0.12 * Hs;
+  if (wx.wind > 12) { cam.focal = 2.6; cam.pitch = Math.min(cam.pitch, 0.4); }
   // the weather the scene draws: storms darken the cloud base; a rainbow needs rain, the Sun up and lower than
   // 42 degrees, and gaps in the cloud for sunlight; a 22 degree halo needs thin high cloud, which is likely (not
   // measured: cloud type is not in the data) at middling cover without rain
@@ -59,7 +66,7 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   const to = ((wx.windFrom + 180) * Math.PI) / 180, windAngle = Math.atan2(Math.cos(to), Math.sin(to));
   return {
     space: { light: { el, az }, cam, wind: wx.wind, windAngle, expo, night: day ? 0 : 1, phase: moon.phaseAngle, lightScale,
-      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo, haze: hazeExtinction(wx) }, cloudSteps: cloudSteps(), sid: { lat, lst: localSidereal(date, lon) } },
+      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo, haze: hazeExtinction(wx) }, cloudSteps: cloudSteps(), quality: quality(), sid: { lat, lst: localSidereal(date, lon) } },
     sun, moon, day, wx, sea: seaState(wx.wind),
   };
 }
@@ -99,7 +106,7 @@ export function mountSky({ button, getField, tall = () => innerHeight > innerWid
   dlg.className = "sky-dialog"; dlg.setAttribute("aria-label", "Your sky"); dlg.innerHTML = html;
   document.body.append(dlg);
   const $ = (k) => dlg.querySelector(`[data-sky="${k}"]`), status = dlg.querySelector(".sky-status");
-  let place = null, heading = null, realWx = null, timer = 0, lastHeadingDraw = 0, field = null, themeBefore, planted = null, last = null, sound = null, boltTimer = 0;
+  let place = null, heading = null, realWx = null, timer = 0, lastHeadingDraw = 0, field = null, themeBefore, planted = null, last = null, sound = null, boltTimer = 0, holdBolt = false;
   const canFace = typeof DeviceOrientationEvent !== "undefined" && matchMedia("(pointer: coarse)").matches;
   if (canFace) dlg.querySelector("[data-sky-face]").hidden = false;
 
@@ -115,6 +122,7 @@ export function mountSky({ button, getField, tall = () => innerHeight > innerWid
     const windNote = weatherWords(r);
     if (sound) sound.set({ wind: r.wx.wind, rain: r.wx.rain, Tp: r.sea.Tp, breaking: Math.min(1, Math.max(0, (r.wx.wind - 7) / 13)) });
     clearTimeout(boltTimer); if (r.wx.thunder) storm();
+    if (holdBolt && r.wx.thunder && field?.lightning) setTimeout(() => field.lightning(1, { hold: true }), 2500);
     status.textContent = words(r, place, windNote) + (field ? "" : " The live water is not available on this device, so the picture stays as it was.");
     button.setAttribute("aria-pressed", "true"); $("off").hidden = false;
   }
@@ -190,6 +198,7 @@ export function mountSky({ button, getField, tall = () => innerHeight > innerWid
     const [lat, lon] = q.get("sky").split(",").map(Number);
     const at = q.get("at") ? new Date(q.get("at")) : null;
     if (PLANTED[q.get("wx")]) planted = q.get("wx");
+    holdBolt = q.get("bolt") === "hold";
     if (Number.isFinite(lat) && Number.isFinite(lon)) { if (q.get("face")) heading = Number(q.get("face")); begin({ lat: coarse(lat), lon: coarse(lon), planted: true, at }); }
   }
 }

@@ -29,10 +29,12 @@ uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles
 uniform float uPitch, uYaw, uFocal, uT, uMoon, uMoonPhaseAngle, uExpo, uStars; uniform vec2 uSid;
 uniform float uGX, uGZ, uGH, uGW, uGT, uGR, uGBase, uGCap, uHasGlyph, uFoam;
 uniform float uCloud, uStorm, uRain, uRainbow, uHalo, uFlash, uHaze; uniform int uCloudSteps;
+uniform vec4 uSwell[8]; uniform float uSwellQ, uHmax, uSpray, uBreakH, uSig; uniform vec2 uWindDir; uniform int uMarch;
 in vec2 v; out vec4 o;
 const float SUN_R = 0.004654;  // rad: the Sun's mean angular radius, 0.2666 deg
 const float MOON_R = 0.004521; // rad: the Moon's mean angular radius, 0.2590 deg
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+float hgp(float c, float g) { return (1.0 - g * g) / (12.566370614 * pow(1.0 + g * g - 2.0 * g * c, 1.5)); }
 vec3 skyL(vec3 rd) {
   vec2 lh = normalize(uL.xz + 1e-6), rh = normalize(rd.xz + 1e-6);
   float az = acos(clamp(dot(lh, rh), -1.0, 1.0)), el = asin(clamp(rd.y, -1.0, 1.0));
@@ -126,7 +128,7 @@ vec4 clouds(vec3 rd) {
     for (int j = 1; j <= 4; j++) tau += cloudD(p + uL * 0.25 * float(j)) * 0.25 * 40.0;
     float sig = d * 40.0, ms = 0.0, a = 1.0, b = 1.0, e = 1.0;
     for (int o = 0; o < 3; o++) { ms += a * mix(hg(c, 0.8 * e), hg(c, -0.3 * e), 0.3) * exp(-b * tau); a *= 0.5; b *= 0.5; e *= 0.5; }
-    vec3 Li = sunC * ms * 4.0 * PI * (1.0 - exp(-2.0 * sig * dt)) + amb * 0.08 + vec3(uFlash) * 6.0;
+    vec3 Li = sunC * ms * 4.0 * PI * (1.0 - exp(-2.0 * sig * dt)) + amb * 0.08 + vec3(0.7, 0.75, 1.0) * uFlash * 0.25;
     float st = exp(-sig * dt);
     S += T * (1.0 - st) * Li; T *= st;
   }
@@ -134,16 +136,35 @@ vec4 clouds(vec3 rd) {
   float fade = smoothstep(0.004, 0.08, rd.y);
   return vec4(S * fade, mix(1.0, T, fade));
 }
-// a rainbow: rain in the air opposite the Sun, the primary bow from 40.6 (violet) to 42.4 degrees (red) round the
-// antisolar point and the secondary, reversed and fainter, from 50.4 to 53.6 (Descartes' minimum deviation in water,
-// n = 1.331 to 1.343 across the visible); seen only with the Sun up and below 42 degrees
+// a rainbow from the spectrum: for 12 wavelengths from 400 to 700 nm, water's index (a Cauchy fit, n = 1.3245 +
+// 3046 / lambda^2 with lambda in nm, within 0.0005 of the measured index of water across the visible) gives Descartes'
+// minimum-deviation radius round the antisolar point, primary 4r - 2i with cos i = sqrt((n^2 - 1) / 3), secondary
+// 180 + 2i - 6r with cos i = sqrt((n^2 - 1) / 8). Each bow is bright at its edge and fades inward (outward for the
+// secondary), widened by the Sun's 0.53 degree disk; colour by Wyman, Sloan and Shirley's analytic fit to the CIE
+// 1931 observer (JCGT 2013), then XYZ to linear sRGB. Alexander's dark band lies between the bows.
+float wg(float x, float m, float s1, float s2) { float t = (x - m) / (x < m ? s1 : s2); return exp(-0.5 * t * t); }
+vec3 cieXYZ(float l) {
+  return vec3(1.056 * wg(l, 599.8, 37.9, 31.0) + 0.362 * wg(l, 442.0, 16.0, 26.7) - 0.065 * wg(l, 501.1, 20.4, 26.2),
+              0.821 * wg(l, 568.8, 46.9, 40.5) + 0.286 * wg(l, 530.9, 16.3, 31.1),
+              1.217 * wg(l, 437.0, 11.8, 36.0) + 0.681 * wg(l, 459.0, 26.0, 13.8));
+}
 vec3 rainbow(vec3 rd) {
   if (uRainbow <= 0.0 || uL.y <= 0.0) return vec3(0.0);
   float a = degrees(acos(clamp(dot(rd, -uL), -1.0, 1.0)));
-  vec3 p = exp(-pow((a - vec3(42.3, 41.5, 40.8)) / 0.45, vec3(2.0)));
-  vec3 s2 = exp(-pow((a - vec3(50.6, 51.8, 53.2)) / 0.6, vec3(2.0))) * 0.42;
-  float alex = smoothstep(42.6, 43.2, a) * smoothstep(50.2, 49.6, a);  // Alexander's dark band between the bows
-  return (p + s2) * uRainbow * 0.05 * lightT() * uLightCol * (1.0 - 0.35 * alex);
+  if (a < 36.0 || a > 58.0) return vec3(0.0);
+  vec3 xyz = vec3(0.0), norm = vec3(0.0);
+  for (int i = 0; i < 12; i++) {
+    float l = 400.0 + 300.0 * (float(i) + 0.5) / 12.0, n = 1.3245 + 3046.0 / (l * l);
+    float i1 = acos(sqrt((n * n - 1.0) / 3.0)), r1 = asin(sin(i1) / n), th1 = degrees(4.0 * r1 - 2.0 * i1);
+    float i2 = acos(sqrt((n * n - 1.0) / 8.0)), r2 = asin(sin(i2) / n), th2 = 180.0 + degrees(2.0 * i2 - 6.0 * r2);
+    float p = a < th1 ? exp(-pow((th1 - a) / 0.75, 2.0)) : exp(-pow((a - th1) / 0.3, 2.0));
+    float q = a > th2 ? exp(-pow((a - th2) / 1.0, 2.0)) * 0.43 : exp(-pow((th2 - a) / 0.35, 2.0)) * 0.43;
+    vec3 c = cieXYZ(l); xyz += c * (p + q); norm += c;
+  }
+  xyz /= norm.y;
+  vec3 rgb = max(mat3(3.2406, -0.9689, 0.0557, -1.5372, 1.8758, -0.2040, -0.4986, 0.0415, 1.0570) * xyz, 0.0);
+  float alex = smoothstep(42.6, 43.4, a) * smoothstep(50.4, 49.6, a);
+  return rgb * uRainbow * 0.6 * lightT() * uLightCol * (1.0 - 0.35 * alex);
 }
 // the 22 degree halo: ice crystals in thin cirrus, red on the inner edge (minimum deviation of hexagonal ice prisms)
 vec3 halo(vec3 rd) {
@@ -155,7 +176,7 @@ vec3 halo(vec3 rd) {
 vec3 sky(vec3 rd) {
   vec3 col = skyL(rd) * uLightCol + lightDisk(rd) + stars(rd);
   // mirrored rays (the sea, the glass) take the cloud cover as a grey veil; the eye's own rays march the clouds
-  return mix(col, skyL(vec3(0.0, 1.0, 0.0)) * uLightCol * (0.6 - 0.4 * uStorm) + vec3(uFlash), uCloud * 0.75);
+  return mix(col, skyL(vec3(0.0, 1.0, 0.0)) * uLightCol * (0.6 - 0.4 * uStorm) + vec3(0.7, 0.75, 1.0) * uFlash * 0.04, uCloud * 0.75);
 }
 vec3 skyEye(vec3 rd) {
   vec3 col = skyL(rd) * uLightCol + lightDisk(rd) + stars(rd);
@@ -199,6 +220,55 @@ bool glyphBox(vec3 ro, vec3 rd, out float t0, out float t1) {
 bool marchGlyph(vec3 ro, vec3 rd, float t0, float t1, out vec3 hit) {
   float t = t0;
   for (int i = 0; i < 72; i++) { vec3 p = ro + rd * t; float d = glyph3(p); if (d < 0.002 * t) { hit = p; return true; } t += max(d, 0.01); if (t > t1) break; }
+  return false;
+}
+// the swell as raised geometry (field/ocean.js swellWaves): Gerstner waves, height a cos(theta) at the undisplaced
+// point p, which two fixed-point steps recover from the world point x (p = x - d(p))
+vec2 swellP(vec2 x) {
+  vec2 p = x;
+  for (int it = 0; it < 2; it++) {
+    vec2 d = vec2(0.0);
+    for (int i = 0; i < 8; i++) { vec4 w = uSwell[i]; float k = length(w.xy); if (k < 1e-6) continue;
+      d -= uSwellQ / (k * 8.0) * (w.xy / k) * sin(dot(w.xy, p) - sqrt(9.81 * k) * uT + w.w); }
+    p = x - d;
+  }
+  return p;
+}
+float swellH(vec2 x) {
+  vec2 p = swellP(x); float h = 0.0;
+  for (int i = 0; i < 8; i++) { vec4 w = uSwell[i]; float k = length(w.xy); if (k < 1e-6) continue; h += w.z * cos(dot(w.xy, p) - sqrt(9.81 * k) * uT + w.w); }
+  return h;
+}
+// the surface Jacobian of the horizontal displacement: 1 on still water, 1 - Q where every crest lines up; below about
+// 0.3 the crest is folding over, which is where the wave breaks
+float swellJ(vec2 x) {
+  vec2 p = swellP(x); float jxx = 1.0, jzz = 1.0, jxz = 0.0;
+  for (int i = 0; i < 8; i++) { vec4 w = uSwell[i]; float k = length(w.xy); if (k < 1e-6) continue; vec2 D = w.xy / k;
+    float c = uSwellQ / 8.0 * cos(dot(w.xy, p) - sqrt(9.81 * k) * uT + w.w); jxx -= c * D.x * D.x; jzz -= c * D.y * D.y; jxz -= c * D.x * D.y; }
+  return jxx * jzz - jxz * jxz;
+}
+// march the eye's ray into the swell: step by the ray's height above the surface, then bisect the crossing. Rays
+// that pass close over a breaking crest without hitting it return the crest point, for its spray
+bool seaMarch(vec3 ro, vec3 rd, out float tHit, out vec2 nearXZ, out float nearF) {
+  nearF = 1e9; nearXZ = vec2(0.0); tHit = -1.0;
+  if (uHmax <= 0.01) { if (rd.y >= 0.0) return false; tHit = -ro.y / rd.y; return true; }
+  float tA = rd.y < 0.0 ? max(0.0, (ro.y - uHmax) / -rd.y) : 0.0;
+  float tB = rd.y < 0.0 ? (ro.y + uHmax) / -rd.y : (uHmax - ro.y) / max(rd.y, 1e-4);
+  tB = min(tB, 3000.0);
+  // samples spaced quadratically from tA to tB: fine near the eye, coarse far off where a pixel spans metres
+  float t = tA, tp = tA;
+  for (int i = 1; i <= 96; i++) {
+    if (i > uMarch) break;
+    vec3 q = ro + rd * t; float f = q.y - swellH(q.xz);
+    if (f < nearF && f > 0.0) { nearF = f; nearXZ = q.xz; }
+    if (f < 0.0) {
+      float a = tp, b = t;
+      for (int j = 0; j < 5; j++) { float m = 0.5 * (a + b); vec3 qm = ro + rd * m; if (qm.y - swellH(qm.xz) < 0.0) b = m; else a = m; }
+      tHit = b; return true;
+    }
+    tp = t; float u = float(i) / float(uMarch); t = tA + (tB - tA) * u * u;
+  }
+  if (rd.y < 0.0) { tHit = -ro.y / rd.y; return true; }
   return false;
 }
 vec3 sea0(vec3 ro, vec3 rd);
@@ -247,6 +317,13 @@ vec3 sea0(vec3 ro, vec3 rd) {
   vec4 c = textureGrad(uW2, r2 * p.xz / uTiles.z, r2 * gx / uTiles.z, r2 * gy / uTiles.z);
   vec2 s = a.xy + transpose(r1) * b.xy + transpose(r2) * c.xy; float varU = max(0.0, a.z - dot(a.xy, a.xy)) + max(0.0, b.z - dot(b.xy, b.xy)) + max(0.0, c.z - dot(c.xy, c.xy));
   float J = min(a.w, min(b.w, c.w));
+  // the swell's own slope, by central differences over a footprint that widens with distance
+  float Js = 1.0;
+  if (uHmax > 0.01) {
+    float e = max(0.08, t * 0.0025);
+    s += vec2(swellH(p.xz + vec2(e, 0.0)) - swellH(p.xz - vec2(e, 0.0)), swellH(p.xz + vec2(0.0, e)) - swellH(p.xz - vec2(0.0, e))) / (2.0 * e);
+    Js = swellJ(p.xz);
+  }
   vec3 n = normalize(vec3(-s.x, 1.0, -s.y));
   float ci = clamp(dot(-rd, n), 0.0, 1.0), F = fresnel(ci, 1.333);
   // a reflected ray that points into the sea (a wave facing away) is lifted to just above the horizon; abs() would
@@ -270,8 +347,8 @@ vec3 sea0(vec3 ro, vec3 rd) {
   return aerial(col, t, rd);
 }
 // the sea, lit; env is what its mirror sees (the sky, or the glass letters for the eye's own ray)
-vec3 sea1(vec3 ro, vec3 rd) {
-  float t = -ro.y / rd.y; vec3 p = ro + rd * t;
+vec3 sea1(vec3 ro, vec3 rd, float t) {
+  vec3 p = ro + rd * t;
   // texture footprint of one pixel on the water, stretched along the view (anisotropic filtering does the rest)
   float pa = 1.0 / (uFocal * uRes.y); vec2 side = normalize(vec2(-rd.z, rd.x) + 1e-6), fwd = normalize(rd.xz + 1e-6);
   vec2 gx = side * t * pa, gy = fwd * t * pa / max(-rd.y, 0.02);
@@ -283,6 +360,13 @@ vec3 sea1(vec3 ro, vec3 rd) {
   vec4 c = textureGrad(uW2, r2 * p.xz / uTiles.z, r2 * gx / uTiles.z, r2 * gy / uTiles.z);
   vec2 s = a.xy + transpose(r1) * b.xy + transpose(r2) * c.xy; float varU = max(0.0, a.z - dot(a.xy, a.xy)) + max(0.0, b.z - dot(b.xy, b.xy)) + max(0.0, c.z - dot(c.xy, c.xy));
   float J = min(a.w, min(b.w, c.w));
+  // the swell's own slope, by central differences over a footprint that widens with distance
+  float Js = 1.0;
+  if (uHmax > 0.01) {
+    float e = max(0.08, t * 0.0025);
+    s += vec2(swellH(p.xz + vec2(e, 0.0)) - swellH(p.xz - vec2(e, 0.0)), swellH(p.xz + vec2(0.0, e)) - swellH(p.xz - vec2(0.0, e))) / (2.0 * e);
+    Js = swellJ(p.xz);
+  }
   vec3 n = normalize(vec3(-s.x, 1.0, -s.y));
   float ci = clamp(dot(-rd, n), 0.0, 1.0), F = fresnel(ci, 1.333);
   // a reflected ray that points into the sea (a wave facing away) is lifted to just above the horizon; abs() would
@@ -301,9 +385,22 @@ vec3 sea1(vec3 ro, vec3 rd) {
   vec3 Ed = uLightCol * (lightT() * max(uL.y, 0.0) + skyL(vec3(0.0, 1.0, 0.0)) * PI);
   vec3 Rw = 0.33 * vec3(0.00085, 0.00163, 0.0033) / vec3(0.460, 0.0645, 0.0498);
   vec3 col = (1.0 - F) * Rw * Ed / PI + F * env + spec;
-  // whitecaps only where crests fold (J < 0) and only in wind that breaks waves (uFoam from U10, Monahan 1971)
-  float foam = smoothstep(0.0, -0.4, J) * uFoam;
-  col = mix(col, 0.7 * Ed / PI, foam);
+  // whitecaps where small crests fold (J < 0) at the coverage the wind allows (uFoam, Monahan 1971); where the swell
+  // itself folds (Js < 0.3) the crest breaks: solid foam on it and a streaked trail behind
+  // the crests that break are the highest ones: as much of the sea as the wind's whitecap coverage (Monahan and
+  // O'Muircheartaigh 1980, W = 3.84e-6 U^3.41) stands above uBreakH, set from the swell's own height distribution
+  // (field.js); a folding crest (Js) breaks too. Foam then streaks downwind, as it does from force 7 up (Beaufort scale)
+  // foam is a lace, not a sheet: two octaves of noise drifting with the water give its holes and threads
+  float lace = smoothstep(0.42, 0.72, 0.6 * n3(vec3(p.xz * 0.35, uT * 0.3)) + 0.4 * n3(vec3(p.xz * 1.7, uT * 0.8)));
+  float brk = max(smoothstep(uBreakH + 0.2 * uSig, uBreakH + 0.8 * uSig, p.y), smoothstep(0.32, 0.05, Js)) * step(0.05, uSpray) * lace;
+  vec2 wq = vec2(dot(p.xz, uWindDir), dot(p.xz, vec2(-uWindDir.y, uWindDir.x)));
+  float streak = smoothstep(0.68, 0.9, n3(vec3(wq * vec2(0.035, 0.7), 0.5)) * (0.7 + 0.3 * n3(vec3(wq * vec2(0.15, 2.3), 4.5))));
+  float trail = (smoothstep(uBreakH - uSig, uBreakH, p.y) * 0.35 * lace + streak * 0.6) * uSpray;
+  float foam = max(smoothstep(0.0, -0.4, J) * uFoam, max(brk, trail * 0.6));
+  col = mix(col, 0.75 * Ed / PI, clamp(foam, 0.0, 1.0));
+  // spray thrown off the breaking crest: a bright, flickering mist in front of it (fast clock: it changes every frame)
+  float sp = brk * uSpray * (0.55 + 0.45 * hash(floor(gl_FragCoord.xy * 0.5) + floor(uT * 24.0)));
+  col = mix(col, 0.9 * Ed / PI + uLightCol * lightT() * hgp(dot(rd, uL), 0.7) * 2.0, sp * 0.7);
   return aerial(col, t, rd);
 }
 vec3 ray(vec2 uv) {
@@ -318,7 +415,16 @@ void main() {
   vec3 rd = ray(uv), ro = uCam, col;
   float g0, g1; vec3 h;
   if (glyphBox(ro, rd, g0, g1) && marchGlyph(ro, rd, g0, g1, h) && h.y > -0.05) col = glass(h, rd);
-  else col = rd.y < 0.0 ? sea1(ro, rd) : skyEye(rd);
+  else {
+    float tHit, nearF; vec2 nearXZ;
+    if (seaMarch(ro, rd, tHit, nearXZ, nearF)) col = sea1(ro, rd, tHit);
+    else {
+      col = skyEye(rd);
+      // a ray that grazes a breaking crest passes through its spray
+      if (uSpray > 0.0 && nearF < 2.5) { float b = smoothstep(uBreakH, uBreakH + 0.5 * uSig, swellH(nearXZ)) * uSpray * exp(-nearF);
+        vec3 Ed = uLightCol * (lightT() * max(uL.y, 0.0) + skyL(vec3(0.0, 1.0, 0.0)) * PI); col = mix(col, 0.9 * Ed / PI, b * 0.6); }
+    }
+  }
   // half floats end at 65504; the sun's disk is brighter than that before exposure, and the display clips it anyway
   o = vec4(min(col * uExpo, vec3(6.0e4)), 1.0);
 }`;
@@ -327,6 +433,9 @@ void main() {
 export const POST_FRAG = `#version 300 es
 precision highp float;
 uniform sampler2D uImg; uniform float uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
+uniform vec2 uSunUV; uniform float uSunOn, uRays, uGhost, uBloom, uHalation, uQuality;
+float lum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
+vec3 hdrAt(vec2 p) { return texture(uImg, clamp(p, vec2(0.001), vec2(0.999))).rgb; }
 in vec2 v; out vec4 o;
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
 vec3 aces(vec3 x) { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0); }
@@ -344,6 +453,35 @@ void main() {
     if (on > 0.0 && k > 0.0) { uv = v - d / 9.0 * 1.2 * sqrt(k); rim = smoothstep(0.25, 0.0, k) * 0.25; }
   }
   vec3 hdr = texture(uImg, uv).rgb * (1.0 - rim);
+  vec2 asp = vec2(uRes.y / uRes.x, 1.0);
+  // bloom and halation: light scattered in the lens, and at night in the film's base, which glows red round bright
+  // points; mist and rain scatter it wider. A golden-angle disk of 16 taps (8 on a phone) over what exceeds white
+  if (uBloom + uHalation > 0.0) {
+    int N = uQuality > 0.5 ? 16 : 12; vec3 acc = vec3(0.0);
+    for (int i = 0; i < 16; i++) { if (i >= N) break;
+      float r = sqrt((float(i) + hash(gl_FragCoord.xy + float(i))) / float(N)) * (0.02 + 0.03 * uBloom), an = float(i) * 2.39996 + 6.2832 * hash(gl_FragCoord.yx);
+      vec3 c = hdrAt(uv + vec2(cos(an), sin(an)) * r * asp); float l = lum(c); acc += c * max(l - 1.0, 0.0) / max(l, 1e-4); }
+    acc /= float(N);
+    hdr += acc * uBloom * 0.8 + lum(acc) * vec3(1.0, 0.32, 0.16) * uHalation * 0.9;
+  }
+  // crepuscular rays: light along the line to the Sun, gathered past the clouds that interrupt it (a screen-space
+  // radial march, Mitchell, "Volumetric Light Scattering as a Post-Process", GPU Gems 3, 2007)
+  if (uSunOn > 0.0 && uRays > 0.0) {
+    int N = uQuality > 0.5 ? 32 : 12; vec2 d = (uSunUV - uv) / float(N) * 0.9, p = uv; float decay = 1.0; vec3 acc = vec3(0.0);
+    for (int i = 0; i < 32; i++) { if (i >= N) break; p += d; vec3 c = hdrAt(p); acc += c * smoothstep(1.2, 5.0, lum(c)) * decay; decay *= 0.95; }
+    hdr += acc / float(N) * uRays * 0.6;
+  }
+  // flare ghosts: the bright source reflected between the lens's surfaces, images strung along the line through the
+  // centre, each tinted by its coatings; only when the source itself is in frame and not behind cloud
+  if (uSunOn > 0.0 && uGhost > 0.0) {
+    float src = clamp(lum(hdrAt(uSunUV)) / 400.0, 0.0, 1.0);
+    for (int k = 0; k < 4; k++) {
+      float f = k == 0 ? -0.35 : k == 1 ? -0.75 : k == 2 ? 0.45 : -1.15, r = k == 0 ? 0.025 : k == 1 ? 0.05 : k == 2 ? 0.014 : 0.08;
+      vec3 tint = k == 0 ? vec3(0.55, 0.8, 1.0) : k == 1 ? vec3(1.0, 0.72, 0.42) : k == 2 ? vec3(0.55, 1.0, 0.65) : vec3(0.8, 0.6, 1.0);
+      vec2 g = 0.5 + (uSunUV - 0.5) * f; float dd = length((uv - g) * vec2(uRes.x / uRes.y, 1.0));
+      hdr += tint * src * uGhost * 0.12 * (smoothstep(r, r * 0.8, dd) * 0.6 + smoothstep(r * 1.05, r, dd) * smoothstep(r * 0.9, r, dd) * 0.4);
+    }
+  }
   // at night the eye shifts to rods: colour drains and what is left leans blue (Jensen et al. 2000, "A
   // Physically-Based Night Sky Model", SIGGRAPH, after Khan and Pattanaik's scotopic blue shift)
   float Y = dot(hdr, vec3(0.2126, 0.7152, 0.0722));
