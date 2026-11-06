@@ -47,6 +47,9 @@
      running text take the text face at a heavy weight and only titles at 36 px and up take Display */
   --face-display:var(--house-text),"Hanken Grotesk",system-ui,sans-serif;
   --face-title:var(--house-display),"Hanken Grotesk",system-ui,sans-serif;
+  /* Accession Display is drawn with its own tight spacing; the negative tracking set for Hanken Grotesk headings is
+     scaled down for it (home.css, pages.css), or its letters touch (2026-11-06, seen at full size on the live home) */
+  --display-track:0.15;
   --face-utility:var(--house-mono),"Conso",ui-monospace,monospace;
   --face-super:var(--house-super),"Hanken Grotesk",sans-serif;
 }
