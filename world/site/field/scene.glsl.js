@@ -28,7 +28,7 @@ uniform sampler2D uTrans, uSky, uW0, uW1, uW2, uGlyph;
 uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles;
 uniform float uPitch, uYaw, uFocal, uT, uMoon, uMoonPhaseAngle, uExpo, uStars; uniform vec2 uSid;
 uniform float uGX, uGZ, uGH, uGW, uGT, uGR, uGBase, uGCap, uHasGlyph, uFoam;
-uniform float uCloud, uStorm, uRain, uRainbow, uHalo, uFlash; uniform int uCloudSteps;
+uniform float uCloud, uStorm, uRain, uRainbow, uHalo, uFlash, uHaze; uniform int uCloudSteps;
 in vec2 v; out vec4 o;
 const float SUN_R = 0.004654;  // rad: the Sun's mean angular radius, 0.2666 deg
 const float MOON_R = 0.004521; // rad: the Moon's mean angular radius, 0.2590 deg
@@ -162,7 +162,9 @@ vec3 skyEye(vec3 rd) {
   vec4 c = clouds(rd);
   // the bow forms in the rain below the cloud base, so it stands in front of the clouds; the halo is in the cloud
   col = col * c.a + c.rgb + rainbow(rd) + halo(rd) * c.a;
-  return col * (1.0 - 0.5 * min(1.0, uRain / 10.0)) + skyL(vec3(rd.x, 0.05, rd.z)) * uLightCol * 0.5 * min(1.0, uRain / 10.0);
+  // rain and fog veil the sky too, most toward the horizon where the path through them is longest
+  float veil = 1.0 - exp(-uHaze * 0.25 / max(rd.y, 0.05));
+  return mix(col, skyL(vec3(rd.x, 0.05, rd.z)) * uLightCol * (0.7 - 0.3 * uStorm), clamp(veil, 0.0, 0.95));
 }
 // Fresnel reflectance of an unpolarised ray at a dielectric interface, exact (Born and Wolf)
 float fresnel(float ci, float n) {
@@ -225,7 +227,8 @@ vec3 glassSeen(vec3 p, vec3 rd) {
   return sky(reflect(rd, n)) * Fr + (1.0 - Fr) * sky(rd) * exp(-uAbs * uGT);
 }
 vec3 aerial(vec3 col, float distM, vec3 rd) {
-  vec3 T = exp(-(extinctionAt(0.0) + vec3(0.6 * min(1.0, uRain / 5.0))) * distM * 0.001);
+  // rain and fog add their own extinction (uHaze per km, from visibility by Koschmieder's law; sky/weather.mjs)
+  vec3 T = exp(-(extinctionAt(0.0) + vec3(uHaze)) * distM * 0.001);
   return col * T + skyL(normalize(vec3(rd.x, 0.02, rd.z))) * uLightCol * (1.0 - T);
 }
 // GLSL has no recursion, so the sea comes twice: sea0 mirrors the sky only (used from inside the glass), sea1

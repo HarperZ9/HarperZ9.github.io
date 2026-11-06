@@ -9,7 +9,7 @@
 // Sun and Moon come from astro.mjs (NOAA solar position; Meeus for the Moon). The field (field/field.js) draws them:
 // sky colour by its physically based scattering, the glint on the sea, the Moon's phase, stars turned by sidereal time.
 import { sunPosition, moonPosition, localSidereal, coarse, placeFromTimeZone } from "./astro.mjs";
-import { estimatedWeather, fromOpenMeteo, OPEN_METEO_FIELDS, PLANTED, seaState, beaufort } from "./weather.mjs";
+import { estimatedWeather, fromOpenMeteo, OPEN_METEO_FIELDS, PLANTED, seaState, beaufort, hazeExtinction } from "./weather.mjs";
 
 const root = document.documentElement;
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -59,14 +59,14 @@ export function skySpace(date, { lat, lon }, { heading = null, tall = false, wx 
   const to = ((wx.windFrom + 180) * Math.PI) / 180, windAngle = Math.atan2(Math.cos(to), Math.sin(to));
   return {
     space: { light: { el, az }, cam, wind: wx.wind, windAngle, expo, night: day ? 0 : 1, phase: moon.phaseAngle, lightScale,
-      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo }, cloudSteps: cloudSteps(), sid: { lat, lst: localSidereal(date, lon) } },
+      wx: { cloud: wx.cloud, storm, rain: wx.rain, rainbow, halo, haze: hazeExtinction(wx) }, cloudSteps: cloudSteps(), sid: { lat, lst: localSidereal(date, lon) } },
     sun, moon, day, wx, sea: seaState(wx.wind),
   };
 }
 
 function weatherWords(r) {
   const w = r.wx, src = w.source === "open-meteo" ? "from Open-Meteo" : w.source === "planted" ? "set in the address" : "estimated from season, hour and place, not measured";
-  const sky = w.thunder ? "thunderstorm" : w.rain > 0 ? `rain ${w.rain} mm an hour` : w.cloud > 0.7 ? "overcast" : w.cloud > 0.3 ? "broken cloud" : "mostly clear";
+  const sky = w.fog ? "fog" : w.thunder ? "thunderstorm" : w.rain > 0 ? `rain ${w.rain} mm an hour` : w.cloud > 0.7 ? "overcast" : w.cloud > 0.3 ? "broken cloud" : "mostly clear";
   return `Weather ${src}: wind ${w.wind.toFixed(0)} m/s (force ${beaufort(w.wind)}) from the ${bearing(w.windFrom)}, ${sky}; waves about ${r.sea.Hs.toFixed(1)} m, every ${r.sea.Tp.toFixed(0)} s.`;
 }
 function words(r, place, windNote) {

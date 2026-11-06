@@ -32,6 +32,7 @@ export const PLANTED = {
   storm: { wind: 24, windFrom: 230, cloud: 0.98, rain: 12, thunder: true },
   rainbow: { wind: 8, windFrom: 260, cloud: 0.55, rain: 2, thunder: false },
   clear: { wind: 5, windFrom: 270, cloud: 0, rain: 0, thunder: false },
+  fog: { wind: 3, windFrom: 200, cloud: 0.9, rain: 0, thunder: false, fog: true },
 };
 
 // WMO weather interpretation codes (Open-Meteo's weather_code): 95, 96 and 99 are thunderstorms
@@ -41,7 +42,7 @@ export function fromOpenMeteo(current) {
   return {
     wind: clamp(wind, 0.5, 32), windFrom: Number.isFinite(from) ? from : 270,
     cloud: clamp((Number(current?.cloud_cover) || 0) / 100, 0, 1), rain: Math.max(0, Number(current?.precipitation) || 0),
-    thunder: [95, 96, 99].includes(Number(current?.weather_code)), source: "open-meteo",
+    thunder: [95, 96, 99].includes(Number(current?.weather_code)), fog: [45, 48].includes(Number(current?.weather_code)), source: "open-meteo",
   };
 }
 export const OPEN_METEO_FIELDS = "wind_speed_10m,wind_direction_10m,precipitation,cloud_cover,weather_code";
@@ -57,6 +58,23 @@ export const SATURATION = (() => {
   return (lo + hi) / 2;
 })();
 export const effectiveFetch = (wind, fetch = 500000) => Math.min(fetch, (SATURATION * wind * wind) / G);
+// fog as a material: extinction beta (per km) from meteorological visibility V by Koschmieder's law, beta = 3.912 / V
+// (contrast threshold 2 percent). Visibility in fog is under 1 km (WMO); in rain it falls with rate, about
+// V = 11.6 R^-0.29 km for rain rate R in mm/h (a fit used in rain-attenuation work; treat the coefficients as
+// approximate). Clear air keeps the field's own aerosol extinction.
+export function hazeExtinction(w) {
+  if (w.fog) return 3.912 / 0.6;
+  if (w.rain > 0) return 3.912 / Math.max(0.8, 11.6 * Math.pow(w.rain, -0.29));
+  return 0;
+}
+// fit beta from a scene's measured contrast against distance: C(d) = C0 exp(-beta d), a log-linear least squares fit
+export function fitExtinction(samples) {
+  const xs = samples.map((s) => s.d), ys = samples.map((s) => Math.log(Math.max(1e-6, s.C))), n = xs.length;
+  const mx = xs.reduce((a, b) => a + b) / n, my = ys.reduce((a, b) => a + b) / n;
+  let sxy = 0, sxx = 0; for (let i = 0; i < n; i++) { sxy += (xs[i] - mx) * (ys[i] - my); sxx += (xs[i] - mx) ** 2; }
+  return -sxy / sxx;
+}
+
 // the sea a wind raises, from the spectrum itself: significant wave height Hs = 4 sqrt(m0) and the peak period
 export function seaState(wind, fetch = 500000) {
   fetch = effectiveFetch(wind, fetch);

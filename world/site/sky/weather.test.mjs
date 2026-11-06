@@ -1,7 +1,7 @@
 // Known answers for the sea a wind raises and for the sound models' physics.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { seaState, beaufort, estimatedWeather, fromOpenMeteo, PLANTED } from "./weather.mjs";
+import { seaState, beaufort, estimatedWeather, fromOpenMeteo, PLANTED, hazeExtinction, fitExtinction } from "./weather.mjs";
 import { minnaert, aeolian, thunderDelay } from "./sound.mjs";
 
 const near = (a, b, rel, what) => assert.ok(Math.abs(a - b) <= rel * Math.abs(b), `${what}: ${a} against ${b} (within ${rel * 100}%)`);
@@ -46,4 +46,15 @@ test("estimated weather says it is estimated, and Open-Meteo's thunderstorm code
   assert.equal(fromOpenMeteo({ wind_speed_10m: 3, weather_code: 3 }).thunder, false);
   assert.throws(() => fromOpenMeteo({}));
   assert.ok(PLANTED.storm.thunder && PLANTED.rainbow.rain > 0);
+});
+
+test("fog as a material: extinction fitted from a planted foggy scene's contrast against distance is within 15% of the truth", () => {
+  // planted scene: dark objects on a bright fog at 40 to 900 m, true beta 6.5 per km, 4 percent measurement noise
+  let seed = 7; const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+  const truth = 6.5, samples = [];
+  for (let d = 0.04; d <= 0.9; d += 0.04) samples.push({ d, C: 0.85 * Math.exp(-truth * d) * (1 + (rnd() - 0.5) * 0.08) });
+  near(fitExtinction(samples), truth, 0.15, "beta per km");
+  // and Koschmieder's law: fog at 0.6 km visibility is beta = 3.912 / 0.6
+  near(hazeExtinction({ fog: true, rain: 0 }), 6.52, 0.01, "fog beta");
+  assert.equal(hazeExtinction({ fog: false, rain: 0 }), 0);
 });

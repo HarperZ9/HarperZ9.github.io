@@ -46,7 +46,7 @@ function target(gl, w, h, { mip = false, filter = true } = {}) {
 }
 for (const sp of Object.values(SPACES)) { sp.cam.focal ??= 1.35; sp.glass.x ??= 0; }
 // weather the scene draws (sky.js): cloud cover, storm darkness, rain rate (mm/h), a rainbow's and a halo's strength
-const WX = ["cloud", "storm", "rain", "rainbow", "halo"];
+const WX = ["cloud", "storm", "rain", "rainbow", "halo", "haze"];
 const lerp = (a, b, k) => a + (b - a) * k, ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 function mixSpace(a, b, k) {
   const m = (x, y) => (typeof x === "number" ? lerp(x, y, k) : Object.fromEntries(Object.keys(x).map((key) => [key, m(x[key], y[key] ?? x[key])])));
@@ -119,7 +119,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
       // a real sky turns its stars with sidereal time (latitude, local sidereal time, radians); x > 9 keeps them fixed
       // weather: clouds marched only when there are clouds and the device can afford it (quality ladder, sky.js)
-      gl.uniform1f(u.uCloud, s.wx.cloud); gl.uniform1f(u.uStorm, s.wx.storm); gl.uniform1f(u.uRain, s.wx.rain); gl.uniform1f(u.uRainbow, s.wx.rainbow); gl.uniform1f(u.uHalo, s.wx.halo);
+      gl.uniform1f(u.uCloud, s.wx.cloud); gl.uniform1f(u.uStorm, s.wx.storm); gl.uniform1f(u.uRain, s.wx.rain); gl.uniform1f(u.uRainbow, s.wx.rainbow); gl.uniform1f(u.uHalo, s.wx.halo); gl.uniform1f(u.uHaze, s.wx.haze);
       gl.uniform1f(u.uFlash, flash); gl.uniform1i(u.uCloudSteps, s.wx.cloud > 0.01 ? (to.cloudSteps ?? 24) : 0);
       gl.uniform2f(u.uSid, to.sid ? to.sid.lat * D : 10, to.sid ? to.sid.lst * D : 0);
       gl.uniform1f(u.uGX, s.glass.x ?? 0); gl.uniform1f(u.uGZ, s.glass.z); gl.uniform1f(u.uGH, s.glass.cap); gl.uniform1f(u.uGT, s.glass.thick); gl.uniform1f(u.uGR, Math.min(0.35, s.glass.thick * 0.3));
