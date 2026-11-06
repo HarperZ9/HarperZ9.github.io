@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-05",
+  "note": "Trial: Accession Text, Display and Mono as the site's faces, Hanken Grotesk and Conso as fallbacks; data-type=hanken brings the stock faces back. Display only on h1; smaller headings take Accession Text. Not merged; joint review pending.",
+  "paths": {
+    "system/doc.css": "5f07b1ae4be8a97365a17641a55341a7b38e1b6f186edbf5c950d8cbaa002df4",
+    "system/figure.css": "44134c91ba8d0d526736359e16859c99dea5e02935f8dba5236c66c4aedf8f0f",
+    "system/system.css": "90f92d878511833316afc2d2fb8ca4e8a6a601f9eb62e36797d10d72ae6bb3cc",
+    "system/tokens.css": "87c8f02cf9ed45a9d6b473b04f228e5f7768cc4454fc213f137a39863827333b"
+  }
+}
