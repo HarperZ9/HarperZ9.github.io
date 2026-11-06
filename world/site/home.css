@@ -121,3 +121,25 @@ html.plain
   .place-in, .place:nth-child(even) .place-in { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
   .place .lead-box, .place:nth-child(even) .lead-box { order: 2; }
 }
+
+/* Sky: the visitor's own Sun and Moon on the water (sky/sky.js). The control is a horizon with a body above it. */
+[data-o="sky"]{position:relative;width:44px;height:44px;padding:0;border:0;border-radius:50%;cursor:pointer;background:none;box-shadow:inset 0 0 0 2px var(--ink)}
+[data-o="sky"]::before{content:"";position:absolute;left:8px;right:8px;top:27px;height:2px;background:var(--ink)}
+[data-o="sky"]::after{content:"";position:absolute;left:19px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]{background:var(--ink)}
+[data-o="sky"][aria-pressed="true"]::before,[data-o="sky"][aria-pressed="true"]::after{background:var(--wall,#fff)}
+.sky-dialog{max-width:min(560px,calc(100vw - 32px));padding:0;border:2px solid var(--ink);background:var(--wall,#f4efe6);color:var(--ink)}
+.sky-dialog::backdrop{background:rgba(0,0,0,.35)}
+.sky-panel{padding:20px 22px;display:grid;gap:12px;font:400 var(--fs-2,15px)/1.45 var(--face-text,sans-serif)}
+.sky-panel h2{margin:0;font:700 var(--fs-5,26px)/1.1 var(--face-text,sans-serif)}
+.sky-panel p{margin:0}
+.sky-row{display:grid;gap:4px}
+.sky-row p,.sky-check span{opacity:.86}
+.sky-panel button{justify-self:start;min-height:44px;padding:8px 14px;font:600 var(--fs-2,15px) var(--face-text,sans-serif);color:var(--ink);background:none;border:2px solid var(--ink);cursor:pointer}
+.sky-panel button[aria-pressed="true"]{background:var(--ink);color:var(--wall,#fff)}
+.sky-check{grid-template-columns:auto 1fr;align-items:start;gap:10px}
+.sky-check input{width:20px;height:20px;margin:2px 0 0}
+.sky-status:empty{display:none}
+.sky-status{font-weight:600}
+.sky-end{display:flex;gap:10px;flex-wrap:wrap}
+.sky-row[hidden]{display:none}

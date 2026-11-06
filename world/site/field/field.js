@@ -4,6 +4,7 @@
 import { TRANS_FRAG, MS_FRAG, SKY_FRAG } from "./atmosphere.glsl.js";
 import { WAVE_FRAG, SCENE_FRAG, POST_FRAG, VERT } from "./scene.glsl.js";
 import { cascadeWaves, glyphField, sellmeier, N_BK7 } from "./ocean.js";
+import { effectiveFetch } from "../sky/weather.mjs";
 
 const D = Math.PI / 180;
 // light: elevation and azimuth in degrees; moon: phase angle in degrees (0 full); wind U10 in m/s; camera height m,
@@ -22,7 +23,7 @@ export const SPACES = {
 };
 // the glass: N-BK7 at 680, 550 and 440 nm; absorption from its internal transmittance, about 0.997 over 25 mm in the
 // red and green and 0.996 in the blue (SCHOTT N-BK7 data sheet), so alpha = -ln(tau) / 0.025 m
-for (const sp of Object.values(SPACES)) { sp.night = sp.moon ? 1 : 0; sp.phase = sp.moon?.phase ?? 0; }
+for (const sp of Object.values(SPACES)) { sp.night = sp.moon ? 1 : 0; sp.phase = sp.moon?.phase ?? 0; sp.lightScale = 1; }
 const IOR = [680, 550, 440].map((l) => sellmeier(l, N_BK7));
 const ABS = [0.997, 0.997, 0.996].map((t) => -Math.log(t) / 0.025);
 const CASCADES = [{ tile: 233, kmin: 0.027, kmax: 0.27 }, { tile: 37, kmin: 0.17, kmax: 1.7 }, { tile: 5.3, kmin: 1.2, kmax: 40 }];
@@ -44,10 +45,13 @@ function target(gl, w, h, { mip = false, filter = true } = {}) {
   return { t, f, w, h };
 }
 for (const sp of Object.values(SPACES)) { sp.cam.focal ??= 1.35; sp.glass.x ??= 0; }
+// weather the scene draws (sky.js): cloud cover, storm darkness, rain rate (mm/h), a rainbow's and a halo's strength
+const WX = ["cloud", "storm", "rain", "rainbow", "halo"];
 const lerp = (a, b, k) => a + (b - a) * k, ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 function mixSpace(a, b, k) {
   const m = (x, y) => (typeof x === "number" ? lerp(x, y, k) : Object.fromEntries(Object.keys(x).map((key) => [key, m(x[key], y[key] ?? x[key])])));
-  return { light: m(a.light, b.light), cam: m(a.cam, b.cam), glass: m(a.glass, b.glass), wind: lerp(a.wind, b.wind, k), expo: lerp(a.expo, b.expo, k), night: lerp(a.night, b.night, k), phase: lerp(a.phase, b.phase, k) };
+  return { light: m(a.light, b.light), cam: m(a.cam, b.cam), glass: m(a.glass, b.glass), wind: lerp(a.wind, b.wind, k), expo: lerp(a.expo, b.expo, k), night: lerp(a.night, b.night, k), phase: lerp(a.phase, b.phase, k), lightScale: lerp(a.lightScale ?? 1, b.lightScale ?? 1, k),
+    windAngle: lerp(a.windAngle ?? 0.35, b.windAngle ?? 0.35, k), wx: Object.fromEntries(WX.map((key) => [key, lerp(a.wx?.[key] ?? 0, b.wx?.[key] ?? 0, k)])) };
 }
 
 export function createField(canvas, { space = "close", dprCap = 1.5, reduced = false } = {}) {
@@ -69,10 +73,12 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   draw(P.ms, T.ms, (u) => bind(0, T.trans.t, u.uTrans));
 
   const waveTex = CASCADES.map(() => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); return t; });
-  let windNow = -1;
-  function setWind(U10) {
-    if (Math.abs(U10 - windNow) < 0.05) return; windNow = U10;
-    CASCADES.forEach((c, i) => { const w = cascadeWaves({ ...c, n: 96, U10, fetch: 120000, windAngle: 0.35, seed: 11 + i * 7 });
+  let windNow = -1, angleNow = 0.35;
+  // the sea for a wind: U10 in m/s and the direction the waves run, radians from east toward north; open
+  // ocean fetch, capped where the sea is fully developed (sky/weather.mjs)
+  function setWind(U10, angle = 0.35) {
+    if (Math.abs(U10 - windNow) < 0.05 && Math.abs(angle - angleNow) < 0.02) return; windNow = U10; angleNow = angle;
+    CASCADES.forEach((c, i) => { const w = cascadeWaves({ ...c, n: 96, U10, fetch: effectiveFetch(U10), windAngle: angle, seed: 11 + i * 7 });
       gl.bindTexture(gl.TEXTURE_2D, waveTex[i]); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 96, 1, 0, gl.RGBA, gl.FLOAT, w); });
   }
   const glyphTex = gl.createTexture(); let glyphNow = null, glyphMeta = null;
@@ -94,14 +100,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   function frame({ t = clock, jitter = [0, 0], blendWeight = 1 } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
-    setWind(s.wind); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
+    setWind(s.wind, s.windAngle); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
     const night = s.night > 0.5, el = s.light.el * D, az = s.light.az * D;
     const L = [Math.cos(el) * Math.sin(az), Math.sin(el), Math.cos(el) * Math.cos(az)];
     // the light is normalised to unit illuminance; night differs by exposure and by the eye's blue shift (post)
     // moonlight is set to 1/60 of the day light so night reads as night; the Moon's true illuminance is near 2.5e-6 of
     // the Sun's (0.25 lx against 1e5 lx), which the display could only show black, so this keeps night visible
-    const lightCol = lerp(1, 1 / 60, s.night), phase = s.phase * D;
-    CASCADES.forEach((c, i) => draw(P.wave, T.waves[i], (u) => { bind(0, waveTex[i], u.uWaves); gl.uniform1i(u.uN, 96); gl.uniform1f(u.uTile, c.tile); gl.uniform1f(u.uT, t); gl.uniform1f(u.uChop, 1.1); }));
+    const lightCol = lerp(1, 1 / 60, s.night) * (s.lightScale ?? 1), phase = s.phase * D;
+    CASCADES.forEach((c, i) => draw(P.wave, T.waves[i], (u) => { bind(0, waveTex[i], u.uWaves); gl.uniform1i(u.uN, 96); gl.uniform1f(u.uTile, c.tile); gl.uniform1f(u.uT, t); gl.uniform1f(u.uChop, 1.1 + 0.6 * Math.min(1, Math.max(0, (s.wind - 6) / 14))); }));
     for (const w of T.waves) { gl.bindTexture(gl.TEXTURE_2D, w.t); gl.generateMipmap(gl.TEXTURE_2D); }
     draw(P.sky, T.sky, (u) => { bind(0, T.trans.t, u.uTrans); bind(1, T.ms.t, u.uMS); gl.uniform3fv(u.uL, L); gl.uniform1f(u.uViewH, Math.max(0.0005, s.cam.h / 1000)); });
     gl.enable(gl.BLEND); gl.blendFunc(gl.CONSTANT_ALPHA, gl.ONE_MINUS_CONSTANT_ALPHA); gl.blendColor(0, 0, 0, blendWeight);
@@ -111,24 +117,39 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       gl.uniform3fv(u.uIor, IOR); gl.uniform3fv(u.uAbs, ABS); gl.uniform3f(u.uLightCol, lightCol, lightCol, lightCol); gl.uniform3f(u.uTiles, ...CASCADES.map((c) => c.tile));
       gl.uniform1f(u.uPitch, s.cam.pitch * D); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
+      // a real sky turns its stars with sidereal time (latitude, local sidereal time, radians); x > 9 keeps them fixed
+      // weather: clouds marched only when there are clouds and the device can afford it (quality ladder, sky.js)
+      gl.uniform1f(u.uCloud, s.wx.cloud); gl.uniform1f(u.uStorm, s.wx.storm); gl.uniform1f(u.uRain, s.wx.rain); gl.uniform1f(u.uRainbow, s.wx.rainbow); gl.uniform1f(u.uHalo, s.wx.halo);
+      gl.uniform1f(u.uFlash, flash); gl.uniform1i(u.uCloudSteps, s.wx.cloud > 0.01 ? (to.cloudSteps ?? 24) : 0);
+      gl.uniform2f(u.uSid, to.sid ? to.sid.lat * D : 10, to.sid ? to.sid.lst * D : 0);
       gl.uniform1f(u.uGX, s.glass.x ?? 0); gl.uniform1f(u.uGZ, s.glass.z); gl.uniform1f(u.uGH, s.glass.cap); gl.uniform1f(u.uGT, s.glass.thick); gl.uniform1f(u.uGR, Math.min(0.35, s.glass.thick * 0.3));
       gl.uniform1f(u.uGBase, glyphMeta.baseV); gl.uniform1f(u.uGCap, glyphMeta.capV); gl.uniform1f(u.uHasGlyph, glyphNow ? 1 : 0); gl.uniform1f(u.uFoam, Math.min(1, 3.84e-6 * Math.pow(s.wind, 3.41) * 100));
     });
     gl.disable(gl.BLEND);
-    draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); });
+    draw(P.post, null, (u) => { bind(0, hdr.t, u.uImg); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
   }
 
+  // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
+  let flash = 0;
   let running = false, last = 0, visible = true;
   function loop(ts) {
     if (!running) return;
     const dt = Math.min(0.05, (ts - last) / 1000); last = ts; clock += dt;
     const dpr = Math.min(devicePixelRatio || 1, dprCap), r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-    size(w, h); frame({ t: clock });
+    size(w, h); frame({ t: clock }); flash *= 0.82;
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
     spaces: Object.keys(SPACES),
+    // a sky that is not one of the named spaces (the visitor's real sky, sky.js): angles move along the short way
+    sky(sp, ms = 2600) {
+      const now = state(), wrap = (a, b) => b + Math.round((a - b) / 360) * 360;
+      const next = { word: "", lightScale: 1, ...sp, cam: { ...sp.cam }, light: { ...sp.light }, glass: { x: 9, z: 30, cap: 3.6, thick: 1.3, ...(sp.glass || {}) } };
+      next.cam.yaw = wrap(now.cam.yaw, next.cam.yaw); next.light.az = wrap(now.light.az, next.light.az); next.cam.focal ??= 1.35;
+      word = progress() < 0.5 ? word : to.word; from = now; to = next; t0 = performance.now(); dur = reduced ? 1 : ms; if (reduced) api.still();
+    },
+    lightning(strength = 1) { flash = Math.max(flash, strength); },
     go(id, ms = 2600) { if (!SPACES[id]) return; word = progress() < 0.5 ? word : to.word; from = state(); to = SPACES[id]; t0 = performance.now(); dur = reduced ? 1 : ms; if (reduced) api.still(); },
     start() { if (reduced) return api.still(); running = true; last = performance.now(); requestAnimationFrame(loop); },
     stop() { running = false; },
