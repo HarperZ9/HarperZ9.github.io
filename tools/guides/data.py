@@ -30,7 +30,7 @@ GUIDES = [
         "role": "Its shell is glass with the receipts inside: a claim should carry its own evidence, so anyone can run the check again.",
         "habit": "It knocks on a claim to hear whether anything is in there, and keeps count of its own wrong guesses on its claw.",
         "home": "A pixel beach at two depths, with one spectral flare in the glass.",
-        "films": ["passing-check", "release-media"],
+        "films": ["passing-check", "release-media", "raw-native-showcase"],
         "alt": "Rerun, a red hermit crab with a glass prism for a shell, on a pixel-art beach; light through the prism splits into a small spectrum.",
         "close_alt": "Rerun's eyes on their stalks under the glass shell.",
     },
@@ -44,6 +44,7 @@ FILM_TITLES = {
     "visible-reasoning": "What a model's written reasoning can and cannot show",
     "release-media": "the films from the latest releases",
     "provenance-commons": "Provenance and the commons",
+    "raw-native-showcase": "One box, many eyes",
 }
 
 VOICE = ("Each guide speaks its introduction in its own synthesized voice. A speech model trained on the author's "
