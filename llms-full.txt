@@ -117,7 +117,7 @@ next release. Python 3.8 or newer, no dependencies. Ports in Rust, Node.js and G
 
 ## BuildLang
 
-Version 1.11.0. Licence AGPL-3.0-only. Written in Rust.
+Version 1.13.0. Licence AGPL-3.0-only. Written in Rust.
 
 - What it does: a compiled language where a function's type lists its side
   effects, such as file, network and C access, so a call that reads a file

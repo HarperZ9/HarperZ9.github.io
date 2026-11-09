@@ -71,7 +71,7 @@
       "name": "BuildLang",
       "repo": "buildlang",
       "page": "buildlang.html",
-      "version": "1.11.0",
+      "version": "1.13.0",
       "registry": "github",
       "package": "HarperZ9/buildlang",
       "downloadUrl": "https://crates.io/crates/buildlang",
