@@ -111,11 +111,14 @@ function supergraphic() {
   const signs = SG_NAMES.map((n) => `<p class="sg-sign" style="--h:${SG_HUE[n]};--n:${n.length}">${n}</p>`).join("");
   return `<div class="sg" aria-hidden="true">
       <svg class="sg-field" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" focusable="false">${lines.join("")}${rings}${spiral}</svg>
-      <p class="sg-frieze">${["ENGINE", "FLYWHEEL", "GAME", "BUILDLANG"].join(" ")}</p>
+      <p class="sg-frieze">${[["ENGINE", "theplygrnd"], ["FLYWHEEL", "theflywheel"], ["GAME", "game"], ["BUILDLANG", "bldlng"]].map(([w, h]) => `<span class="d-3d" data-hue="${h}">${w}</span>`).join(" ")}</p>
       <div class="sg-wall">${signs}</div>
       <p class="sg-caption">THE WORK, SHOWN AS SIX LANDMARKS<br>IN THE ORDER A READER MEETS THEM.</p>
     </div>`;
 }
+
+// a defined term, written [[term]] in the words, becomes <dfn class="term"> in its platform's colour (depth.css)
+const terms = (t, hue) => esc(t).replace(/\[\[(.+?)\]\]/g, (m, w) => `<dfn class="term" data-hue="${hue || "brass"}">${w}</dfn>`);
 
 // the front door: the six landmarks in the author's order, each with the work under it. Site carries the places
 // (the bazaar); Everything carries the rest of the work and the way to every piece.
@@ -128,12 +131,12 @@ function row(p) {
   // "See it work" opens the dial's panel for this piece in place (site-src/world/work.mjs), so every row leads to
   // something to play with before a page of words
   const ways = [p.try ? `<a class="pf-go" href="${p.try}">See it work</a>` : "", `<a${p.try ? "" : ' class="pf-go"'} href="${p.see[0]}">${esc(p.see[1])}</a>`, p.repo ? `<a href="${p.repo}">Source</a>` : ""].join("");
-  const name = p.name ? `<span class="pf-name">${esc(p.name)}</span>${p.mark ? `<span class="pf-mark">${esc(p.mark)}</span>` : ""}` : "";
+  const name = p.name ? `<span class="pf-name d-fine" data-hue="${p.hue || "brass"}">${esc(p.name)}</span>${p.mark ? `<span class="pf-mark">${esc(p.mark)}</span>` : ""}` : "";
   return `
       <div class="pf" id="pf-${p.id}">
         <div class="pf-words">
           <h3 id="hpf-${p.id}">${name}<span class="pf-product">${esc(p.product)}${ver}</span></h3>
-          <p class="pf-what">${esc(p.what)}</p>
+          <p class="pf-what">${terms(p.what, p.hue)}</p>
           ${run}
           <nav class="pf-ways" aria-labelledby="hpf-${p.id}">${ways}</nav>
           ${p.verified ? `<p class="pf-verified"><b>Verified</b> ${esc(CHECKED)}: ${esc(p.verified)}</p>` : ""}
@@ -145,7 +148,7 @@ export function ways() {
 }
 function landmarks(rules) {
   // each landmark word is fixed before it is used: one line saying what we mean by it and what it leaves out
-  const head = (l) => `<h2 id="h-${l.id}" class="lm-word">${esc(l.word)}${l.mark ? ` <span class="pf-mark">${esc(l.mark)}</span>` : ""}</h2>${l.def ? `<p class="lm-def">${esc(l.def)}</p>` : ""}`;
+  const head = (l) => `<h2 id="h-${l.id}" class="lm-word"><span class="d-3d" data-hue="${l.hue}">${esc(l.word)}</span>${l.mark ? ` <span class="pf-mark">${esc(l.mark)}</span>` : ""}</h2>${l.def ? `<p class="lm-def">${terms(l.def, l.hue)}</p>` : ""}`;
   const rows = (l) => l.rows.map((id) => row(PLATFORMS.find((p) => p.id === id))).join("");
   const work = LANDMARKS.filter((l) => !["site", "everything"].includes(l.id)).map((l) => `
     <section class="lm" id="lm-${l.id}" aria-labelledby="h-${l.id}"><div class="lm-in">

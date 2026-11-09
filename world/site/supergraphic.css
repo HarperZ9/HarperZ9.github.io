@@ -32,11 +32,7 @@
 .sg-frieze { position: absolute; right: 47vw; top: 6vh; white-space: nowrap; margin: 0;
   font: 900 min(10.5vw, 17vh)/.86 "Accession Supergraphic Stencil", var(--face-display); letter-spacing: -.035em;
   font-variation-settings: "wght" var(--sg-wght);
-  /* the letters' faces: lit from above and from the field's light at the right, dark at their feet */
-  color: transparent; background: linear-gradient(180deg, #fff6dc 0%, #f2d699 26%, #c39456 52%, #7a5833 80%, #3a2b1b 100%); -webkit-background-clip: text; background-clip: text;
-  /* the stepped profile: chained drop shadows, each one stepping the last, so the faces keep their lit metal (a
-     text-shadow would paint over a background-clipped fill) */
-  filter: drop-shadow(-.018em .018em 0 #7a5a38) drop-shadow(-.018em .018em 0 #45321f) drop-shadow(-.018em .018em 0 #1d150d) drop-shadow(-.03em .03em .06em rgba(0, 0, 0, .6));
+  /* each word takes its platform's hue in the shared depth model (depth.css): lit face, rim, stepped extrusion */
   transform: translateX(var(--sg-run)); }
 
 /* 2b. the sign wall: six columns, one height, enamel in each platform's hue, a stepped edge and a lit rim */
@@ -54,8 +50,7 @@
   font: 300 clamp(10px, 1.15vh, 26px)/1.7 "Accession Caption", var(--face-text); letter-spacing: .24em; color: rgba(236, 228, 212, .7); }
 
 /* 1. the heading at architectural scale, cream, with a stepped deco-metal emboss */
-.world-home .arrival h1 { font-size: max(52px, min(8.6vw, 15.5vh)); line-height: .9; max-width: 11ch; margin-bottom: .14em;
-  text-shadow: .025em .025em 0 var(--brass-4), .05em .05em 0 var(--brass-3), .075em .075em 0 var(--brass-2), .1em .1em 0 var(--brass-1), 0 0 .3em rgba(7, 16, 26, .8); }
+.world-home .arrival h1 { font-size: max(52px, min(8.6vw, 15.5vh)); line-height: .9; max-width: 11ch; margin-bottom: .14em; --lift: .03; }
 .world-home .arrival-lede { font-size: max(var(--fs-3), min(1.7vw, 3vh)); max-width: 30ch; }
 .world-home .arrival-ways a { font-size: max(var(--fs-2), min(1.05vw, 2vh)); }
 

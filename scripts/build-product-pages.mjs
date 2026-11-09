@@ -15,6 +15,8 @@ import * as LW from "../site-src/world/low-water.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const R = JSON.parse(readFileSync(path.join(site, "site-src/world/releases.json"), "utf8"));
+// a defined term, written [[term]], becomes <dfn class="term"> in the page's platform colour (world/site/depth.css)
+const terms = (t) => esc(t).replace(/\[\[(.+?)\]\]/g, (m, w) => `<dfn class="term">${w}</dfn>`);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const PRS = new Map(Object.values(R.products).flatMap((p) => (p.prs || []).map((x) => [`${x.repo}#${x.number}`, x])));
 const BLR = R.products.buildlang.github;
@@ -37,8 +39,8 @@ function fig(f, repo) {
   const r = repo || f.repo || "HarperZ9/buildlang";
   const { x, words } = prState(r, f.pr);
   const open = x.merged ? "" : ' data-state="open"';
-  return `<li class="fig"${open}><details><summary><b class="fig-n">${esc(f.n)}</b> ${esc(f.text)}</summary>
-<p class="fig-src">${esc(f.detail)} <a href="${x.url}">${esc(words)}</a>.</p></details></li>`;
+  return `<li class="fig"${open}><details><summary><b class="fig-n d-fine">${esc(f.n)}</b> ${terms(f.text)}</summary>
+<p class="fig-src">${terms(f.detail)} <a href="${x.url}">${esc(words)}</a>.</p></details></li>`;
 }
 const figs = (list, repo) => (list?.length ? `<ul class="figs">${list.map((f) => fig(f, repo)).join("\n")}</ul>` : "");
 // the state of a section's work, in one visible line, from the merge state of the pull requests behind its figures
@@ -87,16 +89,16 @@ function buildlang() {
   const sections = BL.SECTIONS.map((s) => {
     const list = s.list ? registryField(s) : "";
     return `<section class="lp-sec" id="${s.id}" aria-labelledby="h-${s.id}">
-<h2 id="h-${s.id}">${esc(s.title)}</h2>
+<h2 id="h-${s.id}"><span class="d-3d">${esc(s.title)}</span></h2>
 ${status(s.statusPrs ? s.statusPrs.map((pr) => ({ pr })) : s.figs)}
-<p class="lp-lede">${esc(s.lede)}</p>
+<p class="lp-lede">${terms(s.lede)}</p>
 ${limit(s.limit)}${run(s.run)}${list}${figs(s.figs)}${src(s.source)}
 </section>`;
   }).join("\n");
   const first = BL.FIRST_STEP;
-  const body = `<article class="lp" data-landmark="buildlang">
+  const body = `<article class="lp" data-landmark="buildlang" data-hue="bldlng">
 <header class="lp-head">
-<h1>${esc(BL.INTRO.title)} <span class="pf-mark">BLDLNG</span></h1>
+<h1><span class="d-3d">${esc(BL.INTRO.title)}</span> <span class="pf-mark">BLDLNG</span></h1>
 <p class="lp-lede lp-lede-1">${esc(BL.INTRO.lede)}</p>
 <p class="lp-purpose" data-canonical-purpose="buildlang">${esc(PURPOSE)}</p>
 <p class="lp-run"><code>cargo install buildlang --version ${esc(BLR.version)} --locked</code></p>
@@ -105,7 +107,7 @@ ${sectionsNav([...BL.SECTIONS, { id: "first", title: first.title }])}
 </header>
 ${sections}
 <section class="lp-sec" id="first" aria-labelledby="h-first">
-<h2 id="h-first">${esc(first.title)}</h2>
+<h2 id="h-first"><span class="d-3d">${esc(first.title)}</span></h2>
 <p class="lp-lede">${esc(first.lede)}</p>
 <div class="toy" data-toy="effects"><p class="lp-limit">With scripts on, this is a function you can change: choose what it declares and see whether it builds.</p></div>
 <p class="lp-limit">${esc(first.toyNote)} <a href="${BL.file("docs/EFFECTS_GUIDE.md")}">docs/EFFECTS_GUIDE.md</a>.</p>
@@ -123,8 +125,8 @@ function lowWater() {
   const eras = `<ol class="lw-eras">${LW.ERAS.map(([n, m], i) => `<li><span class="lw-n">${i + 1}</span> <b>${esc(n)}</b> <span class="lp-v">${m} minutes</span></li>`).join("")}</ol>`;
   const total = LW.ERAS.reduce((a, [, m]) => a + m, 0);
   const sections = LW.SECTIONS.map((s) => `<section class="lp-sec" id="${s.id}" aria-labelledby="h-${s.id}">
-<h2 id="h-${s.id}">${esc(s.title)}</h2>
-<p class="lp-lede">${esc(s.lede)}</p>
+<h2 id="h-${s.id}"><span class="d-3d">${esc(s.title)}</span></h2>
+<p class="lp-lede">${terms(s.lede)}</p>
 ${figs(s.figs)}${s.next ? `<p class="lp-limit">${esc(s.next)}</p>` : ""}${s.toy ? `
 <h3 class="lp-h3">${esc(s.toy.title)}</h3>
 <p class="lp-lede">${esc(s.toy.lede)}</p>
@@ -132,15 +134,15 @@ ${figs(s.figs)}${s.next ? `<p class="lp-limit">${esc(s.next)}</p>` : ""}${s.toy 
 <p class="lp-limit">${esc(s.toy.note)}</p>` : ""}
 </section>`).join("\n");
   const st = LW.STORY;
-  const body = `<article class="lp" data-landmark="game">
+  const body = `<article class="lp" data-landmark="game" data-hue="game">
 <header class="lp-head">
-<h1>${esc(LW.INTRO.title)}</h1>
+<h1><span class="d-3d">${esc(LW.INTRO.title)}</span></h1>
 <p class="lp-lede lp-lede-1">${esc(LW.INTRO.lede)}</p>
 <p class="lp-note">${esc(LW.INTRO.note)}</p>
 ${sectionsNav([{ id: "story", title: st.title }, ...LW.SECTIONS])}
 </header>
 <section class="lp-sec" id="story" aria-labelledby="h-story">
-<h2 id="h-story">${esc(st.title)}</h2>
+<h2 id="h-story"><span class="d-3d">${esc(st.title)}</span></h2>
 <p class="lp-lede">${esc(st.lede)}</p>
 ${eras}
 <p class="lp-limit">${Math.floor(total / 60)} hours ${total % 60} minutes across the five eras. ${esc(st.rule)}</p>
@@ -163,7 +165,7 @@ ${sections}
 
 // every landmark page: the field, the one sound layer, and the page's own toy
 function HEAD(toy) {
-  return ['<link rel="stylesheet" href="/world/site/landmark.css">', '<script type="module" src="/world/site/home-field.js"></script>',
+  return ['<link rel="stylesheet" href="/world/site/landmark.css">', '<link rel="stylesheet" href="/world/site/depth.css">', '<script type="module" src="/world/site/home-field.js"></script>',
     '<script type="module" src="/world/site/sound.js"></script>', ...toy.split(",").map((t) => `<script type="module" src="/world/site/explore/${t}.js"></script>`)].join("\n");
 }
 

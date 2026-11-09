@@ -45,7 +45,7 @@ export const SECTIONS = [
   },
   {
     id: "laws", title: "Laws and contracts",
-    lede: "A law is a property you state beside the code, such as a function never returning less than its input. The compiler proves it, refutes it with a counterexample, or says why it cannot tell; it does not test by sampling alone.",
+    lede: "A [[law]] is a property you state beside the code, such as a function never returning less than its input. The compiler proves it, refutes it with a counterexample, or says why it cannot tell; it does not test by sampling alone.",
     run: "buildc verify laws.bld",
     figs: [
       { n: "10 of 10", text: "false laws with rare counterexamples stay unproved", detail: "A planted mutant prover, one that treats 0 >= 0 as a contradiction, fails that set. The prover is sound and incomplete: every step only weakens what it knows.", pr: 138 },
@@ -56,7 +56,7 @@ export const SECTIONS = [
   },
   {
     id: "tv", title: "Translation validation",
-    lede: "Translation validation means proving, function by function, that the C we emit does what its source says: the same traps, the same results. It checks each compiled program, not the compiler for every program.",
+    lede: "[[Translation validation]] means proving, function by function, that the C we emit does what its source says: the same traps, the same results. It checks each compiled program, not the compiler for every program.",
     run: "buildc tv program.bld",
     figs: [
       { n: "31 of 38", text: "functions inside the checked subset are certified in tests/programs, and 22 of 26 in the standard library", detail: "The subset is integers up to 64 bits and bool, with branches, loops and calls. Most functions fall outside it because they print or use strings, floats or structs.", pr: 161 },
@@ -82,7 +82,7 @@ export const SECTIONS = [
     lede: "Low Water's rules are written in BuildLang and linked into raw-native's C++ host through a plain C header.",
     figs: [
       { n: "16 of 16", text: "checks of raw-native's own C++ test pass against the BuildLang library, as they do against the C++ module", detail: "A planted threshold fails 1. The story expression language is not ported: a record that needs it makes lw_rules_create refuse it with an error naming the record.", pr: 158 },
-      { n: "12 of 12", text: "DETMATH goldens hold (DETMATH: BuildLang's deterministic maths, the same bits on every machine, with fast-math shortcuts off), and 40 of 40 combat traces match the game's own corpus", detail: "The moves file builds to 168,234 bytes, identical to the golden. Both planted trace faults are caught.", pr: 158 },
+      { n: "12 of 12", text: "DETMATH goldens hold ([[DETMATH]]: BuildLang's deterministic maths, the same bits on every machine, with fast-math shortcuts off), and 40 of 40 combat traces match the game's own corpus", detail: "The moves file builds to 168,234 bytes, identical to the golden. Both planted trace faults are caught.", pr: 158 },
       { n: "34 of 34", text: "held-out tasks pass in each of two samples, Wilson 95% 0.90 to 1.00", detail: "The tasks were sealed before any generator saw them. Both samples are two draws of one model with one prompt, and the task writer also wrote the compiler changes, so the tasks may sit closer to the docs than an outside writer's would.", pr: 158 },
     ],
     source: { file: "docs/LANGUAGE-COMPLETE.md" },
