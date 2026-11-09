@@ -377,7 +377,8 @@
    "type": "held",
    "scope": "corpus gap ranking",
    "date": "2026-10-31",
-   "note": "F152's corpus gap ranking stays failed."
+   "note": "F152's corpus gap ranking stays failed.",
+   "record": "findings ledger, F206"
   }
  ],
  "corrections": [

@@ -393,7 +393,8 @@
    "type": "narrowed",
    "scope": "headline bound",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method."
+   "note": "The correction pass coded one error: the rerun bound is far below the published limit, so the headline was narrowed to a reproduction of method.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [

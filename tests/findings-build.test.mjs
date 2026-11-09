@@ -49,6 +49,8 @@ test("every link to a finding gets its flag, once, and none inside a drawing", (
   assert.match(once, /F63<\/a><a class="sflag s-narrowed" data-flag="F63"[^>]*>.*?<span>narrowed in part<\/span><\/a>/);
   assert.match(once, /F14<\/a><a class="sflag s-extended" data-flag="F14"/);
   assert.doesNotMatch(once, /data-flag="F1"/, "an unpublished finding gets no flag");
+  const quiet = standings([{ id: "F114", href: "/findings/F114-q.html" }], data.ledger.relations);
+  assert.equal(flagLinks('<a href="/findings/F114-q.html">F114</a>', quiet), '<a href="/findings/F114-q.html">F114</a>', "an untreated finding gets no mark");
   assert.doesNotMatch(once.slice(once.indexOf("<svg>")), /sflag/, "no flag inside an SVG");
 });
 

@@ -345,7 +345,8 @@
    "type": "narrowed",
    "scope": "planted check and scoring",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition."
+   "note": "The correction pass coded a failed plant and an error: the first planted check failed, and the entry was self-graded and not blind, with order confounded with condition.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [

@@ -188,3 +188,21 @@ a.out { overflow-wrap: anywhere; font-size: var(--fs-1); }
 .xc-title .sflag, .fd-next .sflag { font-size: var(--fs-1); }
 .gd { margin: 0 .15em; }
 .gd-f, .gl-scope { font-family: var(--face-text); font-style: italic; }
+/* inline definitions: the first clause beside the term, the rest one tap away (the term and "full definition" both
+   open the glossary entry); the margin note on wide screens carries the whole definition */
+.gd-t, .gd-f, .gd-more { display: none; }
+.gd-full { font: 400 .9em var(--face-utility); margin-left: .3em; white-space: nowrap; }
+@media (min-width: 1100px) {
+  .rp .para .gd-t, .rp .arg-sec li .gd-t { display: block; }
+  .rp .para .gd-f, .rp .arg-sec li .gd-f { display: block; }
+  .rp .para .gd-more, .rp .arg-sec li .gd-more { display: inline; }
+  .rp .para .gd-full, .rp .arg-sec li .gd-full { display: none; }
+}
+/* the field of marks: row labels at the body's small size (the drawing scales by about 0.73 at desktop width) */
+.fd .xf-lab { font-size: 18px; }
+@media (max-width: 600px) { .fd .xf-lab { font-size: 16px; } }
+/* living type sits on the field: over the always-dark reading ground the night sheet blends away (lighten) so only the
+   letters show. The reading page's main lifts itself with z-index 1, which would isolate the blend from the field;
+   z-index auto keeps the same paint order (main still follows the fixed field in the tree) and lets it through. */
+main#main:has(> .fd) { z-index: auto; }
+[data-living-ground="night"] > .living-paint { mix-blend-mode: lighten; }

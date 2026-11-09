@@ -15,8 +15,8 @@
   "tier_reason": "Locked null with a fair control.",
   "rung": "thesis",
   "rung_reason": "Survives Titius-Bode spacing is a law-like rule for exoplanet systems. Decisive observation: fails gap-order shuffle on all three forms at p 0.85, 0.995, 0.68.",
-  "outcome": "null",
-  "bound": "Against each system's own gaps put in a new order, none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68). Regularity in gap sizes is shown; an ordering law is not.",
+  "outcome": "mixed",
+  "bound": "The spacing signal is real: the systems beat gaps pooled from the whole catalogue (p 0.0005). The order and law-like verdicts are null: against each system's own gaps put in a new order none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68).",
   "objection": "The three forms were written from memory of the published ones, and a later review of our own ledger flagged that. A published form that differs could score differently, so the result covers these three versions only. Blagg's formula with its periodic term was not tested.",
   "objection_source": "the paper's first stated limitation; no reviewer attack is on file",
   "would_change": "No condition for raising or overturning the call is on file in the register.",
@@ -330,7 +330,8 @@
    "type": "narrowed",
    "scope": "the three forms",
    "date": "2026-10-31",
-   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only."
+   "note": "The correction pass coded one memory value: the three forms were written from memory, so the result covers these three versions only.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [

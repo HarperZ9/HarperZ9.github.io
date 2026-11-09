@@ -306,7 +306,8 @@
    "type": "narrowed",
    "scope": "sensitivity",
    "date": "2026-10-31",
-   "note": "The correction pass coded one error: the public 10 percent sample has low power, so the claim covers large patterns only."
+   "note": "The correction pass coded one error: the public 10 percent sample has low power, so the claim covers large patterns only.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [

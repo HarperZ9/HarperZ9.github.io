@@ -391,7 +391,8 @@
    "type": "held",
    "scope": "flatness bound against drift-aware versions",
    "date": "2026-10-30",
-   "note": "On 649 development series no drift-aware option beat the original bound (rho 0.350 to 0.398 against 0.414); same data family, not independent."
+   "note": "On 649 development series no drift-aware option beat the original bound (rho 0.350 to 0.398 against 0.414); same data family, not independent.",
+   "record": "findings ledger, F91 C2"
   }
  ],
  "corrections": [

@@ -119,6 +119,7 @@ fn main() ~ Console + FileSystem {
     blk(&mut d, "li", "Build the synthetic worlds of eqs. {ref:eq:fwd} and {ref:eq:rev} and the no-coupling, common-driver and shared-trend worlds from five iAAFT draws per site; score eq. {ref:eq:acc}; run 199 far-site pairings and eq. {ref:eq:p}.");
     blk(&mut d, "li", "Preregistration SHA-256: a2f1dd47e803bf92b5d078f7845554df1f75e9ca8274805cc2049a5d099319ae. Plan SHA-256: 784d61f1c10e5d428ce7ad318d856f1aa9f591c24436a6d9b643e8791eb2e2c8. Run 20261102T094346Z. Result file SHA-256: 61ea2ec9829044fa56dde1110302cd4f7714471194e57a90d4ea04f6dd2f3d93.");
     blk(&mut d, "li", "Cost: the analysis took 131 seconds and the two pairing controls 31 and 33 seconds on one desktop CPU.");
+    blk(&mut d, "pagebreak", "");
     labelled(&mut d, "section", "sec:appendix", "Appendix A. The preregistered verdicts and forecasts");
     blk(&mut d, "p", "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.");
     labelled(&mut d, "tablecap", "tab:verdicts", "Preregistered verdicts, their role and the rules that decided them.");
@@ -136,7 +137,7 @@ fn main() ~ Console + FileSystem {
     blk(&mut d, "row", "Forward, high-pass¦real data¦index above pairing 95th percentile (+0.213); interval lower end above 0¦+1.206; +0.871, yes");
     blk(&mut d, "row", "Forward, first differences¦real data¦index above pairing 95th percentile (+0.186)¦+1.107, yes");
     attributed(&mut d, "row", "", "Decision¦kill condition¦any binding check failing means no standing¦two failed; no standing", "last=1");
-    blk(&mut d, "p", "The forecasts fixed in the preregistration are set against the outcomes below.");
+    blk(&mut d, "p", "Table {ref:tab:forecast} sets the forecasts fixed in the preregistration against the outcomes.");
     labelled(&mut d, "tablecap", "tab:forecast", "Forecasts fixed in the preregistration against what the run gave. Ranges are 80 percent ranges.");
     attributed(&mut d, "thead", "", "Quantity¦Forecast¦Outcome", "cols=0.46,0.30,0.24");
     blk(&mut d, "row", "Mean same-year correlation, high-pass¦0.15 (0.05 to 0.25)¦0.160");

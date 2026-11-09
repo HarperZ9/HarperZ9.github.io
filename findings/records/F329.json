@@ -310,7 +310,8 @@
    "type": "narrowed",
    "scope": "reproduction check",
    "date": "2026-10-31",
-   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03."
+   "note": "The correction pass coded a failed plant, an error and a post hoc rescue; on 2026-11-09 the ledger added that the preregistered reproduction check failed at 0.287 against 0.234 within 0.03.",
+   "record": "findings ledger, F422 correction pass and Publication pass corrections 2026-11-09"
   }
  ],
  "corrections": [

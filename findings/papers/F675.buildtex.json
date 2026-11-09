@@ -2,13 +2,13 @@
  "schema": "buildlang.buildtex-receipt/v0",
  "source": {
   "path": "F675.bld",
-  "sha256": "2522678cae5be2d96291bdbc7b6a2f49719c01b298a0c62600e201a45cdcd80d"
+  "sha256": "ae50df7d96336e72a25a0d34ee7d0bd972cbcca429a8f1afbf4b53c478674b97"
  },
- "ir_sha256": "d8c1fb42589409005bcca2259024e63769d2594321e139a9a27513a888f8008d",
+ "ir_sha256": "021c4811618fc65aba3fc8873209d77cc72b3c11e23975ae16f7386c426388ad",
  "theme": "paper",
  "overrides": [],
  "outputs": {
-  "F675.pdf": "28aafe8cdbb9685fb973cf4d2dfae84111257f11e10d40968e945f3d4c932294"
+  "F675.pdf": "34e06fece9f50b48b68f18d89c329618bcc8beff3229699771d8d63bd8fe5b3b"
  },
  "pdf_metadata": {
   "pdfa": false,
@@ -52,7 +52,7 @@
   "blind_text_runs": 0,
   "reading_order": true,
   "blocks_missing_from_text": [],
-  "pdf_bytes": 597296
+  "pdf_bytes": 597316
  },
  "failed": [],
  "notes": [

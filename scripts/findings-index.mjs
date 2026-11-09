@@ -13,15 +13,15 @@ export function items(records, pages) {
 }
 
 function field(list, domains) {
-  const W = 960, rowH = 22, top = 8, H = top * 2 + domains.length * rowH;
+  const W = 960, rowH = 30, top = 8, H = top * 2 + domains.length * rowH;
   const min = Math.min(...list.map((c) => c.n)), max = Math.max(...list.map((c) => c.n));
-  const x = (n) => 150 + ((n - min) / Math.max(1, max - min)) * (W - 170);
-  const rows = domains.map((d, i) => `<text x="140" y="${top + i * rowH + 15}" text-anchor="end" class="xf-lab">${esc(domainLabel(d))}</text><line x1="150" x2="${W - 20}" y1="${top + i * rowH + 11}" y2="${top + i * rowH + 11}" class="xf-rule"/>`).join("");
+  const x = (n) => 255 + ((n - min) / Math.max(1, max - min)) * (W - 275);
+  const rows = domains.map((d, i) => `<text x="238" y="${top + i * rowH + 21}" text-anchor="end" class="xf-lab">${esc(domainLabel(d))}</text><line x1="255" x2="${W - 20}" y1="${top + i * rowH + 15}" y2="${top + i * rowH + 15}" class="xf-rule"/>`).join("");
   const marks = list.map((c) => c.domains.map((d, k) => {
-    const y = top + domains.indexOf(d) * rowH + 11, cx = x(c.n);
-    return `<a href="${c.href}" class="fd-mark" data-tier="${c.tierInfo.key}" data-domains="${d}"${k ? ' tabindex="-1" aria-hidden="true"' : ""}><g transform="translate(${(cx - 7).toFixed(1)} ${y - 7})">${glyph(c.tier, 14, "fd-mglyph").replace(/<svg[^>]*>|<\/svg>/g, "")}<rect width="14" height="14" fill="transparent"/></g><title>${esc(c.id)}, ${esc(c.tierInfo.label)}, standing ${esc(c.standing.word)}: ${esc(c.title)}</title></a>`;
+    const y = top + domains.indexOf(d) * rowH + 15, cx = x(c.n);
+    return `<a href="${c.href}" class="fd-mark" data-tier="${c.tierInfo.key}" data-domains="${d}"${k ? ' tabindex="-1" aria-hidden="true"' : ""}><g transform="translate(${(cx - 7).toFixed(1)} ${y - 7})">${glyph(c.tier, 14, "fd-mglyph").replace(/<svg[^>]*>|<\/svg>/g, "")}<rect width="14" height="14" fill="transparent"/></g><title>${esc(c.id)}, ${esc(c.tierInfo.label)}, ${c.standing.type === "none" ? "" : `standing ${esc(c.standing.word)}: `}${esc(c.title)}</title></a>`;
   }).join("")).join("");
-  return `<figure class="xf"><div class="xf-scroll" tabindex="0" role="region" aria-label="The field of findings"><svg viewBox="-56 0 ${W + 56} ${H}" role="group" aria-label="Every finding on this page, placed by its number in the ledger (left to right) and by its field; a filled disc is a strong signal, a ring a signal, a struck ring an honest null; each mark links to its page">${rows}${marks}</svg></div>
+  return `<figure class="xf"><div class="xf-scroll" tabindex="0" role="region" aria-label="The field of findings"><svg viewBox="0 0 ${W} ${H}" role="group" aria-label="Every finding on this page, placed by its number in the ledger (left to right) and by its field; a filled disc is a strong signal, a ring a signal, a struck ring an honest null; each mark links to its page">${rows}${marks}</svg></div>
 <figcaption>Each mark is one finding, earliest on the left: ${glyph("B*", 12)} strong signal, ${glyph("B", 12)} signal, ${glyph("D", 12)} honest null. Choose a mark to read it.</figcaption></figure>`;
 }
 
@@ -39,7 +39,7 @@ function entry(it) {
   <p class="xc-meta"><span class="xc-n">${esc(it.id)}</span> <span class="fd-tier" data-tier="${it.tierInfo.key}">${glyph(it.tier)}${esc(it.tierInfo.label)}</span> <span class="fd-out">${mark("outcome", it.outcome)}${esc(OUTCOME_WORD[it.outcome])}</span> <span class="xc-lanes">${it.domains.map((d) => laneMark(d)).join("")}${esc(it.domains.map(domainLabel).join(", "))}</span></p>
   <h2 class="xc-title">${it.redirect ? `<span>${esc(it.title)}</span>` : `<a href="${it.href}">${esc(it.title)}</a>`}</h2>
   <p class="xc-finding">${esc(it.standfirst)}</p>
-  ${it.outcome !== "held" && it.bound ? `<p class="fd-bound"><b>${it.outcome === "null" ? "What it rules out" : "What fell"}.</b> ${esc(it.bound)}</p>` : ""}
+  ${it.outcome !== "held" && it.bound ? `<p class="fd-bound"><b>${{ null: "What it rules out", failed: "What fell", mixed: "What did not hold" }[it.outcome] || "Bound"}.</b> ${esc(it.bound)}</p>` : ""}
   ${it.redirect ? `<p class="fd-moved">${standingMark(st.type)} ${esc(STANDING_WORD[st.type])} by ${esc(st.from)}: ${esc(st.scope)}. ${it.redirect.to ? `Its page now opens <a href="${it.redirect.href}">${esc(it.redirect.to)}</a>, which keeps this record in its Trail.` : "Its page now opens this entry."} <a href="/findings/papers/${it.id}.pdf">The old paper</a> stays downloadable.</p>` : ""}
 </li>`;
 }
@@ -51,11 +51,11 @@ export function indexBody(list) {
   const tierKey = tiers.map((t) => `<dt>${glyph(t)}${esc(TIERS[t].label)}</dt><dd>${esc(TIERS[t].blurb)}.</dd>`).join("");
   const standKey = ["held", "extended", "narrowed", "questioned", "refuted", "retracted"].map((s) => `<span class="lbl">${standingMark(s)}${STANDING_WORD[s]}</span>`).join(" ");
   return `<article class="tool xp fd">
-<h1 data-living="ink engraved">Findings</h1>
+<h1 data-living="ink engraved" data-living-ground="night">Findings</h1>
 <p>What our experiments found, one finding at a time. Each page leads with where the result stands, puts the strongest objection before the argument, marks every checkable claim with its evidence, defines each technical term where it is first used, and ends with the dated trail of corrections, the references both ways, the steps to repeat it and a Verified line. Each offers its whitepaper as a PDF and its BuildTeX source.</p>
 <p class="fd-count">${list.length} findings so far. <b>${nulls} of them are honest nulls</b>: tests that failed, claims that did not hold, and errors of our own that we found and fixed. ${outNull} findings in all report a null result with its bound. They carry the same weight as the results that held, because knowing what does not work saves the next person the trip.</p>
 <dl class="fd-key">${tierKey}</dl>
-<p class="fd-standkey">After every link to a finding, here and anywhere on the site, its standing: what later records in our findings ledger did to it. ${standKey} <span class="lbl">no later treatment</span></p>
+<p class="fd-standkey">After every link to a finding, here and anywhere on the site, its standing: what later records in our findings ledger did to it. ${standKey} A link with no mark is to a finding no later record has treated.</p>
 <p class="fd-standkey">Every technical term is defined where a page first uses it, and again in the <a href="/findings/glossary.html">findings glossary</a>.</p>
 ${field(list, domains)}
 ${filters(list, tiers, domains)}
@@ -83,7 +83,7 @@ export function glossaryBody(glossary, uses, pages, titles) {
   }).join("\n");
   return `<article class="tool st fd gl">
 <p class="kicker"><a class="fd-up" href="/findings/">Findings</a></p>
-<h1 data-living="ink engraved">Glossary</h1>
+<h1 data-living="ink engraved" data-living-ground="night">Glossary</h1>
 <p>Each technical term on the findings pages, defined the way we use it: what we mean, the field the term comes from and what it excludes. A term shared across the findings has one definition; a term one study fixed for itself is defined in that study's scope. Each definition lists every page that uses it, and each use links back here.</p>
 <p class="fd-count">${groups.size} terms, ${glossary.terms.length} scoped definitions, ${uses.length} first uses across ${new Set(uses.map((u) => u.page)).size} findings.</p>
 <ol class="gl-list">${entries}</ol>

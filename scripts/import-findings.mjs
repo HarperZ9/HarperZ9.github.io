@@ -51,6 +51,9 @@ function publicRow(row) {
   if (out.evidence && typeof out.evidence === "object") { const { source, ...rest } = out.evidence; out.evidence = rest; }
   else delete out.evidence;
   if (row.publication) out.publication = { date: row.publication.date, wave: row.publication.wave, status: row.publication.status };
+  // the author's licence decision travels as its public terms only (the words after the dated quote)
+  const ld = row.publication?.licence_decision?.match(/\)\.\s*(.+)$/);
+  if (ld) out.licence_terms = ld[1];
   return JSON.parse(JSON.stringify(out), (k, v) => (typeof v === "string" ? v.replace(WORKSHOP, "internal file").replace(/(?:\.\.\/)+internal file/g, "internal file") : v));
 }
 

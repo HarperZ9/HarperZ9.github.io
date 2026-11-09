@@ -169,7 +169,7 @@
     "paragraphs": [
      "Each verdict is a set of rules written before the run. A verdict passes only when every rule holds. Values are read from the run's result file.",
      "::table tab:verdicts cols=0.22,0.12,0.42,0.24 Preregistered verdicts, their role and the rules that decided them.\nVerdict ¦ Role ¦ Deciding rule ¦ Value, holds\nPlanted reverse, high-pass ¦ binding ¦ index interval upper end below 0; accuracy above 0.6 ¦ -0.303 yes; 0.714 yes\nPlanted reverse, first differences ¦ binding ¦ index interval upper end below 0; accuracy above 0.6 ¦ -0.042 yes; 0.584 no\nNo coupling, high-pass ¦ binding ¦ forward and reverse rates at most 0.10 ¦ 0.055 and 0.078, yes\nNo coupling, first differences ¦ binding ¦ forward and reverse rates at most 0.10 ¦ 0.066 and 0.072, yes\nShared trend, first differences ¦ binding ¦ forward and reverse rates at most 0.10 ¦ 0.092 yes; 0.117 no\nStrong planted forward, high-pass ¦ power ¦ index interval lower end above 0; accuracy above 0.55 ¦ +1.079 yes; 0.894 yes\nPlanted forward at real strength ¦ power ¦ index interval lower end above 0 ¦ +0.073, yes\nShared trend, high-pass ¦ limit ¦ forward and reverse rates at most 0.10 ¦ 0.135 and 0.221, no, as forecast\nCommon driver, high-pass ¦ limit ¦ index interval contains 0 ¦ -0.193 to +0.023, yes\nExclusion ¦ real data ¦ reverse rate at most 0.10 on both arms; real index above planted reverse upper end on both arms ¦ 0.068 and 0.062; +1.206 and +1.107, yes\nForward, high-pass ¦ real data ¦ index above pairing 95th percentile (+0.213); interval lower end above 0 ¦ +1.206; +0.871, yes\nForward, first differences ¦ real data ¦ index above pairing 95th percentile (+0.186) ¦ +1.107, yes\nDecision ¦ kill condition ¦ any binding check failing means no standing ¦ two failed; no standing\n::end",
-     "The forecasts fixed in the preregistration are set against the outcomes below.",
+     "Table {ref:tab:forecast} sets the forecasts fixed in the preregistration against the outcomes.",
      "::table tab:forecast cols=0.46,0.3,0.24 Forecasts fixed in the preregistration against what the run gave. Ranges are 80 percent ranges.\nQuantity ¦ Forecast ¦ Outcome\nMean same-year correlation, high-pass ¦ 0.15 (0.05 to 0.25) ¦ 0.160\nShare of sites with positive correlation ¦ 0.70 ¦ 0.870\nReal forward rate, high-pass ¦ 0.09 (0.05 to 0.15) ¦ 0.398\nReal reverse rate, high-pass ¦ 0.07 (0.03 to 0.11) ¦ 0.068\nReal index, high-pass ¦ -0.05 (-0.30 to +0.20) ¦ +1.206\nPlanted reverse index, high-pass ¦ -0.6 (-1.2 to -0.3) ¦ -0.429\nPlanted reverse accuracy, high-pass ¦ 0.68 ¦ 0.714\nPairing 95th percentile, high-pass ¦ +0.15 ¦ +0.213\nBoth planted reverse checks pass ¦ probability 0.85 ¦ failed\nShared trend, first differences, passes ¦ probability 0.75 ¦ failed\nExclusion rule passes ¦ probability 0.60 ¦ passed\nForward rule passes ¦ probability 0.15 ¦ passed\nPlanted forward at real strength seen ¦ probability 0.10 ¦ passed\nExclusion status granted ¦ probability 0.30 ¦ not granted\nForward status granted ¦ probability 0.03 ¦ not granted\n::end"
     ]
    }
@@ -400,7 +400,8 @@
    "type": "held",
    "scope": "no direction-reading status",
    "date": "2026-11-02",
-   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands."
+   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands.",
+   "record": "findings ledger, F675"
   },
   {
    "from": "F675",
@@ -408,7 +409,8 @@
    "type": "questioned",
    "scope": "account of the planted lag-1 arm",
    "date": "2026-11-02",
-   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands."
+   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands.",
+   "record": "findings ledger, F675"
   },
   {
    "from": "F676",
@@ -416,7 +418,8 @@
    "type": "extended",
    "scope": "direction on rings, read on a panel",
    "date": "2026-11-02",
-   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength."
+   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength.",
+   "record": "findings ledger, F676"
   },
   {
    "from": "F676",
@@ -424,7 +427,8 @@
    "type": "narrowed",
    "scope": "the exploratory negative prior-summer term",
    "date": "2026-11-02",
-   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there."
+   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there.",
+   "record": "findings ledger, F676"
   }
  ],
  "corrections": [
@@ -448,7 +452,7 @@
    "n": 2,
    "date": "2026-11-09",
    "what": "paper version 1.0, first published",
-   "hash": "28aafe8cdbb9685fb973cf4d2dfae84111257f11e10d40968e945f3d4c932294"
+   "hash": "34e06fece9f50b48b68f18d89c329618bcc8beff3229699771d8d63bd8fe5b3b"
   }
  ],
  "grade": {

@@ -174,10 +174,14 @@ def test_every_link_to_a_finding_carries_its_standing_flag() -> None:
             if not fid:
                 continue
             nxt = m.group(2)
+            if standing(fid) == "none":
+                assert not nxt.startswith('<a class="sflag'), f"{f.name}: untreated {fid} carries a mark"
+                continue
             assert nxt.startswith(f'<a class="sflag s-{standing(fid)}" data-flag="{fid}"'), f"{f.name}: link to {fid} has no current flag"
             assert f"<span>{WORD[standing(fid)]}</span>" in nxt
             flagged += 1
-    assert flagged >= 60
+    assert flagged >= 30
+    assert "no later treatment" not in (F / "index.html").read_text("utf-8"), "the untreated word is clutter; absence of a mark says it"
 
 
 def test_index_counts_honest_nulls_and_lists_every_finding() -> None:

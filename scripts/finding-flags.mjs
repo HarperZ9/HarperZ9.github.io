@@ -46,6 +46,7 @@ export function standings(pages, relations) {
 
 export function flag(id, s) {
   const st = s[id];
+  if (st.type === "none") return "";  // nothing later treated it: no mark at all; the index legend says so
   const title = st.type === "none" ? `${id}: no later record treats it` : `${id}: ${st.word} by ${st.from}, ${st.scope}`;
   return `<a class="sflag s-${st.type}" data-flag="${id}" href="${st.href}#cited-by" title="${title.replace(/"/g, "&quot;")}">${standingMark(st.type)}<span>${st.word}</span></a>`;
 }

@@ -357,7 +357,8 @@
    "type": "narrowed",
    "scope": "film fit and its planted recovery",
    "date": "2026-10-31",
-   "note": "The film fit passed log10 sigma into a model of log10 variance. On true variance the errors are 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes."
+   "note": "The film fit passed log10 sigma into a model of log10 variance. On true variance the errors are 0.186 and 0.068; the failed verdict stands and the pattern of hit numbers changes.",
+   "record": "findings ledger, F163"
   },
   {
    "from": "F164",
@@ -365,7 +366,8 @@
    "type": "held",
    "scope": "film hinge within the sheet's range",
    "date": "2026-10-31",
-   "note": "The hinge sits within the sheet's range, as F147 said, now on BIC."
+   "note": "The hinge sits within the sheet's range, as F147 said, now on BIC.",
+   "record": "findings ledger, F164"
   }
  ],
  "corrections": [

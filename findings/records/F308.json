@@ -301,7 +301,8 @@
    "type": "narrowed",
    "scope": "sampling and control",
    "date": "2026-10-31",
-   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction."
+   "note": "The correction pass coded an error and an untestable control: the sampling changed after the search route refused, and fitted lines pass by construction.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [

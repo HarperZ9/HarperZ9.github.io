@@ -341,7 +341,7 @@
    "title": "Peterson, J. C., Bourgin, D. D., Agrawal, M., Reichman, D. and Griffiths, T. L. (2021). Using large-scale experiments and machine learning to discover theories of human decision-making. Science 372, 1209-1214. doi:10.1126/science.abe2629. Data: https://github.com/jcpeterson/choices13k",
    "access": "run",
    "target": "https://doi.org/10.1126/science.abe2629",
-   "licence": "No stated licence; local research copy"
+   "licence": "No stated licence; local research copy; Statistics only; no choices13k data redistributed."
   },
   {
    "id": "r2",
@@ -468,7 +468,7 @@
   "data": [
    {
     "name": "Peterson 2021",
-    "licence": "No stated licence; local research copy",
+    "licence": "No stated licence; local research copy; Statistics only; no choices13k data redistributed.",
     "url": "https://doi.org/10.1126/science.abe2629"
    }
   ],

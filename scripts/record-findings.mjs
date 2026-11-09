@@ -112,7 +112,7 @@ export function buildRecord(id, data) {
   const dataKeys = new Set([...textOf(sec("sec:data")).matchAll(/\{cite:([^}]+)\}/g)].flatMap((m) => m[1].split(",").map((k) => k.trim())));
   const allText = [paper.abstract.join(" "), ...paper.sections.map(textOf)].join(" ");
   const named = [...new Set(allText.match(/\bF\d+\b/g) || [])].filter((f) => f !== id && allMeta[f]).map((f) => ({ id: f, title: allMeta[f].title }));
-  const refs = references({ bib: paper.bib, dataKeys, litNote: litNote(vText), licence: row.data_licence || "as stated in the paper's data section", findings: named, verifiedDate: verified(vText).date });
+  const refs = references({ bib: paper.bib, dataKeys, litNote: litNote(vText), licence: [row.data_licence || "as stated in the paper's data section", row.licence_terms].filter(Boolean).join("; "), findings: named, verifiedDate: verified(vText).date });
   const refIds = Object.fromEntries(refs.map((r, i) => [paper.bib[i]?.key ?? r.key, r.id]));
   const toIds = (s) => s.replace(/\{cite:([^}]+)\}/g, (m, keys) => `{cite:${keys.split(",").map((k) => { const r = refIds[k.trim()]; if (!r) throw new Error(`${id}: cite ${k} has no reference`); return r; }).join(",")}}`);
   const sections = [{ id: "abstract", title: "Abstract", role: "argument", paragraphs: paper.abstract.map(toIds) },
@@ -133,7 +133,7 @@ export function buildRecord(id, data) {
   const doc = documentFor(id, meta, row, limitations, sections);
   const cited = new Set(named.map((f) => f.id));
   const record = { schema: "research-record/1", built: `${published} by scripts/record-findings.mjs from paper.txt, the register row and the findings ledger`,
-    document: doc, claims, evidence, references: refs, relations: ledger.relations.filter((r) => r.to === id || cited.has(r.to)).map(({ source, ...r }) => r),
+    document: doc, claims, evidence, references: refs, relations: ledger.relations.filter((r) => r.to === id || cited.has(r.to)).map(({ source, ...r }) => ({ ...r, record: r.record ? `${r.record}; ${source}` : source })),
     corrections: corr, versions: versions(meta.date_found, corr, published, paper.meta.version, pdfHash),
     grade: grade({ row, paper: { limitations, prereg: repro.prereg?.hash, litNote: litNote(vText) }, relationsIn, bound: meta.bound, outcome: meta.outcome }),
     reproduce: repro, verified: vf };

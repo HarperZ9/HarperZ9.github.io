@@ -53,8 +53,16 @@ function term(n, ctx) {
   if (!g) throw new Error(`${ctx.id}: no glossary entry for ${n.key}`);
   const id = uid(ctx, `use-${n.key}`);
   ctx.termUses.push({ key: n.key, scope: g.scope, anchor: id, section: ctx.section });
-  const def = `${g.definition.slice(0, 1).toUpperCase()}${g.definition.slice(1)}.`;
-  return `<a class="gt" id="${id}" href="/findings/glossary.html#${g.anchor}">${nodes(n.kids, ctx)}</a><span class="gd" role="note"><span class="sr-only">Definition: </span><b class="gd-t">${esc(g.term)}</b> <span class="gd-f">${esc(g.field)}</span> ${esc(def)} <span class="gd-x">Excludes</span> ${esc(g.excludes)}.</span>`;
+  const d = g.definition.slice(0, 1).toUpperCase() + g.definition.slice(1), cut = clauseEnd(d);
+  const first = d.slice(0, cut).replace(/[,;:]$/, ""), rest = d.slice(cut).replace(/^[,;:]?\s*/, "");
+  return `<a class="gt" id="${id}" href="/findings/glossary.html#${g.anchor}">${nodes(n.kids, ctx)}</a><span class="gd" role="note"><span class="sr-only">Definition: </span><b class="gd-t">${esc(g.term)}</b> <span class="gd-f">${esc(g.field)}</span> <span class="gd-1">${esc(first)}.</span><span class="gd-more">${rest ? ` ${esc(rest.slice(0, 1).toUpperCase() + rest.slice(1))}.` : ""} <span class="gd-x">Excludes</span> ${esc(g.excludes)}.</span> <a class="gd-full" href="/findings/glossary.html#${g.anchor}" aria-label="Full definition of ${esc(g.term)}">full definition</a></span>`;
+}
+
+// where a definition's first clause ends: the first semicolon, or the first comma after its opening words
+function clauseEnd(d) {
+  const semi = d.indexOf(";"), comma = d.indexOf(", ", 30);
+  const ends = [semi, comma].filter((i) => i > 0);
+  return ends.length ? Math.min(...ends) : d.length;
 }
 
 function cite(n, ctx) {

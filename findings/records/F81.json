@@ -339,7 +339,8 @@
    "type": "narrowed",
    "scope": "size of the ratios and the union gain",
    "date": "2026-10-30",
-   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only."
+   "note": "Under photon noise the set 1 ratios fall to 1.67 for the bee and 1.50 for the blue tit, and the post hoc union gain of +0.39 shrinks to a null. Publication carries the direction only.",
+   "record": "findings ledger, F88 and Publication pass corrections 2026-11-09"
   }
  ],
  "corrections": [

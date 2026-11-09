@@ -376,7 +376,8 @@
    "type": "extended",
    "scope": "the same replication records",
    "date": "2026-10-31",
-   "note": "A single split of noise and field bias ranks failed replications on the same RPP and FReD set (Brier 0.222 against 0.256), adding nothing to the z value alone."
+   "note": "A single split of noise and field bias ranks failed replications on the same RPP and FReD set (Brier 0.222 against 0.256), adding nothing to the z value alone.",
+   "record": "findings ledger, F270"
   }
  ],
  "corrections": [

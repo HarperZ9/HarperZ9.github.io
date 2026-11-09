@@ -296,8 +296,8 @@
    ],
    "date_found": "2026-10-31",
    "figure": "traxler-slot",
-   "outcome": "null",
-   "bound": "Against each system's own gaps put in a new order, none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68). Regularity in gap sizes is shown; an ordering law is not."
+   "outcome": "mixed",
+   "bound": "The spacing signal is real: the systems beat gaps pooled from the whole catalogue (p 0.0005). The order and law-like verdicts are null: against each system's own gaps put in a new order none of the three forms scored above the shuffled range (p 0.85, 0.995 and 0.68)."
   },
   "F320": {
    "slug": "stress-classifier-leakage",

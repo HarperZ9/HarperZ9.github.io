@@ -52,6 +52,14 @@ export function ladder(rec) {
 <p class="soft">${esc(d.rung_reason)} Tier ${esc(d.tier)}: ${esc(d.tier_reason)}</p></div>`;
 }
 
+// each standing was read by hand from a later ledger entry; the trail names the entry and its date
+function standingTrail(rec) {
+  const into = rec.relations.filter((r) => r.to === rec.document.id).sort((a, b) => b.date.localeCompare(a.date));
+  if (!into.length) return "";
+  return `<h3>Standing, and the ledger entries it rests on</h3><ol class="corrections">${into.map((r) => `<li id="st-${esc(r.from)}-${r.type}"><p class="xhead"><b>${esc(r.date)}</b> <span class="xtype">${esc(STANDING_WORD[r.type])}</span> ${standingMark(r.type)} ${esc(r.from)}</p>
+<p>Set by hand from findings ledger entry ${esc(r.from)}, dated ${esc(r.date)}: ${esc(r.scope)}. Rests on ${esc(r.record || "that entry")}.</p></li>`).join("")}</ol>`;
+}
+
 function trail(rec, env, ctx) {
   const vs = [...rec.versions].sort((a, b) => b.n - a.n);
   const xs = [...rec.corrections].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
@@ -63,6 +71,7 @@ function trail(rec, env, ctx) {
   return `<section id="trail" class="landmark" aria-labelledby="trail-h"><h2 id="trail-h">Trail</h2>
 <h3>Versions</h3><ol class="versions" reversed>${vs.map((v) => `<li><b>v${v.n}</b> ${esc(v.date)}, ${esc(v.what)}${v.hash ? ` <span class="hash">PDF sha256 ${esc(v.hash.slice(0, 16))}</span>` : ""}</li>`).join("")}</ol>
 <h3>Corrections</h3>${corr ? `<ol class="corrections">${corr}</ol>` : "<p>None recorded.</p>"}
+${standingTrail(rec)}
 ${replaced ? `<h3>Findings this one replaced</h3><ol class="corrections">${replaced}</ol>` : ""}
 <p class="soft">Each correction is a dated note; the findings ledger is never rewritten, and a note governs where it differs.</p></section>`;
 }

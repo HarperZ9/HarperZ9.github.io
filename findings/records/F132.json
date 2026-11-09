@@ -428,7 +428,8 @@
    "type": "held",
    "scope": "no direction-reading status",
    "date": "2026-11-02",
-   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands."
+   "note": "On 161 held-out boreal sites the panel instrument's kill fired too; F132's block on direction readings stands.",
+   "record": "findings ledger, F675"
   },
   {
    "from": "F675",
@@ -436,7 +437,8 @@
    "type": "questioned",
    "scope": "account of the planted lag-1 arm",
    "date": "2026-11-02",
-   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands."
+   "note": "Exploratory and post hoc: a negative prior-summer term adds to the Granger signal, so F132's absorption account holds only for same-sign terms, and its planted arm had the wrong sign for these stands.",
+   "record": "findings ledger, F675"
   },
   {
    "from": "F676",
@@ -444,7 +446,8 @@
    "type": "extended",
    "scope": "direction on rings, read on a panel",
    "date": "2026-11-02",
-   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength."
+   "note": "A third round on 145 new sites: the lagged panel instrument passes every binding verdict but one and earns exclusion and forward status at that coupling strength.",
+   "record": "findings ledger, F676"
   },
   {
    "from": "F676",
@@ -452,7 +455,8 @@
    "type": "narrowed",
    "scope": "the exploratory negative prior-summer term",
    "date": "2026-11-02",
-   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there."
+   "note": "On a third held-out panel the negative prior-summer term is species-dependent, not a panel result; the same instrument passes every binding verdict but one there.",
+   "record": "findings ledger, F676"
   }
  ],
  "corrections": [],

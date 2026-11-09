@@ -389,7 +389,8 @@
    "type": "held",
    "scope": "test A, moderate prior drought",
    "date": "2026-10-30",
-   "note": "Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again."
+   "note": "Mirror test MT2 on gridded scPDSI: +0.025, below the time-shift 95th percentile of 0.038; the kill fires again.",
+   "record": "findings ledger, F95 MT2"
   },
   {
    "from": "F95",
@@ -398,7 +399,7 @@
    "scope": "within-species steeling sign",
    "date": "2026-10-30",
    "note": "The +0.037 sign under division PDSI with species effects does not survive site-scale drought.",
-   "record": "PU30-06"
+   "record": "PU30-06; findings ledger, Prior updates 2026-10-30"
   },
   {
    "from": "F87",
@@ -406,7 +407,8 @@
    "type": "extended",
    "scope": "rod tests B3 and B4",
    "date": "2026-10-29",
-   "note": "Adds the cost term the rod lacked; removing it reproduces F63 B3 and B4."
+   "note": "Adds the cost term the rod lacked; removing it reproduces F63 B3 and B4.",
+   "record": "findings ledger, F87"
   },
   {
    "from": "F75",
@@ -414,7 +416,8 @@
    "type": "extended",
    "scope": "test D update weight",
    "date": "2026-10-29",
-   "note": "Constant-rate copying follows F63's 1/(n+1) form at r 0.993."
+   "note": "Constant-rate copying follows F63's 1/(n+1) form at r 0.993.",
+   "record": "findings ledger, F75"
   }
  ],
  "corrections": [

@@ -357,7 +357,8 @@
    "type": "narrowed",
    "scope": "reused inputs and a proxy truth",
    "date": "2026-10-31",
-   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy."
+   "note": "The correction pass coded two errors: later tables reuse inputs, and the Hubble constant truth is a proxy.",
+   "record": "findings ledger, F422 correction pass"
   }
  ],
  "corrections": [
@@ -378,16 +379,6 @@
    "after": "That note was wrong and was withdrawn the same day: the result file has ten forecast verdicts, and six pass (cov2, k95, nu, moved, shrink, own_hold), so 6 of 10 forecasts held, as the ledger says. Every preregistered verdict is listed in the appendix.",
    "reason": "A first publication note said the ledger's count of forecasts held could not be reproduced.",
    "found_by": "the publication pass"
-  },
-  {
-   "id": "x3",
-   "target": "document",
-   "date": "2026-11-09",
-   "type": "number",
-   "reason": "A first publication-pass note said the ledger's \"6 of 10 forecasts held\" could not be reproduced from the result file.",
-   "after": "Later the same day the ledger withdrew that note: the result file has 10 forecast verdicts and 6 pass, so \"6 of 10 forecasts held\" reproduces. The paper still leaves the count out, following the first note; every verdict is listed in its appendix.",
-   "found_by": "the publication pass, correcting itself",
-   "record": "findings ledger, publication pass"
   }
  ],
  "versions": [

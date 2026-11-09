@@ -369,7 +369,8 @@
    "type": "extended",
    "scope": "the 1/89000 inch offset",
    "date": "2026-10-28",
-   "note": "Newton's thick-plate rings run about 0.8 percent large; with F14, both experiments suggest his 1/89000 inch is 2 to 3 percent thick."
+   "note": "Newton's thick-plate rings run about 0.8 percent large; with F14, both experiments suggest his 1/89000 inch is 2 to 3 percent thick.",
+   "record": "findings ledger, F15"
   },
   {
    "from": "F57",
@@ -377,7 +378,8 @@
    "type": "extended",
    "scope": "the 1/89000 inch offset",
    "date": "2026-10-29",
-   "note": "Newton's colour limits read as half-wavelengths: the same interval sits 3 percent short against a different reference, so the sign is not a contradiction."
+   "note": "Newton's colour limits read as half-wavelengths: the same interval sits 3 percent short against a different reference, so the sign is not a contradiction.",
+   "record": "findings ledger, F57"
   }
  ],
  "corrections": [
