@@ -1,0 +1,153 @@
+/* findings-figures.css: charts and diagrams on the findings pages (scripts/findings-charts.mjs).
+   Series inks follow the site's hierarchy colour system (world/site/crossover/colour-tokens.json): three hue
+   families (blue 252 to 256, olive 104, plum 348, the RESEARCH hue), all at OKLCH chroma 0.105 so the verdict inks
+   stay the strongest colour on the page, with lightness set per ground. Each ink is paired with a marker shape.
+   Built and measured with build-color (OKLCH, CAM16-UCS, Machado 2009 dichromat simulation), then checked with a
+   second palette validator on every pair:
+     light, ground #e8e3d9: #5582be #8b832f #944e74   smallest pair 36.0 normal, 19.5 dichromat; 3.05:1 or more
+     dark,  ground #0a0a0c: #6196d1 #9d9542 #ae658b   smallest pair 36.7 normal, 17.4 dichromat; 4.74:1 or more
+   Every ink sits 16 or more CAM16-UCS units from each verdict ink in normal vision and 6 or more under each
+   dichromat simulation. Design moves credited: Munsell (hue, value and chroma as separate axes), Itten (contrast
+   of saturation kept for verdicts), Albers (each ink measured on the ground it meets), Okabe and Ito (the
+   blue to yellow axis survives red-green deficiency). Control ranges are a neutral, never a series slot.
+   No boxes: a chart is set off by space and a hairline above its caption. */
+:root { --fc-1: #5582be; --fc-2: #8b832f; --fc-3: #944e74; --fc-band: color-mix(in srgb, var(--ink) 20%, var(--wall)); --fc-grid: color-mix(in srgb, var(--ink) 11%, var(--wall)); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --fc-1: #6196d1; --fc-2: #9d9542; --fc-3: #ae658b; --fc-band: color-mix(in srgb, var(--ink) 26%, var(--wall)); --fc-grid: color-mix(in srgb, var(--ink) 15%, var(--wall)); } }
+:root[data-theme="dark"] { --fc-1: #6196d1; --fc-2: #9d9542; --fc-3: #ae658b; --fc-band: color-mix(in srgb, var(--ink) 26%, var(--wall)); --fc-grid: color-mix(in srgb, var(--ink) 15%, var(--wall)); }
+
+.fc { margin: 30px 0 34px; padding-top: 12px; border-top: 1px solid var(--line); max-width: var(--measure, 40rem); clear: none; }
+.fc figcaption { font: 400 var(--fs-2, 1rem)/1.45 var(--face-text, inherit); margin: 0 0 14px; }
+.fc figcaption b { font-weight: 600; }
+.fc .fc-take { display: block; margin-top: 4px; font-weight: 600; }
+.fc :is(.fc-axl, .fc-note, .fc-lab, .fc-ticks, .fc-yt, .fc-xt, .fc-legend, .fc-meta, .fc-src, .fc-data summary, .fc-ptitle, .fc-group) { font: 400 var(--fs-1, .82rem)/1.4 var(--face-utility, inherit); }
+.fc :is(.fc-ticks, .fc-yt, .fc-xt, .fc-axl, .fc-note) { color: var(--soft); font-variant-numeric: tabular-nums; }
+.fc-axl { margin: 2px 0 0; text-align: center; }
+.fc-axl.y { text-align: left; margin: 0 0 4px; }
+
+/* marks */
+.fc-m { display: block; overflow: visible; stroke: var(--wall); stroke-width: 2; paint-order: stroke; }
+.fc-m.s0, .fc-bar.s0, .fc-wh.s0, .fc-k.bar.s0 { color: var(--fc-1); }
+.fc-m.s1, .fc-bar.s1, .fc-wh.s1, .fc-k.bar.s1 { color: var(--fc-2); }
+.fc-m.s2, .fc-bar.s2, .fc-wh.s2, .fc-k.bar.s2 { color: var(--fc-3); }
+.fc-m { fill: currentColor; }
+
+/* row forms */
+.fc-rows { display: grid; grid-template-columns: minmax(5.5rem, 11rem) minmax(0, 1fr); column-gap: 14px; }
+.fc-row { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; padding: 3px 0; }
+.fc-lab { color: var(--ink); text-wrap: balance; }
+.fc-track { position: relative; height: 22px; margin-right: 1.6rem; }
+.fc-note { grid-column: 2; margin-top: 1px; }
+.fc-group { grid-column: 1 / -1; margin: 10px 0 2px; font-weight: 600; }
+.fc-track > i, .fc-track > .fc-pt { position: absolute; }
+.fc-g { top: -3px; bottom: -3px; width: 1px; background: var(--fc-grid); }
+.fc-region { top: -3px; bottom: -3px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--fc-grid) 5px 6px); }
+.fc-ref { top: -3px; bottom: -3px; width: 0; border-left: 1.5px dashed var(--ink); }
+.fc-ref.r1 { border-left-style: dotted; border-left-width: 2px; }
+.fc-band { top: 5px; height: 12px; background: var(--fc-band); border-radius: 2px; }
+.fc-tick { top: 2px; height: 18px; width: 2px; margin-left: -1px; background: var(--ink); }
+.fc-wh { top: 10px; height: 2px; background: currentColor; }
+.fc-wh.thin { top: 10.5px; height: 1px; }
+.fc-wh.ink { color: var(--ink); }
+.fc-bar { top: 3px; height: 16px; background: currentColor; border-radius: 0 4px 4px 0; }
+.fc-bar.neg { border-radius: 4px 0 0 4px; }
+.fc-join { top: 10px; height: 2px; background: var(--soft); }
+.fc-pt { top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; }
+.fc-axis { padding: 0; }
+.fc-ticks { height: 1.5em; }
+.fc-ticks span { position: absolute; top: 2px; transform: translateX(-50%); white-space: nowrap; }
+@media (max-width: 560px) {
+  .fc-rows { grid-template-columns: minmax(0, 1fr); }
+  .fc-row { grid-template-columns: minmax(0, 1fr); grid-column: 1; }
+  .fc-note { grid-column: 1; }
+  .fc-lab { margin-top: 6px; }
+}
+
+/* xy forms */
+.fc-panels { display: grid; gap: 14px 18px; }
+.fc-panels:is(.n2, .n4) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fc-panels.n3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 560px) { .fc-panels:is(.n2, .n3, .n4) { grid-template-columns: minmax(0, 1fr); } }
+.fc-ptitle { margin: 0 0 4px 2.9rem; font-weight: 600; }
+.fc-xy { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); grid-template-rows: auto 1.5em; column-gap: 6px; }
+.fc-plot { position: relative; margin-right: 1.2rem; aspect-ratio: 16 / 10; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.fc-panels:is(.n2, .n3, .n4) .fc-plot { aspect-ratio: 4 / 3; }
+.fc-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.fc-plot svg path, .fc-plot svg polyline { fill: none; vector-effect: non-scaling-stroke; }
+.fc-plot svg .g { stroke: var(--fc-grid); stroke-width: 1; }
+.fc-plot svg .ref { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.fc-plot svg .l { stroke-width: 2; stroke-linejoin: round; }
+.fc-plot svg .l.s0 { stroke: var(--fc-1); } .fc-plot svg .l.s1 { stroke: var(--fc-2); } .fc-plot svg .l.s2 { stroke: var(--fc-3); }
+.fc-plot svg .l.d { stroke-dasharray: 2 4; }
+.fc-plot .fc-pt { position: absolute; top: auto; cursor: default; }
+.fc-plot .fc-pt::before { content: ""; position: absolute; inset: -6px; }
+.fc-plot .fc-pt:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.fc-tip { display: none; position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 3; white-space: nowrap; padding: 3px 8px; background: var(--ink); color: var(--wall); font: 400 var(--fs-1, .82rem)/1.4 var(--face-utility, inherit); }
+.fc-pt:is(:hover, :focus) > .fc-tip { display: block; }
+.fc-yt { position: relative; grid-row: 1; }
+.fc-yt span { position: absolute; right: 0; transform: translateY(-50%); white-space: nowrap; }
+.fc-xt { position: relative; grid-column: 2; }
+.fc-xt span { position: absolute; top: 3px; transform: translateX(-50%); white-space: nowrap; }
+
+/* legend, the facts under the chart, the table and the source */
+.fc-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 12px 0 0; padding: 0; color: var(--ink); }
+.fc .fc-legend li { display: flex; align-items: center; gap: 7px; margin: 0; padding: 0; font: inherit; }
+.fc .fc-legend li::before, .fc .fc-step::before { content: none; }
+.fc-k { display: inline-block; flex: none; }
+.fc-k.band { width: 22px; height: 10px; background: var(--fc-band); border-radius: 2px; }
+.fc-k.tick { width: 2px; height: 14px; margin: 0 6px; background: var(--ink); }
+.fc-k.wh { width: 22px; height: 2px; background: var(--ink); }
+.fc-k.bar { width: 14px; height: 10px; background: currentColor; border-radius: 0 3px 3px 0; }
+.fc-k.ref { width: 0; height: 14px; margin: 0 6px; border-left: 1.5px dashed var(--ink); }
+.fc-k.ref.r1 { border-left-style: dotted; border-left-width: 2px; }
+.fc-k.region { width: 22px; height: 12px; background: repeating-linear-gradient(135deg, transparent 0 5px, var(--soft) 5px 6px); }
+.fc-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 14px; margin: 14px 0 0; }
+.fc-meta > div { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; }
+.fc-meta dt { color: var(--soft); }
+.fc-meta dd { margin: 0; color: var(--ink); }
+@media (max-width: 560px) { .fc-meta, .fc-meta > div { grid-template-columns: minmax(0, 1fr); } .fc-meta dd { margin-bottom: 4px; } }
+.fc-data { margin-top: 10px; }
+.fc-data summary { cursor: pointer; min-height: 24px; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.fc-data .fc-rowsn { color: var(--soft); margin-left: .5em; }
+.fc-data .st-table { margin-top: 8px; overflow-x: auto; }
+.fc .st-table table { font-size: var(--fs-2, .92rem); }
+.fc-src { margin: 8px 0 0; color: var(--soft); overflow-wrap: anywhere; }
+.fc-src code { font-size: .92em; }
+.fc-matrix td { background: color-mix(in srgb, var(--fc-1) var(--k, 0%), var(--wall)); }
+.fc-matrix td.hi { color: var(--wall); }
+.fc-verdict { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.fc-verdict.ok { color: var(--verified); } .fc-verdict.no { color: var(--drift); }
+.fc-v { stroke: currentColor; }
+.fc:target { outline: 2px solid var(--rs, currentColor); outline-offset: 6px; }
+
+/* flow diagrams: numbered steps on one hairline, an arrowhead between steps; the verdict is the one coloured mark */
+.fc-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(8.6rem, 1fr)); gap: 18px 0; }
+.fc .fc-step { position: relative; margin: 0; display: flex; flex-direction: column; gap: 3px; padding: 12px 18px 0 0; border-top: 1.5px solid var(--ink); font: 400 var(--fs-1, .82rem)/1.4 var(--face-utility, inherit); }
+.fc-step::after { content: ""; position: absolute; top: -5.5px; right: 6px; width: 8px; height: 8px; border-top: 1.5px solid var(--ink); border-right: 1.5px solid var(--ink); transform: rotate(45deg); }
+.fc-step:last-child::after { display: none; }
+.fc-step.branch { border-top-style: dashed; }
+.fc-step b { font-weight: 600; color: var(--ink); text-wrap: balance; }
+.fc-stepn, .fc-stepd, .fc-kind { color: var(--soft); }
+.fc-stepn { font-variant-numeric: tabular-nums; }
+.fc-stepk { display: inline-flex; align-items: center; gap: 6px; min-height: 18px; }
+.fc-g2 { fill: var(--ink); color: var(--ink); flex: none; }
+.fc-g2.k-control { fill: var(--fc-band); stroke: var(--soft); stroke-width: 1; }
+.fc-g2.k-measure { fill: var(--fc-1); } .fc-g2.k-planted { fill: var(--fc-3); }
+@media (max-width: 560px) {
+  .fc-flow { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .fc-step { border-top: 0; border-left: 1.5px solid var(--ink); padding: 0 0 16px 16px; }
+  .fc-step.branch { border-left-style: dashed; }
+  .fc-step::after { top: auto; bottom: 2px; right: auto; left: -5.5px; transform: rotate(135deg); }
+}
+
+/* live re-run */
+.fc-live { margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line); font: 400 var(--fs-1, .82rem)/1.45 var(--face-utility, inherit); }
+.fc-live h4 { margin: 0 0 6px; font: 600 var(--fs-2, 1rem)/1.3 var(--face-text, inherit); }
+.fc-live button { min-height: 32px; padding: 4px 14px; font: inherit; color: var(--wall); background: var(--ink); border: 0; cursor: pointer; }
+.fc-live button:focus-visible { outline: 2px solid var(--rs, currentColor); outline-offset: 3px; }
+.fc-live button[disabled] { opacity: .55; cursor: default; }
+.fc-live canvas { display: block; width: 100%; height: 150px; margin: 10px 0 4px; border-bottom: 1px solid var(--line); }
+.fc-live .fc-run-out { margin: 6px 0 0; font-variant-numeric: tabular-nums; }
+.fc-live table { border-collapse: collapse; margin-top: 8px; font-variant-numeric: tabular-nums; }
+.fc-live :is(th, td) { padding: 2px 14px 2px 0; text-align: left; font-weight: 400; }
+.fc-live th { color: var(--soft); }
+@media print { .fc-data:not([open]) > .st-table { display: block; } .fc-live { display: none; } }
