@@ -31,56 +31,54 @@
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">security toolkit</span></div>
   <div class="mid">
-    <h1>A maturity map, <span class="g">not a hype sheet.</span></h1>
-    <p class="lede">The security lane uses the same shipped, active, research, controlled-private, and archived maturity states as the canonical system registry. Five public utilities remain directly inspectable, while the private practice is projected as one bounded record.</p>
-    <p class="close">Unknown stays unknown. Public copy follows first-party repository metadata and does not turn a README command into a fresh checkout result.</p>
+    <h1>Security toolkit</h1>
+    <p class="lede">Five small public utilities for checking a repository before you publish it, redacting secrets from tool output, validating release source records, installing repository hooks and indexing review packets.</p>
   </div>
-  <div class="seal">generated projection &middot; <a href="security-tools.json">security-tools.json</a> &middot; evidenceDate 2026-08-27</div>
+  <div class="seal"><a href="security-tools.json">security-tools.json</a> &middot; checked 2026-08-27</div>
 </div>
 
 <main id="main">
 <section class="mv" id="classes" aria-labelledby="classes-h">
-  <h2 id="classes-h">Five maturity states.</h2>
+  <h2 id="classes-h">Status labels</h2>
   <div class="index" role="list">
-    <div class="index-row" role="listitem"><span class="index-term">shipped</span><span class="index-gloss">Public product page, current first-party release, entry point, verification command, limitations, and authorization boundary.</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">active</span><span class="index-gloss">Public source is active, while the current evidence does not establish a stable tagged release.</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">research</span><span class="index-gloss">Research work with bounded evidence and no shipped-product claim.</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">controlled-private</span><span class="index-gloss">Authorized private practice described as one public-safe record with no source or runnable command.</span></div>
-    <div class="index-row" role="listitem"><span class="index-term">archived</span><span class="index-gloss">Retained for provenance or historical reference, not presented as an active surface.</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">shipped</span><span class="index-gloss">A public release with an install command.</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">active</span><span class="index-gloss">Public source under development, without a stable tagged release.</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">research</span><span class="index-gloss">Research work.</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">controlled-private</span><span class="index-gloss">A private system used only under written authorization; no source or command is published.</span></div>
+    <div class="index-row" role="listitem"><span class="index-term">archived</span><span class="index-gloss">Kept for reference and no longer maintained.</span></div>
   </div>
 </section>
 
 <section class="mv" id="toolkit-records" aria-labelledby="toolkit-records-h">
-  <h2 id="toolkit-records-h">Verified public toolkit records.</h2>
-  <p class="body-text">The exact public utility set is Public Surface Sweeper, Model Provenance Validator, Secret Redact IO, Agent Hook Pack, and Repo Proof Index. Each source link below points to a public HarperZ9 repository with evidence dated 2026-08-27.</p>
+  <h2 id="toolkit-records-h">The utilities</h2>
+  <p class="body-text">Each links to its public repository.</p>
   <div class="index" role="list">
     <article class="index-row" role="listitem" id="public-surface-sweeper">
       <span class="index-term">Public Surface Sweeper</span>
-      <span class="index-gloss"><a href="https://github.com/HarperZ9/public-surface-sweeper" rel="noopener">source</a>. Entry: <code><span class="ident" translate="no">public-surface-sweeper</span> . --summary</code>. Verification path from README: <code><span class="ident" translate="no">public-surface-sweeper</span> examples/clean-repo</code> and <code>python -m pytest</code>. Nonclaim: not a full security scanner and not a certification tool.</span>
+      <span class="index-gloss"><a href="https://github.com/HarperZ9/public-surface-sweeper" rel="noopener">source</a>. Entry: <code><span class="ident" translate="no">public-surface-sweeper</span> . --summary</code>. Try it on the sample: <code><span class="ident" translate="no">public-surface-sweeper</span> examples/clean-repo</code>. It checks release hygiene only; use a vulnerability scanner for dependencies and exploits.</span>
     </article>
     <article class="index-row" role="listitem" id="model-provenance-validator">
       <span class="index-term">Model Provenance Validator</span>
-      <span class="index-gloss">Model Provenance Validator is a Python CLI that checks JSON records linking a model or release claim to its sources, retrieval dates, and publishable status. It redacts credential-like values from its output and can emit a Proof Surface packet, but it does not verify the underlying claim. <a href="https://github.com/HarperZ9/model-provenance-validator" rel="noopener">Source</a>. Entry: <code><span class="ident" translate="no">model-provenance-validator</span> envelope.json</code>.</span>
+      <span class="index-gloss">Model Provenance Validator checks JSON records that link a model or release claim to its sources and retrieval dates, redacts credential-like values from its output, and can emit a Proof Surface packet. <a href="https://github.com/HarperZ9/model-provenance-validator" rel="noopener">Source</a>. Entry: <code><span class="ident" translate="no">model-provenance-validator</span> envelope.json</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="secret-redact-io">
       <span class="index-term">Secret Redact IO</span>
-      <span class="index-gloss">Secret Redact IO is a Python helper library that redacts file, fetch, write, and subprocess output while emitting hash-only receipts. <a href="https://github.com/HarperZ9/secret-redact-io" rel="noopener">Source</a>. Entry: <code>secret-redact-io read README.md --json</code>.</span>
+      <span class="index-gloss">Secret Redact IO is a Python library that redacts secrets from file, fetch, write and subprocess output. <a href="https://github.com/HarperZ9/secret-redact-io" rel="noopener">Source</a>. Entry: <code>secret-redact-io read README.md --json</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="agent-hook-pack">
       <span class="index-term">Agent Hook Pack</span>
-      <span class="index-gloss">Agent Hook Pack installs public-safe hooks for secret checks, branch guards, environment synchronization, and repository hygiene. <a href="https://github.com/HarperZ9/agent-hook-pack" rel="noopener">Source</a>. Entry: <code>agent-hook-pack audit</code> and <code>agent-hook-pack list</code>.</span>
+      <span class="index-gloss">Agent Hook Pack installs hooks for secret checks, branch guards, environment synchronization and repository hygiene. <a href="https://github.com/HarperZ9/agent-hook-pack" rel="noopener">Source</a>. Entry: <code>agent-hook-pack audit</code> and <code>agent-hook-pack list</code>.</span>
     </article>
     <article class="index-row" role="listitem" id="repo-proof-index">
       <span class="index-term">Repo Proof Index</span>
-      <span class="index-gloss">Repo Proof Index is a Python CLI that scans proof packets, receipts, and contracts and builds a reviewer-facing index of each artifact's type, status, evidence summary, and source path. It validates known packet formats but does not decide whether the evidence is sufficient. <a href="https://github.com/HarperZ9/repo-proof-index" rel="noopener">Source</a>. Entry: <code><span class="ident" translate="no">repo-proof-index</span> contracts/*.json --summary</code>.</span>
+      <span class="index-gloss">Repo Proof Index scans the proof packets, receipts and contracts in a repository and builds a reviewer index with the type, status, summary and path of each file. <a href="https://github.com/HarperZ9/repo-proof-index" rel="noopener">Source</a>. Entry: <code><span class="ident" translate="no">repo-proof-index</span> contracts/*.json --summary</code>.</span>
     </article>
   </div>
 </section>
 
 <section class="mv" id="records" aria-labelledby="records-h">
-  <h2 id="records-h">Inspectable data file.</h2>
-  <p class="body-text"><a href="security-tools.json">security-tools.json</a> is generated from the security-privacy domain of the canonical system registry. Every record uses the exact fields slug, name, purpose, maturity, source, installOrEntry, verificationCommand, limitations, authorizationBoundary, and evidenceDate.</p>
-  <p class="body-text">The projection records supported entry and verification commands without turning them into a fresh-run claim. Controlled-private records expose neither source nor commands.</p>
+  <h2 id="records-h">Data file</h2>
+  <p class="body-text"><a href="security-tools.json">security-tools.json</a> lists every security tool with its purpose, maturity, source, install and verification commands, limitations and authorization requirement.</p>
 </section>
 </main>
 </body>

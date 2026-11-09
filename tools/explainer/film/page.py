@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -97,16 +98,18 @@ def spoken_line(slug: str, line: str, rows: list) -> str:
 
 def source_card(slug: str, k: str, s: dict, heard: tuple) -> str:
     """One source as an evidence card: what it found, on what sample, with what interval, in its own
-    words, and what it does not prove. Every field is the checked text of evidence.json."""
+    words, and what it covers. Every field is the checked text of evidence.json. "context" was named
+    "does_not_prove" before 23 October 2026; an older file still reads."""
     at, seg = heard
-    kind = "Peer reviewed" if s.get("peer_reviewed") else "Not peer reviewed"
+    kind = s.get("kind") or ("Peer-reviewed paper" if s.get("peer_reviewed") else "Preprint")
+    context = s.get("context", s.get("does_not_prove", ""))
     quote = (f'<dt>From the source</dt><dd>"{E(s["quote"])}"</dd>' if s["quote"] else "")
     return (f'<li id="{slug}-src-{E(k)}">'
             f'<p class="fl-src-name"><b>{E(s["short"])}</b><span class="fl-src-kind">{kind}</span></p>'
             f'<p class="fl-src-heard"><a class="fl-seek" href="#{slug}" data-seek="{at:.2f}">Heard at {clock(at)}</a>, in {E(seg)}</p>'
             f'<dl class="fl-src-facts"><dt>Found</dt><dd>{E(" ".join(s["claims"]))}</dd>'
             f'<dt>Sample</dt><dd>{E(s["n"])}</dd><dt>Interval</dt><dd>{E(s["interval"])}</dd>{quote}'
-            f'<dt class="fl-null">Does not prove</dt><dd class="fl-null">{E(s["does_not_prove"])}</dd></dl>'
+            f'<dt class="fl-context">What it shows</dt><dd class="fl-context">{E(context)}</dd></dl>'
             f'<p class="fl-src-cite">{E(s["citation"])} <a class="inline" href="{E(s["url"])}" rel="external noopener">{E(s["url"])}</a></p></li>')
 
 
@@ -152,13 +155,13 @@ def film_section(slug: str) -> str:
   <h2 id="{slug}-h">{E(f["title"])}</h2>
   {host(slug)}
   <figure class="film" data-film="{slug}" data-folder="{folder}">
-    <video controls preload="metadata" playsinline width="1920" height="1080" poster="{folder}/poster.jpg" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
+    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.webp" aria-describedby="{slug}-transcript"><source src="{folder}/{slug}.mp4" type="video/mp4"><track kind="captions" src="{folder}/{slug}.vtt" srclang="en" label="English"></video>
     {heads}
     <figcaption>{clock(secs)}, with captions (CC button) and a transcript. The narration is a synthesized version of the author's voice, made with a speech model fine-tuned on his own recordings. Each sentence was checked against the script by speech recognition: {nar["sentences"]} sentences, {nar["flagged"]} flagged.{sound_note(rec.get("sound"))}</figcaption>
     <div class="fl-recall xl-recall"><h3>Recall questions</h3><ol>{static_q}</ol></div>
   </figure>{live}{demo(slug)}
   <details id="{slug}-transcript" class="fl-transcript"><summary>Transcript, timed to the film</summary>{transcript}</details>
-  <h3 id="{slug}-sources" class="fl-src-h">Sources, with what each one does not prove</h3>
+  <h3 id="{slug}-sources" class="fl-src-h">Sources, and what each one shows</h3>
   <div class="fl-src-wrap"><ol class="fl-sources">{sources}</ol></div>
   <p class="fl-receipt">Build record: <a class="inline" href="{folder}/film.receipt.json">film.receipt.json</a> lists the hash of the script, the sources file, the render code and every output.</p>
 </section>"""
@@ -173,7 +176,7 @@ def film_index() -> str:
         f = x["film"]
         used = {k for s in f["segments"] for k in s.get("sources", [])}
         chapters = len(f["segments"]) - 1
-        items.append(f'<li><a href="#{slug}"><img src="media/explainers/{slug}/poster.jpg" alt="" width="320" height="180" loading="lazy" decoding="async">'
+        items.append(f'<li><a href="#{slug}"><img src="media/explainers/{slug}/poster-640.webp" alt="" width="320" height="180" loading="lazy" decoding="async">'
                      f'<span class="fl-ix-n">{n:02d}</span><span class="fl-ix-t">{E(f["title"])}</span>'
                      f'<span class="fl-ix-m">{clock(x["receipt"]["seconds"])}, {chapters} chapters, {len(used)} sources</span></a></li>')
     return f'<nav class="fl-index" aria-label="The films"><ol>{"".join(items)}</ol></nav>'
@@ -197,7 +200,17 @@ def interactive(slug: str, folder: str, title: str) -> str:
 # Media rendered by a repository's release (raw-native ADR 0012): media/releases/<repo>/<tag>/<scene>/,
 # copied from the release's media bundle. Each folder holds the video, poster, captions, the facts it
 # was drawn from, and an interactive index.html with the engine beside it.
-RELEASES = [("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+RELEASES = [("flywheel", "v1.5.1", ["first-check", "which-source"]),
+            ("raw-native", "v0.6.0", ["ao-check", "first-run"])]
+
+
+def web_rendition(m: dict) -> tuple[str, int, int]:
+    """The largest video rendition up to 1080p a release media.json lists, with its frame size.
+    raw-native bundles carry 1080p (and a 2160p master the site does not serve); Flywheel's carry 540p."""
+    sizes = [(int(r.group(1)), f) for f in m["files"] if (r := re.search(r"-(\d+)p\.mp4$", f))]
+    h, f = max(x for x in sizes if x[0] <= 1080)
+    w = round(m.get("width", 16 * h / 9) * h / m.get("height", h))
+    return f, w, h
 
 
 def release_section() -> str:
@@ -206,7 +219,8 @@ def release_section() -> str:
         for sid in scenes:
             folder = f"media/releases/{repo}/{tag}/{sid}"
             m = json.loads((ROOT / folder / "media.json").read_text(encoding="utf-8"))
-            video = next(f for f in m["files"] if f.endswith("-1080p.mp4"))
+            # The site serves renditions up to 1080p; a 4K master stays on the release.
+            video, vw, vh = web_rendition(m)
             vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
             track = f'<track kind="captions" src="{folder}/{vtt}" srclang="en" label="English">' if vtt else ""
             voice = ("Narrated in a synthesized version of the author's voice." if m.get("narrated")
@@ -214,7 +228,7 @@ def release_section() -> str:
             items.append(f"""
   <figure class="film rm">
     <h3>{E(m["title"])}</h3>
-    <video controls preload="none" playsinline width="1920" height="1080" poster="{folder}/poster.jpg"><source src="{folder}/{video}" type="video/mp4">{track}</video>
+    <video controls preload="none" playsinline width="{vw}" height="{vh}" poster="{folder}/poster.webp"><source src="{folder}/{video}" type="video/mp4">{track}</video>
     <figcaption>{clock(m["duration"])}. Rendered by the <a class="inline" href="https://github.com/HarperZ9/{repo}/releases/tag/{tag}">{E(repo)} {E(tag)}</a> release from values read at its commit {E(m["commit"][:7])}: <a class="inline" href="{folder}/facts.json">facts.json</a>. {voice} <a class="inline" href="{folder}/index.html">Open it live</a> to scrub it frame by frame in your browser.</figcaption>
   </figure>""")
     return f"""
@@ -265,8 +279,8 @@ def page() -> str:
 <div class="frame">
   <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt">explainers</span></div>
   <div class="mid">
-    <h1>Explainers. <span class="g">Every number has a source.</span></h1>
-    <p class="lede">Short films on the ideas behind the work. Each one teaches one idea through a concrete case, puts every number it says on screen with its source, and stops to ask you to recall what you saw.</p>
+    <h1>Explainers. <span class="g">Short films on how AI works and how it gets checked.</span></h1>
+    <p class="lede">Each film teaches one idea through a concrete case, shows its sources on screen, and ends with recall questions.</p>
     <p class="lede">Three guides host them: <a class="inline" href="guides.html#tallow">Tallow</a>, <a class="inline" href="guides.html#pylon">Pylon</a> and <a class="inline" href="guides.html#rerun">Rerun</a>. <a class="inline" href="guides.html">Meet the guides</a>.</p>
   </div>
   {film_index()}

@@ -28,6 +28,7 @@ RESUME_PDFS = (
     "career/Zain-Dana-Harper-Resume-Public-Operations.pdf",
     "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf",
     "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf",
+    "career/Zain-Dana-Harper-Resume-Graphics-Developer-Tools.pdf",
 )
 RETIRED_LEGACY_PDFS = (
     "career/Zain-Dana-Harper-Resume.pdf",
@@ -37,6 +38,7 @@ RETIRED_LEGACY_PDFS = (
 STATUS_BOUNDARY_DOCS = (
     "resume-support-operations.html",
     "resume-evaluation-tooling.html",
+    "resume-graphics-developer-tools.html",
     "resume-public-operations.html",
     "resume-grounds.html",
     "cv.html",
@@ -404,8 +406,8 @@ def test_hiring_paths_use_one_column_at_mobile_and_readable_action_targets() -> 
 def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     src = (ROOT / "home" / "src" / "App.tsx").read_text(encoding="utf-8")
     brand = src.index('<h1 className="hero-title">Zain Dana Harper</h1>')
-    mission = src.index("Flywheel and public tools for re-derivable AI evaluation.")
-    audience = src.index("claims a skeptic can rerun")
+    mission = src.index("Flywheel and open-source tools for testing AI systems.")
+    audience = src.index("developers who test AI systems")
     hiring = src.index("Hiring, contracting, and collaboration")
     hiring_route = src.index('href: "/hire.html#technical-operations-path"')
     assert brand < mission < audience
@@ -416,10 +418,11 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
     order = re.findall(r"<([A-Z][A-Za-z0-9]*)\s*/>", main.group("body"))
     # 25 September 2026: Recent work sits between the mission and Flywheel.
     # 12 October 2026: the guides who host the films lead, right after the name (author direction).
-    assert order[:9] == [
+    # 18 October 2026: the guides' section left the home page (author: the explainer videos must
+    # not take over the site).
+    assert order[:8] == [
         "IdentityHero",
-        "Guides",
-        "MissionFrame",
+        "Flagships",
         "RecentWork",
         "FeaturedFlywheel",
         "ProductSelection",
@@ -427,7 +430,7 @@ def test_home_source_connects_the_product_brand_to_the_hiring_route() -> None:
         "ResearchPilotRoutes",
         "CapabilityOverview",
     ]
-    assert order.index("MissionFrame") < order.index("FeaturedFlywheel")
+    assert order.index("Flagships") < order.index("FeaturedFlywheel")
     assert order.index("FeaturedFlywheel") < order.index("ProductSelection")
     assert order.index("ProductSelection") < order.index("ResearchPilotRoutes")
 

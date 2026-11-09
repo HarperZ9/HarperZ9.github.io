@@ -1,0 +1,46 @@
+{
+  "schema": "explainer-evidence/1",
+  "explainer": "embeddings",
+  "read": "2026-10-15",
+  "sources": {
+    "ours-embed": {
+      "short": "Night School's skip-gram, trained for this film",
+      "citation": "media/school/embeddings/facts.json, written by tools/school/fill_embeddings.mjs from system/school/embeddings.mjs: skip-gram with negative sampling (32 numbers per word, window 1 to 2, 5 noise words, 5 epochs, seed 1) on the guides' corpus; a finite-difference check of the hand-written gradient (worst 5.3e-7).",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings",
+      "read": "full",
+      "claims": [
+        "Same-kind nearest neighbour share: 26% at the start (shuffle control mean 22%, 95% interval 9% to 39%); highest of the 12 snapshots at 5% of training (72%), 65% at the end, from one seed; held-out loss falls at every snapshot (2.14 at 5%, 1.92 at the end).",
+        "Seed 1 against each of four other seeds: 75% to 80% of each word's three nearest neighbours agree (pairs among seeds 2 to 5 not measured)."
+      ],
+      "n": "46 entries (44 words and two marks); 5 seeds.",
+      "interval": "Range over seeds, stated; shuffle control 95% interval in facts.json.",
+      "does_not_prove": "Anything about large embedding tables."
+    },
+    "mikolov2013": {
+      "short": "Mikolov and others 2013, Distributed Representations of Words and Phrases and their Compositionality",
+      "citation": "Mikolov, T., Sutskever, I., Chen, K., Corrado, G., Dean, J. (2013). Distributed Representations of Words and Phrases and their Compositionality. NeurIPS 26. arXiv:1310.4546.",
+      "url": "https://arxiv.org/abs/1310.4546",
+      "read": "full text of arXiv 1310.4546v1, sections 2 and 2.2 (equation 4, the noise distribution, k from 5 to 20 for small data); the skip-gram architecture itself is from arXiv 1301.3781, section 3.2",
+      "claims": [
+        "The skip-gram model learns an input and an output vector for every word, trained so a word's vector predicts the words around it (section 2).",
+        "Negative sampling replaces the full softmax: each real (word, context) pair is pushed together and k words drawn from a noise distribution (the unigram distribution to the 3/4 power) are pushed apart (section 2.2, equation 4)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "That the learned neighbours reflect meaning beyond how words are used in the training text."
+    },
+    "ours-model": {
+      "short": "Night School's tiny transformer, its word table",
+      "citation": "media/school/attention/model.json (wte), compared in media/school/embeddings/facts.json.",
+      "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/embeddings",
+      "read": "full",
+      "claims": [
+        "The attention model's word table puts 80% of words next to a same-kind word; its top-3 neighbour lists overlap the skip-gram's by 33% (chance about 7%; shuffled control 2% to 12%)."
+      ],
+      "n": "Not applicable.",
+      "interval": "Not applicable.",
+      "does_not_prove": "Which table is better; they were trained for different games."
+    }
+  },
+  "factcheck": "media/school/embeddings/FACTCHECK.md (independent sub-agent, 2026-10-15); every rewording applied"
+}

@@ -5,11 +5,10 @@ run = lambda *a, **k: subprocess.run(a, cwd=repo, check=True, **k)
 run("git", "add", "README.md", "docs/explainer/index.html")
 title = "docs: Watch and Walkthrough sections in the README and explainer"
 watch = (f"embeds the concept film \"{film}\" from harperz9.github.io/explainers.html, with captions and a link to its transcript and sources"
-         if film != "none" else "says plainly that no concept film fits this tool yet")
+         if film != "none" else "is left out, since no film fits this tool")
 msg = f"""{title}
 
-The README and docs/explainer/index.html gain two sections. Watch {watch},
-and notes that a narrated video walkthrough comes with the next release.
+The README and docs/explainer/index.html gain two sections. Watch {watch}.
 Walkthrough takes a reader through install, a first run and the main feature,
 step by step, with commands and output copied from real runs recorded on the
 explainer page.
@@ -20,7 +19,7 @@ run("git", "commit", "-q", "-F", "-", input=msg, text=True)
 run("git", "push", "-q", "-u", "origin", "docs/watch-walkthrough")
 body = f"""Adds a **Watch** section and a **Walkthrough** section to the README and to `docs/explainer/index.html`.
 
-- Watch: {watch}. A narrated video walkthrough is listed as coming with the next release; no dead link is added.
+- Watch: {watch}. No future video is promised and no dead link is added.
 - Walkthrough: install, first run and the main feature, step by step. Every command and output is copied from runs already recorded on the explainer page, which cites its commit.
 
 The explainer page stays byte-identical to the copy served at harperz9.github.io/repo-explainers/.

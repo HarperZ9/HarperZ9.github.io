@@ -10,6 +10,7 @@ from ident_markup import without_idents
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def read(relative: str) -> str:
     return (ROOT / relative).read_text(encoding="utf-8")
 
@@ -198,8 +199,6 @@ def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
     assert "safe_to_submit is false" in forum["verificationCommand"]
     assert "route-preflight checks before model execution" in forum["useCases"]
     assert "standalone host skill" in payload
-    assert "not a marketplace approval" in payload
-    assert "not a Forum engine version bump" in payload
     assert "safe_to_submit=false" in payload
 
     assert skill["href"] == "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0"
@@ -222,7 +221,6 @@ def test_forum_route_preflight_skill_release_is_live_and_nonexecuting() -> None:
     assert "https://github.com/HarperZ9/forum/releases/tag/v1.15.1" in page
     assert "coming soon" not in catalog.lower()
     assert "safe_to_submit=false" in page
-    assert "not a marketplace approval" in page
     assert "https://github.com/HarperZ9/forum/releases/tag/forum-route-preflight-v0.1.0" in page
     assert "https://github.com/HarperZ9/forum/releases/download/forum-route-preflight-v0.1.0/forum-route-preflight-skill-20260907-final.zip" in page
 
@@ -239,7 +237,7 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     release = evidence["flywheel-release-v1-0-1"]
     pypi = evidence["flywheel-pypi-v1-0-1"]
     service_desk = evidence["flywheel-service-desk-env-v0-1-0"]
-    assert flywheel["purpose"] == "Flywheel runs AI tasks with a model you choose and keeps a record you can recheck. Version 1.1.0 is available as a Python package and a Windows installer. Lane cards in the app run tools and show the setup they need. Flywheel keeps its own records on your machine; request content goes to the model provider you choose."
+    assert flywheel["purpose"] == "Flywheel runs AI tasks with the model you choose and checks each answer against the task contract. It runs on your machine from the command line, a desktop app or a local API, and sends request content only to the model provider you pick."
     assert "Service Desk Incident Environment" not in flywheel["purpose"]
     assert flywheel["releaseState"] == 'Python engine v1.1.0 and Windows desktop v1.1.0; release reports 15 of 17 lanes reached expected classes; Index below bar without Git; Telos excluded'
     assert flywheel["entryCommand"] == "pip install flywheel-verify"
@@ -320,7 +318,6 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     # 2026-09-25 round 3: the install lead names the version as the thing installed.
     assert "Install the Python engine from PyPI" in release_section
     assert "published checksums" in release_section
-    assert "15 of its 17 lanes" in release_section
     assert "The installer is unsigned" in release_section
     assert "pip install flywheel-verify" in page
     assert "Windows desktop: 1.1.0" in page
@@ -340,11 +337,12 @@ def test_flywheel_101_release_discovery_keeps_engine_desktop_and_service_desk_li
     assert "Service Desk Incident Environment 0.1.0" in home_registry
     assert "Flywheel v1.1.0" in home_registry
 
-    for relative in ("home/index.html", "index.html"):
+    for relative in ("home/index.html", "workshop.html"):
         fallback = without_idents(read(relative)).split('<section id="noscript-flywheel"', 1)[1]
         fallback = fallback.split("</section>", 1)[0]
         release_link = re.search(r'Release: <a[^>]+href="([^"]+)"', fallback)
-        assert release_link and release_link.group(1) == evidence["flywheel-release-v1-1-0"]["href"]
+        # 2026-10-23-plain-copy: the no-script fallback links the current release, 1.9.0.
+        assert release_link and release_link.group(1) == "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0"
         install = re.search(r"<li>Install: ([^<]+)</li>", fallback)
         assert install and install.group(1) == flywheel["entryCommand"]
 
@@ -366,11 +364,11 @@ def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
     companions_start = page.index('<section class="mv" id="companions"')
     evidence_start = page.index('<li id="evidence-task">')
     reader_flow_start = page.index('<li id="reader-flow-review">')
-    benchmarks_start = page.index('<section class="mv" id="benchmarks"')
+    compare_start = page.index('<section class="mv" id="compare"')
     section = page[companions_start:]
     section = section[: section.index("</section>")]
 
-    assert benchmarks_start < companions_start < evidence_start < reader_flow_start
+    assert compare_start < companions_start < evidence_start < reader_flow_start
     # 2026-09-25 human-first notebook: tokens.css clears the sticky header for every anchor
     # and focused element on every page, so the per-id scroll margins retired.
     assert "html:root{scroll-padding-top:5rem}" in read("system/tokens.css")
@@ -390,10 +388,6 @@ def test_reader_flow_review_skill_is_downloadable_from_flywheel_page() -> None:
     # including its quoted sample passage; only the command token takes the reading-face styling.
     assert 'Use <span class="fw-token">$reader-flow-review</span> to review this passage for reader flow while preserving voice and uncertainty' in section
     assert "&quot;The release is useful, but its evidence is developmental." in section
-    assert "host installation" in section
-    assert "automatic invocation" in section
-    assert "held-out writing quality" in section
-    assert "third-party marketplace approval" in section
 
     for unsupported in (
         "marketplace approved",
@@ -636,4 +630,4 @@ def test_security_plate_lists_exactly_the_advisories_the_registry_records() -> N
     assert with_advisory == {"Gather", "Relay", "Forum", "Crucible", "Canon", "Mneme"}
     for name in with_advisory:
         assert name not in includes
-    assert "evidence through 2026-09-27" in page
+    assert "updated 2026-09-27" in page

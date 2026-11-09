@@ -1,0 +1,91 @@
+{
+ "schema": "explainer-evidence/1",
+ "explainer": "denoiser",
+ "read": "2026-10-16",
+ "sources": {
+  "rn-rtx": {
+   "short": "raw-native parity run on an RTX 4090",
+   "citation": "HarperZ9/raw-native at 9de6582, evidence/rr-h2-v4/rtx4090/v4-parity-raw_hero-validation.json.",
+   "url": "https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-h2-v4/rtx4090/v4-parity-raw_hero-validation.json",
+   "read": "full",
+   "claims": [
+    "Tensor-core path max absolute difference 0.106689 at frame 48, pixel 64580; scalar fp32 path 0.00290298; 64 frames, 24,883,200 values each; p99.99 upper 0.00176668 for the tensor-core path; the perturbed-weights control fails as required."
+   ],
+   "n": "64 frames of raw_hero_p7, 24,883,200 values per path.",
+   "interval": "None; maxima and quantiles of one run.",
+   "does_not_prove": "Behaviour on other GPUs, other scenes or other network versions."
+  },
+  "rn-bounds": {
+   "short": "raw-native inference bounds",
+   "citation": "HarperZ9/raw-native at 9de6582, evidence/rr-inference-bounds.json and the parity measure in vk_rrnet.cpp.",
+   "url": "https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-inference-bounds.json",
+   "read": "full",
+   "claims": [
+    "The parity bound: maximum absolute difference at most 1e-2, measured per value in double over every value."
+   ],
+   "n": "Not applicable.",
+   "interval": "Not applicable.",
+   "does_not_prove": "That 1e-2 is the right bound for image quality; it is the bound set in advance."
+  },
+  "rn-note": {
+   "short": "raw-native evidence note on the tensor-core parity miss, 15 October 2026",
+   "citation": "HarperZ9/raw-native at 9de6582, evidence/rr-tc-note-2026-10-15.json (last changed at 6c06e62).",
+   "url": "https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-note-2026-10-15.json",
+   "read": "full",
+   "claims": [
+    "Predictions written before the emulation; weights-only hypothesis refuted; single-sample specular fireflies (radiance 1,087 beside neighbours near 0.1, demodulated by 0.05 to about 21,700, filtered to about 105 against a reference of 110); per-layer and mixed-precision results; decision: no change this round and the bound is not loosened."
+   ],
+   "n": "64 frames, CPU emulation in PyTorch.",
+   "interval": "None.",
+   "does_not_prove": "That PyTorch's emulation reproduces the tensor cores' summation order."
+  },
+  "rn-emu": {
+   "short": "raw-native CPU emulations W, A and WA",
+   "citation": "HarperZ9/raw-native at 9de6582, evidence/rr-tc-2026-10-15/emu-W.json, emu-A.json, emu-WA.json (commit a0e2cc0).",
+   "url": "https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/emu-WA.json",
+   "read": "full",
+   "claims": [
+    "WA max 0.108489990234375 at frame 48, pixel 64580; W 0.13702392578125; A 0.104095458984375."
+   ],
+   "n": "64 frames each.",
+   "interval": "None.",
+   "does_not_prove": "The GPU's exact arithmetic; it agrees on the worst location and the order of the miss."
+  },
+  "rn-mixed": {
+   "short": "raw-native mixed-precision runs",
+   "citation": "HarperZ9/raw-native at 9de6582, evidence/rr-tc-2026-10-15/keep-10.json, keep-10_1_9.json, keep-10_1_9_8_0_3.json.",
+   "url": "https://github.com/HarperZ9/raw-native/blob/9de6582e822c6eb1eca63de39f857e1be8913b5d/evidence/rr-tc-2026-10-15/keep-10.json",
+   "read": "full",
+   "claims": [
+    "Layer 10 in fp32: 0.0512 (25 pixels over); layers 10, 1, 9: 0.0341 (12); layers 10, 1, 9, 8, 0, 3: 0.0340 (4)."
+   ],
+   "n": "64 frames each.",
+   "interval": "None.",
+   "does_not_prove": "That no other mixed-precision split would pass."
+  },
+  "ours-denoiser": {
+   "short": "Night School's small re-creation of the denoiser's arithmetic",
+   "citation": "media/school/denoiser/facts.json, written by tools/school/fill_denoiser.mjs from system/school/denoiser.mjs: one convolution step and the 5 x 5 softmax filter with a synthetic glint of the note's magnitudes, in fp32, fp16 and bf16 variants, against raw-native's own bound and measure.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/denoiser",
+   "read": "full",
+   "claims": [
+    "The re-created tensor-core arithmetic misses at the glint pixel and the fp32 path passes; without the glint every variant passes."
+   ],
+   "n": "One synthetic 32 x 18 case (seed 1) and a 200-seed sweep.",
+   "interval": "None.",
+   "does_not_prove": "Anything numeric about raw-native's network: the real frame, weights and 12 layers are not in its evidence, so every re-created number is synthetic."
+  },
+  "ours-precision": {
+   "short": "Night School's precision measurements (lesson K24)",
+   "citation": "media/school/precision/facts.json, written by tools/school/fill_precision.mjs.",
+   "url": "https://github.com/HarperZ9/HarperZ9.github.io/tree/main/media/school/precision",
+   "read": "full",
+   "claims": [
+    "Near 110, fp16 values are 0.0625 apart."
+   ],
+   "n": "Exact.",
+   "interval": "Not applicable.",
+   "does_not_prove": "Anything about the denoiser by itself."
+  }
+ }
+}

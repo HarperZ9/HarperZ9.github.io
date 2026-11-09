@@ -5,12 +5,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>index, a map of your whole multi-repo workspace</title>
-<meta name="description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.">
+<meta name="description" content="Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.">
 <link rel="canonical" href="https://harperz9.github.io/index-graph.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zain Dana Harper">
 <meta property="og:title" content="index, a map of your whole multi-repo workspace">
-<meta property="og:description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.">
+<meta property="og:description" content="Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.">
 <meta property="og:url" content="https://harperz9.github.io/index-graph.html">
 <meta property="og:image" content="https://harperz9.github.io/img/og/p/index-graph.jpg?v=9a515b898af0">
 <meta property="og:image:width" content="1200">
@@ -20,11 +20,11 @@
 <meta name="twitter:image" content="https://harperz9.github.io/img/og/p/index-graph.jpg?v=9a515b898af0">
 <meta name="twitter:image:alt" content="index, a map of your whole multi-repo workspace, by Zain Dana Harper. Rings of small nodes, repositories, modules and symbols, linked by fine lines around a bright core. One dashed edge between two modules is crossed out and marked REFUTED.">
 <meta name="twitter:title" content="index, a map of your whole multi-repo workspace">
-<meta name="twitter:description" content="Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.">
+<meta name="twitter:description" content="Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.">
 <meta name="color-scheme" content="dark">
 <link rel="stylesheet" href="system/system.css?v=20260927-copy-pass">
 <!-- structured-data:begin (tools/structured_data.py) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/index-graph.html#software","name":"Index","description":"Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.","url":"https://harperz9.github.io/index-graph.html","codeRepository":"https://github.com/HarperZ9/index","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Index","item":"https://harperz9.github.io/index-graph.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/index-graph.html#software","name":"Index","description":"Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.","url":"https://harperz9.github.io/index-graph.html","codeRepository":"https://github.com/HarperZ9/index","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"Index","item":"https://harperz9.github.io/index-graph.html"}]}]}</script>
 <!-- structured-data:end -->
 </head>
 <body class="inner-clean">
@@ -35,14 +35,13 @@
 <script type="module" src="system/nav.js?v=20260909-pillar-navigation"></script>
 
 <div class="frame">
-  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">index</span> &middot; verified workspace map</span></div>
+  <div class="bar"><span class="nm">Zain Dana Harper</span><span class="rt"><span translate="no">index</span> &middot; workspace maps</span></div>
   <div class="mid">
-    <h1>A workspace with dozens of repos deserves <span class="g">a real map.</span></h1>
-    <p class="lede" data-canonical-purpose="index">Index maps repositories and multi-repo workspaces so teams and agents can see how the code fits together. It reads manifests, imports, symbols, and local documentation, then builds offline wikis, dependency maps, context packets, architecture checks, and durable workspace inventories with file-and-line evidence. Background router jobs, added in version 2.12.0, let large workspace maps run in the background with status and result retrieval for progress and recovery. Version 2.13.0 is the current release on GitHub and PyPI.</p>
+    <h1>Map a workspace of many repositories.</h1>
+    <p class="lede" data-canonical-purpose="index">Index maps a repository or a multi-repo workspace from its manifests, imports, symbols and docs. It builds offline wikis, dependency maps, context packets for agents and architecture checks, each pointing to a file and line. Large workspaces can run as background jobs you check on later.</p>
     <p class="body-text"><a href="repo-explainers/index-graph.html">See it work, step by step</a>: an animated walkthrough with the real commands and output from the repository.</p>
-    <p class="close">Public on GitHub and PyPI, current version 2.13.0. Version 2.12.0 added durable router jobs so large workspace maps can continue in the background, report progress, and return results after an interactive request would have timed out.</p>
   </div>
-  <div class="seal"><span translate="no">index</span> &middot; public &middot; PyPI <span translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</span> &middot; zero dependencies &middot; offline</div>
+  <div class="seal"><span translate="no">index</span> &middot; PyPI <span translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</span> &middot; no dependencies &middot; offline</div>
 </div>
 
 <main id="main">
@@ -51,67 +50,37 @@
   <canvas data-specimen="index-plate-01" data-specimen-layers="fiber-strands" aria-hidden="true"></canvas>
   <figcaption>
     <span class="plate-no">Plate 01</span>
-    <span class="plate-caption">Thousands of strands falling through one field: a workspace, mapped.</span>
+    <span class="plate-caption">Thousands of strands falling through one field.</span>
   </figcaption>
 </figure>
 
-<!-- WHAT IT IS -->
+<!-- WHAT IT DOES -->
 <section class="mv" id="what" aria-labelledby="what-h">
-  <h2 id="what-h" class="reveal">It builds the graph from what is actually there.</h2>
-  <p class="body-text reveal">Repository edges come from imports, manifests, and references rather than hand-written declarations. Each edge retains the file-and-line evidence that produced it, and each node receives a structural role from its graph position: root, leaf, hub, or bridge. A reader can trace every connection back to source.</p>
-  <em class="close reveal">A label that comes from the graph topology is more trustworthy than a label someone wrote in a config file and forgot to update.</em>
+  <h2 id="what-h" class="reveal">What it builds</h2>
+  <p class="body-text reveal">Index reads imports, manifests and references, then draws the dependency graph between repositories and between modules. Each edge names the file and line it came from, and each node is labelled root, leaf, hub or bridge from its place in the graph. It makes no model call and no network call.</p>
 </section>
 
-<!-- THE ATLAS -->
-<section class="mv" id="atlas" aria-labelledby="atlas-h">
-  <h2 id="atlas-h" class="reveal">An atlas of code and knowledge.</h2>
-  <p class="body-text reveal">The deeper idea behind <span translate="no">index</span> is a two-layer map: repos and docs as linked nodes, navigable the way a wiki is navigable. This site is, in that sense, a small atlas of the work. Each flagship page is a node; the connections between the projects are the edges. <span translate="no">index</span> makes that structure explicit and machine-readable for a whole workspace, not just a website.</p>
-  <p class="pull reveal">Run it over the actual workspace and a drift signal emerges: places where the real dependencies no longer match the stated ones.</p>
-  <p class="body-text reveal">When <span translate="no">index</span> was run over one live workspace it surfaced drift: dependencies that had shifted since the manifests were last written. Since version 2.12.0, Index keeps that large-workspace run inspectable by recording progress and making the completed result retrievable instead of tying completion to one interactive request window.</p>
-</section>
-
-<!-- THE VERIFIED BRAIN -->
+<!-- CHECKS -->
 <section class="mv" id="verified" aria-labelledby="verified-h">
-  <h2 id="verified-h" class="reveal">It does not just draw the map. It checks it.</h2>
-  <p class="body-text reveal">A map tells you the shape. The next questions are whether it is the shape you meant, and whether it is still that shape today. You write the rules a healthy codebase keeps into a small <code translate="no">.index.toml</code>: which layers may depend on which, edges that must never exist, a ceiling on cycles. <code translate="no">index check</code> measures the real graph against them and returns a certificate.</p>
-  <p class="pull reveal">The verdict is one of three words, <span translate="no">MATCH</span>, <span translate="no">DRIFT</span>, or <span translate="no">UNVERIFIABLE</span>, and never a fourth. There is no <span translate="no">TRUSTED</span>.</p>
-  <p class="body-text reveal">You believe a certificate by re-running its own <code translate="no">recheck</code> command and recomputing its hashes, not because it told you to. It states its own coverage as well: the files it could not parse, the dynamic imports it could not follow, so a <span translate="no">MATCH</span> never claims more than it proved. <code translate="no">index snapshot</code> and <code translate="no">index drift</code> do the same across time. <code translate="no">index freshness</code> answers whether the ground truth has moved since a certificate was minted. <code translate="no">index verify</code> grounds a single claim, does A depend on B, against the real graph, so a model confirms a dependency instead of trusting its memory.</p>
-  <em class="close reveal">Every answer is re-checkable by anyone holding only the artifact and the evidence. No model sits in the checking step.</em>
+  <h2 id="verified-h" class="reveal">Check the architecture you meant</h2>
+  <p class="body-text reveal">Write your rules in a small <code translate="no">.index.toml</code>: which layers may depend on which, edges that must never exist, a ceiling on cycles. <code translate="no">index check</code> compares the real graph against them and returns <span translate="no">MATCH</span>, <span translate="no">DRIFT</span> or <span translate="no">UNVERIFIABLE</span>, with the files it could not parse listed. <code translate="no">index snapshot</code> and <code translate="no">index drift</code> compare over time, <code translate="no">index freshness</code> tells you whether the code moved since the last check, and <code translate="no">index verify</code> answers one question, such as whether A depends on B, so an agent can confirm a dependency instead of guessing.</p>
 </section>
 
-<!-- THE VERIFIED WIKI -->
+<!-- WIKI -->
 <section class="mv" id="wiki" aria-labelledby="wiki-h">
-  <h2 id="wiki-h" class="reveal">The same discipline, turned on one unfamiliar repo.</h2>
-  <p class="body-text reveal">The atlas maps a whole workspace. <code translate="no">index wiki</code> is the other altitude, the one-repo view a newcomer actually needs. Wiki generators built on a model guess at the architecture and write confident prose about structure that is not there. Repo packers dump the source without understanding it. <code translate="no">index wiki</code> takes the third path: it derives a multi-page, self-contained wiki for one repo from the module dependency graph <span translate="no">index</span> already extracts, with no model and no generated prose, then seals it so the result can be re-checked instead of trusted.</p>
-  <p class="pull reveal">Overview, one module page per module with every edge carrying its file and line, an architecture diagram rendered from the real graph, and your own markdown joined in verbatim. One offline HTML file.</p>
-  <p class="body-text reveal">Each page is sealed with a canonical hash, the artifact is pinned to the commit it was built from, and <code translate="no">index wiki --verify</code> recomputes the page hashes and re-derives the graph against the current tree. The verdict is the same three words as every other certificate: <span translate="no">MATCH</span>, <span translate="no">DRIFT</span> (a page was tampered with, a claimed edge is absent from the real graph, or the repo moved off its pinned commit), or <span translate="no">UNVERIFIABLE</span>. The test suite keeps the known-bad fixtures, a tampered page, a hash-consistent forged edge, hostile markdown, because a verifier that cannot fail on a known-bad input is not a verifier.</p>
+  <h2 id="wiki-h" class="reveal">A wiki for one unfamiliar repository</h2>
+  <p class="body-text reveal"><code translate="no">index wiki</code> builds a single offline HTML file for one repository: an overview, one page per module with each edge and its file and line, an architecture diagram drawn from the real graph, and your own Markdown included as written. It writes no generated prose. <code translate="no">index wiki --verify</code> tells you whether the wiki still matches the code.</p>
   <pre class="artifact" translate="no"><span class="pr">$ index wiki https://github.com/org/repo --out wiki.html</span>
 <span class="cmt"># shallow-clone, derive from the module graph, remove the clone</span>
 <span class="pr">$ index wiki --verify wiki.html --root ./repo</span>
 <span class="ok">MATCH  pages sealed, every claimed edge present, commit pinned</span></pre>
-  <p class="body-text reveal">Point it at a git URL and <span translate="no">index</span> shallow-clones the repo to a temp directory, derives the wiki, and removes the clone, so you can read a repo you have not checked out. <code translate="no">index serve</code> puts the same thing behind a URL: a local server that derives a repo's verified wiki the moment you request it by its forge path (<code translate="no">GET /github.com/org/repo</code>) and not a moment sooner. It is consent-clean by construction. Nothing is crawled or pre-indexed, every page states that the wiki derives structure and generates no prose, <code translate="no">robots.txt</code> disallows indexing, and it binds loopback by default.</p>
-  <em class="close reveal">Same rule as the graph and the certificate: derive the artifact from evidence, seal it, and hand back an answer another run can re-check.</em>
-</section>
-
-<!-- PAIN -> SOLUTION -->
-<section class="mv" id="pain" aria-labelledby="pain-h">
-  <h2 id="pain-h" class="reveal">Built from what practitioners keep asking for.</h2>
-  <p class="body-text reveal">These are real comments from developers talking about agent memory and code agents, each next to what <span translate="no">index</span> does about it.</p>
-  <p class="pull reveal">&ldquo;Claude can make a wrong assumption and that issue will compound for hours until I check.&rdquo;</p>
-  <p class="body-text reveal">The <span translate="no">MATCH</span> / <span translate="no">DRIFT</span> / <span translate="no">UNVERIFIABLE</span> certificate is the mid-loop check that re-grounds an agent against the real structure each turn, instead of letting a wrong assumption ride.</p>
-  <p class="pull reveal">&ldquo;A brain that only ever adds slowly poisons itself with stale facts.&rdquo;</p>
-  <p class="body-text reveal"><span translate="no">index</span> marks a superseded dependency as <span translate="no">DRIFT</span>, non-destructively, with the trail kept, rather than letting a stale claim compete with the truth.</p>
-  <p class="pull reveal">&ldquo;I am done with online AI. Double down on offline AI.&rdquo;</p>
-  <p class="body-text reveal"><span translate="no">index</span> makes no model call and no network call at all. The same repo gives the same graph and the same certificate regardless of which model ran, so it is the deterministic fixed point in a stochastic stack.</p>
-  <p class="pull reveal">&ldquo;90,948 tokens to produce a 3,408-token answer.&rdquo;</p>
-  <p class="body-text reveal"><span translate="no">index</span> precomputes the map once and hands an agent a compact pack instead of making each sub-agent re-read the code. <code translate="no">index bench</code> measures the saving on your own workspace: on a 47-repo, 50 MB workspace the structural pack came back about 70 times smaller than the source it distills.</p>
+  <p class="body-text reveal">Give it a git URL and it clones to a temporary folder, builds the wiki and removes the clone. <code translate="no">index serve</code> runs a local server that builds a wiki when you request a forge path such as <code translate="no">GET /github.com/org/repo</code>. It binds to loopback by default.</p>
 </section>
 
 <!-- DEMONSTRATIONS -->
 <section class="mv" id="demo" aria-labelledby="demo-h">
-  <h2 id="demo-h" class="reveal">See it run.</h2>
-  <p class="body-text reveal">One dependency edge, with the evidence that drew it. One certificate, with the verdict you re-run. One number, the token economy on your own code.</p>
-  <p class="body-text reveal"><a href="demo-index.html">Watch the recorded workflow</a>: a real sanitized workspace, three repositories, evidence-backed edges, a re-run <span translate="no">MATCH</span>, and a budgeted context pack. Choose the 30-second cut or the full 118-second run.</p>
+  <h2 id="demo-h" class="reveal">See it run</h2>
+  <p class="body-text reveal"><a href="demo-index.html">Watch the recorded workflow</a>: a sanitized workspace of three repositories, its edges, a <span translate="no">MATCH</span> check and a context pack for an agent. There is a 30-second cut and the full 118-second run. <code translate="no">index bench</code> measures how much smaller the context pack is than the source on your own workspace; on one 47-repository, 50 MB workspace it was about 70 times smaller.</p>
   <pre class="artifact" translate="no"><span class="pr">$ index graph --root . --json</span>
 <span class="cmt"># every edge carries the file and line that witnesses it</span>
 {"from": "cli", "to": "core", "confidence": "high",
@@ -124,20 +93,18 @@
 <span class="pr">$ index bench --root .</span>
 <span class="cmt"># the structural pack vs the source it reads</span>
 <span class="ok">source read  49,880,045 bytes   index pack  716,288 bytes   69.6x smaller</span></pre>
-  <em class="close reveal">Run any of these over your own workspace and the output is the same shape, with your repos in it.</em>
 </section>
 
-<!-- HONEST STATE -->
+<!-- RELEASE -->
 <section class="mv" id="state" aria-labelledby="state-h">
-  <h2 id="state-h" class="reveal">What is done. What is next.</h2>
-  <p class="body-text reveal">Current public package is <code translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</code>. It includes the two-layer atlas, dependency graph, intra-repo module graph, architecture certificate with snapshot, drift, and freshness, claim oracle, CLAUDE.md or AGENTS.md router, MCP protocol face, token-economy benchmark, and receipt-backed context envelope. Version 2.13.0 reduces repeated router traversal and fixes router job completion events. Version 2.12.0 added durable router jobs for large workspaces with start, status, and result retrieval. Final release validation observed 703 of 703 repositories completed on one live corpus, with scoped runs of 430 s cold and 493 s warm; those are coverage and runtime observations, not a controlled speedup. Version 2.11.0 added resumable <code translate="no">index map --resume-state PATH</code> inventories, explicit unknown Git metadata, and budgeted router, graph, context, and context-envelope calls that return <span translate="no">UNVERIFIABLE</span> instead of presenting a silent partial map. A budgeted router is still a bounded view; use a full-budget, resumable, or durable job run when complete large-workspace inventory matters.</p>
-  <p class="body-text reveal">Saying what is not done yet is part of the design. A map that overstates its coverage is worse than no map at all.</p>
+  <h2 id="state-h" class="reveal">Current release</h2>
+  <p class="body-text reveal"><code translate="no"><span class="ident" translate="no">index-graph</span> 2.13.0</code> includes the workspace atlas, dependency and module graphs, architecture checks, the claim checker, a router for CLAUDE.md and AGENTS.md files, an MCP server, the token benchmark and context packets. Version 2.12.0 added background jobs for large workspaces, and 2.11.0 added resumable <code translate="no">index map --resume-state PATH</code> runs. A run with a budget returns a partial view marked <span translate="no">UNVERIFIABLE</span>; use a full, resumable or background run when you need the complete inventory.</p>
 </section>
 
 <!-- RUN IT -->
 <section class="mv" id="run" aria-labelledby="run-h">
-  <h2 id="run-h" class="reveal">Install it. Point it at the workspace.</h2>
-  <p class="body-text reveal">Install once, then choose the foreground command for a small repo or the durable job path for a large workspace. Start returns a <code translate="no">job_id</code>; use that id with <code translate="no">index router-job status</code> for progress and <code translate="no">index router-job result</code> for retrieval. MCP clients expose the same background path as <code translate="no">index.router.job.start</code>, <code translate="no">index.router.job.status</code>, and <code translate="no">index.router.job.result</code>.</p>
+  <h2 id="run-h" class="reveal">Install and run it</h2>
+  <p class="body-text reveal">For a small repository, run commands in the foreground. For a large workspace, start a background job. Start returns a <code translate="no">job_id</code>; use that id with <code translate="no">index router-job status</code> for progress and <code translate="no">index router-job result</code> for retrieval. MCP clients expose the same background path as <code translate="no">index.router.job.start</code>, <code translate="no">index.router.job.status</code>, and <code translate="no">index.router.job.result</code>.</p>
   <pre class="artifact" translate="no"><span class="pr">$ python -m pip install <span class="ident" translate="no">index-graph==2.13.0</span></span>
 <span class="ok">Successfully installed index-graph-2.13.0</span>
 
@@ -156,7 +123,7 @@
 </main>
 
 <footer class="footer-seal" role="contentinfo">
-  <p class="seal"><span translate="no">index</span> maps what is actually there: repos, edges with evidence, structural roles. Run it over your own workspace and see what the graph knows that you forgot.</p>
+  <p class="seal"><span translate="no">index</span> &middot; workspace maps &middot; <a href="https://github.com/HarperZ9/index">source</a></p>
 </footer>
 
 <script src="system/reveal.js?v=20260902-creative-chassis" defer></script>

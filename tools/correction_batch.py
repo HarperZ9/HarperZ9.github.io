@@ -73,7 +73,8 @@ GENERATORS = (
     "python tools/build_publications.py --records-dir publications/data/records",
     "node scripts/render-route-registry.mjs",
     "node scripts/render-site-index.mjs",
-    "npm --prefix home run build (then re-pin the bundle and release fingerprint tests)",
+    "npm --prefix home run build (then re-pin the bundle test)",
+    "python -m tools.release_reviews record <YYYY-MM-DD-slug> --note \"...\" --stale",
 )
 
 

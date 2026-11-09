@@ -1,0 +1,553 @@
+{
+ "thresholds": {
+  "ssim_max": 0.4,
+  "hamming_min": 16
+ },
+ "calibration": {
+  "33 vs its re-encoded copy": {
+   "ssim": 0.9988,
+   "hamming": 0,
+   "grain_d": 0.0317,
+   "palette_d": 0.015
+  },
+  "28 vs its re-encoded copy": {
+   "ssim": 0.9834,
+   "hamming": 0,
+   "grain_d": 0.1261,
+   "palette_d": 0.061
+  },
+  "series 33-36 siblings, max SSIM": 0.3394,
+  "series 33-36 siblings, min Hamming": 18,
+  "median ref-to-ref grain distance": 0.3011,
+  "median ref-to-ref palette distance": 0.402
+ },
+ "verdict": {
+  "feedback-plate-poster": {
+   "far_in_content": true,
+   "max_ssim": [
+    "34",
+    0.2687
+   ],
+   "min_hamming": [
+    "29",
+    22
+   ],
+   "nearest_grain": [
+    "29",
+    0.2163
+   ],
+   "nearest_palette": [
+    "35",
+    0.212
+   ]
+  },
+  "glyph-field": {
+   "far_in_content": true,
+   "max_ssim": [
+    "30",
+    0.3343
+   ],
+   "min_hamming": [
+    "32",
+    26
+   ],
+   "nearest_grain": [
+    "28",
+    0.0814
+   ],
+   "nearest_palette": [
+    "28",
+    0.09
+   ]
+  },
+  "sheet-one": {
+   "far_in_content": true,
+   "max_ssim": [
+    "34",
+    0.2514
+   ],
+   "min_hamming": [
+    "32",
+    20
+   ],
+   "nearest_grain": [
+    "36",
+    0.0562
+   ],
+   "nearest_palette": [
+    "34",
+    0.184
+   ]
+  },
+  "sheet-two": {
+   "far_in_content": true,
+   "max_ssim": [
+    "34",
+    0.2701
+   ],
+   "min_hamming": [
+    "clip-py9",
+    16
+   ],
+   "nearest_grain": [
+    "31",
+    0.1071
+   ],
+   "nearest_palette": [
+    "34",
+    0.262
+   ]
+  },
+  "static-weather": {
+   "far_in_content": true,
+   "max_ssim": [
+    "clip-py9",
+    0.2558
+   ],
+   "min_hamming": [
+    "28",
+    24
+   ],
+   "nearest_grain": [
+    "clip-fray",
+    0.1165
+   ],
+   "nearest_palette": [
+    "29",
+    0.23
+   ]
+  }
+ },
+ "pairs": {
+  "feedback-plate-poster": {
+   "28": {
+    "ssim": 0.174,
+    "hamming": 28,
+    "grain_d": 0.2255,
+    "palette_d": 0.373
+   },
+   "29": {
+    "ssim": 0.1591,
+    "hamming": 22,
+    "grain_d": 0.2163,
+    "palette_d": 0.321
+   },
+   "30": {
+    "ssim": 0.1888,
+    "hamming": 24,
+    "grain_d": 0.2518,
+    "palette_d": 0.433
+   },
+   "31": {
+    "ssim": 0.1804,
+    "hamming": 26,
+    "grain_d": 0.3116,
+    "palette_d": 0.342
+   },
+   "32": {
+    "ssim": 0.2651,
+    "hamming": 24,
+    "grain_d": 0.3352,
+    "palette_d": 0.251
+   },
+   "33": {
+    "ssim": 0.2283,
+    "hamming": 30,
+    "grain_d": 0.3334,
+    "palette_d": 0.231
+   },
+   "34": {
+    "ssim": 0.2687,
+    "hamming": 26,
+    "grain_d": 0.2792,
+    "palette_d": 0.221
+   },
+   "35": {
+    "ssim": 0.2602,
+    "hamming": 22,
+    "grain_d": 0.2655,
+    "palette_d": 0.212
+   },
+   "36": {
+    "ssim": 0.2531,
+    "hamming": 24,
+    "grain_d": 0.2863,
+    "palette_d": 0.233
+   },
+   "37": {
+    "ssim": 0.1943,
+    "hamming": 24,
+    "grain_d": 0.3108,
+    "palette_d": 0.511
+   },
+   "clip-py9": {
+    "ssim": 0.2384,
+    "hamming": 24,
+    "grain_d": 0.4038,
+    "palette_d": 0.513
+   },
+   "clip-lu7": {
+    "ssim": 0.217,
+    "hamming": 38,
+    "grain_d": 0.4883,
+    "palette_d": 0.752
+   },
+   "clip-pong": {
+    "ssim": 0.1786,
+    "hamming": 34,
+    "grain_d": 0.2273,
+    "palette_d": 0.544
+   },
+   "clip-fray": {
+    "ssim": 0.0781,
+    "hamming": 34,
+    "grain_d": 0.2511,
+    "palette_d": 0.424
+   }
+  },
+  "glyph-field": {
+   "28": {
+    "ssim": 0.3099,
+    "hamming": 28,
+    "grain_d": 0.0814,
+    "palette_d": 0.09
+   },
+   "29": {
+    "ssim": 0.3333,
+    "hamming": 34,
+    "grain_d": 0.0987,
+    "palette_d": 0.106
+   },
+   "30": {
+    "ssim": 0.3343,
+    "hamming": 34,
+    "grain_d": 0.2558,
+    "palette_d": 0.288
+   },
+   "31": {
+    "ssim": 0.2695,
+    "hamming": 30,
+    "grain_d": 0.2648,
+    "palette_d": 0.347
+   },
+   "32": {
+    "ssim": 0.1113,
+    "hamming": 26,
+    "grain_d": 0.2835,
+    "palette_d": 0.381
+   },
+   "33": {
+    "ssim": 0.1386,
+    "hamming": 32,
+    "grain_d": 0.2863,
+    "palette_d": 0.345
+   },
+   "34": {
+    "ssim": 0.1683,
+    "hamming": 28,
+    "grain_d": 0.2269,
+    "palette_d": 0.343
+   },
+   "35": {
+    "ssim": 0.1527,
+    "hamming": 28,
+    "grain_d": 0.2282,
+    "palette_d": 0.295
+   },
+   "36": {
+    "ssim": 0.1357,
+    "hamming": 34,
+    "grain_d": 0.2145,
+    "palette_d": 0.361
+   },
+   "37": {
+    "ssim": 0.1494,
+    "hamming": 32,
+    "grain_d": 0.2848,
+    "palette_d": 0.419
+   },
+   "clip-py9": {
+    "ssim": 0.178,
+    "hamming": 30,
+    "grain_d": 0.4602,
+    "palette_d": 0.498
+   },
+   "clip-lu7": {
+    "ssim": 0.2396,
+    "hamming": 36,
+    "grain_d": 0.5448,
+    "palette_d": 0.546
+   },
+   "clip-pong": {
+    "ssim": 0.3186,
+    "hamming": 34,
+    "grain_d": 0.2894,
+    "palette_d": 0.442
+   },
+   "clip-fray": {
+    "ssim": 0.1047,
+    "hamming": 40,
+    "grain_d": 0.2311,
+    "palette_d": 0.448
+   }
+  },
+  "sheet-one": {
+   "28": {
+    "ssim": 0.194,
+    "hamming": 34,
+    "grain_d": 0.2294,
+    "palette_d": 0.272
+   },
+   "29": {
+    "ssim": 0.1952,
+    "hamming": 32,
+    "grain_d": 0.2464,
+    "palette_d": 0.262
+   },
+   "30": {
+    "ssim": 0.2187,
+    "hamming": 30,
+    "grain_d": 0.376,
+    "palette_d": 0.328
+   },
+   "31": {
+    "ssim": 0.2191,
+    "hamming": 28,
+    "grain_d": 0.0978,
+    "palette_d": 0.357
+   },
+   "32": {
+    "ssim": 0.195,
+    "hamming": 20,
+    "grain_d": 0.1065,
+    "palette_d": 0.271
+   },
+   "33": {
+    "ssim": 0.2309,
+    "hamming": 22,
+    "grain_d": 0.0975,
+    "palette_d": 0.197
+   },
+   "34": {
+    "ssim": 0.2514,
+    "hamming": 30,
+    "grain_d": 0.0629,
+    "palette_d": 0.184
+   },
+   "35": {
+    "ssim": 0.2253,
+    "hamming": 26,
+    "grain_d": 0.0675,
+    "palette_d": 0.195
+   },
+   "36": {
+    "ssim": 0.2191,
+    "hamming": 24,
+    "grain_d": 0.0562,
+    "palette_d": 0.217
+   },
+   "37": {
+    "ssim": 0.1836,
+    "hamming": 28,
+    "grain_d": 0.1009,
+    "palette_d": 0.467
+   },
+   "clip-py9": {
+    "ssim": 0.1887,
+    "hamming": 20,
+    "grain_d": 0.4941,
+    "palette_d": 0.507
+   },
+   "clip-lu7": {
+    "ssim": 0.1551,
+    "hamming": 34,
+    "grain_d": 0.4783,
+    "palette_d": 0.711
+   },
+   "clip-pong": {
+    "ssim": 0.2077,
+    "hamming": 34,
+    "grain_d": 0.336,
+    "palette_d": 0.447
+   },
+   "clip-fray": {
+    "ssim": 0.0622,
+    "hamming": 34,
+    "grain_d": 0.2021,
+    "palette_d": 0.37
+   }
+  },
+  "sheet-two": {
+   "28": {
+    "ssim": 0.2247,
+    "hamming": 24,
+    "grain_d": 0.1624,
+    "palette_d": 0.32
+   },
+   "29": {
+    "ssim": 0.2208,
+    "hamming": 26,
+    "grain_d": 0.1669,
+    "palette_d": 0.3
+   },
+   "30": {
+    "ssim": 0.231,
+    "hamming": 24,
+    "grain_d": 0.2483,
+    "palette_d": 0.386
+   },
+   "31": {
+    "ssim": 0.2221,
+    "hamming": 30,
+    "grain_d": 0.1071,
+    "palette_d": 0.419
+   },
+   "32": {
+    "ssim": 0.2106,
+    "hamming": 24,
+    "grain_d": 0.1637,
+    "palette_d": 0.419
+   },
+   "33": {
+    "ssim": 0.2417,
+    "hamming": 30,
+    "grain_d": 0.1565,
+    "palette_d": 0.309
+   },
+   "34": {
+    "ssim": 0.2701,
+    "hamming": 20,
+    "grain_d": 0.1697,
+    "palette_d": 0.262
+   },
+   "35": {
+    "ssim": 0.2487,
+    "hamming": 28,
+    "grain_d": 0.1299,
+    "palette_d": 0.3
+   },
+   "36": {
+    "ssim": 0.2392,
+    "hamming": 22,
+    "grain_d": 0.1331,
+    "palette_d": 0.287
+   },
+   "37": {
+    "ssim": 0.2216,
+    "hamming": 20,
+    "grain_d": 0.1567,
+    "palette_d": 0.494
+   },
+   "clip-py9": {
+    "ssim": 0.2499,
+    "hamming": 16,
+    "grain_d": 0.4017,
+    "palette_d": 0.549
+   },
+   "clip-lu7": {
+    "ssim": 0.2054,
+    "hamming": 40,
+    "grain_d": 0.4403,
+    "palette_d": 0.655
+   },
+   "clip-pong": {
+    "ssim": 0.2359,
+    "hamming": 38,
+    "grain_d": 0.2641,
+    "palette_d": 0.389
+   },
+   "clip-fray": {
+    "ssim": 0.0967,
+    "hamming": 40,
+    "grain_d": 0.1193,
+    "palette_d": 0.393
+   }
+  },
+  "static-weather": {
+   "28": {
+    "ssim": 0.2282,
+    "hamming": 24,
+    "grain_d": 0.1777,
+    "palette_d": 0.252
+   },
+   "29": {
+    "ssim": 0.2142,
+    "hamming": 28,
+    "grain_d": 0.1809,
+    "palette_d": 0.23
+   },
+   "30": {
+    "ssim": 0.2312,
+    "hamming": 26,
+    "grain_d": 0.2465,
+    "palette_d": 0.266
+   },
+   "31": {
+    "ssim": 0.2248,
+    "hamming": 24,
+    "grain_d": 0.1935,
+    "palette_d": 0.382
+   },
+   "32": {
+    "ssim": 0.2174,
+    "hamming": 32,
+    "grain_d": 0.2039,
+    "palette_d": 0.313
+   },
+   "33": {
+    "ssim": 0.204,
+    "hamming": 30,
+    "grain_d": 0.2394,
+    "palette_d": 0.311
+   },
+   "34": {
+    "ssim": 0.2237,
+    "hamming": 32,
+    "grain_d": 0.2473,
+    "palette_d": 0.313
+   },
+   "35": {
+    "ssim": 0.2197,
+    "hamming": 28,
+    "grain_d": 0.2059,
+    "palette_d": 0.281
+   },
+   "36": {
+    "ssim": 0.2226,
+    "hamming": 38,
+    "grain_d": 0.2313,
+    "palette_d": 0.317
+   },
+   "37": {
+    "ssim": 0.2036,
+    "hamming": 30,
+    "grain_d": 0.2024,
+    "palette_d": 0.454
+   },
+   "clip-py9": {
+    "ssim": 0.2558,
+    "hamming": 26,
+    "grain_d": 0.3195,
+    "palette_d": 0.524
+   },
+   "clip-lu7": {
+    "ssim": 0.2255,
+    "hamming": 32,
+    "grain_d": 0.3772,
+    "palette_d": 0.726
+   },
+   "clip-pong": {
+    "ssim": 0.2425,
+    "hamming": 32,
+    "grain_d": 0.2473,
+    "palette_d": 0.488
+   },
+   "clip-fray": {
+    "ssim": 0.1136,
+    "hamming": 34,
+    "grain_d": 0.1165,
+    "palette_d": 0.407
+   }
+  }
+ }
+}

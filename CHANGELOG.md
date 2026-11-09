@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-16 - Release spine pins: one review file per change
+
+- The release spine's single aggregate SHA-256 in
+  `tests/test_capability_publication_release.py` is replaced by one pin file per path
+  (`tests/release-pins/`) and one review file per change (`tests/release-reviews/`), written by
+  `python -m tools.release_reviews record`. Changes to different release paths no longer edit a
+  shared line; changes to the same path still conflict on that path's pin.
+- `tests/release-reviews/2026-10-15-baseline.json` carries the per-path digests, the dated
+  history notes and the last aggregate, and a test checks the digests compose to it.
+- `tests/test_release_reviews.py` runs real git merges: two changes to different paths merge
+  cleanly, two changes to one path conflict on its pin, and the old single-line scheme is the
+  control that conflicts. A tampered release file fails until a review names its new bytes.
+
 ## 2026-10-02 - Plugin support pages refreshed for the Claude plugin directory
 
 - Every plugin support, privacy and terms page is rebuilt from its repository's

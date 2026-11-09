@@ -36,7 +36,7 @@ SPEC = {
          "scene": [{"cases": {"label": "Choose a record", "items": [
              {"label": "pass, all intact", "blocks": [{"io": {"cmd": "returned / ok / oracle pass / receipt verified / artifact match", "lines": ["verdict verified, in_denominator true"], "verdict": ["verified", "ok"]}}]},
              {"label": "pass, receipt mismatch", "blocks": [{"io": {"cmd": "returned / ok / oracle pass / receipt mismatch / artifact match", "lines": ["verdict refuted, in_denominator true"], "verdict": ["refuted", "drift", "integrity beats the oracle"]}}]},
-             {"label": "no oracle", "blocks": [{"io": {"cmd": "returned / ok / oracle absent / receipt verified / artifact match", "lines": ["verdict unverifiable, in_denominator false"], "verdict": ["unverifiable", "unv", "an honest null, not a pass"]}}]},
+             {"label": "no oracle", "blocks": [{"io": {"cmd": "returned / ok / oracle absent / receipt verified / artifact match", "lines": ["verdict unverifiable, in_denominator false"], "verdict": ["unverifiable", "unv", "outside the denominator"]}}]},
              {"label": "timeout, oracle fail", "blocks": [{"io": {"cmd": "timeout / ok / oracle fail / receipt verified / artifact match", "lines": ["verdict timeout, in_denominator false"], "verdict": ["excluded", "unv", "no terminal answer"]}}]},
              {"label": "provider refused", "blocks": [{"io": {"cmd": "returned / rejected / oracle fail / receipt absent / artifact absent", "lines": ["verdict rejected, in_denominator false"], "verdict": ["excluded", "unv", "a refusal is not a task failure"]}}]}]}}]},
         {"title": "Only 23 of 324 belong in the denominator",

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-23",
+  "note": "CV restructured to lead with a profile and a Selected Evidence list, then grouped by security evaluation (red team and purple team), AI evaluation, graphics and rendering, and developer tools. Adds Elder ENB with Nexus Mods figures read October 23, 2026, Daylight Commons 3.1.0 with its measured slur-sign precision, raw-native work merged after 0.8.0 marked unreleased, Low Water described without private detail, Articulate 0.15.0 on GitHub, and the October 23 census counts. The AI evaluation resume gains a security-evaluation focus; the support resume adds Elder ENB and Daylight Commons. Resumes stay one page; the CV stays six pages.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "bb3209c19668b517b6104c22fdc1858b8c87166505beff74b2409616fd8bd5cf",
+    "career/Zain-Dana-Harper-CV.pdf": "19e17b9e9f9ec3e77d453b32eb237e3cafd7c96c0eb990ea335bdd991e240716",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "e78043e4cfddd750b485091211e366efe91f74f0452b7a39e90e9178f1aab6a2",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "d37c37b647671a82184810834d7f44a786c1bb5c49e94b503995c60e7fbca7a1",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "a53da56fd432244f8c5f164a251db85db1b0820099a0f4bc2144c65f39a5d99d",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "2372e14aec39f1567a802ee4fe10429611b9d1b65b06336f80ba30bde98a9b6e",
+    "career/career-artifacts.json": "30cd4170ef99c6b243c8568f06719fcbdcd6a9369cf6c1698aea10b72c5dd796",
+    "career/career-build-receipt.json": "b763e02251efb2db194890fe9ca4374f858fc3e61af2036e9f25c017caa78612",
+    "cv.html": "63bf8cf09e4f8380964b0d535a8d508c8877b498dec97c7b2ebbf8b7d7377f24",
+    "cv.md": "24d6dc0dcfbf318ddcdc8e6c45dc178d0c0005845167b1f5d72093d9a67ec042",
+    "hire.html": "f589e9e35208e60bd0c30606752c2ab1361c79fce4e9085de2ebc8f3115d5c31",
+    "resume-evaluation-tooling.html": "c806c1c66c2d8563536cd5c3364167f0625771b7f3849f27ea90840372d1662b",
+    "resume-support-operations.html": "181515cb87e8926e1594fabbc65835bcbf31e9c10352e3639dffebced58cd0cb",
+    "resume.html": "75ff9e50f1a9974928ce078bb81c6248976a3f2e4199203223aabf6d9d15682f",
+    "resume.md": "7bfea47213146efa31c13a25cdf1234e258439e3de2735da6ddd0aa447fee5fa"
+  }
+}

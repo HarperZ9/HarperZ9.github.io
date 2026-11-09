@@ -49,7 +49,7 @@ async function parseVtt(url) {
   } catch (e) { console.warn("motion player: captions did not load", e); return []; }
 }
 
-export async function mountPlayer(el, { sceneUrl, shaders, audio = null, captions = null, label = "Interactive film", maxPixels = 3840 * 2160 } = {}) {
+export async function mountPlayer(el, { sceneUrl, shaders, audio = null, captions = null, label = "Interactive film", maxPixels = 3840 * 2160, burnedCaptions = false } = {}) {
   if (!document.getElementById("mo-css")) document.head.append(h("style", { id: "mo-css" }, CSS));
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!navigator.gpu) {
@@ -81,7 +81,10 @@ export async function mountPlayer(el, { sceneUrl, shaders, audio = null, caption
   const snd = audio ? (audio instanceof HTMLMediaElement ? audio : new Audio(audio)) : null;
   if (snd) snd.preload = "auto";
   const cues = captions ? await parseVtt(captions) : [];
-  let t = 0, playing = false, last = performance.now(), dirty = true, showCaps = true, scrubbing = false;
+  // A scene that draws its own captions (scene.burnsCaptions) starts with the player's off,
+  // so the words do not show twice; the button still turns them on.
+  let t = 0, playing = false, last = performance.now(), dirty = true, showCaps = !(scene.burnsCaptions || burnedCaptions), scrubbing = false;
+  capBtn.setAttribute("aria-pressed", String(showCaps));
   const setPlaying = (p) => {
     playing = p;
     play.textContent = p ? "Pause" : "Play";

@@ -1,0 +1,1873 @@
+{
+  "meta": {
+    "version": "0.3.0",
+    "date": "2026-11-05",
+    "authoring_space": "OKLCH",
+    "difference_metric": "CAM16-UCS, L_A 16 cd/m2, Y_b 20, average surround",
+    "cvd": "Machado, Oliveira, Fernandes 2009, severity 1.0, linear sRGB"
+  },
+  "ground": {
+    "light": {
+      "oklch": [
+        0.972,
+        0.012,
+        85.0
+      ],
+      "hex": "#f9f5ed",
+      "in_srgb_gamut": true,
+      "wcag_vs_ground": 1.0,
+      "apca_as_text_on_ground": 0.0,
+      "apca_ink_on_it": 98.0,
+      "sim_hex": {
+        "protanopia": "#f8f5ec",
+        "deuteranopia": "#f9f6ed",
+        "tritanopia": "#fcf4f3"
+      }
+    },
+    "dark": {
+      "oklch": [
+        0.185,
+        0.012,
+        260.0
+      ],
+      "hex": "#101318",
+      "in_srgb_gamut": true,
+      "wcag_vs_ground": 1.0,
+      "apca_as_text_on_ground": 0.0,
+      "apca_ink_on_it": -93.1,
+      "sim_hex": {
+        "protanopia": "#111318",
+        "deuteranopia": "#101218",
+        "tritanopia": "#0d1415"
+      }
+    }
+  },
+  "ink": {
+    "light": {
+      "oklch": [
+        0.235,
+        0.012,
+        260.0
+      ],
+      "hex": "#1b1e24",
+      "in_srgb_gamut": true,
+      "wcag_vs_ground": 15.37,
+      "apca_as_text_on_ground": 98.0,
+      "apca_ink_on_it": 0.0,
+      "sim_hex": {
+        "protanopia": "#1c1e24",
+        "deuteranopia": "#1c1e24",
+        "tritanopia": "#191f20"
+      }
+    },
+    "dark": {
+      "oklch": [
+        0.935,
+        0.012,
+        85.0
+      ],
+      "hex": "#ede9e1",
+      "in_srgb_gamut": true,
+      "wcag_vs_ground": 15.4,
+      "apca_as_text_on_ground": -93.1,
+      "apca_ink_on_it": 0.0,
+      "sim_hex": {
+        "protanopia": "#ebe9e0",
+        "deuteranopia": "#eceae1",
+        "tritanopia": "#f0e7e7"
+      }
+    }
+  },
+  "platform": {
+    "theflywheel": {
+      "ink": {
+        "oklch": [
+          0.5086,
+          0.05,
+          65.222
+        ],
+        "hex": "#7a6047",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.39,
+        "apca_as_text_on_ground": 73.6,
+        "apca_ink_on_it": 22.4,
+        "sim_hex": {
+          "protanopia": "#686145",
+          "deuteranopia": "#6f6748",
+          "tritanopia": "#825a59"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          65.222
+        ],
+        "hex": "#f7e6d7",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.12,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.6,
+        "sim_hex": {
+          "protanopia": "#ece7d6",
+          "deuteranopia": "#f0ead7",
+          "tritanopia": "#fee3e2"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.4086,
+            0.05,
+            65.222
+          ],
+          "hex": "#5d442c",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.28,
+          "apca_as_text_on_ground": 85.0,
+          "apca_ink_on_it": 11.0,
+          "sim_hex": {
+            "protanopia": "#4c462a",
+            "deuteranopia": "#524b2d",
+            "tritanopia": "#643f3e"
+          }
+        },
+        {
+          "oklch": [
+            0.5086,
+            0.0442,
+            65.222
+          ],
+          "hex": "#78614b",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 5.38,
+          "apca_as_text_on_ground": 73.6,
+          "apca_ink_on_it": 22.5,
+          "sim_hex": {
+            "protanopia": "#686249",
+            "deuteranopia": "#6e674b",
+            "tritanopia": "#7f5c5b"
+          }
+        },
+        {
+          "oklch": [
+            0.6086,
+            0.0383,
+            65.222
+          ],
+          "hex": "#937e6b",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.54,
+          "apca_as_text_on_ground": 60.3,
+          "apca_ink_on_it": 35.8,
+          "sim_hex": {
+            "protanopia": "#857f6a",
+            "deuteranopia": "#8a846b",
+            "tritanopia": "#9b7a79"
+          }
+        },
+        {
+          "oklch": [
+            0.7086,
+            0.0325,
+            65.222
+          ],
+          "hex": "#b09d8c",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.4,
+          "apca_as_text_on_ground": 45.2,
+          "apca_ink_on_it": 50.8,
+          "sim_hex": {
+            "protanopia": "#a49e8b",
+            "deuteranopia": "#a8a28d",
+            "tritanopia": "#b69999"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.05,
+            65.222
+          ],
+          "hex": "#553d25",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 9.34,
+          "apca_as_text_on_ground": 87.8,
+          "apca_ink_on_it": 8.1,
+          "sim_hex": {
+            "protanopia": "#453e23",
+            "deuteranopia": "#4a4425",
+            "tritanopia": "#5c3737"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.043,
+            65.222
+          ],
+          "hex": "#705a45",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 5.98,
+          "apca_as_text_on_ground": 76.6,
+          "apca_ink_on_it": 19.5,
+          "sim_hex": {
+            "protanopia": "#615b44",
+            "deuteranopia": "#666045",
+            "tritanopia": "#775554"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.036,
+            65.222
+          ],
+          "hex": "#8c7967",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.85,
+          "apca_as_text_on_ground": 63.2,
+          "apca_ink_on_it": 32.9,
+          "sim_hex": {
+            "protanopia": "#7f7a65",
+            "deuteranopia": "#847e67",
+            "tritanopia": "#937474"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.029,
+            65.222
+          ],
+          "hex": "#a9998a",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.55,
+          "apca_as_text_on_ground": 47.8,
+          "apca_ink_on_it": 48.2,
+          "sim_hex": {
+            "protanopia": "#9e9989",
+            "deuteranopia": "#a29d8a",
+            "tritanopia": "#af9594"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.022,
+            65.222
+          ],
+          "hex": "#c7baae",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.75,
+          "apca_as_text_on_ground": 30.6,
+          "apca_ink_on_it": 65.3,
+          "sim_hex": {
+            "protanopia": "#bebaad",
+            "deuteranopia": "#c1bdae",
+            "tritanopia": "#ccb7b6"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.015,
+            65.222
+          ],
+          "hex": "#e5dcd4",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.25,
+          "apca_as_text_on_ground": 11.6,
+          "apca_ink_on_it": 84.0,
+          "sim_hex": {
+            "protanopia": "#dfdcd3",
+            "deuteranopia": "#e1ded4",
+            "tritanopia": "#e9dada"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.05,
+            65.222
+          ],
+          "hex": "#c8ab90",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.61,
+          "apca_as_text_on_ground": -59.0,
+          "apca_ink_on_it": -33.2,
+          "sim_hex": {
+            "protanopia": "#b5ac8e",
+            "deuteranopia": "#bbb391",
+            "tritanopia": "#d2a5a4"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            65.222
+          ],
+          "hex": "#322313",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.23,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.6,
+          "sim_hex": {
+            "protanopia": "#282412",
+            "deuteranopia": "#2b2714",
+            "tritanopia": "#371f1f"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 8
+    },
+    "thecmmns": {
+      "ink": {
+        "oklch": [
+          0.64,
+          0.0701,
+          117.983
+        ],
+        "hex": "#889261",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 3.05,
+        "apca_as_text_on_ground": 54.8,
+        "apca_ink_on_it": 41.2,
+        "sim_hex": {
+          "protanopia": "#998d5e",
+          "deuteranopia": "#978e63",
+          "tritanopia": "#8d8d86"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          117.983
+        ],
+        "hex": "#e7ecd8",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.11,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 91.2,
+        "sim_hex": {
+          "protanopia": "#f0ead7",
+          "deuteranopia": "#efead8",
+          "tritanopia": "#eaeae6"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.54,
+            0.0701,
+            117.983
+          ],
+          "hex": "#6b7444",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 4.59,
+          "apca_as_text_on_ground": 68.8,
+          "apca_ink_on_it": 27.3,
+          "sim_hex": {
+            "protanopia": "#7a7041",
+            "deuteranopia": "#797047",
+            "tritanopia": "#6f7069"
+          }
+        },
+        {
+          "oklch": [
+            0.64,
+            0.0619,
+            117.983
+          ],
+          "hex": "#889267",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.06,
+          "apca_as_text_on_ground": 54.9,
+          "apca_ink_on_it": 41.1,
+          "sim_hex": {
+            "protanopia": "#978d64",
+            "deuteranopia": "#968d68",
+            "tritanopia": "#8d8d86"
+          }
+        },
+        {
+          "oklch": [
+            0.74,
+            0.0538,
+            117.983
+          ],
+          "hex": "#a7b08a",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.1,
+          "apca_as_text_on_ground": 39.3,
+          "apca_ink_on_it": 56.6,
+          "sim_hex": {
+            "protanopia": "#b5ac87",
+            "deuteranopia": "#b4ac8b",
+            "tritanopia": "#abaca5"
+          }
+        },
+        {
+          "oklch": [
+            0.84,
+            0.0456,
+            117.983
+          ],
+          "hex": "#c7cfae",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.49,
+          "apca_as_text_on_ground": 22.1,
+          "apca_ink_on_it": 73.7,
+          "sim_hex": {
+            "protanopia": "#d4cbac",
+            "deuteranopia": "#d3ccaf",
+            "tritanopia": "#cbcbc6"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.0701,
+            117.983
+          ],
+          "hex": "#3f4717",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 9.09,
+          "apca_as_text_on_ground": 87.2,
+          "apca_ink_on_it": 8.7,
+          "sim_hex": {
+            "protanopia": "#4c4312",
+            "deuteranopia": "#4b441b",
+            "tritanopia": "#43433d"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.0603,
+            117.983
+          ],
+          "hex": "#5b643c",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 5.84,
+          "apca_as_text_on_ground": 75.9,
+          "apca_ink_on_it": 20.2,
+          "sim_hex": {
+            "protanopia": "#686039",
+            "deuteranopia": "#68603d",
+            "tritanopia": "#5f605a"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.0505,
+            117.983
+          ],
+          "hex": "#7a815f",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.77,
+          "apca_as_text_on_ground": 62.5,
+          "apca_ink_on_it": 33.6,
+          "sim_hex": {
+            "protanopia": "#867d5d",
+            "deuteranopia": "#857e60",
+            "tritanopia": "#7d7d78"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.0407,
+            117.983
+          ],
+          "hex": "#99a084",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.51,
+          "apca_as_text_on_ground": 47.2,
+          "apca_ink_on_it": 48.8,
+          "sim_hex": {
+            "protanopia": "#a49d82",
+            "deuteranopia": "#a39d85",
+            "tritanopia": "#9c9d98"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.0308,
+            117.983
+          ],
+          "hex": "#babfa9",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.73,
+          "apca_as_text_on_ground": 30.1,
+          "apca_ink_on_it": 65.8,
+          "sim_hex": {
+            "protanopia": "#c3bda8",
+            "deuteranopia": "#c2bdaa",
+            "tritanopia": "#bdbdb9"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.021,
+            117.983
+          ],
+          "hex": "#dce0d1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.24,
+          "apca_as_text_on_ground": 11.2,
+          "apca_ink_on_it": 84.4,
+          "sim_hex": {
+            "protanopia": "#e3ded0",
+            "deuteranopia": "#e2ded1",
+            "tritanopia": "#dededc"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.0701,
+            117.983
+          ],
+          "hex": "#adb885",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.82,
+          "apca_as_text_on_ground": -60.2,
+          "apca_ink_on_it": -31.9,
+          "sim_hex": {
+            "protanopia": "#beb282",
+            "deuteranopia": "#bdb387",
+            "tritanopia": "#b2b2aa"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            117.983
+          ],
+          "hex": "#252915",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.25,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.5,
+          "sim_hex": {
+            "protanopia": "#2b2713",
+            "deuteranopia": "#2b2716",
+            "tritanopia": "#272724"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 8
+    },
+    "theplygrnd": {
+      "ink": {
+        "oklch": [
+          0.553,
+          0.0647,
+          186.2624
+        ],
+        "hex": "#427f78",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 4.27,
+        "apca_as_text_on_ground": 66.5,
+        "apca_ink_on_it": 29.6,
+        "sim_hex": {
+          "protanopia": "#797978",
+          "deuteranopia": "#6f7179",
+          "tritanopia": "#24817d"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          186.2624
+        ],
+        "hex": "#d6f0ec",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.1,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 91.5,
+        "sim_hex": {
+          "protanopia": "#ededec",
+          "deuteranopia": "#e8e9ed",
+          "tritanopia": "#cff1ef"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.453,
+            0.0647,
+            186.2624
+          ],
+          "hex": "#22625c",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 6.54,
+          "apca_as_text_on_ground": 78.8,
+          "apca_ink_on_it": 17.2,
+          "sim_hex": {
+            "protanopia": "#5d5c5b",
+            "deuteranopia": "#53555c",
+            "tritanopia": "#006460"
+          }
+        },
+        {
+          "oklch": [
+            0.553,
+            0.0572,
+            186.2624
+          ],
+          "hex": "#497e77",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 4.29,
+          "apca_as_text_on_ground": 66.6,
+          "apca_ink_on_it": 29.4,
+          "sim_hex": {
+            "protanopia": "#797877",
+            "deuteranopia": "#6f7278",
+            "tritanopia": "#34807c"
+          }
+        },
+        {
+          "oklch": [
+            0.653,
+            0.0496,
+            186.2624
+          ],
+          "hex": "#6d9a95",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.88,
+          "apca_as_text_on_ground": 52.6,
+          "apca_ink_on_it": 43.4,
+          "sim_hex": {
+            "protanopia": "#969594",
+            "deuteranopia": "#8d8f95",
+            "tritanopia": "#5f9c98"
+          }
+        },
+        {
+          "oklch": [
+            0.753,
+            0.0421,
+            186.2624
+          ],
+          "hex": "#91b8b3",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.99,
+          "apca_as_text_on_ground": 36.8,
+          "apca_ink_on_it": 59.1,
+          "sim_hex": {
+            "protanopia": "#b4b4b3",
+            "deuteranopia": "#acaeb3",
+            "tritanopia": "#87bab6"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.0647,
+            186.2624
+          ],
+          "hex": "#054d48",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.93,
+          "apca_as_text_on_ground": 86.4,
+          "apca_ink_on_it": 9.5,
+          "sim_hex": {
+            "protanopia": "#494847",
+            "deuteranopia": "#3f4248",
+            "tritanopia": "#004f4b"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.0557,
+            186.2624
+          ],
+          "hex": "#366963",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 5.75,
+          "apca_as_text_on_ground": 75.4,
+          "apca_ink_on_it": 20.7,
+          "sim_hex": {
+            "protanopia": "#656463",
+            "deuteranopia": "#5c5e64",
+            "tritanopia": "#1f6b67"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.0466,
+            186.2624
+          ],
+          "hex": "#5d8681",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.73,
+          "apca_as_text_on_ground": 62.1,
+          "apca_ink_on_it": 34.0,
+          "sim_hex": {
+            "protanopia": "#828281",
+            "deuteranopia": "#7a7c81",
+            "tritanopia": "#4f8884"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.0375,
+            186.2624
+          ],
+          "hex": "#82a49f",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.49,
+          "apca_as_text_on_ground": 46.8,
+          "apca_ink_on_it": 49.2,
+          "sim_hex": {
+            "protanopia": "#a0a09f",
+            "deuteranopia": "#9a9ba0",
+            "tritanopia": "#79a6a2"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.0285,
+            186.2624
+          ],
+          "hex": "#a9c3bf",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.73,
+          "apca_as_text_on_ground": 29.8,
+          "apca_ink_on_it": 66.1,
+          "sim_hex": {
+            "protanopia": "#c0c0bf",
+            "deuteranopia": "#bbbcbf",
+            "tritanopia": "#a2c4c2"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.0194,
+            186.2624
+          ],
+          "hex": "#d1e2e0",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.23,
+          "apca_as_text_on_ground": 11.0,
+          "apca_ink_on_it": 84.6,
+          "sim_hex": {
+            "protanopia": "#e0e0e0",
+            "deuteranopia": "#dddde0",
+            "tritanopia": "#cce3e2"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.0647,
+            186.2624
+          ],
+          "hex": "#81bfb7",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.93,
+          "apca_as_text_on_ground": -60.9,
+          "apca_ink_on_it": -31.2,
+          "sim_hex": {
+            "protanopia": "#b9b8b7",
+            "deuteranopia": "#adb0b8",
+            "tritanopia": "#6cc2bc"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            186.2624
+          ],
+          "hex": "#0f2c29",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.25,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.3,
+          "sim_hex": {
+            "protanopia": "#2a2929",
+            "deuteranopia": "#252629",
+            "tritanopia": "#012d2b"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 8
+    },
+    "artiql8": {
+      "ink": {
+        "oklch": [
+          0.4524,
+          0.051,
+          249.543
+        ],
+        "hex": "#405871",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 6.76,
+        "apca_as_text_on_ground": 79.8,
+        "apca_ink_on_it": 16.2,
+        "sim_hex": {
+          "protanopia": "#4e5973",
+          "deuteranopia": "#485471",
+          "tritanopia": "#2d5e61"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          249.543
+        ],
+        "hex": "#dcecfc",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.11,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.9,
+        "sim_hex": {
+          "protanopia": "#e6ecfd",
+          "deuteranopia": "#e2e8fc",
+          "tritanopia": "#d4eff1"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.3524,
+            0.051,
+            249.543
+          ],
+          "hex": "#263d55",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 10.29,
+          "apca_as_text_on_ground": 90.1,
+          "apca_ink_on_it": 0.0,
+          "sim_hex": {
+            "protanopia": "#333e56",
+            "deuteranopia": "#2d3954",
+            "tritanopia": "#0d4345"
+          }
+        },
+        {
+          "oklch": [
+            0.4524,
+            0.045,
+            249.543
+          ],
+          "hex": "#43586e",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 6.76,
+          "apca_as_text_on_ground": 79.9,
+          "apca_ink_on_it": 16.1,
+          "sim_hex": {
+            "protanopia": "#50596f",
+            "deuteranopia": "#4a546e",
+            "tritanopia": "#345d5f"
+          }
+        },
+        {
+          "oklch": [
+            0.5524,
+            0.0391,
+            249.543
+          ],
+          "hex": "#617489",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 4.41,
+          "apca_as_text_on_ground": 67.6,
+          "apca_ink_on_it": 28.4,
+          "sim_hex": {
+            "protanopia": "#6d758a",
+            "deuteranopia": "#687188",
+            "tritanopia": "#56797b"
+          }
+        },
+        {
+          "oklch": [
+            0.6524,
+            0.0331,
+            249.543
+          ],
+          "hex": "#8192a4",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.95,
+          "apca_as_text_on_ground": 53.5,
+          "apca_ink_on_it": 42.5,
+          "sim_hex": {
+            "protanopia": "#8b92a5",
+            "deuteranopia": "#878ea3",
+            "tritanopia": "#789698"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.051,
+            249.543
+          ],
+          "hex": "#2d445d",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 9.2,
+          "apca_as_text_on_ground": 87.5,
+          "apca_ink_on_it": 8.4,
+          "sim_hex": {
+            "protanopia": "#3b455e",
+            "deuteranopia": "#35405c",
+            "tritanopia": "#174a4d"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.0439,
+            249.543
+          ],
+          "hex": "#4c6177",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 5.9,
+          "apca_as_text_on_ground": 76.2,
+          "apca_ink_on_it": 19.8,
+          "sim_hex": {
+            "protanopia": "#596178",
+            "deuteranopia": "#535d76",
+            "tritanopia": "#3e6668"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.0367,
+            249.543
+          ],
+          "hex": "#6c7f92",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.81,
+          "apca_as_text_on_ground": 62.8,
+          "apca_ink_on_it": 33.3,
+          "sim_hex": {
+            "protanopia": "#787f93",
+            "deuteranopia": "#737b92",
+            "tritanopia": "#628385"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.0296,
+            249.543
+          ],
+          "hex": "#8e9eae",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.53,
+          "apca_as_text_on_ground": 47.5,
+          "apca_ink_on_it": 48.5,
+          "sim_hex": {
+            "protanopia": "#989eaf",
+            "deuteranopia": "#949bae",
+            "tritanopia": "#86a1a3"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.0224,
+            249.543
+          ],
+          "hex": "#b2becb",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.74,
+          "apca_as_text_on_ground": 30.3,
+          "apca_ink_on_it": 65.5,
+          "sim_hex": {
+            "protanopia": "#b9becb",
+            "deuteranopia": "#b6bbca",
+            "tritanopia": "#acc1c2"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.0153,
+            249.543
+          ],
+          "hex": "#d7dfe8",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.24,
+          "apca_as_text_on_ground": 11.4,
+          "apca_ink_on_it": 84.2,
+          "sim_hex": {
+            "protanopia": "#dcdfe8",
+            "deuteranopia": "#dadde8",
+            "tritanopia": "#d3e1e2"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.051,
+            249.543
+          ],
+          "hex": "#99b4d1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.72,
+          "apca_as_text_on_ground": -59.7,
+          "apca_ink_on_it": -32.5,
+          "sim_hex": {
+            "protanopia": "#aab5d2",
+            "deuteranopia": "#a3afd0",
+            "tritanopia": "#89bbbd"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            249.543
+          ],
+          "hex": "#192837",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.24,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.5,
+          "sim_hex": {
+            "protanopia": "#222838",
+            "deuteranopia": "#1e2537",
+            "tritanopia": "#0c2b2d"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 8
+    },
+    "bldlng": {
+      "ink": {
+        "oklch": [
+          0.64,
+          0.105,
+          288.4507
+        ],
+        "hex": "#8a81c8",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 3.19,
+        "apca_as_text_on_ground": 56.5,
+        "apca_ink_on_it": 39.5,
+        "sim_hex": {
+          "protanopia": "#6d8bcb",
+          "deuteranopia": "#6c88c6",
+          "tritanopia": "#7b8e9b"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          288.4507
+        ],
+        "hex": "#e8e7fc",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.12,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.5,
+        "sim_hex": {
+          "protanopia": "#e3e9fd",
+          "deuteranopia": "#e2e8fb",
+          "tritanopia": "#e4eaee"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.54,
+            0.105,
+            288.4507
+          ],
+          "hex": "#6d64a8",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 4.83,
+          "apca_as_text_on_ground": 70.3,
+          "apca_ink_on_it": 25.8,
+          "sim_hex": {
+            "protanopia": "#4e6eaa",
+            "deuteranopia": "#4e6ba6",
+            "tritanopia": "#5e707d"
+          }
+        },
+        {
+          "oklch": [
+            0.64,
+            0.0927,
+            288.4507
+          ],
+          "hex": "#8a83c1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.18,
+          "apca_as_text_on_ground": 56.4,
+          "apca_ink_on_it": 39.7,
+          "sim_hex": {
+            "protanopia": "#728bc4",
+            "deuteranopia": "#7189c0",
+            "tritanopia": "#7d8e99"
+          }
+        },
+        {
+          "oklch": [
+            0.74,
+            0.0805,
+            288.4507
+          ],
+          "hex": "#a8a3db",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.17,
+          "apca_as_text_on_ground": 40.7,
+          "apca_ink_on_it": 55.2,
+          "sim_hex": {
+            "protanopia": "#95aade",
+            "deuteranopia": "#94a8da",
+            "tritanopia": "#9dacb7"
+          }
+        },
+        {
+          "oklch": [
+            0.84,
+            0.0683,
+            288.4507
+          ],
+          "hex": "#c8c4f5",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.53,
+          "apca_as_text_on_ground": 23.4,
+          "apca_ink_on_it": 72.4,
+          "sim_hex": {
+            "protanopia": "#b8caf7",
+            "deuteranopia": "#b8c8f4",
+            "tritanopia": "#bfccd5"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.105,
+            288.4507
+          ],
+          "hex": "#413676",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 9.58,
+          "apca_as_text_on_ground": 88.3,
+          "apca_ink_on_it": 7.6,
+          "sim_hex": {
+            "protanopia": "#1a4178",
+            "deuteranopia": "#1a3e75",
+            "tritanopia": "#324450"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.0903,
+            288.4507
+          ],
+          "hex": "#5d568f",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 6.1,
+          "apca_as_text_on_ground": 77.0,
+          "apca_ink_on_it": 19.0,
+          "sim_hex": {
+            "protanopia": "#445e91",
+            "deuteranopia": "#445b8d",
+            "tritanopia": "#50606b"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.0756,
+            288.4507
+          ],
+          "hex": "#7a75a7",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.9,
+          "apca_as_text_on_ground": 63.6,
+          "apca_ink_on_it": 32.5,
+          "sim_hex": {
+            "protanopia": "#687ca9",
+            "deuteranopia": "#687aa6",
+            "tritanopia": "#707e87"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.0609,
+            288.4507
+          ],
+          "hex": "#9a96c0",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.58,
+          "apca_as_text_on_ground": 48.2,
+          "apca_ink_on_it": 47.8,
+          "sim_hex": {
+            "protanopia": "#8c9cc2",
+            "deuteranopia": "#8c9abf",
+            "tritanopia": "#929da5"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.0462,
+            288.4507
+          ],
+          "hex": "#bbb8d9",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.76,
+          "apca_as_text_on_ground": 30.9,
+          "apca_ink_on_it": 65.0,
+          "sim_hex": {
+            "protanopia": "#b1bcdb",
+            "deuteranopia": "#b1bbd8",
+            "tritanopia": "#b5bdc3"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.0315,
+            288.4507
+          ],
+          "hex": "#dddbf2",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.25,
+          "apca_as_text_on_ground": 11.8,
+          "apca_ink_on_it": 83.8,
+          "sim_hex": {
+            "protanopia": "#d6def3",
+            "deuteranopia": "#d6ddf2",
+            "tritanopia": "#d8dfe3"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.105,
+            288.4507
+          ],
+          "hex": "#aea6f0",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.46,
+          "apca_as_text_on_ground": -58.2,
+          "apca_ink_on_it": -34.0,
+          "sim_hex": {
+            "protanopia": "#92b0f3",
+            "deuteranopia": "#92adee",
+            "tritanopia": "#9fb3c1"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            288.4507
+          ],
+          "hex": "#262437",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.23,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.7,
+          "sim_hex": {
+            "protanopia": "#1f2637",
+            "deuteranopia": "#1e2536",
+            "tritanopia": "#22272a"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 8
+    },
+    "rsrch": {
+      "ink": {
+        "oklch": [
+          0.64,
+          0.105,
+          349.1296
+        ],
+        "hex": "#bb7196",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 3.27,
+        "apca_as_text_on_ground": 57.3,
+        "apca_ink_on_it": 38.8,
+        "sim_hex": {
+          "protanopia": "#788097",
+          "deuteranopia": "#8a8d94",
+          "tritanopia": "#c56f7e"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.028,
+          349.1296
+        ],
+        "hex": "#f9e2ec",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.13,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.1,
+        "sim_hex": {
+          "protanopia": "#e4e6ed",
+          "deuteranopia": "#e9e9ec",
+          "tritanopia": "#fde2e6"
+        }
+      },
+      "package_tones": [
+        {
+          "oklch": [
+            0.54,
+            0.105,
+            349.1296
+          ],
+          "hex": "#9b5378",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 4.95,
+          "apca_as_text_on_ground": 70.8,
+          "apca_ink_on_it": 25.2,
+          "sim_hex": {
+            "protanopia": "#5a6379",
+            "deuteranopia": "#6d6f76",
+            "tritanopia": "#a45261"
+          }
+        },
+        {
+          "oklch": [
+            0.64,
+            0.0927,
+            349.1296
+          ],
+          "hex": "#b77495",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.25,
+          "apca_as_text_on_ground": 57.1,
+          "apca_ink_on_it": 39.0,
+          "sim_hex": {
+            "protanopia": "#7a8296",
+            "deuteranopia": "#8a8d93",
+            "tritanopia": "#bf7380"
+          }
+        },
+        {
+          "oklch": [
+            0.74,
+            0.0805,
+            349.1296
+          ],
+          "hex": "#d296b3",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.21,
+          "apca_as_text_on_ground": 41.5,
+          "apca_ink_on_it": 54.5,
+          "sim_hex": {
+            "protanopia": "#9ba2b4",
+            "deuteranopia": "#a9abb1",
+            "tritanopia": "#db95a0"
+          }
+        },
+        {
+          "oklch": [
+            0.84,
+            0.0683,
+            349.1296
+          ],
+          "hex": "#eeb9d1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.55,
+          "apca_as_text_on_ground": 24.2,
+          "apca_ink_on_it": 71.6,
+          "sim_hex": {
+            "protanopia": "#bdc2d2",
+            "deuteranopia": "#c9cbd0",
+            "tritanopia": "#f6b8c1"
+          }
+        }
+      ],
+      "study_ramp": [
+        {
+          "oklch": [
+            0.38,
+            0.105,
+            349.1296
+          ],
+          "hex": "#69264b",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 9.77,
+          "apca_as_text_on_ground": 88.4,
+          "apca_ink_on_it": 7.5,
+          "sim_hex": {
+            "protanopia": "#2e374c",
+            "deuteranopia": "#414349",
+            "tritanopia": "#702435"
+          }
+        },
+        {
+          "oklch": [
+            0.484,
+            0.0903,
+            349.1296
+          ],
+          "hex": "#844867",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 6.23,
+          "apca_as_text_on_ground": 77.5,
+          "apca_ink_on_it": 18.6,
+          "sim_hex": {
+            "protanopia": "#4e5568",
+            "deuteranopia": "#5d5f65",
+            "tritanopia": "#8c4753"
+          }
+        },
+        {
+          "oklch": [
+            0.588,
+            0.0756,
+            349.1296
+          ],
+          "hex": "#9f6a84",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 3.98,
+          "apca_as_text_on_ground": 64.2,
+          "apca_ink_on_it": 31.9,
+          "sim_hex": {
+            "protanopia": "#6f7485",
+            "deuteranopia": "#7b7d82",
+            "tritanopia": "#a66973"
+          }
+        },
+        {
+          "oklch": [
+            0.692,
+            0.0609,
+            349.1296
+          ],
+          "hex": "#ba8da2",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 2.62,
+          "apca_as_text_on_ground": 48.8,
+          "apca_ink_on_it": 47.2,
+          "sim_hex": {
+            "protanopia": "#9095a3",
+            "deuteranopia": "#9b9ca1",
+            "tritanopia": "#c08c94"
+          }
+        },
+        {
+          "oklch": [
+            0.796,
+            0.0462,
+            349.1296
+          ],
+          "hex": "#d4b1c1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.78,
+          "apca_as_text_on_ground": 31.4,
+          "apca_ink_on_it": 64.4,
+          "sim_hex": {
+            "protanopia": "#b4b7c2",
+            "deuteranopia": "#bbbcc0",
+            "tritanopia": "#dab0b6"
+          }
+        },
+        {
+          "oklch": [
+            0.9,
+            0.0315,
+            349.1296
+          ],
+          "hex": "#efd6e1",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.26,
+          "apca_as_text_on_ground": 12.3,
+          "apca_ink_on_it": 83.4,
+          "sim_hex": {
+            "protanopia": "#d8dae2",
+            "deuteranopia": "#dddee1",
+            "tritanopia": "#f3d6da"
+          }
+        }
+      ],
+      "dark": {
+        "ink": {
+          "oklch": [
+            0.76,
+            0.105,
+            349.1296
+          ],
+          "hex": "#e395bb",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 8.27,
+          "apca_as_text_on_ground": -57.2,
+          "apca_ink_on_it": -35.0,
+          "sim_hex": {
+            "protanopia": "#9ca5bd",
+            "deuteranopia": "#afb2b9",
+            "tritanopia": "#ee94a3"
+          }
+        },
+        "tint": {
+          "oklch": [
+            0.27,
+            0.035,
+            349.1296
+          ],
+          "hex": "#331f29",
+          "in_srgb_gamut": true,
+          "wcag_vs_ground": 1.22,
+          "apca_as_text_on_ground": 0.0,
+          "apca_ink_on_it": -90.7,
+          "sim_hex": {
+            "protanopia": "#212329",
+            "deuteranopia": "#262729",
+            "tritanopia": "#361f23"
+          }
+        }
+      },
+      "lightness_steps_at_dE10": 9
+    }
+  },
+  "neutral": {
+    "unassigned": {
+      "ink": {
+        "oklch": [
+          0.5,
+          0.012,
+          230.0
+        ],
+        "hex": "#5d6569",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.51,
+        "apca_as_text_on_ground": 74.3,
+        "apca_ink_on_it": 21.7,
+        "sim_hex": {
+          "protanopia": "#636469",
+          "deuteranopia": "#616369",
+          "tritanopia": "#5a6666"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.008,
+          230.0
+        ],
+        "hex": "#e4ebee",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.11,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.9,
+        "sim_hex": {
+          "protanopia": "#e9eaee",
+          "deuteranopia": "#e8e9ee",
+          "tritanopia": "#e2ecec"
+        }
+      }
+    },
+    "past": {
+      "ink": {
+        "oklch": [
+          0.62,
+          0.018,
+          70.0
+        ],
+        "hex": "#8d847b",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 3.37,
+        "apca_as_text_on_ground": 58.5,
+        "apca_ink_on_it": 37.5,
+        "sim_hex": {
+          "protanopia": "#88857a",
+          "deuteranopia": "#8a877b",
+          "tritanopia": "#918282"
+        }
+      },
+      "tint": {
+        "oklch": [
+          0.935,
+          0.008,
+          70.0
+        ],
+        "hex": "#ede9e4",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 1.12,
+        "apca_as_text_on_ground": 0.0,
+        "apca_ink_on_it": 90.7,
+        "sim_hex": {
+          "protanopia": "#eae9e4",
+          "deuteranopia": "#ebeae4",
+          "tritanopia": "#efe8e7"
+        }
+      }
+    }
+  },
+  "verdict": {
+    "light": {
+      "pass": {
+        "oklch": [
+          0.5,
+          0.165,
+          258.0
+        ],
+        "hex": "#195fbf",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.65,
+        "apca_as_text_on_ground": 74.4,
+        "apca_ink_on_it": 21.7,
+        "sim_hex": {
+          "protanopia": "#2269c2",
+          "deuteranopia": "#005bbd",
+          "tritanopia": "#007686"
+        },
+        "glyph": "filled disc",
+        "meaning": "a locked check passed"
+      },
+      "fail": {
+        "oklch": [
+          0.535,
+          0.185,
+          34.0
+        ],
+        "hex": "#c1310d",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.21,
+        "apca_as_text_on_ground": 71.2,
+        "apca_ink_on_it": 24.8,
+        "sim_hex": {
+          "protanopia": "#5e5302",
+          "deuteranopia": "#817300",
+          "tritanopia": "#d5002c"
+        },
+        "glyph": "cross",
+        "meaning": "a locked check failed or the kill rule fired"
+      },
+      "lead": {
+        "oklch": [
+          0.645,
+          0.145,
+          76.0
+        ],
+        "hex": "#bf7f00",
+        "in_srgb_gamut": false,
+        "wcag_vs_ground": 3.11,
+        "apca_as_text_on_ground": 55.2,
+        "apca_ink_on_it": 40.9,
+        "sim_hex": {
+          "protanopia": "#968200",
+          "deuteranopia": "#a59200",
+          "tritanopia": "#d16d6a"
+        },
+        "glyph": "half disc",
+        "meaning": "exploratory or post hoc; one kind of evidence"
+      },
+      "null": {
+        "oklch": [
+          0.56,
+          0.0,
+          0.0
+        ],
+        "hex": "#747474",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 4.29,
+        "apca_as_text_on_ground": 66.8,
+        "apca_ink_on_it": 29.3,
+        "sim_hex": {
+          "protanopia": "#747474",
+          "deuteranopia": "#747474",
+          "tritanopia": "#747474"
+        },
+        "glyph": "ring",
+        "meaning": "tested and level; an honest null"
+      },
+      "unverified": {
+        "oklch": [
+          0.56,
+          0.0,
+          0.0
+        ],
+        "hex": "#747474",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 4.29,
+        "apca_as_text_on_ground": 66.8,
+        "apca_ink_on_it": 29.3,
+        "sim_hex": {
+          "protanopia": "#747474",
+          "deuteranopia": "#747474",
+          "tritanopia": "#747474"
+        },
+        "glyph": "dotted ring",
+        "meaning": "not checked, or checked only against its own claim"
+      },
+      "withdrawn": {
+        "oklch": [
+          0.56,
+          0.0,
+          0.0
+        ],
+        "hex": "#747474",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 4.29,
+        "apca_as_text_on_ground": 66.8,
+        "apca_ink_on_it": 29.3,
+        "sim_hex": {
+          "protanopia": "#747474",
+          "deuteranopia": "#747474",
+          "tritanopia": "#747474"
+        },
+        "glyph": "struck ring",
+        "meaning": "a reading withdrawn or corrected"
+      }
+    },
+    "dark": {
+      "pass": {
+        "oklch": [
+          0.7,
+          0.1485,
+          258.0
+        ],
+        "hex": "#619ff9",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 6.93,
+        "apca_as_text_on_ground": -49.3,
+        "apca_ink_on_it": -43.1,
+        "sim_hex": {
+          "protanopia": "#78a5fd",
+          "deuteranopia": "#6397f7",
+          "tritanopia": "#00b3c0"
+        },
+        "glyph": "filled disc",
+        "meaning": "a locked check passed"
+      },
+      "fail": {
+        "oklch": [
+          0.7,
+          0.1665,
+          34.0
+        ],
+        "hex": "#f47154",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 6.51,
+        "apca_as_text_on_ground": -47.0,
+        "apca_ink_on_it": -45.3,
+        "sim_hex": {
+          "protanopia": "#948751",
+          "deuteranopia": "#b4a351",
+          "tritanopia": "#ff586b"
+        },
+        "glyph": "cross",
+        "meaning": "a locked check failed or the kill rule fired"
+      },
+      "lead": {
+        "oklch": [
+          0.8,
+          0.1305,
+          76.0
+        ],
+        "hex": "#eeb153",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 9.82,
+        "apca_as_text_on_ground": -65.9,
+        "apca_ink_on_it": -26.1,
+        "sim_hex": {
+          "protanopia": "#c8b349",
+          "deuteranopia": "#d6c256",
+          "tritanopia": "#ffa19d"
+        },
+        "glyph": "half disc",
+        "meaning": "exploratory or post hoc; one kind of evidence"
+      },
+      "null": {
+        "oklch": [
+          0.66,
+          0.0,
+          0.0
+        ],
+        "hex": "#929292",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.99,
+        "apca_as_text_on_ground": -43.0,
+        "apca_ink_on_it": -49.4,
+        "sim_hex": {
+          "protanopia": "#929292",
+          "deuteranopia": "#929292",
+          "tritanopia": "#929292"
+        },
+        "glyph": "ring",
+        "meaning": "tested and level; an honest null"
+      },
+      "unverified": {
+        "oklch": [
+          0.66,
+          0.0,
+          0.0
+        ],
+        "hex": "#929292",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.99,
+        "apca_as_text_on_ground": -43.0,
+        "apca_ink_on_it": -49.4,
+        "sim_hex": {
+          "protanopia": "#929292",
+          "deuteranopia": "#929292",
+          "tritanopia": "#929292"
+        },
+        "glyph": "dotted ring",
+        "meaning": "not checked, or checked only against its own claim"
+      },
+      "withdrawn": {
+        "oklch": [
+          0.66,
+          0.0,
+          0.0
+        ],
+        "hex": "#929292",
+        "in_srgb_gamut": true,
+        "wcag_vs_ground": 5.99,
+        "apca_as_text_on_ground": -43.0,
+        "apca_ink_on_it": -49.4,
+        "sim_hex": {
+          "protanopia": "#929292",
+          "deuteranopia": "#929292",
+          "tritanopia": "#929292"
+        },
+        "glyph": "struck ring",
+        "meaning": "a reading withdrawn or corrected"
+      }
+    }
+  }
+}

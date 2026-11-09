@@ -2,7 +2,7 @@
 
 Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
-linkedin.com/in/zaindanaharper | github.com/HarperZ9
+linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
 
 Field Operations | Facilities Support | Public-Facing Service
 

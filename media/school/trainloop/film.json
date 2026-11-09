@@ -1,0 +1,92 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "trainloop",
+  "title": "The training loop",
+  "page": "night-school-trainloop.html",
+  "seed": 20261027,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/trainloop/facts.json, computed by tools/school/fill_trainloop.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "Pylon's harbour at dusk. A loop of track runs round the dock: a cart takes on a crate of sentences, goes through the scoring shed, past the crane, and back. Pylon checks her clipboard. No words." },
+    "close": { "seconds": 5.0, "what": "The cart slows to a stop after its last lap. The tally board by the shed reads the final held-out score. Pylon puts a cone on the cart and walks off the dock." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "The training loop",
+      "lines": [
+        "The training loop. Five steps, two thousand times.",
+        "Every lesson so far has a piece of training in it. Tonight they go round together, and we watch the whole loop teach the attention model, from the first step to the last."
+      ]
+    },
+    {
+      "key": "loop",
+      "heading": "One lap",
+      "sources": ["ours-trainloop"],
+      "lines": [
+        "One lap goes like this. Take a batch of 16 rows from the training text. Run the model forward and score every next word: that is the loss.",
+        "Run backward to get the slope for every one of the model's 20,864 numbers. Then the optimiser takes one step downhill. That is one lap.",
+        "On one core of our test machine, with this lesson's own code, a lap takes about 21 milliseconds, and most of that is the backward pass: 14 of them."
+      ]
+    },
+    {
+      "key": "settings",
+      "heading": "The settings",
+      "sources": ["ours-trainloop", "kingma2015", "loshchilov2019"],
+      "lines": [
+        "The optimiser is Adam, with a little weight decay that shrinks most of the numbers slightly each step, as in AdamW. The layer norms' gains and the biases are left out.",
+        "The step size starts tiny and grows over the first 30 laps to 0.01. That is warmup.",
+        "And if the whole slope, all the numbers taken together, is ever longer than 1, it is shortened to 1 before the step. That is clipping. It fired on 76 of the 2,000 laps, 62 of them in the first 250."
+      ]
+    },
+    {
+      "key": "run",
+      "heading": "Two thousand laps",
+      "sources": ["ours-trainloop"],
+      "lines": [
+        "Now run it. At lap zero, the held-out loss is 3.84, a blind guess.",
+        "By lap 100 it is 0.97: the easy patterns, which word tends to follow which, come first.",
+        "Copying a word from far back comes late, and then fast. At lap 500, copying is right 43 percent of the time. By lap 750, 97 percent.",
+        "We ran the loop again from the same seeds, and got the attention lesson's model back exactly: 29 of 29 weight tables, number for number."
+      ],
+      "predict": [
+        { "after": [1, 0], "question": "Will copying a word from far back be learned early, late, or bit by bit?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "change",
+      "heading": "Change one thing",
+      "sources": ["ours-trainloop"],
+      "lines": [
+        "Change one setting at a time, train for 1,000 laps, and compare. First, the noise: the same recipe on two other sets of training rows ends at 0.70 and 0.70, and the original at 0.70, all three within a few thousandths. A difference smaller than that cannot be told apart from luck.",
+        "A step size ten times smaller ends at 0.78, and copies right only 54 percent of the time. Ten times larger ends worse, at 0.95, copying 22 percent.",
+        "Without weight decay: 0.70, inside the noise. On this small model, at this length, it makes no difference we can see.",
+        "Batches of 4 rows for the same number of laps see a quarter of the text, and end at 0.87. Given the same text over four times the laps, they still end at 0.76."
+      ],
+      "predict": [
+        { "after": [1, 0], "question": "Make the step size ten times larger. Faster, or worse?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "broken",
+      "heading": "A loop that cannot learn",
+      "sources": ["ours-trainloop"],
+      "lines": [
+        "Two broken loops, as checks. With a step size of zero, nothing moves: the loss stays at 3.84.",
+        "Turn every slope around, so each step goes uphill, and the loss climbs to 68. The loop only works because the slope points the right way."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Batch, forward, loss, backward, step. Two thousand times, and a blind guess becomes a model that copies.",
+        "Next on the dock: what goes into the batches. Goodnight."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+/* Shared tokens and controls for sound.html and theme/index.html.
+   Type: Hanken Grotesk (reading, headings by weight and size) and Conso (readouts). Nothing else.
+   Colour: ink on a calm ground, one hot mark per view. The spectrum lives only in the dot field. */
+@font-face { font-family: 'Hanken Grotesk'; src: url('fonts/hanken-grotesk.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Conso'; src: url('fonts/conso-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Conso'; src: url('fonts/conso-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  --ground: #0c0a11; --raised: #16131d; --line: #3a3547; --ink: #f1f0f5; --muted: #b3afc0; --hot: #ff5a36; --hot-ink: #14090a;
+  --sans: 'Hanken Grotesk', system-ui, sans-serif; --mono: 'Conso', ui-monospace, Consolas, monospace;
+  --step: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+}
+@media (prefers-color-scheme: light) {
+  :root { --ground: #f3f3f6; --raised: #e6e5ec; --line: #8a869b; --ink: #121018; --muted: #4a4658; --hot: #c8321a; --hot-ink: #ffffff; }
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark light; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 var(--step)/1.55 var(--sans); }
+a { color: var(--ink); text-underline-offset: 0.2em; }
+a:hover { color: var(--hot); }
+:focus-visible { outline: 3px solid var(--hot); outline-offset: 3px; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--hot); color: var(--hot-ink); padding: 0.6rem 1rem; z-index: 99; }
+.skip:focus { left: 0; }
+.mono { font-family: var(--mono); }
+button, .btn { font: 700 0.95rem/1 var(--mono); color: var(--ink); background: var(--raised); border: 2px solid var(--line); padding: 0.8rem 1rem; min-height: 44px; cursor: pointer; border-radius: 0; }
+button:hover { border-color: var(--ink); }
+button[aria-pressed='true'], button.on { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+button.hot { background: var(--hot); color: var(--hot-ink); border-color: var(--hot); }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+input[type='range'] { accent-color: var(--hot); min-height: 44px; }
+select { font: 400 0.95rem var(--mono); background: var(--raised); color: var(--ink); border: 2px solid var(--line); min-height: 44px; padding: 0 0.5rem; }
+label { font: 400 0.9rem var(--mono); color: var(--muted); }
+
+/* the sound bar: always visible, always has a mute */
+.soundbar { position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; padding: 0.6rem clamp(0.75rem, 3vw, 1.5rem); background: var(--ground); border-top: 2px solid var(--ink); }
+.soundbar .state { font: 400 0.85rem var(--mono); color: var(--muted); flex: 1 1 10rem; min-width: 0; }
+.soundbar .state b { color: var(--ink); font-weight: 700; }
+.dot-hot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--line); margin-right: 0.5rem; vertical-align: -0.05rem; }
+.live .dot-hot { background: var(--hot); }
+
+.soundbar label { display: inline-flex; align-items: center; gap: 0.4rem; }
+.soundbar input[type='range'] { width: 7rem; }
+@media (max-width: 600px) { .soundbar { gap: 0.4rem; padding: 0.5rem 0.6rem; } .soundbar button { padding: 0.5rem 0.7rem; } .soundbar .state { flex-basis: 100%; font-size: 0.8rem; } body { padding-bottom: 8.5rem !important; } }

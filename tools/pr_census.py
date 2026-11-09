@@ -29,11 +29,47 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 CENSUS = ROOT / "career" / "open-source-census.json"
 USER = "HarperZ9"
 
-QUERIES = {
-    "merged": f"author:{USER} is:pr is:merged -user:{USER}",
-    "open": f"author:{USER} is:pr is:open -user:{USER}",
-    "closed_unmerged": f"author:{USER} is:pr is:closed is:unmerged -user:{USER}",
+STATES = {
+    "merged": "is:merged",
+    "open": "is:open",
+    "closed_unmerged": "is:closed is:unmerged",
 }
+
+
+def own_accounts() -> list[str]:
+    """The user plus every organization the user administers.
+
+    A pull request into an organization the author runs is not upstream work,
+    so it must not count. The list is read from GitHub at run time rather than
+    written here, so a renamed or retired organization needs no code change.
+    """
+    out = subprocess.run(
+        ["gh", "api", "--paginate", "user/memberships/orgs"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if out.returncode != 0:
+        raise SystemExit(
+            "could not list the organizations this account administers; "
+            f"refusing to count without them:\n{out.stderr.strip()}"
+        )
+    orgs = sorted(
+        m["organization"]["login"]
+        for m in json.loads(out.stdout)
+        if m.get("role") == "admin" and m.get("state") == "active"
+    )
+    return [USER, *orgs]
+
+
+def queries(owners: list[str]) -> dict[str, str]:
+    exclude = " ".join(f"-user:{owner}" for owner in owners)
+    return {
+        bucket: f"author:{USER} is:pr {state} {exclude}"
+        for bucket, state in STATES.items()
+    }
+
 
 # Pages that carry a census number, and the element ids that hold it.
 STAMPED = ("hire.html", "portfolio.html", "resume.html", "cv.html", "dossier.html", "cover-letter.html")
@@ -57,8 +93,9 @@ def search(query: str) -> dict:
 
 
 def collect() -> dict:
-    census: dict = {"user": USER, "buckets": {}}
-    for bucket, query in QUERIES.items():
+    owners = own_accounts()
+    census: dict = {"user": USER, "excluded_admin_orgs": len(owners) - 1, "buckets": {}}
+    for bucket, query in queries(owners).items():
         payload = search(query)
         total = payload.get("total_count", 0)
         items = []

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-16",
+  "note": "Night School pair 12: K23 Fused attention and K24 fp16, bf16 and tensor cores join the sitemap, route registry, site index and home bundle. The home bundle is rebuilt from the registry as index-BxvqK2zV.js, and index-bJe3vRuh.js stays as retained history.",
+  "paths": {
+    "assets/index-BxvqK2zV.js": "d085db1ffd47b98475ddaddfd30d7e67444bd79875b582fd7045f9451806eef2",
+    "index.html": "f43d939dc013176f3897820087413dcd888fbddb089eef55a9042658950c739a",
+    "publications/build.json": "be7b575767cc383eb801c1b1b1a71ee78e40bff6d4f32aef95a6e896900dfbaa",
+    "site-index.html": "56dc05d57acc8201377f7014f8d8d196b8a6f520d91849c5afaf4e627a65fde0",
+    "sitemap.xml": "b0b10edc4810af13fa0107dff7100f229f30b8d53e0100c22969a188e4999127",
+    "system/routes.js": "12ef837990ed8799fe023d76cdf92d079adf7217cd8f1437b88957a08347081e"
+  }
+}

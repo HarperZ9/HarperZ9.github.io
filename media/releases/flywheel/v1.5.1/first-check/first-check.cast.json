@@ -1,0 +1,84 @@
+{
+ "schema": "raw-native.media-cast/1",
+ "commit": "ff67e163fa20b8e24cbd29f9e08b3a1ba0e39db8",
+ "platform": "linux",
+ "steps": [
+  {
+   "cmd": "python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-as-filed.json --allow-commands",
+   "lines": [
+    {
+     "t": 0.118,
+     "text": "FAIL  1 of 2 fields confirmed"
+    },
+    {
+     "t": 0.118,
+     "text": "HOLD  blocked by: tax"
+    },
+    {
+     "t": 0.118,
+     "text": "  FAIL          tax: the value disagrees with irs-2025-tax-table-single"
+    },
+    {
+     "t": 0.118,
+     "text": "  PASS          taxable_income: the answer cites the return"
+    },
+    {
+     "t": 0.118,
+     "text": "  next: tax: consult irs-2025-tax-table-single and take the value it gives, rather than deriving one that should match it"
+    }
+   ],
+   "exit": 1,
+   "seconds": 0.128
+  },
+  {
+   "cmd": "python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json --allow-commands",
+   "lines": [
+    {
+     "t": 0.089,
+     "text": "PASS  2 of 2 fields confirmed"
+    },
+    {
+     "t": 0.089,
+     "text": "RELEASE"
+    },
+    {
+     "t": 0.089,
+     "text": "  PASS          taxable_income: the answer cites the return"
+    },
+    {
+     "t": 0.089,
+     "text": "  PASS          tax: the value agrees with irs-2025-tax-table-single"
+    }
+   ],
+   "exit": 0,
+   "seconds": 0.1
+  },
+  {
+   "cmd": "python ../../scripts/run_output_check.py --contract form-1040.contract.json --answer answer-from-the-table.json",
+   "lines": [
+    {
+     "t": 0.063,
+     "text": "UNVERIFIABLE  1 of 2 fields confirmed"
+    },
+    {
+     "t": 0.063,
+     "text": "RELEASE_WITH_CAVEAT"
+    },
+    {
+     "t": 0.063,
+     "text": "  UNVERIFIABLE  tax: irs-2025-tax-table-single could not decide: PermissionError: command authorities are not granted for this run, so this field is unchecked rather than confirmed"
+    },
+    {
+     "t": 0.063,
+     "text": "  PASS          taxable_income: the answer cites the return"
+    },
+    {
+     "t": 0.063,
+     "text": "  next: tax: irs-2025-tax-table-single was not available to the checker, so this field is unchecked rather than wrong"
+    }
+   ],
+   "exit": 3,
+   "seconds": 0.072
+  }
+ ]
+}

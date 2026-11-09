@@ -1,5 +1,6 @@
-// Deploy the built home into the site root: dist/index.html becomes
-// /index.html and dist/assets/* replaces /assets/*. Run `npm run build`
+// Deploy the built workshop page into the site root: dist/index.html becomes
+// /workshop.html and dist/assets/* replaces /assets/*. Since 2026-10-26 the site's
+// home (/index.html) is the world's entrance, built by scripts/build-world-home.mjs. Run `npm run build`
 // first (or `npm run deploy`, which chains both).
 import { cpSync, mkdirSync, readdirSync, rmSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -21,5 +22,5 @@ if (existsSync(assetsDir)) {
   mkdirSync(assetsDir);
 }
 cpSync(path.join(dist, "assets"), assetsDir, { recursive: true });
-cpSync(path.join(dist, "index.html"), path.join(root, "index.html"));
-console.log("deployed: index.html +", readdirSync(assetsDir).join(", "));
+cpSync(path.join(dist, "index.html"), path.join(root, "workshop.html"));
+console.log("deployed: workshop.html +", readdirSync(assetsDir).join(", "));

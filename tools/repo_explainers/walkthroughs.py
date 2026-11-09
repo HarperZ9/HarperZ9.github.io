@@ -36,9 +36,16 @@ def release_films(slug):
         mj = sd / "media.json"
         if mj.is_file():
             m = json.loads(mj.read_text(encoding="utf-8"))
-            if any(f.endswith("-1080p.mp4") for f in m["files"]):
+            if _rendition(m):
                 films.append((sd.name, m, f"{SITE}/media/releases/{slug}/{tag}/{sd.name}"))
     return tag, films
+
+
+def _rendition(m):
+    """The largest video rendition up to 1080p a media.json lists ("scene-1080p.mp4", "scene-540p.mp4"),
+    or None. A 2160p master stays on the release and is not served by the site."""
+    sizes = [(int(r.group(1)), f) for f in m["files"] if (r := re.search(r"-(\d+)p\.mp4$", f)) and int(r.group(1)) <= 1080]
+    return max(sizes)[1] if sizes else None
 
 
 def length(seconds):
@@ -220,13 +227,15 @@ def release_html(slug):
     tag, films = release_films(slug)
     out = []
     for scene, m, base in films:
-        mp4 = next(f for f in m["files"] if f.endswith("-1080p.mp4"))
+        mp4 = _rendition(m)
+        hgt = int(re.search(r"-(\d+)p\.mp4$", mp4).group(1))
+        w = round(m.get("width", 16 * hgt / 9) * hgt / m.get("height", hgt))
         vtt = next((f for f in m["files"] if f.endswith(".vtt")), None)
         track = f'\n      <track kind="captions" src="{base}/{vtt}" srclang="en" label="English">' if vtt else ""
         kind = ", ".join(x for x in ("narrated" if m.get("narrated") else "", "captioned" if vtt else "") if x)
         voice = " The narration is a synthesized version of the author's voice." if m.get("narrated") else ""
         out.append(f'''<figure class="film">
-    <video controls preload="none" playsinline crossorigin="anonymous" width="1920" height="1080" poster="{base}/poster.jpg">
+    <video controls preload="none" playsinline crossorigin="anonymous" width="{w}" height="{hgt}" poster="{base}/poster.jpg">
       <source src="{base}/{mp4}" type="video/mp4">{track}
     </video>
     <figcaption><b>{html.escape(m["title"])}</b> ({length(m["duration"])}{", " + kind if kind else ""}). Rendered by the {html.escape(slug)} {html.escape(tag)} release from values read at its commit {m["commit"][:7]}: <a href="{base}/facts.json">facts.json</a>.{voice} <a href="{base}/index.html">Open it live</a> to scrub it frame by frame.</figcaption>
