@@ -175,3 +175,4 @@ html.plain
    the page; the words keep the field's halo */
 .world-home .work { background: none; text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo), 0 0 22px var(--halo); }
 .world-home .work :is(button, .w-try, .w-out, pre, figure img) { text-shadow: none; }
+.lm-def { margin: 0 0 4px; max-width: 62ch; font: 500 var(--fs-3)/1.45 var(--face-text); color: var(--ink); text-shadow: 0 0 14px var(--halo), 0 0 4px var(--halo), 0 0 1px var(--halo); }

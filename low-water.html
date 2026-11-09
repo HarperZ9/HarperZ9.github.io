@@ -23,15 +23,15 @@
 <meta name="twitter:title" content="Low Water | Zain Dana Harper">
 <meta name="twitter:description" content="Low Water, a narrative game in five eras and the full-scale demonstration of the raw-native engine: fights the animation decides.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4dad9f9ba4">
-<link rel="stylesheet" href="/studies/studies.css?v=world-4dad9f9ba4">
-<script type="module" src="/world/ui/shell/shell.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-4dad9f9ba4"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-4dad9f9ba4">
-<script type="module" src="/world/site/home-field.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/sound.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/explore/tell.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/explore/pair.js?v=world-4dad9f9ba4"></script></head>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-e6e1911eb5">
+<link rel="stylesheet" href="/studies/studies.css?v=world-e6e1911eb5">
+<script type="module" src="/world/ui/shell/shell.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-e6e1911eb5"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-e6e1911eb5">
+<script type="module" src="/world/site/home-field.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/sound.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/explore/tell.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/explore/pair.js?v=world-e6e1911eb5"></script></head>
 <body class="reading landmark">
 <div class="gw-backdrop" aria-hidden="true">
   <picture>
@@ -103,7 +103,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <h2 id="h-fights">The fights</h2>
 <p class="lp-lede">Fights run on raw-native's 60 Hz action timeline, and the animation decides each hit: capsules bound to the bones of the swing.</p>
 <ul class="figs"><li class="fig"><details><summary><b class="fig-n">bit for bit</b> the C++ timeline matches the game's JavaScript combat engine</summary>
-<p class="fig-src">It loads the game's move data and ports its strike generator expression for expression, on DETMATH. <a href="https://github.com/HarperZ9/raw-native/pull/239">raw-native #239, merged 8 November 2026 (ab0e692)</a>.</p></details></li>
+<p class="fig-src">It loads the game's move data and ports its strike generator expression for expression, on deterministic maths: the same bits on every machine. <a href="https://github.com/HarperZ9/raw-native/pull/239">raw-native #239, merged 8 November 2026 (ab0e692)</a>.</p></details></li>
 <li class="fig"><details><summary><b class="fig-n">18, 30 or 36</b> frames of warning before a telegraphed strike, checked as data, with the slow-then-fast shape on every tell you can parry</summary>
 <p class="fig-src">Telegraph retiming drives the presentation clock while the simulation keeps its integer frames. <a href="https://github.com/HarperZ9/raw-native/pull/242">raw-native #242, merged 9 November 2026 (7cfc64a)</a>.</p></details></li></ul><p class="lp-limit">Next, timing, sound, physics, effects and hit markers move onto one shared schedule, and the game's own simulation takes up the capsule contact.</p>
 <h3 class="lp-h3">Read a tell</h3>

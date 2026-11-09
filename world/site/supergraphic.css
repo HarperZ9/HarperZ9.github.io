@@ -1,7 +1,7 @@
 /* supergraphic.css: the home's arrival as an environmental supergraphic. The work's names (BuildLang, Flywheel, Engine,
    Game, CMMNS, Articulate) run as bands of letters at the scale of a wall, off every edge, embossed into the field
-   like letters cast in concrete; a deco sunburst of stepped rays rises behind them; a brutalist stepped mass holds
-   the ground. The letters are dynamic: Accession Divisumma's TURN and weight axes move with the reader's scroll
+   like letters cast in concrete; a deco sunburst of stepped rays rises behind them; the stencilled names, heavy and
+   unornamented, stand on the horizon as the brutalist mass. The letters are dynamic: Accession Divisumma's TURN and weight axes move with the reader's scroll
    (a scroll-driven animation, no script), and settle once on arrival. Reduced motion shows them still, Plain view
    removes them, and the name and the words over them keep the field's halo for AA contrast.
    The faces are letter subsets of Accession (SIL Open Font License 1.1, OFL.txt beside them). */
@@ -23,9 +23,10 @@
   text-shadow: -2px -2px 0 var(--sg-hi), 3px 4px 0 var(--sg-lo), 0 0 1px rgba(255, 248, 232, .06);
   -webkit-text-stroke: 1px rgba(201, 164, 106, .18);
   transform: translateX(var(--sg-run)); }
-.sg-1 { top: 4vh; left: -9vw; }
-.sg-2 { top: calc(4vh + .8 * clamp(120px, 31vh, 460px)); left: -31vw; font-family: "Accession Supergraphic Stencil", var(--face-display); font-weight: 900; font-variation-settings: "wght" 900; color: rgba(236, 228, 212, .045); }
-.sg-3 { top: calc(4vh + 1.6 * clamp(120px, 31vh, 460px)); left: -17vw; }
+.sg-1 { top: 12vh; left: -9vw; }
+.sg-2 { top: auto; bottom: 31vh; left: -31vw; line-height: .74; font-family: "Accession Supergraphic Stencil", var(--face-display); font-weight: 900; font-variation-settings: "wght" 900; color: rgba(236, 228, 212, .045); }
+/* two bands, the tiled names high and the stencilled ones standing on the horizon; the third waits for wider screens */
+.sg-3 { display: none; }
 
 /* the deco sunburst: stepped rays and stepped arcs in a thin metallic line, rising from the horizon at the right */
 .sg-sun { position: absolute; right: -12vw; bottom: 18vh; width: min(92vw, 150vh); height: auto; opacity: .5; }
@@ -33,12 +34,6 @@
 .sg-sun .arc { fill: none; stroke: var(--sg-metal); stroke-width: 1.25; opacity: .5; }
 .sg-sun .core { fill: rgba(201, 164, 106, .12); stroke: var(--sg-metal); stroke-width: 1.5; }
 
-/* the brutalist mass: stepped blocks of the field's deepest water, embossed on their lit edge, under the name */
-.sg-mass { position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; display: flex; align-items: flex-end; }
-.sg-mass i { display: block; flex: none; background: linear-gradient(180deg, rgba(10, 18, 28, .78), rgba(5, 10, 16, .92)); box-shadow: inset 0 2px 0 rgba(255, 248, 232, .08), inset 2px 0 0 rgba(255, 248, 232, .05); }
-.sg-mass i:nth-child(1) { width: 38vw; height: 58%; }
-.sg-mass i:nth-child(2) { width: 22vw; height: 38%; }
-.sg-mass i:nth-child(3) { width: 14vw; height: 22%; }
 
 /* the name: the heavy cut with an offset emboss in the deco metal, after the research display heads */
 .world-home .arrival h1 { text-shadow: 3px 3px 0 rgba(201, 164, 106, .55), 6px 6px 0 rgba(0, 4, 10, .5), 0 0 14px var(--halo), 0 0 4px var(--halo); }
@@ -58,8 +53,9 @@ html.plain .sg { display: none; }
 @media (forced-colors: active) { .sg { display: none; } }
 @media (max-width: 860px) {
   .sg-band { font-size: clamp(96px, 22vh, 220px); }
-  .sg-2 { top: calc(4vh + .8 * clamp(96px, 22vh, 220px)); }
-  .sg-3 { top: calc(4vh + 1.6 * clamp(96px, 22vh, 220px)); }
+  .sg-1 { top: 14vh; }
+  .sg-2 { bottom: 44vh; }
   .sg-sun { right: -40vw; bottom: 30vh; width: 140vw; }
-  .sg-mass { height: 18vh; }
 }
+
+@media (min-aspect-ratio: 21/9) { .sg-3 { display: block; top: 4vh; left: -17vw; opacity: .6; } .sg-1 { top: 38vh; } }

@@ -87,7 +87,7 @@ function bazaar(rules) {
 }
 
 // the arrival's supergraphic: the work's names as bands of letters at wall scale, a deco sunburst of stepped rays and
-// arcs, and a brutalist stepped mass (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
+// arcs, and the stencilled names as the brutalist mass on the horizon (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
 // since the same names are the landmarks' headings below.
 const SG_NAMES = ["BUILDLANG", "FLYWHEEL", "ENGINE", "GAME", "CMMNS", "ARTICULATE"];
 function supergraphic() {
@@ -103,7 +103,6 @@ function supergraphic() {
   return `<div class="sg" aria-hidden="true">
       ${band(1, rot(0))}${band(2, rot(3))}${band(3, rot(1))}
       <svg class="sg-sun" viewBox="0 0 1000 520" focusable="false">${rays.join("")}${arcs}<path class="core" d="M410 500 A90 90 0 0 1 590 500 Z"/></svg>
-      <div class="sg-mass"><i></i><i></i><i></i></div>
     </div>`;
 }
 
@@ -134,7 +133,8 @@ export function ways() {
   return LANDMARKS.map((l) => `<a href="#${l.id === "site" ? "site" : l.id === "everything" ? "everything" : "lm-" + l.id}">${esc(l.word)}</a>`).join("");
 }
 function landmarks(rules) {
-  const head = (l) => `<h2 id="h-${l.id}" class="lm-word">${esc(l.word)}${l.mark ? ` <span class="pf-mark">${esc(l.mark)}</span>` : ""}</h2>`;
+  // each landmark word is fixed before it is used: one line saying what we mean by it and what it leaves out
+  const head = (l) => `<h2 id="h-${l.id}" class="lm-word">${esc(l.word)}${l.mark ? ` <span class="pf-mark">${esc(l.mark)}</span>` : ""}</h2>${l.def ? `<p class="lm-def">${esc(l.def)}</p>` : ""}`;
   const rows = (l) => l.rows.map((id) => row(PLATFORMS.find((p) => p.id === id))).join("");
   const work = LANDMARKS.filter((l) => !["site", "everything"].includes(l.id)).map((l) => `
     <section class="lm" id="lm-${l.id}" aria-labelledby="h-${l.id}"><div class="lm-in">

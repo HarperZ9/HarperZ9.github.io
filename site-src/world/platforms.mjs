@@ -54,15 +54,15 @@ const ROWS = {
     see: ["/buildlang.html", "The registry, laws and the C path"], more: ["/buildlang/", "The language guide"],
     run: "cargo install buildlang --version {v} --locked", repo: "https://github.com/HarperZ9/buildlang" },
   flywheel: { product: "Flywheel",
-    try: "#w-flywheel", what: "Check any model's answer against the source that decides it, and keep every step as a receipt you can recheck offline.",
+    try: "#w-flywheel", what: "Check any model's answer against the source that decides it, and keep every step as a receipt: a record of each step's inputs, output and hashes that anyone can recheck offline, not a log of what the model claimed.",
     see: ["/demo-flywheel.html", "Watch a check, a tamper and a refusal"], more: ["/flywheel.html", "Flywheel"],
     run: "pip install flywheel-verify", then: "flywheel up", repo: "https://github.com/HarperZ9/flywheel" },
   "raw-native": { product: "raw-native",
-    try: "#w-engine", what: "A renderer that draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree.",
+    try: "#w-engine", what: "A renderer that draws each frame twice, on the CPU reference and on the GPU, and certifies whether they agree. Its light comes from radiance cascades: light gathered by rings of probes, each ring reaching farther at coarser detail, an approximation checked against a traced reference.",
     see: ["/raw.html", "Render the frame, then check it"], more: ["/low-water.html", "The game it runs"],
     run: "Download raw-native-{v}-windows-x64.zip from the release", runIsProse: true, repo: "https://github.com/HarperZ9/raw-native" },
   superframe: { product: "Superframe",
-    try: "#w-engine", what: "One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch, byte for byte the same each time.",
+    try: "#w-engine", what: "One seed, written in plain words, comes back as paint, living type, lines, carved material, sound and touch. It is deterministic: the same words and seed give the same bytes on every run, not just a similar picture.",
     see: ["/superframe.html", "One recipe in every medium"], more: ["/world/superframe/room/index.html", "The assistive room"],
     run: "git clone https://github.com/HarperZ9/superframe", then: "npm run make", note: "Node 24 or later", repo: "https://github.com/HarperZ9/superframe" },
   "low-water": { product: "Low Water",
@@ -86,14 +86,14 @@ const ROWS = {
 
 // The six landmarks. `href` is where the menu sends a reader; `rows` is the work the home sets under each.
 export const LANDMARKS = [
-  { id: "buildlang", word: "BuildLang", mark: "BLDLNG", href: "/buildlang.html", tech: "glyphcell", rows: ["buildlang"] },
+  { id: "buildlang", word: "BuildLang", mark: "BLDLNG", href: "/buildlang.html", tech: "glyphcell", def: "BuildLang means the language, its compiler buildc and its package registry; it is not a build system.", rows: ["buildlang"] },
   // the checking platforms sit together: Flywheel seals and rechecks, CMMNS reads public claims, Articulate checks
   // the words that leave; each keeps its own name and mark
-  { id: "flywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/world/ui/directions/cs-max/flywheel.html", tech: "light", rows: ["flywheel", "cmmns", "articulate"] },
-  { id: "engine", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", tech: "nightlights", rows: ["raw-native", "superframe"] },
-  { id: "game", word: "Game", href: "/low-water.html", tech: "chladni", rows: ["low-water"] },
-  { id: "site", word: "Site", href: "/#site", tech: "swarm", rows: ["site"] },
-  { id: "everything", word: "Everything", href: "/floor.html", tech: "rope", rows: ["research"] },
+  { id: "flywheel", word: "Flywheel", mark: "THEFLYWHEEL", href: "/world/ui/directions/cs-max/flywheel.html", tech: "light", def: "Flywheel names the checking work: Flywheel checks answers, CMMNS reads public replies, Articulate checks prose. Each shows its evidence; none decides for you.", rows: ["flywheel", "cmmns", "articulate"] },
+  { id: "engine", word: "Engine", mark: "THEPLYGRND", href: "/raw.html", tech: "nightlights", def: "The engine means raw-native, which renders, and Superframe, which composes; together they are THE PLAYGROUND.", rows: ["raw-native", "superframe"] },
+  { id: "game", word: "Game", href: "/low-water.html", tech: "chladni", def: "Low Water, the game the engine is proved on.", rows: ["low-water"] },
+  { id: "site", word: "Site", href: "/#site", tech: "swarm", def: "This site, built from the same engines.", rows: ["site"] },
+  { id: "everything", word: "Everything", href: "/floor.html", tech: "rope", def: "Every piece of work, current and past, with its status.", rows: ["research"] },
 ];
 
 // After the six, the rest of the hand's places, also in a fixed order.

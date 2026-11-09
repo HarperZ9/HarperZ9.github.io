@@ -23,15 +23,15 @@
 <meta name="twitter:title" content="BuildLang | Zain Dana Harper">
 <meta name="twitter:description" content="BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.">
 <link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4dad9f9ba4">
-<link rel="stylesheet" href="/studies/studies.css?v=world-4dad9f9ba4">
-<script type="module" src="/world/ui/shell/shell.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/hand-scroll.js?v=world-4dad9f9ba4"></script>
-<link rel="stylesheet" href="/world/site/landmark.css?v=world-4dad9f9ba4">
-<script type="module" src="/world/site/home-field.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/sound.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/explore/effects.js?v=world-4dad9f9ba4"></script>
-<script type="module" src="/world/site/explore/registry.js?v=world-4dad9f9ba4"></script>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-e6e1911eb5">
+<link rel="stylesheet" href="/studies/studies.css?v=world-e6e1911eb5">
+<script type="module" src="/world/ui/shell/shell.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-e6e1911eb5"></script>
+<link rel="stylesheet" href="/world/site/landmark.css?v=world-e6e1911eb5">
+<script type="module" src="/world/site/home-field.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/sound.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/explore/effects.js?v=world-e6e1911eb5"></script>
+<script type="module" src="/world/site/explore/registry.js?v=world-e6e1911eb5"></script>
 <!-- structured-data:begin (tools/structured_data.py) -->
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareSourceCode","@id":"https://harperz9.github.io/buildlang.html#software","name":"BuildLang","description":"BuildLang is a systems programming language in which a program declares what it is allowed to touch. The compiler checks those declarations and its memory rules, then emits native code through C. It ships with a CLI, editor support, two-way C integration and experimental shader output.","url":"https://harperz9.github.io/buildlang.html","codeRepository":"https://github.com/HarperZ9/buildlang","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://harperz9.github.io/"},{"@type":"ListItem","position":2,"name":"Catalog","item":"https://harperz9.github.io/catalog.html"},{"@type":"ListItem","position":3,"name":"BuildLang","item":"https://harperz9.github.io/buildlang.html"}]},{"@type":"SoftwareApplication","@id":"https://harperz9.github.io/buildlang.html#application","name":"BuildLang","url":"https://harperz9.github.io/buildlang.html","softwareVersion":"1.11.0","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Linux","downloadUrl":"https://crates.io/crates/buildlang","license":"https://spdx.org/licenses/AGPL-3.0-only.html","author":{"@id":"https://harperz9.github.io/#person","@type":"Person","name":"Zain Dana Harper"},"isAccessibleForFree":true,"sameAs":"https://github.com/HarperZ9/buildlang","installUrl":"https://crates.io/crates/buildlang"}]}</script>
 <!-- structured-data:end -->
@@ -127,7 +127,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <section class="lp-sec" id="laws" aria-labelledby="h-laws">
 <h2 id="h-laws">Laws and contracts</h2>
 <p class="lp-status">On main after 1.11.0 (#138).</p>
-<p class="lp-lede">Write a law beside the code. The compiler proves it, refutes it with a counterexample, or says why it cannot tell.</p>
+<p class="lp-lede">A law is a property you state beside the code, such as a function never returning less than its input. The compiler proves it, refutes it with a counterexample, or says why it cannot tell; it does not test by sampling alone.</p>
 <p class="lp-run"><code>buildc verify laws.bld</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n">10 of 10</b> false laws with rare counterexamples stay unproved</summary>
 <p class="fig-src">A planted mutant prover, one that treats 0 &gt;= 0 as a contradiction, fails that set. The prover is sound and incomplete: every step only weakens what it knows. <a href="https://github.com/HarperZ9/buildlang/pull/138">buildlang #138, merged 9 November 2026 (25d1171), on main after 1.11.0</a>.</p></details></li>
 <li class="fig"><details><summary><b class="fig-n">12 proved, 4 refuted</b> on our own laws: the DETMATH integer rules, the trace codec and conservation laws</summary>
@@ -138,7 +138,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <section class="lp-sec" id="tv" aria-labelledby="h-tv">
 <h2 id="h-tv">Translation validation</h2>
 <p class="lp-status">On main after 1.11.0 (#161, #162).</p>
-<p class="lp-lede">An independent checker proves that each function's C does what its source says: the same traps, the same results.</p>
+<p class="lp-lede">Translation validation means proving, function by function, that the C we emit does what its source says: the same traps, the same results. It checks each compiled program, not the compiler for every program.</p>
 <p class="lp-run"><code>buildc tv program.bld</code></p><ul class="figs"><li class="fig"><details><summary><b class="fig-n">31 of 38</b> functions inside the checked subset are certified in tests/programs, and 22 of 26 in the standard library</summary>
 <p class="fig-src">The subset is integers up to 64 bits and bool, with branches, loops and calls. Most functions fall outside it because they print or use strings, floats or structs. <a href="https://github.com/HarperZ9/buildlang/pull/161">buildlang #161, merged 9 November 2026 (6c90a98), on main after 1.11.0</a>.</p></details></li>
 <li class="fig"><details><summary><b class="fig-n">3 of 3</b> adding functions lose their certificate when a planted switch turns + into - in the C backend</summary>
@@ -161,7 +161,7 @@ new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"
 <p class="lp-lede">Low Water's rules are written in BuildLang and linked into raw-native's C++ host through a plain C header.</p>
 <ul class="figs"><li class="fig"><details><summary><b class="fig-n">16 of 16</b> checks of raw-native's own C++ test pass against the BuildLang library, as they do against the C++ module</summary>
 <p class="fig-src">A planted threshold fails 1. The story expression language is not ported: a record that needs it makes lw_rules_create refuse it with an error naming the record. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), on main after 1.11.0</a>.</p></details></li>
-<li class="fig"><details><summary><b class="fig-n">12 of 12</b> DETMATH goldens hold, and 40 of 40 combat traces match the game's own corpus</summary>
+<li class="fig"><details><summary><b class="fig-n">12 of 12</b> DETMATH goldens hold (DETMATH: BuildLang's deterministic maths, the same bits on every machine, with fast-math shortcuts off), and 40 of 40 combat traces match the game's own corpus</summary>
 <p class="fig-src">The moves file builds to 168,234 bytes, identical to the golden. Both planted trace faults are caught. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), on main after 1.11.0</a>.</p></details></li>
 <li class="fig"><details><summary><b class="fig-n">34 of 34</b> held-out tasks pass in each of two samples, Wilson 95% 0.90 to 1.00</summary>
 <p class="fig-src">The tasks were sealed before any generator saw them. Both samples are two draws of one model with one prompt, and the task writer also wrote the compiler changes, so the tasks may sit closer to the docs than an outside writer's would. <a href="https://github.com/HarperZ9/buildlang/pull/158">buildlang #158, merged 9 November 2026 (3c7cc54), on main after 1.11.0</a>.</p></details></li></ul><p class="lp-source">The whole account: <a href="https://github.com/HarperZ9/buildlang/blob/main/docs/LANGUAGE-COMPLETE.md">docs/LANGUAGE-COMPLETE.md</a> on main.</p>

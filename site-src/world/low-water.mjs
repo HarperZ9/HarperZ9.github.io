@@ -30,7 +30,7 @@ export const SECTIONS = [
       lede: "A telegraphed strike gives you 18, 30 or 36 frames of warning, slow at first and then fast. Start one, and press Parry (or Space) as the arc closes.",
       note: "The three leads and the slow-then-fast shape are the engine's own rule. The 4-frame parry window is an example for practice, not the game's number. Sound is off until you turn it on." },
     figs: [
-      { n: "bit for bit", text: "the C++ timeline matches the game's JavaScript combat engine", detail: "It loads the game's move data and ports its strike generator expression for expression, on DETMATH.", repo: "HarperZ9/raw-native", pr: 239 },
+      { n: "bit for bit", text: "the C++ timeline matches the game's JavaScript combat engine", detail: "It loads the game's move data and ports its strike generator expression for expression, on deterministic maths: the same bits on every machine.", repo: "HarperZ9/raw-native", pr: 239 },
       { n: "18, 30 or 36", text: "frames of warning before a telegraphed strike, checked as data, with the slow-then-fast shape on every tell you can parry", detail: "Telegraph retiming drives the presentation clock while the simulation keeps its integer frames.", repo: "HarperZ9/raw-native", pr: 242 },
     ],
   },
