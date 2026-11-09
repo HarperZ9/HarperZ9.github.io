@@ -1,8 +1,12 @@
 """Per-page link preview cards for the site (og:image and twitter:image), 1200 x 630.
 
-Each card carries the page's own title and author. Essays, papers and briefings
-use their cover from art/aperture/ (dark variant, embedded); tool pages use the
-tool's figure. The cover is embedded as an isolated image so its ids never clash.
+Each card carries the page's own title and author. A page with a render of its own
+work (site_cards.WORK_RULES: the lettering, the glass and water, superframe, the
+film posters) shows that render on the right, fading into the ground under the title.
+Otherwise essays, papers and briefings use their cover from art/aperture/ (dark
+variant, embedded) and tool pages use the tool's figure. Covers and renders are
+embedded as isolated images so their ids never clash. The author's name is a
+byline at the foot of every card and never the picture.
 """
 
 from __future__ import annotations
@@ -32,12 +36,53 @@ def balanced(text: str, face: str, size: float, width: float) -> list[str]:
     return lines
 
 
+WORK_X = 420  # the render fills the card from here to the right edge, under the veil
+
+
+WHOLE = (600, 1190)  # a piece that is a word is shown whole, in this span, fading in from its left edge
+
+
+def work_image(path: Path, scale: int = 2, box: tuple[int, int] | None = None) -> tuple[str, str]:
+    """The render cropped to cover `box` (default the card's right side) at `scale` x, as a JPEG data URI."""
+    import io
+    from PIL import Image
+    try:
+        im = Image.open(path).convert("RGB")
+    except Exception:  # a format Pillow lacks: let ffmpeg decode it
+        import subprocess
+        import imageio_ffmpeg
+        raw = subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-i", str(path), "-frames:v", "1",
+                              "-f", "image2pipe", "-vcodec", "png", "-"], capture_output=True, check=True).stdout
+        im = Image.open(io.BytesIO(raw)).convert("RGB")
+    tw, th = ((box or (W - WORK_X, H))[0]) * scale, ((box or (W - WORK_X, H))[1]) * scale
+    k = max(tw / im.width, th / im.height)
+    im = im.resize((round(im.width * k), round(im.height * k)), Image.LANCZOS)
+    x0, y0 = (im.width - tw) // 2, (im.height - th) // 2
+    buf = io.BytesIO()
+    im.crop((x0, y0, x0 + tw, y0 + th)).save(buf, "JPEG", quality=92, subsampling=0)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode(), hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def card_svg(card: dict, repos: dict) -> tuple[str, dict]:
     p = PAL["dark"]
     uid = f"cd-{card['slug']}"
     defs, body = core_defs(uid, p), [f'<rect width="{W}" height="{H}" fill="{p["ground"]}"/>']
     scene = {"kind": "harperz9.page-card/1", "card": card, "size": [W, H], "seed": card["slug"]}
-    if card.get("cover"):
+    if card.get("work") and card.get("fit") == "whole":
+        x0, x1 = WHOLE
+        w = x1 - x0
+        h = round(w * 9 / 16)
+        y0 = (H - h) // 2
+        uri, scene["work_sha256"] = work_image(ROOT / card["work"], box=(w, h))
+        # soft edges all round: the word sits in the card's dark, with no frame
+        defs += (f'<radialGradient id="{uid}-soft" cx="0.5" cy="0.5" r="0.5"><stop offset="0.72" stop-color="#fff"/>'
+                 f'<stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>'
+                 f'<mask id="{uid}-m" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#{uid}-soft)"/></mask>')
+        body.append(f'<image x="{x0}" y="{y0}" width="{w}" height="{h}" mask="url(#{uid}-m)" href="{uri}"/>')
+    elif card.get("work"):
+        uri, scene["work_sha256"] = work_image(ROOT / card["work"])
+        body.append(f'<image x="{WORK_X}" y="0" width="{W - WORK_X}" height="{H}" preserveAspectRatio="xMidYMid slice" href="{uri}"/>')
+    elif card.get("cover"):
         src = ROOT / "art" / "aperture" / f"{card['cover']}-dark.svg"
         raw = src.read_bytes()
         scene["cover_sha256"] = hashlib.sha256(raw).hexdigest()
@@ -52,9 +97,13 @@ def card_svg(card: dict, repos: dict) -> tuple[str, dict]:
         c = Ctx(uid, card["tool"], "figure", W * 0.74, H * 0.5, H * 0.36, "dark", cfg["maturity"], min_label=22.0)
         body.append(figure_for(card["tool"], cfg)(c))
         scene["hot_mark"] = c.hot
+    # the veil: solid under the title, gone by two thirds across; a render fades in from its own left edge
+    lo, hi = (0.40, 0.62) if card.get("work") else (0.42, 0.66)
+    if card.get("fit") == "whole":
+        lo, hi = 0.44, 0.50
     defs += ('<linearGradient id="%s-veil" x1="0" y1="0" x2="1" y2="0">'
-             '<stop offset="0.42" stop-color="%s" stop-opacity="0.96"/>'
-             '<stop offset="0.66" stop-color="%s" stop-opacity="0"/></linearGradient>' % (uid, p["ground"], p["ground"]))
+             '<stop offset="%s" stop-color="%s" stop-opacity="0.96"/>'
+             '<stop offset="%s" stop-color="%s" stop-opacity="0"/></linearGradient>' % (uid, lo, p["ground"], hi, p["ground"]))
     body.append(f'<rect width="{W}" height="{H}" fill="url(#{uid}-veil)"/>')
     defs += texture_defs(uid, p, 7)
     body.append(texture(uid, W, H, grain=0.05, scan=0.12))

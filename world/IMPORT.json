@@ -7724,15 +7724,15 @@
    "path": "world/ui/assets/goya-nobody-1600.webp",
    "source": "2026-10-23-ui-direction/assets/goya-nobody-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 108002,
-   "sourceSha256": "c6b43d4dc58f233ece975849b68e8768a6690d54499b32df31fcdd45fa8017c4"
+   "bytes": 1122640,
+   "sourceSha256": "42f29ff74af44a65b39f183703b6130576046d5101551061a37ac218c78b9fa7"
   },
   {
    "path": "world/ui/assets/goya-nobody-720.webp",
    "source": "2026-10-23-ui-direction/assets/goya-nobody-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 70778,
-   "sourceSha256": "69f7599fe309a2c6dbcabdfff42dc9b734348b1ae8cbf1cb81c883de9e97fdd7"
+   "bytes": 307772,
+   "sourceSha256": "42b6c01b3aad178ccb945334f211600fa56ee493bd52bbe0a6123b584910c0ca"
   },
   {
    "path": "world/ui/assets/hmso-store-1950-1600.webp",
@@ -7752,29 +7752,29 @@
    "path": "world/ui/assets/munchausen-dore-1600.webp",
    "source": "2026-10-23-ui-direction/assets/munchausen-dore-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 254982,
-   "sourceSha256": "4fb1eed5960e59e2eaf4c89db4067740927e5740c9dbe382053c33713da72edc"
+   "bytes": 916908,
+   "sourceSha256": "c817825450ab9d67bb5205a0586223054aed5d2ae77e7d667e074f41174b174b"
   },
   {
    "path": "world/ui/assets/munchausen-dore-720.webp",
    "source": "2026-10-23-ui-direction/assets/munchausen-dore-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 197502,
-   "sourceSha256": "0dac3ba107e42ac7680e7ceeeacd43bf9b9e0196816960d875533048509753ef"
+   "bytes": 252048,
+   "sourceSha256": "297542b615c331f08f74fce12e5102dbb65c1ada88409be1ee71a19083e60a2f"
   },
   {
    "path": "world/ui/assets/muybridge-758-1600.webp",
    "source": "2026-10-23-ui-direction/assets/muybridge-758-1600.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 30760,
-   "sourceSha256": "0050f6f655c57ac9a366bd0ae06034d7d2740ac56ee9ab74e694c1c011c80ecd"
+   "bytes": 228330,
+   "sourceSha256": "8a0d8baa35ab23404053717dce52919e133c58c0a83ae7be0340dbb78e02a43e"
   },
   {
    "path": "world/ui/assets/muybridge-758-720.webp",
    "source": "2026-10-23-ui-direction/assets/muybridge-758-720.webp",
    "folder": "2026-10-23-ui-direction",
-   "bytes": 22430,
-   "sourceSha256": "5bf4df1454048d23945a7fd885ace70db0a04fbc5608b84dee4bdfd34079259b"
+   "bytes": 45064,
+   "sourceSha256": "a316ef92f5487bf5fdc1eeffd06648123a800d11c1f1672f14ebaaec8f7e259f"
   },
   {
    "path": "world/ui/directions/c-exhibit/exhibit.css",
@@ -10542,7 +10542,7 @@
    "sourceSha256": "096ffb594b7dc75a2017aad71ff4d54d1455f0656d71a2225a299f454198eb0b"
   }
  ],
- "assetRevision": "world-dade5d0b19",
+ "assetRevision": "world-58df2cb08b",
  "assetRevisionScope": [
   "world/",
   "studies/",

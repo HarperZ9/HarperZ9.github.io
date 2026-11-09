@@ -48,13 +48,13 @@ export const PLACES = [
   },
   {
     id: "motion", title: "Motion and film", form: "stroke", medium: "medium", living: ["ink", "charcoal", "ink"],
-    lead: { kind: "living", src: "/world/ui/assets/muybridge-758-720.webp", w: 720, h: 406, alt: "Muybridge's horse in motion, plate 758, held as a living still." },
+    lead: { kind: "living", src: "/world/ui/assets/muybridge-758-720.webp", w: 720, h: 402, alt: "Muybridge's cockatoo in flight, Animal Locomotion plate 758 (1887), held as a living still." },
     laws: ["rule-imperfection-alive", "rule-colour-grade-in-post"],
     ways: [["/explainers.html", "Films"], ["/world/playbook/examples/cadence.html", "Weather, on twos"], ["/night-school.html", "Night School"]],
   },
   {
     id: "exhibit", title: "The exhibit", form: "grain", medium: "viscous", living: ["engraved", "ink", "charcoal"],
-    lead: { kind: "living", src: "/world/ui/assets/goya-nobody-720.webp", w: 720, h: 1044, alt: "Goya's Nobody knows himself: masked figures, held as a living still." },
+    lead: { kind: "living", src: "/world/ui/assets/goya-nobody-720.webp", w: 720, h: 1137, alt: "Goya's Nobody knows himself: masked figures, held as a living still." },
     laws: ["rule-argument-movements", "rule-depth-planes-have-jobs"],
     ways: [["/world/exhibit/index.html", "We are here"], ["/world/exhibit/balance.html", "The false balance"], ["/world/ui/directions/cs-max/exhibit.html", "The Baron's room"]],
   },
