@@ -1,0 +1,198 @@
+// npgen.bld: numpy's default generator, routine for routine. SeedSequence, PCG64 (128-bit state, XSL-RR output),
+// the buffered 32-bit draws, bounded integers the way numpy draws them, the ziggurat normal with numpy's tables,
+// permutation and choice. The page's npgen.js mirrors this file function for function.
+// Needs zig_tables.bld in the same unit. Seeds are whole numbers below 2^64.
+extern "C" {
+    fn log1p(x: f64) -> f64;
+}
+
+struct Gen { state: u128, inc: u128, has32: bool, u32v: u64 }
+struct Hc { v: u64 }
+
+fn mul32(a: u64, b: u64) -> u64 {
+    return a.wrapping_mul(b) & 0xffffffff;
+}
+
+fn hashmix(h: &mut Hc, v0: u64) -> u64 {
+    let mut v: u64 = v0 ^ h.v;
+    h.v = mul32(h.v, 0x931e8875);
+    v = mul32(v, h.v);
+    return v ^ (v >> 16);
+}
+
+fn mix(x: u64, y: u64) -> u64 {
+    let r: u64 = (mul32(0xca01f9dd, x) + 0x100000000 - mul32(0x4973f715, y)) & 0xffffffff;
+    return r ^ (r >> 16);
+}
+
+// SeedSequence: the four-word entropy pool numpy builds from an integer seed. A seed below 2^64 gives at most
+// two entropy words; the missing words are zero.
+fn seed_pool(seed: u64, pool: &mut [u64; 4]) {
+    let mut h: Hc = Hc { v: 0x43b0d7e5 };
+    pool[0] = hashmix(&mut h, seed & 0xffffffff);
+    pool[1] = hashmix(&mut h, seed >> 32);
+    pool[2] = hashmix(&mut h, 0);
+    pool[3] = hashmix(&mut h, 0);
+    let mut a: i32 = 0;
+    while a < 4 {
+        let mut b: i32 = 0;
+        while b < 4 {
+            if a != b {
+                let hm: u64 = hashmix(&mut h, pool[a]);
+                pool[b] = mix(pool[b], hm);
+            }
+            b = b + 1;
+        }
+        a = a + 1;
+    }
+}
+
+// SeedSequence.generate_state(4, uint64): eight 32-bit words, paired low word first.
+fn seed_state(pool: &mut [u64; 4], out: &mut [u64; 4]) {
+    let mut hc: u64 = 0x8b51f9dd;
+    let mut w: [u64; 8] = [0; 8];
+    let mut i: i32 = 0;
+    while i < 8 {
+        let mut d: u64 = pool[i % 4] ^ hc;
+        hc = mul32(hc, 0x58f38ded);
+        d = mul32(d, hc);
+        w[i] = d ^ (d >> 16);
+        i = i + 1;
+    }
+    i = 0;
+    while i < 4 {
+        out[i] = w[2 * i] | (w[2 * i + 1] << 32);
+        i = i + 1;
+    }
+}
+
+fn pcg_step(g: &mut Gen) {
+    g.state = g.state.wrapping_mul(0x2360ed051fc65da44385df649fccf645).wrapping_add(g.inc);
+}
+
+// default_rng(seed): PCG64 seeded from the SeedSequence state.
+fn gen_new(seed: u64) -> Gen {
+    let mut pool: [u64; 4] = [0; 4];
+    let mut v: [u64; 4] = [0; 4];
+    seed_pool(seed, &mut pool);
+    seed_state(&mut pool, &mut v);
+    let mut g: Gen = Gen { state: 0, inc: 0, has32: false, u32v: 0 };
+    g.inc = ((((v[2] as u128) << 64) | (v[3] as u128)) << 1) | 1;
+    pcg_step(&mut g);
+    g.state = g.state.wrapping_add(((v[0] as u128) << 64) | (v[1] as u128));
+    pcg_step(&mut g);
+    return g;
+}
+
+fn next_u64(g: &mut Gen) -> u64 {
+    pcg_step(g);
+    let x: u64 = ((g.state >> 64) as u64) ^ (g.state as u64);
+    let rot: u32 = (g.state >> 122) as u32;
+    return (x >> rot) | (x << ((64 - rot) & 63));
+}
+
+// numpy keeps the high half of a 64-bit draw for the next 32-bit request.
+fn next_u32(g: &mut Gen) -> u64 {
+    if g.has32 {
+        g.has32 = false;
+        return g.u32v;
+    }
+    let n: u64 = next_u64(g);
+    g.has32 = true;
+    g.u32v = n >> 32;
+    return n & 0xffffffff;
+}
+
+fn next_double(g: &mut Gen) -> f64 {
+    return ((next_u64(g) >> 11) as f64) * (1.0 / 9007199254740992.0);
+}
+
+fn standard_normal(g: &mut Gen) -> f64 ~ Foreign {
+    let zig_r: f64 = 3.6541528853610087963519472518;
+    let zig_inv_r: f64 = 0.27366123732975827203338247596;
+    while true {
+        let r: u64 = next_u64(g);
+        let idx: i32 = (r & 0xff) as i32;
+        let sign: u64 = (r >> 8) & 1;
+        let rabs: u64 = (r >> 9) & 0xfffffffffffff;
+        let mut x: f64 = (rabs as f64) * f64::from_bits(zig_wi(idx));
+        if sign == 1 { x = -x; }
+        if rabs < zig_ki(idx) { return x; }
+        if idx == 0 {
+            while true {
+                let u1: f64 = next_double(g);
+                let xx: f64 = -zig_inv_r * log1p(-u1);
+                let u2: f64 = next_double(g);
+                let yy: f64 = -log1p(-u2);
+                if yy + yy > xx * xx {
+                    if ((rabs >> 8) & 1) == 1 { return -(zig_r + xx); }
+                    return zig_r + xx;
+                }
+            }
+        } else {
+            let f1: f64 = f64::from_bits(zig_fi(idx - 1));
+            let f0: f64 = f64::from_bits(zig_fi(idx));
+            let u: f64 = next_double(g);
+            let e: f64 = -0.5 * x * x;
+            if (f1 - f0) * u + f0 < e.exp() { return x; }
+        }
+    }
+    return 0.0;
+}
+
+fn normal(g: &mut Gen, loc: f64, scale: f64) -> f64 ~ Foreign {
+    return loc + scale * standard_normal(g);
+}
+
+// random_interval(max): masked rejection on 32-bit draws (max below 2^32).
+fn interval(g: &mut Gen, max: u64) -> u64 {
+    if max == 0 { return 0; }
+    let mut mask: u64 = max;
+    mask = mask | (mask >> 1);
+    mask = mask | (mask >> 2);
+    mask = mask | (mask >> 4);
+    mask = mask | (mask >> 8);
+    mask = mask | (mask >> 16);
+    while true {
+        let v: u64 = next_u32(g) & mask;
+        if v <= max { return v; }
+    }
+    return 0;
+}
+
+// Lemire's bounded draw on 32-bit words, as Generator.integers uses for a range below 2^32. rng is inclusive.
+fn lemire32(g: &mut Gen, rng: u64) -> u64 {
+    let excl: u64 = rng + 1;
+    let mut m: u64 = next_u32(g) * excl;
+    let mut left: u64 = m & 0xffffffff;
+    if left < excl {
+        let threshold: u64 = (0xffffffff - rng) % excl;
+        while left < threshold {
+            m = next_u32(g) * excl;
+            left = m & 0xffffffff;
+        }
+    }
+    return m >> 32;
+}
+
+// Generator.permutation of the first n values of a, in place: the Fisher-Yates walk from the top index down.
+fn permutation(g: &mut Gen, a: &mut [f64; 8], n: i32) {
+    let mut i: i32 = n - 1;
+    while i >= 1 {
+        let j: i32 = interval(g, i as u64) as i32;
+        let t: f64 = a[i];
+        a[i] = a[j];
+        a[j] = t;
+        i = i - 1;
+    }
+}
+
+// Generator.choice(pool, k) with replacement: k bounded index draws, written to out.
+fn choice(g: &mut Gen, pool: &Vec<f64>, k: i32, out: &mut [f64; 8]) {
+    let top: u64 = (pool.len() as u64) - 1;
+    let mut i: i32 = 0;
+    while i < k {
+        out[i] = pool[lemire32(g, top) as i32];
+        i = i + 1;
+    }
+}

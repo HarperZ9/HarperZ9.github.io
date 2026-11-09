@@ -1,0 +1,605 @@
+{
+ "study": "human-d-replication",
+ "run_id": "20261031T082124Z",
+ "date": "2026-10-31",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "93132f995daad75ca338b5ac8442d262da99b52b5c59d7f1dbfa83fcba3a466f",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "1a6cc22eb03f2b7a168e32ecd696a312affde7a8b1da74809a97434e3f9c7b33",
+  "locked_at": "2026-10-31T08:21:23+00:00"
+ },
+ "hashes": {
+  "rpp_data.csv": "4d87a2636181d8e31230422854cf0fabeaecd2f1b47a59627482c05a2b56d54d",
+  "FReD.xlsx": "59545e3fc0c2979d97507097526319ec8c275aae3ac40c0d1a6d327492079e6b",
+  "d_replication.py": "ea88f8d7462af049672bec863b0924a0d6c8a531d4f2c572b315f75eff3d2a51"
+ },
+ "analysis": {
+  "rows": 1222,
+  "rpp_rows": 79,
+  "fred_rows": 1143,
+  "projects": 307,
+  "largest_project": 156,
+  "fred_total": 2164,
+  "fred_converted": 1344,
+  "dropped_nonsig_rpp": 18,
+  "dropped_nonsig_fred": 201,
+  "rpp_derived_successes": 27,
+  "rpp_reported_successes": 34,
+  "rpp_reported_gap_from_35": 1,
+  "fred_reported_vs_derived": {
+   "descriptive only": {
+    "n": 5,
+    "derived_success": 0.8
+   },
+   "failed": {
+    "n": 448,
+    "derived_success": 0.14732142857142858
+   },
+   "mixed": {
+    "n": 183,
+    "derived_success": 0.5027322404371585
+   },
+   "statistically successful but flawed": {
+    "n": 10,
+    "derived_success": 0.9
+   },
+   "successful": {
+    "n": 497,
+    "derived_success": 0.8571428571428571
+   }
+  },
+  "fred_label_gap": 0.7098214285714285,
+  "planted": {
+   "rows": [
+    {
+     "pi0": 0.5,
+     "tau": 0.25,
+     "pi0_hat": 0.46293885628723164,
+     "tau_hat": 0.24509775168135028,
+     "rate_err": 0.009274765485512204,
+     "brier_sel": 0.12213255234509054,
+     "brier_naive": 0.16355493588487735
+    },
+    {
+     "pi0": 0.5,
+     "tau": 0.25,
+     "pi0_hat": 0.4397512082963629,
+     "tau_hat": 0.25307315740820463,
+     "rate_err": 0.007613537174757212,
+     "brier_sel": 0.1220548205706227,
+     "brier_naive": 0.16488501018378302
+    },
+    {
+     "pi0": 0.5,
+     "tau": 0.25,
+     "pi0_hat": 0.38439371277159096,
+     "tau_hat": 0.250968049782206,
+     "rate_err": 0.024632214159523547,
+     "brier_sel": 0.12439241586202261,
+     "brier_naive": 0.16573211249133707
+    },
+    {
+     "pi0": 0.5,
+     "tau": 0.25,
+     "pi0_hat": 0.40972906458146996,
+     "tau_hat": 0.23679706791948896,
+     "rate_err": 0.01477123085483778,
+     "brier_sel": 0.13010968952624452,
+     "brier_naive": 0.17857814149481835
+    },
+    {
+     "pi0": 0.5,
+     "tau": 0.25,
+     "pi0_hat": 0.45623507466065494,
+     "tau_hat": 0.2429452596960175,
+     "rate_err": 0.00743505628631802,
+     "brier_sel": 0.12893844199508817,
+     "brier_naive": 0.17894437879663516
+    },
+    {
+     "pi0": 0.05,
+     "tau": 0.35,
+     "pi0_hat": 0.17886928695835233,
+     "tau_hat": 0.3454166114134065,
+     "rate_err": 0.013676511206078046,
+     "brier_sel": 0.08588736993596634,
+     "brier_naive": 0.09380574183349209
+    },
+    {
+     "pi0": 0.05,
+     "tau": 0.35,
+     "pi0_hat": 0.18168755994817787,
+     "tau_hat": 0.3495907920488209,
+     "rate_err": 0.003285879700839489,
+     "brier_sel": 0.08074772375686617,
+     "brier_naive": 0.08835603348249922
+    },
+    {
+     "pi0": 0.05,
+     "tau": 0.35,
+     "pi0_hat": 0.023968419255282963,
+     "tau_hat": 0.3451760391807656,
+     "rate_err": 0.00798128113725538,
+     "brier_sel": 0.08933930891687973,
+     "brier_naive": 0.1014470480218732
+    },
+    {
+     "pi0": 0.05,
+     "tau": 0.35,
+     "pi0_hat": 1.4307993450610502e-13,
+     "tau_hat": 0.35009509440492864,
+     "rate_err": 0.001764332115395062,
+     "brier_sel": 0.08198886005816484,
+     "brier_naive": 0.09203843170225962
+    },
+    {
+     "pi0": 0.05,
+     "tau": 0.35,
+     "pi0_hat": 4.445426398265331e-14,
+     "tau_hat": 0.3507876838560137,
+     "rate_err": 0.0003291820957338487,
+     "brier_sel": 0.08180456337949328,
+     "brier_naive": 0.09210820888214595
+    },
+    {
+     "pi0": 0.8,
+     "tau": 0.3,
+     "pi0_hat": 0.8109276611747415,
+     "tau_hat": 0.29826638424874585,
+     "rate_err": 0.01149443894895752,
+     "brier_sel": 0.1328886090053142,
+     "brier_naive": 0.24894419646936136
+    },
+    {
+     "pi0": 0.8,
+     "tau": 0.3,
+     "pi0_hat": 0.793256928037942,
+     "tau_hat": 0.3005613821245516,
+     "rate_err": 0.006498572581046358,
+     "brier_sel": 0.1334975044640755,
+     "brier_naive": 0.26072228653166796
+    },
+    {
+     "pi0": 0.8,
+     "tau": 0.3,
+     "pi0_hat": 0.8021377111024898,
+     "tau_hat": 0.29285859835815026,
+     "rate_err": 0.027599991429944737,
+     "brier_sel": 0.13153299919247913,
+     "brier_naive": 0.23680083100156812
+    },
+    {
+     "pi0": 0.8,
+     "tau": 0.3,
+     "pi0_hat": 0.7880881480120462,
+     "tau_hat": 0.28147308729476844,
+     "rate_err": 0.002269561269731657,
+     "brier_sel": 0.14095077814249174,
+     "brier_naive": 0.26537822963967134
+    },
+    {
+     "pi0": 0.8,
+     "tau": 0.3,
+     "pi0_hat": 0.8002567772214932,
+     "tau_hat": 0.29008089922275304,
+     "rate_err": 0.002687984595495463,
+     "brier_sel": 0.12586378439122348,
+     "brier_naive": 0.2452037948122046
+    }
+   ],
+   "pi0_mae": 0.051034505633499046,
+   "rate_err": 0.009420969269428422,
+   "sel_beats_naive": 1.0
+  },
+  "planted_pi0_mae": 0.051034505633499046,
+  "planted_rate_err": 0.009420969269428422,
+  "planted_beats_naive": 1.0,
+  "bic": {
+   "norm": 5138.391392038729,
+   "spike": 4946.777315533818,
+   "two": 4657.450354036171
+  },
+  "dbic_spike_norm": -191.61407650491037,
+  "dbic_two_spike": -289.32696149764706,
+  "pi0_all": 0.8199037937526101,
+  "tau_all": 0.50938309506643,
+  "brier": {
+   "sel": 0.26024659700367436,
+   "sel_h": 0.2319517885922895,
+   "naive": 0.4021852937358604,
+   "base": 0.2562908614547724,
+   "logit": 0.22301592631580505,
+   "norm": 0.3453365921191242
+  },
+  "brier_project_weighted": {
+   "sel": 0.24383763077643644,
+   "sel_h": 0.23366050734894955,
+   "naive": 0.4257895294524143,
+   "base": 0.25609022713016777,
+   "logit": 0.23088493889298053,
+   "norm": 0.34439750012822495
+  },
+  "tests": {
+   "sel_vs_naive": {
+    "mean": 0.1419386967321861,
+    "ci": [
+     0.10786372532543337,
+     0.18619962189171244
+    ],
+    "p": 0.00024993751562109475,
+    "bh_q": 0.0004998750312421895
+   },
+   "sel_vs_base": {
+    "mean": -0.0039557355489019275,
+    "ci": [
+     -0.03921959329765326,
+     0.027303045723987698
+    ],
+    "p": 0.8110472381904524,
+    "bh_q": 0.8110472381904524
+   },
+   "sel_vs_logit": {
+    "mean": -0.03723067068786929,
+    "ci": [
+     -0.06927253025289065,
+     -0.010573454635569773
+    ],
+    "p": 0.010497375656085979,
+    "bh_q": 0.013996500874781305
+   },
+   "sel_vs_norm": {
+    "mean": 0.08508999511544986,
+    "ci": [
+     0.05910894217825334,
+     0.11803194832508178
+    ],
+    "p": 0.00024993751562109475,
+    "bh_q": 0.0004998750312421895
+   }
+  },
+  "low_naive": 0.10786372532543337,
+  "low_base": -0.03921959329765326,
+  "low_logit": -0.06927253025289065,
+  "skill": -0.00395573554890194,
+  "per_field": {
+   "cognitive": {
+    "rows": 200,
+    "projects": 50,
+    "observed": 0.5,
+    "predicted": 0.6313093183171032,
+    "naive_pred": 0.8784031962726238,
+    "brier_sel": 0.23059232511828057,
+    "brier_base": 0.25016180238280333,
+    "skill": 0.019569477264522805
+   },
+   "economics": {
+    "rows": 16,
+    "projects": 7,
+    "observed": 0.5,
+    "predicted": 0.4966063753879082,
+    "naive_pred": 0.7881177765678431,
+    "brier_sel": 0.256292359747874,
+    "brier_base": 0.25011619624376735,
+    "skill": -0.0061761635041066645
+   },
+   "management": {
+    "rows": 82,
+    "projects": 4,
+    "observed": 0.7926829268292683,
+    "predicted": 0.8383394182059795,
+    "naive_pred": 0.9607730850184172,
+    "brier_sel": 0.1681766274922864,
+    "brier_base": 0.25574137257993074,
+    "skill": 0.08756474508764431
+   },
+   "marketing": {
+    "rows": 84,
+    "projects": 6,
+    "observed": 0.36904761904761907,
+    "predicted": 0.6638094055367199,
+    "naive_pred": 0.9801844517785228,
+    "brier_sel": 0.30909286772840233,
+    "brier_base": 0.2559682473005881,
+    "skill": -0.0531246204278143
+   },
+   "other": {
+    "rows": 163,
+    "projects": 43,
+    "observed": 0.6196319018404908,
+    "predicted": 0.6930224887367566,
+    "naive_pred": 0.8884146976209712,
+    "brier_sel": 0.2537892702760048,
+    "brier_base": 0.2515062425423507,
+    "skill": -0.0022830277336541287
+   },
+   "other_psych": {
+    "rows": 229,
+    "projects": 70,
+    "observed": 0.6200873362445415,
+    "predicted": 0.7229686699805116,
+    "naive_pred": 0.9759360650820386,
+    "brier_sel": 0.2373878264135772,
+    "brier_base": 0.2537203070251417,
+    "skill": 0.016332480611564584
+   },
+   "rpp": {
+    "rows": 79,
+    "projects": 79,
+    "observed": 0.34177215189873417,
+    "predicted": 0.5045476337353348,
+    "naive_pred": 0.834708001069692,
+    "brier_sel": 0.2093729313698659,
+    "brier_base": 0.2575577584347855,
+    "skill": 0.048184827064919625
+   },
+   "social": {
+    "rows": 369,
+    "projects": 83,
+    "observed": 0.4065040650406504,
+    "predicted": 0.6526136582962564,
+    "naive_pred": 0.8949773260335331,
+    "brier_sel": 0.31376148925039915,
+    "brier_base": 0.2635137045988036,
+    "skill": -0.050247784651595524
+   }
+  },
+  "pars": {
+   "cognitive": {
+    "pi0": 0.8170573866841273,
+    "tau": 0.4906062229019728,
+    "h": 1.0,
+    "rows": 200
+   },
+   "economics": {
+    "pi0": 0.8165752826291824,
+    "tau": 0.510770514499166,
+    "h": 1.0,
+    "rows": 16
+   },
+   "management": {
+    "pi0": 0.8428874059951765,
+    "tau": 0.5299493486536314,
+    "h": 1.0,
+    "rows": 82
+   },
+   "marketing": {
+    "pi0": 0.8049912708754965,
+    "tau": 0.506276329522375,
+    "h": 1.0,
+    "rows": 84
+   },
+   "other": {
+    "pi0": 0.810353801310885,
+    "tau": 0.4717972610695428,
+    "h": 1.0,
+    "rows": 163
+   },
+   "other_psych": {
+    "pi0": 0.8255662447824078,
+    "tau": 0.5216300174453146,
+    "h": 1.0,
+    "rows": 229
+   },
+   "rpp": {
+    "pi0": 0.8154882975373547,
+    "tau": 0.5164598252967112,
+    "h": 1.0,
+    "rows": 79
+   },
+   "social": {
+    "pi0": 0.8197175127531691,
+    "tau": 0.5272277011303647,
+    "h": 1.0,
+    "rows": 369
+   }
+  },
+  "big_fields": [
+   "cognitive",
+   "marketing",
+   "other",
+   "other_psych",
+   "rpp",
+   "social"
+  ],
+  "share_fields_skill": 0.5,
+  "rpp_rate_err": 0.16277548183660068,
+  "rpp_observed": 0.34177215189873417,
+  "rpp_predicted": 0.5045476337353348,
+  "calibration": [
+   {
+    "band": 0,
+    "pred": 0.20618920430757717,
+    "obs": 0.2612244897959184,
+    "n": 245
+   },
+   {
+    "band": 1,
+    "pred": 0.4204667148485678,
+    "obs": 0.36065573770491804,
+    "n": 244
+   },
+   {
+    "band": 2,
+    "pred": 0.7524422590391552,
+    "obs": 0.5245901639344263,
+    "n": 244
+   },
+   {
+    "band": 3,
+    "pred": 0.9681394585085652,
+    "obs": 0.5737704918032787,
+    "n": 244
+   },
+   {
+    "band": 4,
+    "pred": 0.9998996307493462,
+    "obs": 0.8326530612244898,
+    "n": 245
+   }
+  ],
+  "signed_sensitivity": {
+   "signed_rows": 701,
+   "brier_sel": 0.2725315772621886,
+   "brier_naive": 0.4021465664547704,
+   "brier_base": 0.2559082490737496
+  }
+ },
+ "controls": {
+  "C_shuffled_outcome": {
+   "n": 500,
+   "usable": true,
+   "mean": -0.12495938827105435,
+   "q95": -0.11034977836356093,
+   "q05": -0.13986836988775342,
+   "p_ge": 0.001996007984031936,
+   "compare": "analysis.skill",
+   "description": "replication outcomes shuffled across rows"
+  },
+  "C_shuffled_original": {
+   "n": 200,
+   "usable": true,
+   "mean": -0.10566483914432812,
+   "q95": -0.09248075361419757,
+   "q05": -0.12026366560695585,
+   "p_ge": 0.004975124378109453,
+   "compare": "analysis.skill",
+   "description": "original statistics shuffled, replication n kept"
+  }
+ },
+ "timing_s": {
+  "analysis": 12.797485200047959,
+  "C_shuffled_outcome": 0.04598660004558042,
+  "C_shuffled_original": 0.5622401000000536
+ },
+ "verdicts": {
+  "PLANTED_GATE": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.planted_pi0_mae < 0.1",
+     "left": 0.051034505633499046,
+     "right": 0.1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.planted_rate_err < 0.03",
+     "left": 0.009420969269428422,
+     "right": 0.03,
+     "holds": true
+    },
+    {
+     "rule": "analysis.planted_beats_naive >= 0.9",
+     "left": 1.0,
+     "right": 0.9,
+     "holds": true
+    }
+   ]
+  },
+  "DATA_GATE": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.rpp_reported_gap_from_35 <= 4",
+     "left": 1,
+     "right": 4,
+     "holds": true
+    },
+    {
+     "rule": "analysis.fred_label_gap >= 0.3",
+     "left": 0.7098214285714285,
+     "right": 0.3,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_FACE_VALUE": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.low_naive > 0",
+     "left": 0.10786372532543337,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_BASE_RATE": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.low_base > 0",
+     "left": -0.03921959329765326,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.skill > controls.C_shuffled_outcome.q95",
+     "left": -0.00395573554890194,
+     "right": -0.11034977836356093,
+     "holds": true
+    }
+   ]
+  },
+  "ORIGINALS_ADD_SKILL": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.skill > controls.C_shuffled_original.q95",
+     "left": -0.00395573554890194,
+     "right": -0.09248075361419757,
+     "holds": true
+    }
+   ]
+  },
+  "BEATS_LOGISTIC": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.low_logit > 0",
+     "left": -0.06927253025289065,
+     "right": 0,
+     "holds": false
+    }
+   ]
+  },
+  "SPIKE_NEEDED": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.dbic_spike_norm < -10",
+     "left": -191.61407650491037,
+     "right": -10,
+     "holds": true
+    }
+   ]
+  },
+  "MOST_FIELDS_SKILL": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.share_fields_skill >= 0.75",
+     "left": 0.5,
+     "right": 0.75,
+     "holds": false
+    }
+   ]
+  },
+  "RPP_RATE_WITHIN_05": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.rpp_rate_err <= 0.05",
+     "left": 0.16277548183660068,
+     "right": 0.05,
+     "holds": false
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

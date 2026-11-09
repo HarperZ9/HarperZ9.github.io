@@ -1,0 +1,391 @@
+{
+ "study": "sound-and-calm",
+ "run_id": "20261029T162517Z",
+ "date": "2026-10-29",
+ "prereg": {
+  "path": "PREREG.txt",
+  "sha256": "ae20eac8980611bc07f8e082e3f07c636229179a7ee051c7305b7423e32b89c7",
+  "anchors": [
+   "sidecar",
+   "lock"
+  ],
+  "plan_sha256": "b051a324f52e1dda7802c57aa3a0d6e33ca3f4db0b51b750e810360df73fefc6",
+  "locked_at": "2026-10-29T16:24:32+00:00"
+ },
+ "hashes": {
+  "features.json": "54d669228f56509f191343579aac51f8e20ac2211ff73fc55a6bab758ec65d5b",
+  "bbaltaxe_Music_Emotion__static_annotations_averaged_songs_1_2000.csv": "b07312724c1add58c09849eeee90c5b53cc54b5e4a97ff3e4f9505d5aa2a1b94",
+  "metadata.zip": "3d1d5ab42e852803a770f2cfbd685c6b464e1ebe76f26b0e10954597902b90f8",
+  "data.csv": "874fa1036b79712379746a198427604806a8027f3ebc312ba3bf0c4f1f60df95",
+  "instrument.json": "7d9c9fbf384aee2f4ed1dfc22354c9628295d040598af13c11e6333af77fe621",
+  "sc_units.py": "02beb57e27496a83197471e6c212a13a2600f80bbc48f13f96eb693b0eb3d1ed",
+  "sc_common.py": "6fcdb62871f6732fd1d0642b16c0034b2d0f4665c51415940bc2317ecc8ae3bb",
+  "sc_synth.py": "a7e2004c416cb1c9296359cd51c3a0eadba973e52ccdcc4379c250156157334a",
+  "sc_instrument.py": "6b01511b268802bfeea351d10c81b219bd1b8172626205c2b7e10b37767977cc",
+  "sc_extract.py": "f239c1dca7d19ca44f7f75ce56b561f532516e5b82d6ff1fd094ed920c85e4c7"
+ },
+ "analysis": {
+  "n": 1744,
+  "n_test": 502,
+  "n_train": 1242,
+  "n_artists_test": 270,
+  "p1_r": -0.39376119949865424,
+  "p1_ci": [
+   -0.47626813746896784,
+   -0.30438883180030113
+  ],
+  "p2a_r": -0.3006329343467157,
+  "p2a_ci": [
+   -0.38620575960790715,
+   -0.19980232269418455
+  ],
+  "p2b_r": 0.32393497345981165,
+  "p2b_ci": [
+   0.21679205231029866,
+   0.42550984078227105
+  ],
+  "p3_r": -0.37519664892684207,
+  "p3_ci": [
+   -0.45491826146101516,
+   -0.28036046746141835
+  ],
+  "p5_r": -0.3429247389554381,
+  "p5_ci": [
+   -0.427505768651662,
+   -0.24589989675664223
+  ],
+  "p4_dr2": 0.11014024733173455,
+  "p4_ci": [
+   0.034022740964171815,
+   0.18197520454102012
+  ],
+  "exploratory": {
+   "ln_tail_s": {
+    "raw_r_arousal": -0.36834185985853785,
+    "raw_r_valence": -0.3162660587562688,
+    "partial_r_arousal": -0.3006329343467157,
+    "partial_r_valence": -0.2672450283147777
+   },
+   "slope": {
+    "raw_r_arousal": 0.3797579571853942,
+    "raw_r_valence": 0.4330819973092573,
+    "partial_r_arousal": 0.32393497345981165,
+    "partial_r_valence": 0.3280398011317697
+   },
+   "ln_rise_s": {
+    "raw_r_arousal": 0.029782997671448805,
+    "raw_r_valence": 0.043224304272009254,
+    "partial_r_arousal": 0.023708569020818113,
+    "partial_r_valence": 0.02646571891619036
+   },
+   "ln_inertia_s": {
+    "raw_r_arousal": -0.29058201265838635,
+    "raw_r_valence": -0.3104002043272434,
+    "partial_r_arousal": -0.1977241667714027,
+    "partial_r_valence": -0.1951085617995194
+   },
+   "ln_reverb_s": {
+    "raw_r_arousal": -0.32909790931852845,
+    "raw_r_valence": -0.32832225023791045,
+    "partial_r_arousal": -0.23730602622736077,
+    "partial_r_valence": -0.21191951239611478
+   },
+   "ln_tempo": {
+    "raw_r_arousal": -0.0871187855382974,
+    "raw_r_valence": -0.1372269982071081,
+    "partial_r_arousal": -0.03338378173260583,
+    "partial_r_valence": -0.11061597185458548
+   },
+   "sent": {
+    "raw_r_arousal": 0.35032412372710525,
+    "raw_r_valence": 0.377464805303352,
+    "partial_r_arousal": 0.34571998280129185,
+    "partial_r_valence": 0.38348082977257225
+   },
+   "loud_db": {
+    "raw_r_arousal": 0.28725003682299904,
+    "raw_r_valence": 0.3868272868850135
+   }
+  },
+  "full_sample_p1_r": -0.4142062954027042,
+  "full_sample_p3_r": -0.3945002516862494,
+  "test_r2_controls_only": 0.16046310139057185,
+  "genre_counts": {
+   "Blues": 113,
+   "Classical": 216,
+   "Country": 205,
+   "Electronic": 192,
+   "Folk": 170,
+   "HipHop": 100,
+   "International": 100,
+   "Jazz": 205,
+   "Pop": 178,
+   "Rock": 177,
+   "SoulRB": 87,
+   "Other": 1
+  },
+  "hex_n": 20326,
+  "p_music_esent_r": 0.21574951185462007,
+  "p_music_esent_ci": [
+   0.2016327004633151,
+   0.2293393389859517
+  ],
+  "p_music_orest_r": 0.18530378628847566,
+  "p_music_orest_ci": [
+   0.17178088104973438,
+   0.20051850872565036
+  ],
+  "p_music_art_rest_r": 0.3839214987691589,
+  "p_music_art_rest_ci": [
+   0.36956773394175374,
+   0.39793860470227904
+  ],
+  "p_concerts_esent_r": 0.19028050574451347,
+  "p_concerts_orest_r": 0.1415404071227347,
+  "instrument_tail_strong": 1.0,
+  "instrument_slope_strong": 1.0,
+  "instrument_constant_fails": 1.0
+ },
+ "controls": {
+  "C1": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.00027454955565119543,
+   "q95": 0.07380283290310367,
+   "q05": -0.07629479335515686,
+   "p_ge": 1.0,
+   "compare": "analysis.p1_r",
+   "description": "calm index permuted across test tracks; partial r with arousal given controls"
+  },
+  "C2": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.0017973058918165064,
+   "q95": 0.07742390351268316,
+   "q05": -0.07806383661180381,
+   "p_ge": 1.0,
+   "compare": "analysis.p3_r",
+   "description": "calm index permuted across test tracks; partial r with valence given controls"
+  },
+  "C3": {
+   "n": 1000,
+   "usable": true,
+   "mean": -0.0014824555564257982,
+   "q95": 0.0031743428772580792,
+   "q05": -0.00809722899303315,
+   "p_ge": 0.000999000999000999,
+   "compare": "analysis.p4_dr2",
+   "description": "ln tail_s and slope rows permuted within train and within test; held-out R2 gain"
+  },
+  "C4": {
+   "n": 1000,
+   "usable": true,
+   "mean": 0.0004624899532814319,
+   "q95": 0.01243523823767238,
+   "q05": -0.011735544506721478,
+   "p_ge": 0.000999000999000999,
+   "compare": "analysis.p_music_esent_r",
+   "description": "absorption item permuted across respondents; r with ESent"
+  }
+ },
+ "timing_s": {
+  "analysis": 34.90855280001415,
+  "C1": 0.3230253000219818,
+  "C2": 0.6885970000002999,
+  "C3": 8.263502399990102,
+  "C4": 1.5114667000016198
+ },
+ "verdicts": {
+  "INSTRUMENT": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.instrument_tail_strong >= 1",
+     "left": 1.0,
+     "right": 1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.instrument_slope_strong >= 1",
+     "left": 1.0,
+     "right": 1,
+     "holds": true
+    },
+    {
+     "rule": "analysis.instrument_constant_fails >= 1",
+     "left": 1.0,
+     "right": 1,
+     "holds": true
+    }
+   ]
+  },
+  "P1": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p1_r < 0",
+     "left": -0.39376119949865424,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p1_ci.1 < 0",
+     "left": -0.30438883180030113,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p1_r < controls.C1.q05",
+     "left": -0.39376119949865424,
+     "right": -0.07629479335515686,
+     "holds": true
+    }
+   ]
+  },
+  "P2a": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p2a_r < 0",
+     "left": -0.3006329343467157,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p2a_ci.1 < 0",
+     "left": -0.19980232269418455,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "P2b": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p2b_r > 0",
+     "left": 0.32393497345981165,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p2b_ci.0 > 0",
+     "left": 0.21679205231029866,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "P3": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.p3_r > 0",
+     "left": -0.37519664892684207,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.p3_ci.0 > 0",
+     "left": -0.45491826146101516,
+     "right": 0,
+     "holds": false
+    },
+    {
+     "rule": "analysis.p3_r > controls.C2.q95",
+     "left": -0.37519664892684207,
+     "right": 0.07742390351268316,
+     "holds": false
+    }
+   ]
+  },
+  "P4": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p4_dr2 > 0",
+     "left": 0.11014024733173455,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p4_ci.0 > 0",
+     "left": 0.034022740964171815,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p4_dr2 > controls.C3.q95",
+     "left": 0.11014024733173455,
+     "right": 0.0031743428772580792,
+     "holds": true
+    }
+   ]
+  },
+  "P5": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p5_r < 0",
+     "left": -0.3429247389554381,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p5_ci.1 < 0",
+     "left": -0.24589989675664223,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  },
+  "P6": {
+   "verdict": "PASS",
+   "rules": [
+    {
+     "rule": "analysis.p_music_esent_r > 0",
+     "left": 0.21574951185462007,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p_music_esent_ci.0 > 0",
+     "left": 0.2016327004633151,
+     "right": 0,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p_music_esent_r > controls.C4.q95",
+     "left": 0.21574951185462007,
+     "right": 0.01243523823767238,
+     "holds": true
+    },
+    {
+     "rule": "analysis.p_music_esent_r >= 0.1",
+     "left": 0.21574951185462007,
+     "right": 0.1,
+     "holds": true
+    }
+   ]
+  },
+  "P7": {
+   "verdict": "FAIL",
+   "rules": [
+    {
+     "rule": "analysis.p_music_orest_r > 0.2",
+     "left": 0.18530378628847566,
+     "right": 0.2,
+     "holds": false
+    },
+    {
+     "rule": "analysis.p_music_orest_ci.0 > 0",
+     "left": 0.17178088104973438,
+     "right": 0,
+     "holds": true
+    }
+   ]
+  }
+ },
+ "reproduce": null,
+ "status": "scored"
+}

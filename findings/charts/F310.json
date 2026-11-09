@@ -240,7 +240,11 @@
      "0.68",
      "200"
     ]
-   ]
+   ],
+   "live": {
+    "kind": "f310",
+    "data": "/findings/results/F310/systems.json"
+   }
   },
   {
    "key": "loo",

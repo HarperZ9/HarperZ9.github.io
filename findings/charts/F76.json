@@ -1,0 +1,358 @@
+{
+ "finding": "F76",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json (main run)",
+   "sha256_original": "d7c106b84548d9b9859404325c8529c1aaef21923c5ebe3ffa0b2d1229c66c28",
+   "sha256_copy": "409175886f0ccba99ed9d57f05b7878dcc68f3ba163f4e9e2c36ed077bbe4aef",
+   "href": "/findings/results/F76/result.json",
+   "run": "20261030T003557Z"
+  },
+  {
+   "id": "round1",
+   "name": "round1-result.json (later round on a split of the same series)",
+   "sha256_original": "84038a29a80a5b7727fda1635d62afd0abb6e3abc7ad6d0c71b084f17dadae3c",
+   "sha256_copy": "9b8c5eabfbd8b9d78e64d9788bf46173e8407e011fc9ab2dd33c5caf5feee7e2",
+   "href": "/findings/results/F76/round1-result.json",
+   "run": "20261030T025631Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c2",
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the ceiling was tested: one bound, two forecasters, two controls and two planted checks.",
+   "takeaway": "The bound ranked forecast skill at rho 0.414 and 6.5 percent of 1,236 series beat it, under the 10 percent limit set in advance.",
+   "n": "1,236 series: 1,128 tree-ring, 106 mood and 2 machine power",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "1,236 real series",
+     "detail": "1,128 tree-ring records, 106 mood diaries and 2 machine power logs. Each is split into a first and a second half."
+    },
+    {
+     "kind": "measure",
+     "label": "Bound from the first half",
+     "detail": "One minus spectral flatness of the first half. It is the largest share of variance a one-step forecast can explain if the series is stationary and Gaussian."
+    },
+    {
+     "kind": "measure",
+     "label": "Forecast skill on the second half",
+     "detail": "A linear autoregressive forecast and a nonlinear analogue forecast, each scored on the half it did not see."
+    },
+    {
+     "kind": "control",
+     "label": "Time-shuffled control",
+     "detail": "Each series permuted in time, 100 draws. This removes all structure. 95th percentile of rho −0.023."
+    },
+    {
+     "kind": "control",
+     "label": "Phase-surrogate control",
+     "detail": "39 sets of copies that keep each spectrum and are Gaussian and stationary. Rho 0.568 to 0.628."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted linear series",
+     "detail": "300 Gaussian series with a known bound. The estimated bound tracked skill at rho 0.925; 4.3 percent beat it."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted nonlinear series",
+     "detail": "50 noisy logistic maps. The analogue forecast beat the linear bound in 100 percent of them."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: rho above the shuffle, at most 10 percent beat the bound",
+     "detail": "Written and hash-locked before the run."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "The bound ranks skill and holds as a ceiling",
+     "yes": "both passed",
+     "no": "not passed",
+     "detail": "Rho 0.414 against −0.023; 80 of 1,236 series beat the bound."
+    }
+   ]
+  },
+  {
+   "key": "rho",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c3"
+   ],
+   "source": [
+    "result",
+    "round1"
+   ],
+   "title": "How well the bound ranks forecast skill, against the two controls.",
+   "takeaway": "Real series gave rho 0.414, far above the time-shuffled control at −0.126 to −0.023 and below the 0.568 to 0.628 of surrogate copies with the same spectra. The bound ranks real skill, less tightly than it ranks Gaussian copies.",
+   "units": "Spearman rho: rank correlation between the bound and held-out one-step forecast skill across series, from −1 to 1; higher means the bound orders the series by skill more closely. The bound is one minus spectral flatness. Spectral flatness measures how even a series' power is across frequencies; for a stationary Gaussian series, one minus it is the largest share of variance any one-step forecast can explain",
+   "n": "1,236 series: 1,128 tree-ring, 106 mood and 2 machine power; 100 shuffle draws; 39 surrogate sets; 300 planted series",
+   "interval": "bands are the 5th to 95th percentile of each control. The real value has a 95% bootstrap interval of 0.361 to 0.461, given in the row note",
+   "baseline": "Time-shuffled control: every series permuted in time, which removes all forecastable structure. Phase-surrogate control: copies that keep each series' spectrum and are Gaussian and stationary, the case where the bound is exact",
+   "threshold": "Real rho above the 95th percentile of the time-shuffled control",
+   "planted": "On 300 planted Gaussian series with a known bound, the estimated bound ranked skill at rho 0.925 and matched the true bound at 0.946",
+   "value_name": "rho on the real series",
+   "band_name": "control, 5th to 95th percentile",
+   "axis": {
+    "label": "Spearman rho between bound and skill (higher: closer ranking)",
+    "min": -0.2,
+    "max": 0.7,
+    "refs": [
+     {
+      "value": 0,
+      "label": "no ranking"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Real series against the time-shuffled control",
+     "value": 0.41367800217581424,
+     "lo": -0.12564558917160465,
+     "hi": -0.022717091047471515,
+     "mean": -0.07073779652237679,
+     "note": "0.414 (0.361 to 0.461); shuffled −0.126 to −0.023; p 0.010 from 100 draws"
+    },
+    {
+     "label": "Real series against phase surrogates",
+     "value": 0.41367800217581424,
+     "lo": 0.5678308246413618,
+     "hi": 0.6279109701311866,
+     "mean": 0.5948124196403435,
+     "note": "0.414; surrogates 0.568 to 0.628, mean 0.595; the real value is the lower"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Series",
+    "Rho",
+    "Control 5th pct",
+    "Control mean",
+    "Control 95th pct",
+    "Draws or sets"
+   ],
+   "table": [
+    [
+     "Real series, all",
+     "1,236",
+     "0.414",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Time-shuffled control",
+     "1,236",
+     "",
+     "−0.126",
+     "−0.071",
+     "−0.023",
+     "100"
+    ],
+    [
+     "Phase-surrogate control",
+     "1,236",
+     "",
+     "0.568",
+     "0.595",
+     "0.628",
+     "39"
+    ],
+    [
+     "Tree rings",
+     "1,128",
+     "0.396",
+     "",
+     "",
+     "−0.030",
+     "100"
+    ],
+    [
+     "Mood",
+     "106",
+     "0.035",
+     "",
+     "",
+     "0.098",
+     "100"
+    ],
+    [
+     "Planted Gaussian series",
+     "300",
+     "0.925",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "Later round, test split of the same series",
+     "585",
+     "0.404",
+     "",
+     "0.595",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "violations",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Share of series that beat the bound, for each forecaster, against the 5 percent chance rate and the 10 percent limit.",
+   "takeaway": "80 of 1,236 real series beat the bound with the linear forecast, 6.5 percent (5.2 to 8.0), under the 10 percent limit. The nonlinear forecast reached 6.4 percent, level with its 6.3 percent on planted Gaussian series where nothing lies beyond the bound.",
+   "units": "percent of series that beat the bound; lower means the bound holds as a ceiling more often. A series counts as beating the bound when its skill above the bound is larger than in at least 38 of 39 surrogate copies of itself, so about 5 percent do by chance",
+   "n": "1,236 series: 1,128 tree-ring, 106 mood and 2 machine power; 300 planted Gaussian series",
+   "interval": "95% Wilson interval, where the result file gives one",
+   "baseline": "Chance rate of 5 percent from the surrogate rule. Phase-surrogate sets scored against each other gave 5.1 percent, so the rule is calibrated",
+   "threshold": "The bound would be rejected as a ceiling if more than 10 percent of real series beat it. The nonlinear check needed more than 10 percent to count as found",
+   "planted": "Planted nonlinear series: the analogue forecast beat the linear bound in 100 percent of 50 noisy logistic maps, so it can find structure beyond the bound when it is there. Planted Gaussian series: the linear forecast beat the true bound in 4.3 percent",
+   "ruled_out": "Predictability beyond the linear bound in these series: the nonlinear forecast's 6.4 percent matches its false rate of 6.3 percent, and no single series passed the correction for 1,236 tests (0 linear, 0 nonlinear)",
+   "series_names": [
+    "Linear autoregressive forecast",
+    "Nonlinear analogue forecast"
+   ],
+   "axis": {
+    "label": "percent of series that beat the bound (lower: the ceiling holds)",
+    "min": 0,
+    "max": 12,
+    "refs": [
+     {
+      "value": 5,
+      "label": "chance, 5%"
+     },
+     {
+      "value": 10.0,
+      "label": "limit, 10%"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Linear forecast",
+     "group": "Real series",
+     "value": 6.472491909385113,
+     "lo": 5.231183900434118,
+     "hi": 7.983536431582487,
+     "series": 0,
+     "note": "80 of 1,236: 6.5% (5.2 to 8.0)"
+    },
+    {
+     "label": "Nonlinear analogue forecast",
+     "group": "Real series",
+     "value": 6.3915857605178,
+     "lo": 5.158463066861894,
+     "hi": 7.8949463364038115,
+     "series": 1,
+     "note": "79 of 1,236: 6.4% (5.2 to 7.9)"
+    },
+    {
+     "label": "Linear forecast",
+     "group": "Planted Gaussian series, where the bound is true",
+     "value": 4.333333333333334,
+     "lo": 2.5496203603204264,
+     "hi": 7.271812912806099,
+     "series": 0,
+     "note": "4.3% of 300 (2.5 to 7.3)"
+    },
+    {
+     "label": "Nonlinear analogue forecast",
+     "group": "Planted Gaussian series, where the bound is true",
+     "value": 6.333333333333334,
+     "series": 1,
+     "note": "6.3% of 300; no interval in the result file"
+    }
+   ],
+   "columns": [
+    "Series",
+    "Forecast",
+    "n",
+    "Beat the bound (%)",
+    "95% Wilson interval (%)",
+    "Skill above the point bound, no surrogate rule (%)"
+   ],
+   "table": [
+    [
+     "Real",
+     "linear",
+     "1,236",
+     "6.5",
+     "5.2 to 8.0",
+     "36.4"
+    ],
+    [
+     "Real",
+     "nonlinear analogue",
+     "1,236",
+     "6.4",
+     "5.2 to 7.9",
+     "25.6"
+    ],
+    [
+     "Planted Gaussian",
+     "linear",
+     "300",
+     "4.3",
+     "2.5 to 7.3",
+     "45.7"
+    ],
+    [
+     "Planted Gaussian",
+     "nonlinear analogue",
+     "300",
+     "6.3",
+     "not in the file",
+     ""
+    ],
+    [
+     "Planted nonlinear (logistic maps)",
+     "linear",
+     "50",
+     "6.0",
+     "not in the file",
+     ""
+    ],
+    [
+     "Planted nonlinear (logistic maps)",
+     "nonlinear analogue",
+     "50",
+     "100.0",
+     "not in the file",
+     ""
+    ],
+    [
+     "Phase surrogates, mean over sets",
+     "linear",
+     "1,236",
+     "5.1",
+     "not in the file",
+     ""
+    ]
+   ]
+  }
+ ]
+}

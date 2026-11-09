@@ -1,0 +1,476 @@
+{
+ "finding": "F362",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "808cc6bdfb4881a9ef594399a848dc0cde0ecacfd73497e0e5f42b70524c613d",
+   "sha256_copy": "cfde632652cb4cbc6056bb31340f96ee23a7cbbbfefdec2fe4e854fbe22ec5cd",
+   "href": "/findings/results/F362/result.json",
+   "run": "20261101T015415Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "methods",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How an old stated uncertainty is scored against the value printed later.",
+   "takeaway": "Each later value is placed inside or outside the earlier edition's interval; the 1 sigma interval covers about as often as it should, and covering 95.45 percent takes 3.8 to 4.9 sigma where a normal error needs 2.",
+   "n": "227 PDG values that moved, 2,213 AME values, 211 CODATA values, 544 Hubble constant values",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Tables of record, several editions",
+     "detail": "PDG particle properties 2010 to 2025, AME atomic masses 2003 to 2020, CODATA constants 2002 to 2022, and 544 published Hubble constant values."
+    },
+    {
+     "kind": "measure",
+     "label": "Shift in units of the old sigma",
+     "detail": "The later value minus the earlier value, divided by the earlier sigma (the stated standard uncertainty printed beside a value)."
+    },
+    {
+     "kind": "measure",
+     "label": "Coverage and needed multiple",
+     "detail": "Coverage is the share of shifts inside 1 or 2 sigma. A normal error gives 0.6827 and 0.9545. The needed multiple is how many sigma it takes to reach those shares."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted: recovered 2.405",
+     "detail": "A made-up world with stated errors at half the true error. The true multiple is 2.394."
+    },
+    {
+     "kind": "control",
+     "label": "Control: honest normal world",
+     "detail": "Standard normal shifts at the PDG sample size, 500 draws. Shortfall from 0.6827: mean 0.0005, 95th percentile 0.040."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "3.8 to 4.9 sigma for 95.45 percent",
+     "yes": "heavy tails",
+     "detail": "1 sigma coverage: PDG 0.68, AME 0.66. The stated sigma is about right in the middle and too small in the tails."
+    }
+   ]
+  },
+  {
+   "key": "coverage",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c1",
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How often the earlier stated interval held the later value.",
+   "takeaway": "At 1 sigma, PDG (0.68) and AME (0.66) sit near the nominal 0.6827; at 2 sigma both fall short of 0.9545 (0.85 and 0.82), and early Hubble constant values cover only 0.35 at 1 sigma.",
+   "units": "share of later values inside the earlier interval, 0 to 1, where sigma (the stated standard uncertainty printed beside a value) sets the interval; a share below the dashed nominal line means the stated uncertainty was too small",
+   "n": "227 PDG particle values that moved, 2010 to 2025; 2,213 AME atomic masses, 2003 to 2020; 211 CODATA constants, 2002 to 2022; 115 Hubble constant values before 1990 (against a proxy truth of 70 km/s/Mpc)",
+   "interval": "95 percent bootstrap interval, drawn at 1 sigma for the three tables. The result file holds none at 2 sigma or for the Hubble values.",
+   "baseline": "A normal error with an honest sigma: 0.6827 inside 1 sigma, 0.9545 inside 2 sigma",
+   "threshold": "None set on these rows. The forecasts set in advance were for all PDG values, and are in the results table on this page.",
+   "planted": "Held: needed multiple recovered as 2.405 against a true 2.394",
+   "series_names": [
+    "inside 1 sigma",
+    "inside 2 sigma"
+   ],
+   "axis": {
+    "label": "share of later values inside the earlier interval",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.6827,
+      "label": "nominal at 1 sigma, 0.6827"
+     },
+     {
+      "value": 0.9545,
+      "label": "nominal at 2 sigma, 0.9545"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "PDG particle values that moved",
+     "group": "Inside 1 sigma (a normal error gives 0.6827)",
+     "value": 0.6828193832599119,
+     "series": 0,
+     "note": "0.68 of 227; 0.63 to 0.74",
+     "lo": 0.6276431718061674,
+     "hi": 0.7379955947136563
+    },
+    {
+     "label": "AME atomic masses",
+     "group": "Inside 1 sigma (a normal error gives 0.6827)",
+     "value": 0.6629010393131496,
+     "series": 0,
+     "note": "0.66 of 2,213; 0.65 to 0.68",
+     "lo": 0.6452779032986896,
+     "hi": 0.6839471305919566
+    },
+    {
+     "label": "CODATA constants",
+     "group": "Inside 1 sigma (a normal error gives 0.6827)",
+     "value": 0.8483412322274881,
+     "series": 0,
+     "note": "0.85 of 211; 0.80 to 0.89",
+     "lo": 0.8009478672985783,
+     "hi": 0.8909952606635071
+    },
+    {
+     "label": "Hubble constant values before 1990",
+     "group": "Inside 1 sigma (a normal error gives 0.6827)",
+     "value": 0.34782608695652173,
+     "series": 0,
+     "note": "0.35 of 115"
+    },
+    {
+     "label": "PDG particle values that moved",
+     "group": "Inside 2 sigma (a normal error gives 0.9545)",
+     "value": 0.8458149779735683,
+     "series": 1,
+     "note": "0.85 of 227"
+    },
+    {
+     "label": "AME atomic masses",
+     "group": "Inside 2 sigma (a normal error gives 0.9545)",
+     "value": 0.8224130140081337,
+     "series": 1,
+     "note": "0.82 of 2,213"
+    },
+    {
+     "label": "CODATA constants",
+     "group": "Inside 2 sigma (a normal error gives 0.9545)",
+     "value": 0.919431279620853,
+     "series": 1,
+     "note": "0.92 of 211"
+    },
+    {
+     "label": "Hubble constant values before 1990",
+     "group": "Inside 2 sigma (a normal error gives 0.9545)",
+     "value": 0.5478260869565217,
+     "series": 1,
+     "note": "0.55 of 115"
+    }
+   ],
+   "columns": [
+    "Source",
+    "Editions or truth",
+    "n",
+    "Inside 1 sigma",
+    "95 percent interval",
+    "Inside 2 sigma",
+    "Share that did not move"
+   ],
+   "table": [
+    [
+     "PDG particle values that moved",
+     "2010 to 2025",
+     "227",
+     "0.683",
+     "0.628 to 0.738",
+     "0.846",
+     "0.000"
+    ],
+    [
+     "AME atomic masses",
+     "2003 to 2020",
+     "2,213",
+     "0.663",
+     "0.645 to 0.684",
+     "0.822",
+     "0.003"
+    ],
+    [
+     "CODATA constants",
+     "2002 to 2022",
+     "211",
+     "0.848",
+     "0.801 to 0.891",
+     "0.919",
+     "0.000"
+    ],
+    [
+     "Hubble constant values before 1990",
+     "against a proxy truth of 70 km/s/Mpc",
+     "115",
+     "0.348",
+     "not in the file",
+     "0.548",
+     "0.026"
+    ],
+    [
+     "PDG, all values",
+     "2010 to 2025",
+     "347",
+     "0.793",
+     "0.744 to 0.833",
+     "0.899",
+     "0.346"
+    ]
+   ]
+  },
+  {
+   "key": "multiple",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How many stated sigma it takes to cover 95.45 percent of later values.",
+   "takeaway": "A normal error needs 2; the tables needed 3.8 (PDG), 4.0 (AME) and 4.9 (CODATA), so the far ends of the stated uncertainty are about half as wide as they should be.",
+   "units": "needed multiple: the number of stated sigma that holds 95.45 percent of the later values; a normal error needs 2, and a larger number means heavier tails",
+   "n": "227 PDG particle values that moved; 2,213 AME atomic masses; 211 CODATA constants; 544 Hubble constant, all values, proxy truth 70",
+   "interval": null,
+   "no_interval": "The result file holds one needed multiple per source, with no interval.",
+   "baseline": "A normal error with an honest sigma needs a multiple of 2",
+   "threshold": "Forecast for all PDG values, set in advance: at least 1.5; held, 3.1",
+   "planted": "Held: the 68.27 percent multiple was recovered as 2.405 against a true 2.394",
+   "axis": {
+    "label": "stated sigma needed to cover 95.45 percent (a normal error needs 2)",
+    "min": 0,
+    "max": 8,
+    "refs": [
+     {
+      "value": 2,
+      "label": "normal error, 2"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "PDG particle values that moved",
+     "value": 3.761145833333209,
+     "series": 1,
+     "note": "3.8 sigma"
+    },
+    {
+     "label": "AME atomic masses",
+     "value": 4.00358430922657,
+     "series": 1,
+     "note": "4.0 sigma"
+    },
+    {
+     "label": "CODATA constants",
+     "value": 4.948193168640136,
+     "series": 1,
+     "note": "4.9 sigma"
+    },
+    {
+     "label": "Hubble constant, all values, proxy truth 70",
+     "value": 6.5,
+     "series": 1,
+     "note": "6.5 sigma"
+    }
+   ],
+   "columns": [
+    "Source",
+    "n",
+    "Multiple for 68.27 percent",
+    "Multiple for 95.45 percent",
+    "Share beyond 5 sigma"
+   ],
+   "table": [
+    [
+     "PDG particle values that moved",
+     "227",
+     "1.00",
+     "3.76",
+     "0.022"
+    ],
+    [
+     "AME atomic masses",
+     "2,213",
+     "1.10",
+     "4.00",
+     "0.029"
+    ],
+    [
+     "CODATA constants",
+     "211",
+     "0.75",
+     "4.95",
+     "0.043"
+    ],
+    [
+     "Hubble constant, all values, proxy truth 70",
+     "544",
+     "1.67",
+     "6.50",
+     "0.059"
+    ],
+    [
+     "PDG, all values, without the top 1 percent of shifts",
+     "343",
+     "0.51",
+     "2.75",
+     "0.003"
+    ],
+    [
+     "AME, without the top 1 percent of shifts",
+     "2,190",
+     "1.06",
+     "3.64",
+     "0.019"
+    ],
+    [
+     "CODATA, without the top 1 percent of shifts",
+     "208",
+     "0.75",
+     "3.22",
+     "0.029"
+    ]
+   ]
+  },
+  {
+   "key": "tails",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The tail shape of the shifts, as a fitted Student t.",
+   "takeaway": "Fitted nu is 1.67 for PDG, 1.22 for AME and 2.17 for CODATA, all close to 1, the Cauchy shape, whose large misses are common.",
+   "units": "nu: the degrees of freedom of a Student t curve fitted to the nonzero shifts. A smaller nu means heavier tails; 1 is the Cauchy shape and a normal curve is the limit of very large nu",
+   "n": "nonzero shifts among 347 PDG, 2,213 AME and 211 CODATA values",
+   "interval": null,
+   "no_interval": "The result file holds one fitted nu and scale per table, with no interval.",
+   "baseline": "Cauchy shape: nu of 1. A normal curve has no finite nu.",
+   "threshold": "Forecast for PDG, set in advance: nu of at least 1.5; held, 1.67",
+   "planted": "Held: on the planted world the fitted nu was 3.002",
+   "axis": {
+    "label": "fitted nu (smaller is heavier tails)",
+    "min": 0,
+    "max": 5,
+    "refs": [
+     {
+      "value": 1,
+      "label": "Cauchy shape, nu 1"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "PDG particle values",
+     "value": 1.6729189121888262,
+     "series": 2,
+     "note": "nu 1.67"
+    },
+    {
+     "label": "AME atomic masses",
+     "value": 1.2201173417655935,
+     "series": 2,
+     "note": "nu 1.22"
+    },
+    {
+     "label": "CODATA constants",
+     "value": 2.174094451011283,
+     "series": 2,
+     "note": "nu 2.17"
+    }
+   ],
+   "columns": [
+    "Table",
+    "Fitted nu",
+    "Fitted scale"
+   ],
+   "table": [
+    [
+     "PDG particle values",
+     "1.67",
+     "0.69"
+    ],
+    [
+     "AME atomic masses",
+     "1.22",
+     "0.57"
+    ],
+    [
+     "CODATA constants",
+     "2.17",
+     "0.72"
+    ]
+   ]
+  },
+  {
+   "key": "planted",
+   "form": "bars",
+   "at": "controls",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Does the method recover a multiple that was planted on purpose?",
+   "takeaway": "Yes: with stated errors set to half the true error, it returned 2.405 against a true 2.394, a relative error of 0.4 percent.",
+   "units": "needed multiple: the number of stated sigma that holds 68.27 percent of the planted shifts",
+   "n": "one planted world; the result file does not hold its number of shifts",
+   "interval": null,
+   "no_interval": "One planted world, one recovered value. The result file holds no interval.",
+   "baseline": "True multiple of the planted world: 2.394",
+   "threshold": "Relative error at most 0.15, set in advance: held, 0.0045",
+   "planted": "This chart is the planted check",
+   "axis": {
+    "label": "sigma multiple needed to cover 68.27 percent",
+    "min": 0,
+    "max": 3
+   },
+   "rows": [
+    {
+     "label": "Recovered by the method",
+     "value": 2.4045168125901824,
+     "series": 0,
+     "note": "2.405"
+    },
+    {
+     "label": "True value of the planted world",
+     "value": 2.3938251199433846,
+     "series": 3,
+     "note": "2.394"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Recovered multiple",
+     "2.4045"
+    ],
+    [
+     "True multiple",
+     "2.3938"
+    ],
+    [
+     "Relative error",
+     "0.0045"
+    ],
+    [
+     "Fitted nu on the planted world",
+     "3.002"
+    ],
+    [
+     "Coverage at 1 sigma in the honest normal world",
+     "0.6755"
+    ]
+   ]
+  }
+ ]
+}

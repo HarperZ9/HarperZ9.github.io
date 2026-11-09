@@ -1,0 +1,452 @@
+{
+ "finding": "F344",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "c057a3088f4ba56f1e9e24198ba11450f2a361ee56996a5e6f285a0a3c80d9a4",
+   "sha256_copy": "e0305fdf3d92b04de8acd905624c37a064b446c8b9a8da8049d6ec938744a3e2",
+   "href": "/findings/results/F344/result.json",
+   "run": "20261031T211927Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the search looks for a cube in the sky, and how it was checked.",
+   "takeaway": "Scrambled skies set the chance level, planted cubic skies measure what the search can see, and the real sky shows no pattern at any of 5 energy cuts (smallest corrected p 0.85).",
+   "n": "25,086 public events read; 3,111 above 8 EeV down to 101 above 78 EeV",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "25,086 cosmic-ray events",
+     "detail": "Public Pierre Auger release. Cut at 8, 16, 32, 40, 78 EeV (1 EeV is 10 to the 18 electronvolts)."
+    },
+    {
+     "kind": "measure",
+     "label": "Cubic statistic T",
+     "detail": "Measures how much the arrival directions bunch along the axes of a cube, over every orientation of the cube. At 32 EeV, T is 1.69."
+    },
+    {
+     "kind": "control",
+     "label": "Control: scrambled skies",
+     "detail": "Right ascension shuffled, declination kept. At 32 EeV, 200 draws gave mean 2.32 and 95th percentile 3.27."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted: a cubic sky",
+     "detail": "Events drawn with a known cubic strength. At strength 1.0 and 32 EeV the search finds it in 0.97 of trials."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: corrected p below 0.01",
+     "detail": "A pattern counts only if the smallest p value, corrected over the five cuts by Benjamini-Hochberg (a correction for running several tests), is below the bar."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Smallest corrected p 0.85",
+     "no": "no cubic pattern",
+     "detail": "The null holds only for strong patterns: the planted check shows the search misses weak ones at 32 EeV."
+    }
+   ]
+  },
+  {
+   "key": "pvalues",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Is there a cubic pattern at any energy cut?",
+   "takeaway": "No: raw p values run from 0.19 to 0.85, and all five read 0.85 after correction, far above the bar of 0.01.",
+   "units": "p value (the share of scrambled skies with a statistic at least as large as the real one); a pattern needs a value below the bar",
+   "n": "3,111 events above 8 EeV; 793 events above 16 EeV; 155 events above 32 EeV; 109 events above 40 EeV; 101 events above 78 EeV",
+   "interval": null,
+   "no_interval": "A p value is itself a share of scrambled skies. The result file holds one per cut.",
+   "baseline": "Scrambled skies: right ascension shuffled, declination kept",
+   "threshold": "Smallest corrected p below 0.01 would count as a pattern; not met (0.85)",
+   "planted": "Held: power 0.97 at planted strength 1.0 and 32 EeV, against a bar of 0.9",
+   "ruled_out": "A strong cubic pattern only. At 32 EeV the search reaches power 0.9 near planted strength 1.0; weaker patterns are not ruled out there.",
+   "a_name": "raw p",
+   "b_name": "p after Benjamini-Hochberg correction over the five cuts",
+   "axis": {
+    "label": "p value (a pattern needs less than 0.01)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.01,
+      "label": "bar set in advance, 0.01"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Above 8 EeV",
+     "a": 0.18604651162790697,
+     "b": 0.8504983388704319,
+     "note": "3,111 events; raw 0.19; corrected 0.85"
+    },
+    {
+     "label": "Above 16 EeV",
+     "a": 0.6843853820598007,
+     "b": 0.8504983388704319,
+     "note": "793 events; raw 0.68; corrected 0.85"
+    },
+    {
+     "label": "Above 32 EeV",
+     "a": 0.8504983388704319,
+     "b": 0.8504983388704319,
+     "note": "155 events; raw 0.85; corrected 0.85"
+    },
+    {
+     "label": "Above 40 EeV",
+     "a": 0.5481727574750831,
+     "b": 0.8504983388704319,
+     "note": "109 events; raw 0.55; corrected 0.85"
+    },
+    {
+     "label": "Above 78 EeV",
+     "a": 0.6112956810631229,
+     "b": 0.8504983388704319,
+     "note": "101 events; raw 0.61; corrected 0.85"
+    }
+   ],
+   "columns": [
+    "Energy cut",
+    "Events",
+    "Statistic T",
+    "Raw p",
+    "Corrected p"
+   ],
+   "table": [
+    [
+     "8 EeV",
+     "3,111",
+     "2.74",
+     "0.19",
+     "0.85"
+    ],
+    [
+     "16 EeV",
+     "793",
+     "1.91",
+     "0.68",
+     "0.85"
+    ],
+    [
+     "32 EeV",
+     "155",
+     "1.69",
+     "0.85",
+     "0.85"
+    ],
+    [
+     "40 EeV",
+     "109",
+     "2.80",
+     "0.55",
+     "0.85"
+    ],
+    [
+     "78 EeV",
+     "101",
+     "2.79",
+     "0.61",
+     "0.85"
+    ]
+   ]
+  },
+  {
+   "key": "outliers",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Does a handful of events hide a pattern at 32 EeV?",
+   "takeaway": "No: without the 28 events near Centaurus A the p value is 0.38, and without the 3 highest-energy events it is 0.71, both far above 0.01.",
+   "units": "raw p value at the 32 EeV cut; a pattern needs a value below the bar",
+   "n": "155 events above 32 EeV before removal",
+   "interval": null,
+   "no_interval": "The result file holds one p value per check.",
+   "baseline": "All events above 32 EeV: p 0.85",
+   "threshold": "The same bar of 0.01",
+   "axis": {
+    "label": "raw p value at 32 EeV",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.01,
+      "label": "bar set in advance, 0.01"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "All events above 32 EeV",
+     "value": 0.8504983388704319,
+     "series": 0,
+     "note": "p 0.85"
+    },
+    {
+     "label": "Without the 28 events near Centaurus A",
+     "value": 0.3781094527363184,
+     "series": 0,
+     "note": "p 0.38"
+    },
+    {
+     "label": "Without the 3 highest-energy events",
+     "value": 0.7114427860696517,
+     "series": 0,
+     "note": "p 0.71"
+    }
+   ],
+   "columns": [
+    "Events used",
+    "Raw p"
+   ],
+   "table": [
+    [
+     "All events above 32 EeV",
+     "0.85"
+    ],
+    [
+     "Without the 28 events near Centaurus A",
+     "0.38"
+    ],
+    [
+     "Without the 3 highest-energy events",
+     "0.71"
+    ]
+   ]
+  },
+  {
+   "key": "power",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How strong a planted cubic pattern has to be before the search finds it.",
+   "takeaway": "With 3,111 events at 8 EeV the search reaches power 0.9 at strength 0.2; with 155 events at 32 EeV it reaches 0.97 only at strength 1.0, where the sky along the cube axes is twice the average.",
+   "units": "power (the share of planted skies in which the search found the pattern, 0 to 1; higher is a more sensitive search) against planted strength (0 is no pattern, 1 is twice the average flux along the cube axes)",
+   "n": "3,111 events per planted sky at 8 EeV, 155 at 32 EeV",
+   "interval": null,
+   "no_interval": "Each power is one share of a small number of planted skies, so the curves are coarse. The result file holds no interval.",
+   "threshold": "Power of at least 0.9 at strength 1.0 and 32 EeV: held, 0.97",
+   "planted": "This chart is the planted check",
+   "x": {
+    "label": "planted strength (1 is twice the average flux along the cube axes)",
+    "min": 0,
+    "max": 1
+   },
+   "y": {
+    "label": "power (share of planted skies found)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.9,
+      "label": "power 0.9"
+     }
+    ]
+   },
+   "series": [
+    {
+     "name": "8 EeV cut",
+     "points": [
+      [
+       0.05,
+       0.1,
+       "8 EeV, planted strength 0.05: power 0.10"
+      ],
+      [
+       0.1,
+       0.3,
+       "8 EeV, planted strength 0.1: power 0.30"
+      ],
+      [
+       0.2,
+       0.9,
+       "8 EeV, planted strength 0.2: power 0.90"
+      ]
+     ]
+    },
+    {
+     "name": "32 EeV cut",
+     "points": [
+      [
+       0.1,
+       0.03333333333333333,
+       "32 EeV, planted strength 0.1: power 0.03"
+      ],
+      [
+       0.2,
+       0.2,
+       "32 EeV, planted strength 0.2: power 0.20"
+      ],
+      [
+       0.3,
+       0.26666666666666666,
+       "32 EeV, planted strength 0.3: power 0.27"
+      ],
+      [
+       0.5,
+       0.4,
+       "32 EeV, planted strength 0.5: power 0.40"
+      ],
+      [
+       0.8,
+       0.8,
+       "32 EeV, planted strength 0.8: power 0.80"
+      ],
+      [
+       1.0,
+       0.9666666666666667,
+       "32 EeV, planted strength 1.0: power 0.97"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Planted strength",
+    "Power at 32 EeV",
+    "Power at 8 EeV"
+   ],
+   "table": [
+    [
+     "0.05",
+     "not run",
+     "0.10"
+    ],
+    [
+     "0.1",
+     "0.03",
+     "0.30"
+    ],
+    [
+     "0.2",
+     "0.20",
+     "0.90"
+    ],
+    [
+     "0.3",
+     "0.27",
+     "not run"
+    ],
+    [
+     "0.5",
+     "0.40",
+     "not run"
+    ],
+    [
+     "0.8",
+     "0.80",
+     "not run"
+    ],
+    [
+     "1.0",
+     "0.97",
+     "not run"
+    ]
+   ]
+  },
+  {
+   "key": "bound",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c3"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The bound on a lattice spacing from the highest-energy event, against the published one.",
+   "takeaway": "The 166 EeV event bounds the spacing below 3.7e−27 m, an inverse spacing of 5.3e10 GeV, which is 0.53 of the 1.0e11 GeV bound of Beane and colleagues.",
+   "units": "inverse lattice spacing in GeV, log scale; a larger value is a finer lattice and a tighter bound",
+   "n": "one event, the highest energy in the catalogue of 109 events",
+   "interval": null,
+   "no_interval": "The bound is one number computed from one event's energy, with no interval in the result file.",
+   "baseline": "Published bound of Beane and colleagues: 1.0e11 GeV",
+   "threshold": "Ratio to the published bound between 0.33 and 3, set in advance: held, 0.53",
+   "series_names": [
+    "this study, from the highest-energy event",
+    "Beane and colleagues"
+   ],
+   "axis": {
+    "label": "inverse lattice spacing, GeV (larger is tighter)",
+    "log": true,
+    "min": 1000000000.0,
+    "max": 1000000000000.0,
+    "regions": [
+     {
+      "from": 33000000000.0,
+      "to": 300000000000.0,
+      "label": "within a factor of 3 of the published bound"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "This study",
+     "value": 52839441106.509254,
+     "series": 0,
+     "note": "5.3e10 GeV"
+    },
+    {
+     "label": "Beane and colleagues",
+     "value": 100000000000.0,
+     "series": 1,
+     "note": "1.0e11 GeV"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Highest event energy",
+     "166 EeV"
+    ],
+    [
+     "Spacing bound",
+     "3.7e−27 m"
+    ],
+    [
+     "Inverse spacing, this study",
+     "5.3e10 GeV"
+    ],
+    [
+     "Inverse spacing, Beane and colleagues",
+     "1.0e11 GeV"
+    ],
+    [
+     "Ratio",
+     "0.528"
+    ]
+   ]
+  }
+ ]
+}

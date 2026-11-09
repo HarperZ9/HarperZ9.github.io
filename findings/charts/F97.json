@@ -1,0 +1,720 @@
+{
+ "finding": "F97",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "6d1917adb4c50b78125146ee5dcaa42c6081a05edc4bcb1920e72fbc3b60cf0d",
+   "sha256_copy": "a28f36d4828f91a94e8b319efdd8484124222e281175fdd885acf21a3ffb1891",
+   "href": "/findings/results/F97/result.json",
+   "run": "20261030T042024Z"
+  },
+  {
+   "id": "panel",
+   "name": "spacetime-panel.json",
+   "sha256_original": "8dfd9b181155952b5d29748aa73dd8de0166689a35618eeecc0f6293a2652531",
+   "sha256_copy": "8dfd9b181155952b5d29748aa73dd8de0166689a35618eeecc0f6293a2652531",
+   "href": "/findings/results/F97/spacetime-panel.json"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c6"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The design: one instrument, checked on planted fields, then four questions put to real drought and tree rings.",
+   "takeaway": "The instrument recovered every planted field. On real data the drought field gave three nulls, and the tree filter passed with a contrast of 0.64 against control 95th percentiles of 0.22 and 0.30.",
+   "n": "399 one-degree drought cells, 1903 to 2025; 664 tree-ring sites, 1903 to 1980; five realisations of each planted field",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Summer drought index and tree rings",
+     "detail": "399 drought cells over 123 years and 664 ring-width sites over 78 years, western North America."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted fields with known answers",
+     "detail": "A field that is a space part times a time part read as such (median p 0.37). A planted wave's speed came back within 2.2 percent. A planted diffusing field read 1.88 against a true 2."
+    },
+    {
+     "kind": "measure",
+     "label": "Three questions on the drought field",
+     "detail": "Does its covariance depart from space times time? Does it travel? Do broad patterns outlast fine ones?"
+    },
+    {
+     "kind": "measure",
+     "label": "One question on the trees",
+     "detail": "Which space and time scales of drought do tree rings pass? The contrast is the passed share at broad, slow scales minus the share at fine, fast scales."
+    },
+    {
+     "kind": "control",
+     "label": "Controls drawn 200 to 300 times",
+     "detail": "Shuffled site positions, phase-randomised series (each site keeps its spectrum, timing scrambled) and a fitted separable field."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: beat every control's 95th percentile",
+     "detail": "With p adjusted over all seven real-data tests below 0.05."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Drought field: separability, travel, dispersion",
+     "no": "three nulls",
+     "detail": "Adjusted p 0.91, 0.66 and 0.80."
+    },
+    {
+     "kind": "verdict",
+     "holds": true,
+     "label": "Tree filter",
+     "yes": "passed",
+     "detail": "Contrast 0.64, adjusted p 0.035."
+    }
+   ]
+  },
+  {
+   "key": "contrast",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "The tree filter's contrast against its two controls.",
+   "takeaway": "The contrast is 0.64 (95% interval 0.62 to 0.68). Phase-randomised trees reach 0.22 at their 95th percentile and trees moved to shuffled sites reach 0.30. Higher means the trees pass broad, slow drought far better than fine, fast drought.",
+   "units": "contrast: passed share at broad, slow scales minus passed share at fine, fast scales (passed share is squared coherence, 0 to 1)",
+   "n": "664 tree-ring sites, 1903 to 1980; 200 draws of each control",
+   "interval": "Grey range: 5th to 95th percentile of 200 control draws. The contrast's own 95% bootstrap interval is 0.620 to 0.681.",
+   "baseline": "Phase-randomised trees (each site keeps its spectrum, timing scrambled) and tree series reassigned to shuffled sites",
+   "threshold": "Contrast above both controls' 95th percentiles, with adjusted p below 0.05. Adjusted p was 0.035.",
+   "planted": "The instrument passed all three planted-field rules in the same job before the real data were scored.",
+   "value_name": "measured contrast",
+   "band_name": "control, 5th to 95th percentile",
+   "axis": {
+    "label": "contrast (higher: broad, slow drought passes better)",
+    "min": 0,
+    "max": 0.8
+   },
+   "rows": [
+    {
+     "label": "Against phase-randomised trees",
+     "value": 0.6434389414144064,
+     "lo": 0.03416875625535279,
+     "hi": 0.21807621858838563,
+     "mean": 0.11225584373677508,
+     "series": 0,
+     "note": "0.64 against 0.03 to 0.22"
+    },
+    {
+     "label": "Against trees at shuffled sites",
+     "value": 0.6434389414144064,
+     "lo": 0.23152572097045396,
+     "hi": 0.30000163725164186,
+     "mean": 0.26304254708196706,
+     "series": 0,
+     "note": "0.64 against 0.23 to 0.30"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value",
+    "5th percentile",
+    "Mean",
+    "95th percentile",
+    "p"
+   ],
+   "table": [
+    [
+     "Measured contrast",
+     "0.643",
+     "0.620 (interval low)",
+     "",
+     "0.681 (interval high)",
+     "0.005, adjusted 0.035"
+    ],
+    [
+     "Phase-randomised trees",
+     "",
+     "0.034",
+     "0.112",
+     "0.218",
+     "0.005"
+    ],
+    [
+     "Trees at shuffled sites",
+     "",
+     "0.232",
+     "0.263",
+     "0.300",
+     "0.005"
+    ]
+   ]
+  },
+  {
+   "key": "lens",
+   "form": "matrix",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Share of the drought signal the trees pass, by space scale and time scale.",
+   "takeaway": "Below 55 km the trees pass at most 0.004 in every time band. Above 460 km they pass 0.27 to 0.91, most at periods over 32 years. Darker means more of the drought signal gets through.",
+   "units": "passed share: squared coherence between drought at the tree sites and the tree rings, 0 (nothing passes) to 1 (all passes)",
+   "n": "664 tree-ring sites, 1903 to 1980; 6 space bands by 5 time bands",
+   "interval": "95% bootstrap interval per cell, listed in the table",
+   "baseline": "Phase-randomised trees and trees at shuffled sites, scored through the contrast in the chart above",
+   "corner": "Space scale \\ period",
+   "cols": [
+    "over 32 years",
+    "16 to 32 years",
+    "8 to 16 years",
+    "4 to 8 years",
+    "2 to 4 years"
+   ],
+   "rowLabels": [
+    "below 55 km",
+    "55 to 95 km",
+    "95 to 160 km",
+    "160 to 270 km",
+    "270 to 460 km",
+    "above 460 km"
+   ],
+   "values": [
+    [
+     0.00339927527705065,
+     0.0005308070958179872,
+     0.0037636795381424015,
+     0.0012473568595478626,
+     0.00048096459758410493
+    ],
+    [
+     0.014634985781731131,
+     0.04270018896867467,
+     0.031984011879660185,
+     0.028263372241309665,
+     0.014668854199427551
+    ],
+    [
+     0.0936848265345153,
+     0.10594192919312737,
+     0.0940668997959445,
+     0.08260355081768674,
+     0.0651259079039307
+    ],
+    [
+     0.28279889235406747,
+     0.2891555467566877,
+     0.23770882642238636,
+     0.22460054611431707,
+     0.11816960117455971
+    ],
+    [
+     0.4805224096824828,
+     0.529687685058606,
+     0.5283965840594893,
+     0.3915450282471284,
+     0.13243261103786502
+    ],
+    [
+     0.9058566116376705,
+     0.7023496071767353,
+     0.6952128449260546,
+     0.7009102393460892,
+     0.26629934923713894
+    ]
+   ],
+   "text": [
+    [
+     "0.003",
+     "0.0005",
+     "0.004",
+     "0.001",
+     "0.0005"
+    ],
+    [
+     "0.015",
+     "0.043",
+     "0.032",
+     "0.028",
+     "0.015"
+    ],
+    [
+     "0.094",
+     "0.11",
+     "0.094",
+     "0.083",
+     "0.065"
+    ],
+    [
+     "0.28",
+     "0.29",
+     "0.24",
+     "0.22",
+     "0.12"
+    ],
+    [
+     "0.48",
+     "0.53",
+     "0.53",
+     "0.39",
+     "0.13"
+    ],
+    [
+     "0.91",
+     "0.70",
+     "0.70",
+     "0.70",
+     "0.27"
+    ]
+   ],
+   "columns": [
+    "Space scale",
+    "Period",
+    "Passed share",
+    "Interval low",
+    "Interval high"
+   ],
+   "table": [
+    [
+     "below 55 km",
+     "over 32 years",
+     "0.0034",
+     "0.0014",
+     "0.0054"
+    ],
+    [
+     "below 55 km",
+     "16 to 32 years",
+     "0.0005",
+     "0.0000",
+     "0.0016"
+    ],
+    [
+     "below 55 km",
+     "8 to 16 years",
+     "0.0038",
+     "0.0010",
+     "0.0075"
+    ],
+    [
+     "below 55 km",
+     "4 to 8 years",
+     "0.0012",
+     "0.0006",
+     "0.0032"
+    ],
+    [
+     "below 55 km",
+     "2 to 4 years",
+     "0.0005",
+     "0.0002",
+     "0.0018"
+    ],
+    [
+     "55 to 95 km",
+     "over 32 years",
+     "0.0146",
+     "0.0108",
+     "0.0243"
+    ],
+    [
+     "55 to 95 km",
+     "16 to 32 years",
+     "0.0427",
+     "0.0252",
+     "0.0675"
+    ],
+    [
+     "55 to 95 km",
+     "8 to 16 years",
+     "0.0320",
+     "0.0167",
+     "0.0518"
+    ],
+    [
+     "55 to 95 km",
+     "4 to 8 years",
+     "0.0283",
+     "0.0233",
+     "0.0394"
+    ],
+    [
+     "55 to 95 km",
+     "2 to 4 years",
+     "0.0147",
+     "0.0088",
+     "0.0220"
+    ],
+    [
+     "95 to 160 km",
+     "over 32 years",
+     "0.0937",
+     "0.0720",
+     "0.1277"
+    ],
+    [
+     "95 to 160 km",
+     "16 to 32 years",
+     "0.1059",
+     "0.0685",
+     "0.1468"
+    ],
+    [
+     "95 to 160 km",
+     "8 to 16 years",
+     "0.0941",
+     "0.0541",
+     "0.1472"
+    ],
+    [
+     "95 to 160 km",
+     "4 to 8 years",
+     "0.0826",
+     "0.0628",
+     "0.1237"
+    ],
+    [
+     "95 to 160 km",
+     "2 to 4 years",
+     "0.0651",
+     "0.0457",
+     "0.0968"
+    ],
+    [
+     "160 to 270 km",
+     "over 32 years",
+     "0.2828",
+     "0.2313",
+     "0.3431"
+    ],
+    [
+     "160 to 270 km",
+     "16 to 32 years",
+     "0.2892",
+     "0.2183",
+     "0.3596"
+    ],
+    [
+     "160 to 270 km",
+     "8 to 16 years",
+     "0.2377",
+     "0.2055",
+     "0.2821"
+    ],
+    [
+     "160 to 270 km",
+     "4 to 8 years",
+     "0.2246",
+     "0.1916",
+     "0.2680"
+    ],
+    [
+     "160 to 270 km",
+     "2 to 4 years",
+     "0.1182",
+     "0.0681",
+     "0.2035"
+    ],
+    [
+     "270 to 460 km",
+     "over 32 years",
+     "0.4805",
+     "0.4219",
+     "0.5435"
+    ],
+    [
+     "270 to 460 km",
+     "16 to 32 years",
+     "0.5297",
+     "0.4522",
+     "0.5992"
+    ],
+    [
+     "270 to 460 km",
+     "8 to 16 years",
+     "0.5284",
+     "0.4957",
+     "0.6383"
+    ],
+    [
+     "270 to 460 km",
+     "4 to 8 years",
+     "0.3915",
+     "0.3029",
+     "0.4573"
+    ],
+    [
+     "270 to 460 km",
+     "2 to 4 years",
+     "0.1324",
+     "0.0451",
+     "0.2281"
+    ],
+    [
+     "above 460 km",
+     "over 32 years",
+     "0.9059",
+     "0.8873",
+     "0.9236"
+    ],
+    [
+     "above 460 km",
+     "16 to 32 years",
+     "0.7023",
+     "0.5970",
+     "0.8593"
+    ],
+    [
+     "above 460 km",
+     "8 to 16 years",
+     "0.6952",
+     "0.6235",
+     "0.8597"
+    ],
+    [
+     "above 460 km",
+     "4 to 8 years",
+     "0.7009",
+     "0.5872",
+     "0.7888"
+    ],
+    [
+     "above 460 km",
+     "2 to 4 years",
+     "0.2663",
+     "0.2014",
+     "0.3407"
+    ]
+   ]
+  },
+  {
+   "key": "variance",
+   "form": "dumbbell",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "panel"
+   ],
+   "title": "Where the variance sits: tree rings against the drought index at the same sites.",
+   "takeaway": "0.61 of the tree-ring variance lies below 55 km, against 0.12 for drought. Above 460 km the order flips: 0.27 for trees and 0.70 for drought. Most tree variance sits where the filter is closed.",
+   "units": "share of a field's variance in each space band, summed over the five time bands; each field's shares sum to 1",
+   "n": "664 tree-ring sites, 1903 to 1980, and the drought index at the same 664 sites",
+   "interval": null,
+   "no_interval": "The panel file holds one variance share per band, with no spread.",
+   "a_name": "tree rings",
+   "b_name": "drought index at the tree sites",
+   "axis": {
+    "label": "share of variance",
+    "min": 0,
+    "max": 0.8
+   },
+   "rows": [
+    {
+     "label": "below 55 km",
+     "a": 0.6065034220088948,
+     "b": 0.11650652607983963,
+     "note": "trees 0.61, drought 0.12"
+    },
+    {
+     "label": "55 to 95 km",
+     "a": 0.04022675577878391,
+     "b": 0.035608969586427806,
+     "note": "trees 0.04, drought 0.04"
+    },
+    {
+     "label": "95 to 160 km",
+     "a": 0.03159632587286425,
+     "b": 0.04250343053348017,
+     "note": "trees 0.03, drought 0.04"
+    },
+    {
+     "label": "160 to 270 km",
+     "a": 0.02617985084316189,
+     "b": 0.04815709216880538,
+     "note": "trees 0.03, drought 0.05"
+    },
+    {
+     "label": "270 to 460 km",
+     "a": 0.027754183476569903,
+     "b": 0.060065747047818654,
+     "note": "trees 0.03, drought 0.06"
+    },
+    {
+     "label": "above 460 km",
+     "a": 0.2677394620197252,
+     "b": 0.6971582345836284,
+     "note": "trees 0.27, drought 0.70"
+    }
+   ],
+   "columns": [
+    "Space scale",
+    "Tree rings",
+    "Drought index at the tree sites"
+   ],
+   "table": [
+    [
+     "below 55 km",
+     "0.607",
+     "0.117"
+    ],
+    [
+     "55 to 95 km",
+     "0.040",
+     "0.036"
+    ],
+    [
+     "95 to 160 km",
+     "0.032",
+     "0.043"
+    ],
+    [
+     "160 to 270 km",
+     "0.026",
+     "0.048"
+    ],
+    [
+     "270 to 460 km",
+     "0.028",
+     "0.060"
+    ],
+    [
+     "above 460 km",
+     "0.268",
+     "0.697"
+    ]
+   ]
+  },
+  {
+   "key": "dispersion",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c5"
+   ],
+   "source": [
+    "result",
+    "panel"
+   ],
+   "title": "Dispersion exponent of the drought field against the planted fields.",
+   "takeaway": "The drought exponent is 0.02 (−0.12 to 0.17), at the planted separable reading of −0.01 and far from the planted wave (0.81) and diffusion (1.88). Near 0 means broad and fine patterns fade at the same rate.",
+   "units": "dispersion exponent: how fast memory time grows with spatial scale; 0 means no growth, 1 is a travelling wave, 2 is diffusion",
+   "n": "399 drought cells, 1903 to 2025; 200 draws of each control; five realisations of each planted field",
+   "interval": "95% bootstrap interval of the drought exponent",
+   "baseline": "Shuffled coordinates: 5th to 95th percentile −0.16 to 0.14. Phase-randomised sites: −0.12 to 0.14. The drought exponent sits inside both.",
+   "threshold": "Exponent above both controls' 95th percentiles. It was not: adjusted p 0.80.",
+   "planted": "The planted diffusing field read 1.88, inside the rule of 1.7 to 2.3.",
+   "ruled_out": "A wave exponent of 1 and a diffusion exponent of 2: both lie outside the interval −0.12 to 0.17.",
+   "series_names": [
+    "tree rings: fit stopped at its lower bound of −1, not drawn",
+    "drought index",
+    "planted field, median of five"
+   ],
+   "axis": {
+    "label": "dispersion exponent",
+    "min": -0.5,
+    "max": 2.5,
+    "refs": [
+     {
+      "value": 1,
+      "label": "1, a travelling wave"
+     },
+     {
+      "value": 2,
+      "label": "2, diffusion"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Drought index",
+     "value": 0.019299901677150875,
+     "lo": -0.12351688474058498,
+     "hi": 0.1659974009780229,
+     "series": 1,
+     "note": "0.02 (−0.12 to 0.17)"
+    },
+    {
+     "label": "Planted separable field",
+     "value": -0.01272656905369451,
+     "series": 2,
+     "note": "−0.01"
+    },
+    {
+     "label": "Planted wave",
+     "value": 0.8124875794324113,
+     "series": 2,
+     "note": "0.81"
+    },
+    {
+     "label": "Planted diffusion",
+     "value": 1.875539431562253,
+     "series": 2,
+     "note": "1.88"
+    }
+   ],
+   "columns": [
+    "Field",
+    "Exponent",
+    "Interval low",
+    "Interval high"
+   ],
+   "table": [
+    [
+     "Drought index",
+     "0.019",
+     "−0.124",
+     "0.166"
+    ],
+    [
+     "Tree rings (fit at its lower bound)",
+     "−1.0",
+     "−1.0",
+     "0.909"
+    ],
+    [
+     "Planted separable field, median",
+     "−0.013",
+     "",
+     ""
+    ],
+    [
+     "Planted wave, median",
+     "0.812",
+     "",
+     ""
+    ],
+    [
+     "Planted diffusion, median",
+     "1.876",
+     "",
+     ""
+    ],
+    [
+     "Control, shuffled coordinates (5th, 95th)",
+     "−0.001",
+     "−0.156",
+     "0.143"
+    ],
+    [
+     "Control, phase-randomised (5th, 95th)",
+     "0.012",
+     "−0.120",
+     "0.143"
+    ]
+   ]
+  }
+ ]
+}

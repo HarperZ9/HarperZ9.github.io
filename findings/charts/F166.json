@@ -1,0 +1,652 @@
+{
+ "finding": "F166",
+ "sources": [
+  {
+   "id": "result",
+   "name": "result.json",
+   "sha256_original": "6b6a2c429eabe63effb8a055cb975e337c929e517d9e7ecb695d35292d836a92",
+   "sha256_copy": "ff1e84e6f4b6c8cd45a3ac469339cc2e7848d24bf98471a51ef1143a4da0a326",
+   "href": "/findings/results/F166/result.json",
+   "run": "20261031T080226Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "prereg",
+   "claims": [
+    "c1",
+    "c5"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "How the test was built: five models, one planted check and two null controls.",
+   "takeaway": "The combined formula had to beat flexible prospect theory by 0.005 in cross-validated R² in both settings. It did so in neither.",
+   "n": "1,928 choice problems without feedback and 9,831 with feedback (choices13k, aggregate choice rates)",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "1,928 and 9,831 problems",
+     "detail": "choices13k, split by whether people saw feedback after each choice."
+    },
+    {
+     "kind": "measure",
+     "label": "Fit five models, score held-out R²",
+     "detail": "Expected value, cumulative prospect theory, a flexible prospect theory, the combined formula and boosted trees."
+    },
+    {
+     "kind": "planted",
+     "label": "Planted model picked in 6 of 6",
+     "detail": "Data simulated from a known model. Model selection had to pick that model in more than 80 percent of sets."
+    },
+    {
+     "kind": "control",
+     "label": "Control 1: terms permuted",
+     "detail": "The added terms shuffled across problems, 200 times."
+    },
+    {
+     "kind": "control",
+     "label": "Control 2: outcomes simulated",
+     "detail": "Choice rates drawn from the fitted prospect theory, 100 times."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: R² gain of at least 0.005",
+     "detail": "Over flexible prospect theory, with a BIC gain of more than 10. Fixed before the run."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Combined formula beats flexible prospect theory",
+     "no": "failed",
+     "detail": "Gain −0.011 without feedback and 0.0009 with it."
+    }
+   ]
+  },
+  {
+   "key": "r2",
+   "form": "bars",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Held-out fit of each model, without and with feedback.",
+   "takeaway": "Combined formula 0.634 against flexible prospect theory 0.645 without feedback, and 0.597 against 0.596 with it. The bar was a gain of 0.005.",
+   "units": "cross-validated R²: share of variance in choice rates explained on problems held out of the fit; higher is better",
+   "n": "1,928 choice problems without feedback and 9,831 with feedback (choices13k, aggregate choice rates)",
+   "interval": null,
+   "no_interval": "The result file holds one cross-validated R² per model and setting, with no interval.",
+   "baseline": "Flexible prospect theory, and the noise ceiling (the best R² the sampling noise in the rates allows)",
+   "threshold": "Combined formula ahead of flexible prospect theory by at least 0.005 in cross-validated R²",
+   "planted": "Held: model selection picked the planted model in 6 of 6 simulated data sets",
+   "ruled_out": "A gain of 0.005 or more over flexible prospect theory: the measured gains are −0.011 without feedback and 0.0009 with feedback",
+   "series_names": [
+    "Combined formula",
+    "Flexible prospect theory",
+    "Cumulative prospect theory",
+    "Expected value",
+    "Boosted trees",
+    "Noise ceiling"
+   ],
+   "axis": {
+    "label": "cross-validated R² (higher is better)",
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "Combined formula",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.6336564206388505,
+     "series": 0,
+     "note": "0.634"
+    },
+    {
+     "label": "Flexible prospect theory",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.6446569772359572,
+     "series": 1,
+     "note": "0.645"
+    },
+    {
+     "label": "Cumulative prospect theory",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.6279975703659333,
+     "series": 2,
+     "note": "0.628"
+    },
+    {
+     "label": "Expected value",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.37303071581688874,
+     "series": 3,
+     "note": "0.373"
+    },
+    {
+     "label": "Boosted trees",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.7354524838445788,
+     "series": 4,
+     "note": "0.735"
+    },
+    {
+     "label": "Noise ceiling",
+     "group": "Without feedback (1,928 problems)",
+     "value": 0.8248672989524486,
+     "series": 5,
+     "note": "0.825"
+    },
+    {
+     "label": "Combined formula",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.5970657838579824,
+     "series": 0,
+     "note": "0.597"
+    },
+    {
+     "label": "Flexible prospect theory",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.5961800613854729,
+     "series": 1,
+     "note": "0.596"
+    },
+    {
+     "label": "Cumulative prospect theory",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.5842873563603063,
+     "series": 2,
+     "note": "0.584"
+    },
+    {
+     "label": "Expected value",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.46372756990578956,
+     "series": 3,
+     "note": "0.464"
+    },
+    {
+     "label": "Boosted trees",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.8054279419407824,
+     "series": 4,
+     "note": "0.805"
+    },
+    {
+     "label": "Noise ceiling",
+     "group": "With feedback (9,831 problems)",
+     "value": 0.8630686997337869,
+     "series": 5,
+     "note": "0.863"
+    }
+   ],
+   "columns": [
+    "Setting",
+    "Model",
+    "Cross-validated R²",
+    "Fitted parameters"
+   ],
+   "table": [
+    [
+     "Without feedback",
+     "Combined formula",
+     "0.634",
+     "10"
+    ],
+    [
+     "Without feedback",
+     "Flexible prospect theory",
+     "0.645",
+     "9"
+    ],
+    [
+     "Without feedback",
+     "Cumulative prospect theory",
+     "0.628",
+     "6"
+    ],
+    [
+     "Without feedback",
+     "Expected value",
+     "0.373",
+     "2"
+    ],
+    [
+     "Without feedback",
+     "Boosted trees",
+     "0.735",
+     "not stated"
+    ],
+    [
+     "Without feedback",
+     "Noise ceiling",
+     "0.825",
+     ""
+    ],
+    [
+     "With feedback",
+     "Combined formula",
+     "0.597",
+     "10"
+    ],
+    [
+     "With feedback",
+     "Flexible prospect theory",
+     "0.596",
+     "9"
+    ],
+    [
+     "With feedback",
+     "Cumulative prospect theory",
+     "0.584",
+     "6"
+    ],
+    [
+     "With feedback",
+     "Expected value",
+     "0.464",
+     "2"
+    ],
+    [
+     "With feedback",
+     "Boosted trees",
+     "0.805",
+     "not stated"
+    ],
+    [
+     "With feedback",
+     "Noise ceiling",
+     "0.863",
+     ""
+    ]
+   ]
+  },
+  {
+   "key": "nulls",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Without feedback: the joint gain of the four added terms against two null controls.",
+   "takeaway": "The gain is 7.6 in deviance, below the 95th percentile of both controls (52.0 and 58.9).",
+   "units": "deviance gain: drop in misfit when the four terms are added to prospect theory; higher means the terms explain more",
+   "n": "1,928 problems without feedback; 200 and 100 control draws",
+   "interval": "5th to 95th percentile of the control draws",
+   "baseline": "Two null controls in which the added terms carry no information",
+   "threshold": "Joint gain above the 95th percentile of each control",
+   "ruled_out": "A joint gain beyond what the nulls produce: 7.6 sits below 52.0 (p 0.82) and 58.9 (p 0.89)",
+   "value_name": "measured joint gain",
+   "band_name": "control draws, 5th to 95th percentile",
+   "axis": {
+    "label": "joint deviance gain (higher means the terms explain more)",
+    "min": 0
+   },
+   "rows": [
+    {
+     "label": "Added terms permuted across problems",
+     "value": 7.622505725710653,
+     "lo": 3.8761755238607294,
+     "hi": 52.04153331538109,
+     "mean": 20.900535916521914,
+     "series": 0,
+     "note": "real 7.6; control 3.9 to 52.0, mean 20.9; p 0.82 from 200 draws"
+    },
+    {
+     "label": "Outcomes simulated from fitted prospect theory",
+     "value": 7.622505725710653,
+     "lo": 3.758312924625352,
+     "hi": 58.869920550037925,
+     "mean": 23.985722688396052,
+     "series": 0,
+     "note": "real 7.6; control 3.8 to 58.9, mean 24.0; p 0.89 from 100 draws"
+    }
+   ],
+   "columns": [
+    "Control",
+    "Measured gain",
+    "Control mean",
+    "Control 5th pct",
+    "Control 95th pct",
+    "p",
+    "Draws"
+   ],
+   "table": [
+    [
+     "Added terms permuted across problems",
+     "7.62",
+     "20.90",
+     "3.88",
+     "52.04",
+     "0.82",
+     "200"
+    ],
+    [
+     "Outcomes simulated from fitted prospect theory",
+     "7.62",
+     "23.99",
+     "3.76",
+     "58.87",
+     "0.89",
+     "100"
+    ]
+   ]
+  },
+  {
+   "key": "lambda",
+   "form": "interval",
+   "at": "results",
+   "claims": [
+    "c4"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Fitted loss aversion in each setting.",
+   "takeaway": "Loss aversion is 1.16 without feedback and 0.89 with it: far below the classic 2.25, and below 1 once people see outcomes.",
+   "units": "loss aversion λ: how much more a loss weighs than an equal gain; 1 means equal weight",
+   "n": "1,928 choice problems without feedback and 9,831 with feedback (choices13k, aggregate choice rates)",
+   "interval": "bootstrap 95 percent interval",
+   "baseline": "λ = 1 (losses and gains weigh the same) and λ = 2.25 (Tversky and Kahneman's estimate)",
+   "threshold": "Without feedback: interval above 1 and below 2.25. Both held.",
+   "series_names": [
+    "Loss aversion fitted in cumulative prospect theory"
+   ],
+   "axis": {
+    "label": "loss aversion λ (1 means losses and gains weigh the same)",
+    "min": 0.75,
+    "max": 2.5,
+    "refs": [
+     {
+      "value": 1,
+      "label": "1, no loss aversion"
+     },
+     {
+      "value": 2.25,
+      "label": "2.25, Tversky and Kahneman"
+     }
+    ]
+   },
+   "rows": [
+    {
+     "label": "Without feedback",
+     "value": 1.1637928096370231,
+     "lo": 1.0548612671323396,
+     "hi": 1.2968687057771313,
+     "series": 0,
+     "note": "1.16 (1.05 to 1.30)"
+    },
+    {
+     "label": "With feedback",
+     "value": 0.8891173310942184,
+     "lo": 0.860044060750304,
+     "hi": 0.9285075500582434,
+     "series": 0,
+     "note": "0.89 (0.86 to 0.93)"
+    }
+   ],
+   "columns": [
+    "Setting",
+    "Loss aversion λ",
+    "Interval low",
+    "Interval high",
+    "Bootstrap median"
+   ],
+   "table": [
+    [
+     "Without feedback",
+     "1.164",
+     "1.055",
+     "1.297",
+     "1.172"
+    ],
+    [
+     "With feedback",
+     "0.889",
+     "0.860",
+     "0.929",
+     "0.889"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "controls",
+   "claims": [
+    "c5",
+    "c1"
+   ],
+   "source": [
+    "result"
+   ],
+   "title": "Every rule fixed in advance, the value it tested and the bar it had to clear.",
+   "takeaway": "10 of 17 rules held. The planted and join checks passed, and both comparisons with flexible prospect theory failed on R².",
+   "units": "shares, R² differences, BIC differences, deviance and loss aversion, as each rule states",
+   "n": "1,928 choice problems without feedback and 9,831 with feedback (choices13k, aggregate choice rates)",
+   "interval": null,
+   "no_interval": "Each rule compares one value with one bar.",
+   "planted": "Held: the planted model was picked in 6 of 6 simulated data sets (share 1.00), and the share of planted loss aversion recovered was 1.00",
+   "rows": [
+    {
+     "label": "Planted check: share of planted models picked, above 0.8",
+     "left": "1.000",
+     "right": "0.800",
+     "holds": true
+    },
+    {
+     "label": "Planted check: share of planted loss aversion recovered, above 0.6",
+     "left": "1.000",
+     "right": "0.600",
+     "holds": true
+    },
+    {
+     "label": "Join check: share of problems matched between files, above 0.999",
+     "left": "1.000",
+     "right": "0.999",
+     "holds": true
+    },
+    {
+     "label": "No feedback, against prospect theory: R² gain at least 0.005",
+     "left": "0.0057",
+     "right": "0.0050",
+     "holds": true
+    },
+    {
+     "label": "No feedback, against prospect theory: BIC change below −10",
+     "left": "−9.622",
+     "right": "−10",
+     "holds": false
+    },
+    {
+     "label": "No feedback: smallest corrected p of a single term below 0.05",
+     "left": "0.766",
+     "right": "0.050",
+     "holds": false
+    },
+    {
+     "label": "No feedback: joint gain above the permuted-terms 95th percentile",
+     "left": "7.623",
+     "right": "52.042",
+     "holds": false
+    },
+    {
+     "label": "No feedback: joint gain above the simulated-outcomes 95th percentile",
+     "left": "7.623",
+     "right": "58.870",
+     "holds": false
+    },
+    {
+     "label": "No feedback, against flexible prospect theory: R² gain at least 0.005",
+     "left": "−0.011",
+     "right": "0.0050",
+     "holds": false
+    },
+    {
+     "label": "No feedback, against flexible prospect theory: BIC change below −10",
+     "left": "58.657",
+     "right": "−10",
+     "holds": false
+    },
+    {
+     "label": "Feedback, against prospect theory: R² gain at least 0.005",
+     "left": "0.013",
+     "right": "0.0050",
+     "holds": true
+    },
+    {
+     "label": "Feedback, against prospect theory: BIC change below −10",
+     "left": "−304.361",
+     "right": "−10",
+     "holds": true
+    },
+    {
+     "label": "Feedback: smallest corrected p of a single term below 0.05",
+     "left": "0.015",
+     "right": "0.050",
+     "holds": true
+    },
+    {
+     "label": "Feedback, against flexible prospect theory: R² gain at least 0.005",
+     "left": "0.0009",
+     "right": "0.0050",
+     "holds": false
+    },
+    {
+     "label": "Feedback, against flexible prospect theory: BIC change below −10",
+     "left": "−38.361",
+     "right": "−10",
+     "holds": true
+    },
+    {
+     "label": "No feedback: loss aversion interval above 1",
+     "left": "1.055",
+     "right": "1",
+     "holds": true
+    },
+    {
+     "label": "No feedback: loss aversion interval below 2.25",
+     "left": "1.297",
+     "right": "2.250",
+     "holds": true
+    }
+   ],
+   "columns": [
+    "Rule set in advance",
+    "Value",
+    "Bar",
+    "Result"
+   ],
+   "table": [
+    [
+     "Planted check: share of planted models picked, above 0.8",
+     "1.000",
+     "0.800",
+     "held"
+    ],
+    [
+     "Planted check: share of planted loss aversion recovered, above 0.6",
+     "1.000",
+     "0.600",
+     "held"
+    ],
+    [
+     "Join check: share of problems matched between files, above 0.999",
+     "1.000",
+     "0.999",
+     "held"
+    ],
+    [
+     "No feedback, against prospect theory: R² gain at least 0.005",
+     "0.0057",
+     "0.0050",
+     "held"
+    ],
+    [
+     "No feedback, against prospect theory: BIC change below −10",
+     "−9.622",
+     "−10",
+     "failed"
+    ],
+    [
+     "No feedback: smallest corrected p of a single term below 0.05",
+     "0.766",
+     "0.050",
+     "failed"
+    ],
+    [
+     "No feedback: joint gain above the permuted-terms 95th percentile",
+     "7.623",
+     "52.042",
+     "failed"
+    ],
+    [
+     "No feedback: joint gain above the simulated-outcomes 95th percentile",
+     "7.623",
+     "58.870",
+     "failed"
+    ],
+    [
+     "No feedback, against flexible prospect theory: R² gain at least 0.005",
+     "−0.011",
+     "0.0050",
+     "failed"
+    ],
+    [
+     "No feedback, against flexible prospect theory: BIC change below −10",
+     "58.657",
+     "−10",
+     "failed"
+    ],
+    [
+     "Feedback, against prospect theory: R² gain at least 0.005",
+     "0.013",
+     "0.0050",
+     "held"
+    ],
+    [
+     "Feedback, against prospect theory: BIC change below −10",
+     "−304.361",
+     "−10",
+     "held"
+    ],
+    [
+     "Feedback: smallest corrected p of a single term below 0.05",
+     "0.015",
+     "0.050",
+     "held"
+    ],
+    [
+     "Feedback, against flexible prospect theory: R² gain at least 0.005",
+     "0.0009",
+     "0.0050",
+     "failed"
+    ],
+    [
+     "Feedback, against flexible prospect theory: BIC change below −10",
+     "−38.361",
+     "−10",
+     "held"
+    ],
+    [
+     "No feedback: loss aversion interval above 1",
+     "1.055",
+     "1",
+     "held"
+    ],
+    [
+     "No feedback: loss aversion interval below 2.25",
+     "1.297",
+     "2.250",
+     "held"
+    ]
+   ]
+  }
+ ]
+}

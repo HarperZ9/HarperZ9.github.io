@@ -1,0 +1,10 @@
+{
+ "chars": 30000,
+ "sha256": "2248f9fa40d14608bc9b2932af537caa0b548722e16499532413ca020952850c",
+ "source": "FINDINGS.md, 30000 chars before F458, written October 2026",
+ "xz": 2.7392,
+ "ppm_cold": 2.702600591223166,
+ "ppm_trained": 2.887385518860302,
+ "smollm": 1.5918116034550185,
+ "qwen": 1.6576989771005433
+}

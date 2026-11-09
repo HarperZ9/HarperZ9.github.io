@@ -1,0 +1,1026 @@
+{
+ "finding": "F190",
+ "sources": [
+  {
+   "id": "round2",
+   "name": "round2-result.json",
+   "sha256_original": "7c14e88710498618063304ef67915af5a1b3883c10a08d1604570ee1affa00c8",
+   "sha256_copy": "a3ed3283970b3f8d310323df85eab2e0be5f68cfb70d7fc2214d3745f811d855",
+   "href": "/findings/results/F190/round2-result.json",
+   "run": "20261031T084103Z"
+  },
+  {
+   "id": "round3",
+   "name": "round3-result.json",
+   "sha256_original": "f2d77eedf9b8d74fbe176f5c3330b42ae6a774824ed52df9ae4eaeabc13bb739",
+   "sha256_copy": "33236c81ceff178af36767107e700b23375ca623809cf6b78c4feb40e92ea6bb",
+   "href": "/findings/results/F190/round3-result.json",
+   "run": "20261031T085106Z"
+  }
+ ],
+ "charts": [
+  {
+   "key": "design",
+   "form": "flow",
+   "at": "controls",
+   "claims": [
+    "c1",
+    "c2"
+   ],
+   "source": [
+    "round2",
+    "round3"
+   ],
+   "title": "How the flaw was found: a control that should have collapsed did not.",
+   "takeaway": "Round two found a threshold at a benefit-to-cost ratio of 9, but shuffled producers survived at 0.37. With the producer's own share removed, local producers topped out at 0.48, under the 0.5 bar.",
+   "n": "Round two: 100 by 100 grid, 1,200 generations, 6 runs per point. Round three: 100 by 100 grid, 1,000 generations, 5 runs per point. Shuffled control: 20 runs in each round.",
+   "steps": [
+    {
+     "kind": "data",
+     "label": "Grid of producers and cheaters",
+     "detail": "Producers pay a cost c to make a good worth b, shared over a 3 by 3 box of cells. Cheaters pay nothing."
+    },
+    {
+     "kind": "measure",
+     "label": "Round two: threshold at ratio 9",
+     "detail": "Local producers first reached a share of 0.5 at b/c of 9, at every b tried."
+    },
+    {
+     "kind": "control",
+     "label": "Shuffled control: 0.37",
+     "detail": "Positions shuffled every generation, so neighbours are strangers. It should fall to 0. Mean of 20 runs at a ratio of 20."
+    },
+    {
+     "kind": "measure",
+     "label": "Cause: a ninth of its own good",
+     "detail": "The box counted the producer itself, so producing paid back b/9. That beats the cost once b/c passes 9, with no neighbours needed."
+    },
+    {
+     "kind": "measure",
+     "label": "Round three: goods to others only",
+     "detail": "The producer is taken out of its own box. Both versions run side by side up to a ratio of 400."
+    },
+    {
+     "kind": "rule",
+     "label": "Rule: local share reaches 0.5 at some ratio",
+     "detail": "Fixed before round three ran."
+    },
+    {
+     "kind": "verdict",
+     "holds": false,
+     "label": "Cooperation persists with goods to others only",
+     "no": "failed",
+     "detail": "Highest local share 0.48, at a ratio of 400."
+    }
+   ]
+  },
+  {
+   "key": "round2",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "round2"
+   ],
+   "title": "Round two, own goods included: producer share against the benefit-to-cost ratio.",
+   "takeaway": "Every curve is at 0 up to a ratio of 8 and crosses 0.5 at 9 (0.52, 0.66 and 0.88 for b of 1, 2 and 4). 9 is the number of cells in the goods box.",
+   "units": "final producer share: share of grid cells holding a producer at the end of a run, averaged over runs; 0 means cheaters took the grid",
+   "n": "100 by 100 grid, 1,200 generations, 6 runs per point; 9 ratios at each of 3 values of the benefit b",
+   "interval": null,
+   "no_interval": "The result file holds the mean over runs at each point, with no spread.",
+   "baseline": "Shuffled control at a ratio of 20, drawn in the next chart",
+   "threshold": "Persistence: mean final share of 0.5 or more. Forecast threshold between 7 and 12.",
+   "x": {
+    "label": "benefit-to-cost ratio b/c",
+    "min": 4,
+    "max": 16
+   },
+   "y": {
+    "label": "final producer share (1 means producers took the grid)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "0.5, the persistence bar"
+     }
+    ]
+   },
+   "series": [
+    {
+     "name": "b = 1",
+     "points": [
+      [
+       5,
+       0.0,
+       "b = 1, ratio 5: 0.00"
+      ],
+      [
+       6,
+       0.0,
+       "b = 1, ratio 6: 0.00"
+      ],
+      [
+       7,
+       0.0,
+       "b = 1, ratio 7: 0.00"
+      ],
+      [
+       8,
+       0.0,
+       "b = 1, ratio 8: 0.00"
+      ],
+      [
+       9,
+       0.5233666666666666,
+       "b = 1, ratio 9: 0.52"
+      ],
+      [
+       10,
+       0.9770166666666666,
+       "b = 1, ratio 10: 0.98"
+      ],
+      [
+       12,
+       1.0,
+       "b = 1, ratio 12: 1.00"
+      ],
+      [
+       14,
+       1.0,
+       "b = 1, ratio 14: 1.00"
+      ],
+      [
+       16,
+       1.0,
+       "b = 1, ratio 16: 1.00"
+      ]
+     ]
+    },
+    {
+     "name": "b = 2",
+     "points": [
+      [
+       5,
+       0.0,
+       "b = 2, ratio 5: 0.00"
+      ],
+      [
+       6,
+       0.0,
+       "b = 2, ratio 6: 0.00"
+      ],
+      [
+       7,
+       0.0,
+       "b = 2, ratio 7: 0.00"
+      ],
+      [
+       8,
+       0.0,
+       "b = 2, ratio 8: 0.00"
+      ],
+      [
+       9,
+       0.662,
+       "b = 2, ratio 9: 0.66"
+      ],
+      [
+       10,
+       1.0,
+       "b = 2, ratio 10: 1.00"
+      ],
+      [
+       12,
+       1.0,
+       "b = 2, ratio 12: 1.00"
+      ],
+      [
+       14,
+       1.0,
+       "b = 2, ratio 14: 1.00"
+      ],
+      [
+       16,
+       1.0,
+       "b = 2, ratio 16: 1.00"
+      ]
+     ]
+    },
+    {
+     "name": "b = 4",
+     "points": [
+      [
+       5,
+       0.0,
+       "b = 4, ratio 5: 0.00"
+      ],
+      [
+       6,
+       0.0,
+       "b = 4, ratio 6: 0.00"
+      ],
+      [
+       7,
+       0.0,
+       "b = 4, ratio 7: 0.00"
+      ],
+      [
+       8,
+       0.0,
+       "b = 4, ratio 8: 0.00"
+      ],
+      [
+       9,
+       0.8766333333333334,
+       "b = 4, ratio 9: 0.88"
+      ],
+      [
+       10,
+       1.0,
+       "b = 4, ratio 10: 1.00"
+      ],
+      [
+       12,
+       1.0,
+       "b = 4, ratio 12: 1.00"
+      ],
+      [
+       14,
+       1.0,
+       "b = 4, ratio 14: 1.00"
+      ],
+      [
+       16,
+       1.0,
+       "b = 4, ratio 16: 1.00"
+      ]
+     ]
+    }
+   ],
+   "columns": [
+    "Ratio b/c",
+    "b = 1",
+    "b = 2",
+    "b = 4"
+   ],
+   "table": [
+    [
+     "5",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "6",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "7",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "8",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "9",
+     "0.523",
+     "0.662",
+     "0.877"
+    ],
+    [
+     "10",
+     "0.977",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "12",
+     "1.000",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "14",
+     "1.000",
+     "1.000",
+     "1.000"
+    ],
+    [
+     "16",
+     "1.000",
+     "1.000",
+     "1.000"
+    ]
+   ]
+  },
+  {
+   "key": "control",
+   "form": "band",
+   "at": "results",
+   "claims": [
+    "c1"
+   ],
+   "source": [
+    "round2"
+   ],
+   "title": "Round two at a ratio of 20: local producers against the shuffled control.",
+   "takeaway": "Local producers end at 1.00. Shuffled producers, which should end at 0, end at 0.37 on average (0.26 to 0.52). Space is not what keeps them alive.",
+   "units": "final producer share: share of grid cells holding a producer at the end of a run, averaged over runs; 0 means cheaters took the grid",
+   "n": "20 shuffled-control runs; local arm 100 by 100 grid, 1,200 generations, 6 runs per point",
+   "interval": "5th to 95th percentile of the shuffled-control runs",
+   "baseline": "Shuffled arm: every position shuffled before each generation, then the local rules applied",
+   "threshold": "Local share above the control's 95th percentile (0.52). It held, yet the control was expected near 0.",
+   "value_name": "local producers",
+   "band_name": "shuffled control, 5th to 95th percentile",
+   "axis": {
+    "label": "final producer share (0 means cheaters took the grid)",
+    "min": 0,
+    "max": 1
+   },
+   "rows": [
+    {
+     "label": "Benefit-to-cost ratio 20",
+     "value": 1.0,
+     "lo": 0.25777,
+     "hi": 0.5175700000000001,
+     "mean": 0.37037,
+     "series": 0,
+     "note": "local 1.00; shuffled 0.26 to 0.52, mean 0.37"
+    }
+   ],
+   "columns": [
+    "Quantity",
+    "Value"
+   ],
+   "table": [
+    [
+     "Local final share",
+     "1.000"
+    ],
+    [
+     "Mixed final share",
+     "0.000"
+    ],
+    [
+     "Shuffled control mean",
+     "0.370"
+    ],
+    [
+     "Shuffled control 5th percentile",
+     "0.258"
+    ],
+    [
+     "Shuffled control 95th percentile",
+     "0.518"
+    ],
+    [
+     "Shuffled control runs",
+     "20"
+    ]
+   ]
+  },
+  {
+   "key": "round3",
+   "form": "line",
+   "at": "results",
+   "claims": [
+    "c2",
+    "c3",
+    "c4"
+   ],
+   "source": [
+    "round3"
+   ],
+   "title": "Round three at b of 2: the same model with and without the producer's own share.",
+   "takeaway": "With own goods included, local producers reach 0.70 at a ratio of 9 and shuffled producers reach 1.0 by 30. With goods to others only, local producers reach 0.48 at 400 and never cross 0.5.",
+   "units": "final producer share: share of grid cells holding a producer at the end of a run, averaged over runs; 0 means cheaters took the grid",
+   "n": "100 by 100 grid, 1,000 generations, 5 runs per point; 11 ratios from 2 to 400",
+   "interval": null,
+   "no_interval": "The result file holds the mean over runs at each point, with no spread.",
+   "baseline": "Shuffled arm (neighbours are strangers) and mixed arm (goods and parents drawn from the whole grid)",
+   "threshold": "Persistence: mean final share of 0.5 or more at some ratio, with goods to others only",
+   "ruled_out": "Persistence of local producers up to a ratio of 400 when goods go to others only: the highest share is 0.483, below 0.5",
+   "x": {
+    "label": "benefit-to-cost ratio b/c",
+    "log": true
+   },
+   "y": {
+    "label": "final producer share (1 means producers took the grid)",
+    "min": 0,
+    "max": 1,
+    "refs": [
+     {
+      "value": 0.5,
+      "label": "0.5, the persistence bar"
+     }
+    ]
+   },
+   "panels": [
+    {
+     "title": "Own goods included",
+     "series": [
+      {
+       "name": "Local",
+       "points": [
+        [
+         2,
+         0.0,
+         "Local, own goods included, ratio 2: 0.00"
+        ],
+        [
+         5,
+         0.0,
+         "Local, own goods included, ratio 5: 0.00"
+        ],
+        [
+         9,
+         0.7019599999999999,
+         "Local, own goods included, ratio 9: 0.70"
+        ],
+        [
+         12,
+         1.0,
+         "Local, own goods included, ratio 12: 1.00"
+        ],
+        [
+         16,
+         1.0,
+         "Local, own goods included, ratio 16: 1.00"
+        ],
+        [
+         20,
+         1.0,
+         "Local, own goods included, ratio 20: 1.00"
+        ],
+        [
+         30,
+         1.0,
+         "Local, own goods included, ratio 30: 1.00"
+        ],
+        [
+         50,
+         1.0,
+         "Local, own goods included, ratio 50: 1.00"
+        ],
+        [
+         100,
+         1.0,
+         "Local, own goods included, ratio 100: 1.00"
+        ],
+        [
+         200,
+         1.0,
+         "Local, own goods included, ratio 200: 1.00"
+        ],
+        [
+         400,
+         1.0,
+         "Local, own goods included, ratio 400: 1.00"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled",
+       "points": [
+        [
+         2,
+         0.0,
+         "Shuffled, own goods included, ratio 2: 0.00"
+        ],
+        [
+         5,
+         0.0,
+         "Shuffled, own goods included, ratio 5: 0.00"
+        ],
+        [
+         9,
+         0.0,
+         "Shuffled, own goods included, ratio 9: 0.00"
+        ],
+        [
+         12,
+         0.0,
+         "Shuffled, own goods included, ratio 12: 0.00"
+        ],
+        [
+         16,
+         0.0,
+         "Shuffled, own goods included, ratio 16: 0.00"
+        ],
+        [
+         20,
+         0.37014,
+         "Shuffled, own goods included, ratio 20: 0.37"
+        ],
+        [
+         30,
+         1.0,
+         "Shuffled, own goods included, ratio 30: 1.00"
+        ],
+        [
+         50,
+         1.0,
+         "Shuffled, own goods included, ratio 50: 1.00"
+        ],
+        [
+         100,
+         1.0,
+         "Shuffled, own goods included, ratio 100: 1.00"
+        ],
+        [
+         200,
+         1.0,
+         "Shuffled, own goods included, ratio 200: 1.00"
+        ],
+        [
+         400,
+         1.0,
+         "Shuffled, own goods included, ratio 400: 1.00"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "title": "Goods to others only, and the mixed arm",
+     "series": [
+      {
+       "name": "Local",
+       "points": [
+        [
+         2,
+         0.0,
+         "Local, others only, ratio 2: 0.00"
+        ],
+        [
+         5,
+         0.0,
+         "Local, others only, ratio 5: 0.00"
+        ],
+        [
+         9,
+         0.0,
+         "Local, others only, ratio 9: 0.00"
+        ],
+        [
+         12,
+         0.0,
+         "Local, others only, ratio 12: 0.00"
+        ],
+        [
+         16,
+         0.0,
+         "Local, others only, ratio 16: 0.00"
+        ],
+        [
+         20,
+         0.0,
+         "Local, others only, ratio 20: 0.00"
+        ],
+        [
+         30,
+         0.0,
+         "Local, others only, ratio 30: 0.00"
+        ],
+        [
+         50,
+         0.0,
+         "Local, others only, ratio 50: 0.00"
+        ],
+        [
+         100,
+         0.028279999999999993,
+         "Local, others only, ratio 100: 0.03"
+        ],
+        [
+         200,
+         0.18526000000000004,
+         "Local, others only, ratio 200: 0.19"
+        ],
+        [
+         400,
+         0.4827199999999999,
+         "Local, others only, ratio 400: 0.48"
+        ]
+       ]
+      },
+      {
+       "name": "Shuffled",
+       "points": [
+        [
+         2,
+         0.0,
+         "Shuffled, others only, ratio 2: 0.00"
+        ],
+        [
+         5,
+         0.0,
+         "Shuffled, others only, ratio 5: 0.00"
+        ],
+        [
+         9,
+         0.0,
+         "Shuffled, others only, ratio 9: 0.00"
+        ],
+        [
+         12,
+         0.0,
+         "Shuffled, others only, ratio 12: 0.00"
+        ],
+        [
+         16,
+         0.0,
+         "Shuffled, others only, ratio 16: 0.00"
+        ],
+        [
+         20,
+         0.0,
+         "Shuffled, others only, ratio 20: 0.00"
+        ],
+        [
+         30,
+         0.0,
+         "Shuffled, others only, ratio 30: 0.00"
+        ],
+        [
+         50,
+         0.0,
+         "Shuffled, others only, ratio 50: 0.00"
+        ],
+        [
+         100,
+         0.0,
+         "Shuffled, others only, ratio 100: 0.00"
+        ],
+        [
+         200,
+         0.0,
+         "Shuffled, others only, ratio 200: 0.00"
+        ],
+        [
+         400,
+         0.0,
+         "Shuffled, others only, ratio 400: 0.00"
+        ]
+       ]
+      },
+      {
+       "name": "Mixed",
+       "points": [
+        [
+         2,
+         0.0,
+         "Mixed, ratio 2: 0.00"
+        ],
+        [
+         5,
+         0.0,
+         "Mixed, ratio 5: 0.00"
+        ],
+        [
+         9,
+         0.0,
+         "Mixed, ratio 9: 0.00"
+        ],
+        [
+         12,
+         0.0,
+         "Mixed, ratio 12: 0.00"
+        ],
+        [
+         16,
+         0.0,
+         "Mixed, ratio 16: 0.00"
+        ],
+        [
+         20,
+         0.0,
+         "Mixed, ratio 20: 0.00"
+        ],
+        [
+         30,
+         0.0,
+         "Mixed, ratio 30: 0.00"
+        ],
+        [
+         50,
+         0.0,
+         "Mixed, ratio 50: 0.00"
+        ],
+        [
+         100,
+         0.0,
+         "Mixed, ratio 100: 0.00"
+        ],
+        [
+         200,
+         0.00292,
+         "Mixed, ratio 200: 0.00"
+        ],
+        [
+         400,
+         0.03764,
+         "Mixed, ratio 400: 0.04"
+        ]
+       ]
+      }
+     ]
+    }
+   ],
+   "columns": [
+    "Ratio b/c",
+    "Local, own goods included",
+    "Shuffled, own goods included",
+    "Local, others only",
+    "Shuffled, others only",
+    "Mixed"
+   ],
+   "table": [
+    [
+     "2",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "5",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "9",
+     "0.702",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "12",
+     "1.000",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "16",
+     "1.000",
+     "0.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "20",
+     "1.000",
+     "0.370",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "30",
+     "1.000",
+     "1.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "50",
+     "1.000",
+     "1.000",
+     "0.000",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "100",
+     "1.000",
+     "1.000",
+     "0.028",
+     "0.000",
+     "0.000"
+    ],
+    [
+     "200",
+     "1.000",
+     "1.000",
+     "0.185",
+     "0.000",
+     "0.003"
+    ],
+    [
+     "400",
+     "1.000",
+     "1.000",
+     "0.483",
+     "0.000",
+     "0.038"
+    ]
+   ]
+  },
+  {
+   "key": "rules",
+   "form": "rules",
+   "at": "results",
+   "claims": [
+    "c2"
+   ],
+   "source": [
+    "round2",
+    "round3"
+   ],
+   "title": "Rules fixed in advance for rounds two and three, the value each tested and its bar.",
+   "takeaway": "10 of 13 rules held and 1 could not be tested. Round two's threshold rules held for the wrong reason; round three's rule that cooperation persists somewhere failed.",
+   "units": "final producer shares, ratios and a count, as each rule states",
+   "n": "Round two: 100 by 100 grid, 1,200 generations, 6 runs per point. Round three: 100 by 100 grid, 1,000 generations, 5 runs per point.",
+   "interval": null,
+   "no_interval": "Each rule compares one value with one bar.",
+   "baseline": "The round-three shuffled control ended at 0 in all 20 runs, so it has no 95th percentile to compare against and that rule is untestable",
+   "rows": [
+    {
+     "label": "Round 2: mixed arm matches the known recursion, largest error below 0.03",
+     "left": "0.0019",
+     "right": "0.030",
+     "holds": true
+    },
+    {
+     "label": "Round 2: mixed producers end below 0.01",
+     "left": "0.000",
+     "right": "0.010",
+     "holds": true
+    },
+    {
+     "label": "Round 2: local producers end above 0.8 at a ratio of 20",
+     "left": "1.000",
+     "right": "0.800",
+     "holds": true
+    },
+    {
+     "label": "Round 2: local share above the shuffled control's 95th percentile",
+     "left": "1.000",
+     "right": "0.518",
+     "holds": true
+    },
+    {
+     "label": "Round 2: lowest threshold ratio at least 7",
+     "left": "9",
+     "right": "7",
+     "holds": true
+    },
+    {
+     "label": "Round 2: highest threshold ratio at most 12",
+     "left": "9",
+     "right": "12",
+     "holds": true
+    },
+    {
+     "label": "Round 2: producers end below 0.05 at the widest goods range",
+     "left": "0.000",
+     "right": "0.050",
+     "holds": true
+    },
+    {
+     "label": "Round 2: local producer lawn holds above 0.8 against a cheater patch",
+     "left": "1.000",
+     "right": "0.800",
+     "holds": true
+    },
+    {
+     "label": "Round 2: mixed producer lawn falls below 0.05 against a cheater patch",
+     "left": "0.500",
+     "right": "0.050",
+     "holds": false
+    },
+    {
+     "label": "Round 3: shuffled producers with own goods pass 0.5 at the top ratio",
+     "left": "1.000",
+     "right": "0.500",
+     "holds": true
+    },
+    {
+     "label": "Round 3: mixed producers end below 0.05 at the top ratio",
+     "left": "0.038",
+     "right": "0.050",
+     "holds": true
+    },
+    {
+     "label": "Round 3: local producers, others only, persist at one ratio or more",
+     "left": "0",
+     "right": "1",
+     "holds": false
+    },
+    {
+     "label": "Round 3: local share, others only, above the shuffled control's 95th percentile",
+     "left": "0.483",
+     "right": "none",
+     "holds": false,
+     "no": "untestable"
+    }
+   ],
+   "columns": [
+    "Rule set in advance",
+    "Value",
+    "Bar",
+    "Result"
+   ],
+   "table": [
+    [
+     "Round 2: mixed arm matches the known recursion, largest error below 0.03",
+     "0.0019",
+     "0.030",
+     "held"
+    ],
+    [
+     "Round 2: mixed producers end below 0.01",
+     "0.000",
+     "0.010",
+     "held"
+    ],
+    [
+     "Round 2: local producers end above 0.8 at a ratio of 20",
+     "1.000",
+     "0.800",
+     "held"
+    ],
+    [
+     "Round 2: local share above the shuffled control's 95th percentile",
+     "1.000",
+     "0.518",
+     "held"
+    ],
+    [
+     "Round 2: lowest threshold ratio at least 7",
+     "9",
+     "7",
+     "held"
+    ],
+    [
+     "Round 2: highest threshold ratio at most 12",
+     "9",
+     "12",
+     "held"
+    ],
+    [
+     "Round 2: producers end below 0.05 at the widest goods range",
+     "0.000",
+     "0.050",
+     "held"
+    ],
+    [
+     "Round 2: local producer lawn holds above 0.8 against a cheater patch",
+     "1.000",
+     "0.800",
+     "held"
+    ],
+    [
+     "Round 2: mixed producer lawn falls below 0.05 against a cheater patch",
+     "0.500",
+     "0.050",
+     "failed"
+    ],
+    [
+     "Round 3: shuffled producers with own goods pass 0.5 at the top ratio",
+     "1.000",
+     "0.500",
+     "held"
+    ],
+    [
+     "Round 3: mixed producers end below 0.05 at the top ratio",
+     "0.038",
+     "0.050",
+     "held"
+    ],
+    [
+     "Round 3: local producers, others only, persist at one ratio or more",
+     "0",
+     "1",
+     "failed"
+    ],
+    [
+     "Round 3: local share, others only, above the shuffled control's 95th percentile",
+     "0.483",
+     "none",
+     "untestable"
+    ]
+   ]
+  }
+ ]
+}
