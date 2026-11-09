@@ -46,6 +46,7 @@ ${robots ? `<meta name="robots" content="${esc(robots)}">\n` : ""}<link rel="can
 <link rel="preload" href="${TEXT_FACE}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/world/ui/shell/shell.css">
 <link rel="stylesheet" href="${css}">
+<link rel="stylesheet" href="/world/site/depth.css">
 <script type="module" src="/world/ui/shell/shell.js"></script>
 <script type="module" src="/world/site/hand-scroll.js"></script>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n` : ""}${extraHead}</head>

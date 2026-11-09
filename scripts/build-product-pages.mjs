@@ -165,7 +165,7 @@ ${sections}
 
 // every landmark page: the field, the one sound layer, and the page's own toy
 function HEAD(toy) {
-  return ['<link rel="stylesheet" href="/world/site/landmark.css">', '<link rel="stylesheet" href="/world/site/depth.css">', '<script type="module" src="/world/site/home-field.js"></script>',
+  return ['<link rel="stylesheet" href="/world/site/landmark.css">', '<script type="module" src="/world/site/home-field.js"></script>',
     '<script type="module" src="/world/site/sound.js"></script>', ...toy.split(",").map((t) => `<script type="module" src="/world/site/explore/${t}.js"></script>`)].join("\n");
 }
 

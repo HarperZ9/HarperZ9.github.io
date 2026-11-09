@@ -1,77 +1,40 @@
-/* supergraphic.css: the home's arrival as one composition, in one order of reading:
-     1. the heading, the author's name, at architectural scale in cream with a stepped deco-metal emboss;
-     2. the supergraphic, built from the work's names, never the author's:
-        - the frieze: the first four names as built mass across the sky in brass, lit from the field's light on the
-          right and cut with a stepped profile, running off the left edge and stopping short of the open right;
-        - the sign wall: all six names stacked upright, every column the same height, so a short name stands wide and a
-          long one narrow, like signs on one street; each in its platform's hue as enamel with a stepped edge, standing
-          on the horizon on a single brass rule;
-     3. the field: the water, and a drafted hairline field of rays, rings and flow after 1889 astronomy plates.
-   The right third stays open for the places' own images. Sizes follow the viewport (vw, vh), so the composition holds
-   its proportions from a phone to a 4K screen at 100 percent. The letters are dynamic: Stencil's weight settles on
-   arrival and the frieze slides as the reader leaves. Reduced motion holds them still; Plain view and forced colours
-   remove the layer; the heading and the words keep AA contrast over a dark ground and the field's halo.
-   Faces: letter subsets of Accession, SIL Open Font License 1.1 (OFL.txt beside them). */
-@font-face { font-family: "Accession Supergraphic Stencil"; src: url("/world/site/supergraphic/AccessionStencil-supergraphic.woff2") format("woff2"); font-weight: 300 900; font-display: block; }
-@font-face { font-family: "Accession Caption"; src: url("/world/site/supergraphic/AccessionDisplay-caption.woff2") format("woff2"); font-weight: 300; font-display: swap; }
-@property --sg-wght { syntax: "<number>"; inherits: true; initial-value: 900; }
-@property --sg-run { syntax: "<length>"; inherits: true; initial-value: 0px; }
+/* supergraphic.css: the arrival's supergraphic (scripts/supergraphic.mjs). Six upright names in Accession Super at one
+   letter size stand in the water at the plate's horizon, as a skyline; each is crowned with its platform's drawn sign
+   and reflected in the water below. Colour comes from the hierarchy colour system (crossover/colour-tokens.json):
+   platform is a hue, package a lightness inside it. Depth is the one model in depth.css. The name is Accession
+   Display. Nothing here moves, so reduced motion has nothing to hold; plain view and forced colours remove it. */
+@font-face { font-family: "SG Super"; src: url("/world/site/supergraphic/AccessionSuper-signs.woff2") format("woff2"); font-weight: 900; font-display: block; }
+@font-face { font-family: "SG Display"; src: url("/world/site/supergraphic/AccessionDisplay-name.woff2") format("woff2"); font-weight: 900; font-display: swap; }
 @property --sg-rise { syntax: "<length>"; inherits: true; initial-value: 0px; }
-
-.arrival { overflow: clip; isolation: isolate; --brass-1: #1d150d; --brass-2: #5c4630; --brass-3: #a7834f; --brass-4: #e9cf98; --brass-5: #fff1cf; }
-.sg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: clip; contain: strict; --line: rgba(236, 228, 212, .18); }
+.arrival { overflow: clip; isolation: isolate; --hk: .052; --img: max(100vh, 56.25vw); --hz: calc(50vh + var(--hk) * var(--img)); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arrival { --hk: .122; } }
+:root[data-theme="dark"] .arrival { --hk: .122; }
+@media (orientation: portrait) {
+  .arrival { --img: max(100vh, 177.78vw); --hk: .024; }
+  :root[data-theme="dark"] .arrival { --hk: .071; }
+}
+@media (orientation: portrait) and (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arrival { --hk: .071; } }
+.sg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: clip; contain: strict; }
+.sg-defs { position: absolute; }
 .arrival > :not(.sg) { position: relative; z-index: 1; }
-
-/* 3. the drafted field, quiet, centred on the light at the right */
-.sg-field { position: absolute; right: -10vw; top: 0; width: 70vw; height: 100%; opacity: .7; }
-.sg-field .ray { stroke: var(--line); stroke-width: .7; opacity: .5; }
-.sg-field .ring { fill: none; stroke: var(--line); stroke-width: .9; }
-.sg-field .flow { fill: none; stroke: var(--line); stroke-width: .8; opacity: .8; }
-
-/* 2a. the frieze: brass letters as built mass, lit from the right, cut with a stepped profile toward the lower left */
-.sg-frieze { position: absolute; right: 47vw; top: 6vh; white-space: nowrap; margin: 0;
-  font: 900 min(10.5vw, 17vh)/.86 "Accession Supergraphic Stencil", var(--face-display); letter-spacing: -.035em;
-  font-variation-settings: "wght" var(--sg-wght);
-  /* each word takes its platform's hue in the shared depth model (depth.css): lit face, rim, stepped extrusion */
-  transform: translateX(var(--sg-run)); }
-
-/* 2b. the sign wall: six columns, one height, enamel in each platform's hue, a stepped edge and a lit rim */
-.sg-wall { --H: min(38vh, 30vw); position: absolute; left: min(54vw, calc(100vw - 52vh)); bottom: 36vh; height: var(--H); display: flex; align-items: flex-end; gap: calc(var(--H) * .045);
-  padding-bottom: calc(var(--H) * .03); border-bottom: max(2px, .35vh) solid var(--brass-3); transform: translateY(var(--sg-rise)); }
-.sg-sign { margin: 0; writing-mode: vertical-rl; text-orientation: upright; white-space: nowrap; letter-spacing: -.1em;
-  font: 900 calc(var(--H) / (var(--n) * .9))/1 "Accession Supergraphic Stencil", var(--face-display);
-  font-variation-settings: "wght" var(--sg-wght);
-  color: oklch(var(--l, .7) .16 var(--h));
-  text-shadow: .03em -.02em 0 oklch(.92 .06 var(--h)), -.035em .035em 0 oklch(.42 .12 var(--h)), -.07em .07em 0 oklch(.26 .08 var(--h)), -.07em .07em .12em rgba(0, 0, 0, .6); }
-.sg-sign:nth-child(4) { --l: .58; }  /* the game shares the engine's hue, a step darker, so the two read apart by tone too */
-
-/* the caption: spaced light capitals under the wall, as a drafted plate caption */
-.sg-caption { position: absolute; left: min(54vw, calc(100vw - 52vh)); bottom: calc(36vh - 5.4vh); margin: 0;
-  font: 300 clamp(10px, 1.15vh, 26px)/1.7 "Accession Caption", var(--face-text); letter-spacing: .24em; color: rgba(236, 228, 212, .7); }
-
-/* 1. the heading at architectural scale, cream, with a stepped deco-metal emboss */
-.world-home .arrival h1 { font-size: max(52px, min(8.6vw, 15.5vh)); line-height: .9; max-width: 11ch; margin-bottom: .14em; --lift: .03; }
 .world-home .arrival-lede { font-size: max(var(--fs-3), min(1.7vw, 3vh)); max-width: 30ch; }
 .world-home .arrival-ways a { font-size: max(var(--fs-2), min(1.05vw, 2vh)); }
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes sg-settle { from { --sg-wght: 640; } to { --sg-wght: 900; } }
-  .sg-frieze, .sg-sign { animation: sg-settle 1.8s cubic-bezier(.2, 0, 0, 1) both; }
-  @supports (animation-timeline: scroll()) {
-    @keyframes sg-leave { from { --sg-run: 0px; } to { --sg-run: -16vw; } }
-    @keyframes sg-sink { from { --sg-rise: 0px; } to { --sg-rise: 18vh; } }
-    .sg-frieze { animation: sg-settle 1.8s cubic-bezier(.2, 0, 0, 1) both, sg-leave linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
-    .sg-wall { animation: sg-sink linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
-  }
-}
+.world-home .o-hand .o-home { visibility: hidden; }
 html.plain .sg { display: none; }
+html.plain .world-home .arrival h1 { font-family: var(--face-display); }
 @media (forced-colors: active) { .sg { display: none; } }
 
-/* narrow screens: the frieze across the top, the wall standing at the right above the heading */
+.sg-wall { --sink: 9vh; --S: min(7.1vh, 4.4vw, (var(--hz) + var(--sink) - 84px) / 11.3); position: absolute; top: 0; height: calc(var(--hz) + var(--sink)); right: 7vw; display: flex; align-items: flex-end; gap: calc(var(--S) * .42); transform: translateY(var(--sg-rise)); }
+.sg-sign { display: flex; flex-direction: column; align-items: center; font-size: var(--S); }
+.sg-glyph { width: .78em; height: .78em; margin-bottom: .34em; color: var(--d-face); overflow: visible; filter: drop-shadow(-.035em .035em 0 var(--d-side)) drop-shadow(-.035em .035em 0 var(--d-side)) drop-shadow(-.02em .02em 0 var(--d-key)); }
+.sg-name { margin: 0 0 -.2em; writing-mode: vertical-rl; text-orientation: upright; white-space: nowrap; letter-spacing: -.2em; font: 900 1em/1 "SG Super", var(--face-display); --d-s: .011em; }
+.sg-mirror { transform-origin: 50% 100%; transform: translateY(var(--sg-rise)) scaleY(-1); opacity: .4; filter: url(#sg-ripple);
+  -webkit-mask-image: linear-gradient(to top, #000 0, rgba(0,0,0,.5) 30%, transparent 62%); mask-image: linear-gradient(to top, #000 0, rgba(0,0,0,.5) 30%, transparent 62%); }
+.sg-mirror .sg-name { color: var(--d-face); }
+.sg-mirror .sg-glyph { filter: none; }
+.world-home .arrival h1 { font: 900 max(52px, min(8.8vw, 16vh))/.9 "SG Display", var(--face-display); letter-spacing: -.025em; max-width: 6em; margin-bottom: .16em; }
 @media (max-width: 860px) {
-  .sg-frieze { display: none; }  /* on a phone the sign wall carries the supergraphic alone */
-  .sg-field { right: -40vw; width: 150vw; }
-  .sg-wall { --H: 27vh; left: auto; right: 5vw; bottom: 47vh; }
-  .sg-caption { display: none; }
-  .world-home .arrival h1 { font-size: 13vw; }
+  .sg-wall { --S: min(3.6vh, 7.4vw); --sink: 0vh; right: 5vw; }
+  .sg-mirror { opacity: .22; -webkit-mask-image: linear-gradient(to top, #000 0, transparent 26%); mask-image: linear-gradient(to top, #000 0, transparent 26%); }
+  .world-home .arrival h1 { font-size: 12.5vw; align-self: start; }
 }

@@ -13,6 +13,7 @@ import { menuDialog } from "./hand-menu.mjs";
 import { workSection } from "../site-src/world/work.mjs";
 import { labelHand } from "./hand-labels.mjs";
 import { backdrop } from "./field-backdrop.mjs";
+import { supergraphic } from "./supergraphic.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -86,37 +87,6 @@ function bazaar(rules) {
   </article>`).join("\n");
 }
 
-// the arrival's supergraphic: the work's names at wall scale (a tiled band across the sky, and upright signs standing
-// on the horizon like buildings' faces), a drafted field of rays, rings and flow lines, and a drafted caption (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
-// since the same names are the landmarks' headings below.
-const SG_NAMES = ["BUILDLANG", "FLYWHEEL", "ENGINE", "GAME", "CMMNS", "ARTICULATE"];
-// each name's sign takes its platform's hue from the shared colour tokens, raised to a flat, saturated sign colour
-const SG_HUE = { BUILDLANG: 288, FLYWHEEL: 65, ENGINE: 186, GAME: 186, CMMNS: 118, ARTICULATE: 250 };
-function supergraphic() {
-  // the drafted field: white hairline on the dark, after the radial lines, rings and swirling flow lines of 1889
-  // astronomy plates (transformed: our own centre, counts and a three-armed logarithmic spiral)
-  const cx = 600, cy = 470, lines = [];
-  for (let i = 0; i < 48; i++) {
-    const a = (Math.PI * 2 * i) / 48, r0 = 46, r1 = 900;
-    lines.push(`<line class="ray" x1="${(cx + r0 * Math.cos(a)).toFixed(1)}" y1="${(cy + r0 * Math.sin(a)).toFixed(1)}" x2="${(cx + r1 * Math.cos(a)).toFixed(1)}" y2="${(cy + r1 * Math.sin(a)).toFixed(1)}"/>`);
-  }
-  const rings = [46, 92, 150, 220, 300, 390, 490, 600].map((r) => `<circle class="ring" cx="${cx}" cy="${cy}" r="${r}"/>`).join("");
-  const spiral = [0, 1, 2].map((arm) => {
-    const pts = [];
-    for (let t = 0; t <= 4.2 * Math.PI; t += 0.08) { const r = 30 * Math.exp(0.21 * t), a = t + (arm * 2 * Math.PI) / 3; pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * 0.62 * Math.sin(a)).toFixed(1)}`); }
-    return `<polyline class="flow" points="${pts.join(" ")}"/>`;
-  }).join("");
-  // the sign wall: each name stacked upright, all six the same height, so a short name stands wide and a long one
-  // narrow, like signs on one street of buildings; the count of letters sets each column's size
-  const signs = SG_NAMES.map((n) => `<p class="sg-sign" style="--h:${SG_HUE[n]};--n:${n.length}">${n}</p>`).join("");
-  return `<div class="sg" aria-hidden="true">
-      <svg class="sg-field" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" focusable="false">${lines.join("")}${rings}${spiral}</svg>
-      <p class="sg-frieze">${[["ENGINE", "theplygrnd"], ["FLYWHEEL", "theflywheel"], ["GAME", "game"], ["BUILDLANG", "bldlng"]].map(([w, h]) => `<span class="d-3d" data-hue="${h}">${w}</span>`).join(" ")}</p>
-      <div class="sg-wall">${signs}</div>
-      <p class="sg-caption">THE WORK, SHOWN AS SIX LANDMARKS<br>IN THE ORDER A READER MEETS THEM.</p>
-    </div>`;
-}
-
 // a defined term, written [[term]] in the words, becomes <dfn class="term"> in its platform's colour (depth.css)
 const terms = (t, hue) => esc(t).replace(/\[\[(.+?)\]\]/g, (m, w) => `<dfn class="term" data-hue="${hue || "brass"}">${w}</dfn>`);
 
@@ -174,7 +144,7 @@ function build() {
   const rules = new Map(world.rules.map((x) => [x.id, x]));
   const html = read("site-src/world/home.html.tmpl")
     .replace("{{BODY_CLASS}}", r.bodyClass).replace("{{HAND}}", r.hand).replace("{{MENU}}", r.menu)
-    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{LANDMARKS}}", landmarks(rules)).replace("{{WORK}}", workSection()).replace("{{SUPER}}", supergraphic()).replace("{{WAYS}}", ways()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
+    .replace("{{CANVASES}}", r.canvases).replace("{{ROAD}}", r.stops).replace("{{LANDMARKS}}", landmarks(rules)).replace("{{WORK}}", workSection()).replace("{{SUPER}}", supergraphic(JSON.parse(read("world/site/crossover/colour-tokens.json")).platform)).replace("{{WAYS}}", ways()).replace("{{BACKDROP}}", backdrop({ priority: "high", live: true })).replace("{{ARRIVAL_SOURCES}}", sources("/media/world/name-art/glass-tubes"));
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
