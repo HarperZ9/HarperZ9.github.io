@@ -162,10 +162,6 @@ html.plain
 .sky-end{display:flex;gap:10px;flex-wrap:wrap}
 .sky-row[hidden]{display:none}
 
-/* a 4K screen at 100% scaling: lay the page out as it reads at 1920, at twice the size, so the type, the hand and
-   the measure keep their proportions instead of shrinking into the middle of a 3840-pixel field */
-@media (min-width: 2560px) and (max-width: 3199px) and (max-resolution: 1.4dppx) { html { zoom: 1.5; } }
-@media (min-width: 3200px) and (max-resolution: 1.4dppx) { html { zoom: 2; } }
 
 /* one left edge for the whole home: the places start at the page's gutter like the arrival, the dial and the
    landmarks, and their lead media take the width that frees */

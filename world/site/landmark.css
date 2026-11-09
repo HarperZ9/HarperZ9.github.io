@@ -82,10 +82,6 @@ body.landmark main { max-width: 1180px; padding-inline: clamp(16px, 4vw, 56px); 
 /* package and file names stay whole on narrow screens (tests/test_ident_tokens.py) */
 .ident{display:inline-block;max-width:100%;overflow-wrap:anywhere;text-decoration:inherit}
 
-/* a 4K screen at 100% scaling: lay the page out as it reads at 1920, at twice the size, so the type, the hand and
-   the measure keep their proportions instead of shrinking into the middle of a 3840-pixel field */
-@media (min-width: 2560px) and (max-width: 3199px) and (max-resolution: 1.4dppx) { html { zoom: 1.5; } }
-@media (min-width: 3200px) and (max-resolution: 1.4dppx) { html { zoom: 2; } }
 
 /* the registry field: ten marks, the shape saying where each came from; the pressed one is filled */
 .rgy { display: grid; gap: 14px; max-width: 74ch; }

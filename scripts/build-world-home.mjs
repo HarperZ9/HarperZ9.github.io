@@ -86,23 +86,34 @@ function bazaar(rules) {
   </article>`).join("\n");
 }
 
-// the arrival's supergraphic: the work's names as bands of letters at wall scale, a deco sunburst of stepped rays and
-// arcs, and the stencilled names as the brutalist mass on the horizon (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
+// the arrival's supergraphic: the work's names at wall scale (a tiled band across the sky, and upright signs standing
+// on the horizon like buildings' faces), a drafted field of rays, rings and flow lines, and a drafted caption (world/site/supergraphic.css). Decoration only: hidden from assistive technology,
 // since the same names are the landmarks' headings below.
 const SG_NAMES = ["BUILDLANG", "FLYWHEEL", "ENGINE", "GAME", "CMMNS", "ARTICULATE"];
+// each name's sign takes its platform's hue from the shared colour tokens, raised to a flat, saturated sign colour
+const SG_HUE = { BUILDLANG: 288, FLYWHEEL: 65, ENGINE: 186, GAME: 186, CMMNS: 118, ARTICULATE: 250 };
 function supergraphic() {
-  const band = (i, names) => `<p class="sg-band sg-${i}">${names.join(" ")}</p>`;
   const rot = (k) => SG_NAMES.slice(k).concat(SG_NAMES.slice(0, k));
-  // rays fan over the upper half, stepped in length like a deco sunburst; arcs step outward in three tiers
-  const cx = 500, cy = 500, rays = [];
-  for (let i = 0; i <= 36; i++) {
-    const a = Math.PI + (Math.PI * i) / 36, r0 = 120, r1 = i % 3 === 0 ? 490 : i % 3 === 1 ? 400 : 330;
-    rays.push(`<line class="ray" x1="${(cx + r0 * Math.cos(a)).toFixed(1)}" y1="${(cy + r0 * Math.sin(a)).toFixed(1)}" x2="${(cx + r1 * Math.cos(a)).toFixed(1)}" y2="${(cy + r1 * Math.sin(a)).toFixed(1)}"/>`);
+  // the drafted field: white hairline on the dark, after the radial lines, rings and swirling flow lines of 1889
+  // astronomy plates (transformed: our own centre, counts and a three-armed logarithmic spiral)
+  const cx = 600, cy = 470, lines = [];
+  for (let i = 0; i < 48; i++) {
+    const a = (Math.PI * 2 * i) / 48, r0 = 46, r1 = 900;
+    lines.push(`<line class="ray" x1="${(cx + r0 * Math.cos(a)).toFixed(1)}" y1="${(cy + r0 * Math.sin(a)).toFixed(1)}" x2="${(cx + r1 * Math.cos(a)).toFixed(1)}" y2="${(cy + r1 * Math.sin(a)).toFixed(1)}"/>`);
   }
-  const arcs = [150, 210, 280].map((r) => `<path class="arc" d="M${cx - r} ${cy} A${r} ${r} 0 0 1 ${cx + r} ${cy}"/>`).join("");
+  const rings = [46, 92, 150, 220, 300, 390, 490, 600].map((r) => `<circle class="ring" cx="${cx}" cy="${cy}" r="${r}"/>`).join("");
+  const spiral = [0, 1, 2].map((arm) => {
+    const pts = [];
+    for (let t = 0; t <= 4.2 * Math.PI; t += 0.08) { const r = 30 * Math.exp(0.21 * t), a = t + (arm * 2 * Math.PI) / 3; pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * 0.62 * Math.sin(a)).toFixed(1)}`); }
+    return `<polyline class="flow" points="${pts.join(" ")}"/>`;
+  }).join("");
+  // the signs: each name stacked upright in its own column, at the scale of a building's face
+  const signs = SG_NAMES.map((n, i) => `<p class="sg-sign" style="--h:${SG_HUE[n]};--i:${i}">${n}</p>`).join("");
   return `<div class="sg" aria-hidden="true">
-      ${band(1, rot(0))}${band(2, rot(3))}${band(3, rot(1))}
-      <svg class="sg-sun" viewBox="0 0 1000 520" focusable="false">${rays.join("")}${arcs}<path class="core" d="M410 500 A90 90 0 0 1 590 500 Z"/></svg>
+      <svg class="sg-field" viewBox="0 0 1200 940" preserveAspectRatio="xMidYMid slice" focusable="false">${lines.join("")}${rings}${spiral}</svg>
+      <p class="sg-band sg-1">${rot(0).join(" ")}</p>
+      <div class="sg-signs">${signs}</div>
+      <p class="sg-caption">THE WORK, SHOWN AS SIX LANDMARKS<br>IN THE ORDER A READER MEETS THEM.<br>DRAWN FOR THIS PAGE, 2026.</p>
     </div>`;
 }
 
