@@ -135,6 +135,14 @@ Limits of offline checks. The test suite sees one commit, not the pull request's
 
 Does not prove: a receipt shows one checker run fingerprinted the page and a named reviewer attested reading it. It does not prove the page's claims. It does not authenticate the reviewer beyond git history. It does not prove the packet came from a real fetch, and it does not prove the page is unchanged after publication.
 
+## 2026-10-14 link targets in HTML fingerprints
+
+HTML profiles now hash every link target inside the registered container, written as `<href>` after the link text, along with the words. Before this change a cited page that kept its words and changed where a link pointed fingerprinted as unchanged. Each HTML record carries `normalizer: text-and-link-targets/1` and a `text_only_sha256` with the old text-only value.
+
+A stored baseline without `normalizer` is compared on its words. Different words report the source as changed, as before. The same words report it as unbaselined, because its link targets were never reviewed. `tools/frontier_safety_renormalize.py` moves a stored baseline to the new normalizer only when the live page's text-only fingerprint still equals the stored value, and it keeps the old value in `renormalized_from_sha256`. On 2026-10-14 it moved four baselines (`aisi-unsanctioned-agent-behaviour`, `anthropic-three-cyber-eval-incidents`, `sysdig-jadepuffer`, `aisi-ai-safety-research-sabotage`). Two sources, `metr-incident-investigation-method` and `openai-metr-redwood-joint-review`, have words that differ from their stored baselines, so they stay on the old baseline and the monitor reports them as changed for the normal review. `tests/test_frontier_safety_link_targets.py` holds the planted link swap that the old normalizer accepted.
+
+Does not prove: that the moved link targets are correct. They are first observations, not reviewed facts. A link rewritten by script after load, or a target outside the container, is not covered.
+
 ## 2026-08-24 Hugging Face false-positive review
 
 The Hugging Face technical timeline produced an apparent fingerprint delta when dynamic engagement and discussion content changed. Review found that those surfaces were outside the article record. The registered `huggingface_blog_article` profile now fingerprints the article container while excluding engagement elements and content outside that container. A same-day recheck recorded zero changed source IDs and zero fetch-error IDs after the profile was applied.

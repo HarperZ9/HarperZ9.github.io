@@ -9,8 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# 2026-10-26: the React home moved to workshop.html when the home became the world's entrance (index.html).
 def test_home_shell_is_intact() -> None:
-    src = (ROOT / "index.html").read_text(encoding="utf-8")
+    src = (ROOT / "workshop.html").read_text(encoding="utf-8")
     assert '<div id="root"></div>' in src
     js = re.search(r'src="(/assets/index-[^"]+\.js)"', src)
     css = re.search(r'href="(/assets/index-[^"]+\.css)"', src)

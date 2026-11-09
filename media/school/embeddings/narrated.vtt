@@ -1,0 +1,95 @@
+WEBVTT
+
+00:00:04.600 --> 00:00:05.796
+Embeddings.
+
+00:00:06.116 --> 00:00:07.833
+Every word gets coordinates.
+
+00:00:08.433 --> 00:00:13.085
+Pylon showed you that a word in a model is a list of numbers, a place.
+
+00:00:13.405 --> 00:00:15.818
+Tonight, where those places come from.
+
+00:00:17.018 --> 00:00:21.431
+At the start, every word gets a list of 32 small random numbers.
+
+00:00:21.751 --> 00:00:23.556
+The places mean nothing yet.
+
+00:00:24.156 --> 00:00:31.438
+Check the neighbours: only 26 percent of words sit next to a word of the same kind, about what a shuffle gives.
+
+00:00:32.638 --> 00:00:34.399
+The trick is a guessing game.
+
+00:00:34.719 --> 00:00:37.415
+Take a word in a sentence, and the words around it.
+
+00:00:38.015 --> 00:00:43.580
+Each word gets two lists: one for when it's the word in the middle, one for when it's a neighbour.
+
+00:00:43.900 --> 00:00:52.791
+Nudge the lists so that the middle word's list and each real neighbour's neighbour-list get a bigger dot product, the measure from the vectors lesson.
+
+00:00:53.391 --> 00:01:00.108
+And for every real neighbour, pick 5 words at random, common words more often than rare ones, and push those the other way.
+
+00:01:00.428 --> 00:01:06.559
+Tomas Mikolov and his colleagues called it negative sampling, in 2013.
+
+00:01:07.759 --> 00:01:13.237
+Run the game over the guides' sentences, 5 times through, and watch the places move.
+
+00:01:13.837 --> 00:01:17.033
+Will the neighbours keep getting tidier all the way through training?
+
+00:01:19.533 --> 00:01:27.902
+Very early, by 5 percent of the way, the neighbours look their tidiest of any checkpoint: 72 percent of words sit next to a word of the same kind.
+
+00:01:28.222 --> 00:01:38.374
+By the end, in this run, it has slipped back to 65, three words fewer out of 46, while the guessing game keeps getting better on sentences it never trained on.
+
+00:01:38.974 --> 00:01:41.801
+Better at the game is not always tidier on the chart.
+
+00:01:42.121 --> 00:01:45.534
+The game is the goal; the neat neighbours are a side effect.
+
+00:01:46.734 --> 00:01:58.081
+Start from different random numbers, four more times, and you get different coordinates, but much the same neighbours: against the first run, 75 to 80 percent of each word's three nearest neighbours agree.
+
+00:01:59.281 --> 00:02:08.455
+The language model from the attention lesson learned its word lists a different way: as a side effect of guessing the next word, through two layers of attention.
+
+00:02:09.055 --> 00:02:12.947
+Its lists put 80 percent of words next to a word of the same kind.
+
+00:02:13.267 --> 00:02:18.353
+And between the two tables, about 33 percent of each word's three nearest neighbours agree.
+
+00:02:18.673 --> 00:02:20.999
+By chance it would be about 7 percent.
+
+00:02:21.599 --> 00:02:28.469
+So the two methods agree on far more than chance, and far less than two runs of the same method agree with each other.
+
+00:02:28.789 --> 00:02:30.746
+Neither one is the true map.
+
+00:02:31.066 --> 00:02:34.152
+Each is a map of what its own game needed.
+
+00:02:35.352 --> 00:02:36.961
+Nobody draws the chart.
+
+00:02:37.281 --> 00:02:41.173
+A guessing game moves the cards, and words used alike end up close.
+
+00:02:41.773 --> 00:02:46.794
+Next in the lighthouse: guessing the next word, and keeping score.
+
+00:02:47.114 --> 00:02:47.962
+Goodnight.
+

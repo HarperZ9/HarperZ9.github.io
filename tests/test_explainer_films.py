@@ -76,7 +76,7 @@ def test_page_carries_transcript_sources_and_quotes() -> None:
             for line in seg["lines"]:
                 assert line in TEXT, f"transcript line missing: {line[:50]}"
             for sid in seg.get("sources", []):
-                assert ev[sid]["url"] in PAGE and ev[sid]["does_not_prove"] in TEXT, sid
+                assert ev[sid]["url"] in PAGE and ev[sid]["context"] in TEXT, sid
         for item in load(folder, "recall.json")["items"]:
             assert item["source"]["ref"].startswith("explainers.html#")
             assert item["source"]["quote"] in TEXT, item["id"]

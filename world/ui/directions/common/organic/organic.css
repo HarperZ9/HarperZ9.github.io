@@ -1,0 +1,138 @@
+/* shell/organic: the standard UI patterns, grown from the site's materials. Native elements underneath. */
+
+/* ---------- material regions ---------- */
+[data-material]{--m-ground:var(--card,#e8e2d4);--m-ink:var(--ink);--m-accent:var(--drift)}
+
+/* ---------- focus: thin-film light (organic-gen.js sets the colours from thinfilm.mjs) ---------- */
+:root{--o-film-a:#c58a2a;--o-film-b:#4f7fc4}
+:focus-visible{outline:3px solid var(--o-film-a);outline-offset:3px;box-shadow:0 0 0 6px color-mix(in srgb,var(--o-film-b) 55%,transparent)}
+@media (forced-colors:active){:focus-visible{outline:3px solid Highlight;box-shadow:none}}
+
+/* ---------- panel: torn, blotted, sand-settled or brush-painted ---------- */
+[data-o="panel"]{position:relative;isolation:isolate;background:var(--m-ground) linear-gradient(rgba(20,16,12,.13),rgba(20,16,12,.13));color:var(--m-ink);padding:calc(var(--o-pad,12px) + 18px)}
+[data-o="panel"].o-brushed{background-color:transparent}
+[data-o-node]{position:relative;isolation:isolate}
+[data-o="panel"] > canvas.o-brush,[data-o-node] > canvas.o-node{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+[data-o="panel"][data-edge-kind="sand"]{background:var(--m-ground);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--m-ink) 25%,transparent);
+  -webkit-mask:radial-gradient(circle,#000 62%,transparent 64%) 0 0/3px 3px,linear-gradient(#000,#000) 6px 6px/calc(100% - 12px) calc(100% - 12px) no-repeat;
+  mask:radial-gradient(circle,#000 62%,transparent 64%) 0 0/3px 3px,linear-gradient(#000,#000) 6px 6px/calc(100% - 12px) calc(100% - 12px) no-repeat}
+
+/* ---------- rule: a rope or ink line ---------- */
+[data-o="rule"]{display:block;border:0;height:14px;margin:28px 0;color:var(--m-ink,var(--ink))}
+[data-o="rule"] svg{display:block;width:100%;height:14px}
+
+/* ---------- mark: a living kicker grown from the material, never small caps ---------- */
+[data-o="mark"]{display:inline-block;width:46px;height:10px;margin-bottom:10px;color:var(--m-accent,var(--ink));
+  background:radial-gradient(circle,currentColor 45%,transparent 50%) 0 50%/6px 6px repeat-x;
+  -webkit-mask:linear-gradient(90deg,#000 calc(var(--o-grow,1) * 100%),transparent 0);mask:linear-gradient(90deg,#000 calc(var(--o-grow,1) * 100%),transparent 0)}
+html.ready [data-o="mark"]{animation:o-grow var(--dur-scene) var(--ease-engrave) both}
+@property --o-grow{syntax:"<number>";inherits:false;initial-value:1}
+@keyframes o-grow{from{--o-grow:0}to{--o-grow:1}}
+
+/* ---------- switch: an ink drop that rolls; the on state develops like a print ---------- */
+[data-o="switch"]{position:relative;display:inline-flex;align-items:center;gap:12px;background:none;border:0;padding:6px 0;min-height:44px;color:var(--m-ink,var(--ink));font:600 var(--fs-2,15px) var(--face-text,sans-serif);cursor:pointer}
+[data-o="switch"]::before{content:"";width:58px;height:28px;border-radius:14px 16px 13px 15px;border:2px solid currentColor;
+  background:color-mix(in srgb,currentColor calc(var(--o-dev,0) * 100%),transparent)}
+[data-o="switch"]::after{content:"";position:absolute;left:6px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:52% 48% 55% 45%;
+  background:var(--m-ground,var(--wall));box-shadow:0 0 0 2px currentColor;transition:translate var(--dur-slow) var(--ease-spring)}
+[data-o="switch"][aria-checked="true"]::after{translate:30px 0}
+
+/* ---------- range: a rope (organic-gen draws it); the native input sits on top, keyboard intact ---------- */
+.o-range-wrap{position:relative;display:block;min-height:44px}
+.o-range-wrap > canvas.o-rope{position:absolute;left:0;top:8px;width:100%;height:28px;pointer-events:none}
+input[data-o="range"]{position:relative;z-index:1;width:100%;height:44px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;color:var(--m-ink,var(--ink))}
+input[data-o="range"]::-webkit-slider-runnable-track{height:28px;background:transparent}
+input[data-o="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:3px;border-radius:50%;background:var(--m-accent,#b58a52);box-shadow:0 0 0 3px currentColor}
+input[data-o="range"]::-moz-range-track{background:transparent}
+input[data-o="range"]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--m-accent,#b58a52);border:3px solid currentColor}
+
+/* ---------- ripple: water over a frame ---------- */
+[data-o="ripple"],[data-o-ripple]{position:relative;isolation:isolate}
+:is([data-o="ripple"],[data-o-ripple]) > canvas.o-ripple{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:soft-light;opacity:.9;image-rendering:auto}
+
+/* ---------- the fold: menu toggle as a sheet folded in thirds ---------- */
+[data-o="fold"]{position:relative;width:52px;height:52px;padding:0;border:0;background:none;cursor:pointer;color:var(--ink)}
+[data-o="fold"] i{position:absolute;left:10px;right:10px;height:9px;background:var(--card,#efe8d8);box-shadow:inset 0 0 0 1.5px var(--ink);transition:transform var(--dur-slow) var(--ease-standard)}
+[data-o="fold"] i:nth-child(1){top:12px;transform:skewY(-6deg)}
+[data-o="fold"] i:nth-child(2){top:21px;transform:skewY(6deg)}
+[data-o="fold"] i:nth-child(3){top:30px;transform:skewY(-6deg)}
+[data-o="fold"]:hover i,[data-o="fold"]:focus-visible i{transform:none}
+[data-o="fold"][aria-expanded="true"] i{transform:skewY(0) scaleX(1.15)}
+
+/* ---------- the menu: a dialog whose ground is settling sand ---------- */
+dialog[data-o="menu"]{position:fixed;inset:0;width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:clamp(24px,6vw,96px) 16px;border:0;
+  background:var(--m-ground,#141a2e);color:var(--m-ink,#e4dcc4);overflow:auto}
+dialog[data-o="menu"]::backdrop{background:transparent}
+dialog[data-o="menu"] > canvas.o-sand{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.75}
+dialog[data-o="menu"] > *:not(canvas){position:relative;z-index:1}
+html.ready dialog[data-o="menu"][open]{animation:o-menu-in var(--dur-slow) var(--ease-enter) both}
+@keyframes o-menu-in{from{opacity:0}}
+.o-places{list-style:none;margin:0 auto;padding:0;max-width:1320px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px 32px}
+.o-places a{display:block;text-decoration:none;color:inherit;padding:10px 0}
+.o-places .o-word{--letter-ground:var(--m-ground);--letter-ink:var(--m-ink);--letter-paper:var(--m-ground);display:block;font:900 clamp(36px,3.4vw,52px)/1 var(--face-display,sans-serif);letter-spacing:-.03em}
+.o-places small{display:block;margin-top:6px;font:400 var(--fs-2,15px)/1.4 var(--face-text,sans-serif);opacity:.8}
+.o-menu-foot{max-width:1320px;margin:40px auto 0;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;font-size:var(--fs-2,15px)}
+.o-menu-foot a,.o-menu-foot button{color:inherit}
+.o-close{font:600 var(--fs-2,15px) var(--face-text,sans-serif);background:none;color:inherit;border:2px solid currentColor;border-radius:0;padding:10px 16px;min-height:44px;cursor:pointer}
+
+/* ---------- the hand: live controls that come to hand, no permanent bar ---------- */
+.o-hand{position:fixed;z-index:40;right:clamp(10px,2vw,24px);top:clamp(10px,2vw,24px);display:flex;gap:6px;align-items:center;
+  padding:4px;background:color-mix(in srgb,var(--wall,#e8e3d9) 95%,transparent);border-radius:30px 26px 32px 28px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}
+.o-hand .o-home{font:800 var(--fs-2,15px)/1 var(--face-text,sans-serif);color:var(--ink);text-decoration:none;padding:0 12px 0 10px}
+.o-hand .o-name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;font-size:var(--fs-1)}
+
+/* lamp: a filament that is the scene's light; the page is lit from where it hangs */
+[data-o="lamp"]{position:relative;width:44px;height:44px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle at 50% 45%,#fff6d8 0 18%,#f2c46b 32%,transparent 62%);box-shadow:inset 0 0 0 2px var(--ink)}
+[data-o="lamp"][aria-pressed="false"]{background:radial-gradient(circle at 50% 45%,#5a5040 0 16%,transparent 40%)}
+.room{background-image:radial-gradient(ellipse 70% 60% at var(--o-lamp-x,78%) 0,var(--lamp,transparent),transparent 70%)}
+
+/* record: the waveform of what plays */
+[data-o="record"]{position:relative;display:inline-flex;align-items:center;width:64px;height:44px;padding:0 6px;border:0;border-radius:22px;background:none;cursor:pointer;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+[data-o="record"] canvas{width:100%;height:20px}
+[data-o="record"][aria-pressed="true"]{background:var(--ink);color:var(--wall,#fff)}
+
+/* peel: the corner of the material lifts to plain paper */
+[data-o="peel"]{position:relative;width:44px;height:44px;padding:0;border:0;cursor:pointer;
+  background:linear-gradient(225deg,transparent 0 30%,#fbf8f1 30% 46%,color-mix(in srgb,var(--ink) 18%,#fbf8f1) 46% 50%,var(--card,#d8cfba) 50%);clip-path:polygon(0 0,70% 0,100% 30%,100% 100%,0 100%)}
+[data-o="peel"]:hover,[data-o="peel"]:focus-visible{background:linear-gradient(225deg,transparent 0 44%,#fbf8f1 44% 62%,color-mix(in srgb,var(--ink) 18%,#fbf8f1) 62% 66%,var(--card,#d8cfba) 66%);clip-path:polygon(0 0,56% 0,100% 44%,100% 100%,0 100%)}
+[data-o="peel"][aria-pressed="true"]{background:#fbf8f1;clip-path:none;box-shadow:inset 0 0 0 2px var(--ink)}
+
+/* scrollbars: thin ink on the wall */
+html{scrollbar-color:color-mix(in srgb,var(--ink) 55%,transparent) transparent;scrollbar-width:thin}
+
+/* ---------- still states ---------- */
+@media (prefers-reduced-motion:reduce){
+  [data-o="switch"]::after,[data-o="fold"] i{transition:none}
+  html.ready [data-o="mark"],html.ready dialog[data-o="menu"][open]{animation:none}
+}
+html.plain canvas.o-brush,html.plain canvas.o-node,html.plain canvas.o-ripple,html.plain canvas.o-sand{display:none}
+html.plain [data-o="panel"]{background:var(--m-ground);clip-path:none!important;-webkit-mask:none;mask:none}
+@media (forced-colors:active){[data-o="panel"]{clip-path:none!important;border:1px solid CanvasText}}
+
+/* on phones the hand sits at the bottom edge, in the thumb's reach, clear of every title */
+@media (max-width:860px){
+  .o-hand{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:10px;left:10px;justify-content:space-between}
+  body:has(.o-hand){padding-bottom:84px}
+}
+
+/* the survey band: the universe's "we are here", carried in the hand; the link names it for readers */
+[data-o="band"]{display:inline-flex;align-items:center;min-height:44px;padding:0 6px;color:var(--ink);text-decoration:none}
+[data-o="band"] svg{display:block;height:40px;width:auto}
+[data-o="band"] .here-num{font:400 12px var(--face-utility,monospace);fill:var(--ink)}
+[data-o="band"] .here-tick,[data-o="band"] .here-bar{fill:var(--ink)}
+[data-o="band"] .here-tile{cursor:pointer}
+/* motion toggle (the alive layer): a strip of Muybridge frames, still when off */
+.o-motion{position:relative;width:44px;height:44px;padding:0;border:0;border-radius:50%;cursor:pointer;overflow:hidden;background:none;box-shadow:inset 0 0 0 2px var(--ink)}
+.o-motion img{width:400%;max-width:none;height:100%;object-fit:cover;object-position:0 50%;filter:grayscale(1) contrast(1.2);mix-blend-mode:multiply}
+.o-motion[aria-pressed="true"] img{animation:o-gallop 1.2s steps(4) infinite}
+@keyframes o-gallop{to{transform:translateX(-75%)}}
+@media (prefers-reduced-motion:reduce){.o-motion img{animation:none!important}}
+html.plain .o-motion img{animation:none}
+.o-motion[aria-pressed="false"]{opacity:.45}
+@media (max-width:860px){.o-hand .o-home{display:none}}
+dialog[data-o="menu"] :is(.lt-host.lt-on,.slot-on,.o-word){color:var(--m-ink)!important}
+dialog[data-o="menu"] :is(.o-places,.o-menu-foot){background:color-mix(in srgb,var(--m-ground) 80%,transparent)}
+
+[data-material] :is(.lt-host.lt-on,.slot-on,.lettered-on){color:var(--m-ink)!important}

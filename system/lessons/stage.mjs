@@ -1,7 +1,7 @@
 // Shared by the lessons and demos: where the vendored engine lives, a tiny element helper, and
 // the drawing backend. WebGPU (raw-native's Motion renderer, with the template looks as post
 // passes) where the browser has it; raw-native's Canvas 2D drawer everywhere else.
-export const ENGINE = new URL("../../media/raw-native/tree-c6b114d/", import.meta.url);
+export const ENGINE = new URL("../../media/raw-native/tree-ada041f/", import.meta.url);
 
 export const el = (tag, attrs = {}, kids = []) => {
   const n = document.createElement(tag);

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-23",
+  "note": "Career pages, CV and resumes refreshed against releases checked October 23, 2026: Flywheel 1.9.0 (PyPI flywheel-verify), Articulate 0.14.0 (PyPI articulate-writing), Daylight Commons 3.0.0, BuildLang 1.7.0 and 1.8.0 (crates.io), raw-native 0.8.0, and the October 23 Gather, Crucible, EMET and Canon releases. Text exports, PDF and DOCX regenerated through tools/render_career_pages.py and tools/build_career_artifacts.py at source epoch 2026-10-23. Census refreshed; pr_census now excludes organizations the author administers. Four targeted resumes stay one page; the CV stays six pages.",
+  "paths": {
+    "career/Zain-Dana-Harper-CV.docx": "44d88666f457aaaa4e92757513b7c70effb730923c7d3d66eb355c1fff2ea76b",
+    "career/Zain-Dana-Harper-CV.pdf": "8d19f21426d9410a73657ea8e5bd3c9c28acd6a2f6c7a8c612cd90f0e955f606",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.docx": "a2d7ac4a01226de3d591d3cb757edc5c1a3031446740e4d1894696f5395df994",
+    "career/Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools.pdf": "e2bcef2e9102ac68ba88bde8f69a98f495b61d93c6a8c7f65f06ef2f42c5130b",
+    "career/Zain-Dana-Harper-Resume-Grounds.docx": "14a79a48a29da7ec716fd5eab0207b01a2a6aaf6545dbcd4a1434f239751b655",
+    "career/Zain-Dana-Harper-Resume-Public-Operations.docx": "3b906a59b1b8ebf8c5298e067c2b11df3caf3c47690175cab5e6cf14def4f4f5",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.docx": "892fe22e6e287b85feab9928cfee429f4c9a8846610d29a7e1174504add12e19",
+    "career/Zain-Dana-Harper-Resume-Support-Developer-Operations-QA.pdf": "7855b28605b804f36eb471f55c046b87df20ebe7cf3de0de79fbbbc303c3a2b8",
+    "career/career-artifacts.json": "0d06783f66cb8cba7c4a7760de7fd770ad0041dfff3c77bc6c20bd83764b2374",
+    "career/career-build-receipt.json": "c5818305cf559238543004cd20b141a0b8ffe9ccac23500bf65defc26d5b2d33",
+    "career/open-source-census.json": "a2e0c3a3d97df4b0ce6bc11469ba85e78042428712a2065effbf1d97ad83f3e8",
+    "cv.html": "648d72761714b2ce1c189f4893f0366e41b7e51d2cb1e1e914cda23ae2af8931",
+    "cv.md": "6ad92030ff0f849e42b673f6f123f59f6c66d094cc2f383ff114faa1f5a45aa2",
+    "hire.html": "1c2334d4f6f1d72d762bb612ccbeadb7a8813165c38ddb88569ea879ab8c1af6",
+    "resume-evaluation-tooling.html": "57741b45cc539a3ee472fdb38acc02dbc10550c0b7362e448726bb8278001518",
+    "resume-grounds.html": "06900d435eaee919da0801b398001f191e6ff51045a460c15509659dc19f1869",
+    "resume-public-operations.html": "e3a571d1ebff3457fafc22eb2c555daa86e89a54c14b8e188b41279ddecd1a1f",
+    "resume-support-operations.html": "82a2ed072a3190702fe297b0a0b1183ea1decdaf720898e918a377c232d069b3",
+    "resume.html": "70828bc5f19454edf0ad5b74daf56fdbd761e9e60e1540261eb4336a7b38d298",
+    "resume.md": "780fa694e588fb177c572c9faae9cde5a100e3d7daf3af81e64d98ea17fcec13"
+  }
+}

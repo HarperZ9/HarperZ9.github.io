@@ -1,0 +1,36 @@
+{
+ "family": "Accession Stencil",
+ "ground": "#ebe5d8",
+ "axes": [
+  "wght"
+ ],
+ "classes": {
+  "bindings": {
+   "fill": {
+    "material": "ink",
+    "kind": "outline",
+    "how": "the outline itself; colour from CSS or a COLRv1 palette entry",
+    "live": []
+   }
+  },
+  "axes": [
+   {
+    "tag": "wght",
+    "target": "skeleton.weight",
+    "kind": "variable"
+   }
+  ]
+ },
+ "files": {
+  "variable": {
+   "ttf": 207040,
+   "woff2": 79140,
+   "name": "AccessionStencil[wght]"
+  },
+  "cut": {
+   "ttf": 95084,
+   "woff2": 31064,
+   "name": "AccessionStencil-Cut"
+  }
+ }
+}

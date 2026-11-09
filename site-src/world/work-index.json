@@ -1,0 +1,2599 @@
+{
+ "built": "2026-11-02",
+ "entries": [
+  {
+   "id": "calibrate-pro",
+   "name": "calibrate-pro",
+   "platform": "THEPLYGRND",
+   "kind": "tool",
+   "summary": "Calibrates a Windows monitor with or without a colorimeter and marks each accuracy figure measured or estimated.",
+   "state": "released",
+   "version": "v2.0.1",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/calibrate-pro",
+   "release": "https://github.com/HarperZ9/calibrate-pro/releases/tag/v2.0.1",
+   "pages": [],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "calibrate-pro",
+     "version": "2.0.1",
+     "url": "https://pypi.org/project/calibrate-pro/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "build-color",
+   "name": "build-color",
+   "platform": "THEPLYGRND",
+   "kind": "library",
+   "summary": "A colour-science library and CLI: perceptual spaces, HDR tone maps, appearance models and LUTs.",
+   "state": "released",
+   "version": "v1.0.1",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-color",
+   "release": "https://github.com/HarperZ9/build-color/releases/tag/v1.0.1",
+   "pages": [
+    "build-color.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "build-color",
+     "version": "1.0.2",
+     "url": "https://pypi.org/project/build-color/"
+    },
+    {
+     "registry": "PyPI",
+     "name": "quanta-color",
+     "version": "1.0.1",
+     "url": "https://pypi.org/project/quanta-color/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "build-finance",
+   "name": "build-finance",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "Backtesting, paper trading and risk metrics in one source-visible finance toolkit.",
+   "state": "released",
+   "version": "v1.0.1",
+   "date": "2026-09-18",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-finance",
+   "release": "https://github.com/HarperZ9/build-finance/releases/tag/v1.0.1",
+   "pages": [
+    "build-products.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "build-oracle",
+   "name": "build-oracle",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "Time-series forecasting with changepoint detection and model comparison.",
+   "state": "released",
+   "version": "v1.0.0",
+   "date": "2026-06-16",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-oracle",
+   "release": "https://github.com/HarperZ9/build-oracle/releases/tag/v1.0.0",
+   "pages": [
+    "build-products.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "build-oracle",
+     "version": "1.0.1",
+     "url": "https://pypi.org/project/build-oracle/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "build-engine",
+   "name": "build-engine",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "An adaptive prediction engine for forecasting and backtests.",
+   "state": "released",
+   "version": "v1.0.0",
+   "date": "2026-06-16",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-engine",
+   "release": "https://github.com/HarperZ9/build-engine/releases/tag/v1.0.0",
+   "pages": [
+    "build-products.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "build-engine",
+     "version": "1.0.1",
+     "url": "https://pypi.org/project/build-engine/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "buildlang",
+   "name": "buildlang",
+   "platform": "BLDLNG",
+   "kind": "flagship",
+   "summary": "A compiled language where a function's type lists what it may touch, such as files, the network or C.",
+   "state": "released",
+   "version": "v1.10.0",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/buildlang",
+   "release": "https://github.com/HarperZ9/buildlang/releases/tag/v1.10.0",
+   "pages": [
+    "buildlang.html"
+   ],
+   "packages": [
+    {
+     "registry": "crates.io",
+     "name": "buildlang",
+     "version": "1.10.0",
+     "url": "https://crates.io/crates/buildlang"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "build-universe",
+   "name": "build-universe",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "Example modules for BuildLang across language, graphics, colour, finance and systems.",
+   "state": "released",
+   "version": "v1.0.2",
+   "date": "2026-06-12",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-universe",
+   "release": "https://github.com/HarperZ9/build-universe/releases/tag/v1.0.2",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "build-ui",
+   "name": "build-ui",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "The shared Qt theme and widgets the Build tools use.",
+   "state": "released",
+   "version": "v2.0.0",
+   "date": "2026-07-11",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-ui",
+   "release": "https://github.com/HarperZ9/build-ui/releases/tag/v2.0.0",
+   "pages": [
+    "build-products.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "build-ui",
+     "version": "2.0.0",
+     "url": "https://pypi.org/project/build-ui/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "build-ecosystem",
+   "name": "build-ecosystem",
+   "platform": "BLDLNG",
+   "kind": "library",
+   "summary": "The meta-package that installs the Build tools together.",
+   "state": "released",
+   "version": "v1.0.0",
+   "date": "2026-06-16",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/build-ecosystem",
+   "release": "https://github.com/HarperZ9/build-ecosystem/releases/tag/v1.0.0",
+   "pages": [
+    "build-products.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "harperz9",
+   "name": "HarperZ9",
+   "platform": "site",
+   "kind": "site",
+   "summary": "The GitHub profile page that lists the flagships and their current releases.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/HarperZ9",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "raw",
+   "name": "raw",
+   "platform": "THEPLYGRND",
+   "kind": "engine",
+   "summary": "The original RAW, a Direct3D 11 effects platform for Skyrim SE, paused while raw-native carries the work.",
+   "state": "paused",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/raw",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "buildlang-tmlanguage",
+   "name": "buildlang-tmLanguage",
+   "platform": "BLDLNG",
+   "kind": "editor",
+   "summary": "The TextMate grammar that highlights BuildLang in VS Code, GitHub and other editors.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/buildlang-tmLanguage",
+   "release": "https://github.com/HarperZ9/buildlang-tmLanguage/releases/tag/v0.1.0",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "buildlang-vscode",
+   "name": "buildlang-vscode",
+   "platform": "BLDLNG",
+   "kind": "editor",
+   "summary": "BuildLang syntax highlighting for VS Code.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/buildlang-vscode",
+   "release": "https://github.com/HarperZ9/buildlang-vscode/releases/tag/v0.1.0",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "wol-pi",
+   "name": "wol-pi",
+   "platform": "unassigned",
+   "kind": "utility",
+   "summary": "A small Wake-on-LAN relay for a Raspberry Pi on a private network.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/wol-pi",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "harperz9-github-io",
+   "name": "HarperZ9.github.io",
+   "platform": "site",
+   "kind": "site",
+   "summary": "This site: tools, essays, papers and the evidence behind each claim.",
+   "state": "live",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/HarperZ9.github.io",
+   "release": null,
+   "pages": [
+    "index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "emet",
+   "name": "emet",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Tells you whether a file still matches the SHA-256 you recorded for it.",
+   "state": "released",
+   "version": "v1.3.1",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/emet",
+   "release": "https://github.com/HarperZ9/emet/releases/tag/v1.3.1",
+   "pages": [
+    "emet.html",
+    "repo-explainers/emet.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "emet",
+     "version": "1.3.1",
+     "url": "https://pypi.org/project/emet/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "agent-routing-kit",
+   "name": "agent-routing-kit",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Routes agent tasks by capability, risk and context budget before files load.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/agent-routing-kit",
+   "release": "https://github.com/HarperZ9/agent-routing-kit/releases/tag/v0.1.0",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "public-surface-sweeper",
+   "name": "public-surface-sweeper",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Checks a repository before you publish it for missing files, secret-shaped strings and unclear handoff.",
+   "state": "released",
+   "version": "v0.1.3",
+   "date": "2026-09-07",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/public-surface-sweeper",
+   "release": "https://github.com/HarperZ9/public-surface-sweeper/releases/tag/v0.1.3",
+   "pages": [
+    "repo-explainers/public-surface-sweeper.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "public-surface-sweeper",
+     "version": "0.1.3",
+     "url": "https://pypi.org/project/public-surface-sweeper/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "repo-proof-index",
+   "name": "repo-proof-index",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Gathers a repository's proof packets and receipts into one reviewer summary.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-09-13",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/repo-proof-index",
+   "release": "https://github.com/HarperZ9/repo-proof-index/releases/tag/v0.2.0",
+   "pages": [
+    "repo-explainers/repo-proof-index.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "repo-proof-index",
+     "version": "0.2.0",
+     "url": "https://pypi.org/project/repo-proof-index/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "model-provenance-validator",
+   "name": "model-provenance-validator",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Checks model and release claims against small provenance records.",
+   "state": "released",
+   "version": "v0.1.1",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/model-provenance-validator",
+   "release": "https://github.com/HarperZ9/model-provenance-validator/releases/tag/v0.1.1",
+   "pages": [
+    "repo-explainers/model-provenance-validator.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "model-provenance-validator",
+     "version": "0.1.1",
+     "url": "https://pypi.org/project/model-provenance-validator/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "anomaly-kernels",
+   "name": "anomaly-kernels",
+   "platform": "THEPLYGRND",
+   "kind": "library",
+   "summary": "C++ kernels for telemetry baselines, outlier scores and alert correlation.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/anomaly-kernels",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "signal-kernels",
+   "name": "signal-kernels",
+   "platform": "THEPLYGRND",
+   "kind": "library",
+   "summary": "Header-only C++ kernels for entropy, causality, FFT and forecasting.",
+   "state": "released",
+   "version": "v1.1.0",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/signal-kernels",
+   "release": "https://github.com/HarperZ9/signal-kernels/releases/tag/v1.1.0",
+   "pages": [
+    "repo-explainers/signal-kernels.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "agent-hook-pack",
+   "name": "agent-hook-pack",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Installs repository hooks for secret checks, branch guards and hygiene.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-13",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/agent-hook-pack",
+   "release": "https://github.com/HarperZ9/agent-hook-pack/releases/tag/v0.1.0",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "index",
+   "name": "index",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Maps your repositories offline: what depends on what, what calls what, and which docs describe which code.",
+   "state": "released",
+   "version": "v2.16.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/index",
+   "release": "https://github.com/HarperZ9/index/releases/tag/v2.16.0",
+   "pages": [
+    "index-graph.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "index-graph",
+     "version": "2.16.0",
+     "url": "https://pypi.org/project/index-graph/"
+    },
+    {
+     "registry": "PyPI",
+     "name": "workspace-repo-map",
+     "version": "0.2.1 (renamed to index-graph)",
+     "url": "https://pypi.org/project/workspace-repo-map/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "workflow-harness-lite",
+   "name": "workflow-harness-lite",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Runs bounded local command workflows in parallel and writes a compact report.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/workflow-harness-lite",
+   "release": "https://github.com/HarperZ9/workflow-harness-lite/releases/tag/v0.1.0",
+   "pages": [
+    "repo-explainers/workflow-harness-lite.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "gpu-trace-validator",
+   "name": "gpu-trace-validator",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Validates GPU and renderer trace files against a schema and summarises the assertions.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/gpu-trace-validator",
+   "release": "https://github.com/HarperZ9/gpu-trace-validator/releases/tag/v0.2.0",
+   "pages": [
+    "repo-explainers/gpu-trace-validator.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "context-curator-lite",
+   "name": "context-curator-lite",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Builds small context bundles for agents with redaction and source references.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-09-18",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/context-curator-lite",
+   "release": "https://github.com/HarperZ9/context-curator-lite/releases/tag/v0.2.0",
+   "pages": [
+    "repo-explainers/context-curator-lite.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "consulting-template-kit",
+   "name": "consulting-template-kit",
+   "platform": "unassigned",
+   "kind": "templates",
+   "summary": "Consulting and technical-writing templates that check for placeholders and private data.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/consulting-template-kit",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "provenance-sensorium",
+   "name": "provenance-sensorium",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Turns local files, git state and claims into hash-stamped receipts.",
+   "state": "archived",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/provenance-sensorium",
+   "release": null,
+   "pages": [
+    "provenance-sensorium.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "agent-audit",
+   "name": "agent-audit",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Compares an agent session's declared intent with what it did.",
+   "state": "archived",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/agent-audit",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "release-surface-scanner",
+   "name": "release-surface-scanner",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Builds a release packet from required files, secret checks and file hashes.",
+   "state": "archived",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/release-surface-scanner",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "secret-redact-io",
+   "name": "secret-redact-io",
+   "platform": "THEFLYWHEEL",
+   "kind": "library",
+   "summary": "Python IO helpers that redact secrets from file, fetch and subprocess output.",
+   "state": "released",
+   "version": "v0.1.0",
+   "date": "2026-06-16",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/secret-redact-io",
+   "release": "https://github.com/HarperZ9/secret-redact-io/releases/tag/v0.1.0",
+   "pages": [
+    "repo-explainers/secret-redact-io.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "proof-surface",
+   "name": "proof-surface",
+   "platform": "THEFLYWHEEL",
+   "kind": "library",
+   "summary": "Checks an agent's trace against the permissions it was granted and returns allow, deny or a report.",
+   "state": "released",
+   "version": "0.1.0",
+   "date": "2026-06-18",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/proof-surface",
+   "release": "https://github.com/HarperZ9/proof-surface/releases/tag/0.1.0",
+   "pages": [
+    "proof-surface.html",
+    "repo-explainers/proof-surface.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "proof-surface",
+     "version": "0.1.0",
+     "url": "https://pypi.org/project/proof-surface/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "proof-surface-report",
+   "name": "proof-surface-report",
+   "platform": "THEFLYWHEEL",
+   "kind": "library",
+   "summary": "Turns proof-surface packets into Markdown reports a reviewer can read.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/proof-surface-report",
+   "release": null,
+   "pages": [
+    "repo-explainers/proof-surface-report.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "coherence-membrane",
+   "name": "coherence-membrane",
+   "platform": "THEFLYWHEEL",
+   "kind": "library",
+   "summary": "Records what an agent actually observed in files, images and screens, separate from what it expected.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/coherence-membrane",
+   "release": "https://github.com/HarperZ9/coherence-membrane/releases/tag/v0.2.0",
+   "pages": [
+    "coherence-membrane.html",
+    "repo-explainers/coherence-membrane.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "coherence-membrane",
+     "version": "0.2.0",
+     "url": "https://pypi.org/project/coherence-membrane/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "behavior-transform-io",
+   "name": "behavior-transform.io",
+   "platform": "past",
+   "kind": "library",
+   "summary": "The Project Telos IO boundary for read, write, exec and fetch receipts; its page now redirects to the Telos systems page.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/behavior-transform.io",
+   "release": null,
+   "pages": [
+    "systems/behavior-transform.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "accountable-surface",
+   "name": "accountable-surface",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Lets an AI agent take only the file, command, web or browser actions you granted, and undoes failed writes.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-09-18",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/accountable-surface",
+   "release": "https://github.com/HarperZ9/accountable-surface/releases/tag/v0.2.0",
+   "pages": [
+    "accountable-surface.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "accountable-surface",
+     "version": "0.3.1",
+     "url": "https://pypi.org/project/accountable-surface/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "accountable-engine",
+   "name": "accountable-engine",
+   "platform": "THEFLYWHEEL",
+   "kind": "method",
+   "summary": "The accountability standard applied to the person using the tools: claims tied to receipts and decision logs.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/accountable-engine",
+   "release": null,
+   "pages": [
+    "accountable-engine.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "senses-and-sensibility",
+   "name": "senses-and-sensibility",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "The Conferred Existence research program on accountability for made minds, as text and code.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/senses-and-sensibility",
+   "release": null,
+   "pages": [
+    "conferred-existence.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "witnessing-spine",
+   "name": "witnessing-spine",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "Five adversarial steelmans in financial technology and where they converge on checkable evidence.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/witnessing-spine",
+   "release": null,
+   "pages": [
+    "witnessing-spine.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "studio-engine",
+   "name": "studio-engine",
+   "platform": "past",
+   "kind": "engine",
+   "summary": "Generated a WebGL shader, synth graph and motion loop from a seed; deprecated in favour of Telos and the shader suite.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/studio-engine",
+   "release": null,
+   "pages": [
+    "systems/studio-engine.html",
+    "repo-explainers/studio-engine.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "reconcile",
+   "name": "reconcile",
+   "platform": "THEPLYGRND",
+   "kind": "engine",
+   "summary": "A browser creative engine that turns generators into replayable worlds.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/reconcile",
+   "release": "https://github.com/HarperZ9/reconcile/releases/tag/v0.2.0",
+   "pages": [
+    "repo-explainers/reconcile.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "faithful-transpile",
+   "name": "faithful-transpile",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "The paper and code for the Conservation of Faithfulness: lossy transforms conserve faithfulness to a named criterion.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/faithful-transpile",
+   "release": null,
+   "pages": [
+    "research-conservation-of-faithfulness.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "forum",
+   "name": "forum",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Splits a request across a team of AI agents and keeps a ledger you can replay.",
+   "state": "released",
+   "version": "v1.17.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/forum",
+   "release": "https://github.com/HarperZ9/forum/releases/tag/v1.17.0",
+   "pages": [
+    "forum.html",
+    "repo-explainers/forum.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "forum-engine",
+     "version": "1.17.0",
+     "url": "https://pypi.org/project/forum-engine/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "telos",
+   "name": "telos",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "A local MCP server that lets an agent read the web, triage CI and drive a browser only after you grant access.",
+   "state": "released",
+   "version": "v0.9.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/telos",
+   "release": "https://github.com/HarperZ9/telos/releases/tag/v0.9.0",
+   "pages": [
+    "systems/telos.html",
+    "repo-explainers/telos.html"
+   ],
+   "packages": [
+    {
+     "registry": "npm",
+     "name": "project-telos-mcp",
+     "version": "0.9.0",
+     "url": "https://www.npmjs.com/package/project-telos-mcp"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "gather",
+   "name": "gather",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Collects research material from the web, papers, scans, audio and video, and records where each item came from.",
+   "state": "released",
+   "version": "v2.4.0",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/gather",
+   "release": "https://github.com/HarperZ9/gather/releases/tag/v2.4.0",
+   "pages": [
+    "gather.html",
+    "repo-explainers/gather.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "gather-engine",
+     "version": "2.4.0",
+     "url": "https://pypi.org/project/gather-engine/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "crucible",
+   "name": "crucible",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Tests each claim in a thesis against a measurement and answers MATCH, DRIFT or UNVERIFIABLE.",
+   "state": "released",
+   "version": "v1.6.0",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/crucible",
+   "release": "https://github.com/HarperZ9/crucible/releases/tag/v1.6.0",
+   "pages": [
+    "crucible.html",
+    "repo-explainers/crucible.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "crucible-bench",
+     "version": "1.6.0",
+     "url": "https://pypi.org/project/crucible-bench/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "-github",
+   "name": ".github",
+   "platform": "unassigned",
+   "kind": "meta",
+   "summary": "Default community health files for the author's repositories.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/.github",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "learn",
+   "name": "learn",
+   "platform": "THECMMNS",
+   "kind": "tool",
+   "summary": "A study planner that schedules reviews from your own attempts and leaves graded work to you.",
+   "state": "released",
+   "version": "v2.3.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/learn",
+   "release": "https://github.com/HarperZ9/learn/releases/tag/v2.3.0",
+   "pages": [
+    "learn.html",
+    "repo-explainers/learn.html"
+   ],
+   "packages": [
+    {
+     "registry": "npm",
+     "name": "@harperz9/learn",
+     "version": "2.3.0",
+     "url": "https://www.npmjs.com/package/@harperz9/learn"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "engine-revival",
+   "name": "engine-revival",
+   "platform": "THEPLYGRND",
+   "kind": "revival",
+   "summary": "A catalogue of lost rendering and game engines: what survives and which are being rebuilt.",
+   "state": "released",
+   "version": "v0.12.0",
+   "date": "2026-10-18",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/engine-revival",
+   "release": "https://github.com/HarperZ9/engine-revival/releases/tag/v0.12.0",
+   "pages": [
+    "engine-revival.html",
+    "repo-explainers/engine-revival.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "brender-archival",
+   "name": "brender-archival",
+   "platform": "THEPLYGRND",
+   "kind": "revival",
+   "summary": "Runs Argonaut's 1990s BRender engine on 64-bit Windows and Linux, with a viewer and a short original game.",
+   "state": "released",
+   "version": "keepers-v0.6.0",
+   "date": "2026-10-17",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/brender-archival",
+   "release": "https://github.com/HarperZ9/brender-archival/releases/tag/keepers-v0.6.0",
+   "pages": [
+    "brender-archival.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "mneme",
+   "name": "mneme",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Memory for AI agents where every recalled fact names the turn it came from.",
+   "state": "released",
+   "version": "v0.7.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/mneme",
+   "release": "https://github.com/HarperZ9/mneme/releases/tag/v0.7.0",
+   "pages": [
+    "systems/mneme.html",
+    "repo-explainers/mneme.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "flywheel-mneme",
+     "version": "0.7.0",
+     "url": "https://pypi.org/project/flywheel-mneme/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "plexus",
+   "name": "plexus",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Finds what each tool in an agent toolchain produces and consumes, then wires them together.",
+   "state": "released",
+   "version": "v0.4.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/plexus",
+   "release": "https://github.com/HarperZ9/plexus/releases/tag/v0.4.0",
+   "pages": [
+    "systems/plexus.html",
+    "repo-explainers/plexus.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "plexus-mesh",
+     "version": "0.4.0",
+     "url": "https://pypi.org/project/plexus-mesh/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "relay",
+   "name": "relay",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "A coding agent for local or hosted models that only accepts work your own tests pass.",
+   "state": "released",
+   "version": "v0.7.0",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/relay",
+   "release": "https://github.com/HarperZ9/relay/releases/tag/v0.7.0",
+   "pages": [
+    "systems/relay.html",
+    "repo-explainers/relay.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "flywheel-relay",
+     "version": "0.7.0",
+     "url": "https://pypi.org/project/flywheel-relay/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "local-model",
+   "name": "local-model",
+   "platform": "past",
+   "kind": "engine",
+   "summary": "The Python engine of Flywheel before it moved into the flywheel monorepo.",
+   "state": "archived",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/local-model",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "flywheel",
+   "name": "flywheel",
+   "platform": "THEFLYWHEEL",
+   "kind": "flagship",
+   "summary": "Runs an AI task on the model you choose, checks the answer against the sources that decide it, and keeps a receipt you can recheck offline.",
+   "state": "released",
+   "version": "v1.9.0",
+   "date": "2026-10-15",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/flywheel",
+   "release": "https://github.com/HarperZ9/flywheel/releases/tag/v1.9.0",
+   "pages": [
+    "flywheel.html",
+    "repo-explainers/flywheel.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "flywheel-verify",
+     "version": "1.9.0",
+     "url": "https://pypi.org/project/flywheel-verify/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "flywheel-desktop",
+   "name": "flywheel-desktop",
+   "platform": "past",
+   "kind": "app",
+   "summary": "Flywheel's Flutter desktop client before it moved into the flywheel monorepo.",
+   "state": "archived",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/flywheel-desktop",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "truth-enb",
+   "name": "truth-enb",
+   "platform": "THEPLYGRND",
+   "kind": "mod",
+   "summary": "A from-scratch Skyrim ENB renderer with a computed physical sky and raymarched clouds.",
+   "state": "release candidate",
+   "version": "v1.0.0-rc.1",
+   "date": "2026-08-15",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/truth-enb",
+   "release": "https://github.com/HarperZ9/truth-enb/releases/tag/v1.0.0-rc.1",
+   "pages": [
+    "truth-enb.html"
+   ],
+   "packages": [],
+   "note": "Not yet tested in game."
+  },
+  {
+   "id": "enb-runtime-core",
+   "name": "enb-runtime-core",
+   "platform": "THEPLYGRND",
+   "kind": "library",
+   "summary": "The embedded C++ runtime that Elder and Truth ENB share.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/enb-runtime-core",
+   "release": null,
+   "pages": [
+    "enb-runtime-core.html"
+   ],
+   "packages": [],
+   "note": "Not yet tested in game."
+  },
+  {
+   "id": "chorus",
+   "name": "chorus",
+   "platform": "THECMMNS",
+   "kind": "tool",
+   "summary": "Reads a comment section and reports its themes, how strongly people feel, and where they split.",
+   "state": "released",
+   "version": "v0.3.0",
+   "date": "2026-09-07",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/chorus",
+   "release": "https://github.com/HarperZ9/chorus/releases/tag/v0.3.0",
+   "pages": [
+    "chorus.html",
+    "repo-explainers/chorus.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "chorus-discourse",
+     "version": "0.3.2",
+     "url": "https://pypi.org/project/chorus-discourse/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "enb-validation-lab",
+   "name": "enb-validation-lab",
+   "platform": "THEPLYGRND",
+   "kind": "tool",
+   "summary": "The test harness that checks the Elder and Truth ENB packages before release.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/enb-validation-lab",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": "Not yet tested in game."
+  },
+  {
+   "id": "skyrimbridge",
+   "name": "skyrimbridge",
+   "platform": "THEPLYGRND",
+   "kind": "mod",
+   "summary": "Feeds live Skyrim engine state, such as weather and camera, into ENB shaders.",
+   "state": "release candidate",
+   "version": "v3.0.0-rc.1",
+   "date": "2026-08-15",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/skyrimbridge",
+   "release": "https://github.com/HarperZ9/skyrimbridge/releases/tag/v3.0.0-rc.1",
+   "pages": [
+    "skyrimbridge.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "elder-enb",
+   "name": "elder-enb",
+   "platform": "THEPLYGRND",
+   "kind": "mod",
+   "summary": "A Skyrim SE/AE ENB shader suite with weather themes and an optional native runtime.",
+   "state": "release candidate",
+   "version": "v1.0.0-rc.5",
+   "date": "2026-08-15",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/elder-enb",
+   "release": "https://github.com/HarperZ9/elder-enb/releases/tag/v1.0.0-rc.5",
+   "pages": [
+    "elder-enb.html"
+   ],
+   "packages": [],
+   "note": "Not yet tested in game."
+  },
+  {
+   "id": "elder-weathers",
+   "name": "elder-weathers",
+   "platform": "THEPLYGRND",
+   "kind": "mod",
+   "summary": "Nineteen original Skyrim weathers generated from a physical atmosphere model.",
+   "state": "released",
+   "version": "v1.0.0",
+   "date": "2026-08-15",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/elder-weathers",
+   "release": "https://github.com/HarperZ9/elder-weathers/releases/tag/v1.0.0",
+   "pages": [],
+   "packages": [],
+   "note": "Not yet tested in game."
+  },
+  {
+   "id": "vllm-ci-forum-receipt",
+   "name": "vllm-ci-forum-receipt",
+   "platform": "THEFLYWHEEL",
+   "kind": "evidence",
+   "summary": "A replayable Forum record of a read-only audit of vLLM's CI.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/vllm-ci-forum-receipt",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "crewai-kickoff-replay-receipt",
+   "name": "crewai-kickoff-replay-receipt",
+   "platform": "THEFLYWHEEL",
+   "kind": "evidence",
+   "summary": "A reproducible replay audit of one CrewAI function, with failing and passing evidence.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/crewai-kickoff-replay-receipt",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "workspace",
+   "name": "workspace",
+   "platform": "site",
+   "kind": "canon",
+   "summary": "The canon, credo, mission and navigation layer for the author's workspace.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/workspace",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "phantom",
+   "name": "phantom",
+   "platform": "THECMMNS",
+   "kind": "tool",
+   "summary": "Audits the hardware identifiers software reads on your machine and swaps the OS-level ones for a profile you can revert.",
+   "state": "released",
+   "version": "v1.1.1",
+   "date": "2026-09-10",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/phantom",
+   "release": "https://github.com/HarperZ9/phantom/releases/tag/v1.1.1",
+   "pages": [
+    "phantom.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "terminal-state-fixtures",
+   "name": "terminal-state-fixtures",
+   "platform": "THEFLYWHEEL",
+   "kind": "evaluation",
+   "summary": "Evaluation environments that score an AI agent by the state it leaves behind, not by its transcript.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/terminal-state-fixtures",
+   "release": null,
+   "pages": [
+    "repo-explainers/terminal-state-fixtures.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "valibot-1518-repro",
+   "name": "valibot-1518-repro",
+   "platform": "unassigned",
+   "kind": "contribution",
+   "summary": "A minimal reproduction filed for an upstream valibot type-checking bug (issue 1518).",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/valibot-1518-repro",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "canon",
+   "name": "canon",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Keeps your agent instructions in one local record and writes them into each host's instruction file.",
+   "state": "released",
+   "version": "v0.7.0",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/canon",
+   "release": "https://github.com/HarperZ9/canon/releases/tag/v0.7.0",
+   "pages": [
+    "canon.html",
+    "repo-explainers/canon.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "flywheel-canon",
+     "version": "0.7.0",
+     "url": "https://pypi.org/project/flywheel-canon/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "raw-native",
+   "name": "raw-native",
+   "platform": "THEPLYGRND",
+   "kind": "engine",
+   "summary": "A C++ renderer that runs a fast effect beside a slow reference and reports how far apart they are.",
+   "state": "released",
+   "version": "v0.8.0",
+   "date": "2026-10-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/raw-native",
+   "release": "https://github.com/HarperZ9/raw-native/releases/tag/v0.8.0",
+   "pages": [
+    "raw.html",
+    "repo-explainers/raw-native.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "bulletin",
+   "name": "bulletin",
+   "platform": "THEFLYWHEEL",
+   "kind": "service",
+   "summary": "A public message board where AI agents post signed messages that anyone can read.",
+   "state": "released",
+   "version": "v0.5.0",
+   "date": "2026-09-14",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/bulletin",
+   "release": "https://github.com/HarperZ9/bulletin/releases/tag/v0.5.0",
+   "pages": [
+    "bulletin.html",
+    "repo-explainers/bulletin.html",
+    "systems/bulletin.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "articulate",
+   "name": "articulate",
+   "platform": "ARTIQL8",
+   "kind": "flagship",
+   "summary": "Checks your prose on your own computer and names each writing pattern with the line it is on.",
+   "state": "released",
+   "version": "v0.17.0",
+   "date": "2026-10-26",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/articulate",
+   "release": "https://github.com/HarperZ9/articulate/releases/tag/v0.17.0",
+   "pages": [
+    "articulate.html",
+    "repo-explainers/articulate.html"
+   ],
+   "packages": [
+    {
+     "registry": "PyPI",
+     "name": "articulate-writing",
+     "version": "0.16.0",
+     "url": "https://pypi.org/project/articulate-writing/"
+    }
+   ],
+   "note": null
+  },
+  {
+   "id": "flywheel-receipt-demo",
+   "name": "flywheel-receipt-demo",
+   "platform": "THEFLYWHEEL",
+   "kind": "demo",
+   "summary": "One command that runs Flywheel's receipt path so you can see it end to end.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/flywheel-receipt-demo",
+   "release": null,
+   "pages": [
+    "repo-explainers/flywheel-receipt-demo.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "flywheel-evidence-task",
+   "name": "flywheel-evidence-task",
+   "platform": "THEFLYWHEEL",
+   "kind": "skill",
+   "summary": "A Claude Code skill that turns a claim into a source-linked evidence packet.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/flywheel-evidence-task",
+   "release": null,
+   "pages": [
+    "repo-explainers/flywheel-evidence-task.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "prereg-ledger",
+   "name": "prereg-ledger",
+   "platform": "RSRCH",
+   "kind": "ledger",
+   "summary": "Public SHA-256 hashes of study plans, each timestamped by a GitHub push before the study ran.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/prereg-ledger",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "bootloops-second-checker",
+   "name": "bootloops-second-checker",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "An independent second checker for BootLoops receipts, with a Lean 4 proof check.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/bootloops-second-checker",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "superstack",
+   "name": "superstack",
+   "platform": "THEPLYGRND",
+   "kind": "library",
+   "summary": "One shared contract for renderers and sound engines: canonical bytes, seed rule and tolerance verdicts.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/superstack",
+   "release": "https://github.com/HarperZ9/superstack/releases/tag/v0.2.0",
+   "pages": [
+    "repo-explainers/superstack.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "seal-watch",
+   "name": "seal-watch",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Clones sealed evidence repositories daily on Ubuntu and Windows and checks they were not altered.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/seal-watch",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "cmmns",
+   "name": "cmmns",
+   "platform": "THECMMNS",
+   "kind": "flagship",
+   "summary": "A browser extension that shows where social media replies come from, signs of coordination, and fact-checks.",
+   "state": "released",
+   "version": "v3.9.1",
+   "date": "2026-10-28",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/cmmns",
+   "release": "https://github.com/HarperZ9/cmmns/releases/tag/v3.9.1",
+   "pages": [
+    "cmmns.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "open-archives",
+   "name": "open-archives",
+   "platform": "THECMMNS",
+   "kind": "tool",
+   "summary": "Searches free archives and museum collections at once and tags every download with its licence.",
+   "state": "source only",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/open-archives",
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "discover",
+   "name": "discover",
+   "platform": "THEFLYWHEEL",
+   "kind": "tool",
+   "summary": "Checks before a release that people can find your project, and fails CI with the fixes.",
+   "state": "released",
+   "version": "v0.1.2",
+   "date": "2026-10-23",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/discover",
+   "release": "https://github.com/HarperZ9/discover/releases/tag/v0.1.2",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "superframe",
+   "name": "superframe",
+   "platform": "THEPLYGRND",
+   "kind": "flagship",
+   "summary": "Describe a piece in words and get it back from one seed as paint, type, line, material, sound and touch.",
+   "state": "released",
+   "version": "v0.2.0",
+   "date": "2026-10-28",
+   "years": "2026",
+   "repo": "https://github.com/HarperZ9/superframe",
+   "release": "https://github.com/HarperZ9/superframe/releases/tag/v0.2.0",
+   "pages": [
+    "superframe.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-20773724",
+   "name": "Conferred Existence: Ontological Nihilism, the Speech-Act of Being, the Standing of Made Minds",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 20773724",
+   "date": "2026-06-20",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.20773724",
+   "pages": [
+    "research-conferred-existence.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-20778927",
+   "name": "The Witnessing Spine: Five Adversarial Steelmans in Financial-Sector Technology",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 20778927",
+   "date": "2026-06-20",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.20778927",
+   "pages": [
+    "witnessing-spine.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768169",
+   "name": "EMET: An Authority-Incapable Byte-Level Integrity Witness for AI-Assisted Work",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768169",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768169",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22767839",
+   "name": "BuildLang: Accountable Compute via Typed Capability Effects and Re-Derivable Receipts",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22767839",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22767839",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768308",
+   "name": "Witnessed Independence: Recording Whether a Verifier Graded Its Own Work",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768308",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768308",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768344",
+   "name": "The Personhood-Gate Handoff: Drawing the Automation Boundary at the False-Signal Line",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768344",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768344",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768231",
+   "name": "Proof Packets: A Derive-Don't-Trust Envelope for Accountable Agent Actions",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768231",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768231",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768261",
+   "name": "Re-Perceived Effects: A Well-Formedness Contract for Accountable Actuation",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768261",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768261",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22768398",
+   "name": "Faithfulness to a Named Criterion Is the Conserved Quantity Across Lossy Substrates",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 22768398",
+   "date": "2026-09-15",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22768398",
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-23126117",
+   "name": "Sourcehood Without a Source: The Arity Gap and the Free Will Debate",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 23126117",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.23126117",
+   "pages": [
+    "research-arity-gap.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-23126357",
+   "name": "The Seam That Holds While It Is Crossed",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 23126357",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.23126357",
+   "pages": [
+    "research-forcing-argument.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-23126458",
+   "name": "Self-Given Is Not Self-Grounding",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 23126458",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.23126458",
+   "pages": [
+    "research-self-given.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-23126484",
+   "name": "The Conservation of Faithfulness",
+   "platform": "RSRCH",
+   "kind": "paper",
+   "summary": "A Zenodo record with a DOI; not peer reviewed.",
+   "state": "released",
+   "version": "Zenodo record 23126484",
+   "date": "2026-10-03",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.23126484",
+   "pages": [
+    "research-conservation-of-faithfulness.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "zenodo-22148403",
+   "name": "Flywheel confirmatory anchor: signed tree head (dataset)",
+   "platform": "RSRCH",
+   "kind": "dataset",
+   "summary": "The signed tree head that anchors Flywheel's confirmatory receipts, deposited with a DOI.",
+   "state": "released",
+   "version": "Zenodo record 22148403",
+   "date": "2026-08-28",
+   "years": "2026",
+   "repo": null,
+   "release": "https://doi.org/10.5281/zenodo.22148403",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "findings-ledger",
+   "name": "Findings ledger and publication register",
+   "platform": "RSRCH",
+   "kind": "research",
+   "summary": "Every result of the studies, nulls and refutations included, numbered F1 to F677 and tiered for publication.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "experiments/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "experiments",
+   "name": "Experiments index",
+   "platform": "RSRCH",
+   "kind": "research",
+   "summary": "Each study written down and locked before it ran, reported with what it found, nulls kept.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "experiments/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "research-notes",
+   "name": "Research notes and papers on the site",
+   "platform": "RSRCH",
+   "kind": "research",
+   "summary": "Seventeen research pages, from philosophy papers to proof-packet notes, each with its record.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "research.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "who-knew-first",
+   "name": "Who Knew First and the series",
+   "platform": "RSRCH",
+   "kind": "investigation",
+   "summary": "A record of nine 2026 AI agent incidents and who told the public first, with five follow-up pieces.",
+   "state": "released",
+   "version": null,
+   "date": "2026-09",
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "who-knew-first.html",
+    "who-knew-first-series.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "essays",
+   "name": "Essays and letters",
+   "platform": "RSRCH",
+   "kind": "writing",
+   "summary": "Essays on checking AI work, evidence, art and people, each with its sources.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "publications.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "frontier-safety",
+   "name": "Frontier Safety briefings",
+   "platform": "RSRCH",
+   "kind": "briefing",
+   "summary": "Dated, sourced briefings on AI safety developments, plus an incident briefing on the OpenAI and Hugging Face case.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "frontier-safety.html",
+    "frontier-safety-openai-hugging-face-incident.html",
+    "briefings/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "metr-packet",
+   "name": "METR count_odds reviewer packet",
+   "platform": "THEFLYWHEEL",
+   "kind": "evidence",
+   "summary": "A reviewer packet for an executed experiment running a pinned METR task through Flywheel with three controls.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "metr-count-odds-reviewer-packet.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "analytics",
+   "name": "Benchmark and evidence records",
+   "platform": "THEFLYWHEEL",
+   "kind": "evidence",
+   "summary": "Flywheel benchmark records, model comparisons and the evidence-status table, with their data files.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "analytics/flywheel-benchmark-record.html",
+    "analytics/benchmark-evidence-status.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "plugins",
+   "name": "Claude Code plugins",
+   "platform": "THEFLYWHEEL",
+   "kind": "plugin",
+   "summary": "Twelve plugins that bring the tools into Claude Code, each with support, privacy and terms pages.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "plugins/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "upstream-contributions",
+   "name": "Work accepted upstream",
+   "platform": "THEFLYWHEEL",
+   "kind": "contribution",
+   "summary": "Changes merged into other people's projects after their maintainers reviewed them.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "portfolio.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "night-school",
+   "name": "Night School",
+   "platform": "THECMMNS",
+   "kind": "course",
+   "summary": "Lessons on how AI works, from vectors to fused attention: 27 lessons, three case studies and a map, nine with narrated films.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "night-school.html",
+    "night-school-coast.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "explainers",
+   "name": "Explainer films",
+   "platform": "THEPLYGRND",
+   "kind": "film",
+   "summary": "Short narrated films on the ideas behind the work, every number sourced on screen.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "explainers.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "guides",
+   "name": "The guides: Tallow, Pylon and Rerun",
+   "platform": "THEPLYGRND",
+   "kind": "film",
+   "summary": "Three guide characters who host the explainer films, with their introductions.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "guides.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "one-step-films",
+   "name": "One Step films and the four studies",
+   "platform": "THEPLYGRND",
+   "kind": "film",
+   "summary": "Short generative films: One Step, its thread cut, and four studies (cathedral, Droste, morphogen, Rorschach).",
+   "state": "released",
+   "version": null,
+   "date": "2026-10-04",
+   "years": "2026",
+   "repo": null,
+   "release": "https://github.com/HarperZ9/HarperZ9.github.io/releases/tag/films-2026-10-04",
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "engine-showcase",
+   "name": "raw-native engine showcase renders",
+   "platform": "THEPLYGRND",
+   "kind": "media",
+   "summary": "Stills and clips rendered entirely inside raw-native: a material gallery, a colonnade, a retro room and thread pieces.",
+   "state": "in progress",
+   "version": null,
+   "date": "2026-10-28",
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "seattle-rain",
+   "name": "Seattle rain back-seat scene",
+   "platform": "THEPLYGRND",
+   "kind": "media",
+   "summary": "A pixel-art night drive in 1990s Seattle rain, the flagship scene the author described from childhood.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "lens-room",
+   "name": "Lens Room",
+   "platform": "THEPLYGRND",
+   "kind": "instrument",
+   "summary": "Look through a strange optical shape, adjust real optics and see measured changes from the same rays.",
+   "state": "in progress",
+   "version": null,
+   "date": "2026-10-31",
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "low-water",
+   "name": "Low Water",
+   "platform": "THEPLYGRND",
+   "kind": "game",
+   "summary": "An original narrative game in development on raw-native.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "cv.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "accession",
+   "name": "Accession type family",
+   "platform": "THEPLYGRND",
+   "kind": "type",
+   "summary": "A family of type drawn in code under the SIL Open Font License 1.1: sixteen families from Text and Mono to Worn and Two Ink.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "accession.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "type-forge",
+   "name": "Type forge and the in-development faces",
+   "platform": "THEPLYGRND",
+   "kind": "type",
+   "summary": "Zain Mint, a parametric face you can mint in the browser, and the Zain Editorial and Mono previews.",
+   "state": "in progress",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "type-forge.html",
+    "fonts.html",
+    "typeface.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "studio",
+   "name": "The Studio",
+   "platform": "THEPLYGRND",
+   "kind": "instrument",
+   "summary": "A live media instrument in the browser for rendering, measuring and transforming a frame.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "studio.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "retro-engine",
+   "name": "Retro Engine",
+   "platform": "THEPLYGRND",
+   "kind": "instrument",
+   "summary": "A browser studio that applies pixelation, hardware palettes, dithering, early-3D shading and CRT looks to your images.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "retro.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "gallery",
+   "name": "Gallery and plates",
+   "platform": "THEPLYGRND",
+   "kind": "instrument",
+   "summary": "Name a seed, pick from ninety-five instruments, and the site draws a plate for you.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "gallery.html",
+    "current-story.html",
+    "session-archive.html",
+    "gaussian-splats.html",
+    "loom.html",
+    "glass-water.html",
+    "swatches.html",
+    "elements.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "world-rooms",
+   "name": "The world rooms",
+   "platform": "THEPLYGRND",
+   "kind": "site",
+   "summary": "The universe, the We Are Here exhibit, the playbook, the type engine rooms and the Hum theme, imported from mission-control.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "world/universe/index.html",
+    "world/exhibit/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "studies",
+   "name": "Studies of references",
+   "platform": "RSRCH",
+   "kind": "study",
+   "summary": "Twenty-nine readings of works the author saved, from Frankenthaler to GLSL sketches, each measured.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "studies/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "demos",
+   "name": "Recorded workflow demos",
+   "platform": "THEFLYWHEEL",
+   "kind": "demo",
+   "summary": "Recorded runs of Flywheel, Forum, Gather, Index, Crucible and EMET with transcripts and files to rerun.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "demonstrations.html",
+    "demo-flywheel.html",
+    "demo-forum.html",
+    "demo-gather.html",
+    "demo-index.html",
+    "demo-crucible.html",
+    "demo-emet.html",
+    "guide.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "repo-explainers",
+   "name": "Repository explainers",
+   "platform": "THEFLYWHEEL",
+   "kind": "explainer",
+   "summary": "Animated step-by-step explainers for thirty-four repositories.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "repo-explainers.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "private-practice",
+   "name": "Authorized private security practice",
+   "platform": "unassigned",
+   "kind": "practice",
+   "summary": "The site's boundary pages for controlled private security systems; it publishes purpose and access limits, not operational detail.",
+   "state": "controlled private",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "private-practice.html",
+    "security.html",
+    "security-toolkit.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "phantom-security",
+   "name": "Security engineering index",
+   "platform": "THECMMNS",
+   "kind": "index",
+   "summary": "A maturity map of the public security tools, Phantom and EMET among them.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "security.html",
+    "security-toolkit.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "career",
+   "name": "CV, resumes and hiring pages",
+   "platform": "site",
+   "kind": "career",
+   "summary": "The CV, four resumes, a cover letter, the dossier and the pilot offer.",
+   "state": "released",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "cv.html",
+    "resume.html",
+    "hire.html",
+    "dossier.html",
+    "flywheel-pilot.html",
+    "income-ledger.html",
+    "independence.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "enb-of-the-elders",
+   "name": "ENB of the Elders, Cyan Dreams and Moody Blues",
+   "platform": "past",
+   "kind": "mod",
+   "summary": "The author's Skyrim ENB presets, which grew into Elder ENB Universal, kept as more than a hundred archived versions.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2024-2026",
+   "repo": null,
+   "release": null,
+   "pages": [],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "quanta",
+   "name": "Quanta products and QuantaLang",
+   "platform": "past",
+   "kind": "rename",
+   "summary": "The earlier names of BuildLang and the Build tools; the old pages now redirect.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "quantalang.html",
+    "quanta-products.html",
+    "quanta-color.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "warden",
+   "name": "WARDEN",
+   "platform": "past",
+   "kind": "rename",
+   "summary": "The accountability work once staged as WARDEN, now Proof Surface.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "warden.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "daylight-commons",
+   "name": "Daylight Commons and Radar",
+   "platform": "past",
+   "kind": "rename",
+   "summary": "Earlier names of CMMNS: Radar until 2026-10-22, Daylight Commons until 2026-10-28.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "daylight.html",
+    "daylight-commons/index.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "telos-atelier",
+   "name": "Telos Atelier",
+   "platform": "past",
+   "kind": "instrument",
+   "summary": "The plotter-ready drawing studio of the Telos era, now carried by The Studio.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "atelier.html"
+   ],
+   "packages": [],
+   "note": null
+  },
+  {
+   "id": "tour",
+   "name": "The Tour",
+   "platform": "past",
+   "kind": "site",
+   "summary": "Eight steps recorded from an earlier version of the site.",
+   "state": "retired",
+   "version": null,
+   "date": null,
+   "years": "2026",
+   "repo": null,
+   "release": null,
+   "pages": [
+    "tour.html"
+   ],
+   "packages": [],
+   "note": null
+  }
+ ]
+}

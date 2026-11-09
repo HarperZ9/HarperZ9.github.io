@@ -1,0 +1,366 @@
+// plot-maps.js: generative, algorithmic plot maps — pen-plotter cartography from a seed.
+//
+// Where plotter.js plots WHATEVER the canvas shows (image-driven: luma in, polylines out), this
+// module is the generative half: a seeded elevation field in, a composed map sheet out. It
+// deliberately drives the SAME downstream pipeline (contourFromLuma's marching squares,
+// hatchFromLuma, flowlinesFromLuma, orderPaths, toPlotterSVG) so every capability the plotter
+// path already earned — chained contours, pen ordering, plotter-grade SVG — works on generated
+// cartography unchanged.
+//
+// Method sources (studio-v3 research digest, lane 2): flow fields per Tyler Hobbs' grid-of-angles;
+// contouring by marching squares; hidden-line ridgelines by horizon tracking; hatch fills for
+// tonal water; the vpype conventions (single-stroke paths, ordered, real units) for export.
+// Everything is deterministic from the seed string: same seed, same map, re-checkable.
+
+import { contourFromLuma, hatchFromLuma, flowlinesFromLuma, orderPaths, toPlotterSVG } from "./plotter.js";
+import { fnv1a32 as hash32, mulberry32 as mulberry } from "./media-engine/seed.mjs";
+
+// ── Seeded field ─────────────────────────────────────────────────────────────
+// FNV-1a string hash into mulberry32, both from media-engine/seed.mjs, the site's one recipe.
+// Value noise on a seeded lattice, smoothstep-interpolated, then fBm. Pure and allocation-light:
+// the lattice is a function of cell coords + seed, no stored grid.
+function latticeValue(seed, xi, yi) {
+  let h = seed ^ Math.imul(xi, 0x9E3779B1) ^ Math.imul(yi, 0x85EBCA77);
+  h = Math.imul(h ^ (h >>> 13), 0xC2B2AE3D);
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+}
+function smooth(t) { return t * t * (3 - 2 * t); }
+function valueNoise(seed, x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y);
+  const fx = smooth(x - xi), fy = smooth(y - yi);
+  const a = latticeValue(seed, xi, yi), b = latticeValue(seed, xi + 1, yi);
+  const c = latticeValue(seed, xi, yi + 1), d = latticeValue(seed, xi + 1, yi + 1);
+  return (a + (b - a) * fx) + ((c + (d - c) * fx) - (a + (b - a) * fx)) * fy;
+}
+
+/**
+ * elevationField(seedStr, w, h, opts) → { field: Float32Array in [0,1], seaLevel }
+ * fBm over seeded value noise; `ridged` folds each octave into sharp crests (mountain grammar).
+ * seaLevel is chosen from the field's own distribution so roughly opts.waterFrac of the sheet is
+ * water — a map with no coast and a map that is all ocean are both dead sheets.
+ */
+export function elevationField(seedStr, w, h, opts = {}) {
+  const { octaves = 5, baseFreq = 3, ridged = false, waterFrac = 0.3 } = opts;
+  const seed = hash32(String(seedStr));
+  const field = new Float32Array(w * h);
+  let mn = Infinity, mx = -Infinity;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const u = x / w, v = y / h;
+      let amp = 1, freq = baseFreq, sum = 0, norm = 0;
+      for (let o = 0; o < octaves; o++) {
+        let n = valueNoise(seed + o * 101, u * freq, v * freq);
+        if (ridged) n = 1 - Math.abs(2 * n - 1);
+        sum += n * amp; norm += amp;
+        amp *= 0.5; freq *= 2;
+      }
+      const e = sum / norm;
+      field[y * w + x] = e;
+      if (e < mn) mn = e;
+      if (e > mx) mx = e;
+    }
+  }
+  const span = mx - mn || 1;
+  for (let i = 0; i < field.length; i++) field[i] = (field[i] - mn) / span;
+  // Sea level from the empirical distribution: the waterFrac-quantile of a coarse sample.
+  const sample = [];
+  for (let i = 0; i < field.length; i += 17) sample.push(field[i]);
+  sample.sort((a, b) => a - b);
+  const seaLevel = sample[Math.min(sample.length - 1, Math.floor(sample.length * waterFrac))];
+  return { field, seaLevel };
+}
+
+// Field → RGBA luma bytes, the lingua franca of the plotter.js primitives. `map` remaps each
+// value first (used to isolate water, invert for hatching density, etc.).
+export function fieldToLuma(field, w, h, map) {
+  const px = new Uint8ClampedArray(w * h * 4);
+  for (let i = 0; i < field.length; i++) {
+    const v = Math.max(0, Math.min(1, map ? map(field[i]) : field[i]));
+    const b = Math.round(v * 255);
+    px[i * 4] = b; px[i * 4 + 1] = b; px[i * 4 + 2] = b; px[i * 4 + 3] = 255;
+  }
+  return px;
+}
+
+// ── Hidden-line ridgelines (horizon tracking) ────────────────────────────────
+// The digest's cheapest occlusion win: walk elevation rows front to back, project each row up by
+// its elevation, keep a running horizon per column, and emit only the segments that rise above
+// it. Output: one polyline per visible ridge segment, front rows occluding back rows.
+export function ridgelines(field, w, h, opts = {}) {
+  const { rows = 60, lift = 0.32, sampleStep = 2 } = opts;
+  const horizon = new Float32Array(Math.ceil(w / sampleStep)).fill(Infinity);
+  const lines = [];
+  for (let r = 0; r < rows; r++) {
+    // Front row first: the BOTTOM of the sheet is nearest the viewer.
+    const y = h - 1 - Math.floor((r / Math.max(1, rows - 1)) * (h - 1));
+    const screenBase = (y / h);
+    let current = null;
+    for (let sx = 0; sx < horizon.length; sx++) {
+      const x = Math.min(w - 1, sx * sampleStep);
+      const e = field[y * w + x];
+      const sy = screenBase - e * lift;   // screen y in [.. , 1], smaller = higher
+      if (sy < horizon[sx] - 1e-4) {
+        horizon[sx] = sy;
+        const px = x / w, py = Math.max(0, sy);
+        if (current) current.push([px, py]);
+        else current = [[px, py]];
+      } else if (current) {
+        if (current.length > 1) lines.push(current);
+        current = null;
+      }
+    }
+    if (current && current.length > 1) lines.push(current);
+  }
+  return lines;
+}
+
+// ── The map sheet ────────────────────────────────────────────────────────────
+// STUDIES are the composition grammars: which layers a sheet carries and how they read.
+// The cartographic studies. The wider vocabulary (basin, moire, lattice, strata, monolith,
+// nomogram, orbital) lives in plot-studies.js and reaches the Studio through plot-compose.js,
+// which also decides for itself which study a seed becomes. These four stay because they are the
+// map register, and because existing seeds must keep reproducing.
+export const PLOT_STUDIES = Object.freeze({
+  topo:  { label: "Topographic",  layers: ["water", "contours", "coast", "frame"] },
+  flow:  { label: "Flow field",   layers: ["flow", "contours-light", "frame"] },
+  ridge: { label: "Ridgelines",   layers: ["ridge", "frame"] },
+  chart: { label: "Chart",        layers: ["water", "coast", "graticule", "soundings", "frame"] },
+});
+
+const FRAME_MARGIN = 0.04;
+
+function frameLayer() {
+  const m = FRAME_MARGIN;
+  return [[[m, m], [1 - m, m], [1 - m, 1 - m], [m, 1 - m], [m, m]]];
+}
+
+function graticuleLayer(rng) {
+  const m = FRAME_MARGIN, lines = [];
+  const nx = 6 + Math.floor(rng() * 3), ny = 4 + Math.floor(rng() * 3);
+  for (let i = 1; i < nx; i++) {
+    const x = m + (i / nx) * (1 - 2 * m);
+    for (let t = 0; t < 1; t += 0.05) lines.push([[x, m + t * (1 - 2 * m)], [x, Math.min(1 - m, m + (t + 0.018) * (1 - 2 * m))]]);
+  }
+  for (let i = 1; i < ny; i++) {
+    const y = m + (i / ny) * (1 - 2 * m);
+    for (let t = 0; t < 1; t += 0.05) lines.push([[m + t * (1 - 2 * m), y], [Math.min(1 - m, m + (t + 0.018) * (1 - 2 * m)), y]]);
+  }
+  return lines;
+}
+
+// Depth soundings: sparse seeded point marks over water (little v ticks, a nautical-chart read).
+function soundingsLayer(field, w, h, seaLevel, rng) {
+  const lines = [];
+  for (let i = 0; i < 240; i++) {
+    const x = rng(), y = rng();
+    const e = field[Math.floor(y * (h - 1)) * w + Math.floor(x * (w - 1))];
+    if (e >= seaLevel) continue;
+    const s = 0.004 + (seaLevel - e) * 0.012;
+    lines.push([[x - s, y - s], [x, y]], [[x, y], [x + s, y - s]]);
+  }
+  return lines;
+}
+
+// Clip normalized polylines to the frame's inner box (drop out-of-frame points, split runs).
+function clipToFrame(polylines) {
+  const m = FRAME_MARGIN, out = [];
+  for (const line of polylines) {
+    let run = null;
+    for (const [x, y] of line) {
+      if (x >= m && x <= 1 - m && y >= m && y <= 1 - m) {
+        if (run) run.push([x, y]);
+        else run = [[x, y]];
+      } else if (run) { if (run.length > 1) out.push(run); run = null; }
+    }
+    if (run && run.length > 1) out.push(run);
+  }
+  return out;
+}
+
+/**
+ * buildPlotMap(seedStr, opts) → { layers: [{name, polylines, weight, tone}], meta }
+ * The whole sheet, deterministic from the seed. opts: { study, res, levels, density }.
+ * Coordinates are normalized [0,1]²; renderPlotMap/plotMapSVG scale them out.
+ */
+export function buildPlotMap(seedStr, opts = {}) {
+  const study = PLOT_STUDIES[opts.study] ? opts.study : "topo";
+  const res = Math.max(64, Math.min(420, opts.res || 220));
+  const levels = Math.max(4, Math.min(28, opts.levels || 14));
+  const density = Math.max(0.2, Math.min(2.5, opts.density || 1));
+  const rng = mulberry(hash32(String(seedStr) + ":" + study));
+  const w = res, h = Math.round(res * 0.75);
+  const { field, seaLevel } = elevationField(seedStr, w, h, {
+    ridged: study === "ridge" || rng() < 0.35,
+    waterFrac: study === "chart" ? 0.45 : 0.3,
+  });
+  const norm = (line) => line.map(([x, y]) => [x / w, y / h]);
+  const layers = [];
+  const wants = PLOT_STUDIES[study].layers;
+
+  if (wants.includes("water")) {
+    // Hatch only below sea level: land maps to white (above every hatch band), water darkens
+    // with depth so hatchFromLuma's banded thresholds (0.72 single, 0.45 cross, 0.2 dense) give
+    // shallow water one direction and deep water a weave. Its angle option is in DEGREES.
+    const waterLuma = fieldToLuma(field, w, h, (v) => (v >= seaLevel ? 1 : 0.15 + 0.55 * (v / Math.max(1e-6, seaLevel))));
+    const hatch = hatchFromLuma(waterLuma, w, h, 4, { spacing: Math.max(3, Math.round(6 / density)), angle: 45 });
+    layers.push({ name: "water", polylines: clipToFrame(hatch.map(norm)), weight: 0.6, tone: "support" });
+  }
+  const contourKinds = wants.includes("contours") ? "contours" : (wants.includes("contours-light") ? "contours-light" : null);
+  if (contourKinds) {
+    const luma = fieldToLuma(field, w, h);
+    const minor = [], major = [];
+    const lo = seaLevel + 0.02;
+    for (let i = 0; i < levels; i++) {
+      const t = lo + ((i + 0.5) / levels) * (0.985 - lo);
+      const paths = contourFromLuma(luma, w, h, 4, { threshold: t * 255 });
+      (i % 5 === 4 ? major : minor).push(...paths.map(norm));
+    }
+    const light = contourKinds === "contours-light";
+    layers.push({ name: "contours", polylines: clipToFrame(minor), weight: light ? 0.45 : 0.7, tone: "ink" });
+    if (major.length) layers.push({ name: "index-contours", polylines: clipToFrame(major), weight: light ? 0.8 : 1.4, tone: "ink" });
+  }
+  if (wants.includes("coast")) {
+    const luma = fieldToLuma(field, w, h);
+    const coast = contourFromLuma(luma, w, h, 4, { threshold: seaLevel * 255 });
+    layers.push({ name: "coast", polylines: clipToFrame(coast.map(norm)), weight: 1.8, tone: "ink" });
+  }
+  if (wants.includes("flow")) {
+    const luma = fieldToLuma(field, w, h);
+    const lines = flowlinesFromLuma(luma, w, h, 4, { lines: Math.round(240 * density), maxSteps: 160 });
+    layers.push({ name: "flow", polylines: clipToFrame(lines.map(norm)), weight: 0.7, tone: "ink" });
+  }
+  if (wants.includes("ridge")) {
+    layers.push({ name: "ridge", polylines: clipToFrame(ridgelines(field, w, h, { rows: Math.round(46 * density) + 14 })), weight: 0.9, tone: "ink" });
+  }
+  if (wants.includes("graticule")) layers.push({ name: "graticule", polylines: graticuleLayer(rng), weight: 0.4, tone: "support" });
+  if (wants.includes("soundings")) layers.push({ name: "soundings", polylines: clipToFrame(soundingsLayer(field, w, h, seaLevel, rng)), weight: 0.6, tone: "support" });
+  if (wants.includes("frame")) layers.push({ name: "frame", polylines: frameLayer(), weight: 1.6, tone: "ink" });
+
+  let strokes = 0, points = 0;
+  for (const l of layers) { strokes += l.polylines.length; points += l.polylines.reduce((a, p) => a + p.length, 0); }
+  return {
+    layers,
+    // aspect 0.75: the elevation field is 4:3, and the sheet keeps the field's shape.
+    meta: { kind: "field", aspect: 0.75, seed: String(seedStr), study, res: [w, h], levels, density, seaLevel: +seaLevel.toFixed(4), strokes, points },
+  };
+}
+
+// ── Render to a 2D canvas: ink on the site's calm ground ─────────────────────
+// opts.view = { zoom, cx, cy } re-renders the sheet magnified about (cx, cy) — a vector zoom, so
+// the ink stays crisp at any magnification. Line weight deliberately does NOT scale with zoom:
+// zooming a plot sheet reads like leaning closer to the paper, and the pen never got thicker.
+// A SHEET HAS AN ASPECT. Mapping the normalized unit square straight onto the canvas stretched
+// every sheet by whatever the viewport happened to be, so the screen and the exported SVG showed
+// different proportions of the same drawing — and an image plot would have been skewed on top of
+// that. The sheet is now letterboxed into the canvas at its own aspect (plot.meta.aspect, 0.75 for
+// the cartographic studies, the picture's own ratio for an image plot), which makes the pixels and
+// the plotter file agree by construction. Returns the sheet's visible rect so the caller can
+// publish it as the measurement content rect: perception must read the paper, not the surround.
+// The letterbox mapping lived inline in renderPlotMap until the replay path needed it too: a
+// stroke replayed on screen must land on the SAME pixels as the static render, and two copies of
+// this arithmetic would eventually disagree. Extracted, one truth. Returns the normalized→canvas
+// transforms (tx, ty), the letterboxed sheet size and offset (sw, sh, ox, oy), and the sheet's
+// visible rect already clamped to the canvas — the same rect renderPlotMap publishes as the
+// measurement content rect.
+export function sheetTransform(plot, W, H, opts = {}) {
+  const aspect = opts.aspect || (plot.meta && plot.meta.aspect) || 0.75;
+  let sw = W, sh = W * aspect;
+  if (sh > H) { sh = H; sw = H / aspect; }
+  const ox = (W - sw) / 2, oy = (H - sh) / 2;
+  const view = opts.view || null;
+  const zoom = view && view.zoom > 0 ? view.zoom : 1;
+  const ccx = (view ? view.cx : 0.5) * sw, ccy = (view ? view.cy : 0.5) * sh;
+  const tx = (x) => ox + (x * sw - ccx) * zoom + sw / 2;
+  const ty = (y) => oy + (y * sh - ccy) * zoom + sh / 2;
+  const vx0 = Math.max(0, tx(0)), vy0 = Math.max(0, ty(0));
+  const vx1 = Math.min(W, tx(1)), vy1 = Math.min(H, ty(1));
+  return { tx, ty, sw, sh, ox, oy, rect: { x: vx0, y: vy0, w: Math.max(1, vx1 - vx0), h: Math.max(1, vy1 - vy0) } };
+}
+
+export function renderPlotMap(ctx, plot, W, H, palette = {}, opts = {}) {
+  const ink = palette.ink || "#e8e6e1";
+  const support = palette.support || "rgba(232,230,225,0.45)";
+  const ground = palette.ground || "#0d1b1c";
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, 0, W, H);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  const { tx, ty, sw, rect } = sheetTransform(plot, W, H, opts);
+  for (const layer of plot.layers) {
+    ctx.strokeStyle = layer.tone === "support" ? support : ink;
+    ctx.lineWidth = Math.max(0.5, layer.weight * (sw / 900));
+    ctx.beginPath();
+    for (const line of layer.polylines) {
+      for (let i = 0; i < line.length; i++) {
+        const [x, y] = line[i];
+        if (i === 0) ctx.moveTo(tx(x), ty(y));
+        else ctx.lineTo(tx(x), ty(y));
+      }
+    }
+    ctx.stroke();
+  }
+  return rect;
+}
+
+// ── Plotter-grade SVG ────────────────────────────────────────────────────────
+// A PEN HAS ONE WIDTH. The first version encoded a layer's weight as stroke-width, which is the
+// least plotter-honest thing the file could do: the machine cannot honour a fractional width, so
+// the SVG was promising something no plot could deliver and the screen preview was lying about
+// how the sheet would come out. Weight is now expressed the way a plotter actually expresses it:
+//   - PEN INDEX. Layers are grouped into pen passes (data-pen), so heavy and light are different
+//     pens or different inks, swapped between passes, which is what the operator physically does.
+//   - PASS COUNT. Within a pen, a heavier layer is drawn more times (data-passes). Ink builds.
+// stroke-width in the file is a fixed nominal 0.3mm for PREVIEW ONLY, declared as such, so no
+// downstream tool mistakes it for an instruction.
+//
+// Each path also gets its own <path> element rather than one concatenated `d`, so vpype, a
+// plotter driver, or an editor can address, reorder, or drop individual strokes.
+const NOMINAL_PEN_MM = 0.3;
+
+// Both helpers are exported so plot-replay.js runs playback in the SAME pen order and pass count
+// the SVG declares — one pen model, two consumers, no copy to drift.
+export function penIndexFor(layer) {
+  // Three pens is what most plotter setups actually keep loaded: a fine support pen, the drawing
+  // pen, and a heavy pen for frames and emphasis.
+  if (layer.tone === "support") return 0;
+  return (layer.weight || 1) >= 1.2 ? 2 : 1;
+}
+export function passesFor(layer) {
+  const w = layer.weight || 1;
+  return w >= 1.4 ? 3 : w >= 0.9 ? 2 : 1;
+}
+
+export function plotMapSVG(plot, opts = {}) {
+  // The paper takes the sheet's own aspect — 0.75 for the cartographic studies, the picture's
+  // ratio for an image plot — so the file and the screen are the same drawing at the same shape.
+  const aspect = opts.aspect || (plot.meta && plot.meta.aspect) || 0.75;
+  const Wmm = opts.widthMm || 210, Hmm = Math.round(Wmm * aspect);
+  const scale = (line) => line.map(([x, y]) => [x * Wmm, y * Hmm]);
+  // Group by pen so the file is ordered the way the plot is run: all of pen 0, then pen 1, then
+  // pen 2, one pen change between groups instead of one per layer.
+  const byPen = new Map();
+  for (const layer of plot.layers) {
+    const pen = penIndexFor(layer);
+    if (!byPen.has(pen)) byPen.set(pen, []);
+    byPen.get(pen).push(layer);
+  }
+  const groups = [];
+  for (const pen of [...byPen.keys()].sort((a, b) => a - b)) {
+    for (const layer of byPen.get(pen)) {
+      const ordered = orderPaths(layer.polylines.map(scale));
+      const paths = ordered.map((line) =>
+        `      <path d="M${line.map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(" L")}"/>`).join("\n");
+      groups.push(
+        `  <g id="${layer.name}" data-pen="${pen}" data-passes="${passesFor(layer)}" data-strokes="${ordered.length}"\n`
+        + `     fill="none" stroke="black" stroke-width="${NOMINAL_PEN_MM}" stroke-linecap="round">\n${paths}\n  </g>`);
+    }
+  }
+  const m = plot.meta;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${Wmm} ${Hmm}" width="${Wmm}mm" height="${Hmm}mm">\n`
+    + `  <!-- seed ${m.seed} · study ${m.study}${m.register ? " · register " + m.register : ""} · ${m.strokes} strokes · deterministic -->\n`
+    + `  <!-- stroke-width is a nominal ${NOMINAL_PEN_MM}mm for preview only. Weight is carried by\n`
+    + `       data-pen (which pen draws the group) and data-passes (how many times it is drawn). -->\n`
+    + groups.join("\n") + "\n</svg>\n";
+}
+
+export { toPlotterSVG };   // re-export so callers can reach the shared exporter through one door

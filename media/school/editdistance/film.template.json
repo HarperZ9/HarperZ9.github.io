@@ -1,0 +1,135 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "editdistance",
+ "title": "Dynamic programming: remember what you already worked out",
+ "page": "night-school-editdistance.html",
+ "seed": 20261044,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/editdistance/facts.json, computed by tools/school/fill_editdistance.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line at night. A tide table is scratched into a flat stone: a grid of small numbers. Rerun fills one more square, looks at the three beside it, and nods. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "The last square of the stone is filled. Rerun traces a path back from it to the first corner, and the tide comes in over the bottom row."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Dynamic programming",
+   "lines": [
+    "Dynamic programming: remember what you already worked out.",
+    "Some problems are made of smaller problems that keep coming back. Tonight Rerun learns to solve each one once and write the answer down."
+   ]
+  },
+  {
+   "key": "problem",
+   "heading": "How different are two words",
+   "sources": [
+    "ours-edit",
+    "jm"
+   ],
+   "lines": [
+    "How different are two words? Count the fewest single-letter edits that turn one into the other: put a letter in, take one out, or change one.",
+    "Kitten becomes sitting in {{pairs.rows.0.distance|int}}: change the k to an s, the e to an i, and add a g. This count is called the edit distance."
+   ]
+  },
+  {
+   "key": "naive",
+   "heading": "Try every way",
+   "sources": [
+    "ours-edit"
+   ],
+   "lines": [
+    "The obvious way is to try everything. Look at the last letters: either delete one, insert one, or match or change them, and work out the rest of each case the same way.",
+    "That works, but the same smaller questions come up again and again. For kitten and sitting, the recursion made {{pairs.rows.0.naiveCallsRun|int}} calls. For intention and execution, {{pairs.rows.1.naiveCallsRun|int}}."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      1
+     ],
+     "question": "Two phrases of thirteen characters. How many calls does trying every way make?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "explode",
+   "heading": "Too many calls",
+   "sources": [
+    "ours-edit"
+   ],
+   "lines": [
+    "For two phrases of {{naive.stoppedAt.atLength|int}} characters, it made {{naive.rows.12.calls|int}} calls and took {{naive.rows.12.ms|int}} milliseconds on this computer. Each extra letter multiplies the work by about five and a half, and the factor keeps rising.",
+    "Yet there are only {{naive.rows.12.cells|int}} different questions in the whole problem, the big one included. The rest is repetition."
+   ]
+  },
+  {
+   "key": "table",
+   "heading": "The tide table",
+   "sources": [
+    "ours-edit",
+    "wf1974",
+    "jm"
+   ],
+   "lines": [
+    "So write each answer down once, in a table: one row for each letter of the first word plus one for the empty start, and the same for the columns.",
+    "Each square needs only three others: the one above, the one to its left, and the one diagonally above and left. Fill them in order and the bottom corner is the answer. For kitten and sitting, {{pairs.rows.0.cells|int}} squares instead of {{pairs.rows.0.naiveCallsRun|int}} calls.",
+    "Robert Wagner and Michael Fischer published this table for strings in 1974, and others found it independently."
+   ]
+  },
+  {
+   "key": "trace",
+   "heading": "Reading the way back",
+   "sources": [
+    "ours-edit",
+    "wf1974"
+   ],
+   "lines": [
+    "The table also says which edits to make. From the bottom corner, step back to whichever neighbour gave its value, and each step is one edit or one match.",
+    "Halve the beach and half the beach are {{pairs.rows.3.distance|int}} apart: drop the v, and change the e to an f."
+   ]
+  },
+  {
+   "key": "greedy",
+   "heading": "A shortcut that fails",
+   "sources": [
+    "ours-edit"
+   ],
+   "lines": [
+    "Why not just walk along both strings and fix each difference as you meet it? We tried that. It got both classic word pairs right.",
+    "It was wrong on all {{controls.greedy.wrong|int}} of our guide sentences, and too high on {{controls.random.greedyAbove|int}} of {{controls.random.pairs|int}} random pairs. A test with only the textbook examples would have passed it."
+   ]
+  },
+  {
+   "key": "bellman",
+   "heading": "The idea",
+   "sources": [
+    "dreyfus2002",
+    "bellman1957",
+    "jm"
+   ],
+   "lines": [
+    "Richard Bellman chose the name dynamic programming around 1950, for problems solved in stages. Today it means: when a big problem is built from smaller ones that overlap, solve each smaller one once and keep the answer.",
+    "The same idea finds shortest routes and decodes speech."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "When the same question keeps coming back, write the answer down.",
+    "Goodnight."
+   ]
+  }
+ ]
+}

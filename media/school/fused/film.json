@@ -1,0 +1,121 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "fused",
+ "title": "Fused attention",
+ "page": "night-school-fused.html",
+ "seed": 20261039,
+ "voice": "pylon",
+ "draft": true,
+ "numbers_from": "media/school/fused/facts.json, computed by tools/school/fill_fused.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "pylon",
+  "style": "painted",
+  "open": {
+   "seconds": 4.0,
+   "what": "The cannery at night. Through the window, Tallow's lighthouse beam sweeps the water. One crew stacks a whole wall of cans in the warehouse; another works from a single tray on its bench. Pylon looks from one to the other. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "The warehouse wall comes down can by can and is not rebuilt. The crew at the bench finishes, the dial on the wall settles, and Pylon switches off the warehouse lights."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "Fused attention",
+   "lines": [
+    "Fused attention.",
+    "Attention, the step where each word looks back at the words before it, is where the lighthouse meets the cannery. Tonight Pylon shows how to do it in one trip, without ever writing the whole table of scores to the warehouse."
+   ]
+  },
+  {
+   "key": "table",
+   "heading": "The table of scores",
+   "sources": [
+    "ours-fused",
+    "flash2022"
+   ],
+   "lines": [
+    "For every word, attention scores that word and every earlier one, turns the scores into shares, and mixes the words by those shares.",
+    "Done the plain way on a graphics chip, that takes three passes, and the table crosses the warehouse door four times. Write the scores. Read them back and write the shares. Read the shares back to mix. For 4,096 words, one head's scores alone fill 64 mebibytes, in 32-bit numbers."
+   ]
+  },
+  {
+   "key": "online",
+   "heading": "Shares without the whole row",
+   "sources": [
+    "ours-fused",
+    "milakov2018"
+   ],
+   "lines": [
+    "The trouble is the shares. To turn a score into a share you divide by a total over the whole row, and you seem to need every score before you can start.",
+    "Maxim Milakov and Natalia Gimelshein showed in 2018 that the largest score and the total can be built in one pass, as the scores go by. When a bigger score arrives, shrink the total so far to match, and carry on.",
+    "On our model's own sentence, the tile-by-tile answer and the plain one both land within float32 rounding of the exact answer, on all four heads."
+   ]
+  },
+  {
+   "key": "fused",
+   "heading": "One trip",
+   "sources": [
+    "ours-fused",
+    "flash2022"
+   ],
+   "lines": [
+    "Tri Dao and colleagues built FlashAttention on this in 2022. Our kernel follows the same idea. A crew loads a tile of questions and walks tiles of keys and values past it on its bench. It keeps the running largest score and total, and writes only the finished answers. Dao's version loops the other way round, and also saves the running largest and total for training.",
+    "Count one head's warehouse traffic for 4,096 words, with 64 numbers per head: 514 mebibytes the plain way, 258 fused. The bench is small, so the keys and values are fetched again for every tile of questions. With 16 numbers per head, more fits on the bench: 272.5 against 16.5."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Four thousand words, sixteen numbers per head. How many times less traffic, fused?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "rescale",
+   "heading": "Forget one step",
+   "sources": [
+    "ours-fused"
+   ],
+   "lines": [
+    "The one step that is easy to forget: shrinking the running total when a bigger score arrives.",
+    "We left it out on purpose. On our model's sentence, some answers came out wrong on every one of the four heads, and the checker caught it. It is right only when the biggest score happens to arrive in the first tile."
+   ]
+  },
+  {
+   "key": "overflow",
+   "heading": "Why keep the largest",
+   "sources": [
+    "ours-fused"
+   ],
+   "lines": [
+    "The running largest score does a second job. Raising e to a score makes big numbers fast, and fp16, the common 16-bit format, overflows above 65,504.",
+    "The largest score in our sentence's last row is 10.32, and e to that is 30,320. That fits, but a score of 11.09 would not. Across the held-out rows, the largest score reaches 23.41, and e to some of those scores would be infinity in fp16. Subtracting the running largest first keeps every term at 1 or below."
+   ]
+  },
+  {
+   "key": "limits",
+   "heading": "What the count leaves out",
+   "sources": [
+    "ours-fused"
+   ],
+   "lines": [
+    "These are counts of the memory requests our own kernels make, not times, and a chip's caches may serve some of them. Fused attention also does a little more arithmetic, the rescaling, to save the trips.",
+    "The lab runs both versions on your own chip, if your browser allows it, and times them beside the count."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Do the whole job on the bench, keep a running largest and a running total, and never build the wall of scores.",
+    "Next, with Tallow: what the 16-bit numbers in those trays can and cannot hold. Goodnight."
+   ]
+  }
+ ]
+}

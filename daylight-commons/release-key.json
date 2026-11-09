@@ -1,0 +1,11 @@
+{
+  "kty": "EC",
+  "crv": "P-256",
+  "x": "0iyHwn2zRDoP7RfuuxvKGxhRYmAXiS7NelteWFPo8CM",
+  "y": "8n431mx6HCqh1hNM1xZmJeDX2ZPckhNUlIBezeKro_k",
+  "use": "sig",
+  "alg": "ES256",
+  "keyId": "0e5e 1984 0565 840c 977e 0f03 6c9a c021",
+  "thumbprint": "Dl4ZhAVlhAyXfg8DbJrAIYTCu3JSbvMKd3bvqqxIevE",
+  "label": "CMMNS project key"
+}

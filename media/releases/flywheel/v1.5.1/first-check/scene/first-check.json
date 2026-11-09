@@ -1,0 +1,36 @@
+{
+ "title": "Flywheel: check an answer against its source",
+ "subtitle": "the Form 1040 example, run from a source checkout",
+ "steps": [
+  {
+   "say": "Check the answer as it was filed. The contract names the tax table as the authority, and the filed tax disagrees with it.",
+   "cwd": "examples/output-validation",
+   "highlight": "^(FAIL|HOLD)",
+   "show_exit": true,
+   "ok_codes": [
+    1
+   ],
+   "keep": 8,
+   "chapter": "As filed"
+  },
+  {
+   "say": "Check the answer that took its tax from the table. It passes.",
+   "cwd": "examples/output-validation",
+   "highlight": "^PASS",
+   "show_exit": true,
+   "keep": 8,
+   "chapter": "From the table"
+  },
+  {
+   "say": "Run the same check with nothing allowed to decide. The same correct answer is unverifiable, not passed.",
+   "cwd": "examples/output-validation",
+   "highlight": "^UNVERIFIABLE",
+   "show_exit": true,
+   "ok_codes": [
+    3
+   ],
+   "keep": 8,
+   "chapter": "Unchecked"
+  }
+ ]
+}

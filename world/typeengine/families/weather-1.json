@@ -1,0 +1,72 @@
+{
+ "schema": "typeengine.family/1",
+ "id": "weather-1",
+ "name": "Weather 1",
+ "ground": "#9fb4c4",
+ "skeleton": {
+  "source": "accession",
+  "style": "text",
+  "weight": 518,
+  "cut": null,
+  "extra": {
+   "n": 2.755,
+   "wd": 0.989
+  }
+ },
+ "bindings": {
+  "fill": {
+   "material": "cloud",
+   "params": {
+    "style": "halftone",
+    "puff": 0.505,
+    "step": 0.352,
+    "depth": 0
+   }
+  },
+  "stroke": {
+   "material": "brush",
+   "params": {
+    "preset": "wisp",
+    "size": 1.339,
+    "flow": 0.926,
+    "color": "#3a3f6b"
+   }
+  }
+ },
+ "axes": [
+  {
+   "tag": "wght",
+   "name": "Weight",
+   "min": 500,
+   "max": 900,
+   "default": 518,
+   "target": "skeleton.weight"
+  }
+ ],
+ "recipe": {
+  "brief": "weather",
+  "seed": 1,
+  "index": 5,
+  "seedRule": "xmur3-mulberry32/1",
+  "candidate": "weather-5",
+  "scores": {
+   "total": 0.8042,
+   "legibility": {
+    "accuracy": 0.968,
+    "margin": 0.144,
+    "misses": [
+     "i>I"
+    ],
+    "pairs": {
+     "I/l": 0.314,
+     "O/0": 0.275,
+     "rn/m": 0.761,
+     "cl/d": 0.33
+    },
+    "proxy": "template correlation against Accession Display 700, 24 x 24; not OCR"
+   },
+   "contrast": 3.54,
+   "novelty": 1
+  }
+ }
+}

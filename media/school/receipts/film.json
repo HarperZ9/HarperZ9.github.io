@@ -1,0 +1,122 @@
+{
+ "schema": "explainer-film/1",
+ "slug": "receipts",
+ "title": "Case study: a score that carries its receipt",
+ "page": "night-school-receipts.html",
+ "seed": 20261042,
+ "voice": "rerun",
+ "draft": true,
+ "numbers_from": "media/school/receipts/facts.json, computed by tools/school/fill_receipts.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+ "host": {
+  "guide": "rerun",
+  "style": "thriller",
+  "open": {
+   "seconds": 4.0,
+   "what": "The tide line at night. Rerun carries a shell with a tag knotted to it. Fifty small beads hang from the tag on threads that join, two by two, into one knot. No words."
+  },
+  "close": {
+   "seconds": 5.0,
+   "what": "Rerun turns the last bead over, compares it with the answer scratched on a pebble, nods, and sets the shell down with the tag facing up."
+  }
+ },
+ "segments": [
+  {
+   "key": "title",
+   "layout": "title",
+   "heading": "A score that carries its receipt",
+   "lines": [
+    "Case study: a score that carries its receipt.",
+    "In lesson E24 we saw a check that could be fooled. Tonight Rerun opens a score that comes with its own evidence, checks it from scratch, and finds out exactly what that evidence proves."
+   ]
+  },
+  {
+   "key": "claim",
+   "heading": "A claim and its receipt",
+   "sources": [
+    "fw-doc",
+    "fw-fixture"
+   ],
+   "lines": [
+    "Flywheel is our evaluation tool. In this demonstration a data owner runs an approved job on private questions, and the job writes one row per question: the answer given and whether it was right.",
+    "The result says 40 of 50. Beside it sits a receipt: a hash of the rows, a tree of hashes over every row, the hash of the approved job, a hash of the approval record, and a signature over the whole body."
+   ]
+  },
+  {
+   "key": "rederive",
+   "heading": "Check it yourself",
+   "sources": [
+    "fw-fixture",
+    "ours-receipts"
+   ],
+   "lines": [
+    "A hash is a fingerprint of bytes: change one byte and the fingerprint changes completely.",
+    "So we counted the rows ourselves: 40 of 50. Then we recomputed, in this page's own code, every fingerprint the files let us check, nine in all. Each matched the published value exactly. The approval record's hash and the model and data commitments cannot be recomputed from the bundle."
+   ],
+   "predict": [
+    {
+     "after": [
+      1,
+      0
+     ],
+     "question": "Flip any one byte of the rows file. Does the check catch every flip, most of them, or few?",
+     "hold": 2.5
+    }
+   ]
+  },
+  {
+   "key": "tamper",
+   "heading": "One byte at a time",
+   "sources": [
+    "ours-receipts"
+   ],
+   "lines": [
+    "We flipped every byte of every file, one at a time, 10,960 tampered copies in all. In the rows file, all 2,892 of 2,892 were caught.",
+    "In the receipt itself, 5,663 of 5,744. The 81 missed bytes sit in two fields outside the signed body, the envelope's schema name and the signature's key name, which Flywheel's verifier never reads. The permissions file was caught 0 times in 108: the job's hash leaves it out on purpose."
+   ]
+  },
+  {
+   "key": "swap",
+   "heading": "Same score, different rows",
+   "sources": [
+    "ours-receipts"
+   ],
+   "lines": [
+    "A sneakier edit: swap the right and wrong marks on two rows. The count is still 40, so a check on the score alone passes.",
+    "The fingerprints do not. The rows' hash and the tree both change, and the receipt no longer matches."
+   ]
+  },
+  {
+   "key": "cheater",
+   "heading": "What the receipt cannot see",
+   "sources": [
+    "ours-receipts",
+    "fw-doc"
+   ],
+   "lines": [
+    "Now the hard case. Someone signs a lie: they mark one wrong row as right, rebuild every fingerprint and sign again.",
+    "If we accept their key, every hash check passes, and the receipt is perfectly consistent. If we insist on a key we trusted before, the signature check catches the swap. But if the liar holds that trusted key, only the true answers, revealed afterwards, catch it.",
+    "A receipt proves the bytes have not changed since they were signed, and which key signed them. It cannot prove the rows were true when they were written. That needs a check against the truth, like the exact checker in lesson E24."
+   ]
+  },
+  {
+   "key": "found",
+   "heading": "Found while checking",
+   "sources": [
+    "ours-receipts",
+    "fw-verify"
+   ],
+   "lines": [
+    "One more thing turned up. Flywheel's verifier never recomputes the receipt's own identifier. Flywheel's own test of a consistent lie rebuilds and signs everything except that identifier, and its verifier still says the receipt matches until the answers are revealed.",
+    "Our page checks the identifier too. That is a gap worth closing in Flywheel's verifier, and it is the point of a receipt anyone can recheck: an outside check found it."
+   ]
+  },
+  {
+   "key": "close",
+   "heading": "Goodnight",
+   "lines": [
+    "Recount the rows, recompute the fingerprints, and remember what a signature cannot see.",
+    "Goodnight."
+   ]
+  }
+ ]
+}

@@ -2,13 +2,13 @@
 // list (raw-native's display list). The page draws it with the WebGPU renderer, in the
 // thriller template's own look, or with the Canvas 2D drawer where there is no WebGPU.
 // Pure in (state, time), so a frame can be checked in Node.
-import { pose } from "../../media/raw-native/tree-c6b114d/templates/guides/rig.mjs";
-import { GUIDES } from "../../media/raw-native/tree-c6b114d/templates/guides/guides.mjs";
-import { thrillerSet } from "../../media/raw-native/tree-c6b114d/templates/guides/sets.mjs";
-import { clipBeat } from "../../media/raw-native/tree-c6b114d/templates/guides/motion.mjs";
-import { LOOKS } from "../../media/raw-native/tree-c6b114d/templates/guides/look.mjs";
-import { rect, circle } from "../../media/raw-native/tree-c6b114d/web/motion/path.mjs";
-import { text } from "../../media/raw-native/tree-c6b114d/web/motion/text.mjs";
+import { pose } from "../../media/raw-native/tree-ada041f/templates/guides/rig.mjs";
+import { GUIDES } from "../../media/raw-native/tree-ada041f/templates/guides/guides.mjs";
+import { thrillerSet } from "../../media/raw-native/tree-ada041f/templates/guides/sets.mjs";
+import { clipBeat } from "../../media/raw-native/tree-ada041f/templates/guides/motion.mjs";
+import { LOOKS } from "../../media/raw-native/tree-ada041f/templates/guides/look.mjs";
+import { rect, circle } from "../../media/raw-native/tree-ada041f/web/motion/path.mjs";
+import { text } from "../../media/raw-native/tree-ada041f/web/motion/text.mjs";
 import { gameHour, reached } from "./night-shift.mjs";
 
 export const INK = "#ece5d6", DIM = "#958e80", OK = "#63d4ce", HOT = "#e29472", UNV = "#b3b1e6", PAPER = "#d9cdb0";

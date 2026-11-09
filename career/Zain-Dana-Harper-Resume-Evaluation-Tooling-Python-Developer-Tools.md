@@ -2,29 +2,31 @@
 
 Kent, Washington | zaindharper@gmail.com | harperz9.github.io
 
-linkedin.com/in/zaindanaharper | github.com/HarperZ9
+linkedin.com/in/zaindanaharper | github.com/HarperZ9 | harperz9.github.io/published-work.html
 
-AI Systems Engineering | Evaluation | Python Developer Tools
+AI Evaluation | Security Evaluation | Python Developer Tools
 
 ## Summary
 
-Self-directed software builder transitioning from arboriculture into AI evaluation and Python tooling, with maintainer-merged fixes for evaluation crashes, configuration data loss, and API errors.
+Self-directed builder moving from arboriculture into AI and security evaluation.
 
 ## Technical Skills
 
-Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, MCP, APIs, deterministic testing, typed capabilities, approval gates, offline verification.
+Python, Rust, C++, Dart/Flutter, SQL, GitHub Actions, pytest, Linux, Windows; AI evaluation, planted-fault and control design, red-team and purple-team test cases, MCP, APIs, deterministic testing, offline verification.
 
 ## Self-Directed Projects
 
 About 13 years self-directed | Career transition began June 2026
 
-- Built and shipped Flywheel, a Python/Flutter workstation with Rowan orchestration, model routing, tools, and a Windows installer with a bundled engine.
+- Shipped Flywheel 1.9.0 on PyPI, a Python/Flutter AI workstation with model routing and a Windows installer; its behavior-check caught 20 of 20 planted changes with 0 of 50 false alarms.
 
-- Built 324 exhaustive terminal-state fixtures and 337 synthetic component cases with 5,058 frozen expectations, distinguishing failed outputs from valid results within defined schemas.
+- Built test infrastructure for evaluating AI agents: 324 terminal-state fixtures and 337 component cases that separate failed outputs from provider failures.
 
-- Built Articulate writing analysis, Accountable Surface approval interfaces, BuildLang capability checks, and Phantom audit/restore workflows for inspectable changes.
+- Built Articulate 0.16.0 writing analysis, Accountable Surface approval interfaces, BuildLang 1.10.0 capability checks and Phantom audit and restore.
 
-- Executed a pinned METR count_odds check with three deterministic controls, retaining logs and score provenance through the Inspect-to-Flywheel handoff.
+- Built Daylight Commons 3.2.2 (now CMMNS), a browser extension for nine platforms; slur-sign precision 3,995 of 4,392.
+
+- Ran a pinned METR count_odds task through the Inspect-to-Flywheel bridge with three deterministic controls.
 
 ### Freelance Technical Writer | Independent projects | Began 2017
 
@@ -44,16 +46,18 @@ Xbox/Microsoft product contract | Wilsonville, Oregon
 
 - Resolved Xbox connectivity problems across TCP/IP, DNS, NAT, firewalls, and routers; documented troubleshooting steps for consistent support handoffs.
 
-## Selected Open-Source Contributions: 6 Merged
+## Open-Source Contributions: 37 Merged in 30 Repositories
 
-- DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters; added regression tests to protect evaluation reliability. Merged.
+- DeepEval #2822: fixed crashes on unhashable tool outputs and nested parameters, with regression tests. Merged.
 
-- TOMLKit #549: preserved sibling keys during dotted-key replacement, preventing silent configuration data loss on round trips. Merged.
+## Certifications and Education
 
-- Datasette #2815: corrected malformed composite-key requests from HTTP 500 or incorrect HTTP 200 to HTTP 400, with regression coverage. Merged.
+- Google DeepMind: Train A Small Language Model, assessed skill badge, 100/100 | Google Skills | September 2026
 
-## Credentials, Training, and Education
+- Microsoft Applied Skills, four credentials, including Secure AI solutions in the cloud and Azure DevOps pipeline security (95% assessment) | Microsoft | September 2026
 
-Qualys Certified Specialist: Policy Audit, CAR, VMDR, KCS, TotalCloud, EDR. Microsoft Applied Skills: AI, identity, storage, and Azure DevOps security (95% assessment). Google badges/coursework: language-model coding, multi-agent systems, BigQuery prediction and modeling, MLOps evaluation. Coursework: security, AI governance, and developer tools. Full record: harperz9.github.io/cv.html.
+- Qualys Certified Specialist, six exams: VMDR, Policy Audit, EDR, TotalCloud, Kubernetes, Custom Assessment | Qualys | September 2026
+
+Training: Cisco Ethical Hacker, Claude Academy MCP, UNESCO Ethics of AI, 17 Linux Foundation security courses. All 42 credentials and verification links: harperz9.github.io/published-work.html
 
 High School Diploma | Wilsonville High School, Oregon | 2013

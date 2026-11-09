@@ -1,0 +1,6 @@
+{
+ "wasm-gpu": {
+  "mjs": "d86fc8ebff7d796918090487001b2cff7b2d919b2fefccd2b3af5266223d55ef",
+  "wasm": "42be77901470cbc691eb729522f53cb2278cd049672b2b90a626c3e30bf384a2"
+ }
+}

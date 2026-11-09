@@ -29,7 +29,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, PageBreak
 from pypdf import PdfReader
 
 
-SOURCE_EPOCH = 1791331200  # 2026-10-07T00:00:00Z
+SOURCE_EPOCH = 1792713600  # 2026-10-23T00:00:00Z
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,6 +49,11 @@ SPECS = (
         "resume-evaluation-tooling.html",
         "Zain-Dana-Harper-Resume-Evaluation-Tooling-Python-Developer-Tools",
         "evaluation-python-tools",
+    ),
+    ArtifactSpec(
+        "resume-graphics-developer-tools.html",
+        "Zain-Dana-Harper-Resume-Graphics-Developer-Tools",
+        "graphics-developer-tools",
     ),
     ArtifactSpec(
         "resume-public-operations.html",

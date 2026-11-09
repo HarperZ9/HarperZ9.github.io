@@ -1,0 +1,57 @@
+/* Type tokens. Every page reads three faces from here and nowhere else.
+
+   Interim: the stock faces (Hanken Grotesk, Conso) and our own minted display cuts.
+   The house family is being built in typeface (text, display, utility). When it lands:
+     1. follow its INSTALL.md to add its @font-face rules at the bottom of this file;
+     2. put its three family names in the [data-type="house"] block below;
+     3. set <html data-type="house"> (or flip the default line at the end of this file).
+   That last switch is the one token: no page CSS changes. */
+@import url("../../fonts/accession/accession.css");
+@font-face{font-family:"Mint Carved";src:url("../../fonts/mint-carved.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Mint Deco";src:url("../../fonts/mint-deco.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+
+@font-face{font-family:"Hanken Grotesk";src:url("../../fonts/hanken-grotesk-italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+
+:root{
+  --face-text:"Hanken Grotesk",system-ui,sans-serif;
+  --face-display:"Hanken Grotesk",system-ui,sans-serif;
+  --face-utility:"Conso",ui-monospace,monospace;
+  /* our own minted cuts, for rooms that synthesise their own display type (caps and digits are safest) */
+  --face-carved:"Mint Carved","Hanken Grotesk",sans-serif;
+  --face-deco:"Mint Deco","Hanken Grotesk",sans-serif;
+  /* licensed (fonts-licensed/LICENCE-NOTE.md): the supergraphic face, one move per page */
+  --face-super:"Hanken Grotesk",sans-serif;
+  /* the type scale (QUALITY-SPEC T8): eight steps, each at least 1.125x the last.
+     Sizes are fixed per breakpoint so a page never grows a ninth size between them. */
+  --fs-1:13px;   /* utility: running heads, media lines, tooltips */
+  --fs-2:15px;   /* cards, notes, captions, controls */
+  --fs-3:17px;   /* body */
+  --fs-4:22px;   /* lede, reading wall, wall text */
+  --fs-5:30px;   /* label titles, the line under the name */
+  --fs-6:64px;   /* room titles, specimens */
+  --fs-7:96px;   /* big specimens, section titles */
+  --fs-hero:216px;
+  /* the older names the pages already use */
+  --sans:var(--face-text);
+  --mono:var(--face-utility);
+}
+:root[data-type="house"]{
+  /* the house family, working name Accession (typeface). Its family names live only here:
+     a rename is this block plus the forge rebuild. */
+  --house-text:"Accession Text";
+  --house-display:"Accession Display";
+  --house-mono:"Accession Mono";
+  --house-super:"Accession Super";
+  --face-text:var(--house-text),"Hanken Grotesk",system-ui,sans-serif;
+  --face-display:var(--house-display),"Hanken Grotesk",system-ui,sans-serif;
+  --face-utility:var(--house-mono),"Conso",ui-monospace,monospace;
+  --face-super:var(--house-super),"Hanken Grotesk",sans-serif;
+}
+/* Legibility results from the typeface session: text under 14 px stays on Hanken until the house 12 px
+   master catches up; the house family has no italic, so nothing requests one. */
+
+
+:root{font-synthesis:none;font-kerning:normal}
+.tt,.runhead,.card,pre,code{font-variant-numeric:tabular-nums slashed-zero}
+
+@media (max-width:860px){:root{--fs-4:20px;--fs-5:26px;--fs-6:36px;--fs-7:60px;--fs-hero:clamp(64px,19vw,140px)}}

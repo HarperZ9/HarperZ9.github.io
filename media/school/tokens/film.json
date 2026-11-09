@@ -1,0 +1,103 @@
+{
+  "schema": "explainer-film/1",
+  "slug": "tokens",
+  "title": "Tokens: cutting text into crates",
+  "page": "night-school-tokens.html",
+  "seed": 20261022,
+  "voice": "pylon",
+  "draft": true,
+  "numbers_from": "media/school/tokens/facts.json, computed by tools/school/fill_tokens.mjs; tools/school/fill_script.mjs fills every double-brace token below from it",
+  "host": {
+    "guide": "pylon",
+    "style": "painted",
+    "open": { "seconds": 4.0, "what": "The customs shed at night. A long ribbon of text unrolls off a boat onto Pylon's counter. She picks up a stamp and a saw. No words." },
+    "close": { "seconds": 5.0, "what": "Crates of every size stacked to the roof, each stamped with its piece of text. Pylon puts a cone on one crate that holds a single odd byte, and turns off the shed light." }
+  },
+  "segments": [
+    {
+      "key": "title",
+      "layout": "title",
+      "heading": "Tokens",
+      "lines": [
+        "Tokens. Cutting text into crates.",
+        "Everything that comes through my customs shed goes into a standard crate. Text too, before any language model can touch it."
+      ]
+    },
+    {
+      "key": "sizes",
+      "heading": "How big a crate",
+      "sources": ["ours-corpus"],
+      "lines": [
+        "A language model doesn't read letters. It reads a list of pieces, each one a number from its vocabulary. The question is how big to cut the pieces.",
+        "Cut by letter, with one extra mark for the end of each word, and the guides' sentences take about 4.39 pieces per word, counting each full stop and question mark as a word: tiny crates, a great many trips.",
+        "Cut by whole word, and every word is one piece. But a word the model has never seen has no crate at all."
+      ]
+    },
+    {
+      "key": "merge",
+      "heading": "Merge the common pairs",
+      "sources": ["sennrich2016", "gage1994", "ours-corpus"],
+      "lines": [
+        "Byte-pair encoding meets in the middle. Start from single letters. Count every pair of neighbouring pieces, inside words. The most common pair gets a crate of its own. Then count again.",
+        "On the guides' sentences, the first merge joins an e to the end-of-word mark, so an e that ends a word gets one crate. By the fifth merge, the whole word 'the' has its own crate.",
+        "After 50 merges, a word takes 1.80 pieces on average. After 136, every one of the guides' words is a single piece."
+      ],
+      "predict": [
+        { "after": [1, 1], "question": "After fifty merges, how many pieces does a word take?", "hold": 2.5 }
+      ]
+    },
+    {
+      "key": "unseen",
+      "heading": "A word nobody shipped before",
+      "sources": ["sennrich2016", "ours-corpus"],
+      "lines": [
+        "Now a word that never came through the shed: lamplit. There's no crate for it.",
+        "So it's cut into pieces that do have crates: l, am, p, and lit at the end of a word. Nothing is thrown away. Rico Sennrich and his colleagues used this method, in a 2016 paper, to translate rare words."
+      ]
+    },
+    {
+      "key": "english",
+      "heading": "Real English",
+      "sources": ["melville1851", "austen1813"],
+      "lines": [
+        "The guides only know 44 words and 2 marks. So here's real English: the opening of Moby-Dick, about 599 words of it, to learn the merges from.",
+        "Then a page it never saw, the opening of Pride and Prejudice. With 400 merges, the new page takes 2.14 pieces per word. The word lighthouse, never seen, comes out as li, gh, thou and se."
+      ]
+    },
+    {
+      "key": "random",
+      "heading": "Why the common pairs",
+      "sources": ["ours-corpus"],
+      "lines": [
+        "Does it matter which pairs we merge? Merge random pairs instead, the same number of times, and over ten tries the guides' words still take 1.32 to 1.67 pieces each, instead of one."
+      ]
+    },
+    {
+      "key": "bytes",
+      "heading": "The smallest crates",
+      "sources": ["radford2019", "ours-bytes"],
+      "lines": [
+        "There's one more choice: what the very first pieces are. Characters run out fast. The page from Pride and Prejudice has curly quotation marks, and a capital D and E, that Moby-Dick never used, so with characters as the base, they have no crate.",
+        "GPT-2 starts from bytes instead. There are only 256 of them, and any text at all is some list of bytes. An a is one byte, an e with its accent built in is two, a curly apostrophe three, and a seal emoji four.",
+        "Start from bytes, and that new page has 0 pieces without a crate, instead of 16."
+      ]
+    },
+    {
+      "key": "ours",
+      "heading": "The lighthouse model",
+      "sources": ["ours-corpus"],
+      "lines": [
+        "The little language model from the attention lesson skips all of this. It has one crate per word, 46 of them counting the full stop and question mark, because its whole world is those 46.",
+        "Byte-pair encoding needs 136 merges, and a vocabulary of 160, to cut the same sentences into whole words, because every piece it made on the way stays in the vocabulary."
+      ]
+    },
+    {
+      "key": "close",
+      "heading": "Goodnight",
+      "lines": [
+        "Common pairs get their own crates, rare words come apart into pieces, and bytes mean nothing is ever left on the dock.",
+        "Next: giving every crate a place on the chart. Goodnight."
+      ]
+    }
+  ]
+}
