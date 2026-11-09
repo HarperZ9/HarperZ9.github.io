@@ -25,7 +25,7 @@ export const SCENE_FRAG = `#version 300 es
 precision highp float;
 ${ATMOS}
 uniform sampler2D uTrans, uSky, uW0, uW1, uW2, uGlyph;
-uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles;
+uniform float uSeq; uniform vec2 uRes, uJitter; uniform vec3 uL, uCam, uIor, uAbs, uLightCol, uTiles;
 uniform float uPitch, uYaw, uFocal, uT, uMoon, uMoonPhaseAngle, uExpo, uStars; uniform vec2 uSid;
 uniform float uGX, uGZ, uGH, uGW, uGT, uGR, uGBase, uGCap, uHasGlyph, uFoam;
 uniform float uCloud, uStorm, uRain, uRainbow, uHalo, uFlash, uHaze; uniform int uCloudSteps;
@@ -35,6 +35,11 @@ in vec2 v; out vec4 o;
 const float SUN_R = 0.004654;  // rad: the Sun's mean angular radius, 0.2666 deg
 const float MOON_R = 0.004521; // rad: the Moon's mean angular radius, 0.2590 deg
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+// sample jitter kernel (jitter.mjs holds the reference and its test): interleaved gradient noise per pixel (Jimenez 2014),
+// shifted by the golden ratio per accumulated sample and by the plastic number per march step, so a still's samples
+// spread evenly through each step and neighbouring steps do not share an offset
+float ign(vec2 p) { return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715)))); }
+float jit(float dim) { return fract(ign(gl_FragCoord.xy) + 0.61803399 * uSeq + 0.75487767 * dim); }
 float hgp(float c, float g) { return (1.0 - g * g) / (12.566370614 * pow(1.0 + g * g - 2.0 * g * c, 1.5)); }
 vec3 skyL(vec3 rd) {
   vec2 lh = normalize(uL.xz + 1e-6), rh = normalize(rd.xz + 1e-6);
@@ -119,7 +124,11 @@ float cloudD(vec3 p) {
   vec2 drift = vec2(uT * 0.004, uT * 0.002);
   float cell = n3(vec3((p.xz + drift) * 0.12, 0.3)), tower = mix(0.35, 1.0, smoothstep(0.35, 0.8, cell) * uStorm + (1.0 - uStorm) * 0.4);
   vec3 q = vec3(p.x + drift.x, p.y * 0.9, p.z + drift.y) * 0.9;
-  float f = 0.5 * n3(q) + 0.27 * n3(q * 2.03 + 1.7) + 0.14 * n3(q * 4.1 + 3.1) + 0.09 * n3(q * 8.3 + 5.3);
+  // each octave is turned off the axes of the one before: value noise keeps its lattice planes, and stacked level
+  // planes seen edge-on from the sea draw stripes across far cloud
+  const mat3 R = mat3(0.36, 0.48, -0.8, -0.8, 0.6, 0.0, 0.48, 0.64, 0.6);
+  vec3 q2 = R * q * 2.03 + 1.7, q3 = R * q2 * 2.02 + 3.1, q4 = R * q3 * 2.02 + 5.3;
+  float f = 0.5 * n3(R * q) + 0.27 * n3(q2) + 0.14 * n3(q3) + 0.09 * n3(q4);
   float b = cloudBase(), top = b + (cloudTop() - b) * tower, h = (p.y - b) / max(top - b, 0.1);
   float prof = smoothstep(0.0, 0.08, h) * smoothstep(1.0, 0.6, h) * (h < 1.0 ? 1.0 : 0.0);
   float cover = uCloud * (0.75 + 0.5 * cell);
@@ -136,19 +145,23 @@ vec4 clouds(vec3 rd) {
   if (uCloudSteps <= 0 || rd.y <= 0.004) return vec4(0.0, 0.0, 0.0, 1.0);
   // with rain shafts the march starts at the sea; otherwise at the cloud base
   float camKm = uCam.y * 0.001, lo = uRain > 0.0 && uStorm > 0.0 ? 0.0 : cloudBase(), t0 = max(0.0, (lo - camKm) / rd.y), t1 = min((cloudTop() - camKm) / rd.y, t0 + 45.0);
-  float dt = (t1 - t0) / float(uCloudSteps), T = 1.0, c = dot(rd, uL);
+  // density is sampled at three times the light-march rate: a step longer than a cloud is wide either hits or misses
+  // it, which shows as grain. Light toward the Sun is marched at every second dense sample and reused between.
+  int NS = uCloudSteps * 3; float dt = (t1 - t0) / float(NS), T = 1.0, c = dot(rd, uL), tau = 0.0; int dense = 0;
   vec3 S = vec3(0.0), sunC = uLightCol * texture(uTrans, transUV(2.0, max(uL.y, 0.02))).rgb, amb = skyL(vec3(0.0, 1.0, 0.0)) * uLightCol * PI * (1.0 - 0.6 * uStorm);
-  for (int i = 0; i < 64; i++) {
-    if (i >= uCloudSteps || T < 0.01) break;
-    vec3 p = vec3(0.0, camKm, 0.0) + rd * (t0 + (float(i) + hash(gl_FragCoord.xy + float(i))) * dt);
+  // one offset per ray, shared by every step: an offset per step biases where the first sample lands behind a
+  // cloud face by its position inside the step, which draws level bands across the cloud
+  float rj = jit(0.0), lj = jit(0.31);
+  for (int i = 0; i < 192; i++) {
+    if (i >= NS || T < 0.01) break;
+    vec3 p = vec3(0.0, camKm, 0.0) + rd * (t0 + (float(i) + rj) * dt);
     float d = cloudD(p);
     if (d <= 0.0) continue;
-    float tau = 0.0;
-    for (int j = 1; j <= 4; j++) tau += cloudD(p + uL * 0.25 * float(j)) * 0.25 * 40.0;
+    if ((dense++ & 1) == 0) { tau = 0.0; for (int j = 0; j < 4; j++) tau += cloudD(p + uL * 0.25 * (float(j) + lj)) * 0.25 * 40.0; }
     float sig = d * 40.0, ms = 0.0, a = 1.0, b = 1.0, e = 1.0;
     for (int o = 0; o < 3; o++) { ms += a * mix(hg(c, 0.8 * e), hg(c, -0.3 * e), 0.3) * exp(-b * tau); a *= 0.5; b *= 0.5; e *= 0.5; }
     // lightning lights the cloud from inside: light from the channel falls off with distance through the cloud
-    vec3 Li = sunC * ms * 4.0 * PI * (1.0 - exp(-2.0 * sig * dt)) + amb * 0.08
+    vec3 Li = sunC * ms * 4.0 * PI * (1.0 - exp(-2.0 * sig * dt * 3.0)) + amb * 0.08
             + vec3(0.72, 0.78, 1.0) * uFlash * 0.6 * exp(-length(p - uBolt) / 0.8) * exp(-0.6 * d * 40.0 * 0.05);
     float st = exp(-sig * dt);
     S += T * (1.0 - st) * Li; T *= st;
@@ -191,8 +204,11 @@ vec3 rainbow(vec3 rd) {
 vec3 halo(vec3 rd) {
   if (uHalo <= 0.0) return vec3(0.0);
   float a = degrees(acos(clamp(dot(rd, uL), -1.0, 1.0)));
-  vec3 r = exp(-pow((a - vec3(21.8, 22.3, 22.8)) / 0.5, vec3(2.0))) * smoothstep(21.0, 22.0, a) + 0.25 * exp(-pow((a - 23.5) / 2.0, 2.0));
-  return r * uHalo * 0.03 * lightT() * uLightCol;
+  // minimum deviation for a 60 degree ice prism is 21.5 (red) to 22.4 (blue) degrees; crystal wobble and the Sun's own
+  // width smear that to about a degree, so only the inner edge keeps a red tint and the rest reads white, with a long
+  // tail outward where crystals away from minimum deviation send their light
+  vec3 r = exp(-pow((a - vec3(21.9, 22.2, 22.5)) / 0.9, vec3(2.0))) * smoothstep(20.6, 22.0, a) + 0.3 * exp(-pow(max(a - 22.5, 0.0) / 3.0, 2.0)) * step(22.5, a);
+  return r * uHalo * 0.012 * lightT() * uLightCol;
 }
 vec3 sky(vec3 rd) {
   vec3 col = skyL(rd) * uLightCol + lightDisk(rd) + stars(rd);
@@ -329,7 +345,7 @@ vec4 sprayVol(vec3 ro, vec3 rd, float tMax) {
   float ph = hgp(dot(rd, uL), 0.6) * 4.0 * PI;
   for (int i = 0; i < 24; i++) {
     if (i >= uSprayN) break;
-    float u = (float(i) + hash(gl_FragCoord.xy + float(i) * 3.1)) / float(uSprayN), t = 0.5 + t1 * u * u, dt = t1 * (2.0 * u + 0.1) / float(uSprayN);
+    float u = (float(i) + jit(float(i) + 0.5)) / float(uSprayN), t = 0.5 + t1 * u * u, dt = t1 * (2.0 * u + 0.1) / float(uSprayN);
     vec3 q = ro + rd * t; float h = swellH(q.xz), above = q.y - h;
     if (above < -0.2 || above > 7.0) continue;
     float brk = smoothstep(uBreakH, uBreakH + 0.7 * uSig, h);
@@ -540,12 +556,17 @@ void main() {
 // display: ACES filmic fit (Narkowicz 2015), the sRGB transfer function (IEC 61966-2-1), triangular dither
 export const POST_FRAG = `#version 300 es
 precision highp float;
-uniform sampler2D uImg; uniform float uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
+uniform sampler2D uImg; uniform float uSeq, uFrame, uNight, uLensRain, uT; uniform vec2 uRes;
 uniform vec2 uSunUV; uniform float uSunOn, uRays, uGhost, uBloom, uHalation, uQuality, uRainP, uTilt;
 float lum(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }
 vec3 hdrAt(vec2 p) { return texture(uImg, clamp(p, vec2(0.001), vec2(0.999))).rgb; }
 in vec2 v; out vec4 o;
 float hash(vec2 p) { p = fract(p * vec2(443.897, 441.423)); p += dot(p, p.yx + 19.19); return fract((p.x + p.y) * p.x); }
+// sample jitter kernel (jitter.mjs holds the reference and its test): interleaved gradient noise per pixel (Jimenez 2014),
+// shifted by the golden ratio per accumulated sample and by the plastic number per march step, so a still's samples
+// spread evenly through each step and neighbouring steps do not share an offset
+float ign(vec2 p) { return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715)))); }
+float jit(float dim) { return fract(ign(gl_FragCoord.xy) + 0.61803399 * uSeq + 0.75487767 * dim); }
 vec3 aces(vec3 x) { return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0); }
 vec3 srgb(vec3 c) { return mix(c * 12.92, 1.055 * pow(c, vec3(1.0 / 2.4)) - 0.055, step(0.0031308, c)); }
 void main() {
@@ -578,7 +599,7 @@ void main() {
   if (uBloom + uHalation > 0.0) {
     int N = uQuality > 0.5 ? 16 : 12; vec3 acc = vec3(0.0);
     for (int i = 0; i < 16; i++) { if (i >= N) break;
-      float r = sqrt((float(i) + hash(gl_FragCoord.xy + float(i))) / float(N)) * (0.02 + 0.03 * uBloom), an = float(i) * 2.39996 + 6.2832 * hash(gl_FragCoord.yx);
+      float r = sqrt((float(i) + jit(float(i))) / float(N)) * (0.02 + 0.03 * uBloom), an = float(i) * 2.39996 + 6.2832 * jit(0.37);
       vec3 c = hdrAt(uv + vec2(cos(an), sin(an)) * r * asp); float l = lum(c); acc += c * max(l - 1.0, 0.0) / max(l, 1e-4); }
     acc /= float(N);
     hdr += acc * uBloom * 0.8 + lum(acc) * vec3(1.0, 0.32, 0.16) * uHalation * 0.9;

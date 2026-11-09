@@ -114,7 +114,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
 
   // one frame: the sea cascades at time t, the sky for this light, the scene (blended into the running mean when
   // accumulating), then the display pass
-  function frame({ t = clock, jitter = [0, 0], blendWeight = 1 } = {}) {
+  function frame({ t = clock, jitter = [0, 0], blendWeight = 1, seq = 0 } = {}) {
     const s = state();
     // the word re-forms halfway along the path, while the camera is between framings
     setWind(s.wind, s.windAngle, !!to.near); setWord(progress() < 0.5 ? word : to.word); if (progress() >= 1) word = to.word;
@@ -142,7 +142,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     gl.enable(gl.BLEND); gl.blendFunc(gl.CONSTANT_ALPHA, gl.ONE_MINUS_CONSTANT_ALPHA); gl.blendColor(0, 0, 0, blendWeight);
     draw(P.scene, hdr, (u) => {
       bind(0, T.trans.t, u.uTrans); bind(1, T.sky.t, u.uSky); T.waves.forEach((w, i) => bind(2 + i, w.t, u[`uW${i}`])); bind(5, glyphTex, u.uGlyph);
-      gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
+      gl.uniform2f(u.uRes, hdr.w, hdr.h); gl.uniform2fv(u.uJitter, jitter); gl.uniform1f(u.uSeq, seq); gl.uniform3fv(u.uL, L); gl.uniform3f(u.uCam, 0, camY, 0);
       gl.uniform3fv(u.uIor, IOR); gl.uniform3fv(u.uAbs, ABS); gl.uniform3f(u.uLightCol, lightCol, lightCol, lightCol); gl.uniform3f(u.uTiles, ...CASCADES.map((c) => c.tile));
       gl.uniform1f(u.uPitch, (s.cam.pitch + dPitch) * D); gl.uniform1f(u.uRoll, roll); gl.uniform1f(u.uYaw, s.cam.yaw * D); gl.uniform1f(u.uFocal, s.cam.focal); gl.uniform1f(u.uT, t);
       gl.uniform1f(u.uMoon, night ? 1 : 0); gl.uniform1f(u.uMoonPhaseAngle, phase); gl.uniform1f(u.uExpo, s.expo); gl.uniform1f(u.uStars, night ? 0.004 : 0);
@@ -169,7 +169,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
       // rays need broken cloud and a low light; ghosts a clear line to it; mist blooms in haze; night halates
       gl.uniform1f(u.uRays, night ? 0.3 * s.wx.cloud : Math.min(1, s.wx.cloud * 1.6) * (1 - s.wx.storm) * Math.max(0.3, 1 - s.light.el / 40));
       gl.uniform1f(u.uGhost, night ? 0.3 : (1 - s.wx.cloud) * 0.8); gl.uniform1f(u.uBloom, 0.12 + Math.min(1, s.wx.haze / 3)); gl.uniform1f(u.uHalation, night ? 1 : 0);
-      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
+      gl.uniform1f(u.uRainP, s.wx.rain); gl.uniform1f(u.uTilt, -0.25 * Math.min(1, s.wind / 20)); gl.uniform1f(u.uFrame, (t * 60) % 97); gl.uniform1f(u.uSeq, seq); gl.uniform1f(u.uNight, s.night); gl.uniform1f(u.uLensRain, Math.min(1, Math.max(0, s.wx.rain - 3) / 8)); gl.uniform1f(u.uT, t); gl.uniform2f(u.uRes, canvas.width, canvas.height); });
   }
 
   // lightning: a flash the scene adds to its light for a few frames; sky.js fires it and schedules the thunder
@@ -177,14 +177,14 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
   // "The Lightning Discharge", 1987); hold keeps one stroke lit, for a still
   let flash = 0, strokes = [], held = 0, bolt = [3, 0.5, 6];
   const flashAt = (now) => held || strokes.reduce((m, k) => (now >= k.t ? Math.max(m, k.s * Math.exp(-(now - k.t) / 45)) : m), 0);
-  let running = false, last = 0, visible = true;
+  let running = false, last = 0, visible = true, tick = 0;
   function loop(ts) {
     if (!running) return;
     const dt = Math.min(0.05, (ts - last) / 1000); last = ts; clock += dt;
     const dpr = Math.min(devicePixelRatio || 1, dprCap), r = canvas.getBoundingClientRect(), w = Math.max(2, Math.round(r.width * dpr)), h = Math.max(2, Math.round(r.height * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     flash = flashAt(performance.now()); strokes = strokes.filter((k) => performance.now() - k.t < 400);
-    size(w, h); frame({ t: clock });
+    size(w, h); frame({ t: clock, seq: (tick = (tick + 1) % 64) });
     if (visible) requestAnimationFrame(loop);
   }
   const api = {
@@ -211,7 +211,7 @@ export function createField(canvas, { space = "close", dprCap = 1.5, reduced = f
     // one settled still: n jittered frames averaged at a fixed time (subpixel antialiasing for the glass edges)
     still({ n = 16, w = canvas.width, h = canvas.height, t = 7.0 } = {}) {
       canvas.width = w; canvas.height = h; size(w, h); t0 = 0;
-      for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1) });
+      for (let i = 0; i < n; i++) frame({ t, jitter: [((i * 0.618034) % 1) - 0.5, ((i * 0.754878) % 1) - 0.5], blendWeight: 1 / (i + 1), seq: i });
     },
   };
   return api;
