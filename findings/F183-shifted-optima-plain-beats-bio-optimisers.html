@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F183: After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests | Zain Dana Harper</title>
+<meta name="description" content="Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F183-shifted-optima-plain-beats-bio-optimisers.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F183: After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests | Zain Dana Harper">
+<meta property="og:description" content="Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F183-shifted-optima-plain-beats-bio-optimisers.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F183: After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests | Zain Dana Harper">
+<meta name="twitter:description" content="Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests","abstract":"Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.","identifier":"F183","dateCreated":"2026-10-31","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Computing and mathematics","Method and statistics"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="null">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F183</span> <span class="fd-tier" data-tier="null"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.6 11.4 11.4 2.6" stroke="currentColor" stroke-width="1.6"/></svg>Honest null</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#computing" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async">Computing and mathematics, Method and statistics</span> <span>found 2026-10-31</span></p>
+<h1>After we fixed our own bug, plain optimisers beat nature-inspired ones on shifted tests</h1>
+<p class="fd-standfirst">Our first benchmark said optimisers named after slime moulds, wolves, bees and ants beat the standard methods. The win came partly from a bug in our own CMA-ES code. Fixed, CMA-ES ranked first, and two popular nature-inspired methods turned out to work well only when the answer sits at the centre of the search box.</p>
+<div class="fd-means"><p>Optimisation research has seen a flood of methods named after animals and plants, and critics have argued that many are old ideas with new names that look good mainly on biased tests. Our own first run seemed to favour the nature-inspired group, and that result came largely from a bug in how we ran a standard method. Once it was fixed, the standard method came first. Two of the nature-inspired methods lost twelve or more orders of magnitude in accuracy when the best answer was moved away from the centre of the search space. A benchmark whose optimum sits at the origin can reward a method for guessing the origin.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>On standard test functions, do optimisers with biological labels search better than plain methods? And how much of any advantage survives when the optimum is shifted away from the centre?</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>We compared ten methods on seven test functions (sphere, ellipsoid, Rosenbrock, Rastrigin, Ackley, Griewank and Schaffer) in 10 dimensions, with 20,000 function evaluations per run and 15 repeats. The plain group was random search, L-BFGS, differential evolution and CMA-ES. The biologically labelled group was slime mould (SMA), grey wolf (GWO), particle swarm (PSO), artificial bee colony (ABC), ant colony for continuous domains (ACOR) and invasive weed (IWO). Each function was run with its optimum at the origin and shifted away from it. Methods were ranked per function and the ranks averaged. All methods used default parameters, with no tuning.</p>
+<p>The first run (O4) put the bio group ahead, mean rank 5.04 against 6.20. Tracing CMA-ES's poor score, we found its search centre had drifted far outside the box, every sample was clipped to one corner, its step size collapsed, and it never restarted. Several other methods also stored candidates outside the box. We kept that run as it was, fixed the box handling for every method, added a restart to CMA-ES, and preregistered a rerun (O4b) with new forecasts before running it.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<p>CMA-ES had to solve the sphere and rotated ellipsoid to near zero, or the rerun would stop. It reached about 1.6e-15 on the sphere. A planted cheat, a method that simply returns the centre of the box, scored 7e-7 on the unshifted sphere and about 10 to the 4.3 on the shifted one, showing the shifted test catches centre bias. Method labels were permuted within each function to give a null for the group difference.</p></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>On shifted functions, mean ranks were: CMA-ES 2.00, ACOR 3.14, IWO 4.43, L-BFGS 4.57, PSO 4.57, differential evolution 5.36, ABC 5.86, SMA 6.36, GWO 8.86 and random search 9.86. Without random search the plain group averaged 3.98 against 5.54 for the bio group, a gap of 1.56. Counting random search as plain, the two groups tied at 5.45 and 5.54.</p>
+<p>On unshifted functions, SMA ranked first (2.07) and GWO second (2.43). Moving the optimum off the origin cost SMA 12.1 and GWO 13.6 orders of magnitude in median error. ACOR, IWO and PSO lost almost nothing (0.0006, 0.07 and 0.42 orders), so the charge that bio-labelled methods win through centre bias holds for some and not others.</p>
+<p>A no-free-lunch check found no significant difference in the best of the first 500 distinct points across methods (p 0.74), and none on raw values (p 0.13). The first run's failure of that check came from converged methods revisiting the same points.</p>
+<p>Our forecast that plain would beat bio was right after the fix, with a gap of 1.56 against a forecast of 1.2. We forecast PSO or ACOR as the best bio method and ACOR came first. We forecast IWO would rank below differential evolution, and it ranked above.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>These results hold for seven functions, 10 dimensions, one budget and default parameters. Other functions, dimensions or budgets could reorder the methods. Tuned parameters could change the ranking. The work was scored by code and checked by the same analyst who wrote it. PSO's biological label is thin: it is a velocity rule with a metaphor and predates the recent flood of such methods.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>all ten mean ranks on shifted and the SMA and GWO ranks on unshifted functions, the group means with and without random search, the gap of 1.56, the shift penalties for all methods, the CMA-ES and cheat-control values, and both no-free-lunch p values were re-read from the rerun's result file on 2026-11-09 and match the ledger. The first run's group ranks were re-read from its result files. Function count, dimension, budget and repeats were read from the build file. The rerun preregistration's sha256 matches its recorded hash. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Implement the ten methods with default parameters and keep every candidate inside the search box. Give CMA-ES a penalty outside the box and a restart when its step size collapses. Run each on the seven functions in 10 dimensions with 20,000 evaluations and 15 repeats, once with the optimum at the origin and once shifted. Rank methods per function by median final error, average the ranks, and compare each method's shifted and unshifted error.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<p>No external sources are named in the study files beyond the standard test functions.</p></section>
+<p class="fd-data"><b>Data</b> No external data. Seven standard test functions in 10 dimensions, evaluated by our own code.</p>
+<p class="fd-ledger">Finding F183 is number 183 in our findings ledger, where every result is kept in the order it came in. Honest null means a test that failed, a claim that did not hold, or our own error found and fixed.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F190-public-goods-self-benefit-correction.html" rel="prev">Newer: F190, Our model of cooperation on a grid had been rewarding selfishness</a><a href="F172-selection-model-of-replication.html" rel="next">Older: F172, A selection model shrinks the overstatement in published effects but cannot pick which replicate</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

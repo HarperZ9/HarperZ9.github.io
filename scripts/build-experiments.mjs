@@ -59,7 +59,7 @@ function card(c) {
 const body = `<article class="tool xp">
 <h1>Experiments</h1>
 <p>Each study here was written down and locked before it ran, and is reported with whatever it found. Nulls stay on the record. ${cards.length} studies have cleared review so far, newest first, and more join as they clear. Every study cleared so far came back null or went against its own forecast, and each card says which.</p>
-<p>Each card keeps its number in our findings ledger (F667 is the 667th finding). It gives the finding, the numbers behind it, the forecast against the outcome where the study made one, the verdict, the limits, and a Verified line saying what was checked.</p>
+<p>Each card keeps its number in our findings ledger (F667 is the 667th finding). It gives the finding, the numbers behind it, the forecast against the outcome where the study made one, the verdict, the limits, and a Verified line saying what was checked. The full write-ups, signals and honest nulls together, are on <a href="/findings/">Findings</a>.</p>
 ${field()}
 <div class="xp-filter" role="group" aria-label="Show one domain"><button type="button" data-domain="" aria-pressed="true">All <span>${cards.length}</span></button>${domains.map((d) => `<button type="button" data-domain="${d.id}" aria-pressed="false">${lane(d.id, "xp-lane", 20)}${esc(d.label)} <span>${cards.filter((c) => c.domains.includes(d.id)).length}</span></button>`).join("")}</div>
 <p class="xp-count" aria-live="polite">${cards.length} studies shown.</p>

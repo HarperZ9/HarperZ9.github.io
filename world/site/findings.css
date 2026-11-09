@@ -1,0 +1,40 @@
+/* findings: the index of write-ups and each finding's page (scripts/build-findings.mjs). The field, the filters and
+   the list borrow the experiments page's sheet (experiments.css); this adds the tier glyphs, the key and the reading
+   page. Tiers are told apart by drawing (disc, ring, struck ring) and by word, never by colour alone. */
+.fd-glyph { display: inline-block; flex: none; vertical-align: -2px; margin-right: 6px; color: var(--ink); }
+.fd-tier { display: inline-flex; align-items: center; font-weight: 600; color: var(--ink); }
+.fd-key { display: grid; grid-template-columns: minmax(10em, 13em) 1fr; gap: 6px 18px; margin: 20px 0 8px; font: 400 var(--fs-2)/1.5 var(--face-text); }
+.fd-key dt { display: flex; align-items: center; font-weight: 600; }
+.fd-key dd { margin: 0; color: var(--soft); }
+.fd-mark { color: var(--ink); }
+.fd-mark g { transition: opacity .2s ease; }
+.fd-mark.xf-off g { opacity: .14; }
+.fd-mark:focus-visible { outline: none; }
+.fd-mark:focus-visible g, .fd-mark:hover g { transform-box: fill-box; }
+.fd-mark:focus-visible rect { stroke: var(--ink); stroke-width: 2; }
+.fd .xc-title a { text-decoration: none; }
+.fd .xc-title a:hover, .fd .xc-title a:focus-visible { text-decoration: underline; text-decoration-thickness: 2px; }
+.fd-filter + .fd-filter { margin-top: 0; }
+.fd-filter button { display: inline-flex; align-items: center; }
+.fd-also { margin-top: 40px !important; font-size: var(--fs-2) !important; color: var(--soft); }
+
+/* one finding's page */
+.fd-page .xc-meta { margin-bottom: 14px !important; }
+.fd-up { font-weight: 600; }
+.fd-standfirst { font: 500 var(--fs-4)/1.45 var(--face-text) !important; margin: 0 0 22px !important; text-wrap: pretty; }
+.fd-means { margin: 0 0 8px; padding: 2px 0 2px 16px; border-left: 2px solid var(--ink); }
+.fd-means p:last-child { margin-bottom: 0; }
+.fd-sec h2 { margin-top: 44px; }
+.fd-sec .verified { margin-top: 4px; }
+.fd-data, .fd-ledger { font-size: var(--fs-2) !important; color: var(--soft); overflow-wrap: anywhere; }
+.fd-data { margin-top: 40px !important; }
+.fd-data b { color: var(--ink); margin-right: .35em; }
+.fd-plate { margin: 36px 0 8px; }
+.fd-plate img { display: block; width: 100%; max-width: 680px; height: auto; margin: 0 auto; background: #0b0b0b; }
+.fd-plate figcaption { max-width: 680px; margin: 10px auto 0; font: 400 var(--fs-2)/1.5 var(--face-text); }
+.fd-credit { display: block; margin-top: 4px; color: var(--soft); }
+.fd-next { display: grid; gap: 10px; margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line); font: 500 var(--fs-2)/1.4 var(--face-text); }
+.fd-page .st-table td, .fd-page .st-table th { font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) { .fd-key { grid-template-columns: 1fr; } .fd-key dd { margin-bottom: 8px; } .fd-standfirst { font-size: var(--fs-3) !important; } }
+@media (prefers-reduced-motion: reduce) { .fd-mark g { transition: none; } }
+@media (forced-colors: active) { .fd-glyph, .fd-mark { color: CanvasText; } }

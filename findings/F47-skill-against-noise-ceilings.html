@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F47: More variables raise prediction skill, yet most targets stall far below their noise ceiling | Zain Dana Harper</title>
+<meta name="description" content="Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F47-skill-against-noise-ceilings.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F47: More variables raise prediction skill, yet most targets stall far below their noise ceiling | Zain Dana Harper">
+<meta property="og:description" content="Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F47-skill-against-noise-ceilings.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F47: More variables raise prediction skill, yet most targets stall far below their noise ceiling | Zain Dana Harper">
+<meta name="twitter:description" content="Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"More variables raise prediction skill, yet most targets stall far below their noise ceiling","abstract":"Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.","identifier":"F47","dateCreated":"2026-10-29","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Method and statistics","Psychology and perception"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="strong">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F47</span> <span class="fd-tier" data-tier="strong"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="5.2" fill="currentColor"/></svg>Strong signal</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#psychology" width="18" height="18" alt="" loading="lazy" decoding="async">Method and statistics, Psychology and perception</span> <span>found 2026-10-29</span></p>
+<h1>More variables raise prediction skill, yet most targets stall far below their noise ceiling</h1>
+<p class="fd-standfirst">Across trees, mood, music ratings, forecasters and a similarity task, held-out skill grew as we added measured variables and always beat a shuffled baseline. In five of six targets with a measurable ceiling it stopped between 0.18 and 0.65 of the way there, and the gap closed mainly when a different kind of variable arrived.</p>
+<div class="fd-means"><p>A common hope says that measuring enough things about a system lets you predict it. We tested that against real data and against each target's own measurement noise, which caps any honest score. Skill rose with every added variable, but in most targets it levelled off far below that ceiling. The jumps came from a new kind of information, such as past behaviour or a human rating. Two toys showed hard limits: chaos buys time only logarithmically with precision, and a published forecast that people react to can defeat itself.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Can held-out skill reach the noise ceiling when enough measured variables are added? We tested six real targets with a ceiling, one without, and two toy systems where the answer is known.</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>Variables were added in eight random orders and one informed order, refitting at about 14 counts with ridge, L2 logistic or conditional logit models. Every score is held out, split by plot, later beeps, artist, forecaster or between-subject repeats. A saturating curve fitted to each order estimates where skill levels off.</p>
+<p>Ceilings came from each dataset's own repeats: parallel items for mood, rater spread for music, split halves for forecasters, between-person agreement for triplets. Rules were hashed before the first run. A first run exposed a scaling fault on the forecaster target (held-out R2 -1.686, from near-constant variables taking huge scaled values). The second run clipped scaled values at plus or minus 5 and changed nothing else. Its rules were hashed after the first run had been read, so it is a corrected rerun and not blind.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<p>Every target was refitted on shuffled training labels 20 times. All beat that null: the shuffled 95th percentile was at most 0.013 R2, 0.531 AUC for tree death and 0.439 accuracy for triplets. The Lorenz-63 toy has a theoretical answer: the forecast horizon should grow by about 2.54 time units per tenfold gain in precision. An overfitting demonstration fitted 150 variables to 150 forecasters.</p></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>All values are held out, from the second run.</p>
+<ul><li>Similarity triplets, 66 dimensions: accuracy 0.655 against a ceiling of 0.660 (chance 0.333), a share of 0.985. These dimensions were learned from the same triplet corpus.</li><li>Mood at the next beep, 31 items: R2 0.521 against a ceiling of 0.798 (share 0.65). Current happiness alone gives 0.501.</li><li>Music valence and arousal, 22 sound and genre variables: R2 0.445 and 0.393 against ceilings of 0.821 and 0.862 with 10 raters assumed (shares 0.54 and 0.46). The other dimension's human rating adds 0.082 and 0.092.</li><li>Forecaster accuracy, 1,349 individual-difference variables: R2 0.131, fitted asymptote 0.137 (0.118 to 0.155), against a ceiling of 0.714 (share 0.18). Accuracy on the other half of the questions lifts it to 0.360, the one plateau that moved by the preregistered rule.</li><li>Tree growth, 42 variables: R2 0.396; prior growth lifts it to 0.639. The preregistered ceiling estimator failed (-3.96), so this target has no valid ceiling here.</li></ul>
+<p>One of six targets reached 0.8 of its ceiling, against a forecast of at least four. One of seven plateaus moved, against a forecast of at least three. Both predictions failed.</p>
+<p>Toys: the Lorenz horizon grew 2.51 time units per decade of precision (theory 2.54, linear R2 0.9999); twelve decades bought 1.2 to 28.7 time units. In the reflexive crowd, an unpublished forecast with every member measured scored R2 1.00, a published naive one -1.55, and a forecaster who solves for the crowd's reaction 0.9999. Measuring 100 of 1,000 members dropped that forecaster to 0.40, and identical members left no surviving forecast (-0.02). Least squares at 150 variables fitted training data at R2 0.96 and scored -135,817 held out; ridge on real targets reached 0.067.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>Ridge and logistic models may leave signal that a nonlinear model would find, so a stall may belong to the model class. The datasets are a convenience sample. The mood ceiling is a lower bound, the music rater count is assumed, and the tree ceiling failed. The rerun was not blind. A related identification test used a private image collection and is left out of this piece. The toys model their stated mechanisms only. Prior work covers limits on predicting life outcomes (Salganik 2020) and past accuracy as a predictor of forecasting skill (Himmelstein, Atanasov and Budescu 2021).</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>on 2026-11-09 every number and verdict quoted here was re-read from the second run's result file, and -1.686 from the first run's, and all match the ledger to rounding (the failed tree ceiling reads -3.9645, logged in the ledger as -3.97). Both preregistration files' SHA-256 values match the ledger. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Obtain the five public datasets. Hold out by the units named above, add variables in random and correlation order, refit at each count and score held out. Compute each ceiling from the data's own repeats, fit s(k) = a k / (k + h), and refit on shuffled labels as the null. For the toys, integrate Lorenz-63 from perturbed states until the error exceeds 1.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>Mellers et al., Good Judgment Project data, doi:10.7910/DVN/BPCDH5; Mellers 2015.</li><li>Salganik et al., 2020, on held-out limits to predicting life outcomes.</li><li>Himmelstein, Atanasov and Budescu, 2021, on predicting forecaster accuracy.</li><li>Aljanaki, Yang and Soleymani, 2017, DEAM, PLoS ONE 12(3) e0173392.</li><li>openESM dataset 0062 (Neubauer).</li><li>THINGS odd-one-out data and SPOSE dimensions.</li><li>USDA Forest Service, Forest Inventory and Analysis.</li></ul></section>
+<p class="fd-data"><b>Data</b> USDA Forest Service Forest Inventory and Analysis (Washington and Oregon remeasured trees); openESM dataset 0062 (Neubauer), CC BY 4.0; DEAM static ratings, CC BY-NC; Good Judgment Project data, CC0 1.0, Harvard Dataverse doi:10.7910/DVN/BPCDH5; THINGS odd-one-out triplets with the 66 SPOSE dimensions (publisher's terms)</p>
+<p class="fd-ledger">Finding F47 is number 47 in our findings ledger, where every result is kept in the order it came in. Strong signal means real data, working controls and a result that held, with a named next test.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F50-childhood-trauma-amygdala-vmpfc-null.html" rel="prev">Newer: F50, Childhood trauma scores showed no meaningful link to amygdala-prefrontal coupling in 187 adults</a><a href="F39-long-tails-dark-spectra.html" rel="next">Older: F39, Music with long ringing tails and dark spectra is rated calmer, and also sadder</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

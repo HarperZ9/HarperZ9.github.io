@@ -1,0 +1,42 @@
+{
+  "credit": "Robert P. Traxler, The Principles of Mechanics as Applied to the Solar System (San Francisco, 1889). Public domain; scan from the Internet Archive, University of California Libraries.",
+  "theory_note": "Traxler drew his plates to argue for a repelling force from the Sun. That was his own theory in 1889, and physics did not adopt it; the drawings stand here as period pictures of the same sky.",
+  "figures": {
+    "F310": {
+      "leaf": "0025",
+      "width": 1440, "height": 2006,
+      "alt": "A white-on-black engraving: the Sun at the centre of concentric orbit rings crossed by radiating lines, with Jupiter, Saturn, Uranus and Neptune and their moons placed on the rings, comets and the asteroid belt marked.",
+      "caption": "Fig. IV, \"Sectional side view of the Sun with Jupiter, Saturn, Uranus, Neptune etc.\" The orbit rings sit at the spacings a Titius-Bode style rule tries to describe."
+    },
+    "F76": {
+      "leaf": "0034",
+      "width": 1440, "height": 1991,
+      "alt": "A white-on-black engraving: two loops around the Sun, one for 1888 and one for 1889, with the Moon's phases drawn as a wave along each loop and the months lettered around them.",
+      "caption": "\"The Moon's path shown along the Earth's orbit during the years 1888 and 1889.\" A regular series drawn as a wave: the kind of signal a flatness ceiling calls easy to forecast."
+    },
+    "F362": {
+      "leaf": "0012",
+      "width": 1440, "height": 2248,
+      "alt": "A white-on-black engraving comparing sizes: an arc of the Sun with a column of Jupiter-sized circles across its diameter, Jupiter with a column of Earth-sized circles, and the Moon.",
+      "caption": "Fig. I, \"The sizes of the Sun, Jupiter, the Earth and the Moon compared by their diameters.\" Every size in it is a measured value with an uncertainty the plate does not show."
+    },
+    "F281": {
+      "leaf": "0004",
+      "width": 1440, "height": 1665,
+      "alt": "A white-on-black engraving of the solar system in quarter view: the Sun at lower left with lines radiating outward, concentric orbit rings, the planets with their moons, and comet streaks.",
+      "caption": "The frontispiece, untitled in the book: the solar system with lines radiating from the Sun. Light from GRB 090510 crossed billions of years of space before reaching a detector inside a picture like this one."
+    },
+    "F344": {
+      "leaf": "0020",
+      "width": 1440, "height": 2110,
+      "alt": "A white-on-black engraving in two parts: above, the inner planets on lines radiating from the Sun with a marked line of attraction; below, an edge view of the Sun's equatorial plane drawn as swirling streams.",
+      "caption": "Fig. II, \"A sectional side and edge view of the Sun with Mercury, Venus, Earth and Mars.\" Lines from a source spread over the sky: the arrival-direction picture a cosmic-ray search tests for hidden structure."
+    },
+    "F14": {
+      "leaf": "0022",
+      "width": 1440, "height": 487,
+      "alt": "Four small discs of the Sun in a row, labelled December, March, June and September, each showing the apparent path of sunspots across the disc.",
+      "caption": "Fig. III: the path of sunspots across the Sun at the solstices and equinoxes, from which Traxler read the tilt of the Sun's axis. Geometry read off a drawn observation, as Newton read his rings."
+    }
+  }
+}

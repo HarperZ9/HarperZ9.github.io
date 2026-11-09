@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F152: Finding missing links by shared neighbours lost to simple popularity on three corpora | Zain Dana Harper</title>
+<meta name="description" content="The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F152-gap-ranking-loses-to-popularity.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F152: Finding missing links by shared neighbours lost to simple popularity on three corpora | Zain Dana Harper">
+<meta property="og:description" content="The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F152-gap-ranking-loses-to-popularity.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F152: Finding missing links by shared neighbours lost to simple popularity on three corpora | Zain Dana Harper">
+<meta name="twitter:description" content="The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Finding missing links by shared neighbours lost to simple popularity on three corpora","abstract":"The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.","identifier":"F152","dateCreated":"2026-10-31","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Method and statistics","Information and signal"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="null">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F152</span> <span class="fd-tier" data-tier="null"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.6 11.4 11.4 2.6" stroke="currentColor" stroke-width="1.6"/></svg>Honest null</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#information" width="18" height="18" alt="" loading="lazy" decoding="async">Method and statistics, Information and signal</span> <span>found 2026-10-31</span></p>
+<h1>Finding missing links by shared neighbours lost to simple popularity on three corpora</h1>
+<p class="fd-standfirst">The classic way to hunt for undiscovered connections, ranking unlinked pairs of ideas by the neighbours they share, found fewer of the links that later appeared than just pairing the most common ideas. Among pairs of equal popularity it still carried some signal.</p>
+<div class="fd-means"><p>Tools that promise to surface hidden connections in a body of knowledge often rank candidate links by shared neighbours: if A goes with B and B goes with C, perhaps A goes with C. Swanson described this idea in 1986. On three corpora, that ranking found fewer of the links that later appeared than the dumbest baseline available, which pairs the two most frequent terms. Anyone building or judging a discovery tool should test it against popularity first. A tool that only beats random guessing may be reading how common words are. Shared neighbours did carry some information once popularity was held fixed. The weakness sits at the top of the ranked list, where a user would look first.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Does a shared-neighbour score, discounted for popularity, rank the unlinked concept pairs that later co-occur above a preferential-attachment baseline that ranks pairs by the product of their degrees?</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>Each corpus was ordered by date and cut into slices. A link is two concepts appearing in the same document. A target is a pair that never co-occurred in the training slices and then co-occurs in at least two documents of the next slice. Three folds trained on slices 1, 1 to 2 and 1 to 3, and each tested on the slice after.</p>
+<p>The shared-neighbour score is a cosine over common neighbours with edges weighted to discount popular terms, Swanson's A-B-C idea in the form used for time-sliced tests by Krenn and Zeilinger (2020). The baseline is preferential attachment, the product of the two concepts' link counts. The main measure is precision in the top 200 candidates, averaged over folds, with a document bootstrap for the difference. A second measure is the area under the ROC curve within deciles of the degree product, which compares pairs of similar popularity. The corpora were our own research notes and the question tags of two public Stack Exchange sites. The rules and forecasts were hashed before any score was computed. Adamic-Adar, another common link-prediction score, was reported as a secondary and was not preregistered.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<p>The shared-neighbour score was also computed on 20 degree-preserving rewired copies of the training graph, which keep each concept's popularity and destroy the real neighbourhoods, and on 20 copies with node labels permuted. If the score adds anything beyond popularity at the top of the list, it should beat the rewired copies. There was no planted known answer.</p></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>Precision in the top 200, averaged over folds:</p>
+<ul><li>Research notes: shared neighbours 0.127, popularity 0.268. Difference interval -0.182 to -0.125.</li><li>Biology Stack Exchange: 0.018 against 0.088 (interval -0.105 to -0.062).</li><li>Skeptics Stack Exchange: 0.007 against 0.043 (interval -0.077 to -0.042).</li></ul>
+<p>On the rewired graphs the shared-neighbour score reached a 95th percentile of 0.164, above its real-graph score of 0.127, so at the top of the list it added nothing beyond popularity. It did beat the node-permuted copies (95th percentile 0.048). Within popularity deciles its area under the curve was 0.569 on the research notes and 0.757 on Biology, above the preregistered 0.55 bar, so it holds some signal among pairs of equal popularity.</p>
+<p>Adamic-Adar tied popularity on the research notes (0.273) and beat it on Biology (0.122). Because it was not preregistered, that is a lead for a new test.</p>
+<p>We had forecast popularity at 0.25 and shared neighbours at 0.15 on the research notes, and put the chance of beating the rewired control at 0.85. That forecast failed.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>A later co-occurrence is an attention event, not a confirmed discovery, so a hit does not show that a link is true. On the research notes almost all hits come from the first fold, with 285 concepts; later folds ran at base rates near 0.001. The research-notes corpus spans days of reading rather than years, and it is not public. One tokenizer was used, with no synonym handling. The study does not show that Adamic-Adar is the better method. Prior work treats literature-based discovery as link prediction and also finds degree baselines hard to beat (Kastrin, Rindflesch and Hristovski 2016).</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>on 2026-11-09 the precision values on all three corpora, the three difference intervals, the rewired and permuted control quantiles, the within-decile AUCs, the Adamic-Adar values, the 285-concept first fold and the later base rates, and all four verdicts were re-read from the study's result file and match the ledger. The preregistration's SHA-256 matches the locked hash. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Take the public Stack Exchange data for Biology and Skeptics and use question tags as concepts. Order questions by date, cut them into five equal slices, and build a co-occurrence graph from the training slices. List unlinked pairs that co-occur at least twice in the next slice as targets. Rank candidates by popularity-discounted shared-neighbour cosine and by degree product, and compare precision at 200 with a document bootstrap. Repeat on degree-preserving rewired graphs as the control.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>Swanson, 1986, undiscovered public knowledge and the A-B-C model.</li><li>Krenn and Zeilinger, 2020, time-sliced prediction of research links.</li><li>Kastrin, Rindflesch and Hristovski, 2016, link prediction for literature-based discovery, Methods of Information in Medicine.</li><li>Stack Exchange data, Biology and Skeptics sites, CC BY-SA.</li></ul></section>
+<p class="fd-data"><b>Data</b> Question tags from Biology Stack Exchange and Skeptics Stack Exchange, 2011 to 2024, CC BY-SA; a third corpus of our own research notes, not public</p>
+<p class="fd-ledger">Finding F152 is number 152 in our findings ledger, where every result is kept in the order it came in. Honest null means a test that failed, a claim that did not hold, or our own error found and fixed.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F166-combined-value-formula-retired.html" rel="prev">Newer: F166, Our combined value formula lost to plain prospect theory on 11,759 risky choice problems</a><a href="F149-karst-doubled-reread.html" rel="next">Older: F149, Did unsupported citations about fungal networks double? It depends on the weighting</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

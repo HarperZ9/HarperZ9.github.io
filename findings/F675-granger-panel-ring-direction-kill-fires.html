@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F675: A panel test read climate driving tree rings correctly, and our own rule still failed it | Zain Dana Harper</title>
+<meta name="description" content="On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F675-granger-panel-ring-direction-kill-fires.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F675: A panel test read climate driving tree rings correctly, and our own rule still failed it | Zain Dana Harper">
+<meta property="og:description" content="On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F675-granger-panel-ring-direction-kill-fires.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F675: A panel test read climate driving tree rings correctly, and our own rule still failed it | Zain Dana Harper">
+<meta name="twitter:description" content="On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"A panel test read climate driving tree rings correctly, and our own rule still failed it","abstract":"On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.","identifier":"F675","dateCreated":"2026-11-02","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Plants, trees and earth","Method and statistics"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="null">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F675</span> <span class="fd-tier" data-tier="null"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.6 11.4 11.4 2.6" stroke="currentColor" stroke-width="1.6"/></svg>Honest null</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#ecology" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async">Plants, trees and earth, Method and statistics</span> <span>found 2026-11-02</span></p>
+<h1>A panel test read climate driving tree rings correctly, and our own rule still failed it</h1>
+<p class="fd-standfirst">On 161 northern tree-ring sites a panel-wide lagged test pointed from summer temperature to ring width, the known direction, with a wide margin. Two of its locked checks missed their bars by less than 0.02, so by the rule we wrote first the method earned no standing in this round.</p>
+<div class="fd-means"><p>This is the second round of a test of tools that claim to read causal direction from time series. Tree rings and summer temperature make a fair test, because warmth shapes the ring and the ring has no meaningful effect on the weather. In the first round, a site-by-site transfer entropy estimator could not tell the two directions apart (finding F132). Here a simpler lagged regression, read across the whole panel of sites at once, pointed the right way with a large margin and flipped when time ran backwards. We still record it as a failure, because two checks we had locked as binding missed by small amounts. Holding to a rule written before the data keeps a near miss from being promoted after the fact.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Read as a panel instead of site by site, can lagged Granger tests exclude the reverse route (ring to climate) and read the forward route (climate to ring) on sites the first round never touched?</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>We used 161 ring-width chronologies at or above 55 degrees north outside Europe: 100 in Canada, 45 in Alaska and 16 in Asia, in 77 two-degree blocks, with a median length of 89 years. Each was paired with June to August temperature from its nearest CRU TS 4.10 cell. At each site we ran Granger F tests with lags of one and two years in both directions and took the difference of their z-scores, d. A positive panel mean d points from climate to ring. Three versions of the data were tested: high-passed with a 10-year Gaussian, first-differenced, and raw. The plan, the checks and a kill rule (any binding check failing means no status) were hash-locked before the run.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<p>Synthetic worlds were built from each site's own surrogate copies, five draws each: no coupling, a planted forward effect and a planted reverse effect at real and at strong strength, a common driver, and a shared trend. The real result was compared with 199 pairings of each tree with climate from a cell 1,000 km or more away.</p></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>On the high-pass series the panel index was plus 1.206 (block bootstrap 95% interval plus 0.871 to plus 1.591), against a far-pairing 95th percentile of plus 0.213 (p 0.005, the floor at 199 pairings). First differences gave plus 1.107 against plus 0.186, and raw series plus 1.242. Climate predicted next year's ring at 39.8 percent of sites; rings predicted next year's summer at 6.8 percent, inside the no-coupling world's 7.8 percent. Reversing time flipped the index to minus 0.894. A shared trend pushed it negative (minus 0.317) and a common driver gave minus 0.090 with an interval across zero, so neither could produce the positive real value.</p>
+<p>All high-pass checks passed. Two first-difference checks failed. The planted reverse world was called correctly at 58.4 percent of sites against a bar of 60 percent, and the shared-trend world's reverse detection rate was 11.7 percent against a limit of 10 percent. The kill rule fired. Our own forecast had been a forward rate of 9 percent and a mean d of minus 0.05; both were far off.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>The planted forward effect used a positive prior-summer term. A look after the run, which is exploratory, found the real prior-summer coefficient negative at most sites (median minus 0.127, positive at 21.7 percent): a warm summer raises that year's ring and lowers the next. The planted world therefore did not match the real lag structure, an error carried over from the first round. Both failed checks are ours: we made the first-difference arm binding when pilot runs had already shown it weaker. CRU temperature at these latitudes rests on few stations before about 1950 (a recalled fact, held with high confidence). Sites cluster in Alaska and Canada. Lag tests cannot see a same-year reverse effect.</p>
+<p>A third round, run the same day on 145 further held-out sites with the planted term fitted to the measured lag sign and only the high-pass arm binding, passed every binding check but one. Its kill rule did not fire, and the panel method gained a limited direction status at that coupling strength. That later result does not change this round's verdict.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>the site, block and length counts, the panel index on all three arms with the high-pass interval, both far-pairing percentiles, the forward and reverse detection rates, the no-coupling rate, the time-reversed index, the trend and common-driver values, and both failed check values were re-read on 2026-11-09 from the run's result file and its results report, and match the ledger. The result file's sha256 matches the hash in the ledger. The preregistration file's sha256 matches its locked prefix. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Select ITRDB ring-width chronologies at or above 55 N outside Europe and pair each with the June to August temperature of its nearest CRU TS 4.10 cell. High-pass both series. At each site run Granger F tests with lags 1 and 2 in both directions, convert the p values to z-scores, and take climate-to-ring minus ring-to-climate. Average across sites with a block bootstrap by two-degree cell, and compare with the same statistic on far-away pairings and on surrogate worlds with planted effects of known sign and size.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>International Tree-Ring Data Bank, NOAA National Centers for Environmental Information.</li><li>CRU TS 4.10, Climatic Research Unit, University of East Anglia.</li></ul></section>
+<p class="fd-data"><b>Data</b> International Tree-Ring Data Bank standard ring-width chronologies at or above 55 N outside Europe (NOAA NCEI; public). CRU TS 4.10 June to August temperature (Climatic Research Unit, University of East Anglia; ODbL 1.0).</p>
+<p class="fd-ledger">Finding F675 is number 675 in our findings ledger, where every result is kept in the order it came in. Honest null means a test that failed, a claim that did not hold, or our own error found and fixed.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F515-llm-compression-and-memorisation.html" rel="next">Older: F515, A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

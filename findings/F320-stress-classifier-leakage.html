@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F320: A random split scores a stress classifier perfect on data with nothing to learn | Zain Dana Harper</title>
+<meta name="description" content="On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F320-stress-classifier-leakage.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F320: A random split scores a stress classifier perfect on data with nothing to learn | Zain Dana Harper">
+<meta property="og:description" content="On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F320-stress-classifier-leakage.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F320: A random split scores a stress classifier perfect on data with nothing to learn | Zain Dana Harper">
+<meta name="twitter:description" content="On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"A random split scores a stress classifier perfect on data with nothing to learn","abstract":"On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.","identifier":"F320","dateCreated":"2026-10-31","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Method and statistics","Psychology and perception"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="signal">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F320</span> <span class="fd-tier" data-tier="signal"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Signal</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#psychology" width="18" height="18" alt="" loading="lazy" decoding="async">Method and statistics, Psychology and perception</span> <span>found 2026-10-31</span></p>
+<h1>A random split scores a stress classifier perfect on data with nothing to learn</h1>
+<p class="fd-standfirst">On planted data where nothing carries from one person to the next, a random train-test split still gives a perfect score of 1.00, while holding out whole people gives chance. On the real WESAD recordings the classifier does hold across 15 people, at an AUC of 0.966, and how stressed people said they felt did not track how much their bodies changed.</p>
+<div class="fd-means"><p>Wearable stress detectors are often scored by cutting a recording into overlapping windows and splitting the windows at random into training and test sets. Neighbouring windows share most of their samples, so the model can recognise the window's neighbours and the condition block it came from. Our planted test shows how far that goes: with no signal that generalises at all, the random split still scores 1.00. Any reported score from a random split over overlapping windows tells you nothing until it is repeated with whole people held out.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Does a stress classifier trained on WESAD hold for a person it has never seen? How much does the random split inflate the score? Which sensors carry the signal? And does the size of a person's bodily response follow the size of the stress they report?</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>WESAD records 15 people with a chest sensor during a baseline, amusing clips and the Trier Social Stress Test (a public talk and mental arithmetic in front of a panel). We used the chest signals only: ECG, electrodermal activity (EDA), skin temperature, respiration, acceleration and EMG. Each recording was cut into 60 s windows every 15 s, so neighbours overlap by 75 percent, giving 2,122 windows, 30 percent of them stress. Twenty features in six groups were fixed before any label was compared. We scored a random forest and a logistic regression under four splits: random over windows, time blocks within a person with a gap, leave one subject out, and leave one subject out with each person's features scaled to their own baseline.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<ul><li>Planted zero: the same windows and timing, with each person and condition block given a random offset per feature and no shared direction. A random split had to read high and a held-out-person split near 0.5.</li><li>Planted real: a shared shift added on top, which a held-out-person split had to find. In the first run we set the bar at 0.90 for a shift of 2, and a later calculation showed the ceiling for that shift was about 0.91, so the run failed its own check (0.82). A second preregistered run tested shifts of 2, 3 and 4; at 4 the forest reached 0.994, and the first run's real-data results were credited.</li><li>Shuffled labels: stress reassigned to a random condition block within each person, keeping the block structure. Logistic held-out-person AUC 0.896 against a shuffled 95th percentile of 0.656 (p 0.0099).</li><li>Sensor groups corrected with Benjamini-Hochberg at q 0.05.</li></ul></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<div class="st-table" role="region" aria-label="Split, Forest AUC, Logistic AUC" tabindex="0"><table><thead><tr><th scope="col">Split</th><th scope="col">Forest AUC</th><th scope="col">Logistic AUC</th></tr></thead><tbody><tr><td>Random over windows</td><td>1.000</td><td>0.982</td></tr><tr><td>Held-out person</td><td>0.966</td><td>0.896</td></tr><tr><td>Held-out person, own baseline</td><td>0.964</td><td>0.971</td></tr><tr><td>Planted zero, random</td><td>1.00</td><td></td></tr><tr><td>Planted zero, held-out person</td><td>0.47 (first run), 0.39 (second run)</td><td></td></tr></tbody></table></div>
+<ul><li>The random split inflated the forest score by 0.033 and the logistic score by 0.086.</li><li>Mean within-person AUC under held-out-person forest: 0.979, interval 0.961 to 0.994 across people. The worst person reads 0.91 under the forest and 0.65 under logistic.</li><li>By sensor (forest, held-out person): ECG 0.92, EDA 0.89, respiration 0.85, acceleration 0.82, temperature 0.60, EMG 0.45. EMG did not pass correction; the other five did.</li><li>Physiology without motion or breath (ECG, EDA, temperature): 0.97. Motion alone: 0.79. We forecast that motion would lead, and it did not.</li><li>Reported anxiety (six-item STAI) rose by 7.7 points on average from baseline to stress. Across the 15 people, the size of that rise did not follow the size of the bodily change: Spearman 0.03 with EDA, 0.02 with heart rate, -0.45 with breathing rate (p 0.09).</li></ul></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>Fifteen people, one lab, one hour, one protocol. The stress session tends to follow baseline in time, so order is confounded with condition, and a cardiac signal also carries posture and speech. With n 15 the interval on any of the felt-stress correlations is about plus or minus 0.5, so &quot;does not follow&quot; means &quot;no detectable relation at this size&quot;. None of this reaches daily stress or trauma, and the classifier says nothing about what the hour meant to anyone. Our scoring was by our own code, not blind, and the second run's forecasts for the real data were written after the first run had shown them.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>the 2,122 windows and 15 people, every AUC in the table, the gaps 0.033 and 0.086, the within-person mean and interval, the per-sensor AUCs and corrected q values, the planted-zero and planted-real values in both runs, the shuffled control and the felt-stress correlations were re-read from both runs' result files on 2026-11-09 and match the ledger. The result files' leading hashes 65165c7a7ae8e10e and 142aab473f4fbe40 match the ledger. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Request WESAD from its authors under their terms and use the chest recordings and questionnaires. Cut each condition into 60 s windows with a 15 s step. Compute fixed features per sensor. Train a random forest and a logistic regression and score AUC under a random split over windows and under leave-one-subject-out. Build a planted dataset with per-person, per-block random offsets and confirm the random split scores high while held-out people score near 0.5. Compare each person's change in STAI with their change in EDA, heart rate and breathing rate by Spearman correlation.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>Schmidt, Reiss, Duerichen, Marberger and Van Laerhoven, 2018, WESAD, ICMI, doi 10.1145/3242969.3242985.</li><li>Campbell and Ehlert, 2012, Acute psychosocial stress: does the emotional stress response correspond with physiological responses?, doi 10.1016/j.psyneuen.2011.12.010.</li></ul></section>
+<p class="fd-data"><b>Data</b> WESAD (Wearable Stress and Affect Detection), Schmidt, Reiss, Duerichen, Marberger and Van Laerhoven, ICMI 2018; UCI record doi 10.24432/C57K5T; data from the authors' page, terms scientific non-commercial use with credit, <a href="https://ubi29.informatik.uni-siegen.de/usi/data_wesad.html">https://ubi29.informatik.uni-siegen.de/usi/data_wesad.html</a></p>
+<p class="fd-ledger">Finding F320 is number 320 in our findings ledger, where every result is kept in the order it came in. Signal means a real effect on real data or a sharp known-answer test, with clear limits.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F329-lying-in-die-tasks.html" rel="prev">Newer: F329, In 27,039 private die rolls, about 45 percent report honestly, and the reports cannot tell us why</a><a href="F310-titius-bode-is-spacing.html" rel="next">Older: F310, Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

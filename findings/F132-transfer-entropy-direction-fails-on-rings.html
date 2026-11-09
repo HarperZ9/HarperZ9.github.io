@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F132: Transfer entropy could not tell which way climate and tree rings are linked | Zain Dana Harper</title>
+<meta name="description" content="Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F132-transfer-entropy-direction-fails-on-rings.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F132: Transfer entropy could not tell which way climate and tree rings are linked | Zain Dana Harper">
+<meta property="og:description" content="Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F132-transfer-entropy-direction-fails-on-rings.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F132: Transfer entropy could not tell which way climate and tree rings are linked | Zain Dana Harper">
+<meta name="twitter:description" content="Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Transfer entropy could not tell which way climate and tree rings are linked","abstract":"Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.","identifier":"F132","dateCreated":"2026-10-31","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Plants, trees and earth","Information and signal","Method and statistics"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="null">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F132</span> <span class="fd-tier" data-tier="null"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.6 11.4 11.4 2.6" stroke="currentColor" stroke-width="1.6"/></svg>Honest null</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#ecology" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#information" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async">Plants, trees and earth, Information and signal, Method and statistics</span> <span>found 2026-10-31</span></p>
+<h1>Transfer entropy could not tell which way climate and tree rings are linked</h1>
+<p class="fd-standfirst">Summer warmth drives tree growth, with no meaningful effect the other way, so tree rings make a clean test for tools that claim to read causal direction from data. A standard transfer entropy estimator failed that test on 135 sites, including on synthetic data where we planted the true direction ourselves.</p>
+<div class="fd-means"><p>Transfer entropy is a popular way to ask whether one time series drives another, and it turns up in climate, ecology, neuroscience and finance. Here the answer was known in advance: summer temperature shapes the ring a tree lays down, and a ring has no meaningful effect on the summer that follows. On real ring-width records about 80 years long, the estimator found links both ways at similar rates. When we built synthetic records with the true direction planted at realistic strength, it ranked the wrong direction at or above the right one at about half the sites. A direction claim from this method on short, noisy annual records needs a planted-truth test before anyone trusts it.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Can a nearest-neighbour transfer entropy estimator read the direction of the link between summer temperature and tree-ring width, site by site, on public data? We set the rule in advance: the instrument would be cleared for direction reading only if it passed both the real-data test and a planted-truth anchor.</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>We took 135 ring-width chronologies from the International Tree-Ring Data Bank that are complete from 1901, in 57 two-degree blocks, with a median length of 78 years. Each was paired with June to August temperature from its nearest CRU TS 4.10 cell, and both series were high-passed with a 10-year Gaussian. For each site we computed KSG conditional transfer entropy (k equal to 4) from climate to ring and from ring to climate at lags 0 to 3, keeping the largest. Each value was tested against 199 iAAFT surrogates of the source series, which keep its spectrum and value distribution and scramble its timing. A site counted as a detection at p of 0.05 or below. The plan was hash-locked before any estimate on real data.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<p>The planted-truth anchor built synthetic ring series from each site's own surrogates with a known climate-to-ring coupling, once at the real data's strength and once much stronger (coefficients 0.6 and 0.3). A null world with no coupling, a shared-trend world, time-reversed series and a site-shuffled pairing at 1,000 km or more checked the rest. A second probe, convergent cross mapping, ran beside it.</p></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>On real data the estimator detected climate to ring at 15.6 percent of sites (block bootstrap 8.8 to 26.2 percent) and ring to climate at 11.9 percent (4.9 to 22.5 percent). The preregistered kill rule required the reverse rate to stay under 10 percent, so it fired, narrowly. Direction accuracy was 0.519 against a coin's 0.5. Time-reversed series gave 19.3 and 22.2 percent, so the estimator was reading no arrow of time.</p>
+<p>The planted anchor failed. At the real coupling strength, forward detection was 19.3 percent and reverse 18.5 percent, and the false direction ranked at or above the true one at 52.6 percent of sites. With strong coupling, detection rose to 97.8 percent forward and 91.9 percent reverse, and accuracy reached 0.60 against the 0.8 the rule required. The estimator detected coupling and still misread its direction. The shared-trend world produced 12.6 and 17.0 percent, above the 10 percent limit even after high-passing. Convergent cross mapping pointed the wrong way: 18.5 percent forward against 28.9 percent reverse.</p>
+<p>A preregistered variant that dropped lag 0 passed on real data (8.9 percent forward, 3.7 percent reverse) but missed a planted lag-one effect in the anchor, so its pass cannot be credited.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>Power is low at about 78 years and a ring-climate correlation near 0.2, so this is a failure on short annual series, and a longer or monthly design might behave differently. Transfer entropy's trouble with direction is known in general; the news here is limited to the tree-ring setting. Rings here are width only, the weaker channel for warmth. With 199 surrogates the smallest p is 0.005, so correcting across 135 sites could hardly reject anything, a design error we should have caught before the lock. Two later rounds on new sites switched to a panel-wide lagged Granger design. The first had its own kill rule fire on two gates by small margins. The second, on a third held-out panel, passed every binding check but one and earned a limited direction status. Neither changes this result for transfer entropy.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>the site, block and length counts, the real forward and reverse rates with their bootstrap intervals, the direction accuracy, the time-reversed rates, the planted-anchor rates at both strengths with the false-ranking share and accuracy, the null and shared-trend rates, the lag-0-removed variant rates and the cross-mapping rates were re-read from the run's result file on 2026-11-09 and match the ledger. The preregistration file's sha256 matches the locked hash. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Select ITRDB ring-width chronologies complete from 1901 and pair each with the June to August temperature of its nearest CRU TS 4.10 cell. High-pass both with a 10-year Gaussian. Compute KSG conditional transfer entropy both ways at lags 0 to 3, take the maximum, and compare it with 199 iAAFT surrogates of the source treated the same way. Then plant a known climate-to-ring coupling into surrogate rings at the real correlation strength and check whether the estimator ranks the true direction first.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>International Tree-Ring Data Bank, NOAA National Centers for Environmental Information.</li><li>CRU TS 4.10, Climatic Research Unit, University of East Anglia.</li><li>Spurious causalities with transfer entropy, Physical Review E 87, 042917.</li><li>De Lellis et al. (2023), Journal of Physics: Complexity 4, 015001, on net transfer entropy misdirection.</li></ul></section>
+<p class="fd-data"><b>Data</b> International Tree-Ring Data Bank ring-width chronologies (NOAA NCEI; public). CRU TS 4.10 June to August temperature (Climatic Research Unit, University of East Anglia; ODbL 1.0).</p>
+<p class="fd-ledger">Finding F132 is number 132 in our findings ledger, where every result is kept in the order it came in. Honest null means a test that failed, a claim that did not hold, or our own error found and fixed.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F147-film-as-a-photon-detector.html" rel="prev">Newer: F147, Kodak's own curves put modern colour negative at 0.6 to 4.9 percent quantum efficiency</a><a href="F114-ring-channel-bits-per-year.html" rel="next">Older: F114, How much summer warmth one tree ring remembers, measured in bits</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

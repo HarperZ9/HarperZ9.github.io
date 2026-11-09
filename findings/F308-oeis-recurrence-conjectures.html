@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F308: Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known | Zain Dana Harper</title>
+<meta name="description" content="We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F308-oeis-recurrence-conjectures.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F308: Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known | Zain Dana Harper">
+<meta property="og:description" content="We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F308-oeis-recurrence-conjectures.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F308: Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known | Zain Dana Harper">
+<meta name="twitter:description" content="We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known","abstract":"We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.","identifier":"F308","dateCreated":"2026-10-31","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Computing and mathematics","Method and statistics"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="null">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F308</span> <span class="fd-tier" data-tier="null"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.6 11.4 11.4 2.6" stroke="currentColor" stroke-width="1.6"/></svg>Honest null</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#computing" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#method" width="18" height="18" alt="" loading="lazy" decoding="async">Computing and mathematics, Method and statistics</span> <span>found 2026-10-31</span></p>
+<h1>Checking 213 OEIS recurrence conjectures against their b-files finds one failure, already known</h1>
+<p class="fd-standfirst">We tested a random sample of conjectured recurrences in the On-Line Encyclopedia of Integer Sequences against the long term lists stored beside them. One of 213 failed, and the entry itself had recorded that failure in 2016, so the sweep produced no new counterexample.</p>
+<div class="fd-means"><p>Many OEIS entries carry a line such as &quot;Conjecture: a(n) = 3*a(n-1) - 3*a(n-2) + a(n-3)&quot;. These lines were usually found by fitting the listed terms, and the b-file beside the entry often holds hundreds or thousands more. A mechanical check is cheap, and on this sample it turned up nothing new. That is useful to know before spending effort on a larger sweep. It also says how to read such a line when it shows up in other work: it has usually held far past the data it was fitted on, which makes it a well-tested guess with no proof behind it.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>What fraction of OEIS recurrence conjectures fail on their own b-files, and are the failures data errors or real counterexamples? The decision it informed was whether these lines are worth a routine mechanical check as a source of counterexamples.</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>From the full OEIS data, 23,883 entries mention a conjecture, and 1,179 have a conjecture line our parser accepts: an equation in n and earlier terms a(n-k) with integer coefficients, restricted by a pattern match and a whitelist of allowed expression parts. We drew a seeded random 500 of those entries, which held 531 conjecture lines, 512 of them parsed. A line counts as tested when the b-file reaches at least 30 indices past the entry's listed data. That left 213 tested lines, with a median of 967 terms beyond the data. A line fails when its equation is false at any index in the b-file's range.</p>
+<p>The locked plan sampled through the OEIS search pages. That route asks for a sign-in past the first 100 results, which we did not work around, so the first run tested only 2 lines and was void by our own minimum. Having seen only those 2 lines, both passing, we switched to the public data repository and took every entry with a parsable conjecture line. That change is recorded as a deviation; the new frame is wider than the locked one.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<ul><li>Planted errors: each tested equation had its first integer coefficient raised by one and was run again. All 212 planted versions were caught.</li><li>Cross check: each equation applied to another sampled entry's terms, 30 terms at a time, 200 draws. This gives the chance pass rate for an unrelated sequence: mean 0.005, 95th percentile 0.033. The real pass rate of 0.995 sits far above it (p 0.005).</li></ul></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<ul><li>One failure in 213 tested lines: 0.47 percent, Wilson 95 percent interval 0.08 to 2.6 percent.</li><li>The failure is A031740. Its 2012 conjecture, a(n) = n(961n + 1) with a matching third-order recurrence, holds for 64 terms and fails at n = 65. The entry already carries a 2016 comment stating that the conjecture is false and giving a counterexample term.</li><li>No new counterexample.</li></ul>
+<p>Forecasts were 150 lines tested (got 213), a fail rate of 4 percent (got 0.5), a cross-check pass rate of 0.001 (got a 95th percentile of 0.033), and an even chance of at least one failure that a data error could not explain (none).</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>The lines were fitted to data, so passing is what a correct fit does, and a high-order fit can pass by construction when the b-file is short relative to its order. A passing line stays a conjecture with more range. Only about 5 percent of conjecture entries parse under our rules, so the rate describes simple linear recurrences. Many lines come from a few contributors, so the rate also describes their habits. The sampling frame changed after the locked route failed, which a later review of our ledger marked as narrowing the claim. Scoring was by our own code, not blind.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>the frame counts 23,883, 1,179 and 500, the 531 lines, 512 parsed and 213 tested, the median 967 terms, the single failure at n = 65 after 64 terms, the Wilson interval, the 212 of 212 planted catches and the cross-check percentiles were re-read from the run's result file and the frame count file on 2026-11-09 and match the ledger. The 2016 comment marking A031740's conjecture false was read in the stored copy of that entry. The preregistration hash matches the hash recorded in the result. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Download the OEIS data repository and the b-files. Find every entry with a comment or formula line that states a conjecture as an equation in a(n) and earlier terms with integer coefficients. Draw a random sample. For each line, evaluate the equation at every index from the end of the listed data to the end of the b-file, and record the first failure. Keep lines with at least 30 further terms. Perturb each equation slightly to confirm the check catches errors, and apply each equation to an unrelated sequence to set the chance level.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>The On-Line Encyclopedia of Integer Sequences, entry A031740 and its 2016 comment.</li><li>OEIS data repository (oeis/oeisdata) and b-files, CC BY-SA 4.0.</li></ul></section>
+<p class="fd-data"><b>Data</b> OEIS data from the public oeis/oeisdata repository and OEIS b-files, retrieved 2026-10-31, licence CC BY-SA 4.0 (OEIS End-User License Agreement), <a href="https://oeis.org">https://oeis.org</a></p>
+<p class="fd-ledger">Finding F308 is number 308 in our findings ledger, where every result is kept in the order it came in. Honest null means a test that failed, a claim that did not hold, or our own error found and fixed.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F310-titius-bode-is-spacing.html" rel="prev">Newer: F310, Titius-Bode regularity in 122 exoplanet systems sits in gap sizes; their order adds nothing</a><a href="F281-speed-limit-rerun.html" rel="next">Older: F281, A home rerun of the GRB 090510 light-speed test, and sound waves that keep their own limit</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

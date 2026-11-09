@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" data-type="stock">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>F508: Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high | Zain Dana Harper</title>
+<meta name="description" content="Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.">
+<link rel="canonical" href="https://harperz9.github.io/findings/F508-shannon-entropy-old-and-new-text.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zain Dana Harper">
+<meta property="og:title" content="F508: Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high | Zain Dana Harper">
+<meta property="og:description" content="Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.">
+<meta property="og:url" content="https://harperz9.github.io/findings/F508-shannon-entropy-old-and-new-text.html">
+<meta property="og:image" content="https://harperz9.github.io/img/og/p/home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="F508: Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high | Zain Dana Harper">
+<meta name="twitter:description" content="Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.">
+<link rel="preload" href="/world/ui/shell/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/world/ui/shell/shell.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/studies/studies.css?v=world-4b329f076e">
+<script type="module" src="/world/ui/shell/shell.js?v=world-4b329f076e"></script>
+<script type="module" src="/world/site/hand-scroll.js?v=world-4b329f076e"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ScholarlyArticle","headline":"Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high","abstract":"Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.","identifier":"F508","dateCreated":"2026-11-01","author":{"@type":"Person","name":"Zain Dana Harper","url":"https://harperz9.github.io/"},"about":["Information and signal","Computing and mathematics","Language and literature"],"isPartOf":{"@type":"CollectionPage","name":"Findings","url":"https://harperz9.github.io/findings/"}}</script>
+<link rel="stylesheet" href="/world/site/experiments.css?v=world-4b329f076e">
+<link rel="stylesheet" href="/world/site/findings.css?v=world-4b329f076e">
+</head>
+<body class="reading">
+<div class="gw-backdrop" aria-hidden="true">
+  <picture>
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-portrait-828.avif 828w, /media/world/glass-water/field-night-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="night" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-portrait-828.webp 828w, /media/world/glass-water/field-night-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/avif" srcset="/media/world/glass-water/field-night-1280.avif 1280w, /media/world/glass-water/field-night-1920.avif 1920w, /media/world/glass-water/field-night-2560.avif 2560w" sizes="100vw">
+    <source data-s="night" data-m="" media="(prefers-color-scheme: dark)" type="image/webp" srcset="/media/world/glass-water/field-night-1280.webp 1280w, /media/world/glass-water/field-night-1920.webp 1920w, /media/world/glass-water/field-night-2560.webp 2560w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-portrait-828.avif 828w, /media/world/glass-water/field-day-portrait-1242.avif 1242w" sizes="100vw">
+    <source data-s="day" data-m="(orientation: portrait)" media="(orientation: portrait) and (prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-portrait-828.webp 828w, /media/world/glass-water/field-day-portrait-1242.webp 1242w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/avif" srcset="/media/world/glass-water/field-day-1280.avif 1280w, /media/world/glass-water/field-day-1920.avif 1920w, /media/world/glass-water/field-day-2560.avif 2560w" sizes="100vw">
+    <source data-s="day" data-m="" media="(prefers-color-scheme: light)" type="image/webp" srcset="/media/world/glass-water/field-day-1280.webp 1280w, /media/world/glass-water/field-day-1920.webp 1920w, /media/world/glass-water/field-day-2560.webp 2560w" sizes="100vw">
+    <img src="/media/world/glass-water/field-day-1920.webp" width="1920" height="1080" alt="" decoding="async" fetchpriority="low">
+  </picture>
+</div>
+<script>(function(){var r=document.documentElement,q=matchMedia("(prefers-color-scheme: dark)");
+function s(){var t=r.dataset.theme;if(!t)return;var d=t==="dark",p=document.querySelector(".gw-backdrop picture");if(!p)return;
+p.querySelectorAll("source[data-s]").forEach(function(x){var on=x.dataset.s===(d?"night":"day");x.media=x.dataset.m+(x.dataset.m?" and ":"")+(on?"all":"not all");});}
+new MutationObserver(s).observe(r,{attributes:true,attributeFilter:["data-theme"]});s();})();</script>
+<header class="o-hand o-said" aria-label="Site">
+  <a class="skip" href="#main">Skip to the page</a>
+  <a class="o-home" href="/">Zain Dana Harper</a>
+  <a data-o="band" href="/world/universe/proto/index.html"><span class="o-name">Map</span></a>
+  <button type="button" data-o="fold" aria-controls="o-menu" aria-keyshortcuts="m" aria-expanded="false" hidden><span class="o-name">Places</span><i></i><i></i><i></i></button>
+  <button type="button" data-o="lamp" data-theme-toggle aria-pressed="true"><span class="o-name">Day</span></button>
+  <span class="o-cell"><button type="button" data-o="peel" data-plain-toggle aria-pressed="false"><span class="o-name">Plain</span></button><span class="o-under" aria-hidden="true">Plain</span></span>
+</header>
+<dialog id="o-menu" data-o="menu" data-material="chladni" aria-label="Places">
+  <nav aria-label="Places">
+    <ul class="o-places">
+      <li><a href="/world/ui/directions/cs-max/flywheel.html"><span class="o-word" data-display-on-open="light">Flywheel</span></a></li>
+      <li><a href="/articulate.html"><span class="o-word" data-display-on-open="engraved">Articulate</span></a></li>
+      <li><a href="/cmmns.html"><span class="o-word" data-display-on-open="glyphcell">CMMNS</span></a></li>
+      <li><a href="/buildlang.html"><span class="o-word" data-display-on-open="glyphcell">BuildLang</span></a></li>
+      <li><a href="/raw.html"><span class="o-word" data-display-on-open="nightlights">raw-native</span></a></li>
+      <li><a href="/explainers.html"><span class="o-word" data-display-on-open="sound">Films</span></a></li>
+      <li><a href="/publications.html"><span class="o-word" data-display-on-open="swarm">Writing</span></a></li>
+      <li><a href="/studies/"><span class="o-word" data-display-on-open="rope">Studies</span></a></li>
+      <li><a href="/hire.html"><span class="o-word" data-display-on-open="rope">Work</span></a></li>
+    </ul>
+  </nav>
+  <p class="o-menu-foot"><a href="/floor.html">Plain index</a> <a href="/world/universe/proto/index.html">The map</a> <button type="button" class="o-close" onclick="this.closest('dialog').close()">Close (Esc)</button></p>
+</dialog>
+<main id="main" tabindex="-1">
+<article class="tool st fd fd-page" data-tier="signal">
+<p class="xc-meta"><a class="fd-up" href="/findings/">Findings</a> <span class="xc-n">F508</span> <span class="fd-tier" data-tier="signal"><svg class="fd-glyph" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><circle cx="7" cy="7" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Signal</span> <span class="xc-lanes"><img class="xc-lane" src="/media/world/icons/lanes.svg#information" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#computing" width="18" height="18" alt="" loading="lazy" decoding="async"><img class="xc-lane" src="/media/world/icons/lanes.svg#language" width="18" height="18" alt="" loading="lazy" decoding="async">Information and signal, Computing and mathematics, Language and literature</span> <span>found 2026-11-01</span></p>
+<h1>Shannon's 1951 letter statistics hold on old and new English; his third-order value reads high</h1>
+<p class="fd-standfirst">Shannon's first- and second-order entropy figures for English letters match ours within 0.12 bits on books from 1788 to 1925 and on present-day Wikipedia. His third-order figure sits 0.23 to 0.39 bits above ours, and an n-gram reader never gets near his 1.3 bits per letter.</p>
+<div class="fd-means"><p>Shannon's 1951 table of how much information each English letter carries is still quoted as a fact about the language. On text two centuries apart, the parts of the table that depend on single letters and letter pairs hold up. The part that depends on letter triples does not, by about a third of a bit, which is a warning about quoting the higher rows. A reader built from letter counts alone stays well above Shannon's human estimate, so his 1.3 bits per letter describes a reader with knowledge of the world, and our n-gram reader has none.</p></div>
+
+<section class="fd-sec" aria-labelledby="the-question"><h2 id="the-question">The question</h2>
+<p>Does the 1951 table (27 symbols: F0 4.76, F1 4.03, F2 3.32, F3 3.1 bits per letter, and 2.14 from word statistics) hold on present data? Does a simple statistical reader reach his 1.3 bits? And when a reader trained on one kind of text reads another, which costs more: a change of era or a change of genre?</p></section>
+<section class="fd-sec" aria-labelledby="how-we-tested-it"><h2 id="how-we-tested-it">How we tested it</h2>
+<p>We reduced each text to 26 letters and a space. F1, F2 and F3 are the entropies of a letter given 0, 1 and 2 letters before it, computed on three pooled corpora: old (1788 to 1859, four novels and The Federalist), mid (1892 to 1925, five works of fiction) and new (Wikipedia featured articles). For the reader we built a PPM-style mixture of letter-context counts, trained it on one corpus and measured its bits per letter on held-out text of each corpus. It also played Shannon's guessing game, ranking the next letter, from which his bounds follow.</p>
+<p>The first run had a fault of ours: a promised shuffle of books was never done, so the old held-out text was all The Federalist and era was read through one book. We wrote a second preregistration to fix it before rerunning; it was not blind, since the first run had been seen. The first run stands as recorded.</p></section>
+<section class="fd-sec" aria-labelledby="controls-and-planted-checks"><h2 id="controls-and-planted-checks">Controls and planted checks</h2>
+<ul><li>A planted second-order Markov text with known entropy: the reader came within 0.004 bits of the truth (kill above 0.1).</li><li>Held-out text with its characters shuffled: the real reader beat every one of 20 shuffles.</li></ul></section>
+<section class="fd-sec" aria-labelledby="result"><h2 id="result">Result</h2>
+<p>Shannon's table against ours (bits per letter):</p>
+<div class="st-table" role="region" aria-label=", Shannon 1951, Old, Mid, New" tabindex="0"><table><thead><tr><th scope="col"></th><th scope="col">Shannon 1951</th><th scope="col">Old</th><th scope="col">Mid</th><th scope="col">New</th></tr></thead><tbody><tr><td>F1</td><td>4.03</td><td>4.09</td><td>4.07</td><td>4.11</td></tr><tr><td>F2</td><td>3.32</td><td>3.35</td><td>3.32</td><td>3.44</td></tr><tr><td>F3</td><td>3.1</td><td>2.71</td><td>2.70</td><td>2.87</td></tr><tr><td>Word-based</td><td>2.14</td><td>1.80</td><td>1.85</td><td>1.75</td></tr></tbody></table></div>
+<ul><li>F1 and F2 differ from his by at most 0.12 (largest gap F2 on new text, 0.120).</li><li>F3 reads 0.39 lower than his on old text and 0.23 lower on new text.</li><li>The word-based figure differs by 0.34 to 0.39, likely because he extended a Zipf-law tail where we counted words directly.</li><li>The reader on its own kind of text, second run: 1.93 (old fiction), 2.15 (mid fiction), 1.63 (The Federalist), 2.41 (Wikipedia). It never reached 1.3.</li><li>Change of era within fiction cost 0.10 bits (old reader on mid text) and 0.25 (mid reader on old text). Change of genre, fiction to The Federalist in the same era, cost 0.44. A reader trained on The Federalist lost 1.37 bits on Wikipedia, where era and topic change together. Our preregistered claim that era costs more than genre failed, as we had forecast.</li></ul>
+<p>Forecasts held 4 of 9 in the first run and 4 of 5 in the second.</p></section>
+<section class="fd-sec" aria-labelledby="limits"><h2 id="limits">Limits</h2>
+<p>Wikipedia is the only new text, so era and genre stay tangled in the new-text rows. No large language model was used as a reader; that was the frame we most wanted to change and it stays open. The word-based gap may be his Zipf tail against our plug-in count. Shannon's own test text is not openly available, so we compare against his table. Scoring was by our own code, not blind.</p></section>
+<section class="fd-sec" aria-labelledby="verified"><h2 id="verified">Verified</h2>
+<p class="verified"><b>Verified</b>every F1, F2, F3 and word-based value in the table, the gaps 0.055, 0.025, 0.388, 0.083, 0.120 and 0.228, the reader values, the era and genre penalties, the planted gap 0.004 and the shuffle control were re-read from both runs' result files on 2026-11-09 and match the ledger. The forecast counts 4 of 9 and 4 of 5 were counted from the forecast rows in those files. Shannon's table values are as recorded in the preregistration from the paper scan. Not re-run.</p></section>
+<section class="fd-sec" aria-labelledby="reproduce"><h2 id="reproduce">Reproduce</h2>
+<p>Take the listed public-domain books from Project Gutenberg and a sample of Wikipedia featured articles. Strip the Project Gutenberg header and footer, lowercase, and map everything outside a to z to a single space. Compute conditional entropies of each letter given 0, 1 and 2 previous letters on each pooled corpus. Train an n-gram mixture reader on part of one corpus and measure its average bits per letter on held-out text from each corpus. Compare with Shannon's 1951 table.</p></section>
+<section class="fd-sec" aria-labelledby="sources"><h2 id="sources">Sources</h2>
+<ul><li>Shannon, 1951, the printed-English prediction paper whose table is re-tested here.</li><li>Shannon, 1948, named in the study's background.</li><li>Project Gutenberg texts listed under data; Wikipedia featured articles.</li></ul></section>
+<p class="fd-data"><b>Data</b> Project Gutenberg public-domain texts (The Federalist 1788, Austen 1813, Bronte 1847, Melville 1851, Dickens 1859, Doyle 1892, Joyce 1914 and 1916, Wodehouse 1920, Fitzgerald 1925) and Wikipedia featured articles (CC BY-SA, used for statistics only), <a href="https://www.gutenberg.org">https://www.gutenberg.org</a> and <a href="https://en.wikipedia.org">https://en.wikipedia.org</a></p>
+<p class="fd-ledger">Finding F508 is number 508 in our findings ledger, where every result is kept in the order it came in. Signal means a real effect on real data or a sharp known-answer test, with clear limits.</p>
+<nav class="fd-next" aria-label="More findings"><a href="F515-llm-compression-and-memorisation.html" rel="prev">Newer: F515, A small language model squeezes the UDHR to 0.27 bits a letter, and fresh text to 1.59</a><a href="F362-stated-uncertainty-tails.html" rel="next">Older: F362, Published 1 sigma error bars hold near nominal; a 95 percent interval needs 3 to 5 sigma</a><a href="/findings/">Every finding</a></nav>
+</article>
+</main>
+</body>
+</html>

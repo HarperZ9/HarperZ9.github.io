@@ -6,7 +6,8 @@
 // Steps, in order (each is its own script and can run alone):
 //   1. import-mission-control.mjs   copy the pieces into world/ (and Accession into system/fonts/accession)
 //   2. import-media.mjs             encode the name art, the loops and the theme into media/world/
-//   3. build-studies.mjs, build-cmmns.mjs
+//   3. build-studies.mjs, build-cmmns.mjs, build-experiments.mjs, build-findings.mjs (from findings/src/, which
+//      scripts/import-findings.mjs fills from the workshop's write-ups)
 //   4. build-world-home.mjs, build-world-pages.mjs, world-asset-revision.mjs, world-discovery.mjs
 //      render-route-registry.mjs, render-site-index.mjs (the World family and pillar)
 //   5. link cards for new sitemap pages, then the card tags on the world's pages only
@@ -26,7 +27,7 @@ import sys
 sys.path.insert(0, ".")
 from tools.repo_art.site_cards import plan, stamp, write_manifest, SOURCES, ROOT
 own = ("index.html", "workshop.html", "floor.html", "elements.html", "swatches.html", "accession.html", "credits.html", "cmmns.html", "experiments/index.html", "glass-water.html")
-cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/")) or c["rel"] in own]
+cards = [c for c in plan() if c["rel"].startswith(("world/", "studies/", "findings/")) or c["rel"] in own]
 print(sum(stamp(c) for c in cards), "of", len(cards), "world pages stamped")
 for c in cards:
     if c["rel"] in SOURCES: stamp(c, ROOT / SOURCES[c["rel"]])
@@ -39,6 +40,7 @@ node("build-studies.mjs", pass);
 node("sync-field-css.mjs");
 node("build-cmmns.mjs");
 node("build-experiments.mjs");
+node("build-findings.mjs");
 node("build-glass-water.mjs");
 node("build-world-home.mjs");
 node("build-world-pages.mjs");

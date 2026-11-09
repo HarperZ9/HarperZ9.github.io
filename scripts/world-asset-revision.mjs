@@ -50,7 +50,7 @@ function stamp(file, rev) {
 }
 
 const rev = revision();
-const pages = [...walk(path.join(site, "world")), ...walk(path.join(site, "studies")), ...OWN.map((p) => path.join(site, p))]
+const pages = [...walk(path.join(site, "world")), ...walk(path.join(site, "studies")), ...walk(path.join(site, "findings")), ...OWN.map((p) => path.join(site, p))]
   .filter((p) => p.endsWith(".html") && existsSync(p) && statSync(p).isFile());
 const changed = pages.filter((p) => stamp(p, rev)).length;
 const impPath = path.join(site, "world/IMPORT.json"), imp = JSON.parse(readFileSync(impPath, "utf8"));
