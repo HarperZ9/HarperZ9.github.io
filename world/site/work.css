@@ -123,3 +123,6 @@ html.plain .w-engraving, html.plain .w-light { display: none; }
 .work:not(.w-live) .w-dial { display: none; }
 .work:not(.w-live) .w-list { align-self: start; position: sticky; top: 112px; }
 @media (max-width: 860px) { .work:not(.w-live) { grid-template-columns: minmax(0, 1fr); grid-template-areas: "list" "panel"; } .work:not(.w-live) .w-list { position: static; } }
+/* a link that carries a package name stays an inline box, so the name keeps the .ident rule (a flex item would be
+   made a block and could break mid-name on a narrow screen; tests/ident-narrow-reading.cjs) */
+.w-go a:has(> .ident) { display: inline-block; padding-block: 12px; min-height: 44px; box-sizing: border-box; }
