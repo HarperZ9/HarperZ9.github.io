@@ -3,10 +3,10 @@
 // findings/charts/<id>.json holds, per chart: the question it answers, a one-line takeaway, the claims it supports,
 // its form and data, n, units, what the interval is, the threshold set in advance, the planted-check result, a data
 // table, and the result file it was read from with two hashes (the run's own file and the published copy, which
-// differs only in file paths cut to the file name). Nothing here computes a result: every number comes from the
+// has file paths cut to the file name and may differ in layout, never in a value). Nothing here computes a result: every number comes from the
 // chart file, which an extractor wrote from the study's result file.
 import { esc } from "./studies-markdown.mjs";
-import { FORMS, SHAPE_WORD, marker } from "./findings-chart-forms.mjs";
+import { FORMS, marker, xySlots } from "./findings-chart-forms.mjs";
 
 export const FORM_NAMES = Object.keys(FORMS);
 const FLOW_NEED = ["key", "form", "title", "takeaway", "claims", "source", "steps"];
@@ -57,17 +57,25 @@ export function chartsFor(rec, spec) {
   };
 }
 
+// the legend lists only the marks a chart draws: each used series slot with its shape, then ranges, rules and regions
 function legend(ch) {
-  const it = [];
-  const names = ch.series_names || (ch.panels || ch.series ? [...new Set((ch.panels || [{ series: ch.series }]).flatMap((p) => p.series.map((s) => s.name)))] : null);
-  if (ch.form === "band") it.push([marker(0), ch.value_name || "measured value"], ['<i class="fc-k band"></i>', ch.band_name || "control range, 5th to 95th percentile"], ['<i class="fc-k tick"></i>', "control mean"]);
-  else if (ch.form === "dumbbell") it.push([marker(0), ch.a_name], [marker(1), ch.b_name]);
-  else if (names && (names.length > 1 || ch.form === "interval") && !names.every((n) => (ch.rows || []).some((r) => r.label === n))) names.slice(0, 3).forEach((n, i) => it.push([ch.form === "bars" ? `<i class="fc-k bar s${i}"></i>` : marker(i), n]));
+  const it = [], rows = ch.rows || [], sn = ch.series_names || [];
+  const used = [...new Set(rows.map((r) => r.series || 0))].sort((a, b) => a - b);
+  if (ch.form === "band") {
+    if (used.length > 1 && used.every((s) => sn[s])) used.forEach((s) => it.push([marker(s), sn[s]]));
+    else it.push([used.map((s) => marker(s)).join(""), ch.value_name || "measured value"]);
+    if (rows.some((r) => Number.isFinite(r.lo))) it.push(['<i class="fc-k band"></i>', ch.band_name || "control range, 5th to 95th percentile"]);
+    if (rows.some((r) => Number.isFinite(r.mean))) it.push(['<i class="fc-k tick"></i>', ch.tick_name || "control mean"]);
+  } else if (ch.form === "dumbbell") it.push([marker(ch.a_series ?? 0), ch.a_name], [marker(ch.b_series ?? 1), ch.b_name]);
+  else if (ch.form === "line" || ch.form === "scatter") {
+    const sl = xySlots(ch);
+    if (sl.size > 1) for (const [name, s] of sl) it.push([s.markers ? marker(s.k) : `<i class="fc-k ln s${s.k}${s.dashed ? " d" : ""}"></i>`, name]);
+  } else if (sn.length && (sn.length > 1 || ch.form === "interval") && !sn.every((n) => rows.some((r) => r.label === n))) used.filter((s) => sn[s]).forEach((s) => it.push([ch.form === "bars" ? `<i class="fc-k bar s${s}"></i>` : marker(s), sn[s]]));
   if (ch.form === "interval" && ch.interval) it.push(['<i class="fc-k wh"></i>', ch.interval]);
   ((ch.axis && ch.axis.refs) || (ch.y && ch.y.refs) || []).forEach((f, i) => it.push([`<i class="fc-k ref r${i % 2}"></i>`, f.label]));
   for (const g of (ch.axis && ch.axis.regions) || []) it.push(['<i class="fc-k region"></i>', g.label]);
   if (ch.diagonal) it.push(['<i class="fc-k ref r0"></i>', ch.diagonal]);
-  return it.length ? `<ul class="fc-legend">${it.map(([m, t]) => `<li>${m}<span>${esc(t)}</span></li>`).join("")}</ul>` : "";
+  return it.length ? `<ul class="fc-legend">${it.map(([m, t]) => `<li><span class="fc-lk">${m}</span><span>${esc(t)}</span></li>`).join("")}</ul>` : "";
 }
 
 const isNum = (c) => /^[-+−]?[\d.,]+(?:e[-+]?\d+)?%?$/i.test(String(c));
@@ -80,7 +88,7 @@ function dataTable(ch, n) {
 function sourceLine(ch, src) {
   return [].concat(ch.source).map((sid) => {
     const s = src[sid];
-    return `<p class="fc-src">Read from <a href="${esc(s.href)}">${esc(s.name)}</a>${s.run ? `, run ${esc(s.run)}` : ""}. <span class="fc-hash">SHA-256 of the run's file <code>${esc(s.sha256_original)}</code></span>${s.sha256_copy === s.sha256_original ? ", published unchanged." : ` <span class="fc-hash">and of the published copy <code>${esc(s.sha256_copy)}</code></span>. The copy differs only in file paths cut to the file name.`}</p>`;
+    return `<p class="fc-src">Read from <a href="${esc(s.href)}">${esc(s.name)}</a>${s.run ? `, run ${esc(s.run)}` : ""}. <span class="fc-hash">SHA-256 of the run's file <code>${esc(s.sha256_original)}</code></span>${s.sha256_copy === s.sha256_original ? ", published unchanged." : ` <span class="fc-hash">and of the published copy <code>${esc(s.sha256_copy)}</code></span>. In the copy, file paths are cut to the file name and the layout (indentation, line endings) may differ; every value is the same.`}</p>`;
   }).join("");
 }
 
@@ -92,7 +100,7 @@ export function chartHtml(ch, n, src, id) {
   if (ch.ruled_out) meta.push(["Ruled out", ch.ruled_out]);
   meta.push(["Supports", ch.claims.map((c) => `<a href="#${c}">claim ${c.slice(1)}</a>`).join(", ")]);
   const flow = ch.form === "flow", word = flow ? "Diagram" : "Chart";
-  const shapes = ch.form === "matrix" || ch.form === "rules" || flow ? "" : ` Marks differ by shape (${SHAPE_WORD.join(", ")}) and by colour.`;
+  const shapes = ch.form === "matrix" || ch.form === "rules" || flow ? "" : " Marks differ by shape and by colour.";
   const live = ch.live ? `<div class="fc-live" data-live="${esc(ch.live.kind)}" data-src="${esc(ch.live.data)}"><noscript><p>The live re-run needs JavaScript. The chart and table above hold the study's own numbers.</p></noscript></div>` : "";
   return `<figure class="fc fk-${ch.form}" id="ch-${esc(ch.key)}" data-finding="${esc(id)}">
 <figcaption><b>${word} ${n}.</b> ${esc(ch.title)} <span class="fc-take">${esc(ch.takeaway)}</span></figcaption>

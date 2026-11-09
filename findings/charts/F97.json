@@ -169,7 +169,7 @@
     "result"
    ],
    "title": "Share of the drought signal the trees pass, by space scale and time scale.",
-   "takeaway": "Below 55 km the trees pass at most 0.004 in every time band. Above 460 km they pass 0.27 to 0.91, most at periods over 32 years. Darker means more of the drought signal gets through.",
+   "takeaway": "Below 55 km the trees pass at most 0.004 in every time band. Above 460 km they pass 0.27 to 0.91, most at periods over 32 years. A stronger blue means more of the drought signal gets through.",
    "units": "passed share: squared coherence between drought at the tree sites and the tree rings, 0 (nothing passes) to 1 (all passes)",
    "n": "664 tree-ring sites, 1903 to 1980; 6 space bands by 5 time bands",
    "interval": "95% bootstrap interval per cell, listed in the table",
