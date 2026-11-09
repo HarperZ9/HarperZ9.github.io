@@ -14,6 +14,7 @@ import { workSection } from "../site-src/world/work.mjs";
 import { labelHand } from "./hand-labels.mjs";
 import { backdrop } from "./field-backdrop.mjs";
 import { supergraphic } from "./supergraphic.mjs";
+import { handIconCss } from "./hand-icons.mjs";
 
 const site = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(site, p), "utf8");
@@ -148,6 +149,7 @@ function build() {
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error("home: a placeholder was left unfilled");
   if (/[A-Za-z]:[\\/](?:dev|Users|Downloads)/.test(html) || html.includes("—")) throw new Error("home: a local path or an em dash reached the page");
   writeFileSync(path.join(site, "index.html"), html);
+  writeFileSync(path.join(site, "world/site/hand-icons.css"), handIconCss());
   console.log(`home: index.html with the glass-and-water field and ${PLACES.length} places`);
 }
 build();

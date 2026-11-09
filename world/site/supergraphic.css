@@ -1,20 +1,21 @@
 /* supergraphic.css: the arrival's supergraphic (scripts/supergraphic.mjs). Six names in Accession Super at one
    letter size stand in the water at the plate's horizon, as a skyline; each word is set on its side like a spine,
-   crowned with its platform's drawn sign and reflected in the water below. Each sign is three flat inks: the face in
+   crowned with its platform's drawn sign and reflected in the water below. Each sign is three flat inks in both schemes: the face in
    the platform's hue, a band of pink, red or yellow, and that ink's deep tone as the solid. Depth is the one model
    in depth.css. The name is Accession
    Display. Nothing here moves, so reduced motion has nothing to hold; plain view and forced colours remove it. */
 @font-face { font-family: "SG Super"; src: url("/world/site/supergraphic/AccessionSuper-signs.woff2") format("woff2"); font-weight: 900; font-display: block; }
 @font-face { font-family: "SG Display"; src: url("/world/site/supergraphic/AccessionDisplay-name.woff2") format("woff2"); font-weight: 900; font-display: swap; }
 @property --sg-rise { syntax: "<length>"; inherits: true; initial-value: 0px; }
-.arrival { overflow: clip; isolation: isolate; --hk: .052; --img: max(100vh, 56.25vw); --hz: calc(50vh + var(--hk) * var(--img)); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arrival { --hk: .122; } }
-:root[data-theme="dark"] .arrival { --hk: .122; }
+.arrival { overflow: clip; isolation: isolate; }
+.world-home { --hk: .052; --img: max(100vh, 56.25vw); --hz: calc(50vh + var(--hk) * var(--img)); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .world-home { --hk: .122; } }
+:root[data-theme="dark"] .world-home { --hk: .122; }
 @media (orientation: portrait) {
-  .arrival { --img: max(100vh, 177.78vw); --hk: .024; }
-  :root[data-theme="dark"] .arrival { --hk: .071; }
+  .world-home { --img: max(100vh, 177.78vw); --hk: .024; }
+  :root[data-theme="dark"] .world-home { --hk: .071; }
 }
-@media (orientation: portrait) and (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arrival { --hk: .071; } }
+@media (orientation: portrait) and (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .world-home { --hk: .071; } }
 .sg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: clip; contain: strict; }
 .sg-defs { position: absolute; }
 .arrival > :not(.sg) { position: relative; z-index: 1; }
@@ -26,9 +27,21 @@ html.plain .world-home .arrival h1 { font-family: var(--face-display); }
 @media (forced-colors: active) { .sg { display: none; } }
 
 .sg-wall { --sink: 9vh; --S: min(8.4vh, 5vw, (var(--hz) + var(--sink) - 128px) / 8.6); position: absolute; top: 0; height: calc(var(--hz) + var(--sink)); right: 7vw; display: flex; align-items: flex-end; gap: calc(var(--S) * .66); transform: translateY(var(--sg-rise)); }
-.sg .sg-name, .sg .sg-glyph { --d-face: #14161c; --d-lit: var(--sg-hue); --d-band: var(--sg-hue); --d-side: var(--sg-ink); --d-key: var(--sg-deep); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sg .sg-name, :root:not([data-theme="light"]) .sg .sg-glyph { --d-face: var(--sg-hue); --d-lit: #fffdf7; --d-band: var(--sg-ink); --d-side: var(--sg-deep); --d-key: #05070f; } }
-:root[data-theme="dark"] .sg .sg-name, :root[data-theme="dark"] .sg .sg-glyph { --d-face: var(--sg-hue); --d-lit: #fffdf7; --d-band: var(--sg-ink); --d-side: var(--sg-deep); --d-key: #05070f; }
+.sg .sg-name, .sg .sg-glyph { --d-face: var(--sg-hue); --d-lit: #fffdf7; --d-band: var(--sg-ink); --d-side: var(--sg-deep); --d-key: #05070f; }
+/* the day sky (the author, 2026-11-09: "Darken the day sky"): the day plate's pale haze is printed through a deep
+   blue, multiplied over the plate and the live field, so the coloured faces hold 3:1 by day as they do at night.
+   The blue is deepest at the horizon, where the signs stand; the left stays lighter under the field's own wash; the
+   Sun keeps its white disc on screens up to 16:10, where it clears the wall; on wider screens it sits behind the last
+   sign, so it prints through the same blue. The dark scheme has no layer. */
+.world-home .gw-backdrop::after { z-index: 2; }
+.world-home .gw-backdrop::before { content: ""; position: absolute; inset: 0; z-index: 1; mix-blend-mode: multiply;
+  background: var(--sg-sun, linear-gradient(transparent, transparent)), linear-gradient(90deg, rgba(255, 255, 255, .55) 0, rgba(255, 255, 255, .45) 30%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(180deg, #3572e0 0, #2f68d6 calc(var(--hz) * .7), #2459c6 var(--hz), #2a5fc8 calc(var(--hz) + 12vh), #5f8fdc 100%); }
+@media (orientation: landscape) { .world-home { --sg-sun: radial-gradient(circle at calc(50vw + .772 * var(--img)) calc(50vh - .25 * var(--img)), #2459c6 0, #2459c6 calc(.03 * var(--img)), rgba(36, 89, 198, 0) calc(.085 * var(--img))); } }
+@media (orientation: landscape) and (max-aspect-ratio: 16/10) { .world-home { --sg-sun: radial-gradient(circle at calc(50vw + .772 * var(--img)) calc(50vh - .25 * var(--img)), #fff 0, #fff calc(.022 * var(--img)), rgba(255, 255, 255, 0) calc(.075 * var(--img))); } }
+.world-home:has([data-o="sky"][aria-pressed="true"]) { --sg-sun: initial; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .world-home .gw-backdrop::before { display: none; } }
+:root[data-theme="dark"] .world-home .gw-backdrop::before { display: none; }
 .sg-sign { display: flex; flex-direction: column; align-items: center; font-size: var(--S); }
 .sg-glyph { width: .78em; height: .78em; margin-bottom: .3em; color: var(--d-face); overflow: visible; filter: drop-shadow(-.033em .033em 0 var(--d-band)) drop-shadow(-.044em .044em 0 var(--d-side)) drop-shadow(-.033em .033em 0 var(--d-side)) drop-shadow(-.02em .02em 0 var(--d-key)); }
 .sg-name { margin: 0; writing-mode: vertical-rl; text-orientation: sideways; white-space: nowrap; letter-spacing: .005em; font: 900 1em/.78 "SG Super", var(--face-display); --d-s: .011em; }

@@ -6,8 +6,8 @@
 // The poster palette (the author, 2026-11-09: pink stays, and green, red, black and yellow are welcome). Each sign is
 // printed in three flat inks, after Italian poster work of the 1950s to 1970s: the face in the platform's own hue at
 // full strength, a narrow band of a second ink, and the solid in that second ink's deep tone, over a black key line.
-// At night the face is the bright ink on the dark sky. By day the stack turns over: the face prints in black, the
-// platform's hue becomes the band and the second ink the solid, so the word keeps 4.5:1 against a bright sky.
+// The face is the bright ink in both schemes: on the dark sky at night, and by day on a sky printed through a deep
+// blue (the author, 2026-11-09: "Darken the day sky"), which holds every face at 3:1 or better.
 // supergraphic.css maps the three inks (--sg-hue, --sg-ink, --sg-deep) onto the depth model per theme.
 const INK = { pink: ["#ff6fb1", "#701f46"], red: ["#f53e39", "#721212"], yellow: ["#fcde3d", "#594d0e"] };
 // [name, platform (the drawn sign), face, second ink]. Engine and Game share The Playground's hue at two tones.
